@@ -9,7 +9,7 @@
       </div>
       <div class="formbody">
 #set ($formAction = $renderResponse.createActionURL())
-		<form action="$formAction" method="get" name="SearchForm" id="SearchForm">
+		<form action="$formAction" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
     	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
         	<p class="datasource_selection">
@@ -39,7 +39,9 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">Forschungsprojekte</a>	
 #end
         	</p>          	
-		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($q)$q #else Geben Sie hier Ihre Suchanfrage ein #end" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" />&nbsp;<input class="btn" type="submit" value="PortalU Suche" />
+		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($q)$q
+#else
+Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" />&nbsp;<input class="btn" type="submit" value="PortalU Suche" />
 		      <span class="clearer"></span>
         </form>
         <div class="optional-links">

@@ -7,7 +7,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -16,7 +15,7 @@ import de.ingrid.portal.search.mockup.SearchResultListMockup;
 
 
 
-public class SimpleSearchPortlet extends GenericVelocityPortlet
+public class SearchResultPortlet extends GenericVelocityPortlet
 {
 
 	private Integer selectedDataSource = new Integer(1);
@@ -37,7 +36,7 @@ public class SimpleSearchPortlet extends GenericVelocityPortlet
     	}
 
     	String q = request.getParameter("q");
-    	if (q != null) {
+    	if (q != null && q.length() > 0) {
     		queryStr = q;
     	}
     	if (queryStr != null) {
@@ -65,7 +64,7 @@ public class SimpleSearchPortlet extends GenericVelocityPortlet
         }
         
     	String q = request.getParameter("q");
-    	if (q != null) {
+    	if (q != null && q.length() > 0) {
     		queryStr = q;
 	    }
     	actionProcessed = true;

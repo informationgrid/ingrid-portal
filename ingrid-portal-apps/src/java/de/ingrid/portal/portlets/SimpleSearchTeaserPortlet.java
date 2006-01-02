@@ -16,7 +16,6 @@ public class SimpleSearchTeaserPortlet extends GenericVelocityPortlet
 {
     private Integer selectedDataSource = new Integer(1);
     
-    
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);

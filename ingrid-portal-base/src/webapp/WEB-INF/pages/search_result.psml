@@ -17,19 +17,15 @@ limitations under the License.
   <defaults
      skin="orange"
      layout-decorator="ingrid"
-     portlet-decorator="ingrid-teaser"
+     portlet-decorator="clear"
   />
   <title>Search</title>
   <metadata name="title" xml:lang="de">Suche</metadata>
 
-  <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
+  <fragment id="search-result" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="search-result-1" type="portlet" name="ingrid-portal-apps::SearchResult">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="main-search-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::SimpleSearchInfo">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
     </fragment>
   </fragment>
 
