@@ -1,0 +1,15 @@
+# template which should be renamed to build.properties and be adapted to local settings (this template is checked in version control)
+
+basedir = C:/wemove/portalu/dev/ingrid-portalu
+
+# Required Portal Configuration Properties
+org.apache.jetspeed.portal.home = C:/wemove/portalu/dev/ingrid-portalu
+
+# Required Application Server Properties
+# configuration (user/password) see -> http://portals.apache.org/jetspeed-2/getting-started.html
+org.apache.jetspeed.server.home = C:/Programme/ApacheSF/apache-tomcat-5.5.12
+org.apache.jetspeed.server.shared = ${org.apache.jetspeed.server.home}/shared/lib
+org.apache.jetspeed.deploy.war.dir = ${org.apache.jetspeed.server.home}/webapps
+org.apache.jetspeed.services.autodeployment.user = j2deployer
+org.apache.jetspeed.services.autodeployment.password = j2deployer
+org.apache.jetspeed.catalina.version.major = 5.5

@@ -1,0 +1,40 @@
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeDS')
+
+<div class="formbody">
+    <form action="portal/main-search.psml" method="get" name="SearchForm" id="SearchForm">
+    	<input type="hidden" name="ds" value="$ds"/>
+    	<input type="hidden" name="action" value="doSearch"/>
+		<p class="datasource_selection">
+#if($ds==1)
+	<strong>Umweltinformationen</strong>
+#else
+    $action.setParameter('ds','1')
+	<a href="$action">Umweltinformationen</a>	
+#end
+&nbsp;&nbsp;&nbsp;&nbsp;
+#if($ds==2)
+	<strong>Adressen</strong>
+#else
+    $action.setParameter('ds','2')
+	<a href="$action">Adressen</a>	
+#end
+&nbsp;&nbsp;&nbsp;&nbsp;
+#if($ds==3)
+	<strong>Forschungsprojekte</strong>
+#else
+    $action.setParameter('ds','3')
+	<a href="$action">Forschungsprojekte</a>	
+#end
+    	</p>
+      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($q)$q #else Geben Sie hier Ihre Suchanfrage ein #end" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" /><input class="btn" type="submit" value="PortalU Suche" />
+          <span class="clearer"></span>
+    </form>
+    <div class="optional-links">
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="e_search.html">Erweiterte Suche</a>
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_prev_search.html">Suchhistorie</a>
+    
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_preferences.html">Einstellungen</a>
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="javascript:contextHelp()">Suchtipps</a>
+    </div>
+</div>

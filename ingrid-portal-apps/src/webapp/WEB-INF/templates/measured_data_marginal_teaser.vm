@@ -1,0 +1,23 @@
+<div class="portlet-section-body">
+    <p class="iconLink">
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+      <span><a href="messwerte_results.html?boden=1">Boden</a></span>
+      <span class="clearer"></span>
+    </p>
+    <p class="iconLink">
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+      <span><a href="messwerte_results.html?luft=1">Luft</a></span>
+      <span class="clearer"></span>
+    </p>       
+    <p class="iconLink">
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+      <span><a href="messwerte_results.html?wasser=1">Wasser</a></span>
+      <span class="clearer"></span>
+    </p>
+    <p class="iconLink">
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+      <span><a href="messwerte_results.html?weitere=1">Weitere</a></span>
+      <span class="clearer"></span>
+    </p>
+</div>
+		

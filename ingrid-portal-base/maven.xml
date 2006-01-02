@@ -1,0 +1,21 @@
+<project xmlns:j="jelly:core" xmlns:ant="jelly:ant">
+
+  <!--==================================================================-->
+  <!-- copy local webapp over default j2 webapp                         -->
+  <!-- MAVEN BUG:                                                       -->
+  <!-- executed multiple times, one time for every "project.xml file"   -->
+  <!-- IN SAME DIRECTORY !!! e.g.     <extend>full-portal.xml</extend>  -->
+  <!--==================================================================-->    
+	<postGoal name="war:war-resources">
+    <j:if test="${webSourcesPresent == 'true'}">
+      <ant:echo>'war:war-resources' postGoal !!! copy local webapp from ${maven.war.src} to ${maven.war.webapp.dir}</ant:echo>
+      <ant:copy todir="${maven.war.webapp.dir}" preservelastmodified="false" overwrite="true" verbose="false">
+        <ant:fileset dir="${maven.war.src}"
+          includes="${maven.war.src.includes}"
+          excludes="${maven.war.src.excludes}">
+        </ant:fileset>
+      </ant:copy>
+    </j:if>
+	</postGoal>
+
+</project>

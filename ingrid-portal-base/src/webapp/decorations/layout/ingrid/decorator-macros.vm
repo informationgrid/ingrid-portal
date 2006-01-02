@@ -1,0 +1,376 @@
+#* define navigation constants *#
+#macro (defineNavigationConstants)
+  #* Constants for layout orientation *#	
+  #set($LEFT_TO_RIGHT = "LeftToRight")
+  #set($RIGHT_TO_LEFT = "RightToLeft")
+  #set($TOP_TO_BOTTOM = "TopToBottom")
+  #set($BOTTOM_TO_TOP = "BottomToTop")
+  #set($TITLE_FIRST = "TitleFirst")
+  #set($TITLE_LAST = "TitleLast")
+  #set($BREADCRUMBS_STYLE = "BreadcrumbsStyle")
+#end
+
+
+#* include identity component *#
+#macro (includeIdentityArea)
+  #set($currentPage = $site.getPage().url)
+  #if($currentPage == "/default-page.psml")
+<div id="identity" class="motiv_start">
+  #elseif($currentPage == "/main-about.psml")
+<div id="identity" class="motiv_start">
+  #elseif($currentPage == "/main-chronicle.psml")
+<div id="identity" class="motiv_umweltchronik">
+  #elseif($currentPage == "/main-enviroment.psml")
+<div id="identity" class="motiv_umweltthemen">
+  #elseif($currentPage == "/main-maps.psml")
+<div id="identity" class="motiv_karten">
+  #elseif($currentPage == "/main-measures.psml")
+<div id="identity" class="motiv_messwerte">
+  #elseif($currentPage == "/main-search.psml")
+<div id="identity" class="motiv_suche">
+  #elseif($currentPage == "/main-service.psml")
+<div id="identity" class="motiv_service">
+  #elseif($currentPage == "/service-contact.psml")
+<div id="identity" class="motiv_topnavi">
+  #elseif($currentPage == "/service-help.psml")
+<div id="identity" class="motiv_hilfe">
+  #elseif($currentPage == "/service-login.psml")
+<div id="identity" class="motiv_topnavi">
+  #else
+<div id="identity" class="motiv_blank">
+  #end
+
+  <!-- LOGO -->
+  <div id="logo">
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" /></a>
+  </div>
+  
+  <!-- SERVICE-NAVIGATION -->
+  <div id="servicenav"><a name="servicenav"></a>
+      <h2 class="hide">Servicemenu</h2>
+      <ul>
+#set($serviceMenu = $site.getMenu("service-menu"))
+#if(!$serviceMenu.empty)
+  #includeServiceNavigation($serviceMenu)
+#end
+      </ul>
+  </div>
+</div>
+#end
+
+#* include main navigation component *#
+#macro (includeMainNavigation $_menu)
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($tabTitle = $element.getTitle($preferedLocale))
+        #set($tabName = $element.getShortTitle($preferedLocale))
+        #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #if($element.isSelected($site))
+          <li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+        #else
+          <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+        #end
+      #end
+    #end
+#end
+
+
+#* include service navigation component *#
+#macro (includeFooterNavigation $_menu)
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #if($velocityCount > 1)
+           | 
+        #end
+        #if($element.isSelected($site))
+          <a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a>
+        #else
+          <a href="$linkUrl" title="$linkTitle">$linkName</a>
+        #end
+      #end
+    #end
+
+#end
+
+#* include service navigation component *#
+#macro (includeServiceNavigation $_menu)
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #if($lastType == "page")
+          #if($isSelected)
+            <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+          #else
+            <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
+          #end  
+        #end 
+        #set($lastType = $element.type)
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #set($isSelected = $element.isSelected($site))
+      #elseif($element.elementType == "separator")
+        #set($separatorTitle = $element.getTitle($preferedLocale))
+        #set($separatorText = $element.getText($preferedLocale))
+        #if ($separatorText == "separator1")
+          #if($lastType == "page")
+            #if($isSelected)
+              <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+            #else
+              <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+            #end  
+          #else
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+          #end
+        #elseif($separatorText == "separator2")
+          #if($lastType == "page")
+            #if($isSelected)
+              <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a> - </li>
+            #else
+              <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a> - </li>
+            #end  
+          #else
+             - 
+          #end
+        #else
+          #if($lastType == "page")
+            #if($isSelected)
+              <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+            #else
+              <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
+            #end  
+          #end 
+        #end
+        #set($lastType = "separator")
+      #end
+    #end
+    #if($lastType == "page")
+      #if($isSelected)
+        <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+      #else
+        <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
+      #end  
+    #end 
+#end
+
+
+
+#* include tabs navigation component *#
+#macro (includeTabsNavigation $_menu $_orientation)
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($tabTitle = $element.getTitle($preferedLocale))
+        #set($tabName = $element.getShortTitle($preferedLocale))
+        #if($_orientation == $LEFT_TO_RIGHT)
+          #if($element.isSelected($site))
+            <td class="LTabLeft" nowrap="true">&nbsp;</td>
+            <td class="LTab" align="center" valign="middle" nowrap="true" title="$!tabTitle">${tabName}</td>
+            <td class="LTabRight"  nowrap="true">&nbsp;</td>
+          #else
+            #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
+            <td class="LTabLeftLow"  nowrap="true">&nbsp;</td>
+            <td class="LTabLow" align="center" valign="middle" nowrap="true" title="$!tabTitle"><a href="$tabUrl">${tabName}</a></td>
+            <td class="LTabRightLow"  nowrap="true">&nbsp;</td>
+          #end
+        #end
+      #end
+    #end
+          </tr>
+        </table>
+#end
+
+#* include links navigation component *#
+#macro (includeLinksNavigation $_menu $_orientation $_title $_style $_delimiter)
+  #if(!$_delimiter || $_delimiter == "")
+    #if($_style != $BREADCRUMBS_STYLE)
+      #set($_delimiter = "&nbsp;")
+    #else
+      #set($_delimiter = "&nbsp;&gt;&gt;&nbsp;")
+    #end
+  #end
+  #set($menuTitle = $_menu.getTitle($preferedLocale))
+  #set($menuName = $_menu.getShortTitle($preferedLocale))
+  
+      <div class="FolderList">
+  #if($_title == $TITLE_FIRST)
+    #if($_orientation == $LEFT_TO_RIGHT)
+		
+        <span title="$!menuTitle">${menuName}&nbsp;</span>
+    #elseif($_orientation == $TOP_TO_BOTTOM)
+		
+        <div class="pagetitle" title="$!menuTitle">${menuName}</div>
+    #end
+  #end
+  #foreach($element in $_menu.elements.iterator())
+    #if($element.elementType == "option")
+      #set($linkTitle = $element.getTitle($preferedLocale))
+      #set($linkName = $element.getShortTitle($preferedLocale))
+      #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+      #if($_style != $BREADCRUMBS_STYLE || $element.type != "page" || $velocityCount < $_menu.elements.size())
+        #if($_orientation == $LEFT_TO_RIGHT)
+			
+        <span>
+        #elseif($_orientation == $TOP_TO_BOTTOM)
+			
+        <div>
+        #end
+        #if($element.type == "page")
+			
+          <a href="$linkUrl" class="LinkPage" title="$!linkTitle">${linkName}</a>
+        #elseif($element.type == "link")
+			
+          <a href="$linkUrl" class="Link" title="$!linkTitle">${linkName}</a>
+        #elseif($element.type == "folder")
+			
+          <a href="$linkUrl" class="LinkFolder" title="$!linkTitle">${linkName}</a>
+        #else
+			
+          <a href="$linkUrl" title="$!linkTitle">${linkName}</a>
+        #end
+        #if($_orientation == $LEFT_TO_RIGHT)
+        ${_delimiter}</span>
+        #elseif($_orientation == $TOP_TO_BOTTOM)
+			
+        </div>
+        #end
+      #else
+        #if($_orientation == $LEFT_TO_RIGHT)
+			
+        <span title="$!linkTitle">${linkName}&nbsp;</span>		
+        #elseif($_orientation == $TOP_TO_BOTTOM)
+			
+        <div title="$!linkTitle">${linkName}</div>
+        #end
+      #end
+    #elseif($element.elementType == "separator")
+      #set($separatorTitle = $element.getTitle($preferedLocale))
+      #set($separatorText = $element.getText($preferedLocale))
+      #if($_orientation == $LEFT_TO_RIGHT)
+		
+        <span title="$!separatorTitle">${separatorText}${_delimiter}</span>              
+      #elseif($_orientation == $TOP_TO_BOTTOM)
+		
+        <div class="pagetitle" title="$!separatorTitle">${separatorText}</div>              
+      #end
+    #end
+  #end
+  #if($_title == $TITLE_LAST)
+    #if($_orientation == $LEFT_TO_RIGHT)
+		
+        <span title="$!menuTitle">${menuName}&nbsp;</span>
+    #elseif($_orientation == $TOP_TO_BOTTOM)
+		
+        <div class="pagetitle" title="$!menuTitle">${menuName}</div>
+    #end
+  #end
+  
+      </div>
+#end
+
+#* include nested menu links navigation component *#
+#macro (includeNestedLinksWithIconNavigation $_menu $_orientation)
+  #set($menuTitle = $_menu.getTitle($preferedLocale))
+  #set($menuName = $_menu.getShortTitle($preferedLocale))
+  #if($menuName)
+              <div class="pagetitle" title="$!menuTitle">${menuName}</div>
+  #end
+              <div>
+  #foreach($element in $_menu.elements.iterator())
+    #if($element.elementType == "option")
+      #set($linkTitle = $element.getTitle($preferedLocale))
+      #set($linkName = $element.getShortTitle($preferedLocale))
+      #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+      #if($element.type == "page")
+                <div><a href="$linkUrl" class="LinkPage" title="$!linkTitle">${linkName}</a></div>
+      #elseif($element.type == "link")
+        #set($linkTarget = $element.target)
+                <div><a href="$linkUrl" target="$linkTarget" class="Link" title="$!linkTitle">${linkName}</a></div>	
+      #elseif($element.type == "folder")
+                <div><a href="$linkUrl" class="LinkFolder" title="$!linkTitle">$linkName</a></div>
+      #end
+    #elseif($element.elementType == "menu")
+      #includeNestedLinksWithIconNavigation($element $_orientation)
+    #elseif($element.elementType == "separator")
+      #set($separatorTitle = $element.getTitle($preferedLocale))
+      #set($separatorText = $element.getText($preferedLocale))
+                  <div class="pagetitle" title="$!separatorTitle">${separatorText}</div>              
+    #end
+  #end
+              </div>
+#end
+
+#* include top level menu links navigation component *#
+#macro (includeLinksWithIconNavigation $_menu $_orientation)
+  #set($rowStarted = false)
+  #set($elementsStarted = false)
+  #foreach($element in $_menu.elements.iterator())
+    #if($element.elementType == "option")
+      #if(!$rowStarted)
+        <tr>
+          <td>
+            <div class="toolgroup">
+              <div class="body">
+                <div class="FolderList">
+      #elseif(!$elementsStarted)
+              <div class="body">
+                <div class="FolderList">
+      #end
+      #set($linkTitle = $element.getTitle($preferedLocale))
+      #set($linkName = $element.getShortTitle($preferedLocale))
+      #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+      #if($element.type == "page")
+                  <div><a href="$linkUrl" class="LinkPage" title="$!linkTitle">${linkName}</a></div>
+      #elseif($element.type == "link")
+        #set($linkTarget = $element.target)
+                  <div><a href="$linkUrl" target="$!linkTarget" class="Link" title="$!linkTitle">${linkName}</a></div>	
+      #elseif($element.type == "folder")
+                  <div><a href="$linkUrl" class="LinkFolder" title="$!linkTitle">$linkName</a></div>
+      #end
+      #set($rowStarted = true)
+      #set($elementsStarted = true)
+    #elseif($element.elementType == "menu")
+      #if(!$rowStarted)
+        <tr>
+          <td>
+            <div class="toolgroup">
+              <div class="body">
+                <div class="FolderList">
+      #elseif(!$elementsStarted)
+              <div class="body">
+                <div class="FolderList">
+      #end
+      #includeNestedLinksWithIconNavigation($element $_orientation)
+      #set($rowStarted = true)
+      #set($elementsStarted = true)
+    #elseif($element.elementType == "separator")
+      #if(!$rowStarted)
+        <tr>
+          <td>
+            <div class="toolgroup">
+      #elseif($elementsStarted)
+                </div>
+              </div>
+      #end
+      #set($separatorTitle = $element.getTitle($preferedLocale))
+      #set($separatorText = $element.getText($preferedLocale))
+              <div class="label">
+                ${separatorText}
+              </div>
+      #set($rowStarted = true)
+      #set($elementsStarted = false)
+    #end
+  #end
+  #if($elementsStarted)
+                </div>
+              </div>
+  #end
+  #if($rowStarted)
+            </div>
+          </td>
+        </tr>
+  #end
+#end

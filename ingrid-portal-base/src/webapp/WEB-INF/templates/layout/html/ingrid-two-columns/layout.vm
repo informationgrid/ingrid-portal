@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+#*
+Copyright 2004 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*#
+#set($theme = $request.getAttribute("org.apache.jetspeed.theme"))
+
+#set($sizes = $jetspeed.columnSizes)
+
+#set($myPage = $jetspeed.page)
+
+#set($myFragment = $jetspeed.currentFragment)
+
+#set($decorator = $myPage.getDefaultDecorator($myFragment.getType()))
+
+#set($actions = $myFragment.decoration.actions)
+
+#if($jetspeed.portletMode.toString() == "edit")
+  #set($editing = true)    
+  #set($lastColumn = $renderRequest.getAttribute("numberOfColumns") - 1)  
+#end    
+  
+ #if($myFragment.getDecorator())
+        #set($decorator = $myFragment.getDecorator())
+ #end
+ 
+<!-- Decorator  $decorator  ${decoTop} - ${decoBottom}-->
+#parse($myFragment.decoration.header)
+
+#set($layoutType =$portletConfig.getInitParameter("layoutType"))
+#set($columnLayout = $renderRequest.getAttribute("columnLayout"))
+#set($decorationFactory = $renderRequest.getAttribute("decorationFactory"))
+#set($rc = $renderRequest.getAttribute("org.apache.jetspeed.request.RequestContext"))
+#set ($dcnt = 0)
+
+   #if($editing)
+   #set($themeUrl = $renderResponse.createActionURL())
+   $!themeUrl.setParameter("editingPage","$myPage.id")
+<form name="themeForm" action="$themeUrl" method='post'>
+     <label style='font-size:8pt;color:blue;padding-left: 9px;'>Theme:
+     <select id='theme' name='theme' style='font-size:8pt;color:blue' onChange="themeForm.submit();">
+        #foreach($td in $decorationFactory.getPageDecorations($rc))
+          <option value='$td' #if($decorator == $td) SELECTED #end>$td
+        #end
+     </select>   
+     </label>
+<label style='font-size:8pt;color:blue;padding-left: 9px;'>Layout:
+     <select id='layout' name='layout' style='font-size:8pt;color:blue' onChange="themeForm.submit();">
+        #foreach($ld in $decorationFactory.getLayouts($rc))     
+          <option value='$ld.Name' #if($myFragment.Name == $ld.Name) SELECTED #end>$ld.DisplayName
+         #end
+</select></label>
+<label style='font-size:8pt;color:blue;padding-left: 9px;'>Page:
+<input id='newpage' name='jsPageName' style='font-size:8pt;color:blue'/></label>
+<input type="submit" name="jsSubmitPage" value="Add Page" />
+</form>
+   #end
+
+ <div id="$renderResponse.namespace" class="portal-layout portal-layout-$layoutType">
+	#set ($sizeIndex = 0)
+	#foreach($column in $columnLayout.columns)
+	  #set($columnWidth = "auto")
+	  
+	  #*
+	  #if ($columnLayout.getColumnWidth($sizeIndex) > 0)
+	    #set($columnWidth = $columnLayout.getColumnWidth($sizeIndex))
+	  #end
+	  *#
+
+	  #set ($sizeIndex = $sizeIndex + 1)  
+	  <div id="column-$sizeIndex" class="portal-layout-column portal-layout-column-$sizeIndex" >
+		<!--  <div class="portal-layout-column-gutter"> --> 
+	     #foreach($f in $column)
+  	     
+           ## Set up coordinates for this fragment
+           #set($coords = $columnLayout.getCoordinate($f))	  
+           #set($col = $coords.x)
+           #set($lastRow = $columnLayout.getLastRowNumber($col))
+           #set($row = $coords.y)
+			
+           ## get the decorated Portlet content
+		   <div class="portal-layout-cell" >
+		   ## editing block
+		   #if($editing)
+		   <div class="portlet-edit-bar">
+   #set ($dcnt = $dcnt + 1)   
+   #set($decUrl = $renderResponse.createActionURL())    
+   $!decUrl.setParameter("fragmentToMove","$f.id")
+   $!decUrl.setParameter("editingPage","$myPage.id")     
+   #set ($temp = ".submit();")
+<form name="portletForm$dcnt" action="$decUrl" method='post'>
+<select id='decorator' name='decorator' style='font-size:8pt;color:blue;' onChange="portletForm$dcnt$temp">
+       <option value=''>
+       #foreach($pd in $decorationFactory.getPortletDecorations($rc))
+          <option value='$pd' #if ($f.Decorator == $pd) SELECTED #end>$pd
+       #end
+</select>
+			 ## Move portlet left
+			 #if($lastColumn > 0 && $col > 0)            
+               #set($leftUrl = $renderResponse.createActionURL())    
+               $!leftUrl.setParameter("move","3")
+               $!leftUrl.setParameter("fragmentToMove","$f.id")
+			   $!leftUrl.setParameter("editingPage","$myPage.id")                
+               <a href="$leftUrl" class="move-portlet-left"><img src="#GetPageResource('images/movePortletLeft.gif')" border="0" title="Move Portlet Left"/></a>
+			 #end
+			 
+			 ## Move portlet up	
+			 #if($row > 0)			   
+               #set($upUrl = $renderResponse.createActionURL())    
+                 $!upUrl.setParameter("move","1")
+                 $!upUrl.setParameter("fragmentToMove","$f.id")
+				 $!upUrl.setParameter("editingPage","$myPage.id") 
+                 <a href="$upUrl" class="move-portlet-up"><img src="#GetPageResource('images/movePortletUp.gif')" border="0" title="Move Portlet Up"/></a>
+			 #end
+			 
+			 ## Remove portlet from page
+             #set($deleter = $renderResponse.createActionURL())    
+             $deleter.setParameter("deleteId","$f.id")
+             $deleter.setParameter("page","$myPage")                         
+             <a href="$deleter" class="remove-portlet-from-apge"><img src="#GetPageResource('images/close.gif')" border="0" title="Remove Portlet"/></a>
+			 
+			 ## Move portlet down
+             #if($row < $lastRow)						
+               #set($downUrl = $renderResponse.createActionURL())	
+               $!downUrl.setParameter("move","2")
+               $!downUrl.setParameter("fragmentToMove","$f.id")
+			   $!downUrl.setParameter("editingPage","$myPage.id") 
+               <a href="$downUrl" class="move-portlet-down"><img src="#GetPageResource('images/movePortletDown.gif')" border="0" title="Move Portlet Down"/></a>
+			 #end
+			 
+			 ## Move portlet right
+             #if($lastColumn > 0 && $col < $lastColumn)
+               #set($rightUrl = $renderResponse.createActionURL())    
+               $!rightUrl.setParameter("move","4")
+               $!rightUrl.setParameter("fragmentToMove","$f.id")
+			   $!rightUrl.setParameter("editingPage","$myPage.id") 
+               <a href="$rightUrl" class="move-portlet-right"><img src="#GetPageResource('images/movePortletRight.gif')" border="0" title="Move Portlet Right"/></a>
+			 #end
+</form>			 
+		   </div>
+		   #end
+		   
+		   #if($f.type == "portlet")
+			 #parse($f.decoration.template)
+		   #else		
+	 	 	 $jetspeed.setCurrentFragment($f)
+			 $f.renderedContent			
+		   #end
+		   </div>
+		   <br />
+		 #end
+		<!-- </div> -->
+	  </div>
+	 #end
+   </div>  
+
+  #if ($myFragment == $myPage.getRootFragment())
+    #parse($myFragment.decoration.footer)
+  #end

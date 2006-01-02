@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app id="ingrid-portal-apps" version="1.0">
+
+    <portlet id="SimpleSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/simple_search.vm</value>
+        </init-param>
+        <portlet-name>SimpleSearch</portlet-name>
+        <display-name>Suche</display-name>
+        <description>This portlet displayes a search ox on the home page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SimpleSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <!--  not implemented yet
+                <portlet-mode>EDIT</portlet-mode>
+                <portlet-mode>HELP</portlet-mode>
+            -->
+        </supports>
+        <portlet-info>
+            <title>Suche</title>
+            <short-title>SimpleSearch</short-title>
+        </portlet-info>
+    </portlet>
+
+
+
+    <portlet id="SimpleSearchTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/simple_search_teaser.vm</value>
+        </init-param>
+        <portlet-name>SimpleSearchTeaser</portlet-name>
+        <display-name>Suche</display-name>
+        <description>This portlet displayes a search ox on the home page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SimpleSearchTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <!--  not implemented yet
+                <portlet-mode>EDIT</portlet-mode>
+                <portlet-mode>HELP</portlet-mode>
+            -->
+        </supports>
+        <portlet-info>
+            <title>Suche</title>
+            <short-title>SimpleSearchTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="EnviromentCatalogTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_catalog_teaser.vm</value>
+        </init-param>
+        <portlet-name>EnviromentCatalogTeaser</portlet-name>
+        <display-name>Umweltthemen</display-name>
+        <description>This portlet displayes a search ox on the home page.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnviromentCatalogTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <!--  not implemented yet
+                <portlet-mode>EDIT</portlet-mode>
+                <portlet-mode>HELP</portlet-mode>
+            -->
+        </supports>
+        <portlet-info>
+            <title>Umweltthemen</title>
+            <short-title>EnviromentCatalogTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="RssNewsTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/rss_news_teaser.vm</value>
+        </init-param>
+        <portlet-name>RssNewsTeaser</portlet-name>
+        <display-name>Aktuelles</display-name>
+        <description>This portlet displays the rss news list.</description>
+        <portlet-class>de.ingrid.portal.portlets.RssNewsTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <!--  not implemented yet
+                <portlet-mode>EDIT</portlet-mode>
+                <portlet-mode>HELP</portlet-mode>
+            -->
+        </supports>
+        <portlet-info>
+            <title>Aktuelles</title>
+            <short-title>RssNewsTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="IngridInformMarginalTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/ingrid_inform_marginal_teaser.vm</value>
+        </init-param>
+        <portlet-name>IngridInformMarginalTeaser</portlet-name>
+        <display-name>PortalU informiert</display-name>
+        <description>This portlet displays general information about the portal.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>PortalU informiert</title>
+            <short-title>IngridInformMarginalTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="ServiceMarginalTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/service_marginal_teaser.vm</value>
+        </init-param>
+        <portlet-name>ServiceMarginalTeaser</portlet-name>
+        <display-name>Service</display-name>
+        <description>This portlet displays a teaser for the service area.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Service</title>
+            <short-title>ServiceMarginalTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="MeasuredDataMarginalTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/measured_data_marginal_teaser.vm</value>
+        </init-param>
+        <portlet-name>MeasuredDataMarginalTeaser</portlet-name>
+        <display-name>Messwerte</display-name>
+        <description>This portlet displays a teaser for the measured data area.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Messwerte</title>
+            <short-title>MeasuredDataMarginalTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="EnviromentalChronicleMarginalTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_chronicle_marginal_teaser.vm</value>
+        </init-param>
+        <portlet-name>EnviromentalChronicleMarginalTeaser</portlet-name>
+        <display-name>Umweltchronik</display-name>
+        <description>This portlet displays a teaser for the measured data area.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Umweltchronik</title>
+            <short-title>EnviromentalChronicleMarginalTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+</portlet-app>
