@@ -16,6 +16,9 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeMockup;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 
 
@@ -47,7 +50,15 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 
     	String q = request.getParameter("q");
     	if (q != null && q.length() > 0) {
-    		ps.put("Q", q);
+/*    		try {
+				IngridQuery iq = QueryStringParser.parse(q);
+				q = iq.getDescription();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+*/			
+			ps.put("Q", q);
     	}
     	if (ps.containsKey("Q")) {
         	List rankedSRL = doSearch((String)ps.get("Q"), (String)ps.get("SELECTED_DS"), true);

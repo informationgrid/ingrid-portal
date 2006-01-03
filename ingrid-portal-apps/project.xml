@@ -93,7 +93,15 @@
 		  <properties>
 	        <war.bundle>true</war.bundle>
 	      </properties>
-	    </dependency>	
+	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-utils</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
     </dependencies>
     <build> 
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
