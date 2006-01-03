@@ -8,38 +8,37 @@
         <span class="clearer"></span>
       </div>
       <div class="formbody">
-#set ($formAction = $renderResponse.createActionURL())
-		<form action="$formAction" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
-    	<input type="hidden" name="ds" value="$ds"/>
+		<form action="$renderResponse.createActionURL()" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
+    	<input type="hidden" name="ds" value="$ps.SELECTED_DS"/>
     	<input type="hidden" name="action" value="doSearch"/>
         	<p class="datasource_selection">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doChangeDS')
-#if($q)
-	$action.setParameter('q',$q)
+#if($ps.Q)
+	$action.setParameter('q',$ps.Q)
 #end
-#if($ds==1)
+#if($ps.SELECTED_DS && $ps.SELECTED_DS=="1")
 	<strong>Umweltinformationen</strong>
 #else
     $action.setParameter('ds','1')
 	<a href="$action">Umweltinformationen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ds==2)
+#if($ps.SELECTED_DS && $ps.SELECTED_DS=="2")
 	<strong>Adressen</strong>
 #else
     $action.setParameter('ds','2')
 	<a href="$action">Adressen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ds==3)
+#if($ps.SELECTED_DS && $ps.SELECTED_DS=="3")
 	<strong>Forschungsprojekte</strong>
 #else
     $action.setParameter('ds','3')
 	<a href="$action">Forschungsprojekte</a>	
 #end
         	</p>          	
-		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($q)$q
+		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($ps.Q)$ps.Q
 #else
 Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" />&nbsp;<input class="btn" type="submit" value="PortalU Suche" />
 		      <span class="clearer"></span>
@@ -54,10 +53,59 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
         </div>
       </div>
       <br />
-      <div class="formbody">
-        <h3><a href="s_search_results_synonym.html"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;<a href="s_search_results_synonym.html">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
+## similar box
+	  <form action="$renderResponse.createActionURL()" method="get" name="frmSimilar" id="frmSimilar">
+	  <input type="hidden" name="action" value="doAddSimilar" />
+	  <div class="formbody">
+#set ($action = $renderResponse.createActionURL())
+#if(!$ps.OPEN_SIMILAR)
+	$action.setParameter('action','doOpenSimilar')
+        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
+#else
+	$action.setParameter('action','doCloseSimilar')
+	  <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new" title="Link öffnet in neuem Fenster"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="SNS Logo" title="Ein Dienst vom Semantic Network Service. Link öffnet in neuem Fenster" /></a></span>
+        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
+        <span class="clearer"></span>
+        	  <div class="leftmargin">
+          	  <table>
+#foreach($similarNode in $ps.SIMILAR_ROOT_NODE.getChildren())
+	#set ($action = $renderResponse.createActionURL())
+	$action.setParameter('nodeId',$similarNode.id)
+	#if($similarNode.isOpen())
+		$action.setParameter('action','doCloseNode')
+			  <tr>
+				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	  </tr>
+		#foreach($tokenNode in $similarNode.getChildren())
+          	  <tr>
+          	    <td></td>
+          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
+          	  </tr>
+		#end
+	#else
+		$action.setParameter('action','doOpenNode')
+          	  <tr>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	  </tr>
+	#end
+#end			  
+          	  </table>
 
+        	  </div>
+	
+	
+#end	
       </div>
+#if($ps.OPEN_SIMILAR)
+	  <div class="formfooter">
+        <div align="right">
+          <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />
+        </div>
+      </div>
+#end
+      </form>	
     </div>
     <br />
   </div>

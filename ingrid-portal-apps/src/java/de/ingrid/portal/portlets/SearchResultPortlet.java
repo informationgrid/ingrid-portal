@@ -1,27 +1,27 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
+import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
+import de.ingrid.portal.search.mockup.SimilarNodeMockup;
 
 
 
 public class SearchResultPortlet extends GenericVelocityPortlet
 {
 
-	private Integer selectedDataSource = new Integer(1);
-	private String queryStr = null;
-	private boolean actionProcessed = false;
-    
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);
@@ -30,24 +30,34 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
-    	// reset queryStr if NO action was processed
-    	if (!actionProcessed) {
-    		queryStr = null;
+    	PortletSession session = request.getPortletSession();
+    	HashMap ps = (HashMap) session.getAttribute("page_state");
+    	if (ps == null) {
+    		ps = new HashMap();
+    		session.setAttribute("page_state", ps);
+    	}
+    	
+    	// initialization if no action has been processed before
+    	if (!ps.containsKey("ACTION_PROCESSED")) {
+    		ps.remove("Q");
+    		ps.remove("OPEN_SIMILAR");
+    		ps.put("SELECTED_DS", "1");
+    		ps.remove("SIMILAR_ROOT_NODE");
     	}
 
     	String q = request.getParameter("q");
     	if (q != null && q.length() > 0) {
-    		queryStr = q;
+    		ps.put("Q", q);
     	}
-    	if (queryStr != null) {
-        	List rankedSRL = doSearch(queryStr, selectedDataSource.toString(), true);
-        	List unrankedSRL = doSearch(queryStr, selectedDataSource.toString(), false);
+    	if (ps.containsKey("Q")) {
+        	List rankedSRL = doSearch((String)ps.get("Q"), (String)ps.get("SELECTED_DS"), true);
+        	List unrankedSRL = doSearch((String)ps.get("Q"), (String)ps.get("SELECTED_DS"), false);
         	context.put("rankedResultList", rankedSRL);
         	context.put("unrankedResultList", unrankedSRL);
-        	context.put("q", queryStr);
 	    }
-    	context.put("ds", selectedDataSource);
-    	actionProcessed = false;
+    	
+    	ps.remove("ACTION_PROCESSED");
+    	context.put("ps", ps);
         
         super.doView(request, response);
     }
@@ -55,19 +65,42 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     {
 
     	String action = request.getParameter("action");
-        
+    	PortletSession session = request.getPortletSession();
+    	HashMap ps = (HashMap) session.getAttribute("page_state");
+    	if (ps == null) {
+    		ps = new HashMap();
+    		session.setAttribute("page_state", ps);
+    	}
+
+    	
         if (action == null) {
         	return;
+        } else if (action.equalsIgnoreCase("doSearch")) {
+            ps.remove("Q");
+            String q = request.getParameter("q");
+        	if (q != null && q.length() > 0) {
+        		ps.put("Q", q);
+    	    }
+        	ps.remove("OPEN_SIMILAR");
+        	ps.remove("SIMILAR_ROOT_NODE");
         } else if (action.equalsIgnoreCase("doChangeDS")) {
         	String ds = request.getParameter("ds");
-        	selectedDataSource = Integer.decode(ds);
+        	ps.put("SELECTED_DS", ds);
+        } else if (action.equalsIgnoreCase("doOpenSimilar")) {
+        	ps.put("OPEN_SIMILAR", "1");
+        	ps.put("SIMILAR_ROOT_NODE", SimilarNodeFactoryMockup.getSimilarNodes());
+        } else if (action.equalsIgnoreCase("doCloseSimilar")) {
+        	ps.remove("OPEN_SIMILAR");
+        	ps.remove("SIMILAR_ROOT_NODE");
+        } else if (action.equalsIgnoreCase("doOpenNode")) {
+        	SimilarNodeFactoryMockup.setOpen((SimilarNodeMockup)ps.get("SIMILAR_ROOT_NODE"), request.getParameter("nodeId"), true);
+        } else if (action.equalsIgnoreCase("doCloseNode")) {
+        	SimilarNodeFactoryMockup.setOpen((SimilarNodeMockup)ps.get("SIMILAR_ROOT_NODE"), request.getParameter("nodeId"), false);
+        } else if (action.equalsIgnoreCase("doAddSimilar")) {
+        	// TODO
         }
         
-    	String q = request.getParameter("q");
-    	if (q != null && q.length() > 0) {
-    		queryStr = q;
-	    }
-    	actionProcessed = true;
+    	ps.put("ACTION_PROCESSED", "1");
     }
     
     private List doSearch(String qryStr, String ds, boolean ranking) {
