@@ -1,3 +1,79 @@
+#macro (renderRankedResultCounter $navStart $navLimit $numberOfHits)
+    #set($rStart = $navStart + 1)
+    #if($navStart + $navLimit >= $numberOfHits)
+    	#set($rEnd = $numberOfHits)
+    #else
+    	#set($rEnd = $navStart + $navLimit)
+    #end	
+    <strong>${rStart} - ${rEnd}</strong> von <strong>$numberOfHits bewerteten</strong> Treffern
+#end
+
+#macro (renderUnrankedResultCounter $navStart $navLimit $numberOfHits)
+    #set($rStart = $navStart + 1)
+    #if($navStart + $navLimit >= $numberOfHits)
+    	#set($rEnd = $numberOfHits)
+    #else
+    	#set($rEnd = $navStart + $navLimit)
+    #end	
+    <strong>${rStart} - ${rEnd}</strong> von <strong>$numberOfHits weiteren</strong> Datenquellen
+#end
+
+#macro (renderRankedPageNavigation $currentPage $numberOfPages $hitsPerPage)
+    (Seite <strong>$currentPage</strong> von <strong>$numberOfPages</strong>)
+    #if($currentPage > 1)
+        #set ($action = $renderResponse.createActionURL())
+        #set ($pstart = ($currentPage - 2) * $hitsPerPage)
+    	$action.setParameter('rstart', $pstart.toString())	
+    		<a href="$action">&laquo;</a>
+    #end
+    #foreach($pageId in [1..$numberOfPages])
+    	#if($pageId == $currentPage)
+    		| $pageId
+    	#else
+            #set ($action = $renderResponse.createActionURL())
+    		#set ($pstart = ($pageId - 1) * $hitsPerPage)
+    		$action.setParameter('rstart', $pstart.toString())
+    		| <a href="$action">$pageId</a>
+    	#end
+    #end	
+    #if($currentPage < $numberOfPages)
+        #set ($action = $renderResponse.createActionURL())
+        #set ($pstart = $currentPage * $hitsPerPage)
+    	$action.setParameter('rstart', $pstart.toString())
+    		| <a href="$action">&raquo;</a>
+    #end
+#end
+
+
+#macro (renderUnrankedPageNavigation $currentPage $numberOfPages $hitsPerPage)
+    (Seite <strong>$currentPage</strong> von <strong>$numberOfPages</strong>)
+    #if($numberOfPages > 1)
+    	#if($currentPage > 1)
+            #set ($action = $renderResponse.createActionURL())
+            #set ($pstart = ($currentPage - 2) * $hitsPerPage)
+        	$action.setParameter('nrstart', $pstart.toString())	
+        		<a href="$action">&laquo;</a>
+        #end
+        #foreach($pageId in [1..$numberOfPages])
+        	#if($pageId == $currentPage)
+        		| $pageId
+        	#else
+                #set ($action = $renderResponse.createActionURL())
+        		#set ($pstart = ($pageId - 1) * $hitsPerPage)
+        		$action.setParameter('nrstart', $pstart.toString())
+        		| <a href="$action">$pageId</a>
+        	#end
+        #end	
+        #if($currentPage < $numberOfPages)
+            #set ($action = $renderResponse.createActionURL())
+            #set ($pstart = $currentPage * $hitsPerPage)
+        	$action.setParameter('nrstart', $pstart.toString())
+        		| <a href="$action">&raquo;</a>
+		#end
+	#end
+#end
+
+
   <div id="content">
     <!-- PORTLET EINFACHE SUCHE -->
     <div class="section">    
@@ -9,36 +85,36 @@
       </div>
       <div class="formbody">
 		<form action="$renderResponse.createActionURL()" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
-    	<input type="hidden" name="ds" value="$ps.SELECTED_DS"/>
+    	<input type="hidden" name="ds" value="$ps.selectedDS"/>
     	<input type="hidden" name="action" value="doSearch"/>
         	<p class="datasource_selection">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doChangeDS')
-#if($ps.Q)
-	$action.setParameter('q',$ps.Q)
+#if($ps.query)
+	$action.setParameter('q',$ps.query)
 #end
-#if($ps.SELECTED_DS && $ps.SELECTED_DS=="1")
+#if($ps.selectedDS && $ps.selectedDS=="1")
 	<strong>Umweltinformationen</strong>
 #else
     $action.setParameter('ds','1')
 	<a href="$action">Umweltinformationen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ps.SELECTED_DS && $ps.SELECTED_DS=="2")
+#if($ps.selectedDS && $ps.selectedDS=="2")
 	<strong>Adressen</strong>
 #else
     $action.setParameter('ds','2')
 	<a href="$action">Adressen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ps.SELECTED_DS && $ps.SELECTED_DS=="3")
+#if($ps.selectedDS && $ps.selectedDS=="3")
 	<strong>Forschungsprojekte</strong>
 #else
     $action.setParameter('ds','3')
 	<a href="$action">Forschungsprojekte</a>	
 #end
         	</p>          	
-		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($ps.Q)$ps.Q
+		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($ps.query)$ps.query
 #else
 Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" />&nbsp;<input class="btn" type="submit" value="PortalU Suche" />
 		      <span class="clearer"></span>
@@ -58,7 +134,7 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
 	  <input type="hidden" name="action" value="doAddSimilar" />
 	  <div class="formbody">
 #set ($action = $renderResponse.createActionURL())
-#if(!$ps.OPEN_SIMILAR)
+#if(!$ps.isSimilarOpen())
 	$action.setParameter('action','doOpenSimilar')
         <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
 #else
@@ -68,7 +144,7 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
         <span class="clearer"></span>
         	  <div class="leftmargin">
           	  <table>
-#foreach($similarNode in $ps.SIMILAR_ROOT_NODE.getChildren())
+#foreach($similarNode in $ps.similarRoot.getChildren())
 	#set ($action = $renderResponse.createActionURL())
 	$action.setParameter('nodeId',$similarNode.id)
 	#if($similarNode.isOpen())
@@ -98,14 +174,26 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
 	
 #end	
       </div>
-#if($ps.OPEN_SIMILAR)
+#if($ps.isSimilarOpen())
 	  <div class="formfooter">
         <div align="right">
           <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />
         </div>
       </div>
 #end
-      </form>	
+      </form>
+#if(!$unrankedResultList && !$rankedResultList)
+        <div class="noresult">
+            <p>Ihre Suche nach <strong>'$!ps.Q'</strong> hat <strong>0</strong> Treffer ergeben.</p>
+            <ul>
+              <li>Versuchen Sie es mit einer neuen <a href="portal/main-search.psml">Suche</a> oder <a href="e_search.html">Erweiterten Suche</a></li>
+              <li>Lesen Sie unsere <a href="javascript:contextHelp()">Suchtipps</a></li>
+              <li>Stöbern Sie durch andere Seiten von PortalU:
+                  <p></p>
+                  <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-enviroment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
+            </ul>
+        </div>	
+#end	  
     </div>
     <br />
   </div>
@@ -116,11 +204,10 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
   <div id="results_left">
     <div class="section">  
       <div class="resultset_nav float_left">
-
-        <strong>1-10</strong> von <strong>198 bewerteten</strong> Treffern
+#renderRankedResultCounter($ps.rankedNavStart $ps.rankedNavLimit $rankedResultList.numberOfHits)
       </div>
       <div class="resultset_nav">
-        (Seite <strong>1</strong> von <strong>20</strong>) | 1 | <a href="#">2</a> | <a href="#">3</a> | <a href="#">4</a> | <a href="#">&raquo;</a> 
+#renderRankedPageNavigation( $ps.rankedCurrentPage $ps.rankedNumberOfPages $ps.rankedNavLimit)
       </div>
 
       <br />
@@ -128,28 +215,28 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
 		  #end		  <div class="resultset">
-            <span class="result_title"><strong><a href="$rs.getMetaData('url')" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>$rs.getResultTitle()</a></strong></span>
+            <span class="result_title"><strong><a href="$!rs.getMetaData("url")" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>$rs.getResultTitle()</a></strong></span>
             <p class="result_description">
             $rs.getResultAbstract() 
             </p>
             <p class="result_metadata">
               Anbieter: $rs.getResultProvider()<br />
     
-              Quelle: $rs.getMetaData('source')<br />
+              Quelle: $!rs.getMetaData('source')<br />
               Ranking: $rs.getResultRanking()<br />
             </p>
             <p class="result_link">
-              <a href="$rs.getMetaData('url')" target="_new" title="Link öffnet in neuem Fenster">$rs.getMetaData('url')</a>
+              <a href="$!rs.getMetaData("url")" target="_new" title="Link öffnet in neuem Fenster">$!rs.getMetaData("url")</a>
             </p>
           </div>
 	  #end
 
       <div class="resultset_nav float_left">
-        <strong>1-10</strong> von <strong>198 bewerteten</strong> Treffern
+#renderRankedResultCounter($ps.rankedNavStart $ps.rankedNavLimit $rankedResultList.numberOfHits)
       </div>
 
       <div class="resultset_nav">
-        (Seite <strong>1</strong> von <strong>20</strong>) | 1 | <a href="#">2</a> | <a href="#">3</a> | <a href="#">4</a> | <a href="#">&raquo;</a> 
+#renderRankedPageNavigation( $ps.rankedCurrentPage $ps.rankedNumberOfPages $ps.rankedNavLimit)
       </div>
 
     </div>
@@ -162,14 +249,14 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
   <div id="results_right">
     <div class="portlet">
       <div class="resultset_nav float_left">
-        <strong>1-5</strong> von <strong>5 weiteren</strong> Datenquellen
+#renderUnrankedResultCounter($ps.unrankedNavStart $ps.unrankedNavLimit $unrankedResultList.numberOfHits)
       </div>
 
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-        (Seite <strong>1</strong> von <strong>1</strong>)
+#renderUnrankedPageNavigation( $ps.unrankedCurrentPage $ps.unrankedNumberOfPages $ps.unrankedNavLimit)
       </div>
       <br />
 
@@ -191,17 +278,19 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
       #end
       
       <div class="resultset_nav float_left">
-        <strong>1-5</strong> von <strong>5 weiteren</strong> Datenquellen
+#renderUnrankedResultCounter($ps.unrankedNavStart $ps.unrankedNavLimit $unrankedResultList.numberOfHits)
       </div>
 
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-        (Seite <strong>1</strong> von <strong>1</strong>)
+#renderUnrankedPageNavigation( $ps.unrankedCurrentPage $ps.unrankedNumberOfPages $ps.unrankedNavLimit)
       </div>
     </div>    
   </div>
 #end
-  
+
+
+
   <div class="clearer"></div>

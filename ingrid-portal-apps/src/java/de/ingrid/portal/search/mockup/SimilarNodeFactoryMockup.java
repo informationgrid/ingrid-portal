@@ -8,6 +8,8 @@ package de.ingrid.portal.search.mockup;
 
 import java.util.Vector;
 
+import de.ingrid.portal.search.SimilarTreeNode;
+
 /**
  * @author joachim
  *
@@ -16,29 +18,29 @@ import java.util.Vector;
  */
 public class SimilarNodeFactoryMockup {
 
-	public static SimilarNodeMockup getSimilarNodes() {
-		SimilarNodeMockup root = new SimilarNodeMockup("1", "root", false);
+	public static SimilarTreeNode getSimilarNodes() {
+		SimilarTreeNode root = new SimilarTreeNode("1", "root", false);
 		
-		SimilarNodeMockup n;
-		SimilarNodeMockup n1;
+		SimilarTreeNode n;
+		SimilarTreeNode n1;
 		
 		
-		n = new SimilarNodeMockup("2", "Luft", false);
+		n = new SimilarTreeNode("2", "Luft", false);
 
-		n1 = new SimilarNodeMockup("3", "Abgasemission", false);
+		n1 = new SimilarTreeNode("3", "Abgasemission", false);
 		n.addChild(n1);
-		n1 = new SimilarNodeMockup("4", "Bodenluft", false);
+		n1 = new SimilarTreeNode("4", "Bodenluft", false);
 		n.addChild(n1);
-		n1 = new SimilarNodeMockup("5", "Druckluft", false);
+		n1 = new SimilarTreeNode("5", "Druckluft", false);
 		n.addChild(n1);
 
 		root.addChild(n);
 
-		n = new SimilarNodeMockup("6", "Gesundheit", false);
+		n = new SimilarTreeNode("6", "Gesundheit", false);
 
-		n1 = new SimilarNodeMockup("7","Gesundheitsrisiko",false);
+		n1 = new SimilarTreeNode("7","Gesundheitsrisiko",false);
 		n.addChild(n1);
-		n1 = new SimilarNodeMockup("8","Apostel",false);
+		n1 = new SimilarTreeNode("8","Apostel",false);
 		n.addChild(n1);
 
 		root.addChild(n);
@@ -51,15 +53,15 @@ public class SimilarNodeFactoryMockup {
 	 * @param parameter
 	 * @param b
 	 */
-	public static void setOpen(SimilarNodeMockup n, String nodeId, boolean open) {
+	public static void setOpen(SimilarTreeNode n, String nodeId, boolean open) {
 		
 		Vector c = n.getChildren();
 		for (int i=0; i<c.size(); i++) {
-			if (((SimilarNodeMockup)c.get(i)).getId().equals(nodeId)) {
-				((SimilarNodeMockup)c.get(i)).setOpen(open);
+			if (((SimilarTreeNode)c.get(i)).getId().equals(nodeId)) {
+				((SimilarTreeNode)c.get(i)).setOpen(open);
 				break;
 			}
-			setOpen(((SimilarNodeMockup)c.get(i)), nodeId, open);
+			setOpen(((SimilarTreeNode)c.get(i)), nodeId, open);
 		}
 	}
 	

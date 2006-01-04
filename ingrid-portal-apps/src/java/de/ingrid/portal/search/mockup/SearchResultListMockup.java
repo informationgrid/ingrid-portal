@@ -10,7 +10,7 @@ import java.util.List;
 
 import de.ingrid.portal.search.RankedSearchResult;
 import de.ingrid.portal.search.SearchResult;
-import de.ingrid.portal.search.SearchResultSet;
+import de.ingrid.portal.search.SearchResultList;
 
 /**
  * @author joachim
@@ -20,9 +20,9 @@ import de.ingrid.portal.search.SearchResultSet;
  */
 public class SearchResultListMockup {
 
-    public static List getRankedSearchResultList() {
+    public static SearchResultList getRankedSearchResultList() {
     	
-    	SearchResultSet srs = new SearchResultSet();
+    	SearchResultList srs = new SearchResultList();
     	RankedSearchResult rsr = new RankedSearchResult();
     	rsr.setResultTitle("BMVEL - Blei und Trinkwasser");
     	rsr.setType("WEBSITE");
@@ -53,6 +53,8 @@ public class SearchResultListMockup {
     	rsr.setResultRanking(0.97);
     	srs.add(rsr);
     	
+    	srs.setNumberOfHits(3);
+    	
     	
     	return srs;
     	
@@ -62,9 +64,9 @@ public class SearchResultListMockup {
 	/**
 	 * @return
 	 */
-	public static List getUnrankedSearchResultList() {
+	public static SearchResultList getUnrankedSearchResultList() {
     	
-		SearchResultSet srs = new SearchResultSet();
+		SearchResultList srs = new SearchResultList();
     	SearchResult rsr = new SearchResult();
     	rsr.setResultTitle("ULIDAT");
     	rsr.setType("WEBSITE");
@@ -82,6 +84,8 @@ public class SearchResultListMockup {
     	rsr.setMetaData("url", "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=VH&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&VHBEG=&VHBEGF=&STATUS=G,X&VERSTA=x,f&%24TMPLG=(DW0720*TH=TTDWDE,L=L0720,Q=SWVF/DW0720*+o+THKEY*TH=THESAW,L=L0710,Q=SWVF/THKEY*+o+AUTDD*Q=AUTDD1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)+u+STATUS*Q=STATUS*+u+VERSTA*Q=VERSTA*");
     	rsr.setMetaData("noOfHits", "2236");
     	srs.add(rsr);
+    	
+    	srs.setNumberOfHits(2);
     	
     	return srs;
 	}

@@ -1,8 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -13,14 +11,10 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.search.SearchResultList;
+import de.ingrid.portal.search.SearchResultPageState;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
-import de.ingrid.portal.search.mockup.SimilarNodeMockup;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
-
-
 
 public class SearchResultPortlet extends GenericVelocityPortlet
 {
@@ -34,93 +28,125 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     {
     	Context context = getContext(request);
     	PortletSession session = request.getPortletSession();
-    	HashMap ps = (HashMap) session.getAttribute("page_state");
+    	SearchResultPageState ps = (SearchResultPageState) session.getAttribute("page_state");
     	if (ps == null) {
-    		ps = new HashMap();
+    		ps = new SearchResultPageState();
     		session.setAttribute("page_state", ps);
     	}
     	
     	// initialization if no action has been processed before
-    	if (!ps.containsKey("ACTION_PROCESSED")) {
-    		ps.remove("Q");
-    		ps.remove("OPEN_SIMILAR");
-    		ps.put("SELECTED_DS", "1");
-    		ps.remove("SIMILAR_ROOT_NODE");
+    	if (!ps.isActionProcessed()) {
+    		ps.setQuery(null);
+    		ps.setSimilarOpen(false);
+    		ps.setSelectedDS("1");
+    		ps.setSimilarRoot(null);
+    		ps.setRankedNavStart(0);
+    		ps.setRankedNavLimit(1);
+    		ps.setUnrankedNavStart(0);
+    		ps.setUnrankedNavLimit(1);
     	}
+    	ps.setActionProcessed(false);
 
     	String q = request.getParameter("q");
     	if (q != null && q.length() > 0) {
-/*    		try {
-				IngridQuery iq = QueryStringParser.parse(q);
-				q = iq.getDescription();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-*/			
-			ps.put("Q", q);
+			ps.setQuery(q);
     	}
-    	if (ps.containsKey("Q")) {
-        	List rankedSRL = doSearch((String)ps.get("Q"), (String)ps.get("SELECTED_DS"), true);
-        	List unrankedSRL = doSearch((String)ps.get("Q"), (String)ps.get("SELECTED_DS"), false);
+    	if (ps.getQuery() != null) {
+    		SearchResultList rankedSRL = doSearch(ps.getQuery(), ps.getSelectedDS(), ps.getRankedNavStart(), ps.getRankedNavLimit(), true);
+    		SearchResultList unrankedSRL = doSearch(ps.getQuery(), ps.getSelectedDS(), ps.getUnrankedNavStart(), ps.getUnrankedNavLimit(), false);
+        	ps.setRankedCurrentPage(ps.getRankedNavStart() / ps.getRankedNavLimit() + 1);
+    		ps.setRankedNumberOfPages(rankedSRL.getNumberOfHits() / ps.getRankedNavLimit() + (int)Math.ceil(rankedSRL.getNumberOfHits() % ps.getRankedNavLimit()));
+        	ps.setUnrankedCurrentPage(ps.getUnrankedNavStart() / ps.getUnrankedNavLimit() + 1);
+    		ps.setUnrankedNumberOfPages(unrankedSRL.getNumberOfHits() / ps.getUnrankedNavLimit() + (int)Math.ceil(unrankedSRL.getNumberOfHits() % ps.getUnrankedNavLimit()));
         	context.put("rankedResultList", rankedSRL);
         	context.put("unrankedResultList", unrankedSRL);
 	    }
     	
-    	ps.remove("ACTION_PROCESSED");
     	context.put("ps", ps);
         
         super.doView(request, response);
     }
+    
+    
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException
     {
 
     	String action = request.getParameter("action");
     	PortletSession session = request.getPortletSession();
-    	HashMap ps = (HashMap) session.getAttribute("page_state");
+    	SearchResultPageState ps = (SearchResultPageState) session.getAttribute("page_state");
     	if (ps == null) {
-    		ps = new HashMap();
+    		ps = new SearchResultPageState();
     		session.setAttribute("page_state", ps);
     	}
-
     	
         if (action == null) {
-        	return;
+        	action = "";
         } else if (action.equalsIgnoreCase("doSearch")) {
-            ps.remove("Q");
+            ps.setQuery(null);
             String q = request.getParameter("q");
         	if (q != null && q.length() > 0) {
-        		ps.put("Q", q);
+                ps.setQuery(q);
     	    }
-        	ps.remove("OPEN_SIMILAR");
-        	ps.remove("SIMILAR_ROOT_NODE");
+        	ps.setSimilarOpen(false);
+        	ps.setSimilarRoot(null);
+        	ps.setRankedNavStart(0);
+        	ps.setUnrankedNavStart(0);
         } else if (action.equalsIgnoreCase("doChangeDS")) {
         	String ds = request.getParameter("ds");
-        	ps.put("SELECTED_DS", ds);
+        	ps.setSelectedDS(ds);
         } else if (action.equalsIgnoreCase("doOpenSimilar")) {
-        	ps.put("OPEN_SIMILAR", "1");
-        	ps.put("SIMILAR_ROOT_NODE", SimilarNodeFactoryMockup.getSimilarNodes());
+        	ps.setSimilarOpen(true);
+        	ps.setSimilarRoot(SimilarNodeFactoryMockup.getSimilarNodes());
         } else if (action.equalsIgnoreCase("doCloseSimilar")) {
-        	ps.remove("OPEN_SIMILAR");
-        	ps.remove("SIMILAR_ROOT_NODE");
+        	ps.setSimilarOpen(false);
+        	ps.setSimilarRoot(null);
         } else if (action.equalsIgnoreCase("doOpenNode")) {
-        	SimilarNodeFactoryMockup.setOpen((SimilarNodeMockup)ps.get("SIMILAR_ROOT_NODE"), request.getParameter("nodeId"), true);
+        	SimilarNodeFactoryMockup.setOpen(ps.getSimilarRoot(), request.getParameter("nodeId"), true);
         } else if (action.equalsIgnoreCase("doCloseNode")) {
-        	SimilarNodeFactoryMockup.setOpen((SimilarNodeMockup)ps.get("SIMILAR_ROOT_NODE"), request.getParameter("nodeId"), false);
+        	SimilarNodeFactoryMockup.setOpen(ps.getSimilarRoot(), request.getParameter("nodeId"), false);
         } else if (action.equalsIgnoreCase("doAddSimilar")) {
         	// TODO
         }
+    	try {
+    		ps.setRankedNavStart(Integer.parseInt(request.getParameter("rstart")));
+    	} catch (NumberFormatException e) {
+    		//ps.setRankedNavStart(0);
+    	}
+    	try {
+    		ps.setUnrankedNavStart(Integer.parseInt(request.getParameter("nrstart")));
+    	} catch (NumberFormatException e) {
+    		//ps.setUnrankedNavStart(0);
+    	}
         
-    	ps.put("ACTION_PROCESSED", "1");
+    	ps.setActionProcessed(true);
     }
     
-    private List doSearch(String qryStr, String ds, boolean ranking) {
+    private SearchResultList doSearch(String qryStr, String ds, int start, int limit, boolean ranking) {
+    	
+    	SearchResultList result = new SearchResultList();
     	
     	if (ranking) {
-    		return SearchResultListMockup.getRankedSearchResultList();
+    		SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
+    		if (start > l.size())
+    			start = l.size() - limit - 1;
+    		for (int i=start; i<start + limit; i++) {
+    			if (i >= l.size())
+    				break;
+    			result.add(l.get(i));
+    		}
+    		result.setNumberOfHits(l.getNumberOfHits());
     	} else {
-    		return SearchResultListMockup.getUnrankedSearchResultList();
+    		SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
+    		if (start > l.size())
+    			start = l.size() - limit - 1;
+    		for (int i=start; i<start + limit; i++) {
+    			if (i >= l.size())
+    				break;
+    			result.add(l.get(i));
+    		}
+    		result.setNumberOfHits(l.getNumberOfHits());
     	}
+    	return result;
     }
     
 }
