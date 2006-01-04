@@ -25,6 +25,7 @@
 		#set($lastRow = $columnLayout.getLastRowNumber($col))
 		#set($row = $coords.y)
 		#if($f.type == "portlet")
+			$jetspeed.setCurrentFragment($f)
 			#parse($f.decoration.template)
 		#else		
 			$jetspeed.setCurrentFragment($f)

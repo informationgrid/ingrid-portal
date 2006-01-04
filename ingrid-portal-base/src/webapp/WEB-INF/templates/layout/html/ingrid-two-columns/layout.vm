@@ -152,6 +152,7 @@ limitations under the License.
 		   #end
 		   
 		   #if($f.type == "portlet")
+			$jetspeed.setCurrentFragment($f)
 			 #parse($f.decoration.template)
 		   #else		
 	 	 	 $jetspeed.setCurrentFragment($f)
