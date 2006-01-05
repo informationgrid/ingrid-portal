@@ -6,8 +6,6 @@
  */
 package de.ingrid.portal.search.mockup;
 
-import java.util.List;
-
 import de.ingrid.portal.search.RankedSearchResult;
 import de.ingrid.portal.search.SearchResult;
 import de.ingrid.portal.search.SearchResultList;

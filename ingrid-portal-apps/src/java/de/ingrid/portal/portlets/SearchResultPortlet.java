@@ -11,8 +11,9 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
-import de.ingrid.portal.search.SearchResultPageState;
+import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 
@@ -22,42 +23,37 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);
+        
     } 
     
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
     	PortletSession session = request.getPortletSession();
-    	SearchResultPageState ps = (SearchResultPageState) session.getAttribute("page_state");
+    	PageState ps = (PageState) session.getAttribute("page_state");
     	if (ps == null) {
-    		ps = new SearchResultPageState();
+    		ps = new PageState(this.getClass().getName());
+    		ps = initPageState(ps);
     		session.setAttribute("page_state", ps);
     	}
     	
     	// initialization if no action has been processed before
-    	if (!ps.isActionProcessed()) {
-    		ps.setQuery(null);
-    		ps.setSimilarOpen(false);
-    		ps.setSelectedDS("1");
-    		ps.setSimilarRoot(null);
-    		ps.setRankedNavStart(0);
-    		ps.setRankedNavLimit(1);
-    		ps.setUnrankedNavStart(0);
-    		ps.setUnrankedNavLimit(1);
+    	if (!ps.getBoolean("isActionProcessed")) {
+    		ps = initPageState(ps);
     	}
-    	ps.setActionProcessed(false);
+    	ps.setBoolean("isActionProcessed", false);
 
     	String q = request.getParameter("q");
     	if (q != null && q.length() > 0) {
-			ps.setQuery(q);
+			ps.put("query", q);
     	}
-    	if (ps.getQuery() != null) {
-    		SearchResultList rankedSRL = doSearch(ps.getQuery(), ps.getSelectedDS(), ps.getRankedNavStart(), ps.getRankedNavLimit(), true);
-    		SearchResultList unrankedSRL = doSearch(ps.getQuery(), ps.getSelectedDS(), ps.getUnrankedNavStart(), ps.getUnrankedNavLimit(), false);
-        	ps.setRankedCurrentPage(ps.getRankedNavStart() / ps.getRankedNavLimit() + 1);
-    		ps.setRankedNumberOfPages(rankedSRL.getNumberOfHits() / ps.getRankedNavLimit() + (int)Math.ceil(rankedSRL.getNumberOfHits() % ps.getRankedNavLimit()));
-        	ps.setUnrankedCurrentPage(ps.getUnrankedNavStart() / ps.getUnrankedNavLimit() + 1);
-    		ps.setUnrankedNumberOfPages(unrankedSRL.getNumberOfHits() / ps.getUnrankedNavLimit() + (int)Math.ceil(unrankedSRL.getNumberOfHits() % ps.getUnrankedNavLimit()));
+    	if (ps.get("query") != null) {
+    		SearchResultList rankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps.getInt("rankedNavStart"), ps.getInt("rankedNavLimit"), true);
+    		SearchResultList unrankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps.getInt("unrankedNavStart"), ps.getInt("unrankedNavLimit"), false);
+        	ps.putInt("rankedCurrentPage", ps.getInt("rankedNavStart") / ps.getInt("rankedNavLimit") + 1);
+        	ps.putInt("rankedNumberOfPages", rankedSRL.getNumberOfHits() / ps.getInt("rankedNavLimit") + (int)Math.ceil(rankedSRL.getNumberOfHits() % ps.getInt("rankedNavLimit")));
+        	ps.putInt("unrankedCurrentPage", ps.getInt("unrankedNavStart") / ps.getInt("unrankedNavLimit") + 1);
+        	ps.putInt("unrankedNumberOfPages", unrankedSRL.getNumberOfHits() / ps.getInt("unrankedNavLimit") + (int)Math.ceil(unrankedSRL.getNumberOfHits() % ps.getInt("unrankedNavLimit")));
         	context.put("rankedResultList", rankedSRL);
         	context.put("unrankedResultList", unrankedSRL);
 	    }
@@ -73,52 +69,53 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 
     	String action = request.getParameter("action");
     	PortletSession session = request.getPortletSession();
-    	SearchResultPageState ps = (SearchResultPageState) session.getAttribute("page_state");
+    	PageState ps = (PageState) session.getAttribute("page_state");
     	if (ps == null) {
-    		ps = new SearchResultPageState();
+    		ps = new PageState(this.getClass().getName());
+    		ps = initPageState(ps);
     		session.setAttribute("page_state", ps);
     	}
     	
         if (action == null) {
         	action = "";
         } else if (action.equalsIgnoreCase("doSearch")) {
-            ps.setQuery(null);
+            ps.putString("query", null);
             String q = request.getParameter("q");
         	if (q != null && q.length() > 0) {
-                ps.setQuery(q);
+                ps.putString("query", q);
     	    }
-        	ps.setSimilarOpen(false);
-        	ps.setSimilarRoot(null);
-        	ps.setRankedNavStart(0);
-        	ps.setUnrankedNavStart(0);
+        	ps.setBoolean("isSimilarOpen", false);
+        	ps.put("similarRoot", null);
+        	ps.putInt("rankedNavStart",0);
+        	ps.putInt("unrankedNavStart",0);
         } else if (action.equalsIgnoreCase("doChangeDS")) {
         	String ds = request.getParameter("ds");
-        	ps.setSelectedDS(ds);
+        	ps.putString("selectedDS", ds);
         } else if (action.equalsIgnoreCase("doOpenSimilar")) {
-        	ps.setSimilarOpen(true);
-        	ps.setSimilarRoot(SimilarNodeFactoryMockup.getSimilarNodes());
+        	ps.setBoolean("isSimilarOpen", true);
+        	ps.put("similarRoot", SimilarNodeFactoryMockup.getSimilarNodes());
         } else if (action.equalsIgnoreCase("doCloseSimilar")) {
-        	ps.setSimilarOpen(false);
-        	ps.setSimilarRoot(null);
+        	ps.setBoolean("isSimilarOpen", false);
+        	ps.put("similarRoot", null);
         } else if (action.equalsIgnoreCase("doOpenNode")) {
-        	SimilarNodeFactoryMockup.setOpen(ps.getSimilarRoot(), request.getParameter("nodeId"), true);
+        	SimilarNodeFactoryMockup.setOpen((SimilarTreeNode)ps.get("similarRoot"), request.getParameter("nodeId"), true);
         } else if (action.equalsIgnoreCase("doCloseNode")) {
-        	SimilarNodeFactoryMockup.setOpen(ps.getSimilarRoot(), request.getParameter("nodeId"), false);
+        	SimilarNodeFactoryMockup.setOpen((SimilarTreeNode)ps.get("similarRoot"), request.getParameter("nodeId"), false);
         } else if (action.equalsIgnoreCase("doAddSimilar")) {
         	// TODO
         }
     	try {
-    		ps.setRankedNavStart(Integer.parseInt(request.getParameter("rstart")));
+    		ps.putInt("rankedNavStart",Integer.parseInt(request.getParameter("rstart")));
     	} catch (NumberFormatException e) {
     		//ps.setRankedNavStart(0);
     	}
     	try {
-    		ps.setUnrankedNavStart(Integer.parseInt(request.getParameter("nrstart")));
+    		ps.putInt("unrankedNavStart",Integer.parseInt(request.getParameter("nrstart")));
     	} catch (NumberFormatException e) {
     		//ps.setUnrankedNavStart(0);
     	}
         
-    	ps.setActionProcessed(true);
+    	ps.setBoolean("isActionProcessed", true);
     }
     
     private SearchResultList doSearch(String qryStr, String ds, int start, int limit, boolean ranking) {
@@ -147,6 +144,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     		result.setNumberOfHits(l.getNumberOfHits());
     	}
     	return result;
+    }
+    
+    private PageState initPageState(PageState ps) {
+		ps.setBoolean("isActionProcessed", false);
+		ps.put("query", null);
+		ps.setBoolean("isSimilarOpen", false);
+		ps.put("selectedDS", "1");
+		ps.put("similarRoot", null);
+		ps.putInt("rankedNavStart", 0);
+		ps.putInt("rankedNavLimit", 1);
+		ps.putInt("unrankedNavStart", 0);
+		ps.putInt("unrankedNavLimit", 1);
+		return ps;
     }
     
 }
