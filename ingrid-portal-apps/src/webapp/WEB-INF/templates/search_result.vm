@@ -134,7 +134,7 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
 	  <input type="hidden" name="action" value="doAddSimilar" />
 	  <div class="formbody">
 #set ($action = $renderResponse.createActionURL())
-#if(!$ps.isSimilarOpen())
+#if(!$ps.isSimilarOpen)
 	$action.setParameter('action','doOpenSimilar')
         <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
 #else
@@ -174,7 +174,7 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
 	
 #end	
       </div>
-#if($ps.isSimilarOpen())
+#if($ps.isSimilarOpen)
 	  <div class="formfooter">
         <div align="right">
           <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />

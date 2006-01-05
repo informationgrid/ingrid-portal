@@ -6,6 +6,7 @@
  */
 package de.ingrid.portal.search;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
@@ -14,8 +15,9 @@ import java.util.Vector;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class SimilarTreeNode {
+public class SimilarTreeNode implements Serializable {
 
+	
 	/**
 	 * TODO: Comment for <code>name</code>
 	 */
@@ -107,4 +109,5 @@ public class SimilarTreeNode {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 }
