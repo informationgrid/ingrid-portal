@@ -1,0 +1,37 @@
+<project default="java:jar" xmlns:j="jelly:core" xmlns:maven="jelly:maven" xmlns:ant="jelly:ant">
+  <goal name="ingrid-portal:war:install">
+    <maven:reactor basedir="${basedir}"
+            includes="ingrid-portal-apps/project.xml,ingrid-portal-layout/project.xml"
+            goals="war:install" banner="Build and Install ingrid apps and layouts"
+            postProcessing="false" ignoreFailures="false" />
+  </goal>
+  <goal name="ingrid-portal:clean">
+    <maven:reactor basedir="${basedir}"
+            includes="ingrid-portal-apps/project.xml,ingrid-portal-layout/project.xml,ingrid-portal-base/project.xml"
+            goals="clean" banner="Clean all ..."
+            postProcessing="false" ignoreFailures="false" />
+  </goal>
+  <goal name="ingrid-portal:allBuild">
+    <attainGoal name="ingrid-portal:clean" />
+    <maven:reactor basedir="${basedir}"
+            includes="ingrid-portal-base/project.xml"
+            goals="j2:portal.genapp.minimal" banner="Creating minimal portal application..."
+            postProcessing="false" ignoreFailures="false" />
+    <attainGoal name="ingrid-portal:war:install" />  
+    <copy file="./ingrid-portal-apps/target/ingrid-portal-apps.war"
+              tofile="./ingrid-portal-base/target/ingrid-portal/WEB-INF/deploy/ingrid-portal-apps.war"
+              overwrite="true"
+              failonerror="true">
+    </copy>          
+    <copy file="./ingrid-portal-layout/target/jetspeed-layouts.war"
+              tofile="./ingrid-portal-base/target/ingrid-portal/WEB-INF/deploy/jetspeed-layouts.war"
+              overwrite="true"
+              failonerror="true">
+    </copy>
+    <maven:reactor basedir="${basedir}"
+            includes="ingrid-portal-base/project.xml"
+            goals="war:install" banner="Creating minimal portal application..."
+            postProcessing="false" ignoreFailures="false" />
+  </goal>
+</project>
+    
