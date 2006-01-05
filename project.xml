@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance.xsd" xsi:noNamespaceSchemaLocation="http://maven.apache.org/xsd/maven-project-3.0.0.xsd">
+    <pomVersion>3</pomVersion>
+    <artifactId>ingrid-portal</artifactId>
+    <name>ingrid-portal</name>
+    <groupId>ingrid</groupId>
+    <currentVersion>0.1-SNAPSHOT</currentVersion>
+    <inceptionYear>2005</inceptionYear>
+    <logo>/images/logo.gif</logo>
+    <shortDescription>short description</shortDescription>
+    <issueTrackingUrl>http://jira.media-style.com/browse/INGRID</issueTrackingUrl>
+    <siteAddress>http://torwald.gistec-online.de/ingrid/ingrid-portal</siteAddress>
+    <siteDirectory>/srv/www/htdocs/ingrid/ingrid-portal</siteDirectory>
+    <mailingLists>
+        <mailingList>
+            <name>${pom.name} Dev List</name>
+        </mailingList>
+        <mailingList>
+            <name>${pom.name} User List</name>
+        </mailingList>
+    </mailingLists>
+	<developers>
+    <developer>
+      <id>jm</id>
+      <name>Joachim Müller</name>
+      <email>jm(at)wemove.com</email>
+      <organization>wemove GmbH</organization>
+      <organizationUrl>http://www.wemove.com</organizationUrl>
+      <roles>
+		  <role>project leader</role>
+		  <role>developer</role>
+	  </roles>
+    </developer>
+  </developers>
+    <shortDescription>todo short description</shortDescription>
+    <issueTrackingUrl>http://jira.media-style.com/browse/INGRID</issueTrackingUrl>
+	<siteAddress>http://torwald.gistec-online.de/ingrid/ingrid-portal</siteAddress>
+    <siteDirectory>/srv/www/htdocs/ingrid/ingrid-portal</siteDirectory>
+   <repository>
+        <connection>scm:svn:http://torwald.gistec-online.de/svn/ingrid:ingrid-portal</connection>
+    </repository>
+    <dependencies>
+    </dependencies>
+	<reports>
+		<report>maven-junit-report-plugin</report>
+        <report>maven-jcoverage-plugin</report>
+        <report>maven-simian-plugin</report>
+        <report>maven-javadoc-plugin</report>
+        <report>maven-pmd-plugin</report>
+        <report>maven-changes-plugin</report>
+        <report>maven-developer-activity-plugin</report>
+        <report>maven-file-activity-plugin</report>
+        <report>maven-jdepend-plugin</report>
+        <report>maven-tasklist-plugin</report>
+        <report>maven-license-plugin</report>
+        <report>maven-checkstyle-plugin</report>
+        <report>maven-jxr-plugin</report>
+        <report>maven-changelog-plugin</report>
+	</reports>
+    <properties/>
+</project>
