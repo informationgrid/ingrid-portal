@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
+
+    <portlet id="MeasuresSearchInfo">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/measures_search_info.vm</value>
+        </init-param>
+        <portlet-name>MeasuresSearchInfo</portlet-name>
+        <display-name>Info zu Messwerte</display-name>
+        <description>This portlet displays the service search info dialog.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Info zu Messwerte</title>
+            <short-title>MeasuresSearchInfo</short-title>
+        </portlet-info>
+    </portlet>
+    <portlet id="MeasuresSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/measures_search.vm</value>
+        </init-param>
+        <portlet-name>MeasuresSearch</portlet-name>
+        <display-name>Messwerte</display-name>
+        <description>This portlet displayes a service search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.MeasuresSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Messwerte</title>
+            <short-title>MeasuresSearch</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="ServiceSearchInfo">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/service_search_info.vm</value>
+        </init-param>
+        <portlet-name>ServiceSearchInfo</portlet-name>
+        <display-name>Info zu Service</display-name>
+        <description>This portlet displays the service search info dialog.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Info zu Service</title>
+            <short-title>ServiceSearchInfo</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="ServiceSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/service_search.vm</value>
+        </init-param>
+        <portlet-name>ServiceSearch</portlet-name>
+        <display-name>Service</display-name>
+        <description>This portlet displayes a service search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.ServiceSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Service</title>
+            <short-title>ServiceSearch</short-title>
+        </portlet-info>
+    </portlet>
+
+
     <portlet id="SearchResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -31,7 +116,7 @@
         <portlet-name>SimpleSearchInfo</portlet-name>
         <display-name>Info zur Suche</display-name>
         <description>This portlet displays the simple search info dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

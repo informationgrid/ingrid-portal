@@ -30,11 +30,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     {
     	Context context = getContext(request);
     	PortletSession session = request.getPortletSession();
-    	PageState ps = (PageState) session.getAttribute("page_state");
+    	PageState ps = (PageState) session.getAttribute("search_result_page_state");
     	if (ps == null) {
     		ps = new PageState(this.getClass().getName());
     		ps = initPageState(ps);
-    		session.setAttribute("page_state", ps);
+    		session.setAttribute("search_result_page_state", ps);
     	}
     	
     	// initialization if no action has been processed before
@@ -69,11 +69,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 
     	String action = request.getParameter("action");
     	PortletSession session = request.getPortletSession();
-    	PageState ps = (PageState) session.getAttribute("page_state");
+    	PageState ps = (PageState) session.getAttribute("search_result_page_state");
     	if (ps == null) {
     		ps = new PageState(this.getClass().getName());
     		ps = initPageState(ps);
-    		session.setAttribute("page_state", ps);
+    		session.setAttribute("search_result_page_state", ps);
     	}
     	
         if (action == null) {
