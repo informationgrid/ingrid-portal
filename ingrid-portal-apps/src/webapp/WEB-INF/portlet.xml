@@ -7,6 +7,27 @@
 ]>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
+    <portlet id="SitemapPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/sitemap.vm</value>
+        </init-param>
+        <portlet-name>SitemapPortlet</portlet-name>
+        <display-name>Inhalts&uuml;bersicht</display-name>
+        <description>This portlet displays the sitemap.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Inhalts&uuml;bersicht</title>
+            <short-title>SitemapPortlet</short-title>
+        </portlet-info>
+    </portlet>
+
     <portlet id="AboutPortalUPartner">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -35,7 +56,7 @@
             <value>/WEB-INF/templates/about_portalu_links.vm</value>
         </init-param>
         <portlet-name>AboutPortalULinks</portlet-name>
-        <display-name>Weiterführende Links</display-name>
+        <display-name>Weiterf&uuml;hrende Links</display-name>
         <description>This portlet displays the about portalU more links portlet.</description>
         <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
@@ -44,7 +65,7 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Weiterführende Links</title>
+            <title>Weiterf&uuml;hrende Links</title>
             <short-title>AboutPortalULinks</short-title>
         </portlet-info>
     </portlet>
@@ -56,7 +77,7 @@
             <value>/WEB-INF/templates/about_portalu.vm</value>
         </init-param>
         <portlet-name>AboutPortalU</portlet-name>
-        <display-name>Über PortalU</display-name>
+        <display-name>ï¿½ber PortalU</display-name>
         <description>This portlet displays the about portalU portlet.</description>
         <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>

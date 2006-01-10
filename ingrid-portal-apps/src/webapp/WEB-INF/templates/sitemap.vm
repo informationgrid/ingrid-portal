@@ -1,0 +1,160 @@
+<div id="overview">
+	<h1>Inhaltsübersicht
+	</h1>
+	<div class="left">
+		<h2>Hauptbereich
+		</h2>
+		<div class="sitemap">
+			<ul>
+				<li>
+					<a href="portal/main-search.psml">Suche
+					</a>
+					<p>Schnelles Suchen per Einfacher Sucheingabe.
+					</p>
+					<ul>
+						<li>
+							<a href="portal/extended-search.psml">Erweiterte Suche
+							</a>
+							<p>Umfangreiches Suchen per Erweiterter Sucheingabe.
+							</p>
+						</li>
+						<li>
+							<a href="s_search_prev_search.html">Suchhistorie
+							</a>
+							<p>Führen Sie frühere oder gespeicherte Suchen erneut aus.
+							</p>
+						</li>
+						<li>
+							<a href="s_search_preferences.html">Einstellungen
+							</a>
+							<p>Ihre Sucheinstellungen
+							</p>
+						</li> 
+					</ul>
+				</li>
+				<li>
+					<a href="service.html">Service
+					</a>
+					<p>Unser Katalog mit den News Seiten unserer Informationsanbieter.
+					</p>
+				</li>
+				<li>
+					<a href="messwerte.html">Messwerte
+					</a>
+					<p>Unser Katalog mit den Messwert Seiten unserer Informationsanbieter.
+					</p>
+				</li>
+				<li>
+					<a href="themen.html">Umweltthemen
+					</a>
+					<p>Unser Katalog mit den Themen Seiten unserer Informationsanbieter.
+					</p>
+				</li>
+				<li>
+					<a href="umweltchronik.html">Umweltchronik
+					</a>
+					<p>Unser Katalog wichtiger Umweltereignisse.
+					</p>
+				</li>
+				<li>
+					<a href="about.html">Über PortalU
+					</a>
+					<p>Lernen Sie uns kennen.
+					</p>
+					<ul>
+						<li>
+							<a href="partner.html">Informationsanbieter
+							</a>
+							<p>Beteiligte Partner und Informationsanbieter.
+							</p>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<br />
+		</div>  
+	</div>
+	<div class="right">
+		<h2>Servicebereich
+		</h2>
+		<div class="sitemap">
+			<ul>
+				<li>
+					<a href="index.html">Startseite
+					</a>
+					<p>Ihr zentraler Einstieg.
+					</p>
+					<ul>
+						<li>
+							<a href="weitere_meldungen.html">Weitere Meldungen
+							</a>
+							<p>Unser Archiv aktueller Meldungen.
+							</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="mpu_anmeldung.html">Mein PortalU
+					</a>
+					<p>Ihre persönlichen Einstellungen.
+					</p>
+				</li>
+				<li>
+					<a href="inhalt.html">Inhaltsübersicht
+					</a>
+					<p>Der globale Überblick.
+					</p>
+				</li>
+				<li>
+					<a href="javascript:openWindow('faq_inhalt',750,550);">Hilfe/FAQs
+					</a>
+					<p>Hilfe und häufig gestellte Fragen.
+					</p>
+				</li>
+				<li>
+					<a href="kontakt.html">Kontakt
+					</a>
+					<p>Nehmen Sie Kontakt mit uns auf.
+					</p>
+					<ul>
+						<li>
+							<a href="kontakt_nl.html">Newsletter
+							</a>
+							<p>Abonnieren Sie unseren Newsletter.
+							</p>
+						</li>          
+					</ul>        
+				</li>
+			</ul>
+			<br />
+		</div>  
+	</div>
+	<div class="clearer">
+	</div>
+	<div class="whole">
+		<h2>Fussbereich
+		</h2>
+		<div class="sitemap">  
+			<ul>
+				<li>
+					<a href="impressum.html">Impressum
+					</a>
+					<p>Verantwortliche und Zuständigkeiten.
+					</p>
+				</li>
+				<li>
+					<a href="datenschutz.html">Datenschutzbestimmung
+					</a>
+					<p>Unsere Datenrichtlinien.
+					</p>
+				</li>
+				<li>
+					<a href="mailto:">Webmaster
+					</a>
+					<p>Kontaktieren Sie unseren Webmaster.
+					</p>
+				</li>
+			</ul>
+		</div>  
+	</div>
+</div>
