@@ -1,0 +1,128 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" enctype="" name="enviroment_chronicle_search" id="enviroment_chronicle_search">
+	<div class="formbody">
+		<h2 class="nospace">Auswahlkriterien
+		</h2>
+		<div class="float_left">  
+			<h3>Ereignistypen
+			</h3>
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td>
+						<input id="chk_all" name="chk_all" type="checkbox" onclick="allTopics()" onkeypress="allTopics()" /> 
+						<label for="chk_all">Alle Ereignistypen
+						</label>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="chk_1" name="chk_1" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_1">Aktionen
+						</label>
+					</td>
+					<td>
+						<input id="chk_2" name="chk_2" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" checked="checked" /> 
+						<label for="chk_2">Geschichte
+						</label>
+					</td>
+					<td>
+						<input id="chk_3" name="chk_3" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_3">Gesetze
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="chk_4" name="chk_4" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_4">Gründungen
+						</label>
+					</td>
+					<td>
+						<input id="chk_5" name="chk_5" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_5">Katastrophen
+						</label>
+					</td>
+					<td>
+						<input id="chk_6" name="chk_6" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_6">Konventionen
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="chk_7" name="chk_7" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_7">Literatur
+						</label>
+					</td>
+					<td>
+						<input id="chk_8" name="chk_8" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_8">Natur d. Jahres
+						</label>
+					</td>
+					<td>
+						<input id="chk_9" name="chk_9" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_9">Richtlinien
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="chk_10" name="chk_10" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_10">Schiffsunfälle
+						</label>
+					</td>
+					<td>
+						<input id="chk_11" name="chk_11" type="checkbox" onclick="checkTopics()" onkeypress="checkTopics()" /> 
+						<label for="chk_11">Störfälle
+						</label>
+					</td>
+					<td>
+					</td>
+				</tr>
+			</table>
+		</div>  
+		<span class="clearer">
+		</span>
+		<div class="float_left">
+			<h3>Zeitbezug
+			</h3>      
+			<p>
+				<input type="radio" id="vonbis" name="time_select" value="0" checked="checked" /> 		      
+				<label for="from_yy">Von:
+				</label>
+				<input class="inputstyletext" id="from_yy" size="10" maxlength="10" name="from_yy" type="text" />
+				<label for="till_yy">Bis:
+				</label>
+				<input class="inputstyletext" id="till_yy" size="10" maxlength="10" name="from_yy" type="text" /> &nbsp;(TT.MM.JJJJ)
+				<br />
+			</p>
+			<p>
+				<input type="radio" id="am" name="time_select" value="0" />          
+				<label for="at_yy">Am: 
+				</label>
+				<input class="inputstyletext" id="at_yy" size="10" maxlength="10" name="from_yy" type="text" /> &nbsp;(TT.MM.JJJJ)
+				<br />
+			</p>
+		</div>  
+		<span class="clearer">
+		</span>
+		<div class="float_left">
+			<h3>
+				<label class="alignleft" for="qry">Suchbegriff
+				</label>
+			</h3>
+			<input class="qry_chronic inputstyletext" id="qry" name="qry" />
+		</div>  
+		<span class="clearer">
+		</span>
+	</div>
+	<div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" value="Anzeigen" />
+		</div>
+	</div>
+</form>

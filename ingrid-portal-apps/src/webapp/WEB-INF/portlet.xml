@@ -1,7 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE doc [
+<!ENTITY % iso-lat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+                    "http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent">
+%iso-lat1;
+]>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
+    <portlet id="AboutPortalUPartner">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/about_portalu_partner.vm</value>
+        </init-param>
+        <portlet-name>AboutPortalUPartner</portlet-name>
+        <display-name>Partner</display-name>
+        <description>This portlet displays the about portalU - partner portlet.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Partner</title>
+            <short-title>AboutPortalUPartner</short-title>
+        </portlet-info>
+    </portlet>
 
+    <portlet id="AboutPortalULinks">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/about_portalu_links.vm</value>
+        </init-param>
+        <portlet-name>AboutPortalULinks</portlet-name>
+        <display-name>Weiterführende Links</display-name>
+        <description>This portlet displays the about portalU more links portlet.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Weiterführende Links</title>
+            <short-title>AboutPortalULinks</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="AboutPortalU">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/about_portalu.vm</value>
+        </init-param>
+        <portlet-name>AboutPortalU</portlet-name>
+        <display-name>Über PortalU</display-name>
+        <description>This portlet displays the about portalU portlet.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>&Uuml;ber PortalU</title>
+            <short-title>AboutPortalU</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="EnviromentChronicleSearchInfo">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_chronicle_search_info.vm</value>
+        </init-param>
+        <portlet-name>EnviromentChronicleSearchInfo</portlet-name>
+        <display-name>Umweltchronik und Ereignisse</display-name>
+        <description>This portlet displays the enviroment chronicle search info dialog.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Umweltchronik und Ereignisse</title>
+            <short-title>EnviromentChronicleSearchInfo</short-title>
+        </portlet-info>
+    </portlet>
+    <portlet id="EnviromentChronicleSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_chronicle_search.vm</value>
+        </init-param>
+        <portlet-name>EnviromentChronicleSearch</portlet-name>
+        <display-name>Umweltchronik</display-name>
+        <description>This portlet displayes a enviroment search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Umweltchronik</title>
+            <short-title>EnviromentChronicleSearch</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="ShowMapsPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/show_maps.vm</value>
+        </init-param>
+        <portlet-name>ShowMapsPortlet</portlet-name>
+        <display-name>Detailinformation - Karte</display-name>
+        <description>This portlet displays the search results.</description>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Detailinformation - Karte</title>
+            <short-title>ShowMapsPortlet</short-title>
+        </portlet-info>
+    </portlet>
+
+    <portlet id="EnviromentSearchInfo">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_search_info.vm</value>
+        </init-param>
+        <portlet-name>EnviromentSearchInfo</portlet-name>
+        <display-name>Info zu Umweltthemen</display-name>
+        <description>This portlet displays the envirometal search info dialog.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Info zu Umweltthemen</title>
+            <short-title>EnviromentSearchInfo</short-title>
+        </portlet-info>
+    </portlet>
+    <portlet id="EnviromentSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_search.vm</value>
+        </init-param>
+        <portlet-name>EnviromentSearch</portlet-name>
+        <display-name>Umweltthemen</display-name>
+        <description>This portlet displayes a enviroment search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnviromentSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Umweltthemen</title>
+            <short-title>EnviromentSearch</short-title>
+        </portlet-info>
+    </portlet>
     <portlet id="MeasuresSearchInfo">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

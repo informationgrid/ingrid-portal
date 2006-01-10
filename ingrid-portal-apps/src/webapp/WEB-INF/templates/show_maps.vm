@@ -1,0 +1,23 @@
+#set ($action = $renderResponse.createActionURL())
+<div id="content_full">
+	<div class="section-header">
+		<h1>Detailinformation - Karte
+		</h1>
+	</div>
+	<span class="clearer">
+	</span>
+	<div class="section">    
+		<div class="formbody">
+			<iframe src="http://torwald.gistec-online.de/mapbender/frames/WMS_Viewer.php?PREQUEST=setServices&amp;PSession=0815portalsession&PHPSESSID=KUGViewer1" style="width:860px;height:720px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
+				Leider kann Ihr Browser keine iframes darstellen. 
+			</iframe>
+			<div class="rightmargin" align="right">
+				<span class="iconLink">
+					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
+					<a href="$action">Kartendienste speichern
+					</a>
+				</span>
+			</div>
+		</div>  
+	</div>
+</div>
