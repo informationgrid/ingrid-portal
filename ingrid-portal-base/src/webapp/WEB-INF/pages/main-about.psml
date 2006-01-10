@@ -1,3 +1,9 @@
+<!DOCTYPE doc [
+<!ENTITY % iso-lat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+                    "http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent">
+%iso-lat1;
+]>
+
 <page>
   <defaults
      skin="orange"
@@ -5,7 +11,7 @@
      portlet-decorator="ingrid-teaser"
   />
   <title>About PortalU</title>
-  <metadata name="title" xml:lang="de">Über PortalU</metadata>
+  <metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>
 
   <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::AboutPortalU">
