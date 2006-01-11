@@ -7,32 +7,32 @@
   <title>Home</title>
   <metadata name="title" xml:lang="de">Startseite</metadata>
 
-  <fragment id="simplest" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="ig-1" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
+  <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="ig-2" type="portlet" name="ingrid-portal-apps::EnviromentCatalogTeaser">
+    <fragment id="home-2" type="portlet" name="ingrid-portal-apps::EnviromentCatalogTeaser">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="ig-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
+    <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
       <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="ig-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::IngridInformMarginalTeaser">
+    <fragment id="home-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::IngridInformMarginalTeaser">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
     </fragment>
-    <fragment id="ig-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ServiceMarginalTeaser">
+    <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ServiceMarginalTeaser">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
     </fragment>
-    <fragment id="ig-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuredDataMarginalTeaser">
+    <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuredDataMarginalTeaser">
       <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="1" />
     </fragment>
-    <fragment id="ig-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::EnviromentalChronicleMarginalTeaser">
+    <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::EnviromentalChronicleMarginalTeaser">
       <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="1" />
     </fragment>
