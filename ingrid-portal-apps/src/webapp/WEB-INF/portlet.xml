@@ -14,7 +14,7 @@
             <value>/WEB-INF/templates/sitemap.vm</value>
         </init-param>
         <portlet-name>SitemapPortlet</portlet-name>
-        <display-name>Inhalts&uuml;bersicht</display-name>
+        <display-name>SitemapPortlet</display-name>
         <description>This portlet displays the sitemap.</description>
         <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
@@ -22,9 +22,11 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <supported-locale>en</supported-locale>                
+        <supported-locale>de</supported-locale>            
+        <resource-bundle>de.ingrid.portal.resources.SitemapPortlet</resource-bundle>            
         <portlet-info>
-            <title>Inhalts&uuml;bersicht</title>
-            <short-title>SitemapPortlet</short-title>
+          <title>SitemapPortlet</title>
         </portlet-info>
     </portlet>
 
@@ -77,7 +79,7 @@
             <value>/WEB-INF/templates/about_portalu.vm</value>
         </init-param>
         <portlet-name>AboutPortalU</portlet-name>
-        <display-name>�ber PortalU</display-name>
+        <display-name>AboutPortalU</display-name>
         <description>This portlet displays the about portalU portlet.</description>
         <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
@@ -85,9 +87,11 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <supported-locale>en</supported-locale>                
+        <supported-locale>de</supported-locale>            
+        <resource-bundle>de.ingrid.portal.resources.AboutPortalU</resource-bundle>            
         <portlet-info>
-            <title>&Uuml;ber PortalU</title>
-            <short-title>AboutPortalU</short-title>
+            <title>AboutPortalU</title>
         </portlet-info>
     </portlet>
 
