@@ -85,7 +85,7 @@
       </div>
       <div class="formbody">
 		<form action="$renderResponse.createActionURL()" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
-    	<input type="hidden" name="ds" value="$ps.selectedDS"/>
+    	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
         	<p class="datasource_selection">
 #set ($action = $renderResponse.createActionURL())
@@ -93,21 +93,21 @@ $action.setParameter('action','doChangeDS')
 #if($ps.query)
 	$action.setParameter('q',$ps.query)
 #end
-#if($ps.selectedDS && $ps.selectedDS=="1")
+#if($ds=="1")
 	<strong>Umweltinformationen</strong>
 #else
     $action.setParameter('ds','1')
 	<a href="$action">Umweltinformationen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ps.selectedDS && $ps.selectedDS=="2")
+#if($ds=="2")
 	<strong>Adressen</strong>
 #else
     $action.setParameter('ds','2')
 	<a href="$action">Adressen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ps.selectedDS && $ps.selectedDS=="3")
+#if($ds=="3")
 	<strong>Forschungsprojekte</strong>
 #else
     $action.setParameter('ds','3')

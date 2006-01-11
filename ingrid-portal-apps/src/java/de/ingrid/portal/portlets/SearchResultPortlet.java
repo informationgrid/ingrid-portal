@@ -17,9 +17,21 @@ import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 
+/**
+ * TODO Please add comments!
+ *
+ * created 11.01.2006
+ *
+ * @author joachim
+ * @version
+ * 
+ */
 public class SearchResultPortlet extends GenericVelocityPortlet
 {
 
+    /* (non-Javadoc)
+     * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
+     */
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);
@@ -30,11 +42,17 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     {
     	Context context = getContext(request);
     	PortletSession session = request.getPortletSession();
-    	PageState ps = (PageState) session.getAttribute("search_result_page_state");
+    	String selectedDS = (String) session.getAttribute("selectedDS");
+    	if (selectedDS == null || selectedDS.length() == 0) {
+    	    selectedDS = "1";
+    	}
+    	context.put("ds", selectedDS);
+    	
+    	PageState ps = (PageState) session.getAttribute("portlet_state");
     	if (ps == null) {
     		ps = new PageState(this.getClass().getName());
     		ps = initPageState(ps);
-    		session.setAttribute("search_result_page_state", ps);
+    		session.setAttribute("portlet_state", ps);
     	}
     	
     	// initialization if no action has been processed before
@@ -69,11 +87,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 
     	String action = request.getParameter("action");
     	PortletSession session = request.getPortletSession();
-    	PageState ps = (PageState) session.getAttribute("search_result_page_state");
+    	PageState ps = (PageState) session.getAttribute("portlet_state");
     	if (ps == null) {
     		ps = new PageState(this.getClass().getName());
     		ps = initPageState(ps);
-    		session.setAttribute("search_result_page_state", ps);
+    		session.setAttribute("portlet_state", ps);
     	}
     	
         if (action == null) {
@@ -89,8 +107,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         	ps.putInt("rankedNavStart",0);
         	ps.putInt("unrankedNavStart",0);
         } else if (action.equalsIgnoreCase("doChangeDS")) {
-        	String ds = request.getParameter("ds");
-        	ps.putString("selectedDS", ds);
+        	session.setAttribute("selectedDS", request.getParameter("ds"), PortletSession.APPLICATION_SCOPE);
         } else if (action.equalsIgnoreCase("doOpenSimilar")) {
         	ps.setBoolean("isSimilarOpen", true);
         	ps.put("similarRoot", SimilarNodeFactoryMockup.getSimilarNodes());
@@ -150,7 +167,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 		ps.setBoolean("isActionProcessed", false);
 		ps.put("query", null);
 		ps.setBoolean("isSimilarOpen", false);
-		ps.put("selectedDS", "1");
 		ps.put("similarRoot", null);
 		ps.putInt("rankedNavStart", 0);
 		ps.putInt("rankedNavLimit", 1);

@@ -6,21 +6,21 @@ $action.setParameter('action','doChangeDS')
     	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
 		<p class="datasource_selection">
-#if($ds==1)
+#if($ds=="1")
 	<strong>Umweltinformationen</strong>
 #else
     $action.setParameter('ds','1')
 	<a href="$action">Umweltinformationen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ds==2)
+#if($ds=="2")
 	<strong>Adressen</strong>
 #else
     $action.setParameter('ds','2')
 	<a href="$action">Adressen</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
-#if($ds==3)
+#if($ds=="3")
 	<strong>Forschungsprojekte</strong>
 #else
     $action.setParameter('ds','3')
