@@ -146,11 +146,11 @@ public abstract class ActionForm implements Serializable {
     // =======================
 
     /**
-     * Check whether a specific value in a multiple selection "field" is
-     * selected (e.g. in SelectBox Group, Listbox with multiple selection ...)
+     * Check whether a specific value in a multiple input "field" is selected
+     * (e.g. in SelectBox Group, Listbox with multiple selection ...)
      * 
-     * @param currSelection
-     *            current selections in "field"
+     * @param fieldName
+     *            name of parameter (is key to our hash map)
      * @param checkValue
      *            selection value to check
      * @param returnValue
@@ -159,48 +159,26 @@ public abstract class ActionForm implements Serializable {
      * @return if selection is true the passed returnValue otherwise empty
      *         String
      */
-    public static String isValueSelected(String[] currSelection, String checkValue, String returnValue) {
-        if (currSelection == null)
+    public String isValueSelected(String fieldName, String checkValue, String returnValue) {
+        String currValue = getInput(fieldName);
+        if (currValue == null || currValue.indexOf(checkValue) == -1) {
             return "";
-
-        for (int i = 0; i < currSelection.length; i++) {
-            if (currSelection[i].equals(checkValue)) {
-                return returnValue;
-            }
         }
-        return "";
-    }
 
-    /**
-     * Check whether a specific value in a single selection "field" is selected
-     * (e.g. Single SelectBox, RadioButton, Listbox ...)
-     * 
-     * @param currSelection
-     *            current selection in "field"
-     * @param checkValue
-     *            selection value to check
-     * @param returnValue
-     *            the value to return if selection is true. Pass here our static
-     *            consts (CHECKED for checkbox, SELECTED for listbox)
-     * @return if selection is true the passed returnValue otherwise empty
-     *         String
-     */
-    public static String isValueSelected(String currSelection, String checkValue, String returnValue) {
-        if (currSelection == null || !currSelection.equals(checkValue))
-            return "";
         return returnValue;
     }
 
     /**
-     * Check whether a specific value in a single selection "field" is selected
-     * (e.g. Single SelectBox, RadioButton, Listbox ...). If nothing is selected
-     * in the "field" compare with default selection value.
+     * Check whether a specific value in a multiple input "field" is selected
+     * (e.g. in SelectBox Group, Listbox with multiple selection ...) including
+     * check for a default value IF NOTHING IS SELECTED IN THE "FIELD" (only
+     * then defaultValue is checked !).
      * 
-     * @param currSelection
-     *            current selection in "field"
+     * @param fieldName
+     *            name of parameter (is key to our hash map)
      * @param checkValue
      *            selection value to check
-     * @param defaultSelection
+     * @param defaultValue
      *            the default selection to compare with if no current selection
      *            in "field"
      * @param returnValue
@@ -212,13 +190,15 @@ public abstract class ActionForm implements Serializable {
      * @return if selection is true the passed returnValue otherwise empty
      *         String
      */
-    public static String isValueSelected(String currSelection, String checkValue, String defaultSelection,
-            String returnValue) {
-        if (currSelection == null || currSelection.length() == 0) {
-            if (defaultSelection.equals(checkValue)) {
+    public String isValueSelected(String fieldName, String checkValue, String defaultValue, String returnValue) {
+        String currValue = getInput(fieldName);
+        if (currValue == null || currValue.length() == 0) {
+            // Nothing selected, check for default value
+            if (defaultValue.indexOf(checkValue) != -1) {
                 return returnValue;
             }
-        } else if (currSelection.equals(checkValue)) {
+        } else if (currValue.indexOf(checkValue) != -1) {
+            // something selected and is our check value
             return returnValue;
         }
 
@@ -226,29 +206,19 @@ public abstract class ActionForm implements Serializable {
     }
 
     /**
-     * Check whether anything in a multiple selection "field" is selected (e.g.
-     * in SelectBox Group, Listbox with multiple selection ...)
+     * Check whether the given "field" has input.
      * 
-     * @param currSelection
-     *            current selection in "field"
-     * @return String true if something is selected
+     * @param fieldName
+     *            name of parameter (field name)
+     * @return String true if field has input (has value or something is
+     *         selected)
      */
-    public static boolean isSelected(String[] currSelection) {
-        if (currSelection == null)
+    public boolean hasInput(String fieldName) {
+        String currValue = getInput(fieldName);
+        if (currValue == null || currValue.length() == 0) {
             return false;
-        return true;
-    }
+        }
 
-    /**
-     * Generic check whether a "field" is selected (selection not empty)
-     * 
-     * @param currSelection
-     *            current selection in "field"
-     * @return boolean true if something selected (currSelection is not empty)
-     */
-    public static boolean isSelected(String currSelection) {
-        if (currSelection == null || currSelection.length() == 0)
-            return false;
         return true;
     }
 

@@ -10,6 +10,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceForm;
 import de.ingrid.portal.search.PageState;
@@ -24,7 +25,9 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet
     }    
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
-        handleActionForm(request);
+        Context context = getContext(request);
+        ServiceForm sf = handleActionForm(request);
+        context.put("serviceForm", sf);        
         
         super.doView(request, response);
     }
@@ -50,7 +53,7 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet
 		return ps;
     }
 
-    private void handleActionForm(PortletRequest request) {
+    private ServiceForm handleActionForm(PortletRequest request) {
         PortletSession session = request.getPortletSession();
         ServiceForm sf = (ServiceForm) session.getAttribute(ServiceForm.SESS_ATTRIB);
         if (sf == null) {
@@ -58,6 +61,8 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet
             sf.init();
             session.setAttribute(ServiceForm.SESS_ATTRIB, sf);
         }
+        
+        return sf;
     }
     
 

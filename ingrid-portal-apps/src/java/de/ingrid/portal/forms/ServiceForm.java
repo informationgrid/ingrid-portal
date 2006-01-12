@@ -56,5 +56,25 @@ public class ServiceForm extends ActionForm {
         // TODO Auto-generated method stub
         return false;
     }
+    
+    /**
+     * Check whether given value is selected in rubric
+     * @param value
+     * @return HTML checked string or empty string
+     */
+    public String checkRubricSelection(String value)
+    {
+        return isValueSelected(PARAM_RUBRIC, value, HTML_CHECKED);
+    }
+
+    /**
+     * Check whether given value is selected as partner
+     * @param value
+     * @return HTML select string or empty string
+     */
+    public String checkPartnerSelection(String value)
+    {
+        return isValueSelected(PARAM_PARTNER, value, HTML_SELECTED);
+    }
 
 }

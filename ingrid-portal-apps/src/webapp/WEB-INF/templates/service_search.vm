@@ -1,65 +1,110 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="service_search" id="service_search">
-<div class="formbody">
-  <h2 class="nospace">Auswahlkriterien</h2>
-
-	<div class="float_left">
-  	<h3>Rubriken</h3>
-    <table cellpadding="0" cellspacing="0">
-      <tr>
-        <td><input id="chk_all" name="rubric" type="checkbox" value="1" onclick="allTopics()" onkeypress="allTopics()" /> <label for="chk_all">Alle</label></td>
-	      <td></td>
-	      <td></td>
-
-      </tr>
-      <tr>
-        <td><input id="chk_1" name="rubric" type="checkbox" value="2" onclick="checkTopics()" onkeypress="checkTopics()" /> <label for="chk_1">Pressemitteilungen</label></td>
-        <td><input id="chk_2" name="rubric" type="checkbox" value="3" onclick="checkTopics()" onkeypress="checkTopics()" /> <label for="chk_2">Publikationen</label></td>      	        
-	      <td><input id="chk_3" name="rubric" type="checkbox" value="4" onclick="checkTopics()" onkeypress="checkTopics()" /> <label for="chk_3">Veranstaltungen</label></td>     		     
-      </tr>
-    </table>  
-  </div>  
-  <div class="clearer"></div>
-
-  <br style="line-height:10px" />
-  <div class="float_left">
-  	<h3>Bund/Länder</h3>
-    <select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
-      <option value="1" >------ Alles auswählen ------</option>
-      <option value="2">Bund</option>
-      <option value="3">Baden-Württemberg</option>
-      <option value="4">Bayern</option>
-      <option value="5">Berlin</option>
-      <option value="6">Brandenburg</option>
-      <option value="7">Bremen</option>
-      <option value="8">Hamburg</option>
-      <option value="9">Hessen</option>
-      <option value="10">Mecklenburg-Vorpommern</option>
-      <option value="11">Niedersachsen</option>
-      <option value="12">Nordrhein-Westfalen</option>
-      <option value="13">Rheinland-Pfalz</option>
-      <option value="14">Saarland</option>
-      <option value="15">Sachsen</option>
-      <option value="16">Sachsen-Anhalt</option>
-      <option value="17">Schleswig-Holstein</option>
-      <option value="18">Thüringen</option>
-    </select>
- </div>
- <div class="float_left marginleft">
-    <h3>Gruppierung</h3>
-
-    <input type="radio" id="grouping_no" name="grouping" value="1" checked="checked" /><label class="radiogroup" for="grouping_no">Keine</label><br />
-    <input type="radio" id="grouping_partner" name="grouping" value="2" /><label class="radiogroup" for="grouping_partner">Bund/Länder</label><br />
-    <input type="radio" id="grouping_info" name="grouping" value="3" /><label class="radiogroup" for="grouping_info">Informationsanbieter</label><br />
-  </div>
-  <br />
-  <span class="clearer"></span>
-</div>
-
-<div class="formfooter">
-  <div align="right">
-    <input class="btn" type="submit" value="Anzeigen" />
-  </div>
-</div>
+	<div class="formbody">
+		<h2 class="nospace">Auswahlkriterien
+		</h2>
+		<div class="float_left">
+			<h3>Rubriken
+			</h3>
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td>
+						<input id="chk_all" name="rubric" type="checkbox" value="1" onclick="allTopics()" onkeypress="allTopics()" $serviceForm.checkRubricSelection("1")/> 
+						<label for="chk_all">Alle
+						</label>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="chk_1" name="rubric" type="checkbox" value="2" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("2")/> 
+						<label for="chk_1">Pressemitteilungen
+						</label>
+					</td>
+					<td>
+						<input id="chk_2" name="rubric" type="checkbox" value="3" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("3")/> 
+						<label for="chk_2">Publikationen
+						</label>
+					</td>      	        
+					<td>
+						<input id="chk_3" name="rubric" type="checkbox" value="4" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("4")/> 
+						<label for="chk_3">Veranstaltungen
+						</label>
+					</td>     		     
+				</tr>
+			</table>  
+		</div>  
+		<div class="clearer">
+		</div>
+		<br style="line-height:10px" />
+		<div class="float_left">
+			<h3>Bund/Länder
+			</h3>
+			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
+				<option value="1"  $serviceForm.checkPartnerSelection("1")>------ Alles auswählen ------
+				</option>
+				<option value="2" $serviceForm.checkPartnerSelection("2")>Bund
+				</option>
+				<option value="3" $serviceForm.checkPartnerSelection("3")>Baden-Württemberg
+				</option>
+				<option value="4" $serviceForm.checkPartnerSelection("4")>Bayern
+				</option>
+				<option value="5" $serviceForm.checkPartnerSelection("5")>Berlin
+				</option>
+				<option value="6" $serviceForm.checkPartnerSelection("6")>Brandenburg
+				</option>
+				<option value="7" $serviceForm.checkPartnerSelection("7")>Bremen
+				</option>
+				<option value="8" $serviceForm.checkPartnerSelection("8")>Hamburg
+				</option>
+				<option value="9" $serviceForm.checkPartnerSelection("9")>Hessen
+				</option>
+				<option value="10" $serviceForm.checkPartnerSelection("10")>Mecklenburg-Vorpommern
+				</option>
+				<option value="11" $serviceForm.checkPartnerSelection("11")>Niedersachsen
+				</option>
+				<option value="12" $serviceForm.checkPartnerSelection("12")>Nordrhein-Westfalen
+				</option>
+				<option value="13" $serviceForm.checkPartnerSelection("13")>Rheinland-Pfalz
+				</option>
+				<option value="14" $serviceForm.checkPartnerSelection("14")>Saarland
+				</option>
+				<option value="15" $serviceForm.checkPartnerSelection("15")>Sachsen
+				</option>
+				<option value="16" $serviceForm.checkPartnerSelection("16")>Sachsen-Anhalt
+				</option>
+				<option value="17" $serviceForm.checkPartnerSelection("17")>Schleswig-Holstein
+				</option>
+				<option value="18" $serviceForm.checkPartnerSelection("18")>Thüringen
+				</option>
+			</select>
+		</div>
+		<div class="float_left marginleft">
+			<h3>Gruppierung
+			</h3>
+			<input type="radio" id="grouping_no" name="grouping" value="1" checked="checked" />
+			<label class="radiogroup" for="grouping_no">Keine
+			</label>
+			<br />
+			<input type="radio" id="grouping_partner" name="grouping" value="2" />
+			<label class="radiogroup" for="grouping_partner">Bund/Länder
+			</label>
+			<br />
+			<input type="radio" id="grouping_info" name="grouping" value="3" />
+			<label class="radiogroup" for="grouping_info">Informationsanbieter
+			</label>
+			<br />
+		</div>
+		<br />
+		<span class="clearer">
+		</span>
+	</div>
+	<div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" value="Anzeigen" />
+		</div>
+	</div>
 </form>
-		
