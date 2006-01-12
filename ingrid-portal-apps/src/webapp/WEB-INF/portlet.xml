@@ -7,6 +7,29 @@
 ]>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
+
+    <portlet id="Privacy">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/privacy.vm</value>
+        </init-param>
+        <portlet-name>Privacy</portlet-name>
+        <display-name>Privacy</display-name>
+        <description>This portlet displayes a enviroment search box.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Datenschutzbestimmungen</title>
+            <short-title>Privacy</short-title>
+        </portlet-info>
+    </portlet>
+
+
     <portlet id="DisclaimerInfo">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

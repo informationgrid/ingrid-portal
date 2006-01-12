@@ -22,8 +22,8 @@ limitations under the License.
   <title>data privacy</title>
   <metadata name="title" xml:lang="de">Datenschutzbestimmung</metadata>
 
-  <fragment id="simplest" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="ig-1" type="portlet" name="ingrid-portal-apps::SearchBoxOnHome">
+  <fragment id="privacy" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::Privacy">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
