@@ -25,8 +25,13 @@
   <link rel="shortcut icon" href="img/favicon.ico">
   <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
 
+  #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   #IncludeStylesheets()
   #includeJavaScriptForHead()
+
+  #* our decorator macros, see ./decorator-macros.vm *#
+  #decoratorIncludeJavaScriptForHead()
+
   </head>
   <body class="#PageBaseCSSClass()">
 <!--  BEGIN: layout/html/portalu/decorator.vm -->

@@ -44,6 +44,7 @@ public class ServiceForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#populate(javax.portlet.PortletRequest)
      */
     public void populate(PortletRequest request) {
+        clearInput();
         setInput(PARAM_RUBRIC, request.getParameterValues(PARAM_RUBRIC));
         setInput(PARAM_PARTNER, request.getParameterValues(PARAM_PARTNER));
         setInput(PARAM_GROUPING, request.getParameter(PARAM_GROUPING));

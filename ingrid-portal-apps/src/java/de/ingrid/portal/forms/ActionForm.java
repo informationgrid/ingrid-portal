@@ -104,7 +104,12 @@ public abstract class ActionForm implements Serializable {
      * @param dataArray
      * @param separator
      */
-    public void setInput(String key, String[] dataArray, String separator) {
+    private void setInput(String key, String[] dataArray, String separator) {
+        if (dataArray == null) {
+            setInput(key, "");
+            return;            
+        }
+        
         StringBuffer result = new StringBuffer();
         if (dataArray.length > 0) {
             result.append(dataArray[0]);
