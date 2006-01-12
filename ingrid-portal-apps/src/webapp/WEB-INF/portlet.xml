@@ -7,6 +7,47 @@
 ]>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
+    <portlet id="DisclaimerInfo">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/disclaimer_info.vm</value>
+        </init-param>
+        <portlet-name>DisclaimerInfo</portlet-name>
+        <display-name>DisclaimerInfo</display-name>
+        <description>This portlet displays the enviroment chronicle search info dialog.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Inhalt des Artikels</title>
+            <short-title>DisclaimerInfo</short-title>
+        </portlet-info>
+    </portlet>
+    <portlet id="Disclaimer">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/disclaimer.vm</value>
+        </init-param>
+        <portlet-name>Disclaimer</portlet-name>
+        <display-name>Disclaimer</display-name>
+        <description>This portlet displayes a enviroment search box.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Impressum</title>
+            <short-title>Disclaimer</short-title>
+        </portlet-info>
+    </portlet>
+
 
     <portlet id="NewsletterTeaser">
         <init-param>
@@ -37,7 +78,7 @@
         <portlet-name>Contact</portlet-name>
         <display-name>Contact</display-name>
         <description>This portlet displayes a enviroment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ContactPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
