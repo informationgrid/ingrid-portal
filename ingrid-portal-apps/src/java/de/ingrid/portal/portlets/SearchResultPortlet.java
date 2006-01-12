@@ -13,11 +13,18 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.ibus.Bus;
+import de.ingrid.ibus.DummyProxyFactory;
+import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
+import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Please add comments!
@@ -150,18 +157,53 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     
     private SearchResultList doSearch(String qryStr, String ds, int start, int limit, boolean ranking) {
     	
-    	SearchResultList result = new SearchResultList();
     	
+        SearchResultList result = new SearchResultList();
+        
     	if (ranking) {
-    		SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
-    		if (start > l.size())
-    			start = l.size() - limit - 1;
-    		for (int i=start; i<start + limit; i++) {
-    			if (i >= l.size())
-    				break;
-    			result.add(l.get(i));
-    		}
-    		result.setNumberOfHits(l.getNumberOfHits());
+
+/*
+            Bus bus = new Bus(new DummyProxyFactory());
+            PlugDescription[] plugDescriptions = new PlugDescription[3];
+            for (int i = 0; i < plugDescriptions.length; i++) {
+                plugDescriptions[i] = new PlugDescription();
+                plugDescriptions[i].setPlugId("" + i);
+                plugDescriptions[i].setOraganisation("Bundesumweltamt");
+                plugDescriptions[i].setDataType("webiste");
+                bus.getIPlugRegistry().addIPlug(plugDescriptions[i]);
+            }
+            IngridQuery query;
+            IngridDocument[] documents = null;
+            try {
+                query = QueryStringParser.parse("fische ort:halle");
+                documents = bus.search(query, 10, 1, Integer.MAX_VALUE, 1000);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+            if (documents != null) {
+                for (int i =0; i< documents.length; i++) {
+                    result.add(documents[i]);
+                }
+                result.setNumberOfHits(documents.length);
+            } else {
+                result.setNumberOfHits(0);
+            }
+*/            
+            SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
+            if (start > l.size())
+                start = l.size() - limit - 1;
+            for (int i=start; i<start + limit; i++) {
+                if (i >= l.size())
+                    break;
+                result.add(l.get(i));
+            }
+            result.setNumberOfHits(l.getNumberOfHits());
+            
     	} else {
     		SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
     		if (start > l.size())
