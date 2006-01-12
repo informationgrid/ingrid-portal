@@ -7,6 +7,48 @@
 ]>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
+
+    <portlet id="NewsletterTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/newsletter_teaser.vm</value>
+        </init-param>
+        <portlet-name>NewsletterTeaser</portlet-name>
+        <display-name>NewsletterTeaser</display-name>
+        <description>This portlet displays the enviroment chronicle search info dialog.</description>
+        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Newsletter</title>
+            <short-title>NewsletterTeaser</short-title>
+        </portlet-info>
+    </portlet>
+    <portlet id="Contact">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/contact.vm</value>
+        </init-param>
+        <portlet-name>Contact</portlet-name>
+        <display-name>Contact</display-name>
+        <description>This portlet displayes a enviroment search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Kontakt</title>
+            <short-title>Contact</short-title>
+        </portlet-info>
+    </portlet>
+
     <portlet id="SitemapPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

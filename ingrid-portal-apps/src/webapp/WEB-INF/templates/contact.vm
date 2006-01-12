@@ -1,0 +1,117 @@
+<h2>Telefon und Adresse
+</h2>
+<p>Sie erreichen unsere Zentrale telefonisch unter +49 (0)511 1203480.
+</p>
+<p>Ein Fax können Sie an den Anschluss +49 (0)511 120-3697 senden oder schreiben Sie uns:
+</p>
+<p>
+	Niedersächsisches Umweltministerium
+	<br />
+	- Koordinierungsstelle UDK/gein
+	<br />
+	Archivstrasse 2
+	<br />
+	D-30167 Hannover
+	<br />
+</p> 
+<p>Nehmen Sie online Kontakt mit uns auf! Wir werden Ihnen schnellstmöglichst per E-Mail antworten. Die eingegebenen Informationen und Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert und genutzt.
+</p>
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="contact" id="contact">
+	<div class="formbody">
+		<h3>
+			<label for="bemerkungen">Ihre Nachricht, Fragen oder Anregungen
+			</label>
+		</h3>
+		<textarea cols="60" rows="10" name="bemerkungen" id="bemerkungen"></textarea>
+		<h3>* Pflichtangaben
+		</h3>
+		<p>
+			<label class="float_left col2left" for="xx2">Vorname*:
+			</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx2" name="xx" value="" />
+			<span class="clearer">
+			</span>    			  
+		</p>
+		<p>
+			<label class="float_left col2left" for="xx3">Nachname*:
+			</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx3" name="xx" value="" />
+			<span class="clearer">
+			</span>
+		</p>
+		<p>
+			<label class="float_left col2left" for="xx4">Organisation, Firma:
+			</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx4" name="xx" value="" />
+			<span class="clearer">
+			</span>
+		</p>
+		<p>
+			<label class="float_left col2left" for="xx5">Telefon:
+			</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx5" name="xx" value="" />
+			<span class="clearer">
+			</span>    			  
+		</p>
+		<p>
+			<label class="float_left col2left" for="xx6">E-Mail-Adresse*:
+			</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx6" name="xx" value="" />
+			<span class="clearer">
+			</span>
+		</p>
+		<p>
+			<label class="float_left col2left" for="activity">Tätigkeitsbereich:
+			</label>
+			<select class="float_left inputstyle" size="1" id="activity" name="activity">
+				<option value="null" selected="selected">---
+				</option>
+				<option value="schul">Sch&uuml;ler
+				</option>
+				<option value="hand">Handwerk/Technik
+				</option>
+				<option value="umwe">Umweltdienstleistungen
+				</option>
+				<option value="beho">Beh&ouml;rde
+				</option>
+				<option value="lehre">Lehrer
+				</option>
+				<option value="univ">Universit&auml;t
+				</option>
+				<option value="medi">Medien
+				</option>
+				<option value="ande">Anderes
+				</option>
+			</select>  
+			<span class="clearer">
+			</span>
+		</p>
+		<p>
+			<label class="float_left col2left" for="type_interest">Mein Interesse an Umweltinformationen ist:
+			</label>
+			<select class="float_left inputstyle" size="1" id="type_interest" name="type_interest">
+				<option>beruflich
+				</option>
+				<option>privat
+				</option>
+			</select>  
+			<span class="clearer">
+			</span>
+		</p>        	    
+		<p>
+			<label class="float_left col2left">PortalU Newsletter:
+			</label>
+			<input type="checkbox" id="chk1" name="chk1" value="1" />&nbsp;
+			<label for="chk1">Ich möchte den Newsletter abonnieren.
+			</label>
+			<span class="clearer">
+			</span>
+		</p>
+	</div>
+	<div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" value="Absenden" />
+		</div>
+	</div>
+</form>
