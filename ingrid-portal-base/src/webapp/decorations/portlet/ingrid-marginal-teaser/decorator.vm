@@ -6,9 +6,6 @@
 <div class="portlet">
   <div class="section-header">
     <h1 class="float_left">$!jetspeed.getTitle($jetspeed.getPortletEntity($f), $f)</h1>
-    <span class="portlet_info">
-    <a href="javascript:contextHelp()">?</a>
-	</span>
     <span class="clearer"></span>
   </div>
     #if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
