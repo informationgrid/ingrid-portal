@@ -38,6 +38,10 @@ public class SimilarTreeNode implements Serializable {
 	 */
 	private String id;
 
+	/**
+	 * TODO: Comment for <code>depth</code>
+	 */
+	private int depth;
 
 
 	/**
@@ -47,6 +51,10 @@ public class SimilarTreeNode implements Serializable {
 		children.add(n);
 	}
 
+	public SimilarTreeNode(String id, String name, boolean isOpen, int depth) {
+		this(id, name, isOpen);
+		this.depth = depth;
+	}
 	/**
 	 * @param name
 	 * @param isOpen
@@ -108,6 +116,20 @@ public class SimilarTreeNode implements Serializable {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return Returns the depth.
+	 */
+	public int getDepth() {
+		return depth;
+	}
+
+	/**
+	 * @param depth The depth to set.
+	 */
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 	
 }

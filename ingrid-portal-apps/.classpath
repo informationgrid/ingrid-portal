@@ -8,5 +8,9 @@
 	<classpathentry kind="var" path="MAVEN_REPO/velocity/jars/velocity-1.4.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.bridges/jars/portals-bridges-velocity-1.0.jar"/>
 	<classpathentry sourcepath="INGRID_UTILS_SRC" kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-utils-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-sockets-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/remote-proxies-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-ibus-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

@@ -19,28 +19,28 @@ import de.ingrid.portal.search.SimilarTreeNode;
 public class SimilarNodeFactoryMockup {
 
 	public static SimilarTreeNode getSimilarNodes() {
-		SimilarTreeNode root = new SimilarTreeNode("1", "root", false);
+		SimilarTreeNode root = new SimilarTreeNode("1", "root", false, 0);
 		
 		SimilarTreeNode n;
 		SimilarTreeNode n1;
 		
 		
-		n = new SimilarTreeNode("2", "Luft", false);
+		n = new SimilarTreeNode("2", "Luft", false, 1);
 
-		n1 = new SimilarTreeNode("3", "Abgasemission", false);
+		n1 = new SimilarTreeNode("3", "Abgasemission", false, 2);
 		n.addChild(n1);
-		n1 = new SimilarTreeNode("4", "Bodenluft", false);
+		n1 = new SimilarTreeNode("4", "Bodenluft", false, 2);
 		n.addChild(n1);
-		n1 = new SimilarTreeNode("5", "Druckluft", false);
+		n1 = new SimilarTreeNode("5", "Druckluft", false, 2);
 		n.addChild(n1);
 
 		root.addChild(n);
 
-		n = new SimilarTreeNode("6", "Gesundheit", false);
+		n = new SimilarTreeNode("6", "Gesundheit", false, 1);
 
-		n1 = new SimilarTreeNode("7","Gesundheitsrisiko",false);
+		n1 = new SimilarTreeNode("7","Gesundheitsrisiko",false, 2);
 		n.addChild(n1);
-		n1 = new SimilarTreeNode("8","Apostel",false);
+		n1 = new SimilarTreeNode("8","Apostel",false, 2);
 		n.addChild(n1);
 
 		root.addChild(n);

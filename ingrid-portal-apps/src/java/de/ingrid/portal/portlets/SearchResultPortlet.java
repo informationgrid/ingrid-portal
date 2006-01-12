@@ -1,6 +1,8 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -119,7 +121,18 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         } else if (action.equalsIgnoreCase("doCloseNode")) {
         	SimilarNodeFactoryMockup.setOpen((SimilarTreeNode)ps.get("similarRoot"), request.getParameter("nodeId"), false);
         } else if (action.equalsIgnoreCase("doAddSimilar")) {
-        	// TODO
+        	ArrayList nodes = getNodeChildrenArray((SimilarTreeNode)ps.get("similarRoot"));
+        	Iterator it = nodes.iterator();
+        	StringBuffer sbQuery = new StringBuffer(ps.getString("query"));
+        	while (it.hasNext()) {
+        		SimilarTreeNode node = (SimilarTreeNode)it.next();
+        		if (request.getParameter("chk_"+node.getId()) != null && sbQuery.indexOf(node.getName()) == -1) {
+        			sbQuery.append(" AND ").append(node.getName());
+        		} else if (node.getDepth() == 2) {
+        			node.setOpen(false);
+        		}
+        	}
+        	ps.put("query", sbQuery.toString());
         }
     	try {
     		ps.putInt("rankedNavStart",Integer.parseInt(request.getParameter("rstart")));
@@ -173,6 +186,18 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 		ps.putInt("unrankedNavStart", 0);
 		ps.putInt("unrankedNavLimit", 1);
 		return ps;
+    }
+    
+    private ArrayList getNodeChildrenArray(SimilarTreeNode n) {
+    	
+    	ArrayList ret = new ArrayList();
+    	Iterator it = n.getChildren().iterator();
+    	while (it != null && it.hasNext()) {
+    		ret.addAll(getNodeChildrenArray((SimilarTreeNode) it.next()));
+    	}
+		ret.add(n);
+    	
+		return ret;
     }
     
 }

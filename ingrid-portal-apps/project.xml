@@ -102,6 +102,64 @@
 	        <war.bundle>true</war.bundle>
 	      </properties>
 	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-ibus</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
+		<dependency>
+            <groupId>weta-components</groupId>
+            <artifactId>communication</artifactId>
+            <version>SNAPSHOT</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+	        <type>jar</type>
+            <url>http://www.weta-group.net/maven/</url>
+		</dependency>
+		<dependency>
+            <groupId>weta-components</groupId>
+            <artifactId>remote-proxies</artifactId>
+            <version>SNAPSHOT</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+            <url>http://www.weta-group.net/maven/</url>
+		</dependency>
+		<dependency>
+            <groupId>weta-components</groupId>
+            <artifactId>communication-sockets</artifactId>
+            <version>SNAPSHOT</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+            <url>http://www.weta-group.net/maven/</url>
+		</dependency>
+		<dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.1_3</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+            <url>http://ibiblio.org/maven</url>
+		</dependency>
+		<dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.8</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+            <url>http://ibiblio.org/maven</url>
+		</dependency>	    
     </dependencies>
     <build> 
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
