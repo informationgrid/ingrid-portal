@@ -17,14 +17,17 @@ public class ServiceForm extends ActionForm {
 
     /** parameter name of "rubric" checkbox group in form */
     public static final String PARAM_RUBRIC = "rubric";
-    public static final String DEFAULT_RUBRIC = "1";
+
+    public static final String DEFAULT_RUBRIC = "1,2,3,4";
 
     /** parameter name of "partner" selection list in form */
     public static final String PARAM_PARTNER = "partner";
+
     public static final String DEFAULT_PARTNER = "1";
 
     /** parameter name of "grouping" radio group in form */
     public static final String PARAM_GROUPING = "grouping";
+
     public static final String DEFAULT_GROUPING = "1";
 
     /**
@@ -34,18 +37,15 @@ public class ServiceForm extends ActionForm {
         clearInput();
         setInput(PARAM_RUBRIC, DEFAULT_RUBRIC);
         setInput(PARAM_PARTNER, DEFAULT_PARTNER);
-        setInput(PARAM_GROUPING, DEFAULT_GROUPING);        
+        setInput(PARAM_GROUPING, DEFAULT_GROUPING);
     }
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#populate(javax.portlet.PortletRequest)
      */
     public void populate(PortletRequest request) {
-        String rubric = request.getParameter(PARAM_RUBRIC);
-        String partner = request.getParameter(PARAM_PARTNER);
-        String grouping = request.getParameter(PARAM_GROUPING);
-        setInput(PARAM_RUBRIC, request.getParameter(PARAM_RUBRIC));
-        setInput(PARAM_PARTNER, request.getParameter(PARAM_PARTNER));
+        setInput(PARAM_RUBRIC, request.getParameterValues(PARAM_RUBRIC));
+        setInput(PARAM_PARTNER, request.getParameterValues(PARAM_PARTNER));
         setInput(PARAM_GROUPING, request.getParameter(PARAM_GROUPING));
     }
 
@@ -56,25 +56,50 @@ public class ServiceForm extends ActionForm {
         // TODO Auto-generated method stub
         return false;
     }
-    
+
     /**
      * Check whether given value is selected in rubric
+     * 
      * @param value
      * @return HTML checked string or empty string
      */
-    public String checkRubricSelection(String value)
-    {
+    public String checkRubricSelection(String value) {
         return isValueSelected(PARAM_RUBRIC, value, HTML_CHECKED);
     }
 
     /**
      * Check whether given value is selected as partner
+     * 
      * @param value
      * @return HTML select string or empty string
      */
-    public String checkPartnerSelection(String value)
-    {
+    public String checkPartnerSelection(String value) {
         return isValueSelected(PARAM_PARTNER, value, HTML_SELECTED);
+    }
+
+    /**
+     * Check whether given value is selected in grouping
+     * 
+     * @param value
+     * @return HTML checked string or empty string
+     */
+    public String checkGroupingSelection(String value) {
+        return isValueSelected(PARAM_GROUPING, value, HTML_CHECKED);
+    }
+
+    /**
+     * static getters FOR VELOCITY !
+     */
+    public static String getPARAM_RUBRIC() {
+        return PARAM_RUBRIC;
+    }
+
+    public static String getPARAM_PARTNER() {
+        return PARAM_PARTNER;
+    }
+
+    public static String getPARAM_GROUPING() {
+        return PARAM_GROUPING;
     }
 
 }

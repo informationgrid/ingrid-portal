@@ -9,7 +9,7 @@
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-						<input id="chk_all" name="rubric" type="checkbox" value="1" onclick="allTopics()" onkeypress="allTopics()" $serviceForm.checkRubricSelection("1")/> 
+						<input id="chk_all" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="1" onclick="allTopics()" onkeypress="allTopics()" $serviceForm.checkRubricSelection("1")/> 
 						<label for="chk_all">Alle
 						</label>
 					</td>
@@ -20,17 +20,17 @@
 				</tr>
 				<tr>
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" value="2" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("2")/> 
+						<input id="chk_1" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="2" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("2")/> 
 						<label for="chk_1">Pressemitteilungen
 						</label>
 					</td>
 					<td>
-						<input id="chk_2" name="rubric" type="checkbox" value="3" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("3")/> 
+						<input id="chk_2" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="3" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("3")/> 
 						<label for="chk_2">Publikationen
 						</label>
 					</td>      	        
 					<td>
-						<input id="chk_3" name="rubric" type="checkbox" value="4" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("4")/> 
+						<input id="chk_3" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="4" onclick="checkTopics()" onkeypress="checkTopics()" $serviceForm.checkRubricSelection("4")/> 
 						<label for="chk_3">Veranstaltungen
 						</label>
 					</td>     		     
@@ -43,7 +43,7 @@
 		<div class="float_left">
 			<h3>Bund/Länder
 			</h3>
-			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
+			<select class="spacial_relation inputstyle" name="$serviceForm.PARAM_PARTNER" size="5" multiple="multiple">
 				<option value="1"  $serviceForm.checkPartnerSelection("1")>------ Alles auswählen ------
 				</option>
 				<option value="2" $serviceForm.checkPartnerSelection("2")>Bund
@@ -85,15 +85,15 @@
 		<div class="float_left marginleft">
 			<h3>Gruppierung
 			</h3>
-			<input type="radio" id="grouping_no" name="grouping" value="1" checked="checked" />
+			<input type="radio" id="grouping_no" name="$serviceForm.PARAM_GROUPING" value="1" $serviceForm.checkGroupingSelection("1")/>
 			<label class="radiogroup" for="grouping_no">Keine
 			</label>
 			<br />
-			<input type="radio" id="grouping_partner" name="grouping" value="2" />
+			<input type="radio" id="grouping_partner" name="$serviceForm.PARAM_GROUPING" value="2" $serviceForm.checkGroupingSelection("2")/>
 			<label class="radiogroup" for="grouping_partner">Bund/Länder
 			</label>
 			<br />
-			<input type="radio" id="grouping_info" name="grouping" value="3" />
+			<input type="radio" id="grouping_info" name="$serviceForm.PARAM_GROUPING" value="3" $serviceForm.checkGroupingSelection("3")/>
 			<label class="radiogroup" for="grouping_info">Informationsanbieter
 			</label>
 			<br />

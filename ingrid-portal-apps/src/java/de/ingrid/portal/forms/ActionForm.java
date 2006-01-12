@@ -76,13 +76,44 @@ public abstract class ActionForm implements Serializable {
     }
 
     /**
-     * Set Input Data for specific field.
+     * Set Input Data for single value field
      * 
      * @param key
      * @param data
      */
     public void setInput(String key, String data) {
         input.put(key, data);
+    }
+
+    /**
+     * Set Input Data for multiple value field. NOTICE: String Array is
+     * converted to one String with ","-separator between strings !
+     * 
+     * @param key
+     * @param dataArray
+     */
+    public void setInput(String key, String[] dataArray) {
+        setInput(key, dataArray, ",");
+    }
+
+    /**
+     * Set Input Data for multiple value field. NOTICE: String Array is
+     * converted to one String with passed separator between strings !
+     * 
+     * @param key
+     * @param dataArray
+     * @param separator
+     */
+    public void setInput(String key, String[] dataArray, String separator) {
+        StringBuffer result = new StringBuffer();
+        if (dataArray.length > 0) {
+            result.append(dataArray[0]);
+            for (int i = 1; i < dataArray.length; i++) {
+                result.append(separator);
+                result.append(dataArray[i]);
+            }
+        }
+        setInput(key, result.toString());
     }
 
     public void clearInput() {
