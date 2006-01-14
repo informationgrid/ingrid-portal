@@ -24,7 +24,8 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
         ServiceForm sf = getActionForm(request);
-        context.put("serviceForm", sf);
+        // use "actionForm" so velocity macros work !
+        context.put("actionForm", sf);
 
         super.doView(request, response);
     }
@@ -33,9 +34,12 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
             IOException {
         String action = request.getParameter("action");
 
-        // take over form parameter in action form
+        // check form input
         ServiceForm sf = getActionForm(request);
         sf.populate(request);
+        if (!sf.validate()) {
+            return;
+        }
 
         // PageState ps = getPageState(request);
 
@@ -46,16 +50,16 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
 
     private ServiceForm getActionForm(PortletRequest request) {
         PortletSession session = request.getPortletSession();
-        ServiceForm sf = (ServiceForm) session.getAttribute(ServiceForm.SESS_ATTRIB);
+        ServiceForm sf = (ServiceForm) session.getAttribute(ServiceForm.SESSION_KEY);
         if (sf == null) {
             sf = new ServiceForm();
             sf.init();
-            session.setAttribute(ServiceForm.SESS_ATTRIB, sf);
+            session.setAttribute(ServiceForm.SESSION_KEY, sf);
         }
 
         return sf;
     }
-
+/*
     private PageState getPageState(PortletRequest request) {
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("service_search_portlet_page_state");
@@ -71,5 +75,5 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
     private PageState initPageState(PageState ps) {
         return ps;
     }
-
+*/
 }

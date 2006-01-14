@@ -4,8 +4,8 @@
 package de.ingrid.portal.forms;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import javax.portlet.PortletRequest;
@@ -17,15 +17,6 @@ import javax.portlet.PortletRequest;
  * @author Martin Maidhof
  */
 public abstract class ActionForm implements Serializable {
-
-    /** HTML: break (<br>) */
-    public static final String HTML_LINE_FEED = "<br />";
-
-    /** HTML: checkbox, radio button pre selection string ("checked") */
-    public static final String HTML_CHECKED = "checked=\"checked\"";
-
-    /** HTML: listbox, pre selection string ("selected") */
-    public static final String HTML_SELECTED = "selected=\"selected\"";
 
     /**
      * encapsulates form input data. NOTICE: HashMap is NOT SYNCHRONIZED
@@ -65,51 +56,34 @@ public abstract class ActionForm implements Serializable {
     // INPUT HANDLING
     // ==============
     /**
-     * Get Input Data of specific field.
-     * 
-     * @param key
-     * @return input data or "" if no input
+     * Get Input Data of specific field. Returns "" if no input.
      */
-    public String getInput(String key) {
-        Object inputVal = input.get(key.trim());
+    public String getInput(String field) {
+        Object inputVal = input.get(field.trim());
         return (inputVal == null) ? "" : inputVal.toString();
     }
 
     /**
      * Set Input Data for single value field
-     * 
-     * @param key
-     * @param data
      */
-    public void setInput(String key, String data) {
-        input.put(key, data);
-    }
-
-    /**
-     * Set Input Data for multiple value field. NOTICE: String Array is
-     * converted to one String with ","-separator between strings !
-     * 
-     * @param key
-     * @param dataArray
-     */
-    public void setInput(String key, String[] dataArray) {
-        setInput(key, dataArray, ",");
+    public void setInput(String field, String data) {
+        if (data == null) {
+            input.remove(field);
+            return;
+        }
+        input.put(field, data);
     }
 
     /**
      * Set Input Data for multiple value field. NOTICE: String Array is
      * converted to one String with passed separator between strings !
-     * 
-     * @param key
-     * @param dataArray
-     * @param separator
      */
-    private void setInput(String key, String[] dataArray, String separator) {
+    public void setInput(String field, String[] dataArray, String separator) {
         if (dataArray == null) {
-            setInput(key, "");
-            return;            
+            input.remove(field);
+            return;
         }
-        
+
         StringBuffer result = new StringBuffer();
         if (dataArray.length > 0) {
             result.append(dataArray[0]);
@@ -118,7 +92,7 @@ public abstract class ActionForm implements Serializable {
                 result.append(dataArray[i]);
             }
         }
-        setInput(key, result.toString());
+        setInput(field, result.toString());
     }
 
     public void clearInput() {
@@ -130,44 +104,33 @@ public abstract class ActionForm implements Serializable {
     // ==============
 
     /**
-     * Get validation error message for a specific key (e.g. fieldname)
+     * Are there errors encapsulated (on validation)
      * 
-     * @param key
-     * @return error message or "" if no error occured
+     * @return true if there are errors
      */
-    public String getError(String key) {
-        Object errorMsg = errors.get(key.trim());
-        return (errorMsg == null) ? "" : errorMsg.toString();
+    public boolean hasErrors() {
+        return errors.isEmpty();
     }
 
     /**
-     * Get all validation error messages in separate lines
-     * 
-     * @return "" if no error occured on validation, else all error messages
+     * Is there an input error in the specified field ?
      */
-    public String getErrors() {
-        String allErrors = "";
-
-        // Iterate over the keys in the map
-        Iterator it = errors.values().iterator();
-        while (it.hasNext()) {
-            allErrors = allErrors + it.next() + HTML_LINE_FEED;
-        }
-
-        return allErrors;
+    public boolean hasErrorInField(String field) {
+        return errors.containsKey(field);
     }
 
     /**
-     * Set an error message
-     * 
-     * @param key
-     *            The key for the message (e.g. the according name of the field
-     *            which caused the error !)
-     * @param msg
-     *            The error message
+     * Return all encapsulated error values (the error "messages")
      */
-    public void setError(String key, String msg) {
-        errors.put(key, msg);
+    public Collection getAllErrors() {
+        return errors.values();
+    }
+
+    /**
+     * Set an error message for a field. NOTICE: A Field can only have ONE Error Message !
+     */
+    public void setError(String field, String msg) {
+        errors.put(field, msg);
     }
 
     /**
@@ -182,80 +145,14 @@ public abstract class ActionForm implements Serializable {
     // =======================
 
     /**
-     * Check whether a specific value in a multiple input "field" is selected
-     * (e.g. in SelectBox Group, Listbox with multiple selection ...)
-     * 
-     * @param fieldName
-     *            name of parameter (is key to our hash map)
-     * @param checkValue
-     *            selection value to check
-     * @param returnValue
-     *            the value to return if selection is true. Pass here our static
-     *            consts (CHECKED for checkbox, SELECTED for listbox)
-     * @return if selection is true the passed returnValue otherwise empty
-     *         String
+     * Check if the given value was entered in given field. Includes multiple input
+     * "fields" (e.g. in SelectBox Group, Listbox with multiple selection ...)
      */
-    public String isValueSelected(String fieldName, String checkValue, String returnValue) {
+    public boolean isCurrentInput(String fieldName, String value) {
         String currValue = getInput(fieldName);
-        if (currValue == null || currValue.indexOf(checkValue) == -1) {
-            return "";
-        }
-
-        return returnValue;
-    }
-
-    /**
-     * Check whether a specific value in a multiple input "field" is selected
-     * (e.g. in SelectBox Group, Listbox with multiple selection ...) including
-     * check for a default value IF NOTHING IS SELECTED IN THE "FIELD" (only
-     * then defaultValue is checked !).
-     * 
-     * @param fieldName
-     *            name of parameter (is key to our hash map)
-     * @param checkValue
-     *            selection value to check
-     * @param defaultValue
-     *            the default selection to compare with if no current selection
-     *            in "field"
-     * @param returnValue
-     *            the value to return if selection is true (that means if the
-     *            checkValue is currently selected in the "field" or if nothing
-     *            is selected in the "field" and the checkValue is the
-     *            defaultSelection). Pass here our static consts (CHECKED for
-     *            checkbox, SELECTED for listbox)
-     * @return if selection is true the passed returnValue otherwise empty
-     *         String
-     */
-    public String isValueSelected(String fieldName, String checkValue, String defaultValue, String returnValue) {
-        String currValue = getInput(fieldName);
-        if (currValue == null || currValue.length() == 0) {
-            // Nothing selected, check for default value
-            if (defaultValue.indexOf(checkValue) != -1) {
-                return returnValue;
-            }
-        } else if (currValue.indexOf(checkValue) != -1) {
-            // something selected and is our check value
-            return returnValue;
-        }
-
-        return "";
-    }
-
-    /**
-     * Check whether the given "field" has input.
-     * 
-     * @param fieldName
-     *            name of parameter (field name)
-     * @return String true if field has input (has value or something is
-     *         selected)
-     */
-    public boolean hasInput(String fieldName) {
-        String currValue = getInput(fieldName);
-        if (currValue == null || currValue.length() == 0) {
+        if (currValue == null || currValue.indexOf(value) == -1) {
             return false;
         }
-
         return true;
     }
-
 }

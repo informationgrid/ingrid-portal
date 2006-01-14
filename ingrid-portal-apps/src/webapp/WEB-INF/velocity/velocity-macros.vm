@@ -1,0 +1,7 @@
+#macro (setChecked $field $value)
+#if ($actionForm.isCurrentInput($field, $value))checked="checked"#end
+#end
+
+#macro (setSelected $field $value)
+#if ($actionForm.isCurrentInput($field, $value))selected="selected"#end
+#end

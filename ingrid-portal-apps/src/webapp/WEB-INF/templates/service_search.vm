@@ -1,3 +1,4 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="service_search" id="service_search">
 	<div class="formbody">
@@ -9,7 +10,7 @@
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-						<input id="chk_all" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="1" onclick="ingrid_checkAll(document.service_search.$serviceForm.PARAM_RUBRIC)" onkeypress="ingrid_checkAll(document.service_search.$serviceForm.PARAM_RUBRIC)" $serviceForm.checkRubricSelection("1")/> 
+						<input id="chk_all" name="rubric" type="checkbox" value="1" onclick="ingrid_checkAll(document.service_search.rubric)" onkeypress="ingrid_checkAll(document.service_search.rubric)" #setChecked("rubric" "1") /> 
 						<label for="chk_all">Alle
 						</label>
 					</td>
@@ -20,17 +21,17 @@
 				</tr>
 				<tr>
 					<td>
-						<input id="chk_1" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="2" onclick="ingrid_checkGroup(document.service_search.$serviceForm.PARAM_RUBRIC)" onkeypress="ingrid_checkGroup(document.service_search.$serviceForm.PARAM_RUBRIC)" $serviceForm.checkRubricSelection("2")/> 
+						<input id="chk_1" name="rubric" type="checkbox" value="2" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" #setChecked("rubric" "2")/> 
 						<label for="chk_1">Pressemitteilungen
 						</label>
 					</td>
 					<td>
-						<input id="chk_2" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="3" onclick="ingrid_checkGroup(document.service_search.$serviceForm.PARAM_RUBRIC)" onkeypress="ingrid_checkGroup(document.service_search.$serviceForm.PARAM_RUBRIC)" $serviceForm.checkRubricSelection("3")/> 
+						<input id="chk_2" name="rubric" type="checkbox" value="3" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" #setChecked("rubric" "3")/> 
 						<label for="chk_2">Publikationen
 						</label>
 					</td>      	        
 					<td>
-						<input id="chk_3" name="$serviceForm.PARAM_RUBRIC" type="checkbox" value="4" onclick="ingrid_checkGroup(document.service_search.$serviceForm.PARAM_RUBRIC)" onkeypress="ingrid_checkGroup(document.service_search.$serviceForm.PARAM_RUBRIC)" $serviceForm.checkRubricSelection("4")/> 
+						<input id="chk_3" name="rubric" type="checkbox" value="4" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" #setChecked("rubric" "4")/> 
 						<label for="chk_3">Veranstaltungen
 						</label>
 					</td>     		     
@@ -43,57 +44,57 @@
 		<div class="float_left">
 			<h3>Bund/Länder
 			</h3>
-			<select class="spacial_relation inputstyle" name="$serviceForm.PARAM_PARTNER" size="5" multiple="multiple">
-				<option value="1"  $serviceForm.checkPartnerSelection("1")>------ Alles auswählen ------
+			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
+				<option value="1" #setSelected("partner" "1")>------ Alles auswählen ------
 				</option>
-				<option value="2" $serviceForm.checkPartnerSelection("2")>Bund
+				<option value="2" #setSelected("partner" "2")>Bund
 				</option>
-				<option value="3" $serviceForm.checkPartnerSelection("3")>Baden-Württemberg
+				<option value="3" #setSelected("partner" "3")>Baden-Württemberg
 				</option>
-				<option value="4" $serviceForm.checkPartnerSelection("4")>Bayern
+				<option value="4" #setSelected("partner" "4")>Bayern
 				</option>
-				<option value="5" $serviceForm.checkPartnerSelection("5")>Berlin
+				<option value="5" #setSelected("partner" "5")>Berlin
 				</option>
-				<option value="6" $serviceForm.checkPartnerSelection("6")>Brandenburg
+				<option value="6" #setSelected("partner" "6")>Brandenburg
 				</option>
-				<option value="7" $serviceForm.checkPartnerSelection("7")>Bremen
+				<option value="7" #setSelected("partner" "7")>Bremen
 				</option>
-				<option value="8" $serviceForm.checkPartnerSelection("8")>Hamburg
+				<option value="8" #setSelected("partner" "8")>Hamburg
 				</option>
-				<option value="9" $serviceForm.checkPartnerSelection("9")>Hessen
+				<option value="9" #setSelected("partner" "9")>Hessen
 				</option>
-				<option value="10" $serviceForm.checkPartnerSelection("10")>Mecklenburg-Vorpommern
+				<option value="10" #setSelected("partner" "10")>Mecklenburg-Vorpommern
 				</option>
-				<option value="11" $serviceForm.checkPartnerSelection("11")>Niedersachsen
+				<option value="11" #setSelected("partner" "11")>Niedersachsen
 				</option>
-				<option value="12" $serviceForm.checkPartnerSelection("12")>Nordrhein-Westfalen
+				<option value="12" #setSelected("partner" "12")>Nordrhein-Westfalen
 				</option>
-				<option value="13" $serviceForm.checkPartnerSelection("13")>Rheinland-Pfalz
+				<option value="13" #setSelected("partner" "13")>Rheinland-Pfalz
 				</option>
-				<option value="14" $serviceForm.checkPartnerSelection("14")>Saarland
+				<option value="14" #setSelected("partner" "14")>Saarland
 				</option>
-				<option value="15" $serviceForm.checkPartnerSelection("15")>Sachsen
+				<option value="15" #setSelected("partner" "15")>Sachsen
 				</option>
-				<option value="16" $serviceForm.checkPartnerSelection("16")>Sachsen-Anhalt
+				<option value="16" #setSelected("partner" "16")>Sachsen-Anhalt
 				</option>
-				<option value="17" $serviceForm.checkPartnerSelection("17")>Schleswig-Holstein
+				<option value="17" #setSelected("partner" "17")>Schleswig-Holstein
 				</option>
-				<option value="18" $serviceForm.checkPartnerSelection("18")>Thüringen
+				<option value="18" #setSelected("partner" "18")>Thüringen
 				</option>
 			</select>
 		</div>
 		<div class="float_left marginleft">
 			<h3>Gruppierung
 			</h3>
-			<input type="radio" id="grouping_no" name="$serviceForm.PARAM_GROUPING" value="1" $serviceForm.checkGroupingSelection("1")/>
+			<input type="radio" id="grouping_no" name="grouping" value="1" #setChecked("grouping" "1")/>
 			<label class="radiogroup" for="grouping_no">Keine
 			</label>
 			<br />
-			<input type="radio" id="grouping_partner" name="$serviceForm.PARAM_GROUPING" value="2" $serviceForm.checkGroupingSelection("2")/>
+			<input type="radio" id="grouping_partner" name="grouping" value="2" #setChecked("grouping" "2")/>
 			<label class="radiogroup" for="grouping_partner">Bund/Länder
 			</label>
 			<br />
-			<input type="radio" id="grouping_info" name="$serviceForm.PARAM_GROUPING" value="3" $serviceForm.checkGroupingSelection("3")/>
+			<input type="radio" id="grouping_info" name="grouping" value="3" #setChecked("grouping" "3")/>
 			<label class="radiogroup" for="grouping_info">Informationsanbieter
 			</label>
 			<br />

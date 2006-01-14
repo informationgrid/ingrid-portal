@@ -13,31 +13,31 @@ import javax.portlet.PortletRequest;
 public class ServiceForm extends ActionForm {
 
     /** attribute name of ServiceForm in session */
-    public static final String SESS_ATTRIB = "service_form";
+    public static final String SESSION_KEY = "service_form";
 
-    /** parameter name of "rubric" checkbox group in form */
-    public static final String PARAM_RUBRIC = "rubric";
+    /** field name of "rubric" checkbox group in form */
+    public static final String FIELD_RUBRIC = "rubric";
 
-    public static final String DEFAULT_RUBRIC = "1,2,3,4";
+    public static final String INITIAL_RUBRIC = "1,2,3,4";
 
-    /** parameter name of "partner" selection list in form */
-    public static final String PARAM_PARTNER = "partner";
+    /** field name of "partner" selection list in form */
+    public static final String FIELD_PARTNER = "partner";
 
-    public static final String DEFAULT_PARTNER = "1";
+    public static final String INITIAL_PARTNER = "1";
 
-    /** parameter name of "grouping" radio group in form */
-    public static final String PARAM_GROUPING = "grouping";
+    /** field name of "grouping" radio group in form */
+    public static final String FIELD_GROUPING = "grouping";
 
-    public static final String DEFAULT_GROUPING = "1";
+    public static final String INITIAL_GROUPING = "1";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
         clearInput();
-        setInput(PARAM_RUBRIC, DEFAULT_RUBRIC);
-        setInput(PARAM_PARTNER, DEFAULT_PARTNER);
-        setInput(PARAM_GROUPING, DEFAULT_GROUPING);
+        setInput(FIELD_RUBRIC, INITIAL_RUBRIC);
+        setInput(FIELD_PARTNER, INITIAL_PARTNER);
+        setInput(FIELD_GROUPING, INITIAL_GROUPING);
     }
 
     /**
@@ -45,62 +45,28 @@ public class ServiceForm extends ActionForm {
      */
     public void populate(PortletRequest request) {
         clearInput();
-        setInput(PARAM_RUBRIC, request.getParameterValues(PARAM_RUBRIC));
-        setInput(PARAM_PARTNER, request.getParameterValues(PARAM_PARTNER));
-        setInput(PARAM_GROUPING, request.getParameter(PARAM_GROUPING));
+        setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC), ",");
+        setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER), ",");
+        setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
     }
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
     public boolean validate() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+        boolean allOk = true;
+        clearErrors();
 
-    /**
-     * Check whether given value is selected in rubric
-     * 
-     * @param value
-     * @return HTML checked string or empty string
-     */
-    public String checkRubricSelection(String value) {
-        return isValueSelected(PARAM_RUBRIC, value, HTML_CHECKED);
-    }
+        // check rubric
+        if (getInput(FIELD_RUBRIC).length() == 0) {
+            setError(FIELD_RUBRIC, "service.error.noRubric");
+            allOk = false;
+        }
+        if (getInput(FIELD_PARTNER).length() == 0) {
+            setError(FIELD_PARTNER, "service.error.noPartner");
+            allOk = false;
+        }
 
-    /**
-     * Check whether given value is selected as partner
-     * 
-     * @param value
-     * @return HTML select string or empty string
-     */
-    public String checkPartnerSelection(String value) {
-        return isValueSelected(PARAM_PARTNER, value, HTML_SELECTED);
+        return allOk;
     }
-
-    /**
-     * Check whether given value is selected in grouping
-     * 
-     * @param value
-     * @return HTML checked string or empty string
-     */
-    public String checkGroupingSelection(String value) {
-        return isValueSelected(PARAM_GROUPING, value, HTML_CHECKED);
-    }
-
-    /**
-     * static getters FOR VELOCITY !
-     */
-    public static String getPARAM_RUBRIC() {
-        return PARAM_RUBRIC;
-    }
-
-    public static String getPARAM_PARTNER() {
-        return PARAM_PARTNER;
-    }
-
-    public static String getPARAM_GROUPING() {
-        return PARAM_GROUPING;
-    }
-
 }
