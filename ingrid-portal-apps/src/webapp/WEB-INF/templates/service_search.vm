@@ -4,10 +4,9 @@
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>
-#checkFormErrors()
+#displayFormErrors()
 		<div class="float_left">
-			<h3>Rubriken
-			</h3>
+			#displayFieldLabel('rubric' 'Rubriken')
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
@@ -43,8 +42,7 @@
 		</div>
 		<br style="line-height:10px" />
 		<div class="float_left">
-			<h3>Bund/Länder
-			</h3>
+			#displayFieldLabel('partner' 'Bund/Länder')
 			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
 				<option value="1" #setSelected("partner" "1")>------ Alles auswählen ------
 				</option>
@@ -85,8 +83,7 @@
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>Gruppierung
-			</h3>
+			#displayFieldLabel('grouping' 'Gruppierung')
 			<input type="radio" id="grouping_no" name="grouping" value="1" #setChecked("grouping" "1")/>
 			<label class="radiogroup" for="grouping_no">Keine
 			</label>

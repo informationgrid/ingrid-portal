@@ -5,3 +5,15 @@
 #macro (setSelected $field $value)
 #if ($actionForm.isCurrentInput($field, $value))selected="selected"#end
 #end
+
+#macro (displayFormErrors)
+#if ($actionForm.hasErrors())
+#parse ('/WEB-INF/templates/include_form_errors.vm')
+#end
+#end
+
+#macro (displayFieldLabel $fieldName $fieldLabel)
+#if ($actionForm.hasErrorInField($fieldName))
+<h3 class="portlet-msg-alert">$fieldLabel</h3>#else
+<h3>$fieldLabel</h3>#end
+#end
