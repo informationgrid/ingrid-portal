@@ -1,3 +1,10 @@
+/**
+ * Inlcude ALL of the CSS styles for applying styles to portlets
+ * in a standard fashion (under /decroations/layout/css).
+ * See: Section PLT.C of the Portlet Specfication 1.0
+ */
+@import url("../../css/PLT.C.All.css");
+
 /********************************************************************
   standard styles 
 *********************************************************************/

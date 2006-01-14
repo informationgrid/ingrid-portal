@@ -13,7 +13,6 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceForm;
-import de.ingrid.portal.search.PageState;
 
 public class ServiceSearchPortlet extends GenericVelocityPortlet {
     public void init(PortletConfig config) throws PortletException {
@@ -59,21 +58,16 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
 
         return sf;
     }
-/*
-    private PageState getPageState(PortletRequest request) {
-        PortletSession session = request.getPortletSession();
-        PageState ps = (PageState) session.getAttribute("service_search_portlet_page_state");
-        if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
-            session.setAttribute("service_search_portlet_page_state", ps);
-        }
-
-        return ps;
-    }
-
-    private PageState initPageState(PageState ps) {
-        return ps;
-    }
-*/
+    /*
+     * private PageState getPageState(PortletRequest request) { PortletSession
+     * session = request.getPortletSession(); PageState ps = (PageState)
+     * session.getAttribute("service_search_portlet_page_state"); if (ps ==
+     * null) { ps = new PageState(this.getClass().getName()); ps =
+     * initPageState(ps);
+     * session.setAttribute("service_search_portlet_page_state", ps); }
+     * 
+     * return ps; }
+     * 
+     * private PageState initPageState(PageState ps) { return ps; }
+     */
 }

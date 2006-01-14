@@ -109,7 +109,7 @@ public abstract class ActionForm implements Serializable {
      * @return true if there are errors
      */
     public boolean hasErrors() {
-        return errors.isEmpty();
+        return !errors.isEmpty();
     }
 
     /**

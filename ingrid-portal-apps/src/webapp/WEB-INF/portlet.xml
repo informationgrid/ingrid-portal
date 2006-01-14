@@ -380,10 +380,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Service</title>
-            <short-title>ServiceSearch</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.ServiceSearch</resource-bundle>            
     </portlet>
 
 

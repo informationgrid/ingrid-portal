@@ -4,6 +4,7 @@
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>
+#checkFormErrors()
 		<div class="float_left">
 			<h3>Rubriken
 			</h3>
