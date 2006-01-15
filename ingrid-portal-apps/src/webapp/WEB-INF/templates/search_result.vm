@@ -1,76 +1,68 @@
-#macro (renderRankedResultCounter $navStart $navLimit $numberOfHits)
-    #set($rStart = $navStart + 1)
-    #if($navStart + $navLimit >= $numberOfHits)
-    	#set($rEnd = $numberOfHits)
-    #else
-    	#set($rEnd = $navStart + $navLimit)
-    #end	
-    <strong>${rStart} - ${rEnd}</strong> von <strong>$numberOfHits bewerteten</strong> Treffern
+#macro (renderRankedResultCounter $pageSelector)
+    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits bewerteten</strong> Treffern
 #end
 
-#macro (renderUnrankedResultCounter $navStart $navLimit $numberOfHits)
-    #set($rStart = $navStart + 1)
-    #if($navStart + $navLimit >= $numberOfHits)
-    	#set($rEnd = $numberOfHits)
-    #else
-    	#set($rEnd = $navStart + $navLimit)
-    #end	
-    <strong>${rStart} - ${rEnd}</strong> von <strong>$numberOfHits weiteren</strong> Datenquellen
+
+#macro (renderUnrankedResultCounter $pageSelector)
+    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits weiteren</strong> Datenquellen
 #end
 
-#macro (renderRankedPageNavigation $currentPage $numberOfPages $hitsPerPage)
-    (Seite <strong>$currentPage</strong> von <strong>$numberOfPages</strong>)
-    #if($currentPage > 1)
+
+#macro (renderRankedPageNavigation $pageSelector)
+    (Seite <strong>$pageSelector.currentSelectorPage</strong> von <strong>$pageSelector.numberOfPages</strong>)
+    #if($pageSelector.selectorHasPreviousPage)
         #set ($action = $renderResponse.createActionURL())
-        #set ($pstart = ($currentPage - 2) * $hitsPerPage)
+        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
     	$action.setParameter('rstart', $pstart.toString())	
     		<a href="$action">&laquo;</a>
+    	$action.setParameter('rstart', "0")	
+    		| <a href="$action">1</a> ..
     #end
-    #foreach($pageId in [1..$numberOfPages])
-    	#if($pageId == $currentPage)
+	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+    	#if($pageId == $pageSelector.currentSelectorPage)
     		| $pageId
     	#else
             #set ($action = $renderResponse.createActionURL())
-    		#set ($pstart = ($pageId - 1) * $hitsPerPage)
+    		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
     		$action.setParameter('rstart', $pstart.toString())
     		| <a href="$action">$pageId</a>
     	#end
-    #end	
-    #if($currentPage < $numberOfPages)
+	#end
+    #if($pageSelector.selectorHasNextPage)
         #set ($action = $renderResponse.createActionURL())
-        #set ($pstart = $currentPage * $hitsPerPage)
+        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
     	$action.setParameter('rstart', $pstart.toString())
     		| <a href="$action">&raquo;</a>
     #end
 #end
 
 
-#macro (renderUnrankedPageNavigation $currentPage $numberOfPages $hitsPerPage)
-    (Seite <strong>$currentPage</strong> von <strong>$numberOfPages</strong>)
-    #if($numberOfPages > 1)
-    	#if($currentPage > 1)
+#macro (renderUnrankedPageNavigation $pageSelector)
+    (Seite <strong>$pageSelector.currentSelectorPage</strong> von <strong>$pageSelector.numberOfPages</strong>)
+    #if($pageSelector.selectorHasPreviousPage)
+        #set ($action = $renderResponse.createActionURL())
+        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    	$action.setParameter('nrstart', $pstart.toString())	
+    		<a href="$action">&laquo;</a>
+    	$action.setParameter('nrstart', "0")	
+    		| <a href="$action">1</a> ..
+    #end
+	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+    	#if($pageId == $pageSelector.currentSelectorPage)
+    		| $pageId
+    	#else
             #set ($action = $renderResponse.createActionURL())
-            #set ($pstart = ($currentPage - 2) * $hitsPerPage)
-        	$action.setParameter('nrstart', $pstart.toString())	
-        		<a href="$action">&laquo;</a>
-        #end
-        #foreach($pageId in [1..$numberOfPages])
-        	#if($pageId == $currentPage)
-        		| $pageId
-        	#else
-                #set ($action = $renderResponse.createActionURL())
-        		#set ($pstart = ($pageId - 1) * $hitsPerPage)
-        		$action.setParameter('nrstart', $pstart.toString())
-        		| <a href="$action">$pageId</a>
-        	#end
-        #end	
-        #if($currentPage < $numberOfPages)
-            #set ($action = $renderResponse.createActionURL())
-            #set ($pstart = $currentPage * $hitsPerPage)
-        	$action.setParameter('nrstart', $pstart.toString())
-        		| <a href="$action">&raquo;</a>
-		#end
+    		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
+    		$action.setParameter('nrstart', $pstart.toString())
+    		| <a href="$action">$pageId</a>
+    	#end
 	#end
+    #if($pageSelector.selectorHasNextPage)
+        #set ($action = $renderResponse.createActionURL())
+        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+    	$action.setParameter('nrstart', $pstart.toString())
+    		| <a href="$action">&raquo;</a>
+    #end
 #end
 
 
@@ -205,10 +197,10 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
   <div id="results_left">
     <div class="section">  
       <div class="resultset_nav float_left">
-#renderRankedResultCounter($ps.rankedNavStart $ps.rankedNavLimit $rankedResultList.numberOfHits)
+#renderRankedResultCounter($rankedPageSelector)
       </div>
       <div class="resultset_nav">
-#renderRankedPageNavigation( $ps.rankedCurrentPage $ps.rankedNumberOfPages $ps.rankedNavLimit)
+#renderRankedPageNavigation($rankedPageSelector)
       </div>
 
       <br />
@@ -233,11 +225,11 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
 	  #end
 
       <div class="resultset_nav float_left">
-#renderRankedResultCounter($ps.rankedNavStart $ps.rankedNavLimit $rankedResultList.numberOfHits)
+#renderRankedResultCounter($rankedPageSelector)
       </div>
 
       <div class="resultset_nav">
-#renderRankedPageNavigation( $ps.rankedCurrentPage $ps.rankedNumberOfPages $ps.rankedNavLimit)
+#renderRankedPageNavigation($rankedPageSelector)
       </div>
 
     </div>
@@ -250,14 +242,14 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
   <div id="results_right">
     <div class="portlet">
       <div class="resultset_nav float_left">
-#renderUnrankedResultCounter($ps.unrankedNavStart $ps.unrankedNavLimit $unrankedResultList.numberOfHits)
+#renderUnrankedResultCounter($unrankedPageSelector)
       </div>
 
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-#renderUnrankedPageNavigation( $ps.unrankedCurrentPage $ps.unrankedNumberOfPages $ps.unrankedNavLimit)
+#renderUnrankedPageNavigation($unrankedPageSelector)
       </div>
       <br />
 
@@ -279,14 +271,14 @@ Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie h
       #end
       
       <div class="resultset_nav float_left">
-#renderUnrankedResultCounter($ps.unrankedNavStart $ps.unrankedNavLimit $unrankedResultList.numberOfHits)
+#renderUnrankedResultCounter($unrankedPageSelector)
       </div>
 
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-#renderUnrankedPageNavigation( $ps.unrankedCurrentPage $ps.unrankedNumberOfPages $ps.unrankedNavLimit)
+#renderUnrankedPageNavigation($unrankedPageSelector)
       </div>
     </div>    
   </div>

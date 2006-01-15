@@ -2,6 +2,7 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
@@ -22,6 +23,7 @@ import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -38,6 +40,9 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 public class SearchResultPortlet extends GenericVelocityPortlet
 {
 
+    private int rankedHitsPerPage = 10;
+    private int unrankedHitsPerPage = 10;
+    
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
@@ -75,12 +80,100 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 			ps.put("query", q);
     	}
     	if (ps.get("query") != null) {
-    		SearchResultList rankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps.getInt("rankedNavStart"), ps.getInt("rankedNavLimit"), true);
-    		SearchResultList unrankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps.getInt("unrankedNavStart"), ps.getInt("unrankedNavLimit"), false);
-        	ps.putInt("rankedCurrentPage", ps.getInt("rankedNavStart") / ps.getInt("rankedNavLimit") + 1);
-        	ps.putInt("rankedNumberOfPages", rankedSRL.getNumberOfHits() / ps.getInt("rankedNavLimit") + (int)Math.ceil(rankedSRL.getNumberOfHits() % ps.getInt("rankedNavLimit")));
-        	ps.putInt("unrankedCurrentPage", ps.getInt("unrankedNavStart") / ps.getInt("unrankedNavLimit") + 1);
-        	ps.putInt("unrankedNumberOfPages", unrankedSRL.getNumberOfHits() / ps.getInt("unrankedNavLimit") + (int)Math.ceil(unrankedSRL.getNumberOfHits() % ps.getInt("unrankedNavLimit")));
+    		
+    	    int currentSelectorPage;
+    	    int numberOfPages;
+    	    int numberOfSelectorPages;
+    	    int firstSelectorPage;
+    	    int lastSelectorPage;
+    	    boolean selectorHasPreviousPage;
+    	    boolean selectorHasNextPage;
+    	    int numberOfFirstHit;
+    	    int numberOfLastHit;
+    	    int numberOfHits;
+    	    
+        	// ranked results	
+    	    SearchResultList rankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps.getInt("rankedNavStart"), rankedHitsPerPage, true);
+        	numberOfHits = rankedSRL.getNumberOfHits();
+    	    
+    	    currentSelectorPage = ps.getInt("rankedNavStart") / rankedHitsPerPage + 1;
+        	numberOfPages = numberOfHits / rankedHitsPerPage + (int)Math.ceil(numberOfHits % rankedHitsPerPage);
+        	numberOfSelectorPages = 5;
+        	firstSelectorPage = 1;
+        	selectorHasPreviousPage = false;
+        	if (currentSelectorPage > numberOfSelectorPages) {
+        	    firstSelectorPage = currentSelectorPage - (int)(numberOfSelectorPages/2); 
+            	selectorHasPreviousPage = true;
+    		}
+        	lastSelectorPage = firstSelectorPage + numberOfSelectorPages - 1;
+        	selectorHasNextPage = true;
+        	if (numberOfPages < lastSelectorPage) {
+        	    lastSelectorPage = numberOfPages;
+        	    selectorHasNextPage = false;
+        	}
+        	numberOfFirstHit = (currentSelectorPage - 1) * rankedHitsPerPage + 1;
+        	numberOfLastHit = numberOfFirstHit + rankedHitsPerPage - 1;
+        	
+        	if (numberOfLastHit > numberOfHits) {
+        	    numberOfLastHit = numberOfHits;
+        	}
+        	
+        	HashMap pageSelector = new HashMap();
+        	pageSelector.put("currentSelectorPage", new Integer(currentSelectorPage));
+        	pageSelector.put("numberOfPages", new Integer(numberOfPages));
+        	pageSelector.put("numberOfSelectorPages", new Integer(numberOfSelectorPages));
+        	pageSelector.put("firstSelectorPage", new Integer(firstSelectorPage));
+        	pageSelector.put("lastSelectorPage", new Integer(lastSelectorPage));
+        	pageSelector.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
+        	pageSelector.put("selectorHasNextPage", new Boolean(selectorHasNextPage));
+        	pageSelector.put("hitsPerPage", new Integer(rankedHitsPerPage));
+        	pageSelector.put("numberOfFirstHit", new Integer(numberOfFirstHit));
+        	pageSelector.put("numberOfLastHit", new Integer(numberOfLastHit));
+        	pageSelector.put("numberOfHits", new Integer(numberOfHits));
+        	
+        	context.put("rankedPageSelector", pageSelector);
+        	
+        	// unranked results	
+    		SearchResultList unrankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps.getInt("unrankedNavStart"), unrankedHitsPerPage, false);
+        	numberOfHits = unrankedSRL.getNumberOfHits();
+        	
+        	currentSelectorPage = ps.getInt("unrankedNavStart") / unrankedHitsPerPage + 1;
+        	numberOfPages = numberOfHits / unrankedHitsPerPage + (int)Math.ceil(numberOfHits % unrankedHitsPerPage);
+        	numberOfSelectorPages = 3;
+        	firstSelectorPage = 1;
+        	selectorHasPreviousPage = false;
+        	if (currentSelectorPage > numberOfSelectorPages) {
+        	    firstSelectorPage = currentSelectorPage - (int)(numberOfSelectorPages/2); 
+            	selectorHasPreviousPage = true;
+    		}
+        	lastSelectorPage = firstSelectorPage + numberOfSelectorPages - 1;
+        	selectorHasNextPage = true;
+        	if (numberOfPages < lastSelectorPage) {
+        	    lastSelectorPage = numberOfPages;
+        	    selectorHasNextPage = false;
+        	}
+        	numberOfFirstHit = (currentSelectorPage - 1) * unrankedHitsPerPage + 1;
+        	numberOfLastHit = numberOfFirstHit + unrankedHitsPerPage - 1;
+        	
+        	if (numberOfLastHit > numberOfHits) {
+        	    numberOfLastHit = numberOfHits;
+        	}
+        	
+        	pageSelector = new HashMap();
+        	pageSelector.put("currentSelectorPage", new Integer(currentSelectorPage));
+        	pageSelector.put("numberOfPages", new Integer(numberOfPages));
+        	pageSelector.put("numberOfSelectorPages", new Integer(numberOfSelectorPages));
+        	pageSelector.put("firstSelectorPage", new Integer(firstSelectorPage));
+        	pageSelector.put("lastSelectorPage", new Integer(lastSelectorPage));
+        	pageSelector.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
+        	pageSelector.put("selectorHasNextPage", new Boolean(selectorHasNextPage));
+        	pageSelector.put("hitsPerPage", new Integer(rankedHitsPerPage));
+        	pageSelector.put("numberOfFirstHit", new Integer(numberOfFirstHit));
+        	pageSelector.put("numberOfLastHit", new Integer(numberOfLastHit));
+        	pageSelector.put("numberOfHits", new Integer(numberOfHits));
+        	
+        	context.put("unrankedPageSelector", pageSelector);        	
+        	
         	context.put("rankedResultList", rankedSRL);
         	context.put("unrankedResultList", unrankedSRL);
 	    }
@@ -162,7 +255,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         
     	if (ranking) {
 
-/*
             Bus bus = new Bus(new DummyProxyFactory());
             PlugDescription[] plugDescriptions = new PlugDescription[3];
             for (int i = 0; i < plugDescriptions.length; i++) {
@@ -173,10 +265,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet
                 bus.getIPlugRegistry().addIPlug(plugDescriptions[i]);
             }
             IngridQuery query;
+            IngridHits hits = null;
             IngridDocument[] documents = null;
             try {
                 query = QueryStringParser.parse("fische ort:halle");
-                documents = bus.search(query, 10, 1, Integer.MAX_VALUE, 1000);
+                hits = bus.search(query, 10, 1, Integer.MAX_VALUE, 1000);
+                documents = hits.getHits();
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -186,14 +280,21 @@ public class SearchResultPortlet extends GenericVelocityPortlet
             }
             
             if (documents != null) {
-                for (int i =0; i< documents.length; i++) {
+                int hitsOnPage;
+                if (documents.length > limit) {
+                    hitsOnPage = limit;
+                } else {
+                    hitsOnPage = documents.length;
+                }
+                
+                for (int i =0; i< hitsOnPage; i++) {
                     result.add(documents[i]);
                 }
-                result.setNumberOfHits(documents.length);
+                result.setNumberOfHits((int)hits.length());
             } else {
                 result.setNumberOfHits(0);
             }
-*/            
+/*            
             SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
             if (start > l.size())
                 start = l.size() - limit - 1;
@@ -203,12 +304,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet
                 result.add(l.get(i));
             }
             result.setNumberOfHits(l.getNumberOfHits());
-            
+*/            
     	} else {
     		SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
-    		if (start > l.size())
-    			start = l.size() - limit - 1;
-    		for (int i=start; i<start + limit; i++) {
+    		for (int i=0; i<limit; i++) {
     			if (i >= l.size())
     				break;
     			result.add(l.get(i));
@@ -224,9 +323,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet
 		ps.setBoolean("isSimilarOpen", false);
 		ps.put("similarRoot", null);
 		ps.putInt("rankedNavStart", 0);
-		ps.putInt("rankedNavLimit", 1);
+		ps.putInt("rankedNavLimit", 10);
 		ps.putInt("unrankedNavStart", 0);
-		ps.putInt("unrankedNavLimit", 1);
+		ps.putInt("unrankedNavLimit", 10);
 		return ps;
     }
     
