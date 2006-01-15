@@ -1,10 +1,7 @@
 #if ($actionForm.hasErrors())
-<br/>
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<div>
 #foreach ($errorMsg in $actionForm.getAllErrors())
-<tr>
-  <td class="portlet-msg-error">$MESSAGES.getString($errorMsg)</td>
-</tr>
+<h3 class="portlet-msg-error">$MESSAGES.getString($errorMsg)</h3>
 #end
-</table>
+</div>
 #end

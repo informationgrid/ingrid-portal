@@ -29,58 +29,30 @@ limitations under the License.
 /* PLT.C.6 Menus                     */
 /* --------------------------------- */
 .portlet-menu {
-    background: #efefef;
-    margin-bottom: 6px;
-    border-right: 1px solid #aaa;
-    border-bottom: 1px solid #aaa;
-    padding: 4px 4px 4px 0;
-    padding-bottom: .3em;
-    padding-left: 1em;
 }
 
 .portlet-menu-item {
-    text-decoration: none;
-    color: blue;
 }
 
 .portlet-menu-item-selected {
-    text-decoration: none;
-    color: #555 !important;
 }
 
 .portlet-menu-item-hover {
-    text-decoration: none;
-    color: #f30 !important;
 }
 
 .portlet-menu-item-hover-selected {
-    text-decoration: none;
-    color: #555 !important;
-    font-weight: bold;
 }
 
 .portlet-menu-cascade-item {
-    text-decoration: none;
-    margin-top: .3em;
-    padding-bottom: 0;
-    color: blue;
 }
 
 .portlet-menu-cascade-item-selected {
-    text-decoration: none;
-    color: #555 !important;
-    font-weight: bold;
 }
 
 .portlet-menu-description {
 }
 
 .portlet-menu-caption {
-    border-bottom: 1px solid #666;
-    border-right: 1px solid #666;
-    background: #ddd;
-    color: #555;
-    padding: 4px;
 }
 
 /* font */
@@ -94,8 +66,4 @@ limitations under the License.
 .portlet-menu-description,
 .portlet-menu-caption
 {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    voice-family: "\"}\"";
-    voice-family: inherit;
-    font-size: x-small;
 }

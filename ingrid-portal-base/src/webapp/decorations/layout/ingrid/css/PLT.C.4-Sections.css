@@ -29,71 +29,24 @@ limitations under the License.
 /* PLT.C.4 Sections                  */
 /* --------------------------------- */
 .portlet-section-header {
-    background-image: url(../../images/nw_maj_rond.gif);
-    background-repeat: no-repeat;
-    color: #fff;
-    background-color: #036;
-    padding: 5px;
-    margin-right: 2px;
-    margin-left: 2px;
-    clear: both;
 }
 
 .portlet-section-body {
-    background: #efefef;
-    border: none;
-    padding: 2px 3px;
-    text-align: left;
-    vertical-align: top;
-    text-align: left;
 }
 
 .portlet-section-alternate {
-    background: #ddd;
-    border: none;
-    padding: 2px 3px;
-    text-align: left;
-    vertical-align: top;
-    text-align: left;
 }
 
 .portlet-section-selected {
-    /* TODO : ex. change color */
-    background: #ffe;
-    border: none;
-    padding: 2px 3px;
-    text-align: left;
-    vertical-align: top;
-    text-align: left;
-    font-weight:bold;
 }
 
 .portlet-section-subheader {
-    background-image: url(../../images/nw_maj_rond.gif);
-    background-repeat: no-repeat;
-    color: #fff;
-    background-color: #888;
-    padding: 5px;
-    margin-right: 2px;
-    margin-left: 2px;
-    clear: both;
 }
 
 .portlet-section-footer {
-    background-repeat: no-repeat;
-    background-position: bottom left;
-    background-color: #ddd;
-    background-image: url(../../images/sw_med_rond.gif);
-    color: #000;
-    padding: 5px;
-    margin: .67em 2px;
-    margin-top: 0;
 }
 
 .portlet-section-text {
-    padding: 1em;
-    padding-bottom: .3em;
-    padding-left: 1em;
 }
 
 /* font */
@@ -105,8 +58,4 @@ limitations under the License.
 .portlet-section-footer,
 .portlet-section-text,
 {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    voice-family: "\"}\"";
-    voice-family: inherit;
-    font-size: x-small;
 }

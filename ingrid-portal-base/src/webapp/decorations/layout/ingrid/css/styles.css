@@ -1,9 +1,9 @@
 /**
- * Inlcude ALL of the CSS styles for applying styles to portlets
- * in a standard fashion (under /decroations/layout/css).
+ * Inlcude CSS styles for portlets (standardized classes)
  * See: Section PLT.C of the Portlet Specfication 1.0
  */
-@import url("../../css/PLT.C.All.css");
+@import url("./PLT.C.All.css");
+
 
 /********************************************************************
   standard styles 
@@ -353,27 +353,6 @@ div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;f
 div.portlet div.section-header a { color: #FFFFFF;}
 
 div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-left: solid #176798 1px; border-bottom: solid #176798 1px; border-right: solid #176798 1px; }
-
-
-/********************************************************************
-  unused PLT styles from JSR 168 standard
-*********************************************************************/
-
-
-.portlet-font {  }
-.portlet-font-dim {  }
-
-.portlet-msg-status {  }
-.portlet-msg-info {  }
-.portlet-msg-error {  }
-.portlet-msg-alert {  }
-.portlet-msg-success {  }
-
-portlet-section-alternate {  }
-portlet-section-selected {  }
-
-portlet-section-footer {  }
-portlet-section-text {  }
 
 
 /********************************************************************

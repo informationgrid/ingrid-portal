@@ -14,6 +14,6 @@
 
 #macro (displayFieldLabel $fieldName $fieldLabel)
 #if ($actionForm.hasErrorInField($fieldName))
-<h3 class="portlet-msg-alert">$fieldLabel</h3>#else
+<h3 class="portlet-msg-error">$fieldLabel</h3>#else
 <h3>$fieldLabel</h3>#end
 #end

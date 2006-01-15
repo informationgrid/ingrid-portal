@@ -29,38 +29,19 @@ limitations under the License.
 /* PLT.C.3 Messages                  */
 /* --------------------------------- */
 .portlet-msg-status {
-    background: url(../../images/icon_status_sml.gif);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    height: 15px;
 }
 
 .portlet-msg-info {
-    background: url(../../images/icon_info_sml.gif);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    height: 15px;
 }
 
 .portlet-msg-error {
-    background: url(../../images/icon_error_sml.gif);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    height: 15px;
+	color: #CC0000;
 }
 
 .portlet-msg-alert {
-    background: url(../../images/icon_warning_sml.gif);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    height: 15px;
 }
 
 .portlet-msg-success {
-    background: url(../../images/icon_success_sml.gif);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    height: 15px;
 }
 
 /* font */
@@ -70,8 +51,4 @@ limitations under the License.
 .portlet-msg-alert,
 .portlet-msg-success
 {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    voice-family: "\"}\"";
-    voice-family: inherit;
-    font-size: x-small;
 }

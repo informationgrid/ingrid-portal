@@ -30,19 +30,13 @@ limitations under the License.
 /* --------------------------------- */
 
 .portlet-font {
-    color: black;
 }
 
 .portlet-font-dim {
-    color: gray;
 }
 
 /* font */
 .blue-gradient .portlet-font,
 .blue-gradient .portlet-font-dim
 {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    voice-family: "\"}\"";
-    voice-family: inherit;
-    font-size: x-small;
 }
