@@ -107,10 +107,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Kontakt</title>
-            <short-title>Contact</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
     </portlet>
 
     <portlet id="SitemapPortlet">
@@ -130,10 +127,7 @@
         </supports>
         <supported-locale>en</supported-locale>                
         <supported-locale>de</supported-locale>            
-        <resource-bundle>de.ingrid.portal.resources.SitemapPortlet</resource-bundle>            
-        <portlet-info>
-          <title>SitemapPortlet</title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SitemapResources</resource-bundle>            
     </portlet>
 
     <portlet id="AboutPortalUPartner">
@@ -195,10 +189,7 @@
         </supports>
         <supported-locale>en</supported-locale>                
         <supported-locale>de</supported-locale>            
-        <resource-bundle>de.ingrid.portal.resources.AboutPortalU</resource-bundle>            
-        <portlet-info>
-            <title>AboutPortalU</title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AboutPortalUResources</resource-bundle>            
     </portlet>
 
     <portlet id="EnviromentChronicleSearchInfo">
@@ -380,7 +371,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ServiceSearch</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
     </portlet>
 
 
