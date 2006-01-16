@@ -18,15 +18,16 @@ public class ServiceForm extends ActionForm {
     /** field name of "rubric" checkbox group in form */
     public static final String FIELD_RUBRIC = "rubric";
 
-    public static final String INITIAL_RUBRIC = "all,press,public,events";
-
     /** field name of "partner" selection list in form */
     public static final String FIELD_PARTNER = "partner";
 
-    public static final String INITIAL_PARTNER = "all";
-
     /** field name of "grouping" radio group in form */
     public static final String FIELD_GROUPING = "grouping";
+
+    /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
+    public static final String INITIAL_RUBRIC = "all''press''public''events";
+
+    public static final String INITIAL_PARTNER = "all";
 
     public static final String INITIAL_GROUPING = "none";
 

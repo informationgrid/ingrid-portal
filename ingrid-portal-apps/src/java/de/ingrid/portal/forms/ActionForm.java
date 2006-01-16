@@ -18,6 +18,8 @@ import javax.portlet.PortletRequest;
  */
 public abstract class ActionForm implements Serializable {
 
+    protected static final String VALUE_SEPARATOR = "'";
+
     /**
      * encapsulates form input data. NOTICE: HashMap is NOT SYNCHRONIZED
      * shouldn't be a problem, there aren't multiple threads accessing this one
@@ -72,8 +74,12 @@ public abstract class ActionForm implements Serializable {
      * Get Input Data of specific field. Returns "" if no input.
      */
     public String getInput(String field) {
-        Object inputVal = input.get(field);
-        return (inputVal == null) ? "" : inputVal.toString();
+        String inputVal = (String) input.get(field);
+        if (inputVal == null) {
+            return "";
+        }
+        String result = inputVal.substring(1, inputVal.length() - 1);
+        return result;
     }
 
     /**
@@ -84,36 +90,33 @@ public abstract class ActionForm implements Serializable {
             input.remove(field);
             return;
         }
-        input.put(field, data);
+        StringBuffer dataWithSep = new StringBuffer();
+        dataWithSep.append(VALUE_SEPARATOR);
+        dataWithSep.append(data);
+        dataWithSep.append(VALUE_SEPARATOR);
+        input.put(field, dataWithSep.toString());
     }
 
     /**
      * Set Input Data for multiple value field. NOTICE: String Array is
-     * converted to one String with separator "," between strings !
+     * converted to one String with the encapsulated Separator String
+     * surrounding each value !
      */
     public void setInput(String field, String[] dataArray) {
-        setInput(field, dataArray, ",");
-    }
-
-    /**
-     * Set Input Data for multiple value field. NOTICE: String Array is
-     * converted to one String with passed separator between strings !
-     */
-    public void setInput(String field, String[] dataArray, String separator) {
         if (dataArray == null) {
             input.remove(field);
             return;
         }
 
-        StringBuffer result = new StringBuffer();
+        StringBuffer dataWithSep = new StringBuffer();
         if (dataArray.length > 0) {
-            result.append(dataArray[0]);
-            for (int i = 1; i < dataArray.length; i++) {
-                result.append(separator);
-                result.append(dataArray[i]);
+            for (int i = 0; i < dataArray.length; i++) {
+                dataWithSep.append(VALUE_SEPARATOR);
+                dataWithSep.append(dataArray[i]);
+                dataWithSep.append(VALUE_SEPARATOR);
             }
         }
-        setInput(field, result.toString());
+        input.put(field, dataWithSep.toString());
     }
 
     public void clearInput() {
@@ -172,10 +175,20 @@ public abstract class ActionForm implements Serializable {
      * ...)
      */
     public boolean isCurrentInput(String fieldName, String value) {
-        String currValue = getInput(fieldName);
-        if (currValue == null || currValue.indexOf(value) == -1) {
+        String currValue = (String) input.get(fieldName);
+        if (currValue == null) {
             return false;
         }
+
+        StringBuffer dataWithSep = new StringBuffer();
+        dataWithSep.append(VALUE_SEPARATOR);
+        dataWithSep.append(value);
+        dataWithSep.append(VALUE_SEPARATOR);
+
+        if (currValue.indexOf(dataWithSep.toString()) == -1) {
+            return false;
+        }
+
         return true;
     }
 }
