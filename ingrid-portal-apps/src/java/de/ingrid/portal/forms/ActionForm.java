@@ -55,11 +55,24 @@ public abstract class ActionForm implements Serializable {
     // ==============
     // INPUT HANDLING
     // ==============
+
+    /**
+     * Check whether the given field has input ! NOTICE: uses trim() to remove
+     * leading and trailing white spaces from input and then checks whether
+     * string has length > 0
+     */
+    public boolean hasInput(String field) {
+        if (getInput(field).trim().length() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Get Input Data of specific field. Returns "" if no input.
      */
     public String getInput(String field) {
-        Object inputVal = input.get(field.trim());
+        Object inputVal = input.get(field);
         return (inputVal == null) ? "" : inputVal.toString();
     }
 
@@ -67,11 +80,19 @@ public abstract class ActionForm implements Serializable {
      * Set Input Data for single value field
      */
     public void setInput(String field, String data) {
-        if (data == null) {
+        if (data == null || data.length() == 0) {
             input.remove(field);
             return;
         }
         input.put(field, data);
+    }
+
+    /**
+     * Set Input Data for multiple value field. NOTICE: String Array is
+     * converted to one String with separator "," between strings !
+     */
+    public void setInput(String field, String[] dataArray) {
+        setInput(field, dataArray, ",");
     }
 
     /**
@@ -127,7 +148,8 @@ public abstract class ActionForm implements Serializable {
     }
 
     /**
-     * Set an error message for a field. NOTICE: A Field can only have ONE Error Message !
+     * Set an error message for a field. NOTICE: A Field can only have ONE Error
+     * Message !
      */
     public void setError(String field, String msg) {
         errors.put(field, msg);
@@ -145,8 +167,9 @@ public abstract class ActionForm implements Serializable {
     // =======================
 
     /**
-     * Check if the given value was entered in given field. Includes multiple input
-     * "fields" (e.g. in SelectBox Group, Listbox with multiple selection ...)
+     * Check if the given value was entered in given field. Includes multiple
+     * input "fields" (e.g. in SelectBox Group, Listbox with multiple selection
+     * ...)
      */
     public boolean isCurrentInput(String fieldName, String value) {
         String currValue = getInput(fieldName);

@@ -11,8 +11,9 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.forms.ContactForm;
 import de.ingrid.portal.search.PageState;
-
+import de.ingrid.portal.utils.Utils;
 
 
 public class ContactPortlet extends GenericVelocityPortlet
@@ -24,12 +25,22 @@ public class ContactPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+        ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
+        // use variable name "actionForm" so velocity macros work !
+        context.put("actionForm", cf);
         
         super.doView(request, response);
     }
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException
     {
         String action = request.getParameter("action");
+
+        // check form input
+        ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
+        cf.populate(request);
+        if (!cf.validate()) {
+            return;
+        }
 
     	PortletSession session = request.getPortletSession();
     	PageState ps = (PageState) session.getAttribute("page_state");
@@ -48,5 +59,4 @@ public class ContactPortlet extends GenericVelocityPortlet
     private PageState initPageState(PageState ps) {
 		return ps;
     }
-    
 }

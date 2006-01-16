@@ -1,3 +1,4 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 <h2>Telefon und Adresse
 </h2>
 <p>Sie erreichen unsere Zentrale telefonisch unter +49 (0)511 1203480.
@@ -19,45 +20,46 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="contact" id="contact">
 	<div class="formbody">
+#displayFormErrors()
 		<h3>
-			<label for="bemerkungen">Ihre Nachricht, Fragen oder Anregungen
+			<label for="bemerkungen">#displayFieldLabel('message' 'Ihre Nachricht, Fragen oder Anregungen')
 			</label>
 		</h3>
-		<textarea cols="60" rows="10" name="bemerkungen" id="bemerkungen"></textarea>
+		<textarea cols="60" rows="10" name="message" id="bemerkungen">#getFieldValue('message')</textarea>
 		<h3>* Pflichtangaben
 		</h3>
 		<p>
-			<label class="float_left col2left" for="xx2">Vorname*:
+			<label class="float_left col2left" for="xx2">#displayFieldLabel('firstname' 'Vorname*:')
 			</label>
-			<input class="float_left col2right inputstyletext" type="text" id="xx2" name="xx" value="" />
+			<input class="float_left col2right inputstyletext" type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')"/>
 			<span class="clearer">
 			</span>    			  
 		</p>
 		<p>
-			<label class="float_left col2left" for="xx3">Nachname*:
+			<label class="float_left col2left" for="xx3">#displayFieldLabel('lastname' 'Nachname*:')
 			</label>
-			<input class="float_left col2right inputstyletext" type="text" id="xx3" name="xx" value="" />
+			<input class="float_left col2right inputstyletext" type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')"/>
 			<span class="clearer">
 			</span>
 		</p>
 		<p>
 			<label class="float_left col2left" for="xx4">Organisation, Firma:
 			</label>
-			<input class="float_left col2right inputstyletext" type="text" id="xx4" name="xx" value="" />
+			<input class="float_left col2right inputstyletext" type="text" id="xx4" name="company" value="#getFieldValue('company')"/>
 			<span class="clearer">
 			</span>
 		</p>
 		<p>
 			<label class="float_left col2left" for="xx5">Telefon:
 			</label>
-			<input class="float_left col2right inputstyletext" type="text" id="xx5" name="xx" value="" />
+			<input class="float_left col2right inputstyletext" type="text" id="xx5" name="phone" value="#getFieldValue('phone')"/>
 			<span class="clearer">
 			</span>    			  
 		</p>
 		<p>
-			<label class="float_left col2left" for="xx6">E-Mail-Adresse*:
+			<label class="float_left col2left" for="xx6">#displayFieldLabel('email' 'E-Mail-Adresse*:')
 			</label>
-			<input class="float_left col2right inputstyletext" type="text" id="xx6" name="xx" value="" />
+			<input class="float_left col2right inputstyletext" type="text" id="xx6" name="email" value="#getFieldValue('email')"/>
 			<span class="clearer">
 			</span>
 		</p>
@@ -65,23 +67,23 @@
 			<label class="float_left col2left" for="activity">Tätigkeitsbereich:
 			</label>
 			<select class="float_left inputstyle" size="1" id="activity" name="activity">
-				<option value="null" selected="selected">---
+				<option value="none" #getSelected('activity' 'none')>---
 				</option>
-				<option value="schul">Sch&uuml;ler
+				<option value="schul" #getSelected('activity' 'schul')>Sch&uuml;ler
 				</option>
-				<option value="hand">Handwerk/Technik
+				<option value="hand" #getSelected('activity' 'hand')>Handwerk/Technik
 				</option>
-				<option value="umwe">Umweltdienstleistungen
+				<option value="umwe" #getSelected('activity' 'umwe')>Umweltdienstleistungen
 				</option>
-				<option value="beho">Beh&ouml;rde
+				<option value="beho" #getSelected('activity' 'beho')>Beh&ouml;rde
 				</option>
-				<option value="lehre">Lehrer
+				<option value="lehre" #getSelected('activity' 'lehre')>Lehrer
 				</option>
-				<option value="univ">Universit&auml;t
+				<option value="univ" #getSelected('activity' 'univ')>Universit&auml;t
 				</option>
-				<option value="medi">Medien
+				<option value="medi" #getSelected('activity' 'medi')>Medien
 				</option>
-				<option value="ande">Anderes
+				<option value="ande" #getSelected('activity' 'ande')>Anderes
 				</option>
 			</select>  
 			<span class="clearer">
@@ -90,10 +92,10 @@
 		<p>
 			<label class="float_left col2left" for="type_interest">Mein Interesse an Umweltinformationen ist:
 			</label>
-			<select class="float_left inputstyle" size="1" id="type_interest" name="type_interest">
-				<option>beruflich
+			<select class="float_left inputstyle" size="1" id="type_interest" name="interest">
+				<option value="prof" #getSelected('interest' 'prof')>beruflich
 				</option>
-				<option>privat
+				<option value="priv" #getSelected('interest' 'priv')>privat
 				</option>
 			</select>  
 			<span class="clearer">
@@ -102,7 +104,7 @@
 		<p>
 			<label class="float_left col2left">PortalU Newsletter:
 			</label>
-			<input type="checkbox" id="chk1" name="chk1" value="1" />&nbsp;
+			<input type="checkbox" id="chk1" name="newsletter" value="1" #getChecked('newsletter' '1')/>&nbsp;
 			<label for="chk1">Ich möchte den Newsletter abonnieren.
 			</label>
 			<span class="clearer">

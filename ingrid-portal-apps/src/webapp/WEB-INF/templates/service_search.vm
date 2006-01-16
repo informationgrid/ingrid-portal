@@ -6,11 +6,11 @@
 		</h2>
 #displayFormErrors()
 		<div class="float_left">
-			#displayFieldLabel('rubric' 'Rubriken')
+			<h3>#displayFieldLabel('rubric' 'Rubriken')</h3>
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-						<input id="chk_all" name="rubric" type="checkbox" value="1" onclick="ingrid_checkAll(document.service_search.rubric)" onkeypress="ingrid_checkAll(document.service_search.rubric)" #setChecked("rubric" "1") /> 
+						<input id="chk_all" name="rubric" type="checkbox" onclick="ingrid_checkAll(document.service_search.rubric)" onkeypress="ingrid_checkAll(document.service_search.rubric)" value="all" #getChecked('rubric' 'all') /> 
 						<label for="chk_all">Alle
 						</label>
 					</td>
@@ -21,17 +21,17 @@
 				</tr>
 				<tr>
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" value="2" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" #setChecked("rubric" "2")/> 
+						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="press" #getChecked('rubric' 'press')/> 
 						<label for="chk_1">Pressemitteilungen
 						</label>
 					</td>
 					<td>
-						<input id="chk_2" name="rubric" type="checkbox" value="3" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" #setChecked("rubric" "3")/> 
+						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="public" #getChecked('rubric' 'public')/> 
 						<label for="chk_2">Publikationen
 						</label>
 					</td>      	        
 					<td>
-						<input id="chk_3" name="rubric" type="checkbox" value="4" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" #setChecked("rubric" "4")/> 
+						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="events" #getChecked('rubric' 'events')/> 
 						<label for="chk_3">Veranstaltungen
 						</label>
 					</td>     		     
@@ -42,57 +42,57 @@
 		</div>
 		<br style="line-height:10px" />
 		<div class="float_left">
-			#displayFieldLabel('partner' 'Bund/Länder')
+			<h3>#displayFieldLabel('partner' 'Bund/Länder')</h3>
 			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
-				<option value="1" #setSelected("partner" "1")>------ Alles auswählen ------
+				<option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------
 				</option>
-				<option value="2" #setSelected("partner" "2")>Bund
+				<option value="2" #getSelected('partner' '2')>Bund
 				</option>
-				<option value="3" #setSelected("partner" "3")>Baden-Württemberg
+				<option value="3" #getSelected('partner' '3')>Baden-Württemberg
 				</option>
-				<option value="4" #setSelected("partner" "4")>Bayern
+				<option value="4" #getSelected('partner' '4')>Bayern
 				</option>
-				<option value="5" #setSelected("partner" "5")>Berlin
+				<option value="5" #getSelected('partner' '5')>Berlin
 				</option>
-				<option value="6" #setSelected("partner" "6")>Brandenburg
+				<option value="6" #getSelected('partner' '6')>Brandenburg
 				</option>
-				<option value="7" #setSelected("partner" "7")>Bremen
+				<option value="7" #getSelected('partner' '7')>Bremen
 				</option>
-				<option value="8" #setSelected("partner" "8")>Hamburg
+				<option value="8" #getSelected('partner' '8')>Hamburg
 				</option>
-				<option value="9" #setSelected("partner" "9")>Hessen
+				<option value="9" #getSelected('partner' '9')>Hessen
 				</option>
-				<option value="10" #setSelected("partner" "10")>Mecklenburg-Vorpommern
+				<option value="10" #getSelected('partner' '10')>Mecklenburg-Vorpommern
 				</option>
-				<option value="11" #setSelected("partner" "11")>Niedersachsen
+				<option value="11" #getSelected('partner' '11')>Niedersachsen
 				</option>
-				<option value="12" #setSelected("partner" "12")>Nordrhein-Westfalen
+				<option value="12" #getSelected('partner' '12')>Nordrhein-Westfalen
 				</option>
-				<option value="13" #setSelected("partner" "13")>Rheinland-Pfalz
+				<option value="13" #getSelected('partner' '13')>Rheinland-Pfalz
 				</option>
-				<option value="14" #setSelected("partner" "14")>Saarland
+				<option value="14" #getSelected('partner' '14')>Saarland
 				</option>
-				<option value="15" #setSelected("partner" "15")>Sachsen
+				<option value="15" #getSelected('partner' '15')>Sachsen
 				</option>
-				<option value="16" #setSelected("partner" "16")>Sachsen-Anhalt
+				<option value="16" #getSelected('partner' '16')>Sachsen-Anhalt
 				</option>
-				<option value="17" #setSelected("partner" "17")>Schleswig-Holstein
+				<option value="17" #getSelected('partner' '17')>Schleswig-Holstein
 				</option>
-				<option value="18" #setSelected("partner" "18")>Thüringen
+				<option value="18" #getSelected('partner' '18')>Thüringen
 				</option>
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			#displayFieldLabel('grouping' 'Gruppierung')
-			<input type="radio" id="grouping_no" name="grouping" value="1" #setChecked("grouping" "1")/>
+			<h3>#displayFieldLabel('grouping' 'Gruppierung')</h3>
+			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
 			<label class="radiogroup" for="grouping_no">Keine
 			</label>
 			<br />
-			<input type="radio" id="grouping_partner" name="grouping" value="2" #setChecked("grouping" "2")/>
+			<input type="radio" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
 			<label class="radiogroup" for="grouping_partner">Bund/Länder
 			</label>
 			<br />
-			<input type="radio" id="grouping_info" name="grouping" value="3" #setChecked("grouping" "3")/>
+			<input type="radio" id="grouping_info" name="grouping" value="info" #getChecked('grouping' 'info')/>
 			<label class="radiogroup" for="grouping_info">Informationsanbieter
 			</label>
 			<br />

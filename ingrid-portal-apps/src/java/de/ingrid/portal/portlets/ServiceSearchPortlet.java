@@ -6,13 +6,12 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceForm;
+import de.ingrid.portal.utils.Utils;
 
 public class ServiceSearchPortlet extends GenericVelocityPortlet {
     public void init(PortletConfig config) throws PortletException {
@@ -22,8 +21,8 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
-        ServiceForm sf = getActionForm(request);
-        // use "actionForm" so velocity macros work !
+        ServiceForm sf = (ServiceForm) Utils.getActionForm(request, ServiceForm.SESSION_KEY, ServiceForm.class);
+        // use variable name "actionForm" so velocity macros work !
         context.put("actionForm", sf);
 
         super.doView(request, response);
@@ -34,7 +33,7 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
         String action = request.getParameter("action");
 
         // check form input
-        ServiceForm sf = getActionForm(request);
+        ServiceForm sf = (ServiceForm) Utils.getActionForm(request, ServiceForm.SESSION_KEY, ServiceForm.class);
         sf.populate(request);
         if (!sf.validate()) {
             return;
@@ -47,17 +46,6 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
         }
     }
 
-    private ServiceForm getActionForm(PortletRequest request) {
-        PortletSession session = request.getPortletSession();
-        ServiceForm sf = (ServiceForm) session.getAttribute(ServiceForm.SESSION_KEY);
-        if (sf == null) {
-            sf = new ServiceForm();
-            sf.init();
-            session.setAttribute(ServiceForm.SESSION_KEY, sf);
-        }
-
-        return sf;
-    }
     /*
      * private PageState getPageState(PortletRequest request) { PortletSession
      * session = request.getPortletSession(); PageState ps = (PageState)

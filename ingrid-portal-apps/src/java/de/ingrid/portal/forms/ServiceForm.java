@@ -18,17 +18,17 @@ public class ServiceForm extends ActionForm {
     /** field name of "rubric" checkbox group in form */
     public static final String FIELD_RUBRIC = "rubric";
 
-    public static final String INITIAL_RUBRIC = "1,2,3,4";
+    public static final String INITIAL_RUBRIC = "all,press,public,events";
 
     /** field name of "partner" selection list in form */
     public static final String FIELD_PARTNER = "partner";
 
-    public static final String INITIAL_PARTNER = "1";
+    public static final String INITIAL_PARTNER = "all";
 
     /** field name of "grouping" radio group in form */
     public static final String FIELD_GROUPING = "grouping";
 
-    public static final String INITIAL_GROUPING = "1";
+    public static final String INITIAL_GROUPING = "none";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -45,8 +45,8 @@ public class ServiceForm extends ActionForm {
      */
     public void populate(PortletRequest request) {
         clearInput();
-        setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC), ",");
-        setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER), ",");
+        setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC));
+        setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER));
         setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
     }
 
@@ -58,11 +58,11 @@ public class ServiceForm extends ActionForm {
         clearErrors();
 
         // check rubric
-        if (getInput(FIELD_RUBRIC).length() == 0) {
+        if (!hasInput(FIELD_RUBRIC)) {
             setError(FIELD_RUBRIC, "service.error.noRubric");
             allOk = false;
         }
-        if (getInput(FIELD_PARTNER).length() == 0) {
+        if (!hasInput(FIELD_PARTNER)) {
             setError(FIELD_PARTNER, "service.error.noPartner");
             allOk = false;
         }

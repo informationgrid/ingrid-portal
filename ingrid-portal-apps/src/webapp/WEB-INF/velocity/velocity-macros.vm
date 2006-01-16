@@ -1,8 +1,12 @@
-#macro (setChecked $field $value)
+
+#macro (getFieldValue $field)
+$actionForm.getInput($field)#end
+
+#macro (getChecked $field $value)
 #if ($actionForm.isCurrentInput($field, $value))checked="checked"#end
 #end
 
-#macro (setSelected $field $value)
+#macro (getSelected $field $value)
 #if ($actionForm.isCurrentInput($field, $value))selected="selected"#end
 #end
 
@@ -14,6 +18,6 @@
 
 #macro (displayFieldLabel $fieldName $fieldLabel)
 #if ($actionForm.hasErrorInField($fieldName))
-<h3 class="portlet-msg-error">$fieldLabel</h3>#else
-<h3>$fieldLabel</h3>#end
+<span class="portlet-msg-error">$fieldLabel</span>#else
+$fieldLabel#end
 #end
