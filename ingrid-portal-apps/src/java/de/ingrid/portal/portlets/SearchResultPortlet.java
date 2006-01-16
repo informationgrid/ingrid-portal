@@ -260,7 +260,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
             for (int i = 0; i < plugDescriptions.length; i++) {
                 plugDescriptions[i] = new PlugDescription();
                 plugDescriptions[i].setPlugId("" + i);
-                plugDescriptions[i].setOraganisation("Bundesumweltamt");
+                plugDescriptions[i].setOrganisation("Bundesumweltamt");
                 plugDescriptions[i].setDataType("webiste");
                 bus.getIPlugRegistry().addIPlug(plugDescriptions[i]);
             }

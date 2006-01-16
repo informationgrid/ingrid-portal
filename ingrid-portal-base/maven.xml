@@ -7,15 +7,53 @@
   <!-- IN SAME DIRECTORY !!! e.g.     <extend>full-portal.xml</extend>  -->
   <!--==================================================================-->    
 	<postGoal name="war:war-resources">
-    <j:if test="${webSourcesPresent == 'true'}">
-      <ant:echo>'war:war-resources' postGoal !!! copy local webapp from ${maven.war.src} to ${maven.war.webapp.dir}</ant:echo>
-      <ant:copy todir="${maven.war.webapp.dir}" preservelastmodified="false" overwrite="true" verbose="false">
-        <ant:fileset dir="${maven.war.src}"
-          includes="${maven.war.src.includes}"
-          excludes="${maven.war.src.excludes}">
-        </ant:fileset>
-      </ant:copy>
-    </j:if>
+	    <j:if test="${webSourcesPresent == 'true'}">
+	      <ant:echo>'war:war-resources' postGoal !!! copy local webapp from ${maven.war.src} to ${maven.war.webapp.dir}</ant:echo>
+	      <ant:copy todir="${maven.war.webapp.dir}" preservelastmodified="false" overwrite="true" verbose="false">
+	        <ant:fileset dir="${maven.war.src}"
+	          includes="${maven.war.src.includes}"
+	          excludes="${maven.war.src.excludes}">
+	        </ant:fileset>
+	      </ant:copy>
+	    </j:if>
+	    <attainGoal name="ingrid:portal.conf.sql"/>
 	</postGoal>
+
+  	<goal name="ingrid:portal.conf.sql" prereqs="j2:_check.required.properties">
+	    <j:set var="portal.sql.src.dir" value="${basedir}/src/sql"/>
+	    <j:set var="torque.schema.dir" value="${basedir}/src/schema"/>
+	    <j:set var="portal.sql.target.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
+	    
+	
+	    <mkdir dir="${portal.sql.target.dir}" failonerror="false"/>
+	          
+	    <copy todir="${portal.sql.target.dir}" overwrite="true" verbose="true" failonerror="false" flatten="true">
+	      <fileset dir="${portal.sql.src.dir}">
+	        <include name="*.sql"/>
+	      </fileset>
+	    </copy>        
+	    <j:set var="org.apache.jetspeed.target.rdbms" value="${org.apache.jetspeed.production.database.default.name}"/>
+	    <attainGoal name="j2:_set.rdbms.props"/>
+	    <echo message="torque.contextProperties: ${torque.contextProperties}"/>
+	    <echo message="torque.template.sql: ${torque.template.sql}"/>
+	    <echo message="torque.idTableXMLFile: ${torque.idTableXMLFile}"/>
+	    <echo message="torque.schema.dir: ${torque.schema.dir}"/>
+	    <echo message="torque.schema.sql.includes: ${torque.schema.sql.includes}"/>
+	    <echo message="torque.schema.sql.excludes: ${torque.schema.sql.excludes}"/>
+	    <attainGoal name="j2:_generate.sql"/>
+	    <attainGoal name="j2:_copy.rdbms.sql.scripts"/>
+	    
+	    <j:if test="${org.apache.jetspeed.use.test.database}">    
+	      <j:set var="test_db" value="${org.apache.jetspeed.test.database.default.name}"/>
+	      <j:set var="prod_db" value="${org.apache.jetspeed.production.database.default.name}"/>
+	      <j:if test="${prod_db != test_db}">
+	        <j:set var="org.apache.jetspeed.target.rdbms" value="${org.apache.jetspeed.test.database.default.name}"/>
+	        <attainGoal name="j2:_set.rdbms.props"/>
+	        <attainGoal name="j2:_generate.sql"/>
+	        <attainGoal name="j2:_copy.rdbms.sql.scripts"/>
+	      </j:if>
+	    </j:if>  
+  	</goal>
+
 
 </project>
