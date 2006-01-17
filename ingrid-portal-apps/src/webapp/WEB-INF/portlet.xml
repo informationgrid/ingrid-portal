@@ -220,17 +220,14 @@
         </init-param>
         <portlet-name>EnviromentChronicleSearch</portlet-name>
         <display-name>Umweltchronik</display-name>
-        <description>This portlet displayes a enviroment search box.</description>
+        <description>This portlet displayes a environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Umweltchronik</title>
-            <short-title>EnviromentChronicleSearch</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentChronicleSearchResources</resource-bundle>            
     </portlet>
 
     <portlet id="ShowMapsPortlet">

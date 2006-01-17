@@ -20,7 +20,6 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
 
     HibernateManager fHibernateManager = null;
 
-    
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
         fHibernateManager = HibernateManager.getInstance();
@@ -29,12 +28,14 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+
+        // put ActionForm to context. use variable name "actionForm" so velocity
+        // macros work !
         ServiceForm sf = (ServiceForm) Utils.getActionForm(request, ServiceForm.SESSION_KEY, ServiceForm.class);
-        // use variable name "actionForm" so velocity macros work !
         context.put("actionForm", sf);
-        
+
         List relations = this.fHibernateManager.loadAllData(IngridPartner.class, 0);
-        
+
         super.doView(request, response);
     }
 

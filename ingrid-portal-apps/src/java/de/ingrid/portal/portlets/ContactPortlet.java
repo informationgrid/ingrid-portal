@@ -25,8 +25,9 @@ public class ContactPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+
+        // put ActionForm to context. use variable name "actionForm" so velocity macros work !
         ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
-        // use variable name "actionForm" so velocity macros work !
         context.put("actionForm", cf);
         
         super.doView(request, response);
