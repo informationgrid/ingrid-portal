@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -11,11 +12,18 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceForm;
+import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.utils.Utils;
 
 public class ServiceSearchPortlet extends GenericVelocityPortlet {
+
+    HibernateManager fHibernateManager = null;
+
+    
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
+        fHibernateManager = HibernateManager.getInstance();
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -24,7 +32,9 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
         ServiceForm sf = (ServiceForm) Utils.getActionForm(request, ServiceForm.SESSION_KEY, ServiceForm.class);
         // use variable name "actionForm" so velocity macros work !
         context.put("actionForm", sf);
-
+        
+        List relations = this.fHibernateManager.loadAllData(IngridPartner.class, 0);
+        
         super.doView(request, response);
     }
 
