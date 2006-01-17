@@ -31,12 +31,10 @@ limitations under the License.
 
 .portlet A:link, 
 .portlet A:visited {
-    text-decoration: underline;
 }
 
 .portlet A:hover, 
 .portlet A:active {
-    text-decoration: underline;
 }
 
 /* font */
@@ -45,8 +43,4 @@ limitations under the License.
 .portlet A:hover,
 .portlet A:active
 {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    voice-family: "\"}\"";
-    voice-family: inherit;
-    font-size: 12px;
 }
