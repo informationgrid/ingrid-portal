@@ -10,9 +10,9 @@ import javax.portlet.PortletRequest;
  * 
  * @author Martin Maidhof
  */
-public class ServiceForm extends ActionForm {
+public class ServiceSearchForm extends ActionForm {
 
-    /** attribute name of ServiceForm in session */
+    /** attribute name of action form in session */
     public static final String SESSION_KEY = "service_form";
 
     /** field name of "rubric" checkbox group in form */

@@ -14,7 +14,7 @@ import de.ingrid.portal.utils.Utils;
  */
 public class ContactForm extends ActionForm {
 
-    /** attribute name of ServiceForm in session */
+    /** attribute name of action form in session */
     public static final String SESSION_KEY = "contact_form";
 
     public static final String FIELD_MESSAGE = "message";

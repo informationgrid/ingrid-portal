@@ -18,7 +18,7 @@ import javax.portlet.PortletRequest;
  * 
  * @author Martin Maidhof
  */
-public class ChronicleForm extends ActionForm {
+public class ChronicleSearchForm extends ActionForm {
 
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "chronicles_form";

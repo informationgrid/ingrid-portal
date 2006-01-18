@@ -11,7 +11,7 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.forms.ChronicleForm;
+import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.utils.Utils;
 
@@ -26,7 +26,7 @@ public class EnviromentChronicleSearchPortlet extends GenericVelocityPortlet {
 
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
-        ChronicleForm cf = (ChronicleForm) Utils.getActionForm(request, ChronicleForm.SESSION_KEY, ChronicleForm.class);
+        ChronicleSearchForm cf = (ChronicleSearchForm) Utils.getActionForm(request, ChronicleSearchForm.SESSION_KEY, ChronicleSearchForm.class);
         context.put("actionForm", cf);
 
         super.doView(request, response);
@@ -37,7 +37,7 @@ public class EnviromentChronicleSearchPortlet extends GenericVelocityPortlet {
         String action = request.getParameter("action");
 
         // check form input
-        ChronicleForm cf = (ChronicleForm) Utils.getActionForm(request, ChronicleForm.SESSION_KEY, ChronicleForm.class);
+        ChronicleSearchForm cf = (ChronicleSearchForm) Utils.getActionForm(request, ChronicleSearchForm.SESSION_KEY, ChronicleSearchForm.class);
         cf.populate(request);
         if (!cf.validate()) {
             return;

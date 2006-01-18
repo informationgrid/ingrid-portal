@@ -12,7 +12,7 @@ import javax.portlet.PortletRequest;
  */
 public class EnvironmentSearchForm extends ActionForm {
 
-    /** attribute name of ServiceForm in session */
+    /** attribute name of action form in session */
     public static final String SESSION_KEY = "envsearch_form";
 
     /** field names (name of request parameter) */
