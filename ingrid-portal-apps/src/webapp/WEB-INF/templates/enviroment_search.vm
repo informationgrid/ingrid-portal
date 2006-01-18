@@ -7,7 +7,7 @@
 		#displayFormErrors()
 		<div class="float_left">
 			<h3>
-				<label for="xx2">#displayFieldLabel('themes' $MESSAGES.getString('envsearch.themes'))
+				<label for="xx2">#displayFieldLabel('themes' $MESSAGES.getString('envSearch.themes'))
 				</label>
 			</h3>
 			<select class="env_themes inputstyle" name="themes" id="xx2" size="5" multiple="multiple">
@@ -57,7 +57,7 @@
 		</div>
 		<div class="float_left marginleft">
 			<h3>
-				<label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envsearch.category'))
+				<label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envSearch.category'))
 				</label>
 			</h3>
 			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
@@ -82,7 +82,7 @@
 		<br style="line-height:10px" />
 		<div class="float_left">
 			<h3>
-				<label for="xx4">#displayFieldLabel('partner' $MESSAGES.getString('envsearch.partner'))
+				<label for="xx4">#displayFieldLabel('partner' $MESSAGES.getString('envSearch.partner'))
 				</label>
 			</h3>
 			<select class="spacial_relation inputstyle" name="partner" id="xx4" size="5" multiple="multiple">
@@ -125,7 +125,7 @@
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('envsearch.grouping'))
+			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('envSearch.grouping'))
 			</h3>
 			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
 			<label class="radiogroup" for="grouping_no">Keine

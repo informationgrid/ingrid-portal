@@ -323,10 +323,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Messwerte</title>
-            <short-title>MeasuresSearch</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>
     </portlet>
 
     <portlet id="ServiceSearchInfo">

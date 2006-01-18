@@ -60,11 +60,11 @@ public class ServiceForm extends ActionForm {
 
         // check rubric
         if (!hasInput(FIELD_RUBRIC)) {
-            setError(FIELD_RUBRIC, "service.error.noRubric");
+            setError(FIELD_RUBRIC, "serviceSearch.error.noRubric");
             allOk = false;
         }
         if (!hasInput(FIELD_PARTNER)) {
-            setError(FIELD_PARTNER, "service.error.noPartner");
+            setError(FIELD_PARTNER, "serviceSearch.error.noPartner");
             allOk = false;
         }
 

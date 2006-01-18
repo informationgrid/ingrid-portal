@@ -64,15 +64,15 @@ public class EnvironmentSearchForm extends ActionForm {
 
         // check rubric
         if (!hasInput(FIELD_THEMES)) {
-            setError(FIELD_THEMES, "envsearch.error.noTheme");
+            setError(FIELD_THEMES, "envSearch.error.noTheme");
             allOk = false;
         }
         if (!hasInput(FIELD_CATEGORY)) {
-            setError(FIELD_CATEGORY, "envsearch.error.noCategory");
+            setError(FIELD_CATEGORY, "envSearch.error.noCategory");
             allOk = false;
         }
         if (!hasInput(FIELD_PARTNER)) {
-            setError(FIELD_PARTNER, "envsearch.error.noPartner");
+            setError(FIELD_PARTNER, "envSearch.error.noPartner");
             allOk = false;
         }
 
