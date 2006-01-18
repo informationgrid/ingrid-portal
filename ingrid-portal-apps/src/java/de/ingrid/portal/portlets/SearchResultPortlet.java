@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,6 +11,11 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
+
+import net.weta.components.communication_sockets.SocketCommunication;
+import net.weta.components.communication_sockets.util.AddressUtil;
+import net.weta.components.proxies.ProxyService;
+import net.weta.components.proxies.remote.RemoteInvocationController;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -23,6 +29,7 @@ import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -97,7 +104,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         	numberOfHits = rankedSRL.getNumberOfHits();
     	    
     	    currentSelectorPage = ps.getInt("rankedNavStart") / rankedHitsPerPage + 1;
-        	numberOfPages = numberOfHits / rankedHitsPerPage + (int)Math.ceil(numberOfHits % rankedHitsPerPage);
+        	numberOfPages = numberOfHits / rankedHitsPerPage;
+        	if (Math.ceil(numberOfHits % rankedHitsPerPage) > 0) {
+        	    numberOfPages++;
+        	}
         	numberOfSelectorPages = 5;
         	firstSelectorPage = 1;
         	selectorHasPreviousPage = false;
@@ -255,29 +265,65 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         
     	if (ranking) {
 
-            Bus bus = new Bus(new DummyProxyFactory());
-            PlugDescription[] plugDescriptions = new PlugDescription[3];
-            for (int i = 0; i < plugDescriptions.length; i++) {
-                plugDescriptions[i] = new PlugDescription();
-                plugDescriptions[i].setPlugId("" + i);
-                plugDescriptions[i].setOrganisation("Bundesumweltamt");
-                plugDescriptions[i].setDataType("webiste");
-                bus.getIPlugRegistry().addIPlug(plugDescriptions[i]);
-            }
-            IngridQuery query;
-            IngridHits hits = null;
-            IngridDocument[] documents = null;
+            //start the communication
+            SocketCommunication communication = new SocketCommunication();
+            
+            communication.setMulticastPort(11111);
+            communication.setUnicastPort(11112);
+            
+            
             try {
-                query = QueryStringParser.parse("fische ort:halle");
-                hits = bus.search(query, 10, 1, Integer.MAX_VALUE, 1000);
-                documents = hits.getHits();
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                communication.startup();
+            } catch (IOException e) {
+                System.err.println("Cannot start the communication: " + e.getMessage());
             }
+            
+            // start the proxy server
+            ProxyService proxy = new ProxyService();
+            
+            proxy.setCommunication(communication);
+            try {
+                proxy.startup();
+            } catch (IllegalArgumentException e) {
+                System.err.println("Wrong arguments supplied to the proxy service: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Cannot start the proxy server: " + e.getMessage());
+            }
+            
+            // register the IPlug
+            String iBusUrl = AddressUtil.getWetagURL("213.144.28.233", 11112);
+            RemoteInvocationController ric = null;
+            try {
+                ric = proxy.createRemoteInvocationController(iBusUrl);
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+            IngridQuery query = null;
+            try {
+                query = QueryStringParser.parse(qryStr);
+            } catch (ParseException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            Bus bus = null;
+            IngridHit[] documents = new IngridHit[0];
+            long numberOfHits = 0;
+            int page = (int)(start / limit) + 1;
+            
+            try {
+                    Class[] args = new Class[] {IngridQuery.class, int.class, int.class, int.class, int.class};
+                    Object[] params = new Object[] {query, new Integer(limit), new Integer(page), new Integer(limit), new Integer(20000) };
+                    IngridHits hits = (IngridHits) ric.invoke(Bus.class, Bus.class.getMethod("searchR", args), params);
+                    documents = hits.getHits();
+                    numberOfHits = hits.length();
+            } catch (Throwable t) {
+                    System.err.println("Error on getting IBus: " + t.getMessage());
+            t.printStackTrace();
+            }
+            
+            proxy.shutdown();
+            communication.shutdown();
             
             if (documents != null) {
                 int hitsOnPage;
@@ -288,9 +334,17 @@ public class SearchResultPortlet extends GenericVelocityPortlet
                 }
                 
                 for (int i =0; i< hitsOnPage; i++) {
+                    documents[i].put("title", "document id:" + documents[i].getId().toString());
+                    documents[i].put("abstract", documents[i].getContent().toString());
+                    documents[i].put("type", "WEBSITE");
+                    documents[i].put("provider", documents[i].getProvider().toString());
+                    documents[i].put("type", "Webseiten");
+                    documents[i].put("url", "url not specified");
+                    documents[i].put("ranking", String.valueOf(documents[i].getScore()));
+                    
                     result.add(documents[i]);
                 }
-                result.setNumberOfHits((int)hits.length());
+                result.setNumberOfHits((int)numberOfHits);
             } else {
                 result.setNumberOfHits(0);
             }
