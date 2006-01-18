@@ -3,6 +3,13 @@
  */
 package de.ingrid.portal.forms;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -39,6 +46,8 @@ public class ChronicleForm extends ActionForm {
 
     public static final String INITIAL_TIME_SELECT = "period";
 
+    DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -68,12 +77,76 @@ public class ChronicleForm extends ActionForm {
         boolean allOk = true;
         clearErrors();
 
-        // check rubric
+        // check event
         if (!hasInput(FIELD_EVENT)) {
             setError(FIELD_EVENT, "chronicle.error.noEvent");
             allOk = false;
         }
 
+        // check time
+        String inputTimeSelect = getInput(FIELD_TIME_SELECT);
+        String inputTimeFrom = getInput(FIELD_TIME_FROM);
+        String inputTimeTo = getInput(FIELD_TIME_TO);
+        String inputTimeAt = getInput(FIELD_TIME_AT);
+        if (inputTimeSelect.equals("period")) {
+            // first remove "other input" of radio button group
+            setInput(FIELD_TIME_AT, "");
+
+            Date fromDate = null;
+            Date toDate = null;
+            if (inputTimeFrom.length() != 0) {
+                fromDate = getDate(inputTimeFrom);
+                if (fromDate == null) {
+                    setError(FIELD_TIME_FROM, "chronicle.error.invalidTimeFrom");
+                    allOk = false;
+                }
+                if (inputTimeTo.length() == 0) {
+                    setError(FIELD_TIME_TO, "chronicle.error.noTimeTo");
+                    allOk = false;
+                }
+            }
+            if (inputTimeTo.length() != 0) {
+                toDate = getDate(inputTimeTo);
+                if (toDate == null) {
+                    setError(FIELD_TIME_TO, "chronicle.error.invalidTimeTo");
+                    allOk = false;
+                }
+                if (inputTimeFrom.length() == 0) {
+                    setError(FIELD_TIME_FROM, "chronicle.error.noTimeFrom");
+                    allOk = false;
+                }
+            }
+            if (fromDate != null && toDate != null) {
+                Calendar fromCal = new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay());
+                Calendar toCal = new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay());
+                if (fromCal.after(toCal)) {
+                    setError(FIELD_TIME_FROM, "chronicle.error.invalidPeriod");
+                    // set empty error, just for highlighting field label
+                    setError(FIELD_TIME_TO, "");
+                    allOk = false;
+                }
+            }
+        } else if (inputTimeSelect.equals("date")) {
+            // first remove "other input" of radio button group
+            setInput(FIELD_TIME_FROM, "");
+            setInput(FIELD_TIME_TO, "");
+
+            if (inputTimeAt.length() != 0) {
+                if (getDate(inputTimeAt) == null) {
+                    setError(FIELD_TIME_AT, "chronicle.error.invalidTimeAt");
+                    allOk = false;
+                }
+            }
+        }
+
         return allOk;
+    }
+
+    private Date getDate(String dateString) {
+        try {
+            return (Date) dateFormatter.parse(dateString);
+        } catch (ParseException e) {
+        }
+        return null;
     }
 }

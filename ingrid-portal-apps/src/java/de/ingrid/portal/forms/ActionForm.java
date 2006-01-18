@@ -4,6 +4,7 @@
 package de.ingrid.portal.forms;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -144,15 +145,30 @@ public abstract class ActionForm implements Serializable {
     }
 
     /**
-     * Return all encapsulated error values (the error "messages")
+     * Return all encapsulated error messages. Remove empty error messages !
+     * NOTICE: empty error messages ("") can be added for a field, so the field
+     * label is highlighted ! These messages aren't displayed (no separate line) !
      */
     public Collection getAllErrors() {
-        return errors.values();
+        if (!errors.containsValue("") && !errors.containsValue(null)) {
+            return errors.values();
+        }
+
+        // remove "empty errors" (as often executed as elements in the list to
+        // guarantee removal of all instances !)
+        ArrayList myErrors = new ArrayList(errors.values());
+        for (int i = 0; i < myErrors.size(); i++) {
+            myErrors.remove("");
+            myErrors.remove(null);
+        }
+
+        return myErrors;
     }
 
     /**
      * Set an error message for a field. NOTICE: A Field can only have ONE Error
-     * Message !
+     * Message ! You can set an empty message for a field, so the field label
+     * will be highlighted ! This empty message won't be displayed as error.
      */
     public void setError(String field, String msg) {
         errors.put(field, msg);
