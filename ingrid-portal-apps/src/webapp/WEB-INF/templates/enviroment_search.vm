@@ -1,77 +1,79 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="get" name="enviroment_search" id="enviroment_search">
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>
+		#displayFormErrors()
 		<div class="float_left">
 			<h3>
-				<label for="xx2">Themen
+				<label for="xx2">#displayFieldLabel('themes' $MESSAGES.getString('envsearch.themes'))
 				</label>
 			</h3>
-			<select class="env_themes inputstyle" name="spacial_relation" id="xx2" size="5" multiple="multiple">
-				<option>------ Alles auswählen ------
+			<select class="env_themes inputstyle" name="themes" id="xx2" size="5" multiple="multiple">
+				<option value="all" #getSelected('themes' 'all')>------ Alles auswählen ------
 				</option>
-				<option>Abfall
+				<option value="gar" #getSelected('themes' 'gar')>Abfall
 				</option>
-				<option>Altlasten
+				<option value="rel" #getSelected('themes' 'rel')>Altlasten
 				</option>
-				<option>Artenvielfalt
+				<option value="bio" #getSelected('themes' 'bio')>Artenvielfalt
 				</option>
-				<option>Bauen
+				<option value="bui" #getSelected('themes' 'bui')>Bauen
 				</option>
-				<option>Boden
+				<option value="gro" #getSelected('themes' 'gro')>Boden
 				</option>
-				<option>Chemikalien
+				<option value="che" #getSelected('themes' 'che')>Chemikalien
 				</option>
-				<option>Energie
+				<option value="ene" #getSelected('themes' 'ene')>Energie
 				</option>
-				<option>Gentechnik
+				<option value="gen" #getSelected('themes' 'gen')>Gentechnik
 				</option>
-				<option>Geologie
+				<option value="geo" #getSelected('themes' 'geo')>Geologie
 				</option>
-				<option>Gesundheit
+				<option value="hea" #getSelected('themes' 'hea')>Gesundheit
 				</option>
-				<option>Land/Forstwirtschaft
+				<option value="agr" #getSelected('themes' 'agr')>Land/Forstwirtschaft
 				</option>
-				<option>Lärm
+				<option value="noi" #getSelected('themes' 'noi')>Lärm
 				</option>
-				<option>Luft
+				<option value="air" #getSelected('themes' 'air')>Luft
 				</option>
-				<option>Naturschutz
+				<option value="nat" #getSelected('themes' 'nat')>Naturschutz
 				</option>
-				<option>Strahlung
+				<option value="rad" #getSelected('themes' 'rad')>Strahlung
 				</option>
-				<option>Tierschutz
+				<option value="ani" #getSelected('themes' 'ani')>Tierschutz
 				</option>
-				<option>Umweltinformationen
+				<option value="ein" #getSelected('themes' 'ein')>Umweltinformationen
 				</option>
-				<option>Umweltwirtschaft
+				<option value="eec" #getSelected('themes' 'eec')>Umweltwirtschaft
 				</option>
-				<option>Verkehr
+				<option value="tra" #getSelected('themes' 'tra')>Verkehr
 				</option>
-				<option>Wasser
+				<option value="wat" #getSelected('themes' 'wat')>Wasser
 				</option>
 			</select>
 		</div>
 		<div class="float_left marginleft">
 			<h3>
-				<label for="xx3">Kategorien
+				<label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envsearch.category'))
 				</label>
 			</h3>
-			<select class="funct_class inputstyle" name="spacial_relation" id="xx3" size="5" multiple="multiple">
-				<option>------ Alles auswählen ------
+			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
+				<option value="all" #getSelected('category' 'all')>------ Alles auswählen ------
 				</option>
-				<option>Rechtliches
+				<option value="leg" #getSelected('category' 'leg')>Rechtliches
 				</option>
-				<option>Konzeptionelles
+				<option value="con" #getSelected('category' 'con')>Konzeptionelles
 				</option>
-				<option>Statusberichte
+				<option value="sta" #getSelected('category' 'sta')>Statusberichte
 				</option>
-				<option>Umweltzustand
+				<option value="env" #getSelected('category' 'env')>Umweltzustand
 				</option>
-				<option>Daten und Karten
+				<option value="dat" #getSelected('category' 'dat')>Daten und Karten
 				</option>
-				<option>Risikobewertungen
+				<option value="ris" #getSelected('category' 'ris')>Risikobewertungen
 				</option>
 			</select>
 		</div>  
@@ -80,60 +82,60 @@
 		<br style="line-height:10px" />
 		<div class="float_left">
 			<h3>
-				<label for="xx4">Bund/Länder
+				<label for="xx4">#displayFieldLabel('partner' $MESSAGES.getString('envsearch.partner'))
 				</label>
 			</h3>
-			<select class="spacial_relation inputstyle" name="spacial_relation" id="xx4" size="5" multiple="multiple">
-				<option>------ Alles auswählen ------
+			<select class="spacial_relation inputstyle" name="partner" id="xx4" size="5" multiple="multiple">
+				<option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------
 				</option>
-				<option>Bund
+				<option value="2" #getSelected('partner' '2')>Bund
 				</option>
-				<option>Baden-Württemberg
+				<option value="3" #getSelected('partner' '3')>Baden-Württemberg
 				</option>
-				<option>Bayern
+				<option value="4" #getSelected('partner' '4')>Bayern
 				</option>
-				<option>Berlin
+				<option value="5" #getSelected('partner' '5')>Berlin
 				</option>
-				<option>Brandenburg
+				<option value="6" #getSelected('partner' '6')>Brandenburg
 				</option>
-				<option>Bremen
+				<option value="7" #getSelected('partner' '7')>Bremen
 				</option>
-				<option>Hamburg
+				<option value="8" #getSelected('partner' '8')>Hamburg
 				</option>
-				<option>Hessen
+				<option value="9" #getSelected('partner' '9')>Hessen
 				</option>
-				<option>Mecklenburg-Vorpommern
+				<option value="10" #getSelected('partner' '10')>Mecklenburg-Vorpommern
 				</option>
-				<option>Niedersachsen
+				<option value="11" #getSelected('partner' '11')>Niedersachsen
 				</option>
-				<option>Nordrhein-Westfalen
+				<option value="12" #getSelected('partner' '12')>Nordrhein-Westfalen
 				</option>
-				<option>Rheinland-Pfalz
+				<option value="13" #getSelected('partner' '13')>Rheinland-Pfalz
 				</option>
-				<option>Saarland
+				<option value="14" #getSelected('partner' '14')>Saarland
 				</option>
-				<option>Sachsen
+				<option value="15" #getSelected('partner' '15')>Sachsen
 				</option>
-				<option>Sachsen-Anhalt
+				<option value="16" #getSelected('partner' '16')>Sachsen-Anhalt
 				</option>
-				<option>Schleswig-Holstein
+				<option value="17" #getSelected('partner' '17')>Schleswig-Holstein
 				</option>
-				<option>Thüringen
+				<option value="18" #getSelected('partner' '18')>Thüringen
 				</option>
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>Gruppierung
+			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('envsearch.grouping'))
 			</h3>
-			<input type="radio" id="grouping_no" name="grouping" value="0" checked="checked" />
+			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
 			<label class="radiogroup" for="grouping_no">Keine
 			</label>
 			<br />
-			<input type="radio" id="grouping_partner" name="grouping" value="1" />
+			<input type="radio" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
 			<label class="radiogroup" for="grouping_partner">Bund/Länder
 			</label>
 			<br />
-			<input type="radio" id="grouping_info" name="grouping" value="2" />
+			<input type="radio" id="grouping_info" name="grouping" value="info" #getChecked('grouping' 'info')/>
 			<label class="radiogroup" for="grouping_info">Informationsanbieter
 			</label>
 			<br />

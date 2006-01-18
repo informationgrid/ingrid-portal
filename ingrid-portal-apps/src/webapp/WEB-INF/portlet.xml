@@ -286,10 +286,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Umweltthemen</title>
-            <short-title>EnviromentSearch</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
     </portlet>
     <portlet id="MeasuresSearchInfo">
         <init-param>
