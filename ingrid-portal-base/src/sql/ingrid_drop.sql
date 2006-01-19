@@ -1,0 +1,1 @@
+drop table ingrid_partner;

@@ -8,7 +8,7 @@
   <!--==================================================================-->    
 	<postGoal name="war:war-resources">
 	    <j:if test="${webSourcesPresent == 'true'}">
-	      <ant:echo>'war:war-resources' postGoal !!! copy local webapp from ${maven.war.src} to ${maven.war.webapp.dir}</ant:echo>
+	      <echo message="ingrid postGoal on 'war:war-resources' -> copy WITH OVERWRITE local ingrid webapp from ${maven.war.src} to ${maven.war.webapp.dir}"/>
 	      <ant:copy todir="${maven.war.webapp.dir}" preservelastmodified="false" overwrite="true" verbose="false">
 	        <ant:fileset dir="${maven.war.src}"
 	          includes="${maven.war.src.includes}"
@@ -17,6 +17,14 @@
 	      </ant:copy>
 	    </j:if>
 	    <attainGoal name="ingrid:portal.conf.sql"/>
+	</postGoal>
+
+	<postGoal name="j2:_db.drop">
+	    <echo message="ingrid postGoal on 'j2:_db.drop' -> dropping ingrid tables !"/>
+	    <j:set var="portal.sql.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
+	    <j:set var="database.arg.script" value="${portal.sql.dir}/ingrid_drop.sql"/>
+	    <j:set var="database.arg.onerror" value="continue"/>
+	    <attainGoal name="j2:_db.execute"/>
 	</postGoal>
 
   	<goal name="ingrid:portal.conf.sql" prereqs="j2:_check.required.properties">

@@ -15,7 +15,7 @@
     <attainGoal name="ingrid-portal:clean" />
     <maven:reactor basedir="${basedir}"
             includes="ingrid-portal-base/project.xml"
-            goals="j2:portal.genapp.minimal" banner="Creating minimal portal application..."
+            goals="j2:portal.genapp.minimal" banner="Creating minimal portal application (j2:portal.genapp.minimal) ..."
             postProcessing="false" ignoreFailures="false" />
     <attainGoal name="ingrid-portal:war:install" />  
     <copy file="./ingrid-portal-apps/target/ingrid-portal-apps.war"
@@ -30,7 +30,7 @@
     </copy>
     <maven:reactor basedir="${basedir}"
             includes="ingrid-portal-base/project.xml"
-            goals="war:install" banner="Creating minimal portal application..."
+            goals="war:install" banner="Creating war file (war:install) ..."
             postProcessing="false" ignoreFailures="false" />
   </goal>
 </project>
