@@ -1,7 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,14 +20,11 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.ibus.Bus;
-import de.ingrid.ibus.DummyProxyFactory;
-import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
-import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
@@ -111,7 +107,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         	numberOfSelectorPages = 5;
         	firstSelectorPage = 1;
         	selectorHasPreviousPage = false;
-        	if (currentSelectorPage > numberOfSelectorPages) {
+        	if (currentSelectorPage >= numberOfSelectorPages) {
         	    firstSelectorPage = currentSelectorPage - (int)(numberOfSelectorPages/2); 
             	selectorHasPreviousPage = true;
     		}
@@ -152,7 +148,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         	numberOfSelectorPages = 3;
         	firstSelectorPage = 1;
         	selectorHasPreviousPage = false;
-        	if (currentSelectorPage > numberOfSelectorPages) {
+        	if (currentSelectorPage >= numberOfSelectorPages) {
         	    firstSelectorPage = currentSelectorPage - (int)(numberOfSelectorPages/2); 
             	selectorHasPreviousPage = true;
     		}
