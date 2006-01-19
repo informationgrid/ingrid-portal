@@ -113,7 +113,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     		}
         	lastSelectorPage = firstSelectorPage + numberOfSelectorPages - 1;
         	selectorHasNextPage = true;
-        	if (numberOfPages < lastSelectorPage) {
+        	if (numberOfPages <= lastSelectorPage) {
         	    lastSelectorPage = numberOfPages;
         	    selectorHasNextPage = false;
         	}
@@ -257,6 +257,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     private SearchResultList doSearch(String qryStr, String ds, int start, int limit, boolean ranking) {
     	
     	
+        // force lower case due to an iPlug/iBus bug
+        qryStr = qryStr.toLowerCase();
+        
         SearchResultList result = new SearchResultList();
         
     	if (ranking) {
@@ -309,7 +312,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
             
             try {
                     Class[] args = new Class[] {IngridQuery.class, int.class, int.class, int.class, int.class};
-                    Object[] params = new Object[] {query, new Integer(limit), new Integer(page), new Integer(limit), new Integer(20000) };
+                    Object[] params = new Object[] {query, new Integer(limit), new Integer(page), new Integer(limit), new Integer(1000) };
                     IngridHits hits = (IngridHits) ric.invoke(Bus.class, Bus.class.getMethod("searchR", args), params);
                     documents = hits.getHits();
                     numberOfHits = hits.length();
