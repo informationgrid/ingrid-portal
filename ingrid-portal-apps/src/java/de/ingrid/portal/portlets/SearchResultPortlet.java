@@ -20,11 +20,13 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.ibus.Bus;
+import de.ingrid.portal.forms.SimpleSearchForm;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
+import de.ingrid.portal.utils.Utils;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
@@ -58,6 +60,25 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+
+        // -------------------
+        // NOTICE: THIS STUFF HAS TO BE MERGED WITH SIMPLE SEARCH PORTLET
+        // (separate portlets for query input and results))
+        // THIS IS A TEMPORARY SOLUTION !
+
+        // get ActionForm, we use get method without instantiation, so we can do
+        // special initialisation
+        SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
+                SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
+
+        // if action is "doSearch" page WAS CALLED FROM STARTPAGE !
+        String action = request.getParameter("action");
+        if (action != null && action.equalsIgnoreCase("doSearch")) {
+            // we are on the result psml page !!!
+            af.populate(request);
+        }
+        // -------------------
+
     	PortletSession session = request.getPortletSession();
     	String selectedDS = (String) session.getAttribute("selectedDS");
     	if (selectedDS == null || selectedDS.length() == 0) {
@@ -192,8 +213,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet
     
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException
     {
-
     	String action = request.getParameter("action");
+
+        // -------------------
+        // NOTICE: THIS STUFF HAS TO BE MERGED WITH SIMPLE SEARCH PORTLET
+        // (separate portlets for query input and results))
+        // THIS IS A TEMPORARY SOLUTION !
+
+        // check form input
+        SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
+                SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        af.populate(request);
+        if (!af.validate()) {
+            return;
+        }
+        // -------------------
+
     	PortletSession session = request.getPortletSession();
     	PageState ps = (PageState) session.getAttribute("portlet_state");
     	if (ps == null) {

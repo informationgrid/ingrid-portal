@@ -6,6 +6,7 @@ package de.ingrid.portal.utils;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +23,27 @@ public class Utils {
     private final static Log log = LogFactory.getLog(Utils.class);
 
     /**
-     * Get ActionForm from Session, add new one of given Class to session if not there yet !
+     * Get ActionForm from Session in given scope, add new one of given Class to
+     * session if not there yet !
+     * 
+     * @param request
+     * @param afKey
+     * @param afClass
+     * @param sessionScope
+     * @return
+     */
+    public static ActionForm getActionForm(PortletRequest request, String afKey, Class afClass, int sessionScope) {
+        ActionForm af = getActionForm(request, afKey, sessionScope);
+        if (af == null) {
+            af = addActionForm(request, afKey, afClass, sessionScope);
+        }
+
+        return af;
+    }
+
+    /**
+     * Convenient method for getting (incl. adding) action forms from
+     * PortletSession.PORTLET_SCOPE
      * 
      * @param request
      * @param afKey
@@ -30,39 +51,36 @@ public class Utils {
      * @return
      */
     public static ActionForm getActionForm(PortletRequest request, String afKey, Class afClass) {
-        ActionForm af = getActionForm(request, afKey);
-        if (af == null) {
-            af = addActionForm(request, afKey, afClass);
-        }
-
-        return af;
+        return getActionForm(request, afKey, afClass, PortletSession.PORTLET_SCOPE);
     }
 
     /**
-     * Get ActionForm from Session, returns null if not there yet !
+     * Get ActionForm from Session in given scope, returns null if not there yet !
      * 
      * @param request
      * @param afKey
+     * @param scope
      * @return
      */
-    public static ActionForm getActionForm(PortletRequest request, String afKey) {
-        return (ActionForm) request.getPortletSession().getAttribute(afKey);
+    public static ActionForm getActionForm(PortletRequest request, String afKey, int scope) {
+        return (ActionForm) request.getPortletSession().getAttribute(afKey, scope);
     }
 
     /**
-     * Add new ActionForm of given Class to Session. Also calls init() on ActionForm !
+     * Add new ActionForm of given Class to Session. Also calls init() on
+     * ActionForm !
      * 
      * @param request
      * @param afKey
      * @param afClass
      * @return
      */
-    public static ActionForm addActionForm(PortletRequest request, String afKey, Class afClass) {
+    public static ActionForm addActionForm(PortletRequest request, String afKey, Class afClass, int scope) {
         ActionForm af = null;
         try {
             af = (ActionForm) afClass.newInstance();
             af.init();
-            request.getPortletSession().setAttribute(afKey, af);
+            request.getPortletSession().setAttribute(afKey, af, scope);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems initial setup ActionForm of type " + afClass, ex);

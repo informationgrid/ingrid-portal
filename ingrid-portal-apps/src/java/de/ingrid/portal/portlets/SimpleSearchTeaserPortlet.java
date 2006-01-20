@@ -47,21 +47,25 @@ public class SimpleSearchTeaserPortlet extends GenericVelocityPortlet {
         ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
         context.put("MESSAGES", messages);
 
-        // get ActionForm, we use get method without instantiation, so we can do special initialisation
-        SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY);
+        // get ActionForm, we use get method without instantiation, so we can do
+        // special initialisation
+        SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
+                PortletSession.APPLICATION_SCOPE);
         if (af == null) {
-            af = (SimpleSearchForm) Utils.addActionForm(request, SimpleSearchForm.SESSION_KEY, SimpleSearchForm.class);
+            af = (SimpleSearchForm) Utils.addActionForm(request, SimpleSearchForm.SESSION_KEY, SimpleSearchForm.class,
+                    PortletSession.APPLICATION_SCOPE);
             af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
             af.init();
         }
-        // put ActionForm to context. use variable name "actionForm" so velocity macros work !
+        // put ActionForm to context. use variable name "actionForm" so velocity
+        // macros work !
         context.put("actionForm", af);
 
-//        String action = request.getParameter("action");
-//        if (action != null && action.equalsIgnoreCase("doSearch")) {
-//            // we are on the result psml page !!!
-//            af.populate(request);
-//        }
+        // String action = request.getParameter("action");
+        // if (action != null && action.equalsIgnoreCase("doSearch")) {
+        // // we are on the result psml page !!!
+        // af.populate(request);
+        // }
 
         PortletSession session = request.getPortletSession();
         String selectedDS = (String) session.getAttribute("selectedDS");
@@ -85,7 +89,7 @@ public class SimpleSearchTeaserPortlet extends GenericVelocityPortlet {
 
         // check form input
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
-                SimpleSearchForm.class);
+                SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
         af.populate(request);
         if (!af.validate()) {
             return;
