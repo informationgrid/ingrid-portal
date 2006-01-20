@@ -424,10 +424,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Suche</title>
-            <short-title>SimpleSearchTeaser</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SimpleSearchTeaserResources</resource-bundle>            
     </portlet>
 
     <portlet id="EnviromentCatalogTeaser">

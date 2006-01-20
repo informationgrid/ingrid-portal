@@ -6,7 +6,6 @@ package de.ingrid.portal.utils;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,28 +22,50 @@ public class Utils {
     private final static Log log = LogFactory.getLog(Utils.class);
 
     /**
-     * Create an ActionForm of given Class and put it in the Session if not
-     * there yet.
+     * Get ActionForm from Session, add new one of given Class to session if not there yet !
      * 
      * @param request
      * @param afKey
      * @param afClass
      * @return
-     * @throws IllegalAccessException
-     * @throws InstantiationException
      */
     public static ActionForm getActionForm(PortletRequest request, String afKey, Class afClass) {
-        PortletSession session = request.getPortletSession();
-        ActionForm af = (ActionForm) session.getAttribute(afKey);
+        ActionForm af = getActionForm(request, afKey);
         if (af == null) {
-            try {
-                af = (ActionForm) afClass.newInstance();
-                af.init();
-                session.setAttribute(afKey, af);
-            } catch (Exception ex) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems initial setup ActionForm of type " + afClass, ex);
-                }
+            af = addActionForm(request, afKey, afClass);
+        }
+
+        return af;
+    }
+
+    /**
+     * Get ActionForm from Session, returns null if not there yet !
+     * 
+     * @param request
+     * @param afKey
+     * @return
+     */
+    public static ActionForm getActionForm(PortletRequest request, String afKey) {
+        return (ActionForm) request.getPortletSession().getAttribute(afKey);
+    }
+
+    /**
+     * Add new ActionForm of given Class to Session. Also calls init() on ActionForm !
+     * 
+     * @param request
+     * @param afKey
+     * @param afClass
+     * @return
+     */
+    public static ActionForm addActionForm(PortletRequest request, String afKey, Class afClass) {
+        ActionForm af = null;
+        try {
+            af = (ActionForm) afClass.newInstance();
+            af.init();
+            request.getPortletSession().setAttribute(afKey, af);
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems initial setup ActionForm of type " + afClass, ex);
             }
         }
 

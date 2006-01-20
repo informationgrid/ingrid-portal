@@ -7,30 +7,29 @@ $action.setParameter('action','doChangeDS')
     	<input type="hidden" name="action" value="doSearch"/>
 		<p class="datasource_selection">
 #if($ds=="1")
-	<strong>Umweltinformationen</strong>
+	<strong>$MESSAGES.getString('simpleSearch.area.envInfos')</strong>
 #else
     $action.setParameter('ds','1')
-	<a href="$action">Umweltinformationen</a>	
+	<a href="$action">$MESSAGES.getString('simpleSearch.area.envInfos')</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
 #if($ds=="2")
-	<strong>Adressen</strong>
+	<strong>$MESSAGES.getString('simpleSearch.area.addresses')</strong>
 #else
     $action.setParameter('ds','2')
-	<a href="$action">Adressen</a>	
+	<a href="$action">$MESSAGES.getString('simpleSearch.area.addresses')</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
 #if($ds=="3")
-	<strong>Forschungsprojekte</strong>
+	<strong>$MESSAGES.getString('simpleSearch.area.research')</strong>
 #else
     $action.setParameter('ds','3')
-	<a href="$action">Forschungsprojekte</a>	
+	<a href="$action">$MESSAGES.getString('simpleSearch.area.research')</a>	
 #end
     	</p>
-      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($q)
-$q#else
-Geben Sie hier Ihre Suchanfrage ein#end
-" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" /><input class="btn" type="submit" value="PortalU Suche" />
+      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#getFieldValue('q')" 
+		onfocus='if (this.value == "$MESSAGES.getString('simpleSearch.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('simpleSearch.query.initial')"' />
+		<input class="btn" type="submit" value="PortalU Suche" />
           <span class="clearer"></span>
     </form>
     <div class="optional-links">
