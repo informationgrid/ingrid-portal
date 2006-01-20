@@ -21,3 +21,10 @@ $actionForm.getInput($field)#end
 <span class="portlet-msg-error">$fieldLabel</span>#else
 $fieldLabel#end
 #end
+
+#macro (displayPartner)
+<option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------</option>
+#foreach ($partner in $partnerList)
+<option value="$partner.Ident" #getSelected('partner' "$partner.Ident")>$partner.Name</option>
+#end
+#end

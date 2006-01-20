@@ -4,9 +4,10 @@
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>
-#displayFormErrors()
+		#displayFormErrors()
 		<div class="float_left">
-			<h3>#displayFieldLabel('rubric' 'Rubriken')</h3>
+			<h3>#displayFieldLabel('rubric' 'Rubriken')
+			</h3>
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
@@ -42,48 +43,15 @@
 		</div>
 		<br style="line-height:10px" />
 		<div class="float_left">
-			<h3>#displayFieldLabel('partner' 'Bund/Länder')</h3>
+			<h3>#displayFieldLabel('partner' 'Bund/Länder')
+			</h3>
 			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
-				<option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------
-				</option>
-				<option value="2" #getSelected('partner' '2')>Bund
-				</option>
-				<option value="3" #getSelected('partner' '3')>Baden-Württemberg
-				</option>
-				<option value="4" #getSelected('partner' '4')>Bayern
-				</option>
-				<option value="5" #getSelected('partner' '5')>Berlin
-				</option>
-				<option value="6" #getSelected('partner' '6')>Brandenburg
-				</option>
-				<option value="7" #getSelected('partner' '7')>Bremen
-				</option>
-				<option value="8" #getSelected('partner' '8')>Hamburg
-				</option>
-				<option value="9" #getSelected('partner' '9')>Hessen
-				</option>
-				<option value="10" #getSelected('partner' '10')>Mecklenburg-Vorpommern
-				</option>
-				<option value="11" #getSelected('partner' '11')>Niedersachsen
-				</option>
-				<option value="12" #getSelected('partner' '12')>Nordrhein-Westfalen
-				</option>
-				<option value="13" #getSelected('partner' '13')>Rheinland-Pfalz
-				</option>
-				<option value="14" #getSelected('partner' '14')>Saarland
-				</option>
-				<option value="15" #getSelected('partner' '15')>Sachsen
-				</option>
-				<option value="16" #getSelected('partner' '16')>Sachsen-Anhalt
-				</option>
-				<option value="17" #getSelected('partner' '17')>Schleswig-Holstein
-				</option>
-				<option value="18" #getSelected('partner' '18')>Thüringen
-				</option>
+				#displayPartner()
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>#displayFieldLabel('grouping' 'Gruppierung')</h3>
+			<h3>#displayFieldLabel('grouping' 'Gruppierung')
+			</h3>
 			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
 			<label class="radiogroup" for="grouping_no">Keine
 			</label>

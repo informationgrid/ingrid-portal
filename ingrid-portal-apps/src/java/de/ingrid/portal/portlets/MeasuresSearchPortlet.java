@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -11,12 +12,13 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.forms.MeasuresSearchForm;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.utils.Utils;
+import de.ingrid.portal.utils.UtilsDB;
 
 public class MeasuresSearchPortlet extends GenericVelocityPortlet {
+
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
@@ -30,6 +32,10 @@ public class MeasuresSearchPortlet extends GenericVelocityPortlet {
         MeasuresSearchForm af = (MeasuresSearchForm) Utils.getActionForm(request, MeasuresSearchForm.SESSION_KEY,
                 MeasuresSearchForm.class);
         context.put("actionForm", af);
+
+        // get data base stuff
+        List partners = UtilsDB.getPartners();
+        context.put("partnerList", partners);
 
         super.doView(request, response);
     }

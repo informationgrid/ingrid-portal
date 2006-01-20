@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import de.ingrid.portal.forms.ActionForm;
 
 /**
- * Global STATIC data and methods.
+ * Global STATIC data and utility methods.
  * 
  * @author Martin Maidhof
  */
@@ -23,8 +23,8 @@ public class Utils {
     private final static Log log = LogFactory.getLog(Utils.class);
 
     /**
-     * Get ActionForm from Session in given scope, add new one of given Class to
-     * session if not there yet !
+     * Get ActionForm from Session in given scope. Add new one of given Class 
+     * if not there yet !
      * 
      * @param request
      * @param afKey

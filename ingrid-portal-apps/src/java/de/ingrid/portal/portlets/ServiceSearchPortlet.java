@@ -12,17 +12,13 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceSearchForm;
-import de.ingrid.portal.hibernate.HibernateManager;
-import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.utils.Utils;
+import de.ingrid.portal.utils.UtilsDB;
 
 public class ServiceSearchPortlet extends GenericVelocityPortlet {
 
-    HibernateManager fHibernateManager = null;
-
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
-        fHibernateManager = HibernateManager.getInstance();
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -31,10 +27,13 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
 
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
-        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY, ServiceSearchForm.class);
+        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
+                ServiceSearchForm.class);
         context.put("actionForm", sf);
 
-        List relations = this.fHibernateManager.loadAllData(IngridPartner.class, 0);
+        // get data base stuff
+        List partners = UtilsDB.getPartners();
+        context.put("partnerList", partners);
 
         super.doView(request, response);
     }
@@ -44,7 +43,8 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
         String action = request.getParameter("action");
 
         // check form input
-        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY, ServiceSearchForm.class);
+        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
+                ServiceSearchForm.class);
         sf.populate(request);
         if (!sf.validate()) {
             return;

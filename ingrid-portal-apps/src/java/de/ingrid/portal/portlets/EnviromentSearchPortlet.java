@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -14,8 +15,10 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.utils.Utils;
+import de.ingrid.portal.utils.UtilsDB;
 
 public class EnviromentSearchPortlet extends GenericVelocityPortlet {
+
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
@@ -29,6 +32,10 @@ public class EnviromentSearchPortlet extends GenericVelocityPortlet {
         EnvironmentSearchForm af = (EnvironmentSearchForm) Utils.getActionForm(request,
                 EnvironmentSearchForm.SESSION_KEY, EnvironmentSearchForm.class);
         context.put("actionForm", af);
+
+        // get data base stuff
+        List partners = UtilsDB.getPartners();
+        context.put("partnerList", partners);
 
         super.doView(request, response);
     }
