@@ -1,0 +1,17 @@
+#foreach($rssEntry in $rssEntries)
+  <div class="resultset">
+    <span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span><a href="$!rssEntry.link" target="_new" title="Link öffnet in neuem Fenster">$!rssEntry.title</a></strong><em class="date">, $!rssEntry.publishedDate</em></span>
+    <p class="result_description">
+      $!rssEntry.description
+    </p>
+    <p class="result_metadata">
+      Rubrik: xx<br />
+      Anbieter: $!rssEntry.author
+    </p>
+
+  </div>
+  <div class="line"><hr /></div>
+#end	
+  <br />
+
+  <div class="ico_linkintern"><span style="font-size:75%"><a href="weitere_meldungen.html">weitere Meldungen</a></span></div>
