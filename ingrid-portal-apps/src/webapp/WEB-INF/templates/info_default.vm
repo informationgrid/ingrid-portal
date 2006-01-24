@@ -1,0 +1,9 @@
+<div class="portlet-section-body">
+	<ul>
+		<li>
+			<p>
+				$MESSAGES.getString('info.default.content')
+			</p>
+		</li>
+	</ul>
+</div>

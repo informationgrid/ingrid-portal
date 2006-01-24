@@ -8,6 +8,24 @@
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
 
+    <portlet id="InfoPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/no_info.vm</value>
+        </init-param>
+        <portlet-name>InfoPortlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+    </portlet>
+
     <portlet id="Privacy">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -248,27 +266,6 @@
         <portlet-info>
             <title>Detailinformation - Karte</title>
             <short-title>ShowMapsPortlet</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="EnviromentSearchInfo">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_search_info.vm</value>
-        </init-param>
-        <portlet-name>EnviromentSearchInfo</portlet-name>
-        <display-name>Info zu Umweltthemen</display-name>
-        <description>This portlet displays the envirometal search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Info zu Umweltthemen</title>
-            <short-title>EnviromentSearchInfo</short-title>
         </portlet-info>
     </portlet>
     <portlet id="EnviromentSearch">
