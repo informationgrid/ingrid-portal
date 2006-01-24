@@ -29,5 +29,6 @@
         <!--<property name="hbm2ddl.auto">create</property>-->
 
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridPartner.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridRSSStore.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

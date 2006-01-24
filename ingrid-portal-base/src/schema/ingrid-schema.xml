@@ -23,5 +23,24 @@ limitations under the License.
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="sortkey" required="true" type="INTEGER"/>
     </table>
+
+    <table name="ingrid_rss_source">
+        <column name="id" primaryKey="true" required="true" type="INTEGER"/>
+        <column name="provider" required="true" size="255" type="VARCHAR"/>
+        <column name="description" required="false" size="255" type="VARCHAR"/>
+        <column name="url" required="true" size="255" type="VARCHAR"/>
+        <column name="lang" required="true" size="255" type="VARCHAR"/>
+    </table>
+
+    <table name="ingrid_rss_store">
+        <column name="link" primaryKey="true" required="true" size="255" type="VARCHAR"/>
+        <column name="author" required="false" size="255" type="VARCHAR"/>
+        <column name="categories" required="false" size="255" type="VARCHAR"/>
+        <column name="copyright" required="false" size="255" type="VARCHAR"/>
+        <column name="description" required="false" type="LONGVARCHAR"/>
+        <column name="language" required="false" size="255" type="VARCHAR"/>
+        <column name="published_date" required="false" type="TIMESTAMP"/>
+        <column name="title" required="false" size="255" type="VARCHAR"/>
+    </table>
     
 </database>

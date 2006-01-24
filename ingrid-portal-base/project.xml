@@ -23,5 +23,16 @@
     <artifactId>ingrid-portal</artifactId>
     <name>Ingrid Portal</name>
     <currentVersion>0.1</currentVersion>
+	<dependencies>
+		<dependency>
+			<id>rome</id>
+			<version>
+				0.4
+			</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>
+		</dependency>
+	</dependencies>
 </project>
 

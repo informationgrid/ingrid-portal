@@ -15,3 +15,7 @@ INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (14, 'sn', 'Sachsen
 INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (15, 'st', 'Sachsen-Anhalt', 15);
 INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (16, 'sh', 'Schleswig-Holstein', 16);
 INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (17, 'th', 'Thüringen', 17);
+
+
+INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (1, 'UBA', 'RSS-UBA', 'http://www.uba.de/rss/ubapresseinfo.xml', 'de');
+INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 'BFN', 'BFN-UBA', 'http://www.bfn.de/6.100.html', 'de');
