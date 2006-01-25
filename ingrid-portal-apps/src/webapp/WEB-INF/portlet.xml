@@ -26,90 +26,6 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
 
-    <portlet id="Privacy">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/privacy.vm</value>
-        </init-param>
-        <portlet-name>Privacy</portlet-name>
-        <display-name>Privacy</display-name>
-        <description>This portlet displayes a enviroment search box.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Datenschutzbestimmungen</title>
-            <short-title>Privacy</short-title>
-        </portlet-info>
-    </portlet>
-
-
-    <portlet id="DisclaimerInfo">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/disclaimer_info.vm</value>
-        </init-param>
-        <portlet-name>DisclaimerInfo</portlet-name>
-        <display-name>DisclaimerInfo</display-name>
-        <description>This portlet displays the enviroment chronicle search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Inhalt des Artikels</title>
-            <short-title>DisclaimerInfo</short-title>
-        </portlet-info>
-    </portlet>
-    <portlet id="Disclaimer">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/disclaimer.vm</value>
-        </init-param>
-        <portlet-name>Disclaimer</portlet-name>
-        <display-name>Disclaimer</display-name>
-        <description>This portlet displayes a enviroment search box.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Impressum</title>
-            <short-title>Disclaimer</short-title>
-        </portlet-info>
-    </portlet>
-
-
-    <portlet id="NewsletterTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/newsletter_teaser.vm</value>
-        </init-param>
-        <portlet-name>NewsletterTeaser</portlet-name>
-        <display-name>NewsletterTeaser</display-name>
-        <description>This portlet displays the enviroment chronicle search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Newsletter</title>
-            <short-title>NewsletterTeaser</short-title>
-        </portlet-info>
-    </portlet>
     <portlet id="Contact">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -126,26 +42,6 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
-    </portlet>
-
-    <portlet id="SitemapPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/sitemap.vm</value>
-        </init-param>
-        <portlet-name>SitemapPortlet</portlet-name>
-        <display-name>SitemapPortlet</display-name>
-        <description>This portlet displays the sitemap.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <supported-locale>en</supported-locale>                
-        <supported-locale>de</supported-locale>            
-        <resource-bundle>de.ingrid.portal.resources.SitemapResources</resource-bundle>            
     </portlet>
 
     <portlet id="AboutPortalUPartner">

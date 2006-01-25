@@ -19,7 +19,7 @@
         <value>/WEB-INF/templates/enviroment_search_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>info.main.environment.search.title</value>
+        <value>info.environment.title</value>
       </preference>
     </fragment>
   </fragment>
