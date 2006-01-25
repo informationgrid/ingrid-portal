@@ -14,7 +14,6 @@ import org.hibernate.criterion.Order;
 
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridRSSStore;
-import de.ingrid.portal.utils.Utils;
 
 
 
@@ -41,6 +40,7 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet
 
         int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("noOfEntriesDisplayed", "3"));
         
+        // TODO refactor into UtilsDB class?
         List rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setMaxResults(noOfEntriesDisplayed).list();
         
         context.put("rssEntries", rssEntries);

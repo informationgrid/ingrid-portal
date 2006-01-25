@@ -422,7 +422,7 @@ ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
 /*** sitemap ***/
 
 div.sitemap ul {list-style: none; margin: 0.5em 0 0 0.5em;}
-div.sitemap li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
+div.sitemap li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
 div.sitemap li a { font-size:75%; }
 div.sitemap li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#111111}
 div.sitemap li li a { font-size:75%;}
