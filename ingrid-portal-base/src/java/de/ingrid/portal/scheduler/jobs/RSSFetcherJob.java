@@ -74,6 +74,9 @@ public class RSSFetcherJob extends ScheduledJob {
                     selectStmt = conn.prepareStatement("SELECT link FROM ingrid_rss_store WHERE language='de' AND link='" + entry.getLink() + "'");
                     rs = selectStmt.executeQuery();
                     if (!rs.next()) {
+                        if (entry.getAuthor() == null) {
+                            entry.setAuthor(feed.getTitle());
+                        }
                         publishedDate = entry.getPublishedDate();
                         if (publishedDate == null) {
                             publishedDate = new Date();
