@@ -11,7 +11,48 @@
 				</label>
 			</h3>
 			<select class="env_themes inputstyle" name="themes" id="xx2" size="5" multiple="multiple">
-				#displayPartner()
+				<option value="all" #getSelected('themes' 'all')>------ Alles auswählen ------
+				</option>
+				<option value="gar" #getSelected('themes' 'gar')>Abfall
+				</option>
+				<option value="rel" #getSelected('themes' 'rel')>Altlasten
+				</option>
+				<option value="bio" #getSelected('themes' 'bio')>Artenvielfalt
+				</option>
+				<option value="bui" #getSelected('themes' 'bui')>Bauen
+				</option>
+				<option value="gro" #getSelected('themes' 'gro')>Boden
+				</option>
+				<option value="che" #getSelected('themes' 'che')>Chemikalien
+				</option>
+				<option value="ene" #getSelected('themes' 'ene')>Energie
+				</option>
+				<option value="gen" #getSelected('themes' 'gen')>Gentechnik
+				</option>
+				<option value="geo" #getSelected('themes' 'geo')>Geologie
+				</option>
+				<option value="hea" #getSelected('themes' 'hea')>Gesundheit
+				</option>
+				<option value="agr" #getSelected('themes' 'agr')>Land/Forstwirtschaft
+				</option>
+				<option value="noi" #getSelected('themes' 'noi')>Lärm
+				</option>
+				<option value="air" #getSelected('themes' 'air')>Luft
+				</option>
+				<option value="nat" #getSelected('themes' 'nat')>Naturschutz
+				</option>
+				<option value="rad" #getSelected('themes' 'rad')>Strahlung
+				</option>
+				<option value="ani" #getSelected('themes' 'ani')>Tierschutz
+				</option>
+				<option value="ein" #getSelected('themes' 'ein')>Umweltinformationen
+				</option>
+				<option value="eec" #getSelected('themes' 'eec')>Umweltwirtschaft
+				</option>
+				<option value="tra" #getSelected('themes' 'tra')>Verkehr
+				</option>
+				<option value="wat" #getSelected('themes' 'wat')>Wasser
+				</option>
 			</select>
 		</div>
 		<div class="float_left marginleft">
@@ -45,42 +86,7 @@
 				</label>
 			</h3>
 			<select class="spacial_relation inputstyle" name="partner" id="xx4" size="5" multiple="multiple">
-				<option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------
-				</option>
-				<option value="2" #getSelected('partner' '2')>Bund
-				</option>
-				<option value="3" #getSelected('partner' '3')>Baden-Württemberg
-				</option>
-				<option value="4" #getSelected('partner' '4')>Bayern
-				</option>
-				<option value="5" #getSelected('partner' '5')>Berlin
-				</option>
-				<option value="6" #getSelected('partner' '6')>Brandenburg
-				</option>
-				<option value="7" #getSelected('partner' '7')>Bremen
-				</option>
-				<option value="8" #getSelected('partner' '8')>Hamburg
-				</option>
-				<option value="9" #getSelected('partner' '9')>Hessen
-				</option>
-				<option value="10" #getSelected('partner' '10')>Mecklenburg-Vorpommern
-				</option>
-				<option value="11" #getSelected('partner' '11')>Niedersachsen
-				</option>
-				<option value="12" #getSelected('partner' '12')>Nordrhein-Westfalen
-				</option>
-				<option value="13" #getSelected('partner' '13')>Rheinland-Pfalz
-				</option>
-				<option value="14" #getSelected('partner' '14')>Saarland
-				</option>
-				<option value="15" #getSelected('partner' '15')>Sachsen
-				</option>
-				<option value="16" #getSelected('partner' '16')>Sachsen-Anhalt
-				</option>
-				<option value="17" #getSelected('partner' '17')>Schleswig-Holstein
-				</option>
-				<option value="18" #getSelected('partner' '18')>Thüringen
-				</option>
+				#displayPartner()
 			</select>
 		</div>
 		<div class="float_left marginleft">
