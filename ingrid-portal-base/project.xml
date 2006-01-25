@@ -27,7 +27,7 @@
 		<dependency>
 			<id>rome</id>
 			<version>
-				0.4
+				0.7
 			</version>
 			<properties>
 	           <war.bundle>true</war.bundle>

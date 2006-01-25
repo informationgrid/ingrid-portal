@@ -6,7 +6,9 @@
     </p>
     <p class="result_metadata">
       Rubrik: xx<br />
-      Anbieter: $!rssEntry.author
+#if($rssEntry.author)
+	  Anbieter: $rssEntry.author
+#end	  
     </p>
 
   </div>

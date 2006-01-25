@@ -1,6 +1,5 @@
 package de.ingrid.portal.scheduler.jobs;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +14,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.scheduler.JobEntry;
 import org.apache.jetspeed.scheduler.ScheduledJob;
 
@@ -23,8 +24,14 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
+import de.ingrid.portal.utils.StringUtils;
+
 public class RSSFetcherJob extends ScheduledJob {
 
+    /** Commons logging */
+    protected final static Log log = LogFactory.getLog(RSSFetcherJob.class);
+    
+    
     public void run(JobEntry arg0) throws Exception {
 
         
@@ -57,6 +64,7 @@ public class RSSFetcherJob extends ScheduledJob {
             String sqlDate = null;
             String sql;
             SimpleDateFormat df;
+            int cnt = 0;
                 
             for (int i=0; i<feeds.size(); i++) {
                 feed = (SyndFeed)feeds.get(i);
@@ -72,16 +80,21 @@ public class RSSFetcherJob extends ScheduledJob {
                         }
                         df = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.S" );
                         sqlDate = df.format( publishedDate );
-                        entry.setTitle(new String(convert(entry.getTitle().getBytes(), "ISO-8859-1", "UTF-8")));
-                        
+                        entry.setTitle(StringUtils.htmlescape(entry.getTitle()));
                         
                         sql = "INSERT INTO ingrid_rss_store (title, description, language, link, published_date, author) VALUES ('"+ entry.getTitle() + "', '" +entry.getDescription().getValue() + "', '" +"de" + "', '" +entry.getLink() + "', '" + sqlDate + "', '" + entry.getAuthor() +  "')";
                         selectStmt = conn.prepareStatement(sql);
                         selectStmt.execute();
+                        cnt++;
                     }
                     rs.close();
                 }
             }
+            
+            if (cnt > 0) {
+                log.info("Number of RSS entries added: " + cnt);                
+            }
+            
             
             // remove old entries
             Calendar myCal = Calendar.getInstance();
@@ -101,30 +114,5 @@ public class RSSFetcherJob extends ScheduledJob {
         }
 
     }
-
-    public static byte[] convert(byte[] data, String srcEncoding, String targetEncoding) {
-        // First, decode the data using the source encoding.
-        // The String constructor does this (Javadoc).
-        String str = null;
-        try {
-            str = new String(data, srcEncoding);
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        // Next, encode the data using the target encoding.
-        // The String.getBytes() method does this.
-        byte[] result = null;
-        try {
-            result = str.getBytes(targetEncoding);
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
 
 }
