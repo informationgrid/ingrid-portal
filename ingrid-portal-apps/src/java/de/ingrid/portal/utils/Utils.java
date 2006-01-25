@@ -20,11 +20,6 @@ import de.ingrid.portal.forms.ActionForm;
  */
 public class Utils {
 
-    /** InfoPortlet default template and title if not set via PSML */
-    public final static String INFO_PORTLET_DEFAULT_TEMPLATE = "/WEB-INF/templates/info_default.vm";
-
-    public final static String INFO_PORTLET_DEFAULT_TITLE_KEY = "info.default.title";
-
     private final static Log log = LogFactory.getLog(Utils.class);
 
     /**

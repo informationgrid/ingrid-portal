@@ -12,11 +12,11 @@ import javax.portlet.PortletPreferences;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.utils.Utils;
-
 public class InfoPortlet extends GenericVelocityPortlet {
 
-    protected static final String DEFAULT_TITLE_KEY = "info.default.title";
+    /** InfoPortlet default template and title if not set via PSML */
+    public final static String DEFAULT_TEMPLATE = "/WEB-INF/templates/info_default.vm";
+    public final static String DEFAULT_TITLE_KEY = "info.default.title";
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
@@ -32,8 +32,8 @@ public class InfoPortlet extends GenericVelocityPortlet {
         // read preferences
         PortletPreferences prefs = request.getPreferences();
 
-        String myView = prefs.getValue("infoTemplate", Utils.INFO_PORTLET_DEFAULT_TEMPLATE);
-        String myTitleKey = prefs.getValue("infoTitleKey", Utils.INFO_PORTLET_DEFAULT_TITLE_KEY);
+        String myView = prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);
+        String myTitleKey = prefs.getValue("infoTitleKey", DEFAULT_TITLE_KEY);
 
         setDefaultViewPage(myView);
         response.setTitle(messages.getString(myTitleKey));
