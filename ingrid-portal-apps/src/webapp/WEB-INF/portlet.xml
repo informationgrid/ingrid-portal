@@ -44,88 +44,6 @@
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
     </portlet>
 
-    <portlet id="AboutPortalUPartner">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/about_portalu_partner.vm</value>
-        </init-param>
-        <portlet-name>AboutPortalUPartner</portlet-name>
-        <display-name>Partner</display-name>
-        <description>This portlet displays the about portalU - partner portlet.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Partner</title>
-            <short-title>AboutPortalUPartner</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="AboutPortalULinks">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/about_portalu_links.vm</value>
-        </init-param>
-        <portlet-name>AboutPortalULinks</portlet-name>
-        <display-name>Weiterf&uuml;hrende Links</display-name>
-        <description>This portlet displays the about portalU more links portlet.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Weiterf&uuml;hrende Links</title>
-            <short-title>AboutPortalULinks</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="AboutPortalU">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/about_portalu.vm</value>
-        </init-param>
-        <portlet-name>AboutPortalU</portlet-name>
-        <display-name>AboutPortalU</display-name>
-        <description>This portlet displays the about portalU portlet.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <supported-locale>en</supported-locale>                
-        <supported-locale>de</supported-locale>            
-        <resource-bundle>de.ingrid.portal.resources.AboutPortalUResources</resource-bundle>            
-    </portlet>
-
-    <portlet id="EnviromentChronicleSearchInfo">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_chronicle_search_info.vm</value>
-        </init-param>
-        <portlet-name>EnviromentChronicleSearchInfo</portlet-name>
-        <display-name>Umweltchronik und Ereignisse</display-name>
-        <description>This portlet displays the enviroment chronicle search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Umweltchronik und Ereignisse</title>
-            <short-title>EnviromentChronicleSearchInfo</short-title>
-        </portlet-info>
-    </portlet>
     <portlet id="EnviromentChronicleSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -181,26 +99,6 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
     </portlet>
-    <portlet id="MeasuresSearchInfo">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/measures_search_info.vm</value>
-        </init-param>
-        <portlet-name>MeasuresSearchInfo</portlet-name>
-        <display-name>Info zu Messwerte</display-name>
-        <description>This portlet displays the service search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Info zu Messwerte</title>
-            <short-title>MeasuresSearchInfo</short-title>
-        </portlet-info>
-    </portlet>
     <portlet id="MeasuresSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -217,27 +115,6 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>
-    </portlet>
-
-    <portlet id="ServiceSearchInfo">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/service_search_info.vm</value>
-        </init-param>
-        <portlet-name>ServiceSearchInfo</portlet-name>
-        <display-name>Info zu Service</display-name>
-        <description>This portlet displays the service search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Info zu Service</title>
-            <short-title>ServiceSearchInfo</short-title>
-        </portlet-info>
     </portlet>
 
     <portlet id="ServiceSearch">
@@ -280,28 +157,6 @@
         </portlet-info>
     </portlet>
     
-    <portlet id="SimpleSearchInfo">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/simple_search_info.vm</value>
-        </init-param>
-        <portlet-name>SimpleSearchInfo</portlet-name>
-        <display-name>Info zur Suche</display-name>
-        <description>This portlet displays the simple search info dialog.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Info zur Suche</title>
-            <short-title>SimpleSearchInfo</short-title>
-        </portlet-info>
-    </portlet>
-
-
     <portlet id="SimpleSearchTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -359,90 +214,6 @@
         <portlet-info>
             <title>Aktuelles</title>
             <short-title>RssNewsTeaser</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="IngridInformMarginalTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/ingrid_inform_marginal_teaser.vm</value>
-        </init-param>
-        <portlet-name>IngridInformMarginalTeaser</portlet-name>
-        <display-name>PortalU informiert</display-name>
-        <description>This portlet displays general information about the portal.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>PortalU informiert</title>
-            <short-title>IngridInformMarginalTeaser</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="ServiceMarginalTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/service_marginal_teaser.vm</value>
-        </init-param>
-        <portlet-name>ServiceMarginalTeaser</portlet-name>
-        <display-name>Service</display-name>
-        <description>This portlet displays a teaser for the service area.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Service</title>
-            <short-title>ServiceMarginalTeaser</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="MeasuredDataMarginalTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/measured_data_marginal_teaser.vm</value>
-        </init-param>
-        <portlet-name>MeasuredDataMarginalTeaser</portlet-name>
-        <display-name>Messwerte</display-name>
-        <description>This portlet displays a teaser for the measured data area.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Messwerte</title>
-            <short-title>MeasuredDataMarginalTeaser</short-title>
-        </portlet-info>
-    </portlet>
-
-    <portlet id="EnviromentalChronicleMarginalTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_chronicle_marginal_teaser.vm</value>
-        </init-param>
-        <portlet-name>EnviromentalChronicleMarginalTeaser</portlet-name>
-        <display-name>Umweltchronik</display-name>
-        <description>This portlet displays a teaser for the measured data area.</description>
-        <portlet-class>org.apache.portals.bridges.velocity.GenericVelocityPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Umweltchronik</title>
-            <short-title>EnviromentalChronicleMarginalTeaser</short-title>
         </portlet-info>
     </portlet>
 

@@ -21,7 +21,7 @@
         <value>/WEB-INF/templates/sitemap.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>info.sitemap.main.title</value>
+        <value>sitemap.title</value>
       </preference>
     </fragment>
   </fragment>

@@ -14,17 +14,35 @@
   <metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>
 
   <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::AboutPortalU">
+    <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/about_portalu.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>about.title</value>
+      </preference>
     </fragment>
-    <fragment id="main-about-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::AboutPortalULinks">
+    <fragment id="main-about-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/about_portalu_links.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>about.links.title</value>
+      </preference>
     </fragment>
-    <fragment id="main-about-3" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::AboutPortalUPartner">
+    <fragment id="main-about-3" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/about_portalu_partner.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>about.partner.title</value>
+      </preference>
     </fragment>
   </fragment>
 

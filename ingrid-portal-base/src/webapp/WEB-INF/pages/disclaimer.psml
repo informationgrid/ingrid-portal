@@ -15,7 +15,7 @@
         <value>/WEB-INF/templates/disclaimer.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>info.disclaimer.main.title</value>
+        <value>disclaimer.title</value>
       </preference>
     </fragment>
     <fragment id="disclaimer-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
@@ -25,7 +25,7 @@
         <value>/WEB-INF/templates/disclaimer_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>info.disclaimer.title</value>
+        <value>disclaimer.info.title</value>
       </preference>
     </fragment>
   </fragment>

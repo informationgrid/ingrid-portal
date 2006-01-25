@@ -12,9 +12,15 @@
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="main-measures-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuresSearchInfo">
+    <fragment id="main-measures-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/measures_search_info.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>measuresSearch.info.title</value>
+      </preference>
     </fragment>
   </fragment>
 

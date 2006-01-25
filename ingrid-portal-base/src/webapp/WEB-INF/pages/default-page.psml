@@ -23,21 +23,45 @@
         <value>4</value>
       </preference>
     </fragment>
-    <fragment id="home-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::IngridInformMarginalTeaser">
+    <fragment id="home-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/ingrid_inform_marginal_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.ingridInform.title</value>
+      </preference>
     </fragment>
-    <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ServiceMarginalTeaser">
+    <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/service_marginal_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.service.title</value>
+      </preference>
     </fragment>
-    <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuredDataMarginalTeaser">
+    <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/measured_data_marginal_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.measures.title</value>
+      </preference>
     </fragment>
-    <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::EnviromentalChronicleMarginalTeaser">
+    <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/enviroment_chronicle_marginal_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.chronicle.title</value>
+      </preference>
     </fragment>
     
 

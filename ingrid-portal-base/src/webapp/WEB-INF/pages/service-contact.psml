@@ -19,7 +19,7 @@
         <value>/WEB-INF/templates/newsletter_teaser.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>info.teaser.newsletter.title</value>
+        <value>teaser.newsletter.title</value>
       </preference>
     </fragment>
   </fragment>
