@@ -1,9 +1,0 @@
-<div class="portlet-section-body">
-	<ul>
-		<li>
-			<p>
-				$MESSAGES.getString('serviceSearch.result.dummy')
-			</p>
-		</li>
-	</ul>
-</div>

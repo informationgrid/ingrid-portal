@@ -137,22 +137,22 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
     </portlet>
-    <portlet id="ServiceSearchResult">
+    <portlet id="ServiceResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/default_search_result.vm</value>
+            <value>/WEB-INF/templates/default_result.vm</value>
         </init-param>
-        <portlet-name>ServiceSearchResult</portlet-name>
+        <portlet-name>ServiceResult</portlet-name>
         <display-name>Service Suchergebnis</display-name>
         <description>This portlet displays the search results of the service search (service catalogue).</description>
-        <portlet-class>de.ingrid.portal.portlets.ServiceSearchResultPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ServiceResultPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResultResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.ServiceResultResources</resource-bundle> 
     </portlet>
     
     <portlet id="MeasuresSearch">

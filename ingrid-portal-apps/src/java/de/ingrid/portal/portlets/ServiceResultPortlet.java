@@ -11,7 +11,7 @@ import javax.portlet.PortletException;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-public class ServiceSearchResultPortlet extends GenericVelocityPortlet {
+public class ServiceResultPortlet extends GenericVelocityPortlet {
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);

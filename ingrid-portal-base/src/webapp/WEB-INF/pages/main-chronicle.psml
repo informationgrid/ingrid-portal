@@ -17,7 +17,7 @@
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/enviroment_chronicle_search_info.vm</value>
+        <value>/WEB-INF/templates/enviroment_chronicle_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
         <value>chronicleSearch.info.title</value>
