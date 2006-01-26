@@ -7,16 +7,11 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-public class InfoPortlet extends GenericVelocityPortlet {
-
-    /** InfoPortlet default template and title if not set via PSML */
-    public final static String DEFAULT_TEMPLATE = "/WEB-INF/templates/default_info.vm";
-    public final static String DEFAULT_TITLE_KEY = "info.default.title";
+public class ServiceSearchResultPortlet extends GenericVelocityPortlet {
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
@@ -28,15 +23,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
 
         ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
         context.put("MESSAGES", messages);
-
-        // read preferences
-        PortletPreferences prefs = request.getPreferences();
-
-        String myView = prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);
-        String myTitleKey = prefs.getValue("infoTitleKey", DEFAULT_TITLE_KEY);
-
-        setDefaultViewPage(myView);
-        response.setTitle(messages.getString(myTitleKey));
 
         super.doView(request, response);
     }

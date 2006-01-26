@@ -8,11 +8,15 @@
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
 
+    <!-- ************************** -->
+    <!-- Generic Portlets           -->
+    <!-- ************************** -->
+
     <portlet id="InfoPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/info_default.vm</value>
+            <value>/WEB-INF/templates/default_info.vm</value>
         </init-param>
         <portlet-name>InfoPortlet</portlet-name>
         <display-name>Generisches Informationsportlet</display-name>
@@ -25,6 +29,53 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
+
+    <!-- *********************** -->
+    <!-- Home                    -->
+    <!-- *********************** -->
+
+    <portlet id="SimpleSearchTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/simple_search_teaser.vm</value>
+        </init-param>
+        <portlet-name>SimpleSearchTeaser</portlet-name>
+        <display-name>Suche</display-name>
+        <description>This portlet displayes a search ox on the home page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SimpleSearchTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SimpleSearchTeaserResources</resource-bundle>            
+    </portlet>
+
+    <portlet id="RssNewsTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/rss_news_teaser.vm</value>
+        </init-param>
+        <portlet-name>RssNewsTeaser</portlet-name>
+        <display-name>Aktuelles</display-name>
+        <description>This portlet displays the rss news list.</description>
+        <portlet-class>de.ingrid.portal.portlets.RssNewsTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Aktuelles</title>
+            <short-title>RssNewsTeaser</short-title>
+        </portlet-info>
+    </portlet>
+
+    <!-- *********************** -->
+    <!-- Service Menue           -->
+    <!-- *********************** -->
 
     <portlet id="Contact">
         <init-param>
@@ -44,97 +95,9 @@
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
     </portlet>
 
-    <portlet id="EnviromentChronicleSearch">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_chronicle_search.vm</value>
-        </init-param>
-        <portlet-name>EnviromentChronicleSearch</portlet-name>
-        <display-name>Umweltchronik</display-name>
-        <description>This portlet displayes a environment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.EnvironmentChronicleSearchResources</resource-bundle>            
-    </portlet>
-
-    <portlet id="ShowMapsPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/show_maps.vm</value>
-        </init-param>
-        <portlet-name>ShowMapsPortlet</portlet-name>
-        <display-name>Detailinformation - Karte</display-name>
-        <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Detailinformation - Karte</title>
-            <short-title>ShowMapsPortlet</short-title>
-        </portlet-info>
-    </portlet>
-    <portlet id="EnviromentSearch">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_search.vm</value>
-        </init-param>
-        <portlet-name>EnviromentSearch</portlet-name>
-        <display-name>Umweltthemen</display-name>
-        <description>This portlet displayes a enviroment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnviromentSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
-    </portlet>
-    <portlet id="MeasuresSearch">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/measures_search.vm</value>
-        </init-param>
-        <portlet-name>MeasuresSearch</portlet-name>
-        <display-name>Messwerte</display-name>
-        <description>This portlet displayes a service search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.MeasuresSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>
-    </portlet>
-
-    <portlet id="ServiceSearch">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/service_search.vm</value>
-        </init-param>
-        <portlet-name>ServiceSearch</portlet-name>
-        <display-name>Service</display-name>
-        <description>This portlet displayes a service search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.ServiceSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
-    </portlet>
-
+    <!-- *********************** -->
+    <!-- Main Menue              -->
+    <!-- *********************** -->
 
     <portlet id="SearchResult">
         <init-param>
@@ -157,64 +120,114 @@
         </portlet-info>
     </portlet>
     
-    <portlet id="SimpleSearchTeaser">
+    <portlet id="ServiceSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/simple_search_teaser.vm</value>
+            <value>/WEB-INF/templates/service_search.vm</value>
         </init-param>
-        <portlet-name>SimpleSearchTeaser</portlet-name>
-        <display-name>Suche</display-name>
-        <description>This portlet displayes a search ox on the home page.</description>
-        <portlet-class>de.ingrid.portal.portlets.SimpleSearchTeaserPortlet</portlet-class>
+        <portlet-name>ServiceSearch</portlet-name>
+        <display-name>Service</display-name>
+        <description>This portlet displayes a service search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.ServiceSearchPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.SimpleSearchTeaserResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
     </portlet>
-
-    <portlet id="EnviromentCatalogTeaser">
+    <portlet id="ServiceSearchResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_catalog_teaser.vm</value>
+            <value>/WEB-INF/templates/default_search_result.vm</value>
         </init-param>
-        <portlet-name>EnviromentCatalogTeaser</portlet-name>
+        <portlet-name>ServiceSearchResult</portlet-name>
+        <display-name>Service Suchergebnis</display-name>
+        <description>This portlet displays the search results of the service search (service catalogue).</description>
+        <portlet-class>de.ingrid.portal.portlets.ServiceSearchResultPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResultResources</resource-bundle> 
+    </portlet>
+    
+    <portlet id="MeasuresSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/measures_search.vm</value>
+        </init-param>
+        <portlet-name>MeasuresSearch</portlet-name>
+        <display-name>Messwerte</display-name>
+        <description>This portlet displayes a service search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.MeasuresSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>
+    </portlet>
+    
+    <portlet id="EnviromentSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_search.vm</value>
+        </init-param>
+        <portlet-name>EnviromentSearch</portlet-name>
         <display-name>Umweltthemen</display-name>
-        <description>This portlet displayes a search ox on the home page.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnviromentCatalogTeaserPortlet</portlet-class>
+        <description>This portlet displayes a enviroment search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnviromentSearchPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Umweltthemen</title>
-            <short-title>EnviromentCatalogTeaser</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
     </portlet>
 
-    <portlet id="RssNewsTeaser">
+    <portlet id="ShowMapsPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/rss_news_teaser.vm</value>
+            <value>/WEB-INF/templates/show_maps.vm</value>
         </init-param>
-        <portlet-name>RssNewsTeaser</portlet-name>
-        <display-name>Aktuelles</display-name>
-        <description>This portlet displays the rss news list.</description>
-        <portlet-class>de.ingrid.portal.portlets.RssNewsTeaserPortlet</portlet-class>
+        <portlet-name>ShowMapsPortlet</portlet-name>
+        <display-name>Detailinformation - Karte</display-name>
+        <description>This portlet displays the search results.</description>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Aktuelles</title>
-            <short-title>RssNewsTeaser</short-title>
+            <title>Detailinformation - Karte</title>
+            <short-title>ShowMapsPortlet</short-title>
         </portlet-info>
+    </portlet>
+
+    <portlet id="EnviromentChronicleSearch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/enviroment_chronicle_search.vm</value>
+        </init-param>
+        <portlet-name>EnviromentChronicleSearch</portlet-name>
+        <display-name>Umweltchronik</display-name>
+        <description>This portlet displayes a environment search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentChronicleSearchResources</resource-bundle>            
     </portlet>
 
 </portlet-app>

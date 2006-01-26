@@ -1,0 +1,15 @@
+<!--
+NOTICE:
+This is the default view template of the InfoPortlet.
+If no view template is set via PSML preferences, tis one is displayed,
+showing that the template is missing.
+-->
+<div class="portlet-section-body">
+	<ul>
+		<li>
+			<p>
+				$MESSAGES.getString('info.default.content')
+			</p>
+		</li>
+	</ul>
+</div>

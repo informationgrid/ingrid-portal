@@ -12,9 +12,15 @@
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="home-2" type="portlet" name="ingrid-portal-apps::EnviromentCatalogTeaser">
+    <fragment id="home-2" type="portlet" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/enviroment_catalog_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.envSearch.title</value>
+      </preference>
     </fragment>
     <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
       <property layout="TwoColumns" name="row" value="2" />

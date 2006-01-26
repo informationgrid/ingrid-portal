@@ -2,7 +2,7 @@
 	<ul>
 		<li>
 			<p>
-				$MESSAGES.getString('info.default.content')
+				$MESSAGES.getString('serviceSearch.result.dummy')
 			</p>
 		</li>
 	</ul>
