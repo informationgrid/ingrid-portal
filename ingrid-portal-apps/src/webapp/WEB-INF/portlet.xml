@@ -12,7 +12,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/no_info.vm</value>
+            <value>/WEB-INF/templates/info_default.vm</value>
         </init-param>
         <portlet-name>InfoPortlet</portlet-name>
         <display-name>Generisches Informationsportlet</display-name>
