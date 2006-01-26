@@ -20,7 +20,7 @@ public class SearchResultListMockup {
     public static SearchResultList getRankedSearchResultList() {
 
         SearchResultList srs = new SearchResultList();
-        int COUNT = 11;
+        int COUNT = 22;
 
         for (int i = 0; i < COUNT; i++) {
             IngridDocument rsr = new IngridDocument();
@@ -32,6 +32,7 @@ public class SearchResultListMockup {
             rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
             rsr.put("ranking", "0.99");
             // for catalogue tests
+            rsr.put("date", "01.01.2006");
             rsr.put("service_rubric", "Presse");
             srs.add(rsr);
 
@@ -48,6 +49,7 @@ public class SearchResultListMockup {
                     "http://www.bmu.de/gesundheit_und_umwelt/lebensmittelsicherheit/verbraucherschutz_d/doc/2429.php");
             rsr.put("ranking", "0.98");
             // for catalogue tests
+            rsr.put("date", "02.01.2006");
             rsr.put("service_rubric", "Publikationen");
             srs.add(rsr);
 
@@ -60,6 +62,7 @@ public class SearchResultListMockup {
             rsr.put("map", "map describing data");
             rsr.put("ranking", "0.97");
             // for catalogue tests
+            rsr.put("date", "03.01.2006");
             rsr.put("url", "http://www.wemove.com");
             rsr.put("service_rubric", "Veranstaltungen, Presse");
             srs.add(rsr);

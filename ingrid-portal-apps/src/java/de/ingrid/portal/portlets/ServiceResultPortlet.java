@@ -1,13 +1,16 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
+import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.resources.PortletApplicationResources;
 import de.ingrid.portal.search.PageState;
@@ -19,7 +22,9 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/default_result.vm";
 
-    private final static String TEMPLATE_QUERY = "/WEB-INF/templates/service_result.vm";
+    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/service_result.vm";
+
+    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/service_no_result.vm";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -30,150 +35,123 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
+
+        // check for query and adapt template
         IngridQuery query = (IngridQuery) receiveRenderMessage(request, PortletApplicationResources.MSG_QUERY);
-        if (query != null) {
-            setDefaultViewPage(TEMPLATE_QUERY);
-        } else {
-            setDefaultViewPage(TEMPLATE_NO_QUERY);            
+        if (query == null) {
+            setDefaultViewPage(TEMPLATE_NO_QUERY);
+            super.doView(request, response);
+            return;
         }
+
+        // assume we have results
+        setDefaultViewPage(TEMPLATE_RESULT);
+
+        // prepare 
+        Context context = getContext(request);
+        PortletSession session = request.getPortletSession();
+        int HITS_PER_PAGE = PortletApplicationResources.HITS_PER_PAGE;
+
+        PageState ps = (PageState) session.getAttribute("portlet_state");
+        if (ps == null) {
+            ps = new PageState(this.getClass().getName());
+            ps = initPageState(ps);
+            session.setAttribute("portlet_state", ps);
+        }
+
+        // ranked results
+        SearchResultList rankedSRL = doSearch(query, ps.getInt("rankedNavStart"), HITS_PER_PAGE, true);
+        int numberOfHits = rankedSRL.getNumberOfHits();
         
-        /*
-         Context context = getContext(request);
-         PortletSession session = request.getPortletSession();
+        if (numberOfHits == 0) {
+            // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
+            setDefaultViewPage(TEMPLATE_NO_RESULT);
+            super.doView(request, response);
+            return;
+        }
 
-         ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
-         context.put("MESSAGES", messages);
+        int NUM_SELECTOR_PAGES = PortletApplicationResources.NUM_SELECTOR_PAGES;
+        int currentSelectorPage;
+        int numberOfPages;
+        int firstSelectorPage;
+        int lastSelectorPage;
+        boolean selectorHasPreviousPage;
+        boolean selectorHasNextPage;
+        int numberOfFirstHit;
+        int numberOfLastHit;
 
-         PageState ps = (PageState) session.getAttribute("portlet_state");
-         if (ps == null) {
-         ps = new PageState(this.getClass().getName());
-         ps = initPageState(ps);
-         session.setAttribute("portlet_state", ps);
-         }
+        currentSelectorPage = ps.getInt("rankedNavStart") / HITS_PER_PAGE + 1;
+        numberOfPages = numberOfHits / HITS_PER_PAGE;
+        if (Math.ceil(numberOfHits % HITS_PER_PAGE) > 0) {
+            numberOfPages++;
+        }
+        firstSelectorPage = 1;
+        selectorHasPreviousPage = false;
+        if (currentSelectorPage >= NUM_SELECTOR_PAGES) {
+            firstSelectorPage = currentSelectorPage - (int) (NUM_SELECTOR_PAGES / 2);
+            selectorHasPreviousPage = true;
+        }
+        lastSelectorPage = firstSelectorPage + NUM_SELECTOR_PAGES - 1;
+        selectorHasNextPage = true;
+        if (numberOfPages <= lastSelectorPage) {
+            lastSelectorPage = numberOfPages;
+            selectorHasNextPage = false;
+        }
+        numberOfFirstHit = (currentSelectorPage - 1) * HITS_PER_PAGE + 1;
+        numberOfLastHit = numberOfFirstHit + HITS_PER_PAGE - 1;
 
-         // initialization if no action has been processed before
-         if (!ps.getBoolean("isActionProcessed")) {
-         ps = initPageState(ps);
-         }
-         ps.setBoolean("isActionProcessed", false);
+        if (numberOfLastHit > numberOfHits) {
+            numberOfLastHit = numberOfHits;
+        }
 
-         String q = request.getParameter("q");
-         if (q != null && q.length() > 0) {
-         ps.put("query", q);
-         }
-         if (ps.get("query") != null) {
+        HashMap pageSelector = new HashMap();
+        pageSelector.put("currentSelectorPage", new Integer(currentSelectorPage));
+        pageSelector.put("numberOfPages", new Integer(numberOfPages));
+        pageSelector.put("numberOfSelectorPages", new Integer(NUM_SELECTOR_PAGES));
+        pageSelector.put("firstSelectorPage", new Integer(firstSelectorPage));
+        pageSelector.put("lastSelectorPage", new Integer(lastSelectorPage));
+        pageSelector.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
+        pageSelector.put("selectorHasNextPage", new Boolean(selectorHasNextPage));
+        pageSelector.put("hitsPerPage", new Integer(HITS_PER_PAGE));
+        pageSelector.put("numberOfFirstHit", new Integer(numberOfFirstHit));
+        pageSelector.put("numberOfLastHit", new Integer(numberOfLastHit));
+        pageSelector.put("numberOfHits", new Integer(numberOfHits));
 
-         int currentSelectorPage;
-         int numberOfPages;
-         int numberOfSelectorPages;
-         int firstSelectorPage;
-         int lastSelectorPage;
-         boolean selectorHasPreviousPage;
-         boolean selectorHasNextPage;
-         int numberOfFirstHit;
-         int numberOfLastHit;
-         int numberOfHits;
+        context.put("rankedPageSelector", pageSelector);
 
-         // ranked results
-         SearchResultList rankedSRL = doSearch(ps.getString("query"), ps.getString("selectedDS"), ps
-         .getInt("rankedNavStart"), HITS_PER_PAGE, true);
-         numberOfHits = rankedSRL.getNumberOfHits();
+        context.put("rankedResultList", rankedSRL);
 
-         currentSelectorPage = ps.getInt("rankedNavStart") / HITS_PER_PAGE + 1;
-         numberOfPages = numberOfHits / HITS_PER_PAGE;
-         if (Math.ceil(numberOfHits % HITS_PER_PAGE) > 0) {
-         numberOfPages++;
-         }
-         numberOfSelectorPages = 5;
-         firstSelectorPage = 1;
-         selectorHasPreviousPage = false;
-         if (currentSelectorPage >= numberOfSelectorPages) {
-         firstSelectorPage = currentSelectorPage - (int) (numberOfSelectorPages / 2);
-         selectorHasPreviousPage = true;
-         }
-         lastSelectorPage = firstSelectorPage + numberOfSelectorPages - 1;
-         selectorHasNextPage = true;
-         if (numberOfPages <= lastSelectorPage) {
-         lastSelectorPage = numberOfPages;
-         selectorHasNextPage = false;
-         }
-         numberOfFirstHit = (currentSelectorPage - 1) * HITS_PER_PAGE + 1;
-         numberOfLastHit = numberOfFirstHit + HITS_PER_PAGE - 1;
+        context.put("ps", ps);
 
-         if (numberOfLastHit > numberOfHits) {
-         numberOfLastHit = numberOfHits;
-         }
-
-         HashMap pageSelector = new HashMap();
-         pageSelector.put("currentSelectorPage", new Integer(currentSelectorPage));
-         pageSelector.put("numberOfPages", new Integer(numberOfPages));
-         pageSelector.put("numberOfSelectorPages", new Integer(numberOfSelectorPages));
-         pageSelector.put("firstSelectorPage", new Integer(firstSelectorPage));
-         pageSelector.put("lastSelectorPage", new Integer(lastSelectorPage));
-         pageSelector.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
-         pageSelector.put("selectorHasNextPage", new Boolean(selectorHasNextPage));
-         pageSelector.put("hitsPerPage", new Integer(HITS_PER_PAGE));
-         pageSelector.put("numberOfFirstHit", new Integer(numberOfFirstHit));
-         pageSelector.put("numberOfLastHit", new Integer(numberOfLastHit));
-         pageSelector.put("numberOfHits", new Integer(numberOfHits));
-
-         context.put("rankedPageSelector", pageSelector);
-
-         context.put("rankedResultList", rankedSRL);
-         }
-
-         context.put("ps", ps);
-         */
         super.doView(request, response);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        /*
-         String action = request.getParameter("action");
-         PortletSession session = request.getPortletSession();
+        PortletSession session = request.getPortletSession();
 
-         PageState ps = (PageState) session.getAttribute("portlet_state");
-         if (ps == null) {
-         ps = new PageState(this.getClass().getName());
-         ps = initPageState(ps);
-         session.setAttribute("portlet_state", ps);
-         }
+        PageState ps = (PageState) session.getAttribute("portlet_state");
+        if (ps == null) {
+            ps = new PageState(this.getClass().getName());
+            ps = initPageState(ps);
+            session.setAttribute("portlet_state", ps);
+        }
 
-         if (action == null) {
-         action = "";
-         } else if (action.equalsIgnoreCase("doSearch")) {
-         ps.putString("query", null);
-         String q = request.getParameter("q");
-         if (q != null && q.length() > 0) {
-         ps.putString("query", q);
-         }
-         ps.setBoolean("isSimilarOpen", false);
-         ps.put("similarRoot", null);
-         ps.putInt("rankedNavStart", 0);
-         ps.putInt("unrankedNavStart", 0);
-         }
-         try {
-         ps.putInt("rankedNavStart", Integer.parseInt(request.getParameter("rstart")));
-         } catch (NumberFormatException e) {
-         // ps.setRankedNavStart(0);
-         }
-
-         ps.setBoolean("isActionProcessed", true);
-         */
+        ps.putInt("rankedNavStart", 0);
+        try {
+            ps.putInt("rankedNavStart", Integer.parseInt(request.getParameter("rstart")));
+        } catch (NumberFormatException e) {
+            // ps.setRankedNavStart(0);
+        }
     }
 
     private PageState initPageState(PageState ps) {
-        ps.setBoolean("isActionProcessed", false);
         ps.putInt("rankedNavStart", 0);
         ps.putInt("rankedNavLimit", PortletApplicationResources.HITS_PER_PAGE);
         return ps;
     }
 
-    private SearchResultList doSearch(String qryStr, String ds, int start, int limit, boolean ranking) {
-
-        // force lower case due to an iPlug/iBus bug
-        qryStr = qryStr.toLowerCase();
+    private SearchResultList doSearch(IngridQuery query, int start, int limit, boolean ranking) {
 
         SearchResultList result = new SearchResultList();
 

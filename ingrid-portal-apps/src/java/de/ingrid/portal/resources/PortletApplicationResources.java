@@ -12,6 +12,7 @@ public class PortletApplicationResources {
 
     /** Search parameters */
     public final static int HITS_PER_PAGE = 10;
+    public final static int NUM_SELECTOR_PAGES = 5;
 
     /** Message Topics: define the message "scope", will be prefix of message key -> "topic:message" */
     public final static String MSG_TOPIC_SERVICE = "service";
