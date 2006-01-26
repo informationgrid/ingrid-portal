@@ -70,6 +70,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         // special initialisation
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
                 SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        if (af == null) {
+            af = (SimpleSearchForm) Utils.addActionForm(request, SimpleSearchForm.SESSION_KEY, SimpleSearchForm.class,
+                    PortletSession.APPLICATION_SCOPE);
+//            af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
+            af.init();
+        }
 
         // if action is "doSearch" page WAS CALLED FROM STARTPAGE !
         String action = request.getParameter("action");
