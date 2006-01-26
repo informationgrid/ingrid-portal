@@ -1,3 +1,7 @@
+#macro (renderRankedResultCounter $pageSelector)
+    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits bewerteten</strong> Treffern
+#end
+
 <div class="section ">
   <div class="resultset_nav float_left">
     <strong>1-10</strong> von <strong>198</strong> Einträgen in <strong>Service</strong>
@@ -7,7 +11,7 @@
   </div>
   <br />
   <div class="resultset">
-    <span class="result_title"><strong><a href="http://www.mluv.brandenburg.de/sixcms/detail.php?template=mluv_neu&amp;_siteid=21" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="img/icn_linkextern.gif" alt="externer Link"/></span>07.07.2005: Brandenburg Agrar Umwelt - Neu oder aktualisiert </a></strong></span>
+    <span class="result_title"><strong><a href="http://www.mluv.brandenburg.de/sixcms/detail.php?template=mluv_neu&amp;_siteid=21" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>07.07.2005: Brandenburg Agrar Umwelt - Neu oder aktualisiert </a></strong></span>
     <p class="result_description">
     Was ist neu oder wurde aktualisiert?
     </p>
@@ -21,7 +25,7 @@
   </div>
   <div class="line"><hr /></div>
   <div class="resultset">
-    <span class="result_title"><strong><a href="http://www.hmulv.hessen.de/service/publikationen/aktuell/umwelt" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="img/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: MULV Hessen Publikationen Übersichtsseite </a></strong></span>
+    <span class="result_title"><strong><a href="http://www.hmulv.hessen.de/service/publikationen/aktuell/umwelt" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: MULV Hessen Publikationen Übersichtsseite </a></strong></span>
     <p class="result_description">
     Publikationen zum Themenbereich Umwelt
     </p>
@@ -35,7 +39,7 @@
   </div>
   <div class="line"><hr /></div>
   <div class="resultset">
-    <span class="result_title"><strong><a href="http://www.bmu.de/presse/aktuell/doc/4211.php" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="img/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: BMU - Presse Aktuelle Pressemitteilung </a></strong></span>
+    <span class="result_title"><strong><a href="http://www.bmu.de/presse/aktuell/doc/4211.php" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: BMU - Presse Aktuelle Pressemitteilung </a></strong></span>
     <p class="result_description">
     Neue Verbraucherinformation des BMU widerlegt Vorwürfe gegen Ökostrom.
     </p>
@@ -49,7 +53,7 @@
   </div>
   <div class="line"><hr /></div>
   <div class="resultset">
-    <span class="result_title"><strong><a href="http://www.mluv.brandenburg.de/sixcms/detail.php?template=mluv_neu&amp;_siteid=21" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="img/icn_linkextern.gif" alt="externer Link"/></span>07.07.2005: Brandenburg Agrar Umwelt - Neu oder aktualisiert </a></strong></span>
+    <span class="result_title"><strong><a href="http://www.mluv.brandenburg.de/sixcms/detail.php?template=mluv_neu&amp;_siteid=21" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>07.07.2005: Brandenburg Agrar Umwelt - Neu oder aktualisiert </a></strong></span>
     <p class="result_description">
     Was ist neu oder wurde aktualisiert?
     </p>
@@ -63,7 +67,7 @@
   </div>
   <div class="line"><hr /></div>
   <div class="resultset">
-    <span class="result_title"><strong><a href="http://www.hmulv.hessen.de/service/publikationen/aktuell/umwelt" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="img/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: MULV Hessen Publikationen Übersichtsseite </a></strong></span>
+    <span class="result_title"><strong><a href="http://www.hmulv.hessen.de/service/publikationen/aktuell/umwelt" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: MULV Hessen Publikationen Übersichtsseite </a></strong></span>
     <p class="result_description">
     Publikationen zum Themenbereich Umwelt
     </p>
@@ -77,7 +81,7 @@
   </div>
   <div class="line"><hr /></div>
   <div class="resultset">
-    <span class="result_title"><strong><a href="http://www.bmu.de/presse/aktuell/doc/4211.php" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="img/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: BMU - Presse Aktuelle Pressemitteilung </a></strong></span>
+    <span class="result_title"><strong><a href="http://www.bmu.de/presse/aktuell/doc/4211.php" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>06.07.2005: BMU - Presse Aktuelle Pressemitteilung </a></strong></span>
     <p class="result_description">
     Neue Verbraucherinformation des BMU widerlegt Vorwürfe gegen Ökostrom.
     </p>

@@ -6,8 +6,6 @@
  */
 package de.ingrid.portal.search.mockup;
 
-import de.ingrid.portal.search.RankedSearchResult;
-import de.ingrid.portal.search.SearchResult;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.utils.IngridDocument;
 
@@ -20,83 +18,99 @@ import de.ingrid.utils.IngridDocument;
 public class SearchResultListMockup {
 
     public static SearchResultList getRankedSearchResultList() {
-    	
+
+        SearchResultList srs = new SearchResultList();
+        int COUNT = 11;
+
+        for (int i = 0; i < COUNT; i++) {
+            IngridDocument rsr = new IngridDocument();
+            rsr.put("title", "BMVEL - Blei und Trinkwasser");
+            rsr.put("type", "WEBSITE");
+            rsr.put("abstract", "Problem, Maßnahmen, weitere Informationen");
+            rsr.put("provider", "Bundesministerium für Verbraucherschutz, Ernährung und Landwirtschaft (BMVEL)");
+            rsr.put("source", "Webseiten");
+            rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
+            rsr.put("ranking", "0.99");
+            // for catalogue tests
+            rsr.put("service_rubric", "Presse");
+            srs.add(rsr);
+
+            rsr = new IngridDocument();
+            rsr.put("title", "BMU - Gesundheit und Umwelt - Lebensmittelsicherheit - Verbraucherschutz D");
+            rsr.put("type", "WEBSITE");
+            rsr
+                    .put(
+                            "abstract",
+                            "Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit - Zentrales Dach- und Rahmengesetz im Bereich des Lebensmittelrechts ist das Lebensmittel- und Bedarfsgegenständegesetz (LMBG), dessen Ziel es ist, den Verbraucherinnen und Verbraucher vor Gesundheitsgefährdungen und Täuschungen im Verkehr ...");
+            rsr.put("provider", "Bundesumweltministerium");
+            rsr.put("source", "Webseiten");
+            rsr.put("url",
+                    "http://www.bmu.de/gesundheit_und_umwelt/lebensmittelsicherheit/verbraucherschutz_d/doc/2429.php");
+            rsr.put("ranking", "0.98");
+            // for catalogue tests
+            rsr.put("service_rubric", "Publikationen");
+            srs.add(rsr);
+
+            rsr = new IngridDocument();
+            rsr.put("title", "K 25 (und Beiblätter) Geologische Karte 1:25 000");
+            rsr.put("type", "UDK");
+            rsr.put("abstract", "Das HLUG erstellt das Geologische Kartenwerk (GK 25) von Hessen.");
+            rsr.put("provider", "Hessisches Landesamt für Umwelt und Geologie (HLUG)");
+            rsr.put("source", "UDK Umweltdatenkatalog");
+            rsr.put("map", "map describing data");
+            rsr.put("ranking", "0.97");
+            // for catalogue tests
+            rsr.put("url", "http://www.wemove.com");
+            rsr.put("service_rubric", "Veranstaltungen, Presse");
+            srs.add(rsr);
+        }
+        srs.setNumberOfHits(3 * COUNT);
+
+        return srs;
+
+    }
+
+    /**
+     * @return
+     */
+    public static SearchResultList getUnrankedSearchResultList() {
+
         SearchResultList srs = new SearchResultList();
 
         IngridDocument rsr = new IngridDocument();
-        rsr.put("title", "BMVEL - Blei und Trinkwasser");
-        rsr.put("type", "WEBSITE");
-        rsr.put("abstract", "Problem, Maßnahmen, weitere Informationen");
-        rsr.put("provider", "Bundesministerium für Verbraucherschutz, Ernährung und Landwirtschaft (BMVEL)");
-        rsr.put("source", "Webseiten");
-        rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
-        rsr.put("ranking", "0.99");
-        srs.add(rsr);
-
-        rsr = new IngridDocument();
-        rsr.put("title", "BMU - Gesundheit und Umwelt - Lebensmittelsicherheit - Verbraucherschutz D");
-        rsr.put("type", "WEBSITE");
-        rsr.put("abstract", "Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit - Zentrales Dach- und Rahmengesetz im Bereich des Lebensmittelrechts ist das Lebensmittel- und Bedarfsgegenständegesetz (LMBG), dessen Ziel es ist, den Verbraucherinnen und Verbraucher vor Gesundheitsgefährdungen und Täuschungen im Verkehr ...");
-        rsr.put("provider", "Bundesumweltministerium");
-        rsr.put("source", "Webseiten");
-        rsr.put("url", "http://www.bmu.de/gesundheit_und_umwelt/lebensmittelsicherheit/verbraucherschutz_d/doc/2429.php");
-        rsr.put("ranking", "0.98");
-        srs.add(rsr);
-        
-
-        rsr = new IngridDocument();
-        rsr.put("title", "K 25 (und Beiblätter) Geologische Karte 1:25 000");
-        rsr.put("type", "UDK");
-        rsr.put("abstract", "Das HLUG erstellt das Geologische Kartenwerk (GK 25) von Hessen.");
-        rsr.put("provider", "Hessisches Landesamt für Umwelt und Geologie (HLUG)");
-        rsr.put("source", "UDK Umweltdatenkatalog");
-        rsr.put("map", "map describing data");
-        rsr.put("ranking", "0.97");
-        srs.add(rsr);
-        
-    	srs.setNumberOfHits(3);
-    	
-    	
-    	return srs;
-    	
-    	
-    }
-
-	/**
-	 * @return
-	 */
-	public static SearchResultList getUnrankedSearchResultList() {
-    	
-		SearchResultList srs = new SearchResultList();
-
-        IngridDocument rsr = new IngridDocument();
-    	rsr.put("title", "ULIDAT");
+        rsr.put("title", "ULIDAT");
         rsr.put("type", "WEBSITE");
         rsr.put("abstract", "Umweltliteraturdatenbank");
         rsr.put("provider", "Umweltbundesamt");
-        rsr.put("url", "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=AK&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&GEJAHR=&GEJAHV=&GEJAHB=&%24TMPLG=(DW0720*TH=TTDWDE,L=L020,Q=SWVF/DW0720*+o+THA710*TH=THESAW,L=L0710,Q=SWVF/THA710*+o+A0712*Q=BIBDE1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)");
+        rsr
+                .put(
+                        "url",
+                        "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=AK&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&GEJAHR=&GEJAHV=&GEJAHB=&%24TMPLG=(DW0720*TH=TTDWDE,L=L020,Q=SWVF/DW0720*+o+THA710*TH=THESAW,L=L0710,Q=SWVF/THA710*+o+A0712*Q=BIBDE1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)");
         rsr.put("hits", "18211");
-    	srs.add(rsr);
+        srs.add(rsr);
 
-    	rsr = new IngridDocument();
+        rsr = new IngridDocument();
         rsr.put("title", "UFORDAT");
         rsr.put("type", "WEBSITE");
         rsr.put("abstract", "Umweltforschungsdatenbank");
         rsr.put("provider", "Umweltbundesamt");
-        rsr.put("url", "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=VH&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&VHBEG=&VHBEGF=&STATUS=G,X&VERSTA=x,f&%24TMPLG=(DW0720*TH=TTDWDE,L=L0720,Q=SWVF/DW0720*+o+THKEY*TH=THESAW,L=L0710,Q=SWVF/THKEY*+o+AUTDD*Q=AUTDD1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)+u+STATUS*Q=STATUS*+u+VERSTA*Q=VERSTA*");
+        rsr
+                .put(
+                        "url",
+                        "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=VH&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&VHBEG=&VHBEGF=&STATUS=G,X&VERSTA=x,f&%24TMPLG=(DW0720*TH=TTDWDE,L=L0720,Q=SWVF/DW0720*+o+THKEY*TH=THESAW,L=L0710,Q=SWVF/THKEY*+o+AUTDD*Q=AUTDD1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)+u+STATUS*Q=STATUS*+u+VERSTA*Q=VERSTA*");
         rsr.put("hits", "2236");
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	srs.add(rsr);
-    	
-    	srs.setNumberOfHits(200);
-    	
-    	return srs;
-	}
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+        srs.add(rsr);
+
+        srs.setNumberOfHits(200);
+
+        return srs;
+    }
 }

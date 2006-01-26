@@ -8,16 +8,23 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceSearchForm;
+import de.ingrid.portal.resources.PortletApplicationResources;
 import de.ingrid.portal.utils.Utils;
 import de.ingrid.portal.utils.UtilsDB;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
-public class ServiceSearchPortlet extends GenericVelocityPortlet {
+public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
     public void init(PortletConfig config) throws PortletException {
+        // set our message "scope" for inter portlet messaging
+        setTopic(PortletApplicationResources.MSG_TOPIC_SERVICE);
+
         super.init(config);
     }
 
@@ -40,33 +47,23 @@ public class ServiceSearchPortlet extends GenericVelocityPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        String action = request.getParameter("action");
-
         // check form input
         ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class);
         sf.populate(request);
         if (!sf.validate()) {
+            cancelRenderMessage(request, PortletApplicationResources.MSG_QUERY);
             return;
         }
 
-        // PageState ps = getPageState(request);
-
-        if (action == null) {
-            return;
+        // TODO Create IngridQuery from form input !
+        IngridQuery query = null;
+        try {
+            query = QueryStringParser.parse("to do");
+        } catch (ParseException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
+        publishRenderMessage(request, PortletApplicationResources.MSG_QUERY, query);
     }
-
-    /*
-     * private PageState getPageState(PortletRequest request) { PortletSession
-     * session = request.getPortletSession(); PageState ps = (PageState)
-     * session.getAttribute("service_search_portlet_page_state"); if (ps ==
-     * null) { ps = new PageState(this.getClass().getName()); ps =
-     * initPageState(ps);
-     * session.setAttribute("service_search_portlet_page_state", ps); }
-     * 
-     * return ps; }
-     * 
-     * private PageState initPageState(PageState ps) { return ps; }
-     */
 }
