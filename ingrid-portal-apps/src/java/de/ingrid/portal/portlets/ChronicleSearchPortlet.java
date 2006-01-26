@@ -15,7 +15,7 @@ import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.utils.Utils;
 
-public class EnviromentChronicleSearchPortlet extends GenericVelocityPortlet {
+public class ChronicleSearchPortlet extends GenericVelocityPortlet {
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
@@ -44,11 +44,11 @@ public class EnviromentChronicleSearchPortlet extends GenericVelocityPortlet {
         }
 
         PortletSession session = request.getPortletSession();
-        PageState ps = (PageState) session.getAttribute("enviroment_chronicle_search_portlet_page_state");
+        PageState ps = (PageState) session.getAttribute("chronicle_search_portlet_page_state");
         if (ps == null) {
             ps = new PageState(this.getClass().getName());
             ps = initPageState(ps);
-            session.setAttribute("enviroment_chronicle_search_portlet_page_state", ps);
+            session.setAttribute("chronicle_search_portlet_page_state", ps);
         }
 
         if (action == null) {

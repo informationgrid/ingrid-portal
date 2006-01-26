@@ -9,7 +9,7 @@
   <metadata name="title" xml:lang="de">Umweltchronik</metadata>
 
   <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-chronicle-1" type="portlet" name="ingrid-portal-apps::EnviromentChronicleSearch">
+    <fragment id="main-chronicle-1" type="portlet" name="ingrid-portal-apps::ChronicleSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
@@ -17,7 +17,7 @@
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/enviroment_chronicle_info.vm</value>
+        <value>/WEB-INF/templates/chronicle_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
         <value>chronicleSearch.info.title</value>

@@ -1,6 +1,6 @@
 #set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" enctype="" name="chronicle_search" id="enviroment_chronicle_search">
+<form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>

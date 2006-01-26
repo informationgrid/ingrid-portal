@@ -212,22 +212,22 @@
         </portlet-info>
     </portlet>
 
-    <portlet id="EnviromentChronicleSearch">
+    <portlet id="ChronicleSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_chronicle_search.vm</value>
+            <value>/WEB-INF/templates/chronicle_search.vm</value>
         </init-param>
-        <portlet-name>EnviromentChronicleSearch</portlet-name>
+        <portlet-name>ChronicleSearch</portlet-name>
         <display-name>Umweltchronik</display-name>
         <description>This portlet displayes a environment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnviromentChronicleSearchPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ChronicleSearchPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.EnvironmentChronicleSearchResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
     </portlet>
 
 </portlet-app>

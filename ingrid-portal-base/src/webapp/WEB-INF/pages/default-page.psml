@@ -63,7 +63,7 @@
       <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/enviroment_chronicle_marginal_teaser.vm</value>
+        <value>/WEB-INF/templates/chronicle_marginal_teaser.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
         <value>teaser.chronicle.title</value>
