@@ -1,8 +1,16 @@
 ## ------------------------------
 ## search macros
 ## ------------------------------
-#macro (renderRankedResultCounter $pageSelector)
+#macro (renderResultCounterCatalogue $pageSelector)
         <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits</strong> Einträgen in <strong>Service</strong>
+#end
+
+#macro (renderRankedResultCounter $pageSelector)
+    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits bewerteten</strong> Treffern
+#end
+
+#macro (renderUnrankedResultCounter $pageSelector)
+    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits weiteren</strong> Datenquellen
 #end
 
 #macro (renderRankedPageNavigation $pageSelector)
@@ -30,3 +38,30 @@
     		| <a href="$action">&raquo;</a>
     #end
 #end
+
+#macro (renderUnrankedPageNavigation $pageSelector)
+#set ($action = $renderResponse.createActionURL())
+    (Seite <strong>$pageSelector.currentSelectorPage</strong> von <strong>$pageSelector.numberOfPages</strong>)
+    #if($pageSelector.selectorHasPreviousPage)
+        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    	$action.setParameter('nrstart', $pstart.toString())	
+    		<a href="$action">&laquo;</a>
+    	$action.setParameter('nrstart', "0")	
+    		| <a href="$action">1</a> ..
+    #end
+	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+    	#if($pageId == $pageSelector.currentSelectorPage)
+    		| $pageId
+    	#else
+    		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
+    		$action.setParameter('nrstart', $pstart.toString())
+    		| <a href="$action">$pageId</a>
+    	#end
+	#end
+    #if($pageSelector.selectorHasNextPage)
+        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+    	$action.setParameter('nrstart', $pstart.toString())
+    		| <a href="$action">&raquo;</a>
+    #end
+#end
+
