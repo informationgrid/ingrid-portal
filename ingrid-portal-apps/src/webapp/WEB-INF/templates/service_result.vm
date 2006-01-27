@@ -1,35 +1,3 @@
-#set ($action = $renderResponse.createActionURL())
-
-#macro (renderRankedResultCounter $pageSelector)
-        <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits</strong> Einträgen in <strong>Service</strong>
-#end
-
-#macro (renderRankedPageNavigation $pageSelector)
-        (Seite <strong>$pageSelector.currentSelectorPage</strong> von <strong>$pageSelector.numberOfPages</strong>)
-	#if($pageSelector.selectorHasPreviousPage)
-        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())	
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('rstart', "0")	
-    		| <a href="$action">1</a> ..
-    #end
-	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
-    	#if($pageId == $pageSelector.currentSelectorPage)
-    		| $pageId
-    	#else
-    		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
-    		$action.setParameter('rstart', $pstart.toString())
-    		| <a href="$action">$pageId</a>
-    	#end
-	#end
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
-    #end
-#end
-
-
     <div class="section ">    
       <div class="resultset_nav float_left">
 #renderRankedResultCounter($rankedPageSelector)

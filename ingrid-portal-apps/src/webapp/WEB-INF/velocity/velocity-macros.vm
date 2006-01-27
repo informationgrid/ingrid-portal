@@ -1,4 +1,6 @@
-
+## ------------------------------
+## Action Form macros
+## ------------------------------
 #macro (getFieldValue $field)
 $actionForm.getInput($field)#end
 
@@ -22,6 +24,9 @@ $actionForm.getInput($field)#end
 $fieldLabel#end
 #end
 
+## ------------------------------
+## display content
+## ------------------------------
 #macro (displayPartner)
 <option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------</option>
 #foreach ($partner in $partnerList)
