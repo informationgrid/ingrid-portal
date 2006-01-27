@@ -7,24 +7,31 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.search.PageState;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.utils.query.IngridQuery;
 
 public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
+    private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
+
+    /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/default_result.vm";
 
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/service_result.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/service_no_result.vm";
+
+    /** Keys of parameters in session */
+    private final static String KEY_START_HIT = "rstart";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -36,7 +43,11 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 
-        // check for query and adapt template
+        // ----------------------------------
+        // set initial view template
+        // ----------------------------------
+
+        // if no query display "nothing"
         IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
         if (query == null) {
             setDefaultViewPage(TEMPLATE_NO_QUERY);
@@ -44,111 +55,74 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        // assume we have results
+        // if query assume we have results
         setDefaultViewPage(TEMPLATE_RESULT);
 
-        // prepare 
-        Context context = getContext(request);
-        PortletSession session = request.getPortletSession();
+        // ----------------------------------
+        // fetch parameters
+        // ----------------------------------
+
+        // default: start at the beginning with the first hit (display first result page)
+        int startHit = 0;
+        // indicates whether a new query was performed !
+        Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY);
+        try {
+            // if no new query was performed, read render parameters from former action request
+            if (newQuery == null) {
+                startHit = (new Integer(request.getParameter(KEY_START_HIT))).intValue();
+            }
+        } catch (Exception ex) {
+            if (log.isDebugEnabled()) {
+                log.debug("Problems fetching starthit of page from render request, set starthit to 0", ex);
+            }
+        }
         int HITS_PER_PAGE = Settings.HITS_PER_PAGE;
 
-        PageState ps = (PageState) session.getAttribute("portlet_state");
-        if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
-            session.setAttribute("portlet_state", ps);
-        }
+        // ----------------------------------
+        // business logic
+        // ----------------------------------
 
-        // ranked results
-        SearchResultList rankedSRL = doSearch(query, ps.getInt("rankedNavStart"), HITS_PER_PAGE, true);
-        int numberOfHits = rankedSRL.getNumberOfHits();
-        
+        // do search
+        SearchResultList searchRL = doSearch(query, startHit, HITS_PER_PAGE, true);
+        int numberOfHits = searchRL.getNumberOfHits();
         if (numberOfHits == 0) {
             // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
         }
+        // adapt settings of page navihation
+        HashMap pageNavigation = Utils
+                .getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits, Settings.NUM_PAGES_TO_SELECT);
 
-        int NUM_SELECTOR_PAGES = Settings.NUM_SELECTOR_PAGES;
-        int currentSelectorPage;
-        int numberOfPages;
-        int firstSelectorPage;
-        int lastSelectorPage;
-        boolean selectorHasPreviousPage;
-        boolean selectorHasNextPage;
-        int numberOfFirstHit;
-        int numberOfLastHit;
+        // ----------------------------------
+        // prepare view
+        // ----------------------------------
 
-        currentSelectorPage = ps.getInt("rankedNavStart") / HITS_PER_PAGE + 1;
-        numberOfPages = numberOfHits / HITS_PER_PAGE;
-        if (Math.ceil(numberOfHits % HITS_PER_PAGE) > 0) {
-            numberOfPages++;
-        }
-        firstSelectorPage = 1;
-        selectorHasPreviousPage = false;
-        if (currentSelectorPage >= NUM_SELECTOR_PAGES) {
-            firstSelectorPage = currentSelectorPage - (int) (NUM_SELECTOR_PAGES / 2);
-            selectorHasPreviousPage = true;
-        }
-        lastSelectorPage = firstSelectorPage + NUM_SELECTOR_PAGES - 1;
-        selectorHasNextPage = true;
-        if (numberOfPages <= lastSelectorPage) {
-            lastSelectorPage = numberOfPages;
-            selectorHasNextPage = false;
-        }
-        numberOfFirstHit = (currentSelectorPage - 1) * HITS_PER_PAGE + 1;
-        numberOfLastHit = numberOfFirstHit + HITS_PER_PAGE - 1;
-
-        if (numberOfLastHit > numberOfHits) {
-            numberOfLastHit = numberOfHits;
-        }
-
-        HashMap pageSelector = new HashMap();
-        pageSelector.put("currentSelectorPage", new Integer(currentSelectorPage));
-        pageSelector.put("numberOfPages", new Integer(numberOfPages));
-        pageSelector.put("numberOfSelectorPages", new Integer(NUM_SELECTOR_PAGES));
-        pageSelector.put("firstSelectorPage", new Integer(firstSelectorPage));
-        pageSelector.put("lastSelectorPage", new Integer(lastSelectorPage));
-        pageSelector.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
-        pageSelector.put("selectorHasNextPage", new Boolean(selectorHasNextPage));
-        pageSelector.put("hitsPerPage", new Integer(HITS_PER_PAGE));
-        pageSelector.put("numberOfFirstHit", new Integer(numberOfFirstHit));
-        pageSelector.put("numberOfLastHit", new Integer(numberOfLastHit));
-        pageSelector.put("numberOfHits", new Integer(numberOfHits));
-
-        context.put("rankedPageSelector", pageSelector);
-
-        context.put("rankedResultList", rankedSRL);
-
-        context.put("ps", ps);
+        Context context = getContext(request);
+        context.put("rankedPageSelector", pageNavigation);
+        context.put("rankedResultList", searchRL);
 
         super.doView(request, response);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        PortletSession session = request.getPortletSession();
+        // ----------------------------------
+        // fetch parameters
+        // ----------------------------------
+        String pageStarthit = request.getParameter(KEY_START_HIT);
 
-        PageState ps = (PageState) session.getAttribute("portlet_state");
-        if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
-            session.setAttribute("portlet_state", ps);
-        }
+        // ----------------------------------
+        // business logic
+        // ----------------------------------
+        // remove message from search submit portlet indicating that a new query was performed
+        cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
 
-        ps.putInt("rankedNavStart", 0);
-        try {
-            ps.putInt("rankedNavStart", Integer.parseInt(request.getParameter("rstart")));
-        } catch (NumberFormatException e) {
-            // ps.setRankedNavStart(0);
-        }
-    }
-
-    private PageState initPageState(PageState ps) {
-        ps.putInt("rankedNavStart", 0);
-        ps.putInt("rankedNavLimit", Settings.HITS_PER_PAGE);
-        return ps;
+        // ----------------------------------
+        // set render parameters
+        // ----------------------------------        
+        actionResponse.setRenderParameter(KEY_START_HIT, pageStarthit);
     }
 
     private SearchResultList doSearch(IngridQuery query, int start, int limit, boolean ranking) {
