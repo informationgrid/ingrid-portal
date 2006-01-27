@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  <!-- Portlet Services  -->
+  <bean id="IngridServices" 
+  	   class="org.apache.jetspeed.services.JetspeedPortletServices" >
+  	   <constructor-arg>
+  	   	<map>
+  	   	  <entry key="WMSInterfaceComponent">
+  	   	  	<ref bean="de.ingrid.portal.interfaces.wms.WMSInterface" />
+  	   	  </entry>
+  	   	</map>
+  	   </constructor-arg>
+  </bean>
+</beans>

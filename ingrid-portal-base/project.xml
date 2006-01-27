@@ -33,6 +33,13 @@
 	           <war.bundle>true</war.bundle>
 	        </properties>
 		</dependency>
+	    <dependency>
+	      <id>dom4j</id>
+	      <version>1.4-dev-8</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
 	</dependencies>
 </project>
 

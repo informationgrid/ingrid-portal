@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- WMS Interface Configuration Implementation -->
+    <bean id="wms_interface_configuration" class="org.apache.commons.configuration.PropertiesConfiguration">
+        <constructor-arg>
+            <value>${applicationRoot}/WEB-INF/conf/wms_interface.properties</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- WMS Interface-->
+    <bean id="de.ingrid.portal.interfaces.wms.WMSInterface" 
+        class="de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl">
+      	<constructor-arg index='0'><ref bean="wms_interface_configuration" /></constructor-arg>
+	</bean>
+</beans>

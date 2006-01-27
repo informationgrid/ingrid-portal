@@ -1,0 +1,27 @@
+<!ELEMENT portalCommunication (search | wmsServices)>
+<!ELEMENT search (bbox | gkz)>
+<!ELEMENT bbox (minx,miny,maxx,maxy)>
+<!ELEMENT minx (#PCDATA)>
+<!ELEMENT miny (#PCDATA)>
+<!ELEMENT maxx (#PCDATA)>
+<!ELEMENT maxy (#PCDATA)>
+<!ELEMENT gkz (#PCDATA)>
+<!ELEMENT wmsServices (wms)+>
+<!ELEMENT wms (name,url)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ATTLIST portalCommunication
+   psession_id    CDATA #REQUIRED
+   prequest       CDATA #REQUIRED
+   phpsession_id  CDATA #REQUIRED
+   moduleName     CDATA #REQUIRED
+>
+<!ATTLIST search
+   type           CDATA #REQUIRED
+>
+<!ATTLIST bbox
+   coo_type       CDATA #REQUIRED
+>
+<!ATTLIST wms
+   id             CDATA #REQUIRED
+>
