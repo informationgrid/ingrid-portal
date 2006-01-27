@@ -21,12 +21,12 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.ibus.Bus;
 import de.ingrid.portal.forms.SimpleSearchForm;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
-import de.ingrid.portal.utils.Utils;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;

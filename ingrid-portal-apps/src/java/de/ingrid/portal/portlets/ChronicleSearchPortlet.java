@@ -12,8 +12,8 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ChronicleSearchForm;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.PageState;
-import de.ingrid.portal.utils.Utils;
 
 public class ChronicleSearchPortlet extends GenericVelocityPortlet {
     public void init(PortletConfig config) throws PortletException {

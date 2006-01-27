@@ -13,7 +13,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SimpleSearchForm;
-import de.ingrid.portal.utils.Utils;
+import de.ingrid.portal.global.Utils;
 
 /**
  * TODO Please add comments!

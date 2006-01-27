@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.utils;
+package de.ingrid.portal.global;
 
 import java.util.List;
 

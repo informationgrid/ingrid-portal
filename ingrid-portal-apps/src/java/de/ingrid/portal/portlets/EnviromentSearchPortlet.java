@@ -13,9 +13,9 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.EnvironmentSearchForm;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.search.PageState;
-import de.ingrid.portal.utils.Utils;
-import de.ingrid.portal.utils.UtilsDB;
 
 public class EnviromentSearchPortlet extends GenericVelocityPortlet {
 

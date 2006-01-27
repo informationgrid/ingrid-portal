@@ -5,7 +5,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.utils.Utils;
+import de.ingrid.portal.global.Utils;
 
 /**
  * Form Handler for Contact page. Stores and validates form input.

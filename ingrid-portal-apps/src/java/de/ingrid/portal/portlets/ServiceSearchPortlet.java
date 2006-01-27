@@ -12,9 +12,9 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceSearchForm;
-import de.ingrid.portal.resources.PortletApplicationResources;
-import de.ingrid.portal.utils.Utils;
-import de.ingrid.portal.utils.UtilsDB;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -23,7 +23,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
-        setTopic(PortletApplicationResources.MSG_TOPIC_SERVICE);
+        setTopic(Settings.MSG_TOPIC_SERVICE);
 
         super.init(config);
     }
@@ -52,7 +52,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
                 ServiceSearchForm.class);
         sf.populate(request);
         if (!sf.validate()) {
-            cancelRenderMessage(request, PortletApplicationResources.MSG_QUERY);
+            cancelRenderMessage(request, Settings.MSG_QUERY);
             return;
         }
 
@@ -64,6 +64,6 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        publishRenderMessage(request, PortletApplicationResources.MSG_QUERY, query);
+        publishRenderMessage(request, Settings.MSG_QUERY, query);
     }
 }

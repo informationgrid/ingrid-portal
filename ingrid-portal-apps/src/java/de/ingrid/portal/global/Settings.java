@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.resources;
+package de.ingrid.portal.global;
 
 /**
  * Common resources used by our Portlet Application
  *
  * @author Martin Maidhof
  */
-public class PortletApplicationResources {
+public class Settings {
 
     /** Search parameters */
     public final static int HITS_PER_PAGE = 10;

@@ -12,7 +12,7 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.resources.PortletApplicationResources;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
@@ -28,7 +28,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
-        setTopic(PortletApplicationResources.MSG_TOPIC_SERVICE);
+        setTopic(Settings.MSG_TOPIC_SERVICE);
 
         super.init(config);
     }
@@ -37,7 +37,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
 
         // check for query and adapt template
-        IngridQuery query = (IngridQuery) receiveRenderMessage(request, PortletApplicationResources.MSG_QUERY);
+        IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
         if (query == null) {
             setDefaultViewPage(TEMPLATE_NO_QUERY);
             super.doView(request, response);
@@ -50,7 +50,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         // prepare 
         Context context = getContext(request);
         PortletSession session = request.getPortletSession();
-        int HITS_PER_PAGE = PortletApplicationResources.HITS_PER_PAGE;
+        int HITS_PER_PAGE = Settings.HITS_PER_PAGE;
 
         PageState ps = (PageState) session.getAttribute("portlet_state");
         if (ps == null) {
@@ -70,7 +70,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        int NUM_SELECTOR_PAGES = PortletApplicationResources.NUM_SELECTOR_PAGES;
+        int NUM_SELECTOR_PAGES = Settings.NUM_SELECTOR_PAGES;
         int currentSelectorPage;
         int numberOfPages;
         int firstSelectorPage;
@@ -147,7 +147,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private PageState initPageState(PageState ps) {
         ps.putInt("rankedNavStart", 0);
-        ps.putInt("rankedNavLimit", PortletApplicationResources.HITS_PER_PAGE);
+        ps.putInt("rankedNavLimit", Settings.HITS_PER_PAGE);
         return ps;
     }
 
