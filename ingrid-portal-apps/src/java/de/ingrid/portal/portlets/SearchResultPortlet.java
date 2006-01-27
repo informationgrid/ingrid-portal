@@ -304,7 +304,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
         SearchResultList result = new SearchResultList();
         
     	if (ranking) {
-
+/*
             //start the communication
             SocketCommunication communication = new SocketCommunication();
             
@@ -379,6 +379,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
                     documents[i].put("type", "WEBSITE");
                     documents[i].put("provider", documents[i].getProvider().toString());
                     documents[i].put("type", "Webseiten");
+                    // TODO url verkürzt darstellen, da sonst rechte Spalte nach unten springt !!!
                     documents[i].put("url", "url not specified");
                     documents[i].put("ranking", String.valueOf(documents[i].getScore()));
                     
@@ -388,7 +389,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet
             } else {
                 result.setNumberOfHits(0);
             }
-/*            
+*/
             SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
             if (start > l.size())
                 start = l.size() - limit - 1;
@@ -398,7 +399,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet
                 result.add(l.get(i));
             }
             result.setNumberOfHits(l.getNumberOfHits());
-*/            
     	} else {
     		SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
     		for (int i=0; i<limit; i++) {
