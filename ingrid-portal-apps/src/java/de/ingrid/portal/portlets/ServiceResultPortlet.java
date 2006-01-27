@@ -76,11 +76,12 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                 log.debug("Problems fetching starthit of page from render request, set starthit to 0", ex);
             }
         }
-        int HITS_PER_PAGE = Settings.HITS_PER_PAGE;
 
         // ----------------------------------
         // business logic
         // ----------------------------------
+
+        int HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
 
         // do search
         SearchResultList searchRL = doSearch(query, startHit, HITS_PER_PAGE, true);
@@ -93,7 +94,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         // adapt settings of page navihation
         HashMap pageNavigation = Utils
-                .getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits, Settings.NUM_PAGES_TO_SELECT);
+                .getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits, Settings.RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------
         // prepare view

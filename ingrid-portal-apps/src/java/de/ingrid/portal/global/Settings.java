@@ -15,11 +15,17 @@ public class Settings {
     // ************************************
 
     /** Search parameters 
-     * number of hits per page */
-    public final static int HITS_PER_PAGE = 10;
+     * number of ranked hits per page */
+    public final static int RANKED_HITS_PER_PAGE = 10;
 
-    /** number of pages displayed for select ("selector pages") */
-    public final static int NUM_PAGES_TO_SELECT = 5;
+    /** number of unranked hits per page */
+    public final static int UNRANKED_HITS_PER_PAGE = 10;
+
+    /** number of ranked pages displayed for selection ("selector pages") */
+    public final static int RANKED_NUM_PAGES_TO_SELECT = 5;
+
+    /** number of unranked pages displayed for selection ("selector pages") */
+    public final static int UNRANKED_NUM_PAGES_TO_SELECT = 3;
 
     // ************************************
     // Portlet Messaging
