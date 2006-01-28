@@ -4,16 +4,18 @@
 package de.ingrid.portal.interfaces.wms.impl;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.xml.sax.EntityResolver;
@@ -24,12 +26,16 @@ import de.ingrid.portal.interfaces.wms.om.WMSSearchDescriptor;
 import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
 
 /**
- * TODO Describe your created type (class, etc.) here.
+ * Implements the WMS interface. It allows to communicate with the mapbender
+ * WMS server that has been extended for the ingrid project with some
+ * interface methods.
  * 
  * @author joachim@wemove.com
  */
 public class WMSInterfaceImpl implements WMSInterface {
 
+    private final static Log log = LogFactory.getLog(WMSInterfaceImpl.class);
+    
     Configuration config;
 
     /**
@@ -42,7 +48,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSServices()
+     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSServices(java.lang.String)
      */
     public Collection getWMSServices(String sessionID) {
         URL url;
@@ -68,7 +74,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             // END workaround for wrong dtd location
 
-            url = new URL(config.getString("url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php")
+            url = new URL(config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php")
                     .concat("?PREQUEST=getWMSServices").concat("&PHPSESSID=" + sessionID));
 
             reader.setValidation(false);
@@ -94,20 +100,16 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             return result;
 
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (DocumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e);
         }
 
         return null;
     }
 
+    /**
+     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSSearchParameter(java.lang.String)
+     */
     public WMSSearchDescriptor getWMSSearchParameter(String sessionID) {
         URL url;
         SAXReader reader = new SAXReader(false);
@@ -131,7 +133,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             // END workaround for wrong dtd location
 
-            url = new URL(config.getString("url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php")
+            url = new URL(config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php")
                     .concat("?PREQUEST=getWMSSearch").concat("&PHPSESSID=" + sessionID));
 
             reader.setValidation(false);
@@ -173,18 +175,68 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             return wmsSearchDescriptor;
 
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (DocumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e);
         }
 
         return null;
+    }
+
+    /**
+     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSURL(java.lang.String)
+     */
+    public String getWMSURL(String sessionId) {
+        return config.getString("display_url", "http://localhost/mapbender/frames/WMS_Search.php")
+        .concat("?PHPSESSID=" + sessionId);
+    }
+
+    /**
+     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor, java.lang.String)
+     */
+    public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId) {
+        ArrayList l = new ArrayList();
+        l.add(service);
+        return getWMSAddedServiceURL(l, sessionId);
+    }
+
+    /**
+     * @throws UnsupportedEncodingException 
+     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList, java.lang.String)
+     */
+    public String getWMSAddedServiceURL(ArrayList services, String sessionId) {
+        WMSServiceDescriptor service;
+        String serviceURL;
+        String serviceName;
+        StringBuffer resultB = new StringBuffer(getWMSURL(sessionId));
+        boolean prequestAdded = false;
+        
+        // check for invalid service parameter
+        if (services == null || services.size() == 0) {
+            return resultB.toString();
+        }
+
+        try {
+            // add services
+            for(int i=0; i<services.size();i++) {
+                service = (WMSServiceDescriptor) services.get(i);
+                serviceURL = service.getUrl();
+                serviceName = service.getName();
+                if (serviceURL != null && serviceURL.length()>0) {
+                    if (!prequestAdded) {
+                        resultB.append("&PREQUEST=setServices");
+                        prequestAdded = true;
+                    }
+                    if (serviceName != null && serviceName.length() > 0) {
+                        resultB.append("&wmsName" + (i+1) + "=" + URLEncoder.encode(serviceName, "UTF-8"));
+                    }
+                    resultB.append("&wms" + (i+1) + "=" + URLEncoder.encode(serviceURL.replace('&', ','), "UTF-8"));
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            log.error(e);
+        }
+        
+        return resultB.toString();
     }
 
 }
