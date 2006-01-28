@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2006 wemove digital solutions. All rights reserved.
+ */
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
@@ -24,13 +27,9 @@ import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 
 /**
- * TODO Please add comments!
+ * TODO Describe your created type (class, etc.) here.
  *
- * created 11.01.2006
- *
- * @author joachim
- * @version
- * 
+ * @author joachim@wemove.com
  */
 public class SearchResultPortlet extends GenericVelocityPortlet {
 
