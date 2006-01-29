@@ -1,0 +1,12 @@
+#if(!$unrankedResultList && !$rankedResultList)
+        <div class="noresult">
+            <p>Ihre Suche nach <strong>'$!ps.Q'</strong> hat <strong>0</strong> Treffer ergeben.</p>
+            <ul>
+              <li>Versuchen Sie es mit einer neuen <a href="portal/main-search.psml">Suche</a> oder <a href="e_search.html">Erweiterten Suche</a></li>
+              <li>Lesen Sie unsere <a href="javascript:contextHelp()">Suchtipps</a></li>
+              <li>Stöbern Sie durch andere Seiten von PortalU:
+                  <p></p>
+                  <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-enviroment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
+            </ul>
+        </div>	
+#end	  

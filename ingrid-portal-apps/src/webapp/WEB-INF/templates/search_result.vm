@@ -1,124 +1,26 @@
+## SHOULD BE SEPARATED INTO MULTIPLE PORTLETS EACH HANDLING IT'S OWN CONTENT:
+## - Simple Search Portlet
+## - Similar Terms Portlet
+## - Search Result Portlet
+##
+## templates separated here already !
+
   <div id="content">
-    <!-- PORTLET EINFACHE SUCHE -->
     <div class="section">    
-      <div class="section-header">
 
-        <h1>Suchergebnis</h1>
-        <span class="portlet_info"><a href="javascript:contextHelp()">[?]</a></span>
-        <span class="clearer"></span>
-      </div>
-      <div class="formbody">
-		<form action="$renderResponse.createActionURL()" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
-    	<input type="hidden" name="ds" value="$ds"/>
-    	<input type="hidden" name="action" value="doSearch"/>
-        	<p class="datasource_selection">
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doChangeDS')
-#if($ps.query)
-	$action.setParameter('q',$ps.query)
-#end
-#if($ds=="1")
-	<strong>Umweltinformationen</strong>
-#else
-    $action.setParameter('ds','1')
-	<a href="$action">Umweltinformationen</a>	
-#end
-&nbsp;&nbsp;&nbsp;&nbsp;
-#if($ds=="2")
-	<strong>Adressen</strong>
-#else
-    $action.setParameter('ds','2')
-	<a href="$action">Adressen</a>	
-#end
-&nbsp;&nbsp;&nbsp;&nbsp;
-#if($ds=="3")
-	<strong>Forschungsprojekte</strong>
-#else
-    $action.setParameter('ds','3')
-	<a href="$action">Forschungsprojekte</a>	
-#end
-        	</p>          	
-		      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#if($ps.query)$ps.query
-#else
-Geben Sie hier Ihre Suchanfrage ein#end" onfocus="if (this.value == 'Geben Sie hier Ihre Suchanfrage ein') this.value=''" onblur="if (this.value == '') this.value='Geben Sie hier Ihre Suchanfrage ein'" />&nbsp;<input class="btn" type="submit" value="PortalU Suche" />
-		      <span class="clearer"></span>
-        </form>
-        <div class="optional-links">
-          <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="e_search.html">Erweiterte Suche</a>
-          <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_prev_search.html">Suchhistorie</a>
-          <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_preferences.html">Einstellungen</a>
+## simple search: SHOULD BE REPLACED WITH SIMPLE SEARCH PORTLET !!!
+#parse ('/WEB-INF/templates/search_result_input_tmp.vm')
 
-          <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="javascript:contextHelp()">Suchtipps</a>
-<!-- only for logged on users -->
-<!--          <img src="/ingrid-portal-apps/images/ico_save_search.gif" alt="Icon Diskette" /><a href="s_search_speichern.html">Suche Speichern</a> -->
-        </div>
-      </div>
       <br />
-## similar box
-	  <form action="$renderResponse.createActionURL()" method="get" name="frmSimilar" id="frmSimilar">
-	  <input type="hidden" name="action" value="doAddSimilar" />
-	  <div class="formbody">
-#set ($action = $renderResponse.createActionURL())
-#if(!$ps.isSimilarOpen)
-	$action.setParameter('action','doOpenSimilar')
-        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
-#else
-	$action.setParameter('action','doCloseSimilar')
-	  <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new" title="Link öffnet in neuem Fenster"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="SNS Logo" title="Ein Dienst vom Semantic Network Service. Link öffnet in neuem Fenster" /></a></span>
-        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
-        <span class="clearer"></span>
-        	  <div class="leftmargin">
-          	  <table>
-#foreach($similarNode in $ps.similarRoot.getChildren())
-	#set ($action = $renderResponse.createActionURL())
-	$action.setParameter('nodeId',$similarNode.id)
-	#if($similarNode.isOpen())
-		$action.setParameter('action','doCloseNode')
-			  <tr>
-				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-          	  </tr>
-		#foreach($tokenNode in $similarNode.getChildren())
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
-          	  </tr>
-		#end
-	#else
-		$action.setParameter('action','doOpenNode')
-          	  <tr>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-          	  </tr>
-	#end
-#end			  
-          	  </table>
 
-        	  </div>
-	
-	
-#end	
-      </div>
-#if($ps.isSimilarOpen)
-	  <div class="formfooter">
-        <div align="right">
-          <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />
-        </div>
-      </div>
-#end
-      </form>
+## similar terms: Should be handled BY SEPARATE PORTLET !
+#parse ('/WEB-INF/templates/search_result_similar.vm')
+
+## no results template: SHOULD BE SWITCHED IN RESULT PORTLET, not here !
 #if(!$unrankedResultList && !$rankedResultList)
-        <div class="noresult">
-            <p>Ihre Suche nach <strong>'$!ps.Q'</strong> hat <strong>0</strong> Treffer ergeben.</p>
-            <ul>
-              <li>Versuchen Sie es mit einer neuen <a href="portal/main-search.psml">Suche</a> oder <a href="e_search.html">Erweiterten Suche</a></li>
-              <li>Lesen Sie unsere <a href="javascript:contextHelp()">Suchtipps</a></li>
-              <li>Stöbern Sie durch andere Seiten von PortalU:
-                  <p></p>
-                  <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-enviroment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
-            </ul>
-        </div>	
+#parse ('/WEB-INF/templates/search_no_result.vm')
 #end	  
+
     </div>
     <br />
   </div>
