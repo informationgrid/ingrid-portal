@@ -61,7 +61,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             EntityResolver resolver = new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId) {
-                    if (systemId.equals("http://torwald.gistec-online.de/mapbender/php/./dtd/portalCommunication.dtd")) {
+                    if (systemId.indexOf("portalCommunication.dtd") > 0) {
 
                         InputStream in = getClass().getResourceAsStream("wms_interface.dtd");
 
@@ -120,7 +120,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             EntityResolver resolver = new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId) {
-                    if (systemId.equals("http://torwald.gistec-online.de/mapbender/php/./dtd/portalCommunication.dtd")) {
+                    if (systemId.indexOf("portalCommunication.dtd") > 0) {
 
                         InputStream in = getClass().getResourceAsStream("wms_interface.dtd");
 
