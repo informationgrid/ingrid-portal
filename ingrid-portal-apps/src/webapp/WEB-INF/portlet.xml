@@ -141,7 +141,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/default_result.vm</value>
+            <value>/WEB-INF/templates/empty.vm</value>
         </init-param>
         <portlet-name>ServiceResult</portlet-name>
         <display-name>Service Suchergebnis</display-name>

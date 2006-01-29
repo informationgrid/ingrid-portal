@@ -24,7 +24,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
 
     /** view templates */
-    private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/default_result.vm";
+    private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
 
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/service_result.vm";
 
