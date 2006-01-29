@@ -61,7 +61,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             EntityResolver resolver = new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId) {
-                    if (systemId.equals("http://torwald.gistec-online.de/mapbender/php/dtd/portalCommunication.dtd")) {
+                    if (systemId.equals("http://torwald.gistec-online.de/mapbender/php/./dtd/portalCommunication.dtd")) {
 
                         InputStream in = getClass().getResourceAsStream("wms_interface.dtd");
 
@@ -94,7 +94,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             for (Iterator i = nodes.iterator(); i.hasNext();) {
                 Node node = (Node) i.next();
                 WMSServiceDescriptor wmsServiceDescriptor = new WMSServiceDescriptor(node.valueOf("//name"), node
-                        .valueOf("//url"));
+                        .valueOf("//url").replace(',', '&'));
                 result.add(wmsServiceDescriptor);
             }
 
@@ -120,7 +120,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             EntityResolver resolver = new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId) {
-                    if (systemId.equals("http://torwald.gistec-online.de/mapbender/php/dtd/portalCommunication.dtd")) {
+                    if (systemId.equals("http://torwald.gistec-online.de/mapbender/php/./dtd/portalCommunication.dtd")) {
 
                         InputStream in = getClass().getResourceAsStream("wms_interface.dtd");
 
