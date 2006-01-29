@@ -45,11 +45,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        // -------------------
-        // NOTICE: THIS STUFF HAS TO BE MERGED WITH SIMPLE SEARCH PORTLET
-        // (separate portlets for query input and results))
-        // THIS IS A TEMPORARY SOLUTION !
-
+// BEGIN: "simple_search" Portlet
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
@@ -61,13 +57,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             af.init();
         }
 
-        // if action is "doSearch" page WAS CALLED FROM STARTPAGE !
+        // if action is "doSearch" page WAS CALLED FROM STARTPAGE and no action was triggered ! 
         String action = request.getParameter("action");
         if (action != null && action.equalsIgnoreCase("doSearch")) {
             // we are on the result psml page !!!
             af.populate(request);
         }
-        // -------------------
 
         PortletSession session = request.getPortletSession();
         String selectedDS = (String) session.getAttribute("selectedDS");
@@ -75,6 +70,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             selectedDS = "1";
         }
         context.put("ds", selectedDS);
+// END: "simple_search" Portlet
 
         PageState ps = (PageState) session.getAttribute("portlet_state");
         if (ps == null) {
@@ -89,6 +85,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         ps.setBoolean("isActionProcessed", false);
 
+// BEGIN: search_result Portlet
         String q = request.getParameter("q");
         if (q != null && q.length() > 0) {
             ps.put("query", q);
@@ -132,6 +129,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             context.put("rankedResultList", rankedSRL);
             context.put("unrankedResultList", unrankedSRL);
         }
+// END: search_result Portlet
 
         context.put("ps", ps);
 
@@ -141,20 +139,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         String action = request.getParameter("action");
-
-        // -------------------
-        // NOTICE: THIS STUFF HAS TO BE MERGED WITH SIMPLE SEARCH PORTLET
-        // (separate portlets for query input and results))
-        // THIS IS A TEMPORARY SOLUTION !
-
-        // check form input
-        SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
-                SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
-        af.populate(request);
-        if (!af.validate()) {
-            return;
-        }
-        // -------------------
 
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
@@ -166,18 +150,39 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         if (action == null) {
             action = "";
+
+// BEGIN: "simple_search" Portlet
         } else if (action.equalsIgnoreCase("doSearch")) {
+
+            // check form input
+            SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
+                    SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
+            af.populate(request);
+            if (!af.validate()) {
+                return;
+            }
+
             ps.putString("query", null);
             String q = request.getParameter("q");
             if (q != null && q.length() > 0) {
                 ps.putString("query", q);
             }
+            
+            // when separate portlets: just send a message that a new query was executed and do this in the
+            // search_result_similar Portlet
             ps.setBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
+            
+            // when separate portlets: just send a message that a new query was executed and do this in the
+            // search_result Portlet
             ps.putInt("rankedNavStart", 0);
             ps.putInt("unrankedNavStart", 0);
+            
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             session.setAttribute("selectedDS", request.getParameter("ds"), PortletSession.APPLICATION_SCOPE);
+// END: "simple_search" Portlet
+            
+// BEGIN: search_result_similar Portlet
         } else if (action.equalsIgnoreCase("doOpenSimilar")) {
             ps.setBoolean("isSimilarOpen", true);
             ps.put("similarRoot", SimilarNodeFactoryMockup.getSimilarNodes());
@@ -204,6 +209,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
             ps.put("query", sbQuery.toString());
         }
+// END: search_result_similar Portlet
+        
+// BEGIN: search_result Portlet
         try {
             ps.putInt("rankedNavStart", Integer.parseInt(request.getParameter("rstart")));
         } catch (NumberFormatException e) {
@@ -214,6 +222,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         } catch (NumberFormatException e) {
             //ps.setUnrankedNavStart(0);
         }
+// END: search_result Portlet
 
         ps.setBoolean("isActionProcessed", true);
     }
