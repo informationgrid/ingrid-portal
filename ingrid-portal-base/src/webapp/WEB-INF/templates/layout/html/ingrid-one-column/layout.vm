@@ -74,7 +74,7 @@ limitations under the License.
 	#set ($columnIndex = 1)
 	#foreach($column in $columnLayout.columns)
 	  
-	  <div id="column_${myFragment.getId()}_${columnIndex}" class="portal-layout-column portal-layout-column-${columnIndex}">
+	  <div id="column_${myFragment.getId()}_${columnIndex}" class="portal-layout-column">
 	     #foreach($f in $column)
   	     
            ## Set up coordinates for this fragment
