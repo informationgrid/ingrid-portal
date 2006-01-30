@@ -51,6 +51,41 @@ limitations under the License.
     </portlet-info>
 </portlet>
 
+<portlet id="IngridOneColumn">
+    <portlet-name>IngridOneColumn</portlet-name>
+    <display-name>One Column Layout for Ingrid Portal Using Velocity</display-name>
+    <init-param>
+      <name>ViewPage</name>
+      <value>ingrid-one-column</value>
+    </init-param>
+    <init-param>
+      <name>MaxPage</name>
+      <value>maximized</value>
+    </init-param>
+    <init-param>
+      <name>columns</name>
+      <value>1</value>
+    </init-param>
+    <init-param>
+      <name>sizes</name>
+      <value>100%</value>
+    </init-param>
+    <init-param>
+      <name>layoutType</name>
+      <value>OneColumn</value>
+    </init-param>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
+    <expiration-cache>-1</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>view</portlet-mode>
+    </supports>
+    <portlet-info>
+      <title>IngridOneColumn</title>
+      <short-title>OneColumn</short-title>
+    </portlet-info>
+</portlet>
+
 <portlet id="IngridTwoColumns">
     <portlet-name>IngridTwoColumns</portlet-name>
     <display-name>Two Columns Layout for Ingrid Portal Using Velocity</display-name>
@@ -86,7 +121,6 @@ limitations under the License.
     </portlet-info>
 </portlet>
 
-
 <portlet id="VelocityOneColumn">
     <portlet-name>VelocityOneColumn</portlet-name>
     <display-name>One Column Layout Using Velocity</display-name>
@@ -121,6 +155,43 @@ limitations under the License.
     <portlet-info>
       <title>VelocityOneColumn</title>
       <short-title>OneColumn</short-title>
+    </portlet-info>
+</portlet>
+
+<portlet id="VelocityOneColumnTable">
+    <portlet-name>VelocityOneColumnTable</portlet-name>
+    <display-name>One Column Layout Using Velocity And Tables</display-name>
+    <init-param>
+      <name>ViewPage</name>
+      <value>tcolumns</value>
+    </init-param>
+    <init-param>
+      <name>MaxPage</name>
+      <value>maximized</value>
+    </init-param>
+    <init-param>
+      <name>columns</name>
+      <value>1</value>
+    </init-param>
+    <init-param>
+      <name>sizes</name>
+      <value>100%</value>
+    </init-param>
+    <init-param>
+      <name>layoutType</name>
+      <value>OneColumn</value>
+    </init-param>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
+    <expiration-cache>-1</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>view</portlet-mode>
+      <portlet-mode>edit</portlet-mode>
+      <portlet-mode>help</portlet-mode>      
+    </supports>
+    <portlet-info>
+      <title>VelocityOneColumnTable</title>
+      <short-title>OneColumnTable</short-title>
     </portlet-info>
 </portlet>
 
@@ -238,7 +309,7 @@ limitations under the License.
 
 <portlet id="VelocityThreeColumnsTable">
     <portlet-name>VelocityThreeColumnsTable</portlet-name>
-    <display-name>Three Columns Layout Using Velocity Tables</display-name>
+    <display-name>Three Columns Layout Using Velocity And Tables</display-name>
     <init-param>
       <name>ViewPage</name>
       <value>tcolumns</value>
@@ -521,7 +592,7 @@ limitations under the License.
 
 <portlet id="VelocityTwoColumnsTable">
     <portlet-name>VelocityTwoColumnsTable</portlet-name>
-    <display-name>Two Columns Layout Using Velocity Table</display-name>
+    <display-name>Two Columns Layout Using Velocity And Tables</display-name>
     <init-param>
       <name>ViewPage</name>
       <value>tcolumns</value>

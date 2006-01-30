@@ -32,6 +32,8 @@ limitations under the License.
 		<js:service name='DecorationLocator'/>
 		<js:service name='Powertools'/>    
 		<js:service name='DecorationFactory'/>		    
+		<js:service name='EntityAccessor'/>				
+		<js:service name='WindowAccessor'/>		
 	</js:services>
 	
 </portlet-app>

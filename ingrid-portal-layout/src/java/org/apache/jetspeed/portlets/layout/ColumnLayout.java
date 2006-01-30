@@ -16,6 +16,7 @@
 package org.apache.jetspeed.portlets.layout;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -65,6 +66,12 @@ import org.apache.jetspeed.om.page.Fragment;
  */
 public class ColumnLayout implements Serializable
 {
+    /** Percentage widths gutter width */
+    private final static double PERCENTAGE_WIDTH_GUTTER = 0.01;
+
+    /** Percentage widths format */
+    private final static DecimalFormat PERCENTAGE_WIDTH_FORMAT = new DecimalFormat("0.00'%'");
+
     /** Constrains the columns for this layout */
     private final int numberOfColumns;
     
@@ -72,7 +79,7 @@ public class ColumnLayout implements Serializable
     private final SortedMap columns;
     
     /** Width settings for eacah column */
-    private final String[] columnWidthes;
+    private final String[] columnWidths;
     
     /** 
      * The type of layout this is, required for extract row/column properties
@@ -99,13 +106,16 @@ public class ColumnLayout implements Serializable
      *            property settings based on the type of layout in use. This
      *            effectively allows for the interchange of multiple layout
      *            formats without one format effecting the settings of another.
+     * @param columnWidths
+     *            widths for each column that accumulate to 100% if percentages
+     *            are used.
      * @see org.apache.jetspeed.om.page.Fragment#getType()
      */
-    public ColumnLayout(int numberOfColumns, String layoutType, String[] columnWidthes)
+    public ColumnLayout(int numberOfColumns, String layoutType, String[] columnWidths)
     {
         this.numberOfColumns = numberOfColumns;
         this.layoutType = layoutType;
-        this.columnWidthes = columnWidthes;
+        this.columnWidths = columnWidths;
         eventListeners = new ArrayList();
 
         columns = new TreeMap();
@@ -140,11 +150,14 @@ public class ColumnLayout implements Serializable
      *            effectively allows for the interchange of multiple layout
      *            formats without one format effecting the settings of another.
      * @param fragments Initial set of fragments to add to this layout.
+     * @param columnWidths
+     *            widths for each column that accumulate to 100% if percentages
+     *            are used.
      * @throws LayoutEventException
      */
-    public ColumnLayout(int numberOfColumns, String layoutType, Collection fragments, String[] columnWidthes) throws LayoutEventException
+    public ColumnLayout(int numberOfColumns, String layoutType, Collection fragments, String[] columnWidths) throws LayoutEventException
     {
-        this(numberOfColumns, layoutType, columnWidthes);
+        this(numberOfColumns, layoutType, columnWidths);
         Iterator fragmentsItr = fragments.iterator();
         try
         {
@@ -242,52 +255,61 @@ public class ColumnLayout implements Serializable
      * @return the width to be used with the specified column.  Or 0 if no value
      * has been specified.
      */
-    public int getColumnWidth(int columnNumber)
+    public String getColumnWidth(int columnNumber)
     {
-        if (columnNumber < numberOfColumns)
+        if ((columnWidths != null) && (columnNumber < numberOfColumns))
         {
-            String stringValue = columnWidthes[columnNumber];
-            if (stringValue.endsWith("%"))
+            String columnWidth = columnWidths[columnNumber];
+
+            // subtract "gutter" width from last percentage
+            // column to prevent wrapping on rounding errors
+            // of column widths when rendered in the browser
+            if ((numberOfColumns > 1) && (columnNumber == (numberOfColumns - 1)))
             {
-                return Integer.parseInt(stringValue.substring(0, (stringValue.length() - 1)));
+                int percentIndex = columnWidth.lastIndexOf('%');
+                if (percentIndex > 0)
+                {
+                    try
+                    {
+                        double width = Double.parseDouble(columnWidth.substring(0,percentIndex).trim());
+                        synchronized (PERCENTAGE_WIDTH_FORMAT)
+                        {
+                            columnWidth = PERCENTAGE_WIDTH_FORMAT.format(width - PERCENTAGE_WIDTH_GUTTER);
+                        }
+                    }
+                    catch (NumberFormatException nfe)
+                    {
+                    }
+                }
             }
-            else
-            {
-                return Integer.parseInt(stringValue);
-            }
+            return columnWidth;
         }
-        else
-        {
-            return 0;
-        }
+        return "0";
     }
     
     /**
-     * IE has a non-conformant box modle that takes into account both padding
-     * and margin settings.  You can use this method to return the column width
-     * reduced by the <code>reductionAmount</code> to prevent unwanted 
-     * scrolling/wrapping.
-     *
+     * returns the float to be used with the specified column.
      * 
-     * @param columnNumber whose width has been requested.  Will be reduced by
-     * the <code>reductionAmount</code> argument.
-     * @param reductionAmount amount to subtract from the column's width setting
-     * @return column width reduced by the <code>reductionAmount</code>.
+     * @param columnNumber whose width has been requested.
+     * @return "right" for the last column, "left" if more than one
+     *         column, or "none" otherwise.
      */
-    public int getSafeColumnWidth(int columnNumber, int reductionAmount)
+    public String getColumnFloat(int columnNumber)
     {
-        int columnWidth = getColumnWidth(columnNumber);
-        if(columnWidth > 0)
+        if ((numberOfColumns > 1) && (columnNumber < numberOfColumns))
         {
-            return (columnWidth - reductionAmount);
+            if (columnNumber == (numberOfColumns - 1))
+            {
+                return "right";
+            }
+            else
+            {
+                return "left";
+            }
         }
-        else
-        {
-            return 0;
-        }
-    
+        return "none";
     }
-
+    
     /**
      * @return <code>java.util.Collection</code> all of columns (also
      *         Collection objects) in order within this layout. All Collections

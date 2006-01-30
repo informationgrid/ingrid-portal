@@ -16,6 +16,7 @@
 package org.apache.jetspeed.portlets.layout;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.decoration.DecorationFactory;
 import org.apache.jetspeed.om.folder.Folder;
+import org.apache.jetspeed.om.page.ContentFragment;
+import org.apache.jetspeed.om.page.ContentPage;
 import org.apache.jetspeed.om.page.Fragment;
 import org.apache.jetspeed.om.page.Page;
 import org.apache.jetspeed.request.RequestContext;
+import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.om.window.PortletWindow;
 
 /**
@@ -49,126 +53,101 @@ public class MultiColumnPortlet extends LayoutPortlet
     protected final static String PARAM_NUM_COLUMN = "columns";
     protected final static int DEFAULT_NUM_COLUMN = 2;
     protected final static String PARAM_COLUMN_SIZES = "sizes";
-    protected final static String DEFAULT_COLUMN_SIZES = "50%,50%";
+    protected final static String DEFAULT_ONE_COLUMN_SIZES = "100%";
+    protected final static String DEFAULT_TWO_COLUMN_SIZES = "50%,50%";
+    protected final static String DEFAULT_THREE_COLUMN_SIZES = "34%,33%,33%";
 
     private int numColumns = 0;
-    private String colSizes = null;
+    private String columnSizes = null;
     private String portletName = null;
     private String layoutType;
-    private List columnSizes = null;
     protected DecorationFactory decorators;
-    private Map layouts ;
 
     public void init( PortletConfig config ) throws PortletException
     {
         super.init(config);
-        layouts = new HashMap();
-        this.numColumns = Integer.parseInt(config.getInitParameter(PARAM_NUM_COLUMN));
-        if (0 == numColumns)
-            numColumns = 1;
-        this.colSizes = config.getInitParameter(PARAM_COLUMN_SIZES);
-        if (colSizes != null || colSizes.trim().length() > 0)
-        {
-            columnSizes = getCellSizes(colSizes);            
-        }
         this.portletName = config.getPortletName();
         this.layoutType = config.getInitParameter("layoutType");
-        
-        decorators = (DecorationFactory)getPortletContext().getAttribute(CommonPortletServices.CPS_DECORATION_FACTORY);
-        if (null == decorators)
+        if (this.layoutType == null)
+        {
+            throw new PortletException("Layout type not specified for " + this.portletName);
+        }
+        this.numColumns = Integer.parseInt(config.getInitParameter(PARAM_NUM_COLUMN));
+        if (this.numColumns < 1)
+        {
+            this.numColumns = 1;
+        }
+        this.columnSizes = config.getInitParameter(PARAM_COLUMN_SIZES);
+        if ((this.columnSizes == null) || (this.columnSizes.trim().length() == 0))
+        {
+            switch (this.numColumns)
+            {
+            case 1: this.columnSizes = DEFAULT_ONE_COLUMN_SIZES; break;
+            case 2: this.columnSizes = DEFAULT_TWO_COLUMN_SIZES; break;
+            case 3: this.columnSizes = DEFAULT_THREE_COLUMN_SIZES; break;
+            default: this.columnSizes = null; break;
+            }
+        }
+        if (this.columnSizes == null)
+        {
+            throw new PortletException("Column sizes cannot be defaulted for " + this.numColumns + " columns and are not specified for " + this.portletName);
+        }
+       
+        this.decorators = (DecorationFactory)getPortletContext().getAttribute(CommonPortletServices.CPS_DECORATION_FACTORY);
+        if (null == this.decorators)
         {
             throw new PortletException("Failed to find the Decoration Factory on portlet initialization");
         }        
-        
     }
 
     public void doView( RenderRequest request, RenderResponse response ) throws PortletException, IOException
     {
+        // get context and test for maximized window rendering
         RequestContext context = getRequestContext(request);
         PortletWindow window = context.getPortalURL().getNavigationalState().getMaximizedWindow();
-        Page page = getRequestContext(request).getPage();
-        Fragment f = getFragment(request, false);
-        ColumnLayout layout;
-        try
-        {
-            layout = new ColumnLayout(numColumns, layoutType, f.getFragments(), this.colSizes.split("\\,") );
-            layout.addLayoutEventListener(new PageManagerLayoutEventListener(pageManager, page, layoutType));
-        }
-        catch (LayoutEventException e1)
-        {
-            throw new PortletException("Failed to build ColumnLayout "+e1.getMessage(), e1);
-        }
-
-       
-
-        // if (targetState != null && targetState.isMaximized())
         if (window != null)
         {
             super.doView(request, response);
             return;
         }
 
+        // get fragment column sizes
+        Fragment f = getFragment(request, false);
+        String fragmentColumnSizes = columnSizes;
+        String fragmentColumnSizesProperty = f.getProperty(Fragment.SIZES_PROPERTY_NAME);
+        if (fragmentColumnSizesProperty != null)
+        {
+            fragmentColumnSizes = fragmentColumnSizesProperty;
+        }
+        String [] fragmentColumnSizesArray = fragmentColumnSizes.split("\\,");
+        List fragmentColumnSizesList = new ArrayList(fragmentColumnSizesArray.length);
+        for (int i = 0; (i < fragmentColumnSizesArray.length); i++)
+        {
+            fragmentColumnSizesList.add(fragmentColumnSizesArray[i]);
+        }
+
+        // construct layout object
+        ColumnLayout layout;
+        try
+        {
+            layout = new ColumnLayout(numColumns, layoutType, f.getFragments(), fragmentColumnSizesArray);
+            layout.addLayoutEventListener(new PageManagerLayoutEventListener(pageManager, context.getPage(), layoutType));
+        }
+        catch (LayoutEventException e1)
+        {
+            throw new PortletException("Failed to build ColumnLayout "+e1.getMessage(), e1);
+        }
+
+        // invoke the JSP associated with this portlet
         request.setAttribute("columnLayout", layout);
         request.setAttribute("numberOfColumns", new Integer(numColumns));
         request.setAttribute("decorationFactory", this.decorators);
-        List columnSizes = this.columnSizes;
-
-        // Determine custom column sizes in the psml
-        String customSizes = f.getProperty(Fragment.SIZES_PROPERTY_NAME);
-        if ( customSizes != null && customSizes.trim().length() > 0 )
-        {
-            columnSizes = getCellSizes(customSizes);
-        }
-                
-        request.setAttribute("columnSizes", columnSizes);        
-
-        // now invoke the JSP associated with this portlet
+        request.setAttribute("columnSizes", fragmentColumnSizesList);        
         super.doView(request, response);
-        
         request.removeAttribute("decorationFactory");
         request.removeAttribute("columnLayout");
         request.removeAttribute("numberOfColumns");
         request.removeAttribute("columnSizes");
-    }
-
-    /**
-     * Parses the size config info and returns a list of size values for the
-     * current set
-     * 
-     * @param sizeList
-     *            java.lang.String a comma separated string a values
-     * @return a List of values
-     */
-    protected static List getCellSizes( String sizeList )
-    {
-        List list = new Vector();
-
-        if (sizeList != null)
-        {
-            StringTokenizer st = new StringTokenizer(sizeList, ",");
-            while (st.hasMoreTokens())
-            {
-                list.add(st.nextToken());
-            }
-        }
-
-        return list;
-    }
-
-    protected static List getCellClasses( String classlist )
-    {
-        List list = new Vector();
-
-        if (classlist != null)
-        {
-            StringTokenizer st = new StringTokenizer(classlist, ",");
-            while (st.hasMoreTokens())
-            {
-                list.add(st.nextToken());
-            }
-        }
-
-        return list;
     }
 
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException
@@ -215,7 +194,7 @@ public class MultiColumnPortlet extends LayoutPortlet
             }
             catch (Exception e)
             {
-                throw new PortletException("Unable to access page for editing: "+e.getMessage());
+                throw new PortletException("Unable to access page for editing: "+e.getMessage(), e);
             }                        
         }
         else if (request.getParameter("move") != null 
@@ -229,7 +208,7 @@ public class MultiColumnPortlet extends LayoutPortlet
             }
             catch (Exception e)
             {
-                throw new PortletException("Unable to access page for editing: "+e.getMessage());
+                throw new PortletException("Unable to access page for editing: "+e.getMessage(), e);
             }
           
             Fragment rootFragment = page.getRootFragment();
@@ -239,7 +218,7 @@ public class MultiColumnPortlet extends LayoutPortlet
             ColumnLayout layout;
             try
             {
-                layout = new ColumnLayout(numColumns, layoutType, rootFragment.getFragments(), this.colSizes.split("\\,") );
+                layout = new ColumnLayout(numColumns, layoutType, rootFragment.getFragments(), null);
                 layout.addLayoutEventListener(new PageManagerLayoutEventListener(pageManager, page, layoutType));
             }
             catch (LayoutEventException e1)
@@ -291,14 +270,14 @@ public class MultiColumnPortlet extends LayoutPortlet
                 && fragmentChange != null                
                 && editingPage != null)
         {
-            Page page;
+            ContentPage page;
             try
             {
-                page = pageManager.getPage(editingPage);
+                page = pageManager.getContentPage(editingPage);
             }
             catch (Exception e)
             {
-                throw new PortletException("Unable to access page for editing: "+e.getMessage());
+                throw new PortletException("Unable to access page for editing: "+e.getMessage(), e);
             }
           
             Fragment fragment = page.getFragmentById(fragmentChange);
@@ -315,35 +294,58 @@ public class MultiColumnPortlet extends LayoutPortlet
             }
             catch (Exception e)
             {
-                throw new PortletException("Unable to update page for fragment decorator: "+e.getMessage());
+                throw new PortletException("Unable to update page for fragment decorator: "+e.getMessage(), e);
             }
         }
         else if (themeChange != null &&
                  layoutChange != null &&
                  editingPage != null)                
         {
-            Page page;
+            // get page to be edited
+            ContentPage page;
             try
             {
-                page = pageManager.getPage(editingPage);
+                // access content page to be edited
+                page = pageManager.getContentPage(editingPage);
             }
             catch (Exception e)
             {
-                throw new PortletException("Unable to access page for editing: "+e.getMessage());
+                throw new PortletException("Unable to access page for editing: "+e.getMessage(), e);
             }
-            
-            page.setDefaultDecorator(themeChange, Fragment.LAYOUT);
-            page.getRootFragment().setName(layoutChange);
-            
+
+            // edit and update page
+            boolean layoutPortletChanged = !layoutChange.equals(page.getRootFragment().getName());
             try
             {
+                // update page theme and/or root fragment
+                // layout portlet change
+                page.setDefaultDecorator(themeChange, Fragment.LAYOUT);
+                page.getRootFragment().setName(layoutChange);
                 pageManager.updatePage(page);
             }
             catch (Exception e)
             {
-                throw new PortletException("Unable to update page for fragment decorator: "+e.getMessage());
+                throw new PortletException("Unable to update page: "+e.getMessage(), e);
             }
             
+            // update portlet entity and portlet window if layout portlet modified
+            if (layoutPortletChanged)
+            {
+                try
+                {
+                    // update matching portlet entity
+                    PortletEntity portletEntity = this.entityAccess.getPortletEntity(page.getRootFragment().getId());
+                    this.entityAccess.updatePortletEntity(portletEntity, (ContentFragment)page.getRootFragment());
+                    this.entityAccess.storePortletEntity(portletEntity);
+
+                    // update matching portlet window
+                    this.windowAccess.createPortletWindow(portletEntity, page.getRootFragment().getId());
+                }
+                catch (Exception e)
+                {
+                    throw new PortletException("Unable to update portlet entity or window: "+e.getMessage(), e);
+                }
+            }
         }
         else
         {        
