@@ -70,13 +70,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             session.setAttribute("portlet_state", ps);
         }
 
-        // initial state ! if no action has been processed before
-        // TODO DO WE NEED THIS ???
-        if (!ps.getBoolean("isActionProcessed")) {
-            ps = initPageState(ps);
-        }
-        ps.setBoolean("isActionProcessed", false);
-
 // BEGIN: "simple_search" Portlet
         // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
 
@@ -199,8 +192,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        String action = request.getParameter("action");
-
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
         if (ps == null) {
@@ -209,13 +200,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             session.setAttribute("portlet_state", ps);
         }
 
+// BEGIN: "simple_search" Portlet
+        // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
+        String action = request.getParameter("action");
         if (action == null) {
             action = "";
-
-// BEGIN: "simple_search" Portlet
-            // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
-
-        } else if (action.equalsIgnoreCase("doSearch")) {
+        }
+        if (action.equalsIgnoreCase("doSearch")) {
 
             // check form input
             SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
@@ -231,10 +222,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
+        }
 // END: "simple_search" Portlet
             
 // BEGIN: search_result_similar Portlet
-        } else if (action.equalsIgnoreCase("doOpenSimilar")) {
+        if (action.equalsIgnoreCase("doOpenSimilar")) {
             ps.setBoolean("isSimilarOpen", true);
             ps.put("similarRoot", SimilarNodeFactoryMockup.getSimilarNodes());
         } else if (action.equalsIgnoreCase("doCloseSimilar")) {
@@ -282,8 +274,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.setRenderParameter(KEY_START_HIT_RANKED, rankedStarthit);
         actionResponse.setRenderParameter(KEY_START_HIT_UNRANKED, unrankedStarthit);
 // END: search_result Portlet
-
-        ps.setBoolean("isActionProcessed", true);
     }
 
     private SearchResultList doSearch(IngridQuery query, String ds, int start, int limit, boolean ranking) {
@@ -431,7 +421,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     private PageState initPageState(PageState ps) {
-        ps.setBoolean("isActionProcessed", false);
         ps.put("query", null);
         ps.setBoolean("isSimilarOpen", false);
         ps.put("similarRoot", null);
