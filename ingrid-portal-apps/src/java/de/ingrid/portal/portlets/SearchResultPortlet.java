@@ -14,7 +14,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SimpleSearchForm;
@@ -31,19 +31,22 @@ import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
  *
  * @author joachim@wemove.com
  */
-public class SearchResultPortlet extends GenericVelocityPortlet {
+public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
-        super.init(config);
+        // set our message "scope" for inter portlet messaging
+        setTopic(Settings.MSG_TOPIC_SERVICE);
 
+        super.init(config);
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+        PortletSession session = request.getPortletSession();
 
 // BEGIN: "simple_search" Portlet
         // get ActionForm, we use get method without instantiation, so we can do
@@ -64,10 +67,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             af.populate(request);
         }
 
-        PortletSession session = request.getPortletSession();
-        String selectedDS = (String) session.getAttribute("selectedDS");
-        if (selectedDS == null || selectedDS.length() == 0) {
-            selectedDS = "1";
+        String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+        if (selectedDS == null) {
+            selectedDS = Settings.INITIAL_DATASOURCE;
+            publishRenderMessage(request, Settings.MSG_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);
 // END: "simple_search" Portlet
@@ -99,8 +102,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             // ranked results	
             int startHit = ps.getInt("rankedNavStart");
             int RANKED_HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
-            selectedDS = ps.getString("selectedDS");
             String query = ps.getString("query");
+            /*String*/ selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+            if (selectedDS == null) {
+                selectedDS = Settings.INITIAL_DATASOURCE;
+            }
 
             SearchResultList rankedSRL = doSearch(query, selectedDS, startHit, RANKED_HITS_PER_PAGE, true);
             int numberOfHits = rankedSRL.getNumberOfHits();
@@ -179,7 +185,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             ps.putInt("unrankedNavStart", 0);
             
         } else if (action.equalsIgnoreCase("doChangeDS")) {
-            session.setAttribute("selectedDS", request.getParameter("ds"), PortletSession.APPLICATION_SCOPE);
+            publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
 // END: "simple_search" Portlet
             
 // BEGIN: search_result_similar Portlet
@@ -348,9 +354,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         ps.setBoolean("isSimilarOpen", false);
         ps.put("similarRoot", null);
         ps.putInt("rankedNavStart", 0);
-        ps.putInt("rankedNavLimit", 10);
         ps.putInt("unrankedNavStart", 0);
-        ps.putInt("unrankedNavLimit", 10);
         return ps;
     }
 
