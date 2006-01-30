@@ -91,7 +91,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (af == null) {
             af = (SimpleSearchForm) Utils.addActionForm(request, SimpleSearchForm.SESSION_KEY, SimpleSearchForm.class,
                     PortletSession.APPLICATION_SCOPE);
-            //            af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
+            // TODO when separate portlet, then read this from lokale !!!! we don't do this here because we
+            // don't wanna add it to resource bundle of RESULT PORTLET !
+//            af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
+            af.setINITIAL_QUERY("Geben Sie hier Ihre Suchanfrage ein");
             af.init();
         }
         // put ActionForm to context. use variable name "actionForm" so velocity macros work !
@@ -114,41 +117,65 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 // END: "simple_search" Portlet
 
 // BEGIN: search_result Portlet
-        String q = request.getParameter("q");
-        if (q != null && q.length() > 0) {
-            ps.put("query", q);
+        // if no query display "nothing"
+        IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
+        if (query == null) {
+            //            setDefaultViewPage(TEMPLATE_NO_QUERY);
+            //            super.doView(request, response);
+            //            return;
         }
-        if (ps.get("query") != null) {
+
+        // if query assume we have results
+        //        setDefaultViewPage(TEMPLATE_RESULT);
+
+        // no "if" clause necessary when separate portlet, then we return above !
+        if (query != null) {
+            
+            // ----------------------------------
+            // fetch data
+            // ----------------------------------
+            int rankedStartHit = 0;
+            int unrankedStartHit = 0;
+
+            // indicates whether a new query was performed !
+            Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY);
+            try {
+                // if no new query was performed, read render parameters from former action request
+                if (newQuery == null) {
+                    rankedStartHit = (new Integer(request.getParameter(KEY_START_HIT_RANKED))).intValue();
+                    unrankedStartHit = (new Integer(request.getParameter(KEY_START_HIT_UNRANKED))).intValue();
+                }
+            } catch (Exception ex) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Problems fetching starthits of RESULT page from render request, set starthits to 0", ex);
+                }
+            }
+
+            /*String*/ selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+            if (selectedDS == null) {
+                selectedDS = Settings.INITIAL_DATASOURCE;
+            }
 
             // ----------------------------------
             // business logic
             // ----------------------------------
 
             // ranked results	
-            int startHit = ps.getInt("rankedNavStart");
             int RANKED_HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
-            String query = ps.getString("query");
-            /*String*/ selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
-            if (selectedDS == null) {
-                selectedDS = Settings.INITIAL_DATASOURCE;
-            }
-
-            SearchResultList rankedSRL = doSearch(query, selectedDS, startHit, RANKED_HITS_PER_PAGE, true);
+            SearchResultList rankedSRL = doSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE, true);
             int numberOfHits = rankedSRL.getNumberOfHits();
 
             // adapt settings of ranked page navihation
-            HashMap rankedPageNavigation = Utils.getPageNavigation(startHit, RANKED_HITS_PER_PAGE, numberOfHits,
+            HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE, numberOfHits,
                     Settings.RANKED_NUM_PAGES_TO_SELECT);
 
             // unranked results	
-            startHit = ps.getInt("unrankedNavStart");
             int UNRANKED_HITS_PER_PAGE = Settings.UNRANKED_HITS_PER_PAGE;
-
-            SearchResultList unrankedSRL = doSearch(query, selectedDS, startHit, UNRANKED_HITS_PER_PAGE, false);
+            SearchResultList unrankedSRL = doSearch(query, selectedDS, unrankedStartHit, UNRANKED_HITS_PER_PAGE, false);
             numberOfHits = unrankedSRL.getNumberOfHits();
 
             // adapt settings of unranked page navihation
-            HashMap unrankedPageNavigation = Utils.getPageNavigation(startHit, UNRANKED_HITS_PER_PAGE, numberOfHits,
+            HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, UNRANKED_HITS_PER_PAGE, numberOfHits,
                     Settings.UNRANKED_NUM_PAGES_TO_SELECT);
 
             // ----------------------------------
@@ -194,22 +221,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             // from start page !)
             doSimpleSearchPortletActionStuff(request, af);
 
-            // TODO OLD STUFF !!!
-            ps.putString("query", null);
-            String q = request.getParameter("q");
-            if (q != null && q.length() > 0) {
-                ps.putString("query", q);
-            }
-            
             // when separate portlets: just send a message that a new query was executed and do this in the
             // search_result_similar Portlet
             ps.setBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
-            
-            // when separate portlets: just send a message that a new query was executed and do this in the
-            // search_result Portlet
-            ps.putInt("rankedNavStart", 0);
-            ps.putInt("unrankedNavStart", 0);
             
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
@@ -245,25 +260,30 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 // END: search_result_similar Portlet
         
 // BEGIN: search_result Portlet
-        try {
-            ps.putInt("rankedNavStart", Integer.parseInt(request.getParameter("rstart")));
-        } catch (NumberFormatException e) {
-            //ps.setRankedNavStart(0);
-        }
-        try {
-            ps.putInt("unrankedNavStart", Integer.parseInt(request.getParameter("nrstart")));
-        } catch (NumberFormatException e) {
-            //ps.setUnrankedNavStart(0);
-        }
+        // ----------------------------------
+        // fetch parameters
+        // ----------------------------------
+        String rankedStarthit = request.getParameter(KEY_START_HIT_RANKED);
+        String unrankedStarthit = request.getParameter(KEY_START_HIT_UNRANKED);
+
+        // ----------------------------------
+        // business logic
+        // ----------------------------------
+        // no new query anymore, we remove messages, so portlets read our render parameters (set below)
+        cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
+        cancelRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
+
+        // ----------------------------------
+        // set render parameters
+        // ----------------------------------        
+        actionResponse.setRenderParameter(KEY_START_HIT_RANKED, rankedStarthit);
+        actionResponse.setRenderParameter(KEY_START_HIT_UNRANKED, unrankedStarthit);
 // END: search_result Portlet
 
         ps.setBoolean("isActionProcessed", true);
     }
 
-    private SearchResultList doSearch(String qryStr, String ds, int start, int limit, boolean ranking) {
-
-        // force lower case due to an iPlug/iBus bug
-        qryStr = qryStr.toLowerCase();
+    private SearchResultList doSearch(IngridQuery query, String ds, int start, int limit, boolean ranking) {
 
         SearchResultList result = new SearchResultList();
 
@@ -302,13 +322,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
              } catch (Exception e2) {
              // TODO Auto-generated catch block
              e2.printStackTrace();
-             }
-             IngridQuery query = null;
-             try {
-             query = QueryStringParser.parse(qryStr);
-             } catch (ParseException e1) {
-             // TODO Auto-generated catch block
-             e1.printStackTrace();
              }
              Bus bus = null;
              IngridHit[] documents = new IngridHit[0];
@@ -388,11 +401,17 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
+        // check query input
+        String queryString = af.getInput(af.FIELD_QUERY);
+        if (queryString.equals(af.getINITIAL_QUERY())
+                || queryString.length() == 0) {
+            return;
+        }
+
         // Create IngridQuery from form input !
-        String queryString = af.getInput(af.FIELD_QUERY).toLowerCase();
         IngridQuery query = null;
         try {
-            query = QueryStringParser.parse(queryString);
+            query = QueryStringParser.parse(queryString.toLowerCase());
         } catch (ParseException ex) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems creating IngridQuery, parsed query string: " + queryString, ex);
@@ -410,8 +429,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         ps.put("query", null);
         ps.setBoolean("isSimilarOpen", false);
         ps.put("similarRoot", null);
-        ps.putInt("rankedNavStart", 0);
-        ps.putInt("unrankedNavStart", 0);
         return ps;
     }
 

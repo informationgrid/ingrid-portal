@@ -61,4 +61,11 @@ public class SimpleSearchForm extends ActionForm {
     public void setINITIAL_QUERY(String initialQuery) {
         INITIAL_QUERY = initialQuery;
     }
+    
+    /**
+     * Get initial query which was set from outside (dependent from locale)
+     */
+    public String getINITIAL_QUERY() {
+        return INITIAL_QUERY;
+    }
 }
