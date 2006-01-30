@@ -45,12 +45,20 @@ public class Settings {
     /** message "scope" for search pages (start page, simple search, extended search ...) */
     public final static String MSG_TOPIC_SEARCH = "search";
 
-    // ------------- MESSAGES -----------------------------
+    // ------------- DATA MESSAGES -----------------------------
     
     /** Messages: define the message itself, will be "message-suffix" in message key -> "topic:message" 
-     * this message contains the ingrid query */
+     * this message contains the ingrid query (an IngridQuery object) */
     public static final String MSG_QUERY = "query";
 
+    /** this message contains the ingrid query STRING*/
+    public static final String MSG_QUERY_STRING = "query_string";
+
+    /** this message contains the ingrid datasource */
+    public static final String MSG_DATASOURCE = "datasource";
+
+    // ------------- INFORMATION MESSAGES -----------------------------
+    
     /** this message indicates that a new query was performed to ignore former render parameters
      * we use a separate message for every portlet, because the message is removed by every portlet
      * and we don't know processing order */
@@ -59,6 +67,4 @@ public class Settings {
     /** new query message for "similar terms" portlet */ 
     public static final String MSG_NEW_QUERY_FOR_SIMILAR = "new_query_similar";
 
-    /** this message contains the ingrid datasource */
-    public static final String MSG_DATASOURCE = "datasource";
 }

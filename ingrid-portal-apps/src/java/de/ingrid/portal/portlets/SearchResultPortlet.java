@@ -119,6 +119,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 // BEGIN: search_result Portlet
         // if no query display "nothing"
         IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
+        String queryString = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
         if (query == null) {
             //            setDefaultViewPage(TEMPLATE_NO_QUERY);
             //            super.doView(request, response);
@@ -186,6 +187,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             context.put("unrankedPageSelector", unrankedPageNavigation);
             context.put("rankedResultList", rankedSRL);
             context.put("unrankedResultList", unrankedSRL);
+            // query string will be displayed when no results !
+            context.put("queryString", queryString);
         }
 // END: search_result Portlet
 
@@ -391,6 +394,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     private void doSimpleSearchPortletActionStuff(PortletRequest request, SimpleSearchForm af) {
         // remove old query message
         cancelRenderMessage(request, Settings.MSG_QUERY);
+        cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
         // set messages that a new query was performed ! set separate messages for every portlet, because every
         // portlet removes it's message (we don't know processing order) !
         publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
@@ -410,8 +414,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // Create IngridQuery from form input !
         IngridQuery query = null;
+        queryString = queryString.toLowerCase();
         try {
-            query = QueryStringParser.parse(queryString.toLowerCase());
+            query = QueryStringParser.parse(queryString);
         } catch (ParseException ex) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems creating IngridQuery, parsed query string: " + queryString, ex);
@@ -421,6 +426,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // set query in message for result portlet
         if (query != null) {
             publishRenderMessage(request, Settings.MSG_QUERY, query);
+            publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryString);
         }
     }
 
