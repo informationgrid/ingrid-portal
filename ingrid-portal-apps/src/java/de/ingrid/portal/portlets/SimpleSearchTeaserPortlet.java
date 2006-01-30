@@ -95,9 +95,9 @@ public class SimpleSearchTeaserPortlet extends AbstractVelocityMessagingPortlet 
             // TODO use JavaScript to submit form on datasource change ! then use ActionForm like below !
         } else {
             // check form input
+            // only populate when form data in request !
             SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
                     SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
-            // only populate when 
             af.populate(request);
             if (!af.validate()) {
                 return;
