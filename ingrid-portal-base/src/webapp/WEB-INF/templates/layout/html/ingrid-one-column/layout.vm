@@ -147,13 +147,13 @@ limitations under the License.
 		   
 		   #if($f.type == "portlet")
 		     $jetspeed.setCurrentFragment($f)
-			     #parse($f.decoration.template)
+			 #parse($f.decoration.template)
 		   #else		
 	 	 	 $jetspeed.setCurrentFragment($f)
   			 $f.renderedContent			
 		   #end
 		   </div>
-  		   <br />
+  		   <br class="clearer"/>
 		 #end
 	  </div>
 	  #set ($columnIndex = $columnIndex + 1)  

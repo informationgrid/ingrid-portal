@@ -1,0 +1,34 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Home</title>
+  <metadata name="title" xml:lang="de">Startseite</metadata>
+
+    <fragment id="nested" type="layout" name="jetspeed-layouts::IngridOneColumn">
+        <fragment id="nested100345" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+          <property layout="OneColumn" name="row" value="0"/>
+          <property layout="TwoColumns" name="sizes" value="33%,66%"/>
+          <fragment id="nested100121" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
+            <property layout="TwoColumns" name="row" value="0"/>
+            <property layout="TwoColumns" name="column" value="0"/>
+          </fragment>                                
+          <fragment id="nested100171" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+            <property layout="TwoColumns" name="row" value="0"/>
+            <property layout="TwoColumns" name="column" value="1"/>
+          </fragment>    
+        </fragment>
+        <fragment id="nested100939" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
+          <property layout="OneColumn" name="row" value="1"/>
+          <preference name="noOfEntriesDisplayed" readOnly="false">
+            <value>4</value>
+          </preference>
+        </fragment>                                
+    </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
