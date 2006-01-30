@@ -12,8 +12,11 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -25,6 +28,9 @@ import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.SimilarTreeNode;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -33,12 +39,19 @@ import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
  */
 public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
+    private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
+
+    /** Keys of parameters in session/request */
+    private final static String KEY_START_HIT_RANKED = "rstart";
+
+    private final static String KEY_START_HIT_UNRANKED = "nrstart";
+
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
-        setTopic(Settings.MSG_TOPIC_SERVICE);
+        setTopic(Settings.MSG_TOPIC_SEARCH);
 
         super.init(config);
     }
@@ -46,9 +59,31 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+
+        // TODO remove page state in future, when separate portlets
+        // use messages and render parameters instead !!!
         PortletSession session = request.getPortletSession();
+        PageState ps = (PageState) session.getAttribute("portlet_state");
+        if (ps == null) {
+            ps = new PageState(this.getClass().getName());
+            ps = initPageState(ps);
+            session.setAttribute("portlet_state", ps);
+        }
+
+        // initial state ! if no action has been processed before
+        // TODO DO WE NEED THIS ???
+        if (!ps.getBoolean("isActionProcessed")) {
+            ps = initPageState(ps);
+        }
+        ps.setBoolean("isActionProcessed", false);
 
 // BEGIN: "simple_search" Portlet
+        // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
+
+        // NOTICE:
+        // may be called directly from Start page, then this method has to be an action method !
+        // When called from startPage, the action request parameter is "doSearch" !!! 
+
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
@@ -59,12 +94,15 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             //            af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
             af.init();
         }
+        // put ActionForm to context. use variable name "actionForm" so velocity macros work !
+        context.put("actionForm", af);
 
         // if action is "doSearch" page WAS CALLED FROM STARTPAGE and no action was triggered ! 
+        // (then we are on the result psml page !!!)
         String action = request.getParameter("action");
         if (action != null && action.equalsIgnoreCase("doSearch")) {
-            // we are on the result psml page !!!
-            af.populate(request);
+            // all ActionStuff encapsulated in separate method !
+            doSimpleSearchPortletActionStuff(request, af);
         }
 
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
@@ -74,19 +112,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         context.put("ds", selectedDS);
 // END: "simple_search" Portlet
-
-        PageState ps = (PageState) session.getAttribute("portlet_state");
-        if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
-            session.setAttribute("portlet_state", ps);
-        }
-
-        // initialization if no action has been processed before
-        if (!ps.getBoolean("isActionProcessed")) {
-            ps = initPageState(ps);
-        }
-        ps.setBoolean("isActionProcessed", false);
 
 // BEGIN: search_result Portlet
         String q = request.getParameter("q");
@@ -158,16 +183,18 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             action = "";
 
 // BEGIN: "simple_search" Portlet
+            // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
+
         } else if (action.equalsIgnoreCase("doSearch")) {
 
             // check form input
             SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
                     SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
-            af.populate(request);
-            if (!af.validate()) {
-                return;
-            }
+            // encapsulate all ActionStuff in separate method, has to be called in view method too (when called
+            // from start page !)
+            doSimpleSearchPortletActionStuff(request, af);
 
+            // TODO OLD STUFF !!!
             ps.putString("query", null);
             String q = request.getParameter("q");
             if (q != null && q.length() > 0) {
@@ -346,6 +373,36 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             result.setNumberOfHits(l.getNumberOfHits());
         }
         return result;
+    }
+
+    private void doSimpleSearchPortletActionStuff(PortletRequest request, SimpleSearchForm af) {
+        // remove old query message
+        cancelRenderMessage(request, Settings.MSG_QUERY);
+        // set messages that a new query was performed ! set separate messages for every portlet, because every
+        // portlet removes it's message (we don't know processing order) !
+        publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
+        publishRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR, Settings.MSG_VALUE_TRUE);
+
+        af.populate(request);
+        if (!af.validate()) {
+            return;
+        }
+
+        // Create IngridQuery from form input !
+        String queryString = af.getInput(af.FIELD_QUERY).toLowerCase();
+        IngridQuery query = null;
+        try {
+            query = QueryStringParser.parse(queryString);
+        } catch (ParseException ex) {
+            if (log.isWarnEnabled()) {
+                log.warn("Problems creating IngridQuery, parsed query string: " + queryString, ex);
+            }
+            // TODO create ERROR message when no IngridQuery because of parse error and return (OR even do that in form ???) 
+        }
+        // set query in message for result portlet
+        if (query != null) {
+            publishRenderMessage(request, Settings.MSG_QUERY, query);
+        }
     }
 
     private PageState initPageState(PageState ps) {
