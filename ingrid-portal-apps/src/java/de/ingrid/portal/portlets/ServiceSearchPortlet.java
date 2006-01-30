@@ -47,13 +47,16 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
+        // remove old query message for result portlet
+        cancelRenderMessage(request, Settings.MSG_QUERY);
+        // also set a message that a new query was performed, so former render parameters are ignored
+        publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
+
         // check form input
         ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class);
         sf.populate(request);
         if (!sf.validate()) {
-            // remove query message for result portlet
-            cancelRenderMessage(request, Settings.MSG_QUERY);
             return;
         }
 
@@ -65,9 +68,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        // set query in message for result portlet
+        // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);
-        // also set a message that a new query was performed, so former render parameters are ignored
-        publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
     }
 }

@@ -30,7 +30,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/service_no_result.vm";
 
-    /** Keys of parameters in session */
+    /** Keys of parameters in session/request */
     private final static String KEY_START_HIT = "rstart";
 
     public void init(PortletConfig config) throws PortletException {
@@ -59,7 +59,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         setDefaultViewPage(TEMPLATE_RESULT);
 
         // ----------------------------------
-        // fetch parameters
+        // fetch data
         // ----------------------------------
 
         // default: start at the beginning with the first hit (display first result page)
@@ -73,7 +73,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         } catch (Exception ex) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching starthit of page from render request, set starthit to 0", ex);
+                log.debug("Problems fetching starthit of SERVICE page from render request, set starthit to 0", ex);
             }
         }
 
