@@ -102,16 +102,21 @@ public class WMSInterfaceTest extends TestCase {
         }
         
         Collection services = wmsInterface.getWMSServices(sessionId);
-        Iterator it = services.iterator();
-        if (it.hasNext()) {
-            WMSServiceDescriptor service = (WMSServiceDescriptor) it.next();
-            // name is not set correctly when only the frame definition page is loaded
-            //assertEquals(descr.getName(), service.getName() );
-            assertEquals(descr.getUrl(), service.getUrl());
-        } else {
-            assertEquals(true, false);
-        }
         
+        // check for failed communication with the WMS Server
+        if (services != null) {
+            Iterator it = services.iterator();
+            if (it.hasNext()) {
+                WMSServiceDescriptor service = (WMSServiceDescriptor) it.next();
+                // name is not set correctly when only the frame definition page is loaded
+                //assertEquals(descr.getName(), service.getName() );
+                assertEquals(descr.getUrl(), service.getUrl());
+            } else {
+                assertEquals(true, false);
+            }
+        } else {
+            System.out.println("Failed to contact the WMS Server!");
+        }
     }
     
     public void testGetWMSSearchParameter() {
