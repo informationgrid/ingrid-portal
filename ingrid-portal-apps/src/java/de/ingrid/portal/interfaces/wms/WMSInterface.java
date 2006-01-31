@@ -6,6 +6,8 @@ package de.ingrid.portal.interfaces.wms;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.commons.configuration.Configuration;
+
 import de.ingrid.portal.interfaces.wms.om.WMSSearchDescriptor;
 import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
 
@@ -18,6 +20,15 @@ import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
  */
 public interface WMSInterface {
 
+
+    /**
+     * Returns the Configuration of the service.
+     * 
+     * @return The Configuration of the Service
+     */
+    Configuration getConfig();
+
+    
     /**
      * Returns all WMS Services from WMS Server that are bound to the 
      * given session id.

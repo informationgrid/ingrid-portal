@@ -8,7 +8,7 @@
 	</span>
 	<div class="section">    
 		<div class="formbody">
-			<iframe src="http://torwald.gistec-online.de/mapbender/frames/WMS_Viewer.php?PREQUEST=setServices&amp;PSession=0815portalsession&PHPSESSID=KUGViewer1" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
+			<iframe src="$wmsURL" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
 				Leider kann Ihr Browser keine iframes darstellen. 
 			</iframe>
 			<div class="rightmargin" align="right">

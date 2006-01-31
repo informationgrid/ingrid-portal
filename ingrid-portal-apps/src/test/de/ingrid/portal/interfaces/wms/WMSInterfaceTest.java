@@ -4,28 +4,20 @@
 package de.ingrid.portal.interfaces.wms;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.configuration.BaseConfiguration;
+import junit.framework.TestCase;
+
 import org.apache.commons.configuration.Configuration;
 
 import de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl;
-import de.ingrid.portal.interfaces.wms.om.WMSSearchDescriptor;
 import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
-
-import junit.framework.TestCase;
 
 public class WMSInterfaceTest extends TestCase {
 
@@ -35,11 +27,8 @@ public class WMSInterfaceTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        config = new BaseConfiguration();
-        config.addProperty("display_url", "http://torwald.gistec-online.de/mapbender/frames/WMS_Search.php");
-        config.addProperty("interface_url", "http://torwald.gistec-online.de/mapbender/php/mod_portalCommunication_gt.php");
-        
-        wmsInterface = new WMSInterfaceImpl(config);
+        wmsInterface = WMSInterfaceImpl.getInstance();
+        config = wmsInterface.getConfig();
         
     }
 

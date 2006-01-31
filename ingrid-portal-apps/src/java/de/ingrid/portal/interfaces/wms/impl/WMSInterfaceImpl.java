@@ -13,11 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.hibernate.cfg.Environment;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -35,16 +37,32 @@ import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
 public class WMSInterfaceImpl implements WMSInterface {
 
     private final static Log log = LogFactory.getLog(WMSInterfaceImpl.class);
+
+    private static WMSInterfaceImpl instance = null;    
     
     Configuration config;
 
-    /**
-     * @param url
-     * @param port
-     */
-    public WMSInterfaceImpl(Configuration config) {
+    public static synchronized WMSInterfaceImpl getInstance() {
+        if (instance == null) {
+            try {
+                instance = new WMSInterfaceImpl();
+            } catch (Exception e) {
+                log.fatal("Error initiating the WMS interface.");
+                e.printStackTrace();
+            }
+        }
+        
+        return instance;
+    }
+    
+    private WMSInterfaceImpl() throws Exception {
         super();
-        this.config = config;
+        String configFilename = getResourceAsStream("/wms_interface.properties");
+        config = new PropertiesConfiguration(configFilename);
+    }
+    
+    public Configuration getConfig() {
+        return config;
     }
 
     /**
@@ -239,4 +257,26 @@ public class WMSInterfaceImpl implements WMSInterface {
         return resultB.toString();
     }
 
+    public static String getResourceAsStream(String resource) throws Exception {
+        String stripped = resource.startsWith("/") ? 
+                resource.substring(1) : resource;
+    
+        String stream = null; 
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        if (classLoader!=null) {
+            stream = classLoader.getResource( stripped ).toString();
+        }
+        if ( stream == null ) {
+            Environment.class.getResourceAsStream( resource );
+        }
+        if ( stream == null ) {
+            stream = Environment.class.getClassLoader().getResource( stripped ).toString();
+        }
+        if ( stream == null ) {
+            throw new Exception( resource + " not found" );
+        }
+        return stream;
+    }
+    
+    
 }

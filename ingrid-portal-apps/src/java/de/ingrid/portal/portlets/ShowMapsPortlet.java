@@ -11,6 +11,8 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.interfaces.wms.WMSInterface;
+import de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl;
 import de.ingrid.portal.search.PageState;
 
 
@@ -24,6 +26,14 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+
+        PortletSession session = request.getPortletSession();
+
+        WMSInterface service = WMSInterfaceImpl.getInstance();
+        String wmsURL = service.getWMSURL(session.getId());
+        
+        context.put("wmsURL", wmsURL);
+        
         
         super.doView(request, response);
     }
@@ -31,8 +41,9 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
     {
         String action = request.getParameter("action");
 
-    	PortletSession session = request.getPortletSession();
-    	PageState ps = (PageState) session.getAttribute("show_maps_portlet_page_state");
+        PortletSession session = request.getPortletSession();
+        
+        PageState ps = (PageState) session.getAttribute("show_maps_portlet_page_state");
     	if (ps == null) {
     		ps = new PageState(this.getClass().getName());
     		ps = initPageState(ps);

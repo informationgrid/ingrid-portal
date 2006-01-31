@@ -60,6 +60,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
+        
+        
         // TODO remove page state in future, when separate portlets
         // use messages and render parameters instead !!!
         PortletSession session = request.getPortletSession();
