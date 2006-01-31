@@ -42,7 +42,7 @@
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
 		  #end		  <div class="resultset">
-            <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>$rs.title </a></strong></span>
+            <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>$!rs.title </a></strong></span>
             <p class="result_description">
             $rs.abstract 
             </p>
