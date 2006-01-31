@@ -73,6 +73,28 @@
         </portlet-info>
     </portlet>
 
+    <portlet id="RssNews">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/rss_news.vm</value>
+        </init-param>
+        <portlet-name>RssNews</portlet-name>
+        <display-name>Weitere Meldungen</display-name>
+        <description>This portlet displays the rss news list.</description>
+        <portlet-class>de.ingrid.portal.portlets.RssNewsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Weitere Meldungen</title>
+            <short-title>RssNews</short-title>
+        </portlet-info>
+    </portlet>
+
+
     <!-- *********************** -->
     <!-- Service Menue           -->
     <!-- *********************** -->

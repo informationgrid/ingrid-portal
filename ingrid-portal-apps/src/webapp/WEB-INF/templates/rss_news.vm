@@ -1,3 +1,4 @@
+<p>Weitere Meldungen unserer Anbieter sortiert nach Aktualität.</p>
 #foreach($rssEntry in $rssEntries)
   <div class="resultset">
     <span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span><a href="$!rssEntry.link" target="_new" title="Link öffnet in neuem Fenster">$!rssEntry.title</a></strong><em class="date">, $!rssEntry.publishedDate</em></span>
@@ -10,10 +11,8 @@
 	  Anbieter: $rssEntry.author
 #end	  
     </p>
-
   </div>
   <div class="line"><hr /></div>
 #end	
-  <br />
-
-  <div class="ico_linkintern"><span style="font-size:75%"><a href="portal/rss-news.psml">weitere Meldungen</a></span></div>
+<br />
+<div class="ico_linkintern float_right"><p><a href="portal/default-page.psml">Zurück zur Startseite</a></p></div>
