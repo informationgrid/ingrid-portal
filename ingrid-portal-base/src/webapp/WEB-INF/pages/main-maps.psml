@@ -1,7 +1,7 @@
 <page>
   <defaults
      skin="orange"
-     layout-decorator="ingrid"
+     layout-decorator="ingrid-popup"
      portlet-decorator="clear"
   />
   <title>Maps</title>
