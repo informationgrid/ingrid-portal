@@ -1,5 +1,5 @@
 <div class="formbody">
-    <form action="portal/search_result.psml" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
+    <form action="portal/search-result.psml" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
     	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
 		<p class="datasource_selection">
