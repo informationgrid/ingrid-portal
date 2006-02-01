@@ -17,6 +17,10 @@
 	<span class="clearer">
 	</span>
 	<div class="section">
-      #renderRecord($record 0)
+      #if($record)
+		#renderRecord($record 0)
+	  #else
+		no details available.
+	  #end
 	</div>
 </div>
