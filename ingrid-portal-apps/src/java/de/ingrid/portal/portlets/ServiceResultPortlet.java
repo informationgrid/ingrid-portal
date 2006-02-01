@@ -93,8 +93,8 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
         // adapt settings of page navihation
-        HashMap pageNavigation = Utils
-                .getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits, Settings.RANKED_NUM_PAGES_TO_SELECT);
+        HashMap pageNavigation = Utils.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
+                Settings.RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------
         // prepare view
@@ -122,8 +122,10 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // ----------------------------------
         // set render parameters
-        // ----------------------------------        
-        actionResponse.setRenderParameter(KEY_START_HIT, pageStarthit);
+        // ----------------------------------
+        if (pageStarthit != null) {
+            actionResponse.setRenderParameter(KEY_START_HIT, pageStarthit);
+        }
     }
 
     private SearchResultList doSearch(IngridQuery query, int start, int limit, boolean ranking) {

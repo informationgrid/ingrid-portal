@@ -146,12 +146,18 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             try {
                 // if no new query was performed, read render parameters from former action request
                 if (newQuery == null) {
-                    rankedStartHit = (new Integer(request.getParameter(KEY_START_HIT_RANKED))).intValue();
-                    unrankedStartHit = (new Integer(request.getParameter(KEY_START_HIT_UNRANKED))).intValue();
+                    String reqParam = request.getParameter(KEY_START_HIT_RANKED);
+                    if (reqParam != null) {
+                        rankedStartHit = (new Integer(reqParam)).intValue();                        
+                    }
+                    reqParam = request.getParameter(KEY_START_HIT_UNRANKED);
+                    if (reqParam != null) {
+                        unrankedStartHit = (new Integer(reqParam)).intValue();
+                    }
                 }
             } catch (Exception ex) {
-                if (log.isInfoEnabled()) {
-                    log.info("Problems fetching starthits (ranked and unranked) from render request, set starthits to 0");
+                if (log.isErrorEnabled()) {
+                    log.error("Problems parsing starthit (ranked or unranked) from render request, set starthit to 0");
                 }
             }
 
@@ -288,9 +294,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // ----------------------------------
         // set render parameters
-        // ----------------------------------        
-        actionResponse.setRenderParameter(KEY_START_HIT_RANKED, rankedStarthit);
-        actionResponse.setRenderParameter(KEY_START_HIT_UNRANKED, unrankedStarthit);
+        // ----------------------------------
+        if (rankedStarthit != null) {
+            actionResponse.setRenderParameter(KEY_START_HIT_RANKED, rankedStarthit);            
+        }
+        if (unrankedStarthit != null) {
+            actionResponse.setRenderParameter(KEY_START_HIT_UNRANKED, unrankedStarthit);
+        }
         // END: search_result Portlet
     }
 
