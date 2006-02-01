@@ -1,6 +1,6 @@
 #macro (renderRecord $myRecord $level)
-	#foreach($key in $myRecord.keySet())
-		<p><strong>$MESSAGES.getString($key):</strong><br />$!myRecord.get($key)</p>
+	#foreach($column in $myRecord.getColumns())
+		<p><strong>$MESSAGES.getString($column.getTargetName()):</strong><br />$!myRecord.getValueAsString($column)</p>
     #end
    	<div class="line"><hr /></div>
    	#set($level = $level + 1)
