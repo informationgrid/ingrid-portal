@@ -67,7 +67,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             communication.startup();
                 
             // start the proxy server
-             proxy = new ProxyService();
+            proxy = new ProxyService();
             
             proxy.setCommunication(communication);
             proxy.startup();
@@ -77,9 +77,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
             bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
         } catch (Throwable t){
-            proxy.shutdown();
-            communication.shutdown();
-            throw new Exception(t);
+            if (proxy != null) proxy.shutdown();
+            if (communication != null) communication.shutdown();
+            throw new Exception("Error initalize ibus interface.", t);
         }
     }
     
