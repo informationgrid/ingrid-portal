@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.Bus;
+import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.interfaces.ibus.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -132,6 +133,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             throw new Exception( resource + " not found" );
         }
         return stream;
+    }
+
+    public PlugDescription getIPlug(String plugId) {
+        return bus.getIPlug(plugId);
     }
     
     

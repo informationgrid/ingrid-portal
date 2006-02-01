@@ -30,6 +30,8 @@ import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.forms.SimpleSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.interfaces.ibus.IBUSInterface;
+import de.ingrid.portal.interfaces.ibus.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.SimilarTreeNode;
@@ -306,13 +308,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
 
-        // TODO put this into iBus Service or global Settings !
-        int COMMUNICATION_MULTICAST_PORT = 11114;
-        int COMMUNICATION_UNICAST_PORT = 50000;
-
-        String IBUS_HOST = "213.144.28.233";
-        int IBUS_PORT = 11112;
-
         int SEARCH_TIMEOUT = 2000;
         int SEARCH_REQUESTED_NUM_HITS = 10;
         int currentPage = (int) (startHit / hitsPerPage) + 1;
@@ -322,26 +317,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String RESULT_KEY_URL = "url";
         String RESULT_KEY_PROVIDER = "provider";
         String RESULT_KEY_SOURCE = "source";
+        String RESULT_KEY_TYPE = "type";
+        String RESULT_KEY_PLUG_ID = "plugid";
+        String RESULT_KEY_DOC_ID = "docid";
 
-        SocketCommunication com = null;
-        ProxyService proxyService = null;
         IngridHits hits = null;
 
         try {
-            com = new SocketCommunication();
-            com.setMulticastPort(COMMUNICATION_MULTICAST_PORT);
-            com.setUnicastPort(COMMUNICATION_UNICAST_PORT);
-            com.startup();
-
-            proxyService = new ProxyService();
-            proxyService.setCommunication(com);
-            proxyService.startup();
-
-            String iBusUrl = AddressUtil.getWetagURL(IBUS_HOST, IBUS_PORT);
-            RemoteInvocationController ric = proxyService.createRemoteInvocationController(iBusUrl);
-
-            Bus bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
-            hits = bus.search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
+            
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance(); 
+            hits = ibus.search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
             IngridHit result = null;
@@ -353,9 +338,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 plug = null;
                 try {
                     result = results[i];
-                    detail = bus.getDetails(result, query);
+                    detail = ibus.getDetails(result, query);
                     plugId = result.getPlugId();
-                    plug = bus.getIPlug(plugId);
+                    plug = ibus.getIPlug(plugId);
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
                         log.error("Problems fetching result details or iPlug", t);
@@ -364,6 +349,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (result == null) {
                     continue;
                 }
+                result.put(RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
                 if (detail != null) {
                     result.put(RESULT_KEY_TITLE, detail.getTitle());
                     result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
@@ -372,18 +358,19 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (plug != null) {
                     result.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
                     result.put(RESULT_KEY_SOURCE, plug.getDataSourceName());
+                    result.put(RESULT_KEY_PLUG_ID, plug.getPlugId());
+                    if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                        result.put(RESULT_KEY_TYPE, "dsc");
+                    } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                        result.put(RESULT_KEY_TYPE, "nutch");
+                    } else {
+                        result.put(RESULT_KEY_TYPE, "unknown");
+                    }
                 }
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems performing Search !", t);
-            }
-        } finally {
-            if (proxyService != null) {
-                proxyService.shutdown();
-            }
-            if (com != null) {
-                com.shutdown();
             }
         }
 

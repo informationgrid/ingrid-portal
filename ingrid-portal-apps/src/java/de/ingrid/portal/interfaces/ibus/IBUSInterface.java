@@ -5,6 +5,7 @@ package de.ingrid.portal.interfaces.ibus;
 
 import org.apache.commons.configuration.Configuration;
 
+import de.ingrid.iplug.PlugDescription;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -52,5 +53,12 @@ public interface IBUSInterface {
      * @throws Exception 
      */
     Record getRecord(IngridHit hit) throws Exception;
+
+
+    /**
+     * @param plugId
+     * @return
+     */
+    PlugDescription getIPlug(String plugId);
     
 }
