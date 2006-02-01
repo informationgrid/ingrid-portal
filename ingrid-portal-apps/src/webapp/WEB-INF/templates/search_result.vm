@@ -38,23 +38,28 @@
       </div>
 
       <br />
-      #foreach($rs in $rankedResultList)
+      #foreach($rs in $rankedResultList.hits)
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
 		  #end		  <div class="resultset">
-            <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>$!rs.title </a></strong></span>
+		  #if ($rs.title)
+            <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
             <p class="result_description">
-            $rs.abstract 
+            $!rs.abstract 
             </p>
             <p class="result_metadata">
-              Anbieter: $rs.provider<br />
+              Anbieter: $!rs.provider<br />
     
               Quelle: $!rs.source<br />
-              Ranking: $rs.ranking<br />
+              Ranking: $!rs.score<br />
             </p>
             <p class="result_link">
               <a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url</a>
             </p>
+		  #else
+			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
+			<p class="result_link"></p>
+		  #end
           </div>
 	  #end
 

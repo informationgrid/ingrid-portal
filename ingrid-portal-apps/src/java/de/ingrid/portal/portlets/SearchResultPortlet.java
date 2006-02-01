@@ -166,19 +166,19 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             // ranked results	
             int RANKED_HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
-            SearchResultList rankedSRL = doSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE, true);
-            int numberOfHits = rankedSRL.getNumberOfHits();
+            IngridHits rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE);
+            int numberOfHits = (int) rankedHits.length();
 
-            // adapt settings of ranked page navihation
+            // adapt settings of ranked page navigation
             HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE, numberOfHits,
                     Settings.RANKED_NUM_PAGES_TO_SELECT);
 
             // unranked results	
             int UNRANKED_HITS_PER_PAGE = Settings.UNRANKED_HITS_PER_PAGE;
-            SearchResultList unrankedSRL = doSearch(query, selectedDS, unrankedStartHit, UNRANKED_HITS_PER_PAGE, false);
+            SearchResultList unrankedSRL = doUnrankedSearch(query, selectedDS, unrankedStartHit, UNRANKED_HITS_PER_PAGE);
             numberOfHits = unrankedSRL.getNumberOfHits();
 
-            // adapt settings of unranked page navihation
+            // adapt settings of unranked page navigation
             HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, UNRANKED_HITS_PER_PAGE,
                     numberOfHits, Settings.UNRANKED_NUM_PAGES_TO_SELECT);
 
@@ -188,7 +188,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             context.put("rankedPageSelector", rankedPageNavigation);
             context.put("unrankedPageSelector", unrankedPageNavigation);
-            context.put("rankedResultList", rankedSRL);
+            context.put("rankedResultList", rankedHits);
             context.put("unrankedResultList", unrankedSRL);
             // query string will be displayed when no results !
             context.put("queryString", queryString);
@@ -286,7 +286,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // END: search_result Portlet
     }
 
-    private SearchResultList doSearch(IngridQuery query, String ds, int startHit, int hitsPerPage, boolean ranking) {
+    private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
 
         // TODO put this into iBus Service or global Settings !
         int COMMUNICATION_MULTICAST_PORT = 11114;
@@ -296,120 +296,93 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int IBUS_PORT = 11112;
 
         int SEARCH_TIMEOUT = 2000;
-        //int SEARCH_REQUESTED_NUM_HITS = Integer.MAX_VALUE;
-        int SEARCH_REQUESTED_NUM_HITS = 2 * hitsPerPage;
+        int SEARCH_REQUESTED_NUM_HITS = 10;
         int currentPage = (int) (startHit / hitsPerPage) + 1;
-
-        String RESULT_IS_NULL_TEXT = "result is null !";
 
         String RESULT_KEY_TITLE = "title";
         String RESULT_KEY_ABSTRACT = "abstract";
+        String RESULT_KEY_URL = "url";
         String RESULT_KEY_PROVIDER = "provider";
         String RESULT_KEY_SOURCE = "source";
-        String RESULT_KEY_RANKING = "ranking";
-        String RESULT_KEY_URL = "url";
-
-        SearchResultList result = new SearchResultList();
 
         SocketCommunication com = null;
         ProxyService proxyService = null;
+        IngridHits hits = null;
 
-        if (ranking) {
-            try {
-                com = new SocketCommunication();
-                com.setMulticastPort(COMMUNICATION_MULTICAST_PORT);
-                com.setUnicastPort(COMMUNICATION_UNICAST_PORT);
-                com.startup();
+        try {
+            com = new SocketCommunication();
+            com.setMulticastPort(COMMUNICATION_MULTICAST_PORT);
+            com.setUnicastPort(COMMUNICATION_UNICAST_PORT);
+            com.startup();
 
-                proxyService = new ProxyService();
-                proxyService.setCommunication(com);
-                proxyService.startup();
+            proxyService = new ProxyService();
+            proxyService.setCommunication(com);
+            proxyService.startup();
 
-                String iBusUrl = AddressUtil.getWetagURL(IBUS_HOST, IBUS_PORT);
-                RemoteInvocationController ric = proxyService.createRemoteInvocationController(iBusUrl);
+            String iBusUrl = AddressUtil.getWetagURL(IBUS_HOST, IBUS_PORT);
+            RemoteInvocationController ric = proxyService.createRemoteInvocationController(iBusUrl);
 
-                Bus bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
-                IngridHits hits = bus
-                        .search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
-                IngridHit[] hitArray = hits.getHits();
-                if (hitArray == null) {
-                    result.setNumberOfHits(0);
-                    return result;
-                }
+            Bus bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+            hits = bus.search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
+            IngridHit[] results = hits.getHits();
 
-                long numHits = hits.length();
-                result.setNumberOfHits((int) numHits);
-
-                int numHitsToDisplay = hitsPerPage;
-                if (numHits < hitsPerPage) {
-                    numHitsToDisplay = (int) numHits;
-                }
-                IngridHit hit = null;
-                IngridHitDetail details = null;
-                String plugId = null;
-                PlugDescription plug = null;
-                for (int i = 0; i < numHitsToDisplay; i++) {
-                    hit = hitArray[i];
-                    try {
-                        details = bus.getDetails(hit, query);
-                        plugId = hit.getPlugId();
-                        plug = bus.getIPlug(plugId);
-                    } catch (Exception ex) {
-                        if (log.isErrorEnabled()) {
-                            log.error("Problems fetching result details in search result page, hit = " + hit, ex);
-                        }
-                        details = null;
+            IngridHit result = null;
+            IngridHitDetail detail = null;
+            String plugId = null;
+            PlugDescription plug = null;
+            for (int i = 0; i < results.length; i++) {
+                detail = null;
+                plug = null;
+                try {
+                    result = results[i];
+                    detail = bus.getDetails(result, query);
+                    plugId = result.getPlugId();
+                    plug = bus.getIPlug(plugId);
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems fetching result details or iPlug", t);
                     }
-
-                    hit.put(RESULT_KEY_RANKING, Float.toString(hit.getScore()));
-
-                    if (details != null) {
-                        hit.put(RESULT_KEY_TITLE, details.getTitle());
-                        hit.put(RESULT_KEY_ABSTRACT, details.getSummary());
-                        hit.put(RESULT_KEY_URL, details.get("url"));
-                    } else {
-                        hit.put(RESULT_KEY_ABSTRACT, RESULT_IS_NULL_TEXT);
-                    }
-                    if (plug != null) {
-                        hit.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
-                        hit.put(RESULT_KEY_SOURCE, plug.getDataSourceName());
-                    }
-
-                    result.add(hit);
                 }
-            } catch (Throwable t) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems performing Search !", t);
+                if (result == null) {
+                    continue;
                 }
-            } finally {
-                if (proxyService != null) {
-                    proxyService.shutdown();
+                if (detail != null) {
+                    result.put(RESULT_KEY_TITLE, detail.getTitle());
+                    result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
+                    result.put(RESULT_KEY_URL, detail.get("url"));
                 }
-                if (com != null) {
-                    com.shutdown();
+                if (plug != null) {
+                    result.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
+                    result.put(RESULT_KEY_SOURCE, plug.getDataSourceName());
                 }
             }
-
-            /*
-             SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
-             if (startHit > l.size())
-             startHit = l.size() - hitsPerPage - 1;
-             for (int i = startHit; i < startHit + hitsPerPage; i++) {
-             if (i >= l.size())
-             break;
-             result.add(l.get(i));
-             }
-             result.setNumberOfHits(l.getNumberOfHits());
-             */
-        } else {
-            SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
-            for (int i = 0; i < hitsPerPage; i++) {
-                if (i >= l.size())
-                    break;
-                result.add(l.get(i));
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing Search !", t);
             }
-            result.setNumberOfHits(l.getNumberOfHits());
+        } finally {
+            if (proxyService != null) {
+                proxyService.shutdown();
+            }
+            if (com != null) {
+                com.shutdown();
+            }
         }
+
+        return hits;
+    }
+
+    private SearchResultList doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
+
+        SearchResultList result = new SearchResultList();
+
+        SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
+        for (int i = 0; i < hitsPerPage; i++) {
+            if (i >= l.size())
+                break;
+            result.add(l.get(i));
+        }
+        result.setNumberOfHits(l.getNumberOfHits());
         return result;
     }
 
