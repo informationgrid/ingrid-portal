@@ -150,8 +150,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     unrankedStartHit = (new Integer(request.getParameter(KEY_START_HIT_UNRANKED))).intValue();
                 }
             } catch (Exception ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Problems fetching starthits of RESULT page from render request, set starthits to 0", ex);
+                if (log.isInfoEnabled()) {
+                    log.info("Problems fetching starthits (ranked and unranked) from render request, set starthits to 0");
                 }
             }
 
@@ -166,8 +166,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             // ranked results	
             int RANKED_HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
-            IngridHits rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE);
-            int numberOfHits = (int) rankedHits.length();
+            IngridHits rankedHits = null;
+            int numberOfHits = 0;
+            try {
+                rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE);
+                numberOfHits = (int) rankedHits.length();                
+            } catch (Exception ex) {
+                if (log.isInfoEnabled()) {
+                    log.info("Problems fetching ranked hits ! hits = "+rankedHits+", numHits = "+numberOfHits, ex);
+                }                
+            }
 
             // adapt settings of ranked page navigation
             HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE, numberOfHits,
