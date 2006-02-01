@@ -121,6 +121,28 @@
     <!-- Main Menue              -->
     <!-- *********************** -->
 
+    <portlet id="SearchDetail">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_detail.vm</value>
+        </init-param>
+        <portlet-name>SearchDetail</portlet-name>
+        <display-name>Detailinformation</display-name>
+        <description>This portlet displays the search detail for dsc results.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchDetailPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Detailinformation</title>
+            <short-title>SearchDetail</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchDetailResources</resource-bundle>
+    </portlet>
+
     <portlet id="SearchResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

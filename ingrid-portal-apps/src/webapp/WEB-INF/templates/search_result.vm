@@ -43,7 +43,13 @@
 			<div class="line"><hr /></div>
 		  #end		  <div class="resultset">
 		  #if ($rs.title)
-            <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+		    #if ($rs.type == "nutch")
+			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+			#elseif($rs.type == "dsc")
+			  <span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+			#else
+			  <span class="result_title"><strong>#if ($rs.title == "")Kein Titel#else$rs.title#end </strong></span>
+			#end		
             <p class="result_description">
             $!rs.abstract 
             </p>

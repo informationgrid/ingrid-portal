@@ -1,0 +1,22 @@
+#macro (renderRecord $myRecord $level)
+	#foreach($key in $myRecord.keySet())
+		<p><strong>$MESSAGES.getString($key):</strong><br />$!myRecord.get($key)</p>
+    #end
+   	<div class="line"><hr /></div>
+   	#set($level = $level + 1)
+	#foreach($mySubRecord in $myRecord.getSubRecords())
+		#renderRecord($mySubRecord $level)
+	#end
+#end
+
+#set ($action = $renderResponse.createActionURL())
+<div id="content_full">
+	<div class="section-header">
+		<h1>Detailinformation</h1>
+	</div>
+	<span class="clearer">
+	</span>
+	<div class="section">
+      #renderRecord($record 0)
+	</div>
+</div>
