@@ -1,0 +1,26 @@
+<div class="themen_image">
+    <img src="/ingrid-portal-apps/images/index_themen.jpg" width="140" height="65" alt="Umweltthemen" />
+    
+</div>
+<ul class="catalog">
+    <li><a href="portal/main-environment.psml?themes=gar&teaser=1">Abfall</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=rel&teaser=1">Altlasten</a><span class="separator">&nbsp;</span></li>       
+    <li><a href="portal/main-environment.psml?themes=bio&teaser=1">Artenvielfalt</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=bui&teaser=1">Bauen</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=gro&teaser=1">Boden</a><span class="separator">&nbsp;</span></li>     
+    <li><a href="portal/main-environment.psml?themes=che&teaser=1">Chemikalien</a><span class="separator">&nbsp;</span></li>        
+    <li><a href="portal/main-environment.psml?themes=ene&teaser=1">Energie</a><span class="separator">&nbsp;</span></li> 
+    <li><a href="portal/main-environment.psml?themes=gen&teaser=1">Gentechnik</a><span class="separator">&nbsp;</span></li>     
+    <li><a href="portal/main-environment.psml?themes=geo&teaser=1">Geologie</a><span class="separator">&nbsp;</span></li>    
+    <li><a href="portal/main-environment.psml?themes=hea&teaser=1">Gesundheit</a><span class="separator">&nbsp;</span></li>     
+    <li><a href="portal/main-environment.psml?themes=agr&teaser=1">Land/Forstwirtschaft</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=noi&teaser=1">Lärm</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=air&teaser=1">Luft</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=nat&teaser=1">Naturschutz</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=rad&teaser=1">Strahlung</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=ani&teaser=1">Tierschutz</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=ein&teaser=1">Umweltinformationen</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=eec&teaser=1">Umweltwirtschaft</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=tra&teaser=1">Verkehr</a><span class="separator">&nbsp;</span></li>       
+    <li><a href="portal/main-environment.psml?themes=wat&teaser=1">Wasser</a><span class="separator">&nbsp;</span></li>
+</ul>

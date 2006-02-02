@@ -25,7 +25,7 @@
 <div id="identity" class="motiv_start">
   #elseif($currentPage == "/main-chronicle.psml")
 <div id="identity" class="motiv_umweltchronik">
-  #elseif($currentPage == "/main-enviroment.psml")
+  #elseif($currentPage == "/main-environment.psml")
 <div id="identity" class="motiv_umweltthemen">
   #elseif($currentPage == "/main-maps.psml")
 <div id="identity" class="motiv_karten">

@@ -257,7 +257,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/enviroment_search.vm</value>
+            <value>/WEB-INF/templates/environment_search.vm</value>
         </init-param>
         <portlet-name>EnviromentSearch</portlet-name>
         <display-name>Umweltthemen</display-name>

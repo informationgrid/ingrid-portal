@@ -16,7 +16,7 @@
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/enviroment_teaser.vm</value>
+        <value>/WEB-INF/templates/environment_teaser.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
         <value>teaser.envSearch.title</value>

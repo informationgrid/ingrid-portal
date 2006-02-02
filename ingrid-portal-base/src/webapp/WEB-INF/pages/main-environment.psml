@@ -7,8 +7,8 @@
   <title>Enviromental Themes</title>
   <metadata name="title" xml:lang="de">Umweltthemen</metadata>
 
-  <fragment id="main-enviroment" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-enviroment-1" type="portlet" name="ingrid-portal-apps::EnviromentSearch">
+  <fragment id="main-environment" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="main-environment-1" type="portlet" name="ingrid-portal-apps::EnviromentSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
@@ -16,11 +16,11 @@
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="main-enviroment-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="main-environment-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/enviroment_info.vm</value>
+        <value>/WEB-INF/templates/environment_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
         <value>envSearch.info.title</value>
