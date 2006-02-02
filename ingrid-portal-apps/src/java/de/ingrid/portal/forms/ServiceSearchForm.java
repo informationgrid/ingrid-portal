@@ -35,6 +35,7 @@ public class ServiceSearchForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
+        clearErrors();
         clearInput();
         setInput(FIELD_RUBRIC, INITIAL_RUBRIC);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
