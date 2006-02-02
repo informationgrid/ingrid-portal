@@ -22,7 +22,7 @@
   <meta name="keywords" content="" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
-  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')">
   <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
