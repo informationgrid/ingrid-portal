@@ -40,7 +40,6 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // macros work !
         ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class);
-
         // when called from teaser take over search criteria and initiate query
         String teaserCall = request.getParameter(PARAM_TEASER_CALL);
         if (teaserCall != null) {

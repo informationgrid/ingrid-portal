@@ -37,7 +37,7 @@ public class Settings {
     public static final String MSG_VALUE_TRUE = "";
 
     // ------------- MESSAGE TOPICS (SCOPES) -----------------------------
-    
+
     /** Message Topics: define the message "scope", will be "topic-prefix" in message key -> "topic:message" 
      * set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
@@ -45,11 +45,14 @@ public class Settings {
     /** set message "scope" measures page */
     public final static String MSG_TOPIC_MEASURES = "measures";
 
+    /** set message "scope" measures page */
+    public final static String MSG_TOPIC_ENVIRONMENT = "environment";
+
     /** message "scope" for search pages (start page, simple search, extended search ...) */
     public final static String MSG_TOPIC_SEARCH = "search";
 
     // ------------- DATA MESSAGES -----------------------------
-    
+
     /** Messages: define the message itself, will be "message-suffix" in message key -> "topic:message" 
      * this message contains the ingrid query (an IngridQuery object) */
     public static final String MSG_QUERY = "query";
@@ -61,13 +64,13 @@ public class Settings {
     public static final String MSG_DATASOURCE = "datasource";
 
     // ------------- INFORMATION MESSAGES -----------------------------
-    
+
     /** this message indicates that a new query was performed to ignore former render parameters
      * we use a separate message for every portlet, because the message is removed by every portlet
      * and we don't know processing order */
     public static final String MSG_NEW_QUERY = "new_query";
 
-    /** new query message for "similar terms" portlet */ 
+    /** new query message for "similar terms" portlet */
     public static final String MSG_NEW_QUERY_FOR_SIMILAR = "new_query_similar";
 
 }

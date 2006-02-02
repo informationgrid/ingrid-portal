@@ -270,6 +270,23 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
     </portlet>
+    <portlet id="EnvironmentResult">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/empty.vm</value>
+        </init-param>
+        <portlet-name>EnvironmentResult</portlet-name>
+        <display-name>Umweltthemen Suchergebnis</display-name>
+        <description>This portlet displays the search results of the environment topics search (environment topics catalogue).</description>
+        <portlet-class>de.ingrid.portal.portlets.EnvironmentResultPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentResultResources</resource-bundle> 
+    </portlet>
 
     <portlet id="ShowMapsPortlet">
         <init-param>
