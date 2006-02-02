@@ -125,7 +125,7 @@
         </init-param>
         <portlet-name>Contact</portlet-name>
         <display-name>Contact</display-name>
-        <description>This portlet displayes a enviroment search box.</description>
+        <description>This portlet displayes an environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.ContactPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
@@ -253,16 +253,16 @@
         <resource-bundle>de.ingrid.portal.resources.MeasuresResultResources</resource-bundle> 
     </portlet>
     
-    <portlet id="EnviromentSearch">
+    <portlet id="EnvironmentSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
             <value>/WEB-INF/templates/environment_search.vm</value>
         </init-param>
-        <portlet-name>EnviromentSearch</portlet-name>
+        <portlet-name>EnvironmentSearch</portlet-name>
         <display-name>Umweltthemen</display-name>
-        <description>This portlet displayes a enviroment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnviromentSearchPortlet</portlet-class>
+        <description>This portlet displays an environment search box.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnvironmentSearchPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

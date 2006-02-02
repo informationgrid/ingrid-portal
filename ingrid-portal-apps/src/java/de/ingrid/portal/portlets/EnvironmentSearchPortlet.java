@@ -20,7 +20,7 @@ import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
-public class EnviromentSearchPortlet extends AbstractVelocityMessagingPortlet {
+public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
 
     /** Keys of parameters in session/request */
     private final static String PARAM_TEASER_CALL = "teaser";
