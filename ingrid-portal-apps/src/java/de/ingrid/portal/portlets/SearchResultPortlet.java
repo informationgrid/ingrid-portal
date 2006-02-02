@@ -357,8 +357,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (detail != null) {
                     result.put(RESULT_KEY_TITLE, detail.getTitle());
                     result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
-                    result.put(RESULT_KEY_URL, detail.get("url"));
-                    result.put(RESULT_KEY_URL_STR, Utils.getShortURLStr((String)detail.get("url"), 80));
+                    if (detail.get("url") != null) {
+                        result.put(RESULT_KEY_URL, detail.get("url"));
+                        result.put(RESULT_KEY_URL_STR, Utils.getShortURLStr((String)detail.get("url"), 80));
+                    }
                     
                 }
                 if (plug != null) {
@@ -383,8 +385,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     } else {
                         result.put(RESULT_KEY_TYPE, "unknown");
                     }
-                } else {
-                    result.put(RESULT_KEY_TYPE, "unknown");
                 }
             }
         } catch (Throwable t) {
