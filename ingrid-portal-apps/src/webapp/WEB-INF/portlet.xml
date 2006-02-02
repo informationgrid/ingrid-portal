@@ -180,6 +180,7 @@
             <title>Suchergebnis</title>
             <short-title>SearchResult</short-title>
         </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
     </portlet>
     
     <portlet id="ServiceSearch">

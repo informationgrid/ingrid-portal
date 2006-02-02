@@ -47,7 +47,9 @@
 			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
 			#elseif($rs.type == "dsc")
 			  #if($rs.udk_class)
-				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="Geo-Information/Karte"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster">#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
+				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster">#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
 			  #else
 				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
 			  #end

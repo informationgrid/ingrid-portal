@@ -23,6 +23,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.forms.SimpleSearchForm;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.ibus.IBUSInterface;
@@ -86,6 +87,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // may be called directly from Start page, then this method has to be an action method !
         // When called from startPage, the action request parameter is "doSearch" !!! 
 
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
+        context.put("MESSAGES", messages);
+        
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
