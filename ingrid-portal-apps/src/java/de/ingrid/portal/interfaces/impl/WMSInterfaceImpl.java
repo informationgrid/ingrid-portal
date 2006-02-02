@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.interfaces.wms.impl;
+package de.ingrid.portal.interfaces.impl;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -23,9 +23,9 @@ import org.hibernate.cfg.Environment;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
-import de.ingrid.portal.interfaces.wms.WMSInterface;
-import de.ingrid.portal.interfaces.wms.om.WMSSearchDescriptor;
-import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
+import de.ingrid.portal.interfaces.WMSInterface;
+import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 
 /**
  * Implements the WMS interface. It allows to communicate with the mapbender
@@ -66,7 +66,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSServices(java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSServices(java.lang.String)
      */
     public Collection getWMSServices(String sessionID) {
         URL url;
@@ -126,7 +126,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSSearchParameter(java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSSearchParameter(java.lang.String)
      */
     public WMSSearchDescriptor getWMSSearchParameter(String sessionID) {
         URL url;
@@ -201,7 +201,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSURL(java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSURL(java.lang.String)
      */
     public String getWMSViewerURL(String sessionId) {
         return config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php")
@@ -209,7 +209,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSSearchURL(java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSSearchURL(java.lang.String)
      */
     public String getWMSSearchURL(String sessionId) {
         return config.getString("display_search_url", "http://localhost/mapbender/frames/WMS_Search.php")
@@ -217,7 +217,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor, java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.om.WMSServiceDescriptor, java.lang.String)
      */
     public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId) {
         ArrayList l = new ArrayList();
@@ -227,7 +227,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
     /**
      * @throws UnsupportedEncodingException 
-     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList, java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList, java.lang.String)
      */
     public String getWMSAddedServiceURL(ArrayList services, String sessionId) {
         WMSServiceDescriptor service;

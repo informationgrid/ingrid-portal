@@ -11,9 +11,9 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.interfaces.wms.WMSInterface;
-import de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl;
-import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
+import de.ingrid.portal.interfaces.WMSInterface;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 import de.ingrid.portal.search.PageState;
 
 

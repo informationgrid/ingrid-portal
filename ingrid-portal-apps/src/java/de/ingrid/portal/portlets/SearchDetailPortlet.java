@@ -13,8 +13,8 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.interfaces.ibus.IBUSInterface;
-import de.ingrid.portal.interfaces.ibus.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.dsc.Record;
 

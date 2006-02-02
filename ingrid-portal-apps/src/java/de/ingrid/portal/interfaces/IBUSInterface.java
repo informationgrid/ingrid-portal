@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.interfaces.ibus;
+package de.ingrid.portal.interfaces;
 
 import org.apache.commons.configuration.Configuration;
 

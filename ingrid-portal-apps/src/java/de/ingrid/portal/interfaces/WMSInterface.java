@@ -1,15 +1,15 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.interfaces.wms;
+package de.ingrid.portal.interfaces;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.configuration.Configuration;
 
-import de.ingrid.portal.interfaces.wms.om.WMSSearchDescriptor;
-import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
+import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 
 /**
  * Defines the interface to be implemented to communicate with the 

@@ -14,8 +14,8 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.PlugDescription;
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.interfaces.ibus.IBUSInterface;
-import de.ingrid.portal.interfaces.ibus.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;

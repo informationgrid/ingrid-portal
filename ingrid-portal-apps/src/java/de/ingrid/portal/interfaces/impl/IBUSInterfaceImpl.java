@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.interfaces.ibus.impl;
+package de.ingrid.portal.interfaces.impl;
 
 import net.weta.components.communication_sockets.SocketCommunication;
 import net.weta.components.communication_sockets.util.AddressUtil;
@@ -16,7 +16,7 @@ import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.Bus;
 import de.ingrid.iplug.PlugDescription;
-import de.ingrid.portal.interfaces.ibus.IBUSInterface;
+import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -84,7 +84,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     }
     
     /**
-     * @see de.ingrid.portal.interfaces.ibus.IBUSInterface#getConfig()
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getConfig()
      */
     public Configuration getConfig() {
         return config;
@@ -92,7 +92,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     /**
      * @throws Exception 
-     * @see de.ingrid.portal.interfaces.ibus.IBUSInterface#search(de.ingrid.utils.query.IngridQuery, int, int, int, int)
+     * @see de.ingrid.portal.interfaces.IBUSInterface#search(de.ingrid.utils.query.IngridQuery, int, int, int, int)
      */
     public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout) throws Exception {
         return bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
@@ -100,7 +100,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     /**
      * @throws Exception 
-     * @see de.ingrid.portal.interfaces.ibus.IBUSInterface#getDetails(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery)
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getDetails(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery)
      */
     public IngridHitDetail getDetails(IngridHit result, IngridQuery query) throws Exception {
         return bus.getDetails(result, query);
@@ -108,7 +108,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     /**
      * @throws Exception 
-     * @see de.ingrid.portal.interfaces.ibus.IBUSInterface#getRecord(de.ingrid.utils.IngridHit)
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getRecord(de.ingrid.utils.IngridHit)
      */
     public Record getRecord(IngridHit hit) throws Exception {
         return bus.getRecord(hit);

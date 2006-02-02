@@ -16,8 +16,9 @@ import junit.framework.TestCase;
 
 import org.apache.commons.configuration.Configuration;
 
-import de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl;
-import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
+import de.ingrid.portal.interfaces.WMSInterface;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 
 public class WMSInterfaceTest extends TestCase {
 
