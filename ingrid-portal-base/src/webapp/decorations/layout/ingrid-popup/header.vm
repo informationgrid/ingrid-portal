@@ -29,7 +29,14 @@
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
+#set($currentPage = $site.getPage().url)
+#if($currentPage == "/main-maps.psml")
 <div id="identity" class="motiv_karten">
+#elseif($currentPage == "/search-detail.psml")
+<div id="identity" class="motiv_suche">
+#else
+<div id="identity" class="motiv_blank">
+#end
   <!-- LOGO -->
   <div id="logo">
     <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
