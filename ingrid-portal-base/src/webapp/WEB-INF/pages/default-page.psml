@@ -59,15 +59,9 @@
         <value>teaser.measures.title</value>
       </preference>
     </fragment>
-    <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ChronicleTeaser">
       <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/chronicle_marginal_teaser.vm</value>
-      </preference>
-      <preference name="infoTitleKey" readOnly="false">
-        <value>teaser.chronicle.title</value>
-      </preference>
     </fragment>
     
 

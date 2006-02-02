@@ -94,6 +94,24 @@
         </portlet-info>
     </portlet>
 
+    <portlet id="ChronicleTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/chronicle_teaser.vm</value>
+        </init-param>
+        <portlet-name>ChronicleTeaser</portlet-name>
+        <display-name>Umweltchronik Teaser</display-name>
+        <description>This portlet displays an anniversary event on the home page.</description>
+        <portlet-class>de.ingrid.portal.portlets.ChronicleTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.ChronicleTeaserResources</resource-bundle>            
+    </portlet>
+
 
     <!-- *********************** -->
     <!-- Service Menue           -->
