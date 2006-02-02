@@ -13,6 +13,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.interfaces.wms.WMSInterface;
 import de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl;
+import de.ingrid.portal.interfaces.wms.om.WMSServiceDescriptor;
 import de.ingrid.portal.search.PageState;
 
 
@@ -28,9 +29,16 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
     	Context context = getContext(request);
 
         PortletSession session = request.getPortletSession();
-
+        
+        String wmsServiceUrl = request.getParameter("wms_url");
+        
         WMSInterface service = WMSInterfaceImpl.getInstance();
-        String wmsURL = service.getWMSURL(session.getId());
+        String wmsURL;
+        if (wmsServiceUrl != null && wmsServiceUrl.length() > 0) {
+            wmsURL = service.getWMSAddedServiceURL(new WMSServiceDescriptor("", wmsServiceUrl), session.getId());
+        } else {
+            wmsURL = service.getWMSURL(session.getId());
+        }
         
         context.put("wmsURL", wmsURL);
         

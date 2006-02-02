@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +35,8 @@ import de.ingrid.portal.search.mockup.SimilarNodeFactoryMockup;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.dsc.Column;
+import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -314,6 +317,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String RESULT_KEY_TYPE = "type";
         String RESULT_KEY_PLUG_ID = "plugid";
         String RESULT_KEY_DOC_ID = "docid";
+        String RESULT_KEY_WMS_URL = "wms_url";
+        String RESULT_KEY_UDK_CLASS = "udk_class";
 
         IngridHits hits = null;
 
@@ -355,6 +360,17 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     result.put(RESULT_KEY_PLUG_ID, plug.getPlugId());
                     if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                         result.put(RESULT_KEY_TYPE, "dsc");
+                        
+                        Record record = ibus.getRecord(result);
+                        Column c = getUDKColumn(record, "T011_obj_serv_op_connpoint.connect_point");
+                        if (c != null) {
+                            result.put(RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c), "UTF-8"));
+                        }
+                        c = getUDKColumn(record, "T01_object.obj_class");
+                        if (c != null) {
+                            result.put(RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
+                        }
+
                     } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
                         result.put(RESULT_KEY_TYPE, "nutch");
                     } else {
@@ -441,5 +457,26 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         return ret;
     }
+    
+    private Column getUDKColumn(Record record, String udkColumnName) {
+        // serach for column
+        Column[] columns = record.getColumns();
+        for (int i=0;i<columns.length;i++) {
+            if (columns[i].getTargetName().equalsIgnoreCase(udkColumnName)) {
+                return columns[i];
+            }
+        }
+        // search sub records
+        Record[] subRecords = record.getSubRecords();
+        Column c = null;
+        for (int i=0;i<subRecords.length;i++) {
+            c = getUDKColumn(subRecords[i], udkColumnName);
+            if (c != null) {
+                return c;
+            }
+        }
+        return null;
+    }
+    
 
 }
