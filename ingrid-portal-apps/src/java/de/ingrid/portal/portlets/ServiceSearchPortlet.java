@@ -45,6 +45,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         String teaserCall = request.getParameter(PARAM_TEASER_CALL);
         if (teaserCall != null) {
             sf.init();
+            // populate doesn't clear !!!
             sf.populate(request);
             doQuery(sf, request);
         }
@@ -67,6 +68,8 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // check form input
         ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class);
+        // populate doesn't clear !!!
+        sf.clearInput();
         sf.populate(request);
         if (!sf.validate()) {
             return;
