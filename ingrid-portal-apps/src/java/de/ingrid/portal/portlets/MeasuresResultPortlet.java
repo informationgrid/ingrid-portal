@@ -19,23 +19,23 @@ import de.ingrid.portal.search.SearchResultList;
 import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.utils.query.IngridQuery;
 
-public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
+public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
+    private final static Log log = LogFactory.getLog(MeasuresResultPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
 
-    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/service_result.vm";
+    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/measures_result.vm";
 
-    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/service_no_result.vm";
+    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/measures_no_result.vm";
 
     /** Keys of parameters in session/request */
     private final static String KEY_START_HIT = "rstart";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
-        setTopic(Settings.MSG_TOPIC_SERVICE);
+        setTopic(Settings.MSG_TOPIC_MEASURES);
 
         super.init(config);
     }
@@ -73,7 +73,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         } catch (Exception ex) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching starthit of SERVICE page from render request, set starthit to 0");
+                log.debug("Problems fetching starthit of MEASURES page from render request, set starthit to 0");
             }
         }
 
@@ -92,7 +92,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             super.doView(request, response);
             return;
         }
-        // adapt settings of page navihation
+        // adapt settings of page nagihation
         HashMap pageNavigation = Utils.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.RANKED_NUM_PAGES_TO_SELECT);
 
@@ -132,7 +132,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
         SearchResultList result = new SearchResultList();
 
-        // TODO DO SERVICE SEARCH HERE
+        // TODO DO MEASURES SEARCH HERE
         SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
         if (start > l.size())
             start = l.size() - limit - 1;

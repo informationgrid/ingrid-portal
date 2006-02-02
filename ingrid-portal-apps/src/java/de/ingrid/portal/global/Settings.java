@@ -42,6 +42,9 @@ public class Settings {
      * set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
 
+    /** set message "scope" measures page */
+    public final static String MSG_TOPIC_MEASURES = "measures";
+
     /** message "scope" for search pages (start page, simple search, extended search ...) */
     public final static String MSG_TOPIC_SEARCH = "search";
 

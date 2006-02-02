@@ -89,6 +89,5 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
         // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);
-        
     }
 }

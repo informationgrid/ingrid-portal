@@ -36,6 +36,7 @@ public class MeasuresSearchForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
+        clearErrors();
         clearInput();
         setInput(FIELD_RUBRIC, INITIAL_RUBRIC);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
@@ -43,13 +44,23 @@ public class MeasuresSearchForm extends ActionForm {
     }
 
     /**
+     * NOTICE: We DON'T CLEAR ANY FIELDS IN THE FORM, just take over the given
+     * params into the according field (but that field then ONLY contains the
+     * new values). In this way, we can initialize the form with default values
+     * and JUST TAKE OVER THE NEW ONES !. Use clearInput() to clear the form
+     * before populating !  
      * @see de.ingrid.portal.forms.ActionForm#populate(javax.portlet.PortletRequest)
      */
     public void populate(PortletRequest request) {
-        clearInput();
-        setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC));
-        setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER));
-        setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
+        if (request.getParameterValues(FIELD_RUBRIC) != null) {
+            setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC));
+        }
+        if (request.getParameterValues(FIELD_PARTNER) != null) {
+            setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER));
+        }
+        if (request.getParameterValues(FIELD_GROUPING) != null) {
+            setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
+        }
     }
 
     /**
