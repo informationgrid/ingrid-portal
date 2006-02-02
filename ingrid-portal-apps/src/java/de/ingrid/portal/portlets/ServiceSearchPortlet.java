@@ -7,6 +7,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
@@ -20,6 +21,9 @@ import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
+
+    /** Keys of parameters in session/request */
+    private final static String PARAM_TEASER_CALL = "teaser";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -36,6 +40,14 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // macros work !
         ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class);
+
+        // when called from teaser take over search criteria and initiate query
+        String teaserCall = request.getParameter(PARAM_TEASER_CALL);
+        if (teaserCall != null) {
+            sf.init();
+            sf.populate(request);
+            doQuery(sf, request);
+        }
         context.put("actionForm", sf);
 
         // get data base stuff
@@ -60,6 +72,10 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
+        doQuery(sf, request);
+    }
+
+    public void doQuery(ServiceSearchForm sf, PortletRequest request) {
         // TODO Create IngridQuery from form input !
         IngridQuery query = null;
         try {
@@ -70,5 +86,6 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
         // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);
+        
     }
 }

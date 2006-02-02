@@ -73,7 +73,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         } catch (Exception ex) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching starthit of SERVICE page from render request, set starthit to 0", ex);
+                log.debug("Problems fetching starthit of SERVICE page from render request, set starthit to 0");
             }
         }
 

@@ -52,9 +52,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
 
     /** Keys of parameters in session/request */
-    private final static String KEY_START_HIT_RANKED = "rstart";
+    private final static String PARAM_START_HIT_RANKED = "rstart";
 
-    private final static String KEY_START_HIT_UNRANKED = "nrstart";
+    private final static String PARAM_START_HIT_UNRANKED = "nrstart";
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -149,11 +149,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             try {
                 // if no new query was performed, read render parameters from former action request
                 if (newQuery == null) {
-                    String reqParam = request.getParameter(KEY_START_HIT_RANKED);
+                    String reqParam = request.getParameter(PARAM_START_HIT_RANKED);
                     if (reqParam != null) {
                         rankedStartHit = (new Integer(reqParam)).intValue();                        
                     }
-                    reqParam = request.getParameter(KEY_START_HIT_UNRANKED);
+                    reqParam = request.getParameter(PARAM_START_HIT_UNRANKED);
                     if (reqParam != null) {
                         unrankedStartHit = (new Integer(reqParam)).intValue();
                     }
@@ -285,8 +285,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // fetch parameters
         // ----------------------------------
-        String rankedStarthit = request.getParameter(KEY_START_HIT_RANKED);
-        String unrankedStarthit = request.getParameter(KEY_START_HIT_UNRANKED);
+        String rankedStarthit = request.getParameter(PARAM_START_HIT_RANKED);
+        String unrankedStarthit = request.getParameter(PARAM_START_HIT_UNRANKED);
 
         // ----------------------------------
         // business logic
@@ -299,10 +299,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // set render parameters
         // ----------------------------------
         if (rankedStarthit != null) {
-            actionResponse.setRenderParameter(KEY_START_HIT_RANKED, rankedStarthit);            
+            actionResponse.setRenderParameter(PARAM_START_HIT_RANKED, rankedStarthit);            
         }
         if (unrankedStarthit != null) {
-            actionResponse.setRenderParameter(KEY_START_HIT_UNRANKED, unrankedStarthit);
+            actionResponse.setRenderParameter(PARAM_START_HIT_UNRANKED, unrankedStarthit);
         }
         // END: search_result Portlet
     }
