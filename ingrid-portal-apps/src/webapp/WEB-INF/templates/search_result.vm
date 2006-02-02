@@ -72,7 +72,7 @@
 			#end
 			#if($rs.url)
 			<p class="result_link">
-              <a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster">$rs.url</a>
+              <a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url_str</a>
             </p>
 			#end
 		  #else

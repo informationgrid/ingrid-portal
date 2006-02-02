@@ -316,6 +316,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String RESULT_KEY_TITLE = "title";
         String RESULT_KEY_ABSTRACT = "abstract";
         String RESULT_KEY_URL = "url";
+        String RESULT_KEY_URL_STR = "url_str";
         String RESULT_KEY_PROVIDER = "provider";
         String RESULT_KEY_SOURCE = "source";
         String RESULT_KEY_TYPE = "type";
@@ -357,6 +358,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     result.put(RESULT_KEY_TITLE, detail.getTitle());
                     result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
                     result.put(RESULT_KEY_URL, detail.get("url"));
+                    result.put(RESULT_KEY_URL_STR, Utils.getShortURLStr((String)detail.get("url"), 80));
+                    
                 }
                 if (plug != null) {
                     result.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
@@ -380,6 +383,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     } else {
                         result.put(RESULT_KEY_TYPE, "unknown");
                     }
+                } else {
+                    result.put(RESULT_KEY_TYPE, "unknown");
                 }
             }
         } catch (Throwable t) {

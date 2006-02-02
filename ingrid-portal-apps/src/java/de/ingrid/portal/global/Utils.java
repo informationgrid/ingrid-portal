@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.global;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 
 import javax.mail.internet.AddressException;
@@ -195,5 +197,61 @@ public class Utils {
         }
         return result;
     }
+    
+    public static String getShortURLStr(String urlStr, int maxLength) {
+        
+        if (urlStr.length() <= maxLength)
+            return urlStr;
+        
+        URL url = null;
+        try {
+            url = new URL(urlStr);
+        } catch (MalformedURLException e) {
+            return "invalid url syntax";
+        }
+        
+        String path = url.getPath();
+        String host = url.getHost();
+        String protocoll = url.getProtocol();
+        String query = url.getQuery();
+        int port = url.getPort();
+        
+        StringBuffer resultB = new StringBuffer();
+        resultB.append(protocoll).append("://").append(host);
+        if (port > -1) {
+            resultB.append(":").append(port).append("/");
+        } else {
+            resultB.append("/");
+        }
+        int maxPathLength = maxLength / 2;
+        String[] pathElements = path.split("/");
+        if (pathElements.length > 3 && path.length() > maxPathLength) {
+            StringBuffer resultPath = new StringBuffer();
+            for (int i=1; i<pathElements.length; i++ ) {
+                resultPath.append(pathElements[i]).append("/");
+                if (resultPath.length() + pathElements[pathElements.length - 1].length() + 5 > maxPathLength) {
+                    resultB.append(resultPath).append(".../").append(pathElements[pathElements.length - 1]);
+                    break;
+                }
+            }
+        } else if (path.length() <= maxPathLength) {
+            resultB.append(path.substring(1));
+        } else if (path.length() > maxPathLength) {
+            resultB.append("...").append(path.substring(path.length() - maxPathLength - 1, path.length()));
+        }
+        if (query != null) {
+            if (resultB.length() < maxLength) {
+                if (query.length() > maxLength - resultB.length()) {
+                    resultB.append("?").append(query.substring(0,maxLength - resultB.length())).append("...");
+                } else {
+                    resultB.append("?").append(query);
+                }
+            } else {
+                resultB.append("?...");
+            }
+        }
+        return resultB.toString(); 
+    }
+    
 
 }
