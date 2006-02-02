@@ -48,17 +48,27 @@ public interface WMSInterface {
     WMSSearchDescriptor getWMSSearchParameter(String sessionId);
     
     /**
-     * Returns the URL of the WMS server to display the map. The URL contains
+     * Returns the URL of the WMS VIEWER to DISPLAY the map. The URL contains
      * the session id to fetch the map that is bound to the session id. This
      * enables different users to preserve their preferences on the WMS server.
      * 
      * @param sessionId The session id.
-     * @return The url of the WMS Server.
+     * @return The url of the WMS view script on the Server.
      */
-    String getWMSURL(String sessionId);
+    String getWMSViewerURL(String sessionId);
 
     /**
-     * Returns the URL of the WMS server. Includes a command to add a service, 
+     * Returns the URL of the WMS SEARCH "MAP" with search functionality. The URL contains
+     * the session id to fetch the map that is bound to the session id. This
+     * enables different users to preserve their preferences on the WMS server.
+     * 
+     * @param sessionId The session id.
+     * @return The url of the WMS search script on the Server.
+     */
+    String getWMSSearchURL(String sessionId);
+
+    /**
+     * Returns the URL of the WMS VIEWER server. Includes a command to add a service, 
      * specified with the service descriptor to the URL to the WMS server session.
      * If the descriptions name is null, no name will be put in the resulting 
      * url for this service. If the url is null the descriptor will be ignored.
@@ -66,12 +76,12 @@ public interface WMSInterface {
      * @param WMSServiceDescriptor The description of the WMS service to add. If 
      * the descriptions name is null, no name will be put in the resulting url. 
      * @param sessionId The sessin id.
-     * @return The url of the WMS Server including the command to add the service.
+     * @return The url of the WMS VIEWER Server including the command to add the service.
      */
     String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId);
     
     /**
-     * Returns the URL of the WMS server. Includes a command to add all services, 
+     * Returns the URL of the WMS VIEWER server. Includes a command to add all services, 
      * specified in the ArrayList of WMSServiceDescriptor to the URL to the WMS 
      * server session. If a descriptors name is null, no name will be put in 
      * the resulting url for this service. If the url is null the descriptor will 

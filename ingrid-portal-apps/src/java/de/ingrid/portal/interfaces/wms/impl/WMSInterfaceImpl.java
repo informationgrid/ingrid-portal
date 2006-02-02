@@ -203,8 +203,16 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSURL(java.lang.String)
      */
-    public String getWMSURL(String sessionId) {
-        return config.getString("display_url", "http://localhost/mapbender/frames/WMS_Search.php")
+    public String getWMSViewerURL(String sessionId) {
+        return config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php")
+        .concat("?PHPSESSID=" + sessionId);
+    }
+
+    /**
+     * @see de.ingrid.portal.interfaces.wms.WMSInterface#getWMSSearchURL(java.lang.String)
+     */
+    public String getWMSSearchURL(String sessionId) {
+        return config.getString("display_search_url", "http://localhost/mapbender/frames/WMS_Search.php")
         .concat("?PHPSESSID=" + sessionId);
     }
 
@@ -225,7 +233,7 @@ public class WMSInterfaceImpl implements WMSInterface {
         WMSServiceDescriptor service;
         String serviceURL;
         String serviceName;
-        StringBuffer resultB = new StringBuffer(getWMSURL(sessionId));
+        StringBuffer resultB = new StringBuffer(getWMSViewerURL(sessionId));
         boolean prequestAdded = false;
         
         // check for invalid service parameter

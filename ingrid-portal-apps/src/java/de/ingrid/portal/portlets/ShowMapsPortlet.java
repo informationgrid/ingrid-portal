@@ -37,7 +37,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
         if (wmsServiceUrl != null && wmsServiceUrl.length() > 0) {
             wmsURL = service.getWMSAddedServiceURL(new WMSServiceDescriptor("", wmsServiceUrl), session.getId());
         } else {
-            wmsURL = service.getWMSURL(session.getId());
+            wmsURL = service.getWMSViewerURL(session.getId());
         }
         
         context.put("wmsURL", wmsURL);
