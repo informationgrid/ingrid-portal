@@ -46,7 +46,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             sf.init();
             // populate doesn't clear !!!
             sf.populate(request);
-            doQuery(sf, request);
+            setupQuery(sf, request);
         }
         context.put("actionForm", sf);
 
@@ -74,10 +74,10 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        doQuery(sf, request);
+        setupQuery(sf, request);
     }
 
-    public void doQuery(ServiceSearchForm sf, PortletRequest request) {
+    public void setupQuery(ServiceSearchForm sf, PortletRequest request) {
         // TODO Create IngridQuery from form input !
         IngridQuery query = null;
         try {

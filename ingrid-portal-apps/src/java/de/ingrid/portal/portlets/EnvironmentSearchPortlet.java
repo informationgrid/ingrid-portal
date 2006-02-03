@@ -46,7 +46,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             af.init();
             // populate doesn't clear !!!
             af.populate(request);
-            doQuery(af, request);
+            setupQuery(af, request);
         }
         context.put("actionForm", af);
 
@@ -74,10 +74,10 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        doQuery(af, request);
+        setupQuery(af, request);
     }
 
-    public void doQuery(EnvironmentSearchForm af, PortletRequest request) {
+    public void setupQuery(EnvironmentSearchForm af, PortletRequest request) {
         // TODO Create IngridQuery from form input !
         IngridQuery query = null;
         try {
