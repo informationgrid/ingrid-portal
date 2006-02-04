@@ -9,6 +9,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -16,11 +18,12 @@ import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
+
+    private final static Log log = LogFactory.getLog(EnvironmentSearchPortlet.class);
 
     /** Keys of parameters in session/request */
     private final static String PARAM_TEASER_CALL = "teaser";
@@ -46,6 +49,9 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             af.init();
             // populate doesn't clear !!!
             af.populate(request);
+            if (!af.validate()) {
+                return;
+            }
             setupQuery(af, request);
         }
         context.put("actionForm", af);
@@ -78,13 +84,63 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     public void setupQuery(EnvironmentSearchForm af, PortletRequest request) {
-        // TODO Create IngridQuery from form input !
+
+        String QUERY_VALUE_DATATYPE = "www_topic";
+        //        String QUERY_PARSE_DATATYPE = "datatype:www_topic";
+        String QUERY_FIELD_TOPIC = "topic";
+        String QUERY_FIELD_FUNCT_CATEGORY = "funct_category";
+        String QUERY_FIELD_PARTNER = "partner";
+
+        String FORM_VALUE_ALL = "all";
+
         IngridQuery query = null;
+
         try {
-            query = QueryStringParser.parse("to do");
-        } catch (ParseException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            //            query = QueryStringParser.parse(QUERY_PARSE_DATATYPE);
+            query = new IngridQuery();
+            query.setDataType(QUERY_VALUE_DATATYPE);
+
+            // set parameters !
+            String[] topics = request.getParameterValues(af.FIELD_TOPIC);
+            String[] functCategories = request.getParameterValues(af.FIELD_FUNCT_CATEGORY);
+            String[] partners = request.getParameterValues(af.FIELD_PARTNER);
+
+            // TOPIC
+            String topic = null;
+            for (int i = 0; i < topics.length; i++) {
+                // TODO at the moment we only use first TOPIC, backend can't handle OR yet
+                topic = topics[i];
+                break;
+            }
+            if (topic != null && !topic.equals(FORM_VALUE_ALL)) {
+                query.addField(new FieldQuery(IngridQuery.AND, QUERY_FIELD_TOPIC, topic));
+            }
+
+            // FUNCT_CATEGORY
+            String functCategory = null;
+            for (int i = 0; i < functCategories.length; i++) {
+                // TODO at the moment we only use first FUNCT_CATEGORY, backend can't handle OR yet
+                functCategory = functCategories[i];
+                break;
+            }
+            if (functCategory != null && !functCategory.equals(FORM_VALUE_ALL)) {
+                query.addField(new FieldQuery(IngridQuery.AND, QUERY_FIELD_FUNCT_CATEGORY, functCategory));
+            }
+
+            // PARTNER
+            String partner = null;
+            for (int i = 0; i < partners.length; i++) {
+                // TODO at the moment we only use first PARTNER, backend can't handle OR yet
+                partner = partners[i];
+                break;
+            }
+            if (partner != null && !partner.equals(FORM_VALUE_ALL)) {
+                query.addField(new FieldQuery(IngridQuery.AND, QUERY_FIELD_PARTNER, partner));
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems setting up Query !", t);
+            }
         }
         // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);
