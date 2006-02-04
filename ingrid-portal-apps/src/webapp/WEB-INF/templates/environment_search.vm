@@ -13,45 +13,57 @@
 			<select class="env_themes inputstyle" name="themes" id="xx2" size="5" multiple="multiple">
 				<option value="all" #getSelected('themes' 'all')>------ Alles auswählen ------
 				</option>
-				<option value="gar" #getSelected('themes' 'gar')>Abfall
+				<option value="Abfall" #getSelected('themes' 'Abfall')>Abfall
 				</option>
-				<option value="rel" #getSelected('themes' 'rel')>Altlasten
+				<option value="Altlasten" #getSelected('themes' 'Altlasten')>Altlasten
 				</option>
-				<option value="bio" #getSelected('themes' 'bio')>Artenvielfalt
+				<!--option value="bio" #getSelected('themes' 'Artenvielfalt')>Artenvielfalt
+				</option-->
+				<option value="Bauen" #getSelected('themes' 'Bauen')>Bauen
 				</option>
-				<option value="bui" #getSelected('themes' 'bui')>Bauen
+				<option value="Boden" #getSelected('themes' 'Boden')>Boden
 				</option>
-				<option value="gro" #getSelected('themes' 'gro')>Boden
+				<option value="Chemikalien" #getSelected('themes' 'Chemikalien')>Chemikalien
 				</option>
-				<option value="che" #getSelected('themes' 'che')>Chemikalien
+				<option value="DatenKarten" #getSelected('themes' 'DatenKarten')>Daten/Karten
 				</option>
-				<option value="ene" #getSelected('themes' 'ene')>Energie
+				<option value="Energie" #getSelected('themes' 'Energie')>Energie
 				</option>
-				<option value="gen" #getSelected('themes' 'gen')>Gentechnik
+				<option value="Forstwirtschaft" #getSelected('themes' 'Forstwirtschaft')>Forstwirtschaft
 				</option>
-				<option value="geo" #getSelected('themes' 'geo')>Geologie
+				<option value="Gentechnik" #getSelected('themes' 'Gentechnik')>Gentechnik
 				</option>
-				<option value="hea" #getSelected('themes' 'hea')>Gesundheit
+				<option value="Geologie" #getSelected('themes' 'Geologie')>Geologie
 				</option>
-				<option value="agr" #getSelected('themes' 'agr')>Land/Forstwirtschaft
+				<option value="Gesundheit" #getSelected('themes' 'Gesundheit')>Gesundheit
 				</option>
-				<option value="noi" #getSelected('themes' 'noi')>Lärm
+				<option value="LaermErschuetterung" #getSelected('themes' 'LaermErschuetterung')>Lärm/Erschütterungen
 				</option>
-				<option value="air" #getSelected('themes' 'air')>Luft
+				<option value="Landwirtschaft" #getSelected('themes' 'Landwirtschaft')>Landwirtschaft
 				</option>
-				<option value="nat" #getSelected('themes' 'nat')>Naturschutz
+				<option value="LuftKlima" #getSelected('themes' 'LuftKlima')>Luft/Klima
 				</option>
-				<option value="rad" #getSelected('themes' 'rad')>Strahlung
+				<option value="NachhaltigeEntwicklung" #getSelected('themes' 'NachhaltigeEntwicklung')>Nachhaltige Entwicklung
 				</option>
-				<option value="ani" #getSelected('themes' 'ani')>Tierschutz
+				<!--option value="nat" #getSelected('themes' 'nat')>Naturschutz
+				</option-->
+				<option value="NaturLandschaft" #getSelected('themes' 'NaturLandschaft')>Natur/Landschaft
 				</option>
-				<option value="ein" #getSelected('themes' 'ein')>Umweltinformationen
+				<option value="Statusberichte" #getSelected('themes' 'Statusberichte')>Statusberichte
 				</option>
-				<option value="eec" #getSelected('themes' 'eec')>Umweltwirtschaft
+				<option value="Strahlung" #getSelected('themes' 'Strahlung')>Strahlung
 				</option>
-				<option value="tra" #getSelected('themes' 'tra')>Verkehr
+				<option value="Tierschutz" #getSelected('themes' 'Tierschutz')>Tierschutz
 				</option>
-				<option value="wat" #getSelected('themes' 'wat')>Wasser
+				<option value="Umweltinformation" #getSelected('themes' 'Umweltinformation')>Umweltinformationen
+				</option>
+				<option value="Umweltwirtschaft" #getSelected('themes' 'Umweltwirtschaft')>Umweltwirtschaft
+				</option>
+				<option value="Umweltzustand" #getSelected('themes' 'Umweltzustand')>Umweltzustand
+				</option>
+				<option value="Verkehr" #getSelected('themes' 'Verkehr')>Verkehr
+				</option>
+				<option value="Wasser" #getSelected('themes' 'Wasser')>Wasser
 				</option>
 			</select>
 		</div>
@@ -63,17 +75,17 @@
 			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
 				<option value="all" #getSelected('category' 'all')>------ Alles auswählen ------
 				</option>
-				<option value="leg" #getSelected('category' 'leg')>Rechtliches
+				<option value="Rechtliches" #getSelected('category' 'Rechtliches')>Rechtliches
 				</option>
-				<option value="con" #getSelected('category' 'con')>Konzeptionelles
+				<option value="Konzeptionelles" #getSelected('category' 'Konzeptionelles')>Konzeptionelles
 				</option>
-				<option value="sta" #getSelected('category' 'sta')>Statusberichte
+				<option value="Statusberichte" #getSelected('category' 'Statusberichte')>Statusberichte
 				</option>
-				<option value="env" #getSelected('category' 'env')>Umweltzustand
+				<option value="Umweltzustand" #getSelected('category' 'Umweltzustand')>Umweltzustand
 				</option>
-				<option value="dat" #getSelected('category' 'dat')>Daten und Karten
+				<option value="DatenKarten" #getSelected('category' 'DatenKarten')>Daten und Karten
 				</option>
-				<option value="ris" #getSelected('category' 'ris')>Risikobewertungen
+				<option value="Risikobewertungen" #getSelected('category' 'Risikobewertungen')>Risikobewertungen
 				</option>
 			</select>
 		</div>  
