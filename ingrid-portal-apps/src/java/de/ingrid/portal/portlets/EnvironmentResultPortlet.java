@@ -13,10 +13,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.search.SearchResultList;
-import de.ingrid.portal.search.mockup.SearchResultListMockup;
+import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 
 public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -84,14 +88,24 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         int HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
 
         // do search
-        SearchResultList searchRL = doSearch(query, startHit, HITS_PER_PAGE, true);
-        int numberOfHits = searchRL.getNumberOfHits();
+        IngridHits hits = null;
+        int numberOfHits = 0;
+        try {
+            hits = doSearch(query, startHit, HITS_PER_PAGE);
+            numberOfHits = (int) hits.length();
+        } catch (Exception ex) {
+            if (log.isInfoEnabled()) {
+                log.info("Problems performing environment catalogue search !");
+            }
+        }
+
         if (numberOfHits == 0) {
             // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
         }
+
         // adapt settings of page nagihation
         HashMap pageNavigation = Utils.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.RANKED_NUM_PAGES_TO_SELECT);
@@ -102,7 +116,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
         Context context = getContext(request);
         context.put("rankedPageSelector", pageNavigation);
-        context.put("rankedResultList", searchRL);
+        context.put("rankedResultList", hits);
 
         super.doView(request, response);
     }
@@ -128,22 +142,75 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         }
     }
 
-    private SearchResultList doSearch(IngridQuery query, int start, int limit, boolean ranking) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
 
-        SearchResultList result = new SearchResultList();
-
-        // TODO DO MEASURES SEARCH HERE
-        SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
-        if (start > l.size())
-            start = l.size() - limit - 1;
-        for (int i = start; i < start + limit; i++) {
-            if (i >= l.size())
-                break;
-            result.add(l.get(i));
+        if (log.isDebugEnabled()) {
+            log.debug("Umweltthemen IngridQuery = " + query);
         }
-        result.setNumberOfHits(l.getNumberOfHits());
 
-        return result;
+        int SEARCH_TIMEOUT = 5000;
+        int SEARCH_REQUESTED_NUM_HITS = hitsPerPage;
+        int currentPage = (int) (startHit / hitsPerPage) + 1;
+
+        String RESULT_KEY_TITLE = "title";
+        String RESULT_KEY_ABSTRACT = "abstract";
+        String RESULT_KEY_TOPIC = "topic";
+        String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
+        String RESULT_KEY_URL = "url";
+        String RESULT_KEY_URL_STR = "url_str";
+        String RESULT_KEY_PROVIDER = "provider";
+        String RESULT_KEY_SOURCE = "source";
+
+        IngridHits hits = null;
+
+        try {
+
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            hits = ibus.search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
+            IngridHit[] results = hits.getHits();
+
+            IngridHit result = null;
+            IngridHitDetail detail = null;
+            String plugId = null;
+            PlugDescription plug = null;
+            for (int i = 0; i < results.length; i++) {
+                detail = null;
+                plug = null;
+                try {
+                    result = results[i];
+                    detail = ibus.getDetails(result, query);
+                    plugId = result.getPlugId();
+                    plug = ibus.getIPlug(plugId);
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems fetching result details or iPlug", t);
+                    }
+                }
+                if (result == null) {
+                    continue;
+                }
+                if (detail != null) {
+                    result.put(RESULT_KEY_TITLE, detail.getTitle());
+                    result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
+                    result.put(RESULT_KEY_TOPIC, detail.get(RESULT_KEY_TOPIC));
+                    result.put(RESULT_KEY_FUNCT_CATEGORY, detail.get(RESULT_KEY_FUNCT_CATEGORY));
+                    if (detail.get("url") != null) {
+                        result.put(RESULT_KEY_URL, detail.get("url"));
+                        result.put(RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail.get("url"), 80));
+                    }
+
+                }
+                if (plug != null) {
+                    result.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
+                    result.put(RESULT_KEY_SOURCE, plug.getDataSourceName());
+                }
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing Search !", t);
+            }
+        }
+
+        return hits;
     }
-
 }

@@ -52,7 +52,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             if (!af.validate()) {
                 return;
             }
-            setupQuery(af, request);
+            setupQuery(request);
         }
         context.put("actionForm", af);
 
@@ -80,30 +80,26 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        setupQuery(af, request);
+        setupQuery(request);
     }
 
-    public void setupQuery(EnvironmentSearchForm af, PortletRequest request) {
+    public void setupQuery(PortletRequest request) {
 
         String QUERY_VALUE_DATATYPE = "www_topic";
-        //        String QUERY_PARSE_DATATYPE = "datatype:www_topic";
         String QUERY_FIELD_TOPIC = "topic";
         String QUERY_FIELD_FUNCT_CATEGORY = "funct_category";
         String QUERY_FIELD_PARTNER = "partner";
-
         String FORM_VALUE_ALL = "all";
 
         IngridQuery query = null;
-
         try {
-            //            query = QueryStringParser.parse(QUERY_PARSE_DATATYPE);
             query = new IngridQuery();
             query.setDataType(QUERY_VALUE_DATATYPE);
 
             // set parameters !
-            String[] topics = request.getParameterValues(af.FIELD_TOPIC);
-            String[] functCategories = request.getParameterValues(af.FIELD_FUNCT_CATEGORY);
-            String[] partners = request.getParameterValues(af.FIELD_PARTNER);
+            String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
+            String[] functCategories = request.getParameterValues(EnvironmentSearchForm.FIELD_FUNCT_CATEGORY);
+            String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
 
             // TOPIC
             String topic = null;
