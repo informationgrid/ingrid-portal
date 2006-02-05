@@ -87,9 +87,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // may be called directly from Start page, then this method has to be an action method !
         // When called from startPage, the action request parameter is "doSearch" !!! 
 
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
         context.put("MESSAGES", messages);
-        
+
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
@@ -151,7 +152,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (newQuery == null) {
                     String reqParam = request.getParameter(PARAM_START_HIT_RANKED);
                     if (reqParam != null) {
-                        rankedStartHit = (new Integer(reqParam)).intValue();                        
+                        rankedStartHit = (new Integer(reqParam)).intValue();
                     }
                     reqParam = request.getParameter(PARAM_START_HIT_UNRANKED);
                     if (reqParam != null) {
@@ -179,11 +180,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             int numberOfHits = 0;
             try {
                 rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE);
-                numberOfHits = (int) rankedHits.length();                
+                numberOfHits = (int) rankedHits.length();
             } catch (Exception ex) {
                 if (log.isInfoEnabled()) {
-                    log.info("Problems fetching ranked hits ! hits = "+rankedHits+", numHits = "+numberOfHits, ex);
-                }                
+                    log
+                            .info("Problems fetching ranked hits ! hits = " + rankedHits + ", numHits = "
+                                    + numberOfHits, ex);
+                }
             }
 
             // adapt settings of ranked page navigation
@@ -299,7 +302,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // set render parameters
         // ----------------------------------
         if (rankedStarthit != null) {
-            actionResponse.setRenderParameter(PARAM_START_HIT_RANKED, rankedStarthit);            
+            actionResponse.setRenderParameter(PARAM_START_HIT_RANKED, rankedStarthit);
         }
         if (unrankedStarthit != null) {
             actionResponse.setRenderParameter(PARAM_START_HIT_UNRANKED, unrankedStarthit);
@@ -313,54 +316,36 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         IngridHits hits = null;
         try {
-            IBUSInterface ibus = IBUSInterfaceImpl.getInstance(); 
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
             IngridHit result = null;
             IngridHitDetail detail = null;
-            String plugId = null;
             PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
-                result = null;
-                detail = null;
-                plug = null;
-                try {
-                    result = results[i];
-                    detail = ibus.getDetails(result, query);
-                    plugId = result.getPlugId();
-                    plug = ibus.getIPlug(plugId);
-                } catch (Throwable t) {
-                    if (log.isErrorEnabled()) {
-                        log.error("Problems fetching result details or iPlug", t);
-                    }
-                }
+                result = results[i];
+                detail = ibus.getDetails(result, query);
+                plug = ibus.getIPlug(result);
+
                 if (result == null) {
                     continue;
                 }
-                result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
                 if (detail != null) {
-                    result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
-                    result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
-                    if (detail.get(Settings.RESULT_KEY_URL) != null) {
-                        result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
-                        result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String)detail.get(Settings.RESULT_KEY_URL), 80));
-                    }
-                    
+                    ibus.transferHitDetails(result, detail);
                 }
                 if (plug != null) {
-                    result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
-                    result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
-                    result.put(Settings.RESULT_KEY_PLUG_ID, plug.getPlugId());
+                    ibus.transferPlugDetails(result, plug);
                     if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                         result.put(Settings.RESULT_KEY_TYPE, "dsc");
-                        
+
                         Record record = ibus.getRecord(result);
-                        Column c = getUDKColumn(record, Settings.HIT_KEY_WMS_URL);
+                        Column c = ibus.getColumn(record, Settings.HIT_KEY_WMS_URL);
                         if (c != null) {
-                            result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c), "UTF-8"));
+                            result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c),
+                                    "UTF-8"));
                         }
-                        c = getUDKColumn(record, Settings.HIT_KEY_UDK_CLASS);
+                        c = ibus.getColumn(record, Settings.HIT_KEY_UDK_CLASS);
                         if (c != null) {
                             result.put(Settings.RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
                         }
@@ -451,26 +436,4 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         return ret;
     }
-    
-    private Column getUDKColumn(Record record, String udkColumnName) {
-        // serach for column
-        Column[] columns = record.getColumns();
-        for (int i=0;i<columns.length;i++) {
-            if (columns[i].getTargetName().equalsIgnoreCase(udkColumnName)) {
-                return columns[i];
-            }
-        }
-        // search sub records
-        Record[] subRecords = record.getSubRecords();
-        Column c = null;
-        for (int i=0;i<subRecords.length;i++) {
-            c = getUDKColumn(subRecords[i], udkColumnName);
-            if (c != null) {
-                return c;
-            }
-        }
-        return null;
-    }
-    
-
 }

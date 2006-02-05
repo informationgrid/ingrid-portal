@@ -9,6 +9,7 @@ import de.ingrid.iplug.PlugDescription;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -26,8 +27,7 @@ public interface IBUSInterface {
      * @return The Configuration of the ibus.
      */
     Configuration getConfig();
-    
-    
+
     /**
      * Performs a search on the iBus. Returns hits with basic properties (not quite usable 
      * for rendering). Get more details with getDetails() and getRecord(). 
@@ -40,8 +40,8 @@ public interface IBUSInterface {
      * @return The IngridHits containing the hits of this query.
      * @throws Exception 
      */
-    IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout) throws Exception;
-    
+    IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout)
+            throws Exception;
 
     /**
      * Returns details for a single IngridHit. Details are mainly used
@@ -49,21 +49,18 @@ public interface IBUSInterface {
      * 
      * @param hit The IngridHit to get the details from.
      * @param query The IngridQuery the hit was found with.
-     * @return The IngridHitDetail with details about the hit.
-     * @throws Exception 
+     * @return The IngridHitDetail with details about the hit OR NULL
      */
-    IngridHitDetail getDetails(IngridHit hit, IngridQuery query) throws Exception;
-    
+    IngridHitDetail getDetails(IngridHit hit, IngridQuery query);
+
     /**
      * Returns more information than getDetails about the hit. This is mainly used
      * to render the detailed information of a DSC hit like UDK details.
      * 
      * @param hit The IngridHit to get the record from.
-     * @return The Record with detailed data of the hit.
-     * @throws Exception 
+     * @return The Record with detailed data of the hit OR NULL
      */
-    Record getRecord(IngridHit hit) throws Exception;
-
+    Record getRecord(IngridHit hit);
 
     /**
      * Returns the PlugDescription of the iPlug with the id plugId. The 
@@ -73,5 +70,33 @@ public interface IBUSInterface {
      * @return The PlugDescription. 
      */
     PlugDescription getIPlug(String plugId);
-    
+
+    /**
+     * Get Plug Description of a result.
+     * @param hit
+     * @return The Plug Description OR NULL
+     */
+    PlugDescription getIPlug(IngridHit hit);
+
+    /**
+     * Transfer commonly used detail parameters from detail object to hitobject.
+     * @param hit
+     * @param detail
+     */
+    void transferHitDetails(IngridHit hit, IngridHitDetail detail);
+
+    /**
+     * Transfer commonly used plug parameters from plug description to hitobject.
+     * @param hit
+     * @param plug
+     */
+    void transferPlugDetails(IngridHit hit, PlugDescription plug);
+
+    /**
+     * Fetch column from Record.
+     * @param record
+     * @param columnName
+     * @return The Column OR NULL
+     */
+    Column getColumn(Record record, String columnName);
 }

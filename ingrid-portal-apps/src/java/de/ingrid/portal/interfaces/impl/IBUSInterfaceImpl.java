@@ -16,10 +16,13 @@ import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.Bus;
 import de.ingrid.iplug.PlugDescription;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -31,11 +34,11 @@ import de.ingrid.utils.query.IngridQuery;
 public class IBUSInterfaceImpl implements IBUSInterface {
 
     private final static Log log = LogFactory.getLog(IBUSInterfaceImpl.class);
-    
+
     private static IBUSInterfaceImpl instance = null;
-    
+
     private static Bus bus = null;
-    
+
     private Configuration config;
 
     public static synchronized IBUSInterface getInstance() {
@@ -47,10 +50,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 e.printStackTrace();
             }
         }
-        
+
         return instance;
     }
-    
+
     private IBUSInterfaceImpl() throws Exception {
         super();
         String configFilename = getResourceAsStream("/ibus_interface.properties");
@@ -58,31 +61,33 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         SocketCommunication communication = null;
         ProxyService proxy = null;
-        try{
+        try {
             communication = new SocketCommunication();
-            
+
             communication.setMulticastPort(Integer.parseInt(config.getString("multicast_port", "11114")));
-            communication.setUnicastPort(Integer.parseInt(config.getString("unicast_port", "50000")));    
-            
+            communication.setUnicastPort(Integer.parseInt(config.getString("unicast_port", "50000")));
+
             communication.startup();
-                
+
             // start the proxy server
             proxy = new ProxyService();
-            
+
             proxy.setCommunication(communication);
             proxy.startup();
-            
 
-            String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer.parseInt(config.getString("ibus_port", "11112")));
+            String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
+                    .parseInt(config.getString("ibus_port", "11112")));
             RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
             bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
-        } catch (Throwable t){
-            if (proxy != null) proxy.shutdown();
-            if (communication != null) communication.shutdown();
+        } catch (Throwable t) {
+            if (proxy != null)
+                proxy.shutdown();
+            if (communication != null)
+                communication.shutdown();
             throw new Exception("Error initalize ibus interface.", t);
         }
     }
-    
+
     /**
      * @see de.ingrid.portal.interfaces.IBUSInterface#getConfig()
      */
@@ -94,7 +99,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @throws Exception 
      * @see de.ingrid.portal.interfaces.IBUSInterface#search(de.ingrid.utils.query.IngridQuery, int, int, int, int)
      */
-    public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout) throws Exception {
+    public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout)
+            throws Exception {
         return bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
     }
 
@@ -102,35 +108,51 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @throws Exception 
      * @see de.ingrid.portal.interfaces.IBUSInterface#getDetails(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery)
      */
-    public IngridHitDetail getDetails(IngridHit result, IngridQuery query) throws Exception {
-        return bus.getDetails(result, query);
+    public IngridHitDetail getDetails(IngridHit result, IngridQuery query) {
+        IngridHitDetail detail = null;
+        try {
+            detail = bus.getDetails(result, query);
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching Detail of result: " + result, t);
+            }
+        }
+
+        return detail;
     }
 
     /**
-     * @throws Exception 
      * @see de.ingrid.portal.interfaces.IBUSInterface#getRecord(de.ingrid.utils.IngridHit)
      */
-    public Record getRecord(IngridHit hit) throws Exception {
-        return bus.getRecord(hit);
+    public Record getRecord(IngridHit result) {
+        Record rec = null;
+        try {
+            rec = getRecord(result);
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching Record of result: " + result, t);
+            }
+        }
+
+        return rec;
     }
 
     private static String getResourceAsStream(String resource) throws Exception {
-        String stripped = resource.startsWith("/") ? 
-                resource.substring(1) : resource;
-    
-        String stream = null; 
+        String stripped = resource.startsWith("/") ? resource.substring(1) : resource;
+
+        String stream = null;
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if (classLoader!=null) {
-            stream = classLoader.getResource( stripped ).toString();
+        if (classLoader != null) {
+            stream = classLoader.getResource(stripped).toString();
         }
-        if ( stream == null ) {
-            Environment.class.getResourceAsStream( resource );
+        if (stream == null) {
+            Environment.class.getResourceAsStream(resource);
         }
-        if ( stream == null ) {
-            stream = Environment.class.getClassLoader().getResource( stripped ).toString();
+        if (stream == null) {
+            stream = Environment.class.getClassLoader().getResource(stripped).toString();
         }
-        if ( stream == null ) {
-            throw new Exception( resource + " not found" );
+        if (stream == null) {
+            throw new Exception(resource + " not found");
         }
         return stream;
     }
@@ -138,6 +160,74 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public PlugDescription getIPlug(String plugId) {
         return bus.getIPlug(plugId);
     }
-    
-    
+
+    public PlugDescription getIPlug(IngridHit result) {
+        PlugDescription plug = null;
+        try {
+            plug = getIPlug(result.getPlugId());
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching iPlug of result: " + result, t);
+            }
+        }
+
+        return plug;
+    }
+
+    public void transferHitDetails(IngridHit result, IngridHitDetail detail) {
+        try {
+            result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
+            result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
+            if (detail.get(Settings.RESULT_KEY_URL) != null) {
+                result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
+                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail
+                        .get(Settings.RESULT_KEY_URL), 80));
+            }
+            //            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems taking over Hit Details into result:" + result, t);
+            }
+        }
+    }
+
+    public void transferPlugDetails(IngridHit result, PlugDescription plug) {
+        try {
+            result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
+            result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
+            //            result.put(Settings.RESULT_KEY_PLUG_ID, plug.getPlugId());
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems taking over Plug Details into result:" + result, t);
+            }
+        }
+    }
+
+    public Column getColumn(Record record, String columnName) {
+        Column col = null;
+        try {
+            // serch for column
+            Column[] columns = record.getColumns();
+            for (int i = 0; i < columns.length; i++) {
+                if (columns[i].getTargetName().equalsIgnoreCase(columnName)) {
+                    return columns[i];
+                }
+            }
+            // search sub records
+            Record[] subRecords = record.getSubRecords();
+            Column c = null;
+            for (int i = 0; i < subRecords.length; i++) {
+                c = getColumn(subRecords[i], columnName);
+                if (c != null) {
+                    return c;
+                }
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching Column from record: " + record, t);
+            }
+        }
+
+        return col;
+    }
 }

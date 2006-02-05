@@ -157,40 +157,22 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
             IngridHit result = null;
             IngridHitDetail detail = null;
-            String plugId = null;
             PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
-                result = null;
-                detail = null;
-                plug = null;
-                try {
-                    result = results[i];
-                    detail = ibus.getDetails(result, query);
-                    plugId = result.getPlugId();
-                    plug = ibus.getIPlug(plugId);
-                } catch (Throwable t) {
-                    if (log.isErrorEnabled()) {
-                        log.error("Problems fetching result details or iPlug", t);
-                    }
-                }
+                result = results[i];
+                detail = ibus.getDetails(result, query);
+                plug = ibus.getIPlug(result);
+                
                 if (result == null) {
                     continue;
                 }
                 if (detail != null) {
-                    result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
-                    result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
+                    ibus.transferHitDetails(result, detail);
                     result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
                     result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY));
-                    if (detail.get(Settings.RESULT_KEY_URL) != null) {
-                        result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
-                        result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail
-                                .get(Settings.RESULT_KEY_URL), 80));
-                    }
-
                 }
                 if (plug != null) {
-                    result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
-                    result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
+                    ibus.transferPlugDetails(result, plug);
                 }
             }
         } catch (Throwable t) {
