@@ -309,28 +309,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
 
-        int SEARCH_TIMEOUT = 2000;
-        int SEARCH_REQUESTED_NUM_HITS = 10;
         int currentPage = (int) (startHit / hitsPerPage) + 1;
 
-        String RESULT_KEY_TITLE = "title";
-        String RESULT_KEY_ABSTRACT = "abstract";
-        String RESULT_KEY_URL = "url";
-        String RESULT_KEY_URL_STR = "url_str";
-        String RESULT_KEY_PROVIDER = "provider";
-        String RESULT_KEY_SOURCE = "source";
-        String RESULT_KEY_TYPE = "type";
-        String RESULT_KEY_PLUG_ID = "plugid";
-        String RESULT_KEY_DOC_ID = "docid";
-        String RESULT_KEY_WMS_URL = "wms_url";
-        String RESULT_KEY_UDK_CLASS = "udk_class";
-
         IngridHits hits = null;
-
         try {
-            
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance(); 
-            hits = ibus.search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.DEFAULT_SEARCH_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
             IngridHit result = null;
@@ -338,6 +322,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             String plugId = null;
             PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
+                result = null;
                 detail = null;
                 plug = null;
                 try {
@@ -353,37 +338,37 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (result == null) {
                     continue;
                 }
-                result.put(RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+                result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
                 if (detail != null) {
-                    result.put(RESULT_KEY_TITLE, detail.getTitle());
-                    result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
-                    if (detail.get("url") != null) {
-                        result.put(RESULT_KEY_URL, detail.get("url"));
-                        result.put(RESULT_KEY_URL_STR, Utils.getShortURLStr((String)detail.get("url"), 80));
+                    result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
+                    result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
+                    if (detail.get(Settings.RESULT_KEY_URL) != null) {
+                        result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
+                        result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String)detail.get(Settings.RESULT_KEY_URL), 80));
                     }
                     
                 }
                 if (plug != null) {
-                    result.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
-                    result.put(RESULT_KEY_SOURCE, plug.getDataSourceName());
-                    result.put(RESULT_KEY_PLUG_ID, plug.getPlugId());
+                    result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
+                    result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
+                    result.put(Settings.RESULT_KEY_PLUG_ID, plug.getPlugId());
                     if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        result.put(RESULT_KEY_TYPE, "dsc");
+                        result.put(Settings.RESULT_KEY_TYPE, "dsc");
                         
                         Record record = ibus.getRecord(result);
-                        Column c = getUDKColumn(record, "T011_obj_serv_op_connpoint.connect_point");
+                        Column c = getUDKColumn(record, Settings.HIT_KEY_WMS_URL);
                         if (c != null) {
-                            result.put(RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c), "UTF-8"));
+                            result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c), "UTF-8"));
                         }
-                        c = getUDKColumn(record, "T01_object.obj_class");
+                        c = getUDKColumn(record, Settings.HIT_KEY_UDK_CLASS);
                         if (c != null) {
-                            result.put(RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
+                            result.put(Settings.RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
                         }
 
                     } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
-                        result.put(RESULT_KEY_TYPE, "nutch");
+                        result.put(Settings.RESULT_KEY_TYPE, "nutch");
                     } else {
-                        result.put(RESULT_KEY_TYPE, "unknown");
+                        result.put(Settings.RESULT_KEY_TYPE, "unknown");
                     }
                 }
             }

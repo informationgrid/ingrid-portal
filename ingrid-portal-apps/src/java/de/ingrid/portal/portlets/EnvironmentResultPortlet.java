@@ -143,30 +143,16 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
-
         if (log.isDebugEnabled()) {
             log.debug("Umweltthemen IngridQuery = " + query);
         }
 
-        int SEARCH_TIMEOUT = 5000;
-        int SEARCH_REQUESTED_NUM_HITS = hitsPerPage;
         int currentPage = (int) (startHit / hitsPerPage) + 1;
 
-        String RESULT_KEY_TITLE = "title";
-        String RESULT_KEY_ABSTRACT = "abstract";
-        String RESULT_KEY_TOPIC = "topic";
-        String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
-        String RESULT_KEY_URL = "url";
-        String RESULT_KEY_URL_STR = "url_str";
-        String RESULT_KEY_PROVIDER = "provider";
-        String RESULT_KEY_SOURCE = "source";
-
         IngridHits hits = null;
-
         try {
-
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, SEARCH_REQUESTED_NUM_HITS, SEARCH_TIMEOUT);
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.DEFAULT_SEARCH_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
             IngridHit result = null;
@@ -174,6 +160,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             String plugId = null;
             PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
+                result = null;
                 detail = null;
                 plug = null;
                 try {
@@ -190,19 +177,20 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     continue;
                 }
                 if (detail != null) {
-                    result.put(RESULT_KEY_TITLE, detail.getTitle());
-                    result.put(RESULT_KEY_ABSTRACT, detail.getSummary());
-                    result.put(RESULT_KEY_TOPIC, detail.get(RESULT_KEY_TOPIC));
-                    result.put(RESULT_KEY_FUNCT_CATEGORY, detail.get(RESULT_KEY_FUNCT_CATEGORY));
-                    if (detail.get("url") != null) {
-                        result.put(RESULT_KEY_URL, detail.get("url"));
-                        result.put(RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail.get("url"), 80));
+                    result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
+                    result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
+                    result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
+                    result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY));
+                    if (detail.get(Settings.RESULT_KEY_URL) != null) {
+                        result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
+                        result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail
+                                .get(Settings.RESULT_KEY_URL), 80));
                     }
 
                 }
                 if (plug != null) {
-                    result.put(RESULT_KEY_PROVIDER, plug.getOrganisation());
-                    result.put(RESULT_KEY_SOURCE, plug.getDataSourceName());
+                    result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
+                    result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
                 }
             }
         } catch (Throwable t) {

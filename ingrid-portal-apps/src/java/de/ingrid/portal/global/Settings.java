@@ -14,6 +14,8 @@ public class Settings {
     // Search
     // ************************************
 
+    // ============= general settings ! ==============================
+
     /** Search parameters 
      * number of ranked hits per page */
     public final static int RANKED_HITS_PER_PAGE = 10;
@@ -29,6 +31,50 @@ public class Settings {
 
     /** the initial datasource ! */
     public final static String INITIAL_DATASOURCE = "1";
+
+    public final static int DEFAULT_SEARCH_TIMEOUT = 2000;
+
+    // ============= definitions for IngridQuery ==============================
+
+    // ------------- field names -----------------------------
+
+    public final static String QFIELD_DATATYPE = "datatype";
+    public final static String QFIELD_PARTNER = "partner";
+    // first category in all catalogue pages
+    public final static String QFIELD_TOPIC = "topic";
+    // second category in environment topics catalogue page !
+    public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
+
+    // ------------- field values -----------------------------
+
+    // datatypes
+    public final static String QVALUE_DATATYPE_WWW = "www";
+    public final static String QVALUE_DATATYPE_SERVICE = "www_service";
+    public final static String QVALUE_DATATYPE_MEASURES = "www_measures";
+    public final static String QVALUE_DATATYPE_ENVTOPIC = "www_topic";
+    
+    // ============= definitions to access Result data (render data) ==============================
+
+    public final static String RESULT_KEY_TITLE = "title";
+    public final static String RESULT_KEY_ABSTRACT = "abstract";
+    public final static String RESULT_KEY_TOPIC = "topic";
+    public final static String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
+    public final static String RESULT_KEY_URL = "url";
+    public final static String RESULT_KEY_URL_STR = "url_str";
+    public final static String RESULT_KEY_PROVIDER = "provider";
+    public final static String RESULT_KEY_SOURCE = "source";
+    public final static String RESULT_KEY_TYPE = "type";
+    public final static String RESULT_KEY_PLUG_ID = "plugid";
+    public final static String RESULT_KEY_DOC_ID = "docid";
+    public final static String RESULT_KEY_WMS_URL = "wms_url";
+    public final static String RESULT_KEY_UDK_CLASS = "udk_class";
+
+    // ============= definitions to access Hit data (get data from hits) ==============================
+    // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
+
+    public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
+    public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
+
 
     // ************************************
     // Portlet Messaging

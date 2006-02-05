@@ -197,25 +197,25 @@ public class Utils {
         }
         return result;
     }
-    
+
     public static String getShortURLStr(String urlStr, int maxLength) {
-        
+
         if (urlStr.length() <= maxLength)
             return urlStr;
-        
+
         URL url = null;
         try {
             url = new URL(urlStr);
         } catch (MalformedURLException e) {
             return "invalid url syntax";
         }
-        
+
         String path = url.getPath();
         String host = url.getHost();
         String protocoll = url.getProtocol();
         String query = url.getQuery();
         int port = url.getPort();
-        
+
         StringBuffer resultB = new StringBuffer();
         resultB.append(protocoll).append("://").append(host);
         if (port > -1) {
@@ -227,7 +227,7 @@ public class Utils {
         String[] pathElements = path.split("/");
         if (pathElements.length > 3 && path.length() > maxPathLength) {
             StringBuffer resultPath = new StringBuffer();
-            for (int i=1; i<pathElements.length; i++ ) {
+            for (int i = 1; i < pathElements.length; i++) {
                 resultPath.append(pathElements[i]).append("/");
                 if (resultPath.length() + pathElements[pathElements.length - 1].length() + 5 > maxPathLength) {
                     resultB.append(resultPath).append(".../").append(pathElements[pathElements.length - 1]);
@@ -242,7 +242,7 @@ public class Utils {
         if (query != null) {
             if (resultB.length() < maxLength) {
                 if (query.length() > maxLength - resultB.length()) {
-                    resultB.append("?").append(query.substring(0,maxLength - resultB.length())).append("...");
+                    resultB.append("?").append(query.substring(0, maxLength - resultB.length())).append("...");
                 } else {
                     resultB.append("?").append(query);
                 }
@@ -250,8 +250,25 @@ public class Utils {
                 resultB.append("?...");
             }
         }
-        return resultB.toString(); 
+        return resultB.toString();
     }
-    
+
+    /**
+     * Returns position of given value in given array.
+     * @param array
+     * @param value value to search for, if null is passed -1 is returned
+     * @return position of value in array or -1
+     */
+    public static int getPosInArray(String[] array, String value) {
+        if (value == null) {
+            return -1;
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i].equals(value)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 }
