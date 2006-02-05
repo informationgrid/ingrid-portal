@@ -56,7 +56,7 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
 
         Topic snsTopic = null;
         try {
-            snsTopic = doSNSSearch(query, SEARCH_REQUESTED_START_HIT, SEARCH_REQUESTED_NUM_HITS);
+//            snsTopic = doSNSSearch(query, SEARCH_REQUESTED_START_HIT, SEARCH_REQUESTED_NUM_HITS);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching sns Topic", ex);
@@ -74,7 +74,7 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
     
     private Topic doSNSSearch(IngridQuery query, int startHit, int numHits) {
 
-        int SEARCH_TIMEOUT = 2000;
+        int SEARCH_TIMEOUT = 1000;
 
         Topic result = null;
 
@@ -83,17 +83,12 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             IngridHits hits = ibus.search(query, numHits, startHit, numHits, SEARCH_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
-            String plugId = null;
-            PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
-                plug = null;
                 try {
                     result = (Topic) results[i];
-                    plugId = result.getPlugId();
-                    plug = ibus.getIPlug(plugId);
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems fetching result details or iPlug", t);
+                        log.error("Problems fetching sns topic, query = "+query, t);
                     }
                 }
                 if (result == null) {

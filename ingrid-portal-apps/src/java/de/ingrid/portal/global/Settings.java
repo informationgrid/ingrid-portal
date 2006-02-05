@@ -18,21 +18,21 @@ public class Settings {
 
     /** Search parameters 
      * number of ranked hits per page */
-    public final static int RANKED_HITS_PER_PAGE = 10;
+    public final static int SEARCH_RANKED_HITS_PER_PAGE = 10;
 
     /** number of unranked hits per page */
-    public final static int UNRANKED_HITS_PER_PAGE = 10;
+    public final static int SEARCH_UNRANKED_HITS_PER_PAGE = 10;
 
     /** number of ranked pages displayed for selection ("selector pages") */
-    public final static int RANKED_NUM_PAGES_TO_SELECT = 5;
+    public final static int SEARCH_RANKED_NUM_PAGES_TO_SELECT = 5;
 
     /** number of unranked pages displayed for selection ("selector pages") */
-    public final static int UNRANKED_NUM_PAGES_TO_SELECT = 3;
+    public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 3;
 
     /** the initial datasource ! */
-    public final static String INITIAL_DATASOURCE = "1";
+    public final static String SEARCH_INITIAL_DATASOURCE = "1";
 
-    public final static int DEFAULT_SEARCH_TIMEOUT = 2000;
+    public final static int SEARCH_DEFAULT_TIMEOUT = 2000;
 
     // ============= definitions for IngridQuery ==============================
 

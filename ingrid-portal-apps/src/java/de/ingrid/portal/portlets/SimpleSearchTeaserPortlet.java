@@ -68,7 +68,7 @@ public class SimpleSearchTeaserPortlet extends AbstractVelocityMessagingPortlet 
 
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
         if (selectedDS == null) {
-            selectedDS = Settings.INITIAL_DATASOURCE;
+            selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
             publishRenderMessage(request, Settings.MSG_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);

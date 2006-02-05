@@ -81,7 +81,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         // business logic
         // ----------------------------------
 
-        int HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
+        int HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
 
         // do search
         SearchResultList searchRL = doSearch(query, startHit, HITS_PER_PAGE, true);
@@ -94,7 +94,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         // adapt settings of page nagihation
         HashMap pageNavigation = Utils.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
-                Settings.RANKED_NUM_PAGES_TO_SELECT);
+                Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------
         // prepare view

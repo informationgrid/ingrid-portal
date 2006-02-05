@@ -116,7 +116,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
         if (selectedDS == null) {
-            selectedDS = Settings.INITIAL_DATASOURCE;
+            selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
             publishRenderMessage(request, Settings.MSG_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);
@@ -166,7 +166,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             /*String*/selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
             if (selectedDS == null) {
-                selectedDS = Settings.INITIAL_DATASOURCE;
+                selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
             }
 
             // ----------------------------------
@@ -174,7 +174,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             // ----------------------------------
 
             // ranked results	
-            int RANKED_HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
+            int RANKED_HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
             IngridHits rankedHits = null;
             int numberOfHits = 0;
             try {
@@ -188,16 +188,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             // adapt settings of ranked page navigation
             HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE, numberOfHits,
-                    Settings.RANKED_NUM_PAGES_TO_SELECT);
+                    Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
             // unranked results	
-            int UNRANKED_HITS_PER_PAGE = Settings.UNRANKED_HITS_PER_PAGE;
+            int UNRANKED_HITS_PER_PAGE = Settings.SEARCH_UNRANKED_HITS_PER_PAGE;
             SearchResultList unrankedSRL = doUnrankedSearch(query, selectedDS, unrankedStartHit, UNRANKED_HITS_PER_PAGE);
             numberOfHits = unrankedSRL.getNumberOfHits();
 
             // adapt settings of unranked page navigation
             HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, UNRANKED_HITS_PER_PAGE,
-                    numberOfHits, Settings.UNRANKED_NUM_PAGES_TO_SELECT);
+                    numberOfHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
             // ----------------------------------
             // prepare view
@@ -314,7 +314,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance(); 
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.DEFAULT_SEARCH_TIMEOUT);
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
             IngridHit result = null;

@@ -85,7 +85,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         // business logic
         // ----------------------------------
 
-        int HITS_PER_PAGE = Settings.RANKED_HITS_PER_PAGE;
+        int HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
 
         // do search
         IngridHits hits = null;
@@ -108,7 +108,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // adapt settings of page nagihation
         HashMap pageNavigation = Utils.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
-                Settings.RANKED_NUM_PAGES_TO_SELECT);
+                Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------
         // prepare view
@@ -152,7 +152,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.DEFAULT_SEARCH_TIMEOUT);
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
 
             IngridHit result = null;
