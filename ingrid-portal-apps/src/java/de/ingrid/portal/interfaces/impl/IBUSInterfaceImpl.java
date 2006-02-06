@@ -183,7 +183,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail
                         .get(Settings.RESULT_KEY_URL), 80));
             }
-            //            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);
@@ -195,7 +195,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
             result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
-            //            result.put(Settings.RESULT_KEY_PLUG_ID, plug.getPlugId());
+            result.put(Settings.RESULT_KEY_PLUG_ID, plug.getPlugId());
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Plug Details into result:" + result, t);
