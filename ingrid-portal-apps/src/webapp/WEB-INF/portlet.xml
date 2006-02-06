@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE doc [
-<!ENTITY % iso-lat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
-                    "http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent">
-%iso-lat1;
-]>
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
 
