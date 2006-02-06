@@ -127,7 +127,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public Record getRecord(IngridHit result) {
         Record rec = null;
         try {
-            rec = getRecord(result);
+            rec = bus.getRecord(result);
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching Record of result: " + result, t);
