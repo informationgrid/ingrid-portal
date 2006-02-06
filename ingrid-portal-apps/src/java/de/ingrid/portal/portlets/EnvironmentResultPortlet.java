@@ -168,8 +168,18 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
                 if (detail != null) {
                     ibus.transferHitDetails(result, detail);
-                    result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
-                    result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY));
+                    // TODO: add " ..." to topic and category AT THE MOMENT !
+                    String temp = "";
+                    if (detail.get(Settings.RESULT_KEY_TOPIC) != null) {
+                        temp = detail.get(Settings.RESULT_KEY_TOPIC).toString() + " ...";
+                    }
+                    result.put(Settings.RESULT_KEY_TOPIC, temp);
+
+                    String temp2 = "";
+                    if (detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY) != null) {
+                        temp2 = detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY).toString() + " ...";
+                    }
+                    result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, temp2);
                 }
                 if (plug != null) {
                     ibus.transferPlugDetails(result, plug);
