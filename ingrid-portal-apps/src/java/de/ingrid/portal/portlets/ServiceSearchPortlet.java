@@ -9,18 +9,22 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
+
+    private final static Log log = LogFactory.getLog(ServiceSearchPortlet.class);
 
     /** Keys of parameters in session/request */
     private final static String PARAM_TEASER_CALL = "teaser";
@@ -46,7 +50,10 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             sf.init();
             // populate doesn't clear !!!
             sf.populate(request);
-            setupQuery(sf, request);
+            if (!sf.validate()) {
+                return;
+            }
+            setupQuery(request);
         }
         context.put("actionForm", sf);
 
@@ -74,17 +81,51 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        setupQuery(sf, request);
+        setupQuery(request);
     }
 
-    public void setupQuery(ServiceSearchForm sf, PortletRequest request) {
-        // TODO Create IngridQuery from form input !
+    public void setupQuery(PortletRequest request) {
+        // remove old query message for result portlet
+        cancelRenderMessage(request, Settings.MSG_QUERY);
+        // also set a message that a new query was performed, so former render parameters are ignored
+        publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
+
+        String FORM_VALUE_ALL = "all";
+
         IngridQuery query = null;
         try {
-            query = QueryStringParser.parse("to do");
-        } catch (ParseException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            query = new IngridQuery();
+            query.setDataType(Settings.QVALUE_DATATYPE_SERVICE);
+            /*
+             // RUBRIC
+             String[] rubrics = request.getParameterValues(ServiceSearchForm.FIELD_RUBRIC);
+             // don't set anything if "all" is selected
+             if (rubrics != null && Utils.getPosInArray(rubrics, FORM_VALUE_ALL) == -1) {
+             for (int i = 0; i < rubrics.length; i++) {
+             if (rubrics[i] != null) {
+             query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_TOPIC, rubrics[i]));
+             // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
+             break;
+             }
+             }
+             }
+             */
+            // PARTNER
+            String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
+            // don't set anything if "all" is selected
+            if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
+                for (int i = 0; i < partners.length; i++) {
+                    if (partners[i] != null) {
+                        query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_PARTNER, partners[i]));
+                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
+                        break;
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems setting up Query !", t);
+            }
         }
         // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);

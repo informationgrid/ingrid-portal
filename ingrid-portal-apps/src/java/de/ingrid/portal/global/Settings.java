@@ -32,7 +32,7 @@ public class Settings {
     /** the initial datasource ! */
     public final static String SEARCH_INITIAL_DATASOURCE = "1";
 
-    public final static int SEARCH_DEFAULT_TIMEOUT = 2000;
+    public final static int SEARCH_DEFAULT_TIMEOUT = 5000;
 
     // ============= definitions for IngridQuery ==============================
 

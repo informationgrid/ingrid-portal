@@ -84,6 +84,10 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     public void setupQuery(PortletRequest request) {
+        // remove old query message for result portlet
+        cancelRenderMessage(request, Settings.MSG_QUERY);
+        // also set a message that a new query was performed, so former render parameters are ignored
+        publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
 
         String FORM_VALUE_ALL = "all";
 
