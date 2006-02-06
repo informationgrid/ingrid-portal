@@ -95,7 +95,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             // TOPIC
             String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
             // don't set anything if "all" is selected
-            if (Utils.getPosInArray(topics, FORM_VALUE_ALL) == -1) {
+            if (topics != null && Utils.getPosInArray(topics, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < topics.length; i++) {
                     if (topics[i] != null) {
                         query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_TOPIC, topics[i]));
@@ -108,7 +108,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             // FUNCT_CATEGORY
             String[] functCategories = request.getParameterValues(EnvironmentSearchForm.FIELD_FUNCT_CATEGORY);
             // don't set anything if "all" is selected
-            if (Utils.getPosInArray(functCategories, FORM_VALUE_ALL) == -1) {
+            if (functCategories != null && Utils.getPosInArray(functCategories, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < functCategories.length; i++) {
                     if (functCategories[i] != null) {
                         query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_FUNCT_CATEGORY,
@@ -122,7 +122,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             // PARTNER
             String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
             // don't set anything if "all" is selected
-            if (Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
+            if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < partners.length; i++) {
                     if (partners[i] != null) {
                         query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_PARTNER, partners[i]));

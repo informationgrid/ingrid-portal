@@ -260,7 +260,7 @@ public class Utils {
      * @return position of value in array or -1
      */
     public static int getPosInArray(String[] array, String value) {
-        if (value == null) {
+        if (array == null || value == null) {
             return -1;
         }
         for (int i = 0; i < array.length; i++) {

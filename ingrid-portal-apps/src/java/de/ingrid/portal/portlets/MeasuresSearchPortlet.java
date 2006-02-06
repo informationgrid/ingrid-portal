@@ -9,6 +9,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -16,11 +18,12 @@ import de.ingrid.portal.forms.MeasuresSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
+
+    private final static Log log = LogFactory.getLog(MeasuresSearchPortlet.class);
 
     /** Keys of parameters in session/request */
     private final static String PARAM_TEASER_CALL = "teaser";
@@ -46,7 +49,10 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             af.init();
             // populate doesn't clear !!!
             af.populate(request);
-            setupQuery(af, request);
+            if (!af.validate()) {
+                return;
+            }
+            setupQuery(request);
         }
         context.put("actionForm", af);
 
@@ -74,17 +80,48 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        setupQuery(af, request);
+        setupQuery(request);
     }
 
-    public void setupQuery(MeasuresSearchForm sf, PortletRequest request) {
-        // TODO Create IngridQuery from form input !
+    public void setupQuery(PortletRequest request) {
+
+        String FORM_VALUE_ALL = "all";
+
         IngridQuery query = null;
         try {
-            query = QueryStringParser.parse("to do");
-        } catch (ParseException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            query = new IngridQuery();
+            query.setDataType(Settings.QVALUE_DATATYPE_MEASURES);
+
+            // RUBRIC
+            /*
+             String[] rubrics = request.getParameterValues(MeasuresSearchForm.FIELD_RUBRIC);
+             // don't set anything if "all" is selected
+             if (rubrics != null && Utils.getPosInArray(rubrics, FORM_VALUE_ALL) == -1) {
+             for (int i = 0; i < rubrics.length; i++) {
+             if (rubrics[i] != null) {
+             query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_TOPIC, rubrics[i]));
+             // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
+             break;
+             }
+             }
+             }
+             */
+            // PARTNER
+            String[] partners = request.getParameterValues(MeasuresSearchForm.FIELD_PARTNER);
+            // don't set anything if "all" is selected
+            if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
+                for (int i = 0; i < partners.length; i++) {
+                    if (partners[i] != null) {
+                        query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_PARTNER, partners[i]));
+                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
+                        break;
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems setting up Query !", t);
+            }
         }
         // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);

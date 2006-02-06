@@ -13,10 +13,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.search.SearchResultList;
-import de.ingrid.portal.search.mockup.SearchResultListMockup;
+import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 
 public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -84,14 +88,24 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         int HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
 
         // do search
-        SearchResultList searchRL = doSearch(query, startHit, HITS_PER_PAGE, true);
-        int numberOfHits = searchRL.getNumberOfHits();
+        IngridHits hits = null;
+        int numberOfHits = 0;
+        try {
+            hits = doSearch(query, startHit, HITS_PER_PAGE);
+            numberOfHits = (int) hits.length();
+        } catch (Exception ex) {
+            if (log.isInfoEnabled()) {
+                log.info("Problems performing environment catalogue search !");
+            }
+        }
+
         if (numberOfHits == 0) {
             // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
         }
+
         // adapt settings of page nagihation
         HashMap pageNavigation = Utils.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
@@ -102,7 +116,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
         Context context = getContext(request);
         context.put("rankedPageSelector", pageNavigation);
-        context.put("rankedResultList", searchRL);
+        context.put("rankedResultList", hits);
 
         super.doView(request, response);
     }
@@ -128,22 +142,44 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         }
     }
 
-    private SearchResultList doSearch(IngridQuery query, int start, int limit, boolean ranking) {
-
-        SearchResultList result = new SearchResultList();
-
-        // TODO DO MEASURES SEARCH HERE
-        SearchResultList l = SearchResultListMockup.getRankedSearchResultList();
-        if (start > l.size())
-            start = l.size() - limit - 1;
-        for (int i = start; i < start + limit; i++) {
-            if (i >= l.size())
-                break;
-            result.add(l.get(i));
+    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
+        if (log.isDebugEnabled()) {
+            log.debug("Messwerte IngridQuery = " + query);
         }
-        result.setNumberOfHits(l.getNumberOfHits());
 
-        return result;
+        int currentPage = (int) (startHit / hitsPerPage) + 1;
+
+        IngridHits hits = null;
+        try {
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
+            IngridHit[] results = hits.getHits();
+
+            IngridHit result = null;
+            IngridHitDetail detail = null;
+            PlugDescription plug = null;
+            for (int i = 0; i < results.length; i++) {
+                result = results[i];
+                detail = ibus.getDetails(result, query);
+                plug = ibus.getIPlug(result);
+
+                if (result == null) {
+                    continue;
+                }
+                if (detail != null) {
+                    ibus.transferHitDetails(result, detail);
+                    //                    result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
+                }
+                if (plug != null) {
+                    ibus.transferPlugDetails(result, plug);
+                }
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing Search !", t);
+            }
+        }
+
+        return hits;
     }
-
 }
