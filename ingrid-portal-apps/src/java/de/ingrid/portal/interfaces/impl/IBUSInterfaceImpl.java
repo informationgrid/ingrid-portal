@@ -46,12 +46,24 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             try {
                 instance = new IBUSInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the WMS interface.");
+                if (log.isFatalEnabled()) {
+                    log.fatal("Error initiating the iBus interface.", e);
+                }
                 e.printStackTrace();
+                resetBus();
             }
         }
 
         return instance;
+    }
+
+    public static synchronized void resetBus() {
+        if (instance != null) {
+            instance = null;
+            if (log.isInfoEnabled()) {
+                log.info("iBus Problems and IBUSInterface Singleton exists -> WE RESET IBUSInterface Singleton, so new Instance is created next time !");
+            }            
+        }
     }
 
     private IBUSInterfaceImpl() throws Exception {
@@ -79,7 +91,14 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                     .parseInt(config.getString("ibus_port", "11112")));
             RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
             bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+
+            if (bus == null) {
+                throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
+            }
         } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems setting up IBUSInterfaceImpl Singleton, we shutdown Proxy and communication", t);
+            }
             if (proxy != null)
                 proxy.shutdown();
             if (communication != null)
@@ -101,7 +120,20 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      */
     public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout)
             throws Exception {
-        return bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
+        IngridHits hits = null;
+        try {
+            hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems doing iBus search, query=" + query + ", hitsPerPage=" + hitsPerPage
+                        + ", currentPage=" + currentPage + ", WE RESET IBUS", t);
+            }
+            // !!! we reset Singleton, so new Instance is created next time !!!
+            resetBus();
+            throw new Exception(t);
+        }
+
+        return hits;
     }
 
     /**
@@ -230,4 +262,5 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         return col;
     }
+
 }
