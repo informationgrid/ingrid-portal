@@ -1,6 +1,9 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -16,6 +19,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 
 
@@ -47,6 +51,16 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         try {
             Record record = ibus.getRecord(hit);
             context.put("record", record);
+            HashMap recordMap = new HashMap();
+
+            // serch for column
+            Column[] columns = record.getColumns();
+            for (int i = 0; i < columns.length; i++) {
+                recordMap.put(columns[i].getTargetName(), record.getValueAsString(columns[i]));
+            }
+            addSubRecords(record, recordMap);
+            
+            context.put("structuredRecord", recordMap);
         } catch(Throwable t){
             log.error("Error getting result record.", t);
         }
@@ -57,6 +71,32 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException
     {
 
-    }    
+    }
+    
+    private void addSubRecords(Record record, HashMap map) {
+        Column[] columns;
+        ArrayList subRecordList;
+        Record[] subRecords = record.getSubRecords();
+
+        for (int i = 0; i < subRecords.length; i++) {
+            HashMap subRecordMap = new HashMap();
+            columns = subRecords[i].getColumns();
+            for (int j = 0; j < columns.length; j++) {
+                subRecordMap.put(columns[j].getTargetName(), subRecords[i].getValueAsString(columns[j]));
+            }
+            if (map.containsKey(columns[0].getTargetName()) && map.get(columns[0].getTargetName()) instanceof ArrayList) {
+                subRecordList = (ArrayList)map.get(columns[0].getTargetName());
+            } else {
+                subRecordList = new ArrayList();
+                map.put(columns[0].getTargetName(), subRecordList);
+            }
+            subRecordList.add(subRecordMap);
+            // add subrecords
+            addSubRecords(subRecords[i], subRecordMap);
+        }
+        
+    }
+    
+    
     
 }

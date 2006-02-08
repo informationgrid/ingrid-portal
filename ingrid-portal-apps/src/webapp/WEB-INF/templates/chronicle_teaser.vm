@@ -2,10 +2,10 @@
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
 
-	  <span><a href="umweltchronik_results_1997_08_18.html"><strong>Vor 8 Jahren: Störfall im AKW Biblis</strong> (18. August 1997)</a></span>
 <!--
-      <span><strong>snsTopic.getName() = $!snsTopic.getTopicName()</strong></span>
--->
+	  <span><a href="umweltchronik_results_1997_08_18.html"><strong>Vor 8 Jahren: Störfall im AKW Biblis</strong> (18. August 1997)</a></span>
+-->	  
+	  <span><a href="umweltchronik_results_1997_08_18.html"><strong>Vor ... Jahren: $!snsAnniversray.title</strong> (18. August 1997)</a></span>
 
       <span class="clearer"></span>
     </p>
