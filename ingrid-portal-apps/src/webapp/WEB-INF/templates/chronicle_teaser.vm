@@ -5,8 +5,11 @@
 <!--
 	  <span><a href="umweltchronik_results_1997_08_18.html"><strong>Vor 8 Jahren: Störfall im AKW Biblis</strong> (18. August 1997)</a></span>
 -->	  
-	  <span><a href="umweltchronik_results_1997_08_18.html"><strong>Vor ... Jahren: $!snsAnniversray.title</strong> (18. August 1997)</a></span>
-
+#if($snsAnniversray.years && $snsAnniversray.title)
+	<span><a href="umweltchronik_results_1997_08_18.html"><strong>Vor $snsAnniversray.years Jahren: $snsAnniversray.title</strong> ($snsAnniversray.from)#if($snsAnniversray.until) - $snsAnniversray.until#end</a></span>
+#else
+	<span><strong>Kein Jahrestag gefunden.</strong></span>
+#end
       <span class="clearer"></span>
     </p>
     <p class="iconLink">

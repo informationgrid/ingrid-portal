@@ -5,16 +5,15 @@ package de.ingrid.portal.interfaces.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.SNSInterface;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
@@ -51,8 +50,7 @@ public class SNSInterfaceImpl implements SNSInterface {
     /**
      * @see de.ingrid.portal.interfaces.SNSInterface#getAnniversary(java.sql.Date)
      */
-    public HashMap getAnniversary(Date d) {
-        // parse date to string
+    public DetailedTopic getAnniversary(Date d) {
         
         SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd" );
         String dateStr = df.format( d );
@@ -60,7 +58,7 @@ public class SNSInterfaceImpl implements SNSInterface {
         // ask ibus for anniversary
         IngridQuery query;
         try {
-            query = QueryStringParser.parse("1978-03-17");
+            query = QueryStringParser.parse(dateStr);
             query.setDataType(IDataTypes.SNS);
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
             
@@ -70,15 +68,7 @@ public class SNSInterfaceImpl implements SNSInterface {
             IngridHit[] hitsArray = hits.getHits();
             if (hitsArray.length > 0) {
                 int entry = (int)(Math.random() * hitsArray.length);
-                IngridHitDetail detail = iBus.getDetails(hitsArray[entry], query);
-                HashMap result = new HashMap();
-                result.put("title", detail.get("topicName"));
-//                myDate = df.parse(myString);
-                result.put("from", detail.get("from"));
-                result.put("until", detail.get("until"));
-                result.put("topicId", detail.get("topicId"));
-                
-                return result;
+                return (DetailedTopic)iBus.getDetails(hitsArray[entry], query);
             }
             // TODO implement fallback
         } catch (Exception e) {

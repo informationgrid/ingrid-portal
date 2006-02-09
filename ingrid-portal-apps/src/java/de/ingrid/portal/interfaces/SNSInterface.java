@@ -5,7 +5,9 @@ package de.ingrid.portal.interfaces;
 
 import java.util.HashMap;
 
+import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.utils.IngridHitDetail;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -24,8 +26,8 @@ public interface SNSInterface {
      *  2.) +- 30 days
      * 
      * @param date The date to search an anniverary for.
-     * @return The Topic representing the anniversary or null if no anniversary was found.
+     * @return The DetailedTopic representing the anniversary or null if no anniversary was found.
      */
-    HashMap getAnniversary(java.util.Date date);
+    DetailedTopic getAnniversary(java.util.Date date);
     
 }
