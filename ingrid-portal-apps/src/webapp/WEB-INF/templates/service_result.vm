@@ -1,6 +1,6 @@
 	<div class="section ">    
       <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector)
+#renderResultCounterCatalogue($rankedPageSelector 'Service')
       </div>
       <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)
@@ -35,7 +35,7 @@
           </div>
 #end
       <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector)
+#renderResultCounterCatalogue($rankedPageSelector 'Service')
       </div>
       <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)

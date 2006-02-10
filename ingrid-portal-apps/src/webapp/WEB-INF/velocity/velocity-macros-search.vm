@@ -1,8 +1,8 @@
 ## ------------------------------
 ## search macros
 ## ------------------------------
-#macro (renderResultCounterCatalogue $pageSelector)
-        <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits</strong> Einträgen in <strong>Service</strong>
+#macro (renderResultCounterCatalogue $pageSelector $catalogueName)
+        <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits</strong> Einträgen in <strong>$!catalogueName</strong>
 #end
 
 #macro (renderRankedResultCounter $pageSelector)
