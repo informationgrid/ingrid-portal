@@ -60,8 +60,12 @@
             $!rs.abstract 
             </p>
             <p class="result_metadata">
+##		    #if ($rs.type == "nutch")
+## NO Partner set in result detail !!! Only in catalogues ?
+##              Anbieter: $!rs.partner<br />
+##			#else
               Anbieter: $!rs.provider<br />
-    
+##			#end
               Quelle: $!rs.source<br />
               Ranking: $!rs.score<br />
             </p>

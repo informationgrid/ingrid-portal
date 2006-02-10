@@ -95,7 +95,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             numberOfHits = (int) hits.length();
         } catch (Exception ex) {
             if (log.isInfoEnabled()) {
-                log.info("Problems performing environment catalogue search !");
+                log.info("Problems performing service catalogue search !");
             }
         }
 

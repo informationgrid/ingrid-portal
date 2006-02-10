@@ -39,6 +39,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     private static Bus bus = null;
 
+    private static SocketCommunication communication = null;
+
+    private static ProxyService proxy = null;
+
     private Configuration config;
 
     public static synchronized IBUSInterface getInstance() {
@@ -49,8 +53,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 if (log.isFatalEnabled()) {
                     log.fatal("Error initiating the iBus interface.", e);
                 }
-                e.printStackTrace();
-                resetBus();
             }
         }
 
@@ -58,11 +60,26 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     }
 
     public static synchronized void resetBus() {
-        if (instance != null) {
-            instance = null;
+        try {
             if (log.isInfoEnabled()) {
-                log.info("iBus Problems and IBUSInterface Singleton exists -> WE RESET IBUSInterface Singleton, so new Instance is created next time !");
-            }            
+                log
+                        .info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
+            }
+            if (proxy != null) {
+                proxy.shutdown();
+                proxy = null;
+            }
+            if (communication != null) {
+                communication.shutdown();
+                communication = null;
+            }
+            if (instance != null) {
+                instance = null;
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems RESETTING IBUSInterfaceImpl Singleton", t);
+            }
         }
     }
 
@@ -71,8 +88,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         String configFilename = getResourceAsStream("/ibus_interface.properties");
         config = new PropertiesConfiguration(configFilename);
 
-        SocketCommunication communication = null;
-        ProxyService proxy = null;
         try {
             communication = new SocketCommunication();
 
@@ -96,13 +111,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
             }
         } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems setting up IBUSInterfaceImpl Singleton, we shutdown Proxy and communication", t);
-            }
-            if (proxy != null)
-                proxy.shutdown();
-            if (communication != null)
-                communication.shutdown();
+            resetBus();
             throw new Exception("Error initalize ibus interface.", t);
         }
     }
@@ -216,6 +225,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         .get(Settings.RESULT_KEY_URL), 80));
             }
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+            result.put(Settings.RESULT_KEY_PARTNER, detail.get(Settings.RESULT_KEY_PARTNER));
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);

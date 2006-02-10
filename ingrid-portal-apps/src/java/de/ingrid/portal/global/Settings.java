@@ -54,9 +54,11 @@ public class Settings {
     public final static String QVALUE_DATATYPE_ENVTOPIC = "www_topic";
     
     // ============= definitions to access Result data (render data) ==============================
+    // IF POSSIBLE, USE THE KEYS TO ACCESS HIT DATA ALSO AS KEYS FOR RESULT DATA !!! 
 
     public final static String RESULT_KEY_TITLE = "title";
     public final static String RESULT_KEY_ABSTRACT = "abstract";
+    public final static String RESULT_KEY_PARTNER = "partner";
     public final static String RESULT_KEY_TOPIC = "topic";
     public final static String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
     public final static String RESULT_KEY_URL = "url";

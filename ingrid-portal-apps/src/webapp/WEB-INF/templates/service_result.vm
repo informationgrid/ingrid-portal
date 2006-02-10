@@ -17,7 +17,7 @@
             $!rs.abstract 
             </p>
             <p class="result_metadata">
-              Anbieter: $!rs.provider<br />
+              Anbieter: $!rs.partner<br />
 <!--
 			  Rubrik: $!rs.topic
 -->
