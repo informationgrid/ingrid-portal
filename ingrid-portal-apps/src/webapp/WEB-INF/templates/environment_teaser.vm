@@ -5,27 +5,23 @@
 <ul class="catalog">
     <li><a href="portal/main-environment.psml?themes=Abfall&teaser=1">Abfall</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Altlasten&teaser=1">Altlasten</a><span class="separator">&nbsp;</span></li>       
-    <!--li><a href="portal/main-environment.psml?themes=bio&teaser=1">Artenvielfalt</a><span class="separator">&nbsp;</span></li-->
     <li><a href="portal/main-environment.psml?themes=Bauen&teaser=1">Bauen</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Boden&teaser=1">Boden</a><span class="separator">&nbsp;</span></li>     
     <li><a href="portal/main-environment.psml?themes=Chemikalien&teaser=1">Chemikalien</a><span class="separator">&nbsp;</span></li>        
-    <li><a href="portal/main-environment.psml?themes=DatenKarten&teaser=1">Daten/Karten</a><span class="separator">&nbsp;</span></li> 
     <li><a href="portal/main-environment.psml?themes=Energie&teaser=1">Energie</a><span class="separator">&nbsp;</span></li> 
     <li><a href="portal/main-environment.psml?themes=Forstwirtschaft&teaser=1">Forstwirtschaft</a><span class="separator">&nbsp;</span></li> 
     <li><a href="portal/main-environment.psml?themes=Gentechnik&teaser=1">Gentechnik</a><span class="separator">&nbsp;</span></li>     
     <li><a href="portal/main-environment.psml?themes=Geologie&teaser=1">Geologie</a><span class="separator">&nbsp;</span></li>    
     <li><a href="portal/main-environment.psml?themes=Gesundheit&teaser=1">Gesundheit</a><span class="separator">&nbsp;</span></li>     
-    <li><a href="portal/main-environment.psml?themes=LaermErschuetterung&teaser=1">Lärm/Erschütterungen</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=LaermErschuetterung&teaser=1">Lärm und Erschütterungen</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Landwirtschaft&teaser=1">Landwirtschaft</a><span class="separator">&nbsp;</span></li>
-    <li><a href="portal/main-environment.psml?themes=LuftKlima&teaser=1">Luft/Klima</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=LuftKlima&teaser=1">Luft und Klima</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=NachhaltigeEntwicklung&teaser=1">Nachhaltige Entwicklung</a><span class="separator">&nbsp;</span></li>
-    <li><a href="portal/main-environment.psml?themes=NaturLandschaft&teaser=1">Natur/Landschaft</a><span class="separator">&nbsp;</span></li>
-    <li><a href="portal/main-environment.psml?themes=Statusberichte&teaser=1">Statusberichte</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=NaturLandschaft&teaser=1">Natur und Landschaft</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Strahlung&teaser=1">Strahlung</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Tierschutz&teaser=1">Tierschutz</a><span class="separator">&nbsp;</span></li>
-    <li><a href="portal/main-environment.psml?themes=Umweltinformation&teaser=1">Umweltinformationen</a><span class="separator">&nbsp;</span></li>
+    <li><a href="portal/main-environment.psml?themes=Umweltinformation&teaser=1">Umweltinformation</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Umweltwirtschaft&teaser=1">Umweltwirtschaft</a><span class="separator">&nbsp;</span></li>
-    <li><a href="portal/main-environment.psml?themes=Umweltzustand&teaser=1">Umweltzustand</a><span class="separator">&nbsp;</span></li>
     <li><a href="portal/main-environment.psml?themes=Verkehr&teaser=1">Verkehr</a><span class="separator">&nbsp;</span></li>       
     <li><a href="portal/main-environment.psml?themes=Wasser&teaser=1">Wasser</a><span class="separator">&nbsp;</span></li>
 </ul>

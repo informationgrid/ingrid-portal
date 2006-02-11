@@ -17,15 +17,11 @@
 				</option>
 				<option value="Altlasten" #getSelected('themes' 'Altlasten')>Altlasten
 				</option>
-				<!--option value="bio" #getSelected('themes' 'Artenvielfalt')>Artenvielfalt
-				</option-->
 				<option value="Bauen" #getSelected('themes' 'Bauen')>Bauen
 				</option>
 				<option value="Boden" #getSelected('themes' 'Boden')>Boden
 				</option>
 				<option value="Chemikalien" #getSelected('themes' 'Chemikalien')>Chemikalien
-				</option>
-				<option value="DatenKarten" #getSelected('themes' 'DatenKarten')>Daten/Karten
 				</option>
 				<option value="Energie" #getSelected('themes' 'Energie')>Energie
 				</option>
@@ -37,29 +33,23 @@
 				</option>
 				<option value="Gesundheit" #getSelected('themes' 'Gesundheit')>Gesundheit
 				</option>
-				<option value="LaermErschuetterung" #getSelected('themes' 'LaermErschuetterung')>Lärm/Erschütterungen
+				<option value="LaermErschuetterung" #getSelected('themes' 'LaermErschuetterung')>Lärm und Erschütterungen
 				</option>
 				<option value="Landwirtschaft" #getSelected('themes' 'Landwirtschaft')>Landwirtschaft
 				</option>
-				<option value="LuftKlima" #getSelected('themes' 'LuftKlima')>Luft/Klima
+				<option value="LuftKlima" #getSelected('themes' 'LuftKlima')>Luft und Klima
 				</option>
 				<option value="NachhaltigeEntwicklung" #getSelected('themes' 'NachhaltigeEntwicklung')>Nachhaltige Entwicklung
 				</option>
-				<!--option value="nat" #getSelected('themes' 'nat')>Naturschutz
-				</option-->
-				<option value="NaturLandschaft" #getSelected('themes' 'NaturLandschaft')>Natur/Landschaft
-				</option>
-				<option value="Statusberichte" #getSelected('themes' 'Statusberichte')>Statusberichte
+				<option value="NaturLandschaft" #getSelected('themes' 'NaturLandschaft')>Natur und Landschaft
 				</option>
 				<option value="Strahlung" #getSelected('themes' 'Strahlung')>Strahlung
 				</option>
 				<option value="Tierschutz" #getSelected('themes' 'Tierschutz')>Tierschutz
 				</option>
-				<option value="Umweltinformation" #getSelected('themes' 'Umweltinformation')>Umweltinformationen
+				<option value="Umweltinformation" #getSelected('themes' 'Umweltinformation')>Umweltinformation
 				</option>
 				<option value="Umweltwirtschaft" #getSelected('themes' 'Umweltwirtschaft')>Umweltwirtschaft
-				</option>
-				<option value="Umweltzustand" #getSelected('themes' 'Umweltzustand')>Umweltzustand
 				</option>
 				<option value="Verkehr" #getSelected('themes' 'Verkehr')>Verkehr
 				</option>
