@@ -169,6 +169,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (detail != null) {
                     ibus.transferHitDetails(result, detail);
                     // TODO: add " ..." to topic and category AT THE MOMENT !
+                    // TODO map topic and funct_category key to full value
                     String temp = "";
                     if (detail.get(Settings.RESULT_KEY_TOPIC) != null) {
                         temp = detail.get(Settings.RESULT_KEY_TOPIC).toString() + " ...";

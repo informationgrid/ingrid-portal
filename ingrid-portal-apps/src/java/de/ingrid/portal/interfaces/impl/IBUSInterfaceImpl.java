@@ -225,6 +225,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         .get(Settings.RESULT_KEY_URL), 80));
             }
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+            // TODO map partner key to full value
             result.put(Settings.RESULT_KEY_PARTNER, detail.get(Settings.RESULT_KEY_PARTNER));
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
