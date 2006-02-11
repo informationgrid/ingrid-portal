@@ -94,7 +94,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridQuery query = null;
         try {
             query = new IngridQuery();
-            query.setDataType(Settings.QVALUE_DATATYPE_ENVTOPIC);
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVTOPIC));
 
             // TOPIC
             String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
@@ -102,7 +102,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             if (topics != null && Utils.getPosInArray(topics, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < topics.length; i++) {
                     if (topics[i] != null) {
-                        query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_TOPIC, topics[i]));
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_TOPIC, topics[i]));
                         // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
                         break;
                     }
@@ -115,7 +115,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             if (functCategories != null && Utils.getPosInArray(functCategories, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < functCategories.length; i++) {
                     if (functCategories[i] != null) {
-                        query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_FUNCT_CATEGORY,
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_FUNCT_CATEGORY,
                                 functCategories[i]));
                         // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
                         break;
@@ -129,7 +129,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < partners.length; i++) {
                     if (partners[i] != null) {
-                        query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_PARTNER, partners[i]));
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_PARTNER, partners[i]));
                         // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
                         break;
                     }

@@ -247,7 +247,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             // when separate portlets: just send a message that a new query was executed and do this in the
             // search_result_similar Portlet
-            ps.setBoolean("isSimilarOpen", false);
+            ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
@@ -257,10 +257,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // BEGIN: search_result_similar Portlet
         if (action.equalsIgnoreCase("doOpenSimilar")) {
-            ps.setBoolean("isSimilarOpen", true);
+            ps.putBoolean("isSimilarOpen", true);
             ps.put("similarRoot", SimilarNodeFactoryMockup.getSimilarNodes());
         } else if (action.equalsIgnoreCase("doCloseSimilar")) {
-            ps.setBoolean("isSimilarOpen", false);
+            ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
         } else if (action.equalsIgnoreCase("doOpenNode")) {
             SimilarNodeFactoryMockup.setOpen((SimilarTreeNode) ps.get("similarRoot"), request.getParameter("nodeId"),
@@ -420,7 +420,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private PageState initPageState(PageState ps) {
         ps.put("query", null);
-        ps.setBoolean("isSimilarOpen", false);
+        ps.putBoolean("isSimilarOpen", false);
         ps.put("similarRoot", null);
         return ps;
     }

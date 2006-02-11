@@ -11,10 +11,12 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.SNSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -59,7 +61,7 @@ public class SNSInterfaceImpl implements SNSInterface {
         IngridQuery query;
         try {
             query = QueryStringParser.parse(dateStr);
-            query.setDataType(IDataTypes.SNS);
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
             
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();

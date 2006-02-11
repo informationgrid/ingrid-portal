@@ -95,7 +95,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridQuery query = null;
         try {
             query = new IngridQuery();
-            query.setDataType(Settings.QVALUE_DATATYPE_SERVICE);
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SERVICE));
             /*
              // RUBRIC
              String[] rubrics = request.getParameterValues(ServiceSearchForm.FIELD_RUBRIC);
@@ -116,7 +116,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < partners.length; i++) {
                     if (partners[i] != null) {
-                        query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_PARTNER, partners[i]));
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_PARTNER, partners[i]));
                         // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
                         break;
                     }
