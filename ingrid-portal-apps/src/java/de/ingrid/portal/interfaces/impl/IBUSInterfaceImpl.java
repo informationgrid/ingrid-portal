@@ -18,6 +18,7 @@ import de.ingrid.ibus.Bus;
 import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -225,8 +226,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         .get(Settings.RESULT_KEY_URL), 80));
             }
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
-            // TODO map partner key to full value
-            result.put(Settings.RESULT_KEY_PARTNER, detail.get(Settings.RESULT_KEY_PARTNER));
+            String partnerName = UtilsDB.getPartnerFromKey(detail.get(Settings.RESULT_KEY_PARTNER).toString());
+            result.put(Settings.RESULT_KEY_PARTNER, partnerName);
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);
