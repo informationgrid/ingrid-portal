@@ -15,3 +15,8 @@
 
 ## similar terms: Should be handled BY SEPARATE PORTLET !
 #parse ('/WEB-INF/templates/search_result_similar.vm')
+
+    </div>
+    <br />
+  </div>
+  <div class="clearer"></div>

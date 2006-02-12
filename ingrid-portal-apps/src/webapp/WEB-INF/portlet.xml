@@ -158,7 +158,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_result_new.vm</value>
+            <value>/WEB-INF/templates/search_result.vm</value>
         </init-param>
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>

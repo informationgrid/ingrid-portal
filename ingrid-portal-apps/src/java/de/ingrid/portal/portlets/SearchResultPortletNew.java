@@ -44,7 +44,7 @@ public class SearchResultPortletNew extends AbstractVelocityMessagingPortlet {
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
 
-    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/search_result_new.vm";
+    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/search_result.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
 
