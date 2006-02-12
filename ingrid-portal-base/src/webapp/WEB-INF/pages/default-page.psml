@@ -8,7 +8,7 @@
   <metadata name="title" xml:lang="de">Startseite</metadata>
 
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
+    <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SimpleSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">

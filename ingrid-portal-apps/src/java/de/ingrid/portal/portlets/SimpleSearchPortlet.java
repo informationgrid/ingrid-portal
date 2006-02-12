@@ -32,9 +32,9 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  * @version
  * 
  */
-public class SimpleSearchTeaserPortlet extends AbstractVelocityMessagingPortlet {
+public class SimpleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(SimpleSearchTeaserPortlet.class);
+    private final static Log log = LogFactory.getLog(SimpleSearchPortlet.class);
 
     /** keys of possible titles, can be set via PSML portlet preferences */
     private final static String SEARCH_RESULT_PAGE = "portal/main-search.psml";

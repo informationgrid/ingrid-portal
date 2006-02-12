@@ -10,7 +10,7 @@
     <fragment id="nested" type="layout" name="jetspeed-layouts::IngridOneColumn">
         <fragment id="nested100345" type="layout" name="jetspeed-layouts::IngridTwoColumns">
           <property layout="OneColumn" name="row" value="0"/>
-          <fragment id="nested100121" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
+          <fragment id="nested100121" type="portlet" name="ingrid-portal-apps::SimpleSearch">
             <property layout="TwoColumns" name="row" value="0"/>
             <property layout="TwoColumns" name="column" value="0"/>
           </fragment>                                

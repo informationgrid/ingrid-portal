@@ -28,22 +28,22 @@
     <!-- Home                    -->
     <!-- *********************** -->
 
-    <portlet id="SimpleSearchTeaser">
+    <portlet id="SimpleSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/simple_search_teaser.vm</value>
+            <value>/WEB-INF/templates/simple_search.vm</value>
         </init-param>
-        <portlet-name>SimpleSearchTeaser</portlet-name>
-        <display-name>Suche</display-name>
-        <description>This portlet displayes a search ox on the home page.</description>
-        <portlet-class>de.ingrid.portal.portlets.SimpleSearchTeaserPortlet</portlet-class>
+        <portlet-name>SimpleSearch</portlet-name>
+        <display-name>Einfache Suche</display-name>
+        <description>This portlet displayes a search box for the home AND main search page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SimpleSearchPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.SimpleSearchTeaserResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.SimpleSearchResources</resource-bundle>            
     </portlet>
 
     <portlet id="RssNewsTeaser">
