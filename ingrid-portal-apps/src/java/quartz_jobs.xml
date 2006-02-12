@@ -18,7 +18,7 @@
                 <job-group>DEFAULT</job-group>
                 <!-- repeat indefinitely every 10 seconds -->
                 <repeat-count>-1</repeat-count>
-                <repeat-interval>60000</repeat-interval>
+                <repeat-interval>3600000</repeat-interval>
             </simple>
         </trigger>
     </job>

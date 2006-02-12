@@ -310,7 +310,7 @@
 		<dependency>
 			<id>rome</id>
 			<version>
-				0.7
+				0.8
 			</version>
 			<properties>
 	           <war.bundle>true</war.bundle>

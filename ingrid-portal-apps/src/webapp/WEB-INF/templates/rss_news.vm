@@ -1,7 +1,7 @@
 <p>Weitere Meldungen unserer Anbieter sortiert nach Aktualität.</p>
 #foreach($rssEntry in $rssEntries)
   <div class="resultset">
-    <span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span><a href="$!rssEntry.link" target="_new" title="Link öffnet in neuem Fenster">$!rssEntry.title</a></strong><em class="date">, $!rssEntry.publishedDate</em></span>
+    <span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span><a href="$!rssEntry.link" target="_new" title="Link öffnet in neuem Fenster">$!rssEntry.title</a></strong><em class="date">, $date.format('medium_date',$rssEntry.publishedDate)</em></span>
     <p class="result_description">
       $!rssEntry.description
     </p>

@@ -29,11 +29,12 @@ import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
 
 /**
- * Quartz job for fetching all RSS feeds in database table ingrid_rss_source. All RSS entries
- * not older than one month will be added to the database table ingrid_rss_store. Entries in 
- * ingrid_rss_store that are older than one month will be deleted.
- *
- *
+ * Quartz job for fetching all RSS feeds in database table ingrid_rss_source.
+ * All RSS entries not older than one month will be added to the database table
+ * ingrid_rss_store. Entries in ingrid_rss_store that are older than one month
+ * will be deleted.
+ * 
+ * 
  * @author joachim@wemove.com
  */
 public class RSSFetcherJob implements Job {
@@ -50,19 +51,23 @@ public class RSSFetcherJob implements Job {
         try {
             fHibernateManager = HibernateManager.getInstance();
             Session session = this.fHibernateManager.getSession();
-            List rssSources = session.createCriteria(IngridRSSSource.class).list();
 
             ArrayList feeds = new ArrayList();
             SyndFeed feed = null;
             URL feedUrl = null;
             SyndFeedInput input = null;
 
+            // get rss sources from database
+            List rssSources = session.createCriteria(IngridRSSSource.class).list();
             Iterator it = rssSources.iterator();
             while (it.hasNext()) {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
                 feedUrl = new URL(rssSource.getUrl());
                 input = new SyndFeedInput();
                 feed = input.build(new XmlReader(feedUrl));
+                if (feed.getLanguage() == null) {
+                    feed.setLanguage(rssSource.getLanguage());
+                }
                 feeds.add(feed);
             }
 
@@ -71,45 +76,57 @@ public class RSSFetcherJob implements Job {
             int cnt = 0;
 
             Calendar cal;
-
+            // work on all feeds
             for (int i = 0; i < feeds.size(); i++) {
                 feed = (SyndFeed) feeds.get(i);
                 it = feed.getEntries().iterator();
+                // work on all rss items of the feed
                 while (it.hasNext()) {
                     entry = (SyndEntry) it.next();
-                    List rssEntries = session.createCriteria(IngridRSSStore.class).add(
-                            Restrictions.eq("link", entry.getLink())).add(Restrictions.eq("language", "de")).list();
-                    if (rssEntries.isEmpty()) {
-                        if (entry.getAuthor() == null) {
-                            entry.setAuthor(feed.getTitle());
-                        }
-                        publishedDate = entry.getPublishedDate();
-                        if (publishedDate == null) {
-                            publishedDate = new Date();
-                        }
-
+                    publishedDate = entry.getPublishedDate();
+                    // check for published date in the entry
+                    if (publishedDate == null) {
+                        // for rss feeds prior rss 1.0 or feeds with pubDate in
+                        // item tag
+                        // use the publish Date of the feed itself
+                        publishedDate = feed.getPublishedDate();
+                    }
+                    if (publishedDate != null) {
                         cal = Calendar.getInstance();
                         cal.add(Calendar.MONTH, -1);
+                        // drop items that are older than one month
                         if (publishedDate.after(cal.getTime())) {
+                            // check if this entry already exists
+                            List rssEntries = session.createCriteria(IngridRSSStore.class).add(
+                                    Restrictions.eq("link", entry.getLink())).add(Restrictions.eq("language", feed.getLanguage()))
+                                    .list();
+                            if (rssEntries.isEmpty()) {
+                                if (entry.getAuthor() == null) {
+                                    entry.setAuthor(feed.getTitle());
+                                }
 
-                            entry.setTitle(StringUtils.htmlescape(entry.getTitle()));
+                                entry.setTitle(StringUtils.htmlescape(entry.getTitle()));
 
-                            IngridRSSStore rssEntry = new IngridRSSStore();
-                            rssEntry.setTitle(entry.getTitle());
-                            rssEntry.setDescription(entry.getDescription().getValue());
-                            rssEntry.setLink(entry.getLink());
-                            rssEntry.setLanguage("de");
-                            rssEntry.setPublishedDate(publishedDate);
-                            rssEntry.setAuthor(entry.getAuthor());
+                                IngridRSSStore rssEntry = new IngridRSSStore();
+                                rssEntry.setTitle(entry.getTitle());
+                                rssEntry.setDescription(entry.getDescription().getValue());
+                                rssEntry.setLink(entry.getLink());
+                                rssEntry.setLanguage(feed.getLanguage());
+                                rssEntry.setPublishedDate(publishedDate);
+                                rssEntry.setAuthor(entry.getAuthor());
 
-                            session.beginTransaction();
-                            session.save(rssEntry);
-                            session.getTransaction().commit();
+                                session.beginTransaction();
+                                session.save(rssEntry);
+                                session.getTransaction().commit();
 
-                            cnt++;
+                                cnt++;
+                            }
+                            rssEntries = null;
                         }
+
                     }
                 }
+                feed = null;
             }
 
             if (cnt > 0) {
@@ -128,6 +145,11 @@ public class RSSFetcherJob implements Job {
                 session.delete((IngridRSSStore) it.next());
             }
             session.getTransaction().commit();
+            deleteEntries = null;
+            feeds = null;
+            // since the working on rss feeds can be memory consuming
+            // do GC after job is finished
+            System.gc();
         } catch (Exception e) {
             log.error("Error executing quartz job RSSFetcherJob.", e);
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, true);
