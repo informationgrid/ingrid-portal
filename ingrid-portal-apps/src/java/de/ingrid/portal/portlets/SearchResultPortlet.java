@@ -33,9 +33,9 @@ import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
- * TODO Describe your created type (class, etc.) here.
+ * This portlet handles the "Result Display" fragment of the result page
  *
- * @author joachim@wemove.com
+ * @author martin@wemove.com
  */
 public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -186,7 +186,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // no new query anymore, we remove messages, so portlets read our render parameters (set below)
         cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
-        cancelRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
 
         // ----------------------------------
         // set render parameters

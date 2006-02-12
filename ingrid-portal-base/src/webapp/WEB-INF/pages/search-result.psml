@@ -14,6 +14,10 @@
             <property layout="TwoColumns" name="row" value="0"/>
             <property layout="TwoColumns" name="column" value="0"/>
           </fragment>                                
+          <fragment id="main-search-similar" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchSimilar">
+            <property layout="TwoColumns" name="row" value="1"/>
+            <property layout="TwoColumns" name="column" value="0"/>
+          </fragment>                                
         </fragment>
         <fragment id="main-search-one-column" type="layout" name="jetspeed-layouts::IngridOneColumn">
           <property layout="OneColumn" name="row" value="1"/>

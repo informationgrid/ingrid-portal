@@ -6,16 +6,9 @@
 ## templates separated here already !
 
   <div id="content">
-    <div class="section">    
-
+    <div class="section">
 ## simple search: SHOULD BE REPLACED WITH SIMPLE SEARCH PORTLET !!!
 #parse ('/WEB-INF/templates/search_result_input_tmp.vm')
-
-      <br />
-
-## similar terms: Should be handled BY SEPARATE PORTLET !
-#parse ('/WEB-INF/templates/search_result_similar.vm')
-
     </div>
   </div>
   <div class="clearer"></div>

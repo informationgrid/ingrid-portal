@@ -17,16 +17,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.SimpleSearchForm;
-import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.interfaces.impl.SNSInterfaceImpl;
-import de.ingrid.portal.search.DisplayTreeFactory;
-import de.ingrid.portal.search.DisplayTreeNode;
-import de.ingrid.portal.search.PageState;
-import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -54,26 +47,12 @@ public class SearchResultPortletOld extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        // TODO remove page state in future, when separate portlets
-        // use messages and render parameters instead !!!
-        PortletSession session = request.getPortletSession();
-        PageState ps = (PageState) session.getAttribute("portlet_state");
-        if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
-            session.setAttribute("portlet_state", ps);
-        }
-
         // BEGIN: "simple_search" Portlet
         // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
 
         // NOTICE:
         // may be called directly from Start page, then this method has to be an action method !
         // When called from startPage, the action request parameter is "doSearch" !!! 
-
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
-        context.put("MESSAGES", messages);
 
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation
@@ -104,25 +83,14 @@ public class SearchResultPortletOld extends AbstractVelocityMessagingPortlet {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
             publishRenderMessage(request, Settings.MSG_DATASOURCE, selectedDS);
         }
-        context.put("ds", selectedDS);
         // END: "simple_search" Portlet
-
-        context.put("ps", ps);
 
         super.doView(request, response);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        PortletSession session = request.getPortletSession();
-        PageState ps = (PageState) session.getAttribute("portlet_state");
-        if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
-            session.setAttribute("portlet_state", ps);
-        }
 
-        // BEGIN: "simple_search" Portlet
         // TODO: MERGE THIS WITH THE SimpleSearch"Teaser" portlet !!!!
         String action = request.getParameter("action");
         if (action == null) {
@@ -136,96 +104,8 @@ public class SearchResultPortletOld extends AbstractVelocityMessagingPortlet {
             // encapsulate all ActionStuff in separate method, has to be called in view method too (when called
             // from start page !)
             doSimpleSearchPortletActionStuff(request, af);
-
-            // when separate portlets: just send a message that a new query was executed and do this in the
-            // search_result_similar Portlet
-            ps.putBoolean("isSimilarOpen", false);
-            ps.put("similarRoot", null);
-            session.removeAttribute("similarRoot");
-
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
-        }
-        // END: "simple_search" Portlet
-
-        // BEGIN: search_result_similar Portlet
-        DisplayTreeNode similarRoot = null;
-        if (action.equalsIgnoreCase("doOpenSimilar")) {
-            ps.putBoolean("isSimilarOpen", true);
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
-            if (similarRoot == null) {
-                IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
-                similarRoot = DisplayTreeFactory.getTree(query);
-                session.setAttribute("similarRoot", similarRoot);
-            }
-            ps.put("similarRoot", similarRoot);
-        } else if (action.equalsIgnoreCase("doCloseSimilar")) {
-            ps.putBoolean("isSimilarOpen", false);
-            ps.put("similarRoot", null);
-        } else if (action.equalsIgnoreCase("doOpenNode")) {
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
-                node.setOpen(true);
-                if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM) {
-                    IngridHit[] hits = SNSInterfaceImpl.getInstance().getSimilarTerms(node.getName());
-                    for (int i=0; i<hits.length; i++) {
-                        Topic hit = (Topic) hits[i];
-                        if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                            DisplayTreeNode snsNode = new DisplayTreeNode(node.getId()+i, hit.getTopicName(), false);
-                            snsNode.setType(DisplayTreeNode.SNS_TERM);
-                            snsNode.setParent(node);
-                            node.addChild(snsNode);
-                        }
-                    }
-                }
-                ps.put("similarRoot", similarRoot);
-            }
-        } else if (action.equalsIgnoreCase("doCloseNode")) {
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
-                if (node != null) {
-                    node.setOpen(false);
-                }
-            }
-        } else if (action.equalsIgnoreCase("doAddSimilar")) {
-            // TODO add snsTerms to the query term with operator OR
-            // the query object is still a mystery
-            
-/*            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
-                ArrayList nodes = similarRoot.getAllChildren();
-                Iterator it = nodes.iterator();
-                while (it.hasNext()) {
-                    DisplayTreeNode node = (DisplayTreeNode) it.next();
-                    if (request.getParameter("chk_" + node.getId()) != null) {
-                        boolean isInQuery = false;
-                        TermQuery[] terms = query.getTerms();
-                        for (int i=0; i<terms.length; i++) {
-                            if (terms[i].getTerm().equalsIgnoreCase(node.getName()) && terms[i].getType() == TermQuery.TERM) {
-                                isInQuery = true;
-                                break;
-                            }
-                        }
-                        if (!isInQuery) {
-                            DisplayTreeNode parent = node.getParent();
-                            for (int i=0; i<terms.length; i++) {
-                                if (terms[i].getTerm().equalsIgnoreCase(parent.getName()) && terms[i].getType() == TermQuery.TERM) {
-                                    terms[i].addClause(new ClauseQuery(true, false));
-                                    terms[i].addTerm(new TermQuery(true, false, node.getName()));
-                                    break;
-                                }
-                            }
-                        }
-                        System.out.println(query.toString());
-                    } else if (node.getDepth() == 2) {
-                        node.setOpen(false);
-                    }
-                }
-            }
-            */
         }
     }
 
@@ -244,7 +124,7 @@ public class SearchResultPortletOld extends AbstractVelocityMessagingPortlet {
         }
 
         // check query input
-        String queryString = af.getInput(af.FIELD_QUERY);
+        String queryString = af.getInput(SimpleSearchForm.FIELD_QUERY);
         if (queryString.equals(af.getINITIAL_QUERY()) || queryString.length() == 0) {
             return;
         }
@@ -265,12 +145,5 @@ public class SearchResultPortletOld extends AbstractVelocityMessagingPortlet {
             publishRenderMessage(request, Settings.MSG_QUERY, query);
             publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryString);
         }
-    }
-
-    private PageState initPageState(PageState ps) {
-        ps.put("query", null);
-        ps.putBoolean("isSimilarOpen", false);
-        ps.put("similarRoot", null);
-        return ps;
     }
 }

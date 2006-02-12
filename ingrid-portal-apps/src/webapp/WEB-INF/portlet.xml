@@ -154,6 +154,27 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
     </portlet>
+    <portlet id="SearchSimilar">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_similar.vm</value>
+        </init-param>
+        <portlet-name>SearchSimilar</portlet-name>
+        <display-name>Similar Terms</display-name>
+        <description>This portlet handles the "Similar Terms" fragment of the search result page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchSimilarPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Similar Terms</title>
+            <short-title>SimilarTerms</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
+    </portlet>
     <portlet id="SearchResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
