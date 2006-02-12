@@ -3,10 +3,12 @@
  */
 package de.ingrid.portal.interfaces;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 
 /**
@@ -29,5 +31,13 @@ public interface SNSInterface {
      * @return The DetailedTopic representing the anniversary or null if no anniversary was found.
      */
     DetailedTopic getAnniversary(java.util.Date date);
+
+    /**
+     * Get similar topics from a given term.
+     * 
+     * @param term The given term to search similar topics for.
+     * @return Array of similar topics for term.
+     */
+    IngridHit[] getSimilarTerms(String term);
     
 }

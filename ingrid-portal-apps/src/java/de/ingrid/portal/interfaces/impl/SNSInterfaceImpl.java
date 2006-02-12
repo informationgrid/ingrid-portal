@@ -19,6 +19,7 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
@@ -79,5 +80,22 @@ public class SNSInterfaceImpl implements SNSInterface {
         }
         
         return null;
+    }
+
+    public IngridHit[] getSimilarTerms(String term) {
+        try {
+            IngridQuery query = QueryStringParser.parse(term);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARTERMS_FROM_TOPIC);
+            
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+            
+            IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
+            
+            return hits.getHits();
+        } catch (Exception e) {
+            log.error("Exception while querying sns for similar terms.", e);
+            return null;
+        }
     }
 }
