@@ -11,6 +11,9 @@
     <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SimpleSearchTeaser">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="titleKey" readOnly="false">
+        <value>simpleSearch.title.search</value>
+      </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />

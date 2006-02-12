@@ -1,5 +1,5 @@
 <div class="formbody">
-    <form action="portal/search-result.psml" method="get" name="SearchForm" id="SearchForm" onSubmit="if (this.q.value == 'Geben Sie hier Ihre Suchanfrage ein') this.q.value=''">
+    <form action="$!formAction" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('simpleSearch.query.initial')") this.q.value=""'>
     	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
 		<p class="datasource_selection">
@@ -36,5 +36,7 @@ $action.setParameter('action','doChangeDS')
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_prev_search.html">Suchhistorie</a>
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_preferences.html">Einstellungen</a>
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="javascript:contextHelp()">Suchtipps</a>
+<!-- only for logged on users -->
+<!--          <img src="/ingrid-portal-apps/images/ico_save_search.gif" alt="Icon Diskette" /><a href="s_search_speichern.html">Suche Speichern</a> -->
     </div>
 </div>
