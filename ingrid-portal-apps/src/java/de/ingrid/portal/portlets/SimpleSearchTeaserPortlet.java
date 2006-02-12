@@ -76,10 +76,10 @@ public class SimpleSearchTeaserPortlet extends AbstractVelocityMessagingPortlet 
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation !
         SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
-                PortletSession.PORTLET_SCOPE);
+                PortletSession.APPLICATION_SCOPE);
         if (af == null) {
             af = (SimpleSearchForm) Utils.addActionForm(request, SimpleSearchForm.SESSION_KEY, SimpleSearchForm.class,
-                    PortletSession.PORTLET_SCOPE);
+                    PortletSession.APPLICATION_SCOPE);
             af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
             af.init();
         }
@@ -129,7 +129,7 @@ public class SimpleSearchTeaserPortlet extends AbstractVelocityMessagingPortlet 
             // encapsulate all ActionStuff in separate method, has to be called in view method too (when called
             // from start page !)
             SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
-                    SimpleSearchForm.class);
+                    SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
             doSimpleSearchPortletActionStuff(request, af);
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
