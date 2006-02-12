@@ -37,9 +37,9 @@ import de.ingrid.utils.query.IngridQuery;
  *
  * @author joachim@wemove.com
  */
-public class SearchResultPortletNew extends AbstractVelocityMessagingPortlet {
+public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchResultPortletNew.class);
+    private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";

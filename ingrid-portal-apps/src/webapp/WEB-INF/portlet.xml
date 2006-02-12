@@ -163,7 +163,7 @@
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultPortletNew</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
