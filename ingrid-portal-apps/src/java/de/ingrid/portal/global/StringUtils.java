@@ -1,4 +1,4 @@
-package de.ingrid.portal.utils;
+package de.ingrid.portal.global;
 
 import java.util.HashMap;
 import java.util.Map;

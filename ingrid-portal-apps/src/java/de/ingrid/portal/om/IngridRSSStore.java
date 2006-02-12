@@ -2,6 +2,7 @@ package de.ingrid.portal.om;
 
 import java.util.Date;
 
+
 public class IngridRSSStore {
     
     private String link;

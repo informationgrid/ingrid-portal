@@ -31,6 +31,13 @@
         <load-on-startup>10</load-on-startup>
     </servlet>
 
+<!-- Define Ingrid Portal Scheduler Servlet -->
+    <servlet>
+        <servlet-name>IngridPortalScheduler</servlet-name>
+        <servlet-class>de.ingrid.portal.servlet.IngridPortalSchedulerServlet</servlet-class>
+        <load-on-startup>20</load-on-startup>
+    </servlet>
+    
     <!-- Map *.vm files to Velocity  -->
 	<servlet-mapping>
 		<servlet-name>velocity</servlet-name>
