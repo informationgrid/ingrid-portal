@@ -36,9 +36,9 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  *
  * @author joachim@wemove.com
  */
-public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
+public class SearchResultPortletOld extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
+    private final static Log log = LogFactory.getLog(SearchResultPortletOld.class);
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)

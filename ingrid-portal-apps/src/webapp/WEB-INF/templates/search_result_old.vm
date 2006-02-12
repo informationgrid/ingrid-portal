@@ -17,6 +17,5 @@
 #parse ('/WEB-INF/templates/search_result_similar.vm')
 
     </div>
-    <br />
   </div>
   <div class="clearer"></div>
