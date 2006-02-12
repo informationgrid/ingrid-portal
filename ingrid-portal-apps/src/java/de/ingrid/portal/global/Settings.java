@@ -82,7 +82,7 @@ public class Settings {
     // Portlet Messaging
     // ************************************
     /** dummy value for a message just to set a value for a message */
-    public static final String MSG_VALUE_TRUE = "";
+    public static final String MSG_VALUE_TRUE = "1";
 
     // ------------- MESSAGE TOPICS (SCOPES) -----------------------------
 

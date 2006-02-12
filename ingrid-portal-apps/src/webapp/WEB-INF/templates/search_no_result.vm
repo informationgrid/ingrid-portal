@@ -1,4 +1,3 @@
-#if(!$unrankedResultList && !$rankedResultList)
         <div class="noresult">
             <p>Ihre Suche nach <strong>"$!queryString"</strong> hat <strong>0</strong> Treffer ergeben.</p>
             <ul>
@@ -9,4 +8,3 @@
                   <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-environment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
             </ul>
         </div>	
-#end	  

@@ -9,11 +9,11 @@
   <metadata name="title" xml:lang="de">Umweltchronik</metadata>
 
   <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-chronicle-1" type="portlet" name="ingrid-portal-apps::ChronicleSearch">
+    <fragment id="main-chronicle-input" type="portlet" name="ingrid-portal-apps::ChronicleSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="main-chronicle-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="main-chronicle-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">

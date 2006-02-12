@@ -4,8 +4,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -19,25 +17,16 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.iplug.PlugDescription;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.SimpleSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.interfaces.IBUSInterface;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.SNSInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
-import de.ingrid.portal.search.SearchResultList;
-import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
-import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.dsc.Column;
-import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -50,11 +39,6 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
-
-    /** Keys of parameters in session/request */
-    private final static String PARAM_START_HIT_RANKED = "rstart";
-
-    private final static String PARAM_START_HIT_UNRANKED = "nrstart";
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -122,98 +106,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         context.put("ds", selectedDS);
         // END: "simple_search" Portlet
-
-        // BEGIN: search_result Portlet
-        // if no query display "nothing"
-        IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
-        String queryString = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
-        if (query == null) {
-            //            setDefaultViewPage(TEMPLATE_NO_QUERY);
-            //            super.doView(request, response);
-            //            return;
-        }
-
-        // if query assume we have results
-        //        setDefaultViewPage(TEMPLATE_RESULT);
-
-        // no "if" clause necessary when separate portlet, then we return above !
-        if (query != null) {
-
-            // ----------------------------------
-            // fetch data
-            // ----------------------------------
-            int rankedStartHit = 0;
-            int unrankedStartHit = 0;
-
-            // indicates whether a new query was performed !
-            Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY);
-            try {
-                // if no new query was performed, read render parameters from former action request
-                if (newQuery == null) {
-                    String reqParam = request.getParameter(PARAM_START_HIT_RANKED);
-                    if (reqParam != null) {
-                        rankedStartHit = (new Integer(reqParam)).intValue();
-                    }
-                    reqParam = request.getParameter(PARAM_START_HIT_UNRANKED);
-                    if (reqParam != null) {
-                        unrankedStartHit = (new Integer(reqParam)).intValue();
-                    }
-                }
-            } catch (Exception ex) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems parsing starthit (ranked or unranked) from render request, set starthit to 0");
-                }
-            }
-
-            /*String*/selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
-            if (selectedDS == null) {
-                selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
-            }
-
-            // ----------------------------------
-            // business logic
-            // ----------------------------------
-
-            // ranked results	
-            int RANKED_HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
-            IngridHits rankedHits = null;
-            int numberOfHits = 0;
-            try {
-                rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE);
-                numberOfHits = (int) rankedHits.length();
-            } catch (Exception ex) {
-                if (log.isInfoEnabled()) {
-                    log
-                            .info("Problems fetching ranked hits ! hits = " + rankedHits + ", numHits = "
-                                    + numberOfHits, ex);
-                }
-            }
-
-            // adapt settings of ranked page navigation
-            HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE, numberOfHits,
-                    Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
-
-            // unranked results	
-            int UNRANKED_HITS_PER_PAGE = Settings.SEARCH_UNRANKED_HITS_PER_PAGE;
-            SearchResultList unrankedSRL = doUnrankedSearch(query, selectedDS, unrankedStartHit, UNRANKED_HITS_PER_PAGE);
-            numberOfHits = unrankedSRL.getNumberOfHits();
-
-            // adapt settings of unranked page navigation
-            HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, UNRANKED_HITS_PER_PAGE,
-                    numberOfHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
-
-            // ----------------------------------
-            // prepare view
-            // ----------------------------------
-
-            context.put("rankedPageSelector", rankedPageNavigation);
-            context.put("unrankedPageSelector", unrankedPageNavigation);
-            context.put("rankedResultList", rankedHits);
-            context.put("unrankedResultList", unrankedSRL);
-            // query string will be displayed when no results !
-            context.put("queryString", queryString);
-        }
-        // END: search_result Portlet
 
         context.put("ps", ps);
 
@@ -335,102 +227,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
             */
         }
-        // END: search_result_similar Portlet
-
-        // BEGIN: search_result Portlet
-        // ----------------------------------
-        // fetch parameters
-        // ----------------------------------
-        String rankedStarthit = request.getParameter(PARAM_START_HIT_RANKED);
-        String unrankedStarthit = request.getParameter(PARAM_START_HIT_UNRANKED);
-
-        // ----------------------------------
-        // business logic
-        // ----------------------------------
-        // no new query anymore, we remove messages, so portlets read our render parameters (set below)
-        cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
-        cancelRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
-
-        // ----------------------------------
-        // set render parameters
-        // ----------------------------------
-        if (rankedStarthit != null) {
-            actionResponse.setRenderParameter(PARAM_START_HIT_RANKED, rankedStarthit);
-        }
-        if (unrankedStarthit != null) {
-            actionResponse.setRenderParameter(PARAM_START_HIT_UNRANKED, unrankedStarthit);
-        }
-        // END: search_result Portlet
-    }
-
-    private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-
-        int currentPage = (int) (startHit / hitsPerPage) + 1;
-
-        IngridHits hits = null;
-        try {
-            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
-            IngridHit[] results = hits.getHits();
-
-            IngridHit result = null;
-            IngridHitDetail detail = null;
-            PlugDescription plug = null;
-            for (int i = 0; i < results.length; i++) {
-                result = results[i];
-                detail = ibus.getDetails(result, query);
-                plug = ibus.getIPlug(result);
-
-                if (result == null) {
-                    continue;
-                }
-                if (detail != null) {
-                    ibus.transferHitDetails(result, detail);
-                }
-                if (plug != null) {
-                    ibus.transferPlugDetails(result, plug);
-                    if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        result.put(Settings.RESULT_KEY_TYPE, "dsc");
-
-                        Record record = ibus.getRecord(result);
-                        Column c = ibus.getColumn(record, Settings.HIT_KEY_WMS_URL);
-                        if (c != null) {
-                            result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c),
-                                    "UTF-8"));
-                        }
-                        c = ibus.getColumn(record, Settings.HIT_KEY_UDK_CLASS);
-                        if (c != null) {
-                            result.put(Settings.RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
-                        }
-
-                    } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
-                        result.put(Settings.RESULT_KEY_TYPE, "nutch");
-                    } else {
-                        result.put(Settings.RESULT_KEY_TYPE, "unknown");
-                    }
-                }
-            }
-        } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems performing Search !", t);
-            }
-        }
-
-        return hits;
-    }
-
-    private SearchResultList doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-
-        SearchResultList result = new SearchResultList();
-
-        SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
-        for (int i = 0; i < hitsPerPage; i++) {
-            if (i >= l.size())
-                break;
-            result.add(l.get(i));
-        }
-        result.setNumberOfHits(l.getNumberOfHits());
-        return result;
     }
 
     private void doSimpleSearchPortletActionStuff(PortletRequest request, SimpleSearchForm af) {

@@ -7,12 +7,21 @@
   <title>Search</title>
   <metadata name="title" xml:lang="de">Suche</metadata>
 
-  <fragment id="search-result" type="layout" name="jetspeed-layouts::IngridClearLayout">
-    <fragment id="search-result-1" type="portlet" name="ingrid-portal-apps::SearchResult">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
+    <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridOneColumn">
+        <fragment id="main-search-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+          <property layout="OneColumn" name="row" value="0"/>
+          <fragment id="main-search-input" type="portlet" name="ingrid-portal-apps::SearchResultOld">
+            <property layout="TwoColumns" name="row" value="0"/>
+            <property layout="TwoColumns" name="column" value="0"/>
+          </fragment>                                
+        </fragment>
+        <fragment id="main-search-one-column" type="layout" name="jetspeed-layouts::IngridOneColumn">
+          <property layout="OneColumn" name="row" value="1"/>
+          <fragment id="main-search-results" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchResult">
+            <property layout="OneColumn" name="row" value="0"/>
+          </fragment>                                
+        </fragment>
     </fragment>
-  </fragment>
 
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>

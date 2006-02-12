@@ -133,16 +133,37 @@
     <!-- Main Menue              -->
     <!-- *********************** -->
 
-    <portlet id="SearchResult">
+    <portlet id="SearchResultOld">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
             <value>/WEB-INF/templates/search_result.vm</value>
         </init-param>
-        <portlet-name>SearchResult</portlet-name>
+        <portlet-name>SearchResultOld</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Suchergebnis</title>
+            <short-title>SearchResult</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
+    </portlet>
+    <portlet id="SearchResult">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_result_new.vm</value>
+        </init-param>
+        <portlet-name>SearchResult</portlet-name>
+        <display-name>Suchergebnis</display-name>
+        <description>This portlet displays the search results.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultPortletNew</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

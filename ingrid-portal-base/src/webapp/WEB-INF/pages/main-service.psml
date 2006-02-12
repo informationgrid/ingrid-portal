@@ -7,8 +7,8 @@
   <title>Service</title>
   <metadata name="title" xml:lang="de">Service</metadata>
 
-  <fragment id="main-service_form" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-service-1" type="portlet" name="ingrid-portal-apps::ServiceSearch">
+  <fragment id="main-service" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="main-service-input" type="portlet" name="ingrid-portal-apps::ServiceSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
