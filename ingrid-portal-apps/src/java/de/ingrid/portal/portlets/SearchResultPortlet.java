@@ -22,8 +22,6 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.SearchResultList;
-import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -118,36 +116,43 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
 
         // ranked results   
-        int RANKED_HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
+        // --------------
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
         try {
-            rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, RANKED_HITS_PER_PAGE);
+            rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
             numberOfRankedHits = (int) rankedHits.length();
         } catch (Exception ex) {
-            if (log.isInfoEnabled()) {
-                log.info("Problems fetching ranked hits ! hits = " + rankedHits + ", numHits = " + numberOfRankedHits,
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching RANKED hits ! hits = " + rankedHits + ", numHits = " + numberOfRankedHits,
                         ex);
             }
         }
 
         // adapt settings of ranked page navigation
-        HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE,
+        HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE,
                 numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
-        // unranked results 
-        int UNRANKED_HITS_PER_PAGE = Settings.SEARCH_UNRANKED_HITS_PER_PAGE;
+        // unranked results
+        // ----------------
+        IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
-        SearchResultList unrankedSRL = doUnrankedSearch(query, selectedDS, unrankedStartHit, UNRANKED_HITS_PER_PAGE);
-        numberOfUnrankedHits = unrankedSRL.getNumberOfHits();
+        try {
+            unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
+            numberOfUnrankedHits = (int) unrankedHits.length();
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
+                        + numberOfUnrankedHits, ex);
+            }
+        }
 
         // adapt settings of unranked page navigation
-        HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, UNRANKED_HITS_PER_PAGE,
-                numberOfUnrankedHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
+        HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit,
+                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
+                Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0) {
-            // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
-
             // query string will be displayed when no results !
             String queryString = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
             context.put("queryString", queryString);
@@ -164,7 +169,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);
-        context.put("unrankedResultList", unrankedSRL);
+        context.put("unrankedResultList", unrankedHits);
 
         super.doView(request, response);
     }
@@ -207,14 +212,15 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
-            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+            //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             String tmpString = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
-                detail = details[i];
+                //                detail = details[i];
+                detail = ibus.getDetail(result, query, requestedMetadata);
                 if (result == null) {
                     continue;
                 }
@@ -248,17 +254,75 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         return hits;
     }
 
-    private SearchResultList doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-
-        SearchResultList result = new SearchResultList();
-
-        SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
-        for (int i = 0; i < hitsPerPage; i++) {
-            if (i >= l.size())
-                break;
-            result.add(l.get(i));
+    private IngridHits doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
+        if (log.isDebugEnabled()) {
+            log.debug("doUnrankedSearch: IngridQuery = " + query);
         }
-        result.setNumberOfHits(l.getNumberOfHits());
-        return result;
+
+        int currentPage = (int) (startHit / hitsPerPage) + 1;
+
+        IngridHits hits = new IngridHits();
+        /*
+         IngridHits hits = null;
+         try {
+         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+         hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
+         IngridHit[] results = hits.getHits();
+         String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
+         IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+
+         IngridHit result = null;
+         IngridHitDetail detail = null;
+         String tmpString = null;
+         for (int i = 0; i < results.length; i++) {
+         result = results[i];
+         detail = details[i];
+         if (result == null) {
+         continue;
+         }
+         if (detail != null) {
+         ibus.transferHitDetails(result, detail);
+         tmpString = detail.getIplugClassName();
+         if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+         result.put(Settings.RESULT_KEY_TYPE, "dsc");
+
+         if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
+         tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
+         result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+         }
+         if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
+         tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+         result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+         }
+         } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
+         result.put(Settings.RESULT_KEY_TYPE, "nutch");
+         } else {
+         result.put(Settings.RESULT_KEY_TYPE, "unknown");
+         }
+         }
+         }
+         } catch (Throwable t) {
+         if (log.isErrorEnabled()) {
+         log.error("Problems performing Search !", t);
+         }
+         }
+         */
+        return hits;
     }
+
+    /*
+     private SearchResultList doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
+
+     SearchResultList result = new SearchResultList();
+
+     SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
+     for (int i = 0; i < hitsPerPage; i++) {
+     if (i >= l.size())
+     break;
+     result.add(l.get(i));
+     }
+     result.setNumberOfHits(l.getNumberOfHits());
+     return result;
+     }
+     */
 }

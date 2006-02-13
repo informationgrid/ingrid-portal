@@ -87,7 +87,9 @@
       <br />
 
 #if($unrankedResultList)
-      #foreach($rs in $unrankedResultList)
+      #foreach($rs in $unrankedResultList.hits)
+<!--
+THIS IS THE CORRECT UNRANKED HTML
     	  <div class="resultset_partner_group">
             <div class="ico_down_black"><span class="title">$rs.title#if($rs.hits) ($rs.hits Treffer)#end</span><br /></div>
             <p class="result_description">
@@ -102,6 +104,14 @@
             <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>Zur Trefferliste</a></strong></span>
           </div>
           <br />
+-->
+		  <div class="resultset">
+		  #if ($rs.title)
+			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+		  #else
+			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
+		  #end
+          </div>
       #end
 #end
       
