@@ -154,14 +154,14 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             IngridHitDetail[] details = ibus.getDetails(results, query, new String[0]);
-/*
+
             IngridHit result = null;
             IngridHitDetail detail = null;
-            PlugDescription plug = null;
+//            PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
-                detail = ibus.getDetail(result, query, new String[0]);
-                plug = ibus.getIPlug(result);
+                detail = details[i];
+//                plug = ibus.getIPlug(result);
                 
                 if (result == null) {
                     continue;
@@ -182,11 +182,12 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, temp2);
                 }
+/*
                 if (plug != null) {
                     ibus.transferPlugDetails(result, plug);
                 }
-            }
 */
+            }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems performing Search !", t);

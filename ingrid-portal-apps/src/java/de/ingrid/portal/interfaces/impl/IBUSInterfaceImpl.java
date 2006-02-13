@@ -251,7 +251,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
         }
     }
-
+/*
     public void transferPlugDetails(IngridHit result, PlugDescription plug) {
         try {
             result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
@@ -263,7 +263,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
         }
     }
-
+*/
     public Column getColumn(Record record, String columnName) {
         Column col = null;
         try {

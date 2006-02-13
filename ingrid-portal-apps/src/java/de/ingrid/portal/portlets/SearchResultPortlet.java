@@ -208,7 +208,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
             IngridHit result = null;
             IngridHitDetail detail = null;
-//            PlugDescription plug = null;
+            //            PlugDescription plug = null;
             String tmpString = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
@@ -220,40 +220,48 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
                 if (detail != null) {
                     ibus.transferHitDetails(result, detail);
-                    if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
-                        tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
-                        result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
-                    }
-                    if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                        tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
-                        result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-                    }
-                }
-/*
-                if (plug != null) {
-                    ibus.transferPlugDetails(result, plug);
-                    if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        result.put(Settings.RESULT_KEY_TYPE, "dsc");
-
-                        Record record = ibus.getRecord(result);
-                        if (record != null) {
-                            Column c = ibus.getColumn(record, Settings.HIT_KEY_WMS_URL);
-                            if (c != null) {
-                                result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c),
-                                        "UTF-8"));
-                            }
-                            c = ibus.getColumn(record, Settings.HIT_KEY_UDK_CLASS);
-                            if (c != null) {
-                                result.put(Settings.RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
-                            }
+                    tmpString = detail.getIplugClassName();
+                    if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                        if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
+                            tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
+                            result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
                         }
-                    } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                        if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
+                            tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+                            result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+
+                        }
+                    } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
                         result.put(Settings.RESULT_KEY_TYPE, "nutch");
                     } else {
                         result.put(Settings.RESULT_KEY_TYPE, "unknown");
                     }
                 }
-*/
+                /*
+                 if (plug != null) {
+                 ibus.transferPlugDetails(result, plug);
+                 if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                 result.put(Settings.RESULT_KEY_TYPE, "dsc");
+
+                 Record record = ibus.getRecord(result);
+                 if (record != null) {
+                 Column c = ibus.getColumn(record, Settings.HIT_KEY_WMS_URL);
+                 if (c != null) {
+                 result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(record.getValueAsString(c),
+                 "UTF-8"));
+                 }
+                 c = ibus.getColumn(record, Settings.HIT_KEY_UDK_CLASS);
+                 if (c != null) {
+                 result.put(Settings.RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
+                 }
+                 }
+                 } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                 result.put(Settings.RESULT_KEY_TYPE, "nutch");
+                 } else {
+                 result.put(Settings.RESULT_KEY_TYPE, "unknown");
+                 }
+                 }
+                 */
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {

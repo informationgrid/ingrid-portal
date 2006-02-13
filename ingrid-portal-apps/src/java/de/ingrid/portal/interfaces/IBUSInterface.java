@@ -99,7 +99,7 @@ public interface IBUSInterface {
      * @param hit
      * @param plug
      */
-    void transferPlugDetails(IngridHit hit, PlugDescription plug);
+//    void transferPlugDetails(IngridHit hit, PlugDescription plug);
 
     /**
      * Fetch column from Record.

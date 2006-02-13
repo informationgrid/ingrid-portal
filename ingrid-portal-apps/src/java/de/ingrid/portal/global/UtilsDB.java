@@ -32,7 +32,7 @@ public class UtilsDB {
     /**
      * Get all the partners. NOTICE: Partners are always reloaded from database
      * if flag alwaysReloadDBData in our class is set to true. Otherwise we load
-     * the partners one and return our cache !
+     * the partners once and return our cache !
      * @return
      */
     public static List getPartners() {
