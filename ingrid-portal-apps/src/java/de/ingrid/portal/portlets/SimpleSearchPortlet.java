@@ -25,6 +25,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * This portlet handles the "Simple Search" input fragment.
+ * NOTICE: This portlet is used in the home page AND in the main-search page.
  * 
  * created 11.01.2006
  * 
@@ -41,7 +42,7 @@ public class SimpleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
     /** keys of possible titles, can be set via PSML portlet preferences */
     private final static String TITLE_KEY_SEARCH = "simpleSearch.title.search";
-//    private final static String TITLE_KEY_RESULT = "simpleSearch.title.result";
+    private final static String TITLE_KEY_RESULT = "simpleSearch.title.result";
 
     /*
      * (non-Javadoc)
@@ -68,9 +69,17 @@ public class SimpleSearchPortlet extends AbstractVelocityMessagingPortlet {
         ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
         context.put("MESSAGES", messages);
 
-        // read preferences
+        // read preferences and adapt title (passed from page)
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
+        boolean startPage = true;
+        if (titleKey.equals(TITLE_KEY_RESULT)) {
+            // we're on main page, check whether there's a query and adapt title
+            startPage = false;
+            if (receiveRenderMessage(request, Settings.MSG_QUERY) == null) {
+                titleKey = TITLE_KEY_SEARCH;
+            }
+        }
         response.setTitle(messages.getString(titleKey));
 
         // get ActionForm, we use get method without instantiation, so we can do
@@ -96,7 +105,7 @@ public class SimpleSearchPortlet extends AbstractVelocityMessagingPortlet {
         
         
         String searchAction = response.createActionURL().toString();
-        if (titleKey.equals(TITLE_KEY_SEARCH)) {
+        if (startPage) {
             searchAction = SEARCH_RESULT_PAGE;
         }
         context.put("formAction", searchAction);
