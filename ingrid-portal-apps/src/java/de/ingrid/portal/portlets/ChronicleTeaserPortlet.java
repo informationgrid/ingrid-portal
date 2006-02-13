@@ -16,6 +16,7 @@ import org.apache.velocity.context.Context;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.global.DateUtil;
 import de.ingrid.portal.interfaces.impl.SNSInterfaceImpl;
+import de.ingrid.utils.IngridHitDetail;
 
 public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -30,7 +31,7 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        DetailedTopic[] details = SNSInterfaceImpl.getInstance().getAnniversaries(new Date());
+        IngridHitDetail[] details = SNSInterfaceImpl.getInstance().getAnniversaries(new Date());
 
         HashMap result = new HashMap();
         if (details.length > 0) {

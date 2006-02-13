@@ -31,5 +31,6 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridPartner.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridRSSStore.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridRSSSource.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridAnniversary.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

@@ -31,7 +31,7 @@ public interface SNSInterface {
      * @param date  The date to search anniveraries for.
      * @return The DetailedTopic Array representing the anniversaries.
      */
-    DetailedTopic[] getAnniversaries(java.util.Date date);
+    IngridHitDetail[] getAnniversaries(java.util.Date date);
     
     
     /**

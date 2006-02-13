@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridAnniversary" table="ingrid_anniversary">
+		<id name="id" column="topic_id" type="java.lang.String">
+    		<generator class="assigned"/>
+        </id>
+    	<property name="topicId" column="topic_id" type="java.lang.String" insert="false" update="false"/>
+    	<property name="topicName" column="topic_name" type="java.lang.String"/>
+    	<property name="dateFrom" column="date_from" type="java.lang.String"/>
+    	<property name="dateTo" column="date_to" type="java.lang.String"/>
+    	<property name="administrativeId" column="administrative_id" type="java.lang.String"/>
+    	<property name="fetched" type="java.sql.Date"/>
+  </class>
+</hibernate-mapping>

@@ -15,6 +15,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.SNSInterface;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -52,7 +53,7 @@ public class SNSInterfaceImpl implements SNSInterface {
     /**
      * @see de.ingrid.portal.interfaces.SNSInterface#getAnniversary(java.sql.Date)
      */
-    public DetailedTopic[] getAnniversaries(Date d) {
+    public IngridHitDetail[] getAnniversaries(Date d) {
         
         SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd" );
         String dateStr = df.format( d );
@@ -68,7 +69,7 @@ public class SNSInterfaceImpl implements SNSInterface {
 
             IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
             if (hits.getHits().length > 0) {
-                return (DetailedTopic[])iBus.getDetails(hits.getHits(), query, new String[0]);
+                return (IngridHitDetail[])iBus.getDetails(hits.getHits(), query, new String[0]);
             }
             return new DetailedTopic[0];
         } catch (Exception e) {

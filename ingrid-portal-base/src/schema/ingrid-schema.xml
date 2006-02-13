@@ -44,8 +44,8 @@ limitations under the License.
     </table>
 
     <table name="ingrid_anniversary">
-        <column name="topicId" primaryKey="true" required="true" size="255" type="VARCHAR"/>
-        <column name="topicName" required="false" size="255" type="VARCHAR"/>
+        <column name="topic_id" primaryKey="true" required="true" size="255" type="VARCHAR"/>
+        <column name="topic_name" required="false" size="255" type="VARCHAR"/>
         <column name="date_from" required="false" size="255" type="VARCHAR"/>
         <column name="date_to" required="false" size="255" type="VARCHAR"/>
         <column name="administrative_id" required="false" type="LONGVARCHAR"/>
