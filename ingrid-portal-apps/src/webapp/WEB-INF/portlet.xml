@@ -37,7 +37,7 @@
         <portlet-name>SimpleSearch</portlet-name>
         <display-name>Einfache Suche</display-name>
         <description>This portlet displayes a search box for the home AND main search page.</description>
-        <portlet-class>de.ingrid.portal.portlets.SimpleSearchPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchSimplePortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
