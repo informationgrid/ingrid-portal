@@ -52,7 +52,7 @@ public class SNSInterfaceImpl implements SNSInterface {
     /**
      * @see de.ingrid.portal.interfaces.SNSInterface#getAnniversary(java.sql.Date)
      */
-    public DetailedTopic getAnniversary(Date d) {
+    public DetailedTopic[] getAnniversaries(Date d) {
         
         SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd" );
         String dateStr = df.format( d );
@@ -67,18 +67,14 @@ public class SNSInterfaceImpl implements SNSInterface {
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
             IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
-            IngridHit[] hitsArray = hits.getHits();
-            if (hitsArray.length > 0) {
-                int entry = (int)(Math.random() * hitsArray.length);
-                return (DetailedTopic)iBus.getDetail(hitsArray[entry], query, new String[0]);
+            if (hits.getHits().length > 0) {
+                return (DetailedTopic[])iBus.getDetails(hits.getHits(), query, new String[0]);
             }
-            // TODO implement fallback
+            return new DetailedTopic[0];
         } catch (Exception e) {
             log.error("Exception while querying sns for anniversary.", e);
-            return null;
+            return new DetailedTopic[0];
         }
-        
-        return null;
     }
 
     public IngridHit[] getSimilarTerms(String term) {
@@ -97,4 +93,5 @@ public class SNSInterfaceImpl implements SNSInterface {
             return null;
         }
     }
+
 }

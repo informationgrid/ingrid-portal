@@ -42,5 +42,15 @@ limitations under the License.
         <column name="published_date" required="false" type="TIMESTAMP"/>
         <column name="title" required="false" size="255" type="VARCHAR"/>
     </table>
+
+    <table name="ingrid_anniversary">
+        <column name="topicId" primaryKey="true" required="true" size="255" type="VARCHAR"/>
+        <column name="topicName" required="false" size="255" type="VARCHAR"/>
+        <column name="date_from" required="false" size="255" type="VARCHAR"/>
+        <column name="date_to" required="false" size="255" type="VARCHAR"/>
+        <column name="administrative_id" required="false" type="LONGVARCHAR"/>
+        <column name="fetched" required="true" type="TIMESTAMP"/>
+    </table>
+
     
 </database>

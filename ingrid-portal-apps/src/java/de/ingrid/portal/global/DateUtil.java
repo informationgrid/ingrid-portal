@@ -82,7 +82,7 @@ public class DateUtil {
     }
     
     /**
-     * Parses a date string with the format 'yyyy-mm-dd' of 'yyyy'
+     * Parses a date string with the format 'yyyy-mm-dd' or 'yyyy'
      * to a Date.
      * 
      * @param dateString The String representing the date.

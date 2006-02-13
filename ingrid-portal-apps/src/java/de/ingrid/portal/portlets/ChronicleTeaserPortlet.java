@@ -30,10 +30,12 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        DetailedTopic detail = SNSInterfaceImpl.getInstance().getAnniversary(new Date());
+        DetailedTopic[] details = SNSInterfaceImpl.getInstance().getAnniversaries(new Date());
 
         HashMap result = new HashMap();
-        if (detail != null) {
+        if (details.length > 0) {
+            int entry = (int)(Math.random() * details.length);
+            DetailedTopic detail = (DetailedTopic) details[entry];
             result.put("title", detail.get("topicName"));
             if (detail.get("from") != null) {
                 result.put("from", DateUtil.parseDateToLocale(detail.get("from").toString(), request.getLocale()));

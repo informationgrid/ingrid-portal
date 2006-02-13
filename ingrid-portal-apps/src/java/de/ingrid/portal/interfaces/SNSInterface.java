@@ -20,18 +20,20 @@ public interface SNSInterface {
 
     
     /**
-     * Returns the Anniversary of a given Date. This method uses a fallback strategy 
+     * Returns all found Anniversary of a given Date. This method uses a fallback strategy 
      * of no aniversary was found for a particular day, month. It enlarges the search
-     * in two steps:
+     * with the following fallbacks:
      * 
-     *  1.) +- 7 days
-     *  2.) +- 30 days
+     *  1.) today
+     *  2.) this month
+     *  3.) year
      * 
-     * @param date The date to search an anniverary for.
-     * @return The DetailedTopic representing the anniversary or null if no anniversary was found.
+     * @param date  The date to search anniveraries for.
+     * @return The DetailedTopic Array representing the anniversaries.
      */
-    DetailedTopic getAnniversary(java.util.Date date);
-
+    DetailedTopic[] getAnniversaries(java.util.Date date);
+    
+    
     /**
      * Get similar topics from a given term.
      * 

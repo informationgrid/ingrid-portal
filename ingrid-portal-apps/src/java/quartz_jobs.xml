@@ -22,4 +22,27 @@
             </simple>
         </trigger>
     </job>
+<!--
+    <job>
+        <job-detail>
+            <name>AnniversaryFetcherJob</name>
+            <group>DEFAULT</group>
+            <description>job fetching all anniversaries from SNS for tomorrow and store them into DB.</description>
+            <job-class>de.ingrid.portal.scheduler.jobs.AnniversaryFetcherJob</job-class>
+            <volatility>false</volatility>
+            <durability>false</durability>
+            <recover>false</recover>
+        </job-detail>
+        <trigger>
+            <simple>
+                <name>AnniversaryFetcherJob</name>
+                <group>DEFAULT</group>
+                <job-name>AnniversaryFetcherJob</job-name>
+                <job-group>DEFAULT</job-group>
+                <repeat-count>-1</repeat-count>
+                <repeat-interval>86400000</repeat-interval>
+            </simple>
+        </trigger>
+    </job>
+-->    
 </quartz>
