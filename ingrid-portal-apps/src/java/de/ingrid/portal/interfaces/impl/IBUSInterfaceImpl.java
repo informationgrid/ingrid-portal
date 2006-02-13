@@ -22,8 +22,6 @@ import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.PlugDescription;
-import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -213,7 +211,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
         return stream;
     }
-
+/*
     public PlugDescription getIPlug(String plugId) {
         return bus.getIPlug(plugId);
     }
@@ -230,7 +228,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         return plug;
     }
-
+*/
     public void transferHitDetails(IngridHit result, IngridHitDetail detail) {
         try {
             result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
@@ -245,6 +243,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (partner != null) {
                 result.put(Settings.RESULT_KEY_PARTNER, UtilsDB.getPartnerFromKey(partner.toString()));                
             }
+            result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
+            result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
+            result.put(Settings.RESULT_KEY_PLUG_ID, detail.getPlugId());
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);
@@ -252,18 +253,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
     }
 /*
-    public void transferPlugDetails(IngridHit result, PlugDescription plug) {
-        try {
-            result.put(Settings.RESULT_KEY_PROVIDER, plug.getOrganisation());
-            result.put(Settings.RESULT_KEY_SOURCE, plug.getDataSourceName());
-            result.put(Settings.RESULT_KEY_PLUG_ID, plug.getPlugId());
-        } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems taking over Plug Details into result:" + result, t);
-            }
-        }
-    }
-*/
     public Column getColumn(Record record, String columnName) {
         Column col = null;
         try {
@@ -291,5 +280,5 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         return col;
     }
-
+*/
 }

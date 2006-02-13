@@ -157,12 +157,9 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
             IngridHit result = null;
             IngridHitDetail detail = null;
-            //            PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
                 detail = details[i];
-                //                plug = ibus.getIPlug(result);
-
                 if (result == null) {
                     continue;
                 }
@@ -170,11 +167,6 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
                     ibus.transferHitDetails(result, detail);
                     result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
                 }
-/*
-                if (plug != null) {
-                    ibus.transferPlugDetails(result, plug);
-                }
-*/
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {

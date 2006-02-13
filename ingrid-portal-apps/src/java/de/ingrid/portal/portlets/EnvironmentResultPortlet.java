@@ -157,11 +157,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
             IngridHit result = null;
             IngridHitDetail detail = null;
-//            PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
                 detail = details[i];
-//                plug = ibus.getIPlug(result);
                 
                 if (result == null) {
                     continue;
@@ -182,11 +180,6 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, temp2);
                 }
-/*
-                if (plug != null) {
-                    ibus.transferPlugDetails(result, plug);
-                }
-*/
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {

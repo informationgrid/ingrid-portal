@@ -8,8 +8,6 @@ import org.apache.commons.configuration.Configuration;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.PlugDescription;
-import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -78,14 +76,14 @@ public interface IBUSInterface {
      * @param plugId The id of the iPlug.
      * @return The PlugDescription. 
      */
-    PlugDescription getIPlug(String plugId);
+//    PlugDescription getIPlug(String plugId);
 
     /**
      * Get Plug Description of a result.
      * @param hit
      * @return The Plug Description OR NULL
      */
-    PlugDescription getIPlug(IngridHit hit);
+//    PlugDescription getIPlug(IngridHit hit);
 
     /**
      * Transfer commonly used detail parameters from detail object to hitobject.
@@ -95,17 +93,10 @@ public interface IBUSInterface {
     void transferHitDetails(IngridHit hit, IngridHitDetail detail);
 
     /**
-     * Transfer commonly used plug parameters from plug description to hitobject.
-     * @param hit
-     * @param plug
-     */
-//    void transferPlugDetails(IngridHit hit, PlugDescription plug);
-
-    /**
      * Fetch column from Record.
      * @param record
      * @param columnName
      * @return The Column OR NULL
      */
-    Column getColumn(Record record, String columnName);
+//    Column getColumn(Record record, String columnName);
 }
