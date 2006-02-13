@@ -28,7 +28,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/commons-collections/jars/commons-collections-3.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-g2k-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/quartz/jars/quartz-1.5.0.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/rome/jars/rome-0.7.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/rome/jars/rome-0.8.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jdom/jars/jdom-1.0.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

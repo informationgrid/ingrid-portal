@@ -7,20 +7,30 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 
 public class IngridPortalSchedulerServlet extends HttpServlet {
 
+    private final static Log log = LogFactory.getLog(IngridPortalSchedulerServlet.class);
+    private final static Log console = LogFactory.getLog("console");
+
+    SchedulerFactory schedFact = null;
+    Scheduler sched = null;
+
+    
     public synchronized final void init(ServletConfig config) throws ServletException {
         synchronized (this.getClass()) {
             super.init(config);
             System.out.println("IngridPortalSchedulerServlet startet");
 
             try {
-                SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
-                Scheduler sched = schedFact.getScheduler();
+                schedFact = new org.quartz.impl.StdSchedulerFactory();
+                sched = schedFact.getScheduler();
                 sched.start();
             } catch (SchedulerException e) {
                 // TODO Auto-generated catch block
@@ -29,4 +39,23 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
         }
     }
 
+    /**
+     * The <code>Servlet</code> destroy method.
+     */
+    public final void destroy()
+    {
+        try {
+            if (sched != null && !sched.isShutdown()) {
+                // wait for jobs to complete
+                log.info("waiting for scheduler to complete jobs...");
+                sched.shutdown(true);
+                log.info("waiting for scheduler to complete jobs... done.");
+            }
+        } catch (SchedulerException e) {
+            log.fatal("Jetspeed: shutdown() failed: ", e);
+            System.err.println(ExceptionUtils.getStackTrace(e));
+        }
+    }
+    
+    
 }
