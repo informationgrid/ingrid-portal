@@ -97,37 +97,39 @@ public class Utils {
     public static HashMap getPageNavigation(int startHit, int hitsPerPage, int numberOfHits, int numSelectorPages) {
 
         // pageSelector
-        int currentSelectorPage;
-        int numberOfPages;
-        int firstSelectorPage;
-        int lastSelectorPage;
-        boolean selectorHasPreviousPage;
-        boolean selectorHasNextPage;
-        int numberOfFirstHit;
-        int numberOfLastHit;
+        int currentSelectorPage = 0;
+        int numberOfPages = 0;
+        int firstSelectorPage = 0;
+        int lastSelectorPage = 0;
+        boolean selectorHasPreviousPage = false;
+        boolean selectorHasNextPage = false;
+        int numberOfFirstHit = 0;
+        int numberOfLastHit = 0;
 
-        currentSelectorPage = startHit / hitsPerPage + 1;
-        numberOfPages = numberOfHits / hitsPerPage;
-        if (Math.ceil(numberOfHits % hitsPerPage) > 0) {
-            numberOfPages++;
-        }
-        firstSelectorPage = 1;
-        selectorHasPreviousPage = false;
-        if (currentSelectorPage >= numSelectorPages) {
-            firstSelectorPage = currentSelectorPage - (int) (numSelectorPages / 2);
-            selectorHasPreviousPage = true;
-        }
-        lastSelectorPage = firstSelectorPage + numSelectorPages - 1;
-        selectorHasNextPage = true;
-        if (numberOfPages <= lastSelectorPage) {
-            lastSelectorPage = numberOfPages;
-            selectorHasNextPage = false;
-        }
-        numberOfFirstHit = (currentSelectorPage - 1) * hitsPerPage + 1;
-        numberOfLastHit = numberOfFirstHit + hitsPerPage - 1;
+        if (numberOfHits != 0) {
+            currentSelectorPage = startHit / hitsPerPage + 1;
+            numberOfPages = numberOfHits / hitsPerPage;
+            if (Math.ceil(numberOfHits % hitsPerPage) > 0) {
+                numberOfPages++;
+            }
+            firstSelectorPage = 1;
+            selectorHasPreviousPage = false;
+            if (currentSelectorPage >= numSelectorPages) {
+                firstSelectorPage = currentSelectorPage - (int) (numSelectorPages / 2);
+                selectorHasPreviousPage = true;
+            }
+            lastSelectorPage = firstSelectorPage + numSelectorPages - 1;
+            selectorHasNextPage = true;
+            if (numberOfPages <= lastSelectorPage) {
+                lastSelectorPage = numberOfPages;
+                selectorHasNextPage = false;
+            }
+            numberOfFirstHit = (currentSelectorPage - 1) * hitsPerPage + 1;
+            numberOfLastHit = numberOfFirstHit + hitsPerPage - 1;
 
-        if (numberOfLastHit > numberOfHits) {
-            numberOfLastHit = numberOfHits;
+            if (numberOfLastHit > numberOfHits) {
+                numberOfLastHit = numberOfHits;
+            }            
         }
 
         HashMap pageSelector = new HashMap();

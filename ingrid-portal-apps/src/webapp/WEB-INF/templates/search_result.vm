@@ -1,4 +1,3 @@
-#if($rankedResultList)
 <!-- RESULTS LEFT -->
   <div id="results_left">
     <div class="section">  
@@ -8,8 +7,9 @@
       <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)
       </div>
-
       <br />
+
+#if($rankedResultList)
       #foreach($rs in $rankedResultList.hits)
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
@@ -57,6 +57,7 @@
 		  #end
           </div>
 	  #end
+#end  
 
       <div class="resultset_nav float_left">
 #renderRankedResultCounter($rankedPageSelector)
@@ -69,9 +70,7 @@
     </div>
     <!-- // PORTLET EINFACHE SUCHE -->    
   </div>
-#end  
   
-#if($unrankedResultList)
 <!-- RESULTS RIGHT -->
   <div id="results_right">
     <div class="portlet">
@@ -87,6 +86,7 @@
       </div>
       <br />
 
+#if($unrankedResultList)
       #foreach($rs in $unrankedResultList)
     	  <div class="resultset_partner_group">
             <div class="ico_down_black"><span class="title">$rs.title#if($rs.hits) ($rs.hits Treffer)#end</span><br /></div>
@@ -103,6 +103,7 @@
           </div>
           <br />
       #end
+#end
       
       <div class="resultset_nav float_left">
 #renderUnrankedResultCounter($unrankedPageSelector)
@@ -116,6 +117,5 @@
       </div>
     </div>    
   </div>
-#end
 
   <div class="clearer"></div>
