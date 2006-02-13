@@ -15,7 +15,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.Bus;
-import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -23,6 +22,7 @@ import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
@@ -147,13 +147,12 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     }
 
     /**
-     * @throws Exception 
-     * @see de.ingrid.portal.interfaces.IBUSInterface#getDetails(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery)
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getDetail(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery, java.lang.String[])
      */
-    public IngridHitDetail getDetails(IngridHit result, IngridQuery query) {
+    public IngridHitDetail getDetail(IngridHit result, IngridQuery query, String[] requestedFields) {
         IngridHitDetail detail = null;
         try {
-            detail = bus.getDetails(result, query);
+            detail = bus.getDetail(result, query, requestedFields);
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching Detail of result: " + result, t);
@@ -161,6 +160,22 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
 
         return detail;
+    }
+
+    /**
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getDetails(de.ingrid.utils.IngridHit[], de.ingrid.utils.query.IngridQuery, java.lang.String[])
+     */
+    public IngridHitDetail[] getDetails(IngridHit[] results, IngridQuery query, String[] requestedFields) {
+        IngridHitDetail[] details = null;
+        try {
+            details = bus.getDetails(results, query, requestedFields);
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching Details of results: " + results, t);
+            }
+        }
+
+        return details;
     }
 
     /**

@@ -17,7 +17,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -28,8 +27,6 @@ import de.ingrid.portal.search.mockup.SearchResultListMockup;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.dsc.Column;
-import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
@@ -129,15 +126,14 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             numberOfRankedHits = (int) rankedHits.length();
         } catch (Exception ex) {
             if (log.isInfoEnabled()) {
-                log
-                        .info("Problems fetching ranked hits ! hits = " + rankedHits + ", numHits = "
-                                + numberOfRankedHits, ex);
+                log.info("Problems fetching ranked hits ! hits = " + rankedHits + ", numHits = " + numberOfRankedHits,
+                        ex);
             }
         }
 
         // adapt settings of ranked page navigation
-        HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE, numberOfRankedHits,
-                Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
+        HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, RANKED_HITS_PER_PAGE,
+                numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // unranked results 
         int UNRANKED_HITS_PER_PAGE = Settings.SEARCH_UNRANKED_HITS_PER_PAGE;
@@ -149,7 +145,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, UNRANKED_HITS_PER_PAGE,
                 numberOfUnrankedHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
-        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0 ) {
+        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0) {
             // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
 
             // query string will be displayed when no results !
@@ -207,21 +203,33 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
+            String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
+            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
-            PlugDescription plug = null;
+//            PlugDescription plug = null;
+            String tmpString = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
-                detail = ibus.getDetails(result, query);
-                plug = ibus.getIPlug(result);
+                detail = details[i];
+                //                plug = ibus.getIPlug(result);
 
                 if (result == null) {
                     continue;
                 }
                 if (detail != null) {
                     ibus.transferHitDetails(result, detail);
+                    if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
+                        tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
+                        result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+                    }
+                    if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
+                        tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+                        result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                    }
                 }
+/*
                 if (plug != null) {
                     ibus.transferPlugDetails(result, plug);
                     if (plug.getIPlugClass().equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
@@ -237,7 +245,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                             c = ibus.getColumn(record, Settings.HIT_KEY_UDK_CLASS);
                             if (c != null) {
                                 result.put(Settings.RESULT_KEY_UDK_CLASS, record.getValueAsString(c));
-                            }                            
+                            }
                         }
                     } else if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
                         result.put(Settings.RESULT_KEY_TYPE, "nutch");
@@ -245,6 +253,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         result.put(Settings.RESULT_KEY_TYPE, "unknown");
                     }
                 }
+*/
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {

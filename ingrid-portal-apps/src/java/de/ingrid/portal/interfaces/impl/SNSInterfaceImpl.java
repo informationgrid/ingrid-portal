@@ -19,7 +19,6 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
@@ -71,7 +70,7 @@ public class SNSInterfaceImpl implements SNSInterface {
             IngridHit[] hitsArray = hits.getHits();
             if (hitsArray.length > 0) {
                 int entry = (int)(Math.random() * hitsArray.length);
-                return (DetailedTopic)iBus.getDetails(hitsArray[entry], query);
+                return (DetailedTopic)iBus.getDetail(hitsArray[entry], query, new String[0]);
             }
             // TODO implement fallback
         } catch (Exception e) {

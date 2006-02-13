@@ -13,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.iplug.PlugDescription;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -154,13 +153,14 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-
+            IngridHitDetail[] details = ibus.getDetails(results, query, new String[0]);
+/*
             IngridHit result = null;
             IngridHitDetail detail = null;
             PlugDescription plug = null;
             for (int i = 0; i < results.length; i++) {
                 result = results[i];
-                detail = ibus.getDetails(result, query);
+                detail = ibus.getDetail(result, query, new String[0]);
                 plug = ibus.getIPlug(result);
 
                 if (result == null) {
@@ -174,6 +174,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                     ibus.transferPlugDetails(result, plug);
                 }
             }
+*/
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems performing Search !", t);

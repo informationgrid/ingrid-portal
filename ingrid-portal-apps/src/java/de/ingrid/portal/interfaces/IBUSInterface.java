@@ -5,10 +5,10 @@ package de.ingrid.portal.interfaces;
 
 import org.apache.commons.configuration.Configuration;
 
-import de.ingrid.iplug.PlugDescription;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
@@ -51,7 +51,16 @@ public interface IBUSInterface {
      * @param query The IngridQuery the hit was found with.
      * @return The IngridHitDetail with details about the hit OR NULL
      */
-    IngridHitDetail getDetails(IngridHit hit, IngridQuery query);
+    IngridHitDetail getDetail(IngridHit hit, IngridQuery query, String[] requestedFields);
+
+    /**
+     * Return details for an array of IngridHits.
+     * @param hits
+     * @param query
+     * @param requestedFields
+     * @return
+     */
+    IngridHitDetail[] getDetails(IngridHit[] hits, IngridQuery query, String[] requestedFields);
 
     /**
      * Returns more information than getDetails about the hit. This is mainly used
