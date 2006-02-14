@@ -212,36 +212,42 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
-            //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+//            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             String tmpString = null;
             for (int i = 0; i < results.length; i++) {
-                result = results[i];
-                //                detail = details[i];
-                detail = ibus.getDetail(result, query, requestedMetadata);
-                if (result == null) {
-                    continue;
-                }
-                if (detail != null) {
-                    ibus.transferHitDetails(result, detail);
-                    tmpString = detail.getIplugClassName();
-                    if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        result.put(Settings.RESULT_KEY_TYPE, "dsc");
+                try {
+                    result = results[i];
+//                    detail = details[i];
+                    detail = ibus.getDetail(result, query, requestedMetadata);
+                    if (result == null) {
+                        continue;
+                    }
+                    if (detail != null) {
+                        ibus.transferHitDetails(result, detail);
+                        tmpString = detail.getIplugClassName();
+                        if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                            result.put(Settings.RESULT_KEY_TYPE, "dsc");
 
-                        if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
-                            tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
-                            result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+                            if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
+                                tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
+                                result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+                            }
+                            if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
+                                tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+                                result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                            }
+                        } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
+                            result.put(Settings.RESULT_KEY_TYPE, "nutch");
+                        } else {
+                            result.put(Settings.RESULT_KEY_TYPE, "unknown");
                         }
-                        if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                            tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
-                            result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-                        }
-                    } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
-                        result.put(Settings.RESULT_KEY_TYPE, "nutch");
-                    } else {
-                        result.put(Settings.RESULT_KEY_TYPE, "unknown");
+                    }                    
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems processing Hit, hit = " +result+ ", detail = "+detail, t);
                     }
                 }
             }
