@@ -29,14 +29,17 @@ public class Settings {
     /** number of unranked pages displayed for selection ("selector pages") */
     public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 3;
 
-    /** the initial datasource ! */
-    public final static String SEARCH_INITIAL_DATASOURCE = "1";
+    /** datasource values submitted from template (view) */
+    public final static String SEARCH_DATASOURCE_ENVINFO = "1";
+    public final static String SEARCH_DATASOURCE_ADDRESS = "2";
+    public final static String SEARCH_DATASOURCE_RESEARCH = "3";
+    public final static String SEARCH_INITIAL_DATASOURCE = SEARCH_DATASOURCE_ENVINFO;
 
     public final static int SEARCH_DEFAULT_TIMEOUT = 5000;
 
     // ============= definitions for IngridQuery ==============================
 
-    // ------------- field names -----------------------------
+    // ------------- query field names -----------------------------
 
     public final static String QFIELD_DATATYPE = "datatype";
     public final static String QFIELD_PARTNER = "partner";
@@ -45,14 +48,19 @@ public class Settings {
     // second category in environment topics catalogue page !
     public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
 
-    // ------------- field values -----------------------------
+    // ------------- query field values -----------------------------
 
     // datatypes
-    public final static String QVALUE_DATATYPE_WWW = "www";
     public final static String QVALUE_DATATYPE_SERVICE = "www_service";
     public final static String QVALUE_DATATYPE_MEASURES = "www_measures";
     public final static String QVALUE_DATATYPE_ENVTOPIC = "www_topic";
-    
+
+    public final static String QVALUE_DATATYPE_ENVINFO = "default";
+    // TODO: doesn't work yet !!! we use explicit address iPlug as datytpe !
+//    public final static String QVALUE_DATATYPE_ADDRESS = "address";
+    public final static String QVALUE_DATATYPE_ADDRESS = "dsc_ecs_address";
+    public final static String QVALUE_DATATYPE_RESEARCH = "research";
+
     // ============= definitions to access Result data (render data) ==============================
     // IF POSSIBLE, USE THE KEYS TO ACCESS HIT DATA ALSO AS KEYS FOR RESULT DATA !!! 
 

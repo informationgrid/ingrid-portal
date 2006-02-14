@@ -161,10 +161,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
             numberOfUnrankedHits = (int) unrankedHits.length();
         } catch (Exception ex) {
+            // TODO commented catch block !
+/*
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
                         + numberOfUnrankedHits, ex);
             }
+*/
         }
 
         // adapt settings of unranked page navigation

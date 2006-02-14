@@ -3,9 +3,13 @@
  */
 package de.ingrid.portal.global;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -16,6 +20,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.forms.ActionForm;
+import de.ingrid.utils.query.FieldQuery;
+import de.ingrid.utils.query.IngridQuery;
 
 /**
  * Global STATIC data and utility methods.
@@ -129,7 +135,7 @@ public class Utils {
 
             if (numberOfLastHit > numberOfHits) {
                 numberOfLastHit = numberOfHits;
-            }            
+            }
         }
 
         HashMap pageSelector = new HashMap();
@@ -273,4 +279,53 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Adapt basic datatypes in query dependent from selected datatype in UserInterface
+     * (the ones above the Simple Search Input).
+     * @param query
+     * @param selectedDS
+     */
+    public static void processBasicDataTypes(IngridQuery query, String selectedDS) {
+
+        if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+            // remove not valid data sources from query
+            removeBasicDataTypes(query);
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
+        } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+            // remove all manual input and set search to address !
+            query.remove(Settings.QFIELD_DATATYPE);
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
+        } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
+            // remove not valid data sources from query
+            removeBasicDataTypes(query);
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.SEARCH_DATASOURCE_RESEARCH));
+        }
+    }
+
+    /**
+     * Remove the Basic DataTypes from the query (the ones above the Simple Search Input) to obtain a "clean" query
+     * @param query
+     */
+    public static void removeBasicDataTypes(IngridQuery query) {
+        FieldQuery[] dataTypesInQuery = query.getDataTypes();
+        if (dataTypesInQuery.length == 0) {
+            return;
+        }
+
+        ArrayList processedDataTypes = new ArrayList(Arrays.asList(dataTypesInQuery));
+        for (Iterator iter = processedDataTypes.iterator(); iter.hasNext();) {
+            FieldQuery field = (FieldQuery) iter.next();
+            String value = field.getFieldValue();
+            if (value == null || value.equals(Settings.QVALUE_DATATYPE_ENVINFO)
+                    || value.equals(Settings.QVALUE_DATATYPE_ADDRESS)
+                    || value.equals(Settings.QVALUE_DATATYPE_RESEARCH)) {
+                iter.remove();
+            }
+        }
+        // remove all old datatypes and set our new ones
+        query.remove(Settings.QFIELD_DATATYPE);
+        for (int i = 0; i < processedDataTypes.size(); i++) {
+            query.addField((FieldQuery) processedDataTypes.get(i));
+        }
+    }
 }

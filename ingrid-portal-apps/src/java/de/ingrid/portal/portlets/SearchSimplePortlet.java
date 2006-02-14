@@ -38,12 +38,16 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
     private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
 
-    /** keys of possible titles, can be set via PSML portlet preferences */
+    /** page for displaying results, is called directly from start page */
     private final static String SEARCH_RESULT_PAGE = "portal/main-search.psml";
 
     /** keys of possible titles, can be set via PSML portlet preferences */
     private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
+
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
+
+    /** Keys of parameters in session/request */
+    private final static String PARAM_DATASOURCE = "ds";
 
     /*
      * (non-Javadoc)
@@ -106,8 +110,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);
-        
-        
+
         String searchAction = response.createActionURL().toString();
         if (startPage) {
             searchAction = SEARCH_RESULT_PAGE;
@@ -119,7 +122,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         String action = request.getParameter("action");
         if (action != null && action.equalsIgnoreCase("doSearch")) {
             // all ActionStuff encapsulated in separate method !
-            doSearchSimplePortletActionStuff(request, af);
+            doSearchAction(request);
         }
 
         super.doView(request, response);
@@ -141,20 +144,19 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         if (action.equalsIgnoreCase("doSearch")) {
             // encapsulate all ActionStuff in separate method, has to be called in view method too (when called
             // from start page !)
-            SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                    SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
-            doSearchSimplePortletActionStuff(request, af);
+            doSearchAction(request);
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
-            publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
+            publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter(PARAM_DATASOURCE));
             // do not requery on datasource change
             publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
             // don't populate action form, this is no submit, so no form parameters are in request !
-            // TODO use JavaScript to submit form on datasource change ! then use ActionForm like below !
+            // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
+            // in that way we don't loose query changes on data source change, when changes weren't submitted before
         }
     }
 
-    private void doSearchSimplePortletActionStuff(PortletRequest request, SearchSimpleForm af) {
+    private void doSearchAction(PortletRequest request) {
         // remove old query message
         cancelRenderMessage(request, Settings.MSG_QUERY);
         cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
@@ -163,6 +165,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
         publishRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR, Settings.MSG_VALUE_TRUE);
 
+        // validate input
+        SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
+                SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
         af.populate(request);
         if (!af.validate()) {
             return;
@@ -185,8 +190,13 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             }
             // TODO create ERROR message when no IngridQuery because of parse error and return (OR even do that in form ???) 
         }
+
         // set query in message for result portlet
         if (query != null) {
+            // adapt query to selected data source
+            String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+            Utils.processBasicDataTypes(query, selectedDS);
+
             publishRenderMessage(request, Settings.MSG_QUERY, query);
             publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryString);
         }
