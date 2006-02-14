@@ -10,7 +10,7 @@ import javax.portlet.PortletRequest;
  * 
  * @author Martin Maidhof
  */
-public class SimpleSearchForm extends ActionForm {
+public class SearchSimpleForm extends ActionForm {
 
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "search_simple_form";

@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.forms.SimpleSearchForm;
+import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.utils.query.IngridQuery;
@@ -41,8 +41,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     private final static String SEARCH_RESULT_PAGE = "portal/main-search.psml";
 
     /** keys of possible titles, can be set via PSML portlet preferences */
-    private final static String TITLE_KEY_SEARCH = "simpleSearch.title.search";
-    private final static String TITLE_KEY_RESULT = "simpleSearch.title.result";
+    private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
+    private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
 
     /*
      * (non-Javadoc)
@@ -84,12 +84,12 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
         // get ActionForm, we use get method without instantiation, so we can do
         // special initialisation !
-        SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
+        SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
                 PortletSession.APPLICATION_SCOPE);
         if (af == null) {
-            af = (SimpleSearchForm) Utils.addActionForm(request, SimpleSearchForm.SESSION_KEY, SimpleSearchForm.class,
+            af = (SearchSimpleForm) Utils.addActionForm(request, SearchSimpleForm.SESSION_KEY, SearchSimpleForm.class,
                     PortletSession.APPLICATION_SCOPE);
-            af.setINITIAL_QUERY(messages.getString("simpleSearch.query.initial"));
+            af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
         // put ActionForm to context. use variable name "actionForm" so velocity
@@ -115,7 +115,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         String action = request.getParameter("action");
         if (action != null && action.equalsIgnoreCase("doSearch")) {
             // all ActionStuff encapsulated in separate method !
-            doSimpleSearchPortletActionStuff(request, af);
+            doSearchSimplePortletActionStuff(request, af);
         }
 
         super.doView(request, response);
@@ -137,9 +137,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         if (action.equalsIgnoreCase("doSearch")) {
             // encapsulate all ActionStuff in separate method, has to be called in view method too (when called
             // from start page !)
-            SimpleSearchForm af = (SimpleSearchForm) Utils.getActionForm(request, SimpleSearchForm.SESSION_KEY,
-                    SimpleSearchForm.class, PortletSession.APPLICATION_SCOPE);
-            doSimpleSearchPortletActionStuff(request, af);
+            SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
+                    SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
+            doSearchSimplePortletActionStuff(request, af);
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
@@ -148,7 +148,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
     }
 
-    private void doSimpleSearchPortletActionStuff(PortletRequest request, SimpleSearchForm af) {
+    private void doSearchSimplePortletActionStuff(PortletRequest request, SearchSimpleForm af) {
         // remove old query message
         cancelRenderMessage(request, Settings.MSG_QUERY);
         cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
@@ -163,7 +163,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // check query input
-        String queryString = af.getInput(SimpleSearchForm.FIELD_QUERY);
+        String queryString = af.getInput(SearchSimpleForm.FIELD_QUERY);
         if (queryString.equals(af.getINITIAL_QUERY()) || queryString.length() == 0) {
             return;
         }

@@ -10,11 +10,11 @@
     <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridOneColumn">
         <fragment id="main-search-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">
           <property layout="OneColumn" name="row" value="0"/>
-          <fragment id="main-search-input" type="portlet" name="ingrid-portal-apps::SimpleSearch">
+          <fragment id="main-search-input" type="portlet" name="ingrid-portal-apps::SearchSimple">
             <property layout="TwoColumns" name="row" value="0"/>
             <property layout="TwoColumns" name="column" value="0"/>
             <preference name="titleKey" readOnly="false">
-              <value>simpleSearch.title.result</value>
+              <value>searchSimple.title.result</value>
             </preference>
           </fragment>                                
           <fragment id="main-search-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
@@ -24,7 +24,7 @@
               <value>/WEB-INF/templates/search_simple_info.vm</value>
             </preference>
             <preference name="infoTitleKey" readOnly="false">
-              <value>simpleSearch.info.title</value>
+              <value>searchSimple.info.title</value>
             </preference>
           </fragment>
           <fragment id="main-search-similar" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchSimilar">

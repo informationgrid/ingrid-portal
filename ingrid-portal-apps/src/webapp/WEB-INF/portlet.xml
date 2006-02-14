@@ -28,13 +28,13 @@
     <!-- Home                    -->
     <!-- *********************** -->
 
-    <portlet id="SimpleSearch">
+    <portlet id="SearchSimple">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
             <value>/WEB-INF/templates/search_simple.vm</value>
         </init-param>
-        <portlet-name>SimpleSearch</portlet-name>
+        <portlet-name>SearchSimple</portlet-name>
         <display-name>Einfache Suche</display-name>
         <description>This portlet displayes a search box for the home AND main search page.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSimplePortlet</portlet-class>
@@ -43,7 +43,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.SimpleSearchResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>            
     </portlet>
 
     <portlet id="RssNewsTeaser">

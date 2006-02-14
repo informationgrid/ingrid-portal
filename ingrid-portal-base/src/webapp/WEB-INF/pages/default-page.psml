@@ -8,11 +8,11 @@
   <metadata name="title" xml:lang="de">Startseite</metadata>
 
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SimpleSearch">
+    <fragment id="main-search-1" type="portlet" name="ingrid-portal-apps::SearchSimple">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
-        <value>simpleSearch.title.search</value>
+        <value>searchSimple.title.search</value>
       </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::InfoPortlet">
