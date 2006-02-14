@@ -16,10 +16,10 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
+import de.ingrid.portal.global.DateUtil;
 import de.ingrid.portal.hibernate.HibernateManager;
-import de.ingrid.portal.interfaces.impl.SNSInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
-import de.ingrid.portal.om.IngridRSSStore;
 import de.ingrid.utils.IngridHitDetail;
 
 /**
@@ -45,7 +45,7 @@ public class AnniversaryFetcherJob implements Job {
             fHibernateManager = HibernateManager.getInstance();
             Session session = this.fHibernateManager.getSession();
             
-            IngridHitDetail[] details = SNSInterfaceImpl.getInstance().getAnniversaries(cal.getTime());
+            IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(cal.getTime());
             if (details.length > 0) {
                 for (int i=0; i<details.length; i++) {
                     DetailedTopic detail = (DetailedTopic) details[i];
@@ -56,10 +56,24 @@ public class AnniversaryFetcherJob implements Job {
                         anni.setTopicId(detail.getTopicID());
                         anni.setTopicName(detail.getTopicName());
                         anni.setDateFrom(detail.getFrom());
+                        if (detail.getFrom() != null) {
+                            Date fromDate = DateUtil.parseDateString(detail.getFrom());
+                            cal.setTime(fromDate);
+                            anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
+                            anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH)));
+                            anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                        }
                         anni.setDateTo(detail.getTo());
+                        if (detail.getTo() != null) {
+                            Date toDate = DateUtil.parseDateString(detail.getTo());
+                            cal.setTime(toDate);
+                            anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
+                            anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH)));
+                            anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                        }
                         anni.setAdministrativeId(detail.getAdministrativeID());
                         anni.setFetched(new Date());
-                        
+
                         session.beginTransaction();
                         session.save(anni);
                         session.getTransaction().commit();

@@ -18,7 +18,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.interfaces.impl.SNSInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
@@ -131,7 +131,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
                 node.setOpen(true);
                 if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM) {
-                    IngridHit[] hits = SNSInterfaceImpl.getInstance().getSimilarTerms(node.getName());
+                    IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
                     for (int i=0; i<hits.length; i++) {
                         Topic hit = (Topic) hits[i];
                         if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {

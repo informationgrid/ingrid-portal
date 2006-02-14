@@ -9,7 +9,13 @@
     	<property name="topicId" column="topic_id" type="java.lang.String" insert="false" update="false"/>
     	<property name="topicName" column="topic_name" type="java.lang.String"/>
     	<property name="dateFrom" column="date_from" type="java.lang.String"/>
+    	<property name="dateFromYear" column="date_from_year" type="java.lang.Integer"/>
+    	<property name="dateFromMonth" column="date_from_month" type="java.lang.Integer"/>
+    	<property name="dateFromDay" column="date_from_day" type="java.lang.Integer"/>
     	<property name="dateTo" column="date_to" type="java.lang.String"/>
+    	<property name="dateToYear" column="date_to_year" type="java.lang.Integer"/>
+    	<property name="dateToMonth" column="date_to_month" type="java.lang.Integer"/>
+    	<property name="dateToDay" column="date_to_day" type="java.lang.Integer"/>
     	<property name="administrativeId" column="administrative_id" type="java.lang.String"/>
     	<property name="fetched" type="java.sql.Date"/>
   </class>

@@ -15,7 +15,8 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.global.DateUtil;
-import de.ingrid.portal.interfaces.impl.SNSInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.utils.IngridHitDetail;
 
 public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
@@ -31,7 +32,7 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        IngridHitDetail[] details = SNSInterfaceImpl.getInstance().getAnniversaries(new Date());
+        IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date());
 
         HashMap result = new HashMap();
         if (details.length > 0) {
@@ -41,7 +42,7 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             if (detail.get("from") != null) {
                 result.put("from", DateUtil.parseDateToLocale(detail.get("from").toString(), request.getLocale()));
             }
-            if (detail.get("until") != null) {
+            if (detail.get("until") != null && !detail.get("until").equals(detail.get("from"))) {
                 result.put("until", DateUtil.parseDateToLocale(detail.get("until").toString(), request.getLocale()));
             }
             result.put("topicId", detail.get("topicId"));

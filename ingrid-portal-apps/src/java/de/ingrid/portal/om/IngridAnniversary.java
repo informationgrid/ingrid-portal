@@ -8,7 +8,13 @@ public class IngridAnniversary {
     private String topicId;
     private String topicName;
     private String dateFrom;
+    private Integer dateFromYear;
+    private Integer dateFromMonth;
+    private Integer dateFromDay;
     private String dateTo;
+    private Integer dateToYear;
+    private Integer dateToMonth;
+    private Integer dateToDay;
     private String administrativeId;
     private Date fetched;
 
@@ -50,6 +56,48 @@ public class IngridAnniversary {
     }
 
     /**
+     * @return Returns the dateFromDay.
+     */
+    public Integer getDateFromDay() {
+        return dateFromDay;
+    }
+
+    /**
+     * @param dateFromDay The dateFromDay to set.
+     */
+    public void setDateFromDay(Integer dateFromDay) {
+        this.dateFromDay = dateFromDay;
+    }
+
+    /**
+     * @return Returns the dateFromMonth.
+     */
+    public Integer getDateFromMonth() {
+        return dateFromMonth;
+    }
+
+    /**
+     * @param dateFromMonth The dateFromMonth to set.
+     */
+    public void setDateFromMonth(Integer dateFromMonth) {
+        this.dateFromMonth = dateFromMonth;
+    }
+
+    /**
+     * @return Returns the dateFromYear.
+     */
+    public Integer getDateFromYear() {
+        return dateFromYear;
+    }
+
+    /**
+     * @param dateFromYear The dateFromYear to set.
+     */
+    public void setDateFromYear(Integer dateFromYear) {
+        this.dateFromYear = dateFromYear;
+    }
+
+    /**
      * @return Returns the dateTo.
      */
     public String getDateTo() {
@@ -61,6 +109,48 @@ public class IngridAnniversary {
      */
     public void setDateTo(String dateTo) {
         this.dateTo = dateTo;
+    }
+
+    /**
+     * @return Returns the dateToDay.
+     */
+    public Integer getDateToDay() {
+        return dateToDay;
+    }
+
+    /**
+     * @param dateToDay The dateToDay to set.
+     */
+    public void setDateToDay(Integer dateToDay) {
+        this.dateToDay = dateToDay;
+    }
+
+    /**
+     * @return Returns the dateToMonth.
+     */
+    public Integer getDateToMonth() {
+        return dateToMonth;
+    }
+
+    /**
+     * @param dateToMonth The dateToMonth to set.
+     */
+    public void setDateToMonth(Integer dateToMonth) {
+        this.dateToMonth = dateToMonth;
+    }
+
+    /**
+     * @return Returns the dateToYear.
+     */
+    public Integer getDateToYear() {
+        return dateToYear;
+    }
+
+    /**
+     * @param dateToYear The dateToYear to set.
+     */
+    public void setDateToYear(Integer dateToYear) {
+        this.dateToYear = dateToYear;
     }
 
     /**
@@ -104,8 +194,8 @@ public class IngridAnniversary {
     public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
-    
-    
+
+
 
 
 }

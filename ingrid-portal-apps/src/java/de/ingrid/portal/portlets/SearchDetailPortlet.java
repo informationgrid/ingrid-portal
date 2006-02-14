@@ -74,6 +74,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     }
     
     private void addSubRecords(Record record, HashMap map) {
+        addSubRecords(record, map, 0);
+    }
+    
+    
+    private void addSubRecords(Record record, HashMap map, int level) {
+        level++;
         Column[] columns;
         ArrayList subRecordList;
         Record[] subRecords = record.getSubRecords();
@@ -92,7 +98,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             }
             subRecordList.add(subRecordMap);
             // add subrecords
-            addSubRecords(subRecords[i], subRecordMap);
+            addSubRecords(subRecords[i], subRecordMap, level);
         }
         
     }

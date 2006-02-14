@@ -14,6 +14,8 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+
 public class IngridPortalSchedulerServlet extends HttpServlet {
 
     private final static Log log = LogFactory.getLog(IngridPortalSchedulerServlet.class);
@@ -45,12 +47,14 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
     public final void destroy()
     {
         try {
+            IBUSInterfaceImpl.resetBus();
             if (sched != null && !sched.isShutdown()) {
                 // wait for jobs to complete
                 log.info("waiting for scheduler to complete jobs...");
                 sched.shutdown(true);
                 log.info("waiting for scheduler to complete jobs... done.");
             }
+            
         } catch (SchedulerException e) {
             log.fatal("Jetspeed: shutdown() failed: ", e);
             System.err.println(ExceptionUtils.getStackTrace(e));
