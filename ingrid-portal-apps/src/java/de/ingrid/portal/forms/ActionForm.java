@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.StringUtils;
+
 /**
  * Super class of all Form Handlers. Defines framework for form validation and
  * error messages.
@@ -83,6 +85,19 @@ public abstract class ActionForm implements Serializable {
         return result;
     }
 
+    /**
+     * Get Input Data of specific field. Returns "" if no input.
+     */
+    public String getInputHTMLEscaped(String field) {
+        String inputVal = (String) input.get(field);
+        if (inputVal == null) {
+            return "";
+        }
+        String result = inputVal.substring(1, inputVal.length() - 1);
+        return StringUtils.htmlescape(result);
+    }
+    
+    
     /**
      * Set Input Data for single value field
      */

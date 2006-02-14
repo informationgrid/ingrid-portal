@@ -94,7 +94,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.init();
         }
         if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
-            af.setInput(SearchSimpleForm.FIELD_QUERY, ((String)receiveRenderMessage(request, Settings.MSG_QUERY_STRING)).replaceAll("\"", "&quot;"));
+            af.setInput(SearchSimpleForm.FIELD_QUERY, ((String)receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
         }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !

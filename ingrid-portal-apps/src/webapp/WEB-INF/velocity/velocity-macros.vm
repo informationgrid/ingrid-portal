@@ -4,6 +4,10 @@
 #macro (getFieldValue $field)
 $actionForm.getInput($field)#end
 
+#macro (getHTMLEscapedFieldValue $field)
+$actionForm.getInputHTMLEscaped($field)#end
+
+
 #macro (getChecked $field $value)
 #if ($actionForm.isCurrentInput($field, $value))checked="checked"#end
 #end

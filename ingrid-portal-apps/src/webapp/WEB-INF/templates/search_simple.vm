@@ -26,7 +26,7 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.research')</a>	
 #end
     	</p>
-      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#getFieldValue('q')" 
+      <label class="hide" for="qrystr">Suche: </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#getHTMLEscapedFieldValue('q')" 
 		onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"' />
 		<input class="btn" type="submit" value="PortalU Suche" />
           <span class="clearer"></span>
