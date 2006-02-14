@@ -116,9 +116,11 @@ public class ChronicleSearchForm extends ActionForm {
                     allOk = false;
                 }
             }
-            if (fromDate != null && toDate != null) {
-                Calendar fromCal = new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay());
-                Calendar toCal = new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay());
+            if (fromDate != null && toDate != null) {                
+                Calendar fromCal = new GregorianCalendar();
+                fromCal.setTime(fromDate);
+                Calendar toCal = new GregorianCalendar();
+                toCal.setTime(toDate);
                 if (fromCal.after(toCal)) {
                     setError(FIELD_TIME_FROM, "chronicle.error.invalidPeriod");
                     // set empty error, just for highlighting field label
