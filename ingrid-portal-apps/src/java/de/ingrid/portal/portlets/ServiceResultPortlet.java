@@ -153,19 +153,27 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-            IngridHitDetail[] details = ibus.getDetails(results, query, new String[0]);
+            //            IngridHitDetail[] details = ibus.getDetails(results, query, new String[0]);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
-                result = results[i];
-                detail = details[i];
-                if (result == null) {
-                    continue;
-                }
-                if (detail != null) {
-                    ibus.transferHitDetails(result, detail);
-                    result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
+                try {
+                    result = results[i];
+                    //                detail = details[i];
+                    detail = ibus.getDetail(result, query, new String[0]);
+
+                    if (result == null) {
+                        continue;
+                    }
+                    if (detail != null) {
+                        ibus.transferHitDetails(result, detail);
+                        result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
+                    }
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
+                    }
                 }
             }
         } catch (Throwable t) {
