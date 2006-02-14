@@ -121,13 +121,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int numberOfRankedHits = 0;
         try {
             if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
-                rankedHits = (IngridHits)receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
-                // check for invalid answer, requery
-                if (rankedHits == null) {
-                    rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
-                    this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
-                }
-            } else {
+                rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
+            }
+            if (rankedHits == null) {
                 rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
             }
@@ -149,25 +145,19 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int numberOfUnrankedHits = 0;
         try {
             if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
-                unrankedHits = (IngridHits)receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-                // check for invalid answer, requery
-                if (unrankedHits == null) {
-                    unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
-                    this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
-                }
-            } else {
-                unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
+                unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+            }
+            if (unrankedHits == null) {
+                unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit,
+                        Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
             }
             numberOfUnrankedHits = (int) unrankedHits.length();
         } catch (Exception ex) {
-            // TODO commented catch block !
-/*
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
                         + numberOfUnrankedHits, ex);
             }
-*/
         }
 
         // adapt settings of unranked page navigation
@@ -194,9 +184,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
 
-        // remove "ibus query disable"
-        cancelRenderMessage(request, Settings.MSG_NO_QUERY);
-        
         super.doView(request, response);
     }
 
@@ -238,7 +225,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
-//            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+            //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
@@ -246,7 +233,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-//                    detail = details[i];
+                    //                    detail = details[i];
                     detail = ibus.getDetail(result, query, requestedMetadata);
                     if (result == null) {
                         continue;
@@ -270,10 +257,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         } else {
                             result.put(Settings.RESULT_KEY_TYPE, "unknown");
                         }
-                    }                    
+                    }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " +result+ ", detail = "+detail, t);
+                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
                     }
                 }
             }

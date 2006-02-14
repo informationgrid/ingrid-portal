@@ -3,7 +3,6 @@
  */
 package de.ingrid.portal.global;
 
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -187,8 +186,8 @@ public class Utils {
 
         boolean result = true;
         try {
-            // check for format syntax of RFC822
-            InternetAddress emailAddr = new InternetAddress(aEmailAddress);
+            // check for format syntax of RFC822, throws Exception if not valid !
+            new InternetAddress(aEmailAddress);
             // check for name and email
             String[] tokens = aEmailAddress.split("@");
             boolean hasNameAndDomain = (tokens.length == 2) && (tokens[0].trim().length() > 0)
@@ -290,7 +289,10 @@ public class Utils {
         if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
             // remove not valid data sources from query
             removeBasicDataTypes(query);
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
+            // TODO: do not set datatype:default, not processed in backend yet !
+            // instead don't allow addresses
+            //            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
+            query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
         } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
             // remove all manual input and set search to address !
             query.remove(Settings.QFIELD_DATATYPE);

@@ -1,7 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -98,7 +97,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.init();
         }
         if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
-            af.setInput(SearchSimpleForm.FIELD_QUERY, ((String)receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
+            af.setInput(SearchSimpleForm.FIELD_QUERY,
+                    ((String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
         }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
@@ -160,6 +160,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // remove old query message
         cancelRenderMessage(request, Settings.MSG_QUERY);
         cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
+        // remove "ibus query disable"
+        cancelRenderMessage(request, Settings.MSG_NO_QUERY);
         // set messages that a new query was performed ! set separate messages for every portlet, because every
         // portlet removes it's message (we don't know processing order) !
         publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);

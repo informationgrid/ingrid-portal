@@ -4,7 +4,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,10 +25,7 @@ import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * This portlet handles the "Similar Terms" fragment of the result page
@@ -45,7 +41,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/search_similar.vm";
 
-//    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/empty.vm";
+    //    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/empty.vm";
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -105,7 +101,6 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         // no new query anymore, we remove messages, so Similar fragment is displayed as clicked
         cancelRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
         publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
-        
 
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
@@ -123,7 +118,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         DisplayTreeNode similarRoot = null;
         if (action.equalsIgnoreCase("doOpenSimilar")) {
             ps.putBoolean("isSimilarOpen", true);
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
+            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot == null) {
                 IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
                 similarRoot = DisplayTreeFactory.getTree(query);
@@ -134,16 +129,16 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
         } else if (action.equalsIgnoreCase("doOpenNode")) {
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
+            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
                 DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
                 node.setOpen(true);
                 if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0) {
                     IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
-                    for (int i=0; i<hits.length; i++) {
+                    for (int i = 0; i < hits.length; i++) {
                         Topic hit = (Topic) hits[i];
                         if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                            DisplayTreeNode snsNode = new DisplayTreeNode(node.getId()+i, hit.getTopicName(), false);
+                            DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
                             snsNode.setType(DisplayTreeNode.SNS_TERM);
                             snsNode.setParent(node);
                             node.addChild(snsNode);
@@ -153,7 +148,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 ps.put("similarRoot", similarRoot);
             }
         } else if (action.equalsIgnoreCase("doCloseNode")) {
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
+            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
                 DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
                 if (node != null) {
@@ -161,18 +156,18 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
         } else if (action.equalsIgnoreCase("doAddSimilar")) {
-            
-            String queryStr = (String)receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
-            
-            String newQueryStr = queryStr.toLowerCase(); 
-            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
+
+            String queryStr = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
+
+            String newQueryStr = queryStr.toLowerCase();
+            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
                 ArrayList queryTerms = similarRoot.getChildren();
                 Iterator it = queryTerms.iterator();
                 while (it.hasNext()) {
                     DisplayTreeNode queryTerm = (DisplayTreeNode) it.next();
-                    Iterator it2 =  queryTerm.getChildren().iterator();
-                    StringBuffer subQueryStr = null; 
+                    Iterator it2 = queryTerm.getChildren().iterator();
+                    StringBuffer subQueryStr = null;
                     boolean hasSubTerms = false;
                     while (it2.hasNext()) {
                         DisplayTreeNode node = (DisplayTreeNode) it2.next();
@@ -199,7 +194,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         }
     }
 
-   private PageState initPageState(PageState ps) {
+    private PageState initPageState(PageState ps) {
         ps.putBoolean("isSimilarOpen", false);
         ps.put("similarRoot", null);
         return ps;
