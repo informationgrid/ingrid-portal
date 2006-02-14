@@ -13,7 +13,7 @@ import javax.portlet.PortletRequest;
 public class SimpleSearchForm extends ActionForm {
 
     /** attribute name of action form in session */
-    public static final String SESSION_KEY = "simple_search_form";
+    public static final String SESSION_KEY = "search_simple_form";
 
     /** field names (name of request parameter) */
     public static final String FIELD_QUERY = "q";

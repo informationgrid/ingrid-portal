@@ -32,7 +32,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/simple_search.vm</value>
+            <value>/WEB-INF/templates/search_simple.vm</value>
         </init-param>
         <portlet-name>SimpleSearch</portlet-name>
         <display-name>Einfache Suche</display-name>
