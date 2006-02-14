@@ -25,7 +25,7 @@ public class ServiceSearchForm extends ActionForm {
     public static final String FIELD_GROUPING = "grouping";
 
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
-    public static final String INITIAL_RUBRIC = "all''press''public''events";
+    public static final String INITIAL_RUBRIC = "all''Presse''Publikationen''Veranstaltungen";
 
     public static final String INITIAL_PARTNER = "all";
 

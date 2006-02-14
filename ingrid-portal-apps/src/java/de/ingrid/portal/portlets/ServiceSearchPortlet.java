@@ -111,7 +111,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
              }
              */
             // PARTNER
-            String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
+            String[] partners = request.getParameterValues(ServiceSearchForm.FIELD_PARTNER);
             // don't set anything if "all" is selected
             if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
                 for (int i = 0; i < partners.length; i++) {

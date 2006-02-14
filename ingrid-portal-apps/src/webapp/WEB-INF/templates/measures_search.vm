@@ -24,22 +24,22 @@
 				</tr>
 				<tr>
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="ground" #getChecked('rubric' 'ground')/> 
+						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Boden" #getChecked('rubric' 'Boden')/> 
 						<label for="chk_1">Boden
 						</label>
 					</td>
 					<td>
-						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="air" #getChecked('rubric' 'air')/> 
+						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Luft" #getChecked('rubric' 'Luft')/> 
 						<label for="chk_2">Luft
 						</label>
 					</td>
 					<td>
-						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="water" #getChecked('rubric' 'water')/> 
+						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Wasser" #getChecked('rubric' 'Wasser')/> 
 						<label for="chk_3">Wasser
 						</label>
 					</td>
 					<td>
-						<input id="chk_4" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="other" #getChecked('rubric' 'other')/> 
+						<input id="chk_4" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Weitere" #getChecked('rubric' 'Weitere')/> 
 						<label for="chk_4">Weitere
 						</label>
 					</td>

@@ -22,17 +22,17 @@
 				</tr>
 				<tr>
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="press" #getChecked('rubric' 'press')/> 
+						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="Presse" #getChecked('rubric' 'Presse')/> 
 						<label for="chk_1">Pressemitteilungen
 						</label>
 					</td>
 					<td>
-						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="public" #getChecked('rubric' 'public')/> 
+						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="Publikationen" #getChecked('rubric' 'Publikationen')/> 
 						<label for="chk_2">Publikationen
 						</label>
 					</td>      	        
 					<td>
-						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="events" #getChecked('rubric' 'events')/> 
+						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="Veranstaltungen" #getChecked('rubric' 'Veranstaltungen')/> 
 						<label for="chk_3">Veranstaltungen
 						</label>
 					</td>     		     
