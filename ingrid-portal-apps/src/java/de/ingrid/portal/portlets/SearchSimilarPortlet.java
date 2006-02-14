@@ -4,6 +4,9 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -23,7 +26,10 @@ import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * This portlet handles the "Similar Terms" fragment of the result page
@@ -98,6 +104,8 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
         // no new query anymore, we remove messages, so Similar fragment is displayed as clicked
         cancelRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
+        publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
+        
 
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
@@ -130,7 +138,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             if (similarRoot != null) {
                 DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
                 node.setOpen(true);
-                if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM) {
+                if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0) {
                     IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
                     for (int i=0; i<hits.length; i++) {
                         Topic hit = (Topic) hits[i];
@@ -153,42 +161,41 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
         } else if (action.equalsIgnoreCase("doAddSimilar")) {
-            // TODO add snsTerms to the query term with operator OR
-            // the query object is still a mystery
             
-/*            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
+            String queryStr = (String)receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
+            
+            String newQueryStr = queryStr.toLowerCase(); 
+            similarRoot = (DisplayTreeNode)session.getAttribute("similarRoot");
             if (similarRoot != null) {
-                IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
-                ArrayList nodes = similarRoot.getAllChildren();
-                Iterator it = nodes.iterator();
+                ArrayList queryTerms = similarRoot.getChildren();
+                Iterator it = queryTerms.iterator();
                 while (it.hasNext()) {
-                    DisplayTreeNode node = (DisplayTreeNode) it.next();
-                    if (request.getParameter("chk_" + node.getId()) != null) {
-                        boolean isInQuery = false;
-                        TermQuery[] terms = query.getTerms();
-                        for (int i=0; i<terms.length; i++) {
-                            if (terms[i].getTerm().equalsIgnoreCase(node.getName()) && terms[i].getType() == TermQuery.TERM) {
-                                isInQuery = true;
-                                break;
+                    DisplayTreeNode queryTerm = (DisplayTreeNode) it.next();
+                    Iterator it2 =  queryTerm.getChildren().iterator();
+                    StringBuffer subQueryStr = null; 
+                    boolean hasSubTerms = false;
+                    while (it2.hasNext()) {
+                        DisplayTreeNode node = (DisplayTreeNode) it2.next();
+                        if (request.getParameter("chk_" + node.getId()) != null) {
+                            if (!hasSubTerms) {
+                                subQueryStr = new StringBuffer("(" + queryTerm.getName());
+                                hasSubTerms = true;
                             }
+                            subQueryStr.append(" OR \"").append(node.getName()).append("\"");
                         }
-                        if (!isInQuery) {
-                            DisplayTreeNode parent = node.getParent();
-                            for (int i=0; i<terms.length; i++) {
-                                if (terms[i].getTerm().equalsIgnoreCase(parent.getName()) && terms[i].getType() == TermQuery.TERM) {
-                                    terms[i].addClause(new ClauseQuery(true, false));
-                                    terms[i].addTerm(new TermQuery(true, false, node.getName()));
-                                    break;
-                                }
-                            }
+                        if (!it2.hasNext() && hasSubTerms) {
+                            subQueryStr.append(")");
                         }
-                        System.out.println(query.toString());
-                    } else if (node.getDepth() == 2) {
-                        node.setOpen(false);
+                    }
+                    if (subQueryStr != null) {
+                        newQueryStr = newQueryStr.replaceAll(queryTerm.getName(), subQueryStr.toString());
                     }
                 }
+                // republish the query
+                if (!queryStr.toLowerCase().equals(newQueryStr)) {
+                    publishRenderMessage(request, Settings.MSG_QUERY_STRING, newQueryStr);
+                }
             }
-            */
         }
     }
 

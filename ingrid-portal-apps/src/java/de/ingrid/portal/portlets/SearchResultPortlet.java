@@ -120,7 +120,17 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
         try {
-            rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
+            if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
+                rankedHits = (IngridHits)receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
+                // check for invalid answer, requery
+                if (rankedHits == null) {
+                    rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
+                    this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
+                }
+            } else {
+                rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
+                this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
+            }
             numberOfRankedHits = (int) rankedHits.length();
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -138,7 +148,17 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
         try {
-            unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
+            if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
+                unrankedHits = (IngridHits)receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+                // check for invalid answer, requery
+                if (unrankedHits == null) {
+                    unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
+                    this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
+                }
+            } else {
+                unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
+                this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
+            }
             numberOfUnrankedHits = (int) unrankedHits.length();
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -171,6 +191,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
 
+        // remove "ibus query disable"
+        cancelRenderMessage(request, Settings.MSG_NO_QUERY);
+        
         super.doView(request, response);
     }
 

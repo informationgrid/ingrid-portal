@@ -111,6 +111,12 @@ public class Settings {
     /** this message contains the ingrid datasource */
     public static final String MSG_DATASOURCE = "datasource";
 
+    /** this message contains ranked search results */
+    public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";
+    
+    /** this message contains unranked search results */
+    public static final String MSG_SEARCH_RESULT_UNRANKED = "search_result_unranked";
+
     // ------------- INFORMATION MESSAGES -----------------------------
 
     /** this message indicates that a new query was performed to ignore former render parameters
@@ -121,4 +127,12 @@ public class Settings {
     /** new query message for "similar terms" portlet */
     public static final String MSG_NEW_QUERY_FOR_SIMILAR = "new_query_similar";
 
+    /** this message indicates that a new query should not be performed.
+     *  
+     * This message is set when an action on the search_result page is triggered that
+     * does not require a requery of the ibus.
+     * 
+     * This message is reset when a requery of the ibus is necessary.
+     *  */
+    public static final String MSG_NO_QUERY = "no_query";
 }

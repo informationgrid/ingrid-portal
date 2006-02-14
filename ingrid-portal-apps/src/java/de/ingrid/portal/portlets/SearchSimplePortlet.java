@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -92,6 +93,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
+        if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
+            af.setInput(SearchSimpleForm.FIELD_QUERY, ((String)receiveRenderMessage(request, Settings.MSG_QUERY_STRING)).replaceAll("\"", "&quot;"));
+        }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
         context.put("actionForm", af);
@@ -143,6 +147,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter("ds"));
+            // do not requery on datasource change
+            publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then use ActionForm like below !
         }
