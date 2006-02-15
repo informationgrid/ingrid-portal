@@ -65,3 +65,6 @@
     #end
 #end
 
+#macro (renderTitle $title)
+#if ($title && $title != "")$title#else Kein Titel#end
+#end

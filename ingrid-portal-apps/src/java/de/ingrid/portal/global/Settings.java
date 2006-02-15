@@ -31,8 +31,11 @@ public class Settings {
 
     /** datasource values submitted from template (view) */
     public final static String SEARCH_DATASOURCE_ENVINFO = "1";
+
     public final static String SEARCH_DATASOURCE_ADDRESS = "2";
+
     public final static String SEARCH_DATASOURCE_RESEARCH = "3";
+
     public final static String SEARCH_INITIAL_DATASOURCE = SEARCH_DATASOURCE_ENVINFO;
 
     public final static int SEARCH_DEFAULT_TIMEOUT = 5000;
@@ -42,9 +45,12 @@ public class Settings {
     // ------------- query field names -----------------------------
 
     public final static String QFIELD_DATATYPE = "datatype";
+
     public final static String QFIELD_PARTNER = "partner";
+
     // first category in all catalogue pages
     public final static String QFIELD_TOPIC = "topic";
+
     // second category in environment topics catalogue page !
     public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
 
@@ -52,39 +58,58 @@ public class Settings {
 
     // datatypes
     public final static String QVALUE_DATATYPE_SERVICE = "www_service";
+
     public final static String QVALUE_DATATYPE_MEASURES = "www_measures";
+
     public final static String QVALUE_DATATYPE_ENVTOPIC = "www_topic";
 
     public final static String QVALUE_DATATYPE_ENVINFO = "default";
+
     // TODO: doesn't work yet !!! we use explicit address iPlug as datytpe !
-//    public final static String QVALUE_DATATYPE_ADDRESS = "address";
+    //    public final static String QVALUE_DATATYPE_ADDRESS = "address";
     public final static String QVALUE_DATATYPE_ADDRESS = "dsc_ecs_address";
+
     public final static String QVALUE_DATATYPE_RESEARCH = "research";
 
     // ============= definitions to access Result data (render data) ==============================
     // IF POSSIBLE, USE THE KEYS TO ACCESS HIT DATA ALSO AS KEYS FOR RESULT DATA !!! 
 
     public final static String RESULT_KEY_TITLE = "title";
+
     public final static String RESULT_KEY_ABSTRACT = "abstract";
+
     public final static String RESULT_KEY_PARTNER = "partner";
+
     public final static String RESULT_KEY_TOPIC = "topic";
+
     public final static String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
+
     public final static String RESULT_KEY_URL = "url";
+
     public final static String RESULT_KEY_URL_STR = "url_str";
+
     public final static String RESULT_KEY_PROVIDER = "provider";
+
     public final static String RESULT_KEY_SOURCE = "source";
+
     public final static String RESULT_KEY_TYPE = "type";
+
     public final static String RESULT_KEY_PLUG_ID = "plugid";
+
     public final static String RESULT_KEY_DOC_ID = "docid";
+
     public final static String RESULT_KEY_WMS_URL = "wms_url";
+
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
 
     // ============= definitions to access Hit data (get data from hits) ==============================
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
 
     public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
+
     public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
 
+    public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
 
     // ************************************
     // Portlet Messaging
@@ -121,7 +146,7 @@ public class Settings {
 
     /** this message contains ranked search results */
     public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";
-    
+
     /** this message contains unranked search results */
     public static final String MSG_SEARCH_RESULT_UNRANKED = "search_result_unranked";
 

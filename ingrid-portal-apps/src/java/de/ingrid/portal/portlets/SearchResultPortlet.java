@@ -25,6 +25,8 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.dsc.Column;
+import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
@@ -37,9 +39,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
 
     /** view templates */
-    private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
+    private final static String TEMPLATE_NO_QUERY_SET = "/WEB-INF/templates/empty.vm";
 
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/search_result.vm";
+
+    private final static String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
 
@@ -65,19 +69,47 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
+        // receive Messages
+        // indicates whether we do a query or we read results from cache
+        boolean doQuery = true;
+        if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
+            doQuery = false;
+        }
+        // indicates whether we do a whole new query and start on first page
+        boolean newQuery = true;
+        if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
+            newQuery = false;
+        }
+
         // ----------------------------------
         // set initial view template
         // ----------------------------------
 
-        // if no query display "nothing"
+        // if no query set display "nothing"
         IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
         if (query == null) {
-            setDefaultViewPage(TEMPLATE_NO_QUERY);
+            setDefaultViewPage(TEMPLATE_NO_QUERY_SET);
             super.doView(request, response);
             return;
         }
-        // if query assume we have results
-        setDefaultViewPage(TEMPLATE_RESULT);
+
+        // selected data source ("Umweltinfo", Adressen" or "Forschungsprojekte")
+        String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+        if (selectedDS == null) {
+            selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
+            setDefaultViewPage(TEMPLATE_RESULT);
+        }
+
+        // adapt result page to selected data source, ONLY IF WE DO A NEW QUERY !!!
+        if (doQuery && newQuery) {
+            if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+                setDefaultViewPage(TEMPLATE_RESULT);
+            } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+                setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
+            }
+        }
+
+        String currentView = getDefaultViewPage();
 
         // ----------------------------------
         // fetch data
@@ -85,12 +117,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // default: start at the beginning with the first hit (display first result page)
         int rankedStartHit = 0;
         int unrankedStartHit = 0;
-
-        // indicates whether a new query was performed !
-        Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY);
-        try {
-            // if no new query was performed, read render parameters from former action request
-            if (newQuery == null) {
+        if (!newQuery) {
+            // if no new query was performed, read render parameters (which page) from former action request
+            try {
                 String reqParam = request.getParameter(PARAM_START_HIT_RANKED);
                 if (reqParam != null) {
                     rankedStartHit = (new Integer(reqParam)).intValue();
@@ -99,16 +128,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 if (reqParam != null) {
                     unrankedStartHit = (new Integer(reqParam)).intValue();
                 }
+            } catch (Exception ex) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems parsing starthit (ranked or unranked) from render request, set starthit to 0");
+                }
             }
-        } catch (Exception ex) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems parsing starthit (ranked or unranked) from render request, set starthit to 0");
-            }
-        }
-
-        String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
-        if (selectedDS == null) {
-            selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
 
         // ----------------------------------
@@ -120,7 +144,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
         try {
-            if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
+            // use cache if we don't query
+            if (!doQuery) {
                 rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
             }
             if (rankedHits == null) {
@@ -143,27 +168,33 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------
         IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
-        try {
-            if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
-                unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-            }
-            if (unrankedHits == null) {
-                unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit,
-                        Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
-                this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
-            }
-            numberOfUnrankedHits = (int) unrankedHits.length();
-        } catch (Exception ex) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
-                        + numberOfUnrankedHits, ex);
-            }
-        }
+        HashMap unrankedPageNavigation = null;
 
-        // adapt settings of unranked page navigation
-        HashMap unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit,
-                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
-                Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
+        // only do unranked stuff if necessary for view
+        if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            try {
+                // use cache if we don't query
+                if (!doQuery) {
+                    unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+                }
+                if (unrankedHits == null) {
+                    unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit,
+                            Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
+                    this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
+                }
+                // TODO: Uncomment, throws Exception, at the Moment no Hits !
+                //            numberOfUnrankedHits = (int) unrankedHits.length();
+            } catch (Exception ex) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
+                            + numberOfUnrankedHits, ex);
+                }
+            }
+
+            // adapt settings of unranked page navigation
+            unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE,
+                    numberOfUnrankedHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
+        }
 
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0) {
             // query string will be displayed when no results !
@@ -198,8 +229,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // business logic
         // ----------------------------------
-        // no new query anymore, we remove messages, so portlets read our render parameters (set below)
+        // no new query anymore, we remove message, so portlets read our render parameters (set below)
         cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
+        // further remove cache message, we have to do query !
+        cancelRenderMessage(request, Settings.MSG_NO_QUERY);
 
         // ----------------------------------
         // set render parameters
@@ -224,7 +257,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-            String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
+            String[] requestedMetadata = new String[0];
+            if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+                requestedMetadata = new String[2];
+                requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+                requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+            } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+                requestedMetadata = new String[2];
+                requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+                requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+            }
             //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
@@ -241,16 +283,27 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
                         tmpString = detail.getIplugClassName();
+
                         if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                             result.put(Settings.RESULT_KEY_TYPE, "dsc");
 
+                            // read for all dsc iplugs
                             if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
                                 tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
                                 result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
                             }
-                            if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                                tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
-                                result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+
+                            // check our selected "data source" and read according data
+                            if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+                                if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
+                                    tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                                }
+                            } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+                                if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
+                                    tmpString = detail.get(Settings.HIT_KEY_ADDRESS_CLASS).toString();
+                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                                }
                             }
                         } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
                             result.put(Settings.RESULT_KEY_TYPE, "nutch");

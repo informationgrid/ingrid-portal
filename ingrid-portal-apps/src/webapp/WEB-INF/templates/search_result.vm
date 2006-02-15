@@ -16,17 +16,17 @@
 		  #end		  <div class="resultset">
 		  #if ($rs.title)
 		    #if ($rs.type == "nutch")
-			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
 			#elseif($rs.type == "dsc")
 			  #if($rs.udk_class)
 				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
 				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
-				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster">#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster">#renderTitle($rs.title) </a></strong></span>
 			  #else
-				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
 			  #end
 			#else
-			  <span class="result_title"><strong>#if ($rs.title == "")Kein Titel#else$rs.title#end </strong></span>
+			  <span class="result_title"><strong>#renderTitle($rs.title) </strong></span>
 			#end		
             <p class="result_description">
             $!rs.abstract 
@@ -107,7 +107,7 @@ THIS IS THE CORRECT UNRANKED HTML
 -->
 		  <div class="resultset">
 		  #if ($rs.title)
-			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
 		  #else
 			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
 		  #end
