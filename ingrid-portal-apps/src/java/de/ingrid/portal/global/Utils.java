@@ -292,10 +292,12 @@ public class Utils {
             // TODO: do not set datatype:default, not processed in backend yet !
             // instead don't allow addresses
             //            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
+            // REMOVE ADRESS IPLUG
             query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
         } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
             // remove all manual input and set search to address !
             query.remove(Settings.QFIELD_DATATYPE);
+            // ONLY ADRESS IPLUG
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
         } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
             // remove not valid data sources from query

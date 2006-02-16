@@ -110,8 +110,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
             }
         } catch (Throwable t) {
+            if (log.isFatalEnabled()) {
+                log.fatal("Problems Constructor IBUSInterfaceImpl Singleton", t);
+            }
             resetBus();
-            throw new Exception("Error initalize ibus interface.", t);
+            throw new Exception("Error Constructor IBUSInterfaceImpl", t);
         }
     }
 
