@@ -48,35 +48,37 @@ public class AnniversaryFetcherJob implements Job {
             IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(cal.getTime());
             if (details.length > 0) {
                 for (int i=0; i<details.length; i++) {
-                    DetailedTopic detail = (DetailedTopic) details[i];
-                    List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
-                            Restrictions.eq("id", detail.getTopicID())).list();
-                    if (anniversaryList.isEmpty()) {
-                        IngridAnniversary anni = new IngridAnniversary();
-                        anni.setTopicId(detail.getTopicID());
-                        anni.setTopicName(detail.getTopicName());
-                        anni.setDateFrom(detail.getFrom());
-                        if (detail.getFrom() != null) {
-                            Date fromDate = DateUtil.parseDateString(detail.getFrom());
-                            cal.setTime(fromDate);
-                            anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
-                            anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH)));
-                            anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                    if ((details[i] instanceof DetailedTopic) &&  details[i].size() > 0) {
+                        DetailedTopic detail = (DetailedTopic) details[i];
+                        List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
+                                Restrictions.eq("id", detail.getTopicID())).list();
+                        if (anniversaryList.isEmpty()) {
+                            IngridAnniversary anni = new IngridAnniversary();
+                            anni.setTopicId(detail.getTopicID());
+                            anni.setTopicName(detail.getTopicName());
+                            anni.setDateFrom(detail.getFrom());
+                            if (detail.getFrom() != null) {
+                                Date fromDate = DateUtil.parseDateString(detail.getFrom());
+                                cal.setTime(fromDate);
+                                anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
+                                anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH)));
+                                anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                            }
+                            anni.setDateTo(detail.getTo());
+                            if (detail.getTo() != null) {
+                                Date toDate = DateUtil.parseDateString(detail.getTo());
+                                cal.setTime(toDate);
+                                anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
+                                anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH)));
+                                anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                            }
+                            anni.setAdministrativeId(detail.getAdministrativeID());
+                            anni.setFetched(new Date());
+    
+                            session.beginTransaction();
+                            session.save(anni);
+                            session.getTransaction().commit();
                         }
-                        anni.setDateTo(detail.getTo());
-                        if (detail.getTo() != null) {
-                            Date toDate = DateUtil.parseDateString(detail.getTo());
-                            cal.setTime(toDate);
-                            anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
-                            anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH)));
-                            anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
-                        }
-                        anni.setAdministrativeId(detail.getAdministrativeID());
-                        anni.setFetched(new Date());
-
-                        session.beginTransaction();
-                        session.save(anni);
-                        session.getTransaction().commit();
                     }
                 }
             }
