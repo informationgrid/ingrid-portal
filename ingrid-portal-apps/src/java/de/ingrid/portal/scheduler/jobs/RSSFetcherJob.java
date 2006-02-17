@@ -101,7 +101,7 @@ public class RSSFetcherJob implements Job {
                                     Restrictions.eq("link", entry.getLink())).add(Restrictions.eq("language", feed.getLanguage()))
                                     .list();
                             if (rssEntries.isEmpty()) {
-                                if (entry.getAuthor() == null) {
+                                if (entry.getAuthor() == null || entry.getAuthor().length() == 0) {
                                     entry.setAuthor(feed.getTitle());
                                 }
 
