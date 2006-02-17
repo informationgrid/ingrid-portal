@@ -27,11 +27,12 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
  * This portlet handles the "Result Display" fragment of the result page
- *
+ * 
  * @author martin@wemove.com
  */
 public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -52,7 +53,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String PARAM_START_HIT_UNRANKED = "nrstart";
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
@@ -93,14 +96,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        // selected data source ("Umweltinfo", Adressen" or "Forschungsprojekte")
+        // selected data source ("Umweltinfo", Adressen" or
+        // "Forschungsprojekte")
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
             setDefaultViewPage(TEMPLATE_RESULT);
         }
 
-        // adapt result page to selected data source, ONLY IF WE DO A NEW QUERY !!!
+        // adapt result page to selected data source, ONLY IF WE DO A NEW QUERY
+        // !!!
         if (doQuery && newQuery) {
             if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
                 setDefaultViewPage(TEMPLATE_RESULT);
@@ -114,11 +119,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // fetch data
         // ----------------------------------
-        // default: start at the beginning with the first hit (display first result page)
+        // default: start at the beginning with the first hit (display first
+        // result page)
         int rankedStartHit = 0;
         int unrankedStartHit = 0;
         if (!newQuery) {
-            // if no new query was performed, read render parameters (which page) from former action request
+            // if no new query was performed, read render parameters (which
+            // page) from former action request
             try {
                 String reqParam = request.getParameter(PARAM_START_HIT_RANKED);
                 if (reqParam != null) {
@@ -139,7 +146,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // business logic
         // ----------------------------------
 
-        // ranked results   
+        // ranked results
         // --------------
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
@@ -183,7 +190,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
                 }
                 // TODO: Uncomment, throws Exception, at the Moment no Hits !
-                //            numberOfUnrankedHits = (int) unrankedHits.length();
+                numberOfUnrankedHits = (int) unrankedHits.length();
             } catch (Exception ex) {
                 if (log.isErrorEnabled()) {
                     log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
@@ -229,7 +236,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // business logic
         // ----------------------------------
-        // no new query anymore, we remove message, so portlets read our render parameters (set below)
+        // no new query anymore, we remove message, so portlets read our render
+        // parameters (set below)
         cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
         // further remove cache message, we have to do query !
         cancelRenderMessage(request, Settings.MSG_NO_QUERY);
@@ -255,6 +263,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, "g2k"));
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = new String[0];
@@ -267,7 +276,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
                 requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
             }
-            //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+            // IngridHitDetail[] details = ibus.getDetails(results, query,
+            // requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
@@ -275,7 +285,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    //                    detail = details[i];
+                    // detail = details[i];
                     detail = ibus.getDetail(result, query, requestedMetadata);
                     if (result == null) {
                         continue;
@@ -293,7 +303,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                                 result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
                             }
 
-                            // check our selected "data source" and read according data
+                            // check our selected "data source" and read
+                            // according data
                             if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
                                 if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
                                     tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
@@ -327,74 +338,87 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     private IngridHits doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-        if (log.isDebugEnabled()) {
-            log.debug("doUnrankedSearch: IngridQuery = " + query);
-        }
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
 
-        IngridHits hits = new IngridHits();
-        /*
-         IngridHits hits = null;
-         try {
-         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-         hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
-         IngridHit[] results = hits.getHits();
-         String[] requestedMetadata = { Settings.HIT_KEY_WMS_URL, Settings.HIT_KEY_UDK_CLASS };
-         IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+        // IngridHits hits = new IngridHits();
+        IngridHits hits = null;
+        try {
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            // copy the query to NOT influence the query for ranked results
+            // TODO refactor this
+            IngridQuery rankedQuery = new IngridQuery();
+            rankedQuery.putAll(query);
+            rankedQuery.remove(Settings.QFIELD_DATATYPE);
+            
+//            query.remove(Settings.QFIELD_DATATYPE);
+            rankedQuery.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, "g2k"));            
+            if (log.isDebugEnabled()) {
+                log.debug("doUnrankedSearch: IngridQuery = " + query);
+            }
+            hits = ibus.search(rankedQuery, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
+            IngridHit[] results = hits.getHits();
+            
+            String[] requestedMetadata = new String[1];
+            requestedMetadata = new String[1];
+            requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+            
+            IngridHit result = null;
+            IngridHitDetail detail = null;
+            String tmpString = null;
+            for (int i = 0; i < results.length; i++) {
+                try {
+                    result = results[i];
+                    // detail = details[i];
+                    detail = ibus.getDetail(result, rankedQuery, requestedMetadata);
+                    if (result == null) {
+                        continue;
+                    }
+                    if (detail != null) {
+                        ibus.transferHitDetails(result, detail);
+                        tmpString = detail.getIplugClassName();
 
-         IngridHit result = null;
-         IngridHitDetail detail = null;
-         String tmpString = null;
-         for (int i = 0; i < results.length; i++) {
-         result = results[i];
-         detail = details[i];
-         if (result == null) {
-         continue;
-         }
-         if (detail != null) {
-         ibus.transferHitDetails(result, detail);
-         tmpString = detail.getIplugClassName();
-         if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-         result.put(Settings.RESULT_KEY_TYPE, "dsc");
+                        if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                            result.put(Settings.RESULT_KEY_TYPE, "dsc");
 
-         if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
-         tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
-         result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
-         }
-         if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-         tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
-         result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-         }
-         } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
-         result.put(Settings.RESULT_KEY_TYPE, "nutch");
-         } else {
-         result.put(Settings.RESULT_KEY_TYPE, "unknown");
-         }
-         }
-         }
-         } catch (Throwable t) {
-         if (log.isErrorEnabled()) {
-         log.error("Problems performing Search !", t);
-         }
-         }
-         */
+                            // read for all dsc iplugs
+                            if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
+                                tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
+                                result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+                            }
+
+                            // check our selected "data source" and read
+                            // according data
+                            if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+                                if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
+                                    tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                                }
+                            } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+                                if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
+                                    tmpString = detail.get(Settings.HIT_KEY_ADDRESS_CLASS).toString();
+                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                                }
+                            }
+                        } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
+                            result.put(Settings.RESULT_KEY_TYPE, "nutch");
+                        } else {
+                            result.put(Settings.RESULT_KEY_TYPE, "unknown");
+                        }
+                    }
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
+                    }
+                }
+            }
+            
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing Search !", t);
+            }
+        }
         return hits;
     }
 
-    /*
-     private SearchResultList doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-
-     SearchResultList result = new SearchResultList();
-
-     SearchResultList l = SearchResultListMockup.getUnrankedSearchResultList();
-     for (int i = 0; i < hitsPerPage; i++) {
-     if (i >= l.size())
-     break;
-     result.add(l.get(i));
-     }
-     result.setNumberOfHits(l.getNumberOfHits());
-     return result;
-     }
-     */
 }
