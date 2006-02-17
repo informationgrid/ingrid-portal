@@ -28,6 +28,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
 {
     private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
 
+    private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
+    
+    
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);
@@ -35,6 +38,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+        setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
         context.put("MESSAGES", messages);
