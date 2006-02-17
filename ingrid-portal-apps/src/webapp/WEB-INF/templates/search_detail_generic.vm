@@ -16,7 +16,7 @@
 	</div>
 	<span class="clearer"></span>
 	<div class="section">
-		<p class="float_right">Generiert am: $structuredRecord.get("T01_object.mod_time")</p>
+		<p class="float_right">Generiert am: 25.07.2005</p>
 		<p class="float_left">
 			<span class="icon_udk_detail"><img src="img/icn_udk_obj_geoinfo.gif" alt="Geo-Information/Karte" /></span>&nbsp;Geo-Information/Karte&nbsp;<span class="smaller">(Objektklasse)</span>
 		</p>
