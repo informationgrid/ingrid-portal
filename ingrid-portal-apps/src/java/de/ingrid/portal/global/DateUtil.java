@@ -92,7 +92,7 @@ public class DateUtil {
     public static Date parseDateString(String dateString) {
         Date result = null;
         SimpleDateFormat df;
-        if (dateString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
+        if (dateString.matches("[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]")) {
             try {
                 df = new SimpleDateFormat("yyyy-MM-dd");
                 result = df.parse((String) dateString);
@@ -102,6 +102,13 @@ public class DateUtil {
         } else if (dateString.matches("[0-9][0-9][0-9][0-9]")) {
             try {
                 df = new SimpleDateFormat("yyyy");
+                result = df.parse((String) dateString);
+            } catch (ParseException e) {
+                log.warn("error parsing from date.", e);
+            }
+        } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
+            try {
+                df = new SimpleDateFormat("yyyyMMddHHmmss");
                 result = df.parse((String) dateString);
             } catch (ParseException e) {
                 log.warn("error parsing from date.", e);
