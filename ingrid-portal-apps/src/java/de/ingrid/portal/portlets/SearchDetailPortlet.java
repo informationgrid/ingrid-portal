@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.global.DateUtil;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -29,6 +30,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
 
     private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
+    private final static String TEMPLATE_ECS = "/WEB-INF/templates/search_detail.vm";
     
     
     public void init(PortletConfig config) throws PortletException
@@ -38,7 +40,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
-        setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
+        setDefaultViewPage(TEMPLATE_ECS);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
         context.put("MESSAGES", messages);
@@ -60,11 +62,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             // serch for column
             Column[] columns = record.getColumns();
             for (int i = 0; i < columns.length; i++) {
-                recordMap.put(columns[i].getTargetName(), record.getValueAsString(columns[i]));
+                if (record.getValueAsString(columns[i]).trim().length() > 0) {
+                    recordMap.put(columns[i].getTargetName().toLowerCase(), record.getValueAsString(columns[i]).trim());
+                }
             }
             addSubRecords(record, recordMap);
             
-            context.put("structuredRecord", recordMap);
+            recordMap.put("t01_object.mod_time", DateUtil.parseDateString((String)recordMap.get("t01_object.mod_time")));
+            
+            context.put("rec", recordMap);
         } catch(Throwable t){
             log.error("Error getting result record.", t);
         }
@@ -92,13 +98,16 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             HashMap subRecordMap = new HashMap();
             columns = subRecords[i].getColumns();
             for (int j = 0; j < columns.length; j++) {
-                subRecordMap.put(columns[j].getTargetName(), subRecords[i].getValueAsString(columns[j]));
+                if (subRecords[i].getValueAsString(columns[j]).trim().length() > 0) {
+                    subRecordMap.put(columns[j].getTargetName().toLowerCase(), subRecords[i].getValueAsString(columns[j]).trim());
+                }
             }
-            if (map.containsKey(columns[0].getTargetName()) && map.get(columns[0].getTargetName()) instanceof ArrayList) {
-                subRecordList = (ArrayList)map.get(columns[0].getTargetName());
+            String targetName = columns[0].getTargetName().toLowerCase();
+            if (map.containsKey(targetName) && map.get(targetName) instanceof ArrayList) {
+                subRecordList = (ArrayList)map.get(targetName);
             } else {
                 subRecordList = new ArrayList();
-                map.put(columns[0].getTargetName(), subRecordList);
+                map.put(targetName, subRecordList);
             }
             subRecordList.add(subRecordMap);
             // add subrecords

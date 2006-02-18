@@ -9,6 +9,128 @@
 	#end
 #end
 
+#macro (renderECSEntry $r $entryName)
+    #if($r.get($entryName))
+		<p><strong>$MESSAGES.getString($entryName):</strong><br>
+		$r.get($entryName)
+		</p>
+    #end
+#end
+
+#macro (renderECSAddress $entryName)
+    #if($rec.get($entryName))
+		<p><strong>$MESSAGES.getString("addresses"):</strong><br></p>
+    	#foreach($myAddressType in $rec.get($entryName))
+    		#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
+			#set($addressTypeKeyName = "T012_obj_adr.typ$addressType")
+			<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
+        	#foreach($myAddress in $myAddressType.get("t02_address.adr_id"))
+        		#if($myAddress.get("t02_address.institution"))$myAddress.get("t02_address.institution")<br/>#end
+				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end 
+				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end
+				#if($myAddress.get("t02_address.firstname"))$myAddress.get("t02_address.firstname")#end
+				#if($myAddress.get("t02_address.lastname"))$myAddress.get("t02_address.lastname")#end<br/>
+				#if($myAddress.get("t02_address.job"))$myAddress.get("t02_address.job")<br/>#end
+				#if($myAddress.get("t02_address.descr"))$myAddress.get("t02_address.descr")<br/>#end
+				#if($myAddress.get("t02_address.postbox"))$myAddress.get("t02_address.postbox")<br/>#end
+				#if($myAddress.get("t02_address.postbox_pc"))$myAddress.get("t02_address.postbox_pc") $myAddress.get("t02_address.city")<br/>#end 
+				#if($myAddress.get("t02_address.street"))$myAddress.get("t02_address.street")<br/>#end
+				#if($myAddress.get("t02_address.state_id"))$myAddress.get("t02_address.state_id")-#end
+				#if($myAddress.get("t02_address.postcode"))
+					$myAddress.get("t02_address.postcode")
+				#elseif($myAddress.get("t02_address.postbox_pc"))
+					$myAddress.get("t02_address.postbox_pc")
+				#end
+				#if($myAddress.get("t02_address.city"))$myAddress.get("t02_address.city")<br/>#end
+				#foreach($myCommunication in $myAddress.get("t021_communication.adr_id"))
+					#if($myCommunication.get("t021_communication.comm_type") == "Telefon")
+						$MESSAGES.getString("T021_communication.comm_type_phone"): $myCommunication.get("t021_communication.comm_value")<br/>
+					#elseif($myCommunication.get("t021_communication.comm_type") == "Fax")
+						$MESSAGES.getString("T021_communication.comm_type_fax"): $myCommunication.get("t021_communication.comm_value")<br/>
+					#elseif($myCommunication.get("t021_communication.comm_type") == "E-Mail" || $myCommunication.get("t021_communication.comm_type") == "EMail" || $myCommunication.get("t021_communication.comm_type") == "E-Mail")
+						$MESSAGES.getString("T021_communication.comm_type_email"): <a href="mailto:$myCommunication.get("t021_communication.comm_value")">$myCommunication.get("t021_communication.comm_value")</a><br/>
+					#else
+						$myCommunication.get("t021_communication.comm_type"): $myCommunication.get("t021_communication.comm_value")<br/>
+					#end	
+				#end
+			#end
+			</p>
+    	#end
+    #end
+#end
+
+#macro (renderECSSpecialData $entryName $ecsClass)
+    #if($rec.get($entryName))
+		#set($myData = $rec.get($entryName))
+		#if($ecsClass == "5")
+			#if($myData.get("t011_obj_data.base") || $myData.get("t011_obj_data.description"))
+				<div class="line"><hr /></div>
+    			<p><strong>$MESSAGES.getString("special data"):</strong><br></p>
+    			#renderECSEntry($myData "t011_obj_data_para.parameter")
+    			#renderECSEntry($myData "t011_obj_data_para.unit")
+    			#renderECSEntry($myData "t011_obj_data.base")
+    			#renderECSEntry($myData "t011_obj_data.description")
+			#end	
+		#elseif($ecsClass == "3")
+			<div class="line"><hr /></div>
+			<p><strong>$MESSAGES.getString("special data"):</strong><br></p>
+			#renderECSEntry($myData "t011_obj_serv.type")
+			#renderECSEntry($myData "t011_obj_serv.environment")
+
+			#renderECSEntry($myData "t011_obj_serv.history")
+			#renderECSEntry($myData "t011_obj_serv.base")
+			#renderECSEntry($myData "t011_obj_serv_version.version")
+			#renderECSEntry($myData "t011_obj_serv_operation.name")
+			#renderECSEntry($myData "t011_obj_serv_operation.descr")
+			#renderECSEntry($myData "t011_obj_serv.description")
+		#elseif($ecsClass == "2")
+			<div class="line"><hr /></div>
+			<p><strong>$MESSAGES.getString("special data"):</strong><br></p>
+			#renderECSEntry($myData "t011_obj_literatur.autor")
+			#renderECSEntry($myData "t011_obj_literatur.publisher")
+			#renderECSEntry($myData "t011_obj_literatur.publish_in")
+			#renderECSEntry($myData "t011_obj_literatur.volume")
+			#renderECSEntry($myData "t011_obj_literatur.sides")
+			#renderECSEntry($myData "t011_obj_literatur.publish_year")
+			#renderECSEntry($myData "t011_obj_literatur.isbn")
+			#renderECSEntry($myData "t011_obj_literatur.publishing")
+			#renderECSEntry($myData "t011_obj_literatur.publish_loc")
+			#renderECSEntry($myData "t011_obj_literatur.typ")
+			#renderECSEntry($myData "t011_obj_literatur.doc_info")
+			#renderECSEntry($myData "t011_obj_literatur.base")
+			#renderECSEntry($myData "t011_obj_literatur.loc")
+			#renderECSEntry($myData "t011_obj_literatur.description")
+		#elseif($ecsClass == "4")
+			<div class="line"><hr /></div>
+			<p><strong>$MESSAGES.getString("special data"):</strong><br></p>
+			#renderECSEntry($myData "t011_obj_project.leader")
+			#renderECSEntry($myData "t011_obj_project.member")
+			#renderECSEntry($myData "t011_obj_project.description")
+		#elseif($ecsClass == "1")
+			<div class="line"><hr /></div>
+			<p><strong>$MESSAGES.getString("special data"):</strong><br></p>
+			#renderECSEntry($myData "t011_obj_geo.hierarchy_level")
+			#renderECSEntry($myData "t011_obj_geo_topic_cat.topic_category")
+			#renderECSEntry($myData "t011_obj_geo_spatial_rep.type")
+			#renderECSEntry($myData "t011_obj_geo_vector.geometric_object_type")
+			#renderECSEntry($myData "t011_obj_geo.vector_topology_level")
+			#renderECSEntry($myData "t011_obj_geo_vector.geometric_object_count")
+			#renderECSEntry($myData "t011_obj_geo.rec_grade")
+			#renderECSEntry($myData "t011_obj_geo.coord")
+			#renderECSEntry($myData "t011_obj_geo_scale.scale")
+			#renderECSEntry($myData "t011_obj_geo_scale.resolution_ground")
+			#renderECSEntry($myData "t011_obj_geo_scale.resolution_scan")
+			#renderECSEntry($myData "t011_obj_geo.pos_accuracy_vertical")
+			#renderECSEntry($myData "t011_obj_geo.rec_exact")
+			#renderECSEntry($myData "t011_obj_geo_supplinfo.feature_type")
+		#end
+	#end
+#end
+
+
+
+
+
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
@@ -16,12 +138,23 @@
 	</div>
 	<span class="clearer"></span>
 	<div class="section">
-		<p class="float_right">Generiert am: $structuredRecord.get("T01_object.mod_time")</p>
+		<p class="float_right">Generiert am: $date.format('medium',$rec.get("t01_object.mod_time"))</p>
 		<p class="float_left">
-			<span class="icon_udk_detail"><img src="img/icn_udk_obj_geoinfo.gif" alt="Geo-Information/Karte" /></span>&nbsp;Geo-Information/Karte&nbsp;<span class="smaller">(Objektklasse)</span>
+            #set($udkObjClass = $rec.get("t01_object.obj_class"))
+            #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
+            #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}" /></span>&nbsp;${udkObjClassName}&nbsp;<span class="smaller">(Objektklasse)</span>
 		</p>
 		<span class="clearer"></span>
 		<div class="line"><hr /></div>
+		<h2>$rec.get("title")</h2>
+#renderECSEntry($rec "t01_object.dataset_alternate_name")
+#renderECSEntry($rec "summary")
+
+#renderECSAddress("t012_obj_adr.obj_id")
+#renderECSSpecialData("t011_obj_data.obj_id" $udkObjClass)
+
+<br><br><br><br>
 	  #if($record)
 		#renderRecord($record 0)
 	  #else
