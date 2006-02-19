@@ -48,11 +48,11 @@ public class DateUtil {
                 df.applyPattern("yyyy");
                 portalFormat.applyPattern("yyyy");
                 result = portalFormat.format(df.parse(dateStr));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][1-9][0-3][1-9]")) {
+            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
                 df.applyPattern("yyyyMMdd");
                 portalFormat.applyPattern("dd.MM.yyyy");
                 result = portalFormat.format(df.parse(dateStr));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][1-9][0-3][1-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
+            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
                 df.applyPattern("yyyyMMddHHmmss");
                 portalFormat.applyPattern("dd.MM.yyyy HH:mm:ss");
                 result = portalFormat.format(df.parse(dateStr));
@@ -60,11 +60,11 @@ public class DateUtil {
                 df.applyPattern("yyyy");
                 portalFormat.applyPattern("yyyy");
                 result = portalFormat.format(df.parse(dateStr.substring(0,4)));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][1-9]00")) {
+            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
                 df.applyPattern("yyyyMM");
                 portalFormat.applyPattern("MM/yyyy");
                 result = portalFormat.format(df.parse(dateStr.substring(0,6)));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][1-9][0-3][1-9]000000")) {
+            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
                 df.applyPattern("yyyyMMdd");
                 portalFormat.applyPattern("dd.MM.yyyy");
                 result = portalFormat.format(df.parse(dateStr.substring(0,8)));
