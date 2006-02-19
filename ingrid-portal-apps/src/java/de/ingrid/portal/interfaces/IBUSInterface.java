@@ -8,6 +8,7 @@ import org.apache.commons.configuration.Configuration;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -76,7 +77,7 @@ public interface IBUSInterface {
      * @param plugId The id of the iPlug.
      * @return The PlugDescription. 
      */
-//    PlugDescription getIPlug(String plugId);
+    PlugDescription getIPlug(String plugId);
 
     /**
      * Get Plug Description of a result.

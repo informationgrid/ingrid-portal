@@ -22,6 +22,7 @@ import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -214,11 +215,16 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
         return stream;
     }
-/*
+    
+    
+    /**
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getIPlug(java.lang.String)
+     */
     public PlugDescription getIPlug(String plugId) {
         return bus.getIPlug(plugId);
     }
 
+    /*
     public PlugDescription getIPlug(IngridHit result) {
         PlugDescription plug = null;
         try {
