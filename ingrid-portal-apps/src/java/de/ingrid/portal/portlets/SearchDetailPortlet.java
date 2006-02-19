@@ -17,10 +17,13 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.DateUtil;
+import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 
@@ -31,7 +34,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
 
     private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
-    private final static String TEMPLATE_ECS = "/WEB-INF/templates/search_detail.vm";
+    private final static String TEMPLATE_DETAIL_ECS = "/WEB-INF/templates/search_detail.vm";
+    private final static String TEMPLATE_DETAIL_ECS_ADDRESS = "/WEB-INF/templates/search_detail_address.vm";
     
     // ecs fields that represent a date, used for date parsing and formating
     private ArrayList dateFields = new ArrayList();
@@ -45,12 +49,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         dateFields.add("t01_object.time_to");
         dateFields.add("t01_object.time_from");
         dateFields.add("t0113_dataset_reference.reference_date");
+        dateFields.add("t02_address.mod_time");
         
     }    
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
-        setDefaultViewPage(TEMPLATE_ECS);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
         context.put("MESSAGES", messages);
@@ -66,6 +70,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         
         try {
             Record record = ibus.getRecord(hit);
+            PlugDescription plugDescription = ibus.getIPlug(iplugId);
+            if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs")) {
+                setDefaultViewPage(TEMPLATE_DETAIL_ECS);
+            } else if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs_address")) {
+                setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
+            } else {
+                setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
+            }
+            
             context.put("record", record);
             HashMap recordMap = new HashMap();
             

@@ -1,0 +1,143 @@
+#macro (renderRecord $myRecord $level)
+	#foreach($column in $myRecord.getColumns())
+		<p><strong>$MESSAGES.getString($column.getTargetName()):</strong><br />$!myRecord.getValueAsString($column)</p>
+    #end
+   	<div class="line"><hr /></div>
+   	#set($level = $level + 1)
+	#foreach($mySubRecord in $myRecord.getSubRecords())
+		#renderRecord($mySubRecord $level)
+	#end
+#end
+
+#macro (renderECSEntry $r $entryName)
+    #if($r.get($entryName))
+		<p><strong>$MESSAGES.getString($entryName):</strong><br>
+		$r.get($entryName)
+		</p>
+    #end
+#end
+
+#macro (renderECSAddress)
+    <div class="line"><hr /></div>
+    <h3>$MESSAGES.getString("address"):</h3>
+	<p>
+	#if($rec.get("title"))$rec.get("title")<br/>#end
+	#if($rec.get("t02_address.institution"))$rec.get("t02_address.institution")<br/>#end
+	#if($rec.get("t02_address.address"))$rec.get("t02_address.address")#end
+	#if($rec.get("t02_address.title"))$rec.get("t02_address.title")#end
+	#if($rec.get("t02_address.firstname"))$rec.get("t02_address.firstname")#end
+	#if($rec.get("t02_address.lastname"))$rec.get("t02_address.lastname")<br/>#end
+	#if($rec.get("t02_address.descr"))$rec.get("t02_address.descr")<br/>#end
+	#if($rec.get("t02_address.postbox"))$MESSAGES.getString("postbox_label")$rec.get("t02_address.postbox")<br/>#end
+	#if($rec.get("t02_address.postbox_pc"))#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end$rec.get("t02_address.postbox_pc") $rec.get("t02_address.city")<br/><br/>#end 
+	#if($rec.get("t02_address.street"))$rec.get("t02_address.street")<br/>#end
+	#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end
+	#if($rec.get("t02_address.postcode"))
+		$rec.get("t02_address.postcode")
+	#elseif($rec.get("t02_address.postbox_pc"))
+		$MESSAGES.getString("t02_address.postbox_pc"): $rec.get("t02_address.postbox_pc")
+	#end
+	#if($rec.get("t02_address.city"))$rec.get("t02_address.city")<br/>#end
+	#foreach($myCommunication in $rec.get("t021_communication.adr_id"))
+		#if($myCommunication.get("t021_communication.comm_type") == "Telefon")
+			$MESSAGES.getString("t021_communication.comm_type_phone"): $myCommunication.get("t021_communication.comm_value")<br/>
+		#elseif($myCommunication.get("t021_communication.comm_type") == "Fax")
+			$MESSAGES.getString("t021_communication.comm_type_fax"): $myCommunication.get("t021_communication.comm_value")<br/>
+		#elseif($myCommunication.get("t021_communication.comm_type") == "E-Mail" || $myCommunication.get("t021_communication.comm_type") == "EMail" || $myCommunication.get("t021_communication.comm_type") == "Email" || $myCommunication.get("t021_communication.comm_type") == "E-Mail")
+			$MESSAGES.getString("t021_communication.comm_type_email"): <a href="mailto:$myCommunication.get("t021_communication.comm_value")">$myCommunication.get("t021_communication.comm_value")</a><br/>
+		#elseif($myCommunication.get("t021_communication.comm_type") == "URL" || $myCommunication.get("t021_communication.comm_type") == "url")
+			$myCommunication.get("t021_communication.comm_type"): <a href="$myCommunication.get("t021_communication.comm_value")" target="_new">$myCommunication.get("t021_communication.comm_value")</a><br/>
+		#else
+			$myCommunication.get("t021_communication.comm_type"): $myCommunication.get("t021_communication.comm_value")<br/>
+		#end	
+	#end
+	</p>
+	#if($rec.get("t02_address.job"))
+		<p><strong>$MESSAGES.getString("t02_address.job"):</strong><br>
+		$rec.get("t02_address.job")</p>
+	#end
+#end
+
+#macro (renderECSAddressFunction)
+	#if($rec.get("t02_address.job"))
+		<p><strong>$MESSAGES.getString("t02_address.job"):</strong><br>
+		$rec.get("t02_address.job")</p>
+	#end
+#end
+
+#macro (renderECSAddressRelatedRecords)
+	#if($rec.get("t012_obj_adr.obj_id"))
+		<div class="line"><hr></div>
+		<h3 id="search_detail3">Datenbezüge</h3>
+		<p>Sie können hier nach Datensätzen suchen, die auf diese ("Direkte Datenbezüge") oder eine ihrer untergeordneten ("Alle Datenbezüge") Adressen verweisen</p>
+        <ul>
+        <li><a name="direkt"></a>Direkte Datenbezüge
+        <ul class="udklist">
+		#foreach($t012_obj_adr in $rec.get("t012_obj_adr.obj_id"))
+			#foreach($t01_object in $t012_obj_adr.get("t01_object.obj_id"))
+                #set($ecsObjClass = $t01_object.get("t01_object.obj_class"))
+                #set($ecsObjClassNameKey = "ecs_obj_class_name_$ecsObjClass")
+                #set($ecsObjClassName = $MESSAGES.getString($ecsObjClassNameKey))
+				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${ecsObjClass}.gif" alt="${ecsObjClassName}"></span>&nbsp;$t01_object.get("t01_object.obj_name")&nbsp;</li>
+			#end
+		#end
+		</ul>
+          </li>
+          <li><a name="alle"></a>Alle Datenbezüge</li>
+        </ul>
+	#end	
+#end
+
+
+
+#set ($action = $renderResponse.createActionURL())
+<div id="content_full">
+	<div class="section-header">
+		<h1>Detailinformation</h1>
+	</div>
+	<span class="clearer"></span>
+	<div class="section">
+#if($rec)
+	<p class="float_right">#if($rec.get("t02_address.mod_time"))Generiert am: $rec.get("t02_address.mod_time")#end</p>
+	<p class="float_left">
+        #set($ecsAddressClass = $rec.get("t02_address.typ"))
+        #set($ecsAddressClassNameKey = "ecs_adr_class_name_$ecsAddressClass")
+        #set($ecsAddressClassName = $MESSAGES.getString($ecsAddressClassNameKey))
+		<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_adr_${ecsAddressClass}.gif" alt="${ecsAddressClassName}" /></span>&nbsp;${ecsAddressClassName}&nbsp;<span class="smaller">(Kategorie)</span>
+	</p>
+	<span class="clearer"></span>
+	#renderECSAddress()
+	#renderECSAddressFunction()
+	#renderECSAddressRelatedRecords()
+    <div class="line"><hr></div>
+	<br />
+	
+    <!--
+    <br><br><br><br>
+    	  #if($record)
+    		#renderRecord($record 0)
+    	  #else
+    		no details available.
+    	  #end
+    -->
+#else
+	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+#end	
+	</div>
+</div>
