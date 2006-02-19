@@ -17,10 +17,21 @@
     #end
 #end
 
-#macro (renderECSAddress $entryName)
-    #if($rec.get($entryName))
+#macro (renderWWWReference)
+	#if($rec.get("t017_url_ref.obj_id"))
+    	<p><strong>$MESSAGES.getString("www_references"):</strong><br/>
+		#foreach($t017_url_ref in $rec.get("t017_url_ref.obj_id"))
+			<a href="$t017_url_ref.get("t017_url_ref.url_link")" target="_new">$t017_url_ref.get("t017_url_ref.content")</a><br/>
+		#end
+		</p>
+	#end
+#end
+
+#macro (renderECSAddress)
+    #if($rec.get("t012_obj_adr.obj_id"))
+    	<div class="line"><hr /></div>
 		<p><strong>$MESSAGES.getString("addresses"):</strong><br></p>
-    	#foreach($myAddressType in $rec.get($entryName))
+    	#foreach($myAddressType in $rec.get("t012_obj_adr.obj_id"))
     		#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
 			#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
 			<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
@@ -249,7 +260,6 @@
 		#end
 		</p>
 	#end
-	
 #end
 
 
@@ -260,33 +270,54 @@
 	</div>
 	<span class="clearer"></span>
 	<div class="section">
+#if($rec)
 		<p class="float_right">#if($rec.get("t01_object.mod_time"))Generiert am: $rec.get("t01_object.mod_time")#end</p>
 		<p class="float_left">
-            #set($udkObjClass = $rec.get("t01_object.obj_class"))
-            #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
-            #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
-			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}" /></span>&nbsp;${udkObjClassName}&nbsp;<span class="smaller">(Objektklasse)</span>
+            #set($ecsObjClass = $rec.get("t01_object.obj_class"))
+            #set($ecsObjClassNameKey = "ecs_obj_class_name_$ecsObjClass")
+            #set($ecsObjClassName = $MESSAGES.getString($ecsObjClassNameKey))
+			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${ecsObjClass}.gif" alt="${ecsObjClassName}" /></span>&nbsp;${ecsObjClassName}&nbsp;<span class="smaller">(Objektklasse)</span>
 		</p>
 		<span class="clearer"></span>
 		<div class="line"><hr /></div>
 		<h2>$rec.get("title")</h2>
-#renderECSEntry($rec "t01_object.dataset_alternate_name")
-#renderECSEntry($rec "summary")
+    #renderECSEntry($rec "t01_object.dataset_alternate_name")
+    #renderECSEntry($rec "summary")
 
-#renderECSAddress("t012_obj_adr.obj_id")
-#renderECSSubjectReference($udkObjClass)
-#renderECSSpacialReference()
-#renderECSTimeReference()
-#renderECSAvailability()
-#renderECSAdditionalInformation()
-#renderECSSearchTerms()
-<!--
-<br><br><br><br>
-	  #if($record)
-		#renderRecord($record 0)
-	  #else
-		no details available.
-	  #end
--->	  
+    #renderWWWReference()
+	#renderECSAddress()
+    #renderECSSubjectReference($ecsObjClass)
+    #renderECSSpacialReference()
+    #renderECSTimeReference()
+    #renderECSAvailability()
+    #renderECSAdditionalInformation()
+    #renderECSSearchTerms()
+    <!--
+    <br><br><br><br>
+    	  #if($record)
+    		#renderRecord($record 0)
+    	  #else
+    		no details available.
+    	  #end
+    -->
+#else
+	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+#end	
 	</div>
 </div>
