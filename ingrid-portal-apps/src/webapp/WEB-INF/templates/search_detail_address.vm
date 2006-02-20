@@ -52,10 +52,6 @@
 		#end	
 	#end
 	</p>
-	#if($rec.get("t02_address.job"))
-		<p><strong>$MESSAGES.getString("t02_address.job"):</strong><br>
-		$rec.get("t02_address.job")</p>
-	#end
 #end
 
 #macro (renderECSAddressFunction)
