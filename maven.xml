@@ -33,6 +33,5 @@
             goals="war:install" banner="Creating war file (war:install) ..."
             postProcessing="false" ignoreFailures="false" />
   </goal>
-
 </project>
     
