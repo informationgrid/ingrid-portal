@@ -189,7 +189,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                             Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
                     this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
                 }
-                // TODO: Uncomment, throws Exception, at the Moment no Hits !
                 numberOfUnrankedHits = (int) unrankedHits.length();
             } catch (Exception ex) {
                 if (log.isErrorEnabled()) {
