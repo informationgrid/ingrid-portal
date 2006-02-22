@@ -71,6 +71,12 @@ public class Settings {
 
     public final static String QVALUE_DATATYPE_RESEARCH = "research";
 
+    // TODO: at the moment we explicitly handle g2k in IngridQuery, should be handled via "search area" in future
+    public final static String QVALUE_DATATYPE_G2K = "g2k";
+
+    // TODO: helper datatype to display nothing, use search areas in future
+    public final static String QVALUE_DATATYPE_NORESULTS = "nix";
+
     // ============= definitions to access Result data (render data) ==============================
     // IF POSSIBLE, USE THE KEYS TO ACCESS HIT DATA ALSO AS KEYS FOR RESULT DATA !!! 
 

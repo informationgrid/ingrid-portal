@@ -310,6 +310,7 @@ public class Utils {
      * Remove the Basic DataTypes from the query (the ones above the Simple Search Input) to obtain a "clean" query
      * @param query
      */
+    // TODO: remove this helper method if functionality is in IngridQuery
     public static void removeBasicDataTypes(IngridQuery query) {
         FieldQuery[] dataTypesInQuery = query.getDataTypes();
         if (dataTypesInQuery.length == 0) {
@@ -331,5 +332,35 @@ public class Utils {
         for (int i = 0; i < processedDataTypes.size(); i++) {
             query.addField((FieldQuery) processedDataTypes.get(i));
         }
+    }
+
+    /**
+     * Remove the passed data type from the query
+     * @param query
+     */
+    // TODO: remove this helper method if functionality is in IngridQuery
+    public static boolean removeDataType(IngridQuery query, String datatypeValue) {
+        boolean removed = false;
+        FieldQuery[] dataTypesInQuery = query.getDataTypes();
+        if (dataTypesInQuery.length == 0) {
+            return removed;
+        }
+
+        ArrayList processedDataTypes = new ArrayList(Arrays.asList(dataTypesInQuery));
+        for (Iterator iter = processedDataTypes.iterator(); iter.hasNext();) {
+            FieldQuery field = (FieldQuery) iter.next();
+            String value = field.getFieldValue();
+            if (value != null && value.equals(datatypeValue)) {
+                iter.remove();
+                removed = true;
+            }
+        }
+        // remove all old datatypes and set our new ones
+        query.remove(Settings.QFIELD_DATATYPE);
+        for (int i = 0; i < processedDataTypes.size(); i++) {
+            query.addField((FieldQuery) processedDataTypes.get(i));
+        }
+        
+        return removed;
     }
 }

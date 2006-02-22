@@ -156,7 +156,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
             }
             if (rankedHits == null) {
-                rankedHits = doRankedSearch(query, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
+                // copy IngridQuery, so we can manipulate it in ranked search without affecting unranked search
+                IngridQuery rankedQuery = new IngridQuery();
+                rankedQuery.putAll(query);
+                rankedHits = doRankedSearch(rankedQuery, selectedDS, rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
             }
             numberOfRankedHits = (int) rankedHits.length();
@@ -185,7 +188,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
                 }
                 if (unrankedHits == null) {
-                    unrankedHits = doUnrankedSearch(query, selectedDS, unrankedStartHit,
+                    // copy IngridQuery, so we can manipulate it in unranked search without affecting ranked search
+                    IngridQuery unrankedQuery = new IngridQuery();
+                    unrankedQuery.putAll(query);
+                    unrankedHits = doUnrankedSearch(unrankedQuery, selectedDS, unrankedStartHit,
                             Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
                     this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
                 }
@@ -253,16 +259,24 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-        if (log.isDebugEnabled()) {
-            log.debug("doRankedSearch: IngridQuery = " + query);
-        }
-
-        int currentPage = (int) (startHit / hitsPerPage) + 1;
 
         IngridHits hits = null;
         try {
+            // first remove the datatypes we don't have to display !
+            if (Utils.removeDataType(query, Settings.QVALUE_DATATYPE_G2K)) {
+                // datatype g2k was part of query, so we display nothing on left side !
+                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));
+            } else {
+                // explicitly prohibit g2k
+                query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));                
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("doRankedSearch: IngridQuery = " + query);
+            }
+
+            int currentPage = (int) (startHit / hitsPerPage) + 1;
+
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, "g2k"));
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = new String[0];
@@ -275,6 +289,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
                 requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
             }
+            // TODO: use getDetails() instead of getDetail for every hit !
             // IngridHitDetail[] details = ibus.getDetails(results, query,
             // requestedMetadata);
 
@@ -338,45 +353,61 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
 
-        int currentPage = (int) (startHit / hitsPerPage) + 1;
-
-        // IngridHits hits = new IngridHits();
         IngridHits hits = null;
         try {
-            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            // copy the query to NOT influence the query for ranked results
-            // TODO refactor this
-            IngridQuery rankedQuery = new IngridQuery();
-            rankedQuery.putAll(query);
-            rankedQuery.remove(Settings.QFIELD_DATATYPE);
-            
-//            query.remove(Settings.QFIELD_DATATYPE);
-            rankedQuery.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, "g2k"));            
+            // TODO unranked search result hack for checking datatypes, use "ranked" field in future 
+            // check for positive data types and if set, check whether g2k should be displayed, if not
+            // set no datatypes (no search)
+            // NOTICE: unranked search isn't called in area "Adressen", only in "Umweltinfo", then no
+            // positive data type is set per default ...
+            boolean showG2K = false;
+            String[] posDataTypes = query.getPositiveDataTypes();
+            if (posDataTypes != null && posDataTypes.length > 0) {
+                // use util method to check whether g2k is set explicit as datatype
+                if (Utils.removeDataType(query, Settings.QVALUE_DATATYPE_G2K)) {
+                    showG2K = true;
+                }
+            } else {
+                // no other data types, we display our unranked stuff
+                showG2K = true;
+            }
+            // remove all datatypes ! should lead to no results !
+            query.remove(Settings.QFIELD_DATATYPE);
+            if (showG2K) {
+                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));                
+            } else {
+                // just to be sure there are NO RESULTS
+                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));                                
+            }
             if (log.isDebugEnabled()) {
                 log.debug("doUnrankedSearch: IngridQuery = " + query);
             }
-            hits = ibus.search(rankedQuery, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
+            
+            int currentPage = (int) (startHit / hitsPerPage) + 1;
+
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             
-            String[] requestedMetadata = new String[1];
-            requestedMetadata = new String[1];
-            requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+            String[] requestedMetadata = new String[0];
+//            String[] requestedMetadata = new String[1];
+//            requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             
             IngridHit result = null;
             IngridHitDetail detail = null;
-            String tmpString = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
+                    // TODO: use getDetails() instead of getDetail for every hit !
                     // detail = details[i];
-                    detail = ibus.getDetail(result, rankedQuery, requestedMetadata);
+                    detail = ibus.getDetail(result, query, requestedMetadata);
                     if (result == null) {
                         continue;
                     }
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
+/*
                         tmpString = detail.getIplugClassName();
-
                         if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                             result.put(Settings.RESULT_KEY_TYPE, "dsc");
 
@@ -404,6 +435,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         } else {
                             result.put(Settings.RESULT_KEY_TYPE, "unknown");
                         }
+*/
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
