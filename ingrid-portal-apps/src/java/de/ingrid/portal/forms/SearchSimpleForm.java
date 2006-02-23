@@ -47,7 +47,7 @@ public class SearchSimpleForm extends ActionForm {
         clearErrors();
 
         // check query
-        if (getInput(FIELD_QUERY).length() == 0) {
+        if (getInput(FIELD_QUERY).trim().length() == 0) {
             setInput(FIELD_QUERY, INITIAL_QUERY);
         }
 

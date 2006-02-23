@@ -48,6 +48,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     /** Keys of parameters in session/request */
     private final static String PARAM_DATASOURCE = "ds";
 
+    private final static String PARAM_ACTION = "action";
+
+    /** Values of parameters in session/request */
+    private final static String PARAM_ACTION_SEARCH = "doSearch";
+
     /*
      * (non-Javadoc)
      * 
@@ -69,16 +74,16 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
-
         ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
         context.put("MESSAGES", messages);
 
         // read preferences and adapt title (passed from page)
+        // NOTICE: this portlet is on start and main search page, may have different titles
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
         boolean startPage = true;
         if (titleKey.equals(TITLE_KEY_RESULT)) {
-            // we're on main page, check whether there's a query and adapt title
+            // we're on main search page, check whether there's a query and adapt title
             startPage = false;
             if (receiveRenderMessage(request, Settings.MSG_QUERY) == null) {
                 titleKey = TITLE_KEY_SEARCH;
@@ -96,9 +101,14 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
-        if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
-            af.setInput(SearchSimpleForm.FIELD_QUERY,
-                    ((String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
+        // check for passed render parameters (the query string which can be bookmarked) and
+        // adapt our message (should be the same anyway !)
+        String queryInRequest = request.getParameter(SearchSimpleForm.FIELD_QUERY);
+        if (log.isInfoEnabled()) {
+            log.info("Query passed as REQUEST PARAMETER, " + SearchSimpleForm.FIELD_QUERY + "=" + queryInRequest);
+        }
+        if (queryInRequest != null) {
+            af.setInput(SearchSimpleForm.FIELD_QUERY, queryInRequest.trim());
         }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
@@ -117,12 +127,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
         context.put("formAction", searchAction);
 
-        // if action is "doSearch" page WAS CALLED FROM STARTPAGE and no action was triggered ! 
-        // (then we are on the result psml page !!!)
-        String action = request.getParameter("action");
-        if (action != null && action.equalsIgnoreCase("doSearch")) {
-            // all ActionStuff encapsulated in separate method !
-            doSearchAction(request);
+        // if action is "doSearch" we should perform a search !!! 
+        String action = request.getParameter(PARAM_ACTION);
+        if (action != null && action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
+            // set up all the stuff for the search result portlet
+            prepareSearch(request, af);
         }
 
         super.doView(request, response);
@@ -136,15 +145,21 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
      */
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        String action = request.getParameter("action");
+        String action = request.getParameter(PARAM_ACTION);
         if (action == null) {
             return;
         }
 
-        if (action.equalsIgnoreCase("doSearch")) {
-            // encapsulate all ActionStuff in separate method, has to be called in view method too (when called
-            // from start page !)
-            doSearchAction(request);
+        if (action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
+            SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
+                    SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
+
+            // set up all the stuff for the search result portlet
+            prepareSearch(request, af);
+
+            // pass render parameters, so bookmarking works
+            String newQueryString = af.getInput(SearchSimpleForm.FIELD_QUERY);
+            actionResponse.setRenderParameter(SearchSimpleForm.FIELD_QUERY, newQueryString);
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter(PARAM_DATASOURCE));
@@ -156,7 +171,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
     }
 
-    private void doSearchAction(PortletRequest request) {
+    private void prepareSearch(PortletRequest request, SearchSimpleForm af) {
         // remove old query message
         cancelRenderMessage(request, Settings.MSG_QUERY);
         cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
@@ -168,8 +183,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         publishRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR, Settings.MSG_VALUE_TRUE);
 
         // validate input
-        SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
+        // NOTICE: resets input to default value if validation fails (INITIAL_QUERY)
         af.populate(request);
         if (!af.validate()) {
             return;
