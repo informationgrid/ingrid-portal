@@ -262,18 +262,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         IngridHits hits = null;
         try {
-            // first remove the datatypes we don't have to display !
-            if (Utils.removeDataType(query, Settings.QVALUE_DATATYPE_G2K)) {
-                // datatype g2k was part of query, so we display nothing on left side !
-                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));
-            } else {
-                // explicitly prohibit g2k
-                query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));                
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("doRankedSearch: IngridQuery = " + query);
-            }
-
+            adaptRankedQuery(query, ds);
+            
             int currentPage = (int) (startHit / hitsPerPage) + 1;
 
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
@@ -351,38 +341,32 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         return hits;
     }
 
+    private void adaptRankedQuery(IngridQuery query, String ds) {
+        // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
+        if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+            // first remove the datatypes we don't have to display !
+            if (Utils.removeDataType(query, Settings.QVALUE_DATATYPE_G2K)) {
+                // datatype g2k was part of query, so we display nothing on left side !
+                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));
+            } else {
+                // explicitly prohibit g2k
+                query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));                
+            }            
+        } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+            
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("doRankedSearch: IngridQuery = " + query);
+        }
+    }
+    
     private IngridHits doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
 
         IngridHits hits = null;
         try {
-            // TODO unranked search result hack for checking datatypes, use "ranked" field in future 
-            // check for positive data types and if set, check whether g2k should be displayed, if not
-            // set no datatypes (no search)
-            // NOTICE: unranked search isn't called in area "Adressen", only in "Umweltinfo", then no
-            // positive data type is set per default ...
-            boolean showG2K = false;
-            String[] posDataTypes = query.getPositiveDataTypes();
-            if (posDataTypes != null && posDataTypes.length > 0) {
-                // use util method to check whether g2k is set explicit as datatype
-                if (Utils.removeDataType(query, Settings.QVALUE_DATATYPE_G2K)) {
-                    showG2K = true;
-                }
-            } else {
-                // no other data types, we display our unranked stuff
-                showG2K = true;
-            }
-            // remove all datatypes ! should lead to no results !
-            query.remove(Settings.QFIELD_DATATYPE);
-            if (showG2K) {
-                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));                
-            } else {
-                // just to be sure there are NO RESULTS
-                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));                                
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("doUnrankedSearch: IngridQuery = " + query);
-            }
-            
+            adaptUnrankedQuery(query, ds);
+
             int currentPage = (int) (startHit / hitsPerPage) + 1;
 
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
@@ -390,8 +374,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             IngridHit[] results = hits.getHits();
             
             String[] requestedMetadata = new String[0];
-//            String[] requestedMetadata = new String[1];
-//            requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             
             IngridHit result = null;
             IngridHitDetail detail = null;
@@ -406,36 +388,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
-/*
-                        tmpString = detail.getIplugClassName();
-                        if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                            result.put(Settings.RESULT_KEY_TYPE, "dsc");
-
-                            // read for all dsc iplugs
-                            if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
-                                tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
-                                result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
-                            }
-
-                            // check our selected "data source" and read
-                            // according data
-                            if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
-                                if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                                    tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
-                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-                                }
-                            } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
-                                if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
-                                    tmpString = detail.get(Settings.HIT_KEY_ADDRESS_CLASS).toString();
-                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-                                }
-                            }
-                        } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
-                            result.put(Settings.RESULT_KEY_TYPE, "nutch");
-                        } else {
-                            result.put(Settings.RESULT_KEY_TYPE, "unknown");
-                        }
-*/
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
@@ -451,5 +403,35 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         return hits;
     }
-
+    
+    private void adaptUnrankedQuery(IngridQuery query, String ds) {
+        // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
+        // unranked search result hack for checking datatypes, use "ranked" field in future 
+        // check for positive data types and if set, check whether g2k should be displayed, if not
+        // set no datatypes (no search)
+        // NOTICE: unranked search isn't called in area "Adressen", only in "Umweltinfo", then no
+        // positive data type is set per default ...
+        boolean showG2K = false;
+        String[] posDataTypes = query.getPositiveDataTypes();
+        if (posDataTypes != null && posDataTypes.length > 0) {
+            // use util method to check whether g2k is set explicit as datatype
+            if (Utils.removeDataType(query, Settings.QVALUE_DATATYPE_G2K)) {
+                showG2K = true;
+            }
+        } else {
+            // no other data types, we display our unranked stuff
+            showG2K = true;
+        }
+        // remove all datatypes ! should lead to no results !
+        query.remove(Settings.QFIELD_DATATYPE);
+        if (showG2K) {
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));                
+        } else {
+            // just to be sure there are NO RESULTS
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));                                
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("doUnrankedSearch: IngridQuery = " + query);
+        }
+    }
 }
