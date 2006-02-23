@@ -286,22 +286,17 @@ public class Utils {
      */
     public static void processBasicDataTypes(IngridQuery query, String selectedDS) {
 
+        // remove not valid data sources from query
+//        removeBasicDataTypes(query);
         if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
-            // remove not valid data sources from query
-            removeBasicDataTypes(query);
             // TODO: do not set datatype:default, not processed in backend yet !
             // instead don't allow addresses
             //            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
             // REMOVE ADRESS IPLUG
             query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
         } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
-            // remove all manual input and set search to address !
-            query.remove(Settings.QFIELD_DATATYPE);
-            // ONLY ADRESS IPLUG
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
         } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
-            // remove not valid data sources from query
-            removeBasicDataTypes(query);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.SEARCH_DATASOURCE_RESEARCH));
         }
     }
@@ -362,5 +357,37 @@ public class Utils {
         }
         
         return removed;
+    }
+
+    public static boolean containsPositiveDataType(IngridQuery query, String datatypeValue) {
+        boolean contains = false;
+
+        String[] posDataTypes = query.getPositiveDataTypes();
+        for (int i=0; i < posDataTypes.length; i++) {
+            if (posDataTypes[i].equals(datatypeValue)) {
+                contains = true;
+                break;
+            }
+        }
+
+        return contains;
+    }
+    
+    public static String queryToString(IngridQuery query) {
+        StringBuffer qStr = new StringBuffer();
+        qStr.append(query);
+        qStr.append(", ");
+        
+        FieldQuery[] fields = query.getDataTypes();
+        for (int i=0; i < fields.length; i++) {
+            qStr.append(" ");
+            qStr.append(fields[i]);
+            qStr.append("/required:");
+            qStr.append(fields[i].isRequred());
+            qStr.append("/prohibited:");
+            qStr.append(fields[i].isProhibited());
+        }
+
+        return qStr.toString();
     }
 }

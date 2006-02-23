@@ -195,10 +195,6 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
         // set query in message for result portlet
         if (query != null) {
-            // adapt query to selected data source
-            String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
-            Utils.processBasicDataTypes(query, selectedDS);
-
             publishRenderMessage(request, Settings.MSG_QUERY, query);
             publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryString);
         }

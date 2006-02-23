@@ -104,6 +104,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
             String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
                     .parseInt(config.getString("ibus_port", "11112")));
+
+            if (log.isInfoEnabled()) {
+                log.info("!!!!!!!!!! Connecting with iBus URL: "+iBusUrl);
+            }
+
             RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
             bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
 
