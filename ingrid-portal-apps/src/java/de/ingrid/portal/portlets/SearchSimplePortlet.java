@@ -48,6 +48,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     /** Keys of parameters in session/request */
     private final static String PARAM_DATASOURCE = "ds";
 
+    private final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
+
     private final static String PARAM_ACTION = "action";
 
     /** Values of parameters in session/request */
@@ -77,7 +79,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
         context.put("MESSAGES", messages);
 
-        // read preferences and adapt title (passed from page)
+        // read PREFERENCES and adapt title (passed from page)
         // NOTICE: this portlet is on start and main search page, may have different titles
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
@@ -91,7 +93,22 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
         response.setTitle(messages.getString(titleKey));
 
-        // get ActionForm, we use get method without instantiation, so we can do
+        // check for passed RENDER PARAMETERS (for bookmarking) and adapt our
+        // messages (should be the same anyway !)
+        String queryInRequest = request.getParameter(PARAM_QUERY);
+        if (queryInRequest != null) {
+            publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryInRequest);
+        }
+        String dsInRequest = request.getParameter(PARAM_DATASOURCE);
+        if (dsInRequest != null) {
+            publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
+        }
+        if (log.isInfoEnabled()) {
+            log.info("Query passed as REQUEST PARAMETER, " + PARAM_QUERY + "=" + queryInRequest);
+            log.info("Search Area passed as REQUEST PARAMETER, " + PARAM_DATASOURCE + "=" + dsInRequest);
+        }
+
+        // get ACTIONFORM, we use get method without instantiation, so we can do
         // special initialisation !
         SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
                 PortletSession.APPLICATION_SCOPE);
@@ -101,19 +118,15 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
-        // check for passed render parameters (the query string which can be bookmarked) and
-        // adapt our message (should be the same anyway !)
-        String queryInRequest = request.getParameter(SearchSimpleForm.FIELD_QUERY);
-        if (log.isInfoEnabled()) {
-            log.info("Query passed as REQUEST PARAMETER, " + SearchSimpleForm.FIELD_QUERY + "=" + queryInRequest);
-        }
-        if (queryInRequest != null) {
-            af.setInput(SearchSimpleForm.FIELD_QUERY, queryInRequest.trim());
+        if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
+            af.setInput(SearchSimpleForm.FIELD_QUERY,
+                    ((String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
         }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
         context.put("actionForm", af);
 
+        // set datasource
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
@@ -121,6 +134,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
         context.put("ds", selectedDS);
 
+        // set form action for template
         String searchAction = response.createActionURL().toString();
         if (startPage) {
             searchAction = SEARCH_RESULT_PAGE;
@@ -150,17 +164,12 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        if (action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
-            SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                    SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
+        SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
+                SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
 
+        if (action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
             // set up all the stuff for the search result portlet
             prepareSearch(request, af);
-
-            // pass render parameters, so bookmarking works
-            String newQueryString = af.getInput(SearchSimpleForm.FIELD_QUERY);
-            actionResponse.setRenderParameter(SearchSimpleForm.FIELD_QUERY, newQueryString);
-
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter(PARAM_DATASOURCE));
             // do not requery on datasource change
@@ -169,6 +178,12 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
         }
+
+        // pass all render parameters, so bookmarking works
+        String param = af.getInput(SearchSimpleForm.FIELD_QUERY);
+        actionResponse.setRenderParameter(PARAM_QUERY, param);
+        param = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+        actionResponse.setRenderParameter(PARAM_DATASOURCE, param);
     }
 
     private void prepareSearch(PortletRequest request, SearchSimpleForm af) {
