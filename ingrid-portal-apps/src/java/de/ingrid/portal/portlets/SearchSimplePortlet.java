@@ -1,7 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -17,6 +16,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SearchSimpleForm;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.utils.query.IngridQuery;
@@ -76,7 +76,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
-        ResourceBundle messages = getPortletConfig().getResourceBundle(request.getLocale());
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
         context.put("MESSAGES", messages);
 
         // read PREFERENCES and adapt title (passed from page)
