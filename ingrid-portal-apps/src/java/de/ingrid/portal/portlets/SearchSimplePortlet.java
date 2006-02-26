@@ -112,10 +112,10 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // get ACTIONFORM, we use get method without instantiation, so we can do
         // special initialisation !
         SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                PortletSession.APPLICATION_SCOPE);
+                PortletSession.PORTLET_SCOPE);
         if (af == null) {
             af = (SearchSimpleForm) Utils.addActionForm(request, SearchSimpleForm.SESSION_KEY, SearchSimpleForm.class,
-                    PortletSession.APPLICATION_SCOPE);
+                    PortletSession.PORTLET_SCOPE);
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
@@ -166,7 +166,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
 
         SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE);
+                SearchSimpleForm.class);
 
         if (action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
             // set up all the stuff for the search result portlet
