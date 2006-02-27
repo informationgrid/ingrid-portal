@@ -24,8 +24,8 @@
 				</tr>
 				<tr>
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Boden" #getChecked('rubric' 'Boden')/> 
-						<label for="chk_1">Boden
+						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Strahlung" #getChecked('rubric' 'Strahlung')/> 
+						<label for="chk_1">Strahlung
 						</label>
 					</td>
 					<td>

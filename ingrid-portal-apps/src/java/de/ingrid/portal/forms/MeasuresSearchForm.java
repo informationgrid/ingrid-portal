@@ -26,7 +26,7 @@ public class MeasuresSearchForm extends ActionForm {
      * initial values. WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES
      * !!!!!!!!!
      */
-    public static final String INITIAL_RUBRIC = "all''Boden''Luft''Wasser''Weitere";
+    public static final String INITIAL_RUBRIC = "all''Strahlung''Luft''Wasser''Weitere";
 
     public static final String INITIAL_PARTNER = "all";
 
