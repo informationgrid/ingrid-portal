@@ -103,17 +103,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
-            setDefaultViewPage(TEMPLATE_RESULT);
         }
-
-        // adapt result page to selected data source, ONLY IF WE DO A NEW QUERY
-        // !!!
-        if (doQuery && newQuery) {
-            if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
-                setDefaultViewPage(TEMPLATE_RESULT);
-            } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
-                setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
-            }
+        if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+            setDefaultViewPage(TEMPLATE_RESULT);
+        } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+            setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
         }
 
         String currentView = getDefaultViewPage();

@@ -114,9 +114,21 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         if (dsInRequest != null) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
         }
+        boolean searchActionTriggered = false;
+        String actionInRequest = request.getParameter(PARAM_ACTION);
+        if (actionInRequest != null && actionInRequest.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
+            // search was submitted by start page 
+            searchActionTriggered = true;
+        } else if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) != null) {
+            // search was submitted by main-search page 
+            searchActionTriggered = true;
+        }
+
         if (log.isInfoEnabled()) {
             log.info("Query passed as REQUEST PARAMETER, " + PARAM_QUERY + "=" + queryInRequest);
             log.info("Search Area passed as REQUEST PARAMETER, " + PARAM_DATASOURCE + "=" + dsInRequest);
+            log.info("action passed as REQUEST PARAMETER, " + PARAM_ACTION + "=" + actionInRequest);
+            log.info("search explicitly triggered = " + searchActionTriggered);
         }
 
         // ----------------------------------
@@ -133,6 +145,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
+        // just to be sure we synchronize action form with message :)
         if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
             af.setInput(SearchSimpleForm.FIELD_QUERY,
                     ((String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
@@ -159,26 +172,27 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // prepare Search if necessary, Search will be performed in SearchResult portlet 
         // ----------------------------------
-        boolean newQuery = true;
-        if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
-            // if action is "doSearch" we should perform a search (e.g. called from start page) 
-            String action = request.getParameter(PARAM_ACTION);
-            if (action != null && action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
-                newQuery = true;
-            } else if (queryInRequest == null) {
-                newQuery = false;
+        boolean newIngridQuery = true;
+        
+        // if not explicitly triggered, check whether new Query is necessary
+        if (searchActionTriggered) {
+            // set messages that a brand new query is performed !
+            publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
+        } else {
+            if (queryInRequest == null) {
+                newIngridQuery = false;
             } else if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
                 // something on result page was clicked, that shouldn't perform a search, e.g. similar portlet !
-                newQuery = false;
+                newIngridQuery = false;
             } else if (receiveRenderMessage(request, Settings.MSG_OLD_QUERY) != null) {
                 // something on result page was clicked, that shouldn't set up a new Query, e.g. next result page !
-                newQuery = false;
+                newIngridQuery = false;
             }
         }
 
-        if (newQuery) {
-            // set up all the stuff for the search result portlet
-            newQuery(request, af);
+        if (newIngridQuery) {
+            // set up new Ingrid Query !
+            doNewIngridQuery(request, af);
         }
 
         super.doView(request, response);
@@ -218,12 +232,10 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
     }
 
-    private void newQuery(PortletRequest request, SearchSimpleForm af) {
+    private void doNewIngridQuery(PortletRequest request, SearchSimpleForm af) {
         // remove old query message
         cancelRenderMessage(request, Settings.MSG_QUERY);
         cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
-        // set messages that a new query is performed !
-        publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
 
         // check query input
         if (!af.validate()) {
