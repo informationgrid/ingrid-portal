@@ -40,18 +40,23 @@ public class SearchSimpleForm extends ActionForm {
     }
 
     /**
+     * NOTICE: Return value indicates whether query should be performed or not !!!
+     * If input is empty or equals initial default value, then return value is false ! 
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
     public boolean validate() {
-        boolean allOk = true;
+        boolean doQuery = true;
         clearErrors();
 
         // check query
         if (getInput(FIELD_QUERY).trim().length() == 0) {
             setInput(FIELD_QUERY, INITIAL_QUERY);
         }
+        if (getInput(FIELD_QUERY).trim().equals(INITIAL_QUERY)) {
+            doQuery = false;
+        }
 
-        return allOk;
+        return doQuery;
     }
 
     /**

@@ -70,17 +70,21 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        // receive Messages
+        // ----------------------------------
+        // consume Messages, THIS IS THE LAST PORTLET ON PAGE, SO WE REMOVE ALL MESSAGES !
+        // ----------------------------------        
         // indicates whether we do a query or we read results from cache
         boolean doQuery = true;
-        if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
+        if (consumeRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
             doQuery = false;
         }
         // indicates whether we do a whole new query and start on first page
         boolean newQuery = true;
-        if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
+        if (consumeRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
             newQuery = false;
         }
+        // cancel the rest, not needed anymore
+        cancelRenderMessage(request, Settings.MSG_OLD_QUERY);
 
         // ----------------------------------
         // set initial view template
@@ -240,11 +244,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // business logic
         // ----------------------------------
-        // no new query anymore, we remove message, so portlets read our render
-        // parameters (set below)
-        cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
-        // further remove cache message, we have to do query !
-        cancelRenderMessage(request, Settings.MSG_NO_QUERY);
+        // further set message indicating that no new IngridQuery should be set up !
+        // So there's no NEW_QUERY message and the result portlet reads our page state (set below)
+        publishRenderMessage(request, Settings.MSG_OLD_QUERY, Settings.MSG_VALUE_TRUE);
 
         // ----------------------------------
         // set render parameters

@@ -158,20 +158,23 @@ public class Settings {
 
     // ------------- INFORMATION MESSAGES -----------------------------
 
-    /** this message indicates that a new query was performed to ignore former render parameters
-     * we use a separate message for every portlet, because the message is removed by every portlet
-     * and we don't know processing order */
+    /** this message indicates that a whole new query should be performed, so former
+     * query states should be ignored (e.g. position of result page) 
+     * This message is reset when the result page has been rendered.
+     */
     public static final String MSG_NEW_QUERY = "new_query";
 
-    /** new query message for "similar terms" portlet */
-    public static final String MSG_NEW_QUERY_FOR_SIMILAR = "new_query_similar";
+    /** this message indicates that a query with the old IngridQuery should be performed.
+     * This message is set when an action on the search_result page is triggered (e.g.
+     * next result page) that needs a requery of the iBus without generating a new IngridQuery .
+     * This message is reset when the result page has been rendered.
+     */
+    public static final String MSG_OLD_QUERY = "old_query";
 
-    /** this message indicates that a new query should not be performed.
-     *  
+    /** this message indicates that a query should not be performed.
      * This message is set when an action on the search_result page is triggered that
      * does not require a requery of the ibus.
-     * 
-     * This message is reset when a requery of the ibus is necessary.
-     *  */
+     * This message is reset when the result page has been rendered.
+     */
     public static final String MSG_NO_QUERY = "no_query";
 }

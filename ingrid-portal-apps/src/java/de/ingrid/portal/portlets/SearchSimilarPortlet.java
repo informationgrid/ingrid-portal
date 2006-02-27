@@ -83,7 +83,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether a new query was performed !
-        Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
+        Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY);
         if (newQuery != null) {
             ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
@@ -98,8 +98,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
-        // no new query anymore, we remove messages, so Similar fragment is displayed as clicked
-        cancelRenderMessage(request, Settings.MSG_NEW_QUERY_FOR_SIMILAR);
+        // indicate, that no query is necessary, we just have to handle similar terms
         publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
 
         PortletSession session = request.getPortletSession();
