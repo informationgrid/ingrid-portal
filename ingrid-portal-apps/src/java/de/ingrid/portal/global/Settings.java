@@ -158,22 +158,16 @@ public class Settings {
 
     // ------------- INFORMATION MESSAGES -----------------------------
 
-    /** this message indicates that a whole new query should be performed, so former
-     * query states should be ignored (e.g. position of result page) 
-     * This message is reset when the result page has been rendered.
+    /** this message indicates that a new query was explicitly triggered by the search form,
+     * so query states should be ignored (e.g. position of result page) 
+     * This message is reset when an action in the result portlet causes a new
+     * query, which then is no initial query anymore (e.g. change result page).
      */
     public static final String MSG_NEW_QUERY = "new_query";
 
-    /** this message indicates that a query with the old IngridQuery should be performed.
-     * This message is set when an action on the search_result page is triggered (e.g.
-     * next result page) that needs a requery of the iBus without generating a new IngridQuery .
-     * This message is reset when the result page has been rendered.
-     */
-    public static final String MSG_OLD_QUERY = "old_query";
-
     /** this message indicates that a query should not be performed.
      * This message is set when an action on the search_result page is triggered that
-     * does not require a requery of the ibus.
+     * does not require a requery of the ibus (e.g. similar terms)
      * This message is reset when the result page has been rendered.
      */
     public static final String MSG_NO_QUERY = "no_query";

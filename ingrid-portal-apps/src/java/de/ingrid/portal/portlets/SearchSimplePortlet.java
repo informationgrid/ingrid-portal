@@ -99,36 +99,22 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and adapt our messages !
         // Render Parameters will be passed in every RenderRequest until next action method is called !
-        // NOTICE: Here messages should be reset, if they're dependent from URL parameters !
-        // e.g. SEARCH IS ONLY PERFORMED, IF THE QUERY IS PART OF THE URL !!!
         // ----------------------------------
         String queryInRequest = request.getParameter(PARAM_QUERY);
-        if (queryInRequest != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryInRequest);
-        } else {
-            // RESET Query, so no search is performed !
-            cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
-            cancelRenderMessage(request, Settings.MSG_QUERY);
-        }
         String dsInRequest = request.getParameter(PARAM_DATASOURCE);
         if (dsInRequest != null) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
         }
-        boolean searchActionTriggered = false;
         String actionInRequest = request.getParameter(PARAM_ACTION);
         if (actionInRequest != null && actionInRequest.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
             // search was submitted by start page 
-            searchActionTriggered = true;
-        } else if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) != null) {
-            // search was submitted by main-search page 
-            searchActionTriggered = true;
+            publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
         }
-
         if (log.isInfoEnabled()) {
             log.info("Query passed as REQUEST PARAMETER, " + PARAM_QUERY + "=" + queryInRequest);
             log.info("Search Area passed as REQUEST PARAMETER, " + PARAM_DATASOURCE + "=" + dsInRequest);
             log.info("action passed as REQUEST PARAMETER, " + PARAM_ACTION + "=" + actionInRequest);
-            log.info("search explicitly triggered = " + searchActionTriggered);
+            log.info("NEW INITIAL QUERY = " + receiveRenderMessage(request, Settings.MSG_NEW_QUERY));
         }
 
         // ----------------------------------
@@ -145,10 +131,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
-        // just to be sure we synchronize action form with message :)
-        if (receiveRenderMessage(request, Settings.MSG_QUERY_STRING) != null) {
-            af.setInput(SearchSimpleForm.FIELD_QUERY,
-                    ((String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING)));
+        // just to be sure we synchronize action form with query in request
+        if (queryInRequest != null) {
+            af.setInput(SearchSimpleForm.FIELD_QUERY, queryInRequest);
         }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
@@ -172,27 +157,13 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // prepare Search if necessary, Search will be performed in SearchResult portlet 
         // ----------------------------------
-        boolean newIngridQuery = true;
-        
-        // if not explicitly triggered, check whether new Query is necessary
-        if (searchActionTriggered) {
-            // set messages that a brand new query is performed !
-            publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
-        } else {
-            if (queryInRequest == null) {
-                newIngridQuery = false;
-            } else if (receiveRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
-                // something on result page was clicked, that shouldn't perform a search, e.g. similar portlet !
-                newIngridQuery = false;
-            } else if (receiveRenderMessage(request, Settings.MSG_OLD_QUERY) != null) {
-                // something on result page was clicked, that shouldn't set up a new Query, e.g. next result page !
-                newIngridQuery = false;
-            }
-        }
+        resetQuery(request);
 
-        if (newIngridQuery) {
-            // set up new Ingrid Query !
-            doNewIngridQuery(request, af);
+        // only query was passed per request and is valid set up IngridQuery
+        // NOTICE: af.validate() checks for default text and only returns true if "valid" query was entered
+        if (queryInRequest != null && af.validate()) {
+            // set up Ingrid Query !
+            setUpQuery(request, af.getInput(SearchSimpleForm.FIELD_QUERY));
         }
 
         super.doView(request, response);
@@ -212,7 +183,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
-            // indicate, that we have to perform a brand new query !
+            // indicate, that new search was triggered by form submit
             publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
 
             // pass all search parameters as render parameters, so bookmarking works
@@ -223,27 +194,21 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             actionResponse.setRenderParameter(PARAM_DATASOURCE, param);
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
+            // NOTICE: all render parameters are reset ! we only publish new data source
             publishRenderMessage(request, Settings.MSG_DATASOURCE, request.getParameter(PARAM_DATASOURCE));
-            // do not requery on datasource change
-            publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
         }
     }
 
-    private void doNewIngridQuery(PortletRequest request, SearchSimpleForm af) {
-        // remove old query message
-        cancelRenderMessage(request, Settings.MSG_QUERY);
+    private void resetQuery(PortletRequest request) {
         cancelRenderMessage(request, Settings.MSG_QUERY_STRING);
+        cancelRenderMessage(request, Settings.MSG_QUERY);
+    }
 
-        // check query input
-        if (!af.validate()) {
-            return;
-        }
-
-        // Create IngridQuery from form input !
-        String queryString = af.getInput(SearchSimpleForm.FIELD_QUERY);
+    private void setUpQuery(PortletRequest request, String queryString) {
+        // Create IngridQuery
         IngridQuery query = null;
         queryString = queryString.toLowerCase();
         try {

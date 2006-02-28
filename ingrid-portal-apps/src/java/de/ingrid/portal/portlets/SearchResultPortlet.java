@@ -71,7 +71,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("MESSAGES", messages);
 
         // ----------------------------------
-        // consume Messages, THIS IS THE LAST PORTLET ON PAGE, SO WE REMOVE ALL MESSAGES !
+        // handle Messages, THIS IS THE LAST PORTLET ON PAGE, SO WE MAY REMOVE MESSAGES !
         // ----------------------------------        
         // indicates whether we do a query or we read results from cache
         boolean doQuery = true;
@@ -79,12 +79,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             doQuery = false;
         }
         // indicates whether we do a whole new query and start on first page
+        // DON't CONSUME THIS ONE, otherwise page position is rendered !
         boolean newQuery = true;
-        if (consumeRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
+        if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
             newQuery = false;
         }
-        // cancel the rest, not needed anymore
-        cancelRenderMessage(request, Settings.MSG_OLD_QUERY);
 
         // ----------------------------------
         // set initial view template
@@ -229,28 +228,19 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        // ----------------------------------
-        // fetch parameters
-        // ----------------------------------
+        // set render parameters
         String rankedStarthit = request.getParameter(PARAM_START_HIT_RANKED);
         String unrankedStarthit = request.getParameter(PARAM_START_HIT_UNRANKED);
-
-        // ----------------------------------
-        // business logic
-        // ----------------------------------
-        // further set message indicating that no new IngridQuery should be set up !
-        // So there's no NEW_QUERY message and the result portlet reads our page state (set below)
-        publishRenderMessage(request, Settings.MSG_OLD_QUERY, Settings.MSG_VALUE_TRUE);
-
-        // ----------------------------------
-        // set render parameters
-        // ----------------------------------
         if (rankedStarthit != null) {
             actionResponse.setRenderParameter(PARAM_START_HIT_RANKED, rankedStarthit);
         }
         if (unrankedStarthit != null) {
             actionResponse.setRenderParameter(PARAM_START_HIT_UNRANKED, unrankedStarthit);
         }
+        
+        // remove message which indicates, that a query was newly submitted from form,
+        // so result page position is taken into account
+        cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
     }
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
