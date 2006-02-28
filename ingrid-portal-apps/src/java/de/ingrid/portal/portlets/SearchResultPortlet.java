@@ -22,6 +22,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -167,7 +168,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of ranked page navigation
-        HashMap rankedPageNavigation = Utils.getPageNavigation(rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE,
+        HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE,
                 numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // unranked results
@@ -200,7 +201,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             // adapt settings of unranked page navigation
-            unrankedPageNavigation = Utils.getPageNavigation(unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE,
+            unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE,
                     numberOfUnrankedHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
         }
 

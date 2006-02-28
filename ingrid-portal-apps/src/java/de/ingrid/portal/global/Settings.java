@@ -150,6 +150,9 @@ public class Settings {
     /** this message contains the ingrid datasource */
     public static final String MSG_DATASOURCE = "datasource";
 
+    /** this message contains the result page position */
+    public static final String MSG_RESULT_PAGE = "resultpage";
+
     /** this message contains ranked search results */
     public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";
 

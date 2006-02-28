@@ -9,6 +9,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,6 +20,7 @@ import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -38,7 +40,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
 
     /** page for displaying results, is called directly from start page */
-    private final static String SEARCH_RESULT_PAGE = "portal/main-search.psml";
+    private final static String SEARCH_RESULT_PAGE = "/ingrid-portal/portal/main-search.psml";
 
     /** keys of possible titles, can be set via PSML portlet preferences */
     private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
@@ -52,8 +54,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String PARAM_ACTION = "action";
 
-    /** Values of parameters in session/request */
-    private final static String PARAM_ACTION_SEARCH = "doSearch";
+    private final static String PARAM_CALL_FROM_TEASER = "teaser";
 
     /*
      * (non-Javadoc)
@@ -81,6 +82,21 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         context.put("MESSAGES", messages);
 
         // ----------------------------------
+        // check for passed RENDER PARAMETERS (for bookmarking) and adapt our messages !
+        // Render Parameters will be passed in every RenderRequest until next action method is called !
+        // ----------------------------------
+        String queryInRequest = request.getParameter(PARAM_QUERY);
+        String dsInRequest = request.getParameter(PARAM_DATASOURCE);
+        if (dsInRequest != null) {
+            publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
+        }
+        if (log.isInfoEnabled()) {
+            log.info("Query passed as REQUEST PARAMETER, " + PARAM_QUERY + "=" + queryInRequest);
+            log.info("Search Area passed as REQUEST PARAMETER, " + PARAM_DATASOURCE + "=" + dsInRequest);
+            log.info("NEW INITIAL QUERY from Submit = " + receiveRenderMessage(request, Settings.MSG_NEW_QUERY));
+        }
+
+        // ----------------------------------
         // read PREFERENCES and adapt title (passed from page)
         // NOTICE: this portlet is on start and main search page, may have different titles
         // ----------------------------------
@@ -90,32 +106,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         if (titleKey.equals(TITLE_KEY_RESULT)) {
             // we're on main search page, check whether there's a query and adapt title
             startPage = false;
-            if (receiveRenderMessage(request, Settings.MSG_QUERY) == null) {
+            if (queryInRequest != null) {
                 titleKey = TITLE_KEY_SEARCH;
             }
         }
         response.setTitle(messages.getString(titleKey));
-
-        // ----------------------------------
-        // check for passed RENDER PARAMETERS (for bookmarking) and adapt our messages !
-        // Render Parameters will be passed in every RenderRequest until next action method is called !
-        // ----------------------------------
-        String queryInRequest = request.getParameter(PARAM_QUERY);
-        String dsInRequest = request.getParameter(PARAM_DATASOURCE);
-        if (dsInRequest != null) {
-            publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
-        }
-        String actionInRequest = request.getParameter(PARAM_ACTION);
-        if (actionInRequest != null && actionInRequest.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
-            // search was submitted by start page 
-            publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
-        }
-        if (log.isInfoEnabled()) {
-            log.info("Query passed as REQUEST PARAMETER, " + PARAM_QUERY + "=" + queryInRequest);
-            log.info("Search Area passed as REQUEST PARAMETER, " + PARAM_DATASOURCE + "=" + dsInRequest);
-            log.info("action passed as REQUEST PARAMETER, " + PARAM_ACTION + "=" + actionInRequest);
-            log.info("NEW INITIAL QUERY = " + receiveRenderMessage(request, Settings.MSG_NEW_QUERY));
-        }
 
         // ----------------------------------
         // set data for view template 
@@ -148,9 +143,10 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         context.put("ds", selectedDS);
 
         // set form action for template
-        String searchAction = response.createActionURL().toString();
+        PortletURL searchAction = response.createActionURL();
         if (startPage) {
-            searchAction = SEARCH_RESULT_PAGE;
+            searchAction.setParameter(PARAM_CALL_FROM_TEASER, "1");
+            //            searchAction = SEARCH_RESULT_PAGE;
         }
         context.put("formAction", searchAction);
 
@@ -182,16 +178,22 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        if (action.equalsIgnoreCase(PARAM_ACTION_SEARCH)) {
+        if (action.equalsIgnoreCase("doSearch")) {
             // indicate, that new search was triggered by form submit
             publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
 
-            // pass all search parameters as render parameters, so bookmarking works
-            String param = request.getParameter(PARAM_QUERY);
-            actionResponse.setRenderParameter(PARAM_QUERY, param);
-            // datasource was set in other action, we get this one via messaging, see below
-            param = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
-            actionResponse.setRenderParameter(PARAM_DATASOURCE, param);
+            // check whether we're called from start page (teaser portlet)
+            // then redirect to result page (main-search page)
+            if (request.getParameter(PARAM_CALL_FROM_TEASER) != null) {
+                actionResponse.sendRedirect(SEARCH_RESULT_PAGE + UtilsSearch.getURLParams(request));
+            } else {
+                // pass all search parameters as render parameters, so bookmarking works
+                String param = request.getParameter(PARAM_QUERY);
+                actionResponse.setRenderParameter(PARAM_QUERY, param);
+                // datasource was set in other action, we get this one via messaging, see below
+                param = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+                actionResponse.setRenderParameter(PARAM_DATASOURCE, param);                
+            }
 
         } else if (action.equalsIgnoreCase("doChangeDS")) {
             // NOTICE: all render parameters are reset ! we only publish new data source
