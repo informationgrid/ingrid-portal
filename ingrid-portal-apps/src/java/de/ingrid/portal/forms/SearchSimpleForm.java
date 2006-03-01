@@ -41,7 +41,8 @@ public class SearchSimpleForm extends ActionForm {
 
     /**
      * NOTICE: Return value indicates whether query should be performed or not !!!
-     * If input is empty or equals initial default value, then return value is false ! 
+     * If input is empty the initial default value is set. Returns true if a query
+     * was entered. 
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
     public boolean validate() {

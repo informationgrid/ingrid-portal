@@ -34,6 +34,8 @@ public class UtilsSearch {
 
     public final static String PARAM_ACTION_NEW_SEARCH = "doSearch";
 
+    public final static String PARAM_ACTION_NEW_DATASOURCE = "doChangeDS";
+
     public final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
 
     public final static String PARAM_DATASOURCE = "ds";
@@ -56,12 +58,12 @@ public class UtilsSearch {
         String param = null;
 
         try {
-            // Action, ONLY READ FROM REQUEST, NO PERMANENT STATE ! Also only pass "New Query" action as param
+            // Action, ONLY READ FROM REQUEST, NO PERMANENT STATE !
             String action = request.getParameter(PARAM_ACTION);
             if (action == null) {
                 action = "";
             }
-            if (action.equals(PARAM_ACTION_NEW_SEARCH)) {
+            if (action.length() > 0) {
                 params.append(PARAM_ACTION);
                 params.append(EQUALS);
                 params.append(action);
@@ -95,7 +97,8 @@ public class UtilsSearch {
             }
 
             // DO THE FOLLOWING STUFF ONLY IF NO NEW SEARCH WAS SUBMITTED !
-            if (!action.equals(PARAM_ACTION_NEW_SEARCH)) {
+            if (!action.equals(PARAM_ACTION_NEW_SEARCH) &&
+                !action.equals(PARAM_ACTION_NEW_DATASOURCE)) {
 
                 // start hit ranked search results
                 param = request.getParameter(PARAM_STARTHIT_RANKED);
