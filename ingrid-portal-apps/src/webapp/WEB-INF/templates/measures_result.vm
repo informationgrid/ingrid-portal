@@ -18,9 +18,7 @@
             </p>
             <p class="result_metadata">
               Anbieter: $!rs.partner<br />
-<!--
-			  Rubrik: $!rs.topic
--->
+			  Rubrik: $!rs.topic<br />
               Ranking: $!rs.score<br />
             </p>
 			#if($rs.url)

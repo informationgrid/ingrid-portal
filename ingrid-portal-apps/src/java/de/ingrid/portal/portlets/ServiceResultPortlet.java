@@ -154,9 +154,8 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-            // TODO: Rubrik von Service Hit holen und anzeigen !!!
-            //String[] requestedFields = { Settings.RESULT_KEY_TOPIC?, Settings.RESULT_KEY_PARTNER };
-            String[] requestedFields = { Settings.RESULT_KEY_PARTNER };
+            // TODO: Welcher Key für Rubrik von Service Hit holen und anzeigen !!!
+            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_PARTNER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
 
             IngridHit result = null;
@@ -171,7 +170,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
-//                        result.put(Settings.RESULT_KEY_TOPIC, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
+                        result.put(Settings.RESULT_KEY_TOPIC, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
