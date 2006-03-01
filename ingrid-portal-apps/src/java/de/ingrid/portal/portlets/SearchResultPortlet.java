@@ -257,9 +257,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
                 requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
             }
-            // TODO: use getDetails() instead of getDetail for every hit !
-            // IngridHitDetail[] details = ibus.getDetails(results, query,
-            // requestedMetadata);
+            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
@@ -267,8 +265,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    // detail = details[i];
-                    detail = ibus.getDetail(result, query, requestedMetadata);
+                    detail = details[i];
+
                     if (result == null) {
                         continue;
                     }
@@ -367,17 +365,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-
             String[] requestedMetadata = new String[0];
+            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    // TODO: use getDetails() instead of getDetail for every hit !
-                    // detail = details[i];
-                    detail = ibus.getDetail(result, query, requestedMetadata);
+                    detail = details[i];
+
                     if (result == null) {
                         continue;
                     }

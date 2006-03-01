@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.util.ArrayList;
+
 import net.weta.components.communication_sockets.SocketCommunication;
 import net.weta.components.communication_sockets.util.AddressUtil;
 import net.weta.components.proxies.ProxyService;
@@ -247,19 +249,30 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
             result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
+            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+            result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
+            result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
+            result.put(Settings.RESULT_KEY_PLUG_ID, detail.getPlugId());
+
             if (detail.get(Settings.RESULT_KEY_URL) != null) {
                 result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
                 result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail
                         .get(Settings.RESULT_KEY_URL), 80));
             }
-            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
-            Object partner = detail.get(Settings.RESULT_KEY_PARTNER);
-            if (partner != null) {
-                result.put(Settings.RESULT_KEY_PARTNER, UtilsDB.getPartnerFromKey(partner.toString()));                
+            // Partner
+            Object values = Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_PARTNER); 
+            if (values != null) {
+                result.put(Settings.RESULT_KEY_PARTNER, UtilsDB.getPartnerFromKey(values.toString()));                
             }
-            result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
-            result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
-            result.put(Settings.RESULT_KEY_PLUG_ID, detail.getPlugId());
+/*            
+            // detail values as ArrayLists !
+            // Hit URL
+            Object values = Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_URL); 
+            if (values != null) {
+                result.put(Settings.RESULT_KEY_URL, values);
+                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String)values, 80));
+            }
+*/            
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);

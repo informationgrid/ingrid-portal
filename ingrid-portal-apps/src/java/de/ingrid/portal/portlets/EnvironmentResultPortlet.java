@@ -14,6 +14,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
@@ -143,7 +144,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
         if (log.isDebugEnabled()) {
-            log.debug("Umweltthemen IngridQuery = " + query);
+            log.debug("Umweltthemen IngridQuery = " + Utils.queryToString(query));
         }
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
@@ -153,34 +154,24 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-            //            IngridHitDetail[] details = ibus.getDetails(results, query, new String[0]);
+            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY, Settings.RESULT_KEY_PARTNER };
+            IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    //                detail = details[i];
-                    detail = ibus.getDetail(result, query, new String[0]);
+                    detail = details[i];
+                    //detail = ibus.getDetail(result, query, requestedFields);
 
                     if (result == null) {
                         continue;
                     }
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
-                        // TODO: add " ..." to topic and category AT THE MOMENT !
-                        // TODO map topic and funct_category key to full value
-                        String temp = "";
-                        if (detail.get(Settings.RESULT_KEY_TOPIC) != null) {
-                            temp = detail.get(Settings.RESULT_KEY_TOPIC).toString() + " ...";
-                        }
-                        result.put(Settings.RESULT_KEY_TOPIC, temp);
-
-                        String temp2 = "";
-                        if (detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY) != null) {
-                            temp2 = detail.get(Settings.RESULT_KEY_FUNCT_CATEGORY).toString() + " ...";
-                        }
-                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, temp2);
+                        result.put(Settings.RESULT_KEY_TOPIC, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
+                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_FUNCT_CATEGORY));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

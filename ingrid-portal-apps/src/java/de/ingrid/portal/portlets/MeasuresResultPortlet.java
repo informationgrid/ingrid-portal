@@ -14,6 +14,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
@@ -143,7 +144,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
         if (log.isDebugEnabled()) {
-            log.debug("Messwerte IngridQuery = " + query);
+            log.debug("Messwerte IngridQuery = " + Utils.queryToString(query));
         }
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
@@ -153,22 +154,24 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-            //            IngridHitDetail[] details = ibus.getDetails(results, query, new String[0]);
+            // TODO: Rubrik von Messwerte Hit holen und anzeigen !!!
+            //String[] requestedFields = { Settings.RESULT_KEY_TOPIC?, Settings.RESULT_KEY_PARTNER };
+            String[] requestedFields = { Settings.RESULT_KEY_PARTNER };
+            IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    //                detail = details[i];
-                    detail = ibus.getDetail(result, query, new String[0]);
+                    detail = details[i];
 
                     if (result == null) {
                         continue;
                     }
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, detail.get(Settings.RESULT_KEY_TOPIC));
+//                        result.put(Settings.RESULT_KEY_TOPIC, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

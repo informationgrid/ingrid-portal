@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.mail.internet.AddressException;
@@ -19,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.forms.ActionForm;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -335,5 +335,22 @@ public class Utils {
         }
 
         return qStr.toString();
+    }
+
+    public static String getDetailMultipleValues(IngridHitDetail detail, String key) {
+        // detail values as ArrayLists !
+        ArrayList valueList = detail.getArrayList(key);
+        StringBuffer values = new StringBuffer();
+        if (valueList != null) {
+            for (int i=0; i < valueList.size(); i++) {
+                if (i != 0) {
+                    values.append(", ");
+                }
+                // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
+                values.append(valueList.get(i));
+            }
+        }
+        
+        return values.toString();
     }
 }
