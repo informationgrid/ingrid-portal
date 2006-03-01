@@ -150,8 +150,11 @@ public class Settings {
     /** this message contains the ingrid datasource */
     public static final String MSG_DATASOURCE = "datasource";
 
-    /** this message contains the result page position */
-    public static final String MSG_RESULT_PAGE = "resultpage";
+    /** this message contains the start hit of the ranked search results (which result page) */
+    public static final String MSG_STARTHIT_RANKED = "starthit_ranked";
+
+    /** this message contains the start hit of the unranked search results (which result page) */
+    public static final String MSG_STARTHIT_UNRANKED = "starthit_unranked";
 
     /** this message contains ranked search results */
     public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";

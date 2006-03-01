@@ -24,6 +24,7 @@ import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -97,9 +98,6 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-
-        // indicate, that no query is necessary, we just have to handle similar terms
-        publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
 
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
@@ -191,6 +189,12 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
         }
+
+        // indicate, that no query is necessary, we just have to handle similar terms
+        publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
+
+        // redirect to our page wih parameters for bookmarking
+        actionResponse.sendRedirect(UtilsSearch.PAGE_SEARCH_RESULT + UtilsSearch.getURLParams(request));
     }
 
     private PageState initPageState(PageState ps) {

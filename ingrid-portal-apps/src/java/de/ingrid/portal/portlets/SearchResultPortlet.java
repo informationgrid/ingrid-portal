@@ -47,11 +47,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
 
-    /** Keys of parameters in session/request */
-    private final static String PARAM_START_HIT_RANKED = "rstart";
-
-    private final static String PARAM_START_HIT_UNRANKED = "nrstart";
-
     /*
      * (non-Javadoc)
      * 
@@ -72,17 +67,26 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("MESSAGES", messages);
 
         // ----------------------------------
-        // handle Messages, THIS IS THE LAST PORTLET ON PAGE, SO WE MAY REMOVE MESSAGES !
-        // ----------------------------------        
+        // check for passed RENDER PARAMETERS (for bookmarking) and
+        // ADAPT OUR PERMANENT STATE VIA MESSAGES
+        // ----------------------------------
+        // starthit changed ! set according messages so according request parameters are generated in next URL
+        String rankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
+        if (rankedStarthit != null) {
+            publishRenderMessage(request, Settings.MSG_STARTHIT_RANKED, rankedStarthit);
+        }
+        String unrankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
+        if (unrankedStarthit != null) {
+            publishRenderMessage(request, Settings.MSG_STARTHIT_UNRANKED, unrankedStarthit);
+        }
         // indicates whether we do a query or we read results from cache
         boolean doQuery = true;
         if (consumeRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
             doQuery = false;
         }
-        // indicates whether we do a whole new query and start on first page
-        // DON't CONSUME THIS ONE, otherwise page position is rendered !
+        // indicates whether a new query was submitted from form
         boolean newQuery = true;
-        if (receiveRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
+        if (consumeRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
             newQuery = false;
         }
 
@@ -98,8 +102,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        // selected data source ("Umweltinfo", Adressen" or
-        // "Forschungsprojekte")
+        // selected data source ("Umweltinfo", Adressen" or "Forschungsprojekte")
         String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
@@ -123,11 +126,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             // if no new query was performed, read render parameters (which
             // page) from former action request
             try {
-                String reqParam = request.getParameter(PARAM_START_HIT_RANKED);
+                String reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
                 if (reqParam != null) {
                     rankedStartHit = (new Integer(reqParam)).intValue();
                 }
-                reqParam = request.getParameter(PARAM_START_HIT_UNRANKED);
+                reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
                 if (reqParam != null) {
                     unrankedStartHit = (new Integer(reqParam)).intValue();
                 }
@@ -229,19 +232,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        // set render parameters
-        String rankedStarthit = request.getParameter(PARAM_START_HIT_RANKED);
-        String unrankedStarthit = request.getParameter(PARAM_START_HIT_UNRANKED);
-        if (rankedStarthit != null) {
-            actionResponse.setRenderParameter(PARAM_START_HIT_RANKED, rankedStarthit);
-        }
-        if (unrankedStarthit != null) {
-            actionResponse.setRenderParameter(PARAM_START_HIT_UNRANKED, unrankedStarthit);
-        }
-        
-        // remove message which indicates, that a query was newly submitted from form,
-        // so result page position is taken into account
-        cancelRenderMessage(request, Settings.MSG_NEW_QUERY);
+        // redirect to our page wih parameters for bookmarking
+        actionResponse.sendRedirect(UtilsSearch.PAGE_SEARCH_RESULT + UtilsSearch.getURLParams(request));
     }
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {

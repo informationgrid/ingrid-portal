@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.search;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 import javax.portlet.PortletRequest;
@@ -23,17 +24,28 @@ public class UtilsSearch {
 
     private final static Log log = LogFactory.getLog(UtilsSearch.class);
 
+    /** page for displaying results */
+    public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
+
     /**
-     * name of request parameters for search !
+     * names and values of URL request parameters for search !
      */
-    private final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
+    public final static String PARAM_ACTION = "action";
 
-    private final static String PARAM_DATASOURCE = "ds";
+    public final static String PARAM_ACTION_NEW_SEARCH = "doSearch";
 
-    private final static String PARAM_RESULT_PAGE = "rp";
+    public final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
+
+    public final static String PARAM_DATASOURCE = "ds";
+
+    public final static String PARAM_STARTHIT_RANKED = "rstart";
+
+    public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
     /**
      * Returns the search Parameter String for the URL which will be concatenated to the URL path.
+     * NOTICE: The passed request may be from different portlets containing different data. We first
+     * try to fetch every parameter directly from request, if null we fetch them from messages (application scope)
      * @param request
      * @return
      */
@@ -43,39 +55,101 @@ public class UtilsSearch {
         StringBuffer params = new StringBuffer("?");
         String param = null;
 
-        // Query !
-        param = request.getParameter(PARAM_QUERY);
-        if (param == null) {
-            param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
-        }
-        if (param != null) {
-            params.append(PARAM_QUERY);
-            params.append(EQUALS);
-            params.append(param);
-        }
+        try {
+            // Action, ONLY READ FROM REQUEST, NO PERMANENT STATE ! Also only pass "New Query" action as param
+            String action = request.getParameter(PARAM_ACTION);
+            if (action == null) {
+                action = "";
+            }
+            if (action.equals(PARAM_ACTION_NEW_SEARCH)) {
+                params.append(PARAM_ACTION);
+                params.append(EQUALS);
+                params.append(action);
+            }
 
-        // datasource
-        param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
-        if (param != null) {
-            params.append(SEPARATOR);
-            params.append(PARAM_DATASOURCE);
-            params.append(EQUALS);
-            params.append(param);
-        }
+            // query string!
+            // DON'T READ from permanent state (message) if new query is performed
+            // and only add as param if not empty
+            param = request.getParameter(PARAM_QUERY);
+            if (param == null && !action.equals(PARAM_ACTION_NEW_SEARCH)) {
+                param = (String) PortletMessaging
+                        .receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
+            }
+            if (param != null && param.trim().length() != 0) {
+                params.append(SEPARATOR);
+                params.append(PARAM_QUERY);
+                params.append(EQUALS);
+                params.append(URLEncoder.encode(param, "UTF-8"));
+            }
 
-        // result page position
-        param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_RESULT_PAGE);
-        if (param != null) {
-            params.append(SEPARATOR);
-            params.append(PARAM_RESULT_PAGE);
-            params.append(EQUALS);
-            params.append(param);
+            // datasource
+            param = request.getParameter(PARAM_DATASOURCE);
+            if (param == null) {
+                param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
+            }
+            if (param != null) {
+                params.append(SEPARATOR);
+                params.append(PARAM_DATASOURCE);
+                params.append(EQUALS);
+                params.append(param);
+            }
+
+            // DO THE FOLLOWING STUFF ONLY IF NO NEW SEARCH WAS SUBMITTED !
+            if (!action.equals(PARAM_ACTION_NEW_SEARCH)) {
+
+                // start hit ranked search results
+                param = request.getParameter(PARAM_STARTHIT_RANKED);
+                if (param == null) {
+                    param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                            Settings.MSG_STARTHIT_RANKED);
+                }
+                if (param != null) {
+                    params.append(SEPARATOR);
+                    params.append(PARAM_STARTHIT_RANKED);
+                    params.append(EQUALS);
+                    params.append(param);
+                }
+
+                // start hit unranked search results
+                param = request.getParameter(PARAM_STARTHIT_UNRANKED);
+                if (param == null) {
+                    param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                            Settings.MSG_STARTHIT_UNRANKED);
+                }
+                if (param != null) {
+                    params.append(SEPARATOR);
+                    params.append(PARAM_STARTHIT_UNRANKED);
+                    params.append(EQUALS);
+                    params.append(param);
+                }                
+            }
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems generating URL search parameters, WE DON'T PASS SEARCH PARAMETERS IN URL !", ex);
+            }
+            params = new StringBuffer("");
         }
 
         if (log.isInfoEnabled()) {
-            log.info("search URL parameters: " + params);
+            log.info("URL search parameters: " + params);
         }
+
         return params.toString();
+    }
+
+    public static void resetSearchState(PortletRequest request) {
+        // state for parameters in URL !
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_RANKED);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_UNRANKED);
+
+        // further state for logic, caching etc.
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_NO_QUERY);
+        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_NEW_QUERY);
     }
 
     /**
