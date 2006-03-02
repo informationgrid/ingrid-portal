@@ -61,7 +61,7 @@ public class AnniversaryFetcherJob implements Job {
                                 Date fromDate = DateUtil.parseDateString(detail.getFrom());
                                 cal.setTime(fromDate);
                                 anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
-                                anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH)));
+                                anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH) + 1));
                                 anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
                             }
                             anni.setDateTo(detail.getTo());
@@ -69,7 +69,7 @@ public class AnniversaryFetcherJob implements Job {
                                 Date toDate = DateUtil.parseDateString(detail.getTo());
                                 cal.setTime(toDate);
                                 anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
-                                anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH)));
+                                anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH) + 1));
                                 anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
                             }
                             anni.setAdministrativeId(detail.getAdministrativeID());

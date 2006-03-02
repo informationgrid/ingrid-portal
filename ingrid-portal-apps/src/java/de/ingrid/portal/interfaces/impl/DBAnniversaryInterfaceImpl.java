@@ -63,20 +63,18 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
 
             List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
                     Restrictions.eq("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH)))).add(
-                    Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH)))).list();
+                    Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1))).list();
             if (anniversaryList.isEmpty()) {
+                // fall back: get any event of this month
                 fromCal.setTime(d);
-                fromCal.add(Calendar.MONTH, -1);
                 toCal.setTime(d);
-                toCal.add(Calendar.MONTH, 1);
 
                 anniversaryList = session.createCriteria(IngridAnniversary.class).add(
-                        Restrictions.between("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH)),
-                                new Integer(toCal.get(Calendar.DAY_OF_MONTH)))).add(
-                        Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH)), new Integer(
-                                toCal.get(Calendar.MONTH)))).list();
+                        Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
+                        .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4")).list();
 
                 if (anniversaryList.isEmpty()) {
+                    // fall back: get all events that only define a year
                     fromCal.setTime(d);
 
                     anniversaryList = session.createCriteria(IngridAnniversary.class).list();
