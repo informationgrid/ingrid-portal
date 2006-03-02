@@ -123,13 +123,15 @@ public class Settings {
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
 
     // ===========================================
-    // Portlet Messaging
+    // PORTLET MESSAGING
+    // topics (Message areas) = MSG_TOPIC_...
+    // keys = MSG_...
+    // values = MSGV_...
     // ===========================================
 
     // ------------- MESSAGE TOPICS (MSG_TOPIC_...) -----------------------------
-    /** Message Topics: define the message "scope", will be "prefix" in message key -> "topic:message" */
-
-    /** set message "scope" service page */
+    /** Message Topics: define the message "scope", will be "prefix" in message key -> "topic:message" 
+     * set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
 
     /** set message "scope" measures page */
@@ -142,9 +144,8 @@ public class Settings {
     public final static String MSG_TOPIC_SEARCH = "search";
 
     // ------------- DATA MESSAGES: KEYS (MSG_...) -----------------------------
-    /** Messages: define the message itself, will be "suffix" in message key -> "topic:message" */
-
-    /** this message contains the ingrid query (an IngridQuery object) */
+    /** Messages: define the message itself, will be "suffix" in message key -> "topic:message"
+     * this message contains the ingrid query (an IngridQuery object) */
     public static final String MSG_QUERY = "query";
 
     /** this message contains the ingrid query STRING */
@@ -188,7 +189,7 @@ public class Settings {
     public static final String MSGV_TRUE = "1";
 
     // ===========================================
-    // Request Parameters
+    // REQUEST PARAMETERS
     // names = PARAM_
     // values = PARAMV_
     // ===========================================
