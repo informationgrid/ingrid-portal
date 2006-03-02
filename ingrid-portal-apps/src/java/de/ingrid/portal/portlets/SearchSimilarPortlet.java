@@ -24,7 +24,7 @@ import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
-import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -193,7 +193,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NO_QUERY);
 
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(UtilsSearch.PAGE_SEARCH_RESULT + UtilsSearch.getURLParams(request));
+        actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
     }
 
     private PageState initPageState(PageState ps) {

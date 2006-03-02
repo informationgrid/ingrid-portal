@@ -16,13 +16,13 @@ import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.Settings;
 
 /**
- * Global STATIC data and utility methods for SEARCH !
+ * Global STATIC data and utility methods for SEARCH STATE !
  * 
  * @author Martin Maidhof
  */
-public class UtilsSearch {
+public class SearchState {
 
-    private final static Log log = LogFactory.getLog(UtilsSearch.class);
+    private final static Log log = LogFactory.getLog(SearchState.class);
 
     /** page for displaying results */
     public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";

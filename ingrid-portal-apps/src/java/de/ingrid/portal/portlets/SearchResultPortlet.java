@@ -22,7 +22,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -74,8 +74,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String reqParam = null;
         int rankedStartHit = 0;
         try {
-            reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
-            if (UtilsSearch.adaptSearchState(request, Settings.MSG_STARTHIT_RANKED, reqParam)) {
+            reqParam = request.getParameter(SearchState.PARAM_STARTHIT_RANKED);
+            if (SearchState.adaptSearchState(request, Settings.MSG_STARTHIT_RANKED, reqParam)) {
                 rankedStartHit = (new Integer(reqParam)).intValue();
             }
         } catch (Exception ex) {
@@ -87,8 +87,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // starthit UNRANKED
         int unrankedStartHit = 0;
         try {
-            reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
-            if (UtilsSearch.adaptSearchState(request, Settings.MSG_STARTHIT_UNRANKED, reqParam)) {
+            reqParam = request.getParameter(SearchState.PARAM_STARTHIT_UNRANKED);
+            if (SearchState.adaptSearchState(request, Settings.MSG_STARTHIT_UNRANKED, reqParam)) {
                 unrankedStartHit = (new Integer(reqParam)).intValue();
             }
         } catch (Exception ex) {
@@ -160,7 +160,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of ranked page navigation
-        HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
+        HashMap rankedPageNavigation = SearchState.getPageNavigation(rankedStartHit,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // unranked results
@@ -195,7 +195,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             // adapt settings of unranked page navigation
-            unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
+            unrankedPageNavigation = SearchState.getPageNavigation(unrankedStartHit,
                     Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
                     Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
         }
@@ -225,18 +225,18 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         // check whether page navigation was clicked and adapt query state
-        String rankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
+        String rankedStarthit = request.getParameter(SearchState.PARAM_STARTHIT_RANKED);
         if (rankedStarthit != null) {
             publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_RANKED_QUERY);
         } else {
-            String unrankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
+            String unrankedStarthit = request.getParameter(SearchState.PARAM_STARTHIT_UNRANKED);
             if (unrankedStarthit != null) {
                 publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_UNRANKED_QUERY);
             }
         }
 
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(UtilsSearch.PAGE_SEARCH_RESULT + UtilsSearch.getURLParams(request));
+        actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
     }
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
