@@ -168,7 +168,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (detail != null) {
-                        ibus.transferHitDetails(result, detail);
+                        UtilsSearch.transferHitDetails(result, detail);
                         result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
                     }
                 } catch (Throwable t) {

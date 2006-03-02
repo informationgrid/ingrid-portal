@@ -87,13 +87,6 @@ public interface IBUSInterface {
 //    PlugDescription getIPlug(IngridHit hit);
 
     /**
-     * Transfer commonly used detail parameters from detail object to hitobject.
-     * @param hit
-     * @param detail
-     */
-    void transferHitDetails(IngridHit hit, IngridHitDetail detail);
-
-    /**
      * Fetch column from Record.
      * @param record
      * @param columnName

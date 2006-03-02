@@ -168,7 +168,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (detail != null) {
-                        ibus.transferHitDetails(result, detail);
+                        UtilsSearch.transferHitDetails(result, detail);
                         result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
                         result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_FUNCT_CATEGORY));
                     }

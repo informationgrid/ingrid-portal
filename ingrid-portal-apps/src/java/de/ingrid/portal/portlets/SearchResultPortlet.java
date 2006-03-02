@@ -280,7 +280,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (detail != null) {
-                        ibus.transferHitDetails(result, detail);
+                        UtilsSearch.transferHitDetails(result, detail);
                         tmpString = detail.getIplugClassName();
                         if (tmpString == null) {
                             tmpString = "";
@@ -397,7 +397,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (detail != null) {
-                        ibus.transferHitDetails(result, detail);
+                        UtilsSearch.transferHitDetails(result, detail);
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
