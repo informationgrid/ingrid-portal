@@ -5,8 +5,8 @@
       $!rssEntry.description
     </p>
     <p class="result_metadata">
-      Rubrik: xx<br />
-#if($rssEntry.author)
+      <br />
+#if($rssEntry.author && $rssEntry.author != "")
 	  Anbieter: $rssEntry.author
 #end	  
     </p>
