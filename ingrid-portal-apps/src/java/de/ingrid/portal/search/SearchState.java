@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.messaging.PortletMessaging;
 
-import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.Settings;
 
 /**
@@ -22,26 +21,6 @@ import de.ingrid.portal.global.Settings;
 public class SearchState {
 
     private final static Log log = LogFactory.getLog(SearchState.class);
-
-    /** page for displaying results */
-    public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
-
-    /**
-     * names (PARAM_...) and values (PARAMV_...) of URL request parameters for search !
-     */
-    public final static String PARAM_ACTION = "action";
-
-    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-
-    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
-
-    public final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
-
-    public final static String PARAM_DATASOURCE = "ds";
-
-    public final static String PARAM_STARTHIT_RANKED = "rstart";
-
-    public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
     /**
      * Returns the search Parameter String for the URL which will be concatenated to the URL path.
@@ -58,12 +37,12 @@ public class SearchState {
 
         try {
             // Action, ONLY READ FROM REQUEST, NO PERMANENT STATE !
-            String action = request.getParameter(PARAM_ACTION);
+            String action = request.getParameter(Settings.PARAM_ACTION);
             if (action == null) {
                 action = "";
             }
             if (action.length() > 0) {
-                params.append(PARAM_ACTION);
+                params.append(Settings.PARAM_ACTION);
                 params.append(EQUALS);
                 params.append(action);
             }
@@ -71,56 +50,56 @@ public class SearchState {
             // query string!
             // DON'T READ from permanent state (message) if new query is performed
             // and only add as param if not empty
-            param = request.getParameter(PARAM_QUERY);
-            if (param == null && !action.equals(PARAMV_ACTION_NEW_SEARCH)) {
+            param = request.getParameter(Settings.PARAM_QUERY);
+            if (param == null && !action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
                 param = (String) PortletMessaging
                         .receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
             }
             if (param != null && param.trim().length() != 0) {
                 params.append(SEPARATOR);
-                params.append(PARAM_QUERY);
+                params.append(Settings.PARAM_QUERY);
                 params.append(EQUALS);
                 params.append(URLEncoder.encode(param, "UTF-8"));
             }
 
             // datasource
-            param = request.getParameter(PARAM_DATASOURCE);
+            param = request.getParameter(Settings.PARAM_DATASOURCE);
             if (param == null) {
                 param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
             }
             if (param != null) {
                 params.append(SEPARATOR);
-                params.append(PARAM_DATASOURCE);
+                params.append(Settings.PARAM_DATASOURCE);
                 params.append(EQUALS);
                 params.append(param);
             }
 
             // DO THE FOLLOWING STUFF ONLY IF NO NEW SEARCH WAS SUBMITTED !
-            if (!action.equals(PARAMV_ACTION_NEW_SEARCH) &&
-                !action.equals(PARAMV_ACTION_NEW_DATASOURCE)) {
+            if (!action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) &&
+                !action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
 
                 // start hit ranked search results
-                param = request.getParameter(PARAM_STARTHIT_RANKED);
+                param = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
                 if (param == null) {
                     param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
                             Settings.MSG_STARTHIT_RANKED);
                 }
                 if (param != null) {
                     params.append(SEPARATOR);
-                    params.append(PARAM_STARTHIT_RANKED);
+                    params.append(Settings.PARAM_STARTHIT_RANKED);
                     params.append(EQUALS);
                     params.append(param);
                 }
 
                 // start hit unranked search results
-                param = request.getParameter(PARAM_STARTHIT_UNRANKED);
+                param = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
                 if (param == null) {
                     param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
                             Settings.MSG_STARTHIT_UNRANKED);
                 }
                 if (param != null) {
                     params.append(SEPARATOR);
-                    params.append(PARAM_STARTHIT_UNRANKED);
+                    params.append(Settings.PARAM_STARTHIT_UNRANKED);
                     params.append(EQUALS);
                     params.append(param);
                 }                

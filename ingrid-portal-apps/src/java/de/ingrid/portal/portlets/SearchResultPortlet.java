@@ -74,7 +74,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String reqParam = null;
         int rankedStartHit = 0;
         try {
-            reqParam = request.getParameter(SearchState.PARAM_STARTHIT_RANKED);
+            reqParam = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
             if (SearchState.adaptSearchState(request, Settings.MSG_STARTHIT_RANKED, reqParam)) {
                 rankedStartHit = (new Integer(reqParam)).intValue();
             }
@@ -87,7 +87,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // starthit UNRANKED
         int unrankedStartHit = 0;
         try {
-            reqParam = request.getParameter(SearchState.PARAM_STARTHIT_UNRANKED);
+            reqParam = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
             if (SearchState.adaptSearchState(request, Settings.MSG_STARTHIT_UNRANKED, reqParam)) {
                 unrankedStartHit = (new Integer(reqParam)).intValue();
             }
@@ -120,9 +120,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
-        if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+        if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             setDefaultViewPage(TEMPLATE_RESULT);
-        } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+        } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
         }
 
@@ -225,18 +225,18 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         // check whether page navigation was clicked and adapt query state
-        String rankedStarthit = request.getParameter(SearchState.PARAM_STARTHIT_RANKED);
+        String rankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
         if (rankedStarthit != null) {
             publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_RANKED_QUERY);
         } else {
-            String unrankedStarthit = request.getParameter(SearchState.PARAM_STARTHIT_UNRANKED);
+            String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
             if (unrankedStarthit != null) {
                 publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_UNRANKED_QUERY);
             }
         }
 
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
+        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
     }
 
     private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
@@ -255,11 +255,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = new String[0];
-            if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+            if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
                 requestedMetadata = new String[2];
                 requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
                 requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-            } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+            } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
                 requestedMetadata = new String[2];
                 requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
                 requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -300,12 +300,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
                             // check our selected "data source" and read
                             // according data
-                            if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+                            if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
                                 if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
                                     tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
                                     result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                                 }
-                            } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+                            } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
                                 if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
                                     tmpString = detail.get(Settings.HIT_KEY_ADDRESS_CLASS).toString();
                                     result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
@@ -337,7 +337,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         UtilsSearch.processBasicDataTypes(query, ds);
 
         // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
-        if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             // check for entered datatypes which lead to no results
             if (UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_G2K)
                     || UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_ADDRESS)) {
@@ -350,7 +350,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 // explicitly prohibit g2k
                 query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));
             }
-        } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+        } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             // check whether something different than address type was entered !
             String[] posDataTypes = query.getPositiveDataTypes();
             for (int i = 0; i < posDataTypes.length; i++) {
@@ -361,7 +361,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                             Settings.QVALUE_DATATYPE_NORESULTS));
                 }
             }
-        } else if (ds.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
+        } else if (ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
         }
     }
 
@@ -419,7 +419,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         UtilsSearch.processBasicDataTypes(query, ds);
 
         // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
-        if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             // unranked search result hack for checking datatypes, use "ranked" field in future 
             // check for positive data types and if set, check whether g2k should be displayed, if not
             // set no datatypes (no search)
@@ -443,11 +443,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                                 Settings.QVALUE_DATATYPE_NORESULTS));
             }
-        } else if (ds.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+        } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             // no address data type in right column
             query.remove(Settings.QFIELD_DATATYPE);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));
-        } else if (ds.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
+        } else if (ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
         }
     }
 }

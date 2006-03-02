@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.global;
 
+import de.ingrid.portal.forms.SearchSimpleForm;
+
 /**
  * Common resources used by our Portlet Application
  *
@@ -10,14 +12,11 @@ package de.ingrid.portal.global;
  */
 public class Settings {
 
-    // ************************************
-    // Search
-    // ************************************
+    // ===========================================
+    // Search general settings
+    // ===========================================
 
-    // ============= general settings ! ==============================
-
-    /** Search parameters 
-     * number of ranked hits per page */
+    /** number of ranked hits per page */
     public final static int SEARCH_RANKED_HITS_PER_PAGE = 10;
 
     /** number of unranked hits per page */
@@ -29,18 +28,20 @@ public class Settings {
     /** number of unranked pages displayed for selection ("selector pages") */
     public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 3;
 
-    /** datasource values submitted from template (view) */
-    public final static String SEARCH_DATASOURCE_ENVINFO = "1";
-
-    public final static String SEARCH_DATASOURCE_ADDRESS = "2";
-
-    public final static String SEARCH_DATASOURCE_RESEARCH = "3";
-
-    public final static String SEARCH_INITIAL_DATASOURCE = SEARCH_DATASOURCE_ENVINFO;
+    public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 
     public final static int SEARCH_DEFAULT_TIMEOUT = 5000;
 
-    // ============= definitions for IngridQuery ==============================
+    // ===========================================
+    // PSML pages
+    // ===========================================
+
+    /** page for displaying results */
+    public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
+
+    // ===========================================
+    // IngridQuery
+    // ===========================================
 
     // ------------- query field names -----------------------------
 
@@ -77,8 +78,10 @@ public class Settings {
     // TODO: helper datatype to display nothing, use search areas in future
     public final static String QVALUE_DATATYPE_NORESULTS = "nix";
 
-    // ============= definitions to access Result data (render data) ==============================
-    // IF POSSIBLE, USE THE KEYS TO ACCESS HIT DATA ALSO AS KEYS FOR RESULT DATA !!! 
+    // ===========================================
+    // Result data (used in templates for rendering results!)
+    // IF POSSIBLE, USE THESE KEYS ALSO TO ACCESS HIT DETAIL DATA !!! 
+    // ===========================================
 
     public final static String RESULT_KEY_TITLE = "title";
 
@@ -108,8 +111,10 @@ public class Settings {
 
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
 
-    // ============= definitions to access Hit data (get data from hits) ==============================
+    // ===========================================
+    // Hit Detail data (get data from hit details)
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
+    // ===========================================
 
     public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
 
@@ -117,9 +122,9 @@ public class Settings {
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
 
-    // ************************************
+    // ===========================================
     // Portlet Messaging
-    // ************************************
+    // ===========================================
 
     // ------------- MESSAGE TOPICS (MSG_TOPIC_...) -----------------------------
     /** Message Topics: define the message "scope", will be "prefix" in message key -> "topic:message" */
@@ -168,13 +173,46 @@ public class Settings {
      * unranked query (right page navigation clicked)  
      */
     public static final String MSG_QUERY_STATE = "query_state";
+
     public static final String MSGV_NO_QUERY = "no";
+
     public static final String MSGV_NEW_QUERY = "new";
+
     public static final String MSGV_RANKED_QUERY = "ranked";
+
     public static final String MSGV_UNRANKED_QUERY = "unranked";
-    
+
     // ------------- GENERIC MESSAGE VALUES ("MSGV_...") -----------------------------
 
     /** dummy value for a message just to set a value for a message */
     public static final String MSGV_TRUE = "1";
+
+    // ===========================================
+    // Request Parameters
+    // names = PARAM_
+    // values = PARAMV_
+    // ===========================================
+
+    public final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
+
+    public final static String PARAM_STARTHIT_RANKED = "rstart";
+
+    public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
+
+    /** Action parameter name and values */
+    public final static String PARAM_ACTION = "action";
+
+    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
+
+    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
+
+    /** Datasource parameter name and values */
+    public final static String PARAM_DATASOURCE = "ds";
+
+    public final static String PARAMV_DATASOURCE_ENVINFO = "1";
+
+    public final static String PARAMV_DATASOURCE_ADDRESS = "2";
+
+    public final static String PARAMV_DATASOURCE_RESEARCH = "3";
+
 }

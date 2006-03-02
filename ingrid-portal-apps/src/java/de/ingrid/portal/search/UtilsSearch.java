@@ -144,16 +144,16 @@ public class UtilsSearch {
 
         // remove not valid data sources from query
         //        removeBasicDataTypes(query);
-        if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
+        if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             // TODO: do not set datatype:default, not processed in backend yet !
             // instead don't allow addresses
             //            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
             // REMOVE ADRESS IPLUG
             query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
-        } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_ADDRESS)) {
+        } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
-        } else if (selectedDS.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.SEARCH_DATASOURCE_RESEARCH));
+        } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.PARAMV_DATASOURCE_RESEARCH));
         }
     }
 

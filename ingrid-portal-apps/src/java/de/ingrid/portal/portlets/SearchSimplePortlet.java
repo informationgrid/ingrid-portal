@@ -73,10 +73,10 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)
         // ----------------------------------
-        String action = request.getParameter(SearchState.PARAM_ACTION);
+        String action = request.getParameter(Settings.PARAM_ACTION);
         if (action != null) {
-            if (action.equals(SearchState.PARAMV_ACTION_NEW_SEARCH)
-                    || action.equals(SearchState.PARAMV_ACTION_NEW_DATASOURCE)) {
+            if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)
+                    || action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
                 // reset relevant search stuff, we perform a new one !
                 SearchState.resetSearchState(request);
                 publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NEW_QUERY);
@@ -84,7 +84,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         } else {
             action = "";
         }
-        String queryInRequest = request.getParameter(SearchState.PARAM_QUERY);
+        String queryInRequest = request.getParameter(Settings.PARAM_QUERY);
         if (queryInRequest != null) {
             publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryInRequest);
         } else {
@@ -93,7 +93,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // although not bookmarkable)
             cancelRenderMessage(request, Settings.MSG_QUERY);
         }
-        String dsInRequest = request.getParameter(SearchState.PARAM_DATASOURCE);
+        String dsInRequest = request.getParameter(Settings.PARAM_DATASOURCE);
         // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE (message), so it is
         // displayed (for convenience, although not bookmarkable)
         if (dsInRequest != null) {
@@ -143,7 +143,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // - only datasource was changed
         // - we have no query parameter in our URL (e.g. we entered from other page)
         // - the enterd query is empty or initial value
-        if (action.equals(SearchState.PARAMV_ACTION_NEW_DATASOURCE) || queryInRequest == null || !validInput) {
+        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE) || queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
@@ -177,18 +177,18 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
      */
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        String action = request.getParameter(SearchState.PARAM_ACTION);
+        String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
             return;
         }
 
-        if (action.equalsIgnoreCase(SearchState.PARAMV_ACTION_NEW_SEARCH)) {
+        if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
             // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
+            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
 
-        } else if (action.equalsIgnoreCase(SearchState.PARAMV_ACTION_NEW_DATASOURCE)) {
+        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
             // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
+            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
 
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
