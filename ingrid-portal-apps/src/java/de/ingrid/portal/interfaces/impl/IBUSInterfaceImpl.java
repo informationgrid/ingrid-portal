@@ -21,6 +21,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -260,7 +261,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         .get(Settings.RESULT_KEY_URL), 80));
             }
             // Partner
-            Object values = Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_PARTNER); 
+            Object values = UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_PARTNER); 
             if (values != null) {
                 result.put(Settings.RESULT_KEY_PARTNER, UtilsDB.getPartnerFromKey(values.toString()));                
             }

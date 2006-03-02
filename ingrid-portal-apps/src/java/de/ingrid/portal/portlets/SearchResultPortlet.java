@@ -19,7 +19,6 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
@@ -247,7 +246,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             adaptRankedQuery(query, ds);
 
             if (log.isDebugEnabled()) {
-                log.debug("doRankedSearch: IngridQuery = " + Utils.queryToString(query));
+                log.debug("doRankedSearch: IngridQuery = " + UtilsSearch.queryToString(query));
             }
 
             int currentPage = (int) (startHit / hitsPerPage) + 1;
@@ -335,13 +334,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private void adaptRankedQuery(IngridQuery query, String ds) {
         // first adapt selected search area in UI (ds) ! 
-        Utils.processBasicDataTypes(query, ds);
+        UtilsSearch.processBasicDataTypes(query, ds);
 
         // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
         if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {
             // check for entered datatypes which lead to no results
-            if (Utils.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_G2K)
-                    || Utils.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_ADDRESS)) {
+            if (UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_G2K)
+                    || UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_ADDRESS)) {
                 // no results
                 query.remove(Settings.QFIELD_DATATYPE);
                 query
@@ -373,7 +372,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             adaptUnrankedQuery(query, ds);
 
             if (log.isDebugEnabled()) {
-                log.debug("doUnrankedSearch: IngridQuery = " + Utils.queryToString(query));
+                log.debug("doUnrankedSearch: IngridQuery = " + UtilsSearch.queryToString(query));
             }
 
             int currentPage = (int) (startHit / hitsPerPage) + 1;
@@ -417,7 +416,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private void adaptUnrankedQuery(IngridQuery query, String ds) {
         // first adapt selected search area in UI (ds) ! 
-        Utils.processBasicDataTypes(query, ds);
+        UtilsSearch.processBasicDataTypes(query, ds);
 
         // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
         if (ds.equals(Settings.SEARCH_DATASOURCE_ENVINFO)) {

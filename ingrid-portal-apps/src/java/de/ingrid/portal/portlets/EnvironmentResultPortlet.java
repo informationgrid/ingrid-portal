@@ -14,7 +14,6 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
@@ -144,7 +143,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
         if (log.isDebugEnabled()) {
-            log.debug("Umweltthemen IngridQuery = " + Utils.queryToString(query));
+            log.debug("Umweltthemen IngridQuery = " + UtilsSearch.queryToString(query));
         }
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
@@ -170,8 +169,8 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
-                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_FUNCT_CATEGORY));
+                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
+                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_FUNCT_CATEGORY));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
