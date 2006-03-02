@@ -27,13 +27,13 @@ public class SearchState {
     public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
 
     /**
-     * names and values of URL request parameters for search !
+     * names (PARAM_...) and values (PARAMV_...) of URL request parameters for search !
      */
     public final static String PARAM_ACTION = "action";
 
-    public final static String PARAM_ACTION_NEW_SEARCH = "doSearch";
+    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
 
-    public final static String PARAM_ACTION_NEW_DATASOURCE = "doChangeDS";
+    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
 
     public final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
 
@@ -72,7 +72,7 @@ public class SearchState {
             // DON'T READ from permanent state (message) if new query is performed
             // and only add as param if not empty
             param = request.getParameter(PARAM_QUERY);
-            if (param == null && !action.equals(PARAM_ACTION_NEW_SEARCH)) {
+            if (param == null && !action.equals(PARAMV_ACTION_NEW_SEARCH)) {
                 param = (String) PortletMessaging
                         .receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
             }
@@ -96,8 +96,8 @@ public class SearchState {
             }
 
             // DO THE FOLLOWING STUFF ONLY IF NO NEW SEARCH WAS SUBMITTED !
-            if (!action.equals(PARAM_ACTION_NEW_SEARCH) &&
-                !action.equals(PARAM_ACTION_NEW_DATASOURCE)) {
+            if (!action.equals(PARAMV_ACTION_NEW_SEARCH) &&
+                !action.equals(PARAMV_ACTION_NEW_DATASOURCE)) {
 
                 // start hit ranked search results
                 param = request.getParameter(PARAM_STARTHIT_RANKED);

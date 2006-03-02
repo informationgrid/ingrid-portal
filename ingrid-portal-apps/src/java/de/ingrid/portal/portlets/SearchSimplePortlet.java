@@ -75,8 +75,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         String action = request.getParameter(SearchState.PARAM_ACTION);
         if (action != null) {
-            if (action.equals(SearchState.PARAM_ACTION_NEW_SEARCH)
-                    || action.equals(SearchState.PARAM_ACTION_NEW_DATASOURCE)) {
+            if (action.equals(SearchState.PARAMV_ACTION_NEW_SEARCH)
+                    || action.equals(SearchState.PARAMV_ACTION_NEW_DATASOURCE)) {
                 // reset relevant search stuff, we perform a new one !
                 SearchState.resetSearchState(request);
                 publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NEW_QUERY);
@@ -143,7 +143,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // - only datasource was changed
         // - we have no query parameter in our URL (e.g. we entered from other page)
         // - the enterd query is empty or initial value
-        if (action.equals(SearchState.PARAM_ACTION_NEW_DATASOURCE) || queryInRequest == null || !validInput) {
+        if (action.equals(SearchState.PARAMV_ACTION_NEW_DATASOURCE) || queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
@@ -182,11 +182,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
-        if (action.equalsIgnoreCase(SearchState.PARAM_ACTION_NEW_SEARCH)) {
+        if (action.equalsIgnoreCase(SearchState.PARAMV_ACTION_NEW_SEARCH)) {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
 
-        } else if (action.equalsIgnoreCase(SearchState.PARAM_ACTION_NEW_DATASOURCE)) {
+        } else if (action.equalsIgnoreCase(SearchState.PARAMV_ACTION_NEW_DATASOURCE)) {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(SearchState.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
 
