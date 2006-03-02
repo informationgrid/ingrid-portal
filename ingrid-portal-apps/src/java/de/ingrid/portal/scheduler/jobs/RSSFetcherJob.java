@@ -68,6 +68,10 @@ public class RSSFetcherJob implements Job {
                 if (feed.getLanguage() == null) {
                     feed.setLanguage(rssSource.getLanguage());
                 }
+                if (feed.getAuthor() == null || feed.getAuthor().length() == 0) {
+                    feed.setAuthor(rssSource.getProvider());
+                }
+                
                 feeds.add(feed);
             }
 
@@ -102,7 +106,11 @@ public class RSSFetcherJob implements Job {
                                     .list();
                             if (rssEntries.isEmpty()) {
                                 if (entry.getAuthor() == null || entry.getAuthor().length() == 0) {
-                                    entry.setAuthor(feed.getTitle());
+                                    if (feed.getTitle() != null && feed.getTitle().length() > 0) {
+                                        entry.setAuthor(feed.getTitle());
+                                    } else {
+                                        entry.setAuthor(feed.getAuthor());
+                                    }
                                 }
 
                                 entry.setTitle(StringUtils.htmlescape(entry.getTitle()));
