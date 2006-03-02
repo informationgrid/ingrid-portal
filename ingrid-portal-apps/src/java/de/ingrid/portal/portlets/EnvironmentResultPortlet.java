@@ -17,7 +17,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.SearchState;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -107,7 +107,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of page nagihation
-        HashMap pageNavigation = SearchState.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
+        HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------
