@@ -84,7 +84,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether a new query was performed !
-        String queryState = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STATE);
+        String queryState = (String) receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryState != null && queryState.equals(Settings.MSGV_NEW_QUERY)) {
             ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
@@ -153,7 +153,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             }
         } else if (action.equalsIgnoreCase("doAddSimilar")) {
 
-            String queryStr = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
+            String queryStr = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
 
             String newQueryStr = queryStr.toLowerCase();
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
@@ -184,13 +184,13 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 }
                 // republish the query
                 if (!queryStr.toLowerCase().equals(newQueryStr)) {
-                    publishRenderMessage(request, Settings.MSG_QUERY_STRING, newQueryStr);
+                    publishRenderMessage(request, Settings.PARAM_QUERY_STRING, newQueryStr);
                 }
             }
         }
 
         // indicate, that no query is necessary, we just have to handle similar terms
-        publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NO_QUERY);
+        publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NO_QUERY);
 
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));

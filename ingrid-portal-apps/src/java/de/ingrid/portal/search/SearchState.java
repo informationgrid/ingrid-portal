@@ -50,14 +50,14 @@ public class SearchState {
             // query string!
             // DON'T READ from permanent state (message) if new query is performed
             // and only add as param if not empty
-            param = request.getParameter(Settings.PARAM_QUERY);
+            param = request.getParameter(Settings.PARAM_QUERY_STRING);
             if (param == null && !action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
                 param = (String) PortletMessaging
-                        .receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
+                        .receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
             }
             if (param != null && param.trim().length() != 0) {
                 params.append(SEPARATOR);
-                params.append(Settings.PARAM_QUERY);
+                params.append(Settings.PARAM_QUERY_STRING);
                 params.append(EQUALS);
                 params.append(URLEncoder.encode(param, "UTF-8"));
             }
@@ -65,7 +65,7 @@ public class SearchState {
             // datasource
             param = request.getParameter(Settings.PARAM_DATASOURCE);
             if (param == null) {
-                param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
+                param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
             }
             if (param != null) {
                 params.append(SEPARATOR);
@@ -82,7 +82,7 @@ public class SearchState {
                 param = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
                 if (param == null) {
                     param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
-                            Settings.MSG_STARTHIT_RANKED);
+                            Settings.PARAM_STARTHIT_RANKED);
                 }
                 if (param != null) {
                     params.append(SEPARATOR);
@@ -95,7 +95,7 @@ public class SearchState {
                 param = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
                 if (param == null) {
                     param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
-                            Settings.MSG_STARTHIT_UNRANKED);
+                            Settings.PARAM_STARTHIT_UNRANKED);
                 }
                 if (param != null) {
                     params.append(SEPARATOR);
@@ -138,16 +138,16 @@ public class SearchState {
 
     public static void resetSearchState(PortletRequest request) {
         // state for parameters in URL !
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_RANKED);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_UNRANKED);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_RANKED);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_UNRANKED);
 
         // further state for logic, caching etc.
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STATE);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_EXECUTION_TYPE);
     }
 
 }

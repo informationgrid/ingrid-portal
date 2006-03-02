@@ -68,7 +68,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
         // also set a message that a new query was performed, so former render parameters are ignored
-        publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NEW_QUERY);
+        publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
 
         // check form input
         EnvironmentSearchForm af = (EnvironmentSearchForm) Utils.getActionForm(request,
@@ -87,7 +87,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
         // also set a message that a new query was performed, so former render parameters are ignored
-        publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NEW_QUERY);
+        publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
 
         String FORM_VALUE_ALL = "all";
 

@@ -124,14 +124,17 @@ public class Settings {
 
     // ===========================================
     // PORTLET MESSAGING
+    // NOTICE: Request Parameter (see next section) ARE USED AS MESSAGE KEYS AND VALUES whenever possible !
+    // These messages here are additional messages for logic, caching etc.
     // topics (Message areas) = MSG_TOPIC_...
     // keys = MSG_...
     // values = MSGV_...
     // ===========================================
 
     // ------------- MESSAGE TOPICS (MSG_TOPIC_...) -----------------------------
-    /** Message Topics: define the message "scope", will be "prefix" in message key -> "topic:message" 
-     * set message "scope" service page */
+    // define the message "scope", will be "prefix" in message key -> "topic:message" 
+
+    /** set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
 
     /** set message "scope" measures page */
@@ -144,36 +147,26 @@ public class Settings {
     public final static String MSG_TOPIC_SEARCH = "search";
 
     // ------------- DATA MESSAGES: KEYS (MSG_...) -----------------------------
-    /** Messages: define the message itself, will be "suffix" in message key -> "topic:message"
-     * this message contains the ingrid query (an IngridQuery object) */
+    // define the message itself, will be "suffix" in message key -> "topic:message"
+
+    /** this message contains the central IngridQuery object */
     public static final String MSG_QUERY = "query";
 
-    /** this message contains the ingrid query STRING */
-    public static final String MSG_QUERY_STRING = "query_string";
-
-    /** this message contains the ingrid datasource */
-    public static final String MSG_DATASOURCE = "datasource";
-
-    /** this message contains the start hit of the ranked search results (which result page) */
-    public static final String MSG_STARTHIT_RANKED = "starthit_ranked";
-
-    /** this message contains the start hit of the unranked search results (which result page) */
-    public static final String MSG_STARTHIT_UNRANKED = "starthit_unranked";
-
-    /** this message contains ranked search results */
+    /** cache for ranked search results */
     public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";
 
-    /** this message contains unranked search results */
+    /** cache for unranked search results */
     public static final String MSG_SEARCH_RESULT_UNRANKED = "search_result_unranked";
 
     // ------------- INFORMATION MESSAGES: KEYS (MSG_...) AND VALUES ("MSGV_...") -----------------------------
 
-    /** this message contains the "state" of the query, indicating the current state
-     * and what kind of query has to be performed, e.g. a new query (form submitted),
-     * no query (click in similiar terms), ranked query (left page navigation clicked),
-     * unranked query (right page navigation clicked)  
+    /** this message indicates what kind of query has to be performed, e.g.
+     * - a new query (form submitted),
+     * - no query (click in similiar terms),
+     * - ranked query (left page navigation clicked),
+     * - unranked query (right page navigation clicked)  
      */
-    public static final String MSG_QUERY_STATE = "query_state";
+    public static final String MSG_QUERY_EXECUTION_TYPE = "query_state";
 
     public static final String MSGV_NO_QUERY = "no";
 
@@ -190,22 +183,18 @@ public class Settings {
 
     // ===========================================
     // REQUEST PARAMETERS
+    // NOTICE: Also used as message keys and values in SearchState !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
     // names = PARAM_
     // values = PARAMV_
     // ===========================================
 
-    public final static String PARAM_QUERY = SearchSimpleForm.FIELD_QUERY;
+    // ------------- PARAMS also used for messaging (SearchState) -----------------------------
+
+    public final static String PARAM_QUERY_STRING = SearchSimpleForm.FIELD_QUERY;
 
     public final static String PARAM_STARTHIT_RANKED = "rstart";
 
     public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
-
-    /** Action parameter name and values */
-    public final static String PARAM_ACTION = "action";
-
-    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-
-    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
 
     /** Datasource parameter name and values */
     public final static String PARAM_DATASOURCE = "ds";
@@ -215,5 +204,14 @@ public class Settings {
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
 
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
+
+    // ------------- PARAMS NOT used for messaging, just for access in Request -----------------------------
+
+    /** Action parameter name and values */
+    public final static String PARAM_ACTION = "action";
+
+    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
+
+    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
 
 }

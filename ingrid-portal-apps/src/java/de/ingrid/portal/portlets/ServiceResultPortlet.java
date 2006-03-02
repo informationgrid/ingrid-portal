@@ -68,7 +68,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         // default: start at the beginning with the first hit (display first result page)
         int startHit = 0;
         // indicates whether a new query was performed !
-        Object newQuery = receiveRenderMessage(request, Settings.MSG_QUERY_STATE);
+        Object newQuery = receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         try {
             // if no new query was performed, read render parameters from former action request
             if (newQuery == null) {
@@ -131,7 +131,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         // business logic
         // ----------------------------------
         // remove message from search submit portlet indicating that a new query was performed
-        cancelRenderMessage(request, Settings.MSG_QUERY_STATE);
+        cancelRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
 
         // ----------------------------------
         // set render parameters

@@ -75,7 +75,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int rankedStartHit = 0;
         try {
             reqParam = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
-            if (SearchState.adaptSearchState(request, Settings.MSG_STARTHIT_RANKED, reqParam)) {
+            if (SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, reqParam)) {
                 rankedStartHit = (new Integer(reqParam)).intValue();
             }
         } catch (Exception ex) {
@@ -88,7 +88,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int unrankedStartHit = 0;
         try {
             reqParam = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
-            if (SearchState.adaptSearchState(request, Settings.MSG_STARTHIT_UNRANKED, reqParam)) {
+            if (SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, reqParam)) {
                 unrankedStartHit = (new Integer(reqParam)).intValue();
             }
         } catch (Exception ex) {
@@ -98,7 +98,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether we do a query or we read results from cache
-        String queryState = (String) consumeRenderMessage(request, Settings.MSG_QUERY_STATE);
+        String queryState = (String) consumeRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryState == null) {
             queryState = "";
         }
@@ -116,7 +116,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // selected data source ("Umweltinfo", Adressen" or "Forschungsprojekte")
-        String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+        String selectedDS = (String) receiveRenderMessage(request, Settings.PARAM_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
@@ -202,7 +202,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0) {
             // query string will be displayed when no results !
-            String queryString = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
+            String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
             context.put("queryString", queryString);
 
             setDefaultViewPage(TEMPLATE_NO_RESULT);
@@ -227,11 +227,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // check whether page navigation was clicked and adapt query state
         String rankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
         if (rankedStarthit != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_RANKED_QUERY);
+            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
         } else {
             String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
             if (unrankedStarthit != null) {
-                publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_UNRANKED_QUERY);
+                publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
             }
         }
 

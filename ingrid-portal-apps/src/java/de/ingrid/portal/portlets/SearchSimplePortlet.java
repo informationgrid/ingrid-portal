@@ -79,14 +79,14 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
                     || action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
                 // reset relevant search stuff, we perform a new one !
                 SearchState.resetSearchState(request);
-                publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NEW_QUERY);
+                publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
             }
         } else {
             action = "";
         }
-        String queryInRequest = request.getParameter(Settings.PARAM_QUERY);
+        String queryInRequest = request.getParameter(Settings.PARAM_QUERY_STRING);
         if (queryInRequest != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryInRequest);
+            publishRenderMessage(request, Settings.PARAM_QUERY_STRING, queryInRequest);
         } else {
             // NOTICE: WE REMOVE THE QUERY ! this leads to empty result portlet, empty similar portlet etc.
             // BUT WE KEEP THE OLD QUERY STRING IN THE STATE (message), so it is displayed (for convenience,
@@ -97,7 +97,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE (message), so it is
         // displayed (for convenience, although not bookmarkable)
         if (dsInRequest != null) {
-            publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
+            publishRenderMessage(request, Settings.PARAM_DATASOURCE, dsInRequest);
         }
 
         // ----------------------------------
@@ -105,10 +105,10 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
 
         // set datasource
-        String selectedDS = (String) receiveRenderMessage(request, Settings.MSG_DATASOURCE);
+        String selectedDS = (String) receiveRenderMessage(request, Settings.PARAM_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
-            publishRenderMessage(request, Settings.MSG_DATASOURCE, selectedDS);
+            publishRenderMessage(request, Settings.PARAM_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);
 
@@ -128,7 +128,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
         // NOTICE: this may be former query, if no query in request ! we keep that one for convenience
         // (although this state is not bookmarkable !)
-        String queryString = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STRING);
+        String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
         af.setInput(SearchSimpleForm.FIELD_QUERY, queryString);
         // put ActionForm to context. use variable name "actionForm" so velocity macros work !
         context.put("actionForm", af);
@@ -212,7 +212,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // set query in message for result portlet
         if (query != null) {
             publishRenderMessage(request, Settings.MSG_QUERY, query);
-            publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryString);
+            publishRenderMessage(request, Settings.PARAM_QUERY_STRING, queryString);
         }
     }
 }
