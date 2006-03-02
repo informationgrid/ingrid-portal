@@ -120,11 +120,9 @@ public class Settings {
     // ************************************
     // Portlet Messaging
     // ************************************
-    /** dummy value for a message just to set a value for a message */
-    public static final String MSG_VALUE_TRUE = "1";
 
-    // ------------- MESSAGE TOPICS (SCOPES) -----------------------------
-    /** Message Topics: define the message "scope", will be "topic-prefix" in message key -> "topic:message" */
+    // ------------- MESSAGE TOPICS (MSG_TOPIC_...) -----------------------------
+    /** Message Topics: define the message "scope", will be "prefix" in message key -> "topic:message" */
 
     /** set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
@@ -138,8 +136,8 @@ public class Settings {
     /** message "scope" for search pages (start page, simple search, extended search ...) */
     public final static String MSG_TOPIC_SEARCH = "search";
 
-    // ------------- DATA MESSAGES -----------------------------
-    /** Messages: define the message itself, will be "message-suffix" in message key -> "topic:message" */
+    // ------------- DATA MESSAGES: KEYS (MSG_...) -----------------------------
+    /** Messages: define the message itself, will be "suffix" in message key -> "topic:message" */
 
     /** this message contains the ingrid query (an IngridQuery object) */
     public static final String MSG_QUERY = "query";
@@ -162,19 +160,21 @@ public class Settings {
     /** this message contains unranked search results */
     public static final String MSG_SEARCH_RESULT_UNRANKED = "search_result_unranked";
 
-    // ------------- INFORMATION MESSAGES -----------------------------
+    // ------------- INFORMATION MESSAGES: KEYS (MSG_...) AND VALUES ("MSGV_...") -----------------------------
 
-    /** this message indicates that a new query was explicitly triggered by the search form,
-     * so query states should be ignored (e.g. position of result page) 
-     * This message is reset when an action in the result portlet causes a new
-     * query, which then is no initial query anymore (e.g. change result page).
+    /** this message contains the "state" of the query, indicating the current state
+     * and what kind of query has to be performed, e.g. a new query (form submitted),
+     * no query (click in similiar terms), ranked query (left page navigation clicked),
+     * unranked query (right page navigation clicked)  
      */
-    public static final String MSG_NEW_QUERY = "new_query";
+    public static final String MSG_QUERY_STATE = "query_state";
+    public static final String MSGV_NO_QUERY = "no";
+    public static final String MSGV_NEW_QUERY = "new";
+    public static final String MSGV_RANKED_QUERY = "ranked";
+    public static final String MSGV_UNRANKED_QUERY = "unranked";
+    
+    // ------------- GENERIC MESSAGE VALUES ("MSGV_...") -----------------------------
 
-    /** this message indicates that a query should not be performed.
-     * This message is set when an action on the search_result page is triggered that
-     * does not require a requery of the ibus (e.g. similar terms)
-     * This message is reset when the result page has been rendered.
-     */
-    public static final String MSG_NO_QUERY = "no_query";
+    /** dummy value for a message just to set a value for a message */
+    public static final String MSGV_TRUE = "1";
 }

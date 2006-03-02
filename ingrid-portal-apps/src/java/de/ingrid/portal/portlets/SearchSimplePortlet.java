@@ -79,7 +79,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
                     || action.equals(UtilsSearch.PARAM_ACTION_NEW_DATASOURCE)) {
                 // reset relevant search stuff, we perform a new one !
                 UtilsSearch.resetSearchState(request);
-                publishRenderMessage(request, Settings.MSG_NEW_QUERY, Settings.MSG_VALUE_TRUE);
+                publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NEW_QUERY);
             }
         } else {
             action = "";
@@ -89,11 +89,13 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             publishRenderMessage(request, Settings.MSG_QUERY_STRING, queryInRequest);
         } else {
             // NOTICE: WE REMOVE THE QUERY ! this leads to empty result portlet, empty similar portlet etc.
-            // but we keep the old query string in the state (message), so it is displayed (for convenience,
+            // BUT WE KEEP THE OLD QUERY STRING IN THE STATE (message), so it is displayed (for convenience,
             // although not bookmarkable)
             cancelRenderMessage(request, Settings.MSG_QUERY);
         }
         String dsInRequest = request.getParameter(UtilsSearch.PARAM_DATASOURCE);
+        // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE (message), so it is
+        // displayed (for convenience, although not bookmarkable)
         if (dsInRequest != null) {
             publishRenderMessage(request, Settings.MSG_DATASOURCE, dsInRequest);
         }

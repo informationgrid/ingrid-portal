@@ -140,19 +140,36 @@ public class UtilsSearch {
         return params.toString();
     }
 
+    public static boolean adaptSearchState(PortletRequest request, String msgKey, String msgValue) {
+        boolean msgPublished = true;
+        try {
+            if (msgValue == null) {
+                PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, msgKey);
+                msgPublished = false;
+            } else {
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, msgKey, msgValue);
+            }            
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("FAILED to adapt Search State (consuming/setting message), msg=" + msgKey + ", value=" + msgValue, ex);
+            }
+        }
+
+        return msgPublished;
+    }
+
     public static void resetSearchState(PortletRequest request) {
         // state for parameters in URL !
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_RANKED);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_UNRANKED);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STRING);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_DATASOURCE);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_RANKED);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_STARTHIT_UNRANKED);
 
         // further state for logic, caching etc.
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_NO_QUERY);
-        PortletMessaging.consume(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_NEW_QUERY);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
+        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_STATE);
     }
 
     /**

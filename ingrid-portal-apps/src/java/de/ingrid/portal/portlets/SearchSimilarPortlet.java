@@ -84,13 +84,12 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether a new query was performed !
-        Object newQuery = receiveRenderMessage(request, Settings.MSG_NEW_QUERY);
-        if (newQuery != null) {
+        String queryState = (String) receiveRenderMessage(request, Settings.MSG_QUERY_STATE);
+        if (queryState != null && queryState.equals(Settings.MSGV_NEW_QUERY)) {
             ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
             session.removeAttribute("similarRoot");
         }
-
         context.put("ps", ps);
 
         super.doView(request, response);
@@ -191,7 +190,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicate, that no query is necessary, we just have to handle similar terms
-        publishRenderMessage(request, Settings.MSG_NO_QUERY, Settings.MSG_VALUE_TRUE);
+        publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_NO_QUERY);
 
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(UtilsSearch.PAGE_SEARCH_RESULT + UtilsSearch.getURLParams(request));

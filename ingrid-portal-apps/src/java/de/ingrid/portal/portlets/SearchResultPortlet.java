@@ -70,24 +70,37 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE VIA MESSAGES
         // ----------------------------------
-        // starthit changed ! set according messages so according request parameters are generated in next URL
-        String rankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
-        if (rankedStarthit != null) {
-            publishRenderMessage(request, Settings.MSG_STARTHIT_RANKED, rankedStarthit);
+        // starthit RANKED
+        String reqParam = null;
+        int rankedStartHit = 0;
+        try {
+            reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
+            if (UtilsSearch.adaptSearchState(request, Settings.MSG_STARTHIT_RANKED, reqParam)) {
+                rankedStartHit = (new Integer(reqParam)).intValue();
+            }
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems parsing RANKED starthit from render request, set RANKED starthit to 0", ex);
+            }
         }
-        String unrankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
-        if (unrankedStarthit != null) {
-            publishRenderMessage(request, Settings.MSG_STARTHIT_UNRANKED, unrankedStarthit);
+
+        // starthit UNRANKED
+        int unrankedStartHit = 0;
+        try {
+            reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
+            if (UtilsSearch.adaptSearchState(request, Settings.MSG_STARTHIT_UNRANKED, reqParam)) {
+                unrankedStartHit = (new Integer(reqParam)).intValue();
+            }
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems parsing UNRANKED starthit from render request, set UNRANKED starthit to 0", ex);
+            }
         }
+
         // indicates whether we do a query or we read results from cache
-        boolean doQuery = true;
-        if (consumeRenderMessage(request, Settings.MSG_NO_QUERY) != null) {
-            doQuery = false;
-        }
-        // indicates whether a new query was submitted from form
-        boolean newQuery = true;
-        if (consumeRenderMessage(request, Settings.MSG_NEW_QUERY) == null) {
-            newQuery = false;
+        String queryState = (String) consumeRenderMessage(request, Settings.MSG_QUERY_STATE);
+        if (queryState == null) {
+            queryState = "";
         }
 
         // ----------------------------------
@@ -116,32 +129,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         String currentView = getDefaultViewPage();
 
         // ----------------------------------
-        // fetch data
-        // ----------------------------------
-        // default: start at the beginning with the first hit (display first
-        // result page)
-        int rankedStartHit = 0;
-        int unrankedStartHit = 0;
-        if (!newQuery) {
-            // if no new query was performed, read render parameters (which
-            // page) from former action request
-            try {
-                String reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
-                if (reqParam != null) {
-                    rankedStartHit = (new Integer(reqParam)).intValue();
-                }
-                reqParam = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
-                if (reqParam != null) {
-                    unrankedStartHit = (new Integer(reqParam)).intValue();
-                }
-            } catch (Exception ex) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems parsing starthit (ranked or unranked) from render request, set starthit to 0");
-                }
-            }
-        }
-
-        // ----------------------------------
         // business logic
         // ----------------------------------
 
@@ -151,7 +138,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int numberOfRankedHits = 0;
         try {
             // use cache if we don't query
-            if (!doQuery) {
+            if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_UNRANKED_QUERY)) {
                 rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
             }
             if (rankedHits == null) {
@@ -162,7 +149,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         Settings.SEARCH_RANKED_HITS_PER_PAGE);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
             }
-            numberOfRankedHits = (int) rankedHits.length();
+            if (rankedHits != null) {
+                numberOfRankedHits = (int) rankedHits.length();
+            }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching RANKED hits ! hits = " + rankedHits + ", numHits = " + numberOfRankedHits,
@@ -171,8 +160,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of ranked page navigation
-        HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit, Settings.SEARCH_RANKED_HITS_PER_PAGE,
-                numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
+        HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
+                Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // unranked results
         // ----------------
@@ -184,7 +173,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
             try {
                 // use cache if we don't query
-                if (!doQuery) {
+                if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_RANKED_QUERY)) {
                     unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
                 }
                 if (unrankedHits == null) {
@@ -195,7 +184,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                             Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
                     this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
                 }
-                numberOfUnrankedHits = (int) unrankedHits.length();
+                if (unrankedHits != null) {
+                    numberOfUnrankedHits = (int) unrankedHits.length();
+                }
             } catch (Exception ex) {
                 if (log.isErrorEnabled()) {
                     log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
@@ -204,8 +195,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             // adapt settings of unranked page navigation
-            unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit, Settings.SEARCH_UNRANKED_HITS_PER_PAGE,
-                    numberOfUnrankedHits, Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
+            unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
+                    Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
+                    Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
         }
 
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0) {
@@ -232,6 +224,17 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
+        // check whether page navigation was clicked and adapt query state
+        String rankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_RANKED);
+        if (rankedStarthit != null) {
+            publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_RANKED_QUERY);
+        } else {
+            String unrankedStarthit = request.getParameter(UtilsSearch.PARAM_STARTHIT_UNRANKED);
+            if (unrankedStarthit != null) {
+                publishRenderMessage(request, Settings.MSG_QUERY_STATE, Settings.MSGV_UNRANKED_QUERY);
+            }
+        }
+
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(UtilsSearch.PAGE_SEARCH_RESULT + UtilsSearch.getURLParams(request));
     }
@@ -241,6 +244,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             adaptRankedQuery(query, ds);
+
+            if (log.isDebugEnabled()) {
+                log.debug("doRankedSearch: IngridQuery = " + Utils.queryToString(query));
+            }
 
             int currentPage = (int) (startHit / hitsPerPage) + 1;
 
@@ -257,7 +264,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
                 requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
             }
-            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+            // TODO: use getDetails() when it works !
+            //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
@@ -265,7 +273,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    detail = details[i];
+                    //                    detail = details[i];
+                    detail = ibus.getDetail(result, query, requestedMetadata);
 
                     if (result == null) {
                         continue;
@@ -273,6 +282,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     if (detail != null) {
                         ibus.transferHitDetails(result, detail);
                         tmpString = detail.getIplugClassName();
+                        if (tmpString == null) {
+                            tmpString = "";
+                            if (log.isErrorEnabled()) {
+                                log.error("Hit Detail has no IplugClassName !!!! hit=" + result + ", detail=" + detail);
+                            }
+                        }
 
                         if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                             result.put(Settings.RESULT_KEY_TYPE, "dsc");
@@ -348,10 +363,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         } else if (ds.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
         }
-
-        if (log.isDebugEnabled()) {
-            log.debug("doRankedSearch: IngridQuery = " + Utils.queryToString(query));
-        }
     }
 
     private IngridHits doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
@@ -360,20 +371,27 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         try {
             adaptUnrankedQuery(query, ds);
 
+            if (log.isDebugEnabled()) {
+                log.debug("doUnrankedSearch: IngridQuery = " + Utils.queryToString(query));
+            }
+
             int currentPage = (int) (startHit / hitsPerPage) + 1;
 
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             String[] requestedMetadata = new String[0];
-            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
+
+            // TODO: use getDetails() when it works !
+            //IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    detail = details[i];
+                    // detail = details[i];
+                    detail = ibus.getDetail(result, query, requestedMetadata);
 
                     if (result == null) {
                         continue;
@@ -430,11 +448,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             query.remove(Settings.QFIELD_DATATYPE);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));
         } else if (ds.equals(Settings.SEARCH_DATASOURCE_RESEARCH)) {
-        }
-
-        // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
-        if (log.isDebugEnabled()) {
-            log.debug("doUnrankedSearch: IngridQuery = " + Utils.queryToString(query));
         }
     }
 }
