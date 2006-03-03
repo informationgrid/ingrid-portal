@@ -5,6 +5,7 @@ package de.ingrid.portal.global;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -216,5 +217,50 @@ public class Utils {
             }
         }
         return -1;
+    }
+
+    /**
+     * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
+     * @param values
+     * @param paramName
+     * @return
+     */
+    public static String toURLParam(String[] values, String paramName) {
+        StringBuffer urlParam = new StringBuffer("");
+        int i = 0;
+        for (i = 0; i < values.length; i++) {
+            if (urlParam.length() != 0) {
+                urlParam.append("&");
+            }
+            urlParam.append(toURLParam(values[i], paramName));
+        }
+
+        return urlParam.toString();
+    }
+
+    /**
+     * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
+     * NOTICE: if string is null or empty, return value is ""
+     * @param value
+     * @param paramName
+     * @return
+     */
+    public static String toURLParam(String value, String paramName) {
+        if (value == null || value.length() == 0) {
+            return "";
+        }
+        
+        String urlParam = null;
+        try {
+            urlParam = paramName + "=" + URLEncoder.encode(value, "UTF-8");
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems generating URL representation of parameter: " + paramName + "=" + value
+                        + "We generate NO Parameter !", ex);
+            }
+            urlParam = "";
+        }
+
+        return urlParam;
     }
 }

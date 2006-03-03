@@ -7,11 +7,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import javax.portlet.PortletRequest;
 
 import de.ingrid.portal.global.StringUtils;
+import de.ingrid.portal.global.Utils;
 
 /**
  * Super class of all Form Handlers. Defines framework for form validation and
@@ -62,18 +64,6 @@ public abstract class ActionForm implements Serializable {
     // ==============
 
     /**
-     * Check whether the given field has input ! NOTICE: uses trim() to remove
-     * leading and trailing white spaces from input and then checks whether
-     * string has length > 0
-     */
-    public boolean hasInput(String field) {
-        if (getInput(field).trim().length() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Get Input Data of specific field. Returns "" if no input.
      */
     public String getInput(String field) {
@@ -89,15 +79,32 @@ public abstract class ActionForm implements Serializable {
      * Get Input Data of specific field. Returns "" if no input.
      */
     public String getInputHTMLEscaped(String field) {
-        String inputVal = (String) input.get(field);
-        if (inputVal == null) {
-            return "";
-        }
-        String result = inputVal.substring(1, inputVal.length() - 1);
-        return StringUtils.htmlescape(result);
+        String inputVal = getInput(field);
+        return StringUtils.htmlescape(inputVal);
     }
-    
-    
+
+    /**
+     * Get Input of specific Field as String Array. Returns Array with "" if no input.
+     * @param field
+     * @return
+     */
+    public String[] getInputAsArray(String field) {
+        String input = getInput(field);
+        return input.split(VALUE_SEPARATOR + VALUE_SEPARATOR);
+    }
+
+    /**
+     * Check whether the given field has input ! NOTICE: uses trim() to remove
+     * leading and trailing white spaces from input and then checks whether
+     * string has length > 0
+     */
+    public boolean hasInput(String field) {
+        if (getInput(field).trim().length() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Set Input Data for single value field
      */
@@ -222,4 +229,29 @@ public abstract class ActionForm implements Serializable {
 
         return true;
     }
+
+    // =======================
+    // MISC
+    // =======================
+
+    /**
+     * Get the current input of the form encoded as URL parameters (WITHOUT leading "?" !)
+     * @return
+     */
+    public String toURLParams() {
+        StringBuffer urlParams = new StringBuffer();
+
+        Iterator iterator = input.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = (String) iterator.next();
+            String[] values = getInputAsArray(key);
+            String urlParam = Utils.toURLParam(values, key);
+            if (urlParams.length() > 0 && urlParam.length() > 0) {
+                urlParams.append("&");
+            }
+            urlParams.append(urlParam);
+        }
+        return urlParams.toString();
+    }
+
 }
