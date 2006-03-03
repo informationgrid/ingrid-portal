@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.ingrid.utils.IngridHits;
 
 /**
@@ -15,6 +18,8 @@ import de.ingrid.utils.IngridHits;
  * @author joachim@wemove.com
  */
 public class ThreadedQueryController {
+    
+    private final static Log log = LogFactory.getLog(ThreadedQueryController.class);
     
     private Object threadMonitor;
     
@@ -95,7 +100,6 @@ public class ThreadedQueryController {
      */
     protected synchronized void addResultSet(String key, IngridHits hits) {
         ingridResults.put(key, hits);
-        System.out.println(key);
         if (ingridQueryDescriptors.size() == ingridResults.size()) {
             synchronized (threadMonitor) {
                 threadMonitor.notify();
@@ -115,6 +119,15 @@ public class ThreadedQueryController {
      */
     public void setTimeout(int timeout) {
         this.timeout = timeout;
+    }
+
+    /**
+     * Returns true if the controller has queries, false if not.
+     * 
+     * @return Returns true if the controller has queries, false if not.
+     */
+    public boolean hasQueries() {
+        return ingridQueryDescriptors.size() > 0;
     }
 
 }

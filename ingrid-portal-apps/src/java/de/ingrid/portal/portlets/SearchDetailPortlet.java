@@ -126,6 +126,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 if (subRecords[i].getValueAsString(columns[j]).trim().length() > 0) {
                     if (dateFields.contains(columns[j].getTargetName().toLowerCase())) {
                         subRecordMap.put(columns[j].getTargetName().toLowerCase(), DateUtil.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
+                    } else if (columns[j].getTargetName().toLowerCase().startsWith("t08_attr")) {
+                        // dummy code add logic for attribute fields
+                        System.out.println(columns[j].getTargetName());
                     } else {
                         subRecordMap.put(columns[j].getTargetName().toLowerCase(), subRecords[i].getValueAsString(columns[j]).trim());
                     }

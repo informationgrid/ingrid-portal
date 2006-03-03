@@ -21,8 +21,12 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.QueryPreProcessor;
+import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.portal.search.net.QueryDescriptor;
+import de.ingrid.portal.search.net.ThreadedQueryController;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -132,67 +136,66 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // business logic
         // ----------------------------------
 
-        // ranked results
-        // --------------
+        // create threaded query controller
+        ThreadedQueryController controller = new ThreadedQueryController();
+        controller.setTimeout(10000);
+        
+        QueryDescriptor qd = null;
+        
+        // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
-        try {
-            // use cache if we don't query
-            if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_UNRANKED_QUERY)) {
-                rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
+        // check if query must be executed
+        if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_UNRANKED_QUERY)) {
+            rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
+        }
+        if (rankedHits == null) {
+            // process query, create QueryDescriptor
+            qd = QueryPreProcessor.createRankedQueryDescriptor(query, selectedDS, rankedStartHit);
+            controller.addQuery("ranked", qd);
+        }
+        
+        // UNRANKED
+        IngridHits unrankedHits = null;
+        int numberOfUnrankedHits = 0;
+        if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            // check if query must be executed
+            if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_RANKED_QUERY)) {
+                unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
             }
-            if (rankedHits == null) {
-                // copy IngridQuery, so we can manipulate it in ranked search without affecting unranked search
-                IngridQuery rankedQuery = new IngridQuery();
-                rankedQuery.putAll(query);
-                rankedHits = doRankedSearch(rankedQuery, selectedDS, rankedStartHit,
-                        Settings.SEARCH_RANKED_HITS_PER_PAGE);
+            if (unrankedHits == null) {
+                // process query, create QueryDescriptor
+                qd = QueryPreProcessor.createUnrankedQueryDescriptor(query, selectedDS, unrankedStartHit);
+                controller.addQuery("unranked", qd);
+            }
+        }
+        
+        // fire query, post process results
+        if (controller.hasQueries()) {
+            // fire queries
+            HashMap results = controller.search();
+            // post process ranked hits if exists
+            if (results.containsKey("ranked")) {
+                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits)results.get("ranked"), selectedDS);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
             }
-            if (rankedHits != null) {
-                numberOfRankedHits = (int) rankedHits.length();
-            }
-        } catch (Exception ex) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching RANKED hits ! hits = " + rankedHits + ", numHits = " + numberOfRankedHits,
-                        ex);
+            // post process unranked hits if exists
+            if (results.containsKey("unranked")) {
+                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits)results.get("unranked"), selectedDS);
+                this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
             }
         }
 
+        if (rankedHits != null) {
+            numberOfRankedHits = (int) rankedHits.length();
+        }
         // adapt settings of ranked page navigation
         HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
-        // unranked results
-        // ----------------
-        IngridHits unrankedHits = null;
-        int numberOfUnrankedHits = 0;
         HashMap unrankedPageNavigation = null;
-
-        // only do unranked stuff if necessary for view
-        if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            try {
-                // use cache if we don't query
-                if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_RANKED_QUERY)) {
-                    unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-                }
-                if (unrankedHits == null) {
-                    // copy IngridQuery, so we can manipulate it in unranked search without affecting ranked search
-                    IngridQuery unrankedQuery = new IngridQuery();
-                    unrankedQuery.putAll(query);
-                    unrankedHits = doUnrankedSearch(unrankedQuery, selectedDS, unrankedStartHit,
-                            Settings.SEARCH_UNRANKED_HITS_PER_PAGE);
-                    this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
-                }
-                if (unrankedHits != null) {
-                    numberOfUnrankedHits = (int) unrankedHits.length();
-                }
-            } catch (Exception ex) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems fetching UNRANKED hits ! hits = " + unrankedHits + ", numHits = "
-                            + numberOfUnrankedHits, ex);
-                }
-            }
+        if (unrankedHits != null) {
+            numberOfUnrankedHits = (int) unrankedHits.length();
 
             // adapt settings of unranked page navigation
             unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
@@ -239,215 +242,4 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
     }
 
-    private IngridHits doRankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-
-        IngridHits hits = null;
-        try {
-            adaptRankedQuery(query, ds);
-
-            if (log.isDebugEnabled()) {
-                log.debug("doRankedSearch: IngridQuery = " + UtilsSearch.queryToString(query));
-            }
-
-            int currentPage = (int) (startHit / hitsPerPage) + 1;
-
-            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
-            IngridHit[] results = hits.getHits();
-            String[] requestedMetadata = new String[0];
-            if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                requestedMetadata = new String[2];
-                requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
-                requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-            } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                requestedMetadata = new String[2];
-                requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
-                requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
-            }
-            // TODO: use getDetails() when it works !
-            //            IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
-
-            IngridHit result = null;
-            IngridHitDetail detail = null;
-            String tmpString = null;
-            for (int i = 0; i < results.length; i++) {
-                try {
-                    result = results[i];
-                    //                    detail = details[i];
-                    detail = ibus.getDetail(result, query, requestedMetadata);
-
-                    if (result == null) {
-                        continue;
-                    }
-                    if (detail != null) {
-                        UtilsSearch.transferHitDetails(result, detail);
-                        tmpString = detail.getIplugClassName();
-                        if (tmpString == null) {
-                            tmpString = "";
-                            if (log.isErrorEnabled()) {
-                                log.error("Hit Detail has no IplugClassName !!!! hit=" + result + ", detail=" + detail);
-                            }
-                        }
-
-                        if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                            result.put(Settings.RESULT_KEY_TYPE, "dsc");
-
-                            // read for all dsc iplugs
-                            if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
-                                tmpString = detail.get(Settings.HIT_KEY_WMS_URL).toString();
-                                result.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
-                            }
-
-                            // check our selected "data source" and read
-                            // according data
-                            if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                                if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                                    tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
-                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-                                }
-                            } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                                if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
-                                    tmpString = detail.get(Settings.HIT_KEY_ADDRESS_CLASS).toString();
-                                    result.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
-                                }
-                            }
-                        } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
-                            result.put(Settings.RESULT_KEY_TYPE, "nutch");
-                        } else {
-                            result.put(Settings.RESULT_KEY_TYPE, "unknown");
-                        }
-                    }
-                } catch (Throwable t) {
-                    if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
-                    }
-                }
-            }
-        } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems performing Search !", t);
-            }
-        }
-
-        return hits;
-    }
-
-    private void adaptRankedQuery(IngridQuery query, String ds) {
-        // first adapt selected search area in UI (ds) ! 
-        UtilsSearch.processBasicDataTypes(query, ds);
-
-        // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
-        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            // check for entered datatypes which lead to no results
-            if (UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_G2K)
-                    || UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_ADDRESS)) {
-                // no results
-                query.remove(Settings.QFIELD_DATATYPE);
-                query
-                        .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                                Settings.QVALUE_DATATYPE_NORESULTS));
-            } else {
-                // explicitly prohibit g2k
-                query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));
-            }
-        } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            // check whether something different than address type was entered !
-            String[] posDataTypes = query.getPositiveDataTypes();
-            for (int i = 0; i < posDataTypes.length; i++) {
-                if (!posDataTypes[i].equals(Settings.QVALUE_DATATYPE_ADDRESS)) {
-                    // no address data type but we're in address area, show no results
-                    query.remove(Settings.QFIELD_DATATYPE);
-                    query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                            Settings.QVALUE_DATATYPE_NORESULTS));
-                }
-            }
-        } else if (ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-        }
-    }
-
-    private IngridHits doUnrankedSearch(IngridQuery query, String ds, int startHit, int hitsPerPage) {
-
-        IngridHits hits = null;
-        try {
-            adaptUnrankedQuery(query, ds);
-
-            if (log.isDebugEnabled()) {
-                log.debug("doUnrankedSearch: IngridQuery = " + UtilsSearch.queryToString(query));
-            }
-
-            int currentPage = (int) (startHit / hitsPerPage) + 1;
-
-            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
-            IngridHit[] results = hits.getHits();
-            String[] requestedMetadata = new String[0];
-
-            // TODO: use getDetails() when it works !
-            //IngridHitDetail[] details = ibus.getDetails(results, query, requestedMetadata);
-
-            IngridHit result = null;
-            IngridHitDetail detail = null;
-            for (int i = 0; i < results.length; i++) {
-                try {
-                    result = results[i];
-                    // detail = details[i];
-                    detail = ibus.getDetail(result, query, requestedMetadata);
-
-                    if (result == null) {
-                        continue;
-                    }
-                    if (detail != null) {
-                        UtilsSearch.transferHitDetails(result, detail);
-                    }
-                } catch (Throwable t) {
-                    if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
-                    }
-                }
-            }
-
-        } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems performing Search !", t);
-            }
-        }
-        return hits;
-    }
-
-    private void adaptUnrankedQuery(IngridQuery query, String ds) {
-        // first adapt selected search area in UI (ds) ! 
-        UtilsSearch.processBasicDataTypes(query, ds);
-
-        // TODO: adapt this to better structure of datatypes in future (search area, ranked field etc.)
-        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            // unranked search result hack for checking datatypes, use "ranked" field in future 
-            // check for positive data types and if set, check whether g2k should be displayed, if not
-            // set no datatypes (no search)
-            // NOTICE: unranked search isn't called in area "Adressen", only in "Umweltinfo", then no
-            // positive data type is set per default ...
-            boolean showG2K = true;
-            String[] posDataTypes = query.getPositiveDataTypes();
-            for (int i = 0; i < posDataTypes.length; i++) {
-                if (!posDataTypes[i].equals(Settings.QVALUE_DATATYPE_G2K)) {
-                    showG2K = false;
-                    break;
-                }
-            }
-            // remove all datatypes ! only show g2k
-            query.remove(Settings.QFIELD_DATATYPE);
-            if (showG2K) {
-                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_G2K));
-            } else {
-                // just to be sure there are NO RESULTS
-                query
-                        .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                                Settings.QVALUE_DATATYPE_NORESULTS));
-            }
-        } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            // no address data type in right column
-            query.remove(Settings.QFIELD_DATATYPE);
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_NORESULTS));
-        } else if (ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-        }
-    }
 }

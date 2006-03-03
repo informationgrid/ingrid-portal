@@ -3,9 +3,11 @@
  */
 package de.ingrid.portal.search.net;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 
 /**
@@ -15,6 +17,8 @@ import de.ingrid.utils.IngridHits;
  * @author joachim@wemove.com
  */
 public class ThreadedQuery extends Thread {
+
+    private final static Log log = LogFactory.getLog(ThreadedQuery.class);
 
     private String key;
     private QueryDescriptor qd;
@@ -40,21 +44,25 @@ public class ThreadedQuery extends Thread {
         
         IngridHits hits = null;
         
+        long startTime = System.currentTimeMillis();
+        
         try {
             hits = IBUSInterfaceImpl.getInstance().search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getRequestedHits(), qd.getTimeout());
             if (qd.isGetDetails()) {
                 IngridHit[] hitArray = hits.getHits(); 
-                IngridHitDetail[] details = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), qd.getQuery(), qd.getRequestedFields());
+//                IngridHitDetail[] details = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), qd.getQuery(), qd.getRequestedFields());
                 for (int i=0; i<hitArray.length; i++) {
-                    hitArray[i].put("details", details[i]);
+                    // hitArray[i].put("detail", details[i]);
+                    hitArray[i].put("detail", IBUSInterfaceImpl.getInstance().getDetail(hitArray[i], qd.getQuery(), qd.getRequestedFields()));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            log.info("Finished search '" + this.key + "' in " + (System.currentTimeMillis() - startTime) + "ms.");
             this.controller.addResultSet(this.key, hits);
         }
     }
-    
+
 
 }
