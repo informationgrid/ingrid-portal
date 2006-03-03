@@ -152,7 +152,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (rankedHits == null) {
             // process query, create QueryDescriptor
             qd = QueryPreProcessor.createRankedQueryDescriptor(query, selectedDS, rankedStartHit);
-            controller.addQuery("ranked", qd);
+            if (qd != null) {
+                controller.addQuery("ranked", qd);
+            }
         }
         
         // UNRANKED
@@ -166,7 +168,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             if (unrankedHits == null) {
                 // process query, create QueryDescriptor
                 qd = QueryPreProcessor.createUnrankedQueryDescriptor(query, selectedDS, unrankedStartHit);
-                controller.addQuery("unranked", qd);
+                if (qd != null) {
+                    controller.addQuery("unranked", qd);
+                }
             }
         }
         

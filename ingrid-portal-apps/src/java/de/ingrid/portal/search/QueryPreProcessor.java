@@ -15,6 +15,15 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class QueryPreProcessor {
     
+    /**
+     * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
+     * return null.
+     * 
+     * @param myQuery The query to submit.
+     * @param ds The datasource type of the query.
+     * @param startHit The hit count to start with.
+     * @return The QueryDescriptor describing the query or null if no query should be submitted.
+     */
     public static QueryDescriptor createRankedQueryDescriptor(IngridQuery myQuery, String ds, int startHit) {
         // copy IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         IngridQuery query = new IngridQuery();
@@ -62,10 +71,19 @@ public class QueryPreProcessor {
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
         }
-        
+//      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_RANKED_HITS_PER_PAGE, 5000, true, requestedMetadata);
     }
 
+    /**
+     * Prepares an unranked query for submitting to the ibus. If no query should be submitted,
+     * return null.
+     * 
+     * @param myQuery The query to submit.
+     * @param ds The datasource type of the query.
+     * @param startHit The hit count to start with.
+     * @return The QueryDescriptor describing the query or null if no query should be submitted.
+     */
     public static QueryDescriptor createUnrankedQueryDescriptor(IngridQuery myQuery, String ds, int startHit) {
         // copy IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         IngridQuery query = new IngridQuery();
@@ -108,6 +126,7 @@ public class QueryPreProcessor {
 
         int currentPage = (int) (startHit / Settings.SEARCH_UNRANKED_HITS_PER_PAGE) + 1;
         
+        // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, 5000, true, null);
     }    
 
