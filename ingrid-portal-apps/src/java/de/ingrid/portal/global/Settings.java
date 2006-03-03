@@ -126,7 +126,7 @@ public class Settings {
     // PORTLET MESSAGING
     // NOTICE: Request Parameter (see next section) ARE USED AS MESSAGE KEYS AND VALUES whenever possible !
     // These messages here are additional messages for logic, caching etc.
-    // topics (Message areas) = MSG_TOPIC_...
+    // topics = MSG_TOPIC_...
     // keys = MSG_...
     // values = MSGV_...
     // ===========================================
@@ -190,7 +190,7 @@ public class Settings {
 
     // ------------- PARAMS also used for messaging (SearchState) -----------------------------
 
-    public final static String PARAM_QUERY_STRING = SearchSimpleForm.FIELD_QUERY;
+    public final static String PARAM_QUERY_STRING = "q";
 
     public final static String PARAM_STARTHIT_RANKED = "rstart";
 

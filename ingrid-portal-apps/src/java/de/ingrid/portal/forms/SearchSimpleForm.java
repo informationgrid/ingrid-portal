@@ -5,6 +5,8 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.Settings;
+
 /**
  * Form Handler for Simple Search form. Stores and validates form input.
  * 
@@ -16,7 +18,7 @@ public class SearchSimpleForm extends ActionForm {
     public static final String SESSION_KEY = "search_simple_form";
 
     /** field names (name of request parameter) */
-    public static final String FIELD_QUERY = "q";
+    public static final String FIELD_QUERY = Settings.PARAM_QUERY_STRING;
 
     /**
      * initial values. initial Query not static ! can be set from outside and may differ because of Locale
