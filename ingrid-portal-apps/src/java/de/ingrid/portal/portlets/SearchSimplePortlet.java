@@ -183,17 +183,28 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-            // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
+            // adapt SearchState (base for generating URL params for render request):
+            // - query string
+            SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
+                    .getParameter(Settings.PARAM_QUERY_STRING));
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
-            // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
-
+            // adapt SearchState (base for generating URL params for render request):
+            // - set datasource
+            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, request
+                    .getParameter(Settings.PARAM_DATASOURCE));
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
         }
+
+        // adapt SearchState (base for generating URL params for render request):
+        // - reset result pages, start with first ones
+        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
+        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
+
+        // redirect to our page wih parameters for bookmarking
+        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
     }
 
     private void setUpQuery(PortletRequest request, String queryString) {

@@ -193,7 +193,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NO_QUERY);
 
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
+        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
     }
 
     private PageState initPageState(PageState ps) {

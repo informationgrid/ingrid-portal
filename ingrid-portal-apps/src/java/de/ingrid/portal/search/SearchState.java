@@ -3,8 +3,6 @@
  */
 package de.ingrid.portal.search;
 
-import java.net.URLEncoder;
-
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
@@ -24,10 +22,6 @@ public class SearchState {
 
     private final static Log log = LogFactory.getLog(SearchState.class);
 
-    private final static String EQUALS = "=";
-
-    private final static String PARAM_SEPARATOR = "&";
-
     /**
      * Returns the current state of the Service page as URL Parameters, which can be concatenated
      * to the URL path (for bookmarking !).
@@ -39,28 +33,18 @@ public class SearchState {
         StringBuffer result = new StringBuffer("?");
 
         // Action parameter, determines what to do (important for bookmarking, to react in view method)
+        // (read only from request)
         String urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_ACTION), Settings.PARAM_ACTION);
-        if (urlParam.length() > 0) {
-            result.append(urlParam);
-        }
+        Utils.appendURLParameter(result, urlParam);
 
-        // Generate form input parameters via ActionForm !
+        // Generate parameters of form input via ActionForm !
         urlParam = af.toURLParams();
-        if (urlParam.length() > 0) {
-            if (result.length() > 0) {
-                result.append(PARAM_SEPARATOR);
-            }
-            result.append(urlParam);
-        }
+        Utils.appendURLParameter(result, urlParam);
 
-        // start hit of search results
-        urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_STARTHIT_RANKED), Settings.PARAM_STARTHIT_RANKED);
-        if (urlParam.length() > 0) {
-            if (result.length() > 0) {
-                result.append(PARAM_SEPARATOR);
-            }
-            result.append(urlParam);
-        }
+        // start hit of search results (read only from request !)
+        urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_STARTHIT_RANKED),
+                Settings.PARAM_STARTHIT_RANKED);
+        Utils.appendURLParameter(result, urlParam);
 
         if (log.isInfoEnabled()) {
             log.info("Service: URL parameters: " + result);
@@ -70,120 +54,86 @@ public class SearchState {
     }
 
     /**
-     * Returns the URL Parameters for the current state of the main search for bookmarking.
-     * NOTICE: The passed request may be from different portlets containing different data. We first
-     * try to fetch every parameter directly from request, if null we fetch them from SearchState
-     * (messages in application scope).
+     * Returns the URL Parameters of the current state of the main search for bookmarking.
      * @param request
      * @return
      */
-    public static String getURLParams(PortletRequest request) {
-        StringBuffer params = new StringBuffer("?");
-        String param = null;
+    public static String getURLParamsMainSearch(PortletRequest request) {
+        StringBuffer result = new StringBuffer("?");
 
         try {
-            // Action, ONLY READ FROM REQUEST, NO PERMANENT STATE !
-            String action = request.getParameter(Settings.PARAM_ACTION);
-            if (action == null) {
-                action = "";
-            }
-            if (action.length() > 0) {
-                params.append(Settings.PARAM_ACTION);
-                params.append(EQUALS);
-                params.append(action);
-            }
+            // Action parameter, determines what to do (important for bookmarking, to react in view method)
+            // (read only from request)
+            String action = Utils.toURLParam(request.getParameter(Settings.PARAM_ACTION), Settings.PARAM_ACTION);
+            Utils.appendURLParameter(result, action);
 
-            // query string!
-            // DON'T READ from permanent state (message) if new query is performed
-            // and only add as param if not empty
-            param = request.getParameter(Settings.PARAM_QUERY_STRING);
-            if (param == null && !action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-                param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
-                        Settings.PARAM_QUERY_STRING);
-            }
-            if (param != null && param.trim().length() != 0) {
-                params.append(PARAM_SEPARATOR);
-                params.append(Settings.PARAM_QUERY_STRING);
-                params.append(EQUALS);
-                params.append(URLEncoder.encode(param, "UTF-8"));
-            }
+            // query string (read from state)
+            String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+            String urlParam = Utils.toURLParam(paramValue, Settings.PARAM_QUERY_STRING);
+            Utils.appendURLParameter(result, urlParam);
 
-            // datasource
-            param = request.getParameter(Settings.PARAM_DATASOURCE);
-            if (param == null) {
-                param = (String) PortletMessaging
-                        .receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
-            }
-            if (param != null) {
-                params.append(PARAM_SEPARATOR);
-                params.append(Settings.PARAM_DATASOURCE);
-                params.append(EQUALS);
-                params.append(URLEncoder.encode(param, "UTF-8"));
-            }
+            // datasource (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+            urlParam = Utils.toURLParam(paramValue, Settings.PARAM_DATASOURCE);
+            Utils.appendURLParameter(result, urlParam);
 
-            // DO THE FOLLOWING STUFF ONLY IF NO NEW SEARCH WAS SUBMITTED !
-            if (!action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)
-                    && !action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
+            // start hit of ranked search results (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
+            urlParam = Utils.toURLParam(paramValue, Settings.PARAM_STARTHIT_RANKED);
+            Utils.appendURLParameter(result, urlParam);
 
-                // start hit ranked search results
-                param = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
-                if (param == null) {
-                    param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
-                            Settings.PARAM_STARTHIT_RANKED);
-                }
-                if (param != null) {
-                    params.append(PARAM_SEPARATOR);
-                    params.append(Settings.PARAM_STARTHIT_RANKED);
-                    params.append(EQUALS);
-                    params.append(URLEncoder.encode(param, "UTF-8"));
-                }
+            // start hit of unranked search results (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
+            urlParam = Utils.toURLParam(paramValue, Settings.PARAM_STARTHIT_UNRANKED);
+            Utils.appendURLParameter(result, urlParam);
 
-                // start hit unranked search results
-                param = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
-                if (param == null) {
-                    param = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
-                            Settings.PARAM_STARTHIT_UNRANKED);
-                }
-                if (param != null) {
-                    params.append(PARAM_SEPARATOR);
-                    params.append(Settings.PARAM_STARTHIT_UNRANKED);
-                    params.append(EQUALS);
-                    params.append(URLEncoder.encode(param, "UTF-8"));
-                }
-            }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems generating URL search parameters, WE DON'T PASS SEARCH PARAMETERS IN URL !", ex);
             }
-            params = new StringBuffer("");
+            result = new StringBuffer("");
         }
 
         if (log.isInfoEnabled()) {
-            log.info("Main Search: URL parameters: " + params);
+            log.info("Main Search: URL parameters: " + result);
         }
 
-        return params.toString();
+        return result.toString();
     }
 
-    public static boolean adaptSearchState(PortletRequest request, String msgKey, String msgValue) {
+    /**
+     * Add the passed Object (Message) to the Search State. If the passed object is null,
+     * the object is removed from the state and false is returned. Otherwise the object is
+     * added and true is returned.
+     * @param request
+     * @param objectKey (=messageKey)
+     * @param objectValue (=messageValue)
+     * @return true = object added, false = object removed
+     */
+    public static boolean adaptSearchState(PortletRequest request, String objectKey, String objectValue) {
         boolean msgPublished = true;
         try {
-            if (msgValue == null) {
-                PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, msgKey);
+            if (objectValue == null) {
+                PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, objectKey);
                 msgPublished = false;
             } else {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, msgKey, msgValue);
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, objectKey, objectValue);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
-                log.error("FAILED to adapt Search State (consuming/setting message), msg=" + msgKey + ", value="
-                        + msgValue, ex);
+                log.error("FAILED to adapt Search State (consuming/setting message), msg=" + objectKey + ", value="
+                        + objectValue, ex);
             }
         }
 
         return msgPublished;
     }
 
+    /**
+     * Clear the search state meaning remove all search data from the state (query string, search parameters,
+     * result cache, messages ...)
+     * @param request
+     */
     public static void resetSearchState(PortletRequest request) {
         // state for parameters in URL !
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
@@ -196,6 +146,31 @@ public class SearchState {
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
         PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_EXECUTION_TYPE);
+    }
+
+    /**
+     * Get the Object with the given key from search state. Returns null if object is not set
+     * @param request
+     * @param objectKey
+     * @return
+     */
+    public static Object getSearchStateObject(PortletRequest request, String objectKey) {
+        return PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, objectKey);
+    }
+
+    /**
+     * Get the Object with the given Key as String. Returns "" if object is not set.
+     * @param request
+     * @param objectKey
+     * @return
+     */
+    public static String getSearchStateObjectAsString(PortletRequest request, String objectKey) {
+        String returnString = "";
+        Object stateObject = getSearchStateObject(request, objectKey);
+        if (stateObject != null) {
+            returnString = stateObject.toString();
+        }
+        return returnString;
     }
 
 }

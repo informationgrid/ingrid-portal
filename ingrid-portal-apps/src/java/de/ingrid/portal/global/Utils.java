@@ -263,4 +263,18 @@ public class Utils {
 
         return urlParam;
     }
+
+    /**
+     * Append a new urlParameter to the given url Parameters 
+     * @param currentURLParams
+     * @param newURLParam
+     */
+    public static void appendURLParameter(StringBuffer currentURLParams, String newURLParam) {
+        if (newURLParam != null && newURLParam.length() > 0) {
+            if (currentURLParams.length() > 0) {
+                currentURLParams.append("&");
+            }
+            currentURLParams.append(newURLParam);
+        }
+    }
 }

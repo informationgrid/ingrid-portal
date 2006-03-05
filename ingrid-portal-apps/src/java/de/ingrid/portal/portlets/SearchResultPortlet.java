@@ -10,6 +10,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -133,9 +134,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // create threaded query controller
         ThreadedQueryController controller = new ThreadedQueryController();
         controller.setTimeout(10000);
-        
+
         QueryDescriptor qd = null;
-        
+
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
@@ -150,7 +151,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 controller.addQuery("ranked", qd);
             }
         }
-        
+
         // UNRANKED
         IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
@@ -167,19 +168,20 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
         }
-        
+
         // fire query, post process results
         if (controller.hasQueries()) {
             // fire queries
             HashMap results = controller.search();
             // post process ranked hits if exists
             if (results.containsKey("ranked")) {
-                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits)results.get("ranked"), selectedDS);
+                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
-                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits)results.get("unranked"), selectedDS);
+                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"),
+                        selectedDS);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
             }
         }
@@ -225,19 +227,23 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        // check whether page navigation was clicked and adapt query state
+        // check whether page navigation was clicked and send according message (Search state)
         String rankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
         if (rankedStarthit != null) {
             publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
-        } else {
-            String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
-            if (unrankedStarthit != null) {
-                publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
-            }
+        }
+        String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
+        if (unrankedStarthit != null) {
+            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
         }
 
+        // adapt SearchState for bookmarking !:
+        // - set new result pages
+        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, rankedStarthit);
+        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, unrankedStarthit);
+
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParams(request));
+        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
     }
 
 }
