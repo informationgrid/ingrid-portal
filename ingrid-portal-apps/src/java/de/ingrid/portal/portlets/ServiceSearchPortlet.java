@@ -22,7 +22,6 @@ import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
