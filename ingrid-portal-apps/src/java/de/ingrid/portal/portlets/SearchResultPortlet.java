@@ -4,7 +4,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
@@ -19,18 +18,13 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.interfaces.IBUSInterface;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
-import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 /**

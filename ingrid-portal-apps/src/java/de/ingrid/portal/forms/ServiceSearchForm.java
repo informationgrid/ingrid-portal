@@ -5,6 +5,8 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.Settings;
+
 /**
  * Form Handler for Service page. Stores and validates form input.
  * 
@@ -16,18 +18,21 @@ public class ServiceSearchForm extends ActionForm {
     public static final String SESSION_KEY = "service_form";
 
     /** field name of "rubric" checkbox group in form */
-    public static final String FIELD_RUBRIC = "rubric";
+    public static final String FIELD_RUBRIC = Settings.PARAM_RUBRIC;
 
     /** field name of "partner" selection list in form */
-    public static final String FIELD_PARTNER = "partner";
+    public static final String FIELD_PARTNER = Settings.PARAM_PARTNER;
 
     /** field name of "grouping" radio group in form */
-    public static final String FIELD_GROUPING = "grouping";
+    public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
+
+    /** field value "all" (used in rubric, partner) */
+    public static final String FIELDV_ALL = "all";
 
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
     public static final String INITIAL_RUBRIC = "all''Presse''Publikationen''Veranstaltungen";
 
-    public static final String INITIAL_PARTNER = "all";
+    public static final String INITIAL_PARTNER = FIELDV_ALL;
 
     public static final String INITIAL_GROUPING = "none";
 
@@ -35,8 +40,7 @@ public class ServiceSearchForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
-        clearErrors();
-        clearInput();
+        clear();
         setInput(FIELD_RUBRIC, INITIAL_RUBRIC);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
         setInput(FIELD_GROUPING, INITIAL_GROUPING);
@@ -52,13 +56,13 @@ public class ServiceSearchForm extends ActionForm {
      */
     public void populate(PortletRequest request) {
         if (request.getParameterValues(FIELD_RUBRIC) != null) {
-            setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC));            
+            setInput(FIELD_RUBRIC, request.getParameterValues(FIELD_RUBRIC));
         }
         if (request.getParameterValues(FIELD_PARTNER) != null) {
-            setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER));            
+            setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER));
         }
         if (request.getParameterValues(FIELD_GROUPING) != null) {
-            setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));            
+            setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
         }
     }
 

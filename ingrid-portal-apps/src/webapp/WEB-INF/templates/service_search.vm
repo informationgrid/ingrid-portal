@@ -1,6 +1,7 @@
 #set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="service_search" id="service_search">
+   	<input type="hidden" name="action" value="doSearch"/>
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>

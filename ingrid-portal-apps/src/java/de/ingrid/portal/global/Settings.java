@@ -39,6 +39,9 @@ public class Settings {
     /** page for displaying results */
     public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
 
+    /** service catalogue page */
+    public final static String PAGE_SERVICE = "/ingrid-portal/portal/main-service.psml";
+
     // ===========================================
     // IngridQuery
     // ===========================================
@@ -196,22 +199,24 @@ public class Settings {
 
     public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
-    /** Datasource parameter name and values */
+    /** Datasource parameter name */
     public final static String PARAM_DATASOURCE = "ds";
-
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";
-
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
-
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 
     // ------------- PARAMS NOT used for messaging, just for access in Request -----------------------------
 
-    /** Action parameter name and values */
+    public final static String PARAM_RUBRIC = "rubric";
+
+    public final static String PARAM_PARTNER = "partner";
+
+    public final static String PARAM_GROUPING = "grouping";
+
+    /** Action parameter name */
     public final static String PARAM_ACTION = "action";
-
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-
     public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
+    public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
 
 }

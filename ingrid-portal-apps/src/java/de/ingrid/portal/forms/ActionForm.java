@@ -235,6 +235,14 @@ public abstract class ActionForm implements Serializable {
     // =======================
 
     /**
+     * Clear everything in this form, so there's no input and no errors.
+     */
+    public void clear() {
+        clearInput();
+        clearErrors();
+    }
+    
+    /**
      * Get the current input of the form encoded as URL parameters (WITHOUT leading "?" !)
      * @return
      */
