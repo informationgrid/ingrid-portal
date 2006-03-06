@@ -16,15 +16,9 @@
         <value>searchSimple.title.search</value>
       </preference>
     </fragment>
-    <fragment id="home-2" type="portlet" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="home-2" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/environment_teaser.vm</value>
-      </preference>
-      <preference name="infoTitleKey" readOnly="false">
-        <value>teaser.envSearch.title</value>
-      </preference>
     </fragment>
     <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
       <property layout="TwoColumns" name="row" value="2" />
