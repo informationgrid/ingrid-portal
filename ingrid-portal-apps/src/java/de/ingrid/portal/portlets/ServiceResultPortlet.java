@@ -125,7 +125,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                 ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
         // redirect to our page wih URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsService(request, af));
+        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
@@ -145,7 +145,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {
-                    log.error("Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    log.error("Problems fetching details of hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
             }
 

@@ -7,15 +7,19 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -32,9 +36,6 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/environment_result.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/environment_no_result.vm";
-
-    /** Keys of parameters in session/request */
-    private final static String KEY_START_HIT = "rstart";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -67,16 +68,11 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // default: start at the beginning with the first hit (display first result page)
         int startHit = 0;
-        // indicates whether a new query was performed !
-        Object newQuery = receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         try {
-            // if no new query was performed, read render parameters from former action request
-            if (newQuery == null) {
-                startHit = (new Integer(request.getParameter(KEY_START_HIT))).intValue();
-            }
+            startHit = (new Integer(request.getParameter(Settings.PARAM_STARTHIT_RANKED))).intValue();
         } catch (Exception ex) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching starthit of ENVIRONMENT page from render request, set starthit to 0");
+                log.debug("No starthit of ENVIRONMENT catalogue page from render request, set starthit to 0");
             }
         }
 
@@ -91,10 +87,12 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         int numberOfHits = 0;
         try {
             hits = doSearch(query, startHit, HITS_PER_PAGE);
-            numberOfHits = (int) hits.length();
+            if (hits != null) {
+                numberOfHits = (int) hits.length();
+            }
         } catch (Exception ex) {
-            if (log.isInfoEnabled()) {
-                log.info("Problems performing environment catalogue search !");
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing environment catalogue search !", ex);
             }
         }
 
@@ -122,23 +120,12 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        // ----------------------------------
-        // fetch parameters
-        // ----------------------------------
-        String pageStarthit = request.getParameter(KEY_START_HIT);
+        // get our ActionForm for generating URL params from current form input
+        EnvironmentSearchForm af = (EnvironmentSearchForm) Utils.getActionForm(request,
+                EnvironmentSearchForm.SESSION_KEY, EnvironmentSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
-        // ----------------------------------
-        // business logic
-        // ----------------------------------
-        // remove message from search submit portlet indicating that a new query was performed
-        cancelRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
-
-        // ----------------------------------
-        // set render parameters
-        // ----------------------------------
-        if (pageStarthit != null) {
-            actionResponse.setRenderParameter(KEY_START_HIT, pageStarthit);
-        }
+        // redirect to our page wih URL parameters for bookmarking
+        actionResponse.sendRedirect(Settings.PAGE_ENVIRONMENT + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
@@ -153,15 +140,23 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
-            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY, Settings.RESULT_KEY_PARTNER };
+            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
+                    Settings.RESULT_KEY_PARTNER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
+            if (details == null) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems fetching details of hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+            }
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    detail = details[i];
+                    if (details != null) {
+                        detail = details[i];
+                    }
                     //detail = ibus.getDetail(result, query, requestedFields);
 
                     if (result == null) {
@@ -169,8 +164,10 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
-                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_FUNCT_CATEGORY));
+                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail,
+                                Settings.RESULT_KEY_TOPIC));
+                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailMultipleValues(detail,
+                                Settings.RESULT_KEY_FUNCT_CATEGORY));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

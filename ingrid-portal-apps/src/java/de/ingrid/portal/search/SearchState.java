@@ -23,15 +23,17 @@ public class SearchState {
     private final static Log log = LogFactory.getLog(SearchState.class);
 
     /**
-     * Returns the current state of the Service page as URL Parameters, which can be concatenated
-     * to the URL path (for bookmarking !).
+     * Returns the current state of a Catalogue page as URL Parameters, which can be concatenated
+     * to the URL path (for bookmarking !). The specific state of the page is encapsulated in the
+     * passed ActionForm.  
      * NOTICE: The passed ActionForm has already to REFLECT THE CURRENT STATE of the form input !!!
-     * If passed ActionForm is null, the parameters are ONLY extracted from request (e.g. for teaser call)
+     * If passed ActionForm is null, the parameters are ONLY extracted from request (e.g. for teaser call,
+     * when teaser call, the request has to contain a parameter "rubric").
      * @param request
      * @param af
      * @return
      */
-    public static String getURLParamsService(PortletRequest request, ActionForm af) {
+    public static String getURLParamsCatalogueSearch(PortletRequest request, ActionForm af) {
         StringBuffer result = new StringBuffer("?");
 
         // Action parameter, determines what to do (important for bookmarking, to react in view method)
@@ -54,23 +56,10 @@ public class SearchState {
         Utils.appendURLParameter(result, urlParam);
 
         if (log.isInfoEnabled()) {
-            log.info("Service: URL parameters: " + result);
+            log.info("Catalogue: URL parameters: " + result);
         }
 
         return result.toString();
-    }
-
-    /**
-     * Returns the current state of the Measures page as URL Parameters, which can be concatenated
-     * to the URL path (for bookmarking !).
-     * NOTICE: The passed ActionForm has already to REFLECT THE CURRENT STATE of the form input !!!
-     * If passed ActionForm is null, the parameters are ONLY extracted from request (e.g. for teaser call)
-     * @param request
-     * @param af
-     * @return
-     */
-    public static String getURLParamsMeasures(PortletRequest request, ActionForm af) {
-        return getURLParamsService(request, af);
     }
 
     /**

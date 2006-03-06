@@ -116,7 +116,7 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
         af.populate(request);
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsMeasures(request, af));
+        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
     public void setupQuery(PortletRequest request) {

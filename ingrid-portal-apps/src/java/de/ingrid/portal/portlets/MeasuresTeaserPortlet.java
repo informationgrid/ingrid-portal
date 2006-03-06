@@ -39,6 +39,6 @@ public class MeasuresTeaserPortlet extends GenericVelocityPortlet {
             IOException {
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsMeasures(request, null));
+        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, null));
     }
 }

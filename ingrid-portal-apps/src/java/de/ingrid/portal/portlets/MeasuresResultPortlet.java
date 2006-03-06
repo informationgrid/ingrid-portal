@@ -125,7 +125,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
                 MeasuresSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
         // redirect to our page wih URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsService(request, af));
+        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {

@@ -5,6 +5,8 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.Settings;
+
 /**
  * Form Handler for Environment Search page. Stores and validates form input.
  * 
@@ -16,20 +18,20 @@ public class EnvironmentSearchForm extends ActionForm {
     public static final String SESSION_KEY = "envsearch_form";
 
     /** field names (name of request parameter) */
-    public static final String FIELD_TOPIC = "themes";
+    public static final String FIELD_TOPIC = Settings.PARAM_RUBRIC;
 
     public static final String FIELD_FUNCT_CATEGORY = "category";
 
-    public static final String FIELD_PARTNER = "partner";
+    public static final String FIELD_PARTNER = Settings.PARAM_PARTNER;
 
-    public static final String FIELD_GROUPING = "grouping";
+    public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
     /** initial values */
-    public static final String INITIAL_THEMES = "all";
+    public static final String INITIAL_THEMES = Settings.PARAMV_ALL;
 
-    public static final String INITIAL_CATEGORY = "all";
+    public static final String INITIAL_CATEGORY = Settings.PARAMV_ALL;
 
-    public static final String INITIAL_PARTNER = "all";
+    public static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
 
     public static final String INITIAL_GROUPING = "none";
 
@@ -37,8 +39,7 @@ public class EnvironmentSearchForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
-        clearErrors();
-        clearInput();
+        clear();
         setInput(FIELD_TOPIC, INITIAL_THEMES);
         setInput(FIELD_FUNCT_CATEGORY, INITIAL_CATEGORY);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);

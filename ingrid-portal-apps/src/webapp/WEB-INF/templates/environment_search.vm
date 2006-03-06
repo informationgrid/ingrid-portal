@@ -1,59 +1,60 @@
 #set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="get" name="environment_search" id="environment_search">
+   	<input type="hidden" name="action" value="doSearch"/>
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>
 		#displayFormErrors()
 		<div class="float_left">
 			<h3>
-				<label for="xx2">#displayFieldLabel('themes' $MESSAGES.getString('envSearch.themes'))
+				<label for="xx2">#displayFieldLabel('rubric' $MESSAGES.getString('envSearch.themes'))
 				</label>
 			</h3>
-			<select class="env_themes inputstyle" name="themes" id="xx2" size="5" multiple="multiple">
-				<option value="all" #getSelected('themes' 'all')>------ Alles auswählen ------
+			<select class="env_themes inputstyle" name="rubric" id="xx2" size="5" multiple="multiple">
+				<option value="all" #getSelected('rubric' 'all')>------ Alles auswählen ------
 				</option>
-				<option value="Abfall" #getSelected('themes' 'Abfall')>Abfall
+				<option value="Abfall" #getSelected('rubric' 'Abfall')>Abfall
 				</option>
-				<option value="Altlasten" #getSelected('themes' 'Altlasten')>Altlasten
+				<option value="Altlasten" #getSelected('rubric' 'Altlasten')>Altlasten
 				</option>
-				<option value="Bauen" #getSelected('themes' 'Bauen')>Bauen
+				<option value="Bauen" #getSelected('rubric' 'Bauen')>Bauen
 				</option>
-				<option value="Boden" #getSelected('themes' 'Boden')>Boden
+				<option value="Boden" #getSelected('rubric' 'Boden')>Boden
 				</option>
-				<option value="Chemikalien" #getSelected('themes' 'Chemikalien')>Chemikalien
+				<option value="Chemikalien" #getSelected('rubric' 'Chemikalien')>Chemikalien
 				</option>
-				<option value="Energie" #getSelected('themes' 'Energie')>Energie
+				<option value="Energie" #getSelected('rubric' 'Energie')>Energie
 				</option>
-				<option value="Forstwirtschaft" #getSelected('themes' 'Forstwirtschaft')>Forstwirtschaft
+				<option value="Forstwirtschaft" #getSelected('rubric' 'Forstwirtschaft')>Forstwirtschaft
 				</option>
-				<option value="Gentechnik" #getSelected('themes' 'Gentechnik')>Gentechnik
+				<option value="Gentechnik" #getSelected('rubric' 'Gentechnik')>Gentechnik
 				</option>
-				<option value="Geologie" #getSelected('themes' 'Geologie')>Geologie
+				<option value="Geologie" #getSelected('rubric' 'Geologie')>Geologie
 				</option>
-				<option value="Gesundheit" #getSelected('themes' 'Gesundheit')>Gesundheit
+				<option value="Gesundheit" #getSelected('rubric' 'Gesundheit')>Gesundheit
 				</option>
-				<option value="LaermErschuetterung" #getSelected('themes' 'LaermErschuetterung')>Lärm und Erschütterungen
+				<option value="LaermErschuetterung" #getSelected('rubric' 'LaermErschuetterung')>Lärm und Erschütterungen
 				</option>
-				<option value="Landwirtschaft" #getSelected('themes' 'Landwirtschaft')>Landwirtschaft
+				<option value="Landwirtschaft" #getSelected('rubric' 'Landwirtschaft')>Landwirtschaft
 				</option>
-				<option value="LuftKlima" #getSelected('themes' 'LuftKlima')>Luft und Klima
+				<option value="LuftKlima" #getSelected('rubric' 'LuftKlima')>Luft und Klima
 				</option>
-				<option value="NachhaltigeEntwicklung" #getSelected('themes' 'NachhaltigeEntwicklung')>Nachhaltige Entwicklung
+				<option value="NachhaltigeEntwicklung" #getSelected('rubric' 'NachhaltigeEntwicklung')>Nachhaltige Entwicklung
 				</option>
-				<option value="NaturLandschaft" #getSelected('themes' 'NaturLandschaft')>Natur und Landschaft
+				<option value="NaturLandschaft" #getSelected('rubric' 'NaturLandschaft')>Natur und Landschaft
 				</option>
-				<option value="Strahlung" #getSelected('themes' 'Strahlung')>Strahlung
+				<option value="Strahlung" #getSelected('rubric' 'Strahlung')>Strahlung
 				</option>
-				<option value="Tierschutz" #getSelected('themes' 'Tierschutz')>Tierschutz
+				<option value="Tierschutz" #getSelected('rubric' 'Tierschutz')>Tierschutz
 				</option>
-				<option value="Umweltinformation" #getSelected('themes' 'Umweltinformation')>Umweltinformation
+				<option value="Umweltinformation" #getSelected('rubric' 'Umweltinformation')>Umweltinformation
 				</option>
-				<option value="Umweltwirtschaft" #getSelected('themes' 'Umweltwirtschaft')>Umweltwirtschaft
+				<option value="Umweltwirtschaft" #getSelected('rubric' 'Umweltwirtschaft')>Umweltwirtschaft
 				</option>
-				<option value="Verkehr" #getSelected('themes' 'Verkehr')>Verkehr
+				<option value="Verkehr" #getSelected('rubric' 'Verkehr')>Verkehr
 				</option>
-				<option value="Wasser" #getSelected('themes' 'Wasser')>Wasser
+				<option value="Wasser" #getSelected('rubric' 'Wasser')>Wasser
 				</option>
 			</select>
 		</div>

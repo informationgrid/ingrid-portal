@@ -39,6 +39,6 @@ public class ServiceTeaserPortlet extends GenericVelocityPortlet {
             IOException {
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsService(request, null));
+        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsCatalogueSearch(request, null));
     }
 }

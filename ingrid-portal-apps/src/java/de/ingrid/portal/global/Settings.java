@@ -43,6 +43,9 @@ public class Settings {
     /** measures catalogue page */
     public final static String PAGE_MEASURES = "/ingrid-portal/portal/main-measures.psml";
 
+    /** environment catalogue page */
+    public final static String PAGE_ENVIRONMENT = "/ingrid-portal/portal/main-environment.psml";
+
     // ===========================================
     // IngridQuery
     // ===========================================
