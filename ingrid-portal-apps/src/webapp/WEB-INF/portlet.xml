@@ -157,7 +157,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ChronicleTeaserResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
     </portlet>
 
 

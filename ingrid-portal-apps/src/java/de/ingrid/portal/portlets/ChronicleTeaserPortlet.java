@@ -10,21 +10,20 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
-import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
-import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.utils.IngridHitDetail;
 
-public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
+public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
+
+    public final static String TITLE_KEY = "teaser.chronicle.title";
 
     public void init(PortletConfig config) throws PortletException {
-        // set our message "scope" for inter portlet messaging
-        // setTopic(Settings.MSG_TOPIC_SERVICE);
-
         super.init(config);
     }
 
@@ -32,11 +31,17 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
+        response.setTitle(messages.getString(TITLE_KEY));
+
         IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date());
 
         HashMap result = new HashMap();
         if (details.length > 0) {
-            int entry = (int)(Math.random() * details.length);
+            int entry = (int) (Math.random() * details.length);
             DetailedTopic detail = (DetailedTopic) details[entry];
             result.put("title", detail.get("topicName"));
             if (detail.get("from") != null) {
@@ -47,7 +52,8 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             }
             result.put("topicId", detail.get("topicId"));
             if (detail.get("from") != null) {
-                int years = UtilsDate.yearsBetween(detail.get("from").toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                int years = UtilsDate.yearsBetween(detail.get("from").toString(), new SimpleDateFormat("yyyy-MM-dd")
+                        .format(new Date()));
                 result.put("years", new Integer(years));
             }
         }
