@@ -1,22 +1,34 @@
 <div class="portlet-section-body">
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-      <span><a href="portal/main-measures.psml?rubric=Strahlung&teaser=1">Strahlung</a></span>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doTeaser')
+$action.setParameter('rubric','Strahlung')
+      <span><a href="$action">Strahlung</a></span>
       <span class="clearer"></span>
     </p>
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-      <span><a href="portal/main-measures.psml?rubric=Luft&teaser=1">Luft</a></span>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doTeaser')
+$action.setParameter('rubric','Luft')
+      <span><a href="$action">Luft</a></span>
       <span class="clearer"></span>
     </p>       
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-      <span><a href="portal/main-measures.psml?rubric=Wasser&teaser=1">Wasser</a></span>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doTeaser')
+$action.setParameter('rubric','Wasser')
+      <span><a href="$action">Wasser</a></span>
       <span class="clearer"></span>
     </p>
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-      <span><a href="portal/main-measures.psml?rubric=Weitere&teaser=1">Weitere</a></span>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doTeaser')
+$action.setParameter('rubric','Weitere')
+      <span><a href="$action">Weitere</a></span>
       <span class="clearer"></span>
     </p>
 </div>

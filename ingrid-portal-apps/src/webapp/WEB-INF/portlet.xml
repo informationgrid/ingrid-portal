@@ -106,6 +106,24 @@
         <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
     </portlet>
 
+    <portlet id="MeasuresTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/measures_teaser.vm</value>
+        </init-param>
+        <portlet-name>MeasuresTeaser</portlet-name>
+        <display-name>Measures Teaser</display-name>
+        <description>This portlet displays the rubrics of the Measures page on the home page for quick search.</description>
+        <portlet-class>de.ingrid.portal.portlets.MeasuresTeaserPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>            
+    </portlet>
+
     <portlet id="ChronicleTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
