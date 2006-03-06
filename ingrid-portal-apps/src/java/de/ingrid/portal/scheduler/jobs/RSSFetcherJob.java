@@ -117,7 +117,7 @@ public class RSSFetcherJob implements Job {
 
                                 IngridRSSStore rssEntry = new IngridRSSStore();
                                 rssEntry.setTitle(entry.getTitle());
-                                rssEntry.setDescription(entry.getDescription().getValue());
+                                rssEntry.setDescription(UtilsString.htmlescape(entry.getDescription().getValue()));
                                 rssEntry.setLink(entry.getLink());
                                 rssEntry.setLanguage(feed.getLanguage());
                                 rssEntry.setPublishedDate(publishedDate);
