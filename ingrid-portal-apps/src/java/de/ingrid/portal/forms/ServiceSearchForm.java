@@ -26,13 +26,10 @@ public class ServiceSearchForm extends ActionForm {
     /** field name of "grouping" radio group in form */
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
-    /** field value "all" (used in rubric, partner) */
-    public static final String FIELDV_ALL = "all";
-
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
     public static final String INITIAL_RUBRIC = "all''Presse''Publikationen''Veranstaltungen";
 
-    public static final String INITIAL_PARTNER = FIELDV_ALL;
+    public static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
 
     public static final String INITIAL_GROUPING = "none";
 

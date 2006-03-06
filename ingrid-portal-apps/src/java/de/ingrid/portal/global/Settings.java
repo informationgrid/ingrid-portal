@@ -192,6 +192,22 @@ public class Settings {
     // values = PARAMV_
     // ===========================================
 
+    // ------------- generic PARAM values -----------------------------
+
+    public final static String PARAMV_ALL = "all";
+
+    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
+
+    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
+
+    public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
+
+    public final static String PARAMV_DATASOURCE_ENVINFO = "1";
+
+    public final static String PARAMV_DATASOURCE_ADDRESS = "2";
+
+    public final static String PARAMV_DATASOURCE_RESEARCH = "3";
+
     // ------------- PARAMS also used for messaging (SearchState) -----------------------------
 
     public final static String PARAM_QUERY_STRING = "q";
@@ -200,14 +216,7 @@ public class Settings {
 
     public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
-    /** Datasource parameter name */
     public final static String PARAM_DATASOURCE = "ds";
-
-    public final static String PARAMV_DATASOURCE_ENVINFO = "1";
-
-    public final static String PARAMV_DATASOURCE_ADDRESS = "2";
-
-    public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 
     // ------------- PARAMS NOT used for messaging, just for access in Request -----------------------------
 
@@ -217,13 +226,6 @@ public class Settings {
 
     public final static String PARAM_GROUPING = "grouping";
 
-    /** Action parameter name */
     public final static String PARAM_ACTION = "action";
-
-    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-
-    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
-
-    public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
 
 }
