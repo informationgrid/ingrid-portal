@@ -8,6 +8,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,15 +19,13 @@ import de.ingrid.portal.forms.MeasuresSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
 
     private final static Log log = LogFactory.getLog(MeasuresSearchPortlet.class);
-
-    /** Keys of parameters in session/request */
-    private final static String PARAM_TEASER_CALL = "teaser";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -39,65 +38,97 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        // put ActionForm to context. use variable name "actionForm" so velocity
-        // macros work !
-        MeasuresSearchForm af = (MeasuresSearchForm) Utils.getActionForm(request, MeasuresSearchForm.SESSION_KEY,
-                MeasuresSearchForm.class);
-        // when called from teaser take over search criteria and initiate query
-        String teaserCall = request.getParameter(PARAM_TEASER_CALL);
-        if (teaserCall != null) {
-            af.init();
-            // populate doesn't clear !!!
-            af.populate(request);
-            if (!af.validate()) {
-                return;
-            }
-            setupQuery(request);
+        // ----------------------------------
+        // check for passed URL PARAMETERS (for bookmarking)
+        // ----------------------------------
+        // action indicates what to do !
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if (action == null) {
+            action = "";
         }
-        context.put("actionForm", af);
+        // indicates whether form parameters were passed -> then we're called from Service page !
+        String grouping = request.getParameter(Settings.PARAM_GROUPING);
 
-        // get data base stuff
+        // search if
+        // - new search submitted
+        // - called from teaser
+        // - parameters are passed, so maybe we process bookmark !
+        boolean doSearch = false;
+        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(Settings.PARAMV_ACTION_FROM_TEASER)
+                || grouping != null) {
+            // remove query message for result portlet -> no results
+            cancelRenderMessage(request, Settings.MSG_QUERY);
+            doSearch = true;
+        }
+
+        // ----------------------------------
+        // set data for view template 
+        // ----------------------------------
+
+        // get partners
         List partners = UtilsDB.getPartners();
         context.put("partnerList", partners);
+
+        // update ActionForm !
+        MeasuresSearchForm af = (MeasuresSearchForm) Utils.getActionForm(request, MeasuresSearchForm.SESSION_KEY,
+                MeasuresSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
+            // empty form on new search
+            af.clear();
+        } else if (action.equals(Settings.PARAMV_ACTION_FROM_TEASER)) {
+            // default values when called from teaser
+            af.init();
+        } else if (grouping == null) {
+            // no URL parameters, we're called from other page -> default values
+            af.init();
+        }
+        // replaces only the ones in request
+        af.populate(request);
+        context.put("actionForm", af);
+
+        // validate via ActionForm
+        if (!af.validate()) {
+            super.doView(request, response);
+            return;
+        }
+
+        // ----------------------------------
+        // prepare Search, Search will be performed in Result portlet 
+        // ----------------------------------
+        if (doSearch) {
+            setupQuery(request);
+        } else {
+            // remove query message for result portlet -> no results
+            cancelRenderMessage(request, Settings.MSG_QUERY);
+        }
 
         super.doView(request, response);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        // remove old query message for result portlet
-        cancelRenderMessage(request, Settings.MSG_QUERY);
-        // also set a message that a new query was performed, so former render parameters are ignored
-        publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
-
-        // check form input
+        // get our ActionForm for generating URL params from current form state
+        // we have a new submit, so bring form up to date !
         MeasuresSearchForm af = (MeasuresSearchForm) Utils.getActionForm(request, MeasuresSearchForm.SESSION_KEY,
-                MeasuresSearchForm.class);
-        // populate doesn't clear !!!
-        af.clearInput();
+                MeasuresSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        af.clear();
+        // populate doesn't clear
         af.populate(request);
-        if (!af.validate()) {
-            return;
-        }
 
-        setupQuery(request);
+        // redirect to our page with URL parameters for bookmarking
+        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsMeasures(request, af));
     }
 
     public void setupQuery(PortletRequest request) {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
-        // also set a message that a new query was performed, so former render parameters are ignored
-        publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
-
-        String FORM_VALUE_ALL = "all";
 
         IngridQuery query = null;
         try {
             query = new IngridQuery();
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_MEASURES));
-
-            // RUBRIC
             /*
+             // RUBRIC
              String[] rubrics = request.getParameterValues(MeasuresSearchForm.FIELD_RUBRIC);
              // don't set anything if "all" is selected
              if (rubrics != null && Utils.getPosInArray(rubrics, FORM_VALUE_ALL) == -1) {
@@ -113,7 +144,7 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             // PARTNER
             String[] partners = request.getParameterValues(MeasuresSearchForm.FIELD_PARTNER);
             // don't set anything if "all" is selected
-            if (partners != null && Utils.getPosInArray(partners, FORM_VALUE_ALL) == -1) {
+            if (partners != null && Utils.getPosInArray(partners, MeasuresSearchForm.FIELDV_ALL) == -1) {
                 for (int i = 0; i < partners.length; i++) {
                     if (partners[i] != null) {
                         query.addField(new FieldQuery(true, false, Settings.QFIELD_PARTNER, partners[i]));

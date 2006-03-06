@@ -3,8 +3,6 @@
  */
 package de.ingrid.portal.global;
 
-import de.ingrid.portal.forms.SearchSimpleForm;
-
 /**
  * Common resources used by our Portlet Application
  *
@@ -41,6 +39,9 @@ public class Settings {
 
     /** service catalogue page */
     public final static String PAGE_SERVICE = "/ingrid-portal/portal/main-service.psml";
+
+    /** measures catalogue page */
+    public final static String PAGE_MEASURES = "/ingrid-portal/portal/main-measures.psml";
 
     // ===========================================
     // IngridQuery
@@ -201,8 +202,11 @@ public class Settings {
 
     /** Datasource parameter name */
     public final static String PARAM_DATASOURCE = "ds";
+
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";
+
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
+
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 
     // ------------- PARAMS NOT used for messaging, just for access in Request -----------------------------
@@ -215,8 +219,11 @@ public class Settings {
 
     /** Action parameter name */
     public final static String PARAM_ACTION = "action";
+
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
+
     public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
+
     public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
 
 }

@@ -7,15 +7,19 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.forms.MeasuresSearchForm;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -32,9 +36,6 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/measures_result.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/measures_no_result.vm";
-
-    /** Keys of parameters in session/request */
-    private final static String KEY_START_HIT = "rstart";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -67,16 +68,11 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // default: start at the beginning with the first hit (display first result page)
         int startHit = 0;
-        // indicates whether a new query was performed !
-        Object newQuery = receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         try {
-            // if no new query was performed, read render parameters from former action request
-            if (newQuery == null) {
-                startHit = (new Integer(request.getParameter(KEY_START_HIT))).intValue();
-            }
+            startHit = (new Integer(request.getParameter(Settings.PARAM_STARTHIT_RANKED))).intValue();
         } catch (Exception ex) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching starthit of MEASURES page from render request, set starthit to 0");
+                log.debug("No starthit of MEASURES page from render request, set starthit to 0");
             }
         }
 
@@ -91,10 +87,12 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         int numberOfHits = 0;
         try {
             hits = doSearch(query, startHit, HITS_PER_PAGE);
-            numberOfHits = (int) hits.length();
+            if (hits != null) {
+                numberOfHits = (int) hits.length();
+            }
         } catch (Exception ex) {
-            if (log.isInfoEnabled()) {
-                log.info("Problems performing environment catalogue search !");
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing measures catalogue search !", ex);
             }
         }
 
@@ -122,23 +120,12 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-        // ----------------------------------
-        // fetch parameters
-        // ----------------------------------
-        String pageStarthit = request.getParameter(KEY_START_HIT);
+        // get our ActionForm for generating URL params from current form input
+        MeasuresSearchForm af = (MeasuresSearchForm) Utils.getActionForm(request, MeasuresSearchForm.SESSION_KEY,
+                MeasuresSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
-        // ----------------------------------
-        // business logic
-        // ----------------------------------
-        // remove message from search submit portlet indicating that a new query was performed
-        cancelRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
-
-        // ----------------------------------
-        // set render parameters
-        // ----------------------------------
-        if (pageStarthit != null) {
-            actionResponse.setRenderParameter(KEY_START_HIT, pageStarthit);
-        }
+        // redirect to our page wih URL parameters for bookmarking
+        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsService(request, af));
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
@@ -156,20 +143,29 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
             // TODO: Welcher Key für Rubrik von Messwerte Hit holen und anzeigen !!!
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_PARTNER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
+            if (details == null) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+            }
 
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
-                    detail = details[i];
+                    if (details != null) {
+                        detail = details[i];
+                    }
+                    //detail = ibus.getDetail(result, query, requestedFields);
 
                     if (result == null) {
                         continue;
                     }
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_TOPIC));
+                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail,
+                                Settings.RESULT_KEY_TOPIC));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

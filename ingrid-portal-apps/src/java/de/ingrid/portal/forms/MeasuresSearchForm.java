@@ -5,6 +5,8 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.Settings;
+
 /**
  * Form Handler for Measures Search portlet. Stores and validates form input.
  * 
@@ -16,19 +18,21 @@ public class MeasuresSearchForm extends ActionForm {
     public static final String SESSION_KEY = "messearch_form";
 
     /** field names (name of request parameter) */
-    public static final String FIELD_RUBRIC = "rubric";
+    public static final String FIELD_RUBRIC = Settings.PARAM_RUBRIC;
 
-    public static final String FIELD_PARTNER = "partner";
+    /** field name of "partner" selection list in form */
+    public static final String FIELD_PARTNER = Settings.PARAM_PARTNER;
 
-    public static final String FIELD_GROUPING = "grouping";
+    /** field name of "grouping" radio group in form */
+    public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
-    /**
-     * initial values. WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES
-     * !!!!!!!!!
-     */
+    /** field value "all" (used in rubric, partner) */
+    public static final String FIELDV_ALL = "all";
+
+    /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
     public static final String INITIAL_RUBRIC = "all''Strahlung''Luft''Wasser''Weitere";
 
-    public static final String INITIAL_PARTNER = "all";
+    public static final String INITIAL_PARTNER = FIELDV_ALL;
 
     public static final String INITIAL_GROUPING = "none";
 
@@ -36,8 +40,7 @@ public class MeasuresSearchForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
-        clearErrors();
-        clearInput();
+        clear();
         setInput(FIELD_RUBRIC, INITIAL_RUBRIC);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
         setInput(FIELD_GROUPING, INITIAL_GROUPING);

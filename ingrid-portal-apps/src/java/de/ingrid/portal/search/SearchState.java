@@ -61,6 +61,19 @@ public class SearchState {
     }
 
     /**
+     * Returns the current state of the Measures page as URL Parameters, which can be concatenated
+     * to the URL path (for bookmarking !).
+     * NOTICE: The passed ActionForm has already to REFLECT THE CURRENT STATE of the form input !!!
+     * If passed ActionForm is null, the parameters are ONLY extracted from request (e.g. for teaser call)
+     * @param request
+     * @param af
+     * @return
+     */
+    public static String getURLParamsMeasures(PortletRequest request, ActionForm af) {
+        return getURLParamsService(request, af);
+    }
+
+    /**
      * Returns the URL Parameters of the current state of the main search for bookmarking.
      * @param request
      * @return
