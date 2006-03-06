@@ -19,6 +19,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.global.QueryStringUtil;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
@@ -155,7 +156,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
             String queryStr = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
 
-            String newQueryStr = queryStr.toLowerCase();
+            String newQueryStr = queryStr;
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
                 ArrayList queryTerms = similarRoot.getChildren();
@@ -172,14 +173,19 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                                 subQueryStr = new StringBuffer("(" + queryTerm.getName());
                                 hasSubTerms = true;
                             }
-                            subQueryStr.append(" OR \"").append(node.getName()).append("\"");
+                            // check for phases, quote phrases
+                            if (node.getName().indexOf(" ") > -1) {
+                                subQueryStr.append(" OR \"").append(node.getName()).append("\"");
+                            } else {
+                                subQueryStr.append(" OR ").append(node.getName());
+                            }
                         }
                         if (!it2.hasNext() && hasSubTerms) {
                             subQueryStr.append(")");
                         }
                     }
                     if (subQueryStr != null) {
-                        newQueryStr = newQueryStr.replaceAll(queryTerm.getName(), subQueryStr.toString());
+                        newQueryStr = QueryStringUtil.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr.toString());
                     }
                 }
                 // republish the query

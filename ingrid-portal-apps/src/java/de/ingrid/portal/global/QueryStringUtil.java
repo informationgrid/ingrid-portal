@@ -1,0 +1,94 @@
+/*
+ * Copyright (c) 2006 wemove digital solutions. All rights reserved.
+ */
+package de.ingrid.portal.global;
+
+/**
+ * TODO Describe your created type (class, etc.) here.
+ *
+ * @author joachim@wemove.com
+ */
+public class QueryStringUtil {
+    
+    public static String replaceTerm(String queryStr, String term, String newTerm) {
+        int termStartPos = 0;
+        int termStopPos = 0;
+        String myTerm;
+        StringBuffer result = new StringBuffer(queryStr);
+        
+        while (true) {
+            termStartPos = getTermStartPos(result.toString(), termStopPos);
+            if (termStartPos == result.length()) {
+                break;
+            }
+            termStopPos = getTermStopPos(result.toString(), termStartPos);
+            myTerm = result.substring(termStartPos, termStopPos);
+            if (myTerm.equalsIgnoreCase(term)) {
+                result.replace(termStartPos, termStopPos, newTerm);
+                termStopPos = termStopPos + (newTerm.length() - term.length());
+            } else if (myTerm.equalsIgnoreCase("\"" + term + "\"")) {
+                result.replace(termStartPos, termStopPos, newTerm);
+                termStopPos = termStopPos + (newTerm.length() - term.length()) - 2;
+            }
+            if (termStopPos == result.length()) {
+                break;
+            }
+        }
+        return result.toString();
+    }
+    
+    private static int getTermStartPos(String query, int start) {
+        char c;
+        String str = new String(query).toLowerCase();
+        int cursor = start;
+        while (true) {
+            c = str.charAt(cursor);
+            // ignore all dividing and white space chars
+            if (" ()".indexOf(c) > -1) {
+                cursor++;
+            } else if (str.indexOf("or", cursor) == 0) {
+                cursor = cursor + 2;
+            } else if (str.indexOf("and", cursor) == 0) {
+                cursor = cursor + 3;
+            } else {
+                break;
+            }
+            if (cursor == str.length()) {
+                break;
+            }
+        }
+        return cursor;
+    }
+    
+    private static int getTermStopPos(String query, int start) {
+        char c;
+        boolean isInPhrase = false;
+        String str = new String(query).toLowerCase();
+        int cursor = start;
+        while (true) {
+            c = str.charAt(cursor);
+            if (isInPhrase) {
+                if (c == '"') {
+                    cursor++;
+                    break;
+                } else {
+                    cursor++;
+                }
+            } else {
+                if (c == '"') {
+                    isInPhrase = true;
+                    cursor++;
+                } else if(" ()".indexOf(c) > -1) {
+                    break;
+                } else {
+                    cursor++;
+                }
+            }
+            if (cursor == str.length()) {
+                break;
+            }
+        }
+        return cursor;
+    }
+
+}
