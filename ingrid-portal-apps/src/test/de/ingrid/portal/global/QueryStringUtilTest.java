@@ -9,17 +9,17 @@ public class QueryStringUtilTest extends TestCase {
     }
 
     /*
-     * Test method for 'de.ingrid.portal.global.QueryStringUtil.replaceTerm(String, String, String)'
+     * Test method for 'de.ingrid.portal.global.UtilsQueryString.replaceTerm(String, String, String)'
      */
     public void testReplaceTerm() {
         String result;
-        result = QueryStringUtil.replaceTerm("Wasser", "wasser", "(wasser OR wasserspiegel)");
+        result = UtilsQueryString.replaceTerm("Wasser", "wasser", "(wasser OR wasserspiegel)");
         assertEquals("(wasser OR wasserspiegel)", result);
-        result = QueryStringUtil.replaceTerm("Wasser AND \"Wasser Aufbereitung\"", "wasser", "(wasser OR wasserspiegel)");
+        result = UtilsQueryString.replaceTerm("Wasser AND \"Wasser Aufbereitung\"", "wasser", "(wasser OR wasserspiegel)");
         assertEquals("(wasser OR wasserspiegel) AND \"Wasser Aufbereitung\"", result);
-        result = QueryStringUtil.replaceTerm("(Wasser OR Boden) AND \"Wasser Aufbereitung\"", "wasser", "(wasser OR wasserspiegel)");
+        result = UtilsQueryString.replaceTerm("(Wasser OR Boden) AND \"Wasser Aufbereitung\"", "wasser", "(wasser OR wasserspiegel)");
         assertEquals("((wasser OR wasserspiegel) OR Boden) AND \"Wasser Aufbereitung\"", result);
-        result = QueryStringUtil.replaceTerm("(\"Wasser\" OR Boden) AND \"Wasser Aufbereitung\"", "wasser", "(wasser OR wasserspiegel)");
+        result = UtilsQueryString.replaceTerm("(\"Wasser\" OR Boden) AND \"Wasser Aufbereitung\"", "wasser", "(wasser OR wasserspiegel)");
         assertEquals("((wasser OR wasserspiegel) OR Boden) AND \"Wasser Aufbereitung\"", result);
     }
 

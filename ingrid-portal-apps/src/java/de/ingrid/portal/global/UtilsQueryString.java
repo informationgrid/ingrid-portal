@@ -8,7 +8,7 @@ package de.ingrid.portal.global;
  *
  * @author joachim@wemove.com
  */
-public class QueryStringUtil {
+public class UtilsQueryString {
     
     public static String replaceTerm(String queryStr, String term, String newTerm) {
         int termStartPos = 0;

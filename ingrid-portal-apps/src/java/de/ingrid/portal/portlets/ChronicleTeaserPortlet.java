@@ -14,7 +14,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
-import de.ingrid.portal.global.DateUtil;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.utils.IngridHitDetail;
@@ -40,14 +40,14 @@ public class ChronicleTeaserPortlet extends AbstractVelocityMessagingPortlet {
             DetailedTopic detail = (DetailedTopic) details[entry];
             result.put("title", detail.get("topicName"));
             if (detail.get("from") != null) {
-                result.put("from", DateUtil.parseDateToLocale(detail.get("from").toString(), request.getLocale()));
+                result.put("from", UtilsDate.parseDateToLocale(detail.get("from").toString(), request.getLocale()));
             }
             if (detail.get("until") != null && !detail.get("until").equals(detail.get("from"))) {
-                result.put("until", DateUtil.parseDateToLocale(detail.get("until").toString(), request.getLocale()));
+                result.put("until", UtilsDate.parseDateToLocale(detail.get("until").toString(), request.getLocale()));
             }
             result.put("topicId", detail.get("topicId"));
             if (detail.get("from") != null) {
-                int years = DateUtil.yearsBetween(detail.get("from").toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                int years = UtilsDate.yearsBetween(detail.get("from").toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 result.put("years", new Integer(years));
             }
         }

@@ -20,7 +20,7 @@ import de.ingrid.portal.portlets.ChronicleTeaserPortlet;
  *
  * @author joachim@wemove.com
  */
-public class DateUtil {
+public class UtilsDate {
 
     private final static Log log = LogFactory.getLog(ChronicleTeaserPortlet.class);
     
@@ -83,8 +83,8 @@ public class DateUtil {
      * @return The years between the dates.
      */
     public static int yearsBetween(String dateStrFrom, String dateStrTo) {
-        Date from = DateUtil.parseDateString(dateStrFrom);
-        Date to = DateUtil.parseDateString(dateStrTo);
+        Date from = UtilsDate.parseDateString(dateStrFrom);
+        Date to = UtilsDate.parseDateString(dateStrTo);
         if (from != null && to != null) {
             Calendar cal = new GregorianCalendar();
             cal.setTime(from);

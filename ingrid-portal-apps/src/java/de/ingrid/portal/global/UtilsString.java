@@ -3,7 +3,7 @@ package de.ingrid.portal.global;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringUtils {
+public class UtilsString {
     
 //  see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {

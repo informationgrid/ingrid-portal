@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.global.DateUtil;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -87,7 +87,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             for (int i = 0; i < columns.length; i++) {
                 if (record.getValueAsString(columns[i]).trim().length() > 0) {
                     if (dateFields.contains(columns[i].getTargetName().toLowerCase())) {
-                        recordMap.put(columns[i].getTargetName().toLowerCase(), DateUtil.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
+                        recordMap.put(columns[i].getTargetName().toLowerCase(), UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
                     } else {
                         recordMap.put(columns[i].getTargetName().toLowerCase(), record.getValueAsString(columns[i]).trim());
                     }
@@ -125,7 +125,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             for (int j = 0; j < columns.length; j++) {
                 if (subRecords[i].getValueAsString(columns[j]).trim().length() > 0) {
                     if (dateFields.contains(columns[j].getTargetName().toLowerCase())) {
-                        subRecordMap.put(columns[j].getTargetName().toLowerCase(), DateUtil.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
+                        subRecordMap.put(columns[j].getTargetName().toLowerCase(), UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
                     } else if (columns[j].getTargetName().toLowerCase().startsWith("t08_attr")) {
                         // dummy code add logic for attribute fields
                         System.out.println(columns[j].getTargetName());

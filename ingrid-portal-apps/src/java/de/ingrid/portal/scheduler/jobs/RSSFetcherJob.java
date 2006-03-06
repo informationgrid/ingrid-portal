@@ -23,7 +23,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-import de.ingrid.portal.global.StringUtils;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
@@ -113,7 +113,7 @@ public class RSSFetcherJob implements Job {
                                     }
                                 }
 
-                                entry.setTitle(StringUtils.htmlescape(entry.getTitle()));
+                                entry.setTitle(UtilsString.htmlescape(entry.getTitle()));
 
                                 IngridRSSStore rssEntry = new IngridRSSStore();
                                 rssEntry.setTitle(entry.getTitle());

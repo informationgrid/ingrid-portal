@@ -19,7 +19,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.global.QueryStringUtil;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
@@ -185,7 +185,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                         }
                     }
                     if (subQueryStr != null) {
-                        newQueryStr = QueryStringUtil.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr.toString());
+                        newQueryStr = UtilsQueryString.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr.toString());
                     }
                 }
                 // republish the query

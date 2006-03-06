@@ -16,7 +16,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
-import de.ingrid.portal.global.DateUtil;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
@@ -58,7 +58,7 @@ public class AnniversaryFetcherJob implements Job {
                             anni.setTopicName(detail.getTopicName());
                             anni.setDateFrom(detail.getFrom());
                             if (detail.getFrom() != null) {
-                                Date fromDate = DateUtil.parseDateString(detail.getFrom());
+                                Date fromDate = UtilsDate.parseDateString(detail.getFrom());
                                 cal.setTime(fromDate);
                                 anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
                                 anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH) + 1));
@@ -66,7 +66,7 @@ public class AnniversaryFetcherJob implements Job {
                             }
                             anni.setDateTo(detail.getTo());
                             if (detail.getTo() != null) {
-                                Date toDate = DateUtil.parseDateString(detail.getTo());
+                                Date toDate = UtilsDate.parseDateString(detail.getTo());
                                 cal.setTime(toDate);
                                 anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
                                 anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH) + 1));

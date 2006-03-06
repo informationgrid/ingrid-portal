@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 
 import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.global.StringUtils;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -80,7 +80,7 @@ public abstract class ActionForm implements Serializable {
      */
     public String getInputHTMLEscaped(String field) {
         String inputVal = getInput(field);
-        return StringUtils.htmlescape(inputVal);
+        return UtilsString.htmlescape(inputVal);
     }
 
     /**
