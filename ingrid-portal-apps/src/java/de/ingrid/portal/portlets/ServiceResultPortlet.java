@@ -121,11 +121,11 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         // get our ActionForm for generating URL params from current form input
-        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
+        ServiceSearchForm af = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
         // redirect to our page wih URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsService(request, sf));
+        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsService(request, af));
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
@@ -145,8 +145,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {
-                    log
-                            .error("Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    log.error("Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
             }
 

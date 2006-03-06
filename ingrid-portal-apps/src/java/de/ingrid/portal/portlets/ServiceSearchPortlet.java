@@ -56,7 +56,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         boolean doSearch = false;
         if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(Settings.PARAMV_ACTION_FROM_TEASER)
                 || grouping != null) {
-            // remove former query message, will be reset
+            // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
             doSearch = true;
         }
@@ -70,37 +70,35 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         context.put("partnerList", partners);
 
         // update ActionForm !
-        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
+        ServiceSearchForm af = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
         if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
             // empty form on new search
-            sf.clear();
+            af.clear();
         } else if (action.equals(Settings.PARAMV_ACTION_FROM_TEASER)) {
             // default values when called from teaser
-            sf.init();
+            af.init();
         } else if (grouping == null) {
             // no URL parameters, we're called from other page -> default values
-            sf.init();
+            af.init();
         }
         // replaces only the ones in request
-        sf.populate(request);
-        context.put("actionForm", sf);
+        af.populate(request);
+        context.put("actionForm", af);
 
         // validate via ActionForm
-        if (!sf.validate()) {
+        if (!af.validate()) {
             super.doView(request, response);
             return;
         }
 
         // ----------------------------------
-        // prepare Search, Search will be performed in ServiceResult portlet 
+        // prepare Search, Search will be performed in Result portlet 
         // ----------------------------------
-        // only do Searchset up search, if rubric is in rparams passed per request, so we don't search when we
-        // enter from other page
         if (doSearch) {
             setupQuery(request);
         } else {
-            // remove query message for result portlet -> no search
+            // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
         }
 
@@ -111,14 +109,14 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             IOException {
         // get our ActionForm for generating URL params from current form state
         // we have a new submit, so bring form up to date !
-        ServiceSearchForm sf = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
+        ServiceSearchForm af = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
-        sf.clear();
+        af.clear();
         // populate doesn't clear
-        sf.populate(request);
+        af.populate(request);
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsService(request, sf));
+        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsService(request, af));
     }
 
     public void setupQuery(PortletRequest request) {
