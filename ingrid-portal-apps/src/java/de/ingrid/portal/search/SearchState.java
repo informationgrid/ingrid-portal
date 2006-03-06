@@ -26,7 +26,9 @@ public class SearchState {
      * Returns the current state of the Service page as URL Parameters, which can be concatenated
      * to the URL path (for bookmarking !).
      * NOTICE: The passed ActionForm has already to REFLECT THE CURRENT STATE of the form input !!!
+     * If passed ActionForm is null, the parameters are ONLY extracted from request (e.g. for teaser call)
      * @param request
+     * @param af
      * @return
      */
     public static String getURLParamsService(PortletRequest request, ActionForm af) {
@@ -38,8 +40,13 @@ public class SearchState {
         Utils.appendURLParameter(result, urlParam);
 
         // Generate parameters of form input via ActionForm !
-        urlParam = af.toURLParams();
-        Utils.appendURLParameter(result, urlParam);
+        if (af != null) {
+            urlParam = af.toURLParams();
+            Utils.appendURLParameter(result, urlParam);
+        } else {
+            urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_RUBRIC), Settings.PARAM_RUBRIC);
+            Utils.appendURLParameter(result, urlParam);
+        }
 
         // start hit of search results (read only from request !)
         urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_STARTHIT_RANKED),

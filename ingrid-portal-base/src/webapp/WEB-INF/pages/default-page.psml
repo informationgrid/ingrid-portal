@@ -43,15 +43,9 @@
         <value>teaser.ingridInform.title</value>
       </preference>
     </fragment>
-    <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ServiceTeaser">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/service_teaser.vm</value>
-      </preference>
-      <preference name="infoTitleKey" readOnly="false">
-        <value>teaser.service.title</value>
-      </preference>
     </fragment>
     <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="2" />

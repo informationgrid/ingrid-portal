@@ -52,7 +52,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // search if
         // - new search submitted
         // - called from teaser
-        // - parameters are passed, so we are called from same page (e.g. result page navigation)
+        // - parameters are passed, so maybe we process bookmark !
         boolean doSearch = false;
         if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(Settings.PARAMV_ACTION_FROM_TEASER)
                 || grouping != null) {
@@ -82,7 +82,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             // no URL parameters, we're called from other page -> default values
             sf.init();
         }
-        // takes over only the ones in request
+        // replaces only the ones in request
         sf.populate(request);
         context.put("actionForm", sf);
 

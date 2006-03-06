@@ -265,13 +265,13 @@ public class Utils {
     }
 
     /**
-     * Append a new urlParameter to the given url Parameters 
+     * Append a new urlParameter to the given url Parameters.
      * @param currentURLParams
      * @param newURLParam
      */
     public static void appendURLParameter(StringBuffer currentURLParams, String newURLParam) {
         if (newURLParam != null && newURLParam.length() > 0) {
-            if (currentURLParams.length() > 0) {
+            if (!currentURLParams.toString().equals("?")) {
                 currentURLParams.append("&");
             }
             currentURLParams.append(newURLParam);
