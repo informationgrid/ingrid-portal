@@ -7,66 +7,46 @@
 		<div class="sitemap">
 			<ul>
 				<li>
-					<a href="portal/main-search.psml">Suche
-					</a>
-					<p>Schnelles Suchen per Einfacher Sucheingabe.
-					</p>
+					<a href="portal/main-search.psml">Suche</a>
+					<p>Schnelles Suchen per einfacher Sucheingabe.</p>
 					<ul>
 						<li>
-							<a href="portal/extended-search.psml">Erweiterte Suche
-							</a>
-							<p>Umfangreiches Suchen per Erweiterter Sucheingabe.
-							</p>
+							<a href="portal/extended-search.psml">Erweiterte Suche</a>
+							<p>Erstellen Sie Suchanfragen mit Hilfe des Assistenten.</p>
 						</li>
 						<li>
-							<a href="s_search_prev_search.html">Suchhistorie
-							</a>
-							<p>Führen Sie frühere oder gespeicherte Suchen erneut aus.
-							</p>
+							<a href="#">Suchhistorie</a>
+							<p>Führen Sie frühere oder gespeicherte Suchen erneut aus.</p>
 						</li>
 						<li>
-							<a href="s_search_preferences.html">Einstellungen
-							</a>
-							<p>Ihre Sucheinstellungen
-							</p>
+							<a href="#">Einstellungen</a>
+							<p>Ihre Sucheinstellungen.</p>
 						</li> 
 					</ul>
 				</li>
 				<li>
-					<a href="service.html">Service
-					</a>
-					<p>Unser Katalog mit den News Seiten unserer Informationsanbieter.
-					</p>
+					<a href="portal/main-service.psml">Service</a>
+					<p>Unser Katalog mit Pressemitteilungen, Publikationen und Veranstaltungshinweisen unserer Informationsanbieter.</p>
 				</li>
 				<li>
-					<a href="messwerte.html">Messwerte
-					</a>
-					<p>Unser Katalog mit den Messwert Seiten unserer Informationsanbieter.
-					</p>
+					<a href="portal/main-measures.psml">Messwerte</a>
+					<p>Unser Katalog mit den Messwertseiten unserer Informationsanbieter.</p>
 				</li>
 				<li>
-					<a href="themen.html">Umweltthemen
-					</a>
-					<p>Unser Katalog mit den Themen Seiten unserer Informationsanbieter.
-					</p>
+					<a href="portal/main-enviroment.psml">Umweltthemen</a>
+					<p>Unser Katalog mit den Themenseiten unserer Informationsanbieter.</p>
 				</li>
 				<li>
-					<a href="umweltchronik.html">Umweltchronik
-					</a>
-					<p>Unser Katalog wichtiger Umweltereignisse.
-					</p>
+					<a href="portal/main-chronicle.psml">Umweltchronik</a>
+					<p>Eine Chronologie von Umweltereignissen, generiert vom <a href="http://www.semantic-network.de/">Semantischen Netzwerk Service</a> des <a href="http://www.uba.de/">Umweltbundesamtes</a>.</p>
 				</li>
 				<li>
-					<a href="about.html">Über PortalU
-					</a>
-					<p>Lernen Sie uns kennen.
-					</p>
+					<a href="portal/main-about.psml">Über PortalU</a>
+					<p>Lernen Sie uns kennen.</p>
 					<ul>
 						<li>
-							<a href="partner.html">Informationsanbieter
-							</a>
-							<p>Beteiligte Partner und Informationsanbieter.
-							</p>
+							<a href="#">Informationsanbieter</a>
+							<p>Beteiligte Partner und Informationsanbieter.</p>
 						</li>
 					</ul>
 				</li>
@@ -80,49 +60,38 @@
 		<div class="sitemap">
 			<ul>
 				<li>
-					<a href="index.html">Startseite
-					</a>
-					<p>Ihr zentraler Einstieg.
-					</p>
+					<a href="portal/default-page.psml">Startseite</a>
+					<p>Ihr zentraler Einstieg.</p>
 					<ul>
 						<li>
-							<a href="weitere_meldungen.html">Weitere Meldungen
-							</a>
-							<p>Unser Archiv aktueller Meldungen.
-							</p>
+							<a href="portal/rss-news.psml">Weitere Meldungen</a>
+							<p>Unser Archiv aktueller Meldungen.</p>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href="mpu_anmeldung.html">Mein PortalU</a>
-					<p>Ihre persönlichen Einstellungen.
-					</p>
+					<a href="portal/service-login.psml">Mein PortalU</a>
+					<p>Ihre persönlichen Einstellungen.</p>
 				</li>
 				<li>
-					<a href="inhalt.html">Diese Seite</a>
-					<p>Der globale Überblick.
-					</p>
+					<a href="portal/service-sitemap.psml">Diese Seite</a>
+					<p>Der globale Überblick.</p>
 				</li>
 				<li>
-					<a href="javascript:openWindow('faq_inhalt',750,550);">Hilfe/FAQs</a>
-					<p>Hilfe und häufig gestellte Fragen (FAQs).
-					</p>
+					<a href="javascript:openWindow('portal/service-help.psml',750,550);">Hilfe/FAQs</a>
+					<p>Hilfe und häufig gestellte Fragen (FAQs).</p>
 				</li>
 				<li>
-					<a href="kontakt.html">Kontakt
-					</a>
-					<p>Unsere Kontaktinformationen.
-					</p>
+					<a href="portal/service-contact.psml">Kontakt</a>
+					<p>Unsere Kontaktinformationen.</p>
 					<ul>
 						<li>
-							<a href="kontakt_nl.html">Newsletter
-							</a>
-							<p>Abonnieren Sie unseren Newsletter.
-							</p>
+							<a href="#">Newsletter</a>
+							<p>Abonnieren Sie unseren Newsletter.</p>
 						</li>          
-					</ul>        
+					</ul>
 				</li>
-			</ul>
+			  </ul>
 			<br />
 		</div>  
 	</div>
@@ -134,22 +103,16 @@
 		<div class="sitemap">  
 			<ul>
 				<li>
-					<a href="impressum.html">Impressum
-					</a>
-					<p>Verantwortliche und Zuständigkeiten.
-					</p>
+					<a href="portal/disclaimer.psml">Impressum</a>
+					<p>Verantwortliche und Zuständigkeiten.</p>
 				</li>
 				<li>
-					<a href="datenschutz.html">Datenschutzbestimmung
-					</a>
-					<p>Unsere Datenrichtlinien.
-					</p>
+					<a href="portal/privacy.psml">Datenschutzbestimmung</a>
+					<p>Unsere Datenrichtlinien.</p>
 				</li>
 				<li>
-					<a href="mailto:">Webmaster
-					</a>
-					<p>Kontaktieren Sie unseren Webmaster.
-					</p>
+					<a href="mailto:webmaster@portalu.de">Webmaster</a>
+					<p>Kontaktieren Sie unseren Webmaster.</p>
 				</li>
 			</ul>
 		</div>  
