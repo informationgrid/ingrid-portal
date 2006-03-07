@@ -94,27 +94,24 @@
 					</ul>
 				</li>
 				<li>
-					<a href="mpu_anmeldung.html">Mein PortalU
-					</a>
+					<a href="mpu_anmeldung.html">Mein PortalU</a>
 					<p>Ihre persönlichen Einstellungen.
 					</p>
 				</li>
 				<li>
-					<a href="inhalt.html">Inhaltsübersicht
-					</a>
+					<a href="inhalt.html">Diese Seite</a>
 					<p>Der globale Überblick.
 					</p>
 				</li>
 				<li>
-					<a href="javascript:openWindow('faq_inhalt',750,550);">Hilfe/FAQs
-					</a>
-					<p>Hilfe und häufig gestellte Fragen.
+					<a href="javascript:openWindow('faq_inhalt',750,550);">Hilfe/FAQs</a>
+					<p>Hilfe und häufig gestellte Fragen (FAQs).
 					</p>
 				</li>
 				<li>
 					<a href="kontakt.html">Kontakt
 					</a>
-					<p>Nehmen Sie Kontakt mit uns auf.
+					<p>Unsere Kontaktinformationen.
 					</p>
 					<ul>
 						<li>
