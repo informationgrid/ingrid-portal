@@ -1,13 +1,9 @@
 <div class="portlet-section-body">
-	<ul>
-		<li>
-			<p>Sie möchten jederzeit und überall schneller wissen, was los ist ?
-				<br />Dann informiert Sie unser 
-				<strong>Newsletter
-				</strong> per Mail. Der Bezug ist kostenlos.
-			</p>
-		</li>
-	</ul>      
+	<p>Sie möchten jederzeit und überall schneller wissen, was los ist ?
+		<br />Dann informiert Sie unser 
+		<strong>Newsletter
+		</strong> per Mail. Der Bezug ist kostenlos.
+	</p>
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
 		<span><a href="kontakt_nl.html">Newsletter</a></span>
