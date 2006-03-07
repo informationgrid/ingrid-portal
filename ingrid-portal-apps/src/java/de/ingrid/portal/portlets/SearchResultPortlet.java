@@ -97,9 +97,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether we do a query or we read results from cache
-        String queryState = (String) consumeRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
-        if (queryState == null) {
-            queryState = "";
+        String queryType = (String) consumeRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+        if (queryType == null) {
+            queryType = "";
         }
 
         // ----------------------------------
@@ -141,7 +141,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
         // check if query must be executed
-        if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_UNRANKED_QUERY)) {
+        if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
             rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
         }
         if (rankedHits == null) {
@@ -157,7 +157,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         int numberOfUnrankedHits = 0;
         if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
             // check if query must be executed
-            if (queryState.equals(Settings.MSGV_NO_QUERY) || queryState.equals(Settings.MSGV_RANKED_QUERY)) {
+            if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
                 unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
             }
             if (unrankedHits == null) {
