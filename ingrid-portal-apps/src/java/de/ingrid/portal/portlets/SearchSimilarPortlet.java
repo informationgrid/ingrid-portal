@@ -130,7 +130,8 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             if (similarRoot != null) {
                 DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
                 node.setOpen(true);
-                if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0) {
+                if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0 && !node.isLoading()) {
+                    node.setLoading(true);
                     IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
                     for (int i = 0; i < hits.length; i++) {
                         Topic hit = (Topic) hits[i];
@@ -141,6 +142,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                             node.addChild(snsNode);
                         }
                     }
+                    node.setLoading(false);
                 }
                 ps.put("similarRoot", similarRoot);
             }

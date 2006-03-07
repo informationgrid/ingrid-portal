@@ -37,6 +37,11 @@ public class DisplayTreeNode implements Serializable {
 	 */
 	private boolean isOpen = false;
 
+    /**
+     * TODO: Comment for <code>isLoading</code>
+     */
+    private boolean isLoading = false;
+
 	/**
 	 * TODO: Comment for <code>children</code>
 	 */
@@ -201,6 +206,20 @@ public class DisplayTreeNode implements Serializable {
      */
     public void setParent(DisplayTreeNode parent) {
         this.parent = parent;
+    }
+
+    /**
+     * @return Returns the isLoading.
+     */
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    /**
+     * @param isLoading The isLoading to set.
+     */
+    public void setLoading(boolean isLoading) {
+        this.isLoading = isLoading;
     }
 	
 }
