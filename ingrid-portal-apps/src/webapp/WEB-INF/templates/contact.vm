@@ -1,10 +1,6 @@
 #set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
-<h2>Telefon und Adresse
-</h2>
-<p>Sie erreichen unsere Zentrale telefonisch unter +49 (0)511 1203480.
-</p>
-<p>Ein Fax können Sie an den Anschluss +49 (0)511 120-3697 senden oder schreiben Sie uns:
-</p>
+<p>Sie erreichen uns per E-Mail unter der Adresse <a href="mailto:kontakt@portalu.de">kontakt@portalu.de</a>.</p>
+<p>Unsere Postadresse:</p>
 <p>
 	Niedersächsisches Umweltministerium
 	<br />
