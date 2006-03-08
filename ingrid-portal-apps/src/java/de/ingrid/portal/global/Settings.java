@@ -185,6 +185,8 @@ public class Settings {
     public static final String MSGV_RANKED_QUERY = "ranked";
 
     public static final String MSGV_UNRANKED_QUERY = "unranked";
+    
+    public static final String MSG_HAS_JAVASCRIPT = "has_javascript";
 
     // ------------- GENERIC MESSAGE VALUES ("MSGV_...") -----------------------------
 
@@ -241,5 +243,6 @@ public class Settings {
     public final static String PARAM_GROUPING = "grouping";
 
     public final static String PARAM_ACTION = "action";
+
 
 }

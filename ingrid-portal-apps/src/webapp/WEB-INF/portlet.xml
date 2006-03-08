@@ -24,6 +24,23 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
 
+    <portlet id="DetectJavaScriptPortlet">
+        <portlet-name>DetectJavaScriptPortlet</portlet-name>
+        <display-name>javascript detection portlet</display-name>
+        <description>The Portlet is called only via javascript.</description>
+        <portlet-class>de.ingrid.portal.portlets.DetectJavaScriptPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>javascript detection portlet</title>
+            <short-title>javascript detection portlet</short-title>
+        </portlet-info>        
+    </portlet>
+
+
     <!-- *********************** -->
     <!-- Home                    -->
     <!-- *********************** -->

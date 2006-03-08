@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Untitled</title>
+</head>
+<script type="text/javascript">
+function isLoaded() {
+  if (parent == window) return;
+  // no way to obtain id of iframe object doc loaded into? no parentNode or parentElement or ...
+  else {
+		var l = parent.document.getElementById? parent.document.getElementById('results_left'): parent.document.all? parent.document.all['results_left']: null;
+    if ( l && typeof l.innerHTML != "undefined" ) {
+      l.innerHTML = document.body.innerHTML;
+    }
+  }
+}
+</script>
+
+<body onload="isLoaded()">
+	<div class="section">  
+      <div class="resultset_nav float_left">
+#renderRankedResultCounter($rankedPageSelector)
+      </div>
+      <div class="resultset_nav">
+#renderRankedPageNavigation($rankedPageSelector)
+      </div>
+      <br />
+
+#if($rankedResultList)
+      #foreach($rs in $rankedResultList.hits)
+    	  #if($velocityCount > 1)
+			<div class="line"><hr /></div>
+		  #end
+		  <div class="resultset">
+		  #if ($rs.title)
+		    #if ($rs.type == "nutch")
+			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
+			#elseif($rs.type == "dsc")
+			  #if($rs.udk_class)
+				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
+				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster">#renderTitle($rs.title) </a></strong></span>
+			  #else
+				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
+			  #end
+			#else
+			  <span class="result_title"><strong>#renderTitle($rs.title) </strong></span>
+			#end		
+            <p class="result_description">
+            $!rs.abstract 
+            </p>
+            <p class="result_metadata">
+##		    #if ($rs.type == "nutch")
+## NO Partner set in result detail !!! Only in catalogues ?
+##              Anbieter: $!rs.partner<br />
+##			#else
+              Anbieter: $!rs.provider<br />
+##			#end
+              Quelle: $!rs.source<br />
+              Ranking: $!rs.score<br />
+            </p>
+			#if($rs.wms_url)
+			<p class="result_link">
+				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="portal/main-maps.psml?wms_url=$rs.wms_url" target="_new" title="Link öffnet in neuem Fenster">Zeige Karte</a>
+			</p>				
+			#end
+			#if($rs.url)
+			<p class="result_link">
+              <a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url_str</a>
+            </p>
+			#end
+		  #else
+			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
+			<p class="result_link"></p>
+		  #end
+          </div>
+	  #end
+#end  
+
+      <div class="resultset_nav float_left">
+#renderRankedResultCounter($rankedPageSelector)
+      </div>
+
+      <div class="resultset_nav">
+#renderRankedPageNavigation($rankedPageSelector)
+      </div>
+
+    </div>
+</body>
+</html>

@@ -13,11 +13,13 @@ import javax.portlet.PortletException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -44,6 +46,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
+
+    private static final String TEMPLATE_RESULT_JS = "/WEB-INF/templates/search_result_js.vm";
+
+    private static final String TEMPLATE_RESULT_JS_RANKED = "/WEB-INF/templates/search_result_js_ranked.vm";
+
+    private static final String TEMPLATE_RESULT_JS_UNRANKED = "/WEB-INF/templates/search_result_js_unranked.vm";
 
     /*
      * (non-Javadoc)
@@ -96,7 +104,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether we do a query or we read results from cache
-        String queryType = (String) consumeRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+        String queryType = (String) this.receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryType == null) {
             queryType = "";
         }
@@ -129,43 +137,75 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // business logic
         // ----------------------------------
+        
+        // check for Javascript
+        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
+        
+        // find out if we have to render only one result column
+        boolean renderOneResultColumnRanked = true;
+        boolean renderOneResultColumnUnranked = true;
+        reqParam = request.getParameter("js_ranked");
+        // check for one column rendering
+        if (reqParam != null) {
+            // check if we have to render only the ranked column
+            if (reqParam.equals("true")) {
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
+                renderOneResultColumnUnranked = false;
+            } else {
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_UNRANKED);
+                renderOneResultColumnRanked = false;
+            }
+        // check for js enabled iframe rendering
+        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY) && !currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            // if javascript and new query, set template to javascript enabled iframe template
+            // exit method!!
+            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
+            context.put("rankedResultUrl", "portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=true");
+            context.put("unrankedResultUrl", "portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=false");
+            super.doView(request, response);
+            return;
+        }
 
         // create threaded query controller
         ThreadedQueryController controller = new ThreadedQueryController();
         controller.setTimeout(10000);
 
         QueryDescriptor qd = null;
-
+        
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
-        // check if query must be executed
-        if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
-            rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
-        }
-        if (rankedHits == null) {
-            // process query, create QueryDescriptor
-            qd = QueryPreProcessor.createRankedQueryDescriptor(query, selectedDS, rankedStartHit);
-            if (qd != null) {
-                controller.addQuery("ranked", qd);
+        if (renderOneResultColumnRanked) {
+            // check if query must be executed
+            if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
+                rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
+            }
+            if (rankedHits == null) {
+                // process query, create QueryDescriptor
+                qd = QueryPreProcessor.createRankedQueryDescriptor(query, selectedDS, rankedStartHit);
+                if (qd != null) {
+                    controller.addQuery("ranked", qd);
+                }
             }
         }
-
+        
         // UNRANKED
         IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
-        if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            // check if query must be executed
-            if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
-                unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-            }
-            if (unrankedHits == null) {
-                // process query, create QueryDescriptor
-                qd = QueryPreProcessor.createUnrankedQueryDescriptor(query, selectedDS, unrankedStartHit);
-                if (qd != null) {
-                    controller.addQuery("unranked", qd);
+        if (renderOneResultColumnUnranked) {
+            if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+                // check if query must be executed
+                if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
+                    unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
                 }
-            }
+                if (unrankedHits == null) {
+                    // process query, create QueryDescriptor
+                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(query, selectedDS, unrankedStartHit);
+                    if (qd != null) {
+                        controller.addQuery("unranked", qd);
+                    }
+                }
+            }            
         }
 
         // fire query, post process results
@@ -202,7 +242,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
         }
 
-        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0) {
+        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)) {
             // query string will be displayed when no results !
             String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
             context.put("queryString", queryString);
@@ -211,7 +251,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             super.doView(request, response);
             return;
         }
-
+        
         // ----------------------------------
         // prepare view
         // ----------------------------------
@@ -220,8 +260,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
-
         super.doView(request, response);
+        this.cancelRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,

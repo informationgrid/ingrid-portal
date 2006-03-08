@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Untitled</title>
+</head>
+<script type="text/javascript">
+function isLoaded() {
+  if (parent == window) return;
+  // no way to obtain id of iframe object doc loaded into? no parentNode or parentElement or ...
+  else {
+		var l = parent.document.getElementById? parent.document.getElementById('results_right'): parent.document.all? parent.document.all['results_right']: null;
+    if ( l && typeof l.innerHTML != "undefined" ) {
+      l.innerHTML = document.body.innerHTML;
+    }
+  }
+}
+</script>
+
+<body onload="isLoaded()">
+	<div class="portlet">
+      <div class="resultset_nav float_left">
+#renderUnrankedResultCounter($unrankedPageSelector)
+      </div>
+
+      <div class="resultset_nav">
+        &nbsp;
+      </div>
+      <div class="resultset_nav">
+#renderUnrankedPageNavigation($unrankedPageSelector)
+      </div>
+      <br />
+
+#if($unrankedResultList)
+      #foreach($rs in $unrankedResultList.hits)
+    	  <div class="resultset_partner_group">
+            <div class="ico_down_black"><span class="title">$rs.title#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
+            <p class="result_description">
+              $rs.abstract
+            </p>
+            <p class="result_metadata">
+              Anbieter: $rs.provider
+            </p>
+          </div>
+
+          <div class="resultset">
+            <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>Zur Trefferliste</a></strong></span>
+          </div>
+          <br />
+<!--
+		  <div class="resultset">
+		  #if ($rs.title)
+			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
+		  #else
+			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
+		  #end
+          </div>
+		  -->		  
+      #end
+#end
+      
+      <div class="resultset_nav float_left">
+#renderUnrankedResultCounter($unrankedPageSelector)
+      </div>
+
+      <div class="resultset_nav">
+        &nbsp;
+      </div>
+      <div class="resultset_nav">
+#renderUnrankedPageNavigation($unrankedPageSelector)
+      </div>
+    </div> 
+</body>
+</html>	

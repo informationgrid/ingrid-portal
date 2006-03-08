@@ -11,6 +11,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -275,6 +276,21 @@ public class Utils {
                 currentURLParams.append("&");
             }
             currentURLParams.append(newURLParam);
+        }
+    }
+    
+    /**
+     * Returns, if the session has been marked as JavaScript- enabled.
+     * 
+     * @param request The RenderRequest to check.
+     * @return True for JavaScript enabled, false for not.
+     */
+    public static boolean isJavaScriptEnabled(RenderRequest request) {
+        String hasJavaScriptStr = (String) request.getPortletSession().getAttribute(Settings.MSG_HAS_JAVASCRIPT);
+        if (hasJavaScriptStr != null && hasJavaScriptStr.equals(Settings.MSGV_TRUE)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

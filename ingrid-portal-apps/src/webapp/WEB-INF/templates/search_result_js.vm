@@ -1,0 +1,14 @@
+<iframe id="frm_ranked" src="$rankedResultUrl" style="display:none"></iframe>
+<iframe id="frm_unranked" src="$unrankedResultUrl" style="display:none"></iframe>
+
+<!-- RESULTS LEFT -->
+  <div id="results_left">
+	loading ...  
+  </div>
+  
+<!-- RESULTS RIGHT -->
+  <div id="results_right">
+	loading ...
+  </div>
+
+  <div class="clearer"></div>
