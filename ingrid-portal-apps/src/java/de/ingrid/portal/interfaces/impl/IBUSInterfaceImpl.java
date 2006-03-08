@@ -15,11 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.Bus;
-import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.IBUSInterface;
-import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -63,8 +59,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public static synchronized void resetBus() {
         try {
             if (log.isInfoEnabled()) {
-                log
-                        .info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
+                log.info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
             }
             if (proxy != null) {
                 proxy.shutdown();
@@ -107,7 +102,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                     .parseInt(config.getString("ibus_port", "11112")));
 
             if (log.isInfoEnabled()) {
-                log.info("!!!!!!!!!! Connecting with iBus URL: "+iBusUrl);
+                log.info("!!!!!!!!!! Connecting with iBus URL: " + iBusUrl);
             }
 
             RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
@@ -221,8 +216,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
         return stream;
     }
-    
-    
+
     /**
      * @see de.ingrid.portal.interfaces.IBUSInterface#getIPlug(java.lang.String)
      */
@@ -231,47 +225,47 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     }
 
     /*
-    public PlugDescription getIPlug(IngridHit result) {
-        PlugDescription plug = null;
-        try {
-            plug = getIPlug(result.getPlugId());
-        } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching iPlug of result: " + result, t);
-            }
-        }
+     public PlugDescription getIPlug(IngridHit result) {
+     PlugDescription plug = null;
+     try {
+     plug = getIPlug(result.getPlugId());
+     } catch (Throwable t) {
+     if (log.isErrorEnabled()) {
+     log.error("Problems fetching iPlug of result: " + result, t);
+     }
+     }
 
-        return plug;
-    }
-*/
+     return plug;
+     }
+     */
 
-/*
-    public Column getColumn(Record record, String columnName) {
-        Column col = null;
-        try {
-            // serch for column
-            Column[] columns = record.getColumns();
-            for (int i = 0; i < columns.length; i++) {
-                if (columns[i].getTargetName().equalsIgnoreCase(columnName)) {
-                    return columns[i];
-                }
-            }
-            // search sub records
-            Record[] subRecords = record.getSubRecords();
-            Column c = null;
-            for (int i = 0; i < subRecords.length; i++) {
-                c = getColumn(subRecords[i], columnName);
-                if (c != null) {
-                    return c;
-                }
-            }
-        } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching Column from record: " + record, t);
-            }
-        }
+    /*
+     public Column getColumn(Record record, String columnName) {
+     Column col = null;
+     try {
+     // serch for column
+     Column[] columns = record.getColumns();
+     for (int i = 0; i < columns.length; i++) {
+     if (columns[i].getTargetName().equalsIgnoreCase(columnName)) {
+     return columns[i];
+     }
+     }
+     // search sub records
+     Record[] subRecords = record.getSubRecords();
+     Column c = null;
+     for (int i = 0; i < subRecords.length; i++) {
+     c = getColumn(subRecords[i], columnName);
+     if (c != null) {
+     return c;
+     }
+     }
+     } catch (Throwable t) {
+     if (log.isErrorEnabled()) {
+     log.error("Problems fetching Column from record: " + record, t);
+     }
+     }
 
-        return col;
-    }
-*/
+     return col;
+     }
+     */
 }

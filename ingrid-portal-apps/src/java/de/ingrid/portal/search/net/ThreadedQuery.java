@@ -21,9 +21,11 @@ public class ThreadedQuery extends Thread {
     private final static Log log = LogFactory.getLog(ThreadedQuery.class);
 
     private String key;
+
     private QueryDescriptor qd;
+
     private ThreadedQueryController controller;
-    
+
     /**
      * Constructor.
      * 
@@ -36,24 +38,27 @@ public class ThreadedQuery extends Thread {
         this.qd = myQueryDescriptor;
         this.controller = myController;
     }
-    
+
     /**
      * @see java.lang.Runnable#run()
      */
     public void run() {
-        
+
         IngridHits hits = null;
-        
+
         long startTime = System.currentTimeMillis();
-        
+
         try {
-            hits = IBUSInterfaceImpl.getInstance().search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getRequestedHits(), qd.getTimeout());
+            hits = IBUSInterfaceImpl.getInstance().search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(),
+                    qd.getRequestedHits(), qd.getTimeout());
             if (qd.isGetDetails()) {
-                IngridHit[] hitArray = hits.getHits(); 
-//                IngridHitDetail[] details = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), qd.getQuery(), qd.getRequestedFields());
-                for (int i=0; i<hitArray.length; i++) {
-                    // hitArray[i].put("detail", details[i]);
-                    hitArray[i].put("detail", IBUSInterfaceImpl.getInstance().getDetail(hitArray[i], qd.getQuery(), qd.getRequestedFields()));
+                IngridHit[] hitArray = hits.getHits();
+                //                IngridHitDetail[] details = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), qd.getQuery(),
+                //                        qd.getRequestedFields());
+                for (int i = 0; i < hitArray.length; i++) {
+                    //                    hitArray[i].put("detail", details[i]);
+                    hitArray[i].put("detail", IBUSInterfaceImpl.getInstance().getDetail(hitArray[i], qd.getQuery(),
+                            qd.getRequestedFields()));
                 }
             }
         } catch (Exception e) {
@@ -63,6 +68,5 @@ public class ThreadedQuery extends Thread {
             this.controller.addResultSet(this.key, hits);
         }
     }
-
 
 }
