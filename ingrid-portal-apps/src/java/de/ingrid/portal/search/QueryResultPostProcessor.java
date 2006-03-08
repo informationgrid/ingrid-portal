@@ -57,12 +57,12 @@ public class QueryResultPostProcessor {
                     // according data
                     if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
                         if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                            tmpString = detail.get(Settings.HIT_KEY_UDK_CLASS).toString();
+                            tmpString = ((String[])detail.get(Settings.HIT_KEY_UDK_CLASS))[0];
                             hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                         }
                     } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
                         if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
-                            tmpString = detail.get(Settings.HIT_KEY_ADDRESS_CLASS).toString();
+                            tmpString = ((String[])detail.get(Settings.HIT_KEY_ADDRESS_CLASS))[0];
                             hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                         }
                     }
