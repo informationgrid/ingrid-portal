@@ -156,7 +156,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // - only datasource was changed
         // - we have no query parameter in our URL (e.g. we entered from other page)
         // - the enterd query is empty or initial value
-        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE) || action.equals(Settings.PARAMV_ACTION_SETTINGS)
+        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE) || action.equals(Settings.PARAMV_ACTION_SEARCH_SETTINGS)
                 || queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
@@ -220,7 +220,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
 
-        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SETTINGS)) {
+        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SEARCH_SETTINGS)) {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(Settings.PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
         }

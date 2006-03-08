@@ -187,6 +187,28 @@
     <!-- Main Menue              -->
     <!-- *********************** -->
 
+    <portlet id="SearchSettings">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_settings.vm</value>
+        </init-param>
+        <portlet-name>SearchSettings</portlet-name>
+        <display-name>Sucheinstellungen</display-name>
+        <description>This portlet displays and handles the search settings.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchSettingsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Sucheinstellungen</title>
+            <short-title>SearchSettings</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
+    </portlet>
+    
     <portlet id="SearchSimilar">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

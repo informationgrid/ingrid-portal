@@ -1,0 +1,36 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="xx2">
+      <input type="hidden" name="action" value="doSubmit"/>
+      <div class="formbody">
+        <h3>$MESSAGES.getString('searchSettings.titleSortAndGrouping')</h3>
+        <p class="topmargin">
+          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.labelSort')</label>
+          <select id="sort_by" class="group_by inputstyle" name="sort_by" size="1">
+            <option>nach Ranking</option>
+            <option>nach Aktualität</option>
+          </select>
+          <span class="clearer"></span>
+        </p>
+        <p>
+          <label class="float_left col2left" for="group_by">$MESSAGES.getString('searchSettings.labelGrouping')</label>
+          <select id="group_by" class="group_by inputstyle" name="group_by" size="1">
+            <option>Keine</option>
+            <option>Nach Bund/Länder</option>
+            <option>Nach Informationsanbieter</option>
+          </select>
+          <span class="clearer"></span>
+        </p>
+        <div class="line_form"><hr /></div>
+        <p>
+          <input type="checkbox" name="inkl_meta" id="inkl_meta" /><label for="inkl_meta"> $MESSAGES.getString('searchSettings.activateSNSTerms')</label>
+        </p>
+      </div>
+      <div class="formfooter">
+        <div align="right">
+$action.setParameter('action','doOriginalSettings')
+          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Originaleinstellung&nbsp;zurücksetzen</a></span>
+          <input class="btn" type="submit" value="Speichern" />
+        </div>
+      </div>
+    </form>

@@ -203,11 +203,15 @@ public class Settings {
     public final static String PARAMV_ALL = "all";
 
     // ACTION VALUES
+    public final static String PARAMV_ACTION_SUBMIT = "doSubmit";
+
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
 
     public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
 
-    public final static String PARAMV_ACTION_SETTINGS = "doSettings";
+    public final static String PARAMV_ACTION_SEARCH_SETTINGS = "doSearchSettings";
+
+    public final static String PARAMV_ACTION_ORIGINAL_SETTINGS = "doOriginalSettings";
 
     public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
 
