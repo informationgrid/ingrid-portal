@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 
 /**
@@ -53,12 +54,12 @@ public class ThreadedQuery extends Thread {
                     qd.getRequestedHits(), qd.getTimeout());
             if (qd.isGetDetails()) {
                 IngridHit[] hitArray = hits.getHits();
-                //                IngridHitDetail[] details = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), qd.getQuery(),
-                //                        qd.getRequestedFields());
+                IngridHitDetail[] details = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), qd.getQuery(),
+                qd.getRequestedFields());
                 for (int i = 0; i < hitArray.length; i++) {
-                    //                    hitArray[i].put("detail", details[i]);
-                    hitArray[i].put("detail", IBUSInterfaceImpl.getInstance().getDetail(hitArray[i], qd.getQuery(),
-                            qd.getRequestedFields()));
+                    hitArray[i].put("detail", details[i]);
+//                    hitArray[i].put("detail", IBUSInterfaceImpl.getInstance().getDetail(hitArray[i], qd.getQuery(),
+//                            qd.getRequestedFields()));
                 }
             }
         } catch (Exception e) {
