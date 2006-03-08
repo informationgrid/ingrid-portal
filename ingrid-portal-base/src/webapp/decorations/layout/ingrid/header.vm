@@ -31,9 +31,28 @@
 
   #* our decorator macros, see ./decorator-macros.vm *#
   #decoratorIncludeJavaScriptForHead()
+  
+<script language="JavaScript">
+	/*@cc_on @if (@_win32 && @_jscript_version >= 5) if (!window.XMLHttpRequest)
+    function XMLHttpRequest() { return new ActiveXObject('Microsoft.XMLHTTP') }
+    @end @*/
+	
+	var xmlHttp = new XMLHttpRequest;
+
+	if (xmlHttp) {
+        xmlHttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+        xmlHttp.onreadystatechange = function () {
+        };
+        xmlHttp.send(null);
+    }	
+</script>
+
 
   </head>
   <body class="#PageBaseCSSClass()">
+    <noscript>
+	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+    </noscript>
 <!--  BEGIN: layout/html/portalu/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 

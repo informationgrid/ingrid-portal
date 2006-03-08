@@ -1,0 +1,20 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid-clear"
+     portlet-decorator="clear"
+  />
+  <title>Suchresult</title>
+  <metadata name="title" xml:lang="de">Suchergebnis</metadata>
+
+  <fragment id="search-result-js" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="search-result-js-1" type="portlet" name="ingrid-portal-apps::SearchResult">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
