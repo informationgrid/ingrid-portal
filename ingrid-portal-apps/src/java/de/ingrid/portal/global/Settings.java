@@ -34,16 +34,19 @@ public class Settings {
     // PSML pages
     // ===========================================
 
-    /** page for displaying results */
+    /** main-search page -> displays and handles simple search, also with results */
     public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
 
-    /** service catalogue page */
+    /** main-search-settings page -> displays and handles search settings */
+    public final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/main-search-settings.psml";
+
+    /** main-service page -> service catalogue, also displays results */
     public final static String PAGE_SERVICE = "/ingrid-portal/portal/main-service.psml";
 
-    /** measures catalogue page */
+    /** main-measures page -> measures catalogue, also displays results */
     public final static String PAGE_MEASURES = "/ingrid-portal/portal/main-measures.psml";
 
-    /** environment catalogue page */
+    /** main-environment page -> environment catalogue, also displays results */
     public final static String PAGE_ENVIRONMENT = "/ingrid-portal/portal/main-environment.psml";
 
     // ===========================================
@@ -195,23 +198,27 @@ public class Settings {
     // values = PARAMV_
     // ===========================================
 
-    // ------------- generic PARAM values -----------------------------
+    // ------------- PARAM values -----------------------------
 
     public final static String PARAMV_ALL = "all";
 
+    // ACTION VALUES
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
 
     public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
 
+    public final static String PARAMV_ACTION_SETTINGS = "doSettings";
+
     public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
 
+    // DATASOURCE VALUES
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";
 
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
 
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 
-    // ------------- PARAMS also used for messaging (SearchState) -----------------------------
+    // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
     public final static String PARAM_QUERY_STRING = "q";
 
@@ -221,7 +228,7 @@ public class Settings {
 
     public final static String PARAM_DATASOURCE = "ds";
 
-    // ------------- PARAMS NOT used for messaging, just for access in Request -----------------------------
+    // ------------- PARAM Keys, NOT used for messaging, just for access in Request -----------------------------
 
     public final static String PARAM_RUBRIC = "rubric";
 

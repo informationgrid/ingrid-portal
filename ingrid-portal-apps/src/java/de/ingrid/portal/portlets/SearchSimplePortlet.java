@@ -9,7 +9,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,10 +38,17 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
     private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
 
-    /** keys of possible titles, can be set via PSML portlet preferences */
+    /** key of title for default-page (start page) and main-search page, if no search is performed
+     * THIS TITLE IS PASSED FROM default-page */
     private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
 
+    /** key of title for main-search page if results are displayed
+     * THIS TITLE IS PASSED FROM main-search page */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
+
+    /** key of title for main-search-settings page
+     * THIS TITLE IS PASSED FROM main-search-settings page */
+    private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
 
     /*
      * (non-Javadoc)
@@ -70,32 +76,37 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         context.put("MESSAGES", messages);
 
         // ----------------------------------
+        // read PREFERENCES (title passed from page)
+        // NOTICE: this portlet is on different pages (default-page, main-search, main-search-settings ...)
+        // TITLE DETERMINES PAGE
+        // ----------------------------------
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
+
+        // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)
         // ----------------------------------
         String action = request.getParameter(Settings.PARAM_ACTION);
-        if (action != null) {
-            if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)
-                    || action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
-                // reset relevant search stuff, we perform a new one !
-                SearchState.resetSearchState(request);
-                publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
-            }
-        } else {
+        if (action == null) {
             action = "";
+        }
+        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
+            // reset relevant search stuff, we perform a new one !
+            SearchState.resetSearchState(request);
+            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
         }
         String queryInRequest = request.getParameter(Settings.PARAM_QUERY_STRING);
         if (queryInRequest != null) {
             publishRenderMessage(request, Settings.PARAM_QUERY_STRING, queryInRequest);
         } else {
             // NOTICE: WE REMOVE THE QUERY ! this leads to empty result portlet, empty similar portlet etc.
-            // BUT WE KEEP THE OLD QUERY STRING IN THE STATE (message), so it is displayed (for convenience,
-            // although not bookmarkable)
+            // BUT WE KEEP THE OLD QUERY STRING IN THE STATE (message), so it is displayed (but not bookmarkable)
             cancelRenderMessage(request, Settings.MSG_QUERY);
         }
         String dsInRequest = request.getParameter(Settings.PARAM_DATASOURCE);
         // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE (message), so it is
-        // displayed (for convenience, although not bookmarkable)
+        // displayed (but not bookmarkable)
         if (dsInRequest != null) {
             publishRenderMessage(request, Settings.PARAM_DATASOURCE, dsInRequest);
         }
@@ -104,6 +115,12 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // set data for view template 
         // ----------------------------------
 
+        // check our page and set indicator so template can react
+        if (titleKey.equals(TITLE_KEY_SETTINGS)) {
+            // we're on settings page !
+            context.put("page", "settings");
+        }
+
         // set datasource
         String selectedDS = (String) receiveRenderMessage(request, Settings.PARAM_DATASOURCE);
         if (selectedDS == null) {
@@ -111,10 +128,6 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             publishRenderMessage(request, Settings.PARAM_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);
-
-        // set form submit action for template
-        PortletURL searchAction = response.createActionURL();
-        context.put("formAction", searchAction);
 
         // Update Action Form (simple search form content)
         // NOTICE: we use get method without instantiation, so we can do special initialisation !
@@ -143,21 +156,20 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // - only datasource was changed
         // - we have no query parameter in our URL (e.g. we entered from other page)
         // - the enterd query is empty or initial value
-        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE) || queryInRequest == null || !validInput) {
+        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE) || action.equals(Settings.PARAMV_ACTION_SETTINGS)
+                || queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
-            // set up Ingrid Query !
+            // set up Ingrid Query -> triggers search in result portlet
             setUpQuery(request, af.getInput(SearchSimpleForm.FIELD_QUERY));
         }
 
         // ----------------------------------
-        // read PREFERENCES and adapt title (passed from page)
-        // NOTICE: this portlet is on start and main search page, may have different titles,
-        // also depends on search state (query submitted or not ...)
+        // adapt title (passed from page)
+        // NOTICE: this portlet is on different pages (default-page, main-search, main-search-settings ...)
+        // title also depends on search state (query submitted or not ...)
         // ----------------------------------
-        PortletPreferences prefs = request.getPreferences();
-        String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
         if (titleKey.equals(TITLE_KEY_RESULT)) {
             // we're on main search page, check whether there's a query and adapt title
             if (receiveRenderMessage(request, Settings.MSG_QUERY) == null) {
@@ -182,11 +194,19 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
+        // adapt SearchState (base for generating URL params):
+        // - reset result pages, if search start with first hits
+        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
+        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
+
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
             // adapt SearchState (base for generating URL params for render request):
             // - query string
             SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
                     .getParameter(Settings.PARAM_QUERY_STRING));
+
+            // redirect to our page wih parameters for bookmarking
+            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
             // adapt SearchState (base for generating URL params for render request):
@@ -196,15 +216,14 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
+
+            // redirect to our page wih parameters for bookmarking
+            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+
+        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SETTINGS)) {
+            // redirect to our page wih parameters for bookmarking
+            actionResponse.sendRedirect(Settings.PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
         }
-
-        // adapt SearchState (base for generating URL params for render request):
-        // - reset result pages, start with first ones
-        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
-
-        // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
     }
 
     private void setUpQuery(PortletRequest request, String queryString) {

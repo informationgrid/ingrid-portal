@@ -75,6 +75,12 @@
           <li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 		#elseif($element.url=="/main-maps.psml")
           <li><a href="$tabUrl" title="$tabTitle" target="_new">$tabName</a></li>
+		#elseif($element.url=="/main-search.psml")
+			#if($currentPage == "/main-search-settings.psml")
+				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+			#else
+				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+			#end
 		#else
           <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
         #end
