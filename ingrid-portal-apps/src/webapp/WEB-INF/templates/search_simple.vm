@@ -1,4 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearch')
 <div class="formbody">
     <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
     	<input type="hidden" name="ds" value="$ds"/>
