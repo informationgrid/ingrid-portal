@@ -38,18 +38,18 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
     private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
 
-    /** key of title for default-page (start page) and main-search page, if no search is performed
-     * THIS TITLE IS PASSED FROM default-page */
+    /** key of title for default-page (start page) and main-search page, if no search is performed,
+     * passed from default-page per Preferences */
     private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
 
-    /** key of title for main-search page if results are displayed
-     * THIS TITLE IS PASSED FROM main-search page */
+    /** key of title for main-search page if results are displayed,
+     * passed from page per Preferences */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
 
-    /** key of title for main-search-settings page
-     * THIS TITLE IS PASSED FROM main-search-settings page */
-    private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
-
+    /* key of title for main-search-settings page, passed from page per Preferences */
+    //    private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
+    /* key of title for main-search-history page, passed from page per Preferences */
+    //    private final static String TITLE_KEY_HISTORY = "searchSimple.title.history";
     /*
      * (non-Javadoc)
      * 
@@ -82,6 +82,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
+        context.put("titleKey", titleKey);
 
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
@@ -94,38 +95,31 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
             // reset relevant search stuff, we perform a new one !
             SearchState.resetSearchState(request);
-            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
+            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
         }
+
+        // NOTICE: if no query string in request, we keep the old query string in state, so it is
+        // displayed. BUT WE REMOVE THE INGRID QUERY from state -> leads to empty result portlet,
+        // empty similar portlet etc.
         String queryInRequest = request.getParameter(Settings.PARAM_QUERY_STRING);
-        if (queryInRequest != null) {
-            publishRenderMessage(request, Settings.PARAM_QUERY_STRING, queryInRequest);
-        } else {
-            // NOTICE: WE REMOVE THE QUERY ! this leads to empty result portlet, empty similar portlet etc.
-            // BUT WE KEEP THE OLD QUERY STRING IN THE STATE (message), so it is displayed (but not bookmarkable)
-            cancelRenderMessage(request, Settings.MSG_QUERY);
+        if (!SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_QUERY_STRING, queryInRequest)) {
+            SearchState.resetSearchStateObject(request, Settings.MSG_QUERY);
         }
-        String dsInRequest = request.getParameter(Settings.PARAM_DATASOURCE);
-        // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE (message), so it is
+
+        // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE, so it is
         // displayed (but not bookmarkable)
-        if (dsInRequest != null) {
-            publishRenderMessage(request, Settings.PARAM_DATASOURCE, dsInRequest);
-        }
+        SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_DATASOURCE, request
+                .getParameter(Settings.PARAM_DATASOURCE));
 
         // ----------------------------------
         // set data for view template 
         // ----------------------------------
 
-        // check our page and set indicator so template can react
-        if (titleKey.equals(TITLE_KEY_SETTINGS)) {
-            // we're on settings page !
-            context.put("page", "settings");
-        }
-
         // set datasource
-        String selectedDS = (String) receiveRenderMessage(request, Settings.PARAM_DATASOURCE);
-        if (selectedDS == null) {
+        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+        if (selectedDS.length() == 0) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
-            publishRenderMessage(request, Settings.PARAM_DATASOURCE, selectedDS);
+            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, selectedDS);
         }
         context.put("ds", selectedDS);
 
@@ -141,7 +135,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
         // NOTICE: this may be former query, if no query in request ! we keep that one for convenience
         // (although this state is not bookmarkable !)
-        String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         af.setInput(SearchSimpleForm.FIELD_QUERY, queryString);
         // put ActionForm to context. use variable name "actionForm" so velocity macros work !
         context.put("actionForm", af);
@@ -156,8 +150,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // - only datasource was changed
         // - we have no query parameter in our URL (e.g. we entered from other page)
         // - the enterd query is empty or initial value
-        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE) || action.equals(Settings.PARAMV_ACTION_SEARCH_SETTINGS)
-                || queryInRequest == null || !validInput) {
+        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)
+                || action.equals(Settings.PARAMV_ACTION_SEARCH_SETTINGS)
+                || action.equals(Settings.PARAMV_ACTION_SEARCH_HISTORY) || queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
@@ -172,7 +167,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         if (titleKey.equals(TITLE_KEY_RESULT)) {
             // we're on main search page, check whether there's a query and adapt title
-            if (receiveRenderMessage(request, Settings.MSG_QUERY) == null) {
+            if (SearchState.getSearchStateObject(request, Settings.MSG_QUERY) == null) {
                 titleKey = TITLE_KEY_SEARCH;
             }
         }
@@ -223,6 +218,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SEARCH_SETTINGS)) {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(Settings.PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
+        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SEARCH_HISTORY)) {
+            // redirect to our page wih parameters for bookmarking
+            actionResponse.sendRedirect(Settings.PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request));
         }
     }
 
@@ -239,10 +237,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // TODO create ERROR message when no IngridQuery because of parse error and return (OR even do that in form ???) 
         }
 
-        // set query in message for result portlet
-        if (query != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY, query);
-            publishRenderMessage(request, Settings.PARAM_QUERY_STRING, queryString);
-        }
+        // set query in state for result portlet
+        SearchState.adaptSearchState(request, Settings.MSG_QUERY, query);
+        SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, queryString);
     }
 }

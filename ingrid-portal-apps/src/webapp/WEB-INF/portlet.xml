@@ -226,6 +226,28 @@
         <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
     </portlet>
     
+    <portlet id="SearchHistory">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_history.vm</value>
+        </init-param>
+        <portlet-name>SearchHistory</portlet-name>
+        <display-name>Suchhistorie</display-name>
+        <description>This portlet displays and handles the search history.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchHistoryPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Suchhistorie</title>
+            <short-title>SearchHistory</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
+    </portlet>
+    
     <portlet id="SearchSimilar">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

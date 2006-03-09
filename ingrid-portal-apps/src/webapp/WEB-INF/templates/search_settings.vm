@@ -3,9 +3,9 @@
     <form action="$action" method="post" enctype="" name="xx" id="xx2">
       <input type="hidden" name="action" value="doSubmit"/>
       <div class="formbody">
-        <h3>$MESSAGES.getString('searchSettings.titleSortAndGrouping')</h3>
+        <h3>$MESSAGES.getString('searchSettings.title.sortAndGrouping')</h3>
         <p class="topmargin">
-          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.labelSort')</label>
+          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.label.sort')</label>
           <select id="sort_by" class="group_by inputstyle" name="sort_by" size="1">
             <option>nach Ranking</option>
             <option>nach Aktualität</option>
@@ -13,7 +13,7 @@
           <span class="clearer"></span>
         </p>
         <p>
-          <label class="float_left col2left" for="group_by">$MESSAGES.getString('searchSettings.labelGrouping')</label>
+          <label class="float_left col2left" for="group_by">$MESSAGES.getString('searchSettings.label.grouping')</label>
           <select id="group_by" class="group_by inputstyle" name="group_by" size="1">
             <option>Keine</option>
             <option>Nach Bund/Länder</option>
@@ -23,7 +23,7 @@
         </p>
         <div class="line_form"><hr /></div>
         <p>
-          <input type="checkbox" name="inkl_meta" id="inkl_meta" /><label for="inkl_meta"> $MESSAGES.getString('searchSettings.activateSNSTerms')</label>
+          <input type="checkbox" name="inkl_meta" id="inkl_meta" /><label for="inkl_meta"> $MESSAGES.getString('searchSettings.label.activateSNSTerms')</label>
         </p>
       </div>
       <div class="formfooter">

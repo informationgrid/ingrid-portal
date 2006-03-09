@@ -1,0 +1,35 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="xx2">
+      <input type="hidden" name="action" value="doSubmit"/>
+      <div class="formbody">
+        <div class="float_left">
+          <h3>$MESSAGES.getString('searchHistory.title.lastQueries')</h3>
+        </div>  
+        <div class="float_right">
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doShowAllQueries')
+            <div class="ico_linkintern"><p><a href="$action">$MESSAGES.getString('searchHistory.label.showAllQueries')</a></p></div>  
+        </div>
+        <span class="clearer"></span>
+<!--
+        <ul class="internlinklist2">
+          <li><a href="s_search_results.html">Katastrophe Tschernobyl</a></li>
+          <li><a href="s_search_results.html">Umwelt Bund</a></li>
+          <li><a href="s_search_results.html">Wasser (Rhein OR Main) "industrielle umweltverschmutzung" (watvogel OR Synonym1) quelle:Internet partner:BU anbieter:NI-A1 (Main OR "Frankfurt am Main")</a></li>
+        </ul>
+-->
+        <br />
+<!--
+        <h3>$MESSAGES.getString('searchHistory.title.savedQueries')<span style="color:#FF0000"> (nur für eingeloggte Benutzer)</span></h3>
+          <ul class="internlinklist2">
+            <li><input id="chk_1_1" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Forschungsprojekte Bund</a></li>
+            <li><input id="chk_1_2" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Messwerte Niedersachsen</a></li>
+            <li><input id="chk_1_3" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Metadaten Bund</a></li>
+            <li><input id="chk_1_4" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Umweltverschmutzung Hessen</a></li>
+          </ul>
+-->
+        <br />
+        <input class="btn" type="submit" value="Löschen" name="delete" />  
+      </div>
+    </form>

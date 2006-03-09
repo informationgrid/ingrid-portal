@@ -111,6 +111,23 @@ public class SearchState {
     }
 
     /**
+     * Add the passed Object (Message) to the Search State, ONLY IF NOT NULL. If the object
+     * is null, the Search State keeps its former value and false is returned. Otherwise
+     * the value is set in the SearchState and true is returned (former value is replaced).
+     * @param request
+     * @param objectKey
+     * @param objectValue
+     * @return
+     */
+    public static boolean adaptSearchStateIfNotNull(PortletRequest request, String objectKey, Object objectValue) {
+        if (objectValue != null) {
+            return adaptSearchState(request, objectKey, objectValue);
+        }
+
+        return false;
+    }
+
+    /**
      * Add the passed Object (Message) to the Search State. If the passed object is null,
      * the object is removed from the state and false is returned. Otherwise the object is
      * added and true is returned.
@@ -119,7 +136,7 @@ public class SearchState {
      * @param objectValue (=messageValue)
      * @return true = object added, false = object removed
      */
-    public static boolean adaptSearchState(PortletRequest request, String objectKey, String objectValue) {
+    public static boolean adaptSearchState(PortletRequest request, String objectKey, Object objectValue) {
         boolean msgPublished = true;
         try {
             if (objectValue == null) {
@@ -136,6 +153,15 @@ public class SearchState {
         }
 
         return msgPublished;
+    }
+
+    /**
+     * Reset the given object in the SearchState, meaning the object is removed !
+     * @param request
+     * @param objectKey
+     */
+    public static void resetSearchStateObject(PortletRequest request, String objectKey) {
+        adaptSearchState(request, objectKey, null);
     }
 
     /**

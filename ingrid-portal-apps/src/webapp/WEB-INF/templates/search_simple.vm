@@ -35,8 +35,14 @@ $action.setParameter('action','doChangeDS')
     </form>
     <div class="optional-links">
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="e_search.html">Erweiterte Suche</a>
-      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="s_search_prev_search.html">Suchhistorie</a>
-#if ($page=="settings")
+#if ($titleKey=="searchSimple.title.history")
+      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="aktiver Link" />&nbsp;<span>$MESSAGES.getString('searchSimple.history')</span>
+#else
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearchHistory')
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">$MESSAGES.getString('searchSimple.history')</a>
+#end
+#if ($titleKey=="searchSimple.title.settings")
 	  <img src="/ingrid-portal-apps/images/icn_down.gif" alt="aktiver Link" />&nbsp;<span>$MESSAGES.getString('searchSimple.settings')</span>
 #else
 #set ($action = $renderResponse.createActionURL())
