@@ -164,9 +164,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail,
+                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
                                 Settings.RESULT_KEY_TOPIC));
-                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailMultipleValues(detail,
+                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
                                 Settings.RESULT_KEY_FUNCT_CATEGORY));
                     }
                 } catch (Throwable t) {

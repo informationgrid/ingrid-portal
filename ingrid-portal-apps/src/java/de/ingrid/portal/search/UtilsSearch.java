@@ -102,25 +102,16 @@ public class UtilsSearch {
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
             result.put(Settings.RESULT_KEY_PLUG_ID, detail.getPlugId());
 
-            if (detail.get(Settings.RESULT_KEY_URL) != null) {
-                result.put(Settings.RESULT_KEY_URL, detail.get(Settings.RESULT_KEY_URL));
-                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String) detail
-                        .get(Settings.RESULT_KEY_URL), 80));
+            String value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_URL);
+            if (value.length() > 0) {
+                result.put(Settings.RESULT_KEY_URL, value);
+                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value, 80));
             }
             // Partner
-            Object values = UtilsSearch.getDetailMultipleValues(detail, Settings.RESULT_KEY_PARTNER); 
-            if (values != null) {
-                result.put(Settings.RESULT_KEY_PARTNER, UtilsDB.getPartnerFromKey(values.toString()));                
+            value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PARTNER);
+            if (value.length() > 0) {
+                result.put(Settings.RESULT_KEY_PARTNER, value);
             }
-/*            
-            // detail values as ArrayLists !
-            // Hit URL
-            Object values = Utils.getDetailMultipleValues(detail, Settings.RESULT_KEY_URL); 
-            if (values != null) {
-                result.put(Settings.RESULT_KEY_URL, values);
-                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr((String)values, 80));
-            }
-*/            
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);
@@ -130,37 +121,59 @@ public class UtilsSearch {
 
     /**
      * Returns all values stored with the passed key and returns them as one String (concatenated with ", ").
-     * If no values are stored an emty string is returned !)
+     * If no values are stored an emty string is returned !).
+     * NOTICE: Also returns Single Values CORRECTLY ! FURTHER MAPS idValues to correct "names", e.g. partnerId to
+     * partnerName.
      * @param detail
      * @param key
      * @return
      */
-    public static String getDetailMultipleValues(IngridHitDetail detail, String key) {
-        String[] valueArray = (String[]) detail.get(key);
+    public static String getDetailValue(IngridHitDetail detail, String key) {
+        Object obj = detail.get(key);
+        if (obj == null) {
+            return "";
+        }
+
         StringBuffer values = new StringBuffer();
-        if (valueArray != null) {
+        if (obj instanceof String[]) {
+            String[] valueArray = (String[]) obj;
             for (int i = 0; i < valueArray.length; i++) {
                 if (i != 0) {
                     values.append(", ");
                 }
-                // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
-                values.append(valueArray[i]);
+                values.append(mapResultValue(key, valueArray[i]));
             }
-        }
-/*
-        ArrayList valueList = detail.getArrayList(key);
-        StringBuffer values = new StringBuffer();
-        if (valueList != null) {
+        } else if (obj instanceof ArrayList) {
+            ArrayList valueList = (ArrayList) obj;
             for (int i = 0; i < valueList.size(); i++) {
                 if (i != 0) {
                     values.append(", ");
                 }
-                // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
-                values.append(valueList.get(i));
+                values.append(mapResultValue(key, valueList.get(i).toString()));
             }
+        } else {
+            values.append(mapResultValue(key, obj.toString()));
         }
-*/
+
         return values.toString();
+    }
+
+    /**
+     * Map the given value to a "real" value, e.g. map partner id to partner name.
+     * The passed key determines what kind of id the passed value is (this is the
+     * key with which the value was read from result/detail)
+     * @param resultKey
+     * @param resultValue
+     * @return
+     */
+    public static String mapResultValue(String resultKey, String resultValue) {
+        String mappedValue = resultValue;
+        if (resultKey.equals(Settings.RESULT_KEY_PARTNER)) {
+            mappedValue = UtilsDB.getPartnerFromKey(resultValue);
+        }
+        // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
+
+        return mappedValue;
     }
 
     public static String queryToString(IngridQuery query) {

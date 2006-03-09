@@ -44,8 +44,8 @@ public class QueryResultPostProcessor {
                     hit.put(Settings.RESULT_KEY_TYPE, "dsc");
 
                     // read for all dsc iplugs
-                    if (detail.get(Settings.HIT_KEY_WMS_URL) != null) {
-                        tmpString = UtilsSearch.getDetailMultipleValues(detail, Settings.HIT_KEY_WMS_URL);
+                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
+                    if (tmpString.length() > 0) {
                         try {
                             hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
                         } catch (UnsupportedEncodingException e) {
@@ -56,13 +56,13 @@ public class QueryResultPostProcessor {
                     // check our selected "data source" and read
                     // according data
                     if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                        if (detail.get(Settings.HIT_KEY_UDK_CLASS) != null) {
-                            tmpString = UtilsSearch.getDetailMultipleValues(detail, Settings.HIT_KEY_UDK_CLASS);
+                        tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
+                        if (tmpString.length() > 0) {
                             hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                         }
                     } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                        if (detail.get(Settings.HIT_KEY_ADDRESS_CLASS) != null) {
-                            tmpString = UtilsSearch.getDetailMultipleValues(detail, Settings.HIT_KEY_ADDRESS_CLASS);
+                        tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
+                        if (tmpString.length() > 0) {
                             // add as udk class, template renders correctly
                             hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                         }

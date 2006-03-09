@@ -164,7 +164,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailMultipleValues(detail,
+                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
                                 Settings.RESULT_KEY_TOPIC));
                     }
                 } catch (Throwable t) {
