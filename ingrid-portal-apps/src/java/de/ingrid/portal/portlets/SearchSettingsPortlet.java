@@ -48,6 +48,7 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
             action = "";
         }
         
+        // TODO: implement functionality
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SUBMIT)) {
             
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_ORIGINAL_SETTINGS)) {

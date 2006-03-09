@@ -128,8 +128,26 @@ public class UtilsSearch {
         }
     }
 
+    /**
+     * Returns all values stored with the passed key and returns them as one String (concatenated with ", ").
+     * If no values are stored an emty string is returned !)
+     * @param detail
+     * @param key
+     * @return
+     */
     public static String getDetailMultipleValues(IngridHitDetail detail, String key) {
-        // detail values as ArrayLists !
+        String[] valueArray = (String[]) detail.get(key);
+        StringBuffer values = new StringBuffer();
+        if (valueArray != null) {
+            for (int i = 0; i < valueArray.length; i++) {
+                if (i != 0) {
+                    values.append(", ");
+                }
+                // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
+                values.append(valueArray[i]);
+            }
+        }
+/*
         ArrayList valueList = detail.getArrayList(key);
         StringBuffer values = new StringBuffer();
         if (valueList != null) {
@@ -141,7 +159,7 @@ public class UtilsSearch {
                 values.append(valueList.get(i));
             }
         }
-
+*/
         return values.toString();
     }
 
