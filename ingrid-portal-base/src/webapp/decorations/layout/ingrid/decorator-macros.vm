@@ -80,6 +80,8 @@
 				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 			#elseif($currentPage == "/main-search-history.psml")
 				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+			#elseif($currentPage == "/main-search-ext-env.psml")
+				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 			#else
 				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
 			#end

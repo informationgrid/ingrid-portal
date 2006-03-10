@@ -37,12 +37,6 @@ public class Settings {
     /** main-search page -> displays and handles simple search, also with results */
     public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
 
-    /** main-search-settings page -> displays and handles search settings */
-    public final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/main-search-settings.psml";
-
-    /** main-search-history page -> displays and handles search settings */
-    public final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/main-search-history.psml";
-
     /** main-service page -> service catalogue, also displays results */
     public final static String PAGE_SERVICE = "/ingrid-portal/portal/main-service.psml";
 
@@ -208,21 +202,14 @@ public class Settings {
 
     public final static String PARAMV_ALL = "all";
 
-    // ACTION VALUES
+    // ACTION VALUES used by multiple portlets
     public final static String PARAMV_ACTION_SUBMIT = "doSubmit";
 
     public final static String PARAMV_ACTION_ORIGINAL_SETTINGS = "doOriginalSettings";
 
     public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
 
-    // Search Portlets (Simple Search, Extended Search)
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-
-    public final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
-
-    public final static String PARAMV_ACTION_SEARCH_SETTINGS = "doSearchSettings";
-
-    public final static String PARAMV_ACTION_SEARCH_HISTORY = "doSearchHistory";
 
     // DATASOURCE VALUES
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";

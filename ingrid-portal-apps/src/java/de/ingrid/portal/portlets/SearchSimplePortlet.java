@@ -38,6 +38,10 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
     private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
 
+    private final static String TEMPLATE_SEARCH_SIMPLE = "/WEB-INF/templates/search_simple.vm";
+
+    private final static String TEMPLATE_SEARCH_EXTENDED = "/WEB-INF/templates/search_extended/search_extended.vm";
+
     /** key of title for default-page (start page) and main-search page, if no search is performed,
      * passed from default-page per Preferences */
     private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
@@ -46,10 +50,34 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
      * passed from page per Preferences */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
 
+    /** key of title for main exstended search pages, passed from page per Preferences */
+    private final static String TITLE_KEY_EXTENDED = "searchSimple.title.extended";
+
     /* key of title for main-search-settings page, passed from page per Preferences */
-    //    private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
+    //private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
     /* key of title for main-search-history page, passed from page per Preferences */
-    //    private final static String TITLE_KEY_HISTORY = "searchSimple.title.history";
+    //private final static String TITLE_KEY_HISTORY = "searchSimple.title.history";
+    /** value of action parameter if datasource was clicked */
+    private final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
+
+    /** value of action parameter if "search settings" was clicked */
+    private final static String PARAMV_ACTION_SEARCH_SETTINGS = "doSearchSettings";
+
+    /** value of action parameter if "search history" was clicked */
+    private final static String PARAMV_ACTION_SEARCH_HISTORY = "doSearchHistory";
+
+    /** value of action parameter if "Extended Search" was clicked */
+    private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
+
+    /** main extended search page for datasource "environmentinfos" */
+    private final static String PAGE_SEARCH_EXTENDED_ENV = "/ingrid-portal/portal/main-search-ext-env.psml";
+
+    /** main-search-history page -> displays and handles search settings */
+    private final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/main-search-history.psml";
+
+    /** main-search-settings page -> displays and handles search settings */
+    private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/main-search-settings.psml";
+
     /*
      * (non-Javadoc)
      * 
@@ -84,6 +112,13 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
         context.put("titleKey", titleKey);
 
+        // set view template, we use the same portlet for Simple- and Extended Search, just
+        // the view template differs !
+        setDefaultViewPage(TEMPLATE_SEARCH_SIMPLE);
+        if (titleKey.equals(TITLE_KEY_EXTENDED)) {
+            setDefaultViewPage(TEMPLATE_SEARCH_EXTENDED);
+        }
+
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)
@@ -92,7 +127,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         if (action == null) {
             action = "";
         }
-        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
+        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(PARAMV_ACTION_NEW_DATASOURCE)) {
             // reset relevant search stuff, we perform a new one !
             SearchState.resetSearchState(request);
             SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
@@ -150,9 +185,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         // - only datasource was changed
         // - we have no query parameter in our URL (e.g. we entered from other page)
         // - the enterd query is empty or initial value
-        if (action.equals(Settings.PARAMV_ACTION_NEW_DATASOURCE)
-                || action.equals(Settings.PARAMV_ACTION_SEARCH_SETTINGS)
-                || action.equals(Settings.PARAMV_ACTION_SEARCH_HISTORY) || queryInRequest == null || !validInput) {
+        if (action.equals(PARAMV_ACTION_NEW_DATASOURCE) || action.equals(PARAMV_ACTION_SEARCH_SETTINGS)
+                || action.equals(PARAMV_ACTION_SEARCH_HISTORY) || action.equals(PARAMV_ACTION_SEARCH_EXTENDED)
+                || queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
@@ -190,7 +225,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt SearchState (base for generating URL params):
-        // - reset result pages, if search start with first hits
+        // - reset result pages if action in input fragment, start with first hits
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
 
@@ -203,7 +238,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
 
-        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_DATASOURCE)) {
+        } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
             // adapt SearchState (base for generating URL params for render request):
             // - set datasource
             SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, request
@@ -215,12 +250,14 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // redirect to our page wih parameters for bookmarking
             actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
 
-        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SEARCH_SETTINGS)) {
-            // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(Settings.PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
-        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SEARCH_HISTORY)) {
-            // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(Settings.PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request));
+        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_SETTINGS)) {
+            actionResponse.sendRedirect(PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
+
+        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_HISTORY)) {
+            actionResponse.sendRedirect(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request));
+
+        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
+            actionResponse.sendRedirect(PAGE_SEARCH_EXTENDED_ENV + SearchState.getURLParamsMainSearch(request));
         }
     }
 
