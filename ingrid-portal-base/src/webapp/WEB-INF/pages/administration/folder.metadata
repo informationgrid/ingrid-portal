@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<folder>
+  <title>Administration</title>  
+  <metadata name="title" xml:lang="de">Administration</metadata>
+  <metadata name="title" xml:lang="en">Administration</metadata>
+
+  <menu name="sub-menu">
+    <options>/administration/admin-usermanagement.psml</options>
+  </menu>
+
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</folder>

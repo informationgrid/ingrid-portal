@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <folder>
-  <title>Roor Folder</title>  
+  <title>Root Folder</title>  
   <metadata name="title" xml:lang="fr">Répertoire racine</metadata>
   <metadata name="title" xml:lang="es">Carpeta raiz</metadata>
 
@@ -49,6 +49,7 @@
     <options>/main-maps.psml</options>
     <options>/main-chronicle.psml</options>
     <options>/main-about.psml</options>
+    <options>/Administrative</options>
   </menu>
 
 

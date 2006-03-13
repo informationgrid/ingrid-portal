@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page-security>
+
+  <!-- define global admin constraints -->
+  <security-constraints-def name="admin">
+    <security-constraint>
+      <roles>admin</roles>
+      <permissions>view, edit</permissions>
+    </security-constraint>
+  </security-constraints-def>
+  <global-security-constraints-ref>admin</global-security-constraints-ref>
+
+  <!-- define manager constraints -->
+  <security-constraints-def name="manager">
+    <security-constraint>
+      <roles>manager</roles>
+      <permissions>view</permissions>
+    </security-constraint>
+  </security-constraints-def>
+
+  <!-- define user constraints -->
+  <security-constraints-def name="users">
+    <security-constraint>
+      <roles>user, manager</roles>
+      <permissions>view</permissions>
+    </security-constraint>
+  </security-constraints-def>
+
+  <!-- define public constraints -->
+  <security-constraints-def name="public-view">
+    <security-constraint>
+      <users>*</users>
+      <permissions>view</permissions>
+    </security-constraint>
+  </security-constraints-def>
+  <security-constraints-def name="public-edit">
+    <security-constraint>
+      <users>*</users>
+      <permissions>view, edit</permissions>
+    </security-constraint>
+  </security-constraints-def>
+
+</page-security>

@@ -74,6 +74,10 @@
 <!-- sub navigation -->
 <div id="subnav"><a name="subnav"></a>
   <div class="subnav_corner"><div class="subnav_corner_img"></div></div>
+#set($subMenu = $site.getMenu("sub-menu"))
+#if(!$subMenu.empty)
+  #includeSubNavigation($subMenu)
+#end
 </div>
   
 
