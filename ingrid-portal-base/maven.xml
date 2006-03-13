@@ -18,10 +18,10 @@
 	        </ant:fileset>
 	      </ant:copy>
 	    </j:if>
-	    <attainGoal name="ingrid:portal.conf.sql"/>
 	</postGoal>
 
 	<preGoal name="j2:db.create.production">
+	    <attainGoal name="ingrid:portal.conf.sql"/>
 	    <echo message="-----------------------------------------------------------------------"/>
 	    <echo message="ingrid preGoal on 'j2:db.create.production' -> dropping ingrid tables !"/>
 	    <echo message="-----------------------------------------------------------------------"/>
