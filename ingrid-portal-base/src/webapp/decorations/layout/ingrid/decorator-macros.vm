@@ -39,7 +39,7 @@
 <div id="identity" class="motiv_topnavi">
   #elseif($currentPage == "/service-help.psml")
 <div id="identity" class="motiv_hilfe">
-  #elseif($currentPage == "/service-login.psml")
+  #elseif($currentPage == "/service-myportal.psml")
 <div id="identity" class="motiv_topnavi">
   #else
 <div id="identity" class="motiv_blank">

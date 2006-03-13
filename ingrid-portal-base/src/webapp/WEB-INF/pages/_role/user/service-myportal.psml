@@ -1,0 +1,24 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Login</title>
+  <metadata name="title" xml:lang="de">Mein PortalU</metadata>
+
+  <fragment id="service-myportal" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="myportal-overview" type="portlet" name="ingrid-portal-apps::MyPortalOverviewPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+    <fragment id="myportal-navigation" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MyPortalNavigationPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

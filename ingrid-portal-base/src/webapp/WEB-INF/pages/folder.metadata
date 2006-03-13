@@ -9,7 +9,7 @@
     <separator>
       <text>separator1</text>
     </separator>
-    <options>/service-login.psml</options>
+    <options>/service-myportal.psml</options>
     <separator>
       <text>separator2</text>
     </separator>
@@ -50,6 +50,7 @@
     <options>/main-chronicle.psml</options>
     <options>/main-about.psml</options>
     <options>/administration</options>
+    <options>/Administrative</options>
   </menu>
 
 
