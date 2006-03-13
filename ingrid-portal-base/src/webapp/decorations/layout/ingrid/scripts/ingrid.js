@@ -37,3 +37,19 @@ function ingrid_checkGroup(group) {
         group[0].checked = false;       
     }
 }
+
+function login() {
+	if (document.getElementById("login").value == "admin") {
+    	document.location.href="mpu_admin.html";
+    } else if (document.getElementById("passwd").value != "") {
+      	document.location.href="mpu_home.html";
+    }
+}
+
+function clearUser() {
+    document.getElementById("login").value = "";
+}
+
+function clearPasswd() {
+    document.getElementById("passwd").value = "";
+}

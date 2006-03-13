@@ -16,6 +16,10 @@
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
+    <fragment id="admin-usermanagement-3" type="portlet" name="j2-admin::LoginPortlet">
+      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
   </fragment>
 
   <security-constraints>
