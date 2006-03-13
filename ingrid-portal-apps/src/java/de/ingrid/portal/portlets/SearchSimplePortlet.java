@@ -53,9 +53,9 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     /** key of title for main exstended search pages, passed from page per Preferences */
     private final static String TITLE_KEY_EXTENDED = "searchSimple.title.extended";
 
-    /* key of title for main-search-settings page, passed from page per Preferences */
+    /* key of title for search-settings page, passed from page per Preferences */
     //private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
-    /* key of title for main-search-history page, passed from page per Preferences */
+    /* key of title for search-history page, passed from page per Preferences */
     //private final static String TITLE_KEY_HISTORY = "searchSimple.title.history";
     /** value of action parameter if datasource was clicked */
     private final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
@@ -70,13 +70,13 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
 
     /** main extended search page for datasource "environmentinfos" */
-    private final static String PAGE_SEARCH_EXTENDED_ENV = "/ingrid-portal/portal/main-search-ext-env.psml";
+    private final static String PAGE_SEARCH_EXTENDED_ENV = "/ingrid-portal/portal/search-ext-env.psml";
 
-    /** main-search-history page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/main-search-history.psml";
+    /** search-history page -> displays and handles search settings */
+    private final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/search-history.psml";
 
-    /** main-search-settings page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/main-search-settings.psml";
+    /** search-settings page -> displays and handles search settings */
+    private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/search-settings.psml";
 
     /*
      * (non-Javadoc)
@@ -105,7 +105,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
         // ----------------------------------
         // read PREFERENCES (title passed from page)
-        // NOTICE: this portlet is on different pages (default-page, main-search, main-search-settings ...)
+        // NOTICE: this portlet is on different pages (default-page, main-search, search-settings ...)
         // TITLE DETERMINES PAGE
         // ----------------------------------
         PortletPreferences prefs = request.getPreferences();
@@ -197,7 +197,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
         // ----------------------------------
         // adapt title (passed from page)
-        // NOTICE: this portlet is on different pages (default-page, main-search, main-search-settings ...)
+        // NOTICE: this portlet is on different pages (default-page, main-search, search-settings ...)
         // title also depends on search state (query submitted or not ...)
         // ----------------------------------
         if (titleKey.equals(TITLE_KEY_RESULT)) {

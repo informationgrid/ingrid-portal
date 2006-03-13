@@ -15,7 +15,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the "History" fragment of the main-search-history page
+ * This portlet handles the "History" fragment of the search-history page
  *
  * @author martin@wemove.com
  */

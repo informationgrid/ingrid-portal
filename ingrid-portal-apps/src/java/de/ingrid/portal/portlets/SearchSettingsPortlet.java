@@ -15,7 +15,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the "Settings" fragment of the main-search-settings page
+ * This portlet handles the "Settings" fragment of the search-settings page
  *
  * @author martin@wemove.com
  */
