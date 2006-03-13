@@ -40,7 +40,7 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
     private final static String TEMPLATE_SEARCH_SIMPLE = "/WEB-INF/templates/search_simple.vm";
 
-    private final static String TEMPLATE_SEARCH_EXTENDED = "/WEB-INF/templates/search_extended/search_extended.vm";
+    private final static String TEMPLATE_SEARCH_EXTENDED = "/WEB-INF/templates/search_extended/search_ext.vm";
 
     /** key of title for default-page (start page) and main-search page, if no search is performed,
      * passed from default-page per Preferences */
@@ -236,18 +236,30 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
+            String newDatasource = request.getParameter(Settings.PARAM_DATASOURCE);
+            
             // adapt SearchState (base for generating URL params for render request):
             // - set datasource
-            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, request
-                    .getParameter(Settings.PARAM_DATASOURCE));
+            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, newDatasource);
+            
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
 
             // redirect to MAIN page with parameters for bookmarking, ONLY IF WE'RE "ON MAIN PAGE"
-            // Otherwise stay on same page without support for bookmarking !
+            // Otherwise go to startpage of extended search for selected datasource without support for bookmarking !
             if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
+                // we're in main search
                 actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+            } else {
+                // we're in extended search
+                if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
+                    actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ENV_TOPIC_TERMS);
+                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
+                    actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ADR_TOPIC_TERMS);
+                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
+                    actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_RES_TOPIC_TERMS);
+                }
             }
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_SETTINGS)) {

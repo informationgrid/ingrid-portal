@@ -1,0 +1,9 @@
+      <div class="portlet-section-body">
+        <ul>
+          <li>
+            <p>
+              Sie können der Suchanfrage beliebige Suchbegriffe hinzufügen. Wählen Sie aus, ob im gesuchten Dokument alle Suchbegriffe (UND-Verknüpfung, Voreinstellung), mindestens einer der Suchbegriffe (ODER-Verknüpfung), keiner der Suchbegriffe (NOT-Verknüpfung), oder genau die angegebene Folge der Suchbegriffe (genaue Wortgruppe) vorkommen muss.
+            </p>
+          </li>
+        </ul>
+      </div>
