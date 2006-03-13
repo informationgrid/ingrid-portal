@@ -69,9 +69,6 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     /** value of action parameter if "Extended Search" was clicked */
     private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
 
-    /** main extended search page for datasource "environmentinfos" */
-    private final static String PAGE_SEARCH_EXTENDED_ENV = "/ingrid-portal/portal/search-ext-env.psml";
-
     /** search-history page -> displays and handles search settings */
     private final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/search-history.psml";
 
@@ -247,8 +244,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
 
-            // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+            // redirect to MAIN page with parameters for bookmarking, ONLY IF WE'RE "ON MAIN PAGE"
+            // Otherwise stay on same page without support for bookmarking !
+            if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
+                actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+            }
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_SETTINGS)) {
             actionResponse.sendRedirect(PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
@@ -257,7 +257,14 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             actionResponse.sendRedirect(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request));
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
-            actionResponse.sendRedirect(PAGE_SEARCH_EXTENDED_ENV + SearchState.getURLParamsMainSearch(request));
+            String currentDatasource = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+            if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
+                actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ENV_TOPIC_TERMS);
+            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
+                actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ADR_TOPIC_TERMS);
+            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
+                actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_RES_TOPIC_TERMS);
+            }
         }
     }
 

@@ -7,7 +7,7 @@
   <title>Search Extended Environment</title>
   <metadata name="title" xml:lang="de">Erweiterte Suche Umweltinformationen</metadata>
 
-  <fragment id="search-ext-env-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+  <fragment id="search-ext-env-topic-terms-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
       <property layout="TwoColumns" name="row" value="0"/>
       <property layout="TwoColumns" name="column" value="0"/>

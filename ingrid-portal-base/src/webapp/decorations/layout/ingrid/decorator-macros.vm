@@ -80,7 +80,7 @@
 				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 			#elseif($currentPage == "/search-history.psml")
 				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
-			#elseif($currentPage == "/search-ext-env.psml")
+			#elseif($currentPage.indexOf('search-ext-') != -1)
 				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 			#else
 				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
