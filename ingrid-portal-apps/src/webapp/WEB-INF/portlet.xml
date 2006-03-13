@@ -200,22 +200,58 @@
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
     </portlet>
 
-    <portlet id="LoginPortlet">
+    <portlet id="MyPortalLoginPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
             <value>/WEB-INF/templates/login.vm</value>
         </init-param>
-        <portlet-name>LoginPortlet</portlet-name>
-        <display-name>LoginPortlet</display-name>
+        <portlet-name>MyPortalLoginPortlet</portlet-name>
+        <display-name>MyPortalLoginPortlet</display-name>
         <description>This portlet displayes the login dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.LoginPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.MyPortalLoginPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.LoginResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+    </portlet>
+
+    <portlet id="MyPortalOverviewPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/myportal_overview.vm</value>
+        </init-param>
+        <portlet-name>MyPortalOverviewPortlet</portlet-name>
+        <display-name>MyPortalOverviewPortlet</display-name>
+        <description>This portlet displays the myportal overview.</description>
+        <portlet-class>de.ingrid.portal.portlets.MyPortalOverviewPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+    </portlet>
+
+    <portlet id="MyPortalNavigationPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/myportal_navigation.vm</value>
+        </init-param>
+        <portlet-name>MyPortalNavigationPortlet</portlet-name>
+        <display-name>MyPortalNavigationPortlet</display-name>
+        <description>This portlet displays the myportal navigation.</description>
+        <portlet-class>de.ingrid.portal.portlets.MyPortalNavigationPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
     </portlet>
 
 

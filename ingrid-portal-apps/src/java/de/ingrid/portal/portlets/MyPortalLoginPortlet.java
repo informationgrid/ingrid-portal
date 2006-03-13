@@ -30,7 +30,7 @@ import de.ingrid.portal.global.Utils;
  *
  * @author joachim@wemove.com
  */
-public class LoginPortlet extends GenericVelocityPortlet {
+public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
@@ -48,7 +48,7 @@ public class LoginPortlet extends GenericVelocityPortlet {
             } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
                 frm.setError(LoginForm.FIELD_PASSWORD, "login.error.noPassword");
             } else {
-                frm.setError("", "login.error.generell");
+                frm.setError("", "login.error.general");
             }
         } else {
             // TODO Localize!
@@ -97,12 +97,13 @@ public class LoginPortlet extends GenericVelocityPortlet {
     
             response.sendRedirect(response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()+ "/login/redirector"));
         } else {
-            if (request.getUserPrincipal() != null) {
-                response.sendRedirect(response.encodeURL("/"));
-            }
             Integer errorCode = (Integer)((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getSessionAttribute(LoginConstants.ERRORCODE);
             if (errorCode != null) {
                 response.setRenderParameter("errorCode", errorCode.toString());
+            } else if (request.getUserPrincipal() == null) {
+                response.setRenderParameter("errorCode", "login.error.principal.null");
+            } else {
+                frm.clearErrors();
             }
         }
     }
