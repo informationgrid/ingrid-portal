@@ -21,3 +21,5 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (1, 
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 'BFN', 'BFN-UBA', 'http://www.bfn.de/6.100.html', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 'MUF RLP', 'MUF RLP', 'http://www.muf.rlp.de/rss/rss_1_20.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (4, 'BFN', 'BfN-Skripten', 'http://www.bfn.de/rss/skripten.xml', 'de');
+
+INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
