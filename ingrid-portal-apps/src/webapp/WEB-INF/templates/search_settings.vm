@@ -1,4 +1,5 @@
 #set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+  <div class="section">    
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="xx" id="xx2">
       <input type="hidden" name="action" value="doSubmit"/>
@@ -34,3 +35,4 @@ $action.setParameter('action','doOriginalSettings')
         </div>
       </div>
     </form>
+  </div>    
