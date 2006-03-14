@@ -1,0 +1,19 @@
+      <div class="portlet-section-body">
+        <ul>
+          <li>
+            <p>
+              Ein Thesaurus besteht, ähnlich wie ein Wörterbuch, aus Fachbegriffen zu einem bestimmten Themengebiet. Außer der korrekten Schreibweise enthält ein Thesaurus aber auch Informationen darüber, ob und wie sich ein Begriff verallgemeinern (Oberbegriffe), spezialisieren (Unterbegriffe) oder anders ausdrücken (Synonyme) lässt. Thesauri werden z.B. zum Verschlagworten und Auffinden von Dokumenten genutzt.
+            </p>
+          </li>
+          <li>
+            <p>
+              Der <strong>Umweltthesaurus (UMTHES)®</strong> enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt".
+            </p>
+          </li>
+        </ul>
+        <p class="iconLink">
+          <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+          <span><a href="javascript:contextHelp()">Weitere Informationen</a></span>
+          <span class="clearer"></span>
+        </p>
+      </div>

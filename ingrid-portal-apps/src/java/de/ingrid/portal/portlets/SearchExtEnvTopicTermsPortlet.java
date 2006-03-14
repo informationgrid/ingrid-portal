@@ -25,6 +25,21 @@ public class SearchExtEnvTopicTermsPortlet extends GenericVelocityPortlet {
 
     //    private final static Log log = LogFactory.getLog(SearchSettingsPortlet.class);
 
+    /** tab param value if main tab place is clicked */
+    private final static String TAB_PLACE = "2";
+
+    /** tab param value if main tab time is clicked */
+    private final static String TAB_TIME = "3";
+
+    /** tab param value if main tab search area is clicked */
+    private final static String TAB_AREA = "4";
+
+    /** tab param value if sub tab thesaurus is clicked */
+    private final static String TAB_TOPIC_THESAURUS = "6";
+
+    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
+    private final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
+
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
@@ -57,6 +72,16 @@ public class SearchExtEnvTopicTermsPortlet extends GenericVelocityPortlet {
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
+            if (newTab.equals(TAB_PLACE)) {
+
+            } else if (newTab.equals(TAB_TIME)) {
+
+            } else if (newTab.equals(TAB_AREA)) {
+
+            } else if (newTab.equals(TAB_TOPIC_THESAURUS)) {
+                actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS);
+            }
+
             System.out.println("TAB: new Tab=" + newTab);
         }
     }
