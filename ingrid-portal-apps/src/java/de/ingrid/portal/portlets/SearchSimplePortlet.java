@@ -12,7 +12,7 @@ import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SearchSimpleForm;
@@ -26,7 +26,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * This portlet handles the "Simple Search" input fragment.
- * NOTICE: This portlet is used in the home page AND in the main-search page.
+ * NOTICE: This portlet is used in the home page AND in the main-search page AND in the extended search page ...
  * 
  * created 11.01.2006
  * 
@@ -34,13 +34,17 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  * @version
  * 
  */
-public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
+public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
+
+    // VIEW TEMPLATES
 
     private final static String TEMPLATE_SEARCH_SIMPLE = "/WEB-INF/templates/search_simple.vm";
 
     private final static String TEMPLATE_SEARCH_EXTENDED = "/WEB-INF/templates/search_extended/search_ext.vm";
+
+    // TITLE KEYS
 
     /** key of title for default-page (start page) and main-search page, if no search is performed,
      * passed from default-page per Preferences */
@@ -53,10 +57,8 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     /** key of title for main exstended search pages, passed from page per Preferences */
     private final static String TITLE_KEY_EXTENDED = "searchSimple.title.extended";
 
-    /* key of title for search-settings page, passed from page per Preferences */
-    //private final static String TITLE_KEY_SETTINGS = "searchSimple.title.settings";
-    /* key of title for search-history page, passed from page per Preferences */
-    //private final static String TITLE_KEY_HISTORY = "searchSimple.title.history";
+    // ACTION VALUES
+
     /** value of action parameter if datasource was clicked */
     private final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
 
@@ -69,11 +71,22 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
     /** value of action parameter if "Extended Search" was clicked */
     private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
 
+    // PAGES
+
     /** search-history page -> displays and handles search settings */
     private final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/search-history.psml";
 
     /** search-settings page -> displays and handles search settings */
     private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/search-settings.psml";
+
+    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/terms */
+    private final static String PAGE_SEARCH_EXT_ENV = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
+
+    /** main extended search page for datasource "address" -> address: topic/terms */
+    private final static String PAGE_SEARCH_EXT_ADR = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-terms.psml";
+
+    /** main extended search page for datasource "research" -> research: topic/terms */
+    private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
 
     /*
      * (non-Javadoc)
@@ -81,9 +94,6 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
-        // set our message "scope" for inter portlet messaging
-        setTopic(Settings.MSG_TOPIC_SEARCH);
-
         super.init(config);
     }
 
@@ -237,11 +247,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
             String newDatasource = request.getParameter(Settings.PARAM_DATASOURCE);
-            
+
             // adapt SearchState (base for generating URL params for render request):
             // - set datasource
             SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, newDatasource);
-            
+
             // don't populate action form, this is no submit, so no form parameters are in request !
             // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
             // in that way we don't loose query changes on data source change, when changes weren't submitted before
@@ -254,11 +264,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
             } else {
                 // we're in extended search
                 if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                    actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ENV_TOPIC_TERMS);
+                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_ENV);
                 } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                    actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ADR_TOPIC_TERMS);
+                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_ADR);
                 } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                    actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_RES_TOPIC_TERMS);
+                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_RES);
                 }
             }
 
@@ -271,11 +281,11 @@ public class SearchSimplePortlet extends AbstractVelocityMessagingPortlet {
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
             String currentDatasource = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
             if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ENV_TOPIC_TERMS);
+                actionResponse.sendRedirect(PAGE_SEARCH_EXT_ENV);
             } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_ADR_TOPIC_TERMS);
+                actionResponse.sendRedirect(PAGE_SEARCH_EXT_ADR);
             } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                actionResponse.sendRedirect(Settings.PAGE_SEARCH_EXT_RES_TOPIC_TERMS);
+                actionResponse.sendRedirect(PAGE_SEARCH_EXT_RES);
             }
         }
     }

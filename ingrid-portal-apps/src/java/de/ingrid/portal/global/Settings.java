@@ -46,16 +46,6 @@ public class Settings {
     /** main-environment page -> environment catalogue, also displays results */
     public final static String PAGE_ENVIRONMENT = "/ingrid-portal/portal/main-environment.psml";
 
-    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/terms */
-    public final static String PAGE_SEARCH_EXT_ENV_TOPIC_TERMS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
-
-    /** main extended search page for datasource "address" -> address: topic/terms */
-    public final static String PAGE_SEARCH_EXT_ADR_TOPIC_TERMS = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-terms.psml";
-
-    /** main extended search page for datasource "research" -> research: topic/terms */
-    public final static String PAGE_SEARCH_EXT_RES_TOPIC_TERMS = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
-
-
     // ===========================================
     // IngridQuery
     // ===========================================
@@ -229,15 +219,6 @@ public class Settings {
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
 
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
-
-    // EXTENDED SEARCH MAIN TAB VALUES
-    public final static String PARAMV_EXTSEARCH_TAB_TOPIC = "1";
-
-    public final static String PARAMV_EXTSEARCH_TAB_PLACE = "2";
-
-    public final static String PARAMV_EXTSEARCH_TAB_TIME = "3";
-
-    public final static String PARAMV_EXTSEARCH_TAB_AREA = "4";
 
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 

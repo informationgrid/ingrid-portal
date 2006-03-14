@@ -14,17 +14,17 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the fragment of the terms input in the extended search
+ * This portlet handles the fragment of the thesaurus input in the extended search.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvPortlet {
+public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvPortlet {
 
     /** tab param value if sub tab thesaurus is clicked */
-    private final static String TAB_TOPIC_THESAURUS = "6";
+    private final static String TAB_TOPIC_TERMS = "5";
 
     /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
-    private final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
+    private final static String PAGE_TOPIC_TERMS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -47,8 +47,8 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvPortlet {
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            if (newTab.equals(TAB_TOPIC_THESAURUS)) {
-                actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS);
+            if (newTab.equals(TAB_TOPIC_TERMS)) {
+                actionResponse.sendRedirect(PAGE_TOPIC_TERMS);
 
             } else {
                 processMainTab(actionResponse, newTab);

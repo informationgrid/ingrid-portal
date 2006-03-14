@@ -15,12 +15,10 @@
         <value>searchSimple.title.extended</value>
       </preference>
     </fragment>
-<!--
     <fragment id="search-ext-env-topic-thesaurus" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtEnvTopicThesaurus">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
--->
     <fragment id="search-ext-env-topic-thesaurus-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />

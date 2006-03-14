@@ -1,0 +1,25 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+
+      <div class="tabmenu">
+        <ul>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+$action.setParameter('tab','5')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>
+          <li><a class="selected">$MESSAGES.getString('searchExtEnvTopicThesaurus.title')</a></li>
+        </ul>
+      </div>
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="extsearch">
+      <input type="hidden" name="action" value="doSubmit"/>
+      <div class="formbody">
+          <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTopicThesaurus.label.terms')</label></p>
+          <div class="innerform">
+            <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="Zerstörung des Waldes" />
+            <input class="btn float_right" type="submit" value="$MESSAGES.getString('searchExtEnvTopicThesaurus.submit')" />
+            <span class="clearer"></span>
+          </div>  
+      </div>      
+    </form>
+  </div>    
