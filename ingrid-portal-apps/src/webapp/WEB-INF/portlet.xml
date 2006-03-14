@@ -259,114 +259,7 @@
     <!-- Main Menue              -->
     <!-- *********************** -->
 
-    <portlet id="SearchSettings">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_settings.vm</value>
-        </init-param>
-        <portlet-name>SearchSettings</portlet-name>
-        <display-name>Sucheinstellungen</display-name>
-        <description>This portlet displays and handles the search settings.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchSettingsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Sucheinstellungen</title>
-            <short-title>SearchSettings</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
-    </portlet>
-    
-    <portlet id="SearchHistory">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_history.vm</value>
-        </init-param>
-        <portlet-name>SearchHistory</portlet-name>
-        <display-name>Suchhistorie</display-name>
-        <description>This portlet displays and handles the search history.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchHistoryPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Suchhistorie</title>
-            <short-title>SearchHistory</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
-    </portlet>
-    
-    <portlet id="SearchSimilar">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_similar.vm</value>
-        </init-param>
-        <portlet-name>SearchSimilar</portlet-name>
-        <display-name>Similar Terms</display-name>
-        <description>This portlet handles the "Similar Terms" fragment of the search result page.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchSimilarPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Similar Terms</title>
-            <short-title>SimilarTerms</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
-    </portlet>
-    <portlet id="SearchResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_result.vm</value>
-        </init-param>
-        <portlet-name>SearchResult</portlet-name>
-        <display-name>Suchergebnis</display-name>
-        <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Suchergebnis</title>
-            <short-title>SearchResult</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
-    </portlet>
-    
-    <portlet id="SearchDetail">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_detail.vm</value>
-        </init-param>
-        <portlet-name>SearchDetail</portlet-name>
-        <display-name>Detailinformation</display-name>
-        <description>This portlet displays the search detail for dsc results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchDetailPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Detailinformation</title>
-            <short-title>SearchDetail</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchDetailResources</resource-bundle>
-    </portlet>
+    <!-- NOTICE: uses SearchSimple from Home -->
 
     <portlet id="ServiceSearch">
         <init-param>
@@ -511,5 +404,147 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
     </portlet>
+
+    <!-- *********************** -->
+    <!-- Search (general)        -->
+    <!-- *********************** -->
+
+    <portlet id="SearchSettings">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_settings.vm</value>
+        </init-param>
+        <portlet-name>SearchSettings</portlet-name>
+        <display-name>Sucheinstellungen</display-name>
+        <description>This portlet displays and handles the search settings.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchSettingsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Sucheinstellungen</title>
+            <short-title>SearchSettings</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
+    </portlet>
+    
+    <portlet id="SearchHistory">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_history.vm</value>
+        </init-param>
+        <portlet-name>SearchHistory</portlet-name>
+        <display-name>Suchhistorie</display-name>
+        <description>This portlet displays and handles the search history.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchHistoryPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Suchhistorie</title>
+            <short-title>SearchHistory</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
+    </portlet>
+    
+    <portlet id="SearchSimilar">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_similar.vm</value>
+        </init-param>
+        <portlet-name>SearchSimilar</portlet-name>
+        <display-name>Similar Terms</display-name>
+        <description>This portlet handles the "Similar Terms" fragment of the search result page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchSimilarPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Similar Terms</title>
+            <short-title>SimilarTerms</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
+    </portlet>
+    <portlet id="SearchResult">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_result.vm</value>
+        </init-param>
+        <portlet-name>SearchResult</portlet-name>
+        <display-name>Suchergebnis</display-name>
+        <description>This portlet displays the search results.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Suchergebnis</title>
+            <short-title>SearchResult</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
+    </portlet>
+    
+    <portlet id="SearchDetail">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_detail.vm</value>
+        </init-param>
+        <portlet-name>SearchDetail</portlet-name>
+        <display-name>Detailinformation</display-name>
+        <description>This portlet displays the search detail for dsc results.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchDetailPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Detailinformation</title>
+            <short-title>SearchDetail</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchDetailResources</resource-bundle>
+    </portlet>
+
+    <!-- *********************** -->
+    <!-- Extended Search         -->
+    <!-- *********************** -->
+
+    <!-- NOTICE: uses SearchSimple from Home -->
+
+    <portlet id="SearchExtEnvTopicTerms">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_env_topic_terms.vm</value>
+        </init-param>
+        <portlet-name>SearchExtEnvTopicTerms</portlet-name>
+        <display-name>ErweiterteSucheUmwThemaSuchbegriffe</display-name>
+        <description>This portlet handles the input of the terms in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTopicTermsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ThemaSuchbegriffe</title>
+            <short-title>TopicTerms</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 
 </portlet-app>

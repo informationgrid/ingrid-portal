@@ -221,12 +221,23 @@ public class Settings {
 
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
 
+    public final static String PARAMV_ACTION_CHANGE_TAB = "doChangeTab";
+
     // DATASOURCE VALUES
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";
 
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
 
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
+
+    // EXTENDED SEARCH MAIN TAB VALUES
+    public final static String PARAMV_EXTSEARCH_TAB_TOPIC = "1";
+
+    public final static String PARAMV_EXTSEARCH_TAB_PLACE = "2";
+
+    public final static String PARAMV_EXTSEARCH_TAB_TIME = "3";
+
+    public final static String PARAMV_EXTSEARCH_TAB_AREA = "4";
 
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
@@ -247,5 +258,7 @@ public class Settings {
     public final static String PARAM_GROUPING = "grouping";
 
     public final static String PARAM_ACTION = "action";
+
+    public final static String PARAM_TAB = "tab";
 
 }
