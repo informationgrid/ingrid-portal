@@ -10,19 +10,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <base href="#BaseHref()">
+  <base href="#BaseHref()" />
   <title>PortalU</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="DE" />
   <!--<meta name="description" content="" />-->
   <meta name="description" content="#PageDescription()" />
-  <meta name="version" content="#SiteVersionTag()">
+  <meta name="version" content="#SiteVersionTag()" />
   <meta name="author" content="wemove digital solutions" />
   <meta name="keywords" content="" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
-  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')">
+  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
   <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
@@ -32,7 +32,7 @@
   #* our decorator macros, see ./decorator-macros.vm *#
   #decoratorIncludeJavaScriptForHead()
   
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 	/*@cc_on @if (@_win32 && @_jscript_version >= 5) if (!window.XMLHttpRequest)
     function XMLHttpRequest() { return new ActiveXObject('Microsoft.XMLHTTP') }
     @end @*/

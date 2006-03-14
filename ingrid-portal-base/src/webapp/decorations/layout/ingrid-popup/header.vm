@@ -7,18 +7,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <base href="#BaseHref()">
+  <base href="#BaseHref()" />
   <title>PortalU</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="DE" />
   <meta name="description" content="#PageDescription()" />
-  <meta name="version" content="#SiteVersionTag()">
+  <meta name="version" content="#SiteVersionTag()" />
   <meta name="author" content="wemove digital solutions" />
   <meta name="keywords" content="" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
-  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')">
+  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   #IncludeStylesheets()
