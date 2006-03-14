@@ -23,9 +23,6 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvPortlet {
     /** tab param value if sub tab thesaurus is clicked */
     private final static String TAB_TOPIC_THESAURUS = "6";
 
-    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
-    private final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
-
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);

@@ -1,0 +1,71 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus.vm')
+<!--
+      <div class="formbody">
+		
+          <p><label class="alignleft" for="search_term">Sie können nach thematischen Fachbegriffen suchen und diese der obigen Suchanfrage hinzufügen:</label></p>
+          <div class="innerform">
+            <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="Zerstörung des Waldes" />
+            <input class="btn float_right" type="button" onclick="javascript:location='e_search_thesaurus_2.html'" onkeypress="javascript:location='e_search_thesaurus_2.html'" value="In Thesaurus suchen" />
+            <span class="clearer"></span>
+-->
+		<br />
+        <div class="line"><hr /></div>
+   	    <a name="thesaurus"></a>
+        <div>
+#set ($action = $renderResponse.createActionURL())
+          <form action="$action" method="post" enctype="" name="xx" id="extsearch">
+              <input type="hidden" name="action" value="doSubmit"/>
+       	      <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="SNS Logo" title="Ein Dienst vom Semantic Network Service. Link öffnet in neuem Fenster" /></a></span>
+              <h3>Ähnliche Begriffe</h3>
+              <span class="clearer"></span>
+          	  <div>
+            	  <table class="fullwidth">
+            	  <tr>
+            	    <td class="iconwidth"><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
+            	    <td><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>Zerstörung</strong></td>
+            	  </tr>
+            	  <tr>
+            	    <td></td>
+            	    <td>&nbsp;&nbsp;<input id="s_chk_1" name="s_chk_1" type="checkbox" />&nbsp;<a href="e_search_thesaurus_3.html">Biotopverlust</a></td>
+            	  </tr>
+            	  <tr>
+            	    <td></td>
+            	    <td>&nbsp;&nbsp;<input id="s_chk_2" name="s_chk_2" type="checkbox" />&nbsp;<a href="e_search_thesaurus_3.html">Erholungsgebiet</a></td>
+            	  </tr>
+            	  <tr>
+            	    <td></td>
+            	    <td>&nbsp;&nbsp;<input id="s_chk_3" name="s_chk_3" type="checkbox" />&nbsp;<a href="e_search_thesaurus_3.html">Landschaftsbild</a></td>
+            	  </tr>
+            	  <tr>
+            	    <td></td>
+            	    <td>&nbsp;&nbsp;<input id="s_chk_4" name="s_chk_4" type="checkbox" />&nbsp;<a href="e_search_thesaurus_3.html">Landschaftsschaden</a></td>
+            	  </tr>
+            	  <tr>
+            	    <td></td>
+            	    <td>
+            	      <span class="float_left">
+            	        &nbsp;&nbsp;<input id="s_chk_5" name="s_chk_5" type="checkbox" />&nbsp;<a href="e_search_thesaurus_3.html">Umweltschaden</a>
+            	      </span>
+            	      <div class="ico_arrowup float_right"><a href="#thesaurus">nach oben</a></div>
+                    <span class="clearer"></span>
+            	    </td>
+            	  </tr>
+            	  <tr>
+            	    <td><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
+            	    <td><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>Waldes</strong></td>
+            	  </tr>
+            	  </table>
+          	  </div>
+          </div>
+        </div>  
+    </div>      
+    <div class="formfooter">
+      <div align="right">
+        <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />
+      </div>
+    </div>
+  </form>
+</div>    

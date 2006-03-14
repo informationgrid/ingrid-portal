@@ -37,6 +37,9 @@ abstract class SearchExtEnvPortlet extends GenericVelocityPortlet {
     /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
     protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
+    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
+    protected final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
+
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
