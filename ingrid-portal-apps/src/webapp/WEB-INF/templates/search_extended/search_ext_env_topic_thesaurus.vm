@@ -4,4 +4,5 @@
 #parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus.vm')
           </div>  
       </div>      
+    </form>
   </div>    

@@ -81,11 +81,13 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvPortlet {
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
-            return;
+            action = "";
         }
+        String submittedSearch = request.getParameter("submitSearch");
+        String submittedAddToQuery = request.getParameter("submitAddToQuery");
 
         // TODO: implement functionality
-        if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
+        if (submittedSearch != null) {
 
             // In Thesaurus suchen
 
@@ -93,19 +95,19 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvPortlet {
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
             actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
 
-        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_SUBMIT)) {
+        } else if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
-            
+
             // redirect to same page with view param where we currently are (so we keep view !)
             String currView = getDefaultViewPage();
             String urlViewParam = "";
             if (currView.equals(TEMPLATE_RESULTS)) {
                 urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
             } else if (currView.equals(TEMPLATE_BROWSE)) {
-                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);                
+                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
             } else if (currView.equals(TEMPLATE_SYNONYM)) {
-                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_SYNONYM, Settings.PARAM_ACTION);                
+                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_SYNONYM, Settings.PARAM_ACTION);
             }
             actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
 
