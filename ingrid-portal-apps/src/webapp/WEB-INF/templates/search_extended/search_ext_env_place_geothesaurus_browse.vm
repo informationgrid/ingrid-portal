@@ -6,21 +6,23 @@
             <div class="line"><hr /></div>
             <div>
 #parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
-              <h3>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.results.title')</h3>
+              <h3>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.browse.keyword')</h3>
+              <p>
+                <input type="checkbox" name="chk1" value="myId" />&nbsp;Südliches Vorland des Thüringer Waldes<span class="smaller">, Naturraum</span>
+              </p>
               <span class="clearer"></span>
             </div>
+            <h3>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.browse.relations')</h3>
             <p>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doBrowse')
 ##$action.setParameter('?id?',?id?)
-              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Südliches Vorland des Thüringer Waldes</a><span class="smaller">, Naturraum</span><br />
+              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Hildburghausen</a><span class="smaller"> (50%, Kreis)</span><br />
 ##$action.setParameter('?id?',?id?)
-              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Thüringer Becken</a><span class="smaller">, Gebirge</span><br />
-##$action.setParameter('?id?',?id?)
-              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Thüringer Wald</a><span class="smaller">, Landschaft</span><br />
+              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Suhl</a><span class="smaller"> (30%, Gemeinde)</span><br />
             </p>
           </div>
-		</div>      
+      </div>
 #parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
-	</form>
+  </form>
 </div>    
