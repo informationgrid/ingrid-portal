@@ -34,8 +34,11 @@ abstract class SearchExtEnvPortlet extends GenericVelocityPortlet {
     /** tab param value if main tab search area is clicked */
     protected final static String TAB_AREA = "4";
 
-    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
+    /** main extended search page for datasource "environmentinfos" / main tab topic */
     protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
+
+    /** main extended search page for datasource "environmentinfos" / main tab place */
+    protected final static String PAGE_PLACE = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 
     /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
     protected final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
@@ -61,7 +64,7 @@ abstract class SearchExtEnvPortlet extends GenericVelocityPortlet {
         if (tab.equals(TAB_TOPIC)) {
             actionResponse.sendRedirect(PAGE_TOPIC);
         } else if (tab.equals(TAB_PLACE)) {
-
+            actionResponse.sendRedirect(PAGE_PLACE);
         } else if (tab.equals(TAB_TIME)) {
 
         } else if (tab.equals(TAB_AREA)) {
