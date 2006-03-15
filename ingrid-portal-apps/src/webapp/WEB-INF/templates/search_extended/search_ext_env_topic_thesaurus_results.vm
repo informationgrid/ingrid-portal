@@ -6,7 +6,7 @@
         <div class="line"><hr /></div>
    	    <a name="thesaurus"></a>
         <div>
-#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus_sns.vm')
+#parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
               <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.results.title')</h3>
               <span class="clearer"></span>
           	  <div>

@@ -1,0 +1,26 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_place_geothesaurus_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_place_geothesaurus.vm')
+            <br />
+            <div class="line"><hr /></div>
+            <p>
+#parse ('/WEB-INF/templates/search_extended/include_snsLogo_noMargin.vm')
+              <span><strong>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.results.title')</strong></span>
+              <span class="clearer"></span>
+            </p>
+            <p>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doBrowse')
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Südliches Vorland des Thüringer Waldes</a><span class="smaller">, Naturraum</span><br />
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Thüringer Becken</a><span class="smaller">, Gebirge</span><br />
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Thüringer Wald</a><span class="smaller">, Landschaft</span><br />
+            </p>
+          </div>
+		</div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+	</form>
+</div>    
