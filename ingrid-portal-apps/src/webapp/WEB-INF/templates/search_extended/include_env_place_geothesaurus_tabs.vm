@@ -1,0 +1,9 @@
+      <div class="tabmenu">
+        <ul>
+          <li><a class="selected">$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.title')</a>&nbsp;|</li>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+$action.setParameter('tab','6')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvPlaceMap.title')</a></li>
+        </ul>
+      </div>

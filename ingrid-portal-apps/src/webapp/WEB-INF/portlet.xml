@@ -568,5 +568,26 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtEnvPlaceGeothesaurus">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus.vm</value>
+        </init-param>
+        <portlet-name>SearchExtEnvPlaceGeothesaurus</portlet-name>
+        <display-name>ErweiterteSucheUmwRaumGeothesaurus</display-name>
+        <description>This portlet handles the input of the geothesaurus terms in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvPlaceGeothesaurusPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>RaumGeothesaurus</title>
+            <short-title>PlaceGeothesaurus</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
 
 </portlet-app>

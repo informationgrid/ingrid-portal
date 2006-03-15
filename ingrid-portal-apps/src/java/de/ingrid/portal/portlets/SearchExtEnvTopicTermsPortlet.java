@@ -18,7 +18,7 @@ import de.ingrid.portal.global.Settings;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvPortlet {
+public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvBase {
 
     /** tab param value if sub tab thesaurus is clicked */
     private final static String TAB_TOPIC_THESAURUS = "6";
