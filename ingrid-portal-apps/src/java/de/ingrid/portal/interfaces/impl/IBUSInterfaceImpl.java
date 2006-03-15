@@ -3,16 +3,30 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.io.FileReader;
+import java.lang.reflect.Method;
+import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import net.weta.components.communication.ICommunication;
 import net.weta.components.communication_sockets.SocketCommunication;
 import net.weta.components.communication_sockets.util.AddressUtil;
 import net.weta.components.proxies.ProxyService;
 import net.weta.components.proxies.remote.RemoteInvocationController;
+import net.weta.components.peer.PeerService;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationUtils;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Environment;
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.InputSource;
 
 import de.ingrid.ibus.Bus;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -22,6 +36,7 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -82,31 +97,55 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     private IBUSInterfaceImpl() throws Exception {
         super();
         String configFilename = getResourceAsStream("/ibus_interface.properties");
+        String jxtaConfigFilename = getResourceAsStream("/jxta.conf.xml");
         config = new PropertiesConfiguration(configFilename);
 
         try {
-            communication = new SocketCommunication();
 
-            communication.setMulticastPort(Integer.parseInt(config.getString("multicast_port", "11114")));
-            communication.setUnicastPort(Integer.parseInt(config.getString("unicast_port", "50000")));
-
-            communication.startup();
-
-            // start the proxy server
-            proxy = new ProxyService();
-
-            proxy.setCommunication(communication);
-            proxy.startup();
-
-            String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
-                    .parseInt(config.getString("ibus_port", "11112")));
-
-            if (log.isInfoEnabled()) {
-                log.info("!!!!!!!!!! Connecting with iBus URL: " + iBusUrl);
+            boolean enJXTACommunication = config.getString("enable_jxta", "0").equals("1");  
+            
+            if (enJXTACommunication) {
+            
+                String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
+                ICommunication communication = null;
+                ProxyService proxy = null;
+                communication = this.startJxtaCommunication(jxtaConfigFilename);
+                
+                communication.subscribeGroup(iBusUrl);
+                    
+                // start the proxy server
+                proxy = new ProxyService();
+                
+                proxy.setCommunication(communication);
+                proxy.startup();
+            
+                RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
+                bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+            } else {    
+            
+                communication = new SocketCommunication();
+    
+                communication.setMulticastPort(Integer.parseInt(config.getString("multicast_port", "11114")));
+                communication.setUnicastPort(Integer.parseInt(config.getString("unicast_port", "50000")));
+    
+                communication.startup();
+    
+                // start the proxy server
+                proxy = new ProxyService();
+    
+                proxy.setCommunication(communication);
+                proxy.startup();
+    
+                String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
+                        .parseInt(config.getString("ibus_port", "11112")));
+    
+                if (log.isInfoEnabled()) {
+                    log.info("!!!!!!!!!! Connecting with iBus URL: " + iBusUrl);
+                }
+    
+                RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
+                bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
             }
-
-            RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
-            bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
 
             if (bus == null) {
                 throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
@@ -203,13 +242,19 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         String stream = null;
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         if (classLoader != null) {
-            stream = classLoader.getResource(stripped).toString();
+            URL url = classLoader.getResource(stripped);
+            if (url != null) {
+                stream = url.toString();
+            }
         }
         if (stream == null) {
             Environment.class.getResourceAsStream(resource);
         }
         if (stream == null) {
-            stream = Environment.class.getClassLoader().getResource(stripped).toString();
+            URL url = Environment.class.getClassLoader().getResource(stripped);
+            if (url != null) {
+                stream = url.toString();
+            }
         }
         if (stream == null) {
             throw new Exception(resource + " not found");
@@ -224,48 +269,55 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         return bus.getIPlug(plugId);
     }
 
-    /*
-     public PlugDescription getIPlug(IngridHit result) {
-     PlugDescription plug = null;
-     try {
-     plug = getIPlug(result.getPlugId());
-     } catch (Throwable t) {
-     if (log.isErrorEnabled()) {
-     log.error("Problems fetching iPlug of result: " + result, t);
-     }
-     }
+    private ICommunication startJxtaCommunication(String fileName) throws Exception {
+        PeerService communication = new PeerService();
 
-     return plug;
-     }
-     */
+        URL url = ConfigurationUtils.locate(fileName);
+        
+        InputSource inputSource = new InputSource(url.openStream());
+        DocumentBuilderFactory buildFactory = DocumentBuilderFactory.newInstance();
+        Document descriptionsDocument = buildFactory.newDocumentBuilder().parse(inputSource);
+        Element descriptionElement = descriptionsDocument.getDocumentElement();
+        NodeList callNodes = descriptionElement.getElementsByTagName("call");
 
-    /*
-     public Column getColumn(Record record, String columnName) {
-     Column col = null;
-     try {
-     // serch for column
-     Column[] columns = record.getColumns();
-     for (int i = 0; i < columns.length; i++) {
-     if (columns[i].getTargetName().equalsIgnoreCase(columnName)) {
-     return columns[i];
-     }
-     }
-     // search sub records
-     Record[] subRecords = record.getSubRecords();
-     Column c = null;
-     for (int i = 0; i < subRecords.length; i++) {
-     c = getColumn(subRecords[i], columnName);
-     if (c != null) {
-     return c;
-     }
-     }
-     } catch (Throwable t) {
-     if (log.isErrorEnabled()) {
-     log.error("Problems fetching Column from record: " + record, t);
-     }
-     }
+        if (callNodes.getLength() < 1) {
+            throw new ParseException("No call tags in the descriptor.xml file.");
+        }
 
-     return col;
-     }
-     */
+        for (int i = 0; i < callNodes.getLength(); i++) {
+            Element element = (Element) callNodes.item(i);
+            final String methodName = "set" + element.getAttribute("attribute");
+
+            NodeList argNodes = element.getElementsByTagName("arg");
+            if (argNodes.getLength() < 1) {
+                throw new ParseException("No arg tags under the a call tag in the descriptor.xml file.");
+            }
+
+            Element argElement = (Element) argNodes.item(0);
+            final String type = argElement.getAttribute("type");
+            final String value = ((Text) argElement.getChildNodes().item(0)).getNodeValue();
+
+            Class argType = null;
+            Object argValue = null;
+            if (type.endsWith("String")) {
+                argType = String.class;
+                argValue = value;
+            } else if (type.endsWith("boolean")) {
+                argType = boolean.class;
+                argValue = new Boolean(value);
+            } else if (type.endsWith("int")) {
+                argType = int.class;
+                argValue = new Integer(value);
+            } else {
+                throw new ParseException("Unknown argument type: " + type);
+            }
+
+            Method method = communication.getClass().getMethod(methodName, new Class[] { argType });
+            method.invoke(communication, new Object[] { argValue });
+        }
+
+        communication.boot();
+
+        return communication;
+    }
 }

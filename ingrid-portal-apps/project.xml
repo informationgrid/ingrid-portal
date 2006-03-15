@@ -176,6 +176,15 @@
 	        <war.bundle>true</war.bundle>
 	      </properties>
 	    </dependency>
+        <dependency>
+            <groupId>weta</groupId>
+            <artifactId>weta-g</artifactId>
+            <version>SNAPSHOT</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+        </dependency>
 		<dependency>
             <groupId>weta-components</groupId>
             <artifactId>communication</artifactId>
@@ -206,6 +215,34 @@
             <type>jar</type>
             <url>http://www.weta-group.net/maven/</url>
 		</dependency>
+		<dependency>
+            <groupId>weta-components</groupId>
+            <artifactId>communication-jxta</artifactId>
+            <version>SNAPSHOT</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+            <url>http://www.weta-group.net/maven/</url>
+		</dependency>
+        <dependency>
+            <groupId>jxta</groupId>
+            <artifactId>jxta</artifactId>
+            <version>2.3.4</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>jxta</groupId>
+            <artifactId>jxtaext</artifactId>
+            <version>2.3.4</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>            
+            <type>jar</type>
+        </dependency>
 		<dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
@@ -316,15 +353,61 @@
 	           <war.bundle>true</war.bundle>
 	        </properties>
 		</dependency>
+        <dependency>
+            <groupId>jal</groupId>
+            <artifactId>jal</artifactId>
+            <version>0.4</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.1-beta-4</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>bouncycastle</groupId>
+            <artifactId>bcprov</artifactId>
+            <version>jdk14-124</version>
+			<properties>
+	           <war.bundle>true</war.bundle>
+	        </properties>
+            <type>jar</type>
+        </dependency>
 		<dependency>
             <groupId>jdom</groupId>
             <artifactId>jdom</artifactId>
-            <version>1.0</version>
+            <version>b10</version>
 			<properties>
 	          <war.bundle>true</war.bundle>
 	        </properties>
         </dependency>
-
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xerces</artifactId>
+            <version>2.4.0</version>
+            <type>jar</type>
+			<properties>
+	          <war.bundle>true</war.bundle>
+	        </properties>
+            <url>http://ibiblio.org/maven</url>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.0.b2</version>
+			<properties>
+	          <war.bundle>true</war.bundle>
+	        </properties>
+            <type>jar</type>
+            <url>http://ibiblio.org/maven</url>
+        </dependency>
     </dependencies>
     <build> 
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
