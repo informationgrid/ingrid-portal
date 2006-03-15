@@ -1,6 +1,8 @@
+#set ($userNameGiven = $userAttributes.get("user.name.given", null))
+#set ($userNameFamily = $userAttributes.get("user.name.family", null))
 <div class="section">
 	<p>
-		Willkommen Herr Mustermann!
+		Willkommen#if($userNameGiven) $userNameGiven#end#if($userNameFamily) $userNameFamily#end!
 		<br />
 		Von hier aus haben Sie folgende erweiterte Funktionalitäten:
 	</p>
