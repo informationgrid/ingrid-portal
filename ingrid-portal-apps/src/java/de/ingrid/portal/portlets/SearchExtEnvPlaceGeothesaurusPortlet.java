@@ -15,7 +15,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
- * This portlet handles the fragment of the thesaurus input in the extended search.
+ * This portlet handles the fragment of the geothesaurus input in the extended search.
  *
  * @author martin@wemove.com
  */

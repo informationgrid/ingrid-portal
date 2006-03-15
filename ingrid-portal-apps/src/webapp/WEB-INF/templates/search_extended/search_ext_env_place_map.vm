@@ -1,0 +1,12 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+      <div class="tabmenu">
+        <ul>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+$action.setParameter('tab','5')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.title')</a>&nbsp;|</li>
+          <li><a class="selected">$MESSAGES.getString('searchExtEnvPlaceMap.title')</a></li>
+        </ul>
+      </div>
+  </div>    

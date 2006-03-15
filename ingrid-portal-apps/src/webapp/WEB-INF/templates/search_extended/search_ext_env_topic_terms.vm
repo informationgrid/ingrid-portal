@@ -11,7 +11,6 @@ $action.setParameter('tab','6')
       </div>
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="xx" id="extsearch">
-      <input type="hidden" name="action" value="doSubmit"/>
       <div class="formbody">
           <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTopicTerms.label.terms')</label></p>
           <div class="innerform">

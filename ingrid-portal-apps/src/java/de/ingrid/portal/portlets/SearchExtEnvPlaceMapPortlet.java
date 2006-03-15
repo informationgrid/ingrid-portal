@@ -14,23 +14,35 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the fragment of the terms input in the extended search
+ * This portlet handles the fragment of the map input in the extended search.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvBase {
+public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvBase {
 
-    /** tab param value if sub tab thesaurus is clicked */
-    private final static String TAB_TOPIC_THESAURUS = "6";
+    // PAGES
+
+    /** main extended search page for datasource "environmentinfos" -> envinfo: place/map */
+    private final static String PAGE_PLACE_GEOTHESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
+
+    // PARAMETER VALUES
+
+    /** tab param value if sub tab "geothesaurus" is clicked */
+    private final static String PARAMV_TAB_PLACE_GEOTHESAURUS = "5";
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
-        context.put("tab", TAB_TOPIC);
+        context.put("tab", TAB_PLACE);
 
         super.doView(request, response);
     }
 
+    /**
+     * NOTICE: on actions in same page we redirect to ourself with url param determining the view
+     * template. If no view template is passed per URL param, the start template is rendered !
+     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     */
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
@@ -45,9 +57,10 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvBase {
             // Zur Suchanfrage hinzufuegen
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
+            // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            if (newTab.equals(TAB_TOPIC_THESAURUS)) {
-                actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS);
+            if (newTab.equals(PARAMV_TAB_PLACE_GEOTHESAURUS)) {
+                actionResponse.sendRedirect(PAGE_PLACE_GEOTHESAURUS);
 
             } else {
                 processMainTab(actionResponse, newTab);
