@@ -12,6 +12,8 @@ import javax.portlet.PortletException;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.interfaces.WMSInterface;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 
 /**
  * This portlet handles the fragment of the map input in the extended search.
@@ -38,6 +40,11 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvBase {
         context.put("tab", TAB_PLACE);
         context.put("subtab", "2");
 
+        // get and set URL to WMS Server
+        WMSInterface service = WMSInterfaceImpl.getInstance();
+        String wmsURL = service.getWMSSearchURL(request.getPortletSession().getId());
+        context.put("wmsURL", wmsURL);
+
         super.doView(request, response);
     }
 
@@ -58,6 +65,10 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvBase {
         if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
+
+        } else if (action.equalsIgnoreCase("doSave")) {
+
+            // Kartendienste speichern
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             // changed main or sub tab

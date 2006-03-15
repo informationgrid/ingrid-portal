@@ -1,4 +1,24 @@
   <div class="section">    
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_place_tabs.vm')
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="id2">
+      <div class="formbody">
+        <iframe src="$wmsURL" style="width:860px;height:678px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
+			$MESSAGES.getString('searchExtEnvPlaceMap.noIFrames')
+        </iframe>
+        <div class="line" style="width:33em"><hr /></div>
+        <div class="float_right rightmargin">
+$action.setParameter('action','doSave')
+          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">$MESSAGES.getString('searchExtEnvPlaceMap.save')</a></span>
+        </div>
+          <h3>$MESSAGES.getString('searchExtEnvPlaceMap.title.constraint')</h3>
+          <p>
+          <input id="chk_1" name="chk_1" type="checkbox" checked="checked" /><label for="chk_1">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint1')</label><br />
+          <input id="chk_2" name="chk_2" type="checkbox" /><label for="chk_2">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint2')</label><br />
+          <input id="chk_3" name="chk_3" type="checkbox" /><label for="chk_3">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint3')</label><br />
+          </p>
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+    </form>
   </div>    
