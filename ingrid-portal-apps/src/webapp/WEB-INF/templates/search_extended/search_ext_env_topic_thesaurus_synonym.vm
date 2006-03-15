@@ -1,0 +1,23 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus.vm')
+            <br />
+            <div class="line"><hr /></div>
+            <div>
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus_sns.vm')
+              <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.synonym.label')</h3>
+              <p>[Landschaftscharakter]</p>
+              <span class="clearer"></span>
+            </div>
+            <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.synonym.alternative')</h3>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doBrowse')
+            <p>
+              <input type="checkbox" name="s1_chk1" value="myId" />&nbsp;<a href="$action">Landschaftsbild</a>
+            </p>
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+  </form>
+</div>    
