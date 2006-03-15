@@ -1,6 +1,6 @@
 <div class="section">    
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
-#parse ('/WEB-INF/templates/search_extended/include_env_place_geothesaurus_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_place_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_place_geothesaurus.vm')
             <br />
             <div class="line"><hr /></div>

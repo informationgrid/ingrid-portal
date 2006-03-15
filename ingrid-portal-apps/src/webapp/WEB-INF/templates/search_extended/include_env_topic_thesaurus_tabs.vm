@@ -1,9 +1,0 @@
-      <div class="tabmenu">
-        <ul>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doChangeTab')
-$action.setParameter('tab','5')
-          <li><a href="$action">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>
-          <li><a class="selected">$MESSAGES.getString('searchExtEnvTopicThesaurus.title')</a></li>
-        </ul>
-      </div>

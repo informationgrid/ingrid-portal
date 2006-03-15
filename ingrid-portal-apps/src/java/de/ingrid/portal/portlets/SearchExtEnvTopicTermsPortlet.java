@@ -21,12 +21,15 @@ import de.ingrid.portal.global.Settings;
 public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvBase {
 
     /** tab param value if sub tab thesaurus is clicked */
-    private final static String TAB_TOPIC_THESAURUS = "6";
+    private final static String PARAMV_TAB_TOPIC_THESAURUS = "6";
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+
+        // set positions in main and sub tab
         context.put("tab", TAB_TOPIC);
+        context.put("subtab", "1");
 
         super.doView(request, response);
     }
@@ -46,7 +49,7 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvBase {
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            if (newTab.equals(TAB_TOPIC_THESAURUS)) {
+            if (newTab.equals(PARAMV_TAB_TOPIC_THESAURUS)) {
                 actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS);
 
             } else {

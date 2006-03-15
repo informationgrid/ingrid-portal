@@ -50,7 +50,10 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvBase {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+
+        // set positions in main and sub tab
         context.put("tab", TAB_TOPIC);
+        context.put("subtab", "2");
 
         setDefaultViewPage(TEMPLATE_START);
 

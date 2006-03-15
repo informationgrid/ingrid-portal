@@ -1,14 +1,6 @@
   <div class="section">    
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
-      <div class="tabmenu">
-        <ul>
-          <li><a class="selected">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doChangeTab')
-$action.setParameter('tab','6')
-          <li><a href="$action">$MESSAGES.getString('searchExtEnvTopicThesaurus.title')</a></li>
-        </ul>
-      </div>
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_tabs.vm')
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="xx" id="extsearch">
       <div class="formbody">

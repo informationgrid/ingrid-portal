@@ -46,7 +46,10 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvBase {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+        
+        // set positions in main and sub tab
         context.put("tab", TAB_PLACE);
+        context.put("subtab", "1");
 
         setDefaultViewPage(TEMPLATE_START);
 
