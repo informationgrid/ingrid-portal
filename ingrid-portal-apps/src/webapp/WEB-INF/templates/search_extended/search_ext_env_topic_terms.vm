@@ -17,7 +17,7 @@ $action.setParameter('tab','6')
           <div class="innerform">
             <input class="search_term inputstyletext" type="text" name="search_term" id="search_term" />
             <p>
-              <label class="alignleft" for="adding_type">Gesuchtes Dokument enthält</label>
+              <label class="alignleft" for="adding_type">$MESSAGES.getString('searchExtEnvTopicTerms.label.logic')</label>
               <select size="1" id="adding_type" name="adding_type" class="inputstyle">
                 <option value="1">alle diese Begriffe (UND)</option>
                 <option value="2">einen dieser Begriffe (ODER)</option>
@@ -28,10 +28,6 @@ $action.setParameter('tab','6')
             <span class="clearer"></span>
           </div>  
       </div>      
-      <div class="formfooter">
-        <div align="right">
-          <input class="btn" type="submit" value="$MESSAGES.getString('searchExtEnvTopicTerms.submit')" />
-        </div>
-      </div>
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
     </form>
   </div>    

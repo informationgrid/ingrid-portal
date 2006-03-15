@@ -1,0 +1,40 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus.vm')
+            <br />
+            <div class="line"><hr /></div>
+            <div>
+       	      <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="SNS Logo" title="$MESSAGES.getString('searchExtEnvTopicThesaurus.sns.logoTitle')" /></a></span>
+              <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.keyword')</h3>
+              <p><input type="checkbox" name="chk" value="myId" />&nbsp;Landschaftsbild</p>
+              <span class="clearer"></span>
+            </div>
+#set ($action = $renderResponse.createActionURL())
+            <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.synonyms')</h3>
+            <p>
+$action.setParameter('action','doSynonym')
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s1_chk5" value="myId" />&nbsp;<a href="$action">Landschaftscharakter</a><br />
+            </p>
+            <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.super')</h3>
+            <p>
+$action.setParameter('action','doBrowse')
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Landschaft </a>
+            </p>
+            <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.sub')</h3>
+            <p>
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s3_chk1" value="myId" />&nbsp;<a href="$action">Landschaftsästhetik</a><br />
+            </p>
+            <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.related')</h3>
+            <p>
+##$action.setParameter('?id?',?id?)
+              <input type="checkbox" name="s3_chk1" value="myId" />&nbsp;<a href="$action">Landschaftsschaden</a><br />
+            </p>
+          </div>
+      </div>
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+  </form>
+</div>    

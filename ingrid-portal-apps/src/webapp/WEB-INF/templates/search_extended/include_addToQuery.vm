@@ -1,0 +1,5 @@
+    <div class="formfooter">
+      <div align="right">
+        <input class="btn" type="submit" name="submitAddToQuery" value="$MESSAGES.getString('searchExt.submit.addToQuery')" />
+      </div>
+    </div>

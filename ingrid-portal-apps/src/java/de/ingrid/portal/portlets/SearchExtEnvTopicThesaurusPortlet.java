@@ -111,6 +111,14 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvPortlet {
             }
             actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
 
+        } else if (action.equalsIgnoreCase("doBrowse")) {
+            
+            // SNS Term browsen
+
+            // redirect to same page with view param setting view !
+            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
+            actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
+            
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
             if (newTab.equals(PARAMV_TAB_TOPIC_TERMS)) {
