@@ -60,4 +60,23 @@
     <taglib-uri>http://java.sun.com/portlet</taglib-uri>
     <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>
   </taglib>
+
+	<!-- Tag libraries -->
+	<taglib>
+		<taglib-uri>c.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>fmt.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>sql.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tld/sql.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>x.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tld/x.tld</taglib-location>
+	</taglib>
+
 </web-app>

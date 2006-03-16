@@ -67,6 +67,23 @@
                 <war.bundle>false</war.bundle>
             </properties>
         </dependency>
+        <dependency>
+            <groupId>org.apache.portals.jetspeed-2</groupId>
+            <artifactId>jetspeed-commons</artifactId>
+            <version>${jetspeed.version}</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+		<dependency>
+		  <id>org.apache.pluto:pluto</id>
+		  <version>1.0.1</version>
+		  <type>jar</type>
+		  <properties>
+		    <war.bundle>false</war.bundle>
+		  </properties>
+		</dependency>
         <!--dependency>
             <groupId>org.apache.portals.jetspeed-2</groupId>
             <artifactId>portals-gems</artifactId>
@@ -408,6 +425,39 @@
             <type>jar</type>
             <url>http://ibiblio.org/maven</url>
         </dependency>
+	    <!-- Servlets, JSTL -->      
+	    <dependency>
+	        <id>jstl</id>
+	        <version>1.0.6</version>
+	        <type>jar</type>
+	        <properties>
+	            <war.bundle>true</war.bundle>
+	        </properties>
+	    </dependency>
+	    <dependency>
+	        <id>taglibs:standard</id>
+	        <version>1.0.6</version>
+	        <type>jar</type>
+	        <properties>
+	            <war.bundle>true</war.bundle>
+	        </properties>
+	    </dependency>
+	    <dependency>
+	        <id>taglibs:request</id>
+	        <version>1.0.1</version>
+	        <type>jar</type>
+	        <properties>
+	            <war.bundle>true</war.bundle>
+	        </properties>
+	    </dependency>
+	    <dependency>
+	        <id>taglibs:standard</id>
+	        <version>1.0.6</version>
+	        <type>jar</type>
+	        <properties>
+	            <war.bundle>true</war.bundle>
+	        </properties>
+	    </dependency>
     </dependencies>
     <build> 
         <sourceDirectory>${basedir}/src/java</sourceDirectory>

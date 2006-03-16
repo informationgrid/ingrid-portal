@@ -1,0 +1,142 @@
+<script language='JavaScript' src='/j2-admin/scripts/jetspeed-security.js'></script>
+
+#set ($formAction = $renderResponse.createActionURL())
+
+#if ($statusMsg)
+<div class="$statusMsg.Type">$statusMsg.Text</div>
+#end
+#if ($errorMessages)
+<h3 class="portlet-msg-error">$MESSAGES.getString($errorMsg)</h3>
+#end
+	<div class="formbody">
+<form action="$formAction" method="post">
+    <input type='hidden' name='db.browser.action' value='search'/>                    
+    <input type='hidden' name='searchColumn' value='0'/>                        
+
+<center>
+<input type="text" name="searchString" size="30" value="" class="inputstyletext">
+<input class="btn" type="submit" value="$MESSAGES.getString('search')">
+<span class="smaller">&nbsp;$MESSAGES.getString('filter')</span>
+<input type="checkbox"  #if($filtered == "on") checked=1 #end name="filtered">
+</center>
+</form>
+<br />
+<table width="100%" style="border:1px solid gray" rules="all">
+  <tr>
+     <th width="24px"></th>
+	#foreach ($column in $title)
+      <th align='left'>
+        $MESSAGES.getString("$column")
+      </th>
+    #end
+  </tr>
+  #foreach ( $userObj in $table )
+  <tr>
+	#set ($user = $userObj.get(0))
+    #if ($velocityCount % 2 == 0)
+       #set($rowstyle = "portlet-section-body")
+    #else
+       #set($rowstyle = "portlet-section-alternate")
+    #end  
+	#set ($action = $renderResponse.createActionURL())
+	$action.setParameter("user", $user)
+	#if ($selected == $user)
+       <td class="$rowstyle" valign="bottom">
+         <img src="/j2-admin/images/selected.gif" />
+       </td>	 	
+    #else
+       <td class="$rowstyle">
+         &nbsp;
+       </td>             
+    #end
+    #foreach ($col in $userObj)
+	  <td class="$rowstyle">
+	    <a href='$action'>$col</a>
+	  </td>
+    #end
+   </tr>
+  #end
+</table>
+
+<hr/>
+
+<center>
+<table class="layout">
+	<tr>
+<!-- controls -->
+    #if ($prev)
+      <td valign="middle" height="30" class="layout">
+        <div align="center">
+          <form action="$formAction" method="post">
+          	<input type='hidden' name='db.browser.action' value='first' />                    
+            <input class="btn" type="submit" value="$MESSAGES.getString('firstarrow')">
+            <input type="hidden" name="start" value="0">
+          </form>
+        </div>
+      </td>  
+      <td valign="middle" height="30" class="layout">
+        <div align="center">
+          <form action="$formAction" method="post">
+          	<input type='hidden' name='db.browser.action' value='prev'/>                    
+            <input class="btn" type="submit" value="$MESSAGES.getString('prevarrow')">
+            <input type="hidden" name="start" value="$prev">
+          </form>
+        </div>
+      </td>
+    #end
+    #if ($tableSize > 0)
+      <form action="$formAction" method="post">
+      <td valign="middle" height="30" class="layout">
+        <div align="center">
+          	<input type='hidden' name='db.browser.action' value='change'/>                    
+            <input type="input" name='start' size='5' value="$start" class="inputstyletext">
+        </div>
+      </td>  
+      <td valign="middle" height="30" class="layout">
+        <div align="center">
+            <input type="input" readonly size='10' value="$MESSAGES.getString('numsepa') $tableSize" class="inputstyletext">            
+        </div>
+      </td>  
+      <td valign="middle" height="30" class="layout">
+        <div align="center">
+            <input class="btn" type="submit" value="$MESSAGES.getString('go')">            
+        </div>
+      </td>
+
+      </form>
+    #end    
+    #if ($next)
+      <td valign="middle" class="layout">
+        <div align="center">
+          <form action="$formAction" method="post">
+          	<input type='hidden' name='db.browser.action' value='next'/>          
+            <input class="btn" type="submit" value="$MESSAGES.getString('nextarrow')">
+            <input type="hidden" name="start" value="$next">
+          </form>
+        </div>
+      </td>
+      <td valign="middle" height="30" class="layout">
+        <div align="center">
+          <form action="$formAction" method="post">
+          	<input type='hidden' name='db.browser.action' value='last'/>                    
+            <input class="btn" type="submit" value="$MESSAGES.getString('lastarrow')">
+            <input type="hidden" name="start" value="$tableSize">
+          </form>
+        </div>
+      </td>  
+    #end
+    #if ($tableSize > 0)
+      <td valign="middle" class="layout">
+        <div align="center">
+          <form action="$formAction" method="post">
+          	<input type='hidden' name='db.browser.action' value='refresh'/>
+            <input class="btn" type="submit" name="eventSubmit_doRefresh" value="$MESSAGES.getString('refresh')" />
+          </form>
+        </div>
+      </td>
+    #end
+  </tr>
+</table>
+</center>
+    
+	</div>

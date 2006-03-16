@@ -30,7 +30,11 @@ limitations under the License.
 
 	<js:services>
         <js:service name='UserManager'/>  
-        <js:service name='HeaderResource'/>  
+        <js:service name='RoleManager'/>  
+        <js:service name='GroupManager'/>  
+        <js:service name='Profiler'/>  
+        <js:service name='PortletRegistryComponent'/>  
+        <js:service name='PageManager'/>  
 	</js:services>
 	
 </portlet-app>
