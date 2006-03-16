@@ -266,7 +266,7 @@ limitations under the License.
 		<dependency>
             <groupId>jdom</groupId>
             <artifactId>jdom</artifactId>
-            <version>b10</version>
+            <version>1.0</version>
 			<properties>
 	          <war.bundle>true</war.bundle>
 	        </properties>
