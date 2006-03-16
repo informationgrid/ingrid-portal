@@ -1,5 +1,43 @@
   <div class="section">
-#parse ('/WEB-INF/templates/search_extended/include_env_time_chronicle.vm')
+      <div class="formbody">
+#set ($action = $renderResponse.createActionURL())
+        <form action="$action" method="post" enctype="" name="xx" id="extsearch2">
+		  <input type="hidden" name="action" value="doSearch"/>
+          <h3>$MESSAGES.getString('searchExtEnvTimeChronicle.title')</h3>
+          <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTimeChronicle.label.terms')</label></p>
+          <div class="innerform">
+            <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" />
+            <input class="btn float_right" type="submit" value="$MESSAGES.getString('searchExtEnvTimeChronicle.submit')" />
+            <span class="clearer"></span>
+#if($results)
+            <br />
+            <div class="line"><hr /></div>
+            <div>
+#parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
+              <h3>$MESSAGES.getString('searchExtEnvTimeChronicle.results.title')</h3>
+              <div class="resultset">
+             	  <table>
+               	  <tr>
+					<td>
+#if($event)
+$action.setParameter('action','doCloseEvent')
+##?$action.setParameter('?id?',?id?)?
+					<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;&nbsp;<strong>13.12.2002:</strong>&nbsp;<a href="$action">Tankeruntergang vor der spanischen Küste - "Prestige"</a>
+                    <p class="event_description">
+Der unter der Flagge Bahamas laufende Tanker 'Prestige' geriet am 13. November 2002 in Seenot und brach am 18. November 2002 um 8 Uhr rund 200 Kilometer vor der galizischen Küste auseinander. Die Bugsektion der 'Prestige' sank am 19. November um 16.15 Uhr CET, die Hecksektion gleichentags um 12.15 Uhr CET (Quelle: Smit-Bergungsgesellschaft, Holland). Am Unglücksort haben sich am 20.11. mehrere Ölteppiche mit bis zu 37 Kilometer Länge und 40 cm Dicke gebildet. Bei der 'Prestige' handelt es sich um ein 1976 als Einhüllentanker in Japan gebautes Schiff von 81.564 tdw (tonnes death weight). Es ist bei einer Breite von 34,4 Metern 243,5 Meter lang. Auf der Fahrt von Riga nach Gibraltar ist der Tanker am 13. November vor der Küste Galiziens leck geschlagen und geriet in Seenot. Nach Aussagen von Besatzungsmitgliedern sei das mit 77.000 Tonnen Rohöl beladene Schiff in der Nacht ca. 28 Seemeilen vor dem Kap Finisterre 'gegen einen Gegenstand' gefahren. Die spanischen Behörden vermuten, entgegen den Aussagen der Besatzung, die Ursache in der Materialermüdung des 26 Jahre alten Tankers. Neujahr 2003 hat die Ölpest auch Frankreich erreicht. Mitte Januar wird die Öäpest vor Frankreich immer bedrohlicher. Ein Teppich aus Millionen kleiner Ölklumpen näherte sich am Freitag der französischen Atlantikküste. Der Ölteppich hat nach Angaben der Präfektur von Aquitaine noch größere Ausmaße als zunächst vermutet und ist nur noch etwa 100 Kilometer von der Küste entfernt. An den Stränden zwischen Biarritz und Bordeaux wurden die Aufräumarbeiten zur Beseitigung des Schweröls aus dem vor Spanien gesunkenen Tanker «Prestige» unterdessen verstärkt. Es war bereits am Neujahrstag angespült worden.
+                    </p>
+#else
+$action.setParameter('action','doOpenEvent')
+##$action.setParameter('?id?',?id?)
+					<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;&nbsp;<strong>13.12.2002:</strong>&nbsp;<a href="$action">Tankeruntergang vor der spanischen Küste - "Prestige"</a>
+#end		
+               	    </td>
+               	  </tr>
+             	  </table>
+              </div>
+              <span class="clearer"></span>
+            </div>
+#end		
           </div>
         </form>
       </div>
