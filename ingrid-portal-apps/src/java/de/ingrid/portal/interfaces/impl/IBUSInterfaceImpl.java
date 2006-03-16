@@ -51,11 +51,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     private static Bus bus = null;
 
-    private static SocketCommunication communication = null;
+    private static Object communication = null;
 
     private static ProxyService proxy = null;
 
     private Configuration config;
+    
+    private static boolean enJXTACommunication = false;
 
     public static synchronized IBUSInterface getInstance() {
         if (instance == null) {
@@ -80,10 +82,14 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 proxy.shutdown();
                 proxy = null;
             }
-            if (communication != null) {
-                communication.shutdown();
-                communication = null;
+            
+            if (enJXTACommunication && communication instanceof PeerService) {
+                ((PeerService)communication).shutdown();
+            } else if (communication != null) {
+                ((SocketCommunication)communication).shutdown();
             }
+            communication = null;
+            
             if (instance != null) {
                 instance = null;
             }
@@ -102,21 +108,20 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         try {
 
-            boolean enJXTACommunication = config.getString("enable_jxta", "0").equals("1");  
+            enJXTACommunication = config.getString("enable_jxta", "0").equals("1");  
             
             if (enJXTACommunication) {
             
                 String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
-                ICommunication communication = null;
                 ProxyService proxy = null;
                 communication = this.startJxtaCommunication(jxtaConfigFilename);
                 
-                communication.subscribeGroup(iBusUrl);
+                ((ICommunication)communication).subscribeGroup(iBusUrl);
                     
                 // start the proxy server
                 proxy = new ProxyService();
                 
-                proxy.setCommunication(communication);
+                proxy.setCommunication(((ICommunication)communication));
                 proxy.startup();
             
                 RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
@@ -125,15 +130,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             
                 communication = new SocketCommunication();
     
-                communication.setMulticastPort(Integer.parseInt(config.getString("multicast_port", "11114")));
-                communication.setUnicastPort(Integer.parseInt(config.getString("unicast_port", "50000")));
+                ((SocketCommunication)communication).setMulticastPort(Integer.parseInt(config.getString("multicast_port", "11114")));
+                ((SocketCommunication)communication).setUnicastPort(Integer.parseInt(config.getString("unicast_port", "50000")));
     
-                communication.startup();
+                ((SocketCommunication)communication).startup();
     
                 // start the proxy server
                 proxy = new ProxyService();
     
-                proxy.setCommunication(communication);
+                proxy.setCommunication(((SocketCommunication)communication));
                 proxy.startup();
     
                 String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
