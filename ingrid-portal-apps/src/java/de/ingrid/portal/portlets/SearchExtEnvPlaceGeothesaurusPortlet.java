@@ -19,7 +19,7 @@ import de.ingrid.portal.global.Utils;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
+public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
 
     // VIEW TEMPLATES
 
@@ -29,15 +29,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
 
     private final static String TEMPLATE_BROWSE = "/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus_browse.vm";
 
-    // PAGES
-
-    /** main extended search page for datasource "environmentinfos" -> envinfo: place/map */
-    private final static String PAGE_PLACE_MAP = "/ingrid-portal/portal/search-extended/search-ext-env-place-map.psml";
-
     // PARAMETER VALUES
-
-    /** tab param value if sub tab "map" is clicked */
-    private final static String PARAMV_TAB_PLACE_MAP = "6";
 
     private final static String PARAMV_VIEW_RESULTS = "1";
 
@@ -46,10 +38,10 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
-        
+
         // set positions in main and sub tab
-        context.put("tab", PARAMV_TAB_PLACE);
-        context.put("subtab", "1");
+        context.put(VAR_MAIN_TAB, PARAMV_TAB_PLACE);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_GEOTHESAURUS);
 
         setDefaultViewPage(TEMPLATE_START);
 
@@ -90,7 +82,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_PLACE_GEOTHESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (submittedAddToQuery != null) {
 
@@ -104,7 +96,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
             } else if (currView.equals(TEMPLATE_BROWSE)) {
                 urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
             }
-            actionResponse.sendRedirect(PAGE_PLACE_GEOTHESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
@@ -112,17 +104,11 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_PLACE_GEOTHESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
-            // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            if (newTab.equals(PARAMV_TAB_PLACE_MAP)) {
-                actionResponse.sendRedirect(PAGE_PLACE_MAP);
-
-            } else {
-                processTab(actionResponse, newTab);
-            }
+            processTab(actionResponse, newTab);
         }
     }
 }

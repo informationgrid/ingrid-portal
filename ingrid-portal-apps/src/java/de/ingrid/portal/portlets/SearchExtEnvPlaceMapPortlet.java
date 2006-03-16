@@ -20,25 +20,15 @@ import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvPlaceMapPortlet extends SearchExtEnv {
-
-    // PAGES
-
-    /** main extended search page for datasource "environmentinfos" -> envinfo: place/map */
-    private final static String PAGE_PLACE_GEOTHESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
-
-    // PARAMETER VALUES
-
-    /** tab param value if sub tab "geothesaurus" is clicked */
-    private final static String PARAMV_TAB_PLACE_GEOTHESAURUS = "5";
+public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", PARAMV_TAB_PLACE);
-        context.put("subtab", "2");
+        context.put(VAR_MAIN_TAB, PARAMV_TAB_PLACE);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_MAP);
 
         // get and set URL to WMS Server
         WMSInterface service = WMSInterfaceImpl.getInstance();
@@ -71,14 +61,8 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnv {
             // Kartendienste speichern
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
-            // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            if (newTab.equals(PARAMV_TAB_PLACE_GEOTHESAURUS)) {
-                actionResponse.sendRedirect(PAGE_PLACE_GEOTHESAURUS);
-
-            } else {
-                processTab(actionResponse, newTab);
-            }
+            processTab(actionResponse, newTab);
         }
     }
 }

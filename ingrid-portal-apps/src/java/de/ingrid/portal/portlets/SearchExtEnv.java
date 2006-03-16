@@ -6,7 +6,6 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -37,7 +36,7 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
     protected final static String PARAMV_TAB_AREA = "4";
 
     // START PAGES FOR MAIN TABS
-    
+
     /** page for main tab "topic" */
     protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
@@ -57,18 +56,6 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
 
     /** velocity variable name for sub tab, has to be put to context, so correct sub tab is selected */
     protected final static String VAR_SUB_TAB = "subtab";
-
-    // ADDITIONAL PAGES USED IN MULTIPLE PORTLETS (subclasses), so we keep them here
-    
-    /** page for envinfo: place/geothesaurus */
-    protected final static String PAGE_PLACE_GEOTHESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
-
-    /* (non-Javadoc)
-     * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
-     */
-    public void init(PortletConfig config) throws PortletException {
-        super.init(config);
-    }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
