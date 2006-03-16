@@ -46,7 +46,7 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            super.processTab(actionResponse, newTab);
+            processTab(actionResponse, newTab);
         }
     }
 }

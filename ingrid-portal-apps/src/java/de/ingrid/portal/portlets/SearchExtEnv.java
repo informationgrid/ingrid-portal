@@ -22,6 +22,8 @@ import de.ingrid.portal.global.IngridResourceBundle;
  */
 abstract class SearchExtEnv extends GenericVelocityPortlet {
 
+    // TAB values from action request (request parameter)
+
     /** tab param value if main tab place is clicked */
     protected final static String PARAMV_TAB_TOPIC = "1";
 
@@ -48,11 +50,16 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
     /** page for main tab "search area" */
     protected final static String PAGE_AREA = "/ingrid-portal/portal/search-extended/search-ext-env-area-contents.psml";
 
+    // VARIABLE NAMES FOR VELOCITY
+
+    /** velocity variable name for main tab, has to be put to context, so correct tab is selected */
+    protected final static String VAR_MAIN_TAB = "tab";
+
+    /** velocity variable name for sub tab, has to be put to context, so correct sub tab is selected */
+    protected final static String VAR_SUB_TAB = "subtab";
+
     // ADDITIONAL PAGES USED IN MULTIPLE PORTLETS (subclasses), so we keep them here
     
-    /** page for envinfo: topic/thesaurus */
-    protected final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
-
     /** page for envinfo: place/geothesaurus */
     protected final static String PAGE_PLACE_GEOTHESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 

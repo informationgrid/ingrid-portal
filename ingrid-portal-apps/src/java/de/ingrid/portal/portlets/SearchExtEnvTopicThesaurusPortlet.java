@@ -19,7 +19,7 @@ import de.ingrid.portal.global.Utils;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
+public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
 
     // VIEW TEMPLATES
 
@@ -31,15 +31,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
 
     private final static String TEMPLATE_SYNONYM = "/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus_synonym.vm";
 
-    // PAGES
-
-    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
-    private final static String PAGE_TOPIC_TERMS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
-
     // PARAMETER VALUES
-
-    /** tab param value if sub tab terms is clicked */
-    private final static String PARAMV_TAB_TOPIC_TERMS = "5";
 
     private final static String PARAMV_VIEW_RESULTS = "1";
 
@@ -52,8 +44,8 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", PARAMV_TAB_TOPIC);
-        context.put("subtab", "2");
+        context.put(VAR_MAIN_TAB, PARAMV_TAB_TOPIC);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_THESAURUS);
 
         setDefaultViewPage(TEMPLATE_START);
 
@@ -96,7 +88,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
 
         } else if (submittedAddToQuery != null) {
 
@@ -112,33 +104,28 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
             } else if (currView.equals(TEMPLATE_SYNONYM)) {
                 urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_SYNONYM, Settings.PARAM_ACTION);
             }
-            actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doBrowse")) {
-            
+
             // SNS Deskriptor browsen
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
-            
+            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+
         } else if (action.equalsIgnoreCase("doSynonym")) {
-            
+
             // SNS Synonym browsen
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_SYNONYM, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS + urlViewParam);
-            
+            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            if (newTab.equals(PARAMV_TAB_TOPIC_TERMS)) {
-                actionResponse.sendRedirect(PAGE_TOPIC_TERMS);
-
-            } else {
-                processTab(actionResponse, newTab);
-            }
+            processTab(actionResponse, newTab);
         }
     }
 }

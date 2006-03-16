@@ -2,13 +2,13 @@
         <ul>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doChangeTab')
-#if($subtab=='1')
+#if($subtab=='5')
           <li><a class="selected">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>		
 #else
 $action.setParameter('tab','5')
           <li><a href="$action">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>	
 #end
-#if($subtab=='2')
+#if($subtab=='6')
           <li><a class="selected">$MESSAGES.getString('searchExtEnvTopicThesaurus.title')</a></li>
 #else
 $action.setParameter('tab','6')
