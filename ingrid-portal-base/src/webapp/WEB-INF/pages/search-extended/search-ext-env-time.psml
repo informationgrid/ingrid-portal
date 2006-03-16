@@ -1,0 +1,37 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>SearchExtended Environment/Time</title>
+  <metadata name="title" xml:lang="de">Erweiterte Suche Umweltinformationen/Zeit/Zeiteinschraenkung</metadata>
+
+  <fragment id="search-ext-env-time-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <property layout="TwoColumns" name="row" value="0"/>
+      <property layout="TwoColumns" name="column" value="0"/>
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.extended</value>
+      </preference>
+    </fragment>
+    <!--fragment id="search-ext-env-time" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtEnvTime">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment-->
+    <fragment id="search-ext-env-time-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/search_extended/search_ext_env_time_info.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>searchExtended.env.time.info.title</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

@@ -1,0 +1,11 @@
+      <div class="portlet-section-body">
+        <ul>
+          <li><p>Die Umweltchronik enthält Ereignisse, die die Umweltsituation in Deutschland beeinflussen bzw. beeinflusst haben.</p></li>
+          <li><p>Zu jedem Ereignis wird ein Zeitbezug angegeben. Sie können diesen Zeitbezug nutzen, um nach weiteren Informationen zu einem Ereignis oder nach anderen Ereignissen im selben Zeitraum zu suchen.</p></li>
+        </ul>
+        <p class="iconLink">
+          <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+          <span><a href="javascript:contextHelp()">Weitere Informationen</a></span>
+          <span class="clearer"></span>
+        </p>
+      </div>

@@ -36,11 +36,14 @@ abstract class SearchExtEnvBase extends GenericVelocityPortlet {
 
     // START PAGES FOR MAIN TABS
     
-    /** main extended search page for datasource "environmentinfos" / main tab topic */
+    /** main extended search page for datasource "environmentinfos" / main tab "topic" */
     protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
-    /** main extended search page for datasource "environmentinfos" / main tab place */
+    /** main extended search page for datasource "environmentinfos" / main tab "place" */
     protected final static String PAGE_PLACE = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
+
+    /** main extended search page for datasource "environmentinfos" / main tab "time" */
+    protected final static String PAGE_TIME = "/ingrid-portal/portal/search-extended/search-ext-env-time.psml";
 
     // ADDITIONAL PAGES USED IN MULTIPLE PORTLETS
     
@@ -73,7 +76,7 @@ abstract class SearchExtEnvBase extends GenericVelocityPortlet {
         } else if (tab.equals(TAB_PLACE)) {
             actionResponse.sendRedirect(PAGE_PLACE);
         } else if (tab.equals(TAB_TIME)) {
-
+            actionResponse.sendRedirect(PAGE_TIME);
         } else if (tab.equals(TAB_AREA)) {
 
         }
