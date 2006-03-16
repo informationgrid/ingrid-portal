@@ -620,7 +620,7 @@
         </init-param>
         <portlet-name>SearchExtEnvTimeConstraint</portlet-name>
         <display-name>ErweiterteSucheUmwZeitEinschraenkung</display-name>
-        <description>This portlet handles the input of the time constraint page in the extended search.</description>
+        <description>This portlet handles the input of the time constraint fragment in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTimeConstraintPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
@@ -630,6 +630,28 @@
         <portlet-info>
             <title>ZeitEinschraenkung</title>
             <short-title>TimeConstraint</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
+    <portlet id="SearchExtEnvTimeChronicle">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_env_time_chronicle.vm</value>
+        </init-param>
+        <portlet-name>SearchExtEnvTimeChronicle</portlet-name>
+        <display-name>ErweiterteSucheUmwZeitChronik</display-name>
+        <description>This portlet handles the input of the time references (chronicle) in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTimeChroniclePortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ZeitChronik</title>
+            <short-title>TimeChronicle</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
