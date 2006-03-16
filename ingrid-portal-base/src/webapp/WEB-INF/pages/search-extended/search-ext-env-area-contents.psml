@@ -15,10 +15,10 @@
         <value>searchSimple.title.extended</value>
       </preference>
     </fragment>
-    <!--fragment id="search-ext-env-area-contents" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtEnvAreaContents">
+    <fragment id="search-ext-env-area-contents" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtEnvAreaContents">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
-    </fragment-->
+    </fragment>
     <fragment id="search-ext-env-area-contents-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />

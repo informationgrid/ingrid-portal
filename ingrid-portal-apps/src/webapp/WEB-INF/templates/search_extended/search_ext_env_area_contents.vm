@@ -1,0 +1,21 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_area_tabs.vm')
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="selection_form" id="extsearch">
+      <div class="formbody">
+          <p>$MESSAGES.getString('searchExtEnvAreaContents.explanation')</p>
+          <div class="innerform">
+            <p>
+              <input type="radio" name="infoart" id="alle" value="alle" checked="checked" /><label for="alle">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
+            </p> 
+            <p>
+              <input class="indent1_checkbox" type="radio" name="infoart" id="themen" value="themen" /><label for="themen">$MESSAGES.getString('searchExtEnvAreaContents.label.topics')</label>
+    	        <br />
+              <input class="indent1_checkbox" type="radio" name="infoart" id="service" value="service" /><label for="service">$MESSAGES.getString('searchExtEnvAreaContents.label.service')</label>
+            </p> 
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+    </form>
+  </div>    
