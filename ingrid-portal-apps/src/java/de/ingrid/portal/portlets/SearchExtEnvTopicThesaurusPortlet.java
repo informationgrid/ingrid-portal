@@ -137,7 +137,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
                 actionResponse.sendRedirect(PAGE_TOPIC_TERMS);
 
             } else {
-                processMainTab(actionResponse, newTab);
+                processTab(actionResponse, newTab);
             }
         }
     }

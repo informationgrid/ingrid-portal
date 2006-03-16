@@ -53,7 +53,7 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnv {
                 actionResponse.sendRedirect(PAGE_TOPIC_THESAURUS);
 
             } else {
-                processMainTab(actionResponse, newTab);
+                processTab(actionResponse, newTab);
             }
         }
     }

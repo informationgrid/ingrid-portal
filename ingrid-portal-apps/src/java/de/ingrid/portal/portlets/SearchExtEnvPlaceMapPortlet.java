@@ -77,7 +77,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnv {
                 actionResponse.sendRedirect(PAGE_PLACE_GEOTHESAURUS);
 
             } else {
-                processMainTab(actionResponse, newTab);
+                processTab(actionResponse, newTab);
             }
         }
     }

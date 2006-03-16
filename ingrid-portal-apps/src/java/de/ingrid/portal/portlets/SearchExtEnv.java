@@ -73,7 +73,7 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
-    protected void processMainTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
+    protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TOPIC)) {
             actionResponse.sendRedirect(PAGE_TOPIC);
         } else if (tab.equals(PARAMV_TAB_PLACE)) {

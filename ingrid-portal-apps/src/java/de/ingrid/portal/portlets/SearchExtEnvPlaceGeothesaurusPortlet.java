@@ -121,7 +121,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
                 actionResponse.sendRedirect(PAGE_PLACE_MAP);
 
             } else {
-                processMainTab(actionResponse, newTab);
+                processTab(actionResponse, newTab);
             }
         }
     }

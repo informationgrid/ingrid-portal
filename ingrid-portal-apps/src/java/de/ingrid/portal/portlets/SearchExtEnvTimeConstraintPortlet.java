@@ -46,7 +46,7 @@ public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnv {
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            processMainTab(actionResponse, newTab);
+            processTab(actionResponse, newTab);
         }
     }
 }
