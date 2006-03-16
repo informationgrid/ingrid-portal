@@ -26,7 +26,7 @@
         <value>/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>searchExtended.env.place.geothesaurus.info.title</value>
+        <value>searchExtEnvPlaceGeothesaurus.info.title</value>
       </preference>
     </fragment>
   </fragment>

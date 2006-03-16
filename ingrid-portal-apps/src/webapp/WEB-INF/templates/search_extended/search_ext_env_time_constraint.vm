@@ -1,0 +1,30 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_time_tabs.vm')
+#set ($action = $renderResponse.createActionURL())
+      <form action="$action" method="post" enctype="" name="xx" id="extsearch1">
+        <div class="formbody">
+          <h3>$MESSAGES.getString('searchExtEnvTimeConstraint.title.time')</h3>
+          <p>$MESSAGES.getString('searchExtEnvTimeConstraint.explanation')</p>
+          <br />
+ 		      <p>
+            <input type="radio" id="vonbis" name="time_select" value="0" checked="checked" /> 		      
+   		      <label for="from_yy">$MESSAGES.getString('searchExtEnvTimeConstraint.label.from')</label><input class="inputstyletext" id="from_yy" size="10" maxlength="10" name="from_yy" type="text" />
+   		      <label for="till_yy">$MESSAGES.getString('searchExtEnvTimeConstraint.label.to')</label><input class="inputstyletext" id="till_yy" size="10" maxlength="10" name="from_yy" type="text" /> &nbsp;$MESSAGES.getString('searchExtEnvTimeConstraint.timeformat')<br />
+          </p>
+          <p>
+            <input type="radio" id="am" name="time_select" value="0" />          
+   		      <label for="at_yy">$MESSAGES.getString('searchExtEnvTimeConstraint.label.at')</label><input class="inputstyletext" id="at_yy" size="10" maxlength="10" name="from_yy" type="text" /> &nbsp;$MESSAGES.getString('searchExtEnvTimeConstraint.timeformat')<br />
+          </p>
+ 		      <span class="clearer"></span>
+          <h3>$MESSAGES.getString('searchExtEnvTimeConstraint.title.extension')</h3>
+          <div class="innerform">
+            <p>
+            <input type="checkbox" name="chk1" id="chk1" value="myId" checked="checked" />&nbsp;<label for="chk1">$MESSAGES.getString('searchExtEnvTimeConstraint.label.chkb1')</label><br />
+            <input type="checkbox" name="chk2" id="chk2" value="myId" checked="checked" />&nbsp;<label for="chk2">$MESSAGES.getString('searchExtEnvTimeConstraint.label.chkb2')</label>
+            </p>
+          </div>
+        </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+      </form>
+  </div>    

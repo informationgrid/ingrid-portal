@@ -612,4 +612,26 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtEnvTimeConstraint">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_env_time_constraint.vm</value>
+        </init-param>
+        <portlet-name>SearchExtEnvTimeConstraint</portlet-name>
+        <display-name>ErweiterteSucheUmwZeitEinschraenkung</display-name>
+        <description>This portlet handles the input of the time constraint page in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTimeConstraintPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ZeitEinschraenkung</title>
+            <short-title>TimeConstraint</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 </portlet-app>

@@ -43,7 +43,7 @@ abstract class SearchExtEnvBase extends GenericVelocityPortlet {
     protected final static String PAGE_PLACE = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 
     /** main extended search page for datasource "environmentinfos" / main tab "time" */
-    protected final static String PAGE_TIME = "/ingrid-portal/portal/search-extended/search-ext-env-time.psml";
+    protected final static String PAGE_TIME = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
 
     // ADDITIONAL PAGES USED IN MULTIPLE PORTLETS
     

@@ -26,7 +26,7 @@
         <value>/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus_info.vm</value>
       </preference>
       <preference name="infoTitleKey" readOnly="false">
-        <value>searchExtended.env.topic.thesaurus.info.title</value>
+        <value>searchExtEnvTopicThesaurus.info.title</value>
       </preference>
     </fragment>
   </fragment>
