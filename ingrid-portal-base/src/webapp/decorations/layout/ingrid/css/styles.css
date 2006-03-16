@@ -47,6 +47,8 @@ th {font-size: 75%; vertical-align:top; padding:3;}
 td {font-size: 75%; vertical-align:top; padding-left:3px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
+table.layout td {font-size: 100%}
+
 
 
 /********************************************************************

@@ -8,16 +8,16 @@
   <metadata name="title" xml:lang="en">User Management</metadata>
 
   <fragment id="admin-usermanagement" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="admin-usermanagement-1" type="portlet" name="j2-admin::UserBrowserPortlet">
+    <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::UserBrowserPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="admin-usermanagement-2" type="portlet" name="j2-admin::UserDetailsPortlet">
-      <property layout="TwoColumns" name="row" value="1" />
+    <fragment id="admin-usermanagement-2" type="portlet" name="ingrid-portal-apps::UserDetailsPortlet">
+      <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
     <fragment id="admin-usermanagement-3" type="portlet" name="j2-admin::LoginPortlet">
-      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
   </fragment>
