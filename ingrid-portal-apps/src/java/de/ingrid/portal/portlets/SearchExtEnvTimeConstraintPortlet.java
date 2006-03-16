@@ -18,7 +18,7 @@ import de.ingrid.portal.global.Settings;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnvBase {
+public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnv {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {

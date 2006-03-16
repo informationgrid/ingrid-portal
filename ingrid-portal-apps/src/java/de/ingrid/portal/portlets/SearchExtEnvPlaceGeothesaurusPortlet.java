@@ -19,7 +19,7 @@ import de.ingrid.portal.global.Utils;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvBase {
+public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnv {
 
     // VIEW TEMPLATES
 

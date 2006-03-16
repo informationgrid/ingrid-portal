@@ -19,7 +19,7 @@ import de.ingrid.portal.global.Utils;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvBase {
+public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnv {
 
     // VIEW TEMPLATES
 

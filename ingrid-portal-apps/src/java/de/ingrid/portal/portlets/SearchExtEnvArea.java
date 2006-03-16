@@ -14,7 +14,7 @@ import javax.portlet.PortletException;
  *
  * @author martin@wemove.com
  */
-abstract class SearchExtEnvArea extends SearchExtEnvBase {
+abstract class SearchExtEnvArea extends SearchExtEnv {
 
     // TAB values from action request (request parameter)
 

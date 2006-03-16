@@ -20,7 +20,7 @@ import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvBase {
+public class SearchExtEnvPlaceMapPortlet extends SearchExtEnv {
 
     // PAGES
 

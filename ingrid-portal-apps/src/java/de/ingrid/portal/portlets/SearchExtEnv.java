@@ -20,7 +20,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
  *
  * @author martin@wemove.com
  */
-abstract class SearchExtEnvBase extends GenericVelocityPortlet {
+abstract class SearchExtEnv extends GenericVelocityPortlet {
 
     /** tab param value if main tab place is clicked */
     protected final static String TAB_TOPIC = "1";
