@@ -25,7 +25,7 @@ public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnv {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", TAB_TIME);
+        context.put("tab", PARAMV_TAB_TIME);
         context.put("subtab", "1");
 
         super.doView(request, response);

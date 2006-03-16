@@ -37,7 +37,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnv {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", TAB_PLACE);
+        context.put("tab", PARAMV_TAB_PLACE);
         context.put("subtab", "2");
 
         // get and set URL to WMS Server

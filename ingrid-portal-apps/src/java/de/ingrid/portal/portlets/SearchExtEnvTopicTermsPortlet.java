@@ -28,7 +28,7 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnv {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", TAB_TOPIC);
+        context.put("tab", PARAMV_TAB_TOPIC);
         context.put("subtab", "1");
 
         super.doView(request, response);

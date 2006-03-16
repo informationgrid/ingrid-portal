@@ -40,7 +40,7 @@ abstract class SearchExtEnvArea extends SearchExtEnv {
         } else if (tab.equals(PARAMV_TAB_PARTNER)) {
             actionResponse.sendRedirect(PAGE_PARTNER);
         } else {
-            processMainTab(actionResponse, tab);
+            super.processMainTab(actionResponse, tab);
         }
     }
 }

@@ -25,7 +25,7 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", TAB_AREA);
+        context.put("tab", PARAMV_TAB_AREA);
         context.put("subtab", PARAMV_TAB_CONTENTS);
 
         super.doView(request, response);
@@ -46,7 +46,7 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
-            processTab(actionResponse, newTab);
+            super.processTab(actionResponse, newTab);
         }
     }
 }

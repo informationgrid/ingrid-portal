@@ -23,16 +23,16 @@ import de.ingrid.portal.global.IngridResourceBundle;
 abstract class SearchExtEnv extends GenericVelocityPortlet {
 
     /** tab param value if main tab place is clicked */
-    protected final static String TAB_TOPIC = "1";
+    protected final static String PARAMV_TAB_TOPIC = "1";
 
     /** tab param value if main tab place is clicked */
-    protected final static String TAB_PLACE = "2";
+    protected final static String PARAMV_TAB_PLACE = "2";
 
     /** tab param value if main tab time is clicked */
-    protected final static String TAB_TIME = "3";
+    protected final static String PARAMV_TAB_TIME = "3";
 
     /** tab param value if main tab search area is clicked */
-    protected final static String TAB_AREA = "4";
+    protected final static String PARAMV_TAB_AREA = "4";
 
     // START PAGES FOR MAIN TABS
     
@@ -74,13 +74,13 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
     }
 
     protected void processMainTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
-        if (tab.equals(TAB_TOPIC)) {
+        if (tab.equals(PARAMV_TAB_TOPIC)) {
             actionResponse.sendRedirect(PAGE_TOPIC);
-        } else if (tab.equals(TAB_PLACE)) {
+        } else if (tab.equals(PARAMV_TAB_PLACE)) {
             actionResponse.sendRedirect(PAGE_PLACE);
-        } else if (tab.equals(TAB_TIME)) {
+        } else if (tab.equals(PARAMV_TAB_TIME)) {
             actionResponse.sendRedirect(PAGE_TIME);
-        } else if (tab.equals(TAB_AREA)) {
+        } else if (tab.equals(PARAMV_TAB_AREA)) {
             actionResponse.sendRedirect(PAGE_AREA);
         }
     }
