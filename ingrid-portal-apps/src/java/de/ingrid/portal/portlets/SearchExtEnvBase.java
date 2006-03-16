@@ -36,21 +36,24 @@ abstract class SearchExtEnvBase extends GenericVelocityPortlet {
 
     // START PAGES FOR MAIN TABS
     
-    /** main extended search page for datasource "environmentinfos" / main tab "topic" */
+    /** page for main tab "topic" */
     protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
-    /** main extended search page for datasource "environmentinfos" / main tab "place" */
+    /** page for main tab "place" */
     protected final static String PAGE_PLACE = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 
-    /** main extended search page for datasource "environmentinfos" / main tab "time" */
+    /** page for main tab "time" */
     protected final static String PAGE_TIME = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
 
-    // ADDITIONAL PAGES USED IN MULTIPLE PORTLETS
+    /** page for main tab "search area" */
+    protected final static String PAGE_AREA = "/ingrid-portal/portal/search-extended/search-ext-env-area-contents.psml";
+
+    // ADDITIONAL PAGES USED IN MULTIPLE PORTLETS (subclasses), so we keep them here
     
-    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/thesaurus */
+    /** page for envinfo: topic/thesaurus */
     protected final static String PAGE_TOPIC_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-topic-thesaurus.psml";
 
-    /** main extended search page for datasource "environmentinfos" -> envinfo: place/geothesaurus */
+    /** page for envinfo: place/geothesaurus */
     protected final static String PAGE_PLACE_GEOTHESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 
     /* (non-Javadoc)
@@ -78,7 +81,7 @@ abstract class SearchExtEnvBase extends GenericVelocityPortlet {
         } else if (tab.equals(TAB_TIME)) {
             actionResponse.sendRedirect(PAGE_TIME);
         } else if (tab.equals(TAB_AREA)) {
-
+            actionResponse.sendRedirect(PAGE_AREA);
         }
     }
 }
