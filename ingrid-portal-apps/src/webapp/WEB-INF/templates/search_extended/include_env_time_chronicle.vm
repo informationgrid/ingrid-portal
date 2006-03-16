@@ -1,0 +1,12 @@
+      <div class="formbody">
+#set ($action = $renderResponse.createActionURL())
+        <form action="$action" method="post" enctype="" name="xx" id="extsearch2">
+		  <input type="hidden" name="action" value="doSearch"/>
+          <h3>$MESSAGES.getString('searchExtEnvTimeChronicle.title')</h3>
+          <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTimeChronicle.label.terms')</label></p>
+          <div class="innerform">
+            <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" />
+            <input class="btn float_right" type="submit" value="$MESSAGES.getString('searchExtEnvTimeChronicle.submit')" />
+            <span class="clearer"></span>
+      <!-- DON'T FORGET TO CLOSE THE FORM AND THE TWO OPEN DIVs OUTSIDE OF THE INCLUDE ! -->
+
