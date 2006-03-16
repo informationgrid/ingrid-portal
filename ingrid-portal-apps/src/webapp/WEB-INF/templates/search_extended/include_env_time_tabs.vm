@@ -1,5 +1,12 @@
       <div class="tabmenu">
         <ul>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+#if($subtab=='5')
           <li><a class="selected">$MESSAGES.getString('searchExtEnvTimeConstraint.title')</a></li>		
+#else
+$action.setParameter('tab','5')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvTimeConstraint.title')</a></li>	
+#end
         </ul>
       </div>

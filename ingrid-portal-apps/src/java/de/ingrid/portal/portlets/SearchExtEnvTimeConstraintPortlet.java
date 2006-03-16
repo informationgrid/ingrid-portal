@@ -18,15 +18,15 @@ import de.ingrid.portal.global.Settings;
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnv {
+public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnvTime {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put("tab", PARAMV_TAB_TIME);
-        context.put("subtab", "1");
+        context.put(VAR_MAIN_TAB, PARAMV_TAB_TIME);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_CONSTRAINTS);
 
         super.doView(request, response);
     }
