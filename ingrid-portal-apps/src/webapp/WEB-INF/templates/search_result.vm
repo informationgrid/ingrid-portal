@@ -5,6 +5,9 @@
 #renderRankedResultCounter($rankedPageSelector)
       </div>
       <div class="resultset_nav">
+        &nbsp;
+      </div>
+      <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)
       </div>
       <br />
@@ -62,7 +65,9 @@
       <div class="resultset_nav float_left">
 #renderRankedResultCounter($rankedPageSelector)
       </div>
-
+      <div class="resultset_nav">
+        &nbsp;
+      </div>
       <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)
       </div>
