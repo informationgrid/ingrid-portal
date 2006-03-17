@@ -1,0 +1,25 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_area_tabs.vm')
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="extsearch">
+      <div class="formbody">
+          <p>$MESSAGES.getString('searchExtEnvAreaPartner.explanation')</p>
+          <div class="innerform">
+            <p>
+        	    <a href="#"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="chk_1" name="chk_1" type="checkbox" /><label for="chk_1">Bund</label>
+        	  </p>
+            <p style="margin-left:4.5em">
+              <input id="chk_1_1" name="chk_1_1" type="checkbox" /><label for="chk_1_1">Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit</label>
+            </p>
+            <p style="margin-left:4.5em">
+              <input id="chk_1_2" name="chk_1_2" type="checkbox" /><label for="chk_1_2">Umweltbundesamt</label>
+            </p>
+            <p>
+              <a href="#"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="chk_2" name="chk_2" type="checkbox" /><label for="chk_2">Baden-Württemberg</label>
+            </p>
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+    </form>
+  </div>    

@@ -832,4 +832,26 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtEnvAreaPartner">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_env_area_partner.vm</value>
+        </init-param>
+        <portlet-name>SearchExtEnvAreaPartner</portlet-name>
+        <display-name>ErweiterteSucheUmwSuchbereichBundLaender</display-name>
+        <description>This portlet handles the input of the "searcharea"/"partner" fragment in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvAreaPartnerPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>SuchbereichBundLaender</title>
+            <short-title>AreaPartner</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 </portlet-app>
