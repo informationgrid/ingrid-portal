@@ -1,0 +1,15 @@
+      <div class="portlet-section-body">
+        <ul>
+          <li>
+            <p>In PortalU werden prinzipiell drei Typen von Datenquellen unterschieden:</p>
+              <ul>
+                <li><p><strong>Webseiten</strong>: HTML-, PDF-Dokumente und andere direkt über das Internet zugängliche Informationen.</p></li>
+                <li><p><strong>Metadaten</strong>: Daten über Daten im Format des Umweltdatenkataloges.</p></li>
+                <li><p><strong>Fachdatenbanken</strong>: Datenbanken und spezielle Internetanwendungen.</p></li>
+              </ul>
+          </li>
+          <li>
+            <p>Geben Sie an, ob Sie alle Datenquellen durchsuchen (Voreinstellung), oder die Suche auf bestimmte Typen beschränken wollen. Bei den Metadaten können Sie die Suche zusätzlich auf einzelne UDK-Objekte einschränken.</p>
+          </li>
+        </ul>
+      </div>

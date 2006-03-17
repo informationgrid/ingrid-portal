@@ -1,0 +1,37 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>SearchExtended Environment/Area/Contents</title>
+  <metadata name="title" xml:lang="de">Erweiterte Suche Umweltinformationen/Suchbereich/Inhalte</metadata>
+
+  <fragment id="search-ext-env-area-sources-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <property layout="TwoColumns" name="row" value="0"/>
+      <property layout="TwoColumns" name="column" value="0"/>
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.extended</value>
+      </preference>
+    </fragment>
+    <!--fragment id="search-ext-env-area-sources" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtEnvAreaSources">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment-->
+    <fragment id="search-ext-env-area-sources-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/search_extended/search_ext_env_area_sources_info.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>searchExtEnvAreaSources.info.title</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
