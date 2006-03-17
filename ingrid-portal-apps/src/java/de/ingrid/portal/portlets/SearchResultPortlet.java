@@ -14,8 +14,6 @@ import javax.portlet.PortletException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.request.RequestContext;
-import org.apache.pluto.services.information.InformationProviderAccess;
-import org.apache.pluto.services.information.ResourceURLProvider;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
