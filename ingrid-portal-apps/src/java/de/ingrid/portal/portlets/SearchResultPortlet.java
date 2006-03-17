@@ -13,6 +13,9 @@ import javax.portlet.PortletException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jetspeed.request.RequestContext;
+import org.apache.pluto.services.information.InformationProviderAccess;
+import org.apache.pluto.services.information.ResourceURLProvider;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
@@ -160,8 +163,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             // if javascript and new query, set template to javascript enabled iframe template
             // exit method!!
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
-            context.put("rankedResultUrl", "portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=true");
-            context.put("unrankedResultUrl", "portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=false");
+            context.put("rankedResultUrl", response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath() + "/portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=true"));
+            context.put("unrankedResultUrl", response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath() + "/portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=false"));
             super.doView(request, response);
             return;
         }
