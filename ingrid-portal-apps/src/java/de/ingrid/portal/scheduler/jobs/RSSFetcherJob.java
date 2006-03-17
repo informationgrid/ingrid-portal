@@ -160,7 +160,7 @@ public class RSSFetcherJob implements Job {
             System.gc();
         } catch (Exception e) {
             log.error("Error executing quartz job RSSFetcherJob.", e);
-            throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, true);
+            throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, false);
         }
 
     }

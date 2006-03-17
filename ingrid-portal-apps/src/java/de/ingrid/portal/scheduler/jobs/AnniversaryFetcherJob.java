@@ -84,7 +84,7 @@ public class AnniversaryFetcherJob implements Job {
             }
         } catch (Exception e) {
             log.error("Error executing quartz job AnniversaryFetcherJob.", e);
-//            throw new JobExecutionException("Error executing quartz job AnniversaryFetcherJob.", e, true);
+            throw new JobExecutionException("Error executing quartz job AnniversaryFetcherJob.", e, false);
         }
     }
 
