@@ -168,7 +168,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // create threaded query controller
         ThreadedQueryController controller = new ThreadedQueryController();
-        controller.setTimeout(90000);
+        controller.setTimeout(30000);
 
         QueryDescriptor qd = null;
         
