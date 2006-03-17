@@ -102,6 +102,12 @@ public class QueryResultPostProcessor {
     public static IngridHits processUnrankedHits(IngridHits hits, String selectedDS) {
 
         try {
+            
+            // check for null hits
+            if (hits == null) {
+                return null;
+            }
+
             IngridHit[] hitArray = hits.getHits();
 
             IngridHit hit = null;

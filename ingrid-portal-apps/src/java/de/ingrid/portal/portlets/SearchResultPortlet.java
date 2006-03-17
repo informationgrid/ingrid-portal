@@ -168,7 +168,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // create threaded query controller
         ThreadedQueryController controller = new ThreadedQueryController();
-        controller.setTimeout(10000);
+        controller.setTimeout(90000);
 
         QueryDescriptor qd = null;
         
@@ -219,8 +219,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
-                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"),
-                        selectedDS);
+                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"), selectedDS);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
             }
         }
@@ -232,16 +231,16 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
-        HashMap unrankedPageNavigation = null;
+        
         if (unrankedHits != null) {
             numberOfUnrankedHits = (int) unrankedHits.length();
-
-            // adapt settings of unranked page navigation
-            unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
-                    Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
-                    Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
         }
+        // adapt settings of unranked page navigation
+        HashMap unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
+                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
+                Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
+        
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)) {
             // query string will be displayed when no results !
             String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
