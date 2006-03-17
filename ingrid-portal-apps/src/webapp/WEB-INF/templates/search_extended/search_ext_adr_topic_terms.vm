@@ -1,0 +1,5 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_adr_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_adr_topic_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_terms.vm')
+  </div>    

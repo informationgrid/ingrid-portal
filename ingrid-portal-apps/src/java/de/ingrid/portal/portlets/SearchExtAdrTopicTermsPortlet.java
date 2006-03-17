@@ -15,11 +15,11 @@ import de.ingrid.portal.global.Settings;
 
 /**
  * This portlet handles the fragment of the terms input in the extended search
- * for ENVIRONMENT INFORMATION.
+ * for ADDRESSES.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
+public class SearchExtAdrTopicTermsPortlet extends SearchExtAdrTopic {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {

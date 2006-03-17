@@ -654,7 +654,7 @@
     <!-- Extended Search         -->
     <!-- *********************** -->
 
-    <!-- NOTICE: uses SearchSimple from Home -->
+    <!-- NOTICE: Extended Search uses SearchSimple Portlet with other view template -->
 
     <portlet id="SearchExtEnvTopicTerms">
         <init-param>
@@ -664,7 +664,7 @@
         </init-param>
         <portlet-name>SearchExtEnvTopicTerms</portlet-name>
         <display-name>ErweiterteSucheUmwThemaSuchbegriffe</display-name>
-        <description>This portlet handles the input of the terms in the extended search.</description>
+        <description>This portlet handles the input of the terms in the extended search for environment info.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTopicTermsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
@@ -850,6 +850,28 @@
         <portlet-info>
             <title>SuchbereichBundLaender</title>
             <short-title>AreaPartner</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
+    <portlet id="SearchExtAdrTopicTerms">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_adr_topic_terms.vm</value>
+        </init-param>
+        <portlet-name>SearchExtAdrTopicTerms</portlet-name>
+        <display-name>ErweiterteSucheAdrThemaSuchbegriffe</display-name>
+        <description>This portlet handles the input of the terms in the extended search for addresses.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrTopicTermsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ThemaSuchbegriffe</title>
+            <short-title>TopicTerms</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>

@@ -1,24 +1,5 @@
   <div class="section">    
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_topic_tabs.vm')
-#set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="xx" id="extsearch">
-      <div class="formbody">
-          <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTopicTerms.label.terms')</label></p>
-          <div class="innerform">
-            <input class="search_term inputstyletext" type="text" name="search_term" id="search_term" />
-            <p>
-              <label class="alignleft" for="adding_type">$MESSAGES.getString('searchExtEnvTopicTerms.label.logic')</label>
-              <select size="1" id="adding_type" name="adding_type" class="inputstyle">
-                <option value="1">alle diese Begriffe (UND)</option>
-                <option value="2">einen dieser Begriffe (ODER)</option>
-                <option value="3">genaue diese Wortgruppe</option>
-                <option value="4">keinen dieser Begriffe (NOT)</option>
-              </select>
-            </p>
-            <span class="clearer"></span>
-          </div>  
-      </div>      
-#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
-    </form>
+#parse ('/WEB-INF/templates/search_extended/include_env_topic_terms.vm')
   </div>    
