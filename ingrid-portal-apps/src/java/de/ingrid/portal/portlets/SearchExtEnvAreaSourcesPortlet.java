@@ -14,11 +14,11 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the fragment of "Contents" input in the extended search
+ * This portlet handles the fragment of "Sources" input in the extended search
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
+public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -26,7 +26,7 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
 
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_AREA);
-        context.put(VAR_SUB_TAB, PARAMV_TAB_CONTENTS);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_SOURCES);
 
         super.doView(request, response);
     }

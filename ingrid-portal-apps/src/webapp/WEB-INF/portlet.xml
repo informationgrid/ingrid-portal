@@ -810,4 +810,26 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtEnvAreaSources">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_env_area_sources.vm</value>
+        </init-param>
+        <portlet-name>SearchExtEnvAreaSources</portlet-name>
+        <display-name>ErweiterteSucheUmwSuchbereichDatenquellen</display-name>
+        <description>This portlet handles the input of the "searcharea"/"sources" fragment in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvAreaSourcesPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>SuchbereichDatenquellen</title>
+            <short-title>AreaSources</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 </portlet-app>

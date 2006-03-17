@@ -22,6 +22,23 @@ function ingrid_checkAll(group) {
   }
 }
 
+// Select all or nothing in group1 and force group2 to same selection state.
+function ingrid_checkAll2Groups(group1, group2) {
+    group2[0].checked = group1[0].checked;
+    ingrid_checkAll(group1);
+    ingrid_checkAll(group2);
+}
+
+//Select all or nothing in group1 and adapt only "all field" in group2.
+function ingrid_checkAllAdapt(group1, group2) {
+    ingrid_checkAll(group1);
+    if (group1[0].checked == false) {
+        group2[0].checked = false;
+    } else {
+        ingrid_checkGroup(group2);
+    }
+}
+
 function ingrid_checkGroup(group) {
     // NOTICE: first field in group has to be "checkAll" field
     var allChecked = true;
@@ -35,6 +52,16 @@ function ingrid_checkGroup(group) {
         group[0].checked = true;
     } else {
         group[0].checked = false;       
+    }
+}
+
+//Check for selection of all field in group1 and then adapt group 2.
+function ingrid_checkGroupAdapt(group1, group2) {
+    ingrid_checkGroup(group1);
+    if (group1[0].checked == false) {
+        group2[0].checked = false;
+    } else {
+        ingrid_checkGroup(group2);
     }
 }
 
