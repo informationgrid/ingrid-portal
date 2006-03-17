@@ -50,6 +50,7 @@ limitations under the License.
   </bean>
 
   <!-- Security SPI: CredentialHandler -->
+<!-- ######## use ingrid security handler
   <bean id="org.apache.jetspeed.security.spi.CredentialHandler" 
        class="org.apache.jetspeed.security.spi.impl.DefaultCredentialHandler"
   >       
@@ -57,10 +58,12 @@ limitations under the License.
        <constructor-arg index="1"><ref bean="org.apache.jetspeed.security.spi.PasswordCredentialProvider"/></constructor-arg>       
        <constructor-arg index="2"><ref bean="org.apache.jetspeed.security.spi.InternalPasswordCredentialInterceptor"/></constructor-arg>       
   </bean>
-  
+-->  
+  <bean id="org.apache.jetspeed.security.spi.CredentialHandler" class="de.ingrid.usermanagement.jetspeed.IngridCredentialHandler" />  
   <!-- Security SPI: UserSecurityHandler -->
   <!-- The DefaultUSerSecurityHandler uses the raw SecurityAccessImpl so that it
   	   may demarcate its own transactions -->
+<!-- ######## use ingrid security handler
   <bean id="org.apache.jetspeed.security.spi.UserSecurityHandlerImpl" 
   	   class="org.apache.jetspeed.security.spi.impl.DefaultUserSecurityHandler"
   >  	   
@@ -80,6 +83,8 @@ limitations under the License.
 				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
-   </bean>
+  </bean>
+-->  
+  <bean id="org.apache.jetspeed.security.spi.UserSecurityHandler" class="de.ingrid.usermanagement.jetspeed.IngridUserSecurityHandler" />
 
 </beans>

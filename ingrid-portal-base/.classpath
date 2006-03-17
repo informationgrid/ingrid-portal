@@ -20,5 +20,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/velocity/jars/velocity-1.4.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-cm-2.0.jar"/>
+	<classpathentry sourcepath="/usermanagement/src" kind="lib" path="lib/ingrid-jetspeed-portal-0.0.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jetspeed-2"/>
 	<classpathentry kind="output" path="target/ingrid-portal/WEB-INF/classes"/>
 </classpath>
