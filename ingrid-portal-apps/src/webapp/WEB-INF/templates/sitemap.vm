@@ -74,11 +74,11 @@
 					<p>Ihre persönlichen Einstellungen.</p>
 				</li>
 				<li>
-					<a href="portal/service-sitemap.psml">Diese Seite</a>
-					<p>Der globale Überblick.</p>
+					<a href="portal/service-sitemap.psml">Inhaltsübersicht</a>
+					<p>Diese Seite.</p>
 				</li>
 				<li>
-					<a href="javascript:openWindow('portal/service-help.psml',750,550);">Hilfe/FAQs</a>
+					<a href="javascript:openWindow('portal/service-help.psml',750,550);">Hilfe</a>
 					<p>Hilfe und häufig gestellte Fragen (FAQs).</p>
 				</li>
 				<li>
