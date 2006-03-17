@@ -6,8 +6,11 @@
       <div class="formbody">
           <p>$MESSAGES.getString('searchExtEnvAreaPartner.explanation')</p>
           <div class="innerform">
+#if($partner)
+$action.setParameter('action','doClosePartner')
+##?$action.setParameter('?id?',?id?)?
             <p>
-        	    <a href="#"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="chk_1" name="chk_1" type="checkbox" /><label for="chk_1">Bund</label>
+        	    <a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="chk_1" name="chk_1" type="checkbox" /><label for="chk_1">Bund</label>
         	  </p>
             <p style="margin-left:4.5em">
               <input id="chk_1_1" name="chk_1_1" type="checkbox" /><label for="chk_1_1">Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit</label>
@@ -15,9 +18,13 @@
             <p style="margin-left:4.5em">
               <input id="chk_1_2" name="chk_1_2" type="checkbox" /><label for="chk_1_2">Umweltbundesamt</label>
             </p>
+#else
+$action.setParameter('action','doOpenPartner')
+##$action.setParameter('?id?',?id?)
             <p>
-              <a href="#"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="chk_2" name="chk_2" type="checkbox" /><label for="chk_2">Baden-Württemberg</label>
+              <a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="chk_2" name="chk_2" type="checkbox" /><label for="chk_2">Bund</label>
             </p>
+#end
           </div>  
       </div>      
 #parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
