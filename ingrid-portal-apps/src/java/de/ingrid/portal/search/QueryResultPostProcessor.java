@@ -25,6 +25,9 @@ public class QueryResultPostProcessor {
 
     public static IngridHits processRankedHits(IngridHits hits, String ds) {
         try {
+            if (hits == null) {
+                return null;
+            }
             IngridHit[] hitArray = hits.getHits();
             String tmpString = null;
             IngridHit hit = null;
