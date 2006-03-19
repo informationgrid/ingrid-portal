@@ -58,21 +58,6 @@ limitations under the License.
         <column name="fetched" required="true" type="TIMESTAMP"/>
     </table>
 
-    <table name="ingrid_anniversary">
-        <column name="topic_id" primaryKey="true" required="true" size="255" type="VARCHAR"/>
-        <column name="topic_name" required="false" size="255" type="VARCHAR"/>
-        <column name="date_from" required="false" size="255" type="VARCHAR"/>
-        <column name="date_from_year" required="false" type="INTEGER"/>
-        <column name="date_from_month" required="false" type="INTEGER"/>
-        <column name="date_from_day" required="false" type="INTEGER"/>
-        <column name="date_to" required="false" size="255" type="VARCHAR"/>
-        <column name="date_to_year" required="false" type="INTEGER"/>
-        <column name="date_to_month" required="false" type="INTEGER"/>
-        <column name="date_to_day" required="false" type="INTEGER"/>
-        <column name="administrative_id" required="false" size="255" type="VARCHAR"/>
-        <column name="fetched" required="true" type="TIMESTAMP"/>
-    </table>
-
     <table name="groups">
         <column name="name" primaryKey="true" required="true" size="255" type="VARCHAR"/>
     </table>
