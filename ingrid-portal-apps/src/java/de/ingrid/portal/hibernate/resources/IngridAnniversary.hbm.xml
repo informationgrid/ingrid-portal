@@ -3,10 +3,10 @@
 
 <hibernate-mapping>
   	<class name="de.ingrid.portal.om.IngridAnniversary" table="ingrid_anniversary">
-		<id name="id" column="topic_id" type="java.lang.String">
-    		<generator class="assigned"/>
+		<id name="id">
+    		<generator class="native"/>
         </id>
-    	<property name="topicId" column="topic_id" type="java.lang.String" insert="false" update="false"/>
+    	<property name="topicId" column="topic_id" type="java.lang.String"/>
     	<property name="topicName" column="topic_name" type="java.lang.String"/>
     	<property name="dateFrom" column="date_from" type="java.lang.String"/>
     	<property name="dateFromYear" column="date_from_year" type="java.lang.Integer"/>
@@ -18,5 +18,6 @@
     	<property name="dateToDay" column="date_to_day" type="java.lang.Integer"/>
     	<property name="administrativeId" column="administrative_id" type="java.lang.String"/>
     	<property name="fetched" type="java.sql.Date"/>
+    	<property name="fetchedFor" column="fetched_for" type="java.sql.Date"/>
   </class>
 </hibernate-mapping>

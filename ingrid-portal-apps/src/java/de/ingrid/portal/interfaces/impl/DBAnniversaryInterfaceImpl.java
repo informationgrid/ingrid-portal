@@ -56,30 +56,48 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
             fHibernateManager = HibernateManager.getInstance();
             Session session = this.fHibernateManager.getSession();
 
+            Calendar queryDateFrom = Calendar.getInstance();
+            queryDateFrom.set(Calendar.HOUR_OF_DAY, 0);
+            queryDateFrom.set(Calendar.MINUTE, 0);
+            queryDateFrom.set(Calendar.SECOND, 0);
+            queryDateFrom.set(Calendar.MILLISECOND, 0);
+            Calendar queryDateTo = Calendar.getInstance();
+            queryDateTo.set(Calendar.HOUR_OF_DAY, 23);
+            queryDateTo.set(Calendar.MINUTE, 59);
+            queryDateTo.set(Calendar.SECOND, 59);
+            queryDateTo.set(Calendar.MILLISECOND, 0);
+
             Calendar fromCal = Calendar.getInstance();
             Calendar toCal = Calendar.getInstance();
 
             fromCal.setTime(d);
-
-            List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
-                    Restrictions.eq("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH)))).add(
-                    Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1))).list();
+            
+            List anniversaryList = session.createCriteria(IngridAnniversary.class)
+                    .add(Restrictions.eq("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH))))
+                    .add(Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1)))
+                    .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                    .list();
             if (anniversaryList.isEmpty()) {
                 // fall back: get any event of this month
                 fromCal.setTime(d);
                 toCal.setTime(d);
 
-                anniversaryList = session.createCriteria(IngridAnniversary.class).add(
-                        Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
-                        .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4")).list();
+                anniversaryList = session.createCriteria(IngridAnniversary.class)
+                        .add(Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
+                        .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4"))
+                        .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                        .list();
 
                 if (anniversaryList.isEmpty()) {
                     // fall back: get all events that only define a year
                     fromCal.setTime(d);
 
-                    anniversaryList = session.createCriteria(IngridAnniversary.class).list();
+                    anniversaryList = session.createCriteria(IngridAnniversary.class)
+                            .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                            .list();
                 }
             }
+            
             IngridHitDetail[] rslt = new IngridHitDetail[anniversaryList.size()];
             for (int i = 0; i < rslt.length; i++) {
                 IngridAnniversary anni = (IngridAnniversary) anniversaryList.get(i);

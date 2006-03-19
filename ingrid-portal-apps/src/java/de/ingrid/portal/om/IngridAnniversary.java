@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class IngridAnniversary {
     
+    private Long id;
     private String topicId;
     private String topicName;
     private String dateFrom;
@@ -17,14 +18,15 @@ public class IngridAnniversary {
     private Integer dateToDay;
     private String administrativeId;
     private Date fetched;
+    private Date fetchedFor;
 
     
-    public String getId() {
-        return this.topicId;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setId(String id) {
-        this.topicId = id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
@@ -193,6 +195,20 @@ public class IngridAnniversary {
      */
     public void setTopicName(String topicName) {
         this.topicName = topicName;
+    }
+
+    /**
+     * @return Returns the fetchedFor.
+     */
+    public Date getFetchedFor() {
+        return fetchedFor;
+    }
+
+    /**
+     * @param fetchedFor The fetchedFor to set.
+     */
+    public void setFetchedFor(Date fetchedFor) {
+        this.fetchedFor = fetchedFor;
     }
 
 

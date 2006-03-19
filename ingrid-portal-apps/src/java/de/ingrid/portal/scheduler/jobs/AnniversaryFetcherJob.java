@@ -5,6 +5,7 @@ package de.ingrid.portal.scheduler.jobs;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -20,6 +21,7 @@ import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
+import de.ingrid.portal.om.IngridRSSStore;
 import de.ingrid.utils.IngridHitDetail;
 
 /**
@@ -40,18 +42,39 @@ public class AnniversaryFetcherJob implements Job {
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
+//            cal.set(Calendar.DATE, 15);
+//            cal.set(Calendar.MONTH, 2);
             cal.add(Calendar.DATE, 1);
-    
+            Date queryDate = cal.getTime();
+
+            Calendar queryDateFrom = Calendar.getInstance();
+            queryDateFrom.setTime(queryDate);
+            queryDateFrom.set(Calendar.HOUR_OF_DAY, 0);
+            queryDateFrom.set(Calendar.MINUTE, 0);
+            queryDateFrom.set(Calendar.SECOND, 0);
+            queryDateFrom.set(Calendar.MILLISECOND, 0);
+            Calendar queryDateTo = Calendar.getInstance();
+            queryDateTo.setTime(queryDate);
+            queryDateTo.set(Calendar.HOUR_OF_DAY, 23);
+            queryDateTo.set(Calendar.MINUTE, 59);
+            queryDateTo.set(Calendar.SECOND, 59);
+            queryDateTo.set(Calendar.MILLISECOND, 0);
+            
+            
             fHibernateManager = HibernateManager.getInstance();
             Session session = this.fHibernateManager.getSession();
-            
-            IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(cal.getTime());
+
+            IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(queryDate);
             if (details.length > 0) {
+
                 for (int i=0; i<details.length; i++) {
                     if ((details[i] instanceof DetailedTopic) &&  details[i].size() > 0) {
                         DetailedTopic detail = (DetailedTopic) details[i];
-                        List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
-                                Restrictions.eq("id", detail.getTopicID())).list();
+                        // check if theis item already exists
+                        List anniversaryList = session.createCriteria(IngridAnniversary.class)
+                            .add(Restrictions.eq("topicId", detail.getTopicID()))
+                            .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                            .list();
                         if (anniversaryList.isEmpty()) {
                             IngridAnniversary anni = new IngridAnniversary();
                             anni.setTopicId(detail.getTopicID());
@@ -74,6 +97,7 @@ public class AnniversaryFetcherJob implements Job {
                             }
                             anni.setAdministrativeId(detail.getAdministrativeID());
                             anni.setFetched(new Date());
+                            anni.setFetchedFor(queryDate);
     
                             session.beginTransaction();
                             session.save(anni);
@@ -82,6 +106,18 @@ public class AnniversaryFetcherJob implements Job {
                     }
                 }
             }
+            // remove old entries
+            cal.setTime(new Date());
+            cal.add(Calendar.DATE, -1);
+            List deleteEntries = session.createCriteria(IngridAnniversary.class).add(
+                    Restrictions.lt("fetchedFor", cal.getTime())).list();
+            Iterator it = deleteEntries.iterator();
+            session.beginTransaction();
+            while (it.hasNext()) {
+                session.delete((IngridAnniversary) it.next());
+            }
+            session.getTransaction().commit();
+            
         } catch (Exception e) {
             log.error("Error executing quartz job AnniversaryFetcherJob.", e);
             throw new JobExecutionException("Error executing quartz job AnniversaryFetcherJob.", e, false);
