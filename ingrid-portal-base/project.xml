@@ -125,6 +125,16 @@
             <war.bundle>true</war.bundle>
         </properties>
     </dependency>
+
+    <dependency>
+		<groupId>ingrid</groupId>
+		<artifactId>ingrid-jetspeed-portal</artifactId>
+		<version>0.1-SNAPSHOT</version>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>
+    </dependency>
+
 	</dependencies>
     <build>
         <sourceDirectory>src/java</sourceDirectory>
