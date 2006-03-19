@@ -1,0 +1,5 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_adr_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_adr_area_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_env_area_partner.vm')
+  </div>    

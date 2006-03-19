@@ -16,11 +16,11 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
- * This portlet handles the fragment of "Partner" input in the extended search for "environment infos".
+ * This portlet handles the fragment of "Partner" input in the extended search for addresses.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvAreaPartnerPortlet extends SearchExtEnvArea {
+public class SearchExtAdrAreaPartnerPortlet extends SearchExtAdrArea {
 
     private static final String MSG_PARTNER = "partner";
 
