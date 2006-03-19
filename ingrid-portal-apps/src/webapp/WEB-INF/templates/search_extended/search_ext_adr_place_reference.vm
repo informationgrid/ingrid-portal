@@ -1,0 +1,25 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_adr_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_adr_place_tabs.vm')
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="extsearch">
+      <div class="formbody">
+          <p>$MESSAGES.getString('searchExtAdrPlaceReference.explanation')</p>
+          <div class="innerform">
+            <p>
+              <label class="left" for="street">$MESSAGES.getString('searchExtAdrPlaceReference.label.street')</label>
+              <input class="address_space inputstyletext" type="text" name="street" id="street" />
+            </p>
+            <p>
+              <label class="left" for="zip">$MESSAGES.getString('searchExtAdrPlaceReference.label.zip')</label>
+              <input class="address_space inputstyletext" type="text" name="zip" id="zip" />
+            </p>
+            <p>
+              <label class="left" for="city">$MESSAGES.getString('searchExtAdrPlaceReference.label.city')</label>
+              <input class="address_space inputstyletext" type="text" name="city" id="city" />
+            </p>
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+    </form>
+  </div>    

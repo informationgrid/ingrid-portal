@@ -1,0 +1,12 @@
+      <div class="tabmenu">
+        <ul>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+#if($subtab=='4')
+          <li><a class="selected">$MESSAGES.getString('searchExtAdrPlaceReference.title')</a></li>
+#else
+$action.setParameter('tab','4')
+          <li><a href="$action">$MESSAGES.getString('searchExtAdrPlaceReference.title')</a></li>
+#end
+        </ul>
+      </div>

@@ -898,4 +898,26 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtAdrPlaceReference">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_adr_place_reference.vm</value>
+        </init-param>
+        <portlet-name>SearchExtAdrPlaceReference</portlet-name>
+        <display-name>ErweiterteSucheAdrRaumRaumbezug</display-name>
+        <description>This portlet handles the input of the place reference in the extended search for addresses.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrPlaceReferencePortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>RaumRaumbezug</title>
+            <short-title>PlaceReference</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 </portlet-app>
