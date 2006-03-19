@@ -876,4 +876,26 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtAdrTopicMode">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_adr_topic_mode.vm</value>
+        </init-param>
+        <portlet-name>SearchExtAdrTopicMode</portlet-name>
+        <display-name>ErweiterteSucheAdrThemaSuchmodus</display-name>
+        <description>This portlet handles the input of the mode in the extended search for addresses.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrTopicModePortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ThemaSuchmodus</title>
+            <short-title>TopicMode</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 </portlet-app>
