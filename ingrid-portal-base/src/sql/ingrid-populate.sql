@@ -23,3 +23,15 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (4, 'BFN', 'BfN-Skripten', 'http://www.bfn.de/rss/skripten.xml', 'de');
 
 INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
+
+INSERT INTO groups VALUES('admin');
+INSERT INTO groups VALUES('manager');
+INSERT INTO groups VALUES('user');
+INSERT INTO roles VALUES('admin');
+INSERT INTO roles VALUES('manager');
+INSERT INTO roles VALUES('user');
+INSERT INTO usergrouprole VALUES(1,'admin','admin','admin');
+INSERT INTO usergrouprole VALUES(2,'admin','admin','manager');
+INSERT INTO usergrouprole VALUES(3,'admin','admin','user');
+INSERT INTO users VALUES('admin','admin');
+INSERT INTO users VALUES('guest','guest');
