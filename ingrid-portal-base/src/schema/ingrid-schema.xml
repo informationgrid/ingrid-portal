@@ -17,15 +17,15 @@ limitations under the License.
 <!DOCTYPE database SYSTEM "http://db.apache.org/torque/dtd/database_3_2.dtd">
 <database name="j2">
 
-    <table name="ingrid_partner">
-        <column name="id" primaryKey="true" required="true" type="INTEGER"/>
+    <table name="ingrid_partner" idMethod="native">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
         <column name="ident" required="true" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="sortkey" required="true" type="INTEGER"/>
     </table>
 
-    <table name="ingrid_rss_source">
-        <column name="id" primaryKey="true" required="true" type="INTEGER"/>
+    <table name="ingrid_rss_source" idMethod="native">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
         <column name="provider" required="true" size="255" type="VARCHAR"/>
         <column name="description" required="false" size="255" type="VARCHAR"/>
         <column name="url" required="true" size="255" type="VARCHAR"/>
@@ -43,8 +43,9 @@ limitations under the License.
         <column name="title" required="false" size="255" type="VARCHAR"/>
     </table>
 
-    <table name="ingrid_anniversary">
-        <column name="topic_id" primaryKey="true" required="true" size="255" type="VARCHAR"/>
+    <table name="ingrid_anniversary" idMethod="native">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
+        <column name="topic_id" required="true" size="255" type="VARCHAR"/>
         <column name="topic_name" required="false" size="255" type="VARCHAR"/>
         <column name="date_from" required="false" size="255" type="VARCHAR"/>
         <column name="date_from_year" required="false" type="INTEGER"/>
@@ -56,6 +57,7 @@ limitations under the License.
         <column name="date_to_day" required="false" type="INTEGER"/>
         <column name="administrative_id" required="false" size="255" type="VARCHAR"/>
         <column name="fetched" required="true" type="TIMESTAMP"/>
+        <column name="fetched_for" required="true" type="DATE"/>
     </table>
 
     <table name="groups">
@@ -71,8 +73,8 @@ limitations under the License.
         <column name="password" size="255" type="VARCHAR"/>
     </table>
 
-    <table name="usergrouprole">
-        <column name="id" primaryKey="true" required="true" size="255" type="INTEGER"/>
+    <table name="usergrouprole" idMethod="native">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
         <column name="username" size="255" type="VARCHAR"/>
         <column name="groupname" size="255" type="VARCHAR"/>
         <column name="rolename" size="255" type="VARCHAR"/>
