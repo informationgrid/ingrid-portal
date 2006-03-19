@@ -159,6 +159,9 @@ public class Settings {
     /** this message contains the central IngridQuery object */
     public static final String MSG_QUERY = "query";
 
+    /** this message contains the currently selected partners, from whom results should be delivered */
+    public static final String MSG_PARTNER = "partner";
+
     /** cache for ranked search results */
     public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";
 

@@ -3,11 +3,18 @@
  */
 package de.ingrid.portal.search;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.RenderRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.portals.messaging.PortletMessaging;
+import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -293,4 +300,65 @@ public class UtilsSearch {
      }
      */
 
+    /**
+     * Encapsulates common doView functionality for all partner selection portlets 
+     * @param request
+     * @param context
+     */
+    public static void doViewForPartnerPortlet(RenderRequest request, Context context) {
+        // ----------------------------------
+        // check for passed RENDER PARAMETERS and react
+        // ----------------------------------
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if (action != null) {
+            // fetch data and pass it to template, HERE DUMMY
+            Object partner = PortletMessaging.receive(request, Settings.MSG_PARTNER);
+            context.put("partner", partner);
+        } else {
+            // remove data from session
+            PortletMessaging.cancel(request, Settings.MSG_PARTNER);
+        }
+    }
+
+    /**
+     * Encapsulates common processAction functionality for all partner selection portlets 
+     * @param request
+     * @param context
+     */
+    public static void processActionForPartnerPortlet(ActionRequest request, ActionResponse response, String page)
+            throws IOException {
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if (action == null) {
+            action = "";
+        }
+        String submittedAddToQuery = request.getParameter("submitAddToQuery");
+
+        // TODO: implement functionality
+        if (submittedAddToQuery != null) {
+
+            // Zur Suchanfrage hinzufuegen
+
+            // redirect to same page with URL parameter indicating that action was called !
+            String urlViewParam = "?" + Utils.toURLParam(Settings.MSGV_TRUE, Settings.PARAM_ACTION);
+            response.sendRedirect(page + urlViewParam);
+
+        } else if (action.equalsIgnoreCase("doOpenPartner")) {
+
+            // Partner anzeigen (publishen, hier dummy)
+            PortletMessaging.publish(request, Settings.MSG_PARTNER, Settings.MSGV_TRUE);
+
+            // redirect to same page with URL parameter indicating that action was called !
+            String urlViewParam = "?" + Utils.toURLParam(Settings.MSGV_TRUE, Settings.PARAM_ACTION);
+            response.sendRedirect(page + urlViewParam);
+
+        } else if (action.equalsIgnoreCase("doClosePartner")) {
+
+            // Partner entfernen (hier dummy)
+            PortletMessaging.cancel(request, Settings.MSG_PARTNER);
+
+            // redirect to same page with URL parameter indicating that action was called !
+            String urlViewParam = "?" + Utils.toURLParam(Settings.MSGV_TRUE, Settings.PARAM_ACTION);
+            response.sendRedirect(page + urlViewParam);
+        }
+    }
 }
