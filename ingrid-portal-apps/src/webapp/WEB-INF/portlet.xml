@@ -665,7 +665,7 @@
         <portlet-name>SearchExtEnvTopicTerms</portlet-name>
         <display-name>ErweiterteSucheUmwThemaSuchbegriffe</display-name>
         <description>This portlet handles the input of the terms in the extended search for environment info.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTopicTermsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTopicTermsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -687,7 +687,7 @@
         <portlet-name>SearchExtEnvTopicThesaurus</portlet-name>
         <display-name>ErweiterteSucheUmwThemaFachwoerterbuch</display-name>
         <description>This portlet handles the input of the thesaurus terms in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTopicThesaurusPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTopicThesaurusPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -709,7 +709,7 @@
         <portlet-name>SearchExtEnvPlaceGeothesaurus</portlet-name>
         <display-name>ErweiterteSucheUmwRaumGeothesaurus</display-name>
         <description>This portlet handles the input of the geothesaurus terms in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvPlaceGeothesaurusPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvPlaceGeothesaurusPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -731,7 +731,7 @@
         <portlet-name>SearchExtEnvPlaceMap</portlet-name>
         <display-name>ErweiterteSucheUmwRaumKarte</display-name>
         <description>This portlet handles the input of the map page in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvPlaceMapPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvPlaceMapPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -753,7 +753,7 @@
         <portlet-name>SearchExtEnvTimeConstraint</portlet-name>
         <display-name>ErweiterteSucheUmwZeitEinschraenkung</display-name>
         <description>This portlet handles the input of the time constraint fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTimeConstraintPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTimeConstraintPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -775,7 +775,7 @@
         <portlet-name>SearchExtEnvTimeChronicle</portlet-name>
         <display-name>ErweiterteSucheUmwZeitChronik</display-name>
         <description>This portlet handles the input of the time references (chronicle) in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvTimeChroniclePortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTimeChroniclePortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -797,7 +797,7 @@
         <portlet-name>SearchExtEnvAreaContents</portlet-name>
         <display-name>ErweiterteSucheUmwSuchbereichInhalte</display-name>
         <description>This portlet handles the input of the "search area"/"contents" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvAreaContentsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaContentsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -819,7 +819,7 @@
         <portlet-name>SearchExtEnvAreaSources</portlet-name>
         <display-name>ErweiterteSucheUmwSuchbereichDatenquellen</display-name>
         <description>This portlet handles the input of the "searcharea"/"sources" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvAreaSourcesPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaSourcesPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -841,7 +841,7 @@
         <portlet-name>SearchExtEnvAreaPartner</portlet-name>
         <display-name>ErweiterteSucheUmwSuchbereichBundLaender</display-name>
         <description>This portlet handles the input of the "envinfo"/"searcharea"/"partner" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtEnvAreaPartnerPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaPartnerPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -863,7 +863,7 @@
         <portlet-name>SearchExtAdrTopicTerms</portlet-name>
         <display-name>ErweiterteSucheAdrThemaSuchbegriffe</display-name>
         <description>This portlet handles the input of the terms in the extended search for addresses.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrTopicTermsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrTopicTermsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -885,7 +885,7 @@
         <portlet-name>SearchExtAdrTopicMode</portlet-name>
         <display-name>ErweiterteSucheAdrThemaSuchmodus</display-name>
         <description>This portlet handles the input of the mode in the extended search for addresses.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrTopicModePortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrTopicModePortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -907,7 +907,7 @@
         <portlet-name>SearchExtAdrPlaceReference</portlet-name>
         <display-name>ErweiterteSucheAdrRaumRaumbezug</display-name>
         <description>This portlet handles the input of the place reference in the extended search for addresses.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrPlaceReferencePortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrPlaceReferencePortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -929,7 +929,7 @@
         <portlet-name>SearchExtAdrAreaPartner</portlet-name>
         <display-name>ErweiterteSucheAdrSuchbereichBundLaender</display-name>
         <description>This portlet handles the input of the "addresses"/"searcharea"/"partner" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtAdrAreaPartnerPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrAreaPartnerPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -951,7 +951,7 @@
         <portlet-name>SearchExtResTopicTerms</portlet-name>
         <display-name>ErweiterteSucheForschungThemaSuchbegriffe</display-name>
         <description>This portlet handles the input of the terms in the extended search for research.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtResTopicTermsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtResTopicTermsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -973,7 +973,7 @@
         <portlet-name>SearchExtResTopicAttributes</portlet-name>
         <display-name>ErweiterteSucheForschungThemaAttribute</display-name>
         <description>This portlet handles the input of the attributes in the extended search for research.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchExtResTopicAttributesPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtResTopicAttributesPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

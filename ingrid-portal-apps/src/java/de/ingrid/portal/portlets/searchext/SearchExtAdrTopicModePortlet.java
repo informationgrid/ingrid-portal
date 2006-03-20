@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.portlets;
+package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
 
@@ -14,19 +14,20 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the fragment of "Contents" input in the extended search
+ * This portlet handles the fragment of the mode input in the extended search
+ * for ADDRESSES.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
+public class SearchExtAdrTopicModePortlet extends SearchExtAdrTopic {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put(VAR_MAIN_TAB, PARAMV_TAB_AREA);
-        context.put(VAR_SUB_TAB, PARAMV_TAB_CONTENTS);
+        context.put(VAR_MAIN_TAB, PARAMV_TAB_TOPIC);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_MODE);
 
         super.doView(request, response);
     }

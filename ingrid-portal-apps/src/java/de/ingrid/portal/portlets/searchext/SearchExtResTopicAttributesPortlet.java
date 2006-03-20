@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.portlets;
+package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
 
@@ -14,12 +14,12 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.global.Settings;
 
 /**
- * This portlet handles the fragment of the terms input in the extended search
- * for ENVIRONMENT INFORMATION.
+ * This portlet handles the fragment of the attributes input in the extended search
+ * for RESEARCH.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
+public class SearchExtResTopicAttributesPortlet extends SearchExtResTopic {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -27,7 +27,7 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
 
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_TOPIC);
-        context.put(VAR_SUB_TAB, PARAMV_TAB_TERMS);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_ATTRIBUTES);
 
         super.doView(request, response);
     }
@@ -39,12 +39,17 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
             action = "";
         }
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
+        String submittedRemoveFilter = request.getParameter("submitUnfilter");
 
         // TODO: implement functionality
         if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
 
+        } else if (submittedRemoveFilter != null) {
+
+            // Filter entfernen
+            
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.portlets;
+package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.velocity.context.Context;
 
@@ -16,14 +17,13 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.search.UtilsSearch;
 
 /**
- * This portlet handles the fragment of "Partner" input in the extended search for addresses.
+ * This portlet handles the fragment of "Partner" input in the extended search for "environment infos".
  *
  * @author martin@wemove.com
  */
-public class SearchExtAdrAreaPartnerPortlet extends SearchExtAdrArea {
+public class SearchExtEnvAreaPartnerPortlet extends SearchExtEnvArea {
 
-    public void doView(RenderRequest request, javax.portlet.RenderResponse response) throws PortletException,
-            IOException {
+    public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
         // set positions in main and sub tab

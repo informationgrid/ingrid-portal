@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2006 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.portal.portlets;
+package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
 
@@ -15,21 +15,19 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
- * This portlet handles the fragment of the thesaurus input in the extended search.
+ * This portlet handles the fragment of the geothesaurus input in the extended search.
  *
  * @author martin@wemove.com
  */
-public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
+public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
 
     // VIEW TEMPLATES
 
-    private final static String TEMPLATE_START = "/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus.vm";
+    private final static String TEMPLATE_START = "/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus.vm";
 
-    private final static String TEMPLATE_RESULTS = "/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus_results.vm";
+    private final static String TEMPLATE_RESULTS = "/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus_results.vm";
 
-    private final static String TEMPLATE_BROWSE = "/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus_browse.vm";
-
-    private final static String TEMPLATE_SYNONYM = "/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus_synonym.vm";
+    private final static String TEMPLATE_BROWSE = "/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus_browse.vm";
 
     // PARAMETER VALUES
 
@@ -37,15 +35,13 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
 
     private final static String PARAMV_VIEW_BROWSE = "2";
 
-    private final static String PARAMV_VIEW_SYNONYM = "3";
-
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
 
         // set positions in main and sub tab
-        context.put(VAR_MAIN_TAB, PARAMV_TAB_TOPIC);
-        context.put(VAR_SUB_TAB, PARAMV_TAB_THESAURUS);
+        context.put(VAR_MAIN_TAB, PARAMV_TAB_PLACE);
+        context.put(VAR_SUB_TAB, PARAMV_TAB_GEOTHESAURUS);
 
         setDefaultViewPage(TEMPLATE_START);
 
@@ -60,8 +56,6 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             setDefaultViewPage(TEMPLATE_RESULTS);
         } else if (action.equals(PARAMV_VIEW_BROWSE)) {
             setDefaultViewPage(TEMPLATE_BROWSE);
-        } else if (action.equals(PARAMV_VIEW_SYNONYM)) {
-            setDefaultViewPage(TEMPLATE_SYNONYM);
         }
 
         super.doView(request, response);
@@ -88,7 +82,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (submittedAddToQuery != null) {
 
@@ -101,10 +95,8 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                 urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
             } else if (currView.equals(TEMPLATE_BROWSE)) {
                 urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
-            } else if (currView.equals(TEMPLATE_SYNONYM)) {
-                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_SYNONYM, Settings.PARAM_ACTION);
             }
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
@@ -112,18 +104,9 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
-
-        } else if (action.equalsIgnoreCase("doSynonym")) {
-
-            // SNS Synonym browsen
-
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_SYNONYM, Settings.PARAM_ACTION);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
-            // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);
         }
