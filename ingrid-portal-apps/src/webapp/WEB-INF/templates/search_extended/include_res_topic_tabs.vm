@@ -1,0 +1,18 @@
+      <div class="tabmenu">
+        <ul>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+#if($subtab=='2')
+          <li><a class="selected">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>		
+#else
+$action.setParameter('tab','2')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvTopicTerms.title')</a>&nbsp;|</li>	
+#end
+#if($subtab=='3')
+          <li><a class="selected">$MESSAGES.getString('searchExtResTopicAttributes.title')</a></li>
+#else
+$action.setParameter('tab','3')
+          <li><a href="$action">$MESSAGES.getString('searchExtResTopicAttributes.title')</a></li>
+#end
+        </ul>
+      </div>

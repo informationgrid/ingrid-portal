@@ -672,8 +672,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>ThemaSuchbegriffe</title>
-            <short-title>TopicTerms</short-title>
+            <title>UmweltinfoThemaSuchbegriffe</title>
+            <short-title>EnvinfoTopicTerms</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
@@ -848,7 +848,7 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>UmweltinfosSuchbereichBundLaender</title>
+            <title>UmweltinfoSuchbereichBundLaender</title>
             <short-title>EnvinfoAreaPartner</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
@@ -870,8 +870,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>ThemaSuchbegriffe</title>
-            <short-title>TopicTerms</short-title>
+            <title>AdressenThemaSuchbegriffe</title>
+            <short-title>AddressTopicTerms</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
@@ -937,7 +937,29 @@
         </supports>
         <portlet-info>
             <title>AdressenSuchbereichBundLaender</title>
-            <short-title>AddressesAreaPartner</short-title>
+            <short-title>AddressAreaPartner</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+    
+    <portlet id="SearchExtResTopicTerms">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_res_topic_terms.vm</value>
+        </init-param>
+        <portlet-name>SearchExtResTopicTerms</portlet-name>
+        <display-name>ErweiterteSucheForschungThemaSuchbegriffe</display-name>
+        <description>This portlet handles the input of the terms in the extended search for research.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchExtResTopicTermsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ForschungThemaSuchbegriffe</title>
+            <short-title>ResearchTopicTerms</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>

@@ -1,0 +1,13 @@
+      <div class="tabs">
+        <ul>			
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+#if($tab=='1')
+          <li><a class="selected">$MESSAGES.getString('searchExtEnvTopic.title')</a></li>
+#else
+$action.setParameter('tab','1')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvTopic.title')</a></li>
+#end
+        </ul>
+        <span class="clearer"></span>
+      </div>
