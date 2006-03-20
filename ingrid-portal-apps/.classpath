@@ -37,5 +37,9 @@
 	<classpathentry kind="var" path="MAVEN_REPO/bouncycastle/jars/bcprov-jdk14-124.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-commons-2.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.pluto/jars/pluto-1.0.1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/log4j/jars/log4j-1.2.8.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/jaxen/jars/jaxen-1.1-beta-4.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/weta/jars/weta-g-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/jal/jars/jal-0.4.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

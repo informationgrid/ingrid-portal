@@ -31,7 +31,7 @@
 
 		<!-- the proxy address for the peer -->
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="PeerProxyAddr">
-			<arg type="java.lang.String">torwald.gistec-online.de:81</arg>
+			<arg type="java.lang.String">http://torwald.gistec-online.de:81</arg>
 		</call>
 
 		<!-- JXTA DEBUG -->
@@ -127,7 +127,7 @@
 			<arg type="boolean">true</arg>
 		</call>
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="SeedRendezvous">
-			<arg type="java.lang.String">tcp://146.140.211.70:9900</arg>
+			<arg type="java.lang.String">http://torwald.gistec-online.de:81</arg>
 		</call>
 
 		<!-- RELAY -->
@@ -138,7 +138,7 @@
 			<arg type="boolean">true</arg>
 		</call>
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="SeedRelay">
-			<arg type="java.lang.String">tcp://146.140.211.70:9900</arg>
+			<arg type="java.lang.String">http://torwald.gistec-online.de:81</arg>
 		</call>
 
 	</startup>
