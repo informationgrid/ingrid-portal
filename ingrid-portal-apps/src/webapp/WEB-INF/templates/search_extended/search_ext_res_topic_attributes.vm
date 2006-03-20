@@ -1,0 +1,52 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_res_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_res_topic_tabs.vm')
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="xx" id="extsearch1">
+      <div class="formbody">
+          <p><span class="smaller">$MESSAGES.getString('searchExtResTopicAttributes.explanation')</span></p>
+          <div class="line_form"><hr /></div>
+          <div class="innerform">
+            <p>
+      			  <label for="db_title" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.project')</label>
+      			  <input class="float_left inputstyletext" type="text" size="35" id="db_title" name="db_title" />
+              <span class="clearer"></span>
+            </p>
+            <p>
+      			  <label for="db_institute" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.institution')</label>
+      			  <input class="float_left inputstyletext" type="text" size="35" id="db_institute" name="db_institute" />
+              <span class="clearer"></span>
+            </p>
+            <p>
+      			  <label for="db_pm" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.leader')</label>
+      			  <input class="float_left inputstyletext" type="text" size="35" id="db_pm" name="db_pm" />
+              <span class="clearer"></span>
+            </p>
+            <p>
+      			  <label for="db_pm" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.involved')</label>
+      			  <input class="float_left inputstyletext" type="text" size="35" id="db_staff" name="db_staff" />
+              <span class="clearer"></span>
+            </p>
+            <p>
+      			  <label for="db_org" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.org')</label>
+      			  <input class="float_left inputstyletext" type="text" size="35" id="db_org" name="db_org" />
+              <span class="clearer"></span>
+            </p>
+            <p>
+      			  <label for="db_org" class="float_left col2left">Laufzeit:</label>
+     		      <label for="from_yy">$MESSAGES.getString('searchExtResTopicAttributes.label.from')</label><input class="inputstyletext" id="from_yy" size="10" maxlength="10" name="from_yy" type="text" />
+     		      <label for="till_yy">$MESSAGES.getString('searchExtResTopicAttributes.label.to')</label><input class="inputstyletext" id="till_yy" size="10" maxlength="10" name="till_yy" type="text" /> &nbsp;$MESSAGES.getString('searchExtResTopicAttributes.timeformat')<br />
+   		      </p>
+            <span class="clearer"></span>
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+      <div class="formbody">
+          <p>Sie haben auch die Möglichkeit, <strong>ALLE</strong> hier bereits hinzugefügten Filter wieder aus der Suchanfrage zu entfernen.</p>
+          <div class="innerform">
+            <input class="btn float_right" type="submit" name="submitUnfilter" value="$MESSAGES.getString('searchExtResTopicAttributes.submit2')" />
+            <span class="clearer"></span>
+          </div>
+      </div>      
+    </form>
+  </div>    
