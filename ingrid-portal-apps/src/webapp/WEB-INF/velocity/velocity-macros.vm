@@ -1,8 +1,11 @@
 ## ------------------------------
 ## Action Form macros
 ## ------------------------------
+#macro (getFieldValueByForm $form $field)
+$form.getInput($field)#end
+
 #macro (getFieldValue $field)
-$actionForm.getInput($field)#end
+#getFieldValueByForm($actionForm)#end
 
 #macro (getHTMLEscapedFieldValue $field)
 $actionForm.getInputHTMLEscaped($field)#end
@@ -16,17 +19,30 @@ $actionForm.getInputHTMLEscaped($field)#end
 #if ($actionForm.isCurrentInput($field, $value))selected="selected"#end
 #end
 
-#macro (displayFormErrors)
-#if ($actionForm.hasErrors())
-#parse ('/WEB-INF/templates/include_form_errors.vm')
+#macro (displayFormErrorsByForm $form)
+#if ($form.hasErrors())
+<div>
+#foreach ($errorMsg in $form.getAllErrors())
+<h3 class="portlet-msg-error">$MESSAGES.getString($errorMsg)</h3>
+#end
+</div>
 #end
 #end
 
-#macro (displayFieldLabel $fieldName $fieldLabel)
-#if ($actionForm.hasErrorInField($fieldName))
+#macro (displayFormErrors)
+#displayFormErrorsByForm($actionForm)	
+#end
+
+#macro (displayFieldLabelByForm $form $fieldName $fieldLabel)
+#if ($form.hasErrorInField($fieldName))
 <span class="portlet-msg-error">$fieldLabel</span>#else
 $fieldLabel#end
 #end
+
+#macro (displayFieldLabel $fieldName $fieldLabel)
+#displayFieldLabelByForm($actionForm $fieldName $fieldLabel)
+#end
+
 
 ## ------------------------------
 ## display content

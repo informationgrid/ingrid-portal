@@ -332,6 +332,25 @@
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
     </portlet>
 
+    <portlet id="ContactNewsletterPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/contact_newsletter.vm</value>
+        </init-param>
+        <portlet-name>ContactNewsletterPortlet</portlet-name>
+        <display-name>ContactNewsletterPortlet</display-name>
+        <description>TODO: Describe the portlet.</description>
+        <portlet-class>de.ingrid.portal.portlets.ContactNewsletterPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.ContactNewsletterResources</resource-bundle>            
+    </portlet>
+
+
     <portlet id="MyPortalLoginPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

@@ -1,0 +1,68 @@
+      <h2>PortalU per Mail</h2>
+
+      <p>Sie möchten jederzeit und überall schneller wissen, was los ist? Dann informiert Sie unser Newsletter per Mail. Der Bezug ist kostenlos. Folgende Themen erwarten Sie:</p>
+      <ul>
+        <li>Aktuelle Veranstaltungen</li>
+        <li>Aktuelle Umwelt-Ereignisse</li>
+        <li>Neueste Informationen</li>
+      </ul>  
+#set ($action = $renderResponse.createActionURL())
+	<form action="$action" method="post" name="contact_newsletter" id="contact_newsletter">
+		<input type="hidden" name="cmd" value="subscribe" />
+
+            <div class="formbody">
+#displayFormErrorsByForm($actionForm1)
+              <h2>Anmeldung für neue Leser</h2>
+              <h3>* Pflichtangaben</h3>
+    			    <p>
+    			      <label class="float_left col2left" for="firstname">#displayFieldLabelByForm($actionForm1 'firstname' 'Vorname:')</label>
+    			      <input class="float_left col2right inputstyletext" type="text" id="firstname" name="firstname" value="#getFieldValueByForm($actionForm1 'firstname')" />
+                <span class="clearer"></span>    			  
+    			    </p>
+
+    			    <p>
+    			      <label class="float_left col2left" for="lastname">#displayFieldLabelByForm($actionForm1 'lastname' 'Nachname:')</label>
+    			      <input class="float_left col2right inputstyletext" type="text" id="lastname" name="lastname" value="#getFieldValueByForm($actionForm1 'lastname')" />
+                <span class="clearer"></span>
+        	    </p>
+    			    <p>
+    			      <label class="float_left col2left" for="email">#displayFieldLabelByForm($actionForm1 'email' 'E-Mail-Adresse*:')</label>
+    			      <input class="float_left col2right inputstyletext" type="text" id="email" name="email" value="#getFieldValueByForm($actionForm1 'email')" />
+                <span class="clearer"></span>
+        	    </p>
+            </div>
+	        <div class="formfooter">
+              <div align="right">
+              <input class="btn" type="submit" value="Anmelden" />
+              </div>
+            </div>
+        </form>
+
+        <div class="line_form"><hr /></div>
+    <div>
+      <p>     
+        Um den Newsletter abzubestellen, geben Sie bitte die E-Mail-Adresse an, unter der Sie sich angemeldet haben.
+      </p>
+    </div>
+    <div class="section">
+		<form action="$action" method="post" name="contact_newsletter_unsubscribe" id="contact_newsletter_unsubscribe">
+		<input type="hidden" name="cmd" value="unsubscribe" />
+		<div class="formbody">
+#displayFormErrorsByForm($actionForm2)
+
+            <h2>Newsletter abbestellen</h2>
+            <h3>* Pflichtangaben</h3>
+    			  <p>
+    			    <label class="float_left col2left" for="email">#displayFieldLabelByForm($actionForm2 'email' 'E-Mail-Adresse*:')</label>
+    			    <input class="float_left col2right inputstyletext" type="text" id="email" name="email" value="#getFieldValueByForm($actionForm2 'email')" />
+              <span class="clearer"></span>    			  
+    			  </p>
+        </div>
+
+	      <div class="formfooter">
+            <div align="right">
+            <input class="btn" type="submit" value="Abmelden" />
+            </div>
+          </div>
+		</form>
+    </div>
