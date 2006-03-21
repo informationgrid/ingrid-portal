@@ -23,6 +23,7 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
 
     SchedulerFactory schedFact = null;
     Scheduler sched = null;
+    IBUSInterfaceImpl iBusInterface = null;
 
     
     public synchronized final void init(ServletConfig config) throws ServletException {
@@ -30,6 +31,14 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
             super.init(config);
             System.out.println("IngridPortalSchedulerServlet startet");
 
+            //start ibus communication
+            try {
+                IBUSInterfaceImpl.getInstance();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                System.out.println("Failed to start iBus communication." + e.getMessage());
+            }
+            
             try {
                 schedFact = new org.quartz.impl.StdSchedulerFactory();
                 sched = schedFact.getScheduler();
@@ -38,6 +47,7 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
                 // TODO Auto-generated catch block
                 System.out.println("Failed to start scheduler." + e.getMessage());
             }
+            
         }
     }
 
@@ -47,13 +57,13 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
     public final void destroy()
     {
         try {
-            IBUSInterfaceImpl.resetBus();
             if (sched != null && !sched.isShutdown()) {
                 // wait for jobs to complete
                 log.info("waiting for scheduler to complete jobs...");
                 sched.shutdown(true);
                 log.info("waiting for scheduler to complete jobs... done.");
             }
+            IBUSInterfaceImpl.resetBus();
             
         } catch (SchedulerException e) {
             log.fatal("Jetspeed: shutdown() failed: ", e);
