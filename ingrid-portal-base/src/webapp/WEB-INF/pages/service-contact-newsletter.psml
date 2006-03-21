@@ -1,0 +1,40 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Newsletter</title>
+  <metadata name="title" xml:lang="de">Newsletter</metadata>
+
+  <fragment id="service-contact-newsletter" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="service-contact-newsletter-1" type="portlet" name="ingrid-portal-apps::ContactNewsletterPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+    <fragment id="service-contact-newsletter-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/contact_back.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.newsletter.contact</value>
+      </preference>
+    </fragment>
+    <fragment id="service-contact-newsletter-3" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/login_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.newsletter.more_info</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

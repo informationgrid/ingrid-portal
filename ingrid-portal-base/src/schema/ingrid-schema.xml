@@ -79,5 +79,14 @@ limitations under the License.
         <column name="groupname" size="255" type="VARCHAR"/>
         <column name="rolename" size="255" type="VARCHAR"/>
     </table>
+
+    <table name="ingrid_newsletter_data" idMethod="native">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
+        <column name="firstname" size="255" type="VARCHAR"/>
+        <column name="lastname" size="255" type="VARCHAR"/>
+        <column name="email" size="255" type="VARCHAR"/>
+        <column name="created" required="false" type="TIMESTAMP"/>
+    </table>
+
     
 </database>

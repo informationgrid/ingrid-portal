@@ -134,12 +134,19 @@
 
 #* include service navigation component *#
 #macro (includeServiceNavigation $_menu)
-    #foreach($element in $_menu.elements.iterator())
+	#set($currentPage = $site.getPage().url)
+	#foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #if($lastType == "page")
-          #if($isSelected)
+		  #if($isSelected)
             <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
-          #else
+		  #elseif($element.url=="/service-contact.psml")
+			#if($currentPage == "/service-contact-newsletter.psml")
+			<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+			#else
+			<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
+			#end
+	      #else
             <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
           #end  
         #end 
@@ -147,14 +154,21 @@
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #set($linkPage = $element.url)
         #set($isSelected = $element.isSelected($site))
       #elseif($element.elementType == "separator")
         #set($separatorTitle = $element.getTitle($preferedLocale))
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
-          #if($lastType == "page")
+		  #if($lastType == "page")
             #if($isSelected)
               <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+   		    #elseif($linkPage=="/service-contact.psml")
+    		  #if($currentPage == "/service-contact-newsletter.psml")
+    			<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+    		  #else
+				<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+			  #end
             #else
               <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
             #end  
@@ -165,6 +179,12 @@
           #if($lastType == "page")
             #if($isSelected)
               <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a> - </li>
+   		    #elseif($linkPage=="/service-contact.psml")
+    		  #if($currentPage == "/service-contact-newsletter.psml")
+    		  <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a> - </li>
+    		  #else
+			  <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a> - </li>
+			  #end
             #else
               <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a> - </li>
             #end  
@@ -175,6 +195,12 @@
           #if($lastType == "page")
             #if($isSelected)
               <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+   		    #elseif($linkPage=="/service-contact.psml")
+    		  #if($currentPage == "/service-contact-newsletter.psml")
+    		  <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+    		  #else
+			  <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
+			  #end
             #else
               <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
             #end  

@@ -7,3 +7,5 @@ drop table users;
 drop table roles;
 drop table groups;
 drop table usergrouprole;
+
+drop table ingrid_newsletter_data;
