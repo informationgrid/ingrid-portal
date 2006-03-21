@@ -124,7 +124,7 @@
 
 		<!-- RENDEZVOUS -->
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="UseOnlySeedsRdv">
-			<arg type="boolean">true</arg>
+			<arg type="boolean">false</arg>
 		</call>
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="SeedRendezvous">
 			<arg type="java.lang.String">http://torwald.gistec-online.de:81</arg>
