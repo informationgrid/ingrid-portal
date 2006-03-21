@@ -21,5 +21,5 @@ $action.setParameter('tab','3')
           <li><a href="$action">$MESSAGES.getString('searchExtEnvArea.title')</a></li>
 #end
         </ul>
-        <span class="clearer"></span>
+        <br class="clearer" />
       </div>

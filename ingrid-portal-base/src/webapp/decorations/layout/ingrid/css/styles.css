@@ -290,7 +290,6 @@ div.resultset_show_partner {text-decoration:none;font-size:75%;margin: 10px 0px 
 
 
 /* TAB, EXTENDED SEARCH */
-div.tabs {margin: 20px 0 0 0;}
 div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
 div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 80%;}
 div.tabs ul li a.selected,
@@ -404,7 +403,8 @@ div.formbody label.lbl_qrystr { margin: 0; padding: 0; line-height: 180%; font-s
 div.formbody label.radiogroup {font-size: 80%; line-height:160%}
 div.formbody .spacer_search_form {margin-top: 15px}
 
-.col2left { width:14em; }
+.col2left { width:12em; }
+.col2left_incr { width:14em; }
 .col2right { width:15em; }
 
 div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border: 1px solid #176798; background-color: #CCCCCC; }
