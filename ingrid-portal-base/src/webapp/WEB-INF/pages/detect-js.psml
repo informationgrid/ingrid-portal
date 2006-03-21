@@ -1,4 +1,4 @@
-<page>
+<page hidden="true">
   <defaults
      skin="orange"
      layout-decorator="ingrid-clear"
