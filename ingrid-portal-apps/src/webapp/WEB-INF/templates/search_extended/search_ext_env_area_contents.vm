@@ -7,12 +7,12 @@
           <p>$MESSAGES.getString('searchExtEnvAreaContents.explanation')</p>
           <div class="innerform">
             <p>
-              <input type="radio" name="infoart" id="alle" value="alle" checked="checked" /><label for="alle">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
+              <input type="radio" name="infoart" id="alle" value="alle" #if(!$select) checked="checked"#end /><label for="alle">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
             </p> 
             <p>
-              <input class="indent1_checkbox" type="radio" name="infoart" id="themen" value="themen" /><label for="themen">$MESSAGES.getString('searchExtEnvAreaContents.label.topics')</label>
+              <input class="indent1_checkbox" type="radio" name="infoart" id="themen" value="themen" #if($select=='1') checked="checked"#end /><label for="themen">$MESSAGES.getString('searchExtEnvAreaContents.label.topics')</label>
     	        <br />
-              <input class="indent1_checkbox" type="radio" name="infoart" id="service" value="service" /><label for="service">$MESSAGES.getString('searchExtEnvAreaContents.label.service')</label>
+              <input class="indent1_checkbox" type="radio" name="infoart" id="service" value="service" #if($select=='2') checked="checked"#end /><label for="service">$MESSAGES.getString('searchExtEnvAreaContents.label.service')</label>
             </p> 
           </div>  
       </div>      

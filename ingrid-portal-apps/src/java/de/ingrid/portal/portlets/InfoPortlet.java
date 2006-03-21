@@ -8,6 +8,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -37,9 +38,15 @@ public class InfoPortlet extends GenericVelocityPortlet {
 
         String myView = prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);
         String myTitleKey = prefs.getValue("infoTitleKey", DEFAULT_TITLE_KEY);
+        String myLink = prefs.getValue("infoLink", "");
 
         setDefaultViewPage(myView);
         response.setTitle(messages.getString(myTitleKey));
+        
+        if (myLink.length() > 0) {
+            String infoLink = response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath() + myLink);
+            context.put("infoLink", infoLink);
+        }
 
         super.doView(request, response);
     }

@@ -20,6 +20,9 @@ import de.ingrid.portal.global.Settings;
  */
 public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
 
+    // URL PARAMETER
+    private final static String PARAM_SELECT = "select";
+
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -27,6 +30,14 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_AREA);
         context.put(VAR_SUB_TAB, PARAMV_TAB_CONTENTS);
+
+        // ----------------------------------
+        // check for passed RENDER PARAMETERS and react
+        // ----------------------------------
+        String select = request.getParameter(PARAM_SELECT);
+        if (select != null) {
+            context.put(PARAM_SELECT, select);
+        }
 
         super.doView(request, response);
     }
