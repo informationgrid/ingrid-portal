@@ -58,12 +58,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     private Configuration config;
     
     private static boolean enJXTACommunication = false;
+    
+    private static boolean initInProgress = false;
 
     public static synchronized IBUSInterface getInstance() {
-        if (instance == null) {
+        if (instance == null && !initInProgress) {
             try {
                 instance = new IBUSInterfaceImpl();
             } catch (Exception e) {
+                initInProgress = false;
                 if (log.isFatalEnabled()) {
                     log.fatal("Error initiating the iBus interface.", e);
                 }
@@ -93,6 +96,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (instance != null) {
                 instance = null;
             }
+            initInProgress = false;
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems RESETTING IBUSInterfaceImpl Singleton", t);
@@ -102,6 +106,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     private IBUSInterfaceImpl() throws Exception {
         super();
+        initInProgress = true;
         String configFilename = getResourceAsStream("/ibus_interface.properties");
         String jxtaConfigFilename = getResourceAsStream("/jxta.conf.xml");
         config = new PropertiesConfiguration(configFilename);
@@ -161,6 +166,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             resetBus();
             throw new Exception("Error Constructor IBUSInterfaceImpl", t);
+        } finally {
+            initInProgress = false;
         }
     }
 
