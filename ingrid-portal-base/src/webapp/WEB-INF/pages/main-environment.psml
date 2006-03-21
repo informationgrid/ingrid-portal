@@ -25,6 +25,9 @@
       <preference name="infoTitleKey" readOnly="false">
         <value>envSearch.info.title</value>
       </preference>
+      <preference name="infoLink" readOnly="false">
+        <value>/portal/search-extended/search-ext-env-area-contents.psml?select=1</value>
+      </preference>
     </fragment>
   </fragment>
 

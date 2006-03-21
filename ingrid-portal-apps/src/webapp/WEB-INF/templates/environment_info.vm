@@ -13,7 +13,7 @@
 	</ul>
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-		<span><a href="portal/main-search.psml">Suche in Umweltthemen</a></span>
+		<span><a href="$infoLink">Suche in Umweltthemen</a></span>
 		<span class="clearer"></span>
 	</p>
 </div>
