@@ -89,6 +89,8 @@
 			<label class="float_left col2left" for="type_interest">Mein Interesse an Umweltinformationen ist:
 			</label>
 			<select class="float_left inputstyle" size="1" id="type_interest" name="interest">
+				<option value="none" #getSelected('interest' 'none')>---
+				</option>
 				<option value="prof" #getSelected('interest' 'prof')>beruflich
 				</option>
 				<option value="priv" #getSelected('interest' 'priv')>privat
