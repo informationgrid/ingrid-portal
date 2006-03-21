@@ -86,5 +86,5 @@ $action.setParameter('rubric','Verkehr')
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
 $action.setParameter('rubric','Wasser')
-    <li><a href="$action">Wasser</a><span class="separator">&nbsp;</span></li>
+    <li><a href="$action">Wasser</a></li>
 </ul>
