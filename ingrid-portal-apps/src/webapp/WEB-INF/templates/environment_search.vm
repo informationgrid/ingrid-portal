@@ -1,4 +1,3 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="get" name="environment_search" id="environment_search">
    	<input type="hidden" name="action" value="doSearch"/>

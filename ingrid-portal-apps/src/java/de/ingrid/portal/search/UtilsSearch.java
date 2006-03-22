@@ -16,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -138,6 +139,18 @@ public class UtilsSearch {
      * @return
      */
     public static String getDetailValue(IngridHitDetail detail, String key) {
+        return getDetailValue(detail, key, null);
+    }
+
+    /**
+     * The same as getDetailValue(detail, key), but here the result is mapped with the passed resource bundle.
+     * Pass null for the resource bundle, if no resource mapping should occur.
+     * @param detail
+     * @param key
+     * @param resources
+     * @return
+     */
+    public static String getDetailValue(IngridHitDetail detail, String key, IngridResourceBundle resources) {
         Object obj = detail.get(key);
         if (obj == null) {
             return "";
@@ -150,7 +163,7 @@ public class UtilsSearch {
                 if (i != 0) {
                     values.append(", ");
                 }
-                values.append(mapResultValue(key, valueArray[i]));
+                values.append(mapResultValue(key, valueArray[i], resources));
             }
         } else if (obj instanceof ArrayList) {
             ArrayList valueList = (ArrayList) obj;
@@ -158,10 +171,10 @@ public class UtilsSearch {
                 if (i != 0) {
                     values.append(", ");
                 }
-                values.append(mapResultValue(key, valueList.get(i).toString()));
+                values.append(mapResultValue(key, valueList.get(i).toString(), resources));
             }
         } else {
-            values.append(mapResultValue(key, obj.toString()));
+            values.append(mapResultValue(key, obj.toString(), resources));
         }
 
         return values.toString();
@@ -175,10 +188,12 @@ public class UtilsSearch {
      * @param resultValue
      * @return
      */
-    public static String mapResultValue(String resultKey, String resultValue) {
-        String mappedValue = resultValue;
-        if (resultKey.equals(Settings.RESULT_KEY_PARTNER)) {
-            mappedValue = UtilsDB.getPartnerFromKey(resultValue);
+    public static String mapResultValue(String detailKey, String detailValue, IngridResourceBundle resources) {
+        String mappedValue = detailValue;
+        if (detailKey.equals(Settings.RESULT_KEY_PARTNER)) {
+            mappedValue = UtilsDB.getPartnerFromKey(detailValue);
+        } else if (detailKey.equals(Settings.RESULT_KEY_TOPIC)) {
+            mappedValue = resources.getString(detailValue);
         }
         // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
 
