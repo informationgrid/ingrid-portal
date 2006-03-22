@@ -194,6 +194,8 @@ public class UtilsSearch {
             mappedValue = UtilsDB.getPartnerFromKey(detailValue);
         } else if (detailKey.equals(Settings.RESULT_KEY_TOPIC)) {
             mappedValue = resources.getString(detailValue);
+        } else if (detailKey.equals(Settings.RESULT_KEY_FUNCT_CATEGORY)) {
+            mappedValue = resources.getString(detailValue);
         }
         // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
 
@@ -205,7 +207,7 @@ public class UtilsSearch {
         boolean isFirstTerm = true;
         String qStr = "";
         TermQuery[] terms = q.getTerms();
-        for (int i=0;i<terms.length;i++) {
+        for (int i = 0; i < terms.length; i++) {
             if (!terms[i].isRequred()) {
                 qStr = qStr.concat(" OR ").concat(terms[i].getTerm());
             } else {
@@ -218,22 +220,22 @@ public class UtilsSearch {
             }
         }
         ClauseQuery[] clauses = q.getClauses();
-        for (int i=0; i<clauses.length;i++) {
+        for (int i = 0; i < clauses.length; i++) {
             if (!clauses[i].isRequred()) {
                 qStr = qStr.concat(" OR (").concat(queryToString(clauses[i])).concat(")");
             } else {
                 qStr = qStr.concat(" (").concat(queryToString(clauses[i])).concat(")");
             }
-            
+
         }
-        
+
         FieldQuery[] fields = q.getFields();
-        for (int i=0;i<fields.length;i++) {
+        for (int i = 0; i < fields.length; i++) {
             qStr = qStr.concat(" ").concat(buildFieldQueryStr(fields[i]));
         }
-        
+
         FieldQuery[] datatypes = q.getDataTypes();
-        for (int i=0;i<datatypes.length;i++) {
+        for (int i = 0; i < datatypes.length; i++) {
             qStr = qStr.concat(" ").concat(buildFieldQueryStr(datatypes[i]));
         }
 
@@ -241,29 +243,28 @@ public class UtilsSearch {
         if (ranking != null) {
             qStr = qStr.concat(" ranking:").concat(ranking);
         }
-        
+
         return qStr;
-        
-        
-/*        
-        StringBuffer qStr = new StringBuffer();
-        qStr.append(query);
-        qStr.append(", ");
 
-        FieldQuery[] fields = query.getDataTypes();
-        for (int i = 0; i < fields.length; i++) {
-            qStr.append(" ");
-            qStr.append(fields[i]);
-            qStr.append("/required:");
-            qStr.append(fields[i].isRequred());
-            qStr.append("/prohibited:");
-            qStr.append(fields[i].isProhibited());
-        }
+        /*        
+         StringBuffer qStr = new StringBuffer();
+         qStr.append(query);
+         qStr.append(", ");
 
-        return qStr.toString();
-*/        
+         FieldQuery[] fields = query.getDataTypes();
+         for (int i = 0; i < fields.length; i++) {
+         qStr.append(" ");
+         qStr.append(fields[i]);
+         qStr.append("/required:");
+         qStr.append(fields[i].isRequred());
+         qStr.append("/prohibited:");
+         qStr.append(fields[i].isProhibited());
+         }
+
+         return qStr.toString();
+         */
     }
-    
+
     private static String buildFieldQueryStr(FieldQuery field) {
         String result = "";
         if (field.isRequred() && !field.isProhibited()) {

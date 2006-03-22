@@ -6,6 +6,7 @@ package de.ingrid.portal.global;
 import java.util.List;
 
 import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridPartner;
 
@@ -26,6 +27,9 @@ public class UtilsDB {
     /** cache for environment topics */
     private static List envTopics = null;
 
+    /** cache for environment functional categories */
+    private static List envFunctCategories = null;
+
     public static boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
     }
@@ -35,23 +39,34 @@ public class UtilsDB {
     }
 
     /**
-     * Get all the partners. NOTICE: Partners are always reloaded from database
-     * if flag alwaysReloadDBData in our class is set to true. Otherwise we load
-     * the partners once and return our cache !
+     * Convenient generic method for reading stuff from database.
+     * NOTICE: values are always reloaded from database if flag alwaysReloadDBData
+     * in our class is set to true. Otherwise we load the values once and return
+     * our cache !
+     * @param objClass
+     * @param cacheList
+     * @return
+     */
+    private static List getValuesFromDB(Class objClass, List cacheList) {
+        if (alwaysReloadDBData) {
+            HibernateManager hibernateManager = HibernateManager.getInstance();
+            return hibernateManager.loadAllData(objClass, 0);
+        }
+        synchronized (UtilsDB.class) {
+            if (cacheList == null) {
+                HibernateManager hibernateManager = HibernateManager.getInstance();
+                cacheList = hibernateManager.loadAllData(objClass, 0);
+            }
+        }
+        return cacheList;
+    }
+
+    /**
+     * Get all the partners.
      * @return
      */
     public static List getPartners() {
-        if (alwaysReloadDBData) {
-            HibernateManager hibernateManager = HibernateManager.getInstance();
-            return hibernateManager.loadAllData(IngridPartner.class, 0);
-        }
-        synchronized (UtilsDB.class) {
-            if (partners == null) {
-                HibernateManager hibernateManager = HibernateManager.getInstance();
-                partners = hibernateManager.loadAllData(IngridPartner.class, 0);
-            }
-        }
-        return partners;
+        return getValuesFromDB(IngridPartner.class, partners);
     }
 
     /**
@@ -72,23 +87,11 @@ public class UtilsDB {
     }
 
     /**
-     * Get all the environment topics. NOTICE: Values are always reloaded from database
-     * if flag alwaysReloadDBData in our class is set to true. Otherwise we load
-     * the values once and return our cache !
+     * Get all the environment topics.
      * @return
      */
     public static List getEnvTopics() {
-        if (alwaysReloadDBData) {
-            HibernateManager hibernateManager = HibernateManager.getInstance();
-            return hibernateManager.loadAllData(IngridEnvTopic.class, 0);
-        }
-        synchronized (UtilsDB.class) {
-            if (envTopics == null) {
-                HibernateManager hibernateManager = HibernateManager.getInstance();
-                envTopics = hibernateManager.loadAllData(IngridEnvTopic.class, 0);
-            }
-        }
-        return envTopics;
+        return getValuesFromDB(IngridEnvTopic.class, envTopics);
     }
 
     /**
@@ -103,6 +106,31 @@ public class UtilsDB {
             topic = (IngridEnvTopic) envTopics.get(i);
             if (topic.getFormValue().equals(key)) {
                 return topic.getQueryValue();
+            }
+        }
+        return key;
+    }
+
+    /**
+     * Get all the environment functional categories.
+     * @return
+     */
+    public static List getEnvFunctCategories() {
+        return getValuesFromDB(IngridEnvFunctCategory.class, envFunctCategories);
+    }
+
+    /**
+     * Get the query value of a functional category from the form value (key).
+     * @param key
+     * @return
+     */
+    public static String getFunctCategoryFromKey(String key) {
+        List envCategories = getEnvFunctCategories();
+        IngridEnvFunctCategory category = null;
+        for (int i = 0; i < envCategories.size(); i++) {
+            category = (IngridEnvFunctCategory) envCategories.get(i);
+            if (category.getFormValue().equals(key)) {
+                return category.getQueryValue();
             }
         }
         return key;

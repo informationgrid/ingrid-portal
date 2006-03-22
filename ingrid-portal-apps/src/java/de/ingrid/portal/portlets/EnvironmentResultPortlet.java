@@ -171,7 +171,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                         result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
                                 Settings.RESULT_KEY_TOPIC, resources));
                         result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
-                                Settings.RESULT_KEY_FUNCT_CATEGORY));
+                                Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

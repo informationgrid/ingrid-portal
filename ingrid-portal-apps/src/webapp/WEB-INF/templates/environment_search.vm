@@ -25,18 +25,9 @@
 			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
 				<option value="all" #getSelected('category' 'all')>------ Alles auswählen ------
 				</option>
-				<option value="Rechtliches" #getSelected('category' 'Rechtliches')>Rechtliches
-				</option>
-				<option value="Konzeptionelles" #getSelected('category' 'Konzeptionelles')>Konzeptionelles
-				</option>
-				<option value="Statusberichte" #getSelected('category' 'Statusberichte')>Statusberichte
-				</option>
-				<option value="Umweltzustand" #getSelected('category' 'Umweltzustand')>Umweltzustand
-				</option>
-				<option value="DatenKarten" #getSelected('category' 'DatenKarten')>Daten und Karten
-				</option>
-				<option value="Risikobewertungen" #getSelected('category' 'Risikobewertungen')>Risikobewertungen
-				</option>
+#foreach ($category in $categoryList)
+<option value="$category.FormValue" #getSelected('category' "$category.FormValue")>$MESSAGES.getString("$category.QueryValue")</option>
+#end
 			</select>
 		</div>  
 		<span class="clearer">
