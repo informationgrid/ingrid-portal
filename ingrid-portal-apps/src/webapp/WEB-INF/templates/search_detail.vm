@@ -276,7 +276,9 @@
             #set($ecsObjClass = $rec.get("t01_object.obj_class"))
             #set($ecsObjClassNameKey = "ecs_obj_class_name_$ecsObjClass")
             #set($ecsObjClassName = $MESSAGES.getString($ecsObjClassNameKey))
+			#if($ecsObjClass)
 			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${ecsObjClass}.gif" alt="${ecsObjClassName}" /></span>&nbsp;${ecsObjClassName}&nbsp;<span class="smaller">(Objektklasse)</span>
+			#end
 		</p>
 		<span class="clearer"></span>
 		<div class="line"><hr /></div>
