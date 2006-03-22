@@ -21,8 +21,10 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.TermQuery;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
@@ -183,7 +185,52 @@ public class UtilsSearch {
         return mappedValue;
     }
 
-    public static String queryToString(IngridQuery query) {
+    public static String queryToString(IngridQuery q) {
+
+        boolean isFirstTerm = true;
+        String qStr = "";
+        TermQuery[] terms = q.getTerms();
+        for (int i=0;i<terms.length;i++) {
+            if (!terms[i].isRequred()) {
+                qStr = qStr.concat(" OR ").concat(terms[i].getTerm());
+            } else {
+                if (isFirstTerm) {
+                    qStr = qStr.concat(terms[i].getTerm());
+                    isFirstTerm = false;
+                } else {
+                    qStr = qStr.concat(" ").concat(terms[i].getTerm());
+                }
+            }
+        }
+        ClauseQuery[] clauses = q.getClauses();
+        for (int i=0; i<clauses.length;i++) {
+            if (!clauses[i].isRequred()) {
+                qStr = qStr.concat(" OR (").concat(queryToString(clauses[i])).concat(")");
+            } else {
+                qStr = qStr.concat(" (").concat(queryToString(clauses[i])).concat(")");
+            }
+            
+        }
+        
+        FieldQuery[] fields = q.getFields();
+        for (int i=0;i<fields.length;i++) {
+            qStr = qStr.concat(" ").concat(buildFieldQueryStr(fields[i]));
+        }
+        
+        FieldQuery[] datatypes = q.getDataTypes();
+        for (int i=0;i<datatypes.length;i++) {
+            qStr = qStr.concat(" ").concat(buildFieldQueryStr(datatypes[i]));
+        }
+
+        String ranking = q.getRankingType();
+        if (ranking != null) {
+            qStr = qStr.concat(" ranking:").concat(ranking);
+        }
+        
+        return qStr;
+        
+        
+/*        
         StringBuffer qStr = new StringBuffer();
         qStr.append(query);
         qStr.append(", ");
@@ -199,6 +246,21 @@ public class UtilsSearch {
         }
 
         return qStr.toString();
+*/        
+    }
+    
+    private static String buildFieldQueryStr(FieldQuery field) {
+        String result = "";
+        if (field.isRequred() && !field.isProhibited()) {
+            result = result.concat(field.getFieldName()).concat(":").concat(field.getFieldValue());
+        } else if (!field.isRequred() && field.isProhibited()) {
+            result = result.concat("-").concat(field.getFieldName()).concat(":").concat(field.getFieldValue());
+        } else if (field.isRequred() && field.isProhibited()) {
+            result = result.concat("+-").concat(field.getFieldName()).concat(":").concat(field.getFieldValue());
+        } else {
+            result = result.concat("?").concat(field.getFieldName()).concat(":").concat(field.getFieldValue());
+        }
+        return result;
     }
 
     public static boolean containsPositiveDataType(IngridQuery query, String datatypeValue) {
