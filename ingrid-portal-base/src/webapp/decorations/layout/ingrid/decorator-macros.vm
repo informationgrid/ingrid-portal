@@ -85,6 +85,12 @@
 			#else
 				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
 			#end
+		#elseif($element.url=="/main-about.psml")
+			#if($currentPage == "/main-about-partner.psml")
+				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+			#else
+				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+			#end
 		#else
           <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
         #end

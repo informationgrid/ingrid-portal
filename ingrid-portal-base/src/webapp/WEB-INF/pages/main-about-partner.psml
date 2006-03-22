@@ -1,0 +1,26 @@
+<!DOCTYPE doc [
+<!ENTITY % iso-lat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+                    "http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent">
+%iso-lat1;
+]>
+
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>About PortalU</title>
+  <metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>
+
+  <fragment id="main-about-partner" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="main-about-partner-1" type="portlet" name="ingrid-portal-apps::ShowPartnerPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
