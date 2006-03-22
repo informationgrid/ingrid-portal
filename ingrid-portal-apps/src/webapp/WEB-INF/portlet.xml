@@ -410,8 +410,24 @@
     <!-- Main Menue              -->
     <!-- *********************** -->
 
+    <portlet id="ShowPartnerPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/show_partner.vm</value>
+        </init-param>
+        <portlet-name>ShowPartnerPortlet</portlet-name>
+        <display-name>ShowPartnerPortlet</display-name>
+        <description>TODO: describe the portlet</description>
+        <portlet-class>de.ingrid.portal.portlets.ShowPartnerPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>            
+    </portlet>
     <!-- NOTICE: uses SearchSimple from Home -->
-
     <portlet id="ServiceSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
