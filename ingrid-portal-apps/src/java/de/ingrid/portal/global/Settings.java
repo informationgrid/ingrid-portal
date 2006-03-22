@@ -46,6 +46,9 @@ public class Settings {
     /** main-environment page -> environment catalogue, also displays results */
     public final static String PAGE_ENVIRONMENT = "/ingrid-portal/portal/main-environment.psml";
 
+    /** contact page */
+    public final static String PAGE_CONTACT = "/ingrid-portal/portal/service-contact.psml";
+
     // ===========================================
     // IngridQuery
     // ===========================================
@@ -242,6 +245,10 @@ public class Settings {
     public final static String PARAM_GROUPING = "grouping";
 
     public final static String PARAM_ACTION = "action";
+
+    /** This parameter is added as URL param in the portlet action method and indicates,
+     *  that the following render request is called after an action */
+    public final static String PARAM_IS_ACTION = "isaction";
 
     public final static String PARAM_TAB = "tab";
 

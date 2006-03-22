@@ -79,7 +79,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
             cancelRenderMessage(request, MSG_EVENT);
 
             // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
             actionResponse.sendRedirect(PAGE_CURRENT + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doOpenEvent")) {
@@ -88,7 +88,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
             publishRenderMessage(request, MSG_EVENT, Settings.MSGV_TRUE);
 
             // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
             actionResponse.sendRedirect(PAGE_CURRENT + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doCloseEvent")) {
@@ -97,7 +97,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
             cancelRenderMessage(request, MSG_EVENT);
 
             // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
             actionResponse.sendRedirect(PAGE_CURRENT + urlViewParam);
         }
 

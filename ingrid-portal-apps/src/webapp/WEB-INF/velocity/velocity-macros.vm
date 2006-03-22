@@ -5,7 +5,7 @@
 $form.getInput($field)#end
 
 #macro (getFieldValue $field)
-#getFieldValueByForm($actionForm)#end
+#getFieldValueByForm($actionForm $field)#end
 
 #macro (getHTMLEscapedFieldValue $field)
 $actionForm.getInputHTMLEscaped($field)#end

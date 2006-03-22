@@ -81,7 +81,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             // In Thesaurus suchen
 
             // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
             actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (submittedAddToQuery != null) {
@@ -92,9 +92,9 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             String currView = getDefaultViewPage();
             String urlViewParam = "";
             if (currView.equals(TEMPLATE_RESULTS)) {
-                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_RESULTS, Settings.PARAM_ACTION);
+                urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
             } else if (currView.equals(TEMPLATE_BROWSE)) {
-                urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
+                urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
             }
             actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
@@ -103,7 +103,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             // SNS Deskriptor browsen
 
             // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(PARAMV_VIEW_BROWSE, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
             actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {

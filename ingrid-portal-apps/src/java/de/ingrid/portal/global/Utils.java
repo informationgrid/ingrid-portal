@@ -233,7 +233,7 @@ public class Utils {
             if (urlParam.length() != 0) {
                 urlParam.append("&");
             }
-            urlParam.append(toURLParam(values[i], paramName));
+            urlParam.append(toURLParam(paramName, values[i]));
         }
 
         return urlParam.toString();
@@ -246,7 +246,7 @@ public class Utils {
      * @param paramName
      * @return
      */
-    public static String toURLParam(String value, String paramName) {
+    public static String toURLParam(String paramName, String value) {
         if (value == null || value.length() == 0) {
             return "";
         }

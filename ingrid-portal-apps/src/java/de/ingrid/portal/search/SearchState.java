@@ -38,7 +38,7 @@ public class SearchState {
 
         // Action parameter, determines what to do (important for bookmarking, to react in view method)
         // (read only from request)
-        String urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_ACTION), Settings.PARAM_ACTION);
+        String urlParam = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
         Utils.appendURLParameter(result, urlParam);
 
         // Generate parameters of form input via ActionForm !
@@ -46,13 +46,13 @@ public class SearchState {
             urlParam = af.toURLParams();
             Utils.appendURLParameter(result, urlParam);
         } else {
-            urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_RUBRIC), Settings.PARAM_RUBRIC);
+            urlParam = Utils.toURLParam(Settings.PARAM_RUBRIC, request.getParameter(Settings.PARAM_RUBRIC));
             Utils.appendURLParameter(result, urlParam);
         }
 
         // start hit of search results (read only from request !)
-        urlParam = Utils.toURLParam(request.getParameter(Settings.PARAM_STARTHIT_RANKED),
-                Settings.PARAM_STARTHIT_RANKED);
+        urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, request
+                .getParameter(Settings.PARAM_STARTHIT_RANKED));
         Utils.appendURLParameter(result, urlParam);
 
         if (log.isInfoEnabled()) {
@@ -73,27 +73,27 @@ public class SearchState {
         try {
             // Action parameter, determines what to do (important for bookmarking, to react in view method)
             // (read only from request)
-            String action = Utils.toURLParam(request.getParameter(Settings.PARAM_ACTION), Settings.PARAM_ACTION);
+            String action = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
             Utils.appendURLParameter(result, action);
 
             // query string (read from state)
             String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-            String urlParam = Utils.toURLParam(paramValue, Settings.PARAM_QUERY_STRING);
+            String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // datasource (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-            urlParam = Utils.toURLParam(paramValue, Settings.PARAM_DATASOURCE);
+            urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // start hit of ranked search results (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
-            urlParam = Utils.toURLParam(paramValue, Settings.PARAM_STARTHIT_RANKED);
+            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // start hit of unranked search results (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
-            urlParam = Utils.toURLParam(paramValue, Settings.PARAM_STARTHIT_UNRANKED);
+            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_UNRANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
         } catch (Exception ex) {

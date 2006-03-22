@@ -339,7 +339,7 @@ public class UtilsSearch {
             // Zur Suchanfrage hinzufuegen
 
             // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.MSGV_TRUE, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
             response.sendRedirect(page + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doOpenPartner")) {
@@ -348,7 +348,7 @@ public class UtilsSearch {
             PortletMessaging.publish(request, Settings.MSG_PARTNER, Settings.MSGV_TRUE);
 
             // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.MSGV_TRUE, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
             response.sendRedirect(page + urlViewParam);
 
         } else if (action.equalsIgnoreCase("doClosePartner")) {
@@ -357,7 +357,7 @@ public class UtilsSearch {
             PortletMessaging.cancel(request, Settings.MSG_PARTNER);
 
             // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.MSGV_TRUE, Settings.PARAM_ACTION);
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
             response.sendRedirect(page + urlViewParam);
         }
     }
