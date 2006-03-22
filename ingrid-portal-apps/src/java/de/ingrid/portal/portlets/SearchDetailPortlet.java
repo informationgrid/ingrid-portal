@@ -76,7 +76,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             } else if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs_address")) {
                 setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
             } else {
-                setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
+                setDefaultViewPage(TEMPLATE_DETAIL_ECS);
             }
             
             context.put("record", record);
