@@ -69,6 +69,10 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         List partners = UtilsDB.getPartners();
         context.put("partnerList", partners);
 
+        // get topics
+        List topics = UtilsDB.getEnvTopics();
+        context.put("topicList", topics);
+
         // update ActionForm !
         EnvironmentSearchForm af = (EnvironmentSearchForm) Utils.getActionForm(request,
                 EnvironmentSearchForm.SESSION_KEY, EnvironmentSearchForm.class, PortletSession.APPLICATION_SCOPE);
@@ -132,9 +136,11 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
             // don't set anything if "all" is selected
             if (topics != null && Utils.getPosInArray(topics, Settings.PARAMV_ALL) == -1) {
+                String queryValue = null;
                 for (int i = 0; i < topics.length; i++) {
                     if (topics[i] != null) {
-                        query.addField(new FieldQuery(true, false, Settings.QFIELD_TOPIC, topics[i]));
+                        queryValue = UtilsDB.getTopicFromKey(topics[i]);
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_TOPIC, queryValue));
                         // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
                         break;
                     }

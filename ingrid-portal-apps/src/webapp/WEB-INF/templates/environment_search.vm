@@ -12,50 +12,10 @@
 				</label>
 			</h3>
 			<select class="env_themes inputstyle" name="rubric" id="xx2" size="5" multiple="multiple">
-				<option value="all" #getSelected('rubric' 'all')>------ Alles auswählen ------
-				</option>
-				<option value="Abfall" #getSelected('rubric' 'Abfall')>Abfall
-				</option>
-				<option value="Altlasten" #getSelected('rubric' 'Altlasten')>Altlasten
-				</option>
-				<option value="Bauen" #getSelected('rubric' 'Bauen')>Bauen
-				</option>
-				<option value="Boden" #getSelected('rubric' 'Boden')>Boden
-				</option>
-				<option value="Chemikalien" #getSelected('rubric' 'Chemikalien')>Chemikalien
-				</option>
-				<option value="Energie" #getSelected('rubric' 'Energie')>Energie
-				</option>
-				<option value="Forstwirtschaft" #getSelected('rubric' 'Forstwirtschaft')>Forstwirtschaft
-				</option>
-				<option value="Gentechnik" #getSelected('rubric' 'Gentechnik')>Gentechnik
-				</option>
-				<option value="Geologie" #getSelected('rubric' 'Geologie')>Geologie
-				</option>
-				<option value="Gesundheit" #getSelected('rubric' 'Gesundheit')>Gesundheit
-				</option>
-				<option value="LaermErschuetterung" #getSelected('rubric' 'LaermErschuetterung')>Lärm und Erschütterungen
-				</option>
-				<option value="Landwirtschaft" #getSelected('rubric' 'Landwirtschaft')>Landwirtschaft
-				</option>
-				<option value="LuftKlima" #getSelected('rubric' 'LuftKlima')>Luft und Klima
-				</option>
-				<option value="NachhaltigeEntwicklung" #getSelected('rubric' 'NachhaltigeEntwicklung')>Nachhaltige Entwicklung
-				</option>
-				<option value="NaturLandschaft" #getSelected('rubric' 'NaturLandschaft')>Natur und Landschaft
-				</option>
-				<option value="Strahlung" #getSelected('rubric' 'Strahlung')>Strahlung
-				</option>
-				<option value="Tierschutz" #getSelected('rubric' 'Tierschutz')>Tierschutz
-				</option>
-				<option value="Umweltinformation" #getSelected('rubric' 'Umweltinformation')>Umweltinformation
-				</option>
-				<option value="Umweltwirtschaft" #getSelected('rubric' 'Umweltwirtschaft')>Umweltwirtschaft
-				</option>
-				<option value="Verkehr" #getSelected('rubric' 'Verkehr')>Verkehr
-				</option>
-				<option value="Wasser" #getSelected('rubric' 'Wasser')>Wasser
-				</option>
+				<option value="all" #getSelected('rubric' 'all')>------ Alles auswählen ------</option>
+#foreach ($topic in $topicList)
+<option value="$topic.FormValue" #getSelected('rubric' "$topic.FormValue")>$MESSAGES.getString("$topic.QueryValue")</option>
+#end
 			</select>
 		</div>
 		<div class="float_left marginleft">

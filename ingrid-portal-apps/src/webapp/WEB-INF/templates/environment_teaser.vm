@@ -3,88 +3,11 @@
     
 </div>
 <ul class="catalog">
+#set ($numTopics = $topicList.size())
+#foreach ($topic in $topicList)
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Abfall')
-    <li><a href="$action">Abfall</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Altlasten')
-    <li><a href="$action">Altlasten</a><span class="separator">&nbsp;</span></li>       
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Bauen')
-    <li><a href="$action">Bauen</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Boden')
-    <li><a href="$action">Boden</a><span class="separator">&nbsp;</span></li>     
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Chemikalien')
-    <li><a href="$action">Chemikalien</a><span class="separator">&nbsp;</span></li>        
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Energie')
-    <li><a href="$action">Energie</a><span class="separator">&nbsp;</span></li> 
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Forstwirtschaft')
-    <li><a href="$action">Forstwirtschaft</a><span class="separator">&nbsp;</span></li> 
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Gentechnik')
-    <li><a href="$action">Gentechnik</a><span class="separator">&nbsp;</span></li>     
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Geologie')
-    <li><a href="$action">Geologie</a><span class="separator">&nbsp;</span></li>    
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Gesundheit')
-    <li><a href="$action">Gesundheit</a><span class="separator">&nbsp;</span></li>     
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','LaermErschuetterung')
-    <li><a href="$action">Lärm und Erschütterungen</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Landwirtschaft')
-    <li><a href="$action">Landwirtschaft</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','LuftKlima')
-    <li><a href="$action">Luft und Klima</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','NachhaltigeEntwicklung')
-    <li><a href="$action">Nachhaltige Entwicklung</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','NaturLandschaft')
-    <li><a href="$action">Natur und Landschaft</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Strahlung')
-    <li><a href="$action">Strahlung</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Tierschutz')
-    <li><a href="$action">Tierschutz</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Umweltinformation')
-    <li><a href="$action">Umweltinformation</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Umweltwirtschaft')
-    <li><a href="$action">Umweltwirtschaft</a><span class="separator">&nbsp;</span></li>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Verkehr')
-    <li><a href="$action">Verkehr</a><span class="separator">&nbsp;</span></li>       
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric','Wasser')
-    <li><a href="$action">Wasser</a></li>
+$action.setParameter('rubric',"$topic.FormValue")
+    <li><a href="$action">$MESSAGES.getString("$topic.QueryValue")</a>#if($velocityCount != $numTopics)<span class="separator">&nbsp;</span>#end</li>
+#end
 </ul>

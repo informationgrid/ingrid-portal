@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridEnvTopic" table="ingrid_env_topic">
+		<id name="id">
+    		<generator class="native"/>
+        </id>
+    	<property name="formValue" type="java.lang.String" column="form_value"/>
+    	<property name="queryValue" type="java.lang.String" column="query_value"/>
+    	<property name="sortkey" type="int"/>
+  </class>
+</hibernate-mapping>

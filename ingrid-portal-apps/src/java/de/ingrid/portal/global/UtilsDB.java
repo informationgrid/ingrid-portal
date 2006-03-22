@@ -6,6 +6,7 @@ package de.ingrid.portal.global;
 import java.util.List;
 
 import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridPartner;
 
 /**
@@ -21,10 +22,14 @@ public class UtilsDB {
 
     /** cache for partners */
     private static List partners = null;
-    
+
+    /** cache for environment topics */
+    private static List envTopics = null;
+
     public static boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
     }
+
     public static synchronized void setAlwaysReloadDBData(boolean reload) {
         alwaysReloadDBData = reload;
     }
@@ -43,12 +48,12 @@ public class UtilsDB {
         synchronized (UtilsDB.class) {
             if (partners == null) {
                 HibernateManager hibernateManager = HibernateManager.getInstance();
-                partners =  hibernateManager.loadAllData(IngridPartner.class, 0);
+                partners = hibernateManager.loadAllData(IngridPartner.class, 0);
             }
         }
-        
         return partners;
     }
+
     /**
      * Get the name of the partner with the according ident.
      * @param ident
@@ -63,7 +68,43 @@ public class UtilsDB {
                 return partner.getName();
             }
         }
-
         return ident;
+    }
+
+    /**
+     * Get all the environment topics. NOTICE: Values are always reloaded from database
+     * if flag alwaysReloadDBData in our class is set to true. Otherwise we load
+     * the values once and return our cache !
+     * @return
+     */
+    public static List getEnvTopics() {
+        if (alwaysReloadDBData) {
+            HibernateManager hibernateManager = HibernateManager.getInstance();
+            return hibernateManager.loadAllData(IngridEnvTopic.class, 0);
+        }
+        synchronized (UtilsDB.class) {
+            if (envTopics == null) {
+                HibernateManager hibernateManager = HibernateManager.getInstance();
+                envTopics = hibernateManager.loadAllData(IngridEnvTopic.class, 0);
+            }
+        }
+        return envTopics;
+    }
+
+    /**
+     * Get the query value of a topic from the form value (key).
+     * @param key
+     * @return
+     */
+    public static String getTopicFromKey(String key) {
+        List envTopics = getEnvTopics();
+        IngridEnvTopic topic = null;
+        for (int i = 0; i < envTopics.size(); i++) {
+            topic = (IngridEnvTopic) envTopics.get(i);
+            if (topic.getFormValue().equals(key)) {
+                return topic.getQueryValue();
+            }
+        }
+        return key;
     }
 }

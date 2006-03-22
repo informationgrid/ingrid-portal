@@ -30,7 +30,7 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
 
-        <property name="hbm2ddl.auto">update</property>
+        <!--property name="hbm2ddl.auto">update</property-->
 
 		<mapping resource="de/ingrid/usermanagement/User.hbm.xml"/>
         <mapping resource="de/ingrid/usermanagement/Group.hbm.xml"/>

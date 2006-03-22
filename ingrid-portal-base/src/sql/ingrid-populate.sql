@@ -16,6 +16,27 @@ INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (15, 'st', 'Sachsen
 INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (16, 'sh', 'Schleswig-Holstein', 16);
 INSERT INTO ingrid_partner (id, ident, name, sortkey) VALUES (17, 'th', 'Thüringen', 17);
 
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (1, 'abf', 'abfall', 1);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (2, 'alt', 'altlasten', 2);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (3, 'bau', 'bauen', 3);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (4, 'bod', 'boden', 4);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (5, 'che', 'chemikalien', 5);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (6, 'ene', 'energie', 6);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (7, 'for', 'forstwirtschaft', 7);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (8, 'gen', 'gentechnik', 8);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (9, 'geo', 'geologie', 9);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (10, 'ges', 'gesundheit', 10);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (11, 'lae', 'laermerschuetterung', 11);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (12, 'lan', 'landwirtschaft', 12);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (13, 'luf', 'luftklima', 13);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (14, 'nac', 'nachhaltigeentwicklung', 14);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (15, 'nat', 'naturlandschaft', 15);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (16, 'str', 'strahlung', 16);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (17, 'tie', 'tierschutz', 17);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (18, 'uin', 'umweltinformation', 18);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (19, 'uwi', 'umweltwirtschaft', 19);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (20, 'ver', 'verkehr', 20);
+INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (21, 'was', 'wasser', 21);
 
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (1, 'UBA', 'RSS-UBA', 'http://www.uba.de/rss/ubapresseinfo.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 'BFN', 'BFN-UBA', 'http://www.bfn.de/6.100.html', 'de');
