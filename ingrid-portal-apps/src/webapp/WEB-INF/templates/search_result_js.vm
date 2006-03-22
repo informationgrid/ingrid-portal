@@ -3,12 +3,12 @@
 
 <!-- RESULTS LEFT -->
   <div id="results_left">
-	loading ...  
+	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="Sanduhr Ikon" width="10" height="17" /><strong>Ihr Suchergebnis wird angefordert.</strong></p>
   </div>
   
 <!-- RESULTS RIGHT -->
   <div id="results_right">
-	loading ...
+	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="Sanduhr Ikon" width="10" height="17" /><strong>Ihr Suchergebnis wird angefordert.</strong></p>
   </div>
 
   <div class="clearer"></div>
