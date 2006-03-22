@@ -38,6 +38,13 @@ INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (19, 
 INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (20, 'ver', 'verkehr', 20);
 INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (21, 'was', 'wasser', 21);
 
+INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (1, 'rec', 'rechtliches', 1);
+INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (2, 'kon', 'konzeptionelles', 2);
+INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (3, 'sta', 'statusberichte', 3);
+INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (4, 'umw', 'umweltzustand', 4);
+INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (5, 'dat', 'datenkarten', 5);
+INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (6, 'ris', 'risikobewertungen', 6);
+
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (1, 'UBA', 'RSS-UBA', 'http://www.uba.de/rss/ubapresseinfo.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 'BFN', 'BFN-UBA', 'http://www.bfn.de/6.100.html', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 'MUF RLP', 'MUF RLP', 'http://www.muf.rlp.de/rss/rss_1_20.xml', 'de');
