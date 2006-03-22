@@ -28,8 +28,7 @@ function isLoaded() {
 #renderRankedPageNavigation($rankedPageSelector)
       </div>
       <br />
-
-#if($rankedResultList)
+#if($rankedResultList && "$rankedResultList.length()" != "0")
       #foreach($rs in $rankedResultList.hits)
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
@@ -78,6 +77,8 @@ function isLoaded() {
 		  #end
           </div>
 	  #end
+#else
+		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
 #end  
 
       <div class="resultset_nav float_left">

@@ -12,7 +12,7 @@
       </div>
       <br />
 
-#if($rankedResultList)
+#if($rankedResultList && "$rankedResultList.length()" != "0")
       #foreach($rs in $rankedResultList.hits)
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
@@ -60,6 +60,8 @@
 		  #end
           </div>
 	  #end
+#else
+		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
 #end  
 
       <div class="resultset_nav float_left">
@@ -91,7 +93,7 @@
       </div>
       <br />
 
-#if($unrankedResultList)
+#if($unrankedResultList && "$unrankedResultList.length()" != "0")
       #foreach($rs in $unrankedResultList.hits)
     	  <div class="resultset_partner_group">
             <div class="ico_down_black"><span class="title">$rs.title#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
@@ -107,16 +109,9 @@
             <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>Zur Trefferliste</a></strong></span>
           </div>
           <br />
-<!--
-		  <div class="resultset">
-		  #if ($rs.title)
-			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
-		  #else
-			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
-		  #end
-          </div>
-		  -->		  
       #end
+#else
+		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
 #end
       
       <div class="resultset_nav float_left">
