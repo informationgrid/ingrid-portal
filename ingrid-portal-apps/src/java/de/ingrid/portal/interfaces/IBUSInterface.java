@@ -5,6 +5,7 @@ package de.ingrid.portal.interfaces;
 
 import org.apache.commons.configuration.Configuration;
 
+import de.ingrid.ibus.Bus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -78,6 +79,14 @@ public interface IBUSInterface {
      * @return The PlugDescription. 
      */
     PlugDescription getIPlug(String plugId);
+    
+    /**
+     * Returns the Bus object.
+     * 
+     * @return The Bus object.
+     */
+    Bus getIBus();
+    
 
     /**
      * Get Plug Description of a result.
