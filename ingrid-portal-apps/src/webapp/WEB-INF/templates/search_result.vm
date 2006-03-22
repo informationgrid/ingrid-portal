@@ -96,7 +96,7 @@
 #if($unrankedResultList && "$unrankedResultList.length()" != "0")
       #foreach($rs in $unrankedResultList.hits)
     	  <div class="resultset_partner_group">
-            <div class="ico_down_black"><span class="title">$rs.title#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
+            <div class="ico_down_black"><span class="title">$rs.title#if($rs.no_of_hits): $rs.no_of_hits Treffer#end</span><br /></div>
             <p class="result_description">
               $rs.abstract
             </p>
