@@ -3,7 +3,6 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
-import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 
@@ -331,5 +330,12 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         communication.boot();
 
         return communication;
+    }
+
+    /**
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getIBus()
+     */
+    public Bus getIBus() {
+        return bus;
     }
 }
