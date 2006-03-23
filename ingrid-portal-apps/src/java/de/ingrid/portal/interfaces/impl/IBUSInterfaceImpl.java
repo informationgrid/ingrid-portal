@@ -29,6 +29,7 @@ import org.xml.sax.InputSource;
 
 import de.ingrid.ibus.Bus;
 import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -185,6 +186,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             throws Exception {
         IngridHits hits = null;
         try {
+            if (log.isDebugEnabled()) {
+                log.debug("doSearch: IngridQuery = " + UtilsSearch.queryToString(query));
+            }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {

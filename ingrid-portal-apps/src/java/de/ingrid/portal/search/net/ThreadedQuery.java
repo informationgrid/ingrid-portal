@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -48,10 +47,6 @@ public class ThreadedQuery extends Thread {
 
         IngridHits hits = null;
 
-        if (log.isDebugEnabled()) {
-            log.debug("doSearch: IngridQuery = " + UtilsSearch.queryToString(qd.getQuery()));
-        }
-        
         long startTime = System.currentTimeMillis();
 
         try {
