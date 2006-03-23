@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.forms;
 
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 
 import de.ingrid.portal.global.Settings;
@@ -27,11 +29,11 @@ public class ServiceSearchForm extends ActionForm {
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
-    public static final String INITIAL_RUBRIC = "all''Presse''Publikationen''Veranstaltungen";
+    protected static String INITIAL_RUBRIC = "";
 
-    public static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
+    protected static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
 
-    public static final String INITIAL_GROUPING = "none";
+    protected static final String INITIAL_GROUPING = "none";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -81,5 +83,21 @@ public class ServiceSearchForm extends ActionForm {
         }
 
         return allOk;
+    }
+
+    /**
+     * Set the initially selected rubrics.
+     * @param rubrics
+     */
+    public static void setInitialSelectedRubrics(List rubrics) {
+        String allRubric = Settings.PARAMV_ALL.concat(VALUE_SEPARATOR).concat(VALUE_SEPARATOR);
+        INITIAL_RUBRIC = allRubric.concat(getInitialSelectString(rubrics));
+    }
+
+    /**
+     * @return Returns the iNITIAL_RUBRIC.
+     */
+    public static String getINITIAL_RUBRIC() {
+        return INITIAL_RUBRIC;
     }
 }

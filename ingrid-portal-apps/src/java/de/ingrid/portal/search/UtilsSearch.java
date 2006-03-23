@@ -6,8 +6,6 @@ package de.ingrid.portal.search;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
@@ -197,11 +195,12 @@ public class UtilsSearch {
         String mappedValue = detailValue;
         if (detailKey.equals(Settings.RESULT_KEY_PARTNER)) {
             mappedValue = UtilsDB.getPartnerFromKey(detailValue);
-        } else if (detailKey.equals(Settings.RESULT_KEY_TOPIC)) {
-            mappedValue = resources.getString(detailValue);
-        } else if (detailKey.equals(Settings.RESULT_KEY_FUNCT_CATEGORY)) {
-            mappedValue = resources.getString(detailValue);
+        } else if (resources != null) {
+            if (detailKey.equals(Settings.RESULT_KEY_TOPIC) || detailKey.equals(Settings.RESULT_KEY_FUNCT_CATEGORY)) {
+                mappedValue = resources.getString(detailValue);
+            }
         }
+
         // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
 
         return mappedValue;
@@ -219,11 +218,10 @@ public class UtilsSearch {
         for (int i = 0; i < clauses.length; i++) {
             result.addAll(Arrays.asList(getAllTerms(clauses[i])));
         }
-        
-        return ((TermQuery[])result.toArray(new TermQuery[result.size()]));
+
+        return ((TermQuery[]) result.toArray(new TermQuery[result.size()]));
     }
-    
-    
+
     public static String queryToString(IngridQuery q) {
 
         boolean isFirstTerm = true;
@@ -265,24 +263,29 @@ public class UtilsSearch {
         if (ranking != null) {
             qStr = qStr.concat(" ranking:").concat(ranking);
         }
-        
+
         if (hasRequiredDataType(q, IDataTypes.SNS)) {
             int rType = q.getInt(Topic.REQUEST_TYPE);
             if (rType == Topic.ANNIVERSARY_FROM_TOPIC) {
-                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(ANNIVERSARY_FROM_TOPIC)");
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
+                        "(ANNIVERSARY_FROM_TOPIC)");
             } else if (rType == Topic.EVENT_FROM_TOPIC) {
-                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(EVENT_FROM_TOPIC)");
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
+                        "(EVENT_FROM_TOPIC)");
             } else if (rType == Topic.SIMILARTERMS_FROM_TOPIC) {
-                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(SIMILARTERMS_FROM_TOPIC)");
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
+                        "(SIMILARTERMS_FROM_TOPIC)");
             } else if (rType == Topic.TOPIC_FROM_TERM) {
-                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(TOPIC_FROM_TERM)");
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
+                        "(TOPIC_FROM_TERM)");
             } else if (rType == Topic.TOPIC_FROM_TEXT) {
-                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(TOPIC_FROM_TEXT)");
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
+                        "(TOPIC_FROM_TEXT)");
             } else {
-                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(UNKNOWN)");
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
+                        "(UNKNOWN)");
             }
         }
-        
 
         return qStr;
 
@@ -318,18 +321,17 @@ public class UtilsSearch {
         }
         return result;
     }
-    
+
     public static boolean hasRequiredDataType(IngridQuery q, String datatype) {
         String[] dtypes = q.getPositiveDataTypes();
-        for (int i=0; i < dtypes.length; i++) {
+        for (int i = 0; i < dtypes.length; i++) {
             if (dtypes[i].equalsIgnoreCase(datatype)) {
                 return true;
             }
         }
         return false;
-        
+
     }
-    
 
     public static boolean containsPositiveDataType(IngridQuery query, String datatypeValue) {
         boolean contains = false;

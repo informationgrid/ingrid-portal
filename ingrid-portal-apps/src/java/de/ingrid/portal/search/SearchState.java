@@ -59,7 +59,7 @@ public class SearchState {
             log.info("Catalogue: URL parameters: " + result);
         }
 
-        return result.toString();
+        return result.substring(0, result.length());
     }
 
     /**
@@ -107,7 +107,7 @@ public class SearchState {
             log.info("Main Search: URL parameters: " + result);
         }
 
-        return result.toString();
+        return result.substring(0, result.length());
     }
 
     /**

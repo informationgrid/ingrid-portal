@@ -9,11 +9,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.om.IngridFormToQuery;
 
 /**
  * Super class of all Form Handlers. Defines framework for form validation and
@@ -117,7 +119,7 @@ public abstract class ActionForm implements Serializable {
         dataWithSep.append(VALUE_SEPARATOR);
         dataWithSep.append(data);
         dataWithSep.append(VALUE_SEPARATOR);
-        input.put(field, dataWithSep.toString());
+        input.put(field, dataWithSep.substring(0, dataWithSep.length()));
     }
 
     /**
@@ -139,7 +141,7 @@ public abstract class ActionForm implements Serializable {
                 dataWithSep.append(VALUE_SEPARATOR);
             }
         }
-        input.put(field, dataWithSep.toString());
+        input.put(field, dataWithSep.substring(0, dataWithSep.length()));
     }
 
     public void clearInput() {
@@ -223,7 +225,7 @@ public abstract class ActionForm implements Serializable {
         dataWithSep.append(value);
         dataWithSep.append(VALUE_SEPARATOR);
 
-        if (currValue.indexOf(dataWithSep.toString()) == -1) {
+        if (currValue.indexOf(dataWithSep.substring(0, dataWithSep.length())) == -1) {
             return false;
         }
 
@@ -259,7 +261,27 @@ public abstract class ActionForm implements Serializable {
             }
             urlParams.append(urlParam);
         }
-        return urlParams.toString();
+        return urlParams.substring(0, urlParams.length());
     }
 
+    /**
+     * Compute initial select String for a group of "fields" from passed list.
+     * @param formToQueryValues List of IngridFormToQuery objects
+     * @return
+     */
+    protected static String getInitialSelectString(List formToQueryValues) {
+        StringBuffer dataWithSep = new StringBuffer();
+        for (int i = 0; i < formToQueryValues.size(); i++) {
+            if (i != 0) {
+                dataWithSep.append(VALUE_SEPARATOR);
+            }
+            dataWithSep.append(((IngridFormToQuery) formToQueryValues.get(i)).getFormValue());
+            if (i != (formToQueryValues.size() - 1)) {
+                dataWithSep.append(VALUE_SEPARATOR);
+            }
+        }
+        
+        String tmp = dataWithSep.substring(0, dataWithSep.length());
+        return tmp;
+    }
 }

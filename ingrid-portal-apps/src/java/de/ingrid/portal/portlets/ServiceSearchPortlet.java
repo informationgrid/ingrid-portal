@@ -16,6 +16,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.ServiceSearchForm;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -37,6 +38,9 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
 
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
@@ -65,6 +69,10 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // set data for view template 
         // ----------------------------------
 
+        // get rubrics
+        List rubrics = UtilsDB.getServiceRubrics();
+        context.put("rubricList", rubrics);
+
         // get partners
         List partners = UtilsDB.getPartners();
         context.put("partnerList", partners);
@@ -72,6 +80,13 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // update ActionForm !
         ServiceSearchForm af = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        // if no initial rubric selection set, set it and initialize the form (first instantiation)
+        if (ServiceSearchForm.getINITIAL_RUBRIC().length() == 0) {
+            // compute initial selection string for all rubrics and initialize selection
+            ServiceSearchForm.setInitialSelectedRubrics(rubrics);
+            af.init();
+        }
+
         if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
             // empty form on new search
             af.clear();

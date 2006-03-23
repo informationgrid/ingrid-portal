@@ -1,4 +1,3 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="service_search" id="service_search">
    	<input type="hidden" name="action" value="doSearch"/>
@@ -21,23 +20,16 @@
 					<td>
 					</td>
 				</tr>
-				<tr>
+#set ($numRubrics = $rubricList.size())
+#foreach ($rubric in $rubricList)
+#if($velocityCount==1 || $velocityCount==4 || $velocityCount==7)<tr>#end
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="Presse" #getChecked('rubric' 'Presse')/> 
-						<label for="chk_1">Pressemitteilungen
+						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
+						<label for="chk_1">$MESSAGES.getString("$rubric.QueryValue")
 						</label>
 					</td>
-					<td>
-						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="Publikationen" #getChecked('rubric' 'Publikationen')/> 
-						<label for="chk_2">Publikationen
-						</label>
-					</td>      	        
-					<td>
-						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="Veranstaltungen" #getChecked('rubric' 'Veranstaltungen')/> 
-						<label for="chk_3">Veranstaltungen
-						</label>
-					</td>     		     
-				</tr>
+#if($velocityCount==$numRubrics || $velocityCount==3 || $velocityCount==6)</tr>#end
+#end
 			</table>  
 		</div>  
 		<div class="clearer">

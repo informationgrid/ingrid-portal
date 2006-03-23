@@ -8,7 +8,9 @@ import java.util.List;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
+import de.ingrid.portal.om.IngridFormToQuery;
 import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridServiceRubric;
 
 /**
  * Global STATIC data and utility methods for Database.
@@ -19,7 +21,8 @@ public class UtilsDB {
 
     /** this flag controls whether Data is always fetched from Database or from cache  */
     // TODO keep possibilty to always reload data from DB ???? makes it complicated ! maybe instable ?
-    private static boolean alwaysReloadDBData = false;
+    // TODO set alwaysReloadDBData to false, when DEPLOYING !
+    private static boolean alwaysReloadDBData = true;
 
     /** cache for partners */
     private static List partners = null;
@@ -29,6 +32,9 @@ public class UtilsDB {
 
     /** cache for environment functional categories */
     private static List envFunctCategories = null;
+
+    /** cache for service rubrics */
+    private static List serviceRubrics = null;
 
     public static boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
@@ -62,11 +68,34 @@ public class UtilsDB {
     }
 
     /**
+     * Convenient method for extracting a QueryValue from a List of IngridFormToQuery
+     * objects, based on the formValue.
+     * @param formToQueryList
+     * @param formValue
+     * @return
+     */
+    private static String getQueryValueFromFormValue(List formToQueryList, String formValue) {
+        String ret = formValue;
+        IngridFormToQuery formToQuery = null;
+        for (int i = 0; i < formToQueryList.size(); i++) {
+            formToQuery = (IngridFormToQuery) formToQueryList.get(i);
+            if (formToQuery.getFormValue().equals(formValue)) {
+                ret = formToQuery.getQueryValue();
+                break;
+            }
+        }
+        return ret;
+    }
+
+    /**
      * Get all the partners.
      * @return
      */
     public static List getPartners() {
-        return getValuesFromDB(IngridPartner.class, partners);
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        partners = getValuesFromDB(IngridPartner.class, partners);
+        return partners;
     }
 
     /**
@@ -91,7 +120,10 @@ public class UtilsDB {
      * @return
      */
     public static List getEnvTopics() {
-        return getValuesFromDB(IngridEnvTopic.class, envTopics);
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        envTopics = getValuesFromDB(IngridEnvTopic.class, envTopics);
+        return envTopics;
     }
 
     /**
@@ -101,14 +133,7 @@ public class UtilsDB {
      */
     public static String getTopicFromKey(String key) {
         List envTopics = getEnvTopics();
-        IngridEnvTopic topic = null;
-        for (int i = 0; i < envTopics.size(); i++) {
-            topic = (IngridEnvTopic) envTopics.get(i);
-            if (topic.getFormValue().equals(key)) {
-                return topic.getQueryValue();
-            }
-        }
-        return key;
+        return getQueryValueFromFormValue(envTopics, key);
     }
 
     /**
@@ -116,7 +141,10 @@ public class UtilsDB {
      * @return
      */
     public static List getEnvFunctCategories() {
-        return getValuesFromDB(IngridEnvFunctCategory.class, envFunctCategories);
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        envFunctCategories = getValuesFromDB(IngridEnvFunctCategory.class, envFunctCategories);
+        return envFunctCategories;
     }
 
     /**
@@ -126,13 +154,27 @@ public class UtilsDB {
      */
     public static String getFunctCategoryFromKey(String key) {
         List envCategories = getEnvFunctCategories();
-        IngridEnvFunctCategory category = null;
-        for (int i = 0; i < envCategories.size(); i++) {
-            category = (IngridEnvFunctCategory) envCategories.get(i);
-            if (category.getFormValue().equals(key)) {
-                return category.getQueryValue();
-            }
-        }
-        return key;
+        return getQueryValueFromFormValue(envCategories, key);
+    }
+
+    /**
+     * Get the service rubrics.
+     * @return
+     */
+    public static List getServiceRubrics() {
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        serviceRubrics = getValuesFromDB(IngridServiceRubric.class, serviceRubrics);
+        return serviceRubrics;
+    }
+
+    /**
+     * Get the query value of a service rubric from the form value (key).
+     * @param key
+     * @return
+     */
+    public static String getServiceRubricFromKey(String key) {
+        List rubrics = getServiceRubrics();
+        return getQueryValueFromFormValue(rubrics, key);
     }
 }
