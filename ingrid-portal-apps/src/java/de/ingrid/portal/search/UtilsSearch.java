@@ -5,6 +5,9 @@ package de.ingrid.portal.search;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
@@ -16,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -26,6 +30,7 @@ import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
+import de.ingrid.utils.queryparser.IDataTypes;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
@@ -202,6 +207,23 @@ public class UtilsSearch {
         return mappedValue;
     }
 
+    public static TermQuery[] getAllTerms(IngridQuery q) {
+        ArrayList result = new ArrayList();
+        TermQuery[] terms = q.getTerms();
+        for (int i = 0; i < terms.length; i++) {
+            if (terms[i].getType() == TermQuery.TERM) {
+                result.add(terms[i]);
+            }
+        }
+        ClauseQuery[] clauses = q.getClauses();
+        for (int i = 0; i < clauses.length; i++) {
+            result.addAll(Arrays.asList(getAllTerms(clauses[i])));
+        }
+        
+        return ((TermQuery[])result.toArray(new TermQuery[result.size()]));
+    }
+    
+    
     public static String queryToString(IngridQuery q) {
 
         boolean isFirstTerm = true;
@@ -243,6 +265,24 @@ public class UtilsSearch {
         if (ranking != null) {
             qStr = qStr.concat(" ranking:").concat(ranking);
         }
+        
+        if (hasRequiredDataType(q, IDataTypes.SNS)) {
+            int rType = q.getInt(Topic.REQUEST_TYPE);
+            if (rType == Topic.ANNIVERSARY_FROM_TOPIC) {
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(ANNIVERSARY_FROM_TOPIC)");
+            } else if (rType == Topic.EVENT_FROM_TOPIC) {
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(EVENT_FROM_TOPIC)");
+            } else if (rType == Topic.SIMILARTERMS_FROM_TOPIC) {
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(SIMILARTERMS_FROM_TOPIC)");
+            } else if (rType == Topic.TOPIC_FROM_TERM) {
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(TOPIC_FROM_TERM)");
+            } else if (rType == Topic.TOPIC_FROM_TEXT) {
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(TOPIC_FROM_TEXT)");
+            } else {
+                qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat("(UNKNOWN)");
+            }
+        }
+        
 
         return qStr;
 
@@ -278,6 +318,18 @@ public class UtilsSearch {
         }
         return result;
     }
+    
+    public static boolean hasRequiredDataType(IngridQuery q, String datatype) {
+        String[] dtypes = q.getPositiveDataTypes();
+        for (int i=0; i < dtypes.length; i++) {
+            if (dtypes[i].equalsIgnoreCase(datatype)) {
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    
 
     public static boolean containsPositiveDataType(IngridQuery query, String datatypeValue) {
         boolean contains = false;
