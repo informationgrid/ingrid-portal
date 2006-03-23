@@ -19,9 +19,12 @@
 
 #macro (renderWWWReference)
 	#if($rec.get("t017_url_ref.obj_id"))
-    	<p><strong>$MESSAGES.getString("www_references"):</strong><br/>
+    	<p>
 		#foreach($t017_url_ref in $rec.get("t017_url_ref.obj_id"))
-			<a href="$t017_url_ref.get("t017_url_ref.url_link")" target="_new">$t017_url_ref.get("t017_url_ref.content")</a><br/>
+		<span class="icon">
+			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" />
+		</span>
+		<a href="$t017_url_ref.get("t017_url_ref.url_link")" target="_new" alt="externer Link">$t017_url_ref.get("t017_url_ref.content")</a><br/>
 		#end
 		</p>
 	#end
