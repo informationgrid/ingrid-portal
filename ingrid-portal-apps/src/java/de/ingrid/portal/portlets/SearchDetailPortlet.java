@@ -71,12 +71,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         try {
             Record record = ibus.getRecord(hit);
             PlugDescription plugDescription = ibus.getIPlug(iplugId);
+            
+            // flag to make column name readable (not lowercase, character substitution)
+            boolean readableColumnNames = false;
+            
             if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs")) {
                 setDefaultViewPage(TEMPLATE_DETAIL_ECS);
             } else if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs_address")) {
                 setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
             } else {
                 setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
+                readableColumnNames = true;
             }
             
             context.put("record", record);
@@ -86,14 +91,21 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             Column[] columns = record.getColumns();
             for (int i = 0; i < columns.length; i++) {
                 if (record.getValueAsString(columns[i]).trim().length() > 0) {
-                    if (dateFields.contains(columns[i].getTargetName().toLowerCase())) {
-                        recordMap.put(columns[i].getTargetName().toLowerCase(), UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
+                    String columnName = columns[i].getTargetName();
+                    if (readableColumnNames) {
+                        columnName = columnName.replace('_', ' ');
                     } else {
-                        recordMap.put(columns[i].getTargetName().toLowerCase(), record.getValueAsString(columns[i]).trim());
+                        columnName = columnName.toLowerCase();
+                    }
+                    
+                    if (dateFields.contains(columnName)) {
+                        recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
+                    } else {
+                        recordMap.put(columnName, record.getValueAsString(columns[i]).trim());
                     }
                 }
             }
-            addSubRecords(record, recordMap, request.getLocale());
+            addSubRecords(record, recordMap, request.getLocale(), readableColumnNames);
             
             context.put("rec", recordMap);
         } catch(Throwable t){
@@ -108,12 +120,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
 
     }
     
-    private void addSubRecords(Record record, HashMap map, Locale locale) {
-        addSubRecords(record, map, locale, 0);
+    private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
+        addSubRecords(record, map, locale, 0, readableColumns);
     }
     
     
-    private void addSubRecords(Record record, HashMap map, Locale locale, int level) {
+    private void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns) {
         level++;
         Column[] columns;
         ArrayList subRecordList;
@@ -124,17 +136,28 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             columns = subRecords[i].getColumns();
             for (int j = 0; j < columns.length; j++) {
                 if (subRecords[i].getValueAsString(columns[j]).trim().length() > 0) {
-                    if (dateFields.contains(columns[j].getTargetName().toLowerCase())) {
-                        subRecordMap.put(columns[j].getTargetName().toLowerCase(), UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
-                    } else if (columns[j].getTargetName().toLowerCase().startsWith("t08_attr")) {
+                    String columnName = columns[j].getTargetName();
+                    if (readableColumns) {
+                        columnName = columnName.replace('_', ' ');
+                    } else {
+                        columnName = columnName.toLowerCase();
+                    }
+                    if (dateFields.contains(columnName)) {
+                        subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
+                    } else if (columnName.startsWith("t08_attr")) {
                         // dummy code add logic for attribute fields
                         System.out.println(columns[j].getTargetName());
                     } else {
-                        subRecordMap.put(columns[j].getTargetName().toLowerCase(), subRecords[i].getValueAsString(columns[j]).trim());
+                        subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim());
                     }
                 }
             }
-            String targetName = columns[0].getTargetName().toLowerCase();
+            String targetName = columns[0].getTargetName();
+            if (readableColumns) {
+                targetName = targetName.replace('_', ' ');
+            } else {
+                targetName = targetName.toLowerCase();
+            }
             if (map.containsKey(targetName) && map.get(targetName) instanceof ArrayList) {
                 subRecordList = (ArrayList)map.get(targetName);
             } else {
@@ -143,7 +166,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             }
             subRecordList.add(subRecordMap);
             // add subrecords
-            addSubRecords(subRecords[i], subRecordMap, locale, level);
+            addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns);
         }
         
     }

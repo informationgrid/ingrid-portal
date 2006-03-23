@@ -36,7 +36,7 @@
 	<p class="float_left"></p>
 	<span class="clearer"></span>
 	<div class="line"><hr /></div>
-    #renderECSEntry($rec "summary")
+	<p>#if($rec.get("summary"))<strong>$MESSAGES.getString("summary"):</strong><br>$rec.get("summary")#end</p>
     <div class="line"><hr /></div>
 	#renderRec($rec 0)
 #else
