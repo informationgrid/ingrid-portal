@@ -1,4 +1,3 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="get" name="measures_search" id="measures_search">
    	<input type="hidden" name="action" value="doSearch"/>
@@ -23,28 +22,16 @@
 					<td>
 					</td>
 				</tr>
-				<tr>
+#set ($numRubrics = $rubricList.size())
+#foreach ($rubric in $rubricList)
+#if($velocityCount==1 || $velocityCount==5 || $velocityCount==9)<tr>#end
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Strahlung" #getChecked('rubric' 'Strahlung')/> 
-						<label for="chk_1">Strahlung
+						<input id="chk_$velocityCount" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
+						<label for="chk_$velocityCount">$MESSAGES.getString("$rubric.QueryValue")
 						</label>
 					</td>
-					<td>
-						<input id="chk_2" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Luft" #getChecked('rubric' 'Luft')/> 
-						<label for="chk_2">Luft
-						</label>
-					</td>
-					<td>
-						<input id="chk_3" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Wasser" #getChecked('rubric' 'Wasser')/> 
-						<label for="chk_3">Wasser
-						</label>
-					</td>
-					<td>
-						<input id="chk_4" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="Weitere" #getChecked('rubric' 'Weitere')/> 
-						<label for="chk_4">Weitere
-						</label>
-					</td>
-				</tr>
+#if($velocityCount==$numRubrics || $velocityCount==4 || $velocityCount==8)</tr>#end
+#end
 			</table>  
 		</div>  
 		<div class="clearer">

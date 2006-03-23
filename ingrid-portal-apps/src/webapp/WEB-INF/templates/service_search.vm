@@ -24,8 +24,8 @@
 #foreach ($rubric in $rubricList)
 #if($velocityCount==1 || $velocityCount==4 || $velocityCount==7)<tr>#end
 					<td>
-						<input id="chk_1" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
-						<label for="chk_1">$MESSAGES.getString("$rubric.QueryValue")
+						<input id="chk_$velocityCount" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.service_search.rubric)" onkeypress="ingrid_checkGroup(document.service_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
+						<label for="chk_$velocityCount">$MESSAGES.getString("$rubric.QueryValue")
 						</label>
 					</td>
 #if($velocityCount==$numRubrics || $velocityCount==3 || $velocityCount==6)</tr>#end

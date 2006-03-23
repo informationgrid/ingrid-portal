@@ -15,6 +15,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.MeasuresSearchForm;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -46,6 +47,10 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
+        Context context = getContext(request);
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
 
         // ----------------------------------
         // set initial view template
@@ -86,7 +91,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         int numberOfHits = 0;
         try {
-            hits = doSearch(query, startHit, HITS_PER_PAGE);
+            hits = doSearch(query, startHit, HITS_PER_PAGE, messages);
             if (hits != null) {
                 numberOfHits = (int) hits.length();
             }
@@ -111,7 +116,6 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         // prepare view
         // ----------------------------------
 
-        Context context = getContext(request);
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);
 
@@ -128,7 +132,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, IngridResourceBundle resources) {
         if (log.isDebugEnabled()) {
             log.debug("Messwerte IngridQuery = " + UtilsSearch.queryToString(query));
         }
@@ -141,7 +145,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
             IngridHit[] results = hits.getHits();
             // TODO: Welcher Key für Rubrik von Messwerte Hit holen und anzeigen !!!
-            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_PARTNER };
+            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {
@@ -164,8 +168,8 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
-                                Settings.RESULT_KEY_TOPIC));
+                        result.put(Settings.RESULT_KEY_RUBRIC, UtilsSearch.getDetailValue(detail,
+                                Settings.RESULT_KEY_RUBRIC, resources));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

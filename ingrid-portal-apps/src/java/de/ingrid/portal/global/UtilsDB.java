@@ -9,6 +9,7 @@ import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFormToQuery;
+import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridServiceRubric;
 
@@ -35,6 +36,9 @@ public class UtilsDB {
 
     /** cache for service rubrics */
     private static List serviceRubrics = null;
+
+    /** cache for measures rubrics */
+    private static List measuresRubrics = null;
 
     public static boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
@@ -175,6 +179,27 @@ public class UtilsDB {
      */
     public static String getServiceRubricFromKey(String key) {
         List rubrics = getServiceRubrics();
+        return getQueryValueFromFormValue(rubrics, key);
+    }
+
+    /**
+     * Get the measures rubrics.
+     * @return
+     */
+    public static List getMeasuresRubrics() {
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        measuresRubrics = getValuesFromDB(IngridMeasuresRubric.class, measuresRubrics);
+        return measuresRubrics;
+    }
+
+    /**
+     * Get the query value of a measures rubric from the form value (key).
+     * @param key
+     * @return
+     */
+    public static String getMeasuresRubricFromKey(String key) {
+        List rubrics = getMeasuresRubrics();
         return getQueryValueFromFormValue(rubrics, key);
     }
 }

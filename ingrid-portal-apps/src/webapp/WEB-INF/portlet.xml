@@ -495,7 +495,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MeasuresResultResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle> 
     </portlet>
     
     <portlet id="EnvironmentSearch">

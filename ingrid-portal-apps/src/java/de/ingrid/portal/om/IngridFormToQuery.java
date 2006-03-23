@@ -1,6 +1,6 @@
 package de.ingrid.portal.om;
 
-public class IngridFormToQuery {
+public abstract class IngridFormToQuery {
 
     private Long id;
 
