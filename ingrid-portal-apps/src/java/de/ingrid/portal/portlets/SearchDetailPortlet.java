@@ -101,7 +101,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     if (dateFields.contains(columnName)) {
                         recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
                     } else {
-                        recordMap.put(columnName, record.getValueAsString(columns[i]).trim());
+                        recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n", "<br />"));
                     }
                 }
             }
@@ -115,11 +115,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         super.doView(request, response);
     }
 
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException
-    {
-
-    }
-    
     private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
         addSubRecords(record, map, locale, 0, readableColumns);
     }
@@ -148,7 +143,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         // dummy code add logic for attribute fields
                         System.out.println(columns[j].getTargetName());
                     } else {
-                        subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim());
+                        subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n", "<br />"));
                     }
                 }
             }
