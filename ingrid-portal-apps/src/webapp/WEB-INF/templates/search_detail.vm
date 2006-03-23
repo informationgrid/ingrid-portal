@@ -266,7 +266,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
-		<h1>Detailinformation</h1>
+		<h1>$rec.get("title")</h1>
 	</div>
 	<span class="clearer"></span>
 	<div class="section">
@@ -282,7 +282,6 @@
 		</p>
 		<span class="clearer"></span>
 		<div class="line"><hr /></div>
-		<h2>$rec.get("title")</h2>
     #renderECSEntry($rec "t01_object.dataset_alternate_name")
     #renderECSEntry($rec "summary")
 
