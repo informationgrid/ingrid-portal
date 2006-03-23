@@ -3,7 +3,7 @@
 <div id="footermarginalcontainer">
   <div id="footermarginal">
     <!-- portlets go here -->
-    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="#">nach oben</a>
+    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="portal$site.getPage().url">nach oben</a>
   </div>
 </div>
 <div class="clearer"></div>
