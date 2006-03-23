@@ -283,8 +283,7 @@
 			#end
 		</p>
 		<span class="clearer"></span>
-		<div class="line"><hr /></div>
-    #renderECSEntry($rec "summary")
+		#if($rec.get("summary"))<p>$rec.get("summary")</p>#end
 
     #renderWWWReference()
 	#renderECSAddress()

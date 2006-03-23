@@ -35,8 +35,7 @@
 	<p class="float_right"></p>
 	<p class="float_left"></p>
 	<span class="clearer"></span>
-	<div class="line"><hr /></div>
-	<p>#if($rec.get("summary"))<strong>$MESSAGES.getString("summary"):</strong><br>$rec.get("summary")#end</p>
+	<p>#if($rec.get("summary"))$rec.get("summary")#end</p>
     <div class="line"><hr /></div>
 	#renderRec($rec 0)
 #else
