@@ -99,6 +99,8 @@ public class Settings {
 
     public final static String RESULT_KEY_PARTNER = "partner";
 
+    public final static String RESULT_KEY_RUBRIC = "rubric";
+
     public final static String RESULT_KEY_TOPIC = "topic";
 
     public final static String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
