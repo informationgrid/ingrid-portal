@@ -39,38 +39,33 @@ public class UtilsDate {
         SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy", locale);
         if (dateStr == null)
             return result;
-        try {
-            if (dateStr.matches("[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]")) {
-                df.applyPattern("yyyy-MM-dd");
-                portalFormat.applyPattern("dd.MM.yyyy");
-                result = portalFormat.format(df.parse(dateStr));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9]")) {
-                df.applyPattern("yyyy");
-                portalFormat.applyPattern("yyyy");
-                result = portalFormat.format(df.parse(dateStr));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
-                df.applyPattern("yyyyMMdd");
-                portalFormat.applyPattern("dd.MM.yyyy");
-                result = portalFormat.format(df.parse(dateStr));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
-                df.applyPattern("yyyyMMddHHmmss");
-                portalFormat.applyPattern("dd.MM.yyyy HH:mm:ss");
-                result = portalFormat.format(df.parse(dateStr));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9]0000")) {
-                df.applyPattern("yyyy");
-                portalFormat.applyPattern("yyyy");
-                result = portalFormat.format(df.parse(dateStr.substring(0,4)));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
-                df.applyPattern("yyyyMM");
-                portalFormat.applyPattern("MM/yyyy");
-                result = portalFormat.format(df.parse(dateStr.substring(0,6)));
-            } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
-                df.applyPattern("yyyyMMdd");
-                portalFormat.applyPattern("dd.MM.yyyy");
-                result = portalFormat.format(df.parse(dateStr.substring(0,8)));
-            }
-        } catch (ParseException e) {
-            log.warn("error parsing from date.", e);
+        if (dateStr.matches("[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]")) {
+            portalFormat.applyPattern("dd.MM.yyyy");
+            result = portalFormat.format(parseDateString(dateStr));
+        } else if (dateStr.matches("[0-9][0-9][0-9][0-9]")) {
+            df.applyPattern("yyyy");
+            portalFormat.applyPattern("yyyy");
+            result = portalFormat.format(parseDateString(dateStr));
+        } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
+            df.applyPattern("yyyyMMdd");
+            portalFormat.applyPattern("dd.MM.yyyy");
+            result = portalFormat.format(parseDateString(dateStr));
+        } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
+            df.applyPattern("yyyyMMddHHmmss");
+            portalFormat.applyPattern("dd.MM.yyyy HH:mm:ss");
+            result = portalFormat.format(parseDateString(dateStr));
+        } else if (dateStr.matches("[0-9][0-9][0-9][0-9]0000")) {
+            df.applyPattern("yyyy");
+            portalFormat.applyPattern("yyyy");
+            result = portalFormat.format(parseDateString(dateStr));
+        } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
+            df.applyPattern("yyyyMM");
+            portalFormat.applyPattern("MM/yyyy");
+            result = portalFormat.format(parseDateString(dateStr));
+        } else if (dateStr.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
+            df.applyPattern("yyyyMMdd");
+            portalFormat.applyPattern("dd.MM.yyyy");
+            result = portalFormat.format(parseDateString(dateStr));
         }
         return result;
     }
@@ -98,8 +93,15 @@ public class UtilsDate {
     }
     
     /**
-     * Parses a date string with the format 'yyyy-mm-dd' or 'yyyy'
-     * to a Date.
+     * Parses a date string to a Date. Accepting the following patterns:
+     * 
+     * - yyyy-MM-dd
+     * - yyyy
+     * - yyyyMMddHHmmss
+     * - yyyyMMdd
+     * - yyyy0000
+     * - yyyyMM00
+     * - yyyyMMdd000000
      * 
      * @param dateString The String representing the date.
      * 
@@ -107,28 +109,32 @@ public class UtilsDate {
      */
     public static Date parseDateString(String dateString) {
         Date result = null;
-        SimpleDateFormat df;
-        if (dateString.matches("[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]")) {
-            try {
-                df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat();
+        try {
+            if (dateString.matches("[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]")) {
+                df.applyPattern("yyyy-MM-dd");
                 result = df.parse((String) dateString);
-            } catch (ParseException e) {
-                log.warn("error parsing from date.", e);
-            }
-        } else if (dateString.matches("[0-9][0-9][0-9][0-9]")) {
-            try {
-                df = new SimpleDateFormat("yyyy");
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9]")) {
+                df.applyPattern("yyyy");
                 result = df.parse((String) dateString);
-            } catch (ParseException e) {
-                log.warn("error parsing from date.", e);
-            }
-        } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
-            try {
-                df = new SimpleDateFormat("yyyyMMddHHmmss");
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
+                df.applyPattern("yyyyMMddHHmmss");
                 result = df.parse((String) dateString);
-            } catch (ParseException e) {
-                log.warn("error parsing from date.", e);
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
+                df.applyPattern("yyyyMMdd");
+                result = df.parse((String) dateString);
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9]0000")) {
+                df.applyPattern("yyyy");
+                result = df.parse((String) dateString.substring(0,4));
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
+                df.applyPattern("yyyyMM");
+                result = df.parse((String) dateString.substring(0,6));
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
+                df.applyPattern("yyyyMMdd");
+                result = df.parse((String) dateString.substring(0,8));
             }
+        } catch (ParseException e) {
+            log.warn("error parsing from date.", e);
         }
         return result;
     }
