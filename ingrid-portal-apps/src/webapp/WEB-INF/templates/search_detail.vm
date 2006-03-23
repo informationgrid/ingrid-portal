@@ -33,7 +33,6 @@
 #macro (renderECSAddress)
     #if($rec.get("t012_obj_adr.obj_id"))
     	<div class="line"><hr /></div>
-		<p><strong>$MESSAGES.getString("addresses"):</strong><br></p>
     	#foreach($myAddressType in $rec.get("t012_obj_adr.obj_id"))
     		#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
 			#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
@@ -78,7 +77,6 @@
 #macro (renderECSSubjectReference $ecsClass)
 	#if($ecsClass == "5" && $rec.get("t011_obj_data.obj_id"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("subject_reference"):</strong><br></p>
 		#foreach($myData in $rec.get("t011_obj_data.obj_id"))    			
 			#if($myData.get("t011_obj_data.base") || $myData.get("t011_obj_data.description"))
     			#renderECSEntry($myData "t011_obj_data_para.parameter")
@@ -89,7 +87,6 @@
 		#end	
 	#elseif($ecsClass == "3" && $rec.get("t011_obj_serv.obj_id"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("subject_reference"):</strong><br></p>
 		#foreach($myData in $rec.get("t011_obj_serv.obj_id"))    			
     		#renderECSEntry($myData "t011_obj_serv.type")
     		#renderECSEntry($myData "t011_obj_serv.environment")
@@ -103,7 +100,6 @@
 		#end	
 	#elseif($ecsClass == "2" && $rec.get("t011_obj_literatur.obj_id"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("subject_reference"):</strong><br></p>
 		#foreach($myData in $rec.get("t011_obj_literatur.obj_id"))    			
     		#renderECSEntry($myData "t011_obj_literatur.autor")
     		#renderECSEntry($myData "t011_obj_literatur.publisher")
@@ -122,7 +118,6 @@
 		#end	
 	#elseif($ecsClass == "4" && $rec.get("t011_obj_project.obj_id"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("subject_reference"):</strong><br></p>
 		#foreach($myData in $rec.get("t011_obj_project.obj_id"))    			
     		#renderECSEntry($myData "t011_obj_project.leader")
     		#renderECSEntry($myData "t011_obj_project.member")
@@ -130,7 +125,6 @@
 		#end	
 	#elseif($ecsClass == "1" && $rec.get("t011_obj_geo.obj_id"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("subject_reference"):</strong><br></p>
 		#foreach($myData in $rec.get("t011_obj_geo.obj_id"))    			
     		#renderECSEntry($myData "t011_obj_geo.hierarchy_level")
     		#renderECSEntry($myData "t011_obj_geo_topic_cat.topic_category")
@@ -153,7 +147,6 @@
 #macro (renderECSSpacialReference)
 	#if($rec.get("t011_township.township_no") || $rec.get("t019_coordinates.obj_id") || $rec.get("t01_object.loc_descr"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("spacial_reference"):</strong><br></p>
     	#if($rec.get("t011_township.obj_id"))
     		#foreach($t011_township in $rec.get("t011_township.obj_id"))
 				#if($t011_township.get("t011_township.township_no"))
@@ -176,7 +169,6 @@
 #macro (renderECSTimeReference)
 	#if($rec.get("t01_object.time_type") || $rec.get("t0113_dataset_reference.obj_id") || $rec.get("t01_object.time_period") || $rec.get("t01_object.time_interval") || $rec.get("t01_object.time_alle") || $rec.get("t01_object.time_status") || $rec.get("t01_object.time_descr"))
     	<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("time_reference"):</strong><br></p>
     	<p><strong>$MESSAGES.getString("time_reference_content")</strong></p>
     	#renderECSEntry($rec "t01_object.time_type")
     	#if($rec.get("t01_object.time_type") == "von")
@@ -205,7 +197,6 @@
 #macro (renderECSAvailability)
 	#if($rec.get("t0110_avail_format.obj_id") || $rec.get("t0112_media_option.obj_id") || $rec.get("t0112_object.ordering_instructions") || $rec.get("t0112_object.avail_access_note") || $rec.get("t0112_object.fees"))
 		<div class="line"><hr /></div>
-    	<p><strong>$MESSAGES.getString("availability"):</strong><br></p>
 	
     	#if($rec.get("t0110_avail_format.obj_id"))
     		<p><strong>$MESSAGES.getString("data_format"):</strong><br>
