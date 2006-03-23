@@ -38,6 +38,13 @@ limitations under the License.
         <column name="sortkey" required="true" type="INTEGER"/>
     </table>
 
+    <table name="ingrid_service_rubric" idMethod="native">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
+        <column name="form_value" required="true" size="255" type="VARCHAR"/>
+        <column name="query_value" required="true" size="255" type="VARCHAR"/>
+        <column name="sortkey" required="true" type="INTEGER"/>
+    </table>
+
     <table name="ingrid_rss_source" idMethod="native">
         <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
         <column name="provider" required="true" size="255" type="VARCHAR"/>

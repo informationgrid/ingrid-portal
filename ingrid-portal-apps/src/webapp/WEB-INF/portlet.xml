@@ -460,7 +460,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ServiceResultResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle> 
     </portlet>
     
     <portlet id="MeasuresSearch">
