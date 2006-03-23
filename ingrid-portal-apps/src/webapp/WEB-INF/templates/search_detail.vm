@@ -267,13 +267,13 @@
 <div id="content_full">
 	<div class="section-header">
 		<h1>$rec.get("title")</h1>
+		<p class="float_right">#if($rec.get("t01_object.mod_time"))letzte Änderung am: $rec.get("t01_object.mod_time")#end</p>
 	</div>
 	<span class="clearer"></span>
 	<p><i>#if($rec.get("t01_object.dataset_alternate_name"))#renderECSEntry($rec "t01_object.dataset_alternate_name")#end</i></p>
 	<br />
 	<div class="section">
 #if($rec)
-		<p class="float_right">#if($rec.get("t01_object.mod_time"))Generiert am: $rec.get("t01_object.mod_time")#end</p>
 		<p class="float_left">
             #set($ecsObjClass = $rec.get("t01_object.obj_class"))
             #set($ecsObjClassNameKey = "ecs_obj_class_name_$ecsObjClass")
