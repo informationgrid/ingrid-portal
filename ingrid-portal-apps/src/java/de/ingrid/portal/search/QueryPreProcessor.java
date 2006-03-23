@@ -76,7 +76,7 @@ public class QueryPreProcessor {
         query.put(IngridQuery.RANKED, IngridQuery.SCORE_RANKED);
         
 //      TODO If no query should be submitted, return null
-        return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_RANKED_HITS_PER_PAGE, 5000, true, requestedMetadata);
+        return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_RANKED_HITS_PER_PAGE, 30000, true, requestedMetadata);
     }
 
     /**
@@ -134,7 +134,7 @@ public class QueryPreProcessor {
         query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
         
         // TODO If no query should be submitted, return null
-        return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, 5000, true, null);
+        return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, 30000, true, null);
     }    
 
 }
