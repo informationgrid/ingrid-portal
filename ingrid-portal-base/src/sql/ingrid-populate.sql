@@ -49,6 +49,11 @@ INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES 
 INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (2, 'pub', 'publikationen', 2);
 INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (3, 'ver', 'veranstaltungen', 3);
 
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (1, 'str', 'strahlung', 1);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (2, 'luf', 'luft', 2);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (3, 'was', 'wasser', 3);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (4, 'wei', 'weitere', 4);
+
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (1, 'UBA', 'RSS-UBA', 'http://www.uba.de/rss/ubapresseinfo.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 'BFN', 'BFN-UBA', 'http://www.bfn.de/6.100.html', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 'MUF RLP', 'MUF RLP', 'http://www.muf.rlp.de/rss/rss_1_20.xml', 'de');
