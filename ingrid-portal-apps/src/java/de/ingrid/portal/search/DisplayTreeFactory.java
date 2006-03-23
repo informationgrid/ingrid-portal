@@ -16,7 +16,7 @@ public class DisplayTreeFactory {
     public static DisplayTreeNode getTree(IngridQuery query) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
-        TermQuery[] terms = query.getTerms();
+        TermQuery[] terms = UtilsSearch.getAllTerms(query);
         for (int i=0; i<terms.length; i++) {
             if (terms[i].getType() == TermQuery.TERM) {
                 DisplayTreeNode node = new DisplayTreeNode(""+i, terms[i].getTerm(), false);

@@ -51,7 +51,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
+            IngridHits hits = iBus.search(query, 10, 1, 10, 30000);
 
             return hits.getHits();
         } catch (Exception e) {
