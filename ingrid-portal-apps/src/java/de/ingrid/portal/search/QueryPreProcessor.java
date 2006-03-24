@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.search;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.utils.query.FieldQuery;
@@ -38,8 +39,7 @@ public class QueryPreProcessor {
                     || UtilsSearch.containsPositiveDataType(query, Settings.QVALUE_DATATYPE_ADDRESS)) {
                 // no results
                 query.remove(Settings.QFIELD_DATATYPE);
-                query
-                        .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+                query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                                 Settings.QVALUE_DATATYPE_NORESULTS));
             } else {
                 // explicitly prohibit g2k
@@ -76,7 +76,7 @@ public class QueryPreProcessor {
         query.put(IngridQuery.RANKED, IngridQuery.SCORE_RANKED);
         
 //      TODO If no query should be submitted, return null
-        return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_RANKED_HITS_PER_PAGE, 30000, true, requestedMetadata);
+        return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_RANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, requestedMetadata);
     }
 
     /**
@@ -134,7 +134,7 @@ public class QueryPreProcessor {
         query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
         
         // TODO If no query should be submitted, return null
-        return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, 30000, true, null);
+        return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, null);
     }    
 
 }
