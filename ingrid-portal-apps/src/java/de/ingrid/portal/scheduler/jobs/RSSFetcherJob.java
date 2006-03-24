@@ -23,6 +23,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridRSSSource;
@@ -97,8 +98,8 @@ public class RSSFetcherJob implements Job {
                     }
                     if (publishedDate != null) {
                         cal = Calendar.getInstance();
-                        cal.add(Calendar.MONTH, -1);
-                        // drop items that are older than one month
+                        cal.add(Calendar.DATE, PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
+                        // drop items that are older than the number of configured days
                         if (publishedDate.after(cal.getTime())) {
                             // check if this entry already exists
                             List rssEntries = session.createCriteria(IngridRSSStore.class).add(
