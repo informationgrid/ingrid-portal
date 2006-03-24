@@ -27,25 +27,29 @@ public class PortalConfig extends PropertiesConfiguration {
 
     // timout for unranked queries in ms
     public final static String QUERY_TIMEOUT_UNRANKED = "query.timout.unranked";
-    
-    
+
+    // always read values from database or only once and then from cache */
+    public final static String ALWAYS_REREAD_DB_VALUES = "db.reread";
+
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
-    
+
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {
             try {
                 instance = new PortalConfig();
             } catch (Exception e) {
                 if (log.isFatalEnabled()) {
-                    log.fatal("Error loading the portal config application config file. (ingrid-portal-apps.properties)", e);
+                    log.fatal(
+                            "Error loading the portal config application config file. (ingrid-portal-apps.properties)",
+                            e);
                 }
             }
         }
         return instance;
     }
-    
+
     private PortalConfig() throws Exception {
         super("ingrid-portal-apps.properties");
     }

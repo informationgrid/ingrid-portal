@@ -5,6 +5,7 @@ package de.ingrid.portal.global;
 
 import java.util.List;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
@@ -22,8 +23,8 @@ public class UtilsDB {
 
     /** this flag controls whether Data is always fetched from Database or from cache  */
     // TODO keep possibilty to always reload data from DB ???? makes it complicated ! maybe instable ?
-    // TODO set alwaysReloadDBData to false, when DEPLOYING !
-    private static boolean alwaysReloadDBData = true;
+    private static boolean alwaysReloadDBData = PortalConfig.getInstance().getBoolean(
+            PortalConfig.ALWAYS_REREAD_DB_VALUES);
 
     /** cache for partners */
     private static List partners = null;
