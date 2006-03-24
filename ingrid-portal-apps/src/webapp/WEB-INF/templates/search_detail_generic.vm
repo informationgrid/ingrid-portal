@@ -26,18 +26,19 @@
 
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
+#if($rec)
 	<div class="section-header">
 		<h1>$rec.get("title")</h1>
 	</div>
 	<span class="clearer"></span>
 	<div class="section">
-#if($rec)
 	<p class="float_right"></p>
 	<p class="float_left"></p>
 	<span class="clearer"></span>
 	<p>#if($rec.get("summary"))$rec.get("summary")#end</p>
     <div class="line"><hr /></div>
 	#renderRec($rec 0)
+	</div>
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
 	<br/>
@@ -57,5 +58,4 @@
 	<br/>
 	<br/>
 #end	
-	</div>
 </div>
