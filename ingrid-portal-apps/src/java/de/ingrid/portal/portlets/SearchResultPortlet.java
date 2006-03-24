@@ -18,6 +18,7 @@ import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -169,7 +170,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         // create threaded query controller
         ThreadedQueryController controller = new ThreadedQueryController();
-        controller.setTimeout(30000);
+        controller.setTimeout(PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_THREADED, 120000));
 
         QueryDescriptor qd = null;
         
