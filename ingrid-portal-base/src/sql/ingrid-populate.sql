@@ -60,6 +60,7 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (4, 'BFN', 'BfN-Skripten', 'http://www.bfn.de/rss/skripten.xml', 'de');
 
 INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
+INSERT INTO SECURITY_CREDENTIAL VALUES(1,1,'admin',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2004-05-22 16:27:12.572','2004-05-22 16:27:12.572',null,null,null);
 
 INSERT INTO groups VALUES('admin');
 INSERT INTO groups VALUES('manager');
