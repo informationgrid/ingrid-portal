@@ -7,10 +7,15 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -18,6 +23,8 @@ import de.ingrid.utils.query.IngridQuery;
  * @author joachim@wemove.com
  */
 public class QueryPreProcessor {
+
+    private final static Log log = LogFactory.getLog(QueryPreProcessor.class);
 
     /**
      * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
@@ -29,15 +36,24 @@ public class QueryPreProcessor {
      * @return The QueryDescriptor describing the query or null if no query should be submitted.
      */
     public static QueryDescriptor createRankedQueryDescriptor(PortletRequest request) {
-        // copy IngridQuery, so we can manipulate it in ranked search without affecting unranked search
-        IngridQuery query = new IngridQuery();
-        query.putAll((Map) SearchState.getSearchStateObject(request, Settings.MSG_QUERY));
+        // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
+        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
+        // we won't complete copy
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        IngridQuery query = null;
+        try {
+            query = QueryStringParser.parse(queryString);
+        } catch (ParseException ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: " + queryString, ex);
+            }
+        }
 
-        // first adapt selected search area in UI (ds) !
+        // set basic datatype in query
         String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         UtilsSearch.processBasicDataTypes(query, ds);
 
-        // sart hit
+        // start hit
         int startHit = 0;
         String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
         if (stateStartHit.length() != 0) {
@@ -80,13 +96,30 @@ public class QueryPreProcessor {
      * @param startHit The hit count to start with.
      * @return The QueryDescriptor describing the query or null if no query should be submitted.
      */
-    public static QueryDescriptor createUnrankedQueryDescriptor(IngridQuery myQuery, String ds, int startHit) {
-        // copy IngridQuery, so we can manipulate it in ranked search without affecting unranked search
-        IngridQuery query = new IngridQuery();
-        query.putAll(myQuery);
+    public static QueryDescriptor createUnrankedQueryDescriptor(PortletRequest request) {
+        // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
+        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
+        // we won't complete copy
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        IngridQuery query = null;
+        try {
+            query = QueryStringParser.parse(queryString);
+        } catch (ParseException ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: " + queryString, ex);
+            }
+        }
 
-        // first adapt selected search area in UI (ds) ! 
+        // set basic datatype in query
+        String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         UtilsSearch.processBasicDataTypes(query, ds);
+
+        // start hit
+        int startHit = 0;
+        String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
+        if (stateStartHit.length() != 0) {
+            startHit = (new Integer(stateStartHit)).intValue();
+        }
 
         int currentPage = (int) (startHit / Settings.SEARCH_UNRANKED_HITS_PER_PAGE) + 1;
 

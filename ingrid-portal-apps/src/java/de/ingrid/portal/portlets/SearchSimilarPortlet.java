@@ -13,14 +13,12 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
@@ -36,7 +34,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchSimilarPortlet.class);
+    //    private final static Log log = LogFactory.getLog(SearchSimilarPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
@@ -121,7 +119,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 similarRoot = DisplayTreeFactory.getTree(query);
                 session.setAttribute("similarRoot", similarRoot);
                 if (similarRoot.getChildren().size() == 1) {
-                    openNode(similarRoot, ((DisplayTreeNode)similarRoot.getChildren().get(0)).getId());                    
+                    openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId());
                 }
             }
             ps.put("similarRoot", similarRoot);
@@ -175,7 +173,8 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                         }
                     }
                     if (subQueryStr != null) {
-                        newQueryStr = UtilsQueryString.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr.toString());
+                        newQueryStr = UtilsQueryString.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr
+                                .toString());
                     }
                 }
                 // republish the query
@@ -197,11 +196,12 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         ps.put("similarRoot", null);
         return ps;
     }
-    
+
     private void openNode(DisplayTreeNode rootNode, String nodeId) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         node.setOpen(true);
-        if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0 && !node.isLoading()) {
+        if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
+                && !node.isLoading()) {
             node.setLoading(true);
             IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
             for (int i = 0; i < hits.length; i++) {
@@ -216,5 +216,5 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             node.setLoading(false);
         }
     }
-    
+
 }

@@ -297,13 +297,17 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         try {
             query = QueryStringParser.parse(queryString);
         } catch (ParseException ex) {
-            if (log.isWarnEnabled()) {
-                log.warn("Problems creating IngridQuery, parsed query string: " + queryString, ex);
+            if (log.isErrorEnabled()) {
+                log.error("Problems creating IngridQuery, parsed query string: " + queryString, ex);
             }
-            // TODO create ERROR message when no IngridQuery because of parse error and return (OR even do that in form ???) 
+            // TODO create ERROR message when no IngridQuery because of parse error (OR even do that in form ???) 
         }
 
         // set query in state for result portlet
+        // NOTICE: DON'T MANIPULATE IngridQuery itself here, we don't use that one
+        // in the Result Portlet anymore, instead we create a new one from the queryString,
+        // to guarantee no shallow copy !!!! BUT KEEP THE QUERY IN THE STATE ! is used in
+        // simpleTermsPortlet and also in resultPortlet to determine whether query should be executed !
         SearchState.adaptSearchState(request, Settings.MSG_QUERY, query);
         SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, queryString);
     }

@@ -116,7 +116,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
 
         // if no query set display "nothing"
-        IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
+        IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
         if (query == null) {
             setDefaultViewPage(TEMPLATE_NO_QUERY_SET);
             super.doView(request, response);
@@ -190,7 +190,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (renderOneResultColumnRanked) {
             // check if query must be executed
             if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
-                rankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED);
+                rankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
             }
             if (rankedHits == null) {
                 // process query, create QueryDescriptor
@@ -208,11 +208,11 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
                 // check if query must be executed
                 if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
-                    unrankedHits = (IngridHits) receiveRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+                    unrankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
                 }
                 if (unrankedHits == null) {
                     // process query, create QueryDescriptor
-                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(query, selectedDS, unrankedStartHit);
+                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
                     if (qd != null) {
                         controller.addQuery("unranked", qd);
                     }
@@ -227,13 +227,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             // post process ranked hits if exists
             if (results.containsKey("ranked")) {
                 rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);
-                this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
+                SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
                 unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"),
                         selectedDS);
-                this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
+                SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
             }
         }
 
@@ -255,7 +255,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0
                 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)) {
             // query string will be displayed when no results !
-            String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
+            String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             context.put("queryString", queryString);
 
             setDefaultViewPage(TEMPLATE_NO_RESULT);
