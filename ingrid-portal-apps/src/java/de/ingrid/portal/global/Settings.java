@@ -67,26 +67,33 @@ public class Settings {
 
     // ------------- query field values -----------------------------
 
-    // datatypes
-    public final static String QVALUE_DATATYPE_SERVICE = "www_service";
+    // datatype: area types
+    // --------------------
+    public final static String QVALUE_DATATYPE_AREA_SERVICE = "service";
 
-    public final static String QVALUE_DATATYPE_MEASURES = "www_measures";
+    public final static String QVALUE_DATATYPE_AREA_MEASURES = "measures";
 
-    public final static String QVALUE_DATATYPE_ENVTOPIC = "www_topic";
+    public final static String QVALUE_DATATYPE_AREA_ENVTOPICS = "topics";
 
-    public final static String QVALUE_DATATYPE_ENVINFO = "default";
+    public final static String QVALUE_DATATYPE_AREA_ENVINFO = "default";
 
-    // TODO: doesn't work yet !!! we use explicit address iPlug as datytpe !
-    //    public final static String QVALUE_DATATYPE_ADDRESS = "address";
-    public final static String QVALUE_DATATYPE_ADDRESS = "dsc_ecs_address";
+    public final static String QVALUE_DATATYPE_AREA_ADDRESS = "address";
 
-    public final static String QVALUE_DATATYPE_RESEARCH = "research";
+    public final static String QVALUE_DATATYPE_AREA_RESEARCH = "research";
 
-    // TODO: at the moment we explicitly handle g2k in IngridQuery, should be handled via "search area" in future
-    public final static String QVALUE_DATATYPE_G2K = "g2k";
+    // datatype: source types
+    // ----------------------
+    public final static String QVALUE_DATATYPE_SOURCE_WWW = "www";
+    
+    public final static String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
+    
+    public final static String QVALUE_DATATYPE_SOURCE_FIS = "fis";
+    
+    // datatype: IPLUG types
+    // ---------------------
+    public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
 
-    // TODO: helper datatype to display nothing, use search areas in future
-    public final static String QVALUE_DATATYPE_NORESULTS = "nix";
+    public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS = "dsc_ecs_address";
 
     // ===========================================
     // Result data (used in templates for rendering results!)
@@ -237,6 +244,8 @@ public class Settings {
     public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
     public final static String PARAM_DATASOURCE = "ds";
+
+    public final static String PARAM_RANKING = "rank";
 
     // ------------- PARAM Keys, NOT used for messaging, just for access in Request -----------------------------
 

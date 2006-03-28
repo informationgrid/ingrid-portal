@@ -358,15 +358,15 @@ public class UtilsSearch {
         // remove not valid data sources from query
         //        removeBasicDataTypes(query);
         if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            // TODO: do not set datatype:default, not processed in backend yet !
-            // instead don't allow addresses
-            //            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ENVINFO));
-            // REMOVE ADRESS IPLUG
-            query.addField(new FieldQuery(false, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
+            query
+                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+                            Settings.QVALUE_DATATYPE_AREA_ENVINFO));
         } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_ADDRESS));
+            query
+                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+                            Settings.QVALUE_DATATYPE_AREA_ADDRESS));
         } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.PARAMV_DATASOURCE_RESEARCH));
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_AREA_RESEARCH));
         }
     }
 
@@ -418,9 +418,9 @@ public class UtilsSearch {
      for (Iterator iter = processedDataTypes.iterator(); iter.hasNext();) {
      FieldQuery field = (FieldQuery) iter.next();
      String value = field.getFieldValue();
-     if (value == null || value.equals(Settings.QVALUE_DATATYPE_ENVINFO)
-     || value.equals(Settings.QVALUE_DATATYPE_ADDRESS)
-     || value.equals(Settings.QVALUE_DATATYPE_RESEARCH)) {
+     if (value == null || value.equals(Settings.QVALUE_DATATYPE_AREA_ENVINFO)
+     || value.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS)
+     || value.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH)) {
      iter.remove();
      }
      }

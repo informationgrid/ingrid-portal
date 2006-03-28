@@ -124,7 +124,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // selected data source ("Umweltinfo", Adressen" or "Forschungsprojekte")
-        String selectedDS = (String) receiveRenderMessage(request, Settings.PARAM_DATASOURCE);
+        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
@@ -139,10 +139,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // business logic
         // ----------------------------------
-        
+
         // check for Javascript
         boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
-        
+
         // find out if we have to render only one result column
         boolean renderOneResultColumnRanked = true;
         boolean renderOneResultColumnUnranked = true;
@@ -157,13 +157,23 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_UNRANKED);
                 renderOneResultColumnRanked = false;
             }
-        // check for js enabled iframe rendering
-        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY) && !currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            // check for js enabled iframe rendering
+        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)
+                && !currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
             // if javascript and new query, set template to javascript enabled iframe template
             // exit method!!
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
-            context.put("rankedResultUrl", response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath() + "/portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=true"));
-            context.put("unrankedResultUrl", response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath() + "/portal/search-result-js.psml" + SearchState.getURLParamsMainSearch(request) + "&js_ranked=false"));
+            context.put("rankedResultUrl", response
+                    .encodeURL(((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest()
+                            .getContextPath()
+                            + "/portal/search-result-js.psml"
+                            + SearchState.getURLParamsMainSearch(request)
+                            + "&js_ranked=true"));
+            context.put("unrankedResultUrl", response.encodeURL(((RequestContext) request
+                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
+                    + "/portal/search-result-js.psml"
+                    + SearchState.getURLParamsMainSearch(request)
+                    + "&js_ranked=false"));
             super.doView(request, response);
             return;
         }
@@ -173,7 +183,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         controller.setTimeout(PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_THREADED, 120000));
 
         QueryDescriptor qd = null;
-        
+
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
@@ -184,13 +194,13 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
             if (rankedHits == null) {
                 // process query, create QueryDescriptor
-                qd = QueryPreProcessor.createRankedQueryDescriptor(query, selectedDS, rankedStartHit);
+                qd = QueryPreProcessor.createRankedQueryDescriptor(request);
                 if (qd != null) {
                     controller.addQuery("ranked", qd);
                 }
             }
         }
-        
+
         // UNRANKED
         IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
@@ -207,7 +217,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                         controller.addQuery("unranked", qd);
                     }
                 }
-            }            
+            }
         }
 
         // fire query, post process results
@@ -221,7 +231,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
-                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"), selectedDS);
+                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"),
+                        selectedDS);
                 this.publishRenderMessage(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
             }
         }
@@ -233,7 +244,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
-        
         if (unrankedHits != null) {
             numberOfUnrankedHits = (int) unrankedHits.length();
         }
@@ -242,8 +252,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
-        
-        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)) {
+        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0
+                && (renderOneResultColumnUnranked && renderOneResultColumnRanked)) {
             // query string will be displayed when no results !
             String queryString = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
             context.put("queryString", queryString);
@@ -252,7 +262,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             super.doView(request, response);
             return;
         }
-        
+
         // ----------------------------------
         // prepare view
         // ----------------------------------

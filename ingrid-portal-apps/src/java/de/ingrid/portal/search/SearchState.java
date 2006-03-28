@@ -86,6 +86,11 @@ public class SearchState {
             urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
+            // datasource (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_RANKING);
+            urlParam = Utils.toURLParam(Settings.PARAM_RANKING, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
             // start hit of ranked search results (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
             urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, paramValue);
@@ -170,17 +175,25 @@ public class SearchState {
      * @param request
      */
     public static void resetSearchState(PortletRequest request) {
-        // state for parameters in URL !
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_RANKED);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_UNRANKED);
+        try {
+            // state for parameters in URL !
+            // NOTICE: don't set INITIAL VALUES, will be transformed to URL parameters (not necessary for initial values) !
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_RANKED);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_UNRANKED);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_RANKING);
 
-        // further state for logic, caching etc.
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
-        PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_EXECUTION_TYPE);
+            // further state for logic, caching etc.
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_EXECUTION_TYPE);
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("FAILED to reset Search State", ex);
+            }
+        }
     }
 
     /**

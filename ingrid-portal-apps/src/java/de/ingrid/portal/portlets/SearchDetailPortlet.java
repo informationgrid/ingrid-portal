@@ -3,11 +3,8 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
@@ -16,13 +13,13 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
@@ -75,9 +72,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             // flag to make column name readable (not lowercase, character substitution)
             boolean readableColumnNames = false;
             
-            if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs")) {
+            if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
                 setDefaultViewPage(TEMPLATE_DETAIL_ECS);
-            } else if (IPlugHelper.hasDataType(plugDescription, "dsc_ecs_address")) {
+            } else if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
                 setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
             } else {
                 setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);

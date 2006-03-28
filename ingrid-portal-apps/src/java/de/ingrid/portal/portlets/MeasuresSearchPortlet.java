@@ -16,7 +16,6 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.MeasuresSearchForm;
-import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -142,7 +141,9 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridQuery query = null;
         try {
             query = new IngridQuery();
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_MEASURES));
+            query
+                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+                            Settings.QVALUE_DATATYPE_AREA_MEASURES));
             /*
              // RUBRIC
              String[] rubrics = request.getParameterValues(MeasuresSearchForm.FIELD_RUBRIC);
@@ -169,6 +170,10 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
                     }
                 }
             }
+
+            // RANKING
+            query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
+
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", t);
