@@ -20,7 +20,6 @@ import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
  */
 public interface WMSInterface {
 
-
     /**
      * Returns the Configuration of the service.
      * 
@@ -28,7 +27,6 @@ public interface WMSInterface {
      */
     Configuration getConfig();
 
-    
     /**
      * Returns all WMS Services from WMS Server that are bound to the 
      * given session id.
@@ -46,16 +44,17 @@ public interface WMSInterface {
      * @return The current search parameter as WMSSearchDescriptor.
      */
     WMSSearchDescriptor getWMSSearchParameter(String sessionId);
-    
+
     /**
      * Returns the URL of the WMS VIEWER to DISPLAY the map. The URL contains
      * the session id to fetch the map that is bound to the session id. This
      * enables different users to preserve their preferences on the WMS server.
      * 
      * @param sessionId The session id.
+     * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
      * @return The url of the WMS view script on the Server.
      */
-    String getWMSViewerURL(String sessionId);
+    String getWMSViewerURL(String sessionId, boolean jsEnabled);
 
     /**
      * Returns the URL of the WMS SEARCH "MAP" with search functionality. The URL contains
@@ -63,9 +62,10 @@ public interface WMSInterface {
      * enables different users to preserve their preferences on the WMS server.
      * 
      * @param sessionId The session id.
+     * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
      * @return The url of the WMS search script on the Server.
      */
-    String getWMSSearchURL(String sessionId);
+    String getWMSSearchURL(String sessionId, boolean jsEnabled);
 
     /**
      * Returns the URL of the WMS VIEWER server. Includes a command to add a service, 
@@ -76,10 +76,11 @@ public interface WMSInterface {
      * @param WMSServiceDescriptor The description of the WMS service to add. If 
      * the descriptions name is null, no name will be put in the resulting url. 
      * @param sessionId The sessin id.
+     * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
      * @return The url of the WMS VIEWER Server including the command to add the service.
      */
-    String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId);
-    
+    String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled);
+
     /**
      * Returns the URL of the WMS VIEWER server. Includes a command to add all services, 
      * specified in the ArrayList of WMSServiceDescriptor to the URL to the WMS 
@@ -89,8 +90,9 @@ public interface WMSInterface {
      * 
      * @param services The ArrayList of WMSServiceDescriptor
      * @param sessionId Thse session id.
+     * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
      * @return The url of the WMS Server including the command to add the services.
      */
-    String getWMSAddedServiceURL(ArrayList services, String sessionId);
+    String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled);
 
 }

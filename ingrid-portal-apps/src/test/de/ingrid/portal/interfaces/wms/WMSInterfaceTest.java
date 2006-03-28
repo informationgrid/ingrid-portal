@@ -37,7 +37,7 @@ public class WMSInterfaceTest extends TestCase {
      * Test method for 'de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl.getWMSViewerURL(String)'
      */
     public void testGetWMSViewerURL() {
-        String myUrl = wmsInterface.getWMSViewerURL("session0815");
+        String myUrl = wmsInterface.getWMSViewerURL("session0815", true);
         assertEquals(config.getProperty("display_viewer_url") + "?PHPSESSID=session0815" , myUrl);
     }
 
@@ -54,7 +54,7 @@ public class WMSInterfaceTest extends TestCase {
      */
     public void testGetWMSAddedServiceURLWMSServiceDescriptorString() throws UnsupportedEncodingException {
         WMSServiceDescriptor descr = new WMSServiceDescriptor("My WMS Service Name", "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map&REQUEST=GetCapabilities&SERVICE=wms&VERSION=1.1.0");
-        String myUrl = wmsInterface.getWMSAddedServiceURL(descr, "session0815");
+        String myUrl = wmsInterface.getWMSAddedServiceURL(descr, "session0815", true);
         assertEquals(config.getProperty("display_viewer_url") + "?PHPSESSID=session0815&PREQUEST=setServices&wmsName1=" + URLEncoder.encode("My WMS Service Name", "UTF-8") + "&wms1=" + URLEncoder.encode("http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=1.1.0", "UTF-8") , myUrl);
     }
 
@@ -68,7 +68,7 @@ public class WMSInterfaceTest extends TestCase {
         descr = new WMSServiceDescriptor("My WMS Service Name 2", "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map&REQUEST=GetCapabilities&SERVICE=wms&VERSION=2.2.2");
         a.add(descr);
         
-        String myUrl = wmsInterface.getWMSAddedServiceURL(a, "session0815");
+        String myUrl = wmsInterface.getWMSAddedServiceURL(a, "session0815", true);
         assertEquals(config.getProperty("display_viewer_url") 
                 + "?PHPSESSID=session0815&PREQUEST=setServices&wmsName1=" 
                 + URLEncoder.encode("My WMS Service Name", "UTF-8") 
@@ -84,7 +84,7 @@ public class WMSInterfaceTest extends TestCase {
     public void testGetWMSServices() {
         WMSServiceDescriptor descr = new WMSServiceDescriptor("WMS Test-Service (con terra GmbH)", "http://www.conterra.de/wmsconnector/gdi/brd?REQUEST=GetCapabilities&SERVICE=wms&VERSION=1.1.0");
         String sessionId = Integer.toString((int)(Math.random() * 10000000));
-        String myUrl = wmsInterface.getWMSAddedServiceURL(descr, sessionId);
+        String myUrl = wmsInterface.getWMSAddedServiceURL(descr, sessionId, true);
         URL url;
         try {
             url = new URL(myUrl);

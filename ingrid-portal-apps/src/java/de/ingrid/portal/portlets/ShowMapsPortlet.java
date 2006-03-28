@@ -11,6 +11,7 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
@@ -27,6 +28,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
 
         PortletSession session = request.getPortletSession();
         
@@ -35,9 +37,9 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
         WMSInterface service = WMSInterfaceImpl.getInstance();
         String wmsURL;
         if (wmsServiceUrl != null && wmsServiceUrl.length() > 0) {
-            wmsURL = service.getWMSAddedServiceURL(new WMSServiceDescriptor("", wmsServiceUrl), session.getId());
+            wmsURL = service.getWMSAddedServiceURL(new WMSServiceDescriptor("", wmsServiceUrl), session.getId(), hasJavaScript);
         } else {
-            wmsURL = service.getWMSViewerURL(session.getId());
+            wmsURL = service.getWMSViewerURL(session.getId(), hasJavaScript);
         }
         
         context.put("wmsURL", wmsURL);

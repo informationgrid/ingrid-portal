@@ -38,8 +38,8 @@ public class WMSInterfaceImpl implements WMSInterface {
 
     private final static Log log = LogFactory.getLog(WMSInterfaceImpl.class);
 
-    private static WMSInterfaceImpl instance = null;    
-    
+    private static WMSInterfaceImpl instance = null;
+
     Configuration config;
 
     public static synchronized WMSInterfaceImpl getInstance() {
@@ -51,16 +51,16 @@ public class WMSInterfaceImpl implements WMSInterface {
                 e.printStackTrace();
             }
         }
-        
+
         return instance;
     }
-    
+
     private WMSInterfaceImpl() throws Exception {
         super();
         String configFilename = getResourceAsStream("/wms_interface.properties");
         config = new PropertiesConfiguration(configFilename);
     }
-    
+
     public Configuration getConfig() {
         return config;
     }
@@ -92,8 +92,9 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             // END workaround for wrong dtd location
 
-            url = new URL(config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php")
-                    .concat("?PREQUEST=getWMSServices").concat("&PHPSESSID=" + sessionID));
+            url = new URL(config.getString("interface_url",
+                    "http://localhost/mapbender/php/mod_portalCommunication_gt.php").concat("?PREQUEST=getWMSServices")
+                    .concat("&PHPSESSID=" + sessionID));
 
             reader.setValidation(false);
             Document document = reader.read(url);
@@ -151,8 +152,9 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             // END workaround for wrong dtd location
 
-            url = new URL(config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php")
-                    .concat("?PREQUEST=getWMSSearch").concat("&PHPSESSID=" + sessionID));
+            url = new URL(config.getString("interface_url",
+                    "http://localhost/mapbender/php/mod_portalCommunication_gt.php").concat("?PREQUEST=getWMSSearch")
+                    .concat("&PHPSESSID=" + sessionID));
 
             reader.setValidation(false);
             Document document = reader.read(url);
@@ -203,39 +205,55 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSURL(java.lang.String)
      */
-    public String getWMSViewerURL(String sessionId) {
-        return config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php")
-        .concat("?PHPSESSID=" + sessionId);
+    public String getWMSViewerURL(String sessionId, boolean jsEnabled) {
+        String viewerURL = "";
+        if (jsEnabled) {
+            viewerURL = config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php");
+        } else {
+            viewerURL = config.getString("nojs_display_viewer_url",
+                    "http://localhost/mapbender/frames/wms_viewer_nojs.php");
+        }
+        viewerURL = viewerURL.concat("?PHPSESSID=" + sessionId);
+
+        return viewerURL;
     }
 
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSSearchURL(java.lang.String)
      */
-    public String getWMSSearchURL(String sessionId) {
-        return config.getString("display_search_url", "http://localhost/mapbender/frames/WMS_Search.php")
-        .concat("?PHPSESSID=" + sessionId);
+    public String getWMSSearchURL(String sessionId, boolean jsEnabled) {
+        String searchURL = "";
+        if (jsEnabled) {
+            searchURL = config.getString("display_search_url", "http://localhost/mapbender/frames/WMS_Search.php");
+        } else {
+            searchURL = config.getString("nojs_display_search_url",
+                    "http://localhost/mapbender/frames/wms_search_nojs.php");
+        }
+        searchURL = searchURL.concat("?PHPSESSID=" + sessionId);
+
+        return searchURL;
     }
 
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.om.WMSServiceDescriptor, java.lang.String)
      */
-    public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId) {
+    public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled) {
         ArrayList l = new ArrayList();
         l.add(service);
-        return getWMSAddedServiceURL(l, sessionId);
+        return getWMSAddedServiceURL(l, sessionId, jsEnabled);
     }
 
     /**
      * @throws UnsupportedEncodingException 
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList, java.lang.String)
      */
-    public String getWMSAddedServiceURL(ArrayList services, String sessionId) {
+    public String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled) {
         WMSServiceDescriptor service;
         String serviceURL;
         String serviceName;
-        StringBuffer resultB = new StringBuffer(getWMSViewerURL(sessionId));
+        StringBuffer resultB = new StringBuffer(getWMSViewerURL(sessionId, jsEnabled));
         boolean prequestAdded = false;
-        
+
         // check for invalid service parameter
         if (services == null || services.size() == 0) {
             return resultB.toString();
@@ -243,48 +261,46 @@ public class WMSInterfaceImpl implements WMSInterface {
 
         try {
             // add services
-            for(int i=0; i<services.size();i++) {
+            for (int i = 0; i < services.size(); i++) {
                 service = (WMSServiceDescriptor) services.get(i);
                 serviceURL = service.getUrl();
                 serviceName = service.getName();
-                if (serviceURL != null && serviceURL.length()>0) {
+                if (serviceURL != null && serviceURL.length() > 0) {
                     if (!prequestAdded) {
                         resultB.append("&PREQUEST=setServices");
                         prequestAdded = true;
                     }
                     if (serviceName != null && serviceName.length() > 0) {
-                        resultB.append("&wmsName" + (i+1) + "=" + URLEncoder.encode(serviceName, "UTF-8"));
+                        resultB.append("&wmsName" + (i + 1) + "=" + URLEncoder.encode(serviceName, "UTF-8"));
                     }
-                    resultB.append("&wms" + (i+1) + "=" + URLEncoder.encode(serviceURL.replace('&', ','), "UTF-8"));
+                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL.replace('&', ','), "UTF-8"));
                 }
             }
         } catch (UnsupportedEncodingException e) {
             log.error(e);
         }
-        
+
         return resultB.toString();
     }
 
     public static String getResourceAsStream(String resource) throws Exception {
-        String stripped = resource.startsWith("/") ? 
-                resource.substring(1) : resource;
-    
-        String stream = null; 
+        String stripped = resource.startsWith("/") ? resource.substring(1) : resource;
+
+        String stream = null;
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if (classLoader!=null) {
-            stream = classLoader.getResource( stripped ).toString();
+        if (classLoader != null) {
+            stream = classLoader.getResource(stripped).toString();
         }
-        if ( stream == null ) {
-            Environment.class.getResourceAsStream( resource );
+        if (stream == null) {
+            Environment.class.getResourceAsStream(resource);
         }
-        if ( stream == null ) {
-            stream = Environment.class.getClassLoader().getResource( stripped ).toString();
+        if (stream == null) {
+            stream = Environment.class.getClassLoader().getResource(stripped).toString();
         }
-        if ( stream == null ) {
-            throw new Exception( resource + " not found" );
+        if (stream == null) {
+            throw new Exception(resource + " not found");
         }
         return stream;
     }
-    
-    
+
 }

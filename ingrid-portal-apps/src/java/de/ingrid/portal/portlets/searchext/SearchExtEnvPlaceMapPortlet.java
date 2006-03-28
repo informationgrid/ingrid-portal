@@ -12,6 +12,7 @@ import javax.portlet.PortletException;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 
@@ -25,6 +26,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
 
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_PLACE);
@@ -32,7 +34,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
 
         // get and set URL to WMS Server
         WMSInterface service = WMSInterfaceImpl.getInstance();
-        String wmsURL = service.getWMSSearchURL(request.getPortletSession().getId());
+        String wmsURL = service.getWMSSearchURL(request.getPortletSession().getId(), hasJavaScript);
         context.put("wmsURL", wmsURL);
 
         super.doView(request, response);
