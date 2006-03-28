@@ -8,7 +8,7 @@ org.apache.jetspeed.portal.home = ${basedir}
 
 # Required Application Server Properties
 # configuration (user/password) see -> http://portals.apache.org/jetspeed-2/getting-started.html
-org.apache.jetspeed.server.home = C:/Programme/ApacheSF/apache-tomcat-5.5.12
+org.apache.jetspeed.server.home = /usr/local/jakarta-tomcat-5.5.9
 org.apache.jetspeed.server.shared = ${org.apache.jetspeed.server.home}/shared/lib
 org.apache.jetspeed.deploy.war.dir = ${org.apache.jetspeed.server.home}/webapps
 org.apache.jetspeed.services.autodeployment.user = j2deployer
@@ -26,7 +26,7 @@ org.apache.jetspeed.catalina.version.major = 5.5
 #org.apache.jetspeed.test.database.url = jdbc:mysql://localhost/j2test
 #org.apache.jetspeed.test.database.driver = com.mysql.jdbc.Driver
 #org.apache.jetspeed.test.database.user = root
-#org.apache.jetspeed.test.database.password = 
+#org.apache.jetspeed.test.database.password = mkmysql
 # -------------------------------------------------------------------------
 # configure MySQL Production DB
 # -------------------------------------------------------------------------
@@ -34,7 +34,7 @@ org.apache.jetspeed.catalina.version.major = 5.5
 #org.apache.jetspeed.production.database.url = jdbc:mysql://localhost/ingrid-portal
 #org.apache.jetspeed.production.database.driver = com.mysql.jdbc.Driver
 #org.apache.jetspeed.production.database.user = root
-#org.apache.jetspeed.production.database.password = 
+#org.apache.jetspeed.production.database.password = mkmysql
 
 #org.apache.jetspeed.test.jdbc.drivers.path=${org.apache.jetspeed.portal.home}/lib/mysql-connector-java-3.1.11-bin.jar
 #org.apache.jetspeed.production.jdbc.drivers.path=${org.apache.jetspeed.portal.home}/lib/mysql-connector-java-3.1.11-bin.jar
