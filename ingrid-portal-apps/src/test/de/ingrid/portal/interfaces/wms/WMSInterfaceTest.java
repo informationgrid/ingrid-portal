@@ -45,7 +45,7 @@ public class WMSInterfaceTest extends TestCase {
      * Test method for 'de.ingrid.portal.interfaces.wms.impl.WMSInterfaceImpl.getWMSSearchURL(String)'
      */
     public void testGetWMSSearchURL() {
-        String myUrl = wmsInterface.getWMSSearchURL("session0815");
+        String myUrl = wmsInterface.getWMSSearchURL("session0815", true);
         assertEquals(config.getProperty("display_search_url") + "?PHPSESSID=session0815" , myUrl);
     }
 
