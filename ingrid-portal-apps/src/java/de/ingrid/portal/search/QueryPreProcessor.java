@@ -3,8 +3,6 @@
  */
 package de.ingrid.portal.search;
 
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
@@ -39,13 +37,15 @@ public class QueryPreProcessor {
         // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
         // we won't complete copy
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING)
+                .toLowerCase();
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
-                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: " + queryString, ex);
+                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
+                        + queryString, ex);
             }
         }
 
@@ -100,13 +100,15 @@ public class QueryPreProcessor {
         // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
         // we won't complete copy
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING)
+                .toLowerCase();
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
-                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: " + queryString, ex);
+                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
+                        + queryString, ex);
             }
         }
 
