@@ -55,7 +55,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     private static ProxyService proxy = null;
 
-    private Configuration config;
+    private static Configuration config;
     
     private static boolean enJXTACommunication = false;
     
@@ -87,6 +87,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             
             if (enJXTACommunication && communication instanceof PeerService) {
+                String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
+                ((PeerService)communication).unsubscribeGroup(iBusUrl);
                 ((PeerService)communication).shutdown();
             } else if (communication != null) {
                 ((SocketCommunication)communication).shutdown();
