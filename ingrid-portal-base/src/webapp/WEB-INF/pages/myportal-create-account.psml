@@ -1,0 +1,30 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Login</title>
+  <metadata name="title" xml:lang="de">Mein PortalU</metadata>
+
+  <fragment id="myportal-create-account" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="myportal-create-account-1" type="portlet" name="ingrid-portal-apps::MyPortalCreateAccountPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+    <fragment id="myportal-create-account-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/login_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.login.title</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
