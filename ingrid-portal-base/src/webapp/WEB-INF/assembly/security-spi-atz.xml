@@ -19,24 +19,18 @@ limitations under the License.
 
   <!-- ************** Security SPI Handlers ************** -->  
   <!-- Security SPI: RoleSecurityHandler -->
-<!--
   <bean id="org.apache.jetspeed.security.spi.RoleSecurityHandler" 
   	   class="org.apache.jetspeed.security.spi.impl.DefaultRoleSecurityHandler"
   >  	   
   	   <constructor-arg ><ref bean="org.apache.jetspeed.security.spi.SecurityAccess"/></constructor-arg>
   </bean>
--->
-    <bean id="org.apache.jetspeed.security.spi.RoleSecurityHandler" class="de.ingrid.usermanagement.jetspeed.IngridRoleSecurityHandler"></bean>
   
   <!-- Security SPI: GroupSecurityHandler -->
-<!--  
   <bean id="org.apache.jetspeed.security.spi.GroupSecurityHandler" 
   	   class="org.apache.jetspeed.security.spi.impl.DefaultGroupSecurityHandler"
   >  	   
   	   <constructor-arg ><ref bean="org.apache.jetspeed.security.spi.SecurityAccess"/></constructor-arg>
   </bean>
--->
-    <bean id="org.apache.jetspeed.security.spi.GroupSecurityHandler" class="de.ingrid.usermanagement.jetspeed.IngridGroupSecurityHandler"></bean>
   
   <!-- Security SPI: SecurityMappingHandler -->
 <!--
