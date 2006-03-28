@@ -35,6 +35,7 @@ limitations under the License.
         <js:service name='Profiler'/>  
         <js:service name='PortletRegistryComponent'/>  
         <js:service name='PageManager'/>  
+        <js:service name='PortalAdministration'/>        
 	</js:services>
 	
 </portlet-app>
