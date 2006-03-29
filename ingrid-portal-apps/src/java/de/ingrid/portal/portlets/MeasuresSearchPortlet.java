@@ -144,20 +144,22 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             query
                     .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                             Settings.QVALUE_DATATYPE_AREA_MEASURES));
-            /*
-             // RUBRIC
-             String[] rubrics = request.getParameterValues(MeasuresSearchForm.FIELD_RUBRIC);
-             // don't set anything if "all" is selected
-             if (rubrics != null && Utils.getPosInArray(rubrics, FORM_VALUE_ALL) == -1) {
-             for (int i = 0; i < rubrics.length; i++) {
-             if (rubrics[i] != null) {
-             query.addField(new FieldQuery(IngridQuery.AND, Settings.QFIELD_TOPIC, rubrics[i]));
-             // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-             break;
-             }
-             }
-             }
-             */
+
+            // RUBRIC
+            String queryValue = null;
+            String[] rubrics = request.getParameterValues(MeasuresSearchForm.FIELD_RUBRIC);
+            // don't set anything if "all" is selected
+            if (rubrics != null && Utils.getPosInArray(rubrics, Settings.PARAMV_ALL) == -1) {
+                for (int i = 0; i < rubrics.length; i++) {
+                    if (rubrics[i] != null) {
+                        queryValue = UtilsDB.getMeasuresRubricFromKey(rubrics[i]);
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_RUBRIC, queryValue));
+                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
+                        break;
+                    }
+                }
+            }
+
             // PARTNER
             String[] partners = request.getParameterValues(MeasuresSearchForm.FIELD_PARTNER);
             // don't set anything if "all" is selected

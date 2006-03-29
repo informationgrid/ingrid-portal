@@ -59,6 +59,9 @@ public class Settings {
 
     public final static String QFIELD_PARTNER = "partner";
 
+    // rubric in service and measures
+    public final static String QFIELD_RUBRIC = "rubric";
+
     // first category in all catalogue pages
     public final static String QFIELD_TOPIC = "topic";
 
