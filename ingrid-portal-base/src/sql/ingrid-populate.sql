@@ -54,6 +54,19 @@ INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES
 INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (3, 'was', 'wasser', 3);
 INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (4, 'wei', 'weitere', 4);
 
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (1, 'eve', 'events', 1);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (2, 'his', 'historical', 2);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (3, 'law', 'law', 3);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (4, 'ins', 'institution', 4);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (5, 'dis', 'disaster', 5);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (6, 'cfe', 'conference', 6);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (7, 'cve', 'convention', 7);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (8, 'lit', 'literature', 8);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (9, 'yea', 'ofTheYear', 9);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (10, 'gui', 'guideline', 10);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (11, 'mar', 'marineAccident', 11);
+INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (12, 'ind', 'industrialAccident', 12);
+
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (1, 'UBA', 'RSS-UBA', 'http://www.uba.de/rss/ubapresseinfo.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 'BFN', 'BFN-UBA', 'http://www.bfn.de/6.100.html', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 'MUF RLP', 'MUF RLP', 'http://www.muf.rlp.de/rss/rss_1_20.xml', 'de');
