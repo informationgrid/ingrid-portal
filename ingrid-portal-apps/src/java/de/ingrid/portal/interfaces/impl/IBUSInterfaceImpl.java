@@ -52,6 +52,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     private static Bus bus = null;
 
     private static Object communication = null;
+    
+    private static RemoteInvocationController ric = null;
 
     private static ProxyService proxy = null;
 
@@ -81,28 +83,47 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isInfoEnabled()) {
                 log.info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
             }
+            
+            if (ric != null) {
+                ric.setCommunication(null);
+            }
+
             if (proxy != null) {
+                proxy.setCommunication(null);
                 proxy.shutdown();
                 proxy = null;
             }
             
             if (enJXTACommunication && communication instanceof PeerService) {
                 String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
-                ((PeerService)communication).unsubscribeGroup(iBusUrl);
-                ((PeerService)communication).shutdown();
+                try {
+                    ((PeerService)communication).unsubscribeGroup(iBusUrl);
+                } catch (RuntimeException e) {
+                    log.error("error unsubscribing from jxta group.", e);
+                }
+                try {
+                    ((PeerService)communication).shutdown();
+                } catch (RuntimeException e) {
+                    log.error("error shutting down jxta communication.", e);
+                }
             } else if (communication != null) {
-                ((SocketCommunication)communication).shutdown();
+                try {
+                    ((SocketCommunication)communication).shutdown();
+                } catch (RuntimeException e) {
+                    log.error("error shutting down socket communication.", e);
+                }
             }
             communication = null;
             
-            if (instance != null) {
-                instance = null;
-            }
-            initInProgress = false;
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems RESETTING IBUSInterfaceImpl Singleton", t);
             }
+        } finally {
+            if (instance != null) {
+                instance = null;
+            }
+            initInProgress = false;
         }
     }
 
@@ -120,7 +141,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (enJXTACommunication) {
             
                 String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
-                ProxyService proxy = null;
+                proxy = null;
                 communication = this.startJxtaCommunication(jxtaConfigFilename);
                 
                 ((ICommunication)communication).subscribeGroup(iBusUrl);
@@ -131,8 +152,12 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 proxy.setCommunication(((ICommunication)communication));
                 proxy.startup();
             
-                RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
+                ric = proxy.createRemoteInvocationController(iBusUrl);
+
                 bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+                if (bus == null) {
+                    throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
+                }
             } else {    
             
                 communication = new SocketCommunication();
@@ -155,13 +180,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                     log.info("!!!!!!!!!! Connecting with iBus URL: " + iBusUrl);
                 }
     
-                RemoteInvocationController ric = proxy.createRemoteInvocationController(iBusUrl);
+                ric = proxy.createRemoteInvocationController(iBusUrl);
                 bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+                if (bus == null) {
+                    throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
+                }
             }
 
-            if (bus == null) {
-                throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
-            }
         } catch (Throwable t) {
             if (log.isFatalEnabled()) {
                 log.fatal("Problems Constructor IBUSInterfaceImpl Singleton", t);
