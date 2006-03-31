@@ -2,7 +2,7 @@
         <div class="noresult">
             <p>Ihre Suche nach <strong>"$!queryString"</strong> hat <strong>0</strong> Treffer ergeben.</p>
             <ul>
-              <li>Versuchen Sie es mit einer neuen <a href="portal/main-search.psml">Suche</a> oder <a href="e_search.html">Erweiterten Suche</a></li>
+              <li>Versuchen Sie es mit einer neuen <a href="portal/main-search.psml">Suche</a> oder <a href="portal/search-extended/search-ext-env-topic-terms.psml">Erweiterten Suche</a></li>
               <li>Lesen Sie unsere <a href="javascript:contextHelp()">Suchtipps</a></li>
               <li>Stöbern Sie durch andere Seiten von PortalU:
                   <p></p>

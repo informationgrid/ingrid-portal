@@ -3,8 +3,8 @@
             <p>Es sind keine Einträge zu Ihren Auswahlkriterien vorhanden.</p>
             <ul>
               <li>Versuchen Sie es mit veränderten Auswahlkriterien</li>
-              <li>Durchsuchen Sie die Serviceseiten nach Stichworten mit der <a href="portal/main-search.psml">Suche in Service</a></li>
-              <li>Suchen Sie auch ausserhalb der Serviceseiten mit der <a href="portal/main-search.psml">Suche</a> oder <a href="e_search.html">Erweiterten Suche</a></li>
+              <li>Durchsuchen Sie die Serviceseiten nach Stichworten mit der <a href="portal/search-extended/search-ext-env-area-contents.psml?select=2">Suche in Service</a></li>
+              <li>Suchen Sie auch ausserhalb der Serviceseiten mit der <a href="portal/main-search.psml">Suche</a> oder <a href="portal/search-extended/search-ext-env-topic-terms.psml">Erweiterten Suche</a></li>
               <li>Stöbern Sie durch andere Seiten von PortalU:
                   <p></p>
                   <a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-environment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
