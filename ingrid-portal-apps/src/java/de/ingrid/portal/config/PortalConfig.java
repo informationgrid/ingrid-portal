@@ -33,7 +33,11 @@ public class PortalConfig extends PropertiesConfiguration {
 
     private static PortalConfig instance = null;
 
+    public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
+
     private final static Log log = LogFactory.getLog(PortalConfig.class);
+
+    public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
 
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {

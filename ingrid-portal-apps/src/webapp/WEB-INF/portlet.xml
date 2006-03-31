@@ -411,6 +411,18 @@
             <name>ViewPage</name>
             <value>/WEB-INF/templates/myportal_create_account.vm</value>
         </init-param>
+        <init-param>
+           <description>This parameter sets the url to which folks will return after they receive an email</description>
+           <name>returnURL</name>
+                <!-- the current system simply return the user to the default page where this portlet provides feedback --> 
+           <value>/</value>
+        </init-param>   
+        <init-param>
+            <description>This is the template in which you setup an email to be sent after user exists</description>
+            <name>emailTemplate</name>
+            <value>/WEB-INF/templates/myportal/userRegistrationEmail.vm</value>
+        </init-param> 
+    
         <portlet-name>MyPortalCreateAccountPortlet</portlet-name>
         <display-name>MyPortalCreateAccountPortlet</display-name>
         <description>This portlet displays the myportal create account dialog.</description>

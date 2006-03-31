@@ -1,0 +1,13 @@
+Hello $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
+
+Welcome to PortalU! 
+Thanks you for registering.
+
+Please verify your registration by following the link below.
+
+$!{map.get("returnURL")}
+
+You may change your password online.
+
+Thanks
+
