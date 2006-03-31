@@ -3,19 +3,41 @@
  */
 package de.ingrid.portal.global;
 
+import java.io.FileReader;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jetspeed.administration.AdministrationEmailException;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 
 /**
@@ -293,4 +315,100 @@ public class Utils {
             return false;
         }
     }
+    
+    public static String getMD5Hash(String val) {
+        MessageDigest mdAlgorithm = null;
+        try {
+            mdAlgorithm = MessageDigest.getInstance("MD5");
+            mdAlgorithm.update(val.getBytes());
+            
+            String plainText = "";
+            
+            byte[] digest = mdAlgorithm.digest();
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < digest.length; i++) {
+                plainText = Integer.toHexString(0xFF & digest[i]);
+
+                if (plainText.length() < 2) {
+                    plainText = "0" + plainText;
+                }
+
+                hexString.append(plainText);
+            }
+            return hexString.toString();        
+        } catch (NoSuchAlgorithmException e) {
+            log.error("unable to create MD5 hash from String '" + val + "'", e);
+            return null;
+        }
+            
+    }
+
+    public static String mergeTemplate(PortletConfig  portletConfig, Map attributes, String attributesName, String template) throws AdministrationEmailException
+    {
+
+        VelocityContext context = new VelocityContext();
+        context.put(attributesName, attributes);
+        StringWriter sw = new StringWriter();
+        
+        try {
+            Velocity.init();
+//            String realTemplatePath = portletConfig.getPortletContext().getRealPath(template);
+            Template vTemplate = Velocity.getTemplate(template);
+            sw = new StringWriter(); 
+            vTemplate.merge( context, sw );
+        } catch (Exception e) {
+            log.error("failed to merge velocity template: " + template, e);
+        }
+        String buffer = sw.getBuffer().toString();
+        return buffer;
+    }
+    
+    public static void sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
+
+       boolean debug = true;
+        
+        Properties props = new Properties();
+        props.put("mail.smtp.host", PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_SERVER, "localhost"));
+
+        // create some properties and get the default Session
+        Session session = Session.getDefaultInstance(props, null);
+        session.setDebug(debug);
+
+        // create a message
+        Message msg = new MimeMessage(session);
+
+        try {
+            // set the from and to address
+            InternetAddress addressFrom = new InternetAddress(from);
+            msg.setFrom(addressFrom);
+
+            InternetAddress[] addressTo = new InternetAddress[to.length]; 
+            for (int i = 0; i < to.length; i++) {
+                addressTo[i] = new InternetAddress(to[i]);
+            }
+            msg.setRecipients(Message.RecipientType.TO, addressTo);
+
+            // set custom headers
+            if (headers != null) {
+                Set keySet = headers.keySet();
+                Iterator it = keySet.iterator();
+                while (it.hasNext()) {
+                    String key = it.next().toString();
+                    msg.addHeader(key, (String)headers.get(key));
+                }
+            }
+
+            // Setting the Subject and Content Type
+            msg.setSubject(subject);
+            msg.setContent(text, "text/plain");
+            Transport.send(msg);
+        } catch (AddressException e) {
+            log.error("invalid email address format", e);
+        } catch (MessagingException e) {
+            log.error("error sending email.", e);
+        }        
+        
+    }    
+    
 }
