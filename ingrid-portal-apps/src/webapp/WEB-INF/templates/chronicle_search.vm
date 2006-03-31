@@ -1,6 +1,6 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
+   	<input type="hidden" name="action" value="doSearch"/>
 	<div class="formbody">
 		<h2 class="nospace">Auswahlkriterien
 		</h2>
@@ -11,7 +11,7 @@
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-						<input id="chk_all" name="event" type="checkbox" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)"  value="all" #getChecked('event' 'all')/> 
+						<input id="chk_all" name="event" type="checkbox" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" value="all" #getChecked('event' 'all')/> 
 						<label for="chk_all">Alle Ereignistypen
 						</label>
 					</td>
@@ -20,71 +20,22 @@
 					<td>
 					</td>
 				</tr>
-				<tr>
+<!--
+            <tr>
+    	        <td><input id="chk_1" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="test" #getChecked('event' "test")/>
+				<label for="chk_1">Aktionen</label></td>
+            </tr>
+				-->			
+#set ($numEvtypes = $evtypesList.size())
+#foreach ($evtype in $evtypesList)
+#if($velocityCount==1 || $velocityCount==4 || $velocityCount==7 || $velocityCount==10 || $velocityCount==13)<tr>#end
 					<td>
-						<input id="chk_1" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="act" #getChecked('event' 'act')/> 
-						<label for="chk_1">Aktionen
+						<input id="chk_$velocityCount" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="$evtype.FormValue" #getChecked('event' "$evtype.FormValue")/> 
+						<label for="chk_$velocityCount">$MESSAGES.getString("$evtype.QueryValue")
 						</label>
 					</td>
-					<td>
-						<input id="chk_2" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="his" #getChecked('event' 'his')/> 
-						<label for="chk_2">Geschichte
-						</label>
-					</td>
-					<td>
-						<input id="chk_3" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="law" #getChecked('event' 'law')/> 
-						<label for="chk_3">Gesetze
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input id="chk_4" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="fou" #getChecked('event' 'fou')/> 
-						<label for="chk_4">Gründungen
-						</label>
-					</td>
-					<td>
-						<input id="chk_5" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="cat" #getChecked('event' 'cat')/> 
-						<label for="chk_5">Katastrophen
-						</label>
-					</td>
-					<td>
-						<input id="chk_6" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="con" #getChecked('event' 'con')/> 
-						<label for="chk_6">Konventionen
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input id="chk_7" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="lit" #getChecked('event' 'lit')/> 
-						<label for="chk_7">Literatur
-						</label>
-					</td>
-					<td>
-						<input id="chk_8" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="nat" #getChecked('event' 'nat')/> 
-						<label for="chk_8">Natur d. Jahres
-						</label>
-					</td>
-					<td>
-						<input id="chk_9" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="dir" #getChecked('event' 'dir')/> 
-						<label for="chk_9">Richtlinien
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input id="chk_10" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="shi" #getChecked('event' 'shi')/> 
-						<label for="chk_10">Schiffsunfälle
-						</label>
-					</td>
-					<td>
-						<input id="chk_11" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="acc" #getChecked('event' 'acc')/> 
-						<label for="chk_11">Störfälle
-						</label>
-					</td>
-					<td>
-					</td>
-				</tr>
+#if($velocityCount==$numEvtypes || $velocityCount==3 || $velocityCount==6 || $velocityCount==9 || $velocityCount==12 || $velocityCount==15)</tr>#end
+#end
 			</table>
 		</div>  
 		<span class="clearer">

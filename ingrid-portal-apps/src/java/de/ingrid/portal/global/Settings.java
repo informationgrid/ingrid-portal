@@ -46,6 +46,9 @@ public class Settings {
     /** main-environment page -> environment catalogue, also displays results */
     public final static String PAGE_ENVIRONMENT = "/ingrid-portal/portal/main-environment.psml";
 
+    /** main-chronicle page -> environment chronicle, also displays results */
+    public final static String PAGE_CHRONICLE = "/ingrid-portal/portal/main-chronicle.psml";
+
     /** contact page */
     public final static String PAGE_CONTACT = "/ingrid-portal/portal/service-contact.psml";
 
@@ -156,6 +159,9 @@ public class Settings {
     // ------------- MESSAGE TOPICS (MSG_TOPIC_...) -----------------------------
     // define the message "scope", will be "prefix" in message key -> "topic:message" 
 
+    /** message "scope" for search pages (start page, simple search, extended search ...) */
+    public final static String MSG_TOPIC_SEARCH = "search";
+
     /** set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
 
@@ -165,8 +171,8 @@ public class Settings {
     /** set message "scope" measures page */
     public final static String MSG_TOPIC_ENVIRONMENT = "environment";
 
-    /** message "scope" for search pages (start page, simple search, extended search ...) */
-    public final static String MSG_TOPIC_SEARCH = "search";
+    /** set message "scope" chronicle page */
+    public final static String MSG_TOPIC_CHRONICLE = "chronicle";
 
     // ------------- DATA MESSAGES: KEYS (MSG_...) -----------------------------
     // define the message itself, will be "suffix" in message key -> "topic:message"

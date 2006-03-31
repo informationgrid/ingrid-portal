@@ -46,8 +46,14 @@ public class SearchState {
             urlParam = af.toURLParams();
             Utils.appendURLParameter(result, urlParam);
         } else {
+            // when no Action Form passed, we're called from teaser !!!
+            
+            // param from service, measures or topics teaser
             urlParam = Utils.toURLParam(Settings.PARAM_RUBRIC, request.getParameter(Settings.PARAM_RUBRIC));
             Utils.appendURLParameter(result, urlParam);
+
+            // param from chronicle teaser
+            // TODO which parameter from chronicle teaser
         }
 
         // start hit of search results (read only from request !)

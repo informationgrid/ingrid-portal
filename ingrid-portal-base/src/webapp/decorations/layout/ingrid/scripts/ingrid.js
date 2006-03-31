@@ -11,13 +11,15 @@ function ingrid_contextHelp()
 
 function ingrid_checkAll(group) {
   // NOTICE: first field in group has to be "checkAll" field
-  if (group[0].checked == true) {
-      for (i=1; i<group.length; i++) {
-          group[i].checked = true;
-      }
-  }	else {
-      for (i=1; i<group.length; i++) {
-          group[i].checked = false;
+  if (group[0]) {
+      if (group[0].checked == true) {
+          for (i=1; i<group.length; i++) {
+              group[i].checked = true;
+          }
+      }	else {
+          for (i=1; i<group.length; i++) {
+              group[i].checked = false;
+          }
       }
   }
 }

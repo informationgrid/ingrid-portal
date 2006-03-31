@@ -1,0 +1,12 @@
+      <div class="section">
+        <div class="noresult">
+            <p>Es wurden keine Ereignisse zu Ihren Auswahlkriterien gefunden.</p>
+            <ul>
+              <li>Versuchen Sie es mit veränderten Auswahlkriterien</li>
+              <li>Suchen Sie auch ausserhalb der Umweltchronik mit der <a href="portal/main-search.psml">Suche</a> oder <a href="portal/search-extended/search-ext-env-topic-terms.psml">Erweiterten Suche</a></li>
+              <li>Stöbern Sie durch andere Seiten von PortalU:
+                  <p></p>
+                  <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-environment.psml">Umweltthemen</a></li>
+            </ul>
+        </div>
+      </div>

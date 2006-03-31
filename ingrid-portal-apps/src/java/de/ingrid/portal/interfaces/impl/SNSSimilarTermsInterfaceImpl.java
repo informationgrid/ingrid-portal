@@ -32,7 +32,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             try {
                 instance = new SNSSimilarTermsInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the WMS interface.");
+                log.fatal("Error initiating the SNSSimilarTerms interface.");
                 e.printStackTrace();
             }
         }

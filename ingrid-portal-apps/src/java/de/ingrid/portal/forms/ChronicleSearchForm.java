@@ -9,8 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
+
+import de.ingrid.portal.global.Settings;
 
 /**
  * Form Handler for Environment Chronicles page. Stores and validates form
@@ -42,9 +45,9 @@ public class ChronicleSearchForm extends ActionForm {
     public static final String FIELD_SEARCH = "search";
 
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
-    public static final String INITIAL_EVENT = "all''act''his''law''fou''cat''con''lit''nat''dir''shi''acc";
+    protected static String INITIAL_EVENT_TYPES = "";
 
-    public static final String INITIAL_TIME_SELECT = "period";
+    protected static final String INITIAL_TIME_SELECT = "period";
 
     DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -53,21 +56,37 @@ public class ChronicleSearchForm extends ActionForm {
      */
     public void init() {
         clearInput();
-        setInput(FIELD_EVENT, INITIAL_EVENT);
+        setInput(FIELD_EVENT, INITIAL_EVENT_TYPES);
         setInput(FIELD_TIME_SELECT, INITIAL_TIME_SELECT);
     }
 
     /**
+     * NOTICE: We DON'T CLEAR ANY FIELDS IN THE FORM, just take over the given
+     * params into the according field (but that field then ONLY contains the
+     * new values). In this way, we can initialize the form with default values
+     * and JUST TAKE OVER THE NEW ONES !. Use clearInput() to clear the form
+     * before populating !  
      * @see de.ingrid.portal.forms.ActionForm#populate(javax.portlet.PortletRequest)
      */
     public void populate(PortletRequest request) {
-        clearInput();
-        setInput(FIELD_EVENT, request.getParameterValues(FIELD_EVENT));
-        setInput(FIELD_TIME_SELECT, request.getParameterValues(FIELD_TIME_SELECT));
-        setInput(FIELD_TIME_FROM, request.getParameter(FIELD_TIME_FROM));
-        setInput(FIELD_TIME_TO, request.getParameter(FIELD_TIME_TO));
-        setInput(FIELD_TIME_AT, request.getParameter(FIELD_TIME_AT));
-        setInput(FIELD_SEARCH, request.getParameter(FIELD_SEARCH));
+        if (request.getParameterValues(FIELD_EVENT) != null) {
+            setInput(FIELD_EVENT, request.getParameterValues(FIELD_EVENT));
+        }
+        if (request.getParameterValues(FIELD_TIME_SELECT) != null) {
+            setInput(FIELD_TIME_SELECT, request.getParameterValues(FIELD_TIME_SELECT));
+        }
+        if (request.getParameterValues(FIELD_TIME_FROM) != null) {
+            setInput(FIELD_TIME_FROM, request.getParameter(FIELD_TIME_FROM));
+        }
+        if (request.getParameterValues(FIELD_TIME_TO) != null) {
+            setInput(FIELD_TIME_TO, request.getParameter(FIELD_TIME_TO));
+        }
+        if (request.getParameterValues(FIELD_TIME_AT) != null) {
+            setInput(FIELD_TIME_AT, request.getParameter(FIELD_TIME_AT));
+        }
+        if (request.getParameterValues(FIELD_SEARCH) != null) {
+            setInput(FIELD_SEARCH, request.getParameter(FIELD_SEARCH));
+        }
     }
 
     /**
@@ -116,7 +135,7 @@ public class ChronicleSearchForm extends ActionForm {
                     allOk = false;
                 }
             }
-            if (fromDate != null && toDate != null) {                
+            if (fromDate != null && toDate != null) {
                 Calendar fromCal = new GregorianCalendar();
                 fromCal.setTime(fromDate);
                 Calendar toCal = new GregorianCalendar();
@@ -142,6 +161,22 @@ public class ChronicleSearchForm extends ActionForm {
         }
 
         return allOk;
+    }
+
+    /**
+     * Set the initially selected event types.
+     * @param eventTypes
+     */
+    public static void setInitialSelectedEventTypes(List eventTypes) {
+        String allType = Settings.PARAMV_ALL.concat(VALUE_SEPARATOR).concat(VALUE_SEPARATOR);
+        INITIAL_EVENT_TYPES = allType.concat(getInitialSelectString(eventTypes));
+    }
+
+    /**
+     * @return Returns the INITIAL_EVENT_TYPES.
+     */
+    public static String getINITIAL_EVENT_TYPES() {
+        return INITIAL_EVENT_TYPES;
     }
 
     private Date getDate(String dateString) {

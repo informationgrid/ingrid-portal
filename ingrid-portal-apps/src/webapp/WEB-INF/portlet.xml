@@ -41,7 +41,7 @@
     </portlet>
 
     <!-- *********************** -->
-    <!-- Home                    -->
+    <!-- User Management         -->
     <!-- *********************** -->
 
     <portlet id="UserBrowserPortlet">
@@ -601,6 +601,23 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
+    </portlet>
+    <portlet id="ChronicleResult">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/empty.vm</value>
+        </init-param>
+        <portlet-name>ChronicleResult</portlet-name>
+        <display-name>Umweltchronik Suchergebnis</display-name>
+        <description>This portlet displays the search results of the environment chronicle search.</description>
+        <portlet-class>de.ingrid.portal.portlets.ChronicleResultPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle> 
     </portlet>
 
     <!-- *********************** -->

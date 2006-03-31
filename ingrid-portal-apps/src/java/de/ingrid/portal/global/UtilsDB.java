@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.om.IngridChronicleEventType;
 import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFormToQuery;
@@ -26,6 +27,8 @@ public class UtilsDB {
     private static boolean alwaysReloadDBData = PortalConfig.getInstance().getBoolean(
             PortalConfig.ALWAYS_REREAD_DB_VALUES);
 
+    // TODO: optimize ? use hash map instead of separate lists !
+
     /** cache for partners */
     private static List partners = null;
 
@@ -40,6 +43,9 @@ public class UtilsDB {
 
     /** cache for measures rubrics */
     private static List measuresRubrics = null;
+
+    /** cache for chronicle eventTypes */
+    private static List chronicleEventTypes = null;
 
     public static boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
@@ -202,5 +208,26 @@ public class UtilsDB {
     public static String getMeasuresRubricFromKey(String key) {
         List rubrics = getMeasuresRubrics();
         return getQueryValueFromFormValue(rubrics, key);
+    }
+
+    /**
+     * Get the event types for chronicle.
+     * @return
+     */
+    public static List getChronicleEventTypes() {
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        chronicleEventTypes = getValuesFromDB(IngridChronicleEventType.class, chronicleEventTypes);
+        return chronicleEventTypes;
+    }
+
+    /**
+     * Get the query value of an event type from the form value (key).
+     * @param key
+     * @return
+     */
+    public static String getChronicleEventTypeFromKey(String key) {
+        List eventTypes = getChronicleEventTypes();
+        return getQueryValueFromFormValue(eventTypes, key);
     }
 }
