@@ -21,7 +21,6 @@ import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
-import de.ingrid.portal.om.IngridRSSStore;
 import de.ingrid.utils.IngridHitDetail;
 
 /**
