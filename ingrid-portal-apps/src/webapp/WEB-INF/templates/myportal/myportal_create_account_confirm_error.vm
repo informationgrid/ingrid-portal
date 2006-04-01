@@ -1,0 +1,4 @@
+<h2>Ihr Account konnte nicht freigeschaltet werden.</h2>
+<p>
+#displayFormErrors()
+</p>

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,6 +43,7 @@ import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
+import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -75,6 +77,12 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
     private static final String IP_RETURN_URL = "returnURL";
 
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
+
+    private static final String TEMPLATE_ACCOUNT_CREATED = "/WEB-INF/templates/myportal/myportal_create_account_done.vm";
+
+    private static final String TEMPLATE_ACCOUNT_CONFIRMED = "/WEB-INF/templates/myportal/myportal_create_account_confirmed.vm";
+
+    private static final String TEMPLATE_ACCOUNT_CONFIRM_ERROR = "/WEB-INF/templates/myportal/myportal_create_account_confirm_error.vm";
     
     /** servlet path of the return url to be printed and href'd in email template */
     private String returnUrlPath;
@@ -128,17 +136,38 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        
-        String cmd = request.getParameter("cmd");
-
         CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY, CreateAccountForm.class);        
-        
-        if (cmd == null) {
-//            f.clear();
+
+        String newUserGUID = request.getParameter("newUserGUID");
+        if (newUserGUID != null) {
+            String userName = request.getParameter("userName");
+            User user = null;
+            try {
+                user = userManager.getUser(userName);
+                Preferences pref = user.getUserAttributes();
+                String userConfirmId = pref.get("user.custom.ingrid.user.confirmid", "invalid");
+                if (userConfirmId.equals(newUserGUID)) {
+                    userManager.setUserEnabled(userName, true);
+                    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRMED);
+                } else {
+                    f.setError("", "account.confirm.error.invalid.comfirmid");
+                    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_ERROR);
+                }
+            } catch (SecurityException e) {
+                f.setError("", "account.confirm.error.invalid.userid");
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_ERROR);
+            }
+        } else {
+            String cmd = request.getParameter("cmd");
+            
+            if (cmd == null) {
+                f.clear();
+            } else if (cmd.equals(STATE_ACCOUNT_CREATED)) {
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CREATED);
+            }
         }
         
         context.put("actionForm", f);
-        
         super.doView(request, response);
     }
 
@@ -193,12 +222,15 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f.getInput(CreateAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
             
             // generate login id
-            String loginId = Utils.getMD5Hash(userName.concat(password).concat(Long.toString(System.currentTimeMillis())));            
-            userAttributes.put("user.custom.ingrid.user.loginid", loginId);
+            String confirmId = Utils.getMD5Hash(userName.concat(password).concat(Long.toString(System.currentTimeMillis())));            
+            userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
             
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
+
+            // TODO set this to false in production env
+            userManager.setUserEnabled(userName, true);
             
-            String returnUrl = generateReturnURL(request, actionResponse, userName, loginId);
+            String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 
             HashMap userInfo = new HashMap(userAttributes);
             userInfo.put("returnURL", returnUrl);
