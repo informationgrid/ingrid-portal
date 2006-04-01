@@ -28,6 +28,7 @@ import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 
 import de.ingrid.ibus.Bus;
+import de.ingrid.ibus.client.BusClient;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
@@ -56,6 +57,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     private static RemoteInvocationController ric = null;
 
     private static ProxyService proxy = null;
+    
+    static BusClient client = null;
 
     private static Configuration config;
     
@@ -95,17 +98,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             
             if (enJXTACommunication && communication instanceof PeerService) {
-                String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
-                try {
-                    ((PeerService)communication).unsubscribeGroup(iBusUrl);
-                } catch (RuntimeException e) {
-                    log.error("error unsubscribing from jxta group.", e);
-                }
-                try {
-                    ((PeerService)communication).shutdown();
-                } catch (RuntimeException e) {
-                    log.error("error shutting down jxta communication.", e);
-                }
+                
+                client.shutdown();
+                
             } else if (communication != null) {
                 try {
                     ((SocketCommunication)communication).shutdown();
@@ -131,7 +126,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         super();
         initInProgress = true;
         String configFilename = getResourceAsStream("/ibus_interface.properties");
-        String jxtaConfigFilename = getResourceAsStream("/jxta.conf.xml");
         config = new PropertiesConfiguration(configFilename);
 
         try {
@@ -141,20 +135,14 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (enJXTACommunication) {
             
                 String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
-                proxy = null;
-                communication = this.startJxtaCommunication(jxtaConfigFilename);
                 
-                ((ICommunication)communication).subscribeGroup(iBusUrl);
-                    
-                // start the proxy server
-                proxy = new ProxyService();
-                
-                proxy.setCommunication(((ICommunication)communication));
-                proxy.startup();
-            
-                ric = proxy.createRemoteInvocationController(iBusUrl);
+                client = BusClient.instance();
+                String jxtaConf = "/jxta.conf.xml";
 
-                bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+                client.setBusUrl(iBusUrl);
+                client.setJxtaConfigurationPath(jxtaConf);
+
+                Bus bus = client.getBus();
                 if (bus == null) {
                     throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
                 }
