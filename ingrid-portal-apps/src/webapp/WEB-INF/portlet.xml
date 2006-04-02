@@ -422,7 +422,30 @@
             <name>emailTemplate</name>
             <value>/WEB-INF/templates/myportal/userRegistrationEmail.vm</value>
         </init-param> 
-    
+<!--
+        This overrides the settings in jetspeed.properties
+        <init-param>
+            <description>This option defines the roles a new user will be registered with</description>
+            <name>roles</name>
+            <value>user</value>
+        </init-param>   
+        <init-param>
+            <description>This option defines the groups a new user will be registered with</description>
+            <name>groups</name>
+            <value></value>
+        </init-param>   
+-->
+        <init-param>
+            <description>This option defines the rule names a new user will be registered with</description>
+            <name>rulesNames</name>
+            <value>user-role-fallback</value>
+        </init-param>   
+        <init-param>
+            <description>This option defines the rule values a new user will be registered with</description>
+            <name>rulesValues</name>
+            <value>page</value>
+        </init-param>   
+        
         <portlet-name>MyPortalCreateAccountPortlet</portlet-name>
         <display-name>MyPortalCreateAccountPortlet</display-name>
         <description>This portlet displays the myportal create account dialog.</description>

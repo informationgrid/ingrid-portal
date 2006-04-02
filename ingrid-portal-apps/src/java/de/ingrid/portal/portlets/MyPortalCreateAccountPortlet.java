@@ -76,6 +76,10 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
     private static final String IP_RETURN_URL = "returnURL";
 
+    private static final String IP_RULES_NAMES = "rulesNames";
+
+    private static final String IP_RULES_VALUES = "rulesValues";
+
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
 
     private static final String TEMPLATE_ACCOUNT_CREATED = "/WEB-INF/templates/myportal/myportal_create_account_done.vm";
@@ -121,6 +125,17 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         // groups
         this.groups = getInitParameterList(config, IP_GROUPS);
 
+        // rules (name,value pairs)
+        List names = getInitParameterList(config, IP_RULES_NAMES);
+        List values = getInitParameterList(config, IP_RULES_VALUES);
+        rules = new HashMap();
+        for (int ix = 0; ix < ((names.size() < values.size()) ? names.size()
+                : values.size()); ix++)
+        {
+            rules.put(names.get(ix), values.get(ix));
+        }
+        
+        
         this.returnUrlPath = config.getInitParameter(IP_RETURN_URL);
         this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
         
@@ -228,7 +243,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
             // TODO set this to false in production env
-            userManager.setUserEnabled(userName, true);
+            userManager.setUserEnabled(userName, false);
             
             String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 
