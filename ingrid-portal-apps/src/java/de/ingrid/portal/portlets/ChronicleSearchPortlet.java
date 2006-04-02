@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -129,27 +130,31 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
 
+        // our action form encapsulating form input
+        ChronicleSearchForm af = (ChronicleSearchForm) Utils.getActionForm(request, ChronicleSearchForm.SESSION_KEY,
+                ChronicleSearchForm.class, PortletSession.APPLICATION_SCOPE);
+
         IngridQuery query = null;
         try {
             query = new IngridQuery();
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
-            //            query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARTERMS_FROM_TOPIC);
-            /*
-             // TOPIC
-             String queryValue = null;
-             String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
-             // don't set anything if "all" is selected
-             if (topics != null && Utils.getPosInArray(topics, Settings.PARAMV_ALL) == -1) {
-             for (int i = 0; i < topics.length; i++) {
-             if (topics[i] != null) {
-             queryValue = UtilsDB.getTopicFromKey(topics[i]);
-             query.addField(new FieldQuery(true, false, Settings.QFIELD_TOPIC, queryValue));
-             // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-             break;
-             }
-             }
-             }
+            query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
 
+            // Event Type
+            String queryValue = null;
+            String[] eventTypes = af.getInputAsArray(ChronicleSearchForm.FIELD_EVENT);
+            // don't set anything if "all" is selected
+            if (eventTypes != null && Utils.getPosInArray(eventTypes, Settings.PARAMV_ALL) == -1) {
+                for (int i = 0; i < eventTypes.length; i++) {
+                    if (eventTypes[i] != null) {
+                        queryValue = UtilsDB.getChronicleEventTypeFromKey(eventTypes[i]);
+                        query.addField(new FieldQuery(true, false, Settings.QFIELD_EVENT_TYPE, queryValue));
+                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
+                        break;
+                    }
+                }
+            }
+            /*
              // FUNCT_CATEGORY
              String[] functCategories = request.getParameterValues(EnvironmentSearchForm.FIELD_FUNCT_CATEGORY);
              // don't set anything if "all" is selected
@@ -178,8 +183,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
              }
              */
             // RANKING
-            query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
-
+            //            query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", ex);

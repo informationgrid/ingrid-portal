@@ -14,12 +14,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -136,43 +141,23 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         int currentPage = (int) (startHit / hitsPerPage) + 1;
 
         IngridHits hits = null;
-/*
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, Settings.SEARCH_DEFAULT_TIMEOUT);
+            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
+                    PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             IngridHit[] results = hits.getHits();
-            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
-                    Settings.RESULT_KEY_PARTNER };
-            IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
-            if (details == null) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems fetching details of hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                }
-            }
 
             IngridHit result = null;
-            IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
-                    result = results[i];
-                    if (details != null) {
-                        detail = details[i];
+                    Topic topic = (Topic) results[i];
+                    if (log.isDebugEnabled()) {
+                        log.debug("chronicle topic" + i + "=" + topic);
                     }
-                    //detail = ibus.getDetail(result, query, requestedFields);
 
-                    if (result == null) {
-                        continue;
-                    }
-                    if (detail != null) {
-                        UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
-                                Settings.RESULT_KEY_TOPIC, resources));
-                        result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
-                                Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
-                    }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
+                        log.error("Problems processing Hit, hit = " + result, t);
                     }
                 }
             }
@@ -181,7 +166,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 log.error("Problems performing Search !", t);
             }
         }
-*/
+
         return hits;
     }
 }

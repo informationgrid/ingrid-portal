@@ -28,8 +28,6 @@ public class Settings {
 
     public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 
-    public final static int SEARCH_DEFAULT_TIMEOUT = 5000;
-
     // ===========================================
     // PSML pages
     // ===========================================
@@ -62,14 +60,26 @@ public class Settings {
 
     public final static String QFIELD_PARTNER = "partner";
 
-    // rubric in service and measures
+    // service, measures; rubric
     public final static String QFIELD_RUBRIC = "rubric";
 
-    // first category in all catalogue pages
+    // environment topics: first category
     public final static String QFIELD_TOPIC = "topic";
 
-    // second category in environment topics catalogue page !
+    // environment topics: second category
     public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
+
+    // environment chronicle: event type
+    public final static String QFIELD_EVENT_TYPE = "eventtype";
+
+    // environment chronicle, ...: at date
+    public final static String QFIELD_AT_DATE = "t0";
+
+    // environment chronicle, ...: from date
+    public final static String QFIELD_FROM_DATE = "t1";
+
+    // environment chronicle, ...: to date
+    public final static String QFIELD_TO_DATE = "t2";
 
     // ------------- query field values -----------------------------
 
@@ -90,11 +100,11 @@ public class Settings {
     // datatype: source types
     // ----------------------
     public final static String QVALUE_DATATYPE_SOURCE_WWW = "www";
-    
+
     public final static String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
-    
+
     public final static String QVALUE_DATATYPE_SOURCE_FIS = "fis";
-    
+
     // datatype: IPLUG types
     // ---------------------
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
