@@ -66,7 +66,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
         
         try {
-            Record record = ibus.getRecord(hit);
             PlugDescription plugDescription = ibus.getIPlug(iplugId);
             
             // flag to make column name readable (not lowercase, character substitution)
@@ -81,30 +80,35 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 readableColumnNames = true;
             }
             
-            context.put("record", record);
-            HashMap recordMap = new HashMap();
-            
-            // serch for column
-            Column[] columns = record.getColumns();
-            for (int i = 0; i < columns.length; i++) {
-                if (record.getValueAsString(columns[i]).trim().length() > 0) {
-                    String columnName = columns[i].getTargetName();
-                    if (readableColumnNames) {
-                        columnName = columnName.replace('_', ' ');
-                    } else {
-                        columnName = columnName.toLowerCase();
-                    }
-                    
-                    if (dateFields.contains(columnName)) {
-                        recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
-                    } else {
-                        recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n", "<br />"));
+            Record record = ibus.getRecord(hit);
+            if (record == null) {
+                log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
+            } else {
+                context.put("record", record);
+                HashMap recordMap = new HashMap();
+                
+                // serch for column
+                Column[] columns = record.getColumns();
+                for (int i = 0; i < columns.length; i++) {
+                    if (record.getValueAsString(columns[i]).trim().length() > 0) {
+                        String columnName = columns[i].getTargetName();
+                        if (readableColumnNames) {
+                            columnName = columnName.replace('_', ' ');
+                        } else {
+                            columnName = columnName.toLowerCase();
+                        }
+                        
+                        if (dateFields.contains(columnName)) {
+                            recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
+                        } else {
+                            recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n", "<br />"));
+                        }
                     }
                 }
+                addSubRecords(record, recordMap, request.getLocale(), readableColumnNames);
+                
+                context.put("rec", recordMap);
             }
-            addSubRecords(record, recordMap, request.getLocale(), readableColumnNames);
-            
-            context.put("rec", recordMap);
         } catch(Throwable t){
             log.error("Error getting result record.", t);
         }
