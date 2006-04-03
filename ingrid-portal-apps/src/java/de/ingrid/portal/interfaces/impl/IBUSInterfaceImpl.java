@@ -96,11 +96,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 proxy.shutdown();
                 proxy = null;
             }
-            
-            if (enJXTACommunication && communication instanceof PeerService) {
-                
+            if (enJXTACommunication ) {
                 client.shutdown();
-                
             } else if (communication != null) {
                 try {
                     ((SocketCommunication)communication).shutdown();
@@ -138,11 +135,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 
                 client = BusClient.instance();
                 String jxtaConf = "/jxta.conf.xml";
-
+                
                 client.setBusUrl(iBusUrl);
                 client.setJxtaConfigurationPath(jxtaConf);
 
-                Bus bus = client.getBus();
+                bus = client.getBus();
                 if (bus == null) {
                     throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
                 }
