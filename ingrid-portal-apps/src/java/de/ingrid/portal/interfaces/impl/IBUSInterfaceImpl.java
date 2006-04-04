@@ -96,8 +96,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 proxy.shutdown();
                 proxy = null;
             }
-            if (enJXTACommunication ) {
+            
+            if (enJXTACommunication) {
                 client.shutdown();
+//                client.removeJXTAHome();
+                
             } else if (communication != null) {
                 try {
                     ((SocketCommunication)communication).shutdown();
@@ -135,14 +138,12 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 
                 client = BusClient.instance();
                 String jxtaConf = "/jxta.conf.xml";
-                
+
                 client.setBusUrl(iBusUrl);
                 client.setJxtaConfigurationPath(jxtaConf);
-
+                
                 bus = client.getBus();
-                if (bus == null) {
-                    throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
-                }
+                communication = client.getCommunication();
             } else {    
             
                 communication = new SocketCommunication();
@@ -167,9 +168,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     
                 ric = proxy.createRemoteInvocationController(iBusUrl);
                 bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
-                if (bus == null) {
-                    throw new Exception("NO iBUS available, RemoteInvocationController.invoke returns  NULL");
-                }
+            }
+            if (bus == null) {
+                throw new Exception("FATAL ERROR! NO iBUS available.");
             }
 
         } catch (Throwable t) {
