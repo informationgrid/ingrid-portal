@@ -1,3 +1,17 @@
+#* defines URL parameter string *#
+#macro (defineUrlParams)
+#set ($myParamNames = $renderRequest.getParameterNames())
+#set ($urlParams = "?")
+#foreach ($paramName in $myParamNames)
+#set ($myVals = $renderRequest.getParameterValues($paramName))
+#foreach ($val in $myVals)
+#if($urlParams!="?")#set ($urlParams = "${urlParams}&")#end
+#set ($urlParams = "${urlParams}${paramName}=${val}")
+#end
+#end
+#if($urlParams=="?")#set ($urlParams = "")#end
+#end
+
 #* Adds ingrid javascript *#
 #macro (decoratorIncludeJavaScriptForHead)
   <script language="JavaScript" src="decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>

@@ -1,4 +1,16 @@
-
+#* defines URL parameter string *#
+#macro (defineUrlParams)
+#set ($myParamNames = $renderRequest.getParameterNames())
+#set ($urlParams = "?")
+#foreach ($paramName in $myParamNames)
+#set ($myVals = $renderRequest.getParameterValues($paramName))
+#foreach ($val in $myVals)
+#if($urlParams!="?")#set ($urlParams = "${urlParams}&")#end
+#set ($urlParams = "${urlParams}${paramName}=${val}")
+#end
+#end
+#if($urlParams=="?")#set ($urlParams = "")#end
+#end
 
 #* include service navigation component *#
 #macro (includeFooterNavigation $_menu)
