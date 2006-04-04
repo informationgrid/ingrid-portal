@@ -7,7 +7,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.Scheduler;
@@ -18,25 +17,24 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 
 public class IngridPortalSchedulerServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 432942374839749234L;
+
     private final static Log log = LogFactory.getLog(IngridPortalSchedulerServlet.class);
-    private final static Log console = LogFactory.getLog("console");
 
     SchedulerFactory schedFact = null;
     Scheduler sched = null;
-    IBUSInterfaceImpl iBusInterface = null;
 
     
     public synchronized final void init(ServletConfig config) throws ServletException {
         synchronized (this.getClass()) {
             super.init(config);
-            System.out.println("IngridPortalSchedulerServlet startet");
+            log.info("IngridPortalSchedulerServlet startet");
 
             //start ibus communication
             try {
                 IBUSInterfaceImpl.getInstance();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                System.out.println("Failed to start iBus communication." + e.getMessage());
+                log.error("Failed to start iBus communication.", e);
             }
             
             try {
@@ -44,13 +42,13 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
                 sched = schedFact.getScheduler();
                 sched.start();
             } catch (SchedulerException e) {
-                // TODO Auto-generated catch block
-                System.out.println("Failed to start scheduler." + e.getMessage());
+                log.error("Failed to start scheduler.", e);
             }
             
         }
     }
 
+    
     /**
      * The <code>Servlet</code> destroy method.
      */
@@ -67,9 +65,8 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
             
         } catch (SchedulerException e) {
             log.fatal("Jetspeed: shutdown() failed: ", e);
-            System.err.println(ExceptionUtils.getStackTrace(e));
         }
     }
-    
+
     
 }
