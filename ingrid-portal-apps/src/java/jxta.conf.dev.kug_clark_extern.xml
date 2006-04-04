@@ -30,10 +30,11 @@
 		</call>
 
 		<!-- the proxy address for the peer -->
+<!--
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="PeerProxyAddr">
-			<arg type="java.lang.String">http://rdv.jxtahosts.net/cgi-bin/relays.cgi?2</arg>
+			<arg type="java.lang.String">http://213.144.28.239:80</arg>
 		</call>
-
+-->
 		<!-- JXTA DEBUG -->
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="DebugLevel">
 			<!-- possible values: error, warn, info, debug, user default -->
@@ -132,10 +133,10 @@
 
 		<!-- RELAY -->
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="UseRelay">
-			<arg type="boolean">true</arg>
+			<arg type="boolean">false</arg>
 		</call>
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="UseOnlySeedsRelay">
-			<arg type="boolean">true</arg>
+			<arg type="boolean">false</arg>
 		</call>
 		<call objectname="weta-g:component=p2p,type=jxta" attribute="SeedRelay">
 			<arg type="java.lang.String">http://213.144.28.239:80</arg>
