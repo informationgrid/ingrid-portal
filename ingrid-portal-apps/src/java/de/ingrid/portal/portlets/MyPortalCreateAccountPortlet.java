@@ -5,9 +5,6 @@ package de.ingrid.portal.portlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.Principal;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
