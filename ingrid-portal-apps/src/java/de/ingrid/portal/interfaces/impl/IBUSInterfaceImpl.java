@@ -137,7 +137,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
                 
                 client = BusClient.instance();
-                String jxtaConf = "/jxta.conf.xml";
+                String jxtaConf = config.getString("jxta_conf_filename", "/jxta.conf.xml");
 
                 client.setBusUrl(iBusUrl);
                 client.setJxtaConfigurationPath(jxtaConf);
