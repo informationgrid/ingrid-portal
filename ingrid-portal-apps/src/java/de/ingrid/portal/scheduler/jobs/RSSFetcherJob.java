@@ -98,7 +98,7 @@ public class RSSFetcherJob implements Job {
                     }
                     if (publishedDate != null) {
                         cal = Calendar.getInstance();
-                        cal.add(Calendar.DATE, PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
+                        cal.add(Calendar.DATE, -1 * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
                         // drop items that are older than the number of configured days
                         if (publishedDate.after(cal.getTime())) {
                             // check if this entry already exists
