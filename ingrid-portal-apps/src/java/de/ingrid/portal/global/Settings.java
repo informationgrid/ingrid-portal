@@ -276,10 +276,6 @@ public class Settings {
 
     public final static String PARAM_ACTION = "action";
 
-    /** This parameter is added as URL param in the portlet action method and indicates,
-     *  that the following render request is called after an action */
-    public final static String PARAM_IS_ACTION = "isaction";
-
     public final static String PARAM_TAB = "tab";
 
 }

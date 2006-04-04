@@ -1,4 +1,3 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
 <p>Sie erreichen uns per E-Mail unter der Adresse <a href="mailto:kontakt@portalu.de">kontakt@portalu.de</a>.</p>
 <p>Unsere Postadresse:</p>
 <p>
