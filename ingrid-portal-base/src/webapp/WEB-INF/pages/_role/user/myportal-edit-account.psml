@@ -1,0 +1,44 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Login</title>
+  <metadata name="title" xml:lang="de">Mein PortalU</metadata>
+
+  <fragment id="myportal-edit-account" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="myportal-edit-account-1" type="portlet" name="ingrid-portal-apps::MyPortalEditAccountPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+    <fragment id="myportal-navigation" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MyPortalNavigationPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+    </fragment>
+    <fragment id="service-contact-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/newsletter_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.newsletter.title</value>
+      </preference>
+    </fragment>
+    <fragment id="myportal-edit-account-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/login_teaser.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>teaser.login.title</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
