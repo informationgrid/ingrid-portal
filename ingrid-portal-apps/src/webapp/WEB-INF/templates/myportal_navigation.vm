@@ -1,7 +1,7 @@
 <div class="portlet-section-body">
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-		<span><a href="mpu_np_bearb.html">Nutzerprofil bearbeiten</a></span>
+		<span><a href="portal/myportal-edit-account.psml">Nutzerprofil bearbeiten</a></span>
 		<span class="clearer"></span>
 	</p>
 	<p class="iconLink">
