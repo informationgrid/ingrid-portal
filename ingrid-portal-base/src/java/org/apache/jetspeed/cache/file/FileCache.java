@@ -16,6 +16,7 @@
 
 package org.apache.jetspeed.cache.file;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -396,29 +397,33 @@ public class FileCache implements java.util.Comparator
                     try
                     {
                         int count = 0;
-                        for (Iterator it = FileCache.this.cache.values().iterator(); it.hasNext(); )
+                        Collection values = Collections.synchronizedCollection(FileCache.this.cache.values());
+                        synchronized (values)
                         {
-                            FileCacheEntry entry = (FileCacheEntry) it.next();
-                            Date modified = new Date(entry.getFile().lastModified());
-    
-                            if (modified.after(entry.getLastModified()))
-                            {                            
-                                for (Iterator lit = FileCache.this.listeners.iterator(); lit.hasNext(); )
-                                {
-                                    FileCacheEventListener listener = 
-                                        (FileCacheEventListener) lit.next();
-                                    try
+                            for (Iterator it = values.iterator(); it.hasNext(); )
+                            {
+                                FileCacheEntry entry = (FileCacheEntry) it.next();
+                                Date modified = new Date(entry.getFile().lastModified());
+        
+                                if (modified.after(entry.getLastModified()))
+                                {                            
+                                    for (Iterator lit = FileCache.this.listeners.iterator(); lit.hasNext(); )
                                     {
-                                        listener.refresh(entry);
+                                        FileCacheEventListener listener = 
+                                            (FileCacheEventListener) lit.next();
+                                        try
+                                        {
+                                            listener.refresh(entry);
+                                        }
+                                        catch (Exception e1)
+                                        {
+                                            log.warn("Unable to refresh cached document:  "+e1.toString(), e1);
+                                        }                                    
+                                        entry.setLastModified(modified);
                                     }
-                                    catch (Exception e1)
-                                    {
-                                        log.warn("Unable to refresh cached document:  "+e1.toString(), e1);
-                                    }                                    
-                                    entry.setLastModified(modified);
                                 }
+                                count++;
                             }
-                            count++;
                         }
                         if (count > FileCache.this.getMaxSize())
                         {
