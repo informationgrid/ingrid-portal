@@ -31,6 +31,7 @@ import de.ingrid.utils.IngridHitDetail;
 public class AnniversaryFetcherJob implements Job {
 
     protected final static Log log = LogFactory.getLog(AnniversaryFetcherJob.class);
+
     HibernateManager fHibernateManager = null;
 
     /**
@@ -41,8 +42,8 @@ public class AnniversaryFetcherJob implements Job {
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
-//            cal.set(Calendar.DATE, 15);
-//            cal.set(Calendar.MONTH, 2);
+            //            cal.set(Calendar.DATE, 15);
+            //            cal.set(Calendar.MONTH, 2);
             cal.add(Calendar.DATE, 1);
             Date queryDate = cal.getTime();
 
@@ -58,22 +59,21 @@ public class AnniversaryFetcherJob implements Job {
             queryDateTo.set(Calendar.MINUTE, 59);
             queryDateTo.set(Calendar.SECOND, 59);
             queryDateTo.set(Calendar.MILLISECOND, 0);
-            
-            
+
             fHibernateManager = HibernateManager.getInstance();
             Session session = this.fHibernateManager.getSession();
 
             IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(queryDate);
             if (details.length > 0) {
 
-                for (int i=0; i<details.length; i++) {
-                    if ((details[i] instanceof DetailedTopic) &&  details[i].size() > 0) {
+                for (int i = 0; i < details.length; i++) {
+                    if ((details[i] instanceof DetailedTopic) && details[i].size() > 0) {
                         DetailedTopic detail = (DetailedTopic) details[i];
                         // check if theis item already exists
-                        List anniversaryList = session.createCriteria(IngridAnniversary.class)
-                            .add(Restrictions.eq("topicId", detail.getTopicID()))
-                            .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
-                            .list();
+                        List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
+                                Restrictions.eq("topicId", detail.getTopicID())).add(
+                                Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                                .list();
                         if (anniversaryList.isEmpty()) {
                             IngridAnniversary anni = new IngridAnniversary();
                             anni.setTopicId(detail.getTopicID());
@@ -97,7 +97,7 @@ public class AnniversaryFetcherJob implements Job {
                             anni.setAdministrativeId(detail.getAdministrativeID());
                             anni.setFetched(new Date());
                             anni.setFetchedFor(queryDate);
-    
+
                             session.beginTransaction();
                             session.save(anni);
                             session.getTransaction().commit();
@@ -116,7 +116,7 @@ public class AnniversaryFetcherJob implements Job {
                 session.delete((IngridAnniversary) it.next());
             }
             session.getTransaction().commit();
-            
+
         } catch (Exception e) {
             log.error("Error executing quartz job AnniversaryFetcherJob.", e);
             throw new JobExecutionException("Error executing quartz job AnniversaryFetcherJob.", e, false);

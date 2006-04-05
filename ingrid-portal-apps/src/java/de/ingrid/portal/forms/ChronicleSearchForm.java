@@ -44,12 +44,18 @@ public class ChronicleSearchForm extends ActionForm {
     /** field name of "search term" text field in form */
     public static final String FIELD_SEARCH = "search";
 
+    /** field VALUE if time reference is "von bis" */
+    public static final String FIELDV_TIME_SELECT_PERIOD = "period";
+
+    /** field VALUE if time reference is "am" */
+    public static final String FIELDV_TIME_SELECT_DATE = "date";
+
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
     protected static String INITIAL_EVENT_TYPES = "";
 
-    protected static final String INITIAL_TIME_SELECT = "period";
+    protected static final String INITIAL_TIME_SELECT = FIELDV_TIME_SELECT_PERIOD;
 
-    DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+    protected static final DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -107,7 +113,7 @@ public class ChronicleSearchForm extends ActionForm {
         String inputTimeFrom = getInput(FIELD_TIME_FROM);
         String inputTimeTo = getInput(FIELD_TIME_TO);
         String inputTimeAt = getInput(FIELD_TIME_AT);
-        if (inputTimeSelect.equals("period")) {
+        if (inputTimeSelect.equals(FIELDV_TIME_SELECT_PERIOD)) {
             // first remove "other input" of radio button group
             setInput(FIELD_TIME_AT, "");
 
@@ -147,7 +153,7 @@ public class ChronicleSearchForm extends ActionForm {
                     allOk = false;
                 }
             }
-        } else if (inputTimeSelect.equals("date")) {
+        } else if (inputTimeSelect.equals(FIELDV_TIME_SELECT_DATE)) {
             // first remove "other input" of radio button group
             setInput(FIELD_TIME_FROM, "");
             setInput(FIELD_TIME_TO, "");
@@ -179,7 +185,12 @@ public class ChronicleSearchForm extends ActionForm {
         return INITIAL_EVENT_TYPES;
     }
 
-    private Date getDate(String dateString) {
+    /**
+     * Returns the Date of the given INPUT Value from Form.
+     * @param dateString
+     * @return null if input not valid
+     */
+    public static Date getDate(String dateString) {
         try {
             return (Date) dateFormatter.parse(dateString);
         } catch (ParseException e) {

@@ -3,7 +3,6 @@
  */
 package de.ingrid.portal.interfaces;
 
-import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 
 /**
@@ -13,7 +12,6 @@ import de.ingrid.utils.IngridHitDetail;
  */
 public interface AnniversaryInterface {
 
-    
     /**
      * Returns all found Anniversary of a given Date. This method uses a fallback strategy 
      * of no aniversary was found for a particular day, month. It enlarges the search
@@ -27,5 +25,5 @@ public interface AnniversaryInterface {
      * @return The DetailedTopic Array representing the anniversaries.
      */
     IngridHitDetail[] getAnniversaries(java.util.Date date);
-    
+
 }

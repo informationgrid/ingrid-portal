@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -268,25 +269,38 @@ public class UtilsSearch {
             if (hasRequiredDataType(q, IDataTypes.SNS)) {
                 int rType = q.getInt(Topic.REQUEST_TYPE);
                 if (rType == Topic.ANNIVERSARY_FROM_TOPIC) {
-                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
-                            "(ANNIVERSARY_FROM_TOPIC)");
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(ANNIVERSARY_FROM_TOPIC)");
                 } else if (rType == Topic.EVENT_FROM_TOPIC) {
-                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
-                            "(EVENT_FROM_TOPIC)");
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(EVENT_FROM_TOPIC)");
                 } else if (rType == Topic.SIMILARTERMS_FROM_TOPIC) {
-                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
-                            "(SIMILARTERMS_FROM_TOPIC)");
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(SIMILARTERMS_FROM_TOPIC)");
                 } else if (rType == Topic.TOPIC_FROM_TERM) {
-                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
-                            "(TOPIC_FROM_TERM)");
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(TOPIC_FROM_TERM)");
                 } else if (rType == Topic.TOPIC_FROM_TEXT) {
-                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
-                            "(TOPIC_FROM_TEXT)");
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(TOPIC_FROM_TEXT)");
                 } else {
-                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType)).concat(
-                            "(UNKNOWN)");
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(UNKNOWN)");
                 }
-            }            
+            }
+
+            // remaining keys in IngridQuery
+            Iterator iterator = q.keySet().iterator();
+            qStr = qStr.concat(" /MAP:");
+            while (iterator.hasNext()) {
+                Object key = iterator.next();
+                Object value = q.get(key);
+                if (value == null) {
+                    value = "null";
+                }
+                qStr = qStr.concat(" ").concat(key.toString()).concat(":").concat(value.toString());
+            }
+
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems transforming IngridQuery to String, string so far = " + qStr, ex);
@@ -372,7 +386,9 @@ public class UtilsSearch {
                     .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                             Settings.QVALUE_DATATYPE_AREA_ADDRESS));
         } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_AREA_RESEARCH));
+            query
+                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+                            Settings.QVALUE_DATATYPE_AREA_RESEARCH));
         }
     }
 

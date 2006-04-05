@@ -73,13 +73,13 @@ public class Settings {
     public final static String QFIELD_EVENT_TYPE = "eventtype";
 
     // environment chronicle, ...: at date
-    public final static String QFIELD_AT_DATE = "t0";
+    public final static String QFIELD_DATE_AT = "t0";
 
     // environment chronicle, ...: from date
-    public final static String QFIELD_FROM_DATE = "t1";
+    public final static String QFIELD_DATE_FROM = "t1";
 
     // environment chronicle, ...: to date
-    public final static String QFIELD_TO_DATE = "t2";
+    public final static String QFIELD_DATE_TO = "t2";
 
     // ------------- query field values -----------------------------
 

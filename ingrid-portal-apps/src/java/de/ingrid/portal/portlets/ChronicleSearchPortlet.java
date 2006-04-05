@@ -1,6 +1,8 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -25,6 +27,7 @@ import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -136,11 +139,15 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         IngridQuery query = null;
         try {
-            query = new IngridQuery();
+            // INPUT: Term
+            String term = af.getInput(ChronicleSearchForm.FIELD_SEARCH);
+            query = QueryStringParser.parse(term);
+
+            // SNS Query criteria
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
 
-            // Event Type
+            // INPUT: Event Type
             String queryValue = null;
             String[] eventTypes = af.getInputAsArray(ChronicleSearchForm.FIELD_EVENT);
             // don't set anything if "all" is selected
@@ -148,42 +155,38 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                 for (int i = 0; i < eventTypes.length; i++) {
                     if (eventTypes[i] != null) {
                         queryValue = UtilsDB.getChronicleEventTypeFromKey(eventTypes[i]);
-                        query.addField(new FieldQuery(true, false, Settings.QFIELD_EVENT_TYPE, queryValue));
+                        query.put(Settings.QFIELD_EVENT_TYPE, queryValue);
                         // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
                         break;
                     }
                 }
             }
-            /*
-             // FUNCT_CATEGORY
-             String[] functCategories = request.getParameterValues(EnvironmentSearchForm.FIELD_FUNCT_CATEGORY);
-             // don't set anything if "all" is selected
-             if (functCategories != null && Utils.getPosInArray(functCategories, Settings.PARAMV_ALL) == -1) {
-             for (int i = 0; i < functCategories.length; i++) {
-             if (functCategories[i] != null) {
-             queryValue = UtilsDB.getFunctCategoryFromKey(functCategories[i]);
-             query.addField(new FieldQuery(true, false, Settings.QFIELD_FUNCT_CATEGORY, queryValue));
-             // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-             break;
-             }
-             }
-             }
 
-             // PARTNER
-             String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
-             // don't set anything if "all" is selected
-             if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
-             for (int i = 0; i < partners.length; i++) {
-             if (partners[i] != null) {
-             query.addField(new FieldQuery(true, false, Settings.QFIELD_PARTNER, partners[i]));
-             // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-             break;
-             }
-             }
-             }
-             */
-            // RANKING
+            // INPUT: Date
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String dateSelect = af.getInput(ChronicleSearchForm.FIELD_TIME_SELECT);
+            if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_DATE)) {
+                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT));
+                if (atDate != null) {
+                    String dateStr = df.format(atDate);
+                    query.put(Settings.QFIELD_DATE_AT, dateStr);
+                }
+            } else if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD)) {
+                Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM));
+                if (fromDate != null) {
+                    Date toDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_TO));
+                    if (toDate != null) {
+                        String dateStr = df.format(fromDate);
+                        query.put(Settings.QFIELD_DATE_FROM, dateStr);
+                        dateStr = df.format(toDate);
+                        query.put(Settings.QFIELD_DATE_TO, dateStr);
+                    }
+                }
+            }
+
+            // RANKING ???
             //            query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
+
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", ex);

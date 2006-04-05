@@ -134,10 +134,6 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, IngridResourceBundle resources) {
-        if (log.isDebugEnabled()) {
-            log.debug("Umweltchronik IngridQuery = " + UtilsSearch.queryToString(query));
-        }
-
         int currentPage = (int) (startHit / hitsPerPage) + 1;
 
         IngridHits hits = null;
