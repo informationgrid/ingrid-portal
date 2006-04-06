@@ -3,75 +3,75 @@
 	<input type="hidden" name="cmd" value="form_sent" />
 	<div class="formbody">
 #displayFormErrors()
-	<h2 class="nospace">Nutzerprofil bearbeiten von #getFieldValue('firstname') #getFieldValue('lastname')</h2>
-	<h3>* Pflichtangaben</h3>
+	<h2 class="nospace">$MESSAGES.getString('account.edit.profile.edit.from') #getFieldValue('firstname') #getFieldValue('lastname')</h2>
+	<h3>* $MESSAGES.getString('account.edit.required.fields')</h3>
 		<p>
-			<label class="float_left col2left alignleft" for="salutation">#displayFieldLabel('salutation' 'Titel/Anrede')</label>
+			<label class="float_left col2left alignleft" for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
 			<select class="float_left inputstyle" name="salutation" id="salutation" size="1">
-				<option value="1" #getSelected('salutation' '1')>Frau</option>
-				<option value="2" #getSelected('salutation' '2')>Herr</option>
-				<option value="3" #getSelected('salutation' '3')>Dr.</option>
-				<option value="4" #getSelected('salutation' '4')>Prof.</option>
+				<option value="1" #getSelected('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
+				<option value="2" #getSelected('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
+				<option value="3" #getSelected('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
+				<option value="4" #getSelected('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
 			</select>
 			<span class="clearer"></span>
 		</p>  
 		<p>
-			<label class="float_left col2left alignleft" for="firstname">#displayFieldLabel('firstname' 'Vorname*')</label>
+			<label class="float_left col2left alignleft" for="firstname">#displayFieldLabel('firstname' $MESSAGES.getString('account.edit.label.firstname'))*</label>
 			<input class="float_left col2right inputstyletext" type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" />
 			<span class="clearer"></span>    			  
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="lastname">#displayFieldLabel('lastname' 'Nachname*')</label>
+			<label class="float_left col2left alignleft" for="lastname">#displayFieldLabel('lastname' $MESSAGES.getString('account.edit.label.lastname'))*</label>
 			<input class="float_left col2right inputstyletext" type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" />
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="email">#displayFieldLabel('email' 'E-Mail*')</label>
+			<label class="float_left col2left alignleft" for="email">#displayFieldLabel('email' $MESSAGES.getString('account.edit.label.email'))*</label>
 			<input class="float_left col2right inputstyletext" type="text" id="email" name="email" value="#getFieldValue('email')" />
 			<span class="clearer"></span>
 		</p>
 		<div class="line_form"><hr /></div>
 		<p>
-			<label class="float_left col2left alignleft" for="login">#displayFieldLabel('password_old' 'Altes Passwort*')</label>
-			<input class="float_left col2right inputstyletext" type="text" id="password_old" name="password_old" value="#getFieldValue('password_old')" />
+			<label class="float_left col2left alignleft" for="login">#displayFieldLabel('password_old' $MESSAGES.getString('account.edit.label.password_old'))*</label>
+			<input class="float_left col2right inputstyletext" type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" />
 			<span class="clearer"></span>
 		</p>
 		<div class="line_form"><hr /></div>
 		<p>
-			<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password_new' 'Neues Passwort*')</label>
+			<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password_new' $MESSAGES.getString('account.edit.label.password_new'))*</label>
 			<input class="float_left col2right inputstyletext" type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" />
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_new_confirm' 'Wiederholung*')</label>
+			<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.edit.label.password_new_confirm'))*</label>
 			<input class="float_left col2right inputstyletext" type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" />
 			<span class="clearer"></span>
 		</p>
 		<div class="line_form"><hr /></div>
-		<h3>Adressinformationen</h3>
+		<h3>$MESSAGES.getString('account.edit.address.information')</h3>
 		<p>
-			<label class="float_left col2left alignleft" for="street">#displayFieldLabel('street' 'Straße')</label>
+			<label class="float_left col2left alignleft" for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street'))</label>
 			<input class="float_left col2right inputstyletext" type="text" id="street" name="street" value="#getFieldValue('street')" />
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="postalcode">#displayFieldLabel('postalcode' 'PLZ')</label>
+			<label class="float_left col2left alignleft" for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode'))</label>
 			<input class="float_left col2right inputstyletext" type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="city">#displayFieldLabel('city' 'Ort')</label>
+			<label class="float_left col2left alignleft" for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city'))</label>
 			<input class="float_left col2right inputstyletext" type="text" id="city" name="city" value="#getFieldValue('city')" />
 			<span class="clearer"></span>
 		</p>
 		<div class="line_form"><hr /></div>
 		<p>
-			<label class="float_left col2left alignleft" for="attention">#displayFieldLabel('attention' 'Wie wurden Sie auf uns aufmerksam?')</label>
+			<label class="float_left col2left alignleft" for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention'))</label>
 			<input class="float_left col2right inputstyletext" type="text" id="attention" name="attention" value="#getFieldValue('attention')" />
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="age">#displayFieldLabel('age' 'Welcher Altersgruppe gehören Sie an?')</label>
+			<label class="float_left col2left alignleft" for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age'))</label>
 			<select class="float_left inputstyle" name="age" size="1" id="age">
 				<option value="1" #getSelected('age' '1')>&lt; 20</option>
 				<option value="2" #getSelected('age' '2')>20 - 30</option>
@@ -83,37 +83,37 @@
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="interest">#displayFieldLabel('interest' 'Ist Ihr Interesse beruflich oder privat?')</label>
+			<label class="float_left col2left alignleft" for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest'))</label>
 			<select class="float_left inputstyle" name="interest" id="interest" size="1">
-				<option value="1" #getSelected('interest' '1')>beruflich</option>
-				<option value="2" #getSelected('interest' '2')>privat</option>
+				<option value="1" #getSelected('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
+				<option value="2" #getSelected('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
 			</select>
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="profession">#displayFieldLabel('profession' 'Welcher Berufsgruppe gehören Sie an?')</label>
+			<label class="float_left col2left alignleft" for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
 			<select class="float_left inputstyle" size="1" id="profession" name="profession">
-				<option value="0" #getSelected('age' '0')>---</option>
-				<option value="1" #getSelected('age' '1')>Sch&uuml;ler</option>
-				<option value="2" #getSelected('age' '2')>Handwerk/Technik</option>
-				<option value="3" #getSelected('age' '3')>Umweltdienstleistungen</option>
-				<option value="4" #getSelected('age' '4')>Beh&ouml;rde</option>
-				<option value="5" #getSelected('age' '5')>Lehrer</option>
-				<option value="6" #getSelected('age' '6')>Universit&auml;t</option>
-				<option value="7" #getSelected('age' '7')>Medien</option>
-				<option value="8" #getSelected('age' '8')>Anderes</option>
+				<option value="0" #getSelected('profession' '0')>---</option>
+				<option value="1" #getSelected('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
+				<option value="2" #getSelected('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
+				<option value="3" #getSelected('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
+				<option value="4" #getSelected('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
+				<option value="5" #getSelected('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
+				<option value="6" #getSelected('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
+				<option value="7" #getSelected('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
+				<option value="8" #getSelected('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
 			</select>  
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft">PortalU Newsletter</label>
-			<input type="checkbox" id="subscribe_newsletter" name="subscribe_newsletter" value="1" />&nbsp;<label for="subscribe_newsletter">Ich möchte den Newsletter abonnieren.</label>
+			<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.label.newsletter1')</label>
+			<input type="checkbox" id="subscribe_newsletter" name="subscribe_newsletter" value="1" />&nbsp;<label for="subscribe_newsletter">$MESSAGES.getString('account.edit.label.newsletter2')</label>
 			<span class="clearer"></span>
 		</p>
 	</div>
 	<div class="formfooter">
 		<div align="right">
-			<input class="btn" type="submit" value="Profil ändern" />
+			<input class="btn" type="submit" value="$MESSAGES.getString('account.edit.submit')" />
 		</div>
 	</div>
 </form>
