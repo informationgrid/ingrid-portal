@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridHelpContent" table="ingrid_help_content">
+		<id name="id">
+    		<generator class="native"/>
+        </id>
+    	<property name="helpId" type="java.lang.Long" column="fk_help_id"/>
+    	<property name="language" type="java.lang.String" column="language"/>
+    	<property name="header" type="java.lang.String" column="header"/>
+    	<property name="content" type="java.lang.String" column="content"/>
+  </class>
+</hibernate-mapping>

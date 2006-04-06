@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridHelpStructure" table="ingrid_help_structure">
+		<id name="id">
+    		<generator class="native"/>
+        </id>
+    	<property name="parentId" type="java.lang.Long" column="fk_help_id"/>
+    	<property name="helpKey" type="java.lang.String" column="help_key"/>
+    	<property name="sortkey" type="int" column="sort_key"/>
+  </class>
+</hibernate-mapping>
