@@ -293,12 +293,11 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     private void setUpQuery(PortletRequest request, String queryString) {
         // Create IngridQuery
         IngridQuery query = null;
-        String queryStringLow = queryString.toLowerCase();
         try {
-            query = QueryStringParser.parse(queryStringLow);
+            query = QueryStringParser.parse(queryString);
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
-                log.error("Problems creating IngridQuery, parsed query string: " + queryStringLow, ex);
+                log.error("Problems creating IngridQuery, parsed query string: " + queryString, ex);
             }
             // TODO create ERROR message when no IngridQuery because of parse error (OR even do that in form ???) 
         }

@@ -37,8 +37,7 @@ public class QueryPreProcessor {
         // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
         // we won't complete copy
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING)
-                .toLowerCase();
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
@@ -100,8 +99,7 @@ public class QueryPreProcessor {
         // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
         // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
         // we won't complete copy
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING)
-                .toLowerCase();
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
