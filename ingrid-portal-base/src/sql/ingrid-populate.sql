@@ -86,3 +86,6 @@ INSERT INTO usergrouprole VALUES(2,'admin','admin','manager');
 INSERT INTO usergrouprole VALUES(3,'admin','admin','user');
 INSERT INTO users VALUES('admin','admin');
 INSERT INTO users VALUES('guest','guest');
+
+INSERT INTO ingrid_help_structure VALUES (1, 0, 'index', 1);
+INSERT INTO ingrid_help_content ( `id` , `fk_help_id` , `language` , `header` , `content` ) VALUES ('', '1', 'de', 'Hilfe zu PortalU', NULL);
