@@ -30,7 +30,24 @@ the root of your decortaion.  This will be used instead of the default.
 	<div class="section-header">
 	  	<h1>$!jetspeed.getTitle($jetspeed.getPortletEntity($f), $f)</h1>
 	    <span class="portlet_info">
-		<a href="javascript:contextHelp()">[?]</a>
+		#set($prefs = $f.getPreferences())
+		#set($hkey = "")
+		#foreach($pref in $prefs)
+			#if($pref.getName() == "helpKey")
+				#foreach($val in $pref.getValues())
+					#set($hkey = $val) 
+				#end
+			#end
+		#end	
+		#if($hkey && $hkey != "")
+			#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
+		<script language="JavaScript">
+    		document.write("<a href=\"javascript:openWindow('$hpath',750,550);\">[?]</a>");
+    	</script>
+    	<noscript>
+    		<a href="$hpath" target="_new">[?]</a>
+    	</noscript>
+		#end
 		</span>
 		<span class="clearer"></span>
   	</div>

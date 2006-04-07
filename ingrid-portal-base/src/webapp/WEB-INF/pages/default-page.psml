@@ -15,6 +15,9 @@
       <preference name="titleKey" readOnly="false">
         <value>searchSimple.title.search</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>index</value>
+      </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
       <property layout="TwoColumns" name="row" value="1" />
