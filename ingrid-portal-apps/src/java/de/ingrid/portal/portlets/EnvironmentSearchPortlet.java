@@ -21,6 +21,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.search.SearchState;
+import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -143,44 +144,45 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
 
             // TOPIC
             String queryValue = null;
+            ClauseQuery cq = null;
             String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
             // don't set anything if "all" is selected
             if (topics != null && Utils.getPosInArray(topics, Settings.PARAMV_ALL) == -1) {
+                cq = new ClauseQuery(true, false);
                 for (int i = 0; i < topics.length; i++) {
                     if (topics[i] != null) {
                         queryValue = UtilsDB.getTopicFromKey(topics[i]);
-                        query.addField(new FieldQuery(true, false, Settings.QFIELD_TOPIC, queryValue));
-                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-                        break;
+                        cq.addField(new FieldQuery(false, false, Settings.QFIELD_TOPIC, queryValue));
                     }
                 }
+                query.addClause(cq);
             }
 
             // FUNCT_CATEGORY
             String[] functCategories = request.getParameterValues(EnvironmentSearchForm.FIELD_FUNCT_CATEGORY);
             // don't set anything if "all" is selected
             if (functCategories != null && Utils.getPosInArray(functCategories, Settings.PARAMV_ALL) == -1) {
+                cq = new ClauseQuery(true, false);
                 for (int i = 0; i < functCategories.length; i++) {
                     if (functCategories[i] != null) {
                         queryValue = UtilsDB.getFunctCategoryFromKey(functCategories[i]);
-                        query.addField(new FieldQuery(true, false, Settings.QFIELD_FUNCT_CATEGORY, queryValue));
-                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-                        break;
+                        cq.addField(new FieldQuery(false, false, Settings.QFIELD_FUNCT_CATEGORY, queryValue));
                     }
                 }
+                query.addClause(cq);
             }
 
             // PARTNER
             String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
             // don't set anything if "all" is selected
             if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
+                cq = new ClauseQuery(true, false);
                 for (int i = 0; i < partners.length; i++) {
                     if (partners[i] != null) {
-                        query.addField(new FieldQuery(true, false, Settings.QFIELD_PARTNER, partners[i]));
-                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-                        break;
+                        cq.addField(new FieldQuery(false, false, Settings.QFIELD_PARTNER, partners[i]));
                     }
                 }
+                query.addClause(cq);
             }
 
             // RANKING
