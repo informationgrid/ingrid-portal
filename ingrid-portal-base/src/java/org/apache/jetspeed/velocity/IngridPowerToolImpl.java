@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -57,6 +58,7 @@ import org.apache.jetspeed.locator.TemplateLocatorException;
 import org.apache.jetspeed.om.common.portlet.PortletDefinitionComposite;
 import org.apache.jetspeed.om.page.ContentFragment;
 import org.apache.jetspeed.om.page.Page;
+import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.jetspeed.services.title.DynamicTitleService;
 import org.apache.jetspeed.util.ArgUtil;
@@ -83,10 +85,10 @@ import org.apache.velocity.context.Context;
  * </p>
  * 
  * @author <a href="mailto:weaver@apache.org">Scott T. Weaver </a>
- * @version $Id: JetspeedPowerToolImpl.java 359157 2005-12-27 01:50:11Z rwatler $
+ * @version $Id: IngridPowerToolImpl.java 359157 2005-12-27 01:50:11Z rwatler $
  * 
  */
-public class JetspeedPowerToolImpl implements JetspeedPowerTool
+public class IngridPowerToolImpl implements JetspeedPowerTool
 {
 
     private static final String DECORATOR_ID_ATTR = "decoratorId";
@@ -113,7 +115,7 @@ public class JetspeedPowerToolImpl implements JetspeedPowerTool
 
     public static final String POWER_TOOL_SESSION_ACTIONS = "org.apache.jetspeed.powertool.actions";
 
-    protected static final Log log = LogFactory.getLog(JetspeedPowerToolImpl.class);
+    protected static final Log log = LogFactory.getLog(IngridPowerToolImpl.class);
 
     protected CapabilityMap capabilityMap;
 
@@ -137,7 +139,7 @@ public class JetspeedPowerToolImpl implements JetspeedPowerTool
 
     private DynamicTitleService titleService;
 
-    public JetspeedPowerToolImpl(RequestContext requestContext, DynamicTitleService titleService) throws Exception
+    public IngridPowerToolImpl(RequestContext requestContext, DynamicTitleService titleService) throws Exception
     {
         HttpServletRequest request = requestContext.getRequest();
         this.requestContext = requestContext;
@@ -197,6 +199,19 @@ public class JetspeedPowerToolImpl implements JetspeedPowerTool
         }
     }
 
+    public Object getPreferenceFirstValue(ContentFragment f, String key) {
+        List prefs = f.getPreferences();
+        Iterator it = prefs.iterator();
+        while (it.hasNext()) {
+            FragmentPreference pref = (FragmentPreference) it.next();
+            if (pref.getName().equals(key) && pref.getValueList() != null && pref.getValueList().size() > 0) {
+                return pref.getValueList().get(0);
+            }
+        }
+        return null;
+    }
+    
+    
     /**
      * Gets the portlet mode for a current portlet window (fragment)
      * 

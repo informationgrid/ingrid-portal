@@ -7,15 +7,7 @@
   <div class="section-header">
     <h1 class="float_left">$!jetspeed.getTitle($jetspeed.getPortletEntity($f), $f)</h1>
     <span class="portlet_info">
-	#set($prefs = $f.getPreferences())
-	#set($hkey = "")
-	#foreach($pref in $prefs)
-		#if($pref.getName() == "helpKey")
-			#foreach($val in $pref.getValues())
-				#set($hkey = $val) 
-			#end
-		#end
-	#end	
+	#set($hkey = $jetspeed.getPreferenceFirstValue($f, "helpKey")) 
 	#if($hkey && $hkey != "")
 		#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
 	<script language="JavaScript">
