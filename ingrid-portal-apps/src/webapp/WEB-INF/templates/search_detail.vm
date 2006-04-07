@@ -262,7 +262,7 @@
 #if($rec)
 	<div class="section-header">
 		<h1>$rec.get("title")</h1>
-		<p class="float_right">#if($rec.get("t01_object.mod_time"))letzte Änderung am: $rec.get("t01_object.mod_time")#end</p>
+		<p class="float_right"><span class="smaller">#if($rec.get("t01_object.mod_time"))letzte Änderung am: $rec.get("t01_object.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
 	<p><i>#if($rec.get("t01_object.dataset_alternate_name"))#renderECSEntry($rec "t01_object.dataset_alternate_name")#end</i></p>
