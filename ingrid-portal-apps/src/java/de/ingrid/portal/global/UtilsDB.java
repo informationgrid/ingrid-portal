@@ -65,6 +65,7 @@ public class UtilsDB {
      * @return
      */
     private static List getValuesFromDB(Class objClass, List cacheList) {
+        // TODO: use hibernate caching
         if (alwaysReloadDBData) {
             HibernateManager hibernateManager = HibernateManager.getInstance();
             return hibernateManager.loadAllData(objClass, 0);
