@@ -50,7 +50,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
         if (helpKey == null) {
             String helpIdStr = request.getParameter("hid");
             if (helpIdStr != null) {
-                helpId = Long.getLong(helpIdStr);
+                helpId = Long.decode(helpIdStr);
                 useKey = false;
             } else {
                 helpKey="index";
