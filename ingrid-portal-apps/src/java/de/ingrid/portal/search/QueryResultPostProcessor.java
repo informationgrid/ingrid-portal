@@ -45,7 +45,7 @@ public class QueryResultPostProcessor {
                         }
                         continue;
                     }
-                    
+
                     UtilsSearch.transferHitDetails(hit, detail);
                     tmpString = detail.getIplugClassName();
                     if (tmpString == null) {
@@ -59,12 +59,32 @@ public class QueryResultPostProcessor {
                         hit.put(Settings.RESULT_KEY_TYPE, "dsc");
 
                         // read for all dsc iplugs
-                        tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
-                        if (tmpString.length() > 0) {
-                            try {
-                                hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
-                            } catch (UnsupportedEncodingException e) {
-                                log.error("Error url encoding wms URL!", e);
+
+                        // services !
+                        Object obj = detail.get(Settings.HIT_KEY_WMS_URL);
+                        if (obj != null) {
+                            tmpString = "";
+                            if (obj instanceof String[]) {
+                                // PATCH for wrong data in database -> service string was passed multiple times !
+                                String[] servicesArray = (String[]) obj;
+                                /*
+                                 for (int j = 0; j < servicesArray.length; j++) {
+                                 if (j != 0) {
+                                 tmpString = tmpString.concat("&");
+                                 }
+                                 tmpString = tmpString.concat(servicesArray[j]);
+                                 }
+                                 */
+                                tmpString = servicesArray[0];
+                            } else {
+                                tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
+                            }
+                            if (tmpString.length() > 0) {
+                                try {
+                                    hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+                                } catch (UnsupportedEncodingException e) {
+                                    log.error("Error url encoding wms URL!", e);
+                                }
                             }
                         }
 
@@ -105,7 +125,7 @@ public class QueryResultPostProcessor {
     public static IngridHits processUnrankedHits(IngridHits hits, String selectedDS) {
 
         try {
-            
+
             // check for null hits
             if (hits == null) {
                 return null;
