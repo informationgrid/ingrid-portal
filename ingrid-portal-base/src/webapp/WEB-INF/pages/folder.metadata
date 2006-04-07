@@ -17,7 +17,7 @@
     <separator>
       <text>separator2</text>
     </separator>
-    <options>/service-help.psml</options>
+    <options>/help.psml</options>
     <separator>
       <text>separator2</text>
     </separator>

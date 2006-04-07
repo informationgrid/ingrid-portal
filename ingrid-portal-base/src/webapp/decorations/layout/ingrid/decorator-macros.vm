@@ -51,7 +51,7 @@
 <div id="identity" class="motiv_service">
   #elseif($currentPage == "/service-contact.psml")
 <div id="identity" class="motiv_topnavi">
-  #elseif($currentPage == "/service-help.psml")
+  #elseif($currentPage == "/help.psml")
 <div id="identity" class="motiv_hilfe">
   #elseif($currentPage == "/service-myportal.psml")
 <div id="identity" class="motiv_topnavi">
@@ -168,6 +168,13 @@
 	#else
 	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
 	#end
+  #elseif($el=="/help.psml")
+	<script language="JavaScript">
+		document.write("<li><a href=\"javascript:openWindow('$linkUrl',750,550);\" title=\"$!linkTitle\">${linkName}</a>$postfix</li>");
+	</script>
+	<noscript>
+		<li><a href="$linkUrl" target="_new" title="$!linkTitle">${linkName}</a>$postfix</li>
+	</noscript>
   #else
     <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
   #end  
