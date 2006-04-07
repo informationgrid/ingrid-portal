@@ -5,6 +5,10 @@ package de.ingrid.portal.global;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridChronicleEventType;
@@ -79,6 +83,20 @@ public class UtilsDB {
         return cacheList;
     }
 
+    private static List getValuesFromDB(Criteria c, List cacheList) {
+        // TODO: use hibernate caching
+        if (alwaysReloadDBData) {
+            return c.list();
+        }
+        synchronized (UtilsDB.class) {
+            if (cacheList == null) {
+                cacheList = c.list();
+            }
+        }
+        return cacheList;
+    }
+    
+    
     /**
      * Convenient method for extracting a QueryValue from a List of IngridFormToQuery
      * objects, based on the formValue.
@@ -106,8 +124,7 @@ public class UtilsDB {
     public static List getPartners() {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
-        partners = getValuesFromDB(IngridPartner.class, partners);
-        return partners;
+        return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridPartner.class).addOrder(Order.asc("sortkey")), partners);
     }
 
     /**
