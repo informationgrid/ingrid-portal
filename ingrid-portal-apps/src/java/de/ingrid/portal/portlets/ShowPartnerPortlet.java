@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -16,10 +17,12 @@ import javax.portlet.RenderResponse;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.forms.ContactNewsletterSubscribeForm;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridNewsletterData;
@@ -33,8 +36,6 @@ import de.ingrid.utils.PlugDescription;
  */
 public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
-    private HibernateManager fHibernateManager = null;
-    
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
@@ -42,18 +43,15 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         
         Context context = getContext(request);
 
-        fHibernateManager  = HibernateManager.getInstance();
-        Session session = this.fHibernateManager.getSession();
-
-        List partnerList = session.createCriteria(IngridPartner.class).list();
+        List partnerList = UtilsDB.getPartners();
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
         
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getIBus().getIPlugRegistry().getAllIPlugs();
+        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getIBus().getAllIPlugs();
         
-        HashMap partnerMap = new HashMap();
+        LinkedHashMap partnerMap = new LinkedHashMap();
         
         /*
          * This code builds a structure as follows:
@@ -77,7 +75,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         Iterator it = partnerList.iterator();
         while (it.hasNext()) {
             IngridPartner partner = (IngridPartner)it.next();
-            HashMap partnerHash = new HashMap();
+            LinkedHashMap partnerHash = new LinkedHashMap();
             partnerHash.put("partner", partner);
             partnerMap.put(partner.getIdent(), partnerHash);
             for (int i=0; i<plugs.length; i++) {
@@ -85,28 +83,28 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 // check for ident AND name
                 // TODO: all plug descriptions should user the partner abbr.
                 String[] partners = plug.getPartners();
-                for (int j=0;j<partners.length;i++) {
+                for (int j=0;j<partners.length;j++) {
                       String partnerIdent = partners[j];
                     if (partnerIdent.equalsIgnoreCase(partner.getIdent()) || partnerIdent.equalsIgnoreCase(partner.getName())) {
                         // check for providers
                         if (!partnerHash.containsKey("providers")) {
-                            partnerHash.put("providers", new HashMap());
+                            partnerHash.put("providers", new LinkedHashMap());
                         }
                         // get providers of the partner
-                        HashMap providersHash = (HashMap)partnerMap.get("providers");
-                        // check for prvider with an organisation abbr.
+                        HashMap providersHash = (LinkedHashMap)partnerHash.get("providers");
+                        // LinkedHashMap for prvider with an organisation abbr.
                         if (!providersHash.containsKey(plug.getOrganisationAbbr())) {
-                            providersHash.put(plug.getOrganisationAbbr(), new HashMap());
+                            providersHash.put(plug.getOrganisationAbbr(), new LinkedHashMap());
                         }
                         // get provider hash map
-                        HashMap providerHash = (HashMap)partnerMap.get(plug.getOrganisationAbbr());
+                        LinkedHashMap providerHash = (LinkedHashMap)providersHash.get(plug.getOrganisationAbbr());
                         // check for provider entry, create if not exists
                         // initialise with iplug, which contains all information
                         if (!providerHash.containsKey("provider")) {
                             providerHash.put("provider", plug);
                         }
                         // check for iplugs
-                        if (!partnerHash.containsKey("iplugs")) {
+                        if (!providerHash.containsKey("iplugs")) {
                             providerHash.put("iplugs", new ArrayList());
                         }
                         // add current iplug
