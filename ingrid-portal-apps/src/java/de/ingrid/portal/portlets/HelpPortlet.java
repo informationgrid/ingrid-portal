@@ -21,6 +21,7 @@ import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridHelpContent;
 import de.ingrid.portal.om.IngridHelpStructure;
@@ -133,10 +134,10 @@ public class HelpPortlet extends GenericVelocityPortlet {
         .list();
         
         if (l.isEmpty()) {
-            log.info("No help entry found. (helpid: " + helpEntry.getId() + ", language: " + language + " )");
+            log.info("No help entry found. (helpid: " + helpEntry.getId() + ", language: " + language + " ) Fall back to default language.");
             l = session.createCriteria(IngridHelpContent.class)
             .add(Restrictions.eq("helpId", helpEntry.getId()))
-            .add(Restrictions.eq("language", "de"))
+            .add(Restrictions.eq("language", PortalConfig.getInstance().getString("help.default.language", "de")))
             .list();
         }
         
