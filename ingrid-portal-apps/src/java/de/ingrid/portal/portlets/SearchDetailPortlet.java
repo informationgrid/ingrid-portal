@@ -3,8 +3,11 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
@@ -13,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -20,9 +24,14 @@ import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 
 
@@ -71,19 +80,56 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             // flag to make column name readable (not lowercase, character substitution)
             boolean readableColumnNames = false;
             
-            if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-                setDefaultViewPage(TEMPLATE_DETAIL_ECS);
-            } else if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-                setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
-            } else {
-                setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
-                readableColumnNames = true;
-            }
             
             Record record = ibus.getRecord(hit);
             if (record == null) {
                 log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
             } else {
+                if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+                    setDefaultViewPage(TEMPLATE_DETAIL_ECS);
+                    
+                    // get references
+                    ArrayList references = getAllTableRows(record, "T012_obj_obj");
+                    Record referenceRecord = null;
+                    String refType = null;
+                    ArrayList superiorReferences = new ArrayList();
+                    ArrayList subordinatedReferences = new ArrayList();
+                    ArrayList crossReferences = new ArrayList();
+                    
+                    for (int i=0; i<references.size(); i++) {
+                        referenceRecord = (Record) references.get(i);
+                        refType = (String)referenceRecord.get("T012_obj_obj.typ");
+                        if (refType.equals("0")) {
+                            // add superior reference
+                            Object objToId = referenceRecord.get("T012_obj_obj.object_to_id");
+                            if (objToId != null && ((String)objToId).length() > 0) {
+                                superiorReferences.add(getUDKObjectHash((String)objToId));
+                            }
+                            // add subordinated reference
+                            Object objFromId = referenceRecord.get("T012_obj_obj.object_from_id");
+                            if (objFromId != null && ((String)objFromId).length() > 0) {
+                                subordinatedReferences.add(getUDKObjectHash((String)objFromId));
+                            }
+                        } else if (refType.equals("1")) {
+                            // add cross reference
+                            Object objFromId = referenceRecord.get("T012_obj_obj.object_from_id");
+                            if (objFromId != null && ((String)objFromId).length() > 0) {
+                                crossReferences.add(getUDKObjectHash((String)objFromId));
+                            }
+                        }
+                    }
+                    
+                    context.put("superiorReferences", superiorReferences);
+                    context.put("subordinatedReferences", subordinatedReferences);
+                    context.put("crossReferences", crossReferences);
+                } else if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+                    setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
+                } else {
+                    setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
+                    readableColumnNames = true;
+                }
+
+                
                 context.put("record", record);
                 HashMap recordMap = new HashMap();
                 
@@ -115,6 +161,23 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
 
         super.doView(request, response);
     }
+    
+    private HashMap getUDKObjectHash(String objId) throws Exception {
+        String queryStr = "T01_object.obj_id:" + objId + " datatype:dsc_ecs ranking:score";
+        IngridQuery q = QueryStringParser.parse(queryStr);
+        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+        HashMap objHash = null;
+        if (hits.length() > 0) {
+            IngridHit refHit = hits.getHits()[0];
+            IngridHitDetail refDetail =  IBUSInterfaceImpl.getInstance().getDetail(refHit, q, null);
+            objHash = new HashMap();
+            objHash.put("obj_id", objId);
+            objHash.put("title", refDetail.getTitle());
+            objHash.put("hit", refHit);
+        }
+        return objHash;
+    }
+
 
     private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
         addSubRecords(record, map, locale, 0, readableColumns);
@@ -168,5 +231,22 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     }
     
     
+    private ArrayList getAllTableRows(Record record,  String tableName) {
+        ArrayList result = new ArrayList();
+        
+        Column[] columns;
+        Record[] subRecords = record.getSubRecords();
+        for (int i = 0; i < subRecords.length; i++) {
+            columns = subRecords[i].getColumns();
+            if (columns.length > 0) {
+                String columnName = columns[0].getTargetName();
+                if (columnName.startsWith(tableName)) {
+                    result.add(subRecords[i]);
+                }
+            }
+            result.addAll(getAllTableRows(subRecords[i], tableName));
+        }
+        return result;
+    }
     
 }
