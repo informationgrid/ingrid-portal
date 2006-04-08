@@ -92,29 +92,31 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     ArrayList references = getAllTableRows(record, "T012_obj_obj");
                     Record referenceRecord = null;
                     String refType = null;
+                    String objToId;
+                    String objFromId;
                     ArrayList superiorReferences = new ArrayList();
                     ArrayList subordinatedReferences = new ArrayList();
                     ArrayList crossReferences = new ArrayList();
+                    String objId = (String)record.get("T01_object.obj_id");
                     
                     for (int i=0; i<references.size(); i++) {
                         referenceRecord = (Record) references.get(i);
                         refType = (String)referenceRecord.get("T012_obj_obj.typ");
+                        objToId = (String)referenceRecord.get("T012_obj_obj.object_to_id");
+                        objFromId = (String)referenceRecord.get("T012_obj_obj.object_from_id");
                         if (refType.equals("0")) {
                             // add superior reference
-                            Object objToId = referenceRecord.get("T012_obj_obj.object_to_id");
-                            if (objToId != null && ((String)objToId).length() > 0) {
-                                superiorReferences.add(getUDKObjectHash((String)objToId));
+                            if (objToId.equals(objId)) {
+                                superiorReferences.add(getUDKObjectHash((String)objFromId));
                             }
                             // add subordinated reference
-                            Object objFromId = referenceRecord.get("T012_obj_obj.object_from_id");
-                            if (objFromId != null && ((String)objFromId).length() > 0) {
-                                subordinatedReferences.add(getUDKObjectHash((String)objFromId));
+                            if (objFromId.equals(objId)) {
+                                subordinatedReferences.add(getUDKObjectHash((String)objToId));
                             }
                         } else if (refType.equals("1")) {
                             // add cross reference
-                            Object objFromId = referenceRecord.get("T012_obj_obj.object_from_id");
-                            if (objFromId != null && ((String)objFromId).length() > 0) {
-                                crossReferences.add(getUDKObjectHash((String)objFromId));
+                            if (objFromId.equals(objId)) {
+                                crossReferences.add(getUDKObjectHash((String)objToId));
                             }
                         }
                     }
