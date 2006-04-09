@@ -133,7 +133,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     for (int i=0; i<addrRecords.size(); i++) {
                         Record addrRecord = (Record)addrRecords.get(i);
                         // get id of the address
-                        String addressId = (String)addrRecord.get("T02_address.adr_id");
+                        String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
                         // create the hashmap that holds the references for a particular address 
                         HashMap addrReferenceHash = new HashMap();
                         addrReferences.put(addressId, addrReferenceHash);
@@ -141,10 +141,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         for (int j=0; j < addrReferenceRecords.size(); j++) {
                             // get address reference info from record
                             Record refRecord = (Record)addrReferenceRecords.get(i);
-                            String addrToId = (String)refRecord.get("T022_adr_adr.adr_to_id");
-                            String addrFromId = (String)refRecord.get("T022_adr_adr.adr_from_id");
+                            String addrToId = (String)refRecord.get("T022_ADR_ADR.ADR_TO_ID");
+                            String addrFromId = (String)refRecord.get("T022_ADR_ADR.ADR_FROM_ID");
                             // get superior reference
-                            if (addrToId.equals(addressId)) {
+                            if (addrToId != null && addrToId.equals(addressId)) {
                                 HashMap udkAddress = getUDKAddressHash(addrFromId);
                                 String addressType = (String)udkAddress.get("T02_address.typ");
                                 // check for address types

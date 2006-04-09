@@ -87,8 +87,8 @@
 			#if (!$addressReferences.get("$addressId").isEmpty())
 				## check for superior institutions
 				#set($addrRefs = $addressReferences.get("$addressId"))
-				#if(!$addrRefs.get("0").isEmpty())
-					<p><strong>$MESSAGES.getString("superios_institution"):</strong><br>
+				#if($addrRefs.get("0"))
+					<p><strong>$MESSAGES.getString("superior_institution"):</strong><br>
 					#foreach($addr in $addrRefs.get("0"))
                 		#set ($action = $renderResponse.createActionURL())
                 		$action.setParameter('docid', "$addr.hit.getId()")
@@ -96,8 +96,8 @@
 						<p><a href="$action">$addr.get("t02_address.institution")</a></p>
 					#end
 				#end
-				#if(!$addrRefs.get("1").isEmpty())
-					<p><strong>$MESSAGES.getString("superios_units"):</strong><br>
+				#if($addrRefs.get("1"))
+					<p><strong>$MESSAGES.getString("superior_units"):</strong><br>
 					#foreach($addr in $addrRefs.get("1"))
                 		#set ($action = $renderResponse.createActionURL())
                 		$action.setParameter('docid', "$addr.hit.getId()")
@@ -245,7 +245,27 @@
     			#end
         		</p>
 			#end	
-    	#end
+		#end
+		#if($rec.get("t01_object.vertical_extent_minimum"))
+			<p><strong>$MESSAGES.getString("t01_object.vertical_extent")</strong></p>
+			<table class="border" border="1">
+			<tbody>	
+				<tr>
+					<th>Maximum</th>
+					<th>Minimum</th>
+					<th>Maﬂeinheit</th>
+					<th>Vertikaldatum</th>
+				</tr>
+				<tr>
+					<td>$rec.get("t01_object.vertical_extent_maximum")</td>
+					<td>$rec.get("t01_object.vertical_extent_minimum")</td>
+					<td>$rec.get("t01_object.vertical_extent_unit")</td>
+					<td>$rec.get("t01_object.vertical_extent_vdatum")</td>
+				</tr>
+			</tbody>	
+			</table>
+			<br />
+		#end
     	#renderECSEntry($rec "t01_object.loc_descr")
 	#end
 #end
