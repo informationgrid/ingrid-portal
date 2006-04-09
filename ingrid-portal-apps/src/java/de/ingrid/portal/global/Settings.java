@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.global;
 
+import de.ingrid.utils.query.IngridQuery;
+
 /**
  * Common resources used by our Portlet Application
  *
@@ -56,29 +58,29 @@ public class Settings {
 
     // ------------- query field names -----------------------------
 
-    public final static String QFIELD_DATATYPE = "datatype";
+    public final static String QFIELD_DATATYPE = IngridQuery.DATA_TYPE;
 
     public final static String QFIELD_PARTNER = "partner";
 
-    // service, measures; rubric
+    // "service", "measures"; rubric
     public final static String QFIELD_RUBRIC = "rubric";
 
-    // environment topics: first category
+    // "environment topics": first category
     public final static String QFIELD_TOPIC = "topic";
 
-    // environment topics: second category
+    // "environment topics": second category
     public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
 
-    // environment chronicle: event type
+    // "environment chronicle": event type
     public final static String QFIELD_EVENT_TYPE = "eventtype";
 
-    // environment chronicle, ...: at date
+    // "environment chronicle", ...: at date
     public final static String QFIELD_DATE_AT = "t0";
 
-    // environment chronicle, ...: from date
+    // "environment chronicle", ...: from date
     public final static String QFIELD_DATE_FROM = "t1";
 
-    // environment chronicle, ...: to date
+    // "environment chronicle", ...: to date
     public final static String QFIELD_DATE_TO = "t2";
 
     // ------------- query field values -----------------------------
