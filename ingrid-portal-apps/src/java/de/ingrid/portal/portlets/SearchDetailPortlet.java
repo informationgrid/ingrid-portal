@@ -85,6 +85,37 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             if (record == null) {
                 log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
             } else {
+                
+                // extract the code lists
+                String udkLangCode;
+                if (request.getLocale().getLanguage().equals(new Locale("en", "", "").getLanguage())) {
+                    udkLangCode = "94";
+                } else {
+                    udkLangCode = "121";
+                }
+                ArrayList codeListRecords = getAllTableRows(record, "sys_codelist_domain");
+                HashMap codeLists = new HashMap();
+                for (int i=0; i<codeListRecords.size(); i++) {
+                    Record codeListRecord = (Record)codeListRecords.get(i);
+                    String langId = (String)codeListRecord.get("sys_codelist_domain.lang_id");
+                    if (langId.equals(udkLangCode)) {
+                        String codeListId = (String)codeListRecord.get("sys_codelist_domain.codelist_id");
+                        if (!codeLists.containsKey(codeListId)) {
+                            codeLists.put(codeListId, new HashMap());
+                        }
+                        HashMap codeListHash = (HashMap)codeLists.get(codeListId);
+    
+                        String domainId = (String)codeListRecord.get("sys_codelist_domain.domain_id");
+                        if (!codeListHash.containsKey(domainId)) {
+                            codeListHash.put(domainId, new HashMap());
+                        }
+                        HashMap codeListDomainHash = (HashMap)codeListHash.get(domainId);
+                        codeListDomainHash.putAll(codeListRecord);
+                    }
+                }
+                context.put("codeLists", codeLists);
+                
+                
                 if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
                     
@@ -188,6 +219,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                     readableColumnNames = true;
                 }
+                
+
 
                 
                 context.put("record", record);

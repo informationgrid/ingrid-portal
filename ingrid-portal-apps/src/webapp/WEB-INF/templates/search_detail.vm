@@ -281,8 +281,17 @@
     	#elseif($rec.get("t01_object.time_type") == "am")
     		<p>am: $rec.get("t01_object.time_from")</p>
     	#end
-    	#renderECSEntry($rec "t01_object.time_status")
-    	#renderECSEntry($rec "t01_object.time_period")
+    	
+    	#if($rec.get("t01_object.time_status"))
+    		<p><strong>$MESSAGES.getString("t01_object.time_status"):</strong><br/>
+    		$codeLists.get("502").get($rec.get("t01_object.time_status")).get("sys_codelist_domain.name")<br/>
+    		</p>
+        #end
+    	#if($rec.get("t01_object.time_period"))
+    		<p><strong>$MESSAGES.getString("t01_object.time_period"):</strong><br/>
+    		$codeLists.get("518").get($rec.get("t01_object.time_period")).get("sys_codelist_domain.name")<br/>
+    		</p>
+        #end
     	<p><strong>$MESSAGES.getString("t01_object.time_interval")</strong><br />
 		alle $rec.get("t01_object.time_alle") $rec.get("t01_object.time_interval")
 		</p>
