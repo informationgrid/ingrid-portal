@@ -84,15 +84,45 @@
     	<div class="line"><hr /></div>
     	#foreach($myAddressType in $rec.get("t012_obj_adr.obj_id"))
     		#set($addressId = $myAddressType.get("t02_address.adr_id"))
+			#if (!$addressReferences.get("$addressId").isEmpty())
+				## check for superior institutions
+				#set($addrRefs = $addressReferences.get("$addressId"))
+				#if(!$addrRefs.get("0").isEmpty())
+					<p><strong>$MESSAGES.getString("superios_institution"):</strong><br>
+					#foreach($addr in $addrRefs.get("0"))
+                		#set ($action = $renderResponse.createActionURL())
+                		$action.setParameter('docid', "$addr.hit.getId()")
+                		$action.setParameter('plugid', "$addr.hit.getPlugId()")
+						<p><a href="$action">$addr.get("t02_address.institution")</a></p>
+					#end
+				#end
+				#if(!$addrRefs.get("1").isEmpty())
+					<p><strong>$MESSAGES.getString("superios_units"):</strong><br>
+					#foreach($addr in $addrRefs.get("1"))
+                		#set ($action = $renderResponse.createActionURL())
+                		$action.setParameter('docid', "$addr.hit.getId()")
+                		$action.setParameter('plugid', "$addr.hit.getPlugId()")
+						<p><a href="$action">$addr.get("t02_address.institution")</a></p>
+					#end
+				#end
+			#end	
+			
 			#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
 			#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
 			<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
         	#foreach($myAddress in $myAddressType.get("t02_address.adr_id"))
-        		#if($myAddress.get("t02_address.institution"))$myAddress.get("t02_address.institution")<br/>#end
-				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end
+				#set ($action = $renderResponse.createActionURL())
+        		$action.setParameter('cmd', "doShowAddressDetail")
+        		$action.setParameter('addrId', $myAddress.get("t02_address.adr_id"))
+				<a href="$action">
+				#if($myAddress.get("t02_address.institution"))$myAddress.get("t02_address.institution")<br />#end
+				</a>
+				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")<br />#end
+				<a href="$action">
 				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end
 				#if($myAddress.get("t02_address.firstname"))$myAddress.get("t02_address.firstname")#end
 				#if($myAddress.get("t02_address.lastname"))$myAddress.get("t02_address.lastname")<br/>#end
+				</a>
 				#if($myAddress.get("t02_address.job"))$myAddress.get("t02_address.job")<br/>#end
 				#if($myAddress.get("t02_address.descr"))$myAddress.get("t02_address.descr")<br/>#end
 				#if($myAddress.get("t02_address.postbox"))$MESSAGES.getString("postbox_label")$myAddress.get("t02_address.postbox")<br/>#end
