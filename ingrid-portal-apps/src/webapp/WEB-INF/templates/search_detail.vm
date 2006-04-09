@@ -10,9 +10,9 @@
 #end
 
 #macro (renderECSEntry $r $entryName)
-    #if($r.get($entryName))
-		<p><strong>$MESSAGES.getString($entryName):</strong><br>
-		$r.get($entryName)
+	#if($r.get($entryName))
+		<p><strong>$MESSAGES.getString($entryName):</strong><br/>
+		$r.get($entryName)<br/>
 		</p>
     #end
 #end
@@ -238,9 +238,13 @@
 			#end
 		#end	
     	#if($rec.get("t019_coordinates.obj_id"))
-    		#foreach($t019_coordinates in $rec.get("t019_coordinates.obj_id"))
-				#renderECSEntry($t019_coordinates "t019_coordinates.bezug")
-			#end
+    		#if(!$rec.get("t019_coordinates.obj_id").isEmpty())
+        		<p><strong>$MESSAGES.getString("t019_coordinates.bezug"):</strong><br>
+    			#foreach($t019_coordinates in $rec.get("t019_coordinates.obj_id"))
+    	    		$t019_coordinates.get("t019_coordinates.bezug")<br/>
+    			#end
+        		</p>
+			#end	
     	#end
     	#renderECSEntry($rec "t01_object.loc_descr")
 	#end
