@@ -260,10 +260,10 @@
 			<table class="border" border="1">
 			<tbody>	
 				<tr>
-					<th>Maximum</th>
-					<th>Minimum</th>
-					<th>Maﬂeinheit</th>
-					<th>Vertikaldatum</th>
+					<th>$MESSAGES.getString("t01_object.vertical_extent_maximum")</th>
+					<th>$MESSAGES.getString("t01_object.vertical_extent_minimum")</th>
+					<th>$MESSAGES.getString("t01_object.vertical_extent_unit")</th>
+					<th>$MESSAGES.getString("t01_object.vertical_extent_vdatum")</th>
 				</tr>
 				<tr>
 					<td>$rec.get("t01_object.vertical_extent_maximum")</td>
@@ -344,9 +344,9 @@
 			<table class="border" border="1">
 			<tbody>	
 				<tr>
-					<th>Medium</th>
-					<th>Datenvolumen</th>
-					<th>Speicherort</th>
+					<th>$MESSAGES.getString("t0112_media_option.medium_name")</th>
+					<th>$MESSAGES.getString("t0112_media_option.transfer_size")</th>
+					<th>$MESSAGES.getString("t0112_media_option.medium_note")</th>
 				</tr>
         	#foreach($t0112_media_option in $rec.get("t0112_media_option.obj_id"))
 				<tr>
