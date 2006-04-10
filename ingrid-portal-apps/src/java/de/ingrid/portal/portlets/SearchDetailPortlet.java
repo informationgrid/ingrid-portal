@@ -3,10 +3,7 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -32,7 +29,6 @@ import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 
@@ -118,7 +114,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 context.put("codeLists", codeLists);
                 
                 // set language code list
-                Iterator it = record.entrySet().iterator();
                 HashMap sysLangHashs = new HashMap();
                 
                 HashMap sysLangHash = new HashMap();
