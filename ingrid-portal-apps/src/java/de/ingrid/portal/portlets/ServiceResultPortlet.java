@@ -160,6 +160,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             for (int i = 0; i < results.length; i++) {
                 try {
                     result = results[i];
+                    detail = null;
                     if (details != null) {
                         detail = details[i];
                     }

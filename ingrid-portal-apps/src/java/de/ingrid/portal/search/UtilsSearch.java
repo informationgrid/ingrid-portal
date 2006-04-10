@@ -197,12 +197,8 @@ public class UtilsSearch {
         if (detailKey.equals(Settings.RESULT_KEY_PARTNER)) {
             mappedValue = UtilsDB.getPartnerFromKey(detailValue);
         } else if (resources != null) {
-            if (detailKey.equals(Settings.RESULT_KEY_TOPIC) || detailKey.equals(Settings.RESULT_KEY_FUNCT_CATEGORY)) {
-                mappedValue = resources.getString(detailValue);
-            }
+            mappedValue = resources.getString(detailValue);
         }
-
-        // TODO: Kataloge, Keys von Kategorien auf Werte abbilden !
 
         return mappedValue;
     }

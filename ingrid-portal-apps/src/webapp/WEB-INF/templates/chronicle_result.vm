@@ -12,7 +12,7 @@
 	#end
 		  <div class="resultset">
 		  #if ($rs.title)
-			<span class="result_title"><strong>#if ($rs.title == "")Kein Titel#else$rs.title#end</strong></span><span class="inquiry"><img src="/ingrid-portal-apps/images/icn_magnifier.gif" alt="Icon Lupe" /> <a href="$!rs.url">Recherche</a></span>
+			<span class="result_title"><strong>#if ($rs.title == "")Kein Titel#else$rs.title#end</strong></span><span class="inquiry"><img src="/ingrid-portal-apps/images/icn_magnifier.gif" alt="Icon Lupe" /> <a href="$!rs.searchURL">Recherche</a></span>
             <p class="result_metadata">
               Ereignistyp: $!rs.type<br />
 			  Datum: $!rs.date<br />
@@ -20,6 +20,9 @@
 			<p class="event_description">
 			$!rs.abstract
 			</p>
+			<p class="result_link">
+				<a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url_str</a>
+			</p>        
 		  #else
 			<span class="result_title"><strong>Ereignis ist leer</strong></span>
 			<p class="result_link"></p>

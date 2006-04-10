@@ -23,8 +23,7 @@ import de.ingrid.portal.portlets.ChronicleTeaserPortlet;
 public class UtilsDate {
 
     private final static Log log = LogFactory.getLog(ChronicleTeaserPortlet.class);
-    
-    
+
     /**
      * Parses a string for a date pattern to the local date
      * representation of the date.
@@ -69,7 +68,7 @@ public class UtilsDate {
         }
         return result;
     }
-    
+
     /** Returns the years between dateStrFrom and dateStringTo. Both can have the formats
      * yyyy-mm-dd or yyyy.
      * 
@@ -91,7 +90,29 @@ public class UtilsDate {
             return -1;
         }
     }
-    
+
+    /**
+     * Get output String for view template. 
+     * @param dateStrFrom
+     * @param dateStrTo
+     * @param locale
+     * @return
+     */
+    public static String getOutputString(String dateStrFrom, String dateStrTo, Locale locale) {
+        String from = UtilsDate.parseDateToLocale(dateStrFrom, locale);
+        String to = UtilsDate.parseDateToLocale(dateStrTo, locale);
+
+        if (from != null && to != null) {
+            return from.concat(" - ").concat(to);
+        } else if (from != null) {
+            return from;
+        } else if (to != null) {
+            return to;
+        }
+        
+        return "";
+    }
+
     /**
      * Parses a date string to a Date. Accepting the following patterns:
      * 
@@ -125,13 +146,13 @@ public class UtilsDate {
                 result = df.parse((String) dateString);
             } else if (dateString.matches("[0-9][0-9][0-9][0-9]0000")) {
                 df.applyPattern("yyyy");
-                result = df.parse((String) dateString.substring(0,4));
+                result = df.parse((String) dateString.substring(0, 4));
             } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
                 df.applyPattern("yyyyMM");
-                result = df.parse((String) dateString.substring(0,6));
+                result = df.parse((String) dateString.substring(0, 6));
             } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
                 df.applyPattern("yyyyMMdd");
-                result = df.parse((String) dateString.substring(0,8));
+                result = df.parse((String) dateString.substring(0, 8));
             }
         } catch (ParseException e) {
             log.warn("error parsing from date.", e);

@@ -2,29 +2,36 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -38,6 +45,9 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/chronicle_result.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/chronicle_no_result.vm";
+
+    /** search page for "recherche" */
+    private final static String PAGE_SEARCH = "/portal/main-search.psml";
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -92,7 +102,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         int numberOfHits = 0;
         try {
-            hits = doSearch(query, startHit, HITS_PER_PAGE, messages);
+            hits = doSearch(query, startHit, HITS_PER_PAGE, request, response);
             if (hits != null) {
                 numberOfHits = (int) hits.length();
             }
@@ -133,27 +143,59 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, IngridResourceBundle resources) {
-        int currentPage = (int) (startHit / hitsPerPage) + 1;
+    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, PortletRequest request,
+            PortletResponse response) {
+        Locale locale = request.getLocale();
+        IngridResourceBundle resources = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
 
+        String searchURL = response.encodeURL(((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+                .getRequest().getContextPath()
+                + PAGE_SEARCH + "?action=doSearch&ds=1&q=");
+
+        int currentPage = (int) (startHit / hitsPerPage) + 1;
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             IngridHit[] results = hits.getHits();
+            IngridHitDetail[] details = ibus.getDetails(results, query, null);
+            if (details == null) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems fetching details of event list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+            }
 
-            IngridHit result = null;
+            Topic topic = null;
+            DetailedTopic detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
-                    Topic topic = (Topic) results[i];
-                    if (log.isDebugEnabled()) {
-                        log.debug("chronicle topic" + i + "=" + topic);
+                    topic = (Topic) results[i];
+                    detail = null;
+                    if (details != null) {
+                        detail = (DetailedTopic) details[i];
                     }
 
+                    if (topic == null) {
+                        continue;
+                    }
+                    if (detail != null) {
+                        //                        String searchData = detail.getSearch();
+                        String searchData = "";
+                        topic.put("searchURL", searchURL.concat(searchData));
+                        topic.put("type", resources.getString(detail.getType()));
+                        topic.put("date", UtilsDate.getOutputString(detail.getFrom(), detail.getTo(), locale));
+                        //                        String searchData = detail.getURL();
+                        String url = "";
+                        if (url != null && url.length() > 0) {
+                            topic.put("url", url);
+                            topic.put("url_str", Utils.getShortURLStr(url, 80));
+                        }
+
+                    }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + result, t);
+                        log.error("Problems processing Hit, hit = " + topic, t);
                     }
                 }
             }

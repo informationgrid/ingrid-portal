@@ -50,6 +50,15 @@ public class SNSInterfaceTest extends TestCase {
         IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
+        if (hitsArray.length == 0) {
+            System.out.println("!!!!!!!!!!!!!!!! NO ANNIVERSARY HIT FOUND");
+        } else {
+            for (int i = 0; i < hitsArray.length; i++) {
+                Topic hit = (Topic) hitsArray[i];
+                System.out.println(hit.getTopicName() + ":" + hit.getTopicID());
+            }
+        }
+        System.out.println("--- try to fetch details:");
         IngridHitDetail[] details = iBus.getDetails(hitsArray, query, new String[0]);
         assertNotNull(details);
         if (details.length > 0) {
@@ -60,7 +69,7 @@ public class SNSInterfaceTest extends TestCase {
                         + detail.getTo() + ":" + detail.getAdministrativeID());
             }
         } else {
-            System.out.println("!!!!!!!!!!!!!!!! NO ANNIVERSARY FOUND");
+            System.out.println("!!!!!!!!!!!!!!!! NO ANNIVERSARY DETAILS FOUND");
         }
     }
 
@@ -96,6 +105,10 @@ public class SNSInterfaceTest extends TestCase {
         query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
         query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
         query.put(Settings.QFIELD_EVENT_TYPE, eventType);
+
+        // fix, if no term, date has to be set !
+        query.put("t1", "0000-01-01");
+        query.put("t2", "2006-04-10");
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
         IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, PortalConfig.getInstance()
@@ -160,6 +173,18 @@ public class SNSInterfaceTest extends TestCase {
             Topic hit = (Topic) hitsArray[0];
             System.out.println(hit.getTopicName() + ":" + hit.getTopicID());
 
+        }
+        IngridHitDetail[] details = ibus.getDetails(hitsArray, query, new String[0]);
+        assertNotNull(details);
+        if (details.length > 0) {
+            for (int i = 0; i < details.length; i++) {
+                assertTrue(details[i] instanceof DetailedTopic);
+                DetailedTopic detail = (DetailedTopic) details[i];
+                System.out.println(detail.getTopicName() + ":" + detail.getTopicID() + ":" + detail.getFrom() + ":"
+                        + detail.getTo() + ":" + detail.getType() + ":" + detail.getAdministrativeID());
+            }
+        } else {
+            System.out.println("!!!!!!!!!!!!!!!! NO EVENT DETAILS FOUND");
         }
     }
 }
