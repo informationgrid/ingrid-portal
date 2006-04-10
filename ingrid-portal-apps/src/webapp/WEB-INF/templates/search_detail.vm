@@ -340,12 +340,24 @@
     		</p>
     	#end	
     	#if($rec.get("t0112_media_option.obj_id"))
-    		<p><strong>$MESSAGES.getString("data_format"):</strong><br></p>
+    		<p><strong>$MESSAGES.getString("t0112_media_option.medium"):</strong><br></p>
+			<table class="border" border="1">
+			<tbody>	
+				<tr>
+					<th>Medium</th>
+					<th>Datenvolumen</th>
+					<th>Speicherort</th>
+				</tr>
         	#foreach($t0112_media_option in $rec.get("t0112_media_option.obj_id"))
-                #renderECSEntry($t0112_media_option "t0112_media_option.medium_name")
-    			#renderECSEntry($t0112_avail_format "t0112_media_option.transfer_size")
-    			#renderECSEntry($t0112_avail_format "t0112_media_option.medium_note")
+				<tr>
+					<td>$t0112_media_option.get("t0112_media_option.medium_name")</td>
+					<td>#if($t0112_media_option.get("t0112_media_option.transfer_size"))$t0112_media_option.get("t0112_media_option.transfer_size")#end</td>
+					<td>#if($t0112_media_option.get("t0112_media_option.medium_note"))$t0112_media_option.get("t0112_media_option.medium_note")#end</td>
+				</tr>
     		#end
+			</tbody>	
+			</table>
+			<br />
     	#end
     	#renderECSEntry($rec "t01_object.ordering_instructions")
     	#renderECSEntry($rec "t01_object.avail_access_note")
