@@ -17,10 +17,10 @@
     #end
 #end
 
-#macro (renderECSEntry $r $entryName $suffix)
+#macro (renderECSEntrySuffix $r $entryName $suffix)
 	#if($r.get($entryName))
 		<p><strong>$MESSAGES.getString($entryName):</strong><br/>
-		$r.get($entryName) $suffix<br/>
+		$r.get($entryName)#if($suffix) $suffix#end<br/>
 		</p>
     #end
 #end
@@ -221,10 +221,10 @@
     		#renderECSEntry($myData "t011_obj_geo_vector.geometric_object_type")
     		#renderECSEntry($myData "t011_obj_geo.vector_topology_level")
     		#renderECSEntry($myData "t011_obj_geo_vector.geometric_object_count")
-			#renderECSEntry($myData "t011_obj_geo.rec_grade" "%")
+			#renderECSEntrySuffix($myData "t011_obj_geo.rec_grade" "%")
     		#renderECSEntry($myData "t011_obj_geo.coord")
     		#renderECSEntry($myData "t011_obj_geo_scale.scale")
-    		#renderECSEntry($myData "t011_obj_geo_scale.resolution_ground" "m")
+    		#renderECSEntrySuffix($myData "t011_obj_geo_scale.resolution_ground" "m")
     		#renderECSEntry($myData "t011_obj_geo_scale.resolution_scan")
     		#renderECSEntry($myData "t011_obj_geo.pos_accuracy_vertical")
     		#renderECSEntry($myData "t011_obj_geo.rec_exact")
@@ -356,8 +356,14 @@
 #macro (renderECSAdditionalInformation)
 	<div class="line"><hr /></div>
 	<p><strong>$MESSAGES.getString("additional_information"):</strong><br/></p>
-	#renderECSEntry($rec "t01_object.metadata_language")
-	#renderECSEntry($rec "t01_object.data_language")
+	#if($rec.get("t01_object.metadata_language") && $rec.get("t01_object.metadata_language") != "")
+		<p><strong>$MESSAGES.getString("t01_object.metadata_language"):</strong><br/>
+		$sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name")
+	#end
+	#if($rec.get("t01_object.data_language") && $rec.get("t01_object.data_language") != "")
+		<p><strong>$MESSAGES.getString("t01_object.data_language"):</strong><br/>
+		$sysLangList.get($rec.get("t01_object.data_language")).get("sys_language.name")
+	#end
 	#if($rec.get("t015_legist.obj_id"))
 		<p><strong>$MESSAGES.getString("legal_basis"):</strong><br/>
 		#foreach($t015_legist in $rec.get("t015_legist.obj_id"))
