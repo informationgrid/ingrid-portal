@@ -17,6 +17,15 @@
     #end
 #end
 
+#macro (renderECSEntry $r $entryName $suffix)
+	#if($r.get($entryName))
+		<p><strong>$MESSAGES.getString($entryName):</strong><br/>
+		$r.get($entryName) $suffix<br/>
+		</p>
+    #end
+#end
+
+
 #macro (renderSuperiorReferences)
 	#if($superiorReferences)
     	<p>
@@ -212,10 +221,10 @@
     		#renderECSEntry($myData "t011_obj_geo_vector.geometric_object_type")
     		#renderECSEntry($myData "t011_obj_geo.vector_topology_level")
     		#renderECSEntry($myData "t011_obj_geo_vector.geometric_object_count")
-    		#renderECSEntry($myData "t011_obj_geo.rec_grade")
+			#renderECSEntry($myData "t011_obj_geo.rec_grade" "%")
     		#renderECSEntry($myData "t011_obj_geo.coord")
     		#renderECSEntry($myData "t011_obj_geo_scale.scale")
-    		#renderECSEntry($myData "t011_obj_geo_scale.resolution_ground")
+    		#renderECSEntry($myData "t011_obj_geo_scale.resolution_ground" "m")
     		#renderECSEntry($myData "t011_obj_geo_scale.resolution_scan")
     		#renderECSEntry($myData "t011_obj_geo.pos_accuracy_vertical")
     		#renderECSEntry($myData "t011_obj_geo.rec_exact")
@@ -292,9 +301,11 @@
     		$codeLists.get("518").get($rec.get("t01_object.time_period")).get("sys_codelist_domain.name")<br/>
     		</p>
         #end
-    	<p><strong>$MESSAGES.getString("t01_object.time_interval")</strong><br />
-		alle $rec.get("t01_object.time_alle") $rec.get("t01_object.time_interval")
-		</p>
+    	#if($rec.get("t01_object.time_alle"))
+    		<p><strong>$MESSAGES.getString("t01_object.time_interval")</strong><br />
+    		alle $rec.get("t01_object.time_alle") $rec.get("t01_object.time_interval")
+    		</p>
+		#end	
     	<p><strong>$MESSAGES.getString("time_reference_record")</strong><br/>
     	#foreach($t0113_dataset_reference in $rec.get("t0113_dataset_reference.obj_id"))
     		#set($t0113_dataset_reference_type = $t0113_dataset_reference.get("t0113_dataset_reference.type"))
