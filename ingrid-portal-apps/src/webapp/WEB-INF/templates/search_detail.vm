@@ -126,7 +126,7 @@
 				<a href="$action">
 				#if($myAddress.get("t02_address.institution"))$myAddress.get("t02_address.institution")<br />#end
 				</a>
-				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")<br />#end
+				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end
 				<a href="$action">
 				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end
 				#if($myAddress.get("t02_address.firstname"))$myAddress.get("t02_address.firstname")#end
@@ -179,7 +179,6 @@
 		#foreach($myData in $rec.get("t011_obj_serv.obj_id"))    			
     		#renderECSEntry($myData "t011_obj_serv.type")
     		#renderECSEntry($myData "t011_obj_serv.environment")
-    
     		#renderECSEntry($myData "t011_obj_serv.history")
     		#renderECSEntry($myData "t011_obj_serv.base")
     		#renderECSEntry($myData "t011_obj_serv_version.version")

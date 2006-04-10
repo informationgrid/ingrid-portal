@@ -168,6 +168,40 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         }
                     }
                     
+                    // get all addresses
+                    ArrayList addrRecords = getAllTableRows(record, "T02_address");
+                    HashMap addrParents = new HashMap();
+                    // iterate over all addresses and add missing information for the address
+                    for (int i=0; i<addrRecords.size(); i++) {
+                        Record addrRecord = (Record)addrRecords.get(i);
+                        String addressType = (String)addrRecord.get("T02_ADDRESS.TYP");
+                        // get id of the address
+                        String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
+                        if (addressType.equals("1") || addressType.equals("2")) {
+                            String myInst = (String)addrRecord.get("T02_ADDRESS.INSTITUTION");
+                            if (myInst == null || myInst.length() == 0) {
+                                HashMap parents = new HashMap();
+                                // get the address record of the address
+                                String queryStr = "T02_address.adr_id:" + addressId + " datatype:address ranking:score";
+                                IngridQuery q = QueryStringParser.parse(queryStr);
+                                IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                                if (hits.getHits().length > 0) {
+                                    IngridHit refHit = hits.getHits()[0];
+                                    Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
+                                    // get parents of the address record
+                                    getUDKAddressParents(parents, myRecord);
+                                    addrParents.put(addressId, parents);
+                                }
+                            }
+                        }
+                    }
+                    context.put("addrParents", addrParents);
+
+/*                    
+                    
+                    // add missing information for the address
+                    
+                    
                     // get superior addresses
                     
                     // get all addresses
@@ -225,7 +259,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     }
                     
                     context.put("addressReferences", addrReferences);
-                    
+*/                    
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
                     context.put("crossReferences", crossReferences);
@@ -269,6 +303,85 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
 
         super.doView(request, response);
+    }
+
+    private void getUDKAddressParents(HashMap result, Record record) throws Exception {
+        // get id of the address
+        String addressId = (String)record.get("T02_ADDRESS.ADR_ID");
+        // get type of the address
+        String addressType = (String)record.get("T02_ADDRESS.TYP");
+        // get parent only for units and persons
+        if (addressType.equals("1") || addressType.equals("2")) {
+            // get all referenced addresses
+            ArrayList addrReferenceRecords = getAllTableRows(record, "t022_adr_adr");
+            // iterate over all references and find first parent address
+            for (int i=0; i < addrReferenceRecords.size(); i++) {
+                Record refRecord = (Record)addrReferenceRecords.get(i);
+                String addrToId = (String)refRecord.get("T022_ADR_ADR.ADR_TO_ID");
+                String addrFromId = (String)refRecord.get("T022_ADR_ADR.ADR_FROM_ID");
+                if (addrToId.equals(addressId)) {
+                    // get the parent of the address
+                    String queryStr = "T02_address.adr_id:" + addrFromId + " datatype:address ranking:score";
+                    IngridQuery q = QueryStringParser.parse(queryStr);
+                    IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                    for (int j=0; j<hits.length(); j++) {
+                        IngridHit refHit = hits.getHits()[j];
+                        Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
+                        String myAddressType = (String)record.get("T02_ADDRESS.typ");
+                        if (myAddressType.equals("0")) {
+                            if (result.containsKey("institution")) {
+                                result.put("institution", new ArrayList());
+                            }
+                            ArrayList institutions = (ArrayList)result.get("institution");
+                            institutions.add(myRecord);
+                        } else if (myAddressType.equals("2")) {
+                            if (result.containsKey("units")) {
+                                result.put("units", new ArrayList());
+                            }
+                            ArrayList units = (ArrayList)result.get("units");
+                            units.add(0, myRecord);
+                            getUDKAddressParents(result, myRecord);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    private HashMap getUDKAddressBreadcrumb(String addrId) throws Exception {
+        String queryStr = "T02_address.adr_id:" + addrId + " datatype:address ranking:score";
+        IngridQuery q = QueryStringParser.parse(queryStr);
+        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+        HashMap addrHash = null;
+        if (hits.length() > 0) {
+            IngridHit refHit = hits.getHits()[0];
+            addrHash = new HashMap();
+            Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
+            addrHash.put("record", myRecord);
+            addrHash.put("hit", refHit);
+            // get id of the address
+            String addressId = (String)myRecord.get("T02_ADDRESS.ADR_ID");
+            // get type of the address
+            String myAddressType = (String)myRecord.get("T02_address.typ");
+            
+            // get parent only for units and persons
+            if (myAddressType.equals("1") || myAddressType.equals("2")) {
+                // get all referenced addresses
+                ArrayList addrReferenceRecords = getAllTableRows(myRecord, "T022_adr_adr");
+                for (int i=0; i < addrReferenceRecords.size(); i++) {
+                    Record refRecord = (Record)addrReferenceRecords.get(i);
+                    String addrToId = (String)refRecord.get("T022_ADR_ADR.ADR_TO_ID");
+                    String addrFromId = (String)refRecord.get("T022_ADR_ADR.ADR_FROM_ID");
+                    if (addrToId.equals(addressId)) {
+                        // get the parent of the address
+                        addrHash.put("parent", getUDKAddressBreadcrumb(addrFromId));
+                        break;
+                    }
+                }
+            }
+        }
+        return addrHash;
     }
     
     private HashMap getUDKAddressHash(String addrId) throws Exception {
