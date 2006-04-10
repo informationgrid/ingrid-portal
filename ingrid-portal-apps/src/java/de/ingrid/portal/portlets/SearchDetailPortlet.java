@@ -3,7 +3,9 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -169,7 +171,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     }
                     
                     // get all addresses
-                    ArrayList addrRecords = getAllTableRows(record, "T02_address");
+                    ArrayList addrRecords = getAllTableRows(record, "T02_ADDRESS");
                     HashMap addrParents = new HashMap();
                     // iterate over all addresses and add missing information for the address
                     for (int i=0; i<addrRecords.size(); i++) {
@@ -317,25 +319,25 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             // iterate over all references and find first parent address
             for (int i=0; i < addrReferenceRecords.size(); i++) {
                 Record refRecord = (Record)addrReferenceRecords.get(i);
-                String addrToId = (String)refRecord.get("T022_ADR_ADR.ADR_TO_ID");
-                String addrFromId = (String)refRecord.get("T022_ADR_ADR.ADR_FROM_ID");
-                if (addrToId.equals(addressId)) {
+                String addrToId = (String)refRecord.get("t022_adr_adr.adr_to_id");
+                String addrFromId = (String)refRecord.get("t022_adr_adr.adr_from_id");
+                if (addrToId != null && addrToId.equals(addressId)) {
                     // get the parent of the address
                     String queryStr = "T02_address.adr_id:" + addrFromId + " datatype:address ranking:score";
                     IngridQuery q = QueryStringParser.parse(queryStr);
                     IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                    for (int j=0; j<hits.length(); j++) {
+                    for (int j=0; j<hits.getHits().length; j++) {
                         IngridHit refHit = hits.getHits()[j];
                         Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
-                        String myAddressType = (String)record.get("T02_ADDRESS.typ");
+                        String myAddressType = (String)myRecord.get("T02_ADDRESS.TYP");
                         if (myAddressType.equals("0")) {
-                            if (result.containsKey("institution")) {
-                                result.put("institution", new ArrayList());
+                            if (!result.containsKey("institutions")) {
+                                result.put("institutions", new ArrayList());
                             }
-                            ArrayList institutions = (ArrayList)result.get("institution");
+                            ArrayList institutions = (ArrayList)result.get("institutions");
                             institutions.add(myRecord);
-                        } else if (myAddressType.equals("2")) {
-                            if (result.containsKey("units")) {
+                        } else if (myAddressType.equals("1")) {
+                            if (!result.containsKey("units")) {
                                 result.put("units", new ArrayList());
                             }
                             ArrayList units = (ArrayList)result.get("units");
@@ -348,48 +350,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
     }
     
-    
-    private HashMap getUDKAddressBreadcrumb(String addrId) throws Exception {
-        String queryStr = "T02_address.adr_id:" + addrId + " datatype:address ranking:score";
-        IngridQuery q = QueryStringParser.parse(queryStr);
-        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-        HashMap addrHash = null;
-        if (hits.length() > 0) {
-            IngridHit refHit = hits.getHits()[0];
-            addrHash = new HashMap();
-            Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
-            addrHash.put("record", myRecord);
-            addrHash.put("hit", refHit);
-            // get id of the address
-            String addressId = (String)myRecord.get("T02_ADDRESS.ADR_ID");
-            // get type of the address
-            String myAddressType = (String)myRecord.get("T02_address.typ");
-            
-            // get parent only for units and persons
-            if (myAddressType.equals("1") || myAddressType.equals("2")) {
-                // get all referenced addresses
-                ArrayList addrReferenceRecords = getAllTableRows(myRecord, "T022_adr_adr");
-                for (int i=0; i < addrReferenceRecords.size(); i++) {
-                    Record refRecord = (Record)addrReferenceRecords.get(i);
-                    String addrToId = (String)refRecord.get("T022_ADR_ADR.ADR_TO_ID");
-                    String addrFromId = (String)refRecord.get("T022_ADR_ADR.ADR_FROM_ID");
-                    if (addrToId.equals(addressId)) {
-                        // get the parent of the address
-                        addrHash.put("parent", getUDKAddressBreadcrumb(addrFromId));
-                        break;
-                    }
-                }
-            }
-        }
-        return addrHash;
-    }
-    
     private HashMap getUDKAddressHash(String addrId) throws Exception {
         String queryStr = "T02_address.adr_id:" + addrId + " datatype:address ranking:score";
         IngridQuery q = QueryStringParser.parse(queryStr);
         IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
         HashMap addrHash = null;
-        if (hits.length() > 0) {
+        if (hits.getHits().length > 0) {
             IngridHit refHit = hits.getHits()[0];
             addrHash = new HashMap();
             addrHash.put("record", IBUSInterfaceImpl.getInstance().getRecord(refHit));
@@ -403,7 +369,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         IngridQuery q = QueryStringParser.parse(queryStr);
         IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
         HashMap objHash = null;
-        if (hits.length() > 0) {
+        if (hits.getHits().length > 0) {
             IngridHit refHit = hits.getHits()[0];
             IngridHitDetail refDetail =  IBUSInterfaceImpl.getInstance().getDetail(refHit, q, null);
             objHash = new HashMap();
@@ -470,16 +436,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     private ArrayList getAllTableRows(Record record,  String tableName) {
         ArrayList result = new ArrayList();
         
-        Column[] columns;
+//        Column[] columns;
         Record[] subRecords = record.getSubRecords();
         for (int i = 0; i < subRecords.length; i++) {
-            columns = subRecords[i].getColumns();
-            if (columns.length > 0) {
-                String columnName = columns[0].getTargetName();
-                if (columnName.startsWith(tableName)) {
-                    result.add(subRecords[i]);
-                }
-            }
+
+            Set keys = subRecords[i].keySet();
+            Iterator it = keys.iterator();
+            String firstKey = (String)it.next();
+            if (firstKey.startsWith(tableName)) {
+                result.add(subRecords[i]);
+            }            
+            
             result.addAll(getAllTableRows(subRecords[i], tableName));
         }
         return result;
@@ -489,7 +456,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         String cmd = request.getParameter("cmd");
-        if (cmd.equals("doShowAddressDetail")) {
+        if (cmd == null) {
+            return;
+        } else if (cmd.equals("doShowAddressDetail")) {
             String addrId = request.getParameter("addrId");
             try {
                 HashMap addrHash = getUDKAddressHash(addrId);
@@ -499,6 +468,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             } catch (Exception e) {
                 log.error("Error fetching address data for address id: " + addrId, e);
             }
+        } else if (cmd.equals("doShowObjectDetail")) {
+            response.setRenderParameter("docid", request.getParameter("docid"));
+            response.setRenderParameter("plugid", request.getParameter("plugid"));
         }
         
     }

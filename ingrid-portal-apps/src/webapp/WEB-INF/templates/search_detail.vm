@@ -34,25 +34,27 @@
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
 		</span>
 		#set ($action = $renderResponse.createActionURL())
+		$action.setParameter('cmd', "doShowObjectDetail")
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
-		<a href="$action" target="_new" alt="externer Link">$ref.title</a><br/>
+		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
 	#end
 #end
 
 #macro (renderSubordinatedReferences)
-	#if($subordinatedReferences && !$subordinatedReferences.isEpmty())
+	#if($subordinatedReferences && !$subordinatedReferences.isEmpty())
 		<p><strong>$MESSAGES.getString("subordinated_references"):</strong><br/>
 		#foreach($ref in $subordinatedReferences)
 		<span class="icon">
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
 		</span>
 		#set ($action = $renderResponse.createActionURL())
+		$action.setParameter('cmd', "doShowObjectDetail")
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
-		<a href="$action" target="_new" alt="externer Link">$ref.title</a><br/>
+		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
 	#end
@@ -66,9 +68,10 @@
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
 		</span>
 		#set ($action = $renderResponse.createActionURL())
+		$action.setParameter('cmd', "doShowObjectDetail")
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
-		<a href="$action" target="_new" alt="externer Link">$ref.title</a><br/>
+		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
 	#end
@@ -93,41 +96,35 @@
     	<div class="line"><hr /></div>
     	#foreach($myAddressType in $rec.get("t012_obj_adr.obj_id"))
     		#set($addressId = $myAddressType.get("t02_address.adr_id"))
-			#if (!$addressReferences.get("$addressId").isEmpty())
-				## check for superior institutions
-				#set($addrRefs = $addressReferences.get("$addressId"))
-				#if($addrRefs.get("0"))
-					<p><strong>$MESSAGES.getString("superior_institution"):</strong><br>
-					#foreach($addr in $addrRefs.get("0"))
-                		#set ($action = $renderResponse.createActionURL())
-                		$action.setParameter('docid', "$addr.hit.getId()")
-                		$action.setParameter('plugid', "$addr.hit.getPlugId()")
-						<p><a href="$action">$addr.get("t02_address.institution")</a></p>
-					#end
-				#end
-				#if($addrRefs.get("1"))
-					<p><strong>$MESSAGES.getString("superior_units"):</strong><br>
-					#foreach($addr in $addrRefs.get("1"))
-                		#set ($action = $renderResponse.createActionURL())
-                		$action.setParameter('docid', "$addr.hit.getId()")
-                		$action.setParameter('plugid', "$addr.hit.getPlugId()")
-						<p><a href="$action">$addr.get("t02_address.institution")</a></p>
-					#end
-				#end
-			#end	
-			
 			#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
 			#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
 			<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
         	#foreach($myAddress in $myAddressType.get("t02_address.adr_id"))
+				#if($myAddress.get("t02_address.institution"))
+					$myAddress.get("t02_address.institution")<br />
+				#else
+					#set($institutions = $addrParents.get($myAddress.get("t02_address.adr_id")).get("institutions"))
+					#foreach($institution in $institutions)
+						#set($instituteAddrId = $institution.get("T02_ADDRESS.ADR_ID"))
+        				#set ($action = $renderResponse.createActionURL())
+                		$action.setParameter('cmd', "doShowAddressDetail")
+                		$action.setParameter('addrId', "$instituteAddrId")						
+						<a href="$action">$institution.get("T02_ADDRESS.INSTITUTION")</a><br/>
+					#end	
+					#set($units = $addrParents.get($myAddress.get("t02_address.adr_id")).get("units"))
+					#foreach($unit in $units)
+						#set($unitAddrId = $unit.get("T02_ADDRESS.ADR_ID"))
+        				#set ($action = $renderResponse.createActionURL())
+                		$action.setParameter('cmd', "doShowAddressDetail")
+                		$action.setParameter('addrId', "$unitAddrId")						
+						<a href="$action">$unit.get("T02_ADDRESS.INSTITUTION")</a><br/>
+					#end
+				#end
 				#set ($action = $renderResponse.createActionURL())
         		$action.setParameter('cmd', "doShowAddressDetail")
         		$action.setParameter('addrId', $myAddress.get("t02_address.adr_id"))
 				<a href="$action">
-				#if($myAddress.get("t02_address.institution"))$myAddress.get("t02_address.institution")<br />#end
-				</a>
 				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end
-				<a href="$action">
 				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end
 				#if($myAddress.get("t02_address.firstname"))$myAddress.get("t02_address.firstname")#end
 				#if($myAddress.get("t02_address.lastname"))$myAddress.get("t02_address.lastname")<br/>#end
@@ -341,6 +338,7 @@
     		#end
 			</tbody>	
 			</table>
+			<br/>
 			</p>
     	#end	
     	#if($rec.get("t0112_media_option.obj_id"))
