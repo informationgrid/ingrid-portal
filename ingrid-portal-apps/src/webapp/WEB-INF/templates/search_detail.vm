@@ -324,20 +324,25 @@
 	
     	#if($rec.get("t0110_avail_format.obj_id"))
     		<p><strong>$MESSAGES.getString("data_format"):</strong><br>
+			<table class="border" border="1">
+			<tbody>	
+				<tr>
+					<th>$MESSAGES.getString("t0110_avail_format.name")</th>
+					<th>$MESSAGES.getString("t0110_avail_format.version")</th>
+					<th>$MESSAGES.getString("t0110_avail_format.file_decompression_technique")</th>
+					<th>$MESSAGES.getString("t0110_avail_format.specification")</th>
+				</tr>
         	#foreach($t0110_avail_format in $rec.get("t0110_avail_format.obj_id"))
-                $t0110_avail_format.get("t0110_avail_format.name")
-    			#if($t0110_avail_format.get("t0110_avail_format.version"))
-    				; $t0110_avail_format.get("t0110_avail_format.version")
-    			#end	
-    			#if($t0110_avail_format.get("t0110_avail_format.file_decompression_technique"))
-    				; $t0110_avail_format.get("t0110_avail_format.file_decompression_technique")
-    			#end	
-    			#if($t0110_avail_format.get("t0110_avail_format.specification"))
-    				; $t0110_avail_format.get("t0110_avail_format.specification")
-    			#end
-    			<br />
+				<tr>
+					<td>#if($t0110_avail_format.get("t0110_avail_format.name"))$t0110_avail_format.get("t0110_avail_format.name")#end</td>
+					<td>#if($t0110_avail_format.get("t0110_avail_format.version"))$t0110_avail_format.get("t0110_avail_format.version")#end</td>
+					<td>#if($t0110_avail_format.get("t0110_avail_format.file_decompression_technique"))$t0110_avail_format.get("t0110_avail_format.file_decompression_technique")#end</td>
+					<td>#if($t0110_avail_format.get("t0110_avail_format.specification"))$t0110_avail_format.get("t0110_avail_format.specification")#end</td>
+				</tr>
     		#end
-    		</p>
+			</tbody>	
+			</table>
+			</p>
     	#end	
     	#if($rec.get("t0112_media_option.obj_id"))
     		<p><strong>$MESSAGES.getString("t0112_media_option.medium"):</strong><br></p>
