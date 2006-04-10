@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -115,6 +117,25 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 }
                 context.put("codeLists", codeLists);
                 
+                // set language code list
+                Iterator it = record.entrySet().iterator();
+                HashMap sysLangHashs = new HashMap();
+                
+                HashMap sysLangHash = new HashMap();
+                sysLangHash.put("sys_language.lang_id", "121");
+                sysLangHash.put("sys_language.name", "Deutsch");
+                sysLangHash.put("sys_language.description", "Deutsch");
+                sysLangHash.put("sys_language.def_lang", "1");
+                sysLangHashs.put("121", sysLangHash);
+                
+                sysLangHash = new HashMap();
+                sysLangHash.put("sys_language.lang_id", "94");
+                sysLangHash.put("sys_language.name", "English");
+                sysLangHash.put("sys_language.description", "English");
+                sysLangHash.put("sys_language.def_lang", "1");
+                sysLangHashs.put("94", sysLangHash);
+                
+                context.put("sysLangList", sysLangHashs);
                 
                 if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
