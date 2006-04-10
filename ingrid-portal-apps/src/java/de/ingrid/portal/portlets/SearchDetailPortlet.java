@@ -136,7 +136,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
                     
                     // get references
-                    ArrayList references = getAllTableRows(record, "T012_obj_obj");
+                    ArrayList references = getAllTableRows(record, "T012_OBJ_OBJ");
                     Record referenceRecord = null;
                     String refType = null;
                     String objToId;
@@ -144,13 +144,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     ArrayList superiorReferences = new ArrayList();
                     ArrayList subordinatedReferences = new ArrayList();
                     ArrayList crossReferences = new ArrayList();
-                    String objId = (String)record.get("T01_object.obj_id");
+                    String objId = (String)record.get("T01_OBJECT.OBJ_ID");
                     
                     for (int i=0; i<references.size(); i++) {
                         referenceRecord = (Record) references.get(i);
-                        refType = (String)referenceRecord.get("T012_obj_obj.typ");
-                        objToId = (String)referenceRecord.get("T012_obj_obj.object_to_id");
-                        objFromId = (String)referenceRecord.get("T012_obj_obj.object_from_id");
+                        refType = (String)referenceRecord.get("T012_OBJ_OBJ.TYP");
+                        objToId = (String)referenceRecord.get("T012_OBJ_OBJ.OBJECT_TO_ID");
+                        objFromId = (String)referenceRecord.get("T012_OBJ_OBJ.OBJECT_FROM_ID");
                         if (refType.equals("0")) {
                             // add superior reference
                             if (objToId.equals(objId)) {

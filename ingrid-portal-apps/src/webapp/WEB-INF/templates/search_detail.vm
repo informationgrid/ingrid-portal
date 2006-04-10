@@ -27,8 +27,8 @@
 
 
 #macro (renderSuperiorReferences)
-	#if($superiorReferences)
-    	<p>
+	#if($superiorReferences && !$superiorReferences.isEmpty())
+		<p><strong>$MESSAGES.getString("superior_references"):</strong><br/>
 		#foreach($ref in $superiorReferences)
 		<span class="icon">
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
@@ -43,8 +43,8 @@
 #end
 
 #macro (renderSubordinatedReferences)
-	#if($subordinatedReferences)
-    	<p>
+	#if($subordinatedReferences && !$subordinatedReferences.isEpmty())
+		<p><strong>$MESSAGES.getString("subordinated_references"):</strong><br/>
 		#foreach($ref in $subordinatedReferences)
 		<span class="icon">
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
@@ -59,8 +59,8 @@
 #end
 
 #macro (renderCrossReferences)
-	#if($crossReferences)
-    	<p>
+	#if($crossReferences && !$crossReferences.isEmpty())
+		<p><strong>$MESSAGES.getString("cross_references"):</strong><br/>
 		#foreach($ref in $crossReferences)
 		<span class="icon">
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
@@ -77,7 +77,7 @@
 
 #macro (renderWWWReferences)
 	#if($rec.get("t017_url_ref.obj_id"))
-    	<p>
+		<p><strong>$MESSAGES.getString("www_references"):</strong><br/>
 		#foreach($t017_url_ref in $rec.get("t017_url_ref.obj_id"))
 		<span class="icon">
 			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" />
@@ -426,14 +426,10 @@
 		<span class="clearer"></span>
 		#if($rec.get("summary"))<p>$rec.get("summary")</p>#end
 
-	<p><strong>$MESSAGES.getString("references"):</strong><br/>
-	<p><strong>$MESSAGES.getString("superior_references"):</strong><br/>
+	<p><strong>$MESSAGES.getString("references"):</strong></p>
 	#renderSuperiorReferences()
-	<p><strong>$MESSAGES.getString("subordinated_references"):</strong><br/>
 	#renderSubordinatedReferences()
-	<p><strong>$MESSAGES.getString("cross_references"):</strong><br/>
 	#renderCrossReferences()
-	<p><strong>$MESSAGES.getString("www_references"):</strong><br/>
 	#renderWWWReferences()
 	#renderECSAddress()
     #renderECSSubjectReference($ecsObjClass)
