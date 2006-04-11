@@ -37,6 +37,67 @@ public class UtilsQueryString {
         return result.toString();
     }
     
+    public static String addTerm(String queryStr, String str, String operator) {
+        StringBuffer result;
+        
+        if (str == null || operator == null) {
+            return queryStr;
+        }
+        
+        if (queryStr == null) {
+            queryStr = "";
+            result = new StringBuffer(str.length());
+        } else {
+            result = new StringBuffer(queryStr.length() + str.length());
+            result.append(queryStr);
+        }
+        
+        if (operator.equals("OR")) {
+            String[] terms = str.split(" ");
+            if (queryStr.length() > 0 && terms.length > 0) {
+                result.insert(0, "(");
+                result.append(") OR ");
+            }
+            for (int i=0; i<terms.length; i++) {
+                result.append(terms[i]);
+                if (i != terms.length - 1) {
+                    result.append(" OR ");
+                }
+            }
+        } else if (operator.equals("AND")) {
+            String[] terms = str.split(" ");
+            if (queryStr.length() > 0 && terms.length > 0) {
+                result.insert(0, "(");
+                result.append(") ");
+            }
+            for (int i=0; i<terms.length; i++) {
+                result.append(terms[i]);
+                if (i != terms.length - 1) {
+                    result.append(" ");
+                }
+            }
+        } else if (operator.equals("NOT")) {
+            String[] terms = str.split(" ");
+            if (queryStr.length() > 0 && terms.length > 0) {
+                result.insert(0, "(");
+                result.append(") ");
+            }
+            for (int i=0; i<terms.length; i++) {
+                result.append("-").append(terms[i]);
+            }
+        } else if (operator.equals("PHRASE")) {
+            if (queryStr.length() > 0) {
+                result.insert(0, "(");
+                result.append(") ");
+            }
+            result.append("\"").append(str).append("\"");
+        }
+        
+        return result.toString();
+    }
+    
+    
+    
     private static int getTermStartPos(String query, int start) {
         char c;
         String str = new String(query).toLowerCase();

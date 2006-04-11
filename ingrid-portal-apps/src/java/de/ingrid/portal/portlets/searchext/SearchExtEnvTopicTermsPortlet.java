@@ -9,9 +9,11 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
+import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsQueryString;
 
 /**
  * This portlet handles the fragment of the terms input in the extended search
@@ -42,8 +44,19 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
 
         // TODO: implement functionality
         if (submittedAddToQuery != null) {
-
             // Zur Suchanfrage hinzufuegen
+            String addingType = request.getParameter("adding_type");
+            String searchTerm = request.getParameter("search_term");
+            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+            if (addingType.equals("1")) {
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "AND"));
+            } else if (addingType.equals("2")) {
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "OR"));
+            } else if (addingType.equals("3")) {
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "PHRASE"));
+            } else if (addingType.equals("4")) {
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "NOT"));
+            }
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
