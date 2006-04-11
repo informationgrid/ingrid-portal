@@ -124,10 +124,12 @@
 #end
 
 #macro (renderUDKAddressRelatedRecords)
-	#if($rec.get("t012_obj_adr.obj_id"))
+	#if($rec.get("t012_obj_adr.obj_id") || ($subordinatedObjRef && !$subordinatedObjRef.isEmpty()))
 		<div class="line"><hr></div>
+		<br />
         <ul>
-        <li><a name="direkt"></a>Datenbezüge
+        #if($rec.get("t012_obj_adr.obj_id"))
+		<li><a name="direkt"></a>Datenbezüge
         <ul class="udklist">
 		#foreach($t012_obj_adr in $rec.get("t012_obj_adr.obj_id"))
 			#foreach($t01_object in $t012_obj_adr.get("t01_object.obj_id"))
@@ -143,10 +145,11 @@
 		#end
 		</ul>
           </li>
+		  #end
 		  #if($subordinatedObjRef && !$subordinatedObjRef.isEmpty())
 		  <li><a name="alle"></a>Datenbezüge aller nachgeordneter Adressen<ul class="udklist">
 			#foreach($objRef in $subordinatedObjRef)
-                #set($udkObjClass = $objRef.get("T01_OBJECT.OBJ_CLASS"))
+				#set($udkObjClass = $objRef.get("T01_OBJECT.OBJ_CLASS"))
                 #set($udkObjId = $objRef.get("T01_OBJECT.OBJ_ID"))
                 #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
                 #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
