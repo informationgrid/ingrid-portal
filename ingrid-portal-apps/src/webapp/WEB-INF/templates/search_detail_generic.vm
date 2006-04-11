@@ -1,4 +1,4 @@
-#macro (renderECSEntry $r $entryName)
+#macro (renderUDKEntry $r $entryName)
 	#if($r.get($entryName))
 		<p><strong>$entryName:</strong><br>
 		$r.get($entryName)
@@ -17,7 +17,7 @@
     		<div class="line"><hr /></div>
 		#else
 			#if($key != "summary" && $key != "title")
-				#renderECSEntry($record $key)
+				#renderUDKEntry($record $key)
 			#end
 		#end	
 		#set($level = $level - 1)

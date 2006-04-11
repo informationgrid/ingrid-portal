@@ -138,7 +138,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
                     
                     // get references
-                    ArrayList references = getAllTableRows(record, "T012_OBJ_OBJ");
+                    ArrayList references = getAllTableRows(record, "t012_obj_obj");
                     Record referenceRecord = null;
                     String refType = null;
                     String objToId;
@@ -150,9 +150,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     
                     for (int i=0; i<references.size(); i++) {
                         referenceRecord = (Record) references.get(i);
-                        refType = (String)referenceRecord.get("T012_OBJ_OBJ.TYP");
-                        objToId = (String)referenceRecord.get("T012_OBJ_OBJ.OBJECT_TO_ID");
-                        objFromId = (String)referenceRecord.get("T012_OBJ_OBJ.OBJECT_FROM_ID");
+                        refType = (String)referenceRecord.get("t012_obj_obj.typ");
+                        objToId = (String)referenceRecord.get("t012_obj_obj.object_to_id");
+                        objFromId = (String)referenceRecord.get("t012_obj_obj.object_from_id");
                         if (refType.equals("0")) {
                             // add superior reference
                             if (objToId.equals(objId)) {
@@ -170,7 +170,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         }
                     }
                     
-                    // get all addresses
+                    // enrich addresses with institution and units
                     ArrayList addrRecords = getAllTableRows(record, "T02_ADDRESS");
                     HashMap addrParents = new HashMap();
                     // iterate over all addresses and add missing information for the address
@@ -180,100 +180,66 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         // get id of the address
                         String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
                         if (addressType.equals("1") || addressType.equals("2")) {
-                            String myInst = (String)addrRecord.get("T02_ADDRESS.INSTITUTION");
-                            if (myInst == null || myInst.length() == 0) {
-                                HashMap parents = new HashMap();
-                                // get the address record of the address
-                                String queryStr = "T02_address.adr_id:" + addressId + " datatype:address ranking:score";
-                                IngridQuery q = QueryStringParser.parse(queryStr);
-                                IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                                if (hits.getHits().length > 0) {
-                                    IngridHit refHit = hits.getHits()[0];
-                                    Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
-                                    // get parents of the address record
-                                    getUDKAddressParents(parents, myRecord);
-                                    addrParents.put(addressId, parents);
-                                }
+                            HashMap parents = new HashMap();
+                            // get the address record of the address
+                            String queryStr = "T02_address.adr_id:" + addressId + " datatype:address ranking:score";
+                            IngridQuery q = QueryStringParser.parse(queryStr);
+                            IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                            if (hits.getHits().length > 0) {
+                                IngridHit refHit = hits.getHits()[0];
+                                Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
+                                // get parents of the address record
+                                getUDKAddressParents(parents, myRecord);
+                                addrParents.put(addressId, parents);
                             }
                         }
                     }
                     context.put("addrParents", addrParents);
-
-/*                    
-                    
-                    // add missing information for the address
-                    
-                    
-                    // get superior addresses
-                    
-                    // get all addresses
-                    ArrayList addrRecords = getAllTableRows(record, "T02_address");
-                    // get all address references
-                    ArrayList addrReferenceRecords = getAllTableRows(record, "T022_adr_adr");
-                    // create references hashmap that holds all references per address
-                    HashMap addrReferences = new HashMap();
-                    // iterate over all addresses and assign the references
-                    for (int i=0; i<addrRecords.size(); i++) {
-                        Record addrRecord = (Record)addrRecords.get(i);
-                        // get id of the address
-                        String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
-                        // create the hashmap that holds the references for a particular address 
-                        HashMap addrReferenceHash = new HashMap();
-                        addrReferences.put(addressId, addrReferenceHash);
-                        // iterate over all address references
-                        for (int j=0; j < addrReferenceRecords.size(); j++) {
-                            // get address reference info from record
-                            Record refRecord = (Record)addrReferenceRecords.get(i);
-                            String addrToId = (String)refRecord.get("T022_ADR_ADR.ADR_TO_ID");
-                            String addrFromId = (String)refRecord.get("T022_ADR_ADR.ADR_FROM_ID");
-                            // get superior reference
-                            if (addrToId != null && addrToId.equals(addressId)) {
-                                HashMap udkAddress = getUDKAddressHash(addrFromId);
-                                String addressType = (String)udkAddress.get("T02_address.typ");
-                                // check for address types
-                                if (addressType.equals("0")) {
-                                    // add the referencing institution to the list
-                                    if (!addrReferenceHash.containsKey("0")) {
-                                        addrReferenceHash.put("0", new ArrayList());
-                                    }
-                                    ((ArrayList)addrReferenceHash.get("0")).add(udkAddress);
-                                } else if (addressType.equals("1")) {
-                                    // add the referencing unit to the list
-                                    if (!addrReferenceHash.containsKey("1")) {
-                                        addrReferenceHash.put("1", new ArrayList());
-                                    }
-                                    ((ArrayList)addrReferenceHash.get("1")).add(udkAddress);
-                                } else if (addressType.equals("2")) {
-                                    // add the referencing person to the list
-                                    if (!addrReferenceHash.containsKey("2")) {
-                                        addrReferenceHash.put("2", new ArrayList());
-                                    }
-                                    ((ArrayList)addrReferenceHash.get("2")).add(udkAddress);
-                                } else if (addressType.equals("3")) {
-                                    // add the referencing free address to the list
-                                    if (!addrReferenceHash.containsKey("3")) {
-                                        addrReferenceHash.put("3", new ArrayList());
-                                    }
-                                    ((ArrayList)addrReferenceHash.get("3")).add(udkAddress);
-                                }
-                            }
-                        }
-                    }
-                    
-                    context.put("addressReferences", addrReferences);
-*/                    
+                   
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
                     context.put("crossReferences", crossReferences);
                 } else if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
+
+                    // enrich address with institution and units
+                    HashMap addrParents = new HashMap();
+                    String addressType = (String)record.get("T02_ADDRESS.TYP");
+                    // get id of the address
+                    if (addressType.equals("1") || addressType.equals("2")) {
+                        getUDKAddressParents(addrParents, record);
+                    }
+                    context.put("addrParents", addrParents);                    
+                    
+                    // get references
+                    ArrayList references = getAllTableRows(record, "t022_adr_adr");
+                    Record referenceRecord = null;
+                    String addrToId;
+                    String addrFromId;
+                    ArrayList superiorReferences = new ArrayList();
+                    ArrayList subordinatedReferences = new ArrayList();
+                    String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
+                    
+                    for (int i=0; i<references.size(); i++) {
+                        referenceRecord = (Record) references.get(i);
+                        addrToId = (String)referenceRecord.get("t022_adr_adr.adr_to_id");
+                        addrFromId = (String)referenceRecord.get("t022_adr_adr.adr_from_id");
+                        // add superior reference
+                        if (addrToId.equals(addrId)) {
+                            superiorReferences.add(getUDKAddressHash(addrFromId));
+                        }
+                        // add subordinated reference
+                        if (addrFromId.equals(addrId)) {
+                            subordinatedReferences.add(getUDKAddressHash(addrToId));
+                        }
+                    }
+                    context.put("superiorReferences", superiorReferences);
+                    context.put("subordinatedReferences", subordinatedReferences);
+                    
                 } else {
                     setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                     readableColumnNames = true;
                 }
-                
-
-
                 
                 context.put("record", record);
                 HashMap recordMap = new HashMap();
@@ -469,6 +435,16 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 log.error("Error fetching address data for address id: " + addrId, e);
             }
         } else if (cmd.equals("doShowObjectDetail")) {
+            String objId = request.getParameter("objId");
+            try {
+                HashMap objHash = getUDKObjectHash(objId);
+                IngridHit hit = (IngridHit)objHash.get("hit");
+                response.setRenderParameter("docid", hit.getId().toString());
+                response.setRenderParameter("plugid", hit.getPlugId());
+            } catch (Exception e) {
+                log.error("Error fetching address data for address id: " + objId, e);
+            }
+        } else if (cmd.equals("doShowDocument")) {
             response.setRenderParameter("docid", request.getParameter("docid"));
             response.setRenderParameter("plugid", request.getParameter("plugid"));
         }

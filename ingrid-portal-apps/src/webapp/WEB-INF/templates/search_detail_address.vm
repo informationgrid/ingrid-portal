@@ -9,7 +9,7 @@
 	#end
 #end
 
-#macro (renderECSEntry $r $entryName)
+#macro (renderUDKEntry $r $entryName)
     #if($r.get($entryName))
 		<p><strong>$MESSAGES.getString($entryName):</strong><br>
 		$r.get($entryName)
@@ -17,12 +17,29 @@
     #end
 #end
 
-#macro (renderECSAddress)
+#macro (renderUDKAddress)
     <div class="line"><hr /></div>
     <h3>$MESSAGES.getString("address"):</h3>
 	<p>
+	#if($rec.get("t02_address.typ") == "1" || $rec.get("t02_address.typ") == "2")
+		#set($institutions = $addrParents.get("institutions"))
+		#foreach($institution in $institutions)
+			#set($instituteAddrId = $institution.get("T02_ADDRESS.ADR_ID"))
+			#set ($action = $renderResponse.createActionURL())
+    		$action.setParameter('cmd', "doShowAddressDetail")
+    		$action.setParameter('addrId', "$instituteAddrId")						
+			<a href="$action">$institution.get("T02_ADDRESS.INSTITUTION")</a><br/>
+		#end	
+		#set($units = $addrParents.get("units"))
+		#foreach($unit in $units)
+			#set($unitAddrId = $unit.get("T02_ADDRESS.ADR_ID"))
+			#set ($action = $renderResponse.createActionURL())
+    		$action.setParameter('cmd', "doShowAddressDetail")
+    		$action.setParameter('addrId', "$unitAddrId")						
+			<a href="$action">$unit.get("T02_ADDRESS.INSTITUTION")</a><br/>
+		#end
+	#end
 	#if($rec.get("title"))$rec.get("title")<br/>#end
-	#if($rec.get("t02_address.institution"))$rec.get("t02_address.institution")<br/>#end
 	#if($rec.get("t02_address.address"))$rec.get("t02_address.address")#end
 	#if($rec.get("t02_address.title"))$rec.get("t02_address.title")#end
 	#if($rec.get("t02_address.firstname"))$rec.get("t02_address.firstname")#end
@@ -54,32 +71,79 @@
 	</p>
 #end
 
-#macro (renderECSAddressFunction)
+#macro (renderSuperiorReferences)
+	#if($superiorReferences && !$superiorReferences.isEmpty())
+		<p><strong>$MESSAGES.getString("superior_address"):</strong><br/>
+		#foreach($ref in $superiorReferences)
+    		<span class="icon">
+    			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
+    		</span>
+			#set($refAddrId = $ref.record.get("T02_ADDRESS.ADR_ID"))
+    		#set ($action = $renderResponse.createActionURL())
+    		$action.setParameter('cmd', "doShowAddressDetail")
+    		$action.setParameter('addrId', "$refAddrId")
+    		<a href="$action" alt="interner Link">$ref.record.get("T02_ADDRESS.INSTITUTION")</a><br/>
+		#end
+		</p>
+	#end
+#end
+
+#macro (renderSubordinatedReferences)
+	#if($subordinatedReferences && !$subordinatedReferences.isEmpty())
+		<p><strong>$MESSAGES.getString("subordinated_addresses"):</strong><br/>
+		#foreach($ref in $subordinatedReferences)
+			<span class="icon">
+    			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
+    		</span>
+    		#set ($action = $renderResponse.createActionURL())
+			#set($refAddrId = $ref.record.get("T02_ADDRESS.ADR_ID"))
+			#set($refAddrType = $ref.record.get("T02_ADDRESS.TYP"))
+			$action.setParameter('cmd', "doShowAddressDetail")
+    		$action.setParameter('addrId', "$refAddrId")
+			#if($refAddrType == "0" || $refAddrType == "1")
+				<a href="$action" alt="interner Link">$ref.record.get("T02_ADDRESS.INSTITUTION")</a><br/>
+			#else
+				<a href="$action" alt="interner Link">
+            	#if($ref.record.get("T02_ADDRESS.ADDRESS"))$ref.record.get("T02_ADDRESS.ADDRESS")#end
+            	#if($ref.record.get("T02_ADDRESS.TITLE"))$ref.record.get("T02_ADDRESS.TITLE")#end
+            	#if($ref.record.get("T02_ADDRESS.FIRSTNAME"))$ref.record.get("T02_ADDRESS.FIRSTNAME")#end
+            	#if($ref.record.get("T02_ADDRESS.LASTNAME"))$ref.record.get("T02_ADDRESS.LASTNAME")#end
+				</a><br/>
+			#end
+		#end
+		</p>
+	#end
+#end
+
+
+#macro (renderUDKAddressFunction)
 	#if($rec.get("t02_address.job"))
 		<p><strong>$MESSAGES.getString("t02_address.job"):</strong><br>
 		$rec.get("t02_address.job")</p>
 	#end
 #end
 
-#macro (renderECSAddressRelatedRecords)
+#macro (renderUDKAddressRelatedRecords)
 	#if($rec.get("t012_obj_adr.obj_id"))
 		<div class="line"><hr></div>
-		<h3 id="search_detail3">Datenbezüge</h3>
-		<p>Sie können hier nach Datensätzen suchen, die auf diese ("Direkte Datenbezüge") oder eine ihrer untergeordneten ("Alle Datenbezüge") Adressen verweisen</p>
         <ul>
-        <li><a name="direkt"></a>Direkte Datenbezüge
+        <li><a name="direkt"></a>Datenbezüge
         <ul class="udklist">
 		#foreach($t012_obj_adr in $rec.get("t012_obj_adr.obj_id"))
 			#foreach($t01_object in $t012_obj_adr.get("t01_object.obj_id"))
-                #set($ecsObjClass = $t01_object.get("t01_object.obj_class"))
-                #set($ecsObjClassNameKey = "ecs_obj_class_name_$ecsObjClass")
-                #set($ecsObjClassName = $MESSAGES.getString($ecsObjClassNameKey))
-				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${ecsObjClass}.gif" alt="${ecsObjClassName}"></span>&nbsp;$t01_object.get("t01_object.obj_name")&nbsp;</li>
+                #set($udkObjClass = $t01_object.get("t01_object.obj_class"))
+                #set($udkObjId = $t01_object.get("t01_object.obj_id"))
+                #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
+                #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+        		#set ($action = $renderResponse.createActionURL())
+        		$action.setParameter('cmd', "doShowObjectDetail")
+        		$action.setParameter('objId', "$udkObjId")
+				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}"></span>&nbsp;<a href="$action">$t01_object.get("t01_object.obj_name")</a>&nbsp;</li>
 			#end
 		#end
 		</ul>
           </li>
-          <li><a name="alle"></a>Alle Datenbezüge</li>
+          <li><a name="alle"></a>Datenbezüge aller nachgeordneter Adressen</li>
         </ul>
 	#end	
 #end
@@ -96,26 +160,28 @@
 #if($rec)
 	<p class="float_right">#if($rec.get("t02_address.mod_time"))Generiert am: $rec.get("t02_address.mod_time")#end</p>
 	<p class="float_left">
-        #set($ecsAddressClass = $rec.get("t02_address.typ"))
-        #set($ecsAddressClassNameKey = "ecs_adr_class_name_$ecsAddressClass")
-        #set($ecsAddressClassName = $MESSAGES.getString($ecsAddressClassNameKey))
-		<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_adr_${ecsAddressClass}.gif" alt="${ecsAddressClassName}" /></span>&nbsp;${ecsAddressClassName}&nbsp;<span class="smaller">(Kategorie)</span>
+        #set($udkAddressClass = $rec.get("t02_address.typ"))
+        #set($udkAddressClassNameKey = "udk_adr_class_name_$udkAddressClass")
+        #set($udkAddressClassName = $MESSAGES.getString($udkAddressClassNameKey))
+		<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_adr_${udkAddressClass}.gif" alt="${udkAddressClassName}" /></span>&nbsp;${udkAddressClassName}&nbsp;<span class="smaller">(Kategorie)</span>
 	</p>
 	<span class="clearer"></span>
-	#renderECSAddress()
-	#renderECSAddressFunction()
-	#renderECSAddressRelatedRecords()
+	#renderUDKAddress()
+	#renderSuperiorReferences()
+	#renderSubordinatedReferences()
+	#renderUDKAddressFunction()
+	#renderUDKAddressRelatedRecords()
     <div class="line"><hr></div>
 	<br />
 	
-    <!--
-    <br><br><br><br>
-    	  #if($record)
-    		#renderRecord($record 0)
-    	  #else
-    		no details available.
-    	  #end
-    -->
+##    <!--
+##    <br><br><br><br>
+##    	  #if($record)
+##    		#renderRecord($record 0)
+##    	  #else
+##    		no details available.
+##    	  #end
+##    -->
 
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
