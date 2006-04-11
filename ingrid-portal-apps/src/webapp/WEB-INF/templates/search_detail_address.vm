@@ -143,11 +143,24 @@
 		#end
 		</ul>
           </li>
-          <li><a name="alle"></a>Datenbezüge aller nachgeordneter Adressen</li>
+		  #if($subordinatedObjRef && !$subordinatedObjRef.isEmpty())
+		  <li><a name="alle"></a>Datenbezüge aller nachgeordneter Adressen<ul class="udklist">
+			#foreach($objRef in $subordinatedObjRef)
+                #set($udkObjClass = $objRef.get("T01_OBJECT.OBJ_CLASS"))
+                #set($udkObjId = $objRef.get("T01_OBJECT.OBJ_ID"))
+                #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
+                #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+        		#set ($action = $renderResponse.createActionURL())
+        		$action.setParameter('cmd', "doShowObjectDetail")
+        		$action.setParameter('objId', "$udkObjId")
+				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}"></span>&nbsp;<a href="$action">$objRef.get("T01_OBJECT.OBJ_NAME")</a>&nbsp;</li>
+			#end
+		</ul>
+		  </li>
+		  #end
         </ul>
 	#end	
 #end
-
 
 
 #set ($action = $renderResponse.createActionURL())

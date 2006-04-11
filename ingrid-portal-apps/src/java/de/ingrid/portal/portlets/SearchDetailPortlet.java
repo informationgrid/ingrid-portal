@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -236,6 +237,32 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
                     
+                    // get ALL suborninated addresses in the complete hierarchie
+                    ArrayList allAddressChildren = new ArrayList();
+                    allAddressChildren.addAll(subordinatedReferences);
+                    for (int i=0; i<subordinatedReferences.size(); i++) {
+                        allAddressChildren.addAll(getUDKAddressChildren((Record)((HashMap)subordinatedReferences.get(i)).get("record")));
+                    }
+                    
+                    // get related record of the subordinated address references
+                    HashMap subordinatedObjRef = new HashMap();
+                    for (int i=0; i<allAddressChildren.size(); i++) {
+                        Record r = (Record)((HashMap)allAddressChildren.get(i)).get("record");
+                        ArrayList refs = getAllTableRows(r, "T012_OBJ_ADR");
+                        for (int j=0; j<refs.size(); j++) {
+                            Record refRecord = (Record)refs.get(j);
+                            ArrayList refObjects = getAllTableRows(refRecord, "T01_OBJECT");
+                            for (int k=0; k<refObjects.size(); k++) {
+                                Record refObj = (Record)refObjects.get(k);
+                                if (!subordinatedObjRef.containsKey(refObj.get("T01_OBJECT.OBJ_ID"))) {
+                                    subordinatedObjRef.put(refObj.get("T01_OBJECT.OBJ_ID"), refObj);
+                                }
+                            }
+                        }
+                    }
+                    context.put("subordinatedObjRef", subordinatedObjRef);
+                    
+                    
                 } else {
                     setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                     readableColumnNames = true;
@@ -271,6 +298,33 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
 
         super.doView(request, response);
+    }
+
+    private ArrayList getUDKAddressChildren(Record record) throws Exception {
+        ArrayList result = new ArrayList();
+        
+        // get references
+        ArrayList references = getAllTableRows(record, "t022_adr_adr");
+        Record referenceRecord = null;
+        String addrToId;
+        String addrFromId;
+        String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
+        
+        for (int i=0; i<references.size(); i++) {
+            referenceRecord = (Record) references.get(i);
+            addrToId = (String)referenceRecord.get("t022_adr_adr.adr_to_id");
+            addrFromId = (String)referenceRecord.get("t022_adr_adr.adr_from_id");
+            // add subordinated reference
+            if (addrFromId.equals(addrId)) {
+                HashMap addrHash = getUDKAddressHash(addrToId);
+                result.add(addrHash);
+                String addrType = (String)((Record)addrHash.get("record")).get("T02_ADDRESS.TYP");
+                if (addrType.equals("0") || addrType.equals("1")) {
+                    result.addAll(getUDKAddressChildren((Record)addrHash.get("record")));
+                }
+            }
+        }
+        return result;
     }
 
     private void getUDKAddressParents(HashMap result, Record record) throws Exception {
