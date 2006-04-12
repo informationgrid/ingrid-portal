@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * @author joachim@wemove.com
  */
 public class IngridResourceBundle {
-    
+
     ResourceBundle r = null;
 
     /**
@@ -21,11 +21,11 @@ public class IngridResourceBundle {
         super();
         this.r = r;
     }
-    
+
     public String getString(String key) {
         try {
             return r.getString(key);
-        } catch (java.util.MissingResourceException e) {
+        } catch (Exception e) {
             return key;
         }
     }
