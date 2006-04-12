@@ -308,7 +308,13 @@
 			#end
 			
 			#renderUDKEntrySuffix($myData "t011_obj_geo.rec_grade" "%")
-    		#renderUDKEntry($myData "t011_obj_geo.coord")
+    		#if($myData.get("t011_obj_geo.referencesystem_id") == -1)
+				#renderUDKEntry($myData "t011_obj_geo.coord")
+			#elseif($myData.get("t011_obj_geo.referencesystem_id"))
+				<p><strong>$MESSAGES.getString("t011_obj_geo.referencesystem_id"):</strong><br>
+				$codeLists.get("???").get($rec.get("t011_obj_geo.referencesystem_id")).get("sys_codelist_domain.name")<br/>
+				</p>
+			#end
 
 			#if($myData.get("t011_obj_geo_scale.obj_id"))
 				<p><strong>$MESSAGES.getString("t011_obj_geo_scale"):</strong></p>
