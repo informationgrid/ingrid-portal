@@ -313,7 +313,7 @@
     		#renderUDKEntrySuffix($myData "t011_obj_geo_scale.resolution_ground" "m")
     		#renderUDKEntry($myData "t011_obj_geo_scale.resolution_scan")
     		#renderUDKEntry($myData "t011_obj_geo.pos_accuracy_vertical")
-    		#renderUDKEntry($myData "t011_obj_geo.rec_exact")
+    		#renderUDKEntrySuffix($myData "t011_obj_geo.rec_exact" "m")
 			#renderUDKEntry($myData "t011_obj_geo.special_base")
 			#renderUDKEntry($myData "t011_obj_geo.data_base")
         	#if($myData.get("t011_obj_geo_supplinfo.obj_id"))
