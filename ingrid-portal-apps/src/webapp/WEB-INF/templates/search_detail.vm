@@ -170,7 +170,28 @@
     	<div class="line"><hr /></div>
 		#foreach($myData in $rec.get("t011_obj_data.obj_id"))    			
 			#if($myData.get("t011_obj_data.base") || $myData.get("t011_obj_data.description"))
-    			#renderUDKEntry($myData "t011_obj_data_para.parameter")
+            	#if($myData.get("t011_obj_data_para.obj_id"))
+            		<p><strong>$MESSAGES.getString("t011_obj_data_para"):</strong><br>
+        			<table class="border" border="1">
+        			<tbody>	
+        				<tr>
+        					<th>$MESSAGES.getString("t011_obj_data_para.line")</th>
+        					<th>$MESSAGES.getString("t011_obj_data_para.parameter")</th>
+        					<th>$MESSAGES.getString("t011_obj_data_para.unit")</th>
+        				</tr>
+                	#foreach($t0110_avail_format in $myData.get("t011_obj_data_para.obj_id"))
+        				<tr>
+        					<td>#if($t0110_avail_format.get("t011_obj_data_para.line"))$t0110_avail_format.get("t011_obj_data_para.line")#end</td>
+        					<td>#if($t0110_avail_format.get("t011_obj_data_para.parameter"))$t0110_avail_format.get("t011_obj_data_para.parameter")#end</td>
+        					<td>#if($t0110_avail_format.get("t011_obj_data_para.unit"))$t0110_avail_format.get("t011_obj_data_para.unit")#end</td>
+        				</tr>
+            		#end
+        			</tbody>	
+        			</table>
+        			<br/>
+        			</p>
+            	#end	
+				#renderUDKEntry($myData "t011_obj_data_para.parameter")
     			#renderUDKEntry($myData "t011_obj_data_para.unit")
     			#renderUDKEntry($myData "t011_obj_data.base")
     			#renderUDKEntry($myData "t011_obj_data.description")
