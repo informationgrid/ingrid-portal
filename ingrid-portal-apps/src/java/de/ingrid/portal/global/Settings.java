@@ -156,6 +156,8 @@ public class Settings {
 
     public final static String RESULT_KEY_UDK_ADDRESS_SALUTATION = "address_salutation";
 
+    public static final String RESULT_KEY_UDK_ADDRESS_PARENTS = "address_parents";
+    
     // ===========================================
     // Hit Detail data (get data from hit details)
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
@@ -174,6 +176,8 @@ public class Settings {
     public static final String HIT_KEY_ADDRESS_TITLE = "T02_address.title";
 
     public static final String HIT_KEY_ADDRESS_ADDRESS = "T02_address.address";
+
+    public static final String HIT_KEY_ADDRESS_ADDRID = "T02_address.adr_id";
 
     // ===========================================
     // PORTLET MESSAGING
@@ -295,5 +299,6 @@ public class Settings {
     public final static String PARAM_ACTION = "action";
 
     public final static String PARAM_TAB = "tab";
+
 
 }

@@ -5,14 +5,19 @@ package de.ingrid.portal.search;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -103,7 +108,27 @@ public class QueryResultPostProcessor {
                                 hit.put(Settings.RESULT_KEY_UDK_ADDRESS_LASTNAME, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME));
                                 hit.put(Settings.RESULT_KEY_UDK_ADDRESS_TITLE, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE));
                                 hit.put(Settings.RESULT_KEY_UDK_ADDRESS_SALUTATION, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS));
+                            } else if (addrClass.equals("1")) {
+                                String currentAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
+                                ArrayList parentAddr = new ArrayList();
+                                while (addrClass.equals("1")) {
+                                    IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId).concat(" datatype:address ranking:score"));
+                                    IngridHits results = IBUSInterfaceImpl.getInstance().search(query, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                                    if (results.getHits().length > 0) {
+                                        IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(results.getHits(), query, new String[]{ Settings.HIT_KEY_ADDRESS_ADDRID, Settings.HIT_KEY_ADDRESS_CLASS});
+                                        for (int j=0; j<details.length; j++) {
+                                            IngridHitDetail addrDetail = (IngridHitDetail)details[j];
+                                            addrClass = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_CLASS);
+                                            if ((addrClass.equals("0") || addrClass.equals("1")) && !currentAddressId.equals(UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_ADDRID))) {
+                                                parentAddr.add(0, addrDetail);
+                                            }
+                                            currentAddressId = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_ADDRID);
+                                        }
+                                    }
+                                }
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_PARENTS, parentAddr);
                             }
+                                
                         }
                     } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
                         hit.put(Settings.RESULT_KEY_TYPE, "nutch");
