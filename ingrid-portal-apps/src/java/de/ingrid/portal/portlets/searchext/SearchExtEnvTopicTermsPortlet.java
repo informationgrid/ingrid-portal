@@ -42,7 +42,6 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
         }
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
 
-        // TODO: implement functionality
         if (submittedAddToQuery != null) {
             // Zur Suchanfrage hinzufuegen
             String addingType = request.getParameter("adding_type");

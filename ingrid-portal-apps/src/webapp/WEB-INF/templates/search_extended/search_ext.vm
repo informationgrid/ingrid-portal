@@ -31,7 +31,7 @@ $action.setParameter('action','doChangeDS')
 		<div class="qrytxt">
 			<label class="hide" for="qrytxt">Suche: </label><textarea class="qrytxt" id="qrytxt" cols="20" rows="3" name="q" 
 				onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"'>#getHTMLEscapedFieldValue('q')</textarea>
-			<input class="btn" type="submit" value="PortalU Suche" />
+			<input class="btn float_left" name="doSetQuery" type="submit" value="Suchstring übernehmen" />&nbsp;&nbsp;&nbsp;<input class="btn" name="doSubmit" type="submit" value="PortalU Suche" />
 			<span class="clearer"></span>
 		</div>
     </form>

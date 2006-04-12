@@ -242,8 +242,11 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
                     .getParameter(Settings.PARAM_QUERY_STRING));
 
-            // redirect to our page wih parameters for bookmarking
-            actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+            // check if submit or requery
+            if (request.getParameter("doSetQuery") == null) {
+                // redirect to our page wih parameters for bookmarking
+                actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+            }
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
             String newDatasource = request.getParameter(Settings.PARAM_DATASOURCE);
