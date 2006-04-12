@@ -165,13 +165,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // INPUT: Date
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String dateSelect = af.getInput(ChronicleSearchForm.FIELD_TIME_SELECT);
-            if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_DATE)) {
-                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT));
-                if (atDate != null) {
-                    String dateStr = df.format(atDate);
-                    query.put(Settings.QFIELD_DATE_AT, dateStr);
-                }
-            } else if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD)) {
+            if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD)) {
                 Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM));
                 if (fromDate != null) {
                     Date toDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_TO));
@@ -181,6 +175,12 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                         dateStr = df.format(toDate);
                         query.put(Settings.QFIELD_DATE_TO, dateStr);
                     }
+                }
+            } else if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_DATE)) {
+                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT));
+                if (atDate != null) {
+                    String dateStr = df.format(atDate);
+                    query.put(Settings.QFIELD_DATE_AT, dateStr);
                 }
             }
 

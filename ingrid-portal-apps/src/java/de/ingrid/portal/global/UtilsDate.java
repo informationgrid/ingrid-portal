@@ -103,6 +103,9 @@ public class UtilsDate {
         String to = UtilsDate.parseDateToLocale(dateStrTo, locale);
 
         if (from != null && to != null) {
+            if (from.equals(to)) {
+                return from;
+            }
             return from.concat(" - ").concat(to);
         } else if (from != null) {
             return from;

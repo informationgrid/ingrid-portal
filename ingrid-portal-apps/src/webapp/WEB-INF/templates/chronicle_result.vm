@@ -18,7 +18,7 @@
 			  Datum: $!rs.date<br />
             </p>
 			<p class="event_description">
-			$!rs.abstract
+			$!rs.description
 			</p>
 			<p class="result_link">
 				<a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url_str</a>

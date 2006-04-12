@@ -26,6 +26,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDate;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
@@ -145,12 +146,16 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, PortletRequest request,
             PortletResponse response) {
+        if (log.isDebugEnabled()) {
+            log.debug("Umweltchronik IngridQuery = " + UtilsSearch.queryToString(query));
+        }
+
         Locale locale = request.getLocale();
         IngridResourceBundle resources = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
 
-        String searchURL = response.encodeURL(((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
-                .getRequest().getContextPath()
-                + PAGE_SEARCH + "?action=doSearch&ds=1&q=");
+        String searchURLBase = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest()
+                .getContextPath()
+                + PAGE_SEARCH + "?action=doSearch&ds=1&q=";
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
         IngridHits hits = null;
@@ -162,7 +167,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
             IngridHitDetail[] details = ibus.getDetails(results, query, null);
             if (details == null) {
                 if (log.isErrorEnabled()) {
-                    log.error("Problems fetching details of event list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    log.error("Problems fetching details of events !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
             }
 
@@ -180,18 +185,22 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (detail != null) {
-                        //                        String searchData = detail.getSearch();
-                        String searchData = "";
-                        topic.put("searchURL", searchURL.concat(searchData));
+                        String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
+                        if (searchData != null && searchData.length() > 0) {
+                            searchData = UtilsString.htmlescape(searchData.replaceAll("\\,", " OR "));
+                        } else {
+                            searchData = UtilsString.htmlescape(topic.getTitle());
+                        }
+                        String searchURL = response.encodeURL(searchURLBase.concat(searchData));
+                        topic.put("searchURL", searchURL);
                         topic.put("type", resources.getString(detail.getType()));
                         topic.put("date", UtilsDate.getOutputString(detail.getFrom(), detail.getTo(), locale));
-                        //                        String searchData = detail.getURL();
-                        String url = "";
+                        topic.put("description", detail.get(DetailedTopic.DESCRIPTION_OCC));
+                        String url = (String) detail.get(DetailedTopic.SAMPLE_OCC);
                         if (url != null && url.length() > 0) {
                             topic.put("url", url);
                             topic.put("url_str", Utils.getShortURLStr(url, 80));
                         }
-
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

@@ -7,7 +7,6 @@ import java.util.Date;
 import junit.framework.TestCase;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -25,12 +24,15 @@ public class SNSInterfaceTest extends TestCase {
 
     static int CURRENT_PAGE = 1;
 
+    static int TIMEOUT = 10000;
+
     protected void setUp() throws Exception {
         super.setUp();
     }
 
     public void testGetAnniversaries() throws Exception {
         System.out.println("########## testGetAnniversaries()");
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         //            cal.set(Calendar.DATE, 15);
@@ -39,7 +41,8 @@ public class SNSInterfaceTest extends TestCase {
         Date queryDate = cal.getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = df.format(queryDate);
+        //        String dateStr = df.format(queryDate);
+        String dateStr = "2006-03-15";
 
         IngridQuery query = QueryStringParser.parse(dateStr);
         query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
@@ -47,30 +50,13 @@ public class SNSInterfaceTest extends TestCase {
 
         IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-        IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
+        IngridHits hits = iBus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, TIMEOUT);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
-        if (hitsArray.length == 0) {
-            System.out.println("!!!!!!!!!!!!!!!! NO ANNIVERSARY HIT FOUND");
-        } else {
-            for (int i = 0; i < hitsArray.length; i++) {
-                Topic hit = (Topic) hitsArray[i];
-                System.out.println(hit.getTopicName() + ":" + hit.getTopicID());
-            }
-        }
-        System.out.println("--- try to fetch details:");
+        showHits(hitsArray);
         IngridHitDetail[] details = iBus.getDetails(hitsArray, query, new String[0]);
         assertNotNull(details);
-        if (details.length > 0) {
-            for (int i = 0; i < details.length; i++) {
-                assertTrue(details[i] instanceof DetailedTopic);
-                DetailedTopic detail = (DetailedTopic) details[i];
-                System.out.println(detail.getTopicName() + ":" + detail.getTopicID() + ":" + detail.getFrom() + ":"
-                        + detail.getTo() + ":" + detail.getAdministrativeID());
-            }
-        } else {
-            System.out.println("!!!!!!!!!!!!!!!! NO ANNIVERSARY DETAILS FOUND");
-        }
+        showDetails(details);
     }
 
     public void testEVENTS_FROM_TERM() throws Exception {
@@ -82,47 +68,40 @@ public class SNSInterfaceTest extends TestCase {
         query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, PortalConfig.getInstance()
-                .getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
+        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, TIMEOUT);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
-        if (hitsArray.length == 0) {
-            System.out.println("!!!!!!!!!!!!!!!! NO EVENT WITH TERM FOUND");
-        } else {
-            for (int i = 0; i < hitsArray.length; i++) {
-                Topic hit = (Topic) hitsArray[i];
-                System.out.println(hit.getTopicName() + ":" + hit.getTopicID());
-            }
-        }
+        showHits(hitsArray);
+        IngridHitDetail[] details = ibus.getDetails(hitsArray, query, new String[0]);
+        assertNotNull(details);
+        showDetails(details);
     }
 
     public void testEVENTS_FROM_TYPE() throws Exception {
         System.out.println("########## testEVENTS_FROM_TYPE()");
+        //                String term = "Tschernobyl";
         String term = "";
-        String eventType = "industrialAccident";
-        System.out.println("TYPE = " + eventType);
         IngridQuery query = QueryStringParser.parse(term);
-        query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
+        //        IngridQuery query = new IngridQuery();
+        query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
         query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
-        query.put(Settings.QFIELD_EVENT_TYPE, eventType);
+        query.put("eventtype", "historical");
 
         // fix, if no term, date has to be set !
-        query.put("t1", "0000-01-01");
-        query.put("t2", "2006-04-10");
+        //        query.put("t0", "3000-01-01");
+        //        query.put("t1", "3000-01-01");
+        //query.put("t1", "1900-01-01");
+
+        query.put("t2", "3000-01-01");
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, PortalConfig.getInstance()
-                .getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
+        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, TIMEOUT);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
-        if (hitsArray.length == 0) {
-            System.out.println("!!!!!!!!!!!!!!!! NO EVENT OF TYPE FOUND");
-        } else {
-            for (int i = 0; i < hitsArray.length; i++) {
-                Topic hit = (Topic) hitsArray[i];
-                System.out.println(hit.getTopicName() + ":" + hit.getTopicID());
-            }
-        }
+        showHits(hitsArray);
+        IngridHitDetail[] details = ibus.getDetails(hitsArray, query, new String[0]);
+        assertNotNull(details);
+        showDetails(details);
     }
 
     public void testEVENTS_FROM_TYPE_AND_TERM() throws Exception {
@@ -137,12 +116,39 @@ public class SNSInterfaceTest extends TestCase {
         query.put(Settings.QFIELD_EVENT_TYPE, eventType);
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, PortalConfig.getInstance()
-                .getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
+        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, TIMEOUT);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
+        showHits(hitsArray);
+        IngridHitDetail[] details = ibus.getDetails(hitsArray, query, new String[0]);
+        assertNotNull(details);
+        showDetails(details);
+    }
+
+    protected void showDetails(IngridHitDetail[] details) {
+        if (details.length > 0) {
+            for (int i = 0; i < details.length; i++) {
+                assertTrue(details[i] instanceof DetailedTopic);
+                DetailedTopic detail = (DetailedTopic) details[i];
+                System.out.println("topicName:" + detail.getTopicName());
+                System.out.println("topicID:" + detail.getTopicID());
+                System.out.println("from:" + detail.getFrom());
+                System.out.println("to:" + detail.getTo());
+                System.out.println("type:" + detail.getType());
+                System.out.println("administrativeID:" + detail.getAdministrativeID());
+                System.out.println("associatedTermsOcc (suchbegriffe):" + detail.get(DetailedTopic.ASSICIATED_OCC));
+                System.out.println("sampleOcc (Internetverweis):" + detail.get(DetailedTopic.SAMPLE_OCC));
+                System.out.println("descriptionOcc:" + detail.get(DetailedTopic.DESCRIPTION_OCC));
+                System.out.println("--------");
+            }
+        } else {
+            System.out.println("!!!!!!!!!!!!!!!! NO DETAILS FOUND");
+        }
+    }
+
+    protected void showHits(IngridHit[] hitsArray) {
         if (hitsArray.length == 0) {
-            System.out.println("!!!!!!!!!!!!!!!! NO EVENT OF TYPE AND TERM FOUND");
+            System.out.println("!!!!!!!!!!!!!!!! NO HITS FOUND");
         } else {
             for (int i = 0; i < hitsArray.length; i++) {
                 Topic hit = (Topic) hitsArray[i];
@@ -151,40 +157,4 @@ public class SNSInterfaceTest extends TestCase {
         }
     }
 
-    public void testEVENT_DETAILS() throws Exception {
-        System.out.println("########## testEVENT_DETAILS()");
-        String term = "Tschernobyl";
-        String eventType = "industrialAccident";
-        System.out.println("TERM = " + term);
-        System.out.println("TYPE = " + eventType);
-        IngridQuery query = QueryStringParser.parse(term);
-        query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
-        query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
-        query.put(Settings.QFIELD_EVENT_TYPE, eventType);
-
-        IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, PortalConfig.getInstance()
-                .getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
-        IngridHit[] hitsArray = hits.getHits();
-        assertNotNull(hitsArray);
-        if (hitsArray.length == 0) {
-            System.out.println("!!!!!!!!!!!!!!!! NO EVENT OF TYPE AND TERM FOUND");
-        } else {
-            Topic hit = (Topic) hitsArray[0];
-            System.out.println(hit.getTopicName() + ":" + hit.getTopicID());
-
-        }
-        IngridHitDetail[] details = ibus.getDetails(hitsArray, query, new String[0]);
-        assertNotNull(details);
-        if (details.length > 0) {
-            for (int i = 0; i < details.length; i++) {
-                assertTrue(details[i] instanceof DetailedTopic);
-                DetailedTopic detail = (DetailedTopic) details[i];
-                System.out.println(detail.getTopicName() + ":" + detail.getTopicID() + ":" + detail.getFrom() + ":"
-                        + detail.getTo() + ":" + detail.getType() + ":" + detail.getAdministrativeID());
-            }
-        } else {
-            System.out.println("!!!!!!!!!!!!!!!! NO EVENT DETAILS FOUND");
-        }
-    }
 }
