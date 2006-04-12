@@ -96,10 +96,13 @@ public class QueryResultPostProcessor {
                                 hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                             }
                         } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                            tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
-                            if (tmpString.length() > 0) {
-                                // add as udk class, template renders correctly
-                                hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                            String addrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
+                            hit.put(Settings.RESULT_KEY_UDK_CLASS, addrClass);
+                            if (addrClass.equals("2") || addrClass.equals("3")) {
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_FIRSTNAME, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_LASTNAME, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_TITLE, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_SALUTATION, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS));
                             }
                         }
                     } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {

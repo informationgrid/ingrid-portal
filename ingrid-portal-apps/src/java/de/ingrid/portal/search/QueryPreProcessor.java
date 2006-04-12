@@ -67,9 +67,13 @@ public class QueryPreProcessor {
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            requestedMetadata = new String[2];
+            requestedMetadata = new String[6];
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+            requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
+            requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
+            requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
+            requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
         }
 
         // adapt ranking to Search State

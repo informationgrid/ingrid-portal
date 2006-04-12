@@ -13,14 +13,27 @@
     	  #if($velocityCount > 1)
 			<div class="line"><hr /></div>
 		  #end		  <div class="resultset">
-		  #if ($rs.title)
+		  #set($title = "")
+		  #if($rs.udk_class == "2")
+			#if($rs.address_salutation)#set($title = "$rs.address_salutation ")#end
+			#if($rs.address_lastname)#set($title = "$title$rs.address_lastname")#end
+			#if($rs.address_firstname)#set($title = "$title, $rs.address_lastname")#end
+		  #elseif($rs.udk_class == "3")
+			#if($rs.title)#set($title = "$rs.title ")#end
+			#if($rs.address_salutation)#set($title = "$rs.address_salutation ")#end
+			#if($rs.address_lastname)#set($title = "$title$rs.address_lastname")#end
+			#if($rs.address_firstname)#set($title = "$title, $rs.address_lastname")#end
+		  #else
+			#set($title = "$rs.title")
+		  #end
+		  #if ($title)
 			#if($rs.type == "dsc")
 			  #if($rs.udk_class)
 				#set($udkObjClassNameKey = "udk_adr_class_name_$rs.udk_class")
 				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
 				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_adr_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster">#renderTitle($rs.title) </a></strong></span>
 			  #else
-				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
+				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
 			  #end
 			#else
 			  <span class="result_title"><strong>#renderTitle($rs.title) </strong></span>

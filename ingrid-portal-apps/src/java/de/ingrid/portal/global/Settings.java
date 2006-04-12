@@ -148,6 +148,14 @@ public class Settings {
 
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
 
+    public final static String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";
+
+    public final static String RESULT_KEY_UDK_ADDRESS_LASTNAME = "address_lastname";
+
+    public final static String RESULT_KEY_UDK_ADDRESS_TITLE = "address_title";
+
+    public final static String RESULT_KEY_UDK_ADDRESS_SALUTATION = "address_salutation";
+
     // ===========================================
     // Hit Detail data (get data from hit details)
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
@@ -158,6 +166,14 @@ public class Settings {
     public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
+    
+    public static final String HIT_KEY_ADDRESS_FIRSTNAME = "T02_address.firstname";
+    
+    public static final String HIT_KEY_ADDRESS_LASTNAME = "T02_address.lastname";
+
+    public static final String HIT_KEY_ADDRESS_TITLE = "T02_address.title";
+
+    public static final String HIT_KEY_ADDRESS_ADDRESS = "T02_address.address";
 
     // ===========================================
     // PORTLET MESSAGING
