@@ -241,7 +241,7 @@
     		#renderUDKEntry($myData "t011_obj_geo.hierarchy_level")
     		#renderUDKEntry($myData "t011_obj_geo_topic_cat.topic_category")
     		#renderUDKEntry($myData "t011_obj_geo_spatial_rep.type")
-			#if($myData.get("t011_obj_geo_spatial_rep.type"))
+			#if($myData.get("t011_obj_geo_spatial_rep.type") == "1")
 				<p><strong>$MESSAGES.getString("t011_obj_geo_vector"):</strong></p>
 				#renderUDKEntryInLine($myData "t011_obj_geo.vector_topology_level")
             	#if($myData.get("t011_obj_geo_vector.obj_id"))
