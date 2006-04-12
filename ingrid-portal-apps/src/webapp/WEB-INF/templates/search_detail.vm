@@ -251,7 +251,7 @@
     		#renderUDKEntry($myData "t011_obj_geo_scale.resolution_scan")
     		#renderUDKEntry($myData "t011_obj_geo.pos_accuracy_vertical")
     		#renderUDKEntry($myData "t011_obj_geo.rec_exact")
-			#renderUDKEntry($myData "t011_obj_geo.method")
+    		#renderUDKEntry($myData "t011_obj_geo.data_base")
         	#if($myData.get("t011_obj_geo_supplinfo.obj_id"))
         		<p><strong>$MESSAGES.getString("t011_obj_geo_supplinfo.feature_type"):</strong><br>
             	#foreach($t011_obj_geo_supplinfo in $myData.get("t011_obj_geo_supplinfo.obj_id"))
@@ -260,6 +260,7 @@
         		#end
     			</p>
         	#end	
+			#renderUDKEntry($myData "t011_obj_geo.method")
 			
 		#end	
 	#end
