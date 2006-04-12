@@ -503,7 +503,7 @@
         	#foreach($t0112_media_option in $rec.get("t0112_media_option.obj_id"))
 				<tr>
 					<td>$t0112_media_option.get("t0112_media_option.medium_name")</td>
-					<td>#if($t0112_media_option.get("t0112_media_option.transfer_size"))$t0112_media_option.get("t0112_media_option.transfer_size")#end</td>
+					<td>#if($t0112_media_option.get("t0112_media_option.transfer_size"))$t0112_media_option.get("t0112_media_option.transfer_size") MB#end</td>
 					<td>#if($t0112_media_option.get("t0112_media_option.medium_note"))$t0112_media_option.get("t0112_media_option.medium_note")#end</td>
 				</tr>
     		#end
