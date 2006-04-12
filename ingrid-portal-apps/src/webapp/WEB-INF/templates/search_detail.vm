@@ -289,7 +289,6 @@
     			</p>
         	#end	
 
-			#renderUDKEntry($myData "t011_obj_geo_spatial_rep.type")
         	#if($myData.get("t011_obj_geo_spatial_rep.obj_id"))
         		<p><strong>$MESSAGES.getString("t011_obj_geo_spatial_rep.type"):</strong><br>
             	#foreach($t011_obj_geo_spatial_rep in $myData.get("t011_obj_geo_spatial_rep.obj_id"))
@@ -297,7 +296,6 @@
         		#end
     			</p>
         	#end	
-
 			
 			#if($myData.get("t011_obj_geo_spatial_rep.type") == "1")
 				<p><strong>$MESSAGES.getString("t011_obj_geo_vector"):</strong></p>
