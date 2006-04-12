@@ -17,6 +17,13 @@
     #end
 #end
 
+#macro (renderUDKEntryInLine $r $entryName)
+	#if($r.get($entryName))
+		<p><strong>$MESSAGES.getString($entryName):</strong> $r.get($entryName)<br/></p>
+    #end
+#end
+
+
 #macro (renderUDKEntrySuffix $r $entryName $suffix)
 	#if($r.get($entryName))
 		<p><strong>$MESSAGES.getString($entryName):</strong><br/>
@@ -184,19 +191,20 @@
 	#elseif($udkClass == "2" && $rec.get("t011_obj_literatur.obj_id"))
     	<div class="line"><hr /></div>
 		#foreach($myData in $rec.get("t011_obj_literatur.obj_id"))    			
-    		#renderUDKEntry($myData "t011_obj_literatur.autor")
-    		#renderUDKEntry($myData "t011_obj_literatur.publisher")
-    		#renderUDKEntry($myData "t011_obj_literatur.publish_in")
-    		#renderUDKEntry($myData "t011_obj_literatur.volume")
-    		#renderUDKEntry($myData "t011_obj_literatur.sides")
-    		#renderUDKEntry($myData "t011_obj_literatur.publish_year")
-    		#renderUDKEntry($myData "t011_obj_literatur.isbn")
-    		#renderUDKEntry($myData "t011_obj_literatur.publishing")
-    		#renderUDKEntry($myData "t011_obj_literatur.publish_loc")
-    		#renderUDKEntry($myData "t011_obj_literatur.typ")
-    		#renderUDKEntry($myData "t011_obj_literatur.doc_info")
-    		#renderUDKEntry($myData "t011_obj_literatur.base")
-    		#renderUDKEntry($myData "t011_obj_literatur.loc")
+    		
+			#renderUDKEntryInLine($myData "t011_obj_literatur.autor")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.publisher")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_in")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.volume")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.sides")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_year")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.isbn")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.publishing")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_loc")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.typ")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.doc_info")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.base")
+    		#renderUDKEntryInLine($myData "t011_obj_literatur.loc")
     		#renderUDKEntry($myData "t011_obj_literatur.description")
 		#end	
 	#elseif($udkClass == "4" && $rec.get("t011_obj_project.obj_id"))
@@ -434,14 +442,14 @@
     #renderUDKAdditionalInformation()
     #renderUDKSearchTerms()
 
-##	<!--
-##    <br><br><br><br>
-##    	  #if($record)
-##    		#renderRecord($record 0)
-##    	  #else
-##    		no details available.
-##    	  #end
-##    -->
+	<!--
+    <br><br><br><br>
+    	  #if($record)
+    		#renderRecord($record 0)
+    	  #else
+    		no details available.
+    	  #end
+    -->
 	</div>
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
