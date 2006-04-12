@@ -240,6 +240,27 @@
 		#foreach($myData in $rec.get("t011_obj_geo.obj_id"))    			
     		#renderUDKEntry($myData "t011_obj_geo.hierarchy_level")
     		#renderUDKEntry($myData "t011_obj_geo_topic_cat.topic_category")
+        	#if($myData.get("t011_obj_geo_symc.obj_id"))
+				<p><strong>$MESSAGES.getString("t011_obj_geo_symc"):</strong></p>
+    			<table class="border" border="1">
+    			<tbody>	
+    				<tr>
+    					<th>$MESSAGES.getString("t011_obj_geo_symc.symbol_cat")</th>
+    					<th>$MESSAGES.getString("t011_obj_geo_symc.symbol_date")</th>
+    					<th>$MESSAGES.getString("t011_obj_geo_symc.edition")</th>
+    				</tr>
+            	#foreach($t011_obj_geo_symc in $myData.get("t011_obj_geo_symc.obj_id"))
+    				<tr>
+    					<td>#if($t011_obj_geo_symc.get("t011_obj_geo_symc.symbol_cat"))$t011_obj_geo_symc.get("t011_obj_geo_symc.symbol_cat")#end</td>
+    					<td>#if($t011_obj_geo_symc.get("t011_obj_geo_symc.symbol_date"))$t011_obj_geo_symc.get("t011_obj_geo_symc.symbol_date")#end</td>
+    					<td>#if($t011_obj_geo_symc.get("t011_obj_geo_symc.edition"))$t011_obj_geo_symc.get("t011_obj_geo_symc.edition")#end</td>
+    				</tr>
+        		#end
+    			</tbody>	
+    			</table>
+    			<br/>
+    			</p>
+        	#end	
         	#if($myData.get("t011_obj_geo_keyc.obj_id"))
 				<p><strong>$MESSAGES.getString("t011_obj_geo_keyc"):</strong></p>
     			<table class="border" border="1">
