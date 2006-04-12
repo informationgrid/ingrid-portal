@@ -212,7 +212,13 @@
     		#renderUDKEntry($myData "t011_obj_serv.environment")
     		#renderUDKEntry($myData "t011_obj_serv.history")
     		#renderUDKEntry($myData "t011_obj_serv.base")
-    		#renderUDKEntry($myData "t011_obj_serv_version.version")
+        	#if($myData.get("t011_obj_serv_version.obj_id"))
+        		<p><strong>$MESSAGES.getString("t011_obj_serv_version.version"):</strong><br>
+            	#foreach($t011_obj_serv_version in $myData.get("t011_obj_serv_version.obj_id"))
+					#if($t011_obj_serv_version.get("t011_obj_serv_version.version"))$t011_obj_serv_version.get("t011_obj_serv_version.version")#end<br/>
+        		#end
+    			</p>
+        	#end	
     		#renderUDKEntry($myData "t011_obj_serv_operation.name")
     		#renderUDKEntry($myData "t011_obj_serv_operation.descr")
     		#renderUDKEntry($myData "t011_obj_serv.description")
