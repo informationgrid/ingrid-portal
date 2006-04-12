@@ -32,6 +32,14 @@
     #end
 #end
 
+#macro (renderUDKEntrySuffixInLine $r $entryName $suffix)
+	#if($r.get($entryName))
+		<p><strong>$MESSAGES.getString($entryName):</strong> $r.get($entryName)#if($suffix) $suffix#end<br/></p>
+    #end
+#end
+
+
+
 
 #macro (renderSuperiorReferences)
 	#if($superiorReferences && !$superiorReferences.isEmpty())
@@ -320,7 +328,7 @@
             	#end	
 			#end
 			
-			#renderUDKEntrySuffix($myData "t011_obj_geo.rec_grade" "%")
+			#renderUDKEntrySuffixInLine($myData "t011_obj_geo.rec_grade" "%")
     		#if($myData.get("t011_obj_geo.referencesystem_id") == -1)
 				#renderUDKEntry($myData "t011_obj_geo.coord")
 			#elseif($myData.get("t011_obj_geo.referencesystem_id"))
