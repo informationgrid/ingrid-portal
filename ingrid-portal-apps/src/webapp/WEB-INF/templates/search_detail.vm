@@ -183,9 +183,9 @@
         			<table class="border" border="1">
         			<tbody>	
         				<tr>
-        					<th>$MESSAGES.getString("t011_obj_data_para.line")</th>
-        					<th>$MESSAGES.getString("t011_obj_data_para.parameter")</th>
-        					<th>$MESSAGES.getString("t011_obj_data_para.unit")</th>
+        					<th> $MESSAGES.getString("t011_obj_data_para.line") </th>
+        					<th> $MESSAGES.getString("t011_obj_data_para.parameter") </th>
+        					<th> $MESSAGES.getString("t011_obj_data_para.unit") </th>
         				</tr>
                 	#foreach($t0110_avail_format in $myData.get("t011_obj_data_para.obj_id"))
         				<tr>
@@ -259,9 +259,9 @@
     			<table class="border" border="1">
     			<tbody>	
     				<tr>
-    					<th>$MESSAGES.getString("t011_obj_geo_symc.symbol_cat")</th>
-    					<th>$MESSAGES.getString("t011_obj_geo_symc.symbol_date")</th>
-    					<th>$MESSAGES.getString("t011_obj_geo_symc.edition")</th>
+    					<th> $MESSAGES.getString("t011_obj_geo_symc.symbol_cat") </th>
+    					<th> $MESSAGES.getString("t011_obj_geo_symc.symbol_date") </th>
+    					<th> $MESSAGES.getString("t011_obj_geo_symc.edition") </th>
     				</tr>
             	#foreach($t011_obj_geo_symc in $myData.get("t011_obj_geo_symc.obj_id"))
     				<tr>
@@ -280,9 +280,9 @@
     			<table class="border" border="1">
     			<tbody>	
     				<tr>
-    					<th>$MESSAGES.getString("t011_obj_geo_keyc.subject_cat")</th>
-    					<th>$MESSAGES.getString("t011_obj_geo_keyc.key_date")</th>
-    					<th>$MESSAGES.getString("t011_obj_geo_keyc.edition")</th>
+    					<th> $MESSAGES.getString("t011_obj_geo_keyc.subject_cat") </th>
+    					<th> $MESSAGES.getString("t011_obj_geo_keyc.key_date") </th>
+    					<th> $MESSAGES.getString("t011_obj_geo_keyc.edition") </th>
     				</tr>
             	#foreach($t011_obj_geo_keyc in $myData.get("t011_obj_geo_keyc.obj_id"))
     				<tr>
@@ -312,8 +312,8 @@
         			<table class="border" border="1">
         			<tbody>	
         				<tr>
-        					<th>$MESSAGES.getString("t011_obj_geo_vector.geometric_object_type")</th>
-        					<th>$MESSAGES.getString("t011_obj_geo_vector.geometric_object_count")</th>
+        					<th> $MESSAGES.getString("t011_obj_geo_vector.geometric_object_type") </th>
+        					<th> $MESSAGES.getString("t011_obj_geo_vector.geometric_object_count") </th>
         				</tr>
                 	#foreach($t011_obj_geo_vector in $myData.get("t011_obj_geo_vector.obj_id"))
         				<tr>
@@ -342,9 +342,9 @@
     			<table class="border" border="1">
     			<tbody>	
     				<tr>
-    					<th>$MESSAGES.getString("t011_obj_geo_scale.scale")</th>
-    					<th>$MESSAGES.getString("t011_obj_geo_scale.resolution_ground")</th>
-    					<th>$MESSAGES.getString("t011_obj_geo_scale.resolution_scan")</th>
+    					<th> $MESSAGES.getString("t011_obj_geo_scale.scale") </th>
+    					<th> $MESSAGES.getString("t011_obj_geo_scale.resolution_ground") </th>
+    					<th> $MESSAGES.getString("t011_obj_geo_scale.resolution_scan") </th>
     				</tr>
             	#foreach($t011_obj_geo_scale in $myData.get("t011_obj_geo_scale.obj_id"))
     				<tr>
@@ -406,10 +406,10 @@
 			<table class="border" border="1">
 			<tbody>	
 				<tr>
-					<th>$MESSAGES.getString("t01_object.vertical_extent_maximum")</th>
-					<th>$MESSAGES.getString("t01_object.vertical_extent_minimum")</th>
-					<th>$MESSAGES.getString("t01_object.vertical_extent_unit")</th>
-					<th>$MESSAGES.getString("t01_object.vertical_extent_vdatum")</th>
+					<th> $MESSAGES.getString("t01_object.vertical_extent_maximum") </th>
+					<th> $MESSAGES.getString("t01_object.vertical_extent_minimum") </th>
+					<th> $MESSAGES.getString("t01_object.vertical_extent_unit") </th>
+					<th> $MESSAGES.getString("t01_object.vertical_extent_vdatum") </th>
 				</tr>
 				<tr>
 					<td>$rec.get("t01_object.vertical_extent_maximum")</td>
@@ -473,10 +473,10 @@
 			<table class="border" border="1">
 			<tbody>	
 				<tr>
-					<th>$MESSAGES.getString("t0110_avail_format.name")</th>
-					<th>$MESSAGES.getString("t0110_avail_format.version")</th>
-					<th>$MESSAGES.getString("t0110_avail_format.file_decompression_technique")</th>
-					<th>$MESSAGES.getString("t0110_avail_format.specification")</th>
+					<th> $MESSAGES.getString("t0110_avail_format.name") </th>
+					<th> $MESSAGES.getString("t0110_avail_format.version") </th>
+					<th> $MESSAGES.getString("t0110_avail_format.file_decompression_technique") </th>
+					<th> $MESSAGES.getString("t0110_avail_format.specification") </th>
 				</tr>
         	#foreach($t0110_avail_format in $rec.get("t0110_avail_format.obj_id"))
 				<tr>
@@ -496,9 +496,9 @@
 			<table class="border" border="1">
 			<tbody>	
 				<tr>
-					<th>$MESSAGES.getString("t0112_media_option.medium_name")</th>
-					<th>$MESSAGES.getString("t0112_media_option.transfer_size")</th>
-					<th>$MESSAGES.getString("t0112_media_option.medium_note")</th>
+					<th> $MESSAGES.getString("t0112_media_option.medium_name") </th>
+					<th> $MESSAGES.getString("t0112_media_option.transfer_size") </th>
+					<th> $MESSAGES.getString("t0112_media_option.medium_note") </th>
 				</tr>
         	#foreach($t0112_media_option in $rec.get("t0112_media_option.obj_id"))
 				<tr>
