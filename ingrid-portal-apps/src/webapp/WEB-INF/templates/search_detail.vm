@@ -521,12 +521,10 @@
 	<div class="line"><hr /></div>
 	<p><strong>$MESSAGES.getString("additional_information"):</strong><br/></p>
 	#if($rec.get("t01_object.metadata_language") && $rec.get("t01_object.metadata_language") != "")
-		<p><strong>$MESSAGES.getString("t01_object.metadata_language"):</strong><br/>
-		$sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name")
+		<p><strong>$MESSAGES.getString("t01_object.metadata_language"):</strong> $sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name")</p>
 	#end
 	#if($rec.get("t01_object.data_language") && $rec.get("t01_object.data_language") != "")
-		<p><strong>$MESSAGES.getString("t01_object.data_language"):</strong><br/>
-		$sysLangList.get($rec.get("t01_object.data_language")).get("sys_language.name")
+		<p><strong>$MESSAGES.getString("t01_object.data_language"):</strong> $sysLangList.get($rec.get("t01_object.data_language")).get("sys_language.name")</p>
 	#end
 	#if($rec.get("t015_legist.obj_id"))
 		<p><strong>$MESSAGES.getString("legal_basis"):</strong><br/>
