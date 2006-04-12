@@ -239,7 +239,13 @@
     	<div class="line"><hr /></div>
 		#foreach($myData in $rec.get("t011_obj_geo.obj_id"))    			
     		#renderUDKEntry($myData "t011_obj_geo.hierarchy_level")
-    		#renderUDKEntry($myData "t011_obj_geo_topic_cat.topic_category")
+        	#if($myData.get("t011_obj_geo_topic_cat.obj_id"))
+        		<p><strong>$MESSAGES.getString("t011_obj_geo_topic_cat.topic_category"):</strong><br>
+            	#foreach($t011_obj_geo_topic_cat in $myData.get("t011_obj_geo_topic_cat.obj_id"))
+					#if($t011_obj_geo_topic_cat.get("t011_obj_geo_topic_cat.topic_category"))$t011_obj_geo_topic_cat.get("t011_obj_geo_topic_cat.topic_category")#end<br/>
+        		#end
+    			</p>
+        	#end	
         	#if($myData.get("t011_obj_geo_symc.obj_id"))
 				<p><strong>$MESSAGES.getString("t011_obj_geo_symc"):</strong></p>
     			<table class="border" border="1">
@@ -348,7 +354,6 @@
         	#if($myData.get("t011_obj_geo_supplinfo.obj_id"))
         		<p><strong>$MESSAGES.getString("t011_obj_geo_supplinfo.feature_type"):</strong><br>
             	#foreach($t011_obj_geo_supplinfo in $myData.get("t011_obj_geo_supplinfo.obj_id"))
-					#if($t011_obj_geo_supplinfo.get("t011_obj_geo_supplinfo.line"))$t011_obj_geo_supplinfo.get("t011_obj_geo_supplinfo.line");#end
 					#if($t011_obj_geo_supplinfo.get("t011_obj_geo_supplinfo.feature_type"))$t011_obj_geo_supplinfo.get("t011_obj_geo_supplinfo.feature_type")#end<br/>
         		#end
     			</p>
