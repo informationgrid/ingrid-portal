@@ -309,7 +309,30 @@
 			
 			#renderUDKEntrySuffix($myData "t011_obj_geo.rec_grade" "%")
     		#renderUDKEntry($myData "t011_obj_geo.coord")
-    		#renderUDKEntry($myData "t011_obj_geo_scale.scale")
+
+			#if($myData.get("t011_obj_geo_scale.obj_id"))
+				<p><strong>$MESSAGES.getString("t011_obj_geo_scale"):</strong></p>
+    			<table class="border" border="1">
+    			<tbody>	
+    				<tr>
+    					<th>$MESSAGES.getString("t011_obj_geo_scale.scale")</th>
+    					<th>$MESSAGES.getString("t011_obj_geo_scale.resolution_ground")</th>
+    					<th>$MESSAGES.getString("t011_obj_geo_scale.resolution_scan")</th>
+    				</tr>
+            	#foreach($t011_obj_geo_scale in $myData.get("t011_obj_geo_scale.obj_id"))
+    				<tr>
+    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.scale"))$t011_obj_geo_scale.get("t011_obj_geo_scale.scale")#end</td>
+    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground"))$t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground")#end</td>
+    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan"))$t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan")#end</td>
+    				</tr>
+        		#end
+    			</tbody>	
+    			</table>
+    			<br/>
+    			</p>
+        	#end	
+
+			#renderUDKEntry($myData "t011_obj_geo_scale.scale")
     		#renderUDKEntrySuffix($myData "t011_obj_geo_scale.resolution_ground" "m")
     		#renderUDKEntry($myData "t011_obj_geo_scale.resolution_scan")
     		#renderUDKEntrySuffix($myData "t011_obj_geo.pos_accuracy_vertical" "m")
