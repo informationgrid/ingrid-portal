@@ -240,7 +240,29 @@
 		#foreach($myData in $rec.get("t011_obj_geo.obj_id"))    			
     		#renderUDKEntry($myData "t011_obj_geo.hierarchy_level")
     		#renderUDKEntry($myData "t011_obj_geo_topic_cat.topic_category")
-    		#renderUDKEntry($myData "t011_obj_geo_spatial_rep.type")
+        	#if($myData.get("t011_obj_geo_keyc.obj_id"))
+				<p><strong>$MESSAGES.getString("t011_obj_geo_keyc"):</strong></p>
+    			<table class="border" border="1">
+    			<tbody>	
+    				<tr>
+    					<th>$MESSAGES.getString("t011_obj_geo_keyc.subject_cat")</th>
+    					<th>$MESSAGES.getString("t011_obj_geo_keyc.key_date")</th>
+    					<th>$MESSAGES.getString("t011_obj_geo_keyc.edition")</th>
+    				</tr>
+            	#foreach($t011_obj_geo_keyc in $myData.get("t011_obj_geo_keyc.obj_id"))
+    				<tr>
+    					<td>#if($t011_obj_geo_keyc.get("t011_obj_geo_keyc.subject_cat"))$t011_obj_geo_keyc.get("t011_obj_geo_keyc.subject_cat")#end</td>
+    					<td>#if($t011_obj_geo_keyc.get("t011_obj_geo_keyc.key_date"))$t011_obj_geo_keyc.get("t011_obj_geo_keyc.key_date")#end</td>
+    					<td>#if($t011_obj_geo_keyc.get("t011_obj_geo_keyc.edition"))$t011_obj_geo_keyc.get("t011_obj_geo_keyc.edition")#end</td>
+    				</tr>
+        		#end
+    			</tbody>	
+    			</table>
+    			<br/>
+    			</p>
+        	#end	
+
+			#renderUDKEntry($myData "t011_obj_geo_spatial_rep.type")
 			#if($myData.get("t011_obj_geo_spatial_rep.type") == "1")
 				<p><strong>$MESSAGES.getString("t011_obj_geo_vector"):</strong></p>
 				#renderUDKEntryInLine($myData "t011_obj_geo.vector_topology_level")
