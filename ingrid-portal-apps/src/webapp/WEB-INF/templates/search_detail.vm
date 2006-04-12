@@ -241,9 +241,29 @@
     		#renderUDKEntry($myData "t011_obj_geo.hierarchy_level")
     		#renderUDKEntry($myData "t011_obj_geo_topic_cat.topic_category")
     		#renderUDKEntry($myData "t011_obj_geo_spatial_rep.type")
-    		#renderUDKEntry($myData "t011_obj_geo_vector.geometric_object_type")
-    		#renderUDKEntry($myData "t011_obj_geo.vector_topology_level")
-    		#renderUDKEntry($myData "t011_obj_geo_vector.geometric_object_count")
+			#if($myData.get("t011_obj_geo_spatial_rep.type") || true)
+				<p><strong>$MESSAGES.getString("t011_obj_geo_vector"):</strong></p>
+				#renderUDKEntryInLine($myData "t011_obj_geo.vector_topology_level")
+            	#if($myData.get("t011_obj_geo_vector.obj_id"))
+        			<table class="border" border="1">
+        			<tbody>	
+        				<tr>
+        					<th>$MESSAGES.getString("t011_obj_geo_vector.geometric_object_type")</th>
+        					<th>$MESSAGES.getString("t011_obj_geo_vector.geometric_object_count")</th>
+        				</tr>
+                	#foreach($t011_obj_geo_vector in $myData.get("t011_obj_geo_vector.obj_id"))
+        				<tr>
+        					<td>#if($t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_type"))$t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_type")#end</td>
+        					<td>#if($t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_count"))$t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_count")#end</td>
+        				</tr>
+            		#end
+        			</tbody>	
+        			</table>
+        			<br/>
+        			</p>
+            	#end	
+			#end
+			
 			#renderUDKEntrySuffix($myData "t011_obj_geo.rec_grade" "%")
     		#renderUDKEntry($myData "t011_obj_geo.coord")
     		#renderUDKEntry($myData "t011_obj_geo_scale.scale")
