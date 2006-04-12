@@ -287,7 +287,7 @@ public class UtilsSearch {
 
             // remaining keys in IngridQuery
             Iterator iterator = q.keySet().iterator();
-            qStr = qStr.concat(" /MAP:");
+            qStr = qStr.concat(" /MAP->");
             while (iterator.hasNext()) {
                 Object key = iterator.next();
                 Object value = q.get(key);

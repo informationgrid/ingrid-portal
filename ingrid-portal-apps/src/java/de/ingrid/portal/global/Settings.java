@@ -63,7 +63,7 @@ public class Settings {
     public final static String QFIELD_PARTNER = "partner";
 
     // "service", "measures"; rubric
-    public final static String QFIELD_RUBRIC = "rubric";
+    public final static String QFIELD_RUBRIC = "topic";
 
     // "environment topics": first category
     public final static String QFIELD_TOPIC = "topic";
@@ -89,7 +89,7 @@ public class Settings {
     // --------------------
     public final static String QVALUE_DATATYPE_AREA_SERVICE = "service";
 
-    public final static String QVALUE_DATATYPE_AREA_MEASURES = "measures";
+    public final static String QVALUE_DATATYPE_AREA_MEASURES = "measure";
 
     public final static String QVALUE_DATATYPE_AREA_ENVTOPICS = "topics";
 
@@ -124,7 +124,7 @@ public class Settings {
 
     public final static String RESULT_KEY_PARTNER = "partner";
 
-    public final static String RESULT_KEY_RUBRIC = "rubric";
+    public final static String RESULT_KEY_RUBRIC = "topic";
 
     public final static String RESULT_KEY_TOPIC = "topic";
 

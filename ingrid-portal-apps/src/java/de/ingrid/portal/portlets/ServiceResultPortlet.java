@@ -171,8 +171,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(result, detail);
-                        result.put(Settings.RESULT_KEY_RUBRIC, UtilsSearch.getDetailValue(detail,
-                                Settings.RESULT_KEY_RUBRIC, resources));
+                        result.put("topic", UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_RUBRIC, resources));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {

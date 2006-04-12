@@ -45,14 +45,14 @@ INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VAL
 INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (5, 'dat', 'datenkarten', 5);
 INSERT INTO ingrid_env_funct_category (id, form_value, query_value, sortkey) VALUES (6, 'ris', 'risikobewertungen', 6);
 
-INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (1, 'pre', 'presse', 1);
-INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (2, 'pub', 'publikationen', 2);
-INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (3, 'ver', 'veranstaltungen', 3);
+INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (1, 'pre', 'press', 1);
+INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (2, 'pub', 'publication', 2);
+INSERT INTO ingrid_service_rubric (id, form_value, query_value, sortkey) VALUES (3, 'ver', 'event', 3);
 
-INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (1, 'str', 'strahlung', 1);
-INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (2, 'luf', 'luft', 2);
-INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (3, 'was', 'wasser', 3);
-INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (4, 'wei', 'weitere', 4);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (1, 'str', 'radiation', 1);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (2, 'luf', 'air', 2);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (3, 'was', 'water', 3);
+INSERT INTO ingrid_measures_rubric (id, form_value, query_value, sortkey) VALUES (4, 'wei', 'misc', 4);
 
 INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (1, 'eve', 'events', 1);
 INSERT INTO ingrid_chronicle_eventtypes (id, form_value, query_value, sortkey) VALUES (2, 'his', 'historical', 2);
