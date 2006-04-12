@@ -110,7 +110,8 @@ public class UtilsSearch {
     public static void transferHitDetails(IngridHit result, IngridHitDetail detail) {
         try {
             result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
-            result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary());
+            // strip all HTML tags from summary
+            result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary().replaceAll("\\<.*?\\>",""));
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
             result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
