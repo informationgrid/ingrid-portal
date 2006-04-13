@@ -219,7 +219,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching Detail of result: " + result, t);
             }
-            resetBus();
+            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
+            if (!enJXTACommunication) {
+                resetBus();
+            }
         }
 
         return detail;
@@ -236,7 +239,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching Details of results: " + results, t);
             }
-            resetBus();
+            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
+            if (!enJXTACommunication) {
+                resetBus();
+            }
         }
 
         return details;
@@ -253,7 +259,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching Record of result: " + result, t);
             }
-            resetBus();
+            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
+            if (!enJXTACommunication) {
+                resetBus();
+            }
         }
 
         return rec;
