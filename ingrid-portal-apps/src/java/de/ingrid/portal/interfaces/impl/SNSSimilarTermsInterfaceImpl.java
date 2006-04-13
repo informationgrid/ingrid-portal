@@ -10,10 +10,12 @@ import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.SimilarTermsInterface;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
@@ -56,6 +58,21 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             return hits.getHits();
         } catch (Exception e) {
             log.error("Exception while querying sns for similar terms.", e);
+            return null;
+        }
+    }
+    
+    public IngridHitDetail[] getSimilarDetailedTerms(String term, IngridHit[] hits) {
+        try {
+            IngridQuery query = QueryStringParser.parse(term);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARTERMS_FROM_TOPIC);
+
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+
+            return iBus.getDetails(hits, query, null);
+        } catch (Exception e) {
+            log.error("Exception while querying sns for similar detailed terms.", e);
             return null;
         }
     }

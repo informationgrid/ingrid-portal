@@ -12,12 +12,11 @@
             <p>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doBrowse')
-##$action.setParameter('?id?',?id?)
-              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Südliches Vorland des Thüringer Waldes</a><span class="smaller">, Naturraum</span><br />
-##$action.setParameter('?id?',?id?)
-              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Thüringer Becken</a><span class="smaller">, Gebirge</span><br />
-##$action.setParameter('?id?',?id?)
-              <input type="checkbox" name="s2_chk1" value="myId" />&nbsp;<a href="$action">Thüringer Wald</a><span class="smaller">, Landschaft</span><br />
+#foreach($topic in $topics)
+	#set($topicId = $topic.topicID)
+	$action.setParameter("topic_id", "$topicId")
+	<input type="checkbox" name="chk$velocityCount" value="$topicId" />&nbsp;<a href="$action">$topic.title</a><span class="smaller"></span><br />
+#end
             </p>
           </div>
 		</div>      

@@ -1,9 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+    <form action="$action" method="post" name="extsearch" id="extsearch">
       <div class="formbody">
           <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.label.terms')</label></p>
           <div class="innerform">
-              <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="" />
+			  <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="#getFieldValue('search_term')" />
               <input class="btn float_right" type="submit" name="submitSearch" value="$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.submit')" />
               <span class="clearer"></span>
-      <!-- DON'T FORGET TO CLOSE THE FORM AND THE TWO OPEN DIVs OUTSIDE OF THE INCLUDE ! -->
+#displayFormErrors()
+<!-- DON'T FORGET TO CLOSE THE FORM AND THE TWO OPEN DIVs OUTSIDE OF THE INCLUDE ! -->
