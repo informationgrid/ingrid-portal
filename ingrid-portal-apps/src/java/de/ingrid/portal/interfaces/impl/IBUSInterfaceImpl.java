@@ -199,9 +199,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         + ", currentPage=" + currentPage, t);
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
-//            if (!enJXTACommunication) {
+            if (!enJXTACommunication) {
                 resetBus();
-//            }
+            }
             throw new Exception(t);
         }
 
