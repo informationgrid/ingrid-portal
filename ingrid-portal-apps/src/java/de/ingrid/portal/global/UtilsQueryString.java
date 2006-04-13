@@ -10,6 +10,12 @@ package de.ingrid.portal.global;
  */
 public class UtilsQueryString {
     
+    public final static String OP_AND = "AND";
+    public final static String OP_OR = "OR";
+    public final static String OP_NOT = "NOT";
+    public final static String OP_PHRASE = "PRASE";
+    
+    
     public static String replaceTerm(String queryStr, String term, String newTerm) {
         int termStartPos = 0;
         int termStopPos = 0;
@@ -52,7 +58,7 @@ public class UtilsQueryString {
             result.append(queryStr);
         }
         
-        if (operator.equals("OR")) {
+        if (operator.equals(OP_OR)) {
             String[] terms = str.split(" ");
             if (queryStr.length() > 0 && terms.length > 0) {
                 result.insert(0, "(");
@@ -64,7 +70,7 @@ public class UtilsQueryString {
                     result.append(" OR ");
                 }
             }
-        } else if (operator.equals("AND")) {
+        } else if (operator.equals(OP_AND)) {
             String[] terms = str.split(" ");
             if (queryStr.length() > 0 && terms.length > 0) {
                 result.insert(0, "(");
@@ -76,7 +82,7 @@ public class UtilsQueryString {
                     result.append(" ");
                 }
             }
-        } else if (operator.equals("NOT")) {
+        } else if (operator.equals(OP_NOT)) {
             String[] terms = str.split(" ");
             if (queryStr.length() > 0 && terms.length > 0) {
                 result.insert(0, "(");
@@ -85,7 +91,7 @@ public class UtilsQueryString {
             for (int i=0; i<terms.length; i++) {
                 result.append("-").append(terms[i]);
             }
-        } else if (operator.equals("PHRASE")) {
+        } else if (operator.equals(OP_PHRASE)) {
             if (queryStr.length() > 0) {
                 result.insert(0, "(");
                 result.append(") ");

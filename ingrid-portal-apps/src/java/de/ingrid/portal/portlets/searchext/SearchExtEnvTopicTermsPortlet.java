@@ -48,13 +48,13 @@ public class SearchExtEnvTopicTermsPortlet extends SearchExtEnvTopic {
             String searchTerm = request.getParameter("search_term");
             String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
             if (addingType.equals("1")) {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "AND"));
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
             } else if (addingType.equals("2")) {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "OR"));
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_OR));
             } else if (addingType.equals("3")) {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "PHRASE"));
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_PHRASE));
             } else if (addingType.equals("4")) {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, "NOT"));
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_NOT));
             }
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
