@@ -46,8 +46,7 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
             int entry = (int) (Math.random() * details.length);
             DetailedTopic detail = (DetailedTopic) details[entry];
             result.put("title", detail.getTopicName());
-//            result.put("type", detail.getType());
-            result.put("type", "historical");
+            result.put("type", detail.getType());
             String topicFrom = detail.getFrom();
             if (topicFrom != null) {
                 result.put("from", UtilsDate.parseDateToLocale(topicFrom, request.getLocale()));

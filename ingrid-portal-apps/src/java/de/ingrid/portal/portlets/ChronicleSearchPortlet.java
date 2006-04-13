@@ -23,6 +23,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -60,8 +61,8 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         boolean doSearch = false;
         String topicId = null;
         String topicType = null;
-        //        String topicFrom = null;
-        //        String topicTo = null;
+        String topicFrom = null;
+        String topicTo = null;
         if (action.length() != 0) {
             // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
@@ -70,8 +71,8 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // fetch topic id from request, we may be called from teaser !
             topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
             topicType = request.getParameter("topType");
-            //            topicFrom = request.getParameter("topFrom");
-            //            topicTo = request.getParameter("topTo");
+            topicFrom = request.getParameter("topFrom");
+            topicTo = request.getParameter("topTo");
         }
 
         // ----------------------------------
@@ -99,9 +100,31 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // initial default values when called from teaser
             af.init();
 
-            // set topic select values in form, when special topic is requested 
+            // set form values of topic, when special topic is requested 
             if (topicId != null) {
-                // skip setting of date, may be of variable format !
+
+                // set date
+                String formFrom = UtilsDate.getInputDateFrom(topicFrom, request.getLocale());
+                String formTo = UtilsDate.getInputDateTo(topicTo, request.getLocale());
+                if (topicFrom != null && topicTo != null) {
+                    if (topicFrom.equals(topicTo)) {
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formFrom);
+                    } else {
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT,
+                                ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
+                    }
+                } else if (topicFrom != null) {
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formFrom);                    
+                } else if (topicTo != null) {
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formTo);                    
+                }
+
+                // set type
                 if (topicType != null) {
                     topicType = UtilsDB.getFormValueFromQueryValue(UtilsDB.getChronicleEventTypes(), topicType);
                     af.setInput(ChronicleSearchForm.FIELD_EVENT, topicType);
@@ -150,7 +173,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         af.populate(request);
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, af));
+        actionResponse.sendRedirect(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, null));
     }
 
     public void setupQuery(PortletRequest request) {

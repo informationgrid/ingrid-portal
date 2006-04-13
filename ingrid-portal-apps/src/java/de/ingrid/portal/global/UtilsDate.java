@@ -112,8 +112,40 @@ public class UtilsDate {
         } else if (to != null) {
             return to;
         }
-        
+
         return "";
+    }
+
+    /**
+     * Checks the Topic Date and returns the according input date for the from field
+     * @param topicDate
+     * @param locale
+     * @return
+     */
+    public static String getInputDateFrom(String topicDate, Locale locale) {
+        String from = UtilsDate.parseDateToLocale(topicDate, locale);
+
+        if (from != null && from.length() == 4) {
+            from = "01.01." + from;
+        }
+
+        return from;
+    }
+
+    /**
+     * Checks the Topic Date and returns the according input date for the to field
+     * @param topicDate
+     * @param locale
+     * @return
+     */
+    public static String getInputDateTo(String topicDate, Locale locale) {
+        String to = UtilsDate.parseDateToLocale(topicDate, locale);
+
+        if (to != null && to.length() == 4) {
+            to = "31.12." + to;
+        }
+
+        return to;
     }
 
     /**

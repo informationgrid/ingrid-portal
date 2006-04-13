@@ -42,7 +42,7 @@ public class SNSInterfaceTest extends TestCase {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         //        String dateStr = df.format(queryDate);
-        String dateStr = "2006-03-15";
+        String dateStr = "2006-04-13";
 
         IngridQuery query = QueryStringParser.parse(dateStr);
         query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
@@ -130,6 +130,7 @@ public class SNSInterfaceTest extends TestCase {
             for (int i = 0; i < details.length; i++) {
                 assertTrue(details[i] instanceof DetailedTopic);
                 DetailedTopic detail = (DetailedTopic) details[i];
+                System.out.println("--------");
                 System.out.println("topicName:" + detail.getTopicName());
                 System.out.println("topicID:" + detail.getTopicID());
                 System.out.println("from:" + detail.getFrom());
@@ -139,7 +140,6 @@ public class SNSInterfaceTest extends TestCase {
                 System.out.println("associatedTermsOcc (suchbegriffe):" + detail.get(DetailedTopic.ASSICIATED_OCC));
                 System.out.println("sampleOcc (Internetverweis):" + detail.get(DetailedTopic.SAMPLE_OCC));
                 System.out.println("descriptionOcc:" + detail.get(DetailedTopic.DESCRIPTION_OCC));
-                System.out.println("--------");
             }
         } else {
             System.out.println("!!!!!!!!!!!!!!!! NO DETAILS FOUND");

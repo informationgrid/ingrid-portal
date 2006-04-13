@@ -251,12 +251,13 @@ public class Utils {
 
         Enumeration paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
-            if (urlParams.length() != 0) {
-                urlParams.append("&");
-            }
             String paramName = (String) paramNames.nextElement();
             String[] paramValues = request.getParameterValues(paramName);
-            urlParams.append(toURLParam(paramValues, paramName));
+            String newParam = toURLParam(paramValues, paramName);
+            if (urlParams.length() != 0 && newParam.length() > 0) {
+                urlParams.append("&");
+            }
+            urlParams.append(newParam);
         }
 
         return urlParams.toString();

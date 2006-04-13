@@ -129,7 +129,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         af.populate(request);
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_ENVIRONMENT + SearchState.getURLParamsCatalogueSearch(request, af));
+        actionResponse.sendRedirect(Settings.PAGE_ENVIRONMENT + SearchState.getURLParamsCatalogueSearch(request, null));
     }
 
     public void setupQuery(PortletRequest request) {

@@ -43,7 +43,7 @@ public class SearchState {
             String  urlParam = af.toURLParams();
             Utils.appendURLParameter(result, urlParam);
         }
-        
+
         if (log.isInfoEnabled()) {
             log.info("Catalogue: URL parameters: " + result);
         }
