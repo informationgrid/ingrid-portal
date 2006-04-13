@@ -563,7 +563,7 @@
 		<p class="float_right"><span class="smaller">#if($rec.get("t01_object.mod_time"))letzte Änderung am: $rec.get("t01_object.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
-	<p><i>#if($rec.get("t01_object.dataset_alternate_name"))#renderUDKEntry($rec "t01_object.dataset_alternate_name")#end</i></p>
+	<p><i>#if($rec.get("t01_object.dataset_alternate_name"))$rec.get("t01_object.dataset_alternate_name")#end</i></p>
 	<br />
 	<div class="section">
 		<p class="float_left">
