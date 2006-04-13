@@ -52,7 +52,7 @@
 
     <bean id="Powertools" class="org.apache.jetspeed.velocity.JetspeedPowerToolFactory">
         <constructor-arg>
-            <value>org.apache.jetspeed.velocity.IngridPowerToolImpl</value>
+            <value>de.ingrid.portal.jetspeed.velocity.IngridPowerToolImpl</value>
         </constructor-arg>
         <constructor-arg>
             <ref bean="DynamicTitleService" />
