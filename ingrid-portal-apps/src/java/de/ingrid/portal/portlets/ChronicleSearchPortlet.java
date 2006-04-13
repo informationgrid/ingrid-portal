@@ -58,10 +58,20 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         // search if action parameter is passed, every action on page should cause new search 
         boolean doSearch = false;
+        String topicId = null;
+        String topicType = null;
+        //        String topicFrom = null;
+        //        String topicTo = null;
         if (action.length() != 0) {
             // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
             doSearch = true;
+
+            // fetch topic id from request, we may be called from teaser !
+            topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
+            topicType = request.getParameter("topType");
+            //            topicFrom = request.getParameter("topFrom");
+            //            topicTo = request.getParameter("topTo");
         }
 
         // ----------------------------------
@@ -86,8 +96,22 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // empty form on new search
             af.clear();
         } else if (action.equals(Settings.PARAMV_ACTION_FROM_TEASER)) {
-            // default values when called from teaser
+            // initial default values when called from teaser
             af.init();
+
+            // set topic select values in form, when special topic is requested 
+            if (topicId != null) {
+                // skip setting of date, may be of variable format !
+                if (topicType != null) {
+                    topicType = UtilsDB.getFormValueFromQueryValue(UtilsDB.getChronicleEventTypes(), topicType);
+                    af.setInput(ChronicleSearchForm.FIELD_EVENT, topicType);
+                }
+
+                // TODO: search topic by ID !?
+            } else {
+                // TODO: at the moment NO SEARCH when called from teaser !
+                doSearch = false;
+            }
         } else if (action.length() == 0) {
             // no URL parameters, we're called from other page -> default values
             af.init();

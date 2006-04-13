@@ -298,6 +298,8 @@ public class Settings {
 
     public final static String PARAM_ACTION = "action";
 
+    public final static String PARAM_TOPIC_ID = "topId";
+
     public final static String PARAM_TAB = "tab";
 
 

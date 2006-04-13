@@ -118,6 +118,26 @@ public class UtilsDB {
     }
 
     /**
+     * Convenient method for extracting a FormValue from a List of IngridFormToQuery
+     * objects, based on the QueryValue.
+     * @param formToQueryList
+     * @param formValue
+     * @return
+     */
+    public static String getFormValueFromQueryValue(List formToQueryList, String queryValue) {
+        String ret = queryValue;
+        IngridFormToQuery formToQuery = null;
+        for (int i = 0; i < formToQueryList.size(); i++) {
+            formToQuery = (IngridFormToQuery) formToQueryList.get(i);
+            if (formToQuery.getQueryValue().equals(queryValue)) {
+                ret = formToQuery.getFormValue();
+                break;
+            }
+        }
+        return ret;
+    }
+
+    /**
      * Get all the partners.
      * @return
      */
@@ -248,4 +268,5 @@ public class UtilsDB {
         List eventTypes = getChronicleEventTypes();
         return getQueryValueFromFormValue(eventTypes, key);
     }
+
 }

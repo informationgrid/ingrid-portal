@@ -3,15 +3,14 @@
  */
 package de.ingrid.portal.global;
 
-import java.io.FileReader;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -35,7 +34,6 @@ import org.apache.jetspeed.administration.AdministrationEmailException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
@@ -244,6 +242,28 @@ public class Utils {
 
     /**
      * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
+     * for all parameters in request !
+     * @param request
+     * @return
+     */
+    public static String getURLParams(PortletRequest request) {
+        StringBuffer urlParams = new StringBuffer("");
+
+        Enumeration paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements()) {
+            if (urlParams.length() != 0) {
+                urlParams.append("&");
+            }
+            String paramName = (String) paramNames.nextElement();
+            String[] paramValues = request.getParameterValues(paramName);
+            urlParams.append(toURLParam(paramValues, paramName));
+        }
+
+        return urlParams.toString();
+    }
+
+    /**
+     * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
      * @param values
      * @param paramName
      * @return
@@ -272,7 +292,7 @@ public class Utils {
         if (value == null || value.length() == 0) {
             return "";
         }
-        
+
         String urlParam = null;
         try {
             urlParam = paramName + "=" + URLEncoder.encode(value, "UTF-8");
@@ -300,7 +320,7 @@ public class Utils {
             currentURLParams.append(newURLParam);
         }
     }
-    
+
     /**
      * Returns, if the session has been marked as JavaScript- enabled.
      * 
@@ -315,15 +335,15 @@ public class Utils {
             return false;
         }
     }
-    
+
     public static String getMD5Hash(String val) {
         MessageDigest mdAlgorithm = null;
         try {
             mdAlgorithm = MessageDigest.getInstance("MD5");
             mdAlgorithm.update(val.getBytes());
-            
+
             String plainText = "";
-            
+
             byte[] digest = mdAlgorithm.digest();
             StringBuffer hexString = new StringBuffer();
 
@@ -336,38 +356,38 @@ public class Utils {
 
                 hexString.append(plainText);
             }
-            return hexString.toString();        
+            return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             log.error("unable to create MD5 hash from String '" + val + "'", e);
             return null;
         }
-            
+
     }
 
-    public static String mergeTemplate(PortletConfig  portletConfig, Map attributes, String attributesName, String template) throws AdministrationEmailException
-    {
+    public static String mergeTemplate(PortletConfig portletConfig, Map attributes, String attributesName,
+            String template) throws AdministrationEmailException {
 
         VelocityContext context = new VelocityContext();
         context.put(attributesName, attributes);
         StringWriter sw = new StringWriter();
-        
+
         try {
             Velocity.init();
-//            String realTemplatePath = portletConfig.getPortletContext().getRealPath(template);
+            //            String realTemplatePath = portletConfig.getPortletContext().getRealPath(template);
             Template vTemplate = Velocity.getTemplate(template);
-            sw = new StringWriter(); 
-            vTemplate.merge( context, sw );
+            sw = new StringWriter();
+            vTemplate.merge(context, sw);
         } catch (Exception e) {
             log.error("failed to merge velocity template: " + template, e);
         }
         String buffer = sw.getBuffer().toString();
         return buffer;
     }
-    
+
     public static void sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
 
-       boolean debug = true;
-        
+        boolean debug = true;
+
         Properties props = new Properties();
         props.put("mail.smtp.host", PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_SERVER, "localhost"));
 
@@ -383,7 +403,7 @@ public class Utils {
             InternetAddress addressFrom = new InternetAddress(from);
             msg.setFrom(addressFrom);
 
-            InternetAddress[] addressTo = new InternetAddress[to.length]; 
+            InternetAddress[] addressTo = new InternetAddress[to.length];
             for (int i = 0; i < to.length; i++) {
                 addressTo[i] = new InternetAddress(to[i]);
             }
@@ -395,7 +415,7 @@ public class Utils {
                 Iterator it = keySet.iterator();
                 while (it.hasNext()) {
                     String key = it.next().toString();
-                    msg.addHeader(key, (String)headers.get(key));
+                    msg.addHeader(key, (String) headers.get(key));
                 }
             }
 
@@ -407,8 +427,8 @@ public class Utils {
             log.error("invalid email address format", e);
         } catch (MessagingException e) {
             log.error("error sending email.", e);
-        }        
-        
-    }    
-    
+        }
+
+    }
+
 }

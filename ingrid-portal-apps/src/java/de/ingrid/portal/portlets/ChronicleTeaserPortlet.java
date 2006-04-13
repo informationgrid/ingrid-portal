@@ -15,8 +15,10 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHitDetail;
 
 public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
@@ -43,27 +45,32 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
         if (details.length > 0) {
             int entry = (int) (Math.random() * details.length);
             DetailedTopic detail = (DetailedTopic) details[entry];
-            result.put("title", detail.get("topicName"));
-            if (detail.get("from") != null) {
-                result.put("from", UtilsDate.parseDateToLocale(detail.get("from").toString(), request.getLocale()));
+            result.put("title", detail.getTopicName());
+//            result.put("type", detail.getType());
+            result.put("type", "historical");
+            String topicFrom = detail.getFrom();
+            if (topicFrom != null) {
+                result.put("from", UtilsDate.parseDateToLocale(topicFrom, request.getLocale()));
             }
-            if (detail.get("until") != null && !detail.get("until").equals(detail.get("from"))) {
-                result.put("until", UtilsDate.parseDateToLocale(detail.get("until").toString(), request.getLocale()));
+            String topicTo = detail.getFrom();
+            if (topicTo != null && !topicTo.equals(topicFrom)) {
+                result.put("to", UtilsDate.parseDateToLocale(topicTo, request.getLocale()));
             }
             result.put("topicId", detail.get("topicId"));
-            if (detail.get("from") != null) {
-                int years = UtilsDate.yearsBetween(detail.get("from").toString(), new SimpleDateFormat("yyyy-MM-dd")
-                        .format(new Date()));
+            if (topicFrom != null) {
+                int years = UtilsDate.yearsBetween(topicFrom, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 result.put("years", new Integer(years));
             }
         }
 
-        context.put("snsAnniversray", result);
+        context.put("snsAnniversary", result);
         super.doView(request, response);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-    }
 
+        // redirect to our page with URL parameters for bookmarking
+        actionResponse.sendRedirect(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, null));
+    }
 }

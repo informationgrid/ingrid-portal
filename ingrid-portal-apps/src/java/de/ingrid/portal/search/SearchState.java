@@ -35,32 +35,15 @@ public class SearchState {
      */
     public static String getURLParamsCatalogueSearch(PortletRequest request, ActionForm af) {
         StringBuffer result = new StringBuffer("?");
-
-        // Action parameter, determines what to do (important for bookmarking, to react in view method)
-        // (read only from request)
-        String urlParam = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
-        Utils.appendURLParameter(result, urlParam);
+        
+        result.append(Utils.getURLParams(request));
 
         // Generate parameters of form input via ActionForm !
         if (af != null) {
-            urlParam = af.toURLParams();
+            String  urlParam = af.toURLParams();
             Utils.appendURLParameter(result, urlParam);
-        } else {
-            // when no Action Form passed, we're called from teaser !!!
-            
-            // param from service, measures or topics teaser
-            urlParam = Utils.toURLParam(Settings.PARAM_RUBRIC, request.getParameter(Settings.PARAM_RUBRIC));
-            Utils.appendURLParameter(result, urlParam);
-
-            // param from chronicle teaser
-            // TODO which parameter from chronicle teaser
         }
-
-        // start hit of search results (read only from request !)
-        urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, request
-                .getParameter(Settings.PARAM_STARTHIT_RANKED));
-        Utils.appendURLParameter(result, urlParam);
-
+        
         if (log.isInfoEnabled()) {
             log.info("Catalogue: URL parameters: " + result);
         }
