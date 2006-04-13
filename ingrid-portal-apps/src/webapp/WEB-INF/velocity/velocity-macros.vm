@@ -12,7 +12,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 
 #macro (getChecked $field $value)
-#if ($actionForm.isCurrentInput($field, $value))checked="checked"#end
+#if ($actionForm.isCurrentInput($field, $value)) checked="checked"#end
 #end
 
 #macro (getSelected $field $value)

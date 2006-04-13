@@ -171,7 +171,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             // get search type
             String searchType = document.valueOf("//portal_communication/search/@type");
-            if (searchType == null || (!searchType.equalsIgnoreCase("bbox") && searchType.equalsIgnoreCase("gkz"))) {
+            if (searchType == null || (!searchType.equalsIgnoreCase("bbox") && !searchType.equalsIgnoreCase("gkz"))) {
                 throw new Exception("WMS Interface: unsupported search type (" + searchType + ")");
             }
 
