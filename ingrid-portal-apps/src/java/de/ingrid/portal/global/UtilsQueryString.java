@@ -13,7 +13,7 @@ public class UtilsQueryString {
     public final static String OP_AND = "AND";
     public final static String OP_OR = "OR";
     public final static String OP_NOT = "NOT";
-    public final static String OP_PHRASE = "PRASE";
+    public final static String OP_PHRASE = "PHRASE";
     
     
     public static String replaceTerm(String queryStr, String term, String newTerm) {
