@@ -365,6 +365,27 @@ public class UtilsSearch {
     }
 
     /**
+     * Check whether query contains a field of the given name.
+     * Ignores whether it is in positive or negative list !
+     * NOTICE: comparison is done with lowercase representation of field name.
+     * @param query
+     * @param fieldName
+     * @return
+     */
+    public static boolean containsField(IngridQuery query, String fieldName) {
+        String fieldNameLowCase = fieldName.toLowerCase();
+        FieldQuery[] fields = query.getDataTypes();
+        int count = fields.length;
+        for (int i = 0; i < count; i++) {
+            if (fields[i].getFieldName().toLowerCase().equals(fieldNameLowCase)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
      * Adapt basic datatypes in query dependent from selected datatype in UserInterface
      * (the ones above the Simple Search Input).
      * @param query
