@@ -25,6 +25,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -68,10 +69,42 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         
         int documentId = Integer.parseInt(request.getParameter("docid"));
         String iplugId = request.getParameter("plugid");
+        
+        // lookup the original hit object
+        IngridHit hit = null;
+        boolean hitFound = false;
+        IngridHits storedHitsObj;
+        IngridHit[] storedHits;
+        if (!hitFound) {
+            storedHitsObj = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
+            storedHits = storedHitsObj.getHits();
+            for (int i=0; i<storedHits.length; i++) {
+                if (storedHits[i].getPlugId().equals(iplugId) && storedHits[i].getDocumentId() == documentId) {
+                    hit = storedHits[i];
+                    hit.remove("detail");
+                    hitFound = true;
+                    break;
+                }
+            }
+        }
+        if (!hitFound) {
+            storedHitsObj = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+            storedHits = storedHitsObj.getHits();
+            for (int i=0; i<storedHits.length; i++) {
+                if (storedHits[i].getPlugId().equals(iplugId) && storedHits[i].getDocumentId() == documentId) {
+                    hit = storedHits[i];
+                    hit.remove("detail");
+                    hitFound = true;
+                    break;
+                }
+            }
+        }
+        if (!hitFound) {
+            hit = new IngridHit();
+            hit.setDocumentId(documentId);
+            hit.setPlugId(iplugId);
+        }
 
-        IngridHit hit = new IngridHit();
-        hit.setDocumentId(documentId);
-        hit.setPlugId(iplugId);
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
         
