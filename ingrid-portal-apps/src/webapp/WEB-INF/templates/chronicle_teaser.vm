@@ -8,6 +8,7 @@ $action.setParameter('topId',"$!snsAnniversary.topicId")
 $action.setParameter('topType',"$!snsAnniversary.type")
 $action.setParameter('topFrom',"$!snsAnniversary.from")
 $action.setParameter('topTo',"$!snsAnniversary.to")
+$action.setParameter('topTerm',"$!snsAnniversary.term")
 	  <a href="$action"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>Details</a>
       <span class="clearer"></span>
     </p>

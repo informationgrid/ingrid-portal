@@ -63,6 +63,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         String topicType = null;
         String topicFrom = null;
         String topicTo = null;
+        String topicTerm = null;
         if (action.length() != 0) {
             // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
@@ -73,6 +74,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             topicType = request.getParameter("topType");
             topicFrom = request.getParameter("topFrom");
             topicTo = request.getParameter("topTo");
+            topicTerm = request.getParameter("topTerm");
         }
 
         // ----------------------------------
@@ -103,6 +105,14 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // set form values of topic, when special topic is requested 
             if (topicId != null) {
 
+                // TODO: search topic by ID !?
+
+                // set type
+                if (topicType != null) {
+                    topicType = UtilsDB.getFormValueFromQueryValue(UtilsDB.getChronicleEventTypes(), topicType);
+                    af.setInput(ChronicleSearchForm.FIELD_EVENT, topicType);
+                }
+
                 // set date
                 String formFrom = UtilsDate.getInputDateFrom(topicFrom, request.getLocale());
                 String formTo = UtilsDate.getInputDateTo(topicTo, request.getLocale());
@@ -117,22 +127,25 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                         af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
                     }
                 } else if (topicFrom != null) {
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formFrom);                    
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
+                    //                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateMax());                    
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateTo(topicFrom, request
+                            .getLocale()));
                 } else if (topicTo != null) {
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formTo);                    
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
+                    //                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateMin());                    
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateFrom(topicTo, request
+                            .getLocale()));
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
                 }
 
-                // set type
-                if (topicType != null) {
-                    topicType = UtilsDB.getFormValueFromQueryValue(UtilsDB.getChronicleEventTypes(), topicType);
-                    af.setInput(ChronicleSearchForm.FIELD_EVENT, topicType);
+                // set term
+                if (topicTerm != null) {
+                    af.setInput(ChronicleSearchForm.FIELD_SEARCH, topicTerm);
                 }
-
-                // TODO: search topic by ID !?
             } else {
-                // TODO: at the moment NO SEARCH when called from teaser !
+                // TODO: at the moment NO SEARCH when called from teaser and no details
                 doSearch = false;
             }
         } else if (action.length() == 0) {

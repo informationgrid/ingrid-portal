@@ -184,12 +184,14 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                     if (topic == null) {
                         continue;
                     }
+                    topic.put("title", topic.getTopicName());
+                    
                     if (detail != null) {
                         String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
                         if (searchData != null && searchData.length() > 0) {
                             searchData = UtilsString.htmlescape(searchData.replaceAll("\\,", " OR "));
                         } else {
-                            searchData = UtilsString.htmlescape(topic.getTitle());
+                            searchData = UtilsString.htmlescape(topic.getTopicName());
                         }
                         String searchURL = response.encodeURL(searchURLBase.concat(searchData));
                         topic.put("searchURL", searchURL);

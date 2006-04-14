@@ -51,7 +51,7 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
             if (topicFrom != null) {
                 result.put("from", UtilsDate.parseDateToLocale(topicFrom, request.getLocale()));
             }
-            String topicTo = detail.getFrom();
+            String topicTo = detail.getTo();
             if (topicTo != null && !topicTo.equals(topicFrom)) {
                 result.put("to", UtilsDate.parseDateToLocale(topicTo, request.getLocale()));
             }
@@ -60,6 +60,28 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
                 int years = UtilsDate.yearsBetween(topicFrom, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 result.put("years", new Integer(years));
             }
+            String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
+            if (searchData != null) {
+                String searchTerm = searchData;
+                int endIndex = searchData.indexOf(',');
+                if (endIndex != -1) {
+                    searchTerm = searchData.substring(0, endIndex);
+                }
+                if (searchTerm.charAt(0) == '"') {
+                    searchTerm = searchTerm.substring(1, searchTerm.length());
+                }
+                if (searchTerm.charAt(searchTerm.length() - 1) == '"') {
+                    searchTerm = searchTerm.substring(0, searchTerm.length() - 1);
+                }
+                result.put("term", searchTerm);
+            } else {
+                result.put("term", detail.getTopicName());
+
+            }
+            /*
+             ArrayList list = detail.getArrayList(DetailedTopic.INSTANCE_OF);
+             System.out.println(list);
+             */
         }
 
         context.put("snsAnniversary", result);
