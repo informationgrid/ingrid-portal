@@ -15,7 +15,7 @@ public class SearchExtEnvPlaceGeothesaurusForm extends ActionForm {
     private static final long serialVersionUID = -3243020432308518967L;
     
     /** attribute name of action form in session */
-    public static final String SESSION_KEY = SearchExtEnvPlaceMapForm.class.getName();
+    public static final String SESSION_KEY = SearchExtEnvPlaceGeothesaurusForm.class.getName();
 
     /** field names (name of request parameter) */
     public static final String FIELD_SEARCH_TERM = "search_term";

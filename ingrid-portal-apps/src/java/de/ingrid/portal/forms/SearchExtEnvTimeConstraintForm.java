@@ -15,7 +15,7 @@ public class SearchExtEnvTimeConstraintForm extends ActionForm {
     private static final long serialVersionUID = 8809471913897989572L;
 
     /** attribute name of action form in session */
-    public static final String SESSION_KEY = SearchExtEnvPlaceMapForm.class.getName();
+    public static final String SESSION_KEY = SearchExtEnvTimeConstraintForm.class.getName();
 
     /** field names (name of request parameter) */
     
