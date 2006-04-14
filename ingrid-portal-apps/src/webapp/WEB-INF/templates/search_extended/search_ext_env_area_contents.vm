@@ -4,15 +4,16 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="selection_form" id="extsearch">
       <div class="formbody">
-          <p>$MESSAGES.getString('searchExtEnvAreaContents.explanation')</p>
+          #displayFormErrors()
+		  <p>$MESSAGES.getString('searchExtEnvAreaContents.explanation')</p>
           <div class="innerform">
             <p>
-              <input type="radio" name="infoart" id="alle" value="alle" #if(!$select) checked="checked"#end /><label for="alle">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
+              <input type="radio" name="content_type" id="all" value="1"#getChecked("content_type" "1") /><label for="all">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
             </p> 
             <p>
-              <input class="indent1_checkbox" type="radio" name="infoart" id="themen" value="themen" #if($select=='1') checked="checked"#end /><label for="themen">$MESSAGES.getString('searchExtEnvAreaContents.label.topics')</label>
+              <input class="indent1_checkbox" type="radio" name="content_type" id="topics" value="2"#getChecked("content_type" "2") /><label for="topics">$MESSAGES.getString('searchExtEnvAreaContents.label.topics')</label>
     	        <br />
-              <input class="indent1_checkbox" type="radio" name="infoart" id="service" value="service" #if($select=='2') checked="checked"#end /><label for="service">$MESSAGES.getString('searchExtEnvAreaContents.label.service')</label>
+              <input class="indent1_checkbox" type="radio" name="content_type" id="service" value="3"#getChecked("content_type" "3") /><label for="service">$MESSAGES.getString('searchExtEnvAreaContents.label.service')</label>
             </p> 
           </div>  
       </div>      

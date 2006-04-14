@@ -106,6 +106,9 @@ public class UtilsQueryString {
     
     private static int getTermStartPos(String query, int start) {
         char c;
+        if (query == null || query.length() == 0) {
+            return 0;
+        }
         String str = new String(query).toLowerCase();
         int cursor = start;
         while (true) {
