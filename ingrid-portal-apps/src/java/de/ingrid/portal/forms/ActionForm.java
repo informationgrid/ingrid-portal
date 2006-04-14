@@ -92,7 +92,11 @@ public abstract class ActionForm implements Serializable {
      */
     public String[] getInputAsArray(String field) {
         String input = getInput(field);
-        return input.split(VALUE_SEPARATOR + VALUE_SEPARATOR);
+        if (input.length() == 0) {
+            return new String[0];
+        } else {
+            return input.split(VALUE_SEPARATOR + VALUE_SEPARATOR);
+        }
     }
 
     /**
