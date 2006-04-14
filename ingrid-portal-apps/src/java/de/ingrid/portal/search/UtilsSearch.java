@@ -263,7 +263,7 @@ public class UtilsSearch {
                 qStr = qStr.concat(" ranking:").concat(ranking);
             }
 
-            if (hasRequiredDataType(q, IDataTypes.SNS)) {
+            if (hasPositiveDataType(q, IDataTypes.SNS)) {
                 int rType = q.getInt(Topic.REQUEST_TYPE);
                 if (rType == Topic.ANNIVERSARY_FROM_TOPIC) {
                     qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
@@ -339,7 +339,7 @@ public class UtilsSearch {
         return result;
     }
 
-    public static boolean hasRequiredDataType(IngridQuery q, String datatype) {
+    public static boolean hasPositiveDataType(IngridQuery q, String datatype) {
         String[] dtypes = q.getPositiveDataTypes();
         for (int i = 0; i < dtypes.length; i++) {
             if (dtypes[i].equalsIgnoreCase(datatype)) {
@@ -347,23 +347,19 @@ public class UtilsSearch {
             }
         }
         return false;
-
     }
 
-    public static boolean containsPositiveDataType(IngridQuery query, String datatypeValue) {
-        boolean contains = false;
-
-        String[] posDataTypes = query.getPositiveDataTypes();
-        for (int i = 0; i < posDataTypes.length; i++) {
-            if (posDataTypes[i].equals(datatypeValue)) {
-                contains = true;
-                break;
+    public static boolean hasNegativeDataType(IngridQuery q, String datatype) {
+        String[] dtypes = q.getNegativeDataTypes();
+        for (int i = 0; i < dtypes.length; i++) {
+            if (dtypes[i].equalsIgnoreCase(datatype)) {
+                return true;
             }
         }
-
-        return contains;
+        return false;
     }
-
+    
+    
     /**
      * Check whether query contains a field of the given name.
      * Ignores whether it is in positive or negative list !
