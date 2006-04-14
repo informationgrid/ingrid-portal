@@ -68,6 +68,30 @@ public class UtilsDate {
         }
         return result;
     }
+    
+    /**
+     * Parses a date string with format <i>srcFormat</i> and 
+     * returns the string with format <i>destFormat</i>.
+     * 
+     * @param dateStr The date string.
+     * @param srcFormat The source format to parse the date string (i.e. "ddMMyyyy").
+     * @param destFormat The format to return the parsed date (i.e. "yyyy-MM-dd")
+     * @return The resulting date string.
+     */
+    public static String convertDateString(String dateStr, String srcFormat, String destFormat) {
+        String result = null;
+        SimpleDateFormat df = new SimpleDateFormat();
+        SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy");
+        try {
+            df.applyPattern(srcFormat);
+            portalFormat.applyPattern(destFormat);
+            result = portalFormat.format(df.parse((String) dateStr));
+        } catch (ParseException e) {
+            log.error("error parsing date (" + dateStr + ") with format (" + srcFormat + ") to format (" + destFormat + ").", e);
+        }
+        return result;
+    }
+    
 
     /** Returns the years between dateStrFrom and dateStringTo. Both can have the formats
      * yyyy-mm-dd or yyyy.
