@@ -48,7 +48,7 @@ public class QueryPreProcessor {
             }
         }
 
-        // set basic datatype according to GUI ! ONLY IF NO DATATYPE ENTERD YET !
+        // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
         String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
             UtilsSearch.processBasicDataTypes(query, ds);
@@ -79,13 +79,16 @@ public class QueryPreProcessor {
             requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         }
 
-        // adapt ranking to Search State
-        Object ranking = IngridQuery.SCORE_RANKED;
-        Object stateRanking = SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
-        if (stateRanking != null) {
-            ranking = stateRanking;
+        // set ranking ! ONLY IF NO RANKING IN Query String Input !
+        if (!UtilsSearch.containsField(query, IngridQuery.RANKED)) {
+            // adapt ranking to Search State
+            Object ranking = IngridQuery.SCORE_RANKED;
+            Object stateRanking = SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+            if (stateRanking != null) {
+                ranking = stateRanking;
+            }
+            query.put(IngridQuery.RANKED, ranking);
         }
-        query.put(IngridQuery.RANKED, ranking);
 
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage,
@@ -117,7 +120,7 @@ public class QueryPreProcessor {
             }
         }
 
-        // set basic datatype according to GUI ! ONLY IF NO DATATYPE ENTERD YET !
+        // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
         if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
             String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
             UtilsSearch.processBasicDataTypes(query, ds);
@@ -132,8 +135,11 @@ public class QueryPreProcessor {
 
         int currentPage = (int) (startHit / Settings.SEARCH_UNRANKED_HITS_PER_PAGE) + 1;
 
-        // set ranking to score
-        query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
+        // set ranking ! ONLY IF NO RANKING IN Query String Input !
+        if (!UtilsSearch.containsField(query, IngridQuery.RANKED)) {
+            // switch ranking OFF
+            query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
+        }
 
         // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage,

@@ -367,7 +367,9 @@ public class UtilsSearch {
     /**
      * Check whether query contains a field of the given name.
      * Ignores whether it is in positive or negative list !
-     * NOTICE: comparison is done with lowercase representation of field name.
+     * NOTICE:
+     * - only FIELD QUERIES and direct map keys are checked, NO CLAUSE QUERIES !
+     * - comparison is done with lowercase representation of field name.
      * @param query
      * @param fieldName
      * @return
@@ -380,6 +382,9 @@ public class UtilsSearch {
             if (fields[i].getFieldName().toLowerCase().equals(fieldNameLowCase)) {
                 return true;
             }
+        }
+        if (query.get(fieldName) != null) {
+            return true;
         }
         
         return false;
