@@ -84,7 +84,7 @@ public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnvTime {
             
             String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
             PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND));
-            
+            f.init();
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
