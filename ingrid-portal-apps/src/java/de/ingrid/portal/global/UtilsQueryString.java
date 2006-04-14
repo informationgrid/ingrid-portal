@@ -46,7 +46,7 @@ public class UtilsQueryString {
     public static String addTerm(String queryStr, String str, String operator) {
         StringBuffer result;
         
-        if (str == null || operator == null) {
+        if (str == null || operator == null || str.length() == 0) {
             return queryStr;
         }
         
@@ -72,9 +72,11 @@ public class UtilsQueryString {
             }
         } else if (operator.equals(OP_AND)) {
             String[] terms = str.split(" ");
-            if (queryStr.length() > 0 && terms.length > 0) {
+            if (queryStr.indexOf(" ") != -1 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") ");
+            } else if (queryStr.indexOf(" ") == -1) {
+                result.append(" ");
             }
             for (int i=0; i<terms.length; i++) {
                 result.append(terms[i]);
@@ -84,24 +86,37 @@ public class UtilsQueryString {
             }
         } else if (operator.equals(OP_NOT)) {
             String[] terms = str.split(" ");
-            if (queryStr.length() > 0 && terms.length > 0) {
+            if (queryStr.indexOf(" ") != -1 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") ");
+            } else if (queryStr.indexOf(" ") == -1) {
+                result.append(" ");
             }
             for (int i=0; i<terms.length; i++) {
                 result.append("-").append(terms[i]);
             }
         } else if (operator.equals(OP_PHRASE)) {
-            if (queryStr.length() > 0) {
+            if (queryStr.indexOf(" ") != -1) {
                 result.insert(0, "(");
                 result.append(") ");
+            } else if (queryStr.indexOf(" ") == -1) {
+                result.append(" ");
             }
             result.append("\"").append(str).append("\"");
         }
         
-        return result.toString();
+        String resultStr = result.toString();
+        // strip empty brackets with operators
+        return resultStr;
     }
     
+
+    public static String stripQueryWhitespace(String q) {
+        // strip empty brackets with operators
+        String returnStr = q.replaceAll("\\s*\\(([\\s()]|OR|AND|NOT)*\\)\\s*", "");
+        returnStr = returnStr.replaceAll("\\s\\s+", "");
+        return returnStr;
+    }
     
     
     private static int getTermStartPos(String query, int start) {
