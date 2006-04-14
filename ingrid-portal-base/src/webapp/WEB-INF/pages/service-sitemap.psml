@@ -1,7 +1,9 @@
 <!DOCTYPE doc [
-<!ENTITY % iso-lat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
-                    "http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent">
-%iso-lat1;
+<!-- 
+for more entities look at
+http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
+-->
+<!ENTITY uuml	"&#x00FC;">
 ]>
 
 <page>
