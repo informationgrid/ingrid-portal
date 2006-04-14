@@ -12,7 +12,6 @@ import javax.portlet.PortletException;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
 import de.ingrid.portal.forms.SearchExtEnvTimeConstraintForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
