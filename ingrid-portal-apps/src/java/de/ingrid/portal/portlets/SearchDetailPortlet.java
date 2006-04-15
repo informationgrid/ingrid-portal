@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -26,6 +27,7 @@ import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -33,6 +35,7 @@ import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 
@@ -144,38 +147,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
                     
-                    // get references
-                    ArrayList references = getAllTableRows(record, "t012_obj_obj");
-                    Record referenceRecord = null;
-                    String refType = null;
-                    String objToId;
-                    String objFromId;
-                    ArrayList superiorReferences = new ArrayList();
-                    ArrayList subordinatedReferences = new ArrayList();
-                    ArrayList crossReferences = new ArrayList();
                     String objId = (String)record.get("T01_OBJECT.OBJ_ID");
-                    
-                    for (int i=0; i<references.size(); i++) {
-                        referenceRecord = (Record) references.get(i);
-                        refType = (String)referenceRecord.get("t012_obj_obj.typ");
-                        objToId = (String)referenceRecord.get("t012_obj_obj.object_to_id");
-                        objFromId = (String)referenceRecord.get("t012_obj_obj.object_from_id");
-                        if (refType.equals("0")) {
-                            // add superior reference
-                            if (objToId.equals(objId)) {
-                                superiorReferences.add(getUDKObjectHash((String)objFromId));
-                            }
-                            // add subordinated reference
-                            if (objFromId.equals(objId)) {
-                                subordinatedReferences.add(getUDKObjectHash((String)objToId));
-                            }
-                        } else if (refType.equals("1")) {
-                            // add cross reference
-                            if (objFromId.equals(objId)) {
-                                crossReferences.add(getUDKObjectHash((String)objToId));
-                            }
-                        }
-                    }
+                    // get references
+                    ArrayList superiorReferences = getSuperiorObjects(objId);
+                    ArrayList subordinatedReferences = getSubordinatedObjects(objId);
+                    ArrayList crossReferences = getCrossReferencedObjects(objId);
                     
                     // enrich addresses with institution and units
                     ArrayList addrRecords = getAllTableRows(record, "T02_ADDRESS");
@@ -188,17 +164,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
                         if (addressType.equals("1") || addressType.equals("2")) {
                             HashMap parents = new HashMap();
-                            // get the address record of the address
-                            String queryStr = "T02_address.adr_id:" + addressId + " datatype:address ranking:score";
-                            IngridQuery q = QueryStringParser.parse(queryStr);
-                            IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                            if (hits.getHits().length > 0) {
-                                IngridHit refHit = hits.getHits()[0];
-                                Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
-                                // get parents of the address record
-                                getUDKAddressParents(parents, myRecord);
-                                addrParents.put(addressId, parents);
-                            }
+                            getUDKAddressParents(parents, addressId);
+                            addrParents.put(addressId, parents);
                         }
                     }
                     context.put("addrParents", addrParents);
@@ -212,57 +179,45 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     // enrich address with institution and units
                     HashMap addrParents = new HashMap();
                     String addressType = (String)record.get("T02_ADDRESS.TYP");
+                    String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
                     // get id of the address
                     if (addressType.equals("1") || addressType.equals("2")) {
-                        getUDKAddressParents(addrParents, record);
+                        getUDKAddressParents(addrParents, addrId);
                     }
                     context.put("addrParents", addrParents);                    
                     
                     // get references
-                    ArrayList references = getAllTableRows(record, "t022_adr_adr");
-                    Record referenceRecord = null;
-                    String addrToId;
-                    String addrFromId;
                     ArrayList superiorReferences = new ArrayList();
-                    ArrayList subordinatedReferences = new ArrayList();
-                    String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
-                    
-                    for (int i=0; i<references.size(); i++) {
-                        referenceRecord = (Record) references.get(i);
-                        addrToId = (String)referenceRecord.get("t022_adr_adr.adr_to_id");
-                        addrFromId = (String)referenceRecord.get("t022_adr_adr.adr_from_id");
-                        // add superior reference
-                        if (addrToId.equals(addrId)) {
-                            superiorReferences.add(getUDKAddressHash(addrFromId));
-                        }
-                        // add subordinated reference
-                        if (addrFromId.equals(addrId)) {
-                            subordinatedReferences.add(getUDKAddressHash(addrToId));
-                        }
+                    IngridHit h = getParentAddress(addrId);
+                    if (h != null) {
+                        superiorReferences.add(getParentAddress(addrId));
                     }
+                    ArrayList subordinatedReferences = getAddressChildren(addrId);
+                    
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
-                    
-                    // get ALL suborninated addresses in the complete hierarchie
+
+                    // get ALL subordinated addresses in the complete hierarchie
                     ArrayList allAddressChildren = new ArrayList();
                     allAddressChildren.addAll(subordinatedReferences);
                     for (int i=0; i<subordinatedReferences.size(); i++) {
-                        allAddressChildren.addAll(getUDKAddressChildren((Record)((HashMap)subordinatedReferences.get(i)).get("record")));
+                        String myAddrId = (String)((IngridHitDetail)((IngridHit)subordinatedReferences.get(i)).get("detail")).get("T02_address.adr_id");
+                        String myAddrType = (String)((IngridHitDetail)((IngridHit)subordinatedReferences.get(i)).get("detail")).get("T02_address.typ");
+                        if (myAddrType.equals("0") || myAddrType.equals("1")) {
+                            allAddressChildren.addAll(getAllAddressChildren(myAddrId));
+                        }
                     }
                     
                     // get related record of the subordinated address references
                     HashMap subordinatedObjRef = new HashMap();
                     for (int i=0; i<allAddressChildren.size(); i++) {
-                        Record r = (Record)((HashMap)allAddressChildren.get(i)).get("record");
-                        ArrayList refs = getAllTableRows(r, "T012_OBJ_ADR");
-                        for (int j=0; j<refs.size(); j++) {
-                            Record refRecord = (Record)refs.get(j);
-                            ArrayList refObjects = getAllTableRows(refRecord, "T01_OBJECT");
-                            for (int k=0; k<refObjects.size(); k++) {
-                                Record refObj = (Record)refObjects.get(k);
-                                if (!subordinatedObjRef.containsKey(refObj.get("T01_OBJECT.OBJ_ID"))) {
-                                    subordinatedObjRef.put(refObj.get("T01_OBJECT.OBJ_ID"), refObj);
-                                }
+                        ArrayList l = getObjectsByAddress((String)((IngridHitDetail)( (IngridHit)allAddressChildren.get(i)).get("detail")).get("T02_address.adr_id"));
+                        for (int j=0; j<l.size(); j++) {
+                            IngridHit objHit = (IngridHit)l.get(j);
+                            IngridHitDetail detail = (IngridHitDetail)objHit.get("detail");
+                            String objId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
+                            if (!subordinatedObjRef.containsKey(objId)) {
+                                subordinatedObjRef.put(objId, objHit);
                             }
                         }
                     }
@@ -306,107 +261,37 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         super.doView(request, response);
     }
 
-    private ArrayList getUDKAddressChildren(Record record) throws Exception {
-        ArrayList result = new ArrayList();
-        
-        // get references
-        ArrayList references = getAllTableRows(record, "t022_adr_adr");
-        Record referenceRecord = null;
-        String addrToId;
-        String addrFromId;
-        String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
-        
-        for (int i=0; i<references.size(); i++) {
-            referenceRecord = (Record) references.get(i);
-            addrToId = (String)referenceRecord.get("t022_adr_adr.adr_to_id");
-            addrFromId = (String)referenceRecord.get("t022_adr_adr.adr_from_id");
-            // add subordinated reference
-            if (addrFromId.equals(addrId)) {
-                HashMap addrHash = getUDKAddressHash(addrToId);
-                result.add(addrHash);
-                String addrType = (String)((Record)addrHash.get("record")).get("T02_ADDRESS.TYP");
-                if (addrType.equals("0") || addrType.equals("1")) {
-                    result.addAll(getUDKAddressChildren((Record)addrHash.get("record")));
-                }
-            }
-        }
-        return result;
-    }
-
-    private void getUDKAddressParents(HashMap result, Record record) throws Exception {
+    private void getUDKAddressParents(HashMap result, String addrId) throws Exception {
         // get id of the address
-        String addressId = (String)record.get("T02_ADDRESS.ADR_ID");
-        // get type of the address
-        String addressType = (String)record.get("T02_ADDRESS.TYP");
-        // get parent only for units and persons
-        if (addressType.equals("1") || addressType.equals("2")) {
-            // get all referenced addresses
-            ArrayList addrReferenceRecords = getAllTableRows(record, "t022_adr_adr");
-            // iterate over all references and find first parent address
-            for (int i=0; i < addrReferenceRecords.size(); i++) {
-                Record refRecord = (Record)addrReferenceRecords.get(i);
-                String addrToId = (String)refRecord.get("t022_adr_adr.adr_to_id");
-                String addrFromId = (String)refRecord.get("t022_adr_adr.adr_from_id");
-                if (addrToId != null && addrToId.equals(addressId)) {
-                    // get the parent of the address
-                    String queryStr = "T02_address.adr_id:" + addrFromId + " datatype:address ranking:score";
-                    IngridQuery q = QueryStringParser.parse(queryStr);
-                    IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                    for (int j=0; j<hits.getHits().length; j++) {
-                        IngridHit refHit = hits.getHits()[j];
-                        Record myRecord = IBUSInterfaceImpl.getInstance().getRecord(refHit);
-                        String myAddressType = (String)myRecord.get("T02_ADDRESS.TYP");
-                        if (myAddressType.equals("0")) {
-                            if (!result.containsKey("institutions")) {
-                                result.put("institutions", new ArrayList());
-                            }
-                            ArrayList institutions = (ArrayList)result.get("institutions");
-                            institutions.add(myRecord);
-                        } else if (myAddressType.equals("1")) {
-                            if (!result.containsKey("units")) {
-                                result.put("units", new ArrayList());
-                            }
-                            ArrayList units = (ArrayList)result.get("units");
-                            units.add(0, myRecord);
-                            getUDKAddressParents(result, myRecord);
-                        }
-                    }
-                }
+        String addressId = addrId;
+        // set initial address type to 1
+        String addressType = "";
+        do {
+            // get the paren address hit + detail
+            IngridHit parent = getParentAddress(addressId);
+            if (parent == null) {
+                // no parent found
+                break;
             }
-        }
+            addressType = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_CLASS);
+            addressId = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_ADDRID);
+            if (addressType.equals("0")) {
+                if (!result.containsKey("institutions")) {
+                    result.put("institutions", new ArrayList());
+                }
+                ArrayList institutions = (ArrayList)result.get("institutions");
+                institutions.add(parent);
+            } else if (addressType.equals("1")) {
+                if (!result.containsKey("units")) {
+                    result.put("units", new ArrayList());
+                }
+                ArrayList units = (ArrayList)result.get("units");
+                units.add(0, parent);
+            }
+            // exit loop if parent was NO unit
+        } while (addressType.equals("1"));
     }
     
-    private HashMap getUDKAddressHash(String addrId) throws Exception {
-        String queryStr = "T02_address.adr_id:" + addrId + " datatype:address ranking:score";
-        IngridQuery q = QueryStringParser.parse(queryStr);
-        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-        HashMap addrHash = null;
-        if (hits.getHits().length > 0) {
-            IngridHit refHit = hits.getHits()[0];
-            addrHash = new HashMap();
-            addrHash.put("record", IBUSInterfaceImpl.getInstance().getRecord(refHit));
-            addrHash.put("hit", refHit);
-        }
-        return addrHash;
-    }
-
-    private HashMap getUDKObjectHash(String objId) throws Exception {
-        String queryStr = "T01_object.obj_id:" + objId + " datatype:dsc_ecs ranking:score";
-        IngridQuery q = QueryStringParser.parse(queryStr);
-        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-        HashMap objHash = null;
-        if (hits.getHits().length > 0) {
-            IngridHit refHit = hits.getHits()[0];
-            IngridHitDetail refDetail =  IBUSInterfaceImpl.getInstance().getDetail(refHit, q, null);
-            objHash = new HashMap();
-            objHash.put("obj_id", objId);
-            objHash.put("title", refDetail.getTitle());
-            objHash.put("hit", refHit);
-        }
-        return objHash;
-    }
-
-
     private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
         addSubRecords(record, map, locale, 0, readableColumns);
     }
@@ -487,8 +372,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         } else if (cmd.equals("doShowAddressDetail")) {
             String addrId = request.getParameter("addrId");
             try {
-                HashMap addrHash = getUDKAddressHash(addrId);
-                IngridHit hit = (IngridHit)addrHash.get("hit");
+                IngridHit hit = getAddressHit(addrId);
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
@@ -500,8 +384,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         } else if (cmd.equals("doShowObjectDetail")) {
             String objId = request.getParameter("objId");
             try {
-                HashMap objHash = getUDKObjectHash(objId);
-                IngridHit hit = (IngridHit)objHash.get("hit");
+                IngridHit hit = getObjectHit(objId);
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
@@ -519,5 +402,172 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
         
     }
+
+    private ArrayList getSuperiorObjects(String objId) {
+        String[] requestedMetadata = new String[2];
+        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
+        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        HashMap filter = new HashMap();
+        filter.put(Settings.HIT_KEY_OBJ_ID, objId);
+        ArrayList result = getHits("t012_obj_obj.object_to_id:".concat(objId).concat(" t012_obj_obj.typ:0 datatype:default ranking:score"), 
+                requestedMetadata, filter);
+        return result;
+    }
+
+    private ArrayList getSubordinatedObjects(String objId) {
+        String[] requestedMetadata = new String[2];
+        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
+        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        HashMap filter = new HashMap();
+        filter.put(Settings.HIT_KEY_OBJ_ID, objId);
+        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(" t012_obj_obj.typ:0 datatype:default ranking:score"), 
+                requestedMetadata, filter);
+        return result;
+    }
     
+
+    
+    private ArrayList getCrossReferencedObjects(String objId) {
+        String[] requestedMetadata = new String[2];
+        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
+        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        HashMap filter = new HashMap();
+        filter.put(Settings.HIT_KEY_OBJ_ID, objId);
+        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(" t012_obj_obj.typ:1 datatype:default ranking:score"), 
+                requestedMetadata, filter);
+        return result;
+    }
+    
+    
+    private ArrayList getObjectsByAddress(String addrId) {
+        String[] requestedMetadata = new String[2];
+        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
+        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        HashMap filter = new HashMap();
+        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:default ranking:score"), 
+                requestedMetadata, filter);
+        return result;
+    }
+    
+    private IngridHit getParentAddress(String addrId) {
+        String[] requestedMetadata = new String[7];
+        requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
+        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
+        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
+        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
+        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
+        HashMap filter = new HashMap();
+        filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
+        ArrayList result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" datatype:address ranking:score"), 
+                requestedMetadata, filter);
+        if (result.size() > 0) {
+            return (IngridHit)result.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    private ArrayList getAddressChildren(String addrId) {
+        String[] requestedMetadata = new String[7];
+        requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
+        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
+        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
+        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
+        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
+        HashMap filter = new HashMap();
+        filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
+        ArrayList result = getHits("T022_adr_adr.adr_from_id:".concat(addrId).concat(" datatype:address ranking:score"), 
+                requestedMetadata, filter);
+        return result;
+    }
+
+    private IngridHit getAddressHit(String addrId) {
+        String[] requestedMetadata = new String[7];
+        requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
+        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
+        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
+        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
+        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
+        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:address ranking:score"), 
+                requestedMetadata, null);
+        if (result.size() > 0) {
+            return (IngridHit)result.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    private IngridHit getObjectHit(String objId) {
+        String[] requestedMetadata = new String[2];
+        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
+        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        ArrayList result = getHits("T01_object.obj_id:".concat(objId).concat(" datatype:default ranking:score"), 
+                requestedMetadata, null);
+        if (result.size() > 0) {
+            return (IngridHit)result.get(0);
+        } else {
+            return null;
+        }
+    }
+    
+    
+    private ArrayList getAllAddressChildren(String addrId) {
+        ArrayList result = getAddressChildren(addrId);
+        Iterator it = result.iterator();
+        while (it.hasNext()) {
+            IngridHit hit = (IngridHit)it.next();
+            IngridHitDetail detail = (IngridHitDetail)hit.get("detail");
+            String addrType = (String)detail.get(Settings.HIT_KEY_ADDRESS_CLASS);
+            if (addrType.equals("0") || addrType.equals("1")) {
+                result.addAll(getAllAddressChildren((String)detail.get(Settings.HIT_KEY_ADDRESS_ADDRID)));
+            }
+        }
+        return result;
+    }
+    private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
+        ArrayList result = new ArrayList();
+        try {
+            IngridQuery query = QueryStringParser.parse(queryStr);
+            IngridHits hits;
+            int page = 0;
+            do {
+                page++;
+                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, 20, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query, requestedMetaData);
+                for (int j=0; j<details.length; j++) {
+                    IngridHitDetail detail = (IngridHitDetail)details[j];
+                    boolean include = true;
+                    if (filter != null && filter.size() > 0) {
+                        Iterator it = filter.entrySet().iterator();
+                        while (it.hasNext()) {
+                            Map.Entry entry = (Map.Entry)it.next();
+                            String recordKey = (String)entry.getKey();
+                            String value = (String)entry.getValue();
+                            if (value.equals(UtilsSearch.getDetailValue(detail, recordKey))) {
+                                include = false;
+                                break;
+                            }
+                        }
+                    }   
+                    if (include) {
+                        // flatten alle detail fields
+                        for(int i=0; i<requestedMetaData.length; i++) {
+                            detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
+                        }
+                        hits.getHits()[j].put("detail", detail);
+                        result.add(hits.getHits()[j]);
+                    }
+                }
+            } while (hits.getHits().length == 20);
+        } catch (Exception e) {
+            log.error("Problems accessing the parent address!", e);
+        }
+        return result;
+    }    
 }

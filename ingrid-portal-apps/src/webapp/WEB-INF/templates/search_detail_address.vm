@@ -24,19 +24,19 @@
 	#if($rec.get("t02_address.typ") == "1" || $rec.get("t02_address.typ") == "2")
 		#set($institutions = $addrParents.get("institutions"))
 		#foreach($institution in $institutions)
-			#set($instituteAddrId = $institution.get("T02_ADDRESS.ADR_ID"))
+			#set($instituteAddrId = $institution.detail.get("T02_address.adr_id"))
 			#set ($action = $renderResponse.createActionURL())
     		$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$instituteAddrId")						
-			<a href="$action">$institution.get("T02_ADDRESS.INSTITUTION")</a><br/>
+			<a href="$action">$institution.detail.title</a><br/>
 		#end	
 		#set($units = $addrParents.get("units"))
 		#foreach($unit in $units)
-			#set($unitAddrId = $unit.get("T02_ADDRESS.ADR_ID"))
+			#set($unitAddrId = $unit.detail.get("T02_address.adr_id"))
 			#set ($action = $renderResponse.createActionURL())
     		$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$unitAddrId")						
-			<a href="$action">$unit.get("T02_ADDRESS.INSTITUTION")</a><br/>
+			<a href="$action">$unit.detail.title</a><br/>
 		#end
 	#end
 	#if($rec.get("title"))$rec.get("title")<br/>#end
@@ -78,11 +78,11 @@
     		<span class="icon">
     			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
     		</span>
-			#set($refAddrId = $ref.record.get("T02_ADDRESS.ADR_ID"))
+			#set($refAddrId = $ref.detail.get("T02_address.adr_id"))
     		#set ($action = $renderResponse.createActionURL())
     		$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$refAddrId")
-    		<a href="$action" alt="interner Link">$ref.record.get("T02_ADDRESS.INSTITUTION")</a><br/>
+    		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -96,18 +96,18 @@
     			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
     		</span>
     		#set ($action = $renderResponse.createActionURL())
-			#set($refAddrId = $ref.record.get("T02_ADDRESS.ADR_ID"))
-			#set($refAddrType = $ref.record.get("T02_ADDRESS.TYP"))
+			#set($refAddrId = $ref.detail.get("T02_address.adr_id"))
+			#set($refAddrType = $ref.detail.get("T02_address.typ"))
 			$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$refAddrId")
 			#if($refAddrType == "0" || $refAddrType == "1")
-				<a href="$action" alt="interner Link">$ref.record.get("T02_ADDRESS.INSTITUTION")</a><br/>
+				<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
 			#else
 				<a href="$action" alt="interner Link">
-            	#if($ref.record.get("T02_ADDRESS.ADDRESS"))$ref.record.get("T02_ADDRESS.ADDRESS")#end
-            	#if($ref.record.get("T02_ADDRESS.TITLE"))$ref.record.get("T02_ADDRESS.TITLE")#end
-            	#if($ref.record.get("T02_ADDRESS.FIRSTNAME"))$ref.record.get("T02_ADDRESS.FIRSTNAME")#end
-            	#if($ref.record.get("T02_ADDRESS.LASTNAME"))$ref.record.get("T02_ADDRESS.LASTNAME")#end
+            	#if($ref.detail.get("T02_address.address"))$ref.detail.get("T02_address.address")#end
+            	#if($ref.detail.get("T02_address.title"))$ref.detail.get("T02_address.title")#end
+            	#if($ref.detail.get("T02_address.firstname"))$ref.detail.get("T02_address.firstname")#end
+            	#if($ref.detail.get("T02_address.lastname"))$ref.detail.get("T02_address.lastname")#end
 				</a><br/>
 			#end
 		#end
@@ -148,15 +148,15 @@
 		  #end
 		  #if($subordinatedObjRef && !$subordinatedObjRef.isEmpty())
 		  <li><a name="alle"></a>Datenbezüge aller nachgeordneter Adressen<ul class="udklist">
-			#foreach($objRef in $subordinatedObjRef)
-				#set($udkObjClass = $objRef.get("T01_OBJECT.OBJ_CLASS"))
-                #set($udkObjId = $objRef.get("T01_OBJECT.OBJ_ID"))
+			#foreach($objHits in $subordinatedObjRef)
+				#set($udkObjClass = $objHits.detail.get("T01_object.obj_class"))
+                #set($udkObjId = $objHits.detail.get("T01_object.obj_id"))
                 #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
                 #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
         		#set ($action = $renderResponse.createActionURL())
         		$action.setParameter('cmd', "doShowObjectDetail")
         		$action.setParameter('objId', "$udkObjId")
-				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}"></span>&nbsp;<a href="$action">$objRef.get("T01_OBJECT.OBJ_NAME")</a>&nbsp;</li>
+				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}"></span>&nbsp;<a href="$action">$objHits.detail.title</a>&nbsp;</li>
 			#end
 		</ul>
 		  </li>
@@ -190,14 +190,14 @@
     <div class="line"><hr></div>
 	<br />
 	
-##    <!--
-##    <br><br><br><br>
-##    	  #if($record)
-##    		#renderRecord($record 0)
-##    	  #else
-##    		no details available.
-##    	  #end
-##    -->
+    <!--
+    <br><br><br><br>
+    	  #if($record)
+    		#renderRecord($record 0)
+    	  #else
+    		no details available.
+    	  #end
+    -->
 
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>

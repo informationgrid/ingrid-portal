@@ -50,11 +50,11 @@
 		</span>
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
-		$action.setParameter('docid', "$ref.hit.getId()")
-		$action.setParameter('plugid', "$ref.hit.getPlugId()")
-		#set($altDocId = $ref.hit.get("alt_document_id"));
+		$action.setParameter('docid', "$ref.getId()")
+		$action.setParameter('plugid', "$ref.getPlugId()")
+		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
-		<a href="$action" alt="interner Link">$ref.title</a><br/>
+		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -69,11 +69,11 @@
 		</span>
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
-		$action.setParameter('docid', "$ref.hit.getId()")
-		$action.setParameter('plugid', "$ref.hit.getPlugId()")
-		#set($altDocId = $ref.hit.get("alt_document_id"));
+		$action.setParameter('docid', "$ref.getId()")
+		$action.setParameter('plugid', "$ref.getPlugId()")
+		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
-		<a href="$action" alt="interner Link">$ref.title</a><br/>
+		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -88,11 +88,11 @@
 		</span>
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
-		$action.setParameter('docid', "$ref.hit.getId()")
-		$action.setParameter('plugid', "$ref.hit.getPlugId()")
-		#set($altDocId = $ref.hit.get("alt_document_id"));
+		$action.setParameter('docid', "$ref.getId()")
+		$action.setParameter('plugid', "$ref.getPlugId()")
+		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
-		<a href="$action" alt="interner Link">$ref.title</a><br/>
+		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -124,24 +124,27 @@
 				#if($myAddress.get("t02_address.typ") == "1" || $myAddress.get("t02_address.typ") == "2")
 					#set($institutions = $addrParents.get($myAddress.get("t02_address.adr_id")).get("institutions"))
 					#foreach($institution in $institutions)
-						#set($instituteAddrId = $institution.get("T02_ADDRESS.ADR_ID"))
+						#set($instituteAddrId = $institution.detail.get("T02_address.adr_id"))
         				#set ($action = $renderResponse.createActionURL())
                 		$action.setParameter('cmd', "doShowAddressDetail")
                 		$action.setParameter('addrId', "$instituteAddrId")						
-						<a href="$action">$institution.get("T02_ADDRESS.INSTITUTION")</a><br/>
+						<a href="$action">$institution.detail.title</a><br/>
 					#end	
 					#set($units = $addrParents.get($myAddress.get("t02_address.adr_id")).get("units"))
 					#foreach($unit in $units)
-						#set($unitAddrId = $unit.get("T02_ADDRESS.ADR_ID"))
+						#set($unitAddrId = $unit.detail.get("T02_address.adr_id"))
         				#set ($action = $renderResponse.createActionURL())
                 		$action.setParameter('cmd', "doShowAddressDetail")
                 		$action.setParameter('addrId', "$unitAddrId")						
-						<a href="$action">$unit.get("T02_ADDRESS.INSTITUTION")</a><br/>
+						<a href="$action">$unit.detail.title</a><br/>
 					#end
 				#end
 				#set ($action = $renderResponse.createActionURL())
         		$action.setParameter('cmd', "doShowAddressDetail")
         		$action.setParameter('addrId', $myAddress.get("t02_address.adr_id"))
+				#if($myAddress.get("t02_address.typ") == "0" || $myAddress.get("t02_address.typ") == "3")
+					#if($myAddress.get("t02_address.institution"))<a href="$action">$myAddress.get("t02_address.institution")</a><br/>#end
+				#end
 				<a href="$action">
 				#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end
 				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end

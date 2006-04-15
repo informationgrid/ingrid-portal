@@ -165,6 +165,8 @@ public class Settings {
 
     public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
 
+    public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
+
     public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
