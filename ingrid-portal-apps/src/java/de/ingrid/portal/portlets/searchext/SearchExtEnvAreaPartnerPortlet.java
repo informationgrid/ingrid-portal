@@ -29,7 +29,7 @@ public class SearchExtEnvAreaPartnerPortlet extends SearchExtEnvArea {
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_AREA);
         context.put(VAR_SUB_TAB, PARAMV_TAB_PARTNER);
-
+        
         UtilsSearch.doViewForPartnerPortlet(request, context);
 
         super.doView(request, response);

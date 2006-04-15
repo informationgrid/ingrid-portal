@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
@@ -23,6 +24,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.query.ClauseQuery;
@@ -502,18 +504,14 @@ public class UtilsSearch {
      * @param context
      */
     public static void doViewForPartnerPortlet(RenderRequest request, Context context) {
-        // ----------------------------------
-        // check for passed RENDER PARAMETERS and react
-        // ----------------------------------
-        String action = request.getParameter(Settings.PARAM_ACTION);
-        if (action != null) {
-            // fetch data and pass it to template, HERE DUMMY
-            Object partner = PortletMessaging.receive(request, Settings.MSG_PARTNER);
-            context.put("partner", partner);
-        } else {
-            // remove data from session
-            PortletMessaging.cancel(request, Settings.MSG_PARTNER);
+        PortletSession session = request.getPortletSession();
+        DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
+        if (partnerRoot == null) { 
+            partnerRoot = DisplayTreeFactory.getTreeFromPartnerProvider();
+            session.setAttribute("partnerRoot", partnerRoot);
         }
+
+        context.put("partnerRoot", partnerRoot);
     }
 
     /**
@@ -528,33 +526,83 @@ public class UtilsSearch {
             action = "";
         }
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
+        
+        PortletSession session = request.getPortletSession();
 
-        // TODO: implement functionality
         if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
-
-            // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
-            response.sendRedirect(page + urlViewParam);
-
+            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+            DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
+            Iterator it = partnerRoot.getChildren().iterator();
+            String chk;
+            HashMap partnerHash = new HashMap();
+            HashMap providerHash = new HashMap();
+            while (it.hasNext()) {
+                DisplayTreeNode partnerNode = (DisplayTreeNode)it.next();
+                chk = request.getParameter("chk_".concat(partnerNode.getId()));
+                if (chk != null && chk.equals("on")) {
+                    partnerHash.put("partner:".concat(partnerNode.getId()), "1");
+                }
+                if (partnerNode.isOpen()) {
+                    Iterator it2 = partnerNode.getChildren().iterator();
+                    while (it2.hasNext()) {
+                        DisplayTreeNode providerNode = (DisplayTreeNode)it2.next();
+                        chk = request.getParameter("chk_".concat(providerNode.getId()));
+                        if (chk != null && chk.equals("on")) {
+                            providerHash.put("provider:".concat(providerNode.getId()), "1");
+                        }
+                    }
+                }
+            }
+            
+            String subTerm = "";
+            if (partnerHash.size() > 1) {
+                subTerm = subTerm.concat("(");
+            }
+            it = partnerHash.keySet().iterator();
+            while (it.hasNext()) {
+                String term = (String)it.next();
+                if (it.hasNext()) {
+                    subTerm = subTerm.concat(term).concat(" OR ");
+                } else {
+                    subTerm = subTerm.concat(term);
+                }
+            }
+            if (partnerHash.size() > 1) {
+                subTerm = subTerm.concat(")");
+            }
+            if (partnerHash.size() > 0 && providerHash.size() > 0) {
+                subTerm = subTerm.concat(" ");
+            }
+            
+            if (providerHash.size() > 1) {
+                subTerm = subTerm.concat("(");
+            }
+            it = providerHash.keySet().iterator();
+            while (it.hasNext()) {
+                String term = (String)it.next();
+                if (it.hasNext()) {
+                    subTerm = subTerm.concat(term).concat(" OR ");
+                } else {
+                    subTerm = subTerm.concat(term);
+                }
+            }
+            if (providerHash.size() > 1) {
+                subTerm = subTerm.concat(")");
+            }
+            if (subTerm.length() > 0) {
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND));
+            }
+            
         } else if (action.equalsIgnoreCase("doOpenPartner")) {
-
-            // Partner anzeigen (publishen, hier dummy)
-            PortletMessaging.publish(request, Settings.MSG_PARTNER, Settings.MSGV_TRUE);
-
-            // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
-            response.sendRedirect(page + urlViewParam);
-
+            DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
+            DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
+            node.setOpen(true);
         } else if (action.equalsIgnoreCase("doClosePartner")) {
-
-            // Partner entfernen (hier dummy)
-            PortletMessaging.cancel(request, Settings.MSG_PARTNER);
-
-            // redirect to same page with URL parameter indicating that action was called !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
-            response.sendRedirect(page + urlViewParam);
+            DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
+            DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
+            node.setOpen(false);
         }
     }
 }

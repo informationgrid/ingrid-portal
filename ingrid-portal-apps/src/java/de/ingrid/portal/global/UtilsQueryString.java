@@ -75,7 +75,7 @@ public class UtilsQueryString {
             if (queryStr.indexOf(" ") != -1 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") ");
-            } else if (queryStr.indexOf(" ") == -1) {
+            } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
                 result.append(" ");
             }
             for (int i=0; i<terms.length; i++) {
@@ -89,7 +89,7 @@ public class UtilsQueryString {
             if (queryStr.indexOf(" ") != -1 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") ");
-            } else if (queryStr.indexOf(" ") == -1) {
+            } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
                 result.append(" ");
             }
             for (int i=0; i<terms.length; i++) {
@@ -99,7 +99,7 @@ public class UtilsQueryString {
             if (queryStr.indexOf(" ") != -1) {
                 result.insert(0, "(");
                 result.append(") ");
-            } else if (queryStr.indexOf(" ") == -1) {
+            } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
                 result.append(" ");
             }
             result.append("\"").append(str).append("\"");
