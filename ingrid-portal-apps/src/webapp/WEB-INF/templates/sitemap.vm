@@ -1,3 +1,4 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 <div id="overview">
 	<h1>Inhaltsübersicht
 	</h1>
@@ -7,45 +8,55 @@
 		<div class="sitemap">
 			<ul>
 				<li>
-					<a href="portal/main-search.psml">Suche</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-search.psml"))
+					<a href="$link">Suche</a>
 					<p>Schnelles Suchen per einfacher Sucheingabe.</p>
 					<ul>
 						<li>
-							<a href="portal/extended-search.psml">Erweiterte Suche</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-extended/search-ext-env-topic-terms.psml?ds=1"))
+							<a href="$link">Erweiterte Suche</a>
 							<p>Erstellen Sie Suchanfragen mit Hilfe des Assistenten.</p>
 						</li>
 						<li>
-							<a href="#">Suchhistorie</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-history.psml"))
+							<a href="$link">Suchhistorie</a>
 							<p>Führen Sie frühere oder gespeicherte Suchen erneut aus.</p>
 						</li>
 						<li>
-							<a href="#">Einstellungen</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-settings.psml"))
+							<a href="$link">Einstellungen</a>
 							<p>Ihre Sucheinstellungen.</p>
 						</li> 
 					</ul>
 				</li>
 				<li>
-					<a href="portal/main-service.psml">Service</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-service.psml"))
+					<a href="$link">Service</a>
 					<p>Unser Katalog mit Pressemitteilungen, Publikationen und Veranstaltungshinweisen unserer Informationsanbieter.</p>
 				</li>
 				<li>
-					<a href="portal/main-measures.psml">Messwerte</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-measures.psml"))
+					<a href="$link">Messwerte</a>
 					<p>Unser Katalog mit den Messwertseiten unserer Informationsanbieter.</p>
 				</li>
 				<li>
-					<a href="portal/main-enviroment.psml">Umweltthemen</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-environment.psml"))
+					<a href="$link">Umweltthemen</a>
 					<p>Unser Katalog mit den Themenseiten unserer Informationsanbieter.</p>
 				</li>
 				<li>
-					<a href="portal/main-chronicle.psml">Umweltchronik</a>
-					<p>Eine Chronologie von Umweltereignissen, generiert vom <a href="http://www.semantic-network.de/">Semantischen Netzwerk Service</a> des <a href="http://www.uba.de/">Umweltbundesamtes</a>.</p>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-chronicle.psml"))
+					<a href="$link">Umweltchronik</a>
+					<p>Eine Chronologie von Umweltereignissen, generiert vom <a href="http://www.semantic-network.de/" target="_new" title="Link öffnet in neuem Fenster">Semantischen Netzwerk Service</a> des <a href="http://www.uba.de/" target="_new" title="Link öffnet in neuem Fenster">Umweltbundesamtes</a>.</p>
 				</li>
 				<li>
-					<a href="portal/main-about.psml">Über PortalU</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about.psml"))
+					<a href="$link">Über PortalU</a>
 					<p>Lernen Sie uns kennen.</p>
 					<ul>
 						<li>
-							<a href="#">Informationsanbieter</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml"))
+							<a href="$link">Informationsanbieter</a>
 							<p>Beteiligte Partner und Informationsanbieter.</p>
 						</li>
 					</ul>
@@ -60,33 +71,45 @@
 		<div class="sitemap">
 			<ul>
 				<li>
-					<a href="portal/default-page.psml">Startseite</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/default-page.psml"))
+					<a href="$link">Startseite</a>
 					<p>Ihr zentraler Einstieg.</p>
 					<ul>
 						<li>
-							<a href="portal/rss-news.psml">Weitere Meldungen</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/rss-news.psml"))
+							<a href="$link">Weitere Meldungen</a>
 							<p>Unser Archiv aktueller Meldungen.</p>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href="portal/service-myportal.psml">Mein PortalU</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-myportal.psml"))
+					<a href="$link">Mein PortalU</a>
 					<p>Ihre persönlichen Einstellungen.</p>
 				</li>
 				<li>
-					<a href="portal/service-sitemap.psml">Inhaltsübersicht</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-sitemap.psml"))
+					<a href="$link">Inhaltsübersicht</a>
 					<p>Diese Seite.</p>
 				</li>
 				<li>
-					<a href="javascript:openWindow('portal/service-help.psml',750,550);">Hilfe</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml"))
+	<script language="JavaScript">
+		document.write("<a href=\"javascript:openWindow('$link',750,550);\">Hilfe</a>");
+	</script>
+	<noscript>
+					<a href="$link" target="_new">Hilfe</a>
+	</noscript>
 					<p>Hilfe und häufig gestellte Fragen (FAQs).</p>
 				</li>
 				<li>
-					<a href="portal/service-contact.psml">Kontakt</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact.psml"))
+					<a href="$link">Kontakt</a>
 					<p>Unsere Kontaktinformationen.</p>
 					<ul>
 						<li>
-							<a href="#">Newsletter</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact-newsletter.psml"))
+							<a href="$link">Newsletter</a>
 							<p>Abonnieren Sie unseren Newsletter.</p>
 						</li>          
 					</ul>
@@ -103,11 +126,13 @@
 		<div class="sitemap">  
 			<ul>
 				<li>
-					<a href="portal/disclaimer.psml">Impressum</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/disclaimer.psml"))
+					<a href="$link">Impressum</a>
 					<p>Verantwortliche und Zuständigkeiten.</p>
 				</li>
 				<li>
-					<a href="portal/privacy.psml">Datenschutzbestimmung</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/privacy.psml"))
+					<a href="$link">Datenschutzbestimmung</a>
 					<p>Unsere Datenrichtlinien.</p>
 				</li>
 				<li>
