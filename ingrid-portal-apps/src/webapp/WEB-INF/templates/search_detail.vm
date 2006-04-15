@@ -53,7 +53,7 @@
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
 		#set($altDocId = $ref.hit.get("alt_document_id"));
-		$action.setParameter('altdocid', "$altDocId")
+		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
 		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
@@ -72,7 +72,7 @@
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
 		#set($altDocId = $ref.hit.get("alt_document_id"));
-		$action.setParameter('altdocid', "$altDocId")
+		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
 		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
@@ -91,7 +91,7 @@
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
 		#set($altDocId = $ref.hit.get("alt_document_id"));
-		$action.setParameter('altdocid', "$altDocId")
+		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
 		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
