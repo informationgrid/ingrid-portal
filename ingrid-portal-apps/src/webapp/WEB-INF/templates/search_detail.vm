@@ -52,6 +52,7 @@
 		$action.setParameter('cmd', "doShowDocument")
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
+		$action.setParameter('altdocid', "$ref.hit.alt_document_id")
 		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
@@ -69,6 +70,7 @@
 		$action.setParameter('cmd', "doShowDocument")
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
+		$action.setParameter('altdocid', "$ref.hit.alt_document_id")
 		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>
@@ -86,6 +88,7 @@
 		$action.setParameter('cmd', "doShowDocument")
 		$action.setParameter('docid', "$ref.hit.getId()")
 		$action.setParameter('plugid', "$ref.hit.getPlugId()")
+		$action.setParameter('altdocid', "$ref.hit.alt_document_id")
 		<a href="$action" alt="interner Link">$ref.title</a><br/>
 		#end
 		</p>

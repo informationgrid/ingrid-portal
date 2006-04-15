@@ -68,41 +68,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         context.put("MESSAGES", messages);
         
         int documentId = Integer.parseInt(request.getParameter("docid"));
+        String altDocumentId = request.getParameter("altdocid");
         String iplugId = request.getParameter("plugid");
         
-        // lookup the original hit object
-        IngridHit hit = null;
-        boolean hitFound = false;
-        IngridHits storedHitsObj;
-        IngridHit[] storedHits;
-        if (!hitFound) {
-            storedHitsObj = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
-            storedHits = storedHitsObj.getHits();
-            for (int i=0; i<storedHits.length; i++) {
-                if (storedHits[i].getPlugId().equals(iplugId) && storedHits[i].getDocumentId() == documentId) {
-                    hit = storedHits[i];
-                    hit.remove("detail");
-                    hitFound = true;
-                    break;
-                }
-            }
-        }
-        if (!hitFound) {
-            storedHitsObj = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-            storedHits = storedHitsObj.getHits();
-            for (int i=0; i<storedHits.length; i++) {
-                if (storedHits[i].getPlugId().equals(iplugId) && storedHits[i].getDocumentId() == documentId) {
-                    hit = storedHits[i];
-                    hit.remove("detail");
-                    hitFound = true;
-                    break;
-                }
-            }
-        }
-        if (!hitFound) {
-            hit = new IngridHit();
-            hit.setDocumentId(documentId);
-            hit.setPlugId(iplugId);
+        IngridHit hit = new IngridHit();
+        hit.setDocumentId(documentId);
+        hit.setPlugId(iplugId);
+        if (altDocumentId != null) {
+            hit.put("alt_document_id", altDocumentId);
         }
 
 
@@ -518,6 +491,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 IngridHit hit = (IngridHit)addrHash.get("hit");
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
+                if (hit.get(".alt_document_id") != null) {
+                    response.setRenderParameter("altdocid", (String)hit.get("alt_document_id"));
+                }
             } catch (Exception e) {
                 log.error("Error fetching address data for address id: " + addrId, e);
             }
@@ -528,12 +504,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 IngridHit hit = (IngridHit)objHash.get("hit");
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
+                if (hit.get(".alt_document_id") != null) {
+                    response.setRenderParameter("altdocid", (String)hit.get("alt_document_id"));
+                }
             } catch (Exception e) {
                 log.error("Error fetching address data for address id: " + objId, e);
             }
         } else if (cmd.equals("doShowDocument")) {
             response.setRenderParameter("docid", request.getParameter("docid"));
             response.setRenderParameter("plugid", request.getParameter("plugid"));
+            if (request.getParameter("alt_document_id") != null) {
+                response.setRenderParameter("altdocid", request.getParameter("alt_document_id"));
+            }
         }
         
     }
