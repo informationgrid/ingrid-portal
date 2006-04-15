@@ -140,6 +140,7 @@ public class SNSInterfaceTest extends TestCase {
                 System.out.println("associatedTermsOcc (suchbegriffe):" + detail.get(DetailedTopic.ASSICIATED_OCC));
                 System.out.println("sampleOcc (Internetverweis):" + detail.get(DetailedTopic.SAMPLE_OCC));
                 System.out.println("descriptionOcc:" + detail.get(DetailedTopic.DESCRIPTION_OCC));
+                System.out.println("href:" + detail.getArrayList(DetailedTopic.INSTANCE_OF));
             }
         } else {
             System.out.println("!!!!!!!!!!!!!!!! NO DETAILS FOUND");

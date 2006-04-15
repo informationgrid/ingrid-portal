@@ -208,18 +208,14 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
 
             // INPUT: Event Type
-            String queryValue = null;
             String[] eventTypes = af.getInputAsArray(ChronicleSearchForm.FIELD_EVENT);
             // don't set anything if "all" is selected
             if (eventTypes != null && Utils.getPosInArray(eventTypes, Settings.PARAMV_ALL) == -1) {
+                String[] queryTypes = new String[eventTypes.length];
                 for (int i = 0; i < eventTypes.length; i++) {
-                    if (eventTypes[i] != null) {
-                        queryValue = UtilsDB.getChronicleEventTypeFromKey(eventTypes[i]);
-                        query.put(Settings.QFIELD_EVENT_TYPE, queryValue);
-                        // TODO at the moment we only use first selection value, backend can't handle multiple OR yet
-                        break;
-                    }
+                    queryTypes[i] = UtilsDB.getChronicleEventTypeFromKey(eventTypes[i]);
                 }
+                query.put(Settings.QFIELD_EVENT_TYPE, queryTypes);
             }
 
             // INPUT: Date

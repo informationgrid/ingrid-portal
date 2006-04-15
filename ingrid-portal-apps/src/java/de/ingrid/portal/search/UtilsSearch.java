@@ -111,7 +111,7 @@ public class UtilsSearch {
         try {
             result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
             // strip all HTML tags from summary
-            result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary().replaceAll("\\<.*?\\>",""));
+            result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary().replaceAll("\\<.*?\\>", ""));
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
             result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
@@ -295,7 +295,31 @@ public class UtilsSearch {
                 if (value == null) {
                     value = "null";
                 }
-                qStr = qStr.concat(" ").concat(key.toString()).concat(":").concat(value.toString());
+                qStr = qStr.concat(" ").concat(key.toString()).concat(":");
+
+                if (value instanceof String[]) {
+                    qStr = qStr.concat("[");
+                    String[] valueArray = (String[]) value;
+                    for (int i = 0; i < valueArray.length; i++) {
+                        if (i != 0) {
+                            qStr = qStr.concat(", ");
+                        }
+                        qStr = qStr.concat(valueArray[i]);
+                    }
+                    qStr = qStr.concat("]");
+                } else if (value instanceof ArrayList) {
+                    qStr = qStr.concat("[");
+                    ArrayList valueList = (ArrayList) value;
+                    for (int i = 0; i < valueList.size(); i++) {
+                        if (i != 0) {
+                            qStr = qStr.concat(", ");
+                        }
+                        qStr = qStr.concat(valueList.get(i).toString());
+                    }
+                    qStr = qStr.concat("]");
+                } else {
+                    qStr = qStr.concat(value.toString());
+                }
             }
 
         } catch (Exception ex) {
@@ -358,8 +382,7 @@ public class UtilsSearch {
         }
         return false;
     }
-    
-    
+
     /**
      * Check whether query contains a field of the given name.
      * Ignores whether it is in positive or negative list !
@@ -382,7 +405,7 @@ public class UtilsSearch {
         if (query.get(fieldName) != null) {
             return true;
         }
-        
+
         return false;
     }
 
