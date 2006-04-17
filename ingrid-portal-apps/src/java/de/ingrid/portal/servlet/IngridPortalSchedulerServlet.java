@@ -61,7 +61,7 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
                 sched.shutdown(true);
                 log.info("waiting for scheduler to complete jobs... done.");
             }
-            IBUSInterfaceImpl.resetBus();
+            IBUSInterfaceImpl.shutdown();
             
         } catch (SchedulerException e) {
             log.fatal("Jetspeed: shutdown() failed: ", e);

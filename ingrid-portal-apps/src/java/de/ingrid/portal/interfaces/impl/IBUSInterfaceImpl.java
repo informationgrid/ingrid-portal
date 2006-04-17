@@ -69,7 +69,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         return instance;
     }
 
-    public static synchronized void resetBus() {
+    public static synchronized void shutdown() {
         try {
             if (log.isInfoEnabled()) {
                 log.info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
@@ -87,7 +87,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
             if (client != null) {
                 client.shutdown();
-                //                client.removeJXTAHome();
 
             } else if (communication != null) {
                 try {
@@ -167,7 +166,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isFatalEnabled()) {
                 log.fatal("Problems Constructor IBUSInterfaceImpl Singleton", t);
             }
-            resetBus();
+            shutdown();
             throw new Exception("Error Constructor IBUSInterfaceImpl", t);
         } finally {
             initInProgress = false;
@@ -200,7 +199,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
-                resetBus();
+                shutdown();
             }
             throw new Exception(t);
         }
@@ -221,7 +220,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
-                resetBus();
+                shutdown();
             }
         }
 
@@ -241,7 +240,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
-                resetBus();
+                shutdown();
             }
         }
 
@@ -261,7 +260,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
-                resetBus();
+                shutdown();
             }
         }
 
