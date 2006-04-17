@@ -13,7 +13,7 @@ AdvertisementsSearchIntervall=2000
 TcpServerEnable=true
 TcpClientEnable=true
 TcpMulticastEnable=true
-TcpPort=9999
+TcpPort=9998
 TcpMode=manual
 TcpIntfAddr=localhost
 
