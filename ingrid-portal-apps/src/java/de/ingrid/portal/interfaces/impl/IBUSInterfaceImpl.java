@@ -122,10 +122,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
             if (enJXTACommunication) {
 
-                String iBusUrl = config.getString("ibus_wetag_url", "wetag:///torwald-ibus:ibus-torwald");
+                String iBusUrl = config.getString("ibus_wetag_url", "wetag:///kug-group:kug-ibus");
 
                 client = BusClient.instance();
-                String jxtaConf = config.getString("jxta_conf_filename", "/jxta.conf.xml");
+                String jxtaConf = config.getString("jxta_conf_filename", "/jxta.properties");
 
                 client.setBusUrl(iBusUrl);
                 client.setJxtaConfigurationPath(jxtaConf);
