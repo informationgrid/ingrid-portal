@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
@@ -85,13 +86,13 @@ public class SNSInterfaceTest extends TestCase {
         //        IngridQuery query = new IngridQuery();
         query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
         query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
-        query.put("eventtype", "historical");
 
-        // fix, if no term, date has to be set !
-        //        query.put("t0", "3000-01-01");
-        //        query.put("t1", "3000-01-01");
-        //query.put("t1", "1900-01-01");
+        String[] eventTypes = new String[]{"industrialAccident"};
+        query.put("eventtype", eventTypes);
 
+        // fix, if no term, date has to be set !!!!?????
+//                query.put("t0", "3000-01-01");
+//                query.put("t1", "1900-01-01");
         query.put("t2", "3000-01-01");
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
@@ -107,13 +108,13 @@ public class SNSInterfaceTest extends TestCase {
     public void testEVENTS_FROM_TYPE_AND_TERM() throws Exception {
         System.out.println("########## testEVENTS_FROM_TYPE_AND_TERM()");
         String term = "Tschernobyl";
-        String eventType = "industrialAccident";
+        String[] eventTypes = new String[]{"industrialAccident"};
         System.out.println("TERM = " + term);
-        System.out.println("TYPE = " + eventType);
+        System.out.println("TYPE = " + eventTypes);
         IngridQuery query = QueryStringParser.parse(term);
         query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
         query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
-        query.put(Settings.QFIELD_EVENT_TYPE, eventType);
+        query.put(Settings.QFIELD_EVENT_TYPE, eventTypes);
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
         IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, TIMEOUT);
