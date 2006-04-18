@@ -110,6 +110,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                 IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM));
                 if (hits != null && hits.length > 1) {
                     IngridHit[] realHits = new IngridHit[hits.length-1];
+                    // TODO remove first hit, not necessary when fixed, see http://jira.media-style.com/browse/INGRID-837
                     System.arraycopy(hits, 1, realHits, 0, realHits.length);                
                     IngridHitDetail[] details = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarDetailedTerms(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), realHits);
                     request.getPortletSession().setAttribute(TOPICS, realHits, PortletSessionImpl.PORTLET_SCOPE);
