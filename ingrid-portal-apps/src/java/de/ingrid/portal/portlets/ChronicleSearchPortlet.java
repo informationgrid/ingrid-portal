@@ -114,21 +114,19 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                 }
 
                 // set date
-                String formFrom = UtilsDate.getInputDateFrom(topicFrom, request.getLocale());
-                String formTo = UtilsDate.getInputDateTo(topicTo, request.getLocale());
-                if (topicFrom != null && topicTo != null) {
+                if ((topicFrom != null) && (topicTo != null)) {
                     if (topicFrom.equals(topicTo)) {
                         af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formFrom);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_AT, topicFrom);
                     } else {
                         af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT,
                                 ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, topicFrom);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_TO, topicTo);
                     }
                 } else if (topicFrom != null) {
                     af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, topicFrom);
                     //                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateMax());                    
                     af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateTo(topicFrom, request
                             .getLocale()));
@@ -137,7 +135,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                     //                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateMin());                    
                     af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateFrom(topicTo, request
                             .getLocale()));
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, topicTo);
                 }
 
                 // set term

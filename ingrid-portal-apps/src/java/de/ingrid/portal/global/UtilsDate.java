@@ -46,6 +46,9 @@ public class UtilsDate {
         } else if (dateStr.matches("[0-1][0-9]\\.[0-9][0-9][0-9][0-9]")) {
             // already correct
             result = dateStr;
+        } else if (dateStr.matches("[0-3][0-9]\\.[0-1][0-9]\\.[0-9][0-9][0-9][0-9]")) {
+            // already correct
+            result = dateStr;
         } else if (dateStr.matches("[0-9][0-9][0-9][0-9]")) {
             portalFormat.applyPattern("yyyy");
             result = portalFormat.format(parseDateString(dateStr));
@@ -115,7 +118,9 @@ public class UtilsDate {
                 result = df.parse(dateString.substring(0, 8));
             }
         } catch (ParseException e) {
-            log.warn("error parsing from date.", e);
+            if (log.isWarnEnabled()) {
+                log.warn("error parsing from date.", e);
+            }
         }
         return result;
     }
@@ -138,8 +143,10 @@ public class UtilsDate {
             portalFormat.applyPattern(destFormat);
             result = portalFormat.format(df.parse((String) dateStr));
         } catch (ParseException e) {
-            log.error("error parsing date (" + dateStr + ") with format (" + srcFormat + ") to format (" + destFormat
-                    + ").", e);
+            if (log.isErrorEnabled()) {
+                log.error("error parsing date (" + dateStr + ") with format (" + srcFormat + ") to format (" + destFormat
+                        + ").", e);
+            }
         }
         return result;
     }
