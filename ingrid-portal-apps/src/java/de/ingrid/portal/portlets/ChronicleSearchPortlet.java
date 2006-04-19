@@ -114,28 +114,30 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                 }
 
                 // set date
-                if ((topicFrom != null) && (topicTo != null)) {
-                    if (topicFrom.equals(topicTo)) {
+                String formFrom = UtilsDate.getInputDateFrom(topicFrom, request.getLocale());
+                String formTo = UtilsDate.getInputDateTo(topicTo, request.getLocale());
+                if ((formFrom != null) && (formTo != null)) {
+                    if (formFrom.equals(formTo)) {
                         af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_AT, topicFrom);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formFrom);
                     } else {
                         af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT,
                                 ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, topicFrom);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_TO, topicTo);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
+                        af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
                     }
-                } else if (topicFrom != null) {
+                } else if (formFrom != null) {
                     af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, topicFrom);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
                     //                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateMax());                    
                     af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateTo(topicFrom, request
                             .getLocale()));
-                } else if (topicTo != null) {
+                } else if (formTo != null) {
                     af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
                     //                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateMin());                    
                     af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateFrom(topicTo, request
                             .getLocale()));
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, topicTo);
+                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
                 }
 
                 // set term
