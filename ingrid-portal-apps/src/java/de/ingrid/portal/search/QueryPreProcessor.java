@@ -93,7 +93,7 @@ public class QueryPreProcessor {
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(
-                        PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, requestedMetadata);
+                        PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, false, requestedMetadata);
     }
 
     /**
@@ -141,10 +141,16 @@ public class QueryPreProcessor {
             query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
         }
 
+        // set grouping ! ONLY IF NO grouping IN Query String Input !
+        if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
+            // grouping per iPlug !
+//            query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
+        }
+
         // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage,
                 Settings.SEARCH_UNRANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(
-                        PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, null);
+                        PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, true, null);
     }
 
 }

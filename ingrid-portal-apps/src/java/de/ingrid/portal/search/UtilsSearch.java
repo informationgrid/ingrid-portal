@@ -27,6 +27,7 @@ import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -132,6 +133,26 @@ public class UtilsSearch {
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);
+            }
+        }
+    }
+
+    /**
+     * Transfer commonly used plug parameters from PlugDescription to hitobject.
+     * @param result
+     * @param plugDescr
+     */
+    public static void transferPlugDescription(IngridHit result, PlugDescription plugDescr) {
+        try {
+            result.put("hasPlugDescr", Settings.MSGV_TRUE);
+            result.put(PlugDescription.DATA_SOURCE_NAME, plugDescr.getDataSourceName());
+            result.put(PlugDescription.DATA_SOURCE_DESCRIPTION, plugDescr.getDataSourceDescription().replaceAll(
+                    "\\<.*?\\>", ""));
+            result.put(PlugDescription.DATA_TYPE, plugDescr.getDataTypes());
+            result.put(PlugDescription.ORGANISATION, plugDescr.getOrganisation());
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems taking over PlugDescription into result:" + result, t);
             }
         }
     }
@@ -506,7 +527,7 @@ public class UtilsSearch {
     public static void doViewForPartnerPortlet(RenderRequest request, Context context) {
         PortletSession session = request.getPortletSession();
         DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
-        if (partnerRoot == null) { 
+        if (partnerRoot == null) {
             partnerRoot = DisplayTreeFactory.getTreeFromPartnerProvider();
             session.setAttribute("partnerRoot", partnerRoot);
         }
@@ -526,20 +547,21 @@ public class UtilsSearch {
             action = "";
         }
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
-        
+
         PortletSession session = request.getPortletSession();
 
         if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
-            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                    Settings.PARAM_QUERY_STRING);
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
             Iterator it = partnerRoot.getChildren().iterator();
             String chk;
             HashMap partnerHash = new HashMap();
             HashMap providerHash = new HashMap();
             while (it.hasNext()) {
-                DisplayTreeNode partnerNode = (DisplayTreeNode)it.next();
+                DisplayTreeNode partnerNode = (DisplayTreeNode) it.next();
                 chk = request.getParameter("chk_".concat(partnerNode.getId()));
                 if (chk != null && chk.equals("on")) {
                     partnerHash.put("partner:".concat(partnerNode.getId()), "1");
@@ -547,7 +569,7 @@ public class UtilsSearch {
                 if (partnerNode.isOpen()) {
                     Iterator it2 = partnerNode.getChildren().iterator();
                     while (it2.hasNext()) {
-                        DisplayTreeNode providerNode = (DisplayTreeNode)it2.next();
+                        DisplayTreeNode providerNode = (DisplayTreeNode) it2.next();
                         chk = request.getParameter("chk_".concat(providerNode.getId()));
                         if (chk != null && chk.equals("on")) {
                             providerHash.put("provider:".concat(providerNode.getId()), "1");
@@ -555,14 +577,14 @@ public class UtilsSearch {
                     }
                 }
             }
-            
+
             String subTerm = "";
             if (partnerHash.size() > 1) {
                 subTerm = subTerm.concat("(");
             }
             it = partnerHash.keySet().iterator();
             while (it.hasNext()) {
-                String term = (String)it.next();
+                String term = (String) it.next();
                 if (it.hasNext()) {
                     subTerm = subTerm.concat(term).concat(" OR ");
                 } else {
@@ -575,13 +597,13 @@ public class UtilsSearch {
             if (partnerHash.size() > 0 && providerHash.size() > 0) {
                 subTerm = subTerm.concat(" ");
             }
-            
+
             if (providerHash.size() > 1) {
                 subTerm = subTerm.concat("(");
             }
             it = providerHash.keySet().iterator();
             while (it.hasNext()) {
-                String term = (String)it.next();
+                String term = (String) it.next();
                 if (it.hasNext()) {
                     subTerm = subTerm.concat(term).concat(" OR ");
                 } else {
@@ -592,9 +614,10 @@ public class UtilsSearch {
                 subTerm = subTerm.concat(")");
             }
             if (subTerm.length() > 0) {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND));
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
+                        UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND));
             }
-            
+
         } else if (action.equalsIgnoreCase("doOpenPartner")) {
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
             DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));

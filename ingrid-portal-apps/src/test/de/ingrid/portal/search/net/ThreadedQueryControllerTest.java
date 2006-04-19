@@ -34,10 +34,10 @@ public class ThreadedQueryControllerTest extends TestCase {
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
             
-            QueryDescriptor qd = new QueryDescriptor(query, 10, 1, 10, 10000, true, null);
+            QueryDescriptor qd = new QueryDescriptor(query, 10, 1, 10, 10000, true, false, null);
             controller.addQuery("1", qd);
             query = QueryStringParser.parse("wasser");
-            qd = new QueryDescriptor(query, 10, 1, 10, 10000, true, null);
+            qd = new QueryDescriptor(query, 10, 1, 10, 10000, true, false, null);
             controller.setTimeout(1000000);
 //            controller.addQuery("2", qd);
             

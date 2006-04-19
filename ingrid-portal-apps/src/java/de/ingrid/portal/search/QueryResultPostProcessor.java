@@ -16,6 +16,7 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
@@ -104,31 +105,46 @@ public class QueryResultPostProcessor {
                             String addrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
                             hit.put(Settings.RESULT_KEY_UDK_CLASS, addrClass);
                             if (addrClass.equals("2") || addrClass.equals("3")) {
-                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_FIRSTNAME, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME));
-                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_LASTNAME, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME));
-                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_TITLE, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE));
-                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_SALUTATION, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_FIRSTNAME, UtilsSearch.getDetailValue(detail,
+                                        Settings.HIT_KEY_ADDRESS_FIRSTNAME));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_LASTNAME, UtilsSearch.getDetailValue(detail,
+                                        Settings.HIT_KEY_ADDRESS_LASTNAME));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_TITLE, UtilsSearch.getDetailValue(detail,
+                                        Settings.HIT_KEY_ADDRESS_TITLE));
+                                hit.put(Settings.RESULT_KEY_UDK_ADDRESS_SALUTATION, UtilsSearch.getDetailValue(detail,
+                                        Settings.HIT_KEY_ADDRESS_ADDRESS));
                             } else if (addrClass.equals("1")) {
-                                String currentAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
+                                String currentAddressId = UtilsSearch.getDetailValue(detail,
+                                        Settings.HIT_KEY_ADDRESS_ADDRID);
                                 ArrayList parentAddr = new ArrayList();
                                 while (addrClass.equals("1")) {
-                                    IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId).concat(" datatype:address ranking:score"));
-                                    IngridHits results = IBUSInterfaceImpl.getInstance().search(query, 10, 1, 10, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                                    IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(
+                                            currentAddressId).concat(" datatype:address ranking:score"));
+                                    IngridHits results = IBUSInterfaceImpl.getInstance().search(query, 10, 1, 10,
+                                            PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
                                     if (results.getHits().length > 0) {
-                                        IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(results.getHits(), query, new String[]{ Settings.HIT_KEY_ADDRESS_ADDRID, Settings.HIT_KEY_ADDRESS_CLASS});
-                                        for (int j=0; j<details.length; j++) {
-                                            IngridHitDetail addrDetail = (IngridHitDetail)details[j];
-                                            addrClass = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_CLASS);
-                                            if ((addrClass.equals("0") || addrClass.equals("1")) && !currentAddressId.equals(UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_ADDRID))) {
+                                        IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(
+                                                results.getHits(),
+                                                query,
+                                                new String[] { Settings.HIT_KEY_ADDRESS_ADDRID,
+                                                        Settings.HIT_KEY_ADDRESS_CLASS });
+                                        for (int j = 0; j < details.length; j++) {
+                                            IngridHitDetail addrDetail = (IngridHitDetail) details[j];
+                                            addrClass = UtilsSearch.getDetailValue(addrDetail,
+                                                    Settings.HIT_KEY_ADDRESS_CLASS);
+                                            if ((addrClass.equals("0") || addrClass.equals("1"))
+                                                    && !currentAddressId.equals(UtilsSearch.getDetailValue(addrDetail,
+                                                            Settings.HIT_KEY_ADDRESS_ADDRID))) {
                                                 parentAddr.add(0, addrDetail);
                                             }
-                                            currentAddressId = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_ADDRID);
+                                            currentAddressId = UtilsSearch.getDetailValue(addrDetail,
+                                                    Settings.HIT_KEY_ADDRESS_ADDRID);
                                         }
                                     }
                                 }
                                 hit.put(Settings.RESULT_KEY_UDK_ADDRESS_PARENTS, parentAddr);
                             }
-                                
+
                         }
                     } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
                         hit.put(Settings.RESULT_KEY_TYPE, "nutch");
@@ -163,17 +179,50 @@ public class QueryResultPostProcessor {
 
             IngridHit hit = null;
             IngridHitDetail detail = null;
+            PlugDescription plugDescr = null;
+            IngridHit[] subHitArray = null;
             for (int i = 0; i < hitArray.length; i++) {
                 try {
+                    // top hit of group !
                     hit = hitArray[i];
-                    detail = (IngridHitDetail) hit.get("detail");
-
                     if (hit == null) {
                         continue;
                     }
+
+                    plugDescr = (PlugDescription) hit.get("plugDescr");
+                    if (plugDescr != null) {
+                        UtilsSearch.transferPlugDescription(hit, plugDescr);
+                    }
+
+                    detail = (IngridHitDetail) hit.get("detail");
                     if (detail != null) {
                         UtilsSearch.transferHitDetails(hit, detail);
+
+                        // check for grouping and get details of "sub hits"
+                        subHitArray = hit.getGroupHits();
+                        if (subHitArray.length > 0) {
+                            hit.put("no_of_hits", new Integer(subHitArray.length + 1).toString());
+                            // only get Details of the hits we need to render !
+                            if (Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
+                                int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
+                                if (numNeededSubHits > subHitArray.length) {
+                                    numNeededSubHits = subHitArray.length;
+                                }
+                                for (int j = 0; j < numNeededSubHits; j++) {
+                                    hit = subHitArray[j];
+                                    if (hit == null) {
+                                        continue;
+                                    }
+
+                                    detail = (IngridHitDetail) hit.get("detail");
+                                    if (detail != null) {
+                                        UtilsSearch.transferHitDetails(hit, detail);
+                                    }
+                                }
+                            }
+                        }
                     }
+
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
                         log.error("Problems processing Hit, hit = " + hit + ", detail = " + detail, t);
