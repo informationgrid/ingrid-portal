@@ -1,7 +1,0 @@
-#if ($actionForm.hasErrors())
-<div>
-#foreach ($errorMsg in $actionForm.getAllErrors())
-<h3 class="portlet-msg-error">$MESSAGES.getString($errorMsg)</h3>
-#end
-</div>
-#end
