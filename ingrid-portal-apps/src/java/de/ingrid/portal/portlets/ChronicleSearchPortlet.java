@@ -200,8 +200,8 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridQuery query = null;
         try {
             // INPUT: Term
-            String term = af.getInput(ChronicleSearchForm.FIELD_SEARCH);
-            query = QueryStringParser.parse(term);
+            String inputTerm = af.getInput(ChronicleSearchForm.FIELD_SEARCH).trim();
+            query = QueryStringParser.parse(inputTerm);
 
             // SNS Query criteria
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
@@ -221,6 +221,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // INPUT: Date
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String dateSelect = af.getInput(ChronicleSearchForm.FIELD_TIME_SELECT);
+            boolean dateSet = false;
             if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD)) {
                 Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM));
                 if (fromDate != null) {
@@ -230,6 +231,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                         query.put(Settings.QFIELD_DATE_FROM, dateStr);
                         dateStr = df.format(toDate);
                         query.put(Settings.QFIELD_DATE_TO, dateStr);
+                        dateSet = true;
                     }
                 }
             } else if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_DATE)) {
@@ -237,7 +239,14 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                 if (atDate != null) {
                     String dateStr = df.format(atDate);
                     query.put(Settings.QFIELD_DATE_AT, dateStr);
+                    dateSet = true;
                 }
+            }
+
+            // fix for event type selection
+            if (inputTerm.length() == 0 && !dateSet) {
+                // set future date for type selection
+                query.put(Settings.QFIELD_DATE_TO, "3000-01-01");
             }
 
             // RANKING ???
