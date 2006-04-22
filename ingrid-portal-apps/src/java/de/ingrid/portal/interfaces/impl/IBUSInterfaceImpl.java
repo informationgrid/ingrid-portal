@@ -129,7 +129,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 client.setBusUrl(iBusUrl);
                 client.setJxtaConfigurationPath(jxtaConf);
 
-                bus = client.getBus();
+                bus = (Bus) client.getBus();
                 //                communication = client.getCommunication();
             } else {
 
