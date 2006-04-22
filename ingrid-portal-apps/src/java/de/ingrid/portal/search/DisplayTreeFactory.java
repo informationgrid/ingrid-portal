@@ -40,7 +40,7 @@ public class DisplayTreeFactory {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         List partnerList = UtilsDB.getPartners();
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getIBus().getAllIPlugs();
+        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
         Iterator it = partnerList.iterator();
         while (it.hasNext()) {
             IngridPartner partner = (IngridPartner)it.next();

@@ -5,7 +5,6 @@ package de.ingrid.portal.interfaces;
 
 import org.apache.commons.configuration.Configuration;
 
-import de.ingrid.ibus.Bus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -79,27 +78,12 @@ public interface IBUSInterface {
      * @return The PlugDescription. 
      */
     PlugDescription getIPlug(String plugId);
-    
+
     /**
-     * Returns the Bus object.
+     * Returns the PlugDescriptions of all iPlugs.
      * 
-     * @return The Bus object.
+     * @return
      */
-    Bus getIBus();
-    
+    PlugDescription[] getAllIPlugs();
 
-    /**
-     * Get Plug Description of a result.
-     * @param hit
-     * @return The Plug Description OR NULL
-     */
-//    PlugDescription getIPlug(IngridHit hit);
-
-    /**
-     * Fetch column from Record.
-     * @param record
-     * @param columnName
-     * @return The Column OR NULL
-     */
-//    Column getColumn(Record record, String columnName);
 }

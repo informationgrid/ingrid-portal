@@ -20,6 +20,7 @@ import de.ingrid.ibus.Bus;
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -38,7 +39,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     private static IBUSInterfaceImpl instance = null;
 
-    private static Bus bus = null;
+    private static IBus bus = null;
 
     private static Object communication = null;
 
@@ -129,7 +130,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 client.setBusUrl(iBusUrl);
                 client.setJxtaConfigurationPath(jxtaConf);
 
-                bus = (Bus) client.getBus();
+                bus = client.getBus();
                 //                communication = client.getCommunication();
             } else {
 
@@ -297,66 +298,17 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getIPlug(java.lang.String)
      */
     public PlugDescription getIPlug(String plugId) {
-        return bus.getIPlug(plugId);
+//        return bus.getIPlug(plugId);
+        // TODO: IBus not Bus, as soon as IBus Interface supports method , DONT CAST  !!!!!!!!!!!!!!!!!!!
+        return ((Bus)bus).getIPlug(plugId);
     }
 
-    /*
-     private ICommunication startJxtaCommunication(String fileName) throws Exception {
-     PeerService communication = new PeerService();
-
-     URL url = ConfigurationUtils.locate(fileName);
-     
-     InputSource inputSource = new InputSource(url.openStream());
-     DocumentBuilderFactory buildFactory = DocumentBuilderFactory.newInstance();
-     Document descriptionsDocument = buildFactory.newDocumentBuilder().parse(inputSource);
-     Element descriptionElement = descriptionsDocument.getDocumentElement();
-     NodeList callNodes = descriptionElement.getElementsByTagName("call");
-
-     if (callNodes.getLength() < 1) {
-     throw new ParseException("No call tags in the descriptor.xml file.");
-     }
-
-     for (int i = 0; i < callNodes.getLength(); i++) {
-     Element element = (Element) callNodes.item(i);
-     final String methodName = "set" + element.getAttribute("attribute");
-
-     NodeList argNodes = element.getElementsByTagName("arg");
-     if (argNodes.getLength() < 1) {
-     throw new ParseException("No arg tags under the a call tag in the descriptor.xml file.");
-     }
-
-     Element argElement = (Element) argNodes.item(0);
-     final String type = argElement.getAttribute("type");
-     final String value = ((Text) argElement.getChildNodes().item(0)).getNodeValue();
-
-     Class argType = null;
-     Object argValue = null;
-     if (type.endsWith("String")) {
-     argType = String.class;
-     argValue = value;
-     } else if (type.endsWith("boolean")) {
-     argType = boolean.class;
-     argValue = new Boolean(value);
-     } else if (type.endsWith("int")) {
-     argType = int.class;
-     argValue = new Integer(value);
-     } else {
-     throw new ParseException("Unknown argument type: " + type);
-     }
-
-     Method method = communication.getClass().getMethod(methodName, new Class[] { argType });
-     method.invoke(communication, new Object[] { argValue });
-     }
-
-     communication.boot();
-
-     return communication;
-     }
-     */
     /**
-     * @see de.ingrid.portal.interfaces.IBUSInterface#getIBus()
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getAllIPlugs()
      */
-    public Bus getIBus() {
-        return bus;
+    public PlugDescription[] getAllIPlugs() {
+//        return bus.getAllIPlugs();
+        // TODO: IBus not Bus, as soon as IBus Interface supports method , DONT CAST  !!!!!!!!!!!!!!!!!!!
+        return ((Bus)bus).getAllIPlugs();
     }
 }

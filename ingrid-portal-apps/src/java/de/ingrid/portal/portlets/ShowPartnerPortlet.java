@@ -49,7 +49,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
         
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getIBus().getAllIPlugs();
+        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
         
         LinkedHashMap partnerMap = new LinkedHashMap();
         
