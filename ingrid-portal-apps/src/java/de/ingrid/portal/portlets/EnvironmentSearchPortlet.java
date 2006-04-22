@@ -21,6 +21,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.search.SearchState;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -173,17 +174,10 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             // PARTNER
-            String[] partners = request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER);
-            // don't set anything if "all" is selected
-            if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
-                cq = new ClauseQuery(true, false);
-                for (int i = 0; i < partners.length; i++) {
-                    if (partners[i] != null) {
-                        cq.addField(new FieldQuery(false, false, Settings.QFIELD_PARTNER, partners[i]));
-                    }
-                }
-                query.addClause(cq);
-            }
+            UtilsSearch.processPartner(query, request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER));
+
+            // GROUPING
+            //            UtilsSearch.processGrouping(query, request.getParameter(EnvironmentSearchForm.FIELD_GROUPING));
 
             // RANKING
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);

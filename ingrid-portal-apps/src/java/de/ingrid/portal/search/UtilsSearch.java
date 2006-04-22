@@ -458,6 +458,41 @@ public class UtilsSearch {
     }
 
     /**
+     * Add partner(s) to query
+     * @param query
+     * @param partners
+     */
+    public static void processPartner(IngridQuery query, String[] partners) {
+        ClauseQuery cq = null;
+
+        // don't set anything if "all" is selected
+        if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
+            cq = new ClauseQuery(true, false);
+            for (int i = 0; i < partners.length; i++) {
+                if (partners[i] != null) {
+                    cq.addField(new FieldQuery(false, false, Settings.QFIELD_PARTNER, partners[i]));
+                }
+            }
+            query.addClause(cq);
+        }
+    }
+
+    /**
+     * Add grouping to query
+     * @param query
+     * @param grouping
+     */
+    public static void processGrouping(IngridQuery query, String grouping) {
+        if (grouping != null) {
+            if (grouping.equals(Settings.PARAMV_GROUPING_PARTNER)) {
+                query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PARTNER);
+            } else if (grouping.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
+                query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_ORGANISATION);
+            }
+        }
+    }
+
+    /**
      * Remove the passed data type from the query
      * @param query
      */
