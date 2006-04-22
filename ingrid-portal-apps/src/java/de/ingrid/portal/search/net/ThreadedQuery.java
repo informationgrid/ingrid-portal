@@ -12,7 +12,6 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.PlugDescription;
 
 /**
  * Class for threaded ibus search. Queries the ibus in the run method and optionally
@@ -86,9 +85,11 @@ public class ThreadedQuery extends Thread {
                                 IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
                                 System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
                                 subHitArray = tmpHitArray;
+                                hitArray[i].putBoolean("moreHits", true);
                             }
-                            subDetailArray = ibus.getDetails(subHitArray, qd.getQuery(),
-                                    qd.getRequestedFields());
+                            // separate the subHitArray to render in map !  
+                            hitArray[i].put("subHits", subHitArray);
+                            subDetailArray = ibus.getDetails(subHitArray, qd.getQuery(), qd.getRequestedFields());
                             for (int j = 0; j < subDetailArray.length; j++) {
                                 subHitArray[j].put("detail", subDetailArray[j]);
                             }

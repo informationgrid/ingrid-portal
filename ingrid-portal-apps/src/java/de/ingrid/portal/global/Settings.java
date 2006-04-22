@@ -284,6 +284,13 @@ public class Settings {
 
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 
+    // GROUPING VALUES
+    public final static String PARAMV_GROUPING_OFF = "none";
+
+    public final static String PARAMV_GROUPING_PARTNER = "partner";
+
+    public final static String PARAMV_GROUPING_PROVIDER = "info";
+
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
     public final static String PARAM_QUERY_STRING = "q";

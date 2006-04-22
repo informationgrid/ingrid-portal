@@ -144,7 +144,7 @@ public class QueryPreProcessor {
         // set grouping ! ONLY IF NO grouping IN Query String Input !
         if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
             // grouping per iPlug !
-//            query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
+            query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
         }
 
         // TODO If no query should be submitted, return null
