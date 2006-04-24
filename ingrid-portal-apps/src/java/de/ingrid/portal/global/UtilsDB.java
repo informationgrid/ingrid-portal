@@ -6,7 +6,6 @@ package de.ingrid.portal.global;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -17,6 +16,7 @@ import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFormToQuery;
 import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.om.IngridServiceRubric;
 
 /**
@@ -35,6 +35,9 @@ public class UtilsDB {
 
     /** cache for partners */
     private static List partners = null;
+
+    /** cache for providers */
+    private static List providers = null;
 
     /** cache for environment topics */
     private static List envTopics = null;
@@ -95,8 +98,7 @@ public class UtilsDB {
         }
         return cacheList;
     }
-    
-    
+
     /**
      * Convenient method for extracting a QueryValue from a List of IngridFormToQuery
      * objects, based on the formValue.
@@ -144,7 +146,8 @@ public class UtilsDB {
     public static List getPartners() {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
-        return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridPartner.class).addOrder(Order.asc("sortkey")), partners);
+        return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridPartner.class)
+                .addOrder(Order.asc("sortkey")), partners);
     }
 
     /**
@@ -159,6 +162,34 @@ public class UtilsDB {
             partner = (IngridPartner) partners.get(i);
             if (partner.getIdent().equals(ident)) {
                 return partner.getName();
+            }
+        }
+        return ident;
+    }
+
+    /**
+     * Get all the providers.
+     * @return
+     */
+    public static List getProviders() {
+        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // so there's no call by reference !
+        return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridProvider.class)
+                .addOrder(Order.asc("sortkey")), providers);
+    }
+
+    /**
+     * Get the name of the Provider with the according ident.
+     * @param ident
+     * @return the name of the provider OR the key, if no matching provider was found
+     */
+    public static String getProviderFromKey(String ident) {
+        List providers = getProviders();
+        IngridProvider provider = null;
+        for (int i = 0; i < providers.size(); i++) {
+            provider = (IngridProvider) providers.get(i);
+            if (provider.getIdent().equals(ident)) {
+                return provider.getName();
             }
         }
         return ident;

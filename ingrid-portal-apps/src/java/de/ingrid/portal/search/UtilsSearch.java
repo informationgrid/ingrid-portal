@@ -225,6 +225,8 @@ public class UtilsSearch {
         String mappedValue = detailValue;
         if (detailKey.equals(Settings.RESULT_KEY_PARTNER)) {
             mappedValue = UtilsDB.getPartnerFromKey(detailValue);
+        } else if (detailKey.equals(Settings.RESULT_KEY_PROVIDER)) {
+            mappedValue = UtilsDB.getProviderFromKey(detailValue);
         } else if (resources != null) {
             mappedValue = resources.getString(detailValue);
         }
