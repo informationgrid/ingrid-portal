@@ -298,17 +298,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getIPlug(java.lang.String)
      */
     public PlugDescription getIPlug(String plugId) {
-//        return bus.getIPlug(plugId);
-        // TODO: IBus not Bus, as soon as IBus Interface supports method , DONT CAST  !!!!!!!!!!!!!!!!!!!
-        return ((Bus)bus).getIPlug(plugId);
+        return bus.getIPlug(plugId);
     }
 
     /**
      * @see de.ingrid.portal.interfaces.IBUSInterface#getAllIPlugs()
      */
     public PlugDescription[] getAllIPlugs() {
-//        return bus.getAllIPlugs();
-        // TODO: IBus not Bus, as soon as IBus Interface supports method , DONT CAST  !!!!!!!!!!!!!!!!!!!
-        return ((Bus)bus).getAllIPlugs();
+        return bus.getAllIPlugs();
     }
 }
