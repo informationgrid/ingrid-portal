@@ -167,7 +167,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             UtilsSearch.processPartner(query, request.getParameterValues(ServiceSearchForm.FIELD_PARTNER));
 
             // GROUPING
-//            UtilsSearch.processGrouping(query, request.getParameter(ServiceSearchForm.FIELD_GROUPING));
+            UtilsSearch.processGrouping(query, request.getParameter(ServiceSearchForm.FIELD_GROUPING));
 
             // RANKING
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);

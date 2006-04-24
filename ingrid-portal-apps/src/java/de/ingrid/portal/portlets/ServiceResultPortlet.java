@@ -117,6 +117,15 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         // prepare view
         // ----------------------------------
 
+        // check for grouping
+        String grouping = (String) query.get(Settings.QFIELD_GROUPED);
+        if (grouping != null) {
+            if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
+                context.put("grouping", "partner");
+            } else if (grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {
+                context.put("grouping", "provider");
+            }
+        }
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);
 
@@ -154,27 +163,39 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
 
-            IngridHit result = null;
-            IngridHitDetail detail = null;
+            IngridHit[] subHitArray = null;
+            IngridHitDetail[] subDetailArray = null;
             for (int i = 0; i < results.length; i++) {
                 try {
-                    result = results[i];
-                    detail = null;
-                    if (details != null) {
-                        detail = details[i];
-                    }
-                    //detail = ibus.getDetail(result, query, requestedFields);
-
-                    if (result == null) {
+                    if (results[i] == null) {
                         continue;
                     }
-                    if (detail != null) {
-                        UtilsSearch.transferHitDetails(result, detail);
-                        result.put("topic", UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_RUBRIC, resources));
+                    if (details[i] != null) {
+                        UtilsSearch.transferHitDetails(results[i], details[i]);
+                        results[i].put("topic", UtilsSearch.getDetailValue(details[i], Settings.RESULT_KEY_RUBRIC,
+                                resources));
+                    }
+                    // check for grouping and get details of "sub hits"
+                    subHitArray = results[i].getGroupHits();
+                    if (subHitArray.length > 0 && Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
+                        // only get Details of the hits we need to render !
+                        int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
+                        if (subHitArray.length > numNeededSubHits) {
+                            IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
+                            System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
+                            subHitArray = tmpHitArray;
+                            results[i].putBoolean("moreHits", true);
+                        }
+                        // separate the subHitArray to render in map !  
+                        results[i].put("subHits", subHitArray);
+                        subDetailArray = ibus.getDetails(subHitArray, query, requestedFields);
+                        for (int j = 0; j < subDetailArray.length; j++) {
+                            UtilsSearch.transferHitDetails(subHitArray[j], subDetailArray[j]);
+                        }
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
+                        log.error("Problems processing Hit, hit = " + results[i] + ", detail = " + details[i], t);
                     }
                 }
             }
