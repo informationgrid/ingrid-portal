@@ -130,6 +130,11 @@ public class UtilsSearch {
             if (value.length() > 0) {
                 result.put(Settings.RESULT_KEY_PARTNER, value);
             }
+            // Provider
+            value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PROVIDER);
+            if (value.length() > 0) {
+                result.put(Settings.RESULT_KEY_PROVIDER, value);
+            }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);

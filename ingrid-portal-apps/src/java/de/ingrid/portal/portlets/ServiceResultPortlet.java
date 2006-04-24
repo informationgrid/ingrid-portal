@@ -155,7 +155,8 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
-            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER };
+            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER,
+                    Settings.RESULT_KEY_PROVIDER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {
@@ -171,9 +172,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (details[i] != null) {
-                        UtilsSearch.transferHitDetails(results[i], details[i]);
-                        results[i].put("topic", UtilsSearch.getDetailValue(details[i], Settings.RESULT_KEY_RUBRIC,
-                                resources));
+                        transferDetailData(results[i], details[i], resources);
                     }
                     // check for grouping and get details of "sub hits"
                     subHitArray = results[i].getGroupHits();
@@ -190,7 +189,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                         results[i].put("subHits", subHitArray);
                         subDetailArray = ibus.getDetails(subHitArray, query, requestedFields);
                         for (int j = 0; j < subDetailArray.length; j++) {
-                            UtilsSearch.transferHitDetails(subHitArray[j], subDetailArray[j]);
+                            transferDetailData(subHitArray[j], subDetailArray[j], resources);
                         }
                     }
                 } catch (Throwable t) {
@@ -207,4 +206,10 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
 
         return hits;
     }
+
+    private void transferDetailData(IngridHit hit, IngridHitDetail detail, IngridResourceBundle resources) {
+        UtilsSearch.transferHitDetails(hit, detail);
+        hit.put("topic", UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_RUBRIC, resources));
+    }
+
 }
