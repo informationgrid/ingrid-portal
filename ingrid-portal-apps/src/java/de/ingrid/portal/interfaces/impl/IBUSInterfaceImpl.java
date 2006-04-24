@@ -157,6 +157,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 }
 
                 ric = proxy.createRemoteInvocationController(iBusUrl);
+                // TODO Cast to Bus or IBus ????????????????????
                 bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
             }
             if (bus == null) {
