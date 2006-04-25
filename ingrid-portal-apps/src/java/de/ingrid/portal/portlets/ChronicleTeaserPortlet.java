@@ -40,6 +40,7 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
 
         response.setTitle(messages.getString(TITLE_KEY));
 
+        // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
         IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date());
 
         HashMap result = new HashMap();
@@ -47,7 +48,16 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
             int entry = (int) (Math.random() * details.length);
             DetailedTopic detail = (DetailedTopic) details[entry];
             result.put("title", detail.getTopicName());
-            result.put("type", detail.getType());
+            // type NOT IN DATABASE 
+            /*
+             try {
+             String urlWithType = (String) detail.getArrayList(DetailedTopic.INSTANCE_OF).get(0);
+             String type = urlWithType.split("#")[1].split("Type")[0];
+             result.put("type", type);
+             } catch (Exception ex) {
+             }
+             */
+            result.put("topicId", detail.get("topicId"));
             String topicFrom = detail.getFrom();
             if (topicFrom != null) {
                 result.put("from", UtilsDate.parseDateToLocale(topicFrom, request.getLocale()));
@@ -56,13 +66,14 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
             if (topicTo != null && !topicTo.equals(topicFrom)) {
                 result.put("to", UtilsDate.parseDateToLocale(topicTo, request.getLocale()));
             }
-            result.put("topicId", detail.get("topicId"));
             if (topicFrom != null) {
                 int years = UtilsDate.yearsBetween(topicFrom, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 result.put("years", new Integer(years));
             }
             // fetch search term
+            // TODO use title if bug in iPlug is resolved, see INGRID-901
             result.put("term", UtilsString.getSearchTerm(detail.getTopicName(), " "));
+            //result.put("term", detail.getTopicName());
 
             /*
              String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
