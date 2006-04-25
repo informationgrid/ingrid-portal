@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -185,7 +186,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     topic.put("title", topic.getTopicName());
-                    
+
                     if (detail != null) {
                         String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
                         if (searchData != null && searchData.length() > 0) {
@@ -195,7 +196,6 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         }
                         String searchURL = response.encodeURL(searchURLBase.concat(searchData));
                         topic.put("searchURL", searchURL);
-                        topic.put("type", resources.getString(detail.getType()));
                         topic.put("date", UtilsDate.getOutputString(detail.getFrom(), detail.getTo(), locale));
                         topic.put("description", detail.get(DetailedTopic.DESCRIPTION_OCC));
                         String url = (String) detail.get(DetailedTopic.SAMPLE_OCC);
@@ -203,10 +203,14 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                             topic.put("url", url);
                             topic.put("url_str", Utils.getShortURLStr(url, 80));
                         }
+                        // type
+                        String urlWithType = (String) detail.getArrayList(DetailedTopic.INSTANCE_OF).get(0);
+                        String type = urlWithType.split("#")[1].split("Type")[0];
+                        topic.put("type", resources.getString(type));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + topic, t);
+                        log.error("Problems processing Event, hit=" + topic + ", detail=" + detail, t);
                     }
                 }
             }
