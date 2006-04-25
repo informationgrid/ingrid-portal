@@ -85,7 +85,8 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
                 anniversaryList = session.createCriteria(IngridAnniversary.class)
                         .add(Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
                         .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4"))
-                        .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                        // FIX, DO WE NEED THIS ! IS WRONG ?
+//                        .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
                         .list();
 
                 if (anniversaryList.isEmpty()) {
