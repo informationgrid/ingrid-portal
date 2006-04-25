@@ -40,7 +40,7 @@
               Anbieter: $!rs.provider<br />
 ##			#end
               Quelle: $!rs.source<br />
-              Ranking: $!rs.score<br />
+##              Ranking: $!rs.score<br />
             </p>
 			#if($rs.wms_url)
 			<p class="result_link">

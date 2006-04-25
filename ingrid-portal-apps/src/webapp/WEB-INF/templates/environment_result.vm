@@ -20,7 +20,7 @@
               Anbieter: $!rs.partner<br />
               Thema: $!rs.topic<br />
               Kategorie: $!rs.funct_category<br />
-              Ranking: $!rs.score<br />
+##              Ranking: $!rs.score<br />
             </p>
 			#if($rs.url)
 			<p class="result_link">
