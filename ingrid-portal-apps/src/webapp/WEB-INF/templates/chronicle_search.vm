@@ -64,7 +64,7 @@
 			<h3>
 				<label class="alignleft" for="qry">#displayFieldLabel('search' 'Suchbegriff')</label>
 			</h3>
-			<input class="qry_chronic inputstyletext" id="qry" name="search" value="#getFieldValue('search')"/>
+			<input class="qry_chronic inputstyletext" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"/>
 		</div>  
 		<span class="clearer">
 		</span>
