@@ -165,7 +165,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             IngridHit[] subHitArray = null;
-            IngridHitDetail[] subDetailArray = null;
+//            IngridHitDetail[] subDetailArray = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     if (results[i] == null) {
@@ -175,23 +175,29 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                         transferDetailData(results[i], details[i], resources);
                     }
                     // check for grouping and get details of "sub hits"
+                    // NO, WE ONLY SHOW ONE HIT !
                     subHitArray = results[i].getGroupHits();
-                    if (subHitArray.length > 0 && Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
-                        // only get Details of the hits we need to render !
-                        int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
-                        if (subHitArray.length > numNeededSubHits) {
-                            IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
-                            System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
-                            subHitArray = tmpHitArray;
-                            results[i].putBoolean("moreHits", true);
-                        }
-                        // separate the subHitArray to render in map !  
-                        results[i].put("subHits", subHitArray);
-                        subDetailArray = ibus.getDetails(subHitArray, query, requestedFields);
-                        for (int j = 0; j < subDetailArray.length; j++) {
-                            transferDetailData(subHitArray[j], subDetailArray[j], resources);
-                        }
+                    if (subHitArray.length > 0) {
+                        results[i].putBoolean("moreHits", true);
                     }
+                    /*
+                     if (subHitArray.length > 0 && Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
+                     // only get Details of the hits we need to render !
+                     int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
+                     if (subHitArray.length > numNeededSubHits) {
+                     IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
+                     System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
+                     subHitArray = tmpHitArray;
+                     results[i].putBoolean("moreHits", true);
+                     }
+                     // separate the subHitArray to render in map !  
+                     results[i].put("subHits", subHitArray);
+                     subDetailArray = ibus.getDetails(subHitArray, query, requestedFields);
+                     for (int j = 0; j < subDetailArray.length; j++) {
+                     transferDetailData(subHitArray[j], subDetailArray[j], resources);
+                     }
+                     }
+                     */
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
                         log.error("Problems processing Hit, hit = " + results[i] + ", detail = " + details[i], t);
