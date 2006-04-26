@@ -5,10 +5,9 @@ package de.ingrid.portal.interfaces.impl;
 
 import java.net.URL;
 
+import net.weta.components.communication.ICommunication;
 import net.weta.components.communication_sockets.SocketCommunication;
 import net.weta.components.communication_sockets.util.AddressUtil;
-import net.weta.components.proxies.ProxyService;
-import net.weta.components.proxies.remote.RemoteInvocationController;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -16,7 +15,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Environment;
 
-import de.ingrid.ibus.Bus;
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.search.UtilsSearch;
@@ -42,10 +40,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     private static IBus bus = null;
 
     private static Object communication = null;
-
-    private static RemoteInvocationController ric = null;
-
-    private static ProxyService proxy = null;
 
     static BusClient client = null;
 
@@ -74,16 +68,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             if (log.isInfoEnabled()) {
                 log.info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
-            }
-
-            if (ric != null) {
-                ric.setCommunication(null);
-            }
-
-            if (proxy != null) {
-                proxy.setCommunication(null);
-                proxy.shutdown();
-                proxy = null;
             }
 
             if (client != null) {
@@ -131,7 +115,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 client.setJxtaConfigurationPath(jxtaConf);
 
                 bus = client.getBus();
-                //                communication = client.getCommunication();
             } else {
 
                 communication = new SocketCommunication();
@@ -143,23 +126,16 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
                 ((SocketCommunication) communication).startup();
 
-                // start the proxy server
-                proxy = new ProxyService();
-
-                proxy.setCommunication(((SocketCommunication) communication));
-                proxy.startup();
-
                 String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
                         .parseInt(config.getString("ibus_port", "11112")));
-
                 if (log.isInfoEnabled()) {
                     log.info("!!!!!!!!!! Connecting with iBus URL: " + iBusUrl);
                 }
 
-                ric = proxy.createRemoteInvocationController(iBusUrl);
-                // TODO Cast to Bus or IBus ????????????????????
-                bus = (Bus) ric.invoke(Bus.class, Bus.class.getMethod("getInstance", null), null);
+                bus = (IBus) net.weta.components.communication.reflect.ProxyService.createProxy(
+                        (ICommunication) communication, IBus.class, iBusUrl);
             }
+
             if (bus == null) {
                 throw new Exception("FATAL ERROR! iBus == null, FAILED to create bus instance.");
             }

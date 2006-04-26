@@ -223,16 +223,6 @@
 		</dependency>
 		<dependency>
             <groupId>weta-components</groupId>
-            <artifactId>remote-proxies</artifactId>
-            <version>SNAPSHOT</version>
-			<properties>
-	           <war.bundle>true</war.bundle>
-	        </properties>            
-            <type>jar</type>
-            <url>http://www.weta-group.net/maven/</url>
-		</dependency>
-		<dependency>
-            <groupId>weta-components</groupId>
             <artifactId>communication-sockets</artifactId>
             <version>SNAPSHOT</version>
 			<properties>
