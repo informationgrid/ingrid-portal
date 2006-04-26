@@ -9,10 +9,12 @@
     <separator>
       <text>separator1</text>
     </separator>
+<!--    
     <options>/service-myportal.psml</options>
     <separator>
       <text>separator2</text>
     </separator>
+-->
     <options>/service-sitemap.psml</options>
     <separator>
       <text>separator2</text>
@@ -22,10 +24,12 @@
       <text>separator2</text>
     </separator>
     <options>/service-contact.psml</options>
+<!--    
     <separator>
       <text>separator1</text>
     </separator>
     <options>/service-lang.psml</options>
+-->
   </menu>
 
   <menu name="footer-menu">
