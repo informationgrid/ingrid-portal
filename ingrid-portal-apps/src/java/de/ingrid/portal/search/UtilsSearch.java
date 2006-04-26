@@ -126,13 +126,19 @@ public class UtilsSearch {
                 result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value, 80));
             }
             // Partner
-            value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PARTNER);
+            value = UtilsSearch.getRawDetailValue(detail, Settings.RESULT_KEY_PARTNER);
             if (value.length() > 0) {
+                result.put(Settings.RESULT_KEY_PARTNER + "Key", value);
+                // mapped partner
+                value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PARTNER);
                 result.put(Settings.RESULT_KEY_PARTNER, value);
             }
             // Provider
-            value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PROVIDER);
+            value = UtilsSearch.getRawDetailValue(detail, Settings.RESULT_KEY_PROVIDER);
             if (value.length() > 0) {
+                result.put(Settings.RESULT_KEY_PROVIDER + "Key", value);
+                // mapped provider
+                value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PROVIDER);
                 result.put(Settings.RESULT_KEY_PROVIDER, value);
             }
         } catch (Throwable t) {
@@ -184,6 +190,29 @@ public class UtilsSearch {
      * @return
      */
     public static String getDetailValue(IngridHitDetail detail, String key, IngridResourceBundle resources) {
+        return getDetailValue(detail, key, resources, false);
+    }
+
+    /**
+     * Get raw detail value with given key, meaning no Mapping occurs ! (same as getDetailValue() but
+     * without mapping)
+     * @param detail
+     * @param key
+     * @return
+     */
+    public static String getRawDetailValue(IngridHitDetail detail, String key) {
+        return getDetailValue(detail, key, null, true);
+    }
+
+    /**
+     * Private method handling all Detail Fetching (Mapping)
+     * @param detail
+     * @param key
+     * @param resources
+     * @param raw
+     * @return
+     */
+    private static String getDetailValue(IngridHitDetail detail, String key, IngridResourceBundle resources, boolean raw) {
         Object obj = detail.get(key);
         if (obj == null) {
             return "";
@@ -196,7 +225,11 @@ public class UtilsSearch {
                 if (i != 0) {
                     values.append(", ");
                 }
-                values.append(mapResultValue(key, valueArray[i], resources));
+                if (raw) {
+                    values.append(valueArray[i]);
+                } else {
+                    values.append(mapResultValue(key, valueArray[i], resources));
+                }
             }
         } else if (obj instanceof ArrayList) {
             ArrayList valueList = (ArrayList) obj;
@@ -204,10 +237,19 @@ public class UtilsSearch {
                 if (i != 0) {
                     values.append(", ");
                 }
-                values.append(mapResultValue(key, valueList.get(i).toString(), resources));
+                if (raw) {
+                    values.append(valueList.get(i).toString());
+                } else {
+                    values.append(mapResultValue(key, valueList.get(i).toString(), resources));
+
+                }
             }
         } else {
-            values.append(mapResultValue(key, obj.toString(), resources));
+            if (raw) {
+                values.append(obj.toString());
+            } else {
+                values.append(mapResultValue(key, obj.toString(), resources));
+            }
         }
 
         return values.toString();
