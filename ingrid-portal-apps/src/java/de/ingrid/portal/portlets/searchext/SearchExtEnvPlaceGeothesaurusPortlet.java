@@ -17,6 +17,7 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
+import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
 import de.ingrid.portal.global.Settings;
@@ -107,13 +108,10 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             f.clearErrors();
             f.populate(request);
             if (f.validate()) {
-                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM));
+                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), "/location");
                 if (hits != null && hits.length > 1) {
-                    IngridHit[] realHits = new IngridHit[hits.length-1];
-                    // TODO remove first hit, not necessary when fixed, see http://jira.media-style.com/browse/INGRID-837
-                    System.arraycopy(hits, 1, realHits, 0, realHits.length);                
-                    IngridHitDetail[] details = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarDetailedTerms(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), realHits);
-                    request.getPortletSession().setAttribute(TOPICS, realHits, PortletSessionImpl.PORTLET_SCOPE);
+                    IngridHitDetail[] details = SNSSimilarTermsInterfaceImpl.getInstance().getDetailedTopics(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), hits, Topic.TOPIC_FROM_TEXT);
+                    request.getPortletSession().setAttribute(TOPICS, hits, PortletSessionImpl.PORTLET_SCOPE);
                 } else {
                     f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");
                     request.getPortletSession().removeAttribute(TOPICS);

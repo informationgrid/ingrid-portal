@@ -45,6 +45,26 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         super();
     }
 
+    public IngridHit[] getTopicsFromText(String term, String filter) {
+        try {
+            IngridQuery query = QueryStringParser.parse(term);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            if (filter != null) {
+                query.addField(new FieldQuery(true, false, "filter", filter));
+            }
+            query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TEXT);
+
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+
+            IngridHits hits = iBus.search(query, 10, 1, 10, 30000);
+
+            return hits.getHits();
+        } catch (Exception e) {
+            log.error("Exception while querying sns for similar terms.", e);
+            return null;
+        }
+    }
+
     public IngridHit[] getSimilarTerms(String term) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -76,5 +96,20 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             return null;
         }
     }
+
+    public IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType) {
+        try {
+            IngridQuery query = QueryStringParser.parse(term);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.putInt(Topic.REQUEST_TYPE, queryType);
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+    
+            return iBus.getDetails(hits, query, null);
+        } catch (Exception e) {
+            log.error("Exception while querying sns for detailed terms.", e);
+            return null;
+        }
+    }
+
 
 }

@@ -28,8 +28,29 @@ public interface SimilarTermsInterface {
      * 
      * @param term
      *            The given term to search similar topics for.
+     * @param hits The hits to fetch details for.
      * @return Array of similar detailed topics for term.
      */
     IngridHitDetail[] getSimilarDetailedTerms(String term, IngridHit[] hits);
 
+    
+    /**
+     * Get topics from a given term using the autoclassify method of SNS.
+     * 
+     * @param term The term to classify.
+     * @param filter The filter to apply to the query (i.e. "/location" or "/event")
+     * @return Array of topics found for term.
+     */
+    IngridHit[] getTopicsFromText(String term, String filter);
+    
+    /**
+     * Get detailed topics from a given term, the hits and a querytype.
+     * 
+     * @param term The given term to search similar topics for.
+     * @param hits The hits to fetch details for.
+     * @param queryType The SNS query type the hits where fetched with.
+     * @return Array of detailed topics for term.
+     */
+    IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType);
+    
 }
