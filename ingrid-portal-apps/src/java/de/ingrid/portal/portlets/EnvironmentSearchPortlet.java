@@ -177,7 +177,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             UtilsSearch.processPartner(query, request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER));
 
             // GROUPING
-            //            UtilsSearch.processGrouping(query, request.getParameter(EnvironmentSearchForm.FIELD_GROUPING));
+            UtilsSearch.processGrouping(query, request.getParameter(EnvironmentSearchForm.FIELD_GROUPING));
 
             // RANKING
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);

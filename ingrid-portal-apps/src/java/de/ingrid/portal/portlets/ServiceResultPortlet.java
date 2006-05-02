@@ -165,7 +165,6 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             IngridHit[] subHitArray = null;
-//            IngridHitDetail[] subDetailArray = null;
             for (int i = 0; i < results.length; i++) {
                 try {
                     if (results[i] == null) {

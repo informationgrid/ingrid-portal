@@ -117,6 +117,16 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         // prepare view
         // ----------------------------------
 
+        // check for grouping
+        String grouping = (String) query.get(Settings.QFIELD_GROUPED);
+        if (grouping != null) {
+            if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
+                context.put("grouping", "partner");
+            } else if (grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {
+                context.put("grouping", "provider");
+            }
+        }
+
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);
 
@@ -155,6 +165,28 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
 
+            IngridHit[] subHitArray = null;
+          for (int i = 0; i < results.length; i++) {
+              try {
+                  if (results[i] == null) {
+                      continue;
+                  }
+                  if (details[i] != null) {
+                      transferDetailData(results[i], details[i], resources);
+                  }
+                  // check for grouping and get details of "sub hits"
+                  // NO, WE ONLY SHOW ONE HIT !
+                  subHitArray = results[i].getGroupHits();
+                  if (subHitArray.length > 0) {
+                      results[i].putBoolean("moreHits", true);
+                  }
+              } catch (Throwable t) {
+                  if (log.isErrorEnabled()) {
+                      log.error("Problems processing Hit, hit = " + results[i] + ", detail = " + details[i], t);
+                  }
+              }
+            
+/*            
             IngridHit result = null;
             IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
@@ -181,6 +213,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                         log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
                     }
                 }
+*/            
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
@@ -190,4 +223,14 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
         return hits;
     }
+
+
+    private void transferDetailData(IngridHit hit, IngridHitDetail detail, IngridResourceBundle resources) {
+        UtilsSearch.transferHitDetails(hit, detail);
+        hit.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
+                Settings.RESULT_KEY_TOPIC, resources));
+        hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
+                Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
+    }
+
 }
