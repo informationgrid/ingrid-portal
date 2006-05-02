@@ -1,15 +1,4 @@
-	<div class="section ">    
-      <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
-      </div>
-      <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
-      </div>
-      <br />
-#foreach($rs in $rankedResultList.hits)
-	#if($velocityCount > 1)
-      <div class="line"><hr /></div>
-	#end
+#macro (renderHit $rs $grouping)
 		  <div class="resultset">
 		  #if ($rs.title)
 			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
@@ -17,7 +6,13 @@
             $!rs.abstract 
             </p>
             <p class="result_metadata">
-              Anbieter: $!rs.partner<br />
+				#if($grouping)
+					#if($grouping == 'partner')
+						Anbieter: $!rs.provider<br />
+					#end
+				#else
+              Anbieter: $!rs.provider<br />
+				#end
 			  Rubrik: $!rs.topic<br />
 ##              Ranking: $!rs.score<br />
             </p>
@@ -31,6 +26,51 @@
 			<p class="result_link"></p>
 		  #end
           </div>
+#end
+	
+	<div class="section ">    
+      <div class="resultset_nav float_left">
+#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+      </div>
+      <div class="resultset_nav">
+#renderRankedPageNavigation($rankedPageSelector)
+      </div>
+      <br />
+#foreach($rs in $rankedResultList.hits)
+
+	#if($grouping)
+      <div class="resultset_partner_group">
+		#set ($groupSubject = "")
+		#if($grouping == 'partner')
+			#set ($groupSubject = "Partner '$rs.partner'")
+			#set ($groupSubjectKey = $rs.partnerKey)
+		#elseif($grouping == 'provider')
+			#set ($groupSubject = "Anbieter '$rs.provider'")
+			#set ($groupSubjectKey = $rs.providerKey)
+		#end
+        <div class="ico_down_black"><span class="title">Gruppierte Ergebnisse für $!{groupSubject}</span></div>
+      </div>
+	#else
+		#if($velocityCount > 1)
+			<div class="line"><hr /></div>
+		#end
+	#end
+	#renderHit($rs $grouping)
+    #foreach($sub_rs in $rs.get('subHits'))
+        <div class="line"><hr /></div>
+		#renderHit($sub_rs $grouping)
+    #end
+	#if($rs.get('moreHits'))
+      <div class="line"><hr /></div>
+      <div class="resultset_show_partner">
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('action', 'showAll')
+    $action.setParameter('grouping', $grouping)
+    $action.setParameter('subject', $groupSubjectKey)
+        <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Zeige alle Ergebnisse für $!{groupSubject}</a></span>
+      </div>
+      <br />
+	#end
 #end
       <div class="resultset_nav float_left">
 #renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
