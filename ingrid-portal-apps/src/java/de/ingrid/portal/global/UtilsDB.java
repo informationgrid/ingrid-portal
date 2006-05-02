@@ -196,6 +196,24 @@ public class UtilsDB {
     }
 
     /**
+     * Get the Provider Object with the according ident.
+     * @param ident
+     * @return The IngridPrivider OR null if no matching was found
+     */
+    public static IngridProvider getIngridProviderFromKey(String ident) {
+        List providers = getProviders();
+        IngridProvider provider = null;
+        for (int i = 0; i < providers.size(); i++) {
+            provider = (IngridProvider) providers.get(i);
+            if (provider.getIdent().equals(ident)) {
+                return provider;
+            }
+        }
+        return null;
+    }
+    
+    
+    /**
      * Get all the environment topics.
      * @return
      */

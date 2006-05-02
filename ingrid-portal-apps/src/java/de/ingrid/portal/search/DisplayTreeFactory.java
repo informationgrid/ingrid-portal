@@ -50,21 +50,17 @@ public class DisplayTreeFactory {
             root.addChild(node);
             for (int i=0; i<plugs.length; i++) {
                 PlugDescription plug = plugs[i]; 
-                String[] plugPartner = plug.getPartners(); 
-                boolean hasPartner = false;
-                for (int j=0; j<plugPartner.length; j++) {
-                    if (plugPartner[j].equals(partner.getIdent())) {
-                        hasPartner = true;
-                        break;
-                    }
-                }
-                if (hasPartner) {
-                    DisplayTreeNode orgaNode = node.getChild(plug.getOrganisationAbbr());
-                    if (orgaNode == null) {
-                        orgaNode = new DisplayTreeNode(plug.getOrganisationAbbr(), plug.getOrganisation(), false);
-                        orgaNode.setType(DisplayTreeNode.GENERIC);
-                        orgaNode.setParent(node);
-                        node.addChild(orgaNode);
+                String[] plugProvider = plug.getProviders();
+                for (int j=0; j<plugProvider.length; j++) {
+                    String partnerIdent = plugProvider[j].substring(0, plugProvider[j].indexOf("_"));
+                    if (partnerIdent.equals(partner.getIdent())) {
+                        DisplayTreeNode providerNode = node.getChild(plugProvider[j]);
+                        if (providerNode == null) {
+                            providerNode = new DisplayTreeNode(plugProvider[j], UtilsDB.getProviderFromKey(plugProvider[j]), false);
+                            providerNode.setType(DisplayTreeNode.GENERIC);
+                            providerNode.setParent(node);
+                            node.addChild(providerNode);
+                        }
                     }
                 }
             }

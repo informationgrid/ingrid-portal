@@ -64,7 +64,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
          *  ("providers" => providersHash)
          * 
          * providersHash
-         *  (Organisation Abbr of the first iPlug found for this partner => providerHash)
+         *  (provider ident of the first iPlug found for this partner => providerHash)
          *  
          * providerHash
          *  ("provider" => first iPlug that hast been found for this provider) 
@@ -79,12 +79,10 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
             partnerHash.put("partner", partner);
             partnerMap.put(partner.getIdent(), partnerHash);
             for (int i=0; i<plugs.length; i++) {
-                PlugDescription plug = plugs[i]; 
-                // check for ident AND name
-                // TODO: all plug descriptions should user the partner abbr.
-                String[] partners = plug.getPartners();
-                for (int j=0;j<partners.length;j++) {
-                      String partnerIdent = partners[j];
+                PlugDescription plug = plugs[i];
+                String[] providers = plug.getProviders();
+                for (int j=0;j<providers.length;j++) {
+                    String partnerIdent = providers[j].substring(0, providers[j].indexOf("_"));
                     if (partnerIdent.equalsIgnoreCase(partner.getIdent()) || partnerIdent.equalsIgnoreCase(partner.getName())) {
                         // check for providers
                         if (!partnerHash.containsKey("providers")) {
@@ -92,16 +90,16 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                         }
                         // get providers of the partner
                         HashMap providersHash = (LinkedHashMap)partnerHash.get("providers");
-                        // LinkedHashMap for prvider with an organisation abbr.
-                        if (!providersHash.containsKey(plug.getOrganisationAbbr())) {
-                            providersHash.put(plug.getOrganisationAbbr(), new LinkedHashMap());
+                        // LinkedHashMap for prvider with a provider id.
+                        if (!providersHash.containsKey(providers[j])) {
+                            providersHash.put(providers[j], new LinkedHashMap());
                         }
                         // get provider hash map
-                        LinkedHashMap providerHash = (LinkedHashMap)providersHash.get(plug.getOrganisationAbbr());
+                        LinkedHashMap providerHash = (LinkedHashMap)providersHash.get(providers[j]);
                         // check for provider entry, create if not exists
                         // initialise with iplug, which contains all information
                         if (!providerHash.containsKey("provider")) {
-                            providerHash.put("provider", plug);
+                            providerHash.put("provider", UtilsDB.getIngridProviderFromKey(providers[j]));
                         }
                         // check for iplugs
                         if (!providerHash.containsKey("iplugs")) {

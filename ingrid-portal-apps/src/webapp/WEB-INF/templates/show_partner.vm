@@ -19,7 +19,7 @@
   <h3>$partner.name</h3>
 		#set($providers = $partnerHash.providers)
 		#foreach($provider in $providers)
-			<p>$provider.provider.getOrganisation()</p>
+			<p>$provider.provider.name</p>
 			<ul>
 			#foreach($plug in $provider.iplugs)
 				<li>$plug.getDataSourceName()</li>
