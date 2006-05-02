@@ -144,5 +144,21 @@ limitations under the License.
         <column name="header" size="255" type="VARCHAR"/>
         <column name="content" type="CLOB"/>
     </table>
+
+    <table name="ingrid_sys_codelist_domain">
+        <column name="codelist_id" type="BIGINT" primaryKey="true"/>
+        <column name="domain_id" type="BIGINT" primaryKey="true"/>
+        <column name="lang_id" type="BIGINT" primaryKey="true"/>
+        <column name="name" size="255" type="VARCHAR"/>
+        <column name="description" size="255" type="VARCHAR"/>
+        <column name="def_domain" type="INTEGER"/>
+    </table>
+
+    <table name="ingrid_sys_codelist">
+        <column name="codelist_id" type="BIGINT" primaryKey="true"/>
+        <column name="name" size="50" type="VARCHAR"/>
+        <column name="default_enabled" type="INTEGER"/>
+        <column name="maintainable" type="INTEGER"/>
+    </table>
     
 </database>
