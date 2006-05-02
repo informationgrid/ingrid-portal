@@ -42,9 +42,6 @@ public class AnniversaryFetcherJob implements Job {
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
-            //            cal.set(Calendar.DATE, 15);
-            //            cal.set(Calendar.MONTH, 2);
-            cal.add(Calendar.DATE, 1);
             Date queryDate = cal.getTime();
 
             Calendar queryDateFrom = Calendar.getInstance();
