@@ -1,5 +1,3 @@
-<iframe id="frm_ranked" src="$rankedResultUrl" style="display:none"></iframe>
-<iframe id="frm_unranked" src="$unrankedResultUrl" style="display:none"></iframe>
 
 <!-- RESULTS LEFT -->
   <div id="results_left">
@@ -12,3 +10,5 @@
   </div>
 
   <div class="clearer"></div>
+<iframe id="frm_ranked" src="$rankedResultUrl" style="display:none"></iframe>
+<iframe id="frm_unranked" src="$unrankedResultUrl" style="display:none"></iframe>
