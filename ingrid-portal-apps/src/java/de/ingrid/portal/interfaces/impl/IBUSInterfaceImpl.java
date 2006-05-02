@@ -67,7 +67,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public static synchronized void shutdown() {
         try {
             if (log.isInfoEnabled()) {
-                log.info("WE RESET IBUSInterface Singleton, so new Instance is created next time !");
+                log.info("SHUT DOWN IBUSInterface!");
             }
 
             if (client != null) {
@@ -84,7 +84,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems RESETTING IBUSInterfaceImpl Singleton", t);
+                log.error("Problems SHUTTING DPWN IBUSInterface", t);
             }
         } finally {
             if (instance != null) {
