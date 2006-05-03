@@ -101,6 +101,15 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
         // replaces only the ones in request
         af.populate(request);
+
+        // check for "zeige alle Ergebnisse von" and set the form fields accordingly
+        String subject = request.getParameter(ServiceSearchForm.FIELD_SUBJECT);
+        if (subject != null && subject.length() > 0) {
+            if (af.getInput(ServiceSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PARTNER)) {
+                af.setInput(ServiceSearchForm.FIELD_PARTNER, subject);
+            }
+        }
+        
         context.put("actionForm", af);
 
         // validate via ActionForm
@@ -140,17 +149,19 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
 
+        ServiceSearchForm af = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
+                ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        
         IngridQuery query = null;
         try {
             query = new IngridQuery();
-            query
-                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                             Settings.QVALUE_DATATYPE_AREA_SERVICE));
 
             // RUBRIC
             String queryValue = null;
             ClauseQuery cq = null;
-            String[] rubrics = request.getParameterValues(ServiceSearchForm.FIELD_RUBRIC);
+            String[] rubrics = af.getInputAsArray(ServiceSearchForm.FIELD_RUBRIC);
             // don't set anything if "all" is selected
             if (rubrics != null && Utils.getPosInArray(rubrics, Settings.PARAMV_ALL) == -1) {
                 cq = new ClauseQuery(true, false);
@@ -162,12 +173,18 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
                 }
                 query.addClause(cq);
             }
-
+            
             // PARTNER
-            UtilsSearch.processPartner(query, request.getParameterValues(ServiceSearchForm.FIELD_PARTNER));
+            UtilsSearch.processPartner(query, af.getInputAsArray(ServiceSearchForm.FIELD_PARTNER));
 
+            // Provider restriction
+            if (af.getInput(ServiceSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PROVIDER)) {
+                // only for "zeige alle Ergebnisse von" functionality
+                UtilsSearch.processProvider(query, request.getParameterValues(ServiceSearchForm.FIELD_SUBJECT));
+            }
+            
             // GROUPING
-            UtilsSearch.processGrouping(query, request.getParameter(ServiceSearchForm.FIELD_GROUPING));
+            UtilsSearch.processGrouping(query, af.getInput(ServiceSearchForm.FIELD_GROUPING));
 
             // RANKING
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);

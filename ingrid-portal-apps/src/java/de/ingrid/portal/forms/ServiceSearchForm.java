@@ -25,6 +25,8 @@ public class ServiceSearchForm extends ActionForm {
     /** field name of "partner" selection list in form */
     public static final String FIELD_PARTNER = Settings.PARAM_PARTNER;
 
+    public static final String FIELD_SUBJECT = Settings.PARAM_SUBJECT;
+
     /** field name of "grouping" radio group in form */
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
@@ -34,6 +36,7 @@ public class ServiceSearchForm extends ActionForm {
     protected static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
 
     protected static final String INITIAL_GROUPING = "none";
+
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()

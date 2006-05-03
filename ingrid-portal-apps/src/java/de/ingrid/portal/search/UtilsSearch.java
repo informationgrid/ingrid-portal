@@ -507,6 +507,26 @@ public class UtilsSearch {
     }
 
     /**
+     * Add provider(s) to query
+     * @param query
+     * @param partners
+     */
+    public static void processProvider(IngridQuery query, String[] providers) {
+        ClauseQuery cq = null;
+
+        // don't set anything if "all" is selected
+        if (providers != null && providers.length > 0) {
+            cq = new ClauseQuery(true, false);
+            for (int i = 0; i < providers.length; i++) {
+                if (providers[i] != null) {
+                    cq.addField(new FieldQuery(false, false, Settings.QFIELD_PROVIDER, providers[i]));
+                }
+            }
+            query.addClause(cq);
+        }
+    }
+
+    /**
      * Add partner(s) to query
      * @param query
      * @param partners
@@ -525,7 +545,8 @@ public class UtilsSearch {
             query.addClause(cq);
         }
     }
-
+    
+    
     /**
      * Add grouping to query
      * @param query
