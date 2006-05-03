@@ -103,7 +103,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         af.populate(request);
 
         // check for "zeige alle Ergebnisse von" and set the form fields accordingly
-        String subject = request.getParameter(ServiceSearchForm.FIELD_SUBJECT);
+        String subject = request.getParameter(Settings.PARAM_SUBJECT);
         if (subject != null && subject.length() > 0) {
             if (af.getInput(ServiceSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PARTNER)) {
                 af.setInput(ServiceSearchForm.FIELD_PARTNER, subject);
@@ -180,7 +180,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             // Provider restriction
             if (af.getInput(ServiceSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PROVIDER)) {
                 // only for "zeige alle Ergebnisse von" functionality
-                UtilsSearch.processProvider(query, request.getParameterValues(ServiceSearchForm.FIELD_SUBJECT));
+                UtilsSearch.processProvider(query, request.getParameterValues(Settings.PARAM_SUBJECT));
             }
             
             // GROUPING
