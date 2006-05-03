@@ -431,8 +431,8 @@
 				<tr>
 					<td>$rec.get("t01_object.vertical_extent_maximum")</td>
 					<td>$rec.get("t01_object.vertical_extent_minimum")</td>
-					<td>$rec.get("t01_object.vertical_extent_unit")</td>
-					<td>$rec.get("t01_object.vertical_extent_vdatum")</td>
+					<td>$codeList.getName('102', $rec.get("t01_object.vertical_extent_unit"))</td>
+					<td>$codeList.getName('101', $rec.get("t01_object.vertical_extent_vdatum"))</td>
 				</tr>
 			</tbody>	
 			</table>
