@@ -107,6 +107,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         if (subject != null && subject.length() > 0) {
             if (af.getInput(ServiceSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PARTNER)) {
                 af.setInput(ServiceSearchForm.FIELD_PARTNER, subject);
+                af.setInput(ServiceSearchForm.FIELD_GROUPING, "none");
             }
         }
         
