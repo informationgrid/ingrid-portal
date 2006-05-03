@@ -157,7 +157,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
-                    Settings.RESULT_KEY_PARTNER };
+                    Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {

@@ -16,6 +16,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.EnvironmentSearchForm;
+import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -98,6 +99,16 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
         // replaces only the ones in request
         af.populate(request);
+
+        // check for "zeige alle Ergebnisse von" and set the form fields accordingly
+        String subject = request.getParameter(Settings.PARAM_SUBJECT);
+        if (subject != null && subject.length() > 0) {
+            if (af.getInput(EnvironmentSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PARTNER)) {
+                af.setInput(EnvironmentSearchForm.FIELD_PARTNER, subject);
+                af.setInput(EnvironmentSearchForm.FIELD_GROUPING, "none");
+            }
+        }
+        
         context.put("actionForm", af);
 
         // validate via ActionForm
@@ -137,6 +148,9 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
 
+        EnvironmentSearchForm af = (EnvironmentSearchForm) Utils.getActionForm(request, EnvironmentSearchForm.SESSION_KEY,
+                EnvironmentSearchForm.class, PortletSession.APPLICATION_SCOPE);
+        
         IngridQuery query = null;
         try {
             query = new IngridQuery();
@@ -146,7 +160,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             // TOPIC
             String queryValue = null;
             ClauseQuery cq = null;
-            String[] topics = request.getParameterValues(EnvironmentSearchForm.FIELD_TOPIC);
+            String[] topics = af.getInputAsArray(EnvironmentSearchForm.FIELD_TOPIC);
             // don't set anything if "all" is selected
             if (topics != null && Utils.getPosInArray(topics, Settings.PARAMV_ALL) == -1) {
                 cq = new ClauseQuery(true, false);
@@ -174,10 +188,16 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             }
 
             // PARTNER
-            UtilsSearch.processPartner(query, request.getParameterValues(EnvironmentSearchForm.FIELD_PARTNER));
+            UtilsSearch.processPartner(query, af.getInputAsArray(EnvironmentSearchForm.FIELD_PARTNER));
+
+            // Provider restriction
+            if (af.getInput(ServiceSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PROVIDER)) {
+                // only for "zeige alle Ergebnisse von" functionality
+                UtilsSearch.processProvider(query, request.getParameterValues(Settings.PARAM_SUBJECT));
+            }
 
             // GROUPING
-            UtilsSearch.processGrouping(query, request.getParameter(EnvironmentSearchForm.FIELD_GROUPING));
+            UtilsSearch.processGrouping(query, af.getInput(EnvironmentSearchForm.FIELD_GROUPING));
 
             // RANKING
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
