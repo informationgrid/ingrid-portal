@@ -55,7 +55,7 @@
 			<label class="radiogroup" for="grouping_partner">Bund/Länder
 			</label>
 			<br />
-			<input type="radio" id="grouping_info" name="grouping" value="info" #getChecked('grouping' 'info')/>
+			<input type="radio" id="grouping_info" name="grouping" value="provider" #getChecked('grouping' 'info')/>
 			<label class="radiogroup" for="grouping_info">Informationsanbieter
 			</label>
 			<br />

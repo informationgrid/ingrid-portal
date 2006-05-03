@@ -41,6 +41,7 @@
 	#if($grouping)
       <div class="resultset_partner_group">
 		#set ($groupSubject = "")
+		$grouping $rs.providerKey
 		#if($grouping == 'partner')
 			#set ($groupSubject = "Partner '$rs.partner'")
 			#set ($groupSubjectKey = $rs.partnerKey)

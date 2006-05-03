@@ -157,7 +157,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
-            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER };
+            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {
