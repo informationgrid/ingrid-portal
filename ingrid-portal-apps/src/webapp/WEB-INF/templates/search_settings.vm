@@ -1,30 +1,30 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
   <div class="section">    
 #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="xx" id="xx2">
+    <form action="$action" method="post" name="settings_form" id="settings_form">
       <input type="hidden" name="action" value="doSubmit"/>
       <div class="formbody">
+		#displayFormErrors()
         <h3>$MESSAGES.getString('searchSettings.title.sortAndGrouping')</h3>
         <p class="topmargin">
           <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.label.sort')</label>
-          <select id="sort_by" class="group_by inputstyle" name="sort_by" size="1">
-            <option>nach Ranking</option>
-            <option>nach Aktualität</option>
+          <select id="sorting" class="group_by inputstyle" name="sorting" size="1">
+            <option value="score" #getSelected('sorting' 'score')>nach Ranking</option>
+            <option value="date" #getSelected('sorting' 'date')>nach Aktualität</option>
           </select>
           <span class="clearer"></span>
         </p>
         <p>
           <label class="float_left col2left" for="group_by">$MESSAGES.getString('searchSettings.label.grouping')</label>
-          <select id="group_by" class="group_by inputstyle" name="group_by" size="1">
-            <option>Keine</option>
-            <option>Nach Bund/Länder</option>
-            <option>Nach Informationsanbieter</option>
+          <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
+            <option value="none" #getSelected('grouping' 'none')>Keine</option>
+            <option value="partner" #getSelected('grouping' 'partner')>Nach Bund/Länder</option>
+            <option value="provider" #getSelected('grouping' 'provider')>Nach Informationsanbieter</option>
           </select>
           <span class="clearer"></span>
         </p>
         <div class="line_form"><hr /></div>
         <p>
-          <input type="checkbox" name="inkl_meta" id="inkl_meta" /><label for="inkl_meta"> $MESSAGES.getString('searchSettings.label.activateSNSTerms')</label>
+          <input type="checkbox" name="incl_meta" id="incl_meta" #getChecked('incl_meta' 'on') /><label for="incl_meta"> $MESSAGES.getString('searchSettings.label.activateSNSTerms')</label>
         </p>
       </div>
       <div class="formfooter">

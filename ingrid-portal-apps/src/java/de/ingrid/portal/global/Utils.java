@@ -35,6 +35,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
+import de.ingrid.portal.config.IngridUserPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 
@@ -65,6 +66,24 @@ public class Utils {
 
         return af;
     }
+    
+    /**
+     * Convenient method to get the session preferences object.
+     * 
+     * @param request
+     * @param aKey
+     * @param aClass
+     * @return
+     */
+    public static IngridUserPreferences getSessionPreferences(PortletRequest request, String aKey, Class aClass) {
+        IngridUserPreferences obj = (IngridUserPreferences) request.getPortletSession().getAttribute(aKey, PortletSession.APPLICATION_SCOPE);
+        if (obj == null) {
+            obj = new IngridUserPreferences();
+            request.getPortletSession().setAttribute(aKey, obj, PortletSession.APPLICATION_SCOPE);
+        }
+        return obj;
+    }
+    
 
     /**
      * Convenient method for getting (incl. adding) action forms from
