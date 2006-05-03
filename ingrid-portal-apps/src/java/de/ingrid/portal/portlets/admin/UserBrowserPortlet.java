@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,6 +31,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.jetspeed.CommonPortletServices;
+import org.apache.jetspeed.security.Role;
+import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
@@ -38,6 +41,7 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.portlets.browser.BrowserIterator;
 import de.ingrid.portal.portlets.browser.BrowserPortlet;
 import de.ingrid.portal.portlets.browser.DatabaseBrowserIterator;
@@ -54,6 +58,7 @@ import de.ingrid.portal.portlets.security.SecurityUtil;
 public class UserBrowserPortlet extends BrowserPortlet
 {
     protected UserManager userManager;
+    protected RoleManager roleManager;    
 
     // view context
     public static final String STATUS = "statusMsg";
@@ -68,6 +73,12 @@ public class UserBrowserPortlet extends BrowserPortlet
         if (null == userManager)
         {
             throw new PortletException("Failed to find the User Manager on portlet initialization");
+        }
+        roleManager = (RoleManager) 
+        getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+        if (null == roleManager)
+        {
+            throw new PortletException("Failed to find the Role Manager on portlet initialization");
         }
     }
 
@@ -144,35 +155,83 @@ public class UserBrowserPortlet extends BrowserPortlet
 
     public void getRows(RenderRequest request, String sql, int windowSize, String filter)
     {
-        List resultSetTitleList = new ArrayList();
-        List resultSetTypeList = new ArrayList();
-        resultSetTypeList.add(String.valueOf(Types.VARCHAR));
-        resultSetTitleList.add("user"); // resource bundle key
-        resultSetTitleList.add(SecurityResources.USER_NAME_FAMILY); // resource bundle key
-        resultSetTitleList.add(SecurityResources.USER_NAME_GIVEN); // resource bundle key
-
-        List list = new ArrayList();
-        try
-        {
-            Iterator users = userManager.getUsers(filter);
-
-            while (users.hasNext())
+        
+/*
+        // get current user
+        String authUserName = request.getUserPrincipal().getName();
+        ArrayList authUserRoles = new ArrayList();
+        
+        try {
+            Collection roles = roleManager.getRolesForUser(authUserName);
+            Iterator it = roles.iterator();
+            while (it.hasNext()) {
+                authUserRoles.add(((Role)it.next()).getPrincipal().getName());
+            }
+            
+            List authUserPartnerRelations = UtilsDB.getUserPartnerRelations(authUserName);
+            
+        
+            List resultSetTitleList = new ArrayList();
+            List resultSetTypeList = new ArrayList();
+            resultSetTypeList.add(String.valueOf(Types.VARCHAR));
+            resultSetTitleList.add("user"); // resource bundle key
+            resultSetTitleList.add(SecurityResources.USER_NAME_FAMILY); // resource bundle key
+            resultSetTitleList.add(SecurityResources.USER_NAME_GIVEN); // resource bundle key
+    
+            List list = new ArrayList();
+            try
             {
-                User user = (User)users.next();
-                Principal principal = SecurityUtil.getPrincipal(user.getSubject(),UserPrincipal.class);                
-                List columns = new ArrayList();
-                columns.add(principal.getName());
-                columns.add(user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
-                columns.add(user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
-                list.add(columns);
-            }            
+                Iterator users = userManager.getUsers(filter);
+                
+                while (users.hasNext())                   
+                {
+                    boolean addUser = false;
+                    User user = (User)users.next();
+                    Principal principal = SecurityUtil.getPrincipal(user.getSubject(),UserPrincipal.class);                
+                    
+                    ArrayList userRoles = new ArrayList();
+                    
+                    if (authUserRoles.contains("admin")) {
+                        addUser = true;
+                    } else  if (authUserRoles.contains("admin_portal")) {
+                        addUser = true;
+                    } else  if (authUserRoles.contains("admin_partner") && userRoles.contains("admin_provider")) {
+                        // check if partner_ident of the authUser exists for user
+                        it = authUserPartnerRelations.iterator();
+                        List userPartnerRelations = UtilsDB.getUserPartnerRelations(principal.getName());
+                        while (it.hasNext()) {
+                            String authPartnerIdent = (String)it.next();
+                            for (int i=0; i<userPartnerRelations.size(); i++ ) {
+                                if (authPartnerIdent.equalsIgnoreCase((String)userPartnerRelations.get(i))) {
+                                    addUser = true;
+                                    break;
+                                }
+                            }
+                            if (addUser) {
+                                break;
+                            }
+                        }
+                    }
+                    if (addUser) {
+                        List columns = new ArrayList();
+                        columns.add(principal.getName());
+                        columns.add(user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
+                        columns.add(user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
+                        list.add(columns);
+                    }
+                }            
+            }
+            catch (SecurityException sex)
+            {
+                SecurityUtil.publishErrorMessage(request, SecurityResources.TOPIC_USERS, sex.getMessage());
+            }                                    
+            BrowserIterator iterator = new DatabaseBrowserIterator(list, resultSetTitleList, resultSetTypeList, windowSize);
+            setBrowserIterator(request, iterator);
+            iterator.sort("user"); // resource bundle key
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        catch (SecurityException sex)
-        {
-            SecurityUtil.publishErrorMessage(request, SecurityResources.TOPIC_USERS, sex.getMessage());
-        }                                    
-        BrowserIterator iterator = new DatabaseBrowserIterator(list, resultSetTitleList, resultSetTypeList, windowSize);
-        setBrowserIterator(request, iterator);
-        iterator.sort("user"); // resource bundle key        
+*/
     }    
 }

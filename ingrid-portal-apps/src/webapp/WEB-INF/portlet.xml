@@ -58,6 +58,28 @@
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
     </portlet>
 
+    <!-- *********************** -->
+    <!-- Admin Portlets         -->
+    <!-- *********************** -->
+
+    <portlet id="EditHelpPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/edit_help.vm</value>
+        </init-param>
+        <portlet-name>EditHelpPortlet</portlet-name>
+        <display-name>Edit Help Portlet</display-name>
+        <description>The Portlet displays the editor for the help content.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.EditHelpPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
+    </portlet>
+
 
     <!-- *********************** -->
     <!-- User Management         -->
