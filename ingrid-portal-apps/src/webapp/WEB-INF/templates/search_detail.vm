@@ -317,7 +317,7 @@
         	#if($myData.get("t011_obj_geo_spatial_rep.obj_id"))
         		<p><strong>$MESSAGES.getString("t011_obj_geo_spatial_rep.type"):</strong><br>
             	#foreach($t011_obj_geo_spatial_rep in $myData.get("t011_obj_geo_spatial_rep.obj_id"))
-					#if($t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type"))$t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type")#end<br/>
+					#if($t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type"))$codeList.getName('526', $t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type"))#end<br/>
         		#end
     			</p>
         	#end	
