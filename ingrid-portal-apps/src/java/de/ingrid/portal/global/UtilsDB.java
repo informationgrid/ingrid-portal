@@ -6,6 +6,8 @@ package de.ingrid.portal.global;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -18,6 +20,8 @@ import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.om.IngridServiceRubric;
+import de.ingrid.portal.om.IngridSysCodelistDomain;
+import de.ingrid.portal.om.IngridSysCodelistDomainId;
 
 /**
  * Global STATIC data and utility methods for Database.
@@ -316,6 +320,32 @@ public class UtilsDB {
     public static String getChronicleEventTypeFromKey(String key) {
         List eventTypes = getChronicleEventTypes();
         return getQueryValueFromFormValue(eventTypes, key);
+    }
+    
+    /**
+     * Get a entry from the code list table
+     * 
+     * @param codeListId
+     * @param domainId
+     * @param langId
+     * @return
+     */
+    public static String getCodeListEntryName(long codeListId, long domainId, long langId) {
+        
+        try {
+            IngridSysCodelistDomainId id = new IngridSysCodelistDomainId();
+            id.setCodelistId(new Long(codeListId));
+            id.setDomainId(new Long(domainId));
+            id.setLangId(new Long(langId));
+            HibernateManager hibernateManager = HibernateManager.getInstance();
+            Session session = hibernateManager.getSession();
+
+            IngridSysCodelistDomain domainEntry = (IngridSysCodelistDomain) session.load(IngridSysCodelistDomain.class, id);
+            
+            return domainEntry.getName();
+        } catch (Exception e) {
+            return "key not found in domain table (codelistId:"+ codeListId +", domainId:"+ domainId +", langId:"+ langId +").";
+        }
     }
 
 }

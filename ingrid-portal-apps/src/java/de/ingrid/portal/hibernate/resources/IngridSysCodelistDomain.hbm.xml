@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridSysCodelistDomain" table="ingrid_sys_codelist_domain">
+        <composite-id name="id" class="de.ingrid.portal.om.IngridSysCodelistDomainId">
+            <key-property name="codelistId" type="java.lang.Long" column="codelist_id"/>
+            <key-property name="domainId" type="java.lang.Long" column="domain_id"/>
+            <key-property name="langId" type="java.lang.Long" column="lang_id"/>
+        </composite-id>
+    
+    	<property name="name" type="java.lang.String" column="name"/>
+    	<property name="description" type="java.lang.String" column="description"/>
+    	<property name="defDomain" type="java.lang.Integer" column="def_domain"/>
+  </class>
+</hibernate-mapping>

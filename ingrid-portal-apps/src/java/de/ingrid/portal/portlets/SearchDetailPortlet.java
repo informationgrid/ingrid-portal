@@ -22,6 +22,7 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -96,35 +97,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
             } else {
                 
-                // extract the code lists
-                String udkLangCode;
-                if (request.getLocale().getLanguage().equals(new Locale("en", "", "").getLanguage())) {
-                    udkLangCode = "94";
-                } else {
-                    udkLangCode = "121";
-                }
-                ArrayList codeListRecords = getAllTableRows(record, "sys_codelist_domain");
-                HashMap codeLists = new HashMap();
-                for (int i=0; i<codeListRecords.size(); i++) {
-                    Record codeListRecord = (Record)codeListRecords.get(i);
-                    String langId = (String)codeListRecord.get("sys_codelist_domain.lang_id");
-                    if (langId.equals(udkLangCode)) {
-                        String codeListId = (String)codeListRecord.get("sys_codelist_domain.codelist_id");
-                        if (!codeLists.containsKey(codeListId)) {
-                            codeLists.put(codeListId, new HashMap());
-                        }
-                        HashMap codeListHash = (HashMap)codeLists.get(codeListId);
-    
-                        String domainId = (String)codeListRecord.get("sys_codelist_domain.domain_id");
-                        if (!codeListHash.containsKey(domainId)) {
-                            codeListHash.put(domainId, new HashMap());
-                        }
-                        HashMap codeListDomainHash = (HashMap)codeListHash.get(domainId);
-                        codeListDomainHash.putAll(codeListRecord);
-                    }
-                }
-                context.put("codeLists", codeLists);
-                
                 // set language code list
                 HashMap sysLangHashs = new HashMap();
                 
@@ -143,6 +115,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 sysLangHashs.put("94", sysLangHash);
                 
                 context.put("sysLangList", sysLangHashs);
+                
+                // put codelist fetcher into context
+                context.put("codeList", new IngridSysCodeList(request.getLocale()));
                 
                 if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);

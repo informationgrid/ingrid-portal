@@ -261,11 +261,13 @@
 	#elseif($udkClass == "1" && $rec.get("t011_obj_geo.obj_id"))
     	<div class="line"><hr /></div>
 		#foreach($myData in $rec.get("t011_obj_geo.obj_id"))    			
-    		#renderUDKEntry($myData "t011_obj_geo.hierarchy_level")
+			<p><strong>$MESSAGES.getString("t011_obj_geo.hierarchy_level"):</strong><br/>
+			$codeList.getName('525', $myData.get('t011_obj_geo.hierarchy_level'))
+			</p>
         	#if($myData.get("t011_obj_geo_topic_cat.obj_id"))
         		<p><strong>$MESSAGES.getString("t011_obj_geo_topic_cat.topic_category"):</strong><br>
             	#foreach($t011_obj_geo_topic_cat in $myData.get("t011_obj_geo_topic_cat.obj_id"))
-					#if($t011_obj_geo_topic_cat.get("t011_obj_geo_topic_cat.topic_category"))$t011_obj_geo_topic_cat.get("t011_obj_geo_topic_cat.topic_category")#end<br/>
+					#if($t011_obj_geo_topic_cat.get("t011_obj_geo_topic_cat.topic_category"))$codeList.getName('527', $t011_obj_geo_topic_cat.get("t011_obj_geo_topic_cat.topic_category"))#end<br/>
         		#end
     			</p>
         	#end	
@@ -344,11 +346,11 @@
 			#end
 			
 			#renderUDKEntrySuffixInLine($myData "t011_obj_geo.rec_grade" "%")
-    		#if($myData.get("t011_obj_geo.referencesystem_id") == -1)
+    		#if($myData.get("t011_obj_geo.referencesystem_id") == "-1")
 				#renderUDKEntry($myData "t011_obj_geo.coord")
 			#elseif($myData.get("t011_obj_geo.referencesystem_id"))
 				<p><strong>$MESSAGES.getString("t011_obj_geo.referencesystem_id"):</strong><br>
-				$codeLists.get("???").get($rec.get("t011_obj_geo.referencesystem_id")).get("sys_codelist_domain.name")<br/>
+				$codeList.getName('100', $myData.get("t011_obj_geo.referencesystem_id"))
 				</p>
 			#end
 
@@ -455,12 +457,12 @@
     	
     	#if($rec.get("t01_object.time_status"))
     		<p><strong>$MESSAGES.getString("t01_object.time_status"):</strong><br/>
-    		$codeLists.get("502").get($rec.get("t01_object.time_status")).get("sys_codelist_domain.name")<br/>
+    		$codeList.getName('502', $rec.get("t01_object.time_status"))<br/>
     		</p>
         #end
     	#if($rec.get("t01_object.time_period"))
     		<p><strong>$MESSAGES.getString("t01_object.time_period"):</strong><br/>
-    		$codeLists.get("518").get($rec.get("t01_object.time_period")).get("sys_codelist_domain.name")<br/>
+    		$codeList.getName('518', $rec.get("t01_object.time_period"))<br/>
     		</p>
         #end
     	#if($rec.get("t01_object.time_alle"))
@@ -517,7 +519,7 @@
 				</tr>
         	#foreach($t0112_media_option in $rec.get("t0112_media_option.obj_id"))
 				<tr>
-					<td>$t0112_media_option.get("t0112_media_option.medium_name")</td>
+					<td>$codeList.getName('520',$t0112_media_option.get("t0112_media_option.medium_name"))</td>
 					<td>#if($t0112_media_option.get("t0112_media_option.transfer_size"))$t0112_media_option.get("t0112_media_option.transfer_size") MB#end</td>
 					<td>#if($t0112_media_option.get("t0112_media_option.medium_note"))$t0112_media_option.get("t0112_media_option.medium_note")#end</td>
 				</tr>
