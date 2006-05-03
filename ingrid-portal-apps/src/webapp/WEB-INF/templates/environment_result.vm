@@ -14,8 +14,7 @@
               Anbieter: $!rs.provider<br />
 				#end
               Thema: $!rs.topic<br />
-              Rubrik: $!rs.topic<br />
-##              Ranking: $!rs.score<br />
+              Rubrik: $!rs.funct_category<br />
             </p>
 			#if($rs.url)
 			<p class="result_link">
