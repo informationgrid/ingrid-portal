@@ -182,6 +182,8 @@ public class SearchState {
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_RANKED);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_UNRANKED);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_RANKING);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_SUBJECT);
 
             // further state for logic, caching etc.
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
