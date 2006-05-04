@@ -53,7 +53,7 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
         if (cmd == null) {
             f.clear();
             IngridUserPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridUserPreferences.SESSION_KEY, IngridUserPreferences.class);
-            f.setInput(SearchSettingsForm.FIELD_SORTING, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_SORTING));
+            f.setInput(SearchSettingsForm.FIELD_RANKING, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_RANKING));
             f.setInput(SearchSettingsForm.FIELD_GROUPING, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_GROUPING));
             f.setInput(SearchSettingsForm.FIELD_INCL_META, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_INCL_META));
         }
@@ -90,7 +90,7 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         IngridUserPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridUserPreferences.SESSION_KEY, IngridUserPreferences.class);
-        sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_SORTING, f.getInput(SearchSettingsForm.FIELD_SORTING));
+        sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_RANKING, f.getInput(SearchSettingsForm.FIELD_RANKING));
         sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_GROUPING, f.getInput(SearchSettingsForm.FIELD_GROUPING));
         sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_INCL_META, f.getInput(SearchSettingsForm.FIELD_INCL_META));
     

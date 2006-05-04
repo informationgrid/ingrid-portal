@@ -18,7 +18,7 @@ public class IngridUserPreferences extends HashMap {
     public static final String SESSION_KEY = IngridUserPreferences.class.getName();
 
     
-    public static final String SEARCH_SETTING_SORTING = "sorting";
+    public static final String SEARCH_SETTING_RANKING = "ranking";
     public static final String SEARCH_SETTING_GROUPING = "grouping";
     public static final String SEARCH_SETTING_INCL_META = "incl_meta";
     

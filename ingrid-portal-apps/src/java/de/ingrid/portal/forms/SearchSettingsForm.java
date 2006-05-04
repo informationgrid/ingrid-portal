@@ -18,12 +18,12 @@ public class SearchSettingsForm extends ActionForm {
     public static final String SESSION_KEY = SearchSettingsForm.class.getName();
 
     /** field names (name of request parameter) */
-    public static final String FIELD_SORTING = "sorting";
+    public static final String FIELD_RANKING = "ranking";
     public static final String FIELD_GROUPING = "grouping";
     public static final String FIELD_INCL_META = "incl_meta";
 
     private static final String VALUE_GROUPING_INIT = "none";
-    private static final String VALUE_SORTING_INIT = "score";
+    private static final String VALUE_RANKING_INIT = "score";
     
     
     /**
@@ -32,7 +32,7 @@ public class SearchSettingsForm extends ActionForm {
     public void init() {
         clear();
         setInput(FIELD_GROUPING, VALUE_GROUPING_INIT);
-        setInput(FIELD_SORTING, VALUE_SORTING_INIT);
+        setInput(FIELD_RANKING, VALUE_RANKING_INIT);
     }
 
     /**
@@ -40,7 +40,7 @@ public class SearchSettingsForm extends ActionForm {
      */
     public void populate(PortletRequest request) {
         clearInput();
-        setInput(FIELD_SORTING, request.getParameter(FIELD_SORTING));
+        setInput(FIELD_RANKING, request.getParameter(FIELD_RANKING));
         setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
         setInput(FIELD_INCL_META, request.getParameter(FIELD_INCL_META));
     }

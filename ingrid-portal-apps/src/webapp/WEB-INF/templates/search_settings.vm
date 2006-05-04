@@ -7,9 +7,9 @@
         <h3>$MESSAGES.getString('searchSettings.title.sortAndGrouping')</h3>
         <p class="topmargin">
           <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.label.sort')</label>
-          <select id="sorting" class="group_by inputstyle" name="sorting" size="1">
-            <option value="score" #getSelected('sorting' 'score')>nach Ranking</option>
-            <option value="date" #getSelected('sorting' 'date')>nach Aktualität</option>
+          <select id="ranking" class="group_by inputstyle" name="ranking" size="1">
+            <option value="score" #getSelected('ranking' 'score')>nach Ranking</option>
+            <option value="date" #getSelected('ranking' 'date')>nach Aktualität</option>
           </select>
           <span class="clearer"></span>
         </p>
