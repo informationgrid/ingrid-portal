@@ -90,6 +90,16 @@ public class SearchState {
             urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_UNRANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
+            // grouping (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_GROUPING);
+            urlParam = Utils.toURLParam(Settings.PARAM_GROUPING, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
+            // subject for grouping (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
+            urlParam = Utils.toURLParam(Settings.PARAM_SUBJECT, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+            
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems generating URL search parameters, WE DON'T PASS SEARCH PARAMETERS IN URL !", ex);

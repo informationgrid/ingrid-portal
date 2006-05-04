@@ -8,8 +8,12 @@ import javax.portlet.PortletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.portal.config.IngridUserPreferences;
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.SearchSettingsForm;
+import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -47,7 +51,7 @@ public class QueryPreProcessor {
                         + queryString, ex);
             }
         }
-
+        
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
         String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
@@ -65,9 +69,11 @@ public class QueryPreProcessor {
 
         String[] requestedMetadata = null;
         if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            requestedMetadata = new String[2];
+            requestedMetadata = new String[4];
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+            requestedMetadata[2] = Settings.RESULT_KEY_PARTNER;
+            requestedMetadata[3] = Settings.RESULT_KEY_PROVIDER;
         } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             requestedMetadata = new String[7];
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
@@ -79,17 +85,33 @@ public class QueryPreProcessor {
             requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         }
 
+
+        // set properties according to the session preferences
+        IngridUserPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridUserPreferences.SESSION_KEY, IngridUserPreferences.class);
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
         if (!UtilsSearch.containsField(query, IngridQuery.RANKED)) {
             // adapt ranking to Search State
-            Object ranking = IngridQuery.SCORE_RANKED;
-            Object stateRanking = SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
-            if (stateRanking != null) {
-                ranking = stateRanking;
+            String ranking = (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_RANKING);
+            if (ranking == null || ranking.length() == 0) {
+                ranking = IngridQuery.SCORE_RANKED;
+                String stateRanking = (String)SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+                if (stateRanking != null) {
+                    ranking = stateRanking;
+                }
             }
             query.put(IngridQuery.RANKED, ranking);
         }
 
+        // set grouping ! ONLY IF NO GROUPING IN Query String Input !
+        if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
+            // adapt ranking to Search State
+            String grouping = (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_GROUPING);
+            
+            // set grouping
+            UtilsSearch.processGrouping(query, grouping);
+        }
+        
+        
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(

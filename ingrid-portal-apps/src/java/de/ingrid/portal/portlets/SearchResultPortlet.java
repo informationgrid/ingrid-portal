@@ -197,6 +197,18 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
                 if (qd != null) {
                     controller.addQuery("ranked", qd);
+                    
+                    // check for grouping
+                    // this must be done here because grouping will only be 
+                    // put into the query created by the pre processor
+                    String grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
+                    if (grouping != null) {
+                        if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
+                            context.put("grouping", "partner");
+                        } else if (grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {
+                            context.put("grouping", "provider");
+                        }
+                    }
                 }
             }
         }
@@ -266,7 +278,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // prepare view
         // ----------------------------------
-
+        
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);
@@ -292,6 +304,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, rankedStarthit);
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, unrankedStarthit);
 
+        // adapt grouping params
+        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, request.getParameter(Settings.PARAM_SUBJECT));
+        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, request.getParameter(Settings.PARAM_GROUPING));
+        
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
     }
