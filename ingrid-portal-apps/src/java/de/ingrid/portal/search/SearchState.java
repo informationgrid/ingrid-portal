@@ -95,7 +95,12 @@ public class SearchState {
             urlParam = Utils.toURLParam(Settings.PARAM_GROUPING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
-            // subject for grouping (read from state)
+            // filter (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
+            urlParam = Utils.toURLParam(Settings.PARAM_FILTER, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
+            // subject for filter (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
             urlParam = Utils.toURLParam(Settings.PARAM_SUBJECT, paramValue);
             Utils.appendURLParameter(result, urlParam);
@@ -184,6 +189,7 @@ public class SearchState {
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_RANKING);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_SUBJECT);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_FILTER);
 
             // further state for logic, caching etc.
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);

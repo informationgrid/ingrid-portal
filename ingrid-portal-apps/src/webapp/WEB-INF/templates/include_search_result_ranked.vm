@@ -14,7 +14,7 @@
         	#if($grouping)
               <div class="resultset_partner_group">
         		#set ($groupSubject = "")
-        		#if($grouping == 'partner')
+				#if($grouping == 'partner')
         			#set ($detailAction = "showAllForPartner")
         			#set ($groupSubject = "Partner '$rs.partner'")
         			#set ($groupSubjectKey = $rs.partnerKey)

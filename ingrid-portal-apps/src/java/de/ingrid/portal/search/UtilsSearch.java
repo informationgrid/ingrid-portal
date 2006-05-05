@@ -513,7 +513,16 @@ public class UtilsSearch {
      */
     public static void processProvider(IngridQuery query, String[] providers) {
         ClauseQuery cq = null;
-
+        if (providers != null && providers.length > 0) {
+            cq = new ClauseQuery(true, false);
+            for (int i = 0; i < providers.length; i++) {
+                if (providers[i] != null) {
+                    query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, providers[i]));
+                }
+            }
+        }
+/*        
+        
         // don't set anything if "all" is selected
         if (providers != null && providers.length > 0) {
             cq = new ClauseQuery(true, false);
@@ -524,6 +533,7 @@ public class UtilsSearch {
             }
             query.addClause(cq);
         }
+*/
     }
 
     /**

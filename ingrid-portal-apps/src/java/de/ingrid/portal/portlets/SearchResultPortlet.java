@@ -264,8 +264,18 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
+        // set filter params into context for filter display
+        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
+        if (filter != null && filter.length() > 0) {
+            context.put("filteredBy", filter);
+            if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
+            } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
+            }
+        }
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0
-                && (renderOneResultColumnUnranked && renderOneResultColumnRanked)) {
+                && (renderOneResultColumnUnranked && renderOneResultColumnRanked) && filter.length() == 0) {
             // query string will be displayed when no results !
             String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             context.put("queryString", queryString);
@@ -304,9 +314,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, rankedStarthit);
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, unrankedStarthit);
 
-        // adapt grouping params
-        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, request.getParameter(Settings.PARAM_SUBJECT));
-        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, request.getParameter(Settings.PARAM_GROUPING));
+        // adapt filter params, set state only if we do have a subject
+        // avoid reset the states while browsing the resultpages
+        if (request.getParameter(Settings.PARAM_SUBJECT) != null) {
+            SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, request.getParameter(Settings.PARAM_SUBJECT));
+            SearchState.adaptSearchState(request, Settings.PARAM_FILTER, request.getParameter(Settings.PARAM_GROUPING));
+        }
         
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));

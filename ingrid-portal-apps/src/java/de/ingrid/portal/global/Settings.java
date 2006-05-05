@@ -292,6 +292,7 @@ public class Settings {
     public final static String PARAMV_GROUPING_PARTNER = "partner";
 
     public final static String PARAMV_GROUPING_PROVIDER = "provider";
+    
 
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
@@ -305,6 +306,9 @@ public class Settings {
 
     public final static String PARAM_RANKING = "rank";
 
+    /** this parameter holds the type of filter for search result display (usually same as grouping: partner | provider) **/
+    public static final String PARAM_FILTER = "filter";
+    
     // ------------- PARAM Keys, NOT used for messaging, just for access in Request -----------------------------
 
     public final static String PARAM_RUBRIC = "rubric";
@@ -320,6 +324,7 @@ public class Settings {
     public final static String PARAM_TOPIC_ID = "topId";
 
     public final static String PARAM_TAB = "tab";
+
 
 
 
