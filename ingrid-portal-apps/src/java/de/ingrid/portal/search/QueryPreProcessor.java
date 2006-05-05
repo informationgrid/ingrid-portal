@@ -15,6 +15,7 @@ import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.net.QueryDescriptor;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -129,6 +130,11 @@ public class QueryPreProcessor {
                 // set grouping
                 UtilsSearch.processGrouping(query, grouping);
             }
+        }
+        
+        String inclMetaData = (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_INCL_META);
+        if (inclMetaData != null && inclMetaData.equals("on")) {
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_INCL_META, "on"));
         }
         
         

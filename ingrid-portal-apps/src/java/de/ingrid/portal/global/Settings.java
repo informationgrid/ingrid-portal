@@ -91,6 +91,10 @@ public class Settings {
     // "environment chronicle", ...: to date
     public final static String QFIELD_DATE_TO = "t2";
 
+    // search settings: search sns metadata as well
+    public static final String QFIELD_INCL_META = "incl_meta";
+    
+    
     // ------------- query field values -----------------------------
 
     // datatype: area types
@@ -324,8 +328,6 @@ public class Settings {
     public final static String PARAM_TOPIC_ID = "topId";
 
     public final static String PARAM_TAB = "tab";
-
-
 
 
 
