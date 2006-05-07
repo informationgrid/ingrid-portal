@@ -15,8 +15,6 @@ drop table groups;
 drop table usergrouprole;
 
 drop table ingrid_newsletter_data;
-drop table ingrid_help_structure;
-drop table ingrid_help_content;
 
 drop table ingrid_sys_codelist_domain;
 drop table ingrid_sys_codelist;

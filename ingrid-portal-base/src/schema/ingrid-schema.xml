@@ -115,6 +115,19 @@ limitations under the License.
         <column name="password" size="255" type="VARCHAR"/>
     </table>
 
+    <table name="userpartner">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
+        <column name="username" size="255" type="VARCHAR"/>
+        <column name="partner_ident" size="255" type="VARCHAR"/>
+    </table>
+
+    <table name="userprovider">
+        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
+        <column name="username" size="255" type="VARCHAR"/>
+        <column name="provider_ident" size="255" type="VARCHAR"/>
+    </table>
+
+
     <table name="usergrouprole" idMethod="native">
         <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
         <column name="username" size="255" type="VARCHAR"/>
@@ -128,21 +141,6 @@ limitations under the License.
         <column name="lastname" size="255" type="VARCHAR"/>
         <column name="email" size="255" type="VARCHAR"/>
         <column name="created" required="false" type="TIMESTAMP"/>
-    </table>
-
-    <table name="ingrid_help_structure" idMethod="native">
-        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
-        <column name="fk_help_id" type="INTEGER"/>
-        <column name="help_key" size="255" type="VARCHAR"/>
-        <column name="sort_key" type="INTEGER"/>
-    </table>
-    
-    <table name="ingrid_help_content" idMethod="native">
-        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
-        <column name="fk_help_id" type="INTEGER"/>
-        <column name="language" size="6" type="VARCHAR"/>
-        <column name="header" size="255" type="VARCHAR"/>
-        <column name="content" type="CLOB"/>
     </table>
 
     <table name="ingrid_sys_codelist_domain">

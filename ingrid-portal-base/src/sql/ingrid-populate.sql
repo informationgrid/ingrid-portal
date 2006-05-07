@@ -198,12 +198,6 @@ INSERT INTO usergrouprole VALUES(3,'admin','admin','user');
 INSERT INTO users VALUES('admin','admin');
 INSERT INTO users VALUES('guest','guest');
 
-INSERT INTO ingrid_help_structure VALUES (1, 0, 'index', 1);
-INSERT INTO ingrid_help_structure VALUES (2, 1, NULL, 1);
-INSERT INTO ingrid_help_content VALUES (1, 1, 'de', 'Hilfe zu PortalU', NULL);
-INSERT INTO ingrid_help_content VALUES (2, 2, 'de', 'Hilfethemen', '<ul>\r\n<li>Über PortalU</li>\r\n<li>Suche</li>\r\n<li>Umweltthemen</li>\r\n<li>Service</li>\r\n<li>Messwerte</li>\r\n<li>Umweltchronik</li>\r\n<li>Karten</li>\r\n<li>Aktuelles</li>\r\n<li>PortalU informiert</li>\r\n<li>Mein PortalU</li>\r\n<li>Newsletter</li>\r\n</ul>');
-
-
 INSERT INTO ingrid_sys_codelist VALUES (100, 'Raumbezugssystem (EPSG)', 1, 1);
 INSERT INTO ingrid_sys_codelist VALUES (101, 'Vertikales Datum', 1, 1);
 INSERT INTO ingrid_sys_codelist VALUES (102, 'Höhe', 1, 1);
