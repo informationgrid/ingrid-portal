@@ -34,6 +34,7 @@ import org.apache.jetspeed.administration.AdministrationEmailException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.hibernate.cfg.Environment;
 
 import de.ingrid.portal.config.IngridUserPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -450,5 +451,32 @@ public class Utils {
         }
 
     }
+    
+    public static String getResourceAsStream(String resource) throws Exception {
+        String stripped = resource.startsWith("/") ? resource.substring(1) : resource;
+
+        String stream = null;
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        if (classLoader != null) {
+            URL url = classLoader.getResource(stripped);
+            if (url != null) {
+                stream = url.toString();
+            }
+        }
+        if (stream == null) {
+            Environment.class.getResourceAsStream(resource);
+        }
+        if (stream == null) {
+            URL url = Environment.class.getClassLoader().getResource(stripped);
+            if (url != null) {
+                stream = url.toString();
+            }
+        }
+        if (stream == null) {
+            throw new Exception(resource + " not found");
+        }
+        return stream;
+    }
+
 
 }
