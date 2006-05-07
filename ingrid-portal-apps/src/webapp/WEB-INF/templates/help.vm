@@ -1,10 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section">
-		<h1>$help.content.header</h1>
-		#foreach($item in $help.children)
-			<h2>$item.content.header</h2>
-			$item.content.content
-		#end
+		$help_content
 	</div>
 </div>

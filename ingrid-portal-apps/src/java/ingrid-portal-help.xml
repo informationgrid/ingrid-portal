@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<help>
+    <chapter>
+        <header>Hilfe zu PortalU</header>
+        <section help-key="index">
+            <header>Hilfethemen</header>
+            <content><ul><li>Über PortalU</li><li>Suche</li><li>Umweltthemen</li><li>Service</li><li>Messwerte</li><li>Umweltchronik</li><li>Karten</li><li>Aktuelles</li><li>PortalU informiert</li><li>Mein PortalU</li><li>Newsletter</li></ul></content>
+            </section>
+    </chapter>
+</help>
