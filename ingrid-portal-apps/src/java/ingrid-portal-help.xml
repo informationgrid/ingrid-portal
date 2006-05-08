@@ -4,7 +4,61 @@
         <header>Hilfe zu PortalU</header>
         <section help-key="index">
             <header>Hilfethemen</header>
-            <content><ul><li>Über PortalU</li><li>Suche</li><li>Umweltthemen</li><li>Service</li><li>Messwerte</li><li>Umweltchronik</li><li>Karten</li><li>Aktuelles</li><li>PortalU informiert</li><li>Mein PortalU</li><li>Newsletter</li></ul></content>
-            </section>
+            <content>
+                <ul>
+                    <li>Über PortalU</li>
+                    <li>Suche</li>
+                    <li>Umweltthemen</li>
+                    <li>Service</li>
+                    <li>Messwerte</li>
+                    <li>Umweltchronik</li>
+                    <li>Karten</li>
+                    <li>Aktuelles</li>
+                    <li>PortalU informiert</li>
+                    <li>Mein PortalU</li>
+                    <li>Newsletter</li>
+                </ul>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Über PortalU</header>
+        <section help-key="about-1">
+            <header>Konzept und Aufgabe von PortalU</header>
+            <content>
+                <p>PortalU, das Umweltportal Deutschland, bietet einen
+zentralen Zugriff auf mehrere hunderttausend Internetseiten und Datenbankeinträge
+von öffentlichen Institutionen und Organisationen in Bund und Ländern. Mit
+einem Mix aus aktuellen Nachrichten, Umweltmesswerten (z.B. aktuelle
+Ozonkonzentration in der Luft), Hintergrundinformationen, und historischen
+Umweltereignissen richtet sich PortalU sowohl an interessierte Laien als auch
+an Fachpublikum. Das Informationsangebot wird kontinuierlich ausgebaut mit dem
+Ziel, langfristig möglichst alle behördlichen Anbieter von Umweltinformationen
+zu erfassen.</p>
+            <p>Bei der Konzeption von PortalU spielten die
+EU-Umweltinformationsrichtlinie von 2003 und die geplante INSPIRE Richtlinie
+eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche
+Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür
+notwendigen informationstechnischen Infrastrukturen. Zukünftig sind wesentlich
+mehr Behörden und Organisationen als bisher dazu verpflichtet, umweltrelevante
+Daten und Informationen in einer klar verständlichen und einfach zugänglichen
+Form bereitzustellen. PortalU und die eigens zum Aufbau des Portals entwickelte
+Software &#8222;InGrid 1.0&#8220; wurden speziell als Werkzeuge zur
+Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.
+            </p>
+            </content>
+        </section>
+        <section help-key="about-2">
+            <header>Die Betreiber von PortalU</header>
+            <content>
+                <p>Als Nachfolgeprojekt des
+Umweltdatenkatalogs (UDK) und des German Environmental Information Network
+(gein) wurde PortalU im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN
+entwickelt. An der Verwaltungsvereinbarung sind u.a. das Umweltbundesministerium
+(BMU) und die Umweltministerien von 15 Ländern beteiligt.  PortalU wird technisch
+und inhaltlich von der Koordinierungsstelle UDK/GEIN (KUG) im Niedersächsischen
+Umweltministerium in Hannover betreut.</p>
+            </content>
+        </section>
     </chapter>
 </help>

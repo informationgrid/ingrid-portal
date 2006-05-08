@@ -7,10 +7,24 @@
     <help>
     <xsl:for-each select="chapter">
         <h1><xsl:value-of select="header"/></h1>
-        <xsl:for-each select="section">
-            <h2><xsl:value-of select="header"/></h2>
-            <xsl:apply-templates select="content"/>
-        </xsl:for-each>
+          <div class="left">
+            <h3>Navigation</h3>
+            <div class="helpcontent">
+              <ul>
+                <xsl:for-each select="section">
+                    <li><a href="#top1"><xsl:value-of select="header"/></a></li>
+                </xsl:for-each>
+              </ul>
+              <br />
+            </div>
+          </div>
+          <div class="right">
+            <xsl:for-each select="section">
+                <h2><xsl:value-of select="header"/></h2>
+                <xsl:apply-templates select="content"/>
+            </xsl:for-each>
+          </div>
+                        
     </xsl:for-each>
     </help>
 </xsl:template>
