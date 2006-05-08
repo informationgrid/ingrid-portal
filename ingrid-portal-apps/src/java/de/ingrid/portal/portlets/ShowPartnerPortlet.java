@@ -82,12 +82,15 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 PlugDescription plug = plugs[i];
                 String[] providers = plug.getProviders();
                 for (int j=0;j<providers.length;j++) {
-                    String partnerIdent = providers[j].substring(0, providers[j].indexOf("_"));
+                    String providerIdent = providers[j];
+                    String partnerIdent = "";
+                    if (providerIdent != null && providerIdent.length() > 0) {
+                        partnerIdent = providers[j].substring(0, providers[j].indexOf("_"));
+                    }
                     // hack: "bund" is coded as "bu" in provider idents
                     if (partnerIdent.equals("bu")) {
                         partnerIdent = "bund";
                     }
-                        
                     if (partnerIdent.equalsIgnoreCase(partner.getIdent()) || partnerIdent.equalsIgnoreCase(partner.getName())) {
                         // check for providers
                         if (!partnerHash.containsKey("providers")) {
