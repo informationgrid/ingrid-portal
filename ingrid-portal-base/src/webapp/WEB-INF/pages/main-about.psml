@@ -25,6 +25,9 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <preference name="infoTitleKey" readOnly="false">
         <value>about.title</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>about-1</value>
+      </preference>
     </fragment>
     <fragment id="main-about-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />

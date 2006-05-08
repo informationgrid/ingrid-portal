@@ -1,7 +1,7 @@
 <page>
   <defaults
      skin="orange"
-     layout-decorator="ingrid-popup"
+     layout-decorator="ingrid-help"
      portlet-decorator="clear"
   />
   <title>Help</title>
