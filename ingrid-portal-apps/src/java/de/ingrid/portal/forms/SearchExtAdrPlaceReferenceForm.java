@@ -43,13 +43,7 @@ public class SearchExtAdrPlaceReferenceForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
     public boolean validate() {
-        boolean valid = true;
-        clearErrors();
-        if (!hasInput(FIELD_STREET) && !hasInput(FIELD_ZIP) && !hasInput(FIELD_CITY)) {
-            setError("", "searchExtAdrPlaceReference.error.supply_field");
-            valid = false;
-        }
-        return valid;
+        return true;
     }
 
 }
