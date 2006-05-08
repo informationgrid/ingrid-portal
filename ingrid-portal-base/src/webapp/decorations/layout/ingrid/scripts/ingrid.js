@@ -1,12 +1,7 @@
-function ingrid_openWindow(section, winWidth, winHeight)
+function ingrid_openWindow(url, winWidth, winHeight)
 {
-  popupWin = window.open(section+".html", "InternalWin", 'width=' + winWidth + ',height=' + winHeight + ',resizable=yes,scrollbars=yes,location=no,toolbar=yes');
+  popupWin = window.open(url, "InternalWin", 'width=' + winWidth + ',height=' + winHeight + ',resizable=yes,scrollbars=yes,location=no,toolbar=yes');
   popupWin.focus();
-}
-
-function ingrid_contextHelp()
-{
-  openWindow('faq',750,550);
 }
 
 function ingrid_checkAll(group) {
