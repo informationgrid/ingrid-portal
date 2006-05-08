@@ -16,6 +16,15 @@ public class UtilsQueryString {
     public final static String OP_PHRASE = "PHRASE";
     
     
+    /**
+     * This method replaces a term in the query string with the new term. It also
+     * takes into account that terms can be surrounded by '"'.
+     * 
+     * @param queryStr The query string.
+     * @param term The term to search for.
+     * @param newTerm The term to replace with.
+     * @return The resulting query string.
+     */
     public static String replaceTerm(String queryStr, String term, String newTerm) {
         int termStartPos = 0;
         int termStopPos = 0;
@@ -43,6 +52,19 @@ public class UtilsQueryString {
         return result.toString();
     }
     
+    /**
+     * Add a new Term to the query string. This method tries to figure out
+     * how to extend the existing query (i.e. put brackets around it), before
+     * adding the term. Terms can be added with a operator.
+     * 
+     * operators: OP_OR, OP_AND, OP_NOT, OP_PHRASE
+     * 
+     * 
+     * @param queryStr The query string.
+     * @param str The term to add.
+     * @param operator The operator to use.
+     * @return The query string with the term added using operator.
+     */
     public static String addTerm(String queryStr, String str, String operator) {
         StringBuffer result;
         
@@ -111,6 +133,12 @@ public class UtilsQueryString {
     }
     
 
+    /**
+     * Strips white space from query string. This includes also empty brackets.
+     * 
+     * @param q The queryString
+     * @return The "cleaned up" query string. 
+     */
     public static String stripQueryWhitespace(String q) {
         // strip empty brackets with operators
         String returnStr = q.replaceAll("\\s*\\(([\\s()]|OR|AND|NOT)*\\)\\s*", "");
@@ -178,6 +206,12 @@ public class UtilsQueryString {
         return cursor;
     }
     
+    /**
+     * Returns a "phrased" String (surrounded by '"') if the string contains a ' '.
+     * 
+     * @param term A String, representing a term.
+     * @return The "phrased" term.
+     */
     public static String getPhrasedTerm(String term) {
         if (term != null && term.indexOf(" ") != -1) {
             return "\"".concat(term).concat("\"");
