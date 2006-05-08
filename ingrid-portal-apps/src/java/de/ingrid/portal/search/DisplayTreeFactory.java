@@ -53,6 +53,10 @@ public class DisplayTreeFactory {
                 String[] plugProvider = plug.getProviders();
                 for (int j=0; j<plugProvider.length; j++) {
                     String partnerIdent = plugProvider[j].substring(0, plugProvider[j].indexOf("_"));
+                    // hack: "bund" is coded as "bu" in provider idents
+                    if (partnerIdent.equals("bu")) {
+                        partnerIdent = "bund";
+                    }
                     if (partnerIdent.equals(partner.getIdent())) {
                         DisplayTreeNode providerNode = node.getChild(plugProvider[j]);
                         if (providerNode == null) {
