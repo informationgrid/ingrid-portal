@@ -95,7 +95,7 @@
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml"))
 	<script language="JavaScript">
-		document.write("<a href=\"javascript:openWindow('$link',750,550);\">Hilfe</a>");
+		document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\">Hilfe</a>");
 	</script>
 	<noscript>
 					<a href="$link" target="_new">Hilfe</a>
