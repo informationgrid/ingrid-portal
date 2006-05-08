@@ -177,5 +177,13 @@ public class UtilsQueryString {
         }
         return cursor;
     }
+    
+    public static String getPhrasedTerm(String term) {
+        if (term != null && term.indexOf(" ") != -1) {
+            return "\"".concat(term).concat("\"");
+        } else {
+            return term;
+        }
+    }
 
 }
