@@ -114,8 +114,10 @@ public class UtilsQueryString {
     public static String stripQueryWhitespace(String q) {
         // strip empty brackets with operators
         String returnStr = q.replaceAll("\\s*\\(([\\s()]|OR|AND|NOT)*\\)\\s*", "");
-        returnStr = returnStr.replaceAll("\\s\\s+", "");
-        return returnStr;
+        returnStr = returnStr.replaceAll("\\s\\s+", " ");
+        returnStr = returnStr.replaceAll("\\s*\\)", ")");
+        returnStr = returnStr.replaceAll("\\(\\s*", "(");
+        return returnStr.trim();
     }
     
     

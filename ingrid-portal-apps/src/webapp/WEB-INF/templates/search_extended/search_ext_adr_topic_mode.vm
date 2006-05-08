@@ -9,15 +9,15 @@
             <h3>$MESSAGES.getString('searchExtAdrTopicMode.title.mode')</h3>
             <div class="intend">
               <p>
-                <input type="radio" value="like" checked="checked" name="search_mode" id="search_like" /><label for="search_like">$MESSAGES.getString('searchExtAdrTopicMode.label.mode1')</label>
-                <input type="radio" value="word" name="search_mode" id="search_word" /><label for="search_word">$MESSAGES.getString('searchExtAdrTopicMode.label.mode2')</label>
+                <input type="radio" value="2" checked="checked" name="search_mode" id="search_word" /><label for="search_word">$MESSAGES.getString('searchExtAdrTopicMode.label.mode2')</label>
+                <input type="radio" value="1" name="search_mode" id="search_like" /><label for="search_like">$MESSAGES.getString('searchExtAdrTopicMode.label.mode1')</label>
               </p>
             </div>
             <p></p>
             <h3>$MESSAGES.getString('searchExtAdrTopicMode.title.fields')</h3>
             <div class="intend">
-                <p><input type="radio" value="all_fields" checked="checked" name="search_scope" id="search_all_fields" /><label for="search_all_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields1')</label></p>
-                <p><input type="radio" value="some_fields" name="search_scope" id="search_some_fields" /><label for="search_some_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields2')</label></p>
+                <p><input type="radio" value="1" checked="checked" name="search_scope" id="search_all_fields" /><label for="search_all_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields1')</label></p>
+                <p><input type="radio" value="2" name="search_scope" id="search_some_fields" /><label for="search_some_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields2')</label></p>
             </div>  
           </div>  
       </div>      
