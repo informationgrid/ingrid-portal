@@ -36,7 +36,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.hibernate.cfg.Environment;
 
-import de.ingrid.portal.config.IngridUserPreferences;
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 
@@ -76,10 +76,10 @@ public class Utils {
      * @param aClass
      * @return
      */
-    public static IngridUserPreferences getSessionPreferences(PortletRequest request, String aKey, Class aClass) {
-        IngridUserPreferences obj = (IngridUserPreferences) request.getPortletSession().getAttribute(aKey, PortletSession.APPLICATION_SCOPE);
+    public static IngridSessionPreferences getSessionPreferences(PortletRequest request, String aKey, Class aClass) {
+        IngridSessionPreferences obj = (IngridSessionPreferences) request.getPortletSession().getAttribute(aKey, PortletSession.APPLICATION_SCOPE);
         if (obj == null) {
-            obj = new IngridUserPreferences();
+            obj = new IngridSessionPreferences();
             request.getPortletSession().setAttribute(aKey, obj, PortletSession.APPLICATION_SCOPE);
         }
         return obj;

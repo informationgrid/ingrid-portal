@@ -10,12 +10,12 @@ import java.util.HashMap;
  *
  * @author joachim@wemove.com
  */
-public class IngridUserPreferences extends HashMap {
+public class IngridSessionPreferences extends HashMap {
 
     private static final long serialVersionUID = -9079742501129971482L;
 
     /** attribute name of action form in session */
-    public static final String SESSION_KEY = IngridUserPreferences.class.getName();
+    public static final String SESSION_KEY = IngridSessionPreferences.class.getName();
 
     
     public static final String SEARCH_SETTING_RANKING = "ranking";

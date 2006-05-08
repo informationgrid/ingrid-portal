@@ -8,7 +8,7 @@ import javax.portlet.PortletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.ingrid.portal.config.IngridUserPreferences;
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchSettingsForm;
 import de.ingrid.portal.forms.ServiceSearchForm;
@@ -88,11 +88,11 @@ public class QueryPreProcessor {
 
 
         // set properties according to the session preferences
-        IngridUserPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridUserPreferences.SESSION_KEY, IngridUserPreferences.class);
+        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
         if (!UtilsSearch.containsField(query, IngridQuery.RANKED)) {
             // adapt ranking to Search State
-            String ranking = (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_RANKING);
+            String ranking = (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_RANKING);
             if (ranking == null || ranking.length() == 0) {
                 ranking = IngridQuery.SCORE_RANKED;
                 String stateRanking = (String)SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
@@ -125,14 +125,14 @@ public class QueryPreProcessor {
             // set grouping ! ONLY IF NO GROUPING IN Query String Input !
             if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
                 // adapt ranking to Search State
-                String grouping = (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_GROUPING);
+                String grouping = (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);
                 
                 // set grouping
                 UtilsSearch.processGrouping(query, grouping);
             }
         }
         
-        String inclMetaData = (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_INCL_META);
+        String inclMetaData = (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_INCL_META);
         if (inclMetaData != null && inclMetaData.equals("on")) {
             query.addField(new FieldQuery(true, false, Settings.QFIELD_INCL_META, "on"));
         }

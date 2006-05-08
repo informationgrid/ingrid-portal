@@ -13,7 +13,7 @@ import javax.portlet.PortletException;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.config.IngridUserPreferences;
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.forms.CreateAccountForm;
 import de.ingrid.portal.forms.SearchSettingsForm;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -52,10 +52,10 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
         String cmd = request.getParameter("cmd");
         if (cmd == null) {
             f.clear();
-            IngridUserPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridUserPreferences.SESSION_KEY, IngridUserPreferences.class);
-            f.setInput(SearchSettingsForm.FIELD_RANKING, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_RANKING));
-            f.setInput(SearchSettingsForm.FIELD_GROUPING, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_GROUPING));
-            f.setInput(SearchSettingsForm.FIELD_INCL_META, (String)sessionPrefs.get(IngridUserPreferences.SEARCH_SETTING_INCL_META));
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+            f.setInput(SearchSettingsForm.FIELD_RANKING, (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_RANKING));
+            f.setInput(SearchSettingsForm.FIELD_GROUPING, (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING));
+            f.setInput(SearchSettingsForm.FIELD_INCL_META, (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_INCL_META));
         }
         
         context.put("actionForm", f);
@@ -89,10 +89,10 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
             f.setError("", "searchSettings.message.settings.resetted");
         }
 
-        IngridUserPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridUserPreferences.SESSION_KEY, IngridUserPreferences.class);
-        sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_RANKING, f.getInput(SearchSettingsForm.FIELD_RANKING));
-        sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_GROUPING, f.getInput(SearchSettingsForm.FIELD_GROUPING));
-        sessionPrefs.put(IngridUserPreferences.SEARCH_SETTING_INCL_META, f.getInput(SearchSettingsForm.FIELD_INCL_META));
+        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+        sessionPrefs.put(IngridSessionPreferences.SEARCH_SETTING_RANKING, f.getInput(SearchSettingsForm.FIELD_RANKING));
+        sessionPrefs.put(IngridSessionPreferences.SEARCH_SETTING_GROUPING, f.getInput(SearchSettingsForm.FIELD_GROUPING));
+        sessionPrefs.put(IngridSessionPreferences.SEARCH_SETTING_INCL_META, f.getInput(SearchSettingsForm.FIELD_INCL_META));
     
     }
 }
