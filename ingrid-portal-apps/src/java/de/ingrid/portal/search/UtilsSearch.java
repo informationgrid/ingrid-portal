@@ -21,6 +21,7 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -513,9 +514,7 @@ public class UtilsSearch {
      * @param partners
      */
     public static void processProvider(IngridQuery query, String[] providers) {
-        ClauseQuery cq = null;
         if (providers != null && providers.length > 0) {
-            cq = new ClauseQuery(true, false);
             for (int i = 0; i < providers.length; i++) {
                 if (providers[i] != null) {
                     query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, providers[i]));
@@ -766,5 +765,22 @@ public class UtilsSearch {
             DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
             node.setOpen(false);
         }
+    }
+
+    /**
+     * Add a querystring to the session querystring history.
+     * 
+     * @param request The request.
+     */
+    public static void addQueryToHistory(RenderRequest request) {
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        String urlStr = Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request);
+        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+        QueryHistory history = (QueryHistory)sessionPrefs.getInitializedObject(IngridSessionPreferences.QUERY_HISTORY, QueryHistory.class);
+        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+        if (selectedDS == null) {
+            selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
+        }
+        history.add(queryString, urlStr, selectedDS);
     }
 }

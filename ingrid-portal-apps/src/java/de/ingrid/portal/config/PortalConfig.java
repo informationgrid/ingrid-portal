@@ -40,10 +40,13 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
 
+    public static final String QUERY_HISTORY_DISPLAY_SIZE = "query.history.display.size";
+    
     // private stuff 
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
+
 
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {

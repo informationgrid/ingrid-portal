@@ -184,6 +184,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
 
         QueryDescriptor qd = null;
 
+        // store query in session
+        UtilsSearch.addQueryToHistory(request);
+        
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;

@@ -7,12 +7,19 @@
         <div class="float_left">
           <h3>$MESSAGES.getString('searchHistory.title.lastQueries')</h3>
         </div>  
-        <div class="float_right">
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doShowAllQueries')
-            <div class="ico_linkintern"><p><a href="$action">$MESSAGES.getString('searchHistory.label.showAllQueries')</a></p></div>  
-        </div>
+##        <div class="float_right">
+###set ($action = $renderResponse.createActionURL())
+##$action.setParameter('action','doShowAllQueries')
+##            <div class="ico_linkintern"><p><a href="$action">$MESSAGES.getString('searchHistory.label.showAllQueries')</a></p></div>  
+##        </div>
         <span class="clearer"></span>
+        <ul class="internlinklist2">
+#foreach($query in $queries)
+		<li><a href="$query.url">$query.query</a> #if($query.ds == "2")<span class="smaller">(Adressen)</span>#elseif($query.ds == "3")<span class="smaller">(Forschungsprojekte</span>)#end</li>
+#end	
+		</ul>
+
+
 <!--
         <ul class="internlinklist2">
           <li><a href="s_search_results.html">Katastrophe Tschernobyl</a></li>
@@ -31,7 +38,7 @@ $action.setParameter('action','doShowAllQueries')
           </ul>
 -->
         <br />
-        <input class="btn" type="submit" value="Löschen" name="delete" />  
+##        <input class="btn" type="submit" value="Löschen" name="delete" />  
       </div>
     </form>
   </div>
