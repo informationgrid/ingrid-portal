@@ -133,8 +133,10 @@ public class QueryResultPostProcessor {
                             } else if (addrClass.equals("1")) {
                                 String currentAddressId = UtilsSearch.getDetailValue(detail,
                                         Settings.HIT_KEY_ADDRESS_ADDRID);
+                                String newAddressId = null;
                                 ArrayList parentAddr = new ArrayList();
-                                while (addrClass.equals("1")) {
+                                boolean skipSearch = false;
+                                while (!skipSearch) {
                                     IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(
                                             currentAddressId).concat(" datatype:address ranking:score"));
                                     IngridHits results = IBUSInterfaceImpl.getInstance().search(query, 10, 1, 10,
@@ -145,18 +147,27 @@ public class QueryResultPostProcessor {
                                                 query,
                                                 new String[] { Settings.HIT_KEY_ADDRESS_ADDRID,
                                                         Settings.HIT_KEY_ADDRESS_CLASS });
+                                        // find first parent of the address in the result set
                                         for (int j = 0; j < details.length; j++) {
                                             IngridHitDetail addrDetail = (IngridHitDetail) details[j];
                                             addrClass = UtilsSearch.getDetailValue(addrDetail,
                                                     Settings.HIT_KEY_ADDRESS_CLASS);
-                                            if ((addrClass.equals("0") || addrClass.equals("1"))
-                                                    && !currentAddressId.equals(UtilsSearch.getDetailValue(addrDetail,
-                                                            Settings.HIT_KEY_ADDRESS_ADDRID))) {
-                                                parentAddr.add(0, addrDetail);
-                                            }
-                                            currentAddressId = UtilsSearch.getDetailValue(addrDetail,
+                                            newAddressId = UtilsSearch.getDetailValue(addrDetail,
                                                     Settings.HIT_KEY_ADDRESS_ADDRID);
+                                            if ((addrClass.equals("0") || addrClass.equals("1"))
+                                                    && !currentAddressId.equals(newAddressId)) {
+                                                parentAddr.add(0, addrDetail);
+                                                break;
+                                            }
                                         }
+                                        // check for search skip
+                                        if (!addrClass.equals("1") || currentAddressId.equals(newAddressId)) {
+                                            skipSearch = true;
+                                        } else {
+                                            currentAddressId = newAddressId; 
+                                        }
+                                    } else {
+                                        skipSearch = true;
                                     }
                                 }
                                 hit.put(Settings.RESULT_KEY_UDK_ADDRESS_PARENTS, parentAddr);

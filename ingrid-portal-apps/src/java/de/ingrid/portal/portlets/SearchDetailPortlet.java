@@ -494,9 +494,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     
     private ArrayList getAllAddressChildren(String addrId) {
         ArrayList result = getAddressChildren(addrId);
-        Iterator it = result.iterator();
-        while (it.hasNext()) {
-            IngridHit hit = (IngridHit)it.next();
+        int size = result.size();
+        for (int i=0; i<size; i++) {
+            IngridHit hit = (IngridHit)result.get(i);
             IngridHitDetail detail = (IngridHitDetail)hit.get("detail");
             String addrType = (String)detail.get(Settings.HIT_KEY_ADDRESS_CLASS);
             if (addrType.equals("0") || addrType.equals("1")) {
@@ -505,6 +505,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
         return result;
     }
+    
     private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
         ArrayList result = new ArrayList();
         try {
