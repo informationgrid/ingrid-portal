@@ -12,7 +12,8 @@
             <div class="helpcontent">
               <ul>
                 <xsl:for-each select="section">
-                    <li><a href="#top1"><xsl:value-of select="header"/></a></li>
+                    <li><a><xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>                    
+                    <xsl:value-of select="header"/></a></li>
                 </xsl:for-each>
               </ul>
               <br />
@@ -20,6 +21,7 @@
           </div>
           <div class="right">
             <xsl:for-each select="section">
+                <a><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><div/></a>
                 <h2><xsl:value-of select="header"/></h2>
                 <xsl:apply-templates select="content"/>
             </xsl:for-each>
