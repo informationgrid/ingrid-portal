@@ -4,6 +4,7 @@
 package de.ingrid.portal.search;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -650,6 +651,29 @@ public class UtilsSearch {
         context.put("partnerRoot", partnerRoot);
     }
 
+
+    /**
+     * Encapsulates common processAction functionality for all term-adding portlets.
+     * 
+     * @param request
+     * @param response
+     * @throws NotSerializableException
+     */
+    public static void processActionForTermPortlets(ActionRequest request, ActionResponse response) throws NotSerializableException {
+        String addingType = request.getParameter("adding_type");
+        String searchTerm = request.getParameter("search_term");
+        String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+        if (addingType.equals("1")) {
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
+        } else if (addingType.equals("2")) {
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_OR));
+        } else if (addingType.equals("3")) {
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_PHRASE));
+        } else if (addingType.equals("4")) {
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_NOT));
+        }
+    }
+    
     /**
      * Encapsulates common processAction functionality for all partner selection portlets 
      * @param request

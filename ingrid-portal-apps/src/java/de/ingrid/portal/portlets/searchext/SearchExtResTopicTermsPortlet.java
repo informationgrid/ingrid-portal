@@ -9,9 +9,12 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
+import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsQueryString;
+import de.ingrid.portal.search.UtilsSearch;
 
 /**
  * This portlet handles the fragment of the terms input in the extended search
@@ -40,11 +43,8 @@ public class SearchExtResTopicTermsPortlet extends SearchExtResTopic {
         }
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
 
-        // TODO: implement functionality
         if (submittedAddToQuery != null) {
-
-            // Zur Suchanfrage hinzufuegen
-
+            UtilsSearch.processActionForTermPortlets(request, actionResponse);
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);
