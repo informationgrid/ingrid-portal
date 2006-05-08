@@ -4,6 +4,7 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="xx" id="extsearch1">
       <div class="formbody">
+		  #displayFormErrors()
           <p><span class="smaller">$MESSAGES.getString('searchExtResTopicAttributes.explanation')</span></p>
           <div class="line_form"><hr /></div>
           <div class="innerform">
@@ -23,7 +24,7 @@
               <span class="clearer"></span>
             </p>
             <p>
-      			  <label for="db_pm" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.involved')</label>
+      			  <label for="db_staff" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.involved')</label>
       			  <input class="float_left inputstyletext" type="text" size="35" id="db_staff" name="db_staff" />
               <span class="clearer"></span>
             </p>
@@ -34,8 +35,8 @@
             </p>
             <p>
       			  <label for="db_org" class="float_left col2left">Laufzeit:</label>
-     		      <label for="from_yy">$MESSAGES.getString('searchExtResTopicAttributes.label.from')</label><input class="inputstyletext" id="from_yy" size="10" maxlength="10" name="from_yy" type="text" />
-     		      <label for="till_yy">$MESSAGES.getString('searchExtResTopicAttributes.label.to')</label><input class="inputstyletext" id="till_yy" size="10" maxlength="10" name="till_yy" type="text" /> &nbsp;$MESSAGES.getString('searchExtResTopicAttributes.timeformat')<br />
+     		      <label for="term_from">#displayFieldLabel('term_from' $MESSAGES.getString('searchExtResTopicAttributes.label.from'))</label><input class="inputstyletext" id="term_from" size="10" maxlength="10" name="term_from" type="text" value="#getFieldValue('term_from')" />
+     		      <label for="term_to">#displayFieldLabel('term_to' $MESSAGES.getString('searchExtResTopicAttributes.label.to'))</label><input class="inputstyletext" id="term_to" size="10" maxlength="10" name="term_to" type="text" value="#getFieldValue('term_to')" /> &nbsp;$MESSAGES.getString('searchExtResTopicAttributes.timeformat')<br />
    		      </p>
             <span class="clearer"></span>
           </div>  

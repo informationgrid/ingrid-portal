@@ -220,4 +220,35 @@ public class UtilsQueryString {
         }
     }
 
+    /**
+     * Remove a field from query string (key:["]value["]).
+     * 
+     * @param query The query string.
+     * @param term The field name to remove.
+     * @return The resulting query string.
+     */
+    public static String removeField(String query, String fieldName) {
+        int termStartPos = 0;
+        int termStopPos = 0;
+        String myTerm;
+        StringBuffer result = new StringBuffer(query);
+        
+        while (true) {
+            termStartPos = getTermStartPos(result.toString(), termStopPos);
+            if (termStartPos == result.length()) {
+                break;
+            }
+            termStopPos = getTermStopPos(result.toString(), termStartPos);
+            myTerm = result.substring(termStartPos, termStopPos);
+            if (myTerm.startsWith(fieldName.concat(":"))) {
+                result.replace(termStartPos, termStopPos, "");
+                termStopPos = termStartPos;
+            }
+            if (termStopPos == result.length()) {
+                break;
+            }
+        }
+        return result.toString();
+    }
+
 }
