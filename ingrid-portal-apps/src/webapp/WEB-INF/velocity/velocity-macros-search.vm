@@ -14,6 +14,10 @@
     <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits bewerteten</strong> Treffern
 #end
 
+#macro (renderRankedResultCounterGrouping $pageSelector)
+    <strong><strong>$pageSelector.numberOfHits bewertete</strong> Treffer
+#end
+
 #macro (renderUnrankedResultCounter $pageSelector)
     <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits weiteren</strong> Datenquellen
 #end
