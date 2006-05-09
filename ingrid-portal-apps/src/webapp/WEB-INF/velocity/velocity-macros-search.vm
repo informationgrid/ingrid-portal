@@ -15,7 +15,7 @@
 #end
 
 #macro (renderRankedResultCounterGrouping $pageSelector)
-    <strong><strong>$pageSelector.numberOfHits bewertete</strong> Treffer
+    <strong>$pageSelector.numberOfHits bewertete</strong> Treffer
 #end
 
 #macro (renderUnrankedResultCounter $pageSelector)
