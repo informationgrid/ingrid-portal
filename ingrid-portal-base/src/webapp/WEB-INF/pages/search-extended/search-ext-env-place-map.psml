@@ -16,6 +16,9 @@
               <preference name="titleKey" readOnly="false">
                 <value>searchSimple.title.extended</value>
               </preference>
+              <preference name="helpKey" readOnly="false">
+                <value>ext-search-spacial-1</value>
+              </preference>
             </fragment>
         </fragment>
         <fragment id="search-ext-env-place-map" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtEnvPlaceMap">

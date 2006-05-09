@@ -17,7 +17,10 @@
             <preference name="titleKey" readOnly="false">
               <value>searchSimple.title.result</value>
             </preference>
-          </fragment>                                
+            <preference name="helpKey" readOnly="false">
+              <value>search-results-1</value>
+            </preference>
+          </fragment>
           <fragment id="main-search-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
             <property layout="TwoColumns" name="row" value="0" />
             <property layout="TwoColumns" name="column" value="1" />

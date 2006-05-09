@@ -14,6 +14,9 @@
       <preference name="titleKey" readOnly="false">
         <value>searchSimple.title.extended</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>ext-search-address-1</value>
+      </preference>
     </fragment>
     <fragment id="search-ext-adr-area-partner" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtAdrAreaPartner">
       <property layout="TwoColumns" name="row" value="1" />

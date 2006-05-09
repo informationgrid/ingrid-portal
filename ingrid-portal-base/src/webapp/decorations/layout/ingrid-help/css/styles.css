@@ -499,5 +499,5 @@ div#popupOverview h2, div#overview h2 { height:auto; padding: 2px 14px 2px 8px; 
 
 div.helpcontent ul {list-style: none; margin: 0.0em 0 0 0.5em; padding:0;}
 div.helpcontent li { margin: 0 0 0.3em 0;padding: 0 0 0 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
-div.helpcontent li a { font-size:75%; }
 
+div#popupContent li { font-size:75%; }

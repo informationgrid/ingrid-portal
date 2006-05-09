@@ -14,6 +14,9 @@
       <preference name="titleKey" readOnly="false">
         <value>searchSimple.title.extended</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>ext-search-research-2</value>
+      </preference>
     </fragment>
     <fragment id="search-ext-res-topic-attributes" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtResTopicAttributes">
       <property layout="TwoColumns" name="row" value="1" />
