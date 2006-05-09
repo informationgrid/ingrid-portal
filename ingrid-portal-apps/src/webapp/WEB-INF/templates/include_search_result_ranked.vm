@@ -1,12 +1,20 @@
 	<div class="section">  
       <div class="resultset_nav float_left">
-#renderRankedResultCounter($rankedPageSelector)
+#if($grouping)
+	#renderRankedResultCounterGrouping($rankedPageSelector)
+#else
+	#renderRankedResultCounter($rankedPageSelector)
+#end
       </div>
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
+#if($grouping)
+	#renderRankedPageNavigationGrouping($rankedPageSelector)
+#else
+	#renderRankedPageNavigation($rankedPageSelector)
+#end
       </div>
       <br />
 #if($rankedResultList && "$rankedResultList.length()" != "0")
@@ -90,13 +98,21 @@ $action.setParameter('subject', $groupSubjectKey)
 #end  
 
       <div class="resultset_nav float_left">
-#renderRankedResultCounter($rankedPageSelector)
+#if($grouping)
+	#renderRankedResultCounterGrouping($rankedPageSelector)
+#else
+	#renderRankedResultCounter($rankedPageSelector)
+#end
       </div>
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
+#if($grouping)
+	#renderRankedPageNavigationGrouping($rankedPageSelector)
+#else
+	#renderRankedPageNavigation($rankedPageSelector)
+#end
       </div>
 
     </div>
