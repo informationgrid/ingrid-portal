@@ -29,10 +29,18 @@
 	
 	<div class="section ">    
       <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+#if($grouping)
+	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Messwerte')
+#else
+	#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+#end	
       </div>
       <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
+#if($grouping)
+	#renderRankedPageNavigationGrouping($rankedPageSelector)
+#else
+	#renderRankedPageNavigation($rankedPageSelector)
+#end
       </div>
       <br />
 #foreach($rs in $rankedResultList.hits)
@@ -72,9 +80,17 @@
 	#end
 #end
       <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+#if($grouping)
+	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Messwerte')
+#else
+	#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+#end	
       </div>
       <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
+#if($grouping)
+	#renderRankedPageNavigationGrouping($rankedPageSelector)
+#else
+	#renderRankedPageNavigation($rankedPageSelector)
+#end
       </div>
     </div>

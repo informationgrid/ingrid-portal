@@ -13,8 +13,8 @@
 				#else
               Anbieter: $!rs.provider<br />
 				#end
-			  Rubrik: $!rs.topic<br />
-##              Ranking: $!rs.score<br />
+              Thema: $!rs.topic<br />
+              Rubrik: $!rs.funct_category<br />
             </p>
 			#if($rs.url)
 			<p class="result_link">
@@ -27,14 +27,12 @@
 		  #end
           </div>
 #end
-
-
-	<div class="section ">    
+	<div class="section">    
       <div class="resultset_nav float_left">
 #if($grouping)
-	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Service')
+	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Umweltthemen')
 #else
-	#renderResultCounterCatalogue($rankedPageSelector 'Service')
+	#renderResultCounterCatalogue($rankedPageSelector 'Umweltthemen')
 #end	
       </div>
       <div class="resultset_nav">
@@ -79,13 +77,12 @@ $action.setParameter('subject', $groupSubjectKey)
       </div>
       <br />
 #end
-
 #end
       <div class="resultset_nav float_left">
 #if($grouping)
-	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Service')
+	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Umweltthemen')
 #else
-	#renderResultCounterCatalogue($rankedPageSelector 'Service')
+	#renderResultCounterCatalogue($rankedPageSelector 'Umweltthemen')
 #end	
       </div>
       <div class="resultset_nav">

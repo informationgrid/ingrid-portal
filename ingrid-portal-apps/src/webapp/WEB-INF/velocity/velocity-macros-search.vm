@@ -5,6 +5,11 @@
         <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits</strong> Einträgen in <strong>$!catalogueName</strong>
 #end
 
+#macro (renderResultCounterCatalogueGrouping $pageSelector $catalogueName)
+        <strong>$pageSelector.numberOfHits</strong> Einträge in <strong>$!catalogueName</strong>
+#end
+
+
 #macro (renderRankedResultCounter $pageSelector)
     <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits bewerteten</strong> Treffern
 #end
