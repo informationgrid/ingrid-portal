@@ -68,6 +68,9 @@ public class HelpPortlet extends GenericVelocityPortlet {
 
         // get the help chapter
         String helpKey = request.getParameter("hkey");
+        if (helpKey == null) {
+            helpKey = "index";
+        }
         Object chapterObj = doc.selectSingleNode( "//section[@help-key='" + helpKey + "']/ancestor::chapter" );
 
         // transform the xml content to valid html using xslt
