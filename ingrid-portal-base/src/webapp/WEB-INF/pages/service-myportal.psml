@@ -21,6 +21,9 @@
       <preference name="infoTitleKey" readOnly="false">
         <value>teaser.login.title</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>myingrid-1</value>
+      </preference>
     </fragment>
   </fragment>
 

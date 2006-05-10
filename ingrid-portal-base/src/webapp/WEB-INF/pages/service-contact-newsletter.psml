@@ -21,6 +21,9 @@
       <preference name="infoTitleKey" readOnly="false">
         <value>teaser.newsletter.contact</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>ingrid-newsletter-1</value>
+      </preference>
     </fragment>
     <fragment id="service-contact-newsletter-3" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />
