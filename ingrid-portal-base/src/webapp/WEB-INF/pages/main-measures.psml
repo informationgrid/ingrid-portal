@@ -11,6 +11,9 @@
     <fragment id="main-measures-input" type="portlet" name="ingrid-portal-apps::MeasuresSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="helpKey" readOnly="false">
+        <value>search-measure-1</value>
+      </preference>
     </fragment>
     <fragment id="main-measures-results" type="portlet" decorator="clear" name="ingrid-portal-apps::MeasuresResult">
       <property layout="TwoColumns" name="row" value="1" />

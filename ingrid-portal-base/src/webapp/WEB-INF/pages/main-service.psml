@@ -11,6 +11,9 @@
     <fragment id="main-service-input" type="portlet" name="ingrid-portal-apps::ServiceSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="helpKey" readOnly="false">
+        <value>search-service-1</value>
+      </preference>
     </fragment>
     <fragment id="main-service-results" type="portlet" decorator="clear" name="ingrid-portal-apps::ServiceResult">
       <property layout="TwoColumns" name="row" value="1" />

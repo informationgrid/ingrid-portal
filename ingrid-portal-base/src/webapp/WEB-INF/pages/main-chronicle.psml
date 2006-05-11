@@ -12,6 +12,9 @@
     <fragment id="main-chronicle-input" type="portlet" name="ingrid-portal-apps::ChronicleSearch">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="helpKey" readOnly="false">
+        <value>search-chronicle-1</value>
+      </preference>
     </fragment>
     <fragment id="main-chronicle-results" type="portlet" decorator="clear" name="ingrid-portal-apps::ChronicleResult">
       <property layout="TwoColumns" name="row" value="1" />
