@@ -35,6 +35,12 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
         if (cmd == null) {
             f.init();
         }
+        
+        String preSelect = request.getParameter("select");
+        if (preSelect != null && preSelect.length() > 0) {
+            f.setInput(SearchExtEnvAreaContentsForm.FIELD_CONTENT_TYPE, preSelect);
+        }
+        
         context.put("actionForm", f);
         
         
