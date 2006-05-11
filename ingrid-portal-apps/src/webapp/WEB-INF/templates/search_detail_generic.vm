@@ -1,5 +1,5 @@
 #macro (renderUDKEntry $r $entryName)
-	#if($r.get($entryName))
+	#if($r.get($entryName) && $r.get($entryName) != "")
 		<p><strong>$entryName:</strong><br>
 		$r.get($entryName)
 		</p>
@@ -10,11 +10,11 @@
 	#foreach($key in $record.keySet())
 		#set($level = $level + 1)
 		#if($record.get($key).get(0))
-			#set($newRenderRecord = $record.get($key).get(0))
-    		<p><strong>$key:</strong><br>
-			<div class="line"><hr /></div>
+			#foreach($newRenderRecord in $record.get($key))
+			#if (!$newRenderRecord.isEmpty())
 			#renderRec($newRenderRecord $level)
-    		<div class="line"><hr /></div>
+			#end
+			#end
 		#else
 			#if($key != "summary" && $key != "title")
 				#renderUDKEntry($record $key)
@@ -26,6 +26,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
+
 #if($rec)
 	<div class="section-header">
 		<h1>$rec.get("title")</h1>

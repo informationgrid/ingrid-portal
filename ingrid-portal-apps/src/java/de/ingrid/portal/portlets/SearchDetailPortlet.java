@@ -88,7 +88,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         try {
             PlugDescription plugDescription = ibus.getIPlug(iplugId);
             
-            // flag to make column name readable (not lowercase, character substitution)
+            // flag to make column name readable (not lowercase, character substitution '_' => ' ')
             boolean readableColumnNames = false;
             
             
@@ -210,7 +210,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 // serch for column
                 Column[] columns = record.getColumns();
                 for (int i = 0; i < columns.length; i++) {
-                    if (record.getValueAsString(columns[i]).trim().length() > 0) {
+
+                    if (columns[i].toIndex()) {
                         String columnName = columns[i].getTargetName();
                         if (readableColumnNames) {
                             columnName = columnName.replace('_', ' ');
@@ -227,6 +228,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 }
                 addSubRecords(record, recordMap, request.getLocale(), readableColumnNames);
                 
+                recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
+                
                 context.put("rec", recordMap);
             }
         } catch(Throwable t){
@@ -236,36 +239,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         super.doView(request, response);
     }
 
-    private void getUDKAddressParents(HashMap result, String addrId) throws Exception {
-        // get id of the address
-        String addressId = addrId;
-        // set initial address type to 1
-        String addressType = "";
-        do {
-            // get the paren address hit + detail
-            IngridHit parent = getParentAddress(addressId);
-            if (parent == null) {
-                // no parent found
-                break;
-            }
-            addressType = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_CLASS);
-            addressId = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_ADDRID);
-            if (addressType.equals("0")) {
-                if (!result.containsKey("institutions")) {
-                    result.put("institutions", new ArrayList());
-                }
-                ArrayList institutions = (ArrayList)result.get("institutions");
-                institutions.add(parent);
-            } else if (addressType.equals("1")) {
-                if (!result.containsKey("units")) {
-                    result.put("units", new ArrayList());
-                }
-                ArrayList units = (ArrayList)result.get("units");
-                units.add(0, parent);
-            }
-            // exit loop if parent was NO unit
-        } while (addressType.equals("1"));
-    }
     
     private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
         addSubRecords(record, map, locale, 0, readableColumns);
@@ -282,7 +255,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             HashMap subRecordMap = new HashMap();
             columns = subRecords[i].getColumns();
             for (int j = 0; j < columns.length; j++) {
-                if (subRecords[i].getValueAsString(columns[j]).trim().length() > 0) {
+                if (columns[j].toIndex()) {
                     String columnName = columns[j].getTargetName();
                     if (readableColumns) {
                         columnName = columnName.replace('_', ' ');
@@ -316,13 +289,76 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns);
         }
         
+    }    
+    
+    private void getUDKAddressParents(HashMap result, String addrId) throws Exception {
+        // get id of the address
+        String addressId = addrId;
+        // set initial address type to 1
+        String addressType = "";
+        do {
+            // get the paren address hit + detail
+            IngridHit parent = getParentAddress(addressId);
+            if (parent == null) {
+                // no parent found
+                break;
+            }
+            addressType = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_CLASS);
+            addressId = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_ADDRID);
+            if (addressType.equals("0")) {
+                if (!result.containsKey("institutions")) {
+                    result.put("institutions", new ArrayList());
+                }
+                ArrayList institutions = (ArrayList)result.get("institutions");
+                institutions.add(parent);
+            } else if (addressType.equals("1")) {
+                if (!result.containsKey("units")) {
+                    result.put("units", new ArrayList());
+                }
+                ArrayList units = (ArrayList)result.get("units");
+                units.add(0, parent);
+            }
+            // exit loop if parent was NO unit
+        } while (addressType.equals("1"));
+    }
+    
+
+    /**
+     * Iterate over the hashmap ArrayList structure and return the requested field.
+     * 
+     * @param hash
+     * @param fieldName
+     * @return
+     */
+    private String getFieldFromHashTree(HashMap hash,  String fieldName) {
+        Iterator it = hash.keySet().iterator();
+        while (it.hasNext()) {
+            String key = (String)it.next();
+            if (key.equals(fieldName)) {
+                if (hash.get(key) instanceof String) {
+                    return (String)hash.get(key);
+                }
+            }
+            if (hash.get(key) instanceof ArrayList) {
+                ArrayList array = (ArrayList)hash.get(key);
+                for (int i=0; i<array.size(); i++) {
+                    if (array.get(i) instanceof HashMap) {
+                        String val = getFieldFromHashTree((HashMap)array.get(i), fieldName);
+                        if (val != null) {
+                            return val;
+                        }
+                    }
+                }
+            }
+            
+        }
+        return null;
     }
     
     
     private ArrayList getAllTableRows(Record record,  String tableName) {
         ArrayList result = new ArrayList();
         
-//        Column[] columns;
         Record[] subRecords = record.getSubRecords();
         for (int i = 0; i < subRecords.length; i++) {
 
