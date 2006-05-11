@@ -87,6 +87,7 @@ public class PortalSiteSessionContextImpl implements PortalSiteSessionContext, P
      * folderPageHistory - map of last page visited by folder 
      */
     private Map folderPageHistory;
+    private boolean enFolderPageHistory = false;
 
     /**
      * menuDefinitionLocatorCache - cached menu definition locators for
@@ -428,7 +429,10 @@ public class PortalSiteSessionContextImpl implements PortalSiteSessionContext, P
                     // path, (proxies are hashed by their path), contains
                     // test must be performed since identical paths may
                     // occur in multiple site views
-                    Page requestPage = (Page)folderPageHistory.get(requestFolder);
+                    Page requestPage = null;
+                    if (enFolderPageHistory) {
+                        requestPage = (Page)folderPageHistory.get(requestFolder);
+                    }
                     
                     if ((requestPage != null) && requestFolderPages.contains(requestPage))
                     {
@@ -457,7 +461,7 @@ public class PortalSiteSessionContextImpl implements PortalSiteSessionContext, P
                             // path, (proxies are hashed by their path), and
                             // return default page
                             requestPage = requestFolder.getPage(defaultPageName);
-                            if (!requestPage.isHidden())
+                            if (!requestPage.isHidden() && enFolderPageHistory)
                             {
                                 folderPageHistory.put(requestFolder, requestPage);
                             }
@@ -483,7 +487,7 @@ public class PortalSiteSessionContextImpl implements PortalSiteSessionContext, P
                     // non-hidden page for folder proxy path, (proxies
                     // are hashed by their path), and return default page
                     requestPage = (Page)requestFolderPages.iterator().next();
-                    if (!requestPage.isHidden())
+                    if (!requestPage.isHidden() && enFolderPageHistory)
                     {
                         folderPageHistory.put(requestFolder, requestPage);
                     }
@@ -504,7 +508,7 @@ public class PortalSiteSessionContextImpl implements PortalSiteSessionContext, P
                 // path, (proxies are hashed by their path), and
                 // return matched page
                 Folder requestFolder = (Folder)requestPage.getParent();
-                if (!requestPage.isHidden())
+                if (!requestPage.isHidden() && enFolderPageHistory)
                 {
                     folderPageHistory.put(requestFolder, requestPage);
                 }
