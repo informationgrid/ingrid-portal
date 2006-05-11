@@ -179,7 +179,7 @@ public class UtilsSearch {
      * @param key
      * @return
      */
-    public static String getDetailValue(IngridHitDetail detail, String key) {
+    public static String getDetailValue(IngridHit detail, String key) {
         return getDetailValue(detail, key, null);
     }
 
@@ -191,7 +191,7 @@ public class UtilsSearch {
      * @param resources
      * @return
      */
-    public static String getDetailValue(IngridHitDetail detail, String key, IngridResourceBundle resources) {
+    public static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources) {
         return getDetailValue(detail, key, resources, false);
     }
 
@@ -202,7 +202,7 @@ public class UtilsSearch {
      * @param key
      * @return
      */
-    public static String getRawDetailValue(IngridHitDetail detail, String key) {
+    public static String getRawDetailValue(IngridHit detail, String key) {
         return getDetailValue(detail, key, null, true);
     }
 
@@ -214,7 +214,7 @@ public class UtilsSearch {
      * @param raw
      * @return
      */
-    private static String getDetailValue(IngridHitDetail detail, String key, IngridResourceBundle resources, boolean raw) {
+    private static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources, boolean raw) {
         Object obj = detail.get(key);
         if (obj == null) {
             return "";
