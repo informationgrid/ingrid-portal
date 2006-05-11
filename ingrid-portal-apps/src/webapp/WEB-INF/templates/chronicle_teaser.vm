@@ -1,7 +1,7 @@
 <div class="portlet-section-body">
 #if($snsAnniversary.years && $snsAnniversary.title)
     <p class="iconLink">
-	  <strong>Vor $snsAnniversary.years Jahren: $snsAnniversary.title</strong> ($snsAnniversary.from#if($snsAnniversary.until) - $snsAnniversary.until#end)<br/><br/>
+	  <strong>Vor $snsAnniversary.years#if($snsAnniversary.years > 1) Jahren#else Jahr#end: $snsAnniversary.title</strong> ($snsAnniversary.from#if($snsAnniversary.until) - $snsAnniversary.until#end)<br/><br/>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
 $action.setParameter('topId',"$!snsAnniversary.topicId")
