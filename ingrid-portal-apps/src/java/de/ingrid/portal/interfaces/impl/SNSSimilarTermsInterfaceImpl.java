@@ -15,7 +15,6 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
@@ -50,7 +49,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             IngridQuery query = QueryStringParser.parse(term);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             if (filter != null) {
-                query.addField(new FieldQuery(true, false, "filter", filter));
+                query.put("filter", filter);
             }
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TEXT);
 
@@ -73,7 +72,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, 30000);
+            IngridHits hits = iBus.search(query, 10, 1, 10, 60000);
 
             return hits.getHits();
         } catch (Exception e) {
