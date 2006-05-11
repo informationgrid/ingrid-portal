@@ -1,8 +1,8 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="popupContent">
   <p class="optional-links">
-    <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$jetspeed.getAbsoluteUrl('/help.psml?hkey=index')faq_inhalt.html">zur Themenübersicht</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="javascript:closeWindow()">schließen</a>
+    <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="help.psml?hkey=index">zur Themenübersicht</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="javascript:window.close()">schließen</a>
   </p>
   <p class="clearer"></p> 
   <div class="line"><hr /></div>
