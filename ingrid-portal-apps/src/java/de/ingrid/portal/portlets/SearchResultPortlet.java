@@ -343,6 +343,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (rankedStarthit != null) {
             publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
         }
+        // currentSelectorPage is set, send according message (Search state)
+        String currentSelectorPage = request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE);
+        if (currentSelectorPage != null) {
+            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+        }
+
         String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
         if (unrankedStarthit != null) {
             publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
