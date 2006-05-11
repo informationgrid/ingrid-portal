@@ -89,7 +89,7 @@
 			<p class="result_link"></p>
 		  #end
           </div>
-        #if($rs.get('moreHits'))
+        #if($rs.get('moreHits') && $groupSubjectKey != "")
           <div class="line"><hr /></div>
           <div class="resultset_show_partner">
 #set ($action = $renderResponse.createActionURL())
