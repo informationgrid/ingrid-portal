@@ -290,7 +290,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         if (unrankedHits != null) {
-            numberOfUnrankedHits = (int) unrankedHits.length();
+            numberOfUnrankedHits = (int) unrankedHits.getInVolvedPlugs();
         }
         // adapt settings of unranked page navigation
         HashMap unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
@@ -325,6 +325,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // adapt page navigation for grouping 
         if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             rankedPageNavigation.put("currentSelectorPage", new Integer(currentSelectorPage));
+            // check if we have more results to come
+            if (numberOfRankedHits <= rankedHits.getGoupedHitsLength()) {
+                rankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
+            }
         }
         
         
