@@ -24,6 +24,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 
@@ -110,7 +111,12 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             if (f.validate()) {
                 IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), "/location");
                 if (hits != null && hits.length > 1) {
-                    IngridHitDetail[] details = SNSSimilarTermsInterfaceImpl.getInstance().getDetailedTopics(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), hits, Topic.TOPIC_FROM_TEXT);
+                    for (int i=0; i<hits.length; i++) {
+                        String href = UtilsSearch.getDetailValue(hits[i], "href");
+                        if (href != null && href.lastIndexOf("#") != -1) {
+                            hits[i].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
+                        }
+                    }
                     request.getPortletSession().setAttribute(TOPICS, hits, PortletSessionImpl.PORTLET_SCOPE);
                 } else {
                     f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");
@@ -136,12 +142,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                     if (subTerm.length() > 0) {
                         subTerm = subTerm.concat(" OR ");
                     }
-                    String termTitle = (String)hits[i].get("title");
-                    if (termTitle.indexOf(" ") != -1) {
-                        subTerm = subTerm.concat("\"").concat((String)hits[i].get("title")).concat("\"");
-                    } else {
-                        subTerm = subTerm.concat((String)hits[i].get("title"));
-                    }
+                    subTerm = subTerm.concat("areaid:").concat(chkVal);
                 }
             }
             if (subTerm.length() > 0) {
