@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
@@ -82,6 +83,31 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         }
 
+        // handle grouped page navigation
+        String grouping = (String) query.get(Settings.QFIELD_GROUPED);
+        int nextStartHit = 0;
+        ArrayList groupedStartHits = null;
+        int currentSelectorPage = 1;
+        if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
+            // get the current page number, default to 1
+            try {
+                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+            } catch (Exception ex) {
+                currentSelectorPage = 1;
+            }
+            // get the grouping starthits history from session
+            // create and initialize if not exists
+            groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+            if (groupedStartHits == null || currentSelectorPage == 1) {
+                groupedStartHits = new ArrayList();
+                groupedStartHits.add(new Integer(0));
+                SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
+            }
+            // set next starthit for grouped search
+            nextStartHit = ((Integer)groupedStartHits.get(currentSelectorPage-1)).intValue();
+        }
+        
+        
         // ----------------------------------
         // business logic
         // ----------------------------------
@@ -92,7 +118,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         int numberOfHits = 0;
         try {
-            hits = doSearch(query, startHit, HITS_PER_PAGE, messages);
+            hits = doSearch(query, startHit, nextStartHit, HITS_PER_PAGE, messages);
             if (hits != null) {
                 numberOfHits = (int) hits.length();
             }
@@ -109,6 +135,11 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             return;
         }
 
+        // store start hit for next page (grouping)
+        if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
+            groupedStartHits.add(currentSelectorPage, new Integer(hits.getGoupedHitsLength()));
+        }
+        
         // adapt settings of page nagihation
         HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
@@ -117,16 +148,18 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         // prepare view
         // ----------------------------------
 
-        // check for grouping
-        String grouping = (String) query.get(Settings.QFIELD_GROUPED);
+        // set context properties for grouping
         if (grouping != null) {
             if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
                 context.put("grouping", "partner");
             } else if (grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {
                 context.put("grouping", "provider");
             }
+            // adapt page navigation for grouping 
+            if (!grouping.equals(IngridQuery.GROUPED_OFF)) {
+                pageNavigation.put("currentSelectorPage", new Integer(currentSelectorPage));
+            }
         }
-
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);
 
@@ -143,7 +176,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_ENVIRONMENT + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, IngridResourceBundle resources) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources) {
         if (log.isDebugEnabled()) {
             log.debug("Umweltthemen IngridQuery = " + UtilsSearch.queryToString(query));
         }
@@ -153,7 +186,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
+            hits = ibus.search(query, hitsPerPage, currentPage, groupedStartHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
