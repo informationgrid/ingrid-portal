@@ -19,7 +19,7 @@ public class QueryDescriptor {
 
     int currentPage;
 
-    int requestedHits;
+    int startHit;
 
     int timeout;
 
@@ -35,7 +35,7 @@ public class QueryDescriptor {
      * @param query
      * @param hitsPerPage
      * @param currentPage
-     * @param requestedHits
+     * @param startHit
      * @param timeout
      * @param getDetails
      * @param getPlugDescription
@@ -47,7 +47,7 @@ public class QueryDescriptor {
         this.query = query;
         this.hitsPerPage = hitsPerPage;
         this.currentPage = currentPage;
-        this.requestedHits = requestedHits;
+        this.startHit = requestedHits;
         this.timeout = timeout;
         this.getDetails = getDetails;
         this.getPlugDescription = getPlugDescription;
@@ -139,17 +139,17 @@ public class QueryDescriptor {
     }
 
     /**
-     * @return Returns the requestedHits.
+     * @return Returns the startHit.
      */
-    public int getRequestedHits() {
-        return requestedHits;
+    public int getStartHit() {
+        return startHit;
     }
 
     /**
-     * @param requestedHits The requestedHits to set.
+     * @param startHit The startHit to set.
      */
-    public void setRequestedHits(int requestedHits) {
-        this.requestedHits = requestedHits;
+    public void setStartHit(int startHit) {
+        this.startHit = startHit;
     }
 
     /**

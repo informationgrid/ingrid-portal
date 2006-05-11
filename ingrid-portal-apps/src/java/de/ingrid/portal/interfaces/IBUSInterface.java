@@ -34,12 +34,12 @@ public interface IBUSInterface {
      * @param query The IngridQuery to search for.
      * @param hitsPerPage The number of hits per page.
      * @param currentPage The current page requested.
-     * @param requestedHits The number of requested hits.
+     * @param startHit The startHit for a new grouped(!) query.
      * @param timeout The timeout for this query.
      * @return The IngridHits containing the hits of this query.
      * @throws Exception 
      */
-    IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout)
+    IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout)
             throws Exception;
 
     /**

@@ -309,6 +309,10 @@ public class Settings {
     public final static String PARAM_DATASOURCE = "ds";
 
     public final static String PARAM_RANKING = "rank";
+    
+    // history of starthits of grouped pages
+    public static final String PARAM_GROUPING_STARTHITS = "grouping_starthits";
+    
 
     /** this parameter holds the type of filter for search result display (usually same as grouping: partner | provider) **/
     public static final String PARAM_FILTER = "filter";
@@ -328,6 +332,9 @@ public class Settings {
     public final static String PARAM_TOPIC_ID = "topId";
 
     public final static String PARAM_TAB = "tab";
+
+    public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
+
 
 
 

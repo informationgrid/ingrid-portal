@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.search;
 
+import java.util.ArrayList;
+
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
@@ -15,6 +17,7 @@ import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.net.QueryDescriptor;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -132,15 +135,40 @@ public class QueryPreProcessor {
             }
         }
         
+        
         String inclMetaData = (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_INCL_META);
         if (inclMetaData != null && inclMetaData.equals("on")) {
             query.addField(new FieldQuery(true, false, Settings.QFIELD_INCL_META, "on"));
         }
         
+        // if grouping, adapt search parameters to deliver the startHit for the next ibus query
+        int newStartHit = 0;
+        if (query.getGrouped() != null && query.getGrouped().length() > 0 && !query.getGrouped().equals(IngridQuery.GROUPED_OFF)) {
+            
+            // get the current page number, default to 1
+            int currentSelectorPage;
+            try {
+                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+            } catch (Exception ex) {
+                currentSelectorPage = 1;
+            }
+
+            // get the grouping starthits history from session
+            // create and initialize if not exists
+            ArrayList groupedStartHits = null;
+            groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+            if (groupedStartHits == null) {
+                groupedStartHits = new ArrayList();
+                groupedStartHits.add(new Integer(0));
+                SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
+            }
+            currentPage = 0;
+            newStartHit = ((Integer)groupedStartHits.get(currentSelectorPage - 1)).intValue();
+        }
         
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage,
-                Settings.SEARCH_RANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(
+                newStartHit, PortalConfig.getInstance().getInt(
                         PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, false, requestedMetadata);
     }
 

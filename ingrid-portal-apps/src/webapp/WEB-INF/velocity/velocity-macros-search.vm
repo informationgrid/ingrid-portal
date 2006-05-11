@@ -52,16 +52,16 @@
 #set ($action = $renderResponse.createActionURL())
 	(Seite <strong>$pageSelector.currentSelectorPage</strong>)
 	#if($pageSelector.currentSelectorPage > 1)
-        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())	
+        #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    	$action.setParameter('currentSelectorPage', $pstart.toString())
     		<a href="$action">&laquo;</a>
-    	$action.setParameter('rstart', "0")	
+    	$action.setParameter('currentSelectorPage', "1")	
     		| <a href="$action">1</a> ..
 	#end
     		| $pageSelector.currentSelectorPage
     #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())
+        #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    	$action.setParameter('currentSelectorPage', $pstart.toString())
     		| <a href="$action">&raquo;</a>
     #end
 #end

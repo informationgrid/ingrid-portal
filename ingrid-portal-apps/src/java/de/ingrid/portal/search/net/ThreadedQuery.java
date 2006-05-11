@@ -54,7 +54,7 @@ public class ThreadedQuery extends Thread {
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 
-            hits = ibus.search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getRequestedHits(), qd
+            hits = ibus.search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getStartHit(), qd
                     .getTimeout());
             if (qd.isGetDetails() || qd.isGetPlugDescription()) {
                 IngridHit[] hitArray = hits.getHits();

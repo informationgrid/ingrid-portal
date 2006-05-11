@@ -65,8 +65,13 @@ public class SearchState {
             String action = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
             Utils.appendURLParameter(result, action);
 
+            // current selector page (set only for grouping)
+            // (read only from request)
+            String paramValue = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE));
+            Utils.appendURLParameter(result, paramValue);
+            
             // query string (read from state)
-            String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 

@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
@@ -187,6 +188,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // store query in session
         UtilsSearch.addQueryToHistory(request);
         
+        // initialize grouping 
+        String grouping = null;
+        
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
@@ -204,7 +208,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     // check for grouping
                     // this must be done here because grouping will only be 
                     // put into the query created by the pre processor
-                    String grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
+                    grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
                     if (grouping != null) {
                         if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
                             context.put("grouping", "partner");
@@ -235,6 +239,9 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         }
 
+        // preset currentselector page (needed only for grouping)
+        int currentSelectorPage = 1;
+        
         // fire query, post process results
         if (controller.hasQueries()) {
             // fire queries
@@ -243,6 +250,29 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             if (results.containsKey("ranked")) {
                 rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
+                // GROUPING ONLY !!!
+                // store start hit for the next page (only when in grouping mode)
+                if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
+                    // get the current page number, default to 1
+                    try {
+                        currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                    } catch (Exception ex) {
+                        currentSelectorPage = 1;
+                    }
+                    // get the grouping starthits history from session
+                    // create and initialize if not exists
+                    ArrayList groupedStartHits = null;
+                    groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+                    if (groupedStartHits == null) {
+                        groupedStartHits = new ArrayList();
+                        groupedStartHits.add(new Integer(0));
+                        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
+                    } else {
+                        // set start hit for next page (grouping)
+                        groupedStartHits.add(currentSelectorPage, new Integer(rankedHits.getGoupedHitsLength()));
+                    }
+                }
+                
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
@@ -291,6 +321,12 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // prepare view
         // ----------------------------------
+
+        // adapt page navigation for grouping 
+        if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
+            rankedPageNavigation.put("currentSelectorPage", new Integer(currentSelectorPage));
+        }
+        
         
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
