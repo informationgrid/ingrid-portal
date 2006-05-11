@@ -157,6 +157,10 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
             // adapt page navigation for grouping 
             if (!grouping.equals(IngridQuery.GROUPED_OFF)) {
                 pageNavigation.put("currentSelectorPage", new Integer(currentSelectorPage));
+                // check if we have more results to come
+                if (numberOfHits <= hits.getGoupedHitsLength()) {
+                    pageNavigation.put("selectorHasNextPage", new Boolean(false));
+                }
             }
         }
         context.put("rankedPageSelector", pageNavigation);
