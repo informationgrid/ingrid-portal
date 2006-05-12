@@ -354,6 +354,9 @@ public class UtilsSearch {
                 } else if (rType == Topic.TOPIC_FROM_TEXT) {
                     qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
                             .concat("(TOPIC_FROM_TEXT)");
+                } else if (rType == Topic.SIMILARLOCATIONS_FROM_TOPIC) {
+                    qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
+                            .concat("(SIMILARLOCATIONS_FROM_TOPIC)");
                 } else {
                     qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
                             .concat("(UNKNOWN)");
