@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.SimilarTermsInterface;
 import de.ingrid.utils.IngridHit;
@@ -58,7 +59,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, 30000);
+            IngridHits hits = iBus.search(query, 50, 1, 50,  PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {
@@ -78,7 +79,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, 60000);
+            IngridHits hits = iBus.search(query, 10, 1, 10,  PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {
@@ -133,7 +134,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, 60000);
+            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {

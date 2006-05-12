@@ -4,29 +4,23 @@
 package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.apache.pluto.core.impl.PortletSessionImpl;
-import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.iplug.sns.utils.DetailedTopic;
-import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
-import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.tool.SNSUtil;
 
 /**
  * This portlet handles the fragment of the geothesaurus input in the extended search.
@@ -55,9 +49,6 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
 
     private final static String PARAMV_VIEW_BROWSE = "2";
     
-    private static final String PARAMV_SEARCH_TERM = "search_term";
-   
-
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -82,12 +73,14 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
         if (action.equals(PARAMV_VIEW_RESULTS)) {
             if (!f.hasErrors()) {
                 setDefaultViewPage(TEMPLATE_RESULTS);
-                context.put("topics", request.getPortletSession().getAttribute(TOPICS));
+                context.put("topics", (IngridHit[])request.getPortletSession().getAttribute(TOPICS));
+                context.put("list_size", new Integer(((IngridHit[])request.getPortletSession().getAttribute(TOPICS)).length));
             }
         } else if (action.equals(PARAMV_VIEW_BROWSE)) {
             setDefaultViewPage(TEMPLATE_BROWSE);
             context.put("current_topic", request.getPortletSession().getAttribute(CURRENT_TOPIC));
             context.put("similar_topics", request.getPortletSession().getAttribute(SIMILAR_TOPICS));
+            context.put("list_size", new Integer(((IngridHit[])request.getPortletSession().getAttribute(SIMILAR_TOPICS)).length));
         }
 
         super.doView(request, response);
@@ -139,15 +132,15 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
         } else if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
-            IngridHit[] hits = (IngridHit[])request.getPortletSession().getAttribute(TOPICS);
             String subTerm = "";
-            for (int i=0; i< hits.length; i++) {
+            String listSize = request.getParameter("list_size");
+            for (int i=0; i< Integer.parseInt(listSize); i++) {
                 String chkVal = request.getParameter("chk"+(i+1));
                 if (chkVal != null) {
                     if (subTerm.length() > 0) {
                         subTerm = subTerm.concat(" OR ");
                     }
-                    subTerm = subTerm.concat("areaid:").concat(chkVal);
+                    subTerm = subTerm.concat("areaid:").concat(SNSUtil.transformSpacialReference(chkVal));
                 }
             }
             if (subTerm.length() > 0) {
@@ -170,15 +163,28 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
             // SNS Deskriptor browsen
+            IngridHit[] hits = null;
             String topicId = request.getParameter("topic_id");
+            if (topicId != null) {
+                hits = (IngridHit[])request.getPortletSession().getAttribute(TOPICS);
+            } else {
+                topicId = request.getParameter("similar_topic_id");
+                if (topicId != null) {
+                    hits = (IngridHit[])request.getPortletSession().getAttribute(SIMILAR_TOPICS);
+                }
+            }
 
-            IngridHit[] hits = (IngridHit[])request.getPortletSession().getAttribute(TOPICS);
             if (hits != null && hits.length > 1) {
                 for (int i=0; i<hits.length; i++) {
                     String tid = UtilsSearch.getDetailValue(hits[i], "topicID");
                     if (tid != null && tid.equals(topicId)) {
                         request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSessionImpl.PORTLET_SCOPE);
                         IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId);
+                        if (similarHits == null) {
+                            SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);
+                            f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");
+                            break;
+                        }
                         for (int j=0; j<similarHits.length; j++) {
                             String href = UtilsSearch.getDetailValue(similarHits[j], "abstract");
                             if (href != null && href.lastIndexOf("#") != -1) {

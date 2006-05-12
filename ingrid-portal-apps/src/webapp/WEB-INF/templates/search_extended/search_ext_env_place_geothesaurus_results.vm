@@ -12,6 +12,7 @@
             <p>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doBrowse')
+<input type="hidden" name="list_size" value="$list_size"/>
 #foreach($topic in $topics)
 	#set($topicId = $topic.topicID)
 	#set($topicRef = $topic.topic_ref)
