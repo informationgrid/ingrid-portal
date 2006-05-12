@@ -44,6 +44,9 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         super();
     }
 
+    /**
+     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getTopicsFromText(java.lang.String, java.lang.String)
+     */
     public IngridHit[] getTopicsFromText(String term, String filter) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -64,6 +67,9 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
+    /**
+     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getSimilarTerms(java.lang.String)
+     */
     public IngridHit[] getSimilarTerms(String term) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -81,6 +87,9 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
     
+    /**
+     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getSimilarDetailedTerms(java.lang.String, de.ingrid.utils.IngridHit[])
+     */
     public IngridHitDetail[] getSimilarDetailedTerms(String term, IngridHit[] hits) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -96,6 +105,9 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
+    /**
+     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getDetailedTopics(java.lang.String, de.ingrid.utils.IngridHit[], int)
+     */
     public IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -108,6 +120,28 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             log.error("Exception while querying sns for detailed terms.", e);
             return null;
         }
+    }
+    
+    /**
+     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getTopicSimilarLocationsFromTopic(java.lang.String)
+     */
+    public IngridHit[] getTopicSimilarLocationsFromTopic(String topicId) {
+        try {
+            IngridQuery query = QueryStringParser.parse(topicId);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARLOCATIONS_FROM_TOPIC);
+
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+
+            IngridHits hits = iBus.search(query, 10, 1, 10, 60000);
+
+            return hits.getHits();
+        } catch (Exception e) {
+            log.error("Exception while querying sns for similar terms.", e);
+            return null;
+        }
+        
+        
     }
 
 

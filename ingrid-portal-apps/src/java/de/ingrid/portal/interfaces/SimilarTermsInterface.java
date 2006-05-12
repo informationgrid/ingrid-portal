@@ -53,4 +53,15 @@ public interface SimilarTermsInterface {
      */
     IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType);
     
+    
+    
+    /**
+     * Get similar location topics from a given topic id.
+     * 
+     * @param term
+     *            The given topic id to search similar topics for.
+     * @return Array of similar topics for term.
+     */
+    IngridHit[] getTopicSimilarLocationsFromTopic(String topicId);
+    
 }

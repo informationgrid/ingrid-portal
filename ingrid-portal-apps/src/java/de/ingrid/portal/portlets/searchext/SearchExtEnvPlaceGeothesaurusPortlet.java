@@ -37,7 +37,11 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
 
     // VIEW TEMPLATES
 
+    private static final String CURRENT_TOPIC = "current_topic";
+
     private static final String TOPICS = "topics";
+
+    private static final String SIMILAR_TOPICS = "similar_topics";
 
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus.vm";
 
@@ -52,7 +56,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
     private final static String PARAMV_VIEW_BROWSE = "2";
     
     private static final String PARAMV_SEARCH_TERM = "search_term";
-    
+   
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -82,6 +86,8 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             }
         } else if (action.equals(PARAMV_VIEW_BROWSE)) {
             setDefaultViewPage(TEMPLATE_BROWSE);
+            context.put("current_topic", request.getPortletSession().getAttribute(CURRENT_TOPIC));
+            context.put("similar_topics", request.getPortletSession().getAttribute(SIMILAR_TOPICS));
         }
 
         super.doView(request, response);
@@ -126,7 +132,6 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                 request.getPortletSession().removeAttribute(TOPICS);
             }
             
-            
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
             actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
@@ -165,8 +170,26 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
             // SNS Deskriptor browsen
-            
+            String topicId = request.getParameter("topic_id");
 
+            IngridHit[] hits = (IngridHit[])request.getPortletSession().getAttribute(TOPICS);
+            if (hits != null && hits.length > 1) {
+                for (int i=0; i<hits.length; i++) {
+                    String tid = UtilsSearch.getDetailValue(hits[i], "topicID");
+                    if (tid != null && tid.equals(topicId)) {
+                        request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSessionImpl.PORTLET_SCOPE);
+                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId);
+                        for (int j=0; j<similarHits.length; j++) {
+                            String href = UtilsSearch.getDetailValue(similarHits[j], "abstract");
+                            if (href != null && href.lastIndexOf("#") != -1) {
+                                similarHits[j].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
+                            }
+                        }
+                        request.getPortletSession().setAttribute(SIMILAR_TOPICS, similarHits, PortletSessionImpl.PORTLET_SCOPE);            
+                        break;
+                    }
+                }
+            }
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
             actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
