@@ -11,32 +11,32 @@
               <span class="clearer"></span>
           	  <div>
             	  <table class="fullwidth">
-            	  <tr>
-            	    <td class="iconwidth"><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
-            	    <td><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>Zerstörung</strong></td>
-            	  </tr>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doBrowse')
-            	  <tr>
-            	    <td></td>
-##$action.setParameter('?id?',?id?)
-            	    <td>&nbsp;&nbsp;<input id="s_chk_3" name="s_chk_3" type="checkbox" />&nbsp;<a href="$action">Landschaftsbild</a></td>
-            	  </tr>
-            	  <tr>
-            	    <td></td>
-            	    <td>
-            	      <span class="float_left">
-##$action.setParameter('?id?',?id?)
-            	        &nbsp;&nbsp;<input id="s_chk_5" name="s_chk_5" type="checkbox" />&nbsp;<a href="$action">Umweltschaden</a>
-            	      </span>
-            	      <div class="ico_arrowup float_right"><a href="#thesaurus">nach oben</a></div>
-                    <span class="clearer"></span>
-            	    </td>
-            	  </tr>
-            	  <tr>
-            	    <td><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
-            	    <td><a href="#thesaurus"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>Waldes</strong></td>
-            	  </tr>
+#foreach($similarNode in $ps.similarRoot.getChildren())
+	#set ($action = $renderResponse.createActionURL())
+	$action.setParameter('nodeId',$similarNode.id)
+	#if($similarNode.isOpen())
+		$action.setParameter('action','doCloseNode')
+			  <tr>
+				<td class="iconwidth"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	  </tr>
+		#foreach($tokenNode in $similarNode.getChildren())
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter('action','doBrowse')
+			$action.setParameter('topicID',$tokenNode.get("topicID"))
+          	  <tr>
+          	    <td></td>
+          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/>&nbsp;&nbsp;<a href="$action">$tokenNode.name</a></td>
+          	  </tr>
+		#end
+	#else
+		$action.setParameter('action','doOpenNode')
+          	  <tr>
+          	    <td class="iconwidth"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	  </tr>
+	#end
+#end			  
             	  </table>
           	  </div>
           </div>
