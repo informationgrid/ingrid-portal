@@ -9,6 +9,7 @@
 #parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
               <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.results.title')</h3>
               <span class="clearer"></span>
+			  <input type="hidden" name="addFromDisplayTree" value="1"/>
           	  <div>
             	  <table class="fullwidth">
 #foreach($similarNode in $ps.similarRoot.getChildren())

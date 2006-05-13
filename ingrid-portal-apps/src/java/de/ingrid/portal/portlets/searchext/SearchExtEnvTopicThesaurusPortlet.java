@@ -4,6 +4,8 @@
 package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -11,21 +13,20 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
 import org.apache.pluto.core.impl.PortletSessionImpl;
+import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtEnvTopicThesaurusForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
-import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
@@ -54,7 +55,11 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
 
     private final static String PARAMV_VIEW_SYNONYM = "3";
     
-    private final static String TOPICS = "topics";
+    private final static String ASSOCIATED_TOPICS = "associated_topics";
+    
+    private final static String CURRENT_TOPIC = "current_topic";
+    
+    
     
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -91,6 +96,10 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             
             setDefaultViewPage(TEMPLATE_RESULTS);
         } else if (action.equals(PARAMV_VIEW_BROWSE)) {
+            context.put(CURRENT_TOPIC, request.getPortletSession().getAttribute(CURRENT_TOPIC));
+            context.put(ASSOCIATED_TOPICS, request.getPortletSession().getAttribute(ASSOCIATED_TOPICS));
+            context.put("list_size", new Integer(((IngridHit[])request.getPortletSession().getAttribute(ASSOCIATED_TOPICS)).length + 1));
+            
             setDefaultViewPage(TEMPLATE_BROWSE);
         } else if (action.equals(PARAMV_VIEW_SYNONYM)) {
             setDefaultViewPage(TEMPLATE_SYNONYM);
@@ -121,7 +130,6 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             session.setAttribute("portlet_state", ps);
         }
         
-        // TODO: implement functionality
         DisplayTreeNode similarRoot = null;
         if (submittedSearch != null) {
             // In Thesaurus suchen
@@ -182,6 +190,56 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
 
             // Zur Suchanfrage hinzufuegen
 
+            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+
+            if (request.getParameter("addFromDisplayTree") != null) {
+                String subQueryStr = "";
+                similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
+                if (similarRoot != null) {
+                    ArrayList queryTerms = similarRoot.getAllChildren();
+                    Iterator it = queryTerms.iterator();
+                    while (it.hasNext()) {
+                        DisplayTreeNode node = (DisplayTreeNode) it.next();
+                        if (request.getParameter("chk_" + node.getId()) != null) {
+                            if (subQueryStr.length() > 0) {
+                                subQueryStr = subQueryStr.concat(" OR ");
+                            }
+                            // check for phases, quote phrases
+                            if (node.getName().indexOf(" ") > -1) {
+                                subQueryStr = subQueryStr.concat("\"").concat(node.getName()).concat("\"");
+                            } else {
+                                subQueryStr = subQueryStr.concat(node.getName());
+                            }
+                        }
+                    }
+                    if (subQueryStr != null) {
+                        subQueryStr = "(".concat(subQueryStr).concat(")");
+                        PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subQueryStr, UtilsQueryString.OP_AND));
+                    }
+                }            
+            } else if (request.getParameter("addFromAssociatedTopics") != null) {
+                String subQueryStr = "";
+                int listSize = Integer.parseInt(request.getParameter("list_size"));
+                for (int i=0; i<listSize; i++) {
+                    String val = request.getParameter("chk_" + i);
+                    if (val != null) {
+                        if (subQueryStr.length() > 0) {
+                            subQueryStr = subQueryStr.concat(" OR ");
+                        }
+                        // check for phases, quote phrases
+                        if (val.indexOf(" ") > -1) {
+                            subQueryStr = subQueryStr.concat("\"").concat(val).concat("\"");
+                        } else {
+                            subQueryStr = subQueryStr.concat(val);
+                        }
+                    }
+                }
+                if (subQueryStr != null) {
+                    subQueryStr = "(".concat(subQueryStr).concat(")");
+                    PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subQueryStr, UtilsQueryString.OP_AND));
+                }
+            }
+            
             // redirect to same page with view param where we currently are (so we keep view !)
             String currView = getDefaultViewPage();
             String urlViewParam = "";
@@ -197,9 +255,12 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
             // SNS Deskriptor browsen
+            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             String topicID = request.getParameter("topicID");
-//            IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().ge.getTopicSimilarLocationsFromTopic(topicId);
-            
+            Topic currentTopic = getTopicFromTree(similarRoot, topicID);
+            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
+            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, assocTopics, PortletSessionImpl.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
@@ -218,6 +279,18 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);
         }
+    }
+
+    private Topic getTopicFromTree(DisplayTreeNode similarRoot, String topicId) {
+        ArrayList queryTerms = similarRoot.getAllChildren();
+        Iterator it = queryTerms.iterator();
+        while (it.hasNext()) {
+            DisplayTreeNode node = (DisplayTreeNode) it.next();
+            if (topicId.equals((String)node.get("topicID"))) {
+                return (Topic)node.get("topic");
+            }
+        }
+        return null;
     }
 
     private PageState initPageState(PageState ps) {
@@ -241,6 +314,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                         snsNode.setType(DisplayTreeNode.SNS_TERM);
                         snsNode.setParent(node);
                         snsNode.put("topicID", hit.getTopicID());
+                        snsNode.put("topic", hit);
                         node.addChild(snsNode);
                     }
                 }

@@ -2,17 +2,19 @@
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_topic_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus.vm')
+<input type="hidden" name="list_size" value="$list_size"/>
+<input type="hidden" name="addFromAssociatedTopics" value="1"/>
             <br />
             <div class="line"><hr /></div>
             <div>
 #parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
               <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.keyword')</h3>
-              <p><input type="checkbox" name="chk" value="myId" />&nbsp;Landschaftsbild</p>
+              <p><input type="checkbox" name="chk_1" value="$current_topic.topicName" />&nbsp;$current_topic.topicName</p>
               <span class="clearer"></span>
             </div>
 #set ($action = $renderResponse.createActionURL())
             <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.synonyms')</h3>
-            <p>
+	        <p>
 $action.setParameter('action','doSynonym')
 ##$action.setParameter('?id?',?id?)
               <input type="checkbox" name="s1_chk5" value="myId" />&nbsp;<a href="$action">Landschaftscharakter</a><br />
