@@ -141,9 +141,25 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             log.error("Exception while querying sns for similar terms.", e);
             return null;
         }
-        
-        
     }
 
+    
+    public IngridHit[] getTopicsFromTopic(String topicId) {
+        try {
+            IngridQuery query = QueryStringParser.parse(topicId);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TOPIC);
+
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+
+            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
+
+            return hits.getHits();
+        } catch (Exception e) {
+            log.error("Exception while querying sns for similar terms.", e);
+            return null;
+        }
+    }
+    
 
 }

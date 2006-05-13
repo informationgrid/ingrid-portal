@@ -60,8 +60,17 @@ public interface SimilarTermsInterface {
      * 
      * @param term
      *            The given topic id to search similar topics for.
-     * @return Array of similar topics for term.
+     * @return Array of similar topics for topic.
      */
     IngridHit[] getTopicSimilarLocationsFromTopic(String topicId);
+
+    /**
+     * Get associated topics from a given topic id.
+     * 
+     * @param term
+     *            The given topic id to search similar topics for.
+     * @return Array of associated topics for topic.
+     */
+    IngridHit[] getTopicsFromTopic(String topicId);
     
 }
