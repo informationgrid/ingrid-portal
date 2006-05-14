@@ -69,6 +69,8 @@ public class Settings {
     public final static String QFIELD_PARTNER = "partner";
 
     public static final String QFIELD_PROVIDER = "provider";
+
+    public static final String QFIELD_PLUG_ID = "plugid";
     
     // "service", "measures"; rubric
     public final static String QFIELD_RUBRIC = "topic";
@@ -296,8 +298,9 @@ public class Settings {
     public final static String PARAMV_GROUPING_PARTNER = "partner";
 
     public final static String PARAMV_GROUPING_PROVIDER = "provider";
-    
 
+    public final static String PARAMV_GROUPING_PLUG_ID = "plugid";
+    
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
     public final static String PARAM_QUERY_STRING = "q";
@@ -334,6 +337,7 @@ public class Settings {
     public final static String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
+
 
 
 

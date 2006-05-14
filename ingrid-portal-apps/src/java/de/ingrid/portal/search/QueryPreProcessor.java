@@ -228,15 +228,20 @@ public class QueryPreProcessor {
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
         if (filter != null && filter.length() > 0) {
             String subject = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
-            if (filter.equals(Settings.PARAMV_GROUPING_PARTNER)) {
+            if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
                 if (!UtilsSearch.containsField(query, Settings.QFIELD_PARTNER)) {
                     // set filter for partner 
                     UtilsSearch.processPartner(query, new String[] {subject});
                 }
-            } else if (filter.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
+            } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
                 if (!UtilsSearch.containsField(query, Settings.QFIELD_PROVIDER)) {
                     // set filter for provider 
                     UtilsSearch.processProvider(query, new String[] {subject});
+                }
+            } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
+                if (!UtilsSearch.containsField(query, Settings.QFIELD_PLUG_ID)) {
+                    // set filter for iplugs 
+                    UtilsSearch.processIPlugs(query, new String[] {subject});
                 }
             }
             

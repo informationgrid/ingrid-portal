@@ -1,10 +1,7 @@
-	<div class="portlet">
+<!-- RESULTS LEFT -->
+    <div class="section">  
       <div class="resultset_nav float_left">
 #renderUnrankedResultCounter($unrankedPageSelector)
-      </div>
-
-      <div class="resultset_nav">
-        &nbsp;
       </div>
       <div class="resultset_nav">
 #renderUnrankedPageNavigation($unrankedPageSelector)
@@ -26,22 +23,11 @@
           <div class="resultset">
             <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
           </div>
-##      #foreach($sub_rs in $rs.get('subHits'))
-##          <div class="resultset">
-##            <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($sub_rs.title)</a></strong></span>
-##          </div>
-##      #end
-#if($rs.get('moreHits'))
-      <div class="line"><hr /></div>
-      <div class="resultset_show_partner">
-#set ($action = $renderResponse.createActionURL())
-#set ($groupSubjectKey = $rs.plugId)
-$action.setParameter('action', 'showAllFromIPlug')
-$action.setParameter('subject', $groupSubjectKey)
-$action.setParameter('grouping', 'plugid')
-        <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Zeige alle Ergebnisse für $rs.dataSourceName</a></span>
-      </div>
-#end
+      #foreach($sub_rs in $rs.get('subHits'))
+          <div class="resultset">
+            <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($sub_rs.title)</a></strong></span>
+          </div>
+      #end
           <br />
       #end
 #else
@@ -53,9 +39,9 @@ $action.setParameter('grouping', 'plugid')
       </div>
 
       <div class="resultset_nav">
-        &nbsp;
-      </div>
-      <div class="resultset_nav">
 #renderUnrankedPageNavigation($unrankedPageSelector)
       </div>
-    </div> 
+
+    </div>
+
+  <div class="clearer"></div>

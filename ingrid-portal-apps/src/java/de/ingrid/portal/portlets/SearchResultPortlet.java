@@ -55,6 +55,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
     private static final String TEMPLATE_RESULT_JS_RANKED = "/WEB-INF/templates/search_result_js_ranked.vm";
 
     private static final String TEMPLATE_RESULT_JS_UNRANKED = "/WEB-INF/templates/search_result_js_unranked.vm";
+    
+    private static final String TEMPLATE_RESULT_IPLUG = "/WEB-INF/templates/search_result_iplug.vm";
 
     /*
      * (non-Javadoc)
@@ -129,11 +131,19 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
+        // get the filter from search state
+        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
+        
         if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             setDefaultViewPage(TEMPLATE_RESULT);
         } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
         }
+        if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
+            setDefaultViewPage(TEMPLATE_RESULT_IPLUG);
+        }
+        
+        
 
         String currentView = getDefaultViewPage();
 
@@ -160,7 +170,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             }
             // check for js enabled iframe rendering
         } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)
-                && !currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+                && !currentView.equals(TEMPLATE_RESULT_ADDRESS)
+                && !currentView.equals(TEMPLATE_RESULT_IPLUG)) {
             // if javascript and new query, set template to javascript enabled iframe template
             // exit method!!
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
@@ -177,6 +188,8 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                     + "&js_ranked=false"));
             super.doView(request, response);
             return;
+        } else if (currentView.equals(TEMPLATE_RESULT_IPLUG)) {
+            renderOneResultColumnRanked = false;
         }
 
         // create threaded query controller
@@ -298,13 +311,14 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
         // set filter params into context for filter display
-        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
         if (filter != null && filter.length() > 0) {
             context.put("filteredBy", filter);
             if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
                 context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
             } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
                 context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
+            } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
             }
         }
         if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0

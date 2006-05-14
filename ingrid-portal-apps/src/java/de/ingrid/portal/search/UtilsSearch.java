@@ -27,6 +27,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsQueryString;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
@@ -271,6 +272,8 @@ public class UtilsSearch {
             mappedValue = UtilsDB.getPartnerFromKey(detailValue);
         } else if (detailKey.equals(Settings.RESULT_KEY_PROVIDER)) {
             mappedValue = UtilsDB.getProviderFromKey(detailValue);
+        } else if (detailKey.equals(Settings.RESULT_KEY_PLUG_ID)) {
+            mappedValue = ((PlugDescription)IBUSInterfaceImpl.getInstance().getIPlug(detailValue)).getDataSourceName();
         } else if (resources != null) {
             mappedValue = resources.getString(detailValue);
         }
@@ -785,5 +788,21 @@ public class UtilsSearch {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
         history.add(queryString, urlStr, selectedDS);
+    }
+
+    /**
+     * Add plug ids to the query.
+     * 
+     * @param query
+     * @param plugIds
+     */
+    public static void processIPlugs(IngridQuery query, String[] plugIds) {
+        if (plugIds != null && plugIds.length > 0) {
+            for (int i = 0; i < plugIds.length; i++) {
+                if (plugIds[i] != null) {
+                    query.addToList(IngridQuery.IPLUGS, new FieldQuery(true, false, Settings.QFIELD_PLUG_ID, plugIds[i]));
+                }
+            }
+        }
     }
 }
