@@ -50,7 +50,7 @@
 	#if($rec.get("t02_address.job") && $rec.get("t02_address.job") != "")$rec.get("t02_address.job")<br/>#end
 	#if($rec.get("t02_address.descr") && $rec.get("t02_address.descr")!="")$rec.get("t02_address.descr")<br/>#end
 	#if($rec.get("t02_address.postbox") && $rec.get("t02_address.postbox") != "")
-		$MESSAGES.getString("postbox_label")$rec.get("t02_address.postbox")<br/>
+		$MESSAGES.getString("postbox_label") $rec.get("t02_address.postbox")<br/>
 		#if($rec.get("t02_address.postbox_pc"))#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end$rec.get("t02_address.postbox_pc") $rec.get("t02_address.city")<br/><br/>#end 
 	#else
 		#if($rec.get("t02_address.street"))$rec.get("t02_address.street")<br/>#end
