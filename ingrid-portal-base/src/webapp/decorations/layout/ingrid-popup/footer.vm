@@ -4,7 +4,8 @@
   <div id="footermarginal">
     <!-- portlets go here -->
 #defineUrlParams()
-    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="${jetspeed.getAbsoluteUrl(${site.getPage().url})}${urlParams}">nach oben</a>
+##    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="${jetspeed.getAbsoluteUrl(${site.getPage().url})}${urlParams}">nach oben</a>
+  &nbsp;
   </div>
 </div>
 <div class="clearer"></div>
