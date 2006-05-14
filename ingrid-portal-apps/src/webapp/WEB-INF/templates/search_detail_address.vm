@@ -186,6 +186,11 @@
 	</p>
 	<span class="clearer"></span>
 	#renderUDKAddress()
+    #if($rec.get("summary") && $rec.get("summary") != "")
+		<p><strong>$MESSAGES.getString("t02_address.job"):</strong><br>
+		$rec.get("summary")
+		</p>
+    #end
 	#renderSuperiorReferences()
 	#renderSubordinatedReferences()
 	#renderUDKAddressFunction()
