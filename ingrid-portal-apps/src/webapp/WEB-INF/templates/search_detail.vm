@@ -198,13 +198,11 @@
         			<table class="border" border="1">
         			<tbody>	
         				<tr>
-        					<th> $MESSAGES.getString("t011_obj_data_para.line") </th>
         					<th> $MESSAGES.getString("t011_obj_data_para.parameter") </th>
         					<th> $MESSAGES.getString("t011_obj_data_para.unit") </th>
         				</tr>
                 	#foreach($t0110_avail_format in $myData.get("t011_obj_data_para.obj_id"))
         				<tr>
-        					<td>#if($t0110_avail_format.get("t011_obj_data_para.line"))$t0110_avail_format.get("t011_obj_data_para.line")#end</td>
         					<td>#if($t0110_avail_format.get("t011_obj_data_para.parameter"))$t0110_avail_format.get("t011_obj_data_para.parameter")#end</td>
         					<td>#if($t0110_avail_format.get("t011_obj_data_para.unit"))$t0110_avail_format.get("t011_obj_data_para.unit")#end</td>
         				</tr>
