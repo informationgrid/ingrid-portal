@@ -74,7 +74,7 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
             String[] sources = f.getInputAsArray(SearchExtEnvAreaSourcesForm.FIELD_CHK_SOURCES);
             String[] meta = f.getInputAsArray(SearchExtEnvAreaSourcesForm.FIELD_CHK_META);
             queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:www", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:meta", "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:metadata", "");
             queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:fis", "");
             queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:database", "");
             queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:service", "");
@@ -108,7 +108,7 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
             for (int i=0; i<meta.length; i++) {
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_ALL)) {
                     datatypes.put("datatype:meta", "1");
-                    datatypes.remove("-datatype:meta");
+                    datatypes.remove("-datatype:metadata");
                     // empty meta classes, all metaclasses are selected
                     metaclasses = new LinkedHashMap();
                     break;
@@ -134,8 +134,8 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
             }
             // remove meta exclusion if we have a meta data class selection
             if (metaclasses.size() > 0) {
-                datatypes.remove("-datatype:meta");
-                datatypes.put("datatype:meta", "1");
+                datatypes.remove("-datatype:metadata");
+                datatypes.put("datatype:metadata", "1");
             }
             // build the subquery
             if (!datatypes.containsKey("datatype:default") && (metaclasses.size() > 0 || datatypes.size() > 0)) {
