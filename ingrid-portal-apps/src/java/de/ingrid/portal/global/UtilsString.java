@@ -205,4 +205,30 @@ public class UtilsString {
 
         return ret;
     }
+    
+    /**
+     * Cut a string at a given position. Returns a substring 
+     * with max. maxLength or shorter. searches for the last 
+     * occurence of ' '.
+     * 
+     * @param str
+     * @param maxLength
+     * @return
+     */
+    public static String cutString(String str, int maxLength) {
+        
+        if (str.length() <= maxLength) {
+            return str;
+        }
+        
+        int lastWhitespace = str.lastIndexOf(' ', maxLength);
+        if (lastWhitespace > 1) {
+            return str.substring(0, lastWhitespace).concat("...");
+        } else {
+            return str.substring(0, maxLength).concat("...");
+        }
+        
+        
+    }
+    
 }

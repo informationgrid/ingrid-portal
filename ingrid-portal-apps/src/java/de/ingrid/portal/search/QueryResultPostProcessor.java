@@ -65,22 +65,6 @@ public class QueryResultPostProcessor {
                     if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                         hit.put(Settings.RESULT_KEY_TYPE, "dsc");
                         
-                        // quick hack to get partner and provider for dsc results
-                        // TODO remove this if we get the info from the dsc
-                        // http://jira.media-style.com/browse/INGRID-943
-/*                        PlugDescription plugDescr = IBUSInterfaceImpl.getInstance().getIPlug(hit.getPlugId());
-                        String[] partners = plugDescr.getPartners();
-                        if (partners != null && partners.length > 0) {
-                            hit.put(Settings.RESULT_KEY_PARTNER+"Key", plugDescr.getPartners()[0]);
-                            hit.put(Settings.RESULT_KEY_PARTNER, UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, plugDescr.getPartners()[0], null));
-                        }
-                        String[] providers = plugDescr.getProviders();
-                        if (providers != null && providers.length > 0) {
-                            hit.put(Settings.RESULT_KEY_PROVIDER, plugDescr.getProviders()[0]);
-                            hit.put(Settings.RESULT_KEY_PROVIDER+"Key", plugDescr.getProviders()[0]);
-                            hit.put(Settings.RESULT_KEY_PROVIDER, UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, plugDescr.getProviders()[0], null));
-                        }
-*/
                         // read for all dsc iplugs
 
                         // services !

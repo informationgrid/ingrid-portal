@@ -27,6 +27,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsQueryString;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -117,7 +118,7 @@ public class UtilsSearch {
         try {
             result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
             // strip all HTML tags from summary
-            result.put(Settings.RESULT_KEY_ABSTRACT, detail.getSummary().replaceAll("\\<.*?\\>", ""));
+            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>", ""), 400));
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
             result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
