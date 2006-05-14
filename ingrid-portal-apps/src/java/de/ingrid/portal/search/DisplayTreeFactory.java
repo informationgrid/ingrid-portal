@@ -6,9 +6,12 @@ package de.ingrid.portal.search;
 import java.util.Iterator;
 import java.util.List;
 
+import de.ingrid.iplug.sns.utils.DetailedTopic;
+import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
@@ -69,6 +72,23 @@ public class DisplayTreeFactory {
                 }
             }
             
+        }
+        return root;
+    }
+
+
+    public static DisplayTreeNode getTreeFromEvents(IngridHit[] results) {
+        Topic topic = null;
+
+        DisplayTreeNode root = new DisplayTreeNode("root", "root", true); 
+        root.setType(DisplayTreeNode.ROOT);
+        for (int i = 0; i < results.length; i++) {
+            topic = (Topic) results[i];
+            DisplayTreeNode node = new DisplayTreeNode(""+i, topic.getTopicName(), false);
+            node.setType(DisplayTreeNode.GENERIC);
+            node.setParent(root);
+            node.put("topic", results[i]);
+            root.addChild(node);
         }
         return root;
     }
