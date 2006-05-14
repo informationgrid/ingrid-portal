@@ -559,7 +559,6 @@
 
 #macro (renderUDKAdditionalInformation)
 	<div class="line"><hr /></div>
-	<p><strong>$MESSAGES.getString("additional_information"):</strong><br/></p>
 	#if($rec.get("t01_object.metadata_language") && $rec.get("t01_object.metadata_language") != "")
 		<p><strong>$MESSAGES.getString("t01_object.metadata_language"):</strong> $sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name")</p>
 	#end
