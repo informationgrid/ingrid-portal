@@ -31,7 +31,11 @@ public class IngridSysCodeList {
     }
     
     public String getName(String codeListId, String domainId) {
-        return getName(Long.parseLong(codeListId), Long.parseLong(domainId));
+        try {
+            return getName(Long.parseLong(codeListId), Long.parseLong(domainId));
+        } catch (NumberFormatException e) {
+            return "";
+        }
     }
     
 }
