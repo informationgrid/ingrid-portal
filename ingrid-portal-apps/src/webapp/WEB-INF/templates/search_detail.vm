@@ -118,7 +118,11 @@
     	#foreach($myAddressType in $rec.get("t012_obj_adr.obj_id"))
     		#set($addressId = $myAddressType.get("t02_address.adr_id"))
 			#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
-			#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
+			#if($addressType == "999")
+				#set($addressTypeKeyName = $myAddressType.get("t012_obj_adr.spezial_name"))
+			#else
+				#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
+			#end	
 			<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
         	#foreach($myAddress in $myAddressType.get("t02_address.adr_id"))
 				#if($myAddress.get("t02_address.typ") == "1" || $myAddress.get("t02_address.typ") == "2")
