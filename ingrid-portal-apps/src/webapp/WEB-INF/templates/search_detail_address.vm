@@ -39,22 +39,25 @@
 			<a href="$action">$unit.detail.title</a><br/>
 		#end
 	#end
-	#if($rec.get("title"))$rec.get("title")<br/>#end
-	#if($rec.get("t02_address.address"))$rec.get("t02_address.address")#end
-	#if($rec.get("t02_address.title"))$rec.get("t02_address.title")#end
-	#if($rec.get("t02_address.firstname"))$rec.get("t02_address.firstname")#end
-	#if($rec.get("t02_address.lastname"))$rec.get("t02_address.lastname")<br/>#end
-	#if($rec.get("t02_address.descr"))$rec.get("t02_address.descr")<br/>#end
-	#if($rec.get("t02_address.postbox"))$MESSAGES.getString("postbox_label")$rec.get("t02_address.postbox")<br/>#end
-	#if($rec.get("t02_address.postbox_pc"))#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end$rec.get("t02_address.postbox_pc") $rec.get("t02_address.city")<br/><br/>#end 
-	#if($rec.get("t02_address.street"))$rec.get("t02_address.street")<br/>#end
-	#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end
-	#if($rec.get("t02_address.postcode"))
-		$rec.get("t02_address.postcode")
-	#elseif($rec.get("t02_address.postbox_pc"))
-		$MESSAGES.getString("t02_address.postbox_pc"): $rec.get("t02_address.postbox_pc")
+   	#if($rec.get("title") && $rec.get("title")!="")$rec.get("title")<br/>#end
+	#if($rec.get("t02_address.lastname") && $rec.get("t02_address.lastname")!="")
+    	#if($rec.get("t02_address.address"))$rec.get("t02_address.address")#end
+    	#if($rec.get("t02_address.title"))$rec.get("t02_address.title")#end
+    	#if($rec.get("t02_address.firstname"))$rec.get("t02_address.firstname")#end
+    	#if($rec.get("t02_address.lastname"))$rec.get("t02_address.lastname")<br/>#end
 	#end
-	#if($rec.get("t02_address.city"))$rec.get("t02_address.city")<br/>#end
+	
+	#if($rec.get("t02_address.job") && $rec.get("t02_address.job") != "")$rec.get("t02_address.job")<br/>#end
+	#if($rec.get("t02_address.descr") && $rec.get("t02_address.descr")!="")$rec.get("t02_address.descr")<br/>#end
+	#if($rec.get("t02_address.postbox") && $rec.get("t02_address.postbox") != "")
+		$MESSAGES.getString("postbox_label")$rec.get("t02_address.postbox")<br/>
+		#if($rec.get("t02_address.postbox_pc"))#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end$rec.get("t02_address.postbox_pc") $rec.get("t02_address.city")<br/><br/>#end 
+	#else
+		#if($rec.get("t02_address.street"))$rec.get("t02_address.street")<br/>#end
+		#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end
+		#if($rec.get("t02_address.postcode"))$rec.get("t02_address.postcode")#end
+		#if($rec.get("t02_address.city"))$rec.get("t02_address.city")<br/><br/>#end
+	#end
 	#foreach($myCommunication in $rec.get("t021_communication.adr_id"))
 		#if($myCommunication.get("t021_communication.comm_type") == "Telefon")
 			$MESSAGES.getString("t021_communication.comm_type_phone"): $myCommunication.get("t021_communication.comm_value")<br/>
