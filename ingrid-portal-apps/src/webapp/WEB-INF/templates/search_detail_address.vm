@@ -10,7 +10,7 @@
 #end
 
 #macro (renderUDKEntry $r $entryName)
-    #if($r.get($entryName))
+    #if($r.get($entryName) && $r.get($entryName) != "")
 		<p><strong>$MESSAGES.getString($entryName):</strong><br>
 		$r.get($entryName)
 		</p>

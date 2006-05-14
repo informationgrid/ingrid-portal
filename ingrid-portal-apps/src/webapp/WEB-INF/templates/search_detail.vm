@@ -10,7 +10,7 @@
 #end
 
 #macro (renderUDKEntry $r $entryName)
-	#if($r.get($entryName))
+	#if($r.get($entryName) && $r.get($entryName) != "")
 		<p><strong>$MESSAGES.getString($entryName):</strong><br/>
 		$r.get($entryName)<br/>
 		</p>
@@ -18,14 +18,14 @@
 #end
 
 #macro (renderUDKEntryInLine $r $entryName)
-	#if($r.get($entryName))
+	#if($r.get($entryName) && $r.get($entryName) != "")
 		<p><strong>$MESSAGES.getString($entryName):</strong> $r.get($entryName)<br/></p>
     #end
 #end
 
 
 #macro (renderUDKEntrySuffix $r $entryName $suffix)
-	#if($r.get($entryName))
+	#if($r.get($entryName) && $r.get($entryName) != "")
 		<p><strong>$MESSAGES.getString($entryName):</strong><br/>
 		$r.get($entryName)#if($suffix) $suffix#end<br/>
 		</p>
@@ -33,7 +33,7 @@
 #end
 
 #macro (renderUDKEntrySuffixInLine $r $entryName $suffix)
-	#if($r.get($entryName))
+	#if($r.get($entryName) && $r.get($entryName) != "")
 		<p><strong>$MESSAGES.getString($entryName):</strong> $r.get($entryName)#if($suffix) $suffix#end<br/></p>
     #end
 #end
@@ -357,7 +357,7 @@
         				</tr>
                 	#foreach($t011_obj_geo_vector in $myData.get("t011_obj_geo_vector.obj_id"))
         				<tr>
-        					<td>#if($t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_type"))$t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_type")#end</td>
+        					<td>#if($t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_type"))$codeList.getName('528', $t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_type"))#end</td>
         					<td>#if($t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_count"))$t011_obj_geo_vector.get("t011_obj_geo_vector.geometric_object_count")#end</td>
         				</tr>
             		#end
@@ -478,17 +478,17 @@
 		#end
 		</p>
     	
-    	#if($rec.get("t01_object.time_status"))
+    	#if($rec.get("t01_object.time_status") && $rec.get("t01_object.time_status") != "")
     		<p><strong>$MESSAGES.getString("t01_object.time_status"):</strong><br/>
     		$codeList.getName('502', $rec.get("t01_object.time_status"))<br/>
     		</p>
         #end
-    	#if($rec.get("t01_object.time_period"))
+    	#if($rec.get("t01_object.time_period") && $rec.get("t01_object.time_period") != "")
     		<p><strong>$MESSAGES.getString("t01_object.time_period"):</strong><br/>
     		$codeList.getName('518', $rec.get("t01_object.time_period"))<br/>
     		</p>
         #end
-    	#if($rec.get("t01_object.time_alle"))
+    	#if($rec.get("t01_object.time_alle") && $rec.get("t01_object.time_alle") != "" && $rec.get("t01_object.time_interval") && $rec.get("t01_object.time_interval") != "")
     		<p><strong>$MESSAGES.getString("t01_object.time_interval"):</strong><br />
     		alle $rec.get("t01_object.time_alle") $rec.get("t01_object.time_interval")
     		</p>
