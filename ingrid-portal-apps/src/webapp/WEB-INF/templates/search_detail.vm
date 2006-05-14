@@ -259,7 +259,7 @@
     	<div class="line"><hr /></div>
 		#foreach($myData in $rec.get("t011_obj_literatur.obj_id"))    			
     		
-			#renderUDKEntryInLine($myData "t011_obj_literatur.autor")
+			#renderUDKEntry($myData "t011_obj_literatur.autor")
     		#renderUDKEntryInLine($myData "t011_obj_literatur.publisher")
     		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_in")
     		#renderUDKEntryInLine($myData "t011_obj_literatur.volume")
@@ -269,9 +269,9 @@
     		#renderUDKEntryInLine($myData "t011_obj_literatur.publishing")
     		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_loc")
     		#renderUDKEntryInLine($myData "t011_obj_literatur.typ")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.doc_info")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.base")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.loc")
+    		#renderUDKEntry($myData "t011_obj_literatur.doc_info")
+    		#renderUDKEntry($myData "t011_obj_literatur.base")
+    		#renderUDKEntry($myData "t011_obj_literatur.loc")
     		#renderUDKEntry($myData "t011_obj_literatur.description")
 		#end	
 	#elseif($udkClass == "4" && $rec.get("t011_obj_project.obj_id"))
