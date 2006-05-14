@@ -388,9 +388,9 @@
     				</tr>
             	#foreach($t011_obj_geo_scale in $myData.get("t011_obj_geo_scale.obj_id"))
     				<tr>
-    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.scale"))$t011_obj_geo_scale.get("t011_obj_geo_scale.scale")#end</td>
-    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground"))$t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground")#end</td>
-    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan"))$t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan")#end</td>
+    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.scale") && $t011_obj_geo_scale.get("t011_obj_geo_scale.scale") != "")1:$t011_obj_geo_scale.get("t011_obj_geo_scale.scale")#end</td>
+    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground") && $t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground") != "")$t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_ground") m#end</td>
+    					<td>#if($t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan") && $t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan") != "")$t011_obj_geo_scale.get("t011_obj_geo_scale.resolution_scan") dpi#end</td>
     				</tr>
         		#end
     			</tbody>	
