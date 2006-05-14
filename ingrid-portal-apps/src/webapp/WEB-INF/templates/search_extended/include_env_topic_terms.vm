@@ -9,7 +9,7 @@
               <select size="1" id="adding_type" name="adding_type" class="inputstyle">
                 <option value="1">alle diese Begriffe (UND)</option>
                 <option value="2">einen dieser Begriffe (ODER)</option>
-                <option value="3">genaue diese Wortgruppe</option>
+                <option value="3">genau diese Wortgruppe</option>
                 <option value="4">keinen dieser Begriffe (NOT)</option>
               </select>
             </p>
