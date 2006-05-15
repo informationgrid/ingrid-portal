@@ -1,11 +1,23 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
-		<h1>Detailinformation - Karte
-		</h1>
+		<h1>Detailinformation - Karte</h1>
+	    
+		#if($hKey && $hKey.length() > 0)
+		<span class="portlet_info">
+		#set($hpath = $renderResponse.encodeURL("$contextPath/portal/help.psml?hkey=$hKey"))
+		<script language="JavaScript">
+    		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\">[?]</a>");
+    	</script>
+    	<noscript>
+    		<a href="$hpath" target="_new">[?]</a>
+    	</noscript>
+		</span>
+		#end
+		<span class="clearer"></span>
 	</div>
-	<span class="clearer">
-	</span>
+	<span class="clearer"></span>
 	<div class="section">    
 		<div class="formbody">
 			<iframe src="$wmsURL" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
@@ -14,8 +26,7 @@
 			<div class="rightmargin" align="right">
 				<span class="iconLink">
 					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
-					<a href="$action">Kartendienste speichern
-					</a>
+					<a href="$action">Kartendienste speichern</a>
 				</span>
 			</div>
 		</div>  

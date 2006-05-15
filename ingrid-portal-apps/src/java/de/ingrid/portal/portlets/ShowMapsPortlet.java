@@ -6,6 +6,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -40,6 +41,13 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
             wmsURL = service.getWMSAddedServiceURL(new WMSServiceDescriptor("", wmsServiceUrl), session.getId(), hasJavaScript);
         } else {
             wmsURL = service.getWMSViewerURL(session.getId(), hasJavaScript);
+        }
+        
+        // read preferences
+        PortletPreferences prefs = request.getPreferences();
+        String hKey = prefs.getValue("helpKey", null);
+        if (hKey != null && hKey.length() > 0) {
+            context.put("hKey", hKey);
         }
         
         context.put("wmsURL", wmsURL);
