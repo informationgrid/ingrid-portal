@@ -11,10 +11,10 @@
     <fragment id="main-maps-1" type="portlet" name="ingrid-portal-apps::ShowMapsPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="helpKey" readOnly="false">
+        <value>maps-1</value>
+      </preference>
     </fragment>
-    <preference name="helpKey" readOnly="false">
-      <value>maps-1</value>
-    </preference>
   </fragment>
 
   <security-constraints>

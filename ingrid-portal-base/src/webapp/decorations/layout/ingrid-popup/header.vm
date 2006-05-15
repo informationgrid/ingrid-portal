@@ -22,6 +22,9 @@
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   #IncludeStylesheets()
+
+  #* our decorator macros, see ./decorator-macros.vm *#
+  #decoratorIncludeJavaScriptForHead()
   
 <script language="JavaScript" type="text/javascript">
 	/*@cc_on @if (@_win32 && @_jscript_version >= 5) if (!window.XMLHttpRequest)
