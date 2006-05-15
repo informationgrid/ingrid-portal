@@ -63,17 +63,21 @@ public class RSSFetcherJob implements Job {
             Iterator it = rssSources.iterator();
             while (it.hasNext()) {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
-                feedUrl = new URL(rssSource.getUrl());
-                input = new SyndFeedInput();
-                feed = input.build(new XmlReader(feedUrl));
-                if (feed.getLanguage() == null) {
-                    feed.setLanguage(rssSource.getLanguage());
+                try {
+                    feedUrl = new URL(rssSource.getUrl());
+                    input = new SyndFeedInput();
+                    feed = input.build(new XmlReader(feedUrl));
+                    if (feed.getLanguage() == null) {
+                        feed.setLanguage(rssSource.getLanguage());
+                    }
+                    if (feed.getAuthor() == null || feed.getAuthor().length() == 0) {
+                        feed.setAuthor(rssSource.getProvider());
+                    }
+                    
+                    feeds.add(feed);
+                } catch (Exception e) {
+                    log.error("Error building RSS feed (" + rssSource.getUrl() + ").", e);
                 }
-                if (feed.getAuthor() == null || feed.getAuthor().length() == 0) {
-                    feed.setAuthor(rssSource.getProvider());
-                }
-                
-                feeds.add(feed);
             }
 
             Date publishedDate = null;
