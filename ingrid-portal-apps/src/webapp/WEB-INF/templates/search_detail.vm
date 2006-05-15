@@ -337,15 +337,18 @@
     			</p>
         	#end	
 
-        	#if($myData.get("t011_obj_geo_spatial_rep.obj_id"))
+        	#set($geoSpacialRepType = "0")
+			#if($myData.get("t011_obj_geo_spatial_rep.obj_id"))
         		<p><strong>$MESSAGES.getString("t011_obj_geo_spatial_rep.type"):</strong><br>
             	#foreach($t011_obj_geo_spatial_rep in $myData.get("t011_obj_geo_spatial_rep.obj_id"))
 					#if($t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type"))$codeList.getName('526', $t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type"))#end<br/>
+					#if($t011_obj_geo_spatial_rep.get("t011_obj_geo_spatial_rep.type") == "1")
+						#set($geoSpacialRepType = "1")
+					#end	
         		#end
     			</p>
         	#end	
-			
-			#if($myData.get("t011_obj_geo_spatial_rep.type") == "1")
+			#if($geoSpacialRepType == "1")
 				<p><strong>$MESSAGES.getString("t011_obj_geo_vector"):</strong></p>
             	#if($myData.get("t011_obj_geo.vector_topology_level") && $myData.get("t011_obj_geo.vector_topology_level") != "")
             		<p><strong>$MESSAGES.getString("t011_obj_geo.vector_topology_level"):</strong> $codeList.getName('528', $myData.get("t011_obj_geo.vector_topology_level"))<br/></p>
