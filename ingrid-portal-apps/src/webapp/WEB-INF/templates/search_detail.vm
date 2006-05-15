@@ -424,11 +424,40 @@
 	#end
 #end
 
+#macro(renderUDKAttributes)
+	#if($rec.get("t08_attr.attr_id"))
+		<div class="line"><hr /></div>
+		#foreach($t08_attr in $rec.get("t08_attr.attr_id"))
+			#foreach($t08_attrtyp in $t08_attr.get("t08_attrtyp.attr_id"))
+				#set($attrType = $t08_attrtyp.get("t08_attrtyp.typ"))
+				<p><strong>$t08_attrtyp.get("t08_attrtyp.attr_name"):</strong><br/>
+				#if($t08_attrtyp.get("t08_attrlist.attr_id"))
+        			<table class="border" border="1">
+        			<tbody>	
+        				<tr>
+        					<th> $t08_attr.get("t08_attr.data") </th>
+        				</tr>
+                	#foreach($t08_attrlist in $t08_attrtyp.get("t08_attrlist.attr_id"))
+        				<tr>
+        					<td>$t08_attrlist.get("t08_attrlist.data")</td>
+        				</tr>
+            		#end
+        			</tbody>	
+        			</table>
+				#else
+					$t08_attr.get("t08_attr.data")
+				#end
+				</p>
+			#end
+		#end
+	#end
+#end
+
 #macro (renderUDKSpacialReference)
-	#if($rec.get("t011_township.township_no") || $rec.get("t019_coordinates.obj_id") || $rec.get("t01_object.loc_descr"))
+	#if($rec.get("t011_township.obj_id") && !$rec.get("t011_township.obj_id").isEmpty() || $rec.get("t019_coordinates.obj_id") && !$rec.get("t019_coordinates.obj_id").isEmpty() || $rec.get("t01_object.loc_descr") && $rec.get("t01_object.loc_descr") != "")
     	<div class="line"><hr /></div>
     	#if($rec.get("t011_township.obj_id"))
-    		#foreach($t011_township in $rec.get("t011_township.obj_id"))
+			#foreach($t011_township in $rec.get("t011_township.obj_id"))
 				#if($t011_township.get("t011_township.township_no"))
 					#renderUDKEntry($t011_township "t011_township.township_no")
 					#foreach($t01_st_township in $t011_township.get("t01_st_township.obj_id"))
@@ -622,6 +651,7 @@
 	#renderWWWReferences()
 	#renderUDKAddress()
     #renderUDKSubjectReference($udkObjClass)
+	#renderUDKAttributes()
     #renderUDKSpacialReference()
     #renderUDKTimeReference()
     #renderUDKAvailability()

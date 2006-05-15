@@ -264,9 +264,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     }
                     if (dateFields.contains(columnName)) {
                         subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
-                    } else if (columnName.startsWith("t08_attr")) {
-                        // dummy code add logic for attribute fields
-                        System.out.println(columns[j].getTargetName());
                     } else {
                         subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n", "<br />"));
                     }
