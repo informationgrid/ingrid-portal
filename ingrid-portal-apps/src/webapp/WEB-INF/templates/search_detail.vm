@@ -625,14 +625,14 @@
     #renderUDKAdditionalInformation()
     #renderUDKSearchTerms()
 
-	<!--
-    <br><br><br><br>
-    	  #if($record)
-    		#renderRecord($record 0)
-    	  #else
-    		no details available.
-    	  #end
-    -->
+##	<!--
+##    <br><br><br><br>
+##    	  #if($record)
+##    		#renderRecord($record 0)
+##    	  #else
+##    		no details available.
+##    	  #end
+##    -->
 	</div>
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
