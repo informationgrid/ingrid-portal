@@ -456,15 +456,16 @@
 #macro (renderUDKSpacialReference)
 	#if($rec.get("t011_township.obj_id") && !$rec.get("t011_township.obj_id").isEmpty() || $rec.get("t019_coordinates.obj_id") && !$rec.get("t019_coordinates.obj_id").isEmpty() || $rec.get("t01_object.loc_descr") && $rec.get("t01_object.loc_descr") != "")
     	<div class="line"><hr /></div>
-    	#if($rec.get("t011_township.obj_id"))
+    	#if($rec.get("t011_township.obj_id") && !$rec.get("t011_township.obj_id").isEmpty())
+       		<p><strong>$MESSAGES.getString("t011_township.township_no"):</strong><br>
 			#foreach($t011_township in $rec.get("t011_township.obj_id"))
-				#if($t011_township.get("t011_township.township_no"))
-					#renderUDKEntry($t011_township "t011_township.township_no")
-					#foreach($t01_st_township in $t011_township.get("t01_st_township.obj_id"))
-						#renderUDKEntry($t01_st_township "t01_st_township.township")
+				#if($t011_township.get("t011_town_loc_town.township_no"))
+					#foreach($t011_town_loc_town in $t011_township.get("t011_town_loc_town.township_no"))
+						$t011_town_loc_town.get("t011_town_loc_town.name") ($t011_town_loc_town.get("t011_town_loc_town.township_no"))<br/>
 					#end
 				#end	
 			#end
+			</p>
 		#end	
     	#if($rec.get("t019_coordinates.obj_id"))
     		#if(!$rec.get("t019_coordinates.obj_id").isEmpty())
@@ -659,6 +660,7 @@
     #renderUDKSearchTerms()
 
 ##	<!--
+##	$rec
 ##    <br><br><br><br>
 ##    	  #if($record)
 ##    		#renderRecord($record 0)
