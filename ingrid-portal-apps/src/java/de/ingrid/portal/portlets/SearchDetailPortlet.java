@@ -1,8 +1,9 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -27,7 +28,6 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -36,7 +36,6 @@ import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 
@@ -229,6 +228,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 addSubRecords(record, recordMap, request.getLocale(), readableColumnNames);
                 
                 recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
+                ArrayList addressList = (ArrayList)getFieldFromHashTree(recordMap, "t012_obj_adr.obj_id");
+                if (addressList != null) {
+                    Collections.sort(addressList, new AddressTypeComparator());
+                }
                 
                 context.put("rec", recordMap);
             }
@@ -327,20 +330,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
      * @param fieldName
      * @return
      */
-    private String getFieldFromHashTree(HashMap hash,  String fieldName) {
+    private Object getFieldFromHashTree(HashMap hash,  String fieldName) {
         Iterator it = hash.keySet().iterator();
         while (it.hasNext()) {
             String key = (String)it.next();
             if (key.equals(fieldName)) {
-                if (hash.get(key) instanceof String) {
-                    return (String)hash.get(key);
-                }
+                return hash.get(key);
             }
             if (hash.get(key) instanceof ArrayList) {
                 ArrayList array = (ArrayList)hash.get(key);
                 for (int i=0; i<array.size(); i++) {
                     if (array.get(i) instanceof HashMap) {
-                        String val = getFieldFromHashTree((HashMap)array.get(i), fieldName);
+                        Object val = getFieldFromHashTree((HashMap)array.get(i), fieldName);
                         if (val != null) {
                             return val;
                         }
@@ -578,5 +579,35 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             log.error("Problems accessing the parent address!", e);
         }
         return result;
-    }    
+    }
+    
+    /**
+     * Inner class: AddressTypeComperator for address sorting;
+     *
+     * @author joachim@wemove.com
+     */
+    private class AddressTypeComparator implements Comparator
+    {
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public final int compare ( Object a, Object b )  {
+            int ia;
+            int ib;
+            try {
+                ia = Integer.parseInt((String)((HashMap) a).get("t012_obj_adr.typ"));
+                ib = Integer.parseInt((String)((HashMap) b).get("t012_obj_adr.typ"));
+            } catch (Exception e) {
+                return 0;
+            }
+            
+            if (ia > ib)
+                return 1;
+            else if (ia < ib)
+                return -1;
+            else
+                return 0;
+        }
+    }
+    
 }

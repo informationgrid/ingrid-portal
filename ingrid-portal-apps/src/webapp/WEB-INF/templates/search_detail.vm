@@ -119,11 +119,12 @@
     		#set($addressId = $myAddressType.get("t02_address.adr_id"))
 			#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
 			#if($addressType == "999")
-				#set($addressTypeKeyName = $myAddressType.get("t012_obj_adr.spezial_name"))
+				#set($addressTypeKeyName = $myAddressType.get("t012_obj_adr.special_name"))
+				<p><strong>$addressTypeKeyName:</strong><br>
 			#else
 				#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
+				<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
 			#end	
-			<p><strong>$MESSAGES.getString($addressTypeKeyName):</strong><br>
         	#foreach($myAddress in $myAddressType.get("t02_address.adr_id"))
 				#if($myAddress.get("t02_address.typ") == "1" || $myAddress.get("t02_address.typ") == "2")
 					#set($institutions = $addrParents.get($myAddress.get("t02_address.adr_id")).get("institutions"))
