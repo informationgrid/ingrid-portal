@@ -5,6 +5,7 @@ public class IngridProvider {
     private Long id;
     private String ident;
     private String name;
+    private String url;
     private int sortkey;
     /**
      * @return Returns the id.
@@ -53,6 +54,18 @@ public class IngridProvider {
      */
     public void setSortkey(int sortkey) {
         this.sortkey = sortkey;
+    }
+    /**
+     * @return Returns the url.
+     */
+    public String getUrl() {
+        return url;
+    }
+    /**
+     * @param url The url to set.
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
     
 }
