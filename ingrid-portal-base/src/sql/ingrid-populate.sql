@@ -42,7 +42,7 @@ INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (23, 'bu
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (24, 'bu_dwd', 'Deutscher Wetterdienst', 24);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (25, 'bu_gein', 'PortalU Information Broker (Webseiten aller Informationsanbieter)', 25);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (26, 'bu_gtz', 'Deutsche Gesellschaft für Technische Zusammenarbeit (GTZ) GmbH', 26);
-INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (27, 'bu_kug', 'Koordinierungsstelle PortlaU', 27);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (27, 'bu_kug', 'Koordinierungsstelle PortalU', 27);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (28, 'bu_labo', 'Länderarbeitsgemeinschaft Boden LABO', 28);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (29, 'bu_laofdh', 'Leitstelle des Bundes für Abwassertechnik, Boden- und Grundwasserschutz, Kampfmittelräumung und das Liegenschaftsinformationssystem Außenanlagen LISA', 29);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `sortkey`) VALUES (30, 'bu_lawa', 'Länderarbeitsgemeinschaft Wasser', 30);
