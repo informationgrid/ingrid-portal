@@ -13,6 +13,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -34,7 +36,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
-    //    private final static Log log = LogFactory.getLog(SearchSimilarPortlet.class);
+    private final static Log log = LogFactory.getLog(SearchSimilarPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
@@ -62,7 +64,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
 
         // if no query display "nothing"
-        IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
+        IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
         if (query == null) {
             setDefaultViewPage(TEMPLATE_NO_QUERY);
             super.doView(request, response);
@@ -83,7 +85,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether a new query was performed !
-        String queryState = (String) receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+        String queryState = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryState != null && queryState.equals(Settings.MSGV_NEW_QUERY)) {
             ps.putBoolean("isSimilarOpen", false);
             ps.put("similarRoot", null);
@@ -110,82 +112,88 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             action = "";
         }
 
-        DisplayTreeNode similarRoot = null;
-        if (action.equalsIgnoreCase("doOpenSimilar")) {
-            ps.putBoolean("isSimilarOpen", true);
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            if (similarRoot == null) {
-                IngridQuery query = (IngridQuery) receiveRenderMessage(request, Settings.MSG_QUERY);
-                similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
-                session.setAttribute("similarRoot", similarRoot);
-                if (similarRoot.getChildren().size() == 1) {
-                    openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId());
+        try {
+            DisplayTreeNode similarRoot = null;
+            if (action.equalsIgnoreCase("doOpenSimilar")) {
+                ps.putBoolean("isSimilarOpen", true);
+                similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
+                if (similarRoot == null) {
+                    IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+                    similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
+                    session.setAttribute("similarRoot", similarRoot);
+                    if (similarRoot.getChildren().size() == 1) {
+                        openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId());
+                    }
                 }
-            }
-            ps.put("similarRoot", similarRoot);
-        } else if (action.equalsIgnoreCase("doCloseSimilar")) {
-            ps.putBoolean("isSimilarOpen", false);
-            ps.put("similarRoot", null);
-        } else if (action.equalsIgnoreCase("doOpenNode")) {
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                openNode(similarRoot, request.getParameter("nodeId"));
                 ps.put("similarRoot", similarRoot);
-            }
-        } else if (action.equalsIgnoreCase("doCloseNode")) {
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
-                if (node != null) {
-                    node.setOpen(false);
+            } else if (action.equalsIgnoreCase("doCloseSimilar")) {
+                ps.putBoolean("isSimilarOpen", false);
+                ps.put("similarRoot", null);
+            } else if (action.equalsIgnoreCase("doOpenNode")) {
+                similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
+                if (similarRoot != null) {
+                    openNode(similarRoot, request.getParameter("nodeId"));
+                    ps.put("similarRoot", similarRoot);
                 }
-            }
-        } else if (action.equalsIgnoreCase("doAddSimilar")) {
-
-            String queryStr = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
-
-            String newQueryStr = queryStr;
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                ArrayList queryTerms = similarRoot.getChildren();
-                Iterator it = queryTerms.iterator();
-                while (it.hasNext()) {
-                    DisplayTreeNode queryTerm = (DisplayTreeNode) it.next();
-                    Iterator it2 = queryTerm.getChildren().iterator();
-                    StringBuffer subQueryStr = null;
-                    boolean hasSubTerms = false;
-                    while (it2.hasNext()) {
-                        DisplayTreeNode node = (DisplayTreeNode) it2.next();
-                        if (request.getParameter("chk_" + node.getId()) != null) {
-                            if (!hasSubTerms) {
-                                subQueryStr = new StringBuffer("(" + queryTerm.getName());
-                                hasSubTerms = true;
-                            }
-                            // check for phases, quote phrases
-                            if (node.getName().indexOf(" ") > -1) {
-                                subQueryStr.append(" OR \"").append(node.getName()).append("\"");
-                            } else {
-                                subQueryStr.append(" OR ").append(node.getName());
-                            }
-                        }
-                        if (!it2.hasNext() && hasSubTerms) {
-                            subQueryStr.append(")");
-                        }
-                    }
-                    if (subQueryStr != null) {
-                        newQueryStr = UtilsQueryString.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr
-                                .toString());
+            } else if (action.equalsIgnoreCase("doCloseNode")) {
+                similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
+                if (similarRoot != null) {
+                    DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
+                    if (node != null) {
+                        node.setOpen(false);
                     }
                 }
-                // republish the query
-                if (!queryStr.toLowerCase().equals(newQueryStr)) {
-                    publishRenderMessage(request, Settings.PARAM_QUERY_STRING, newQueryStr);
+            } else if (action.equalsIgnoreCase("doAddSimilar")) {
+
+                String queryStr = (String) receiveRenderMessage(request, Settings.PARAM_QUERY_STRING);
+
+                String newQueryStr = queryStr;
+                similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
+                if (similarRoot != null) {
+                    ArrayList queryTerms = similarRoot.getChildren();
+                    Iterator it = queryTerms.iterator();
+                    while (it.hasNext()) {
+                        DisplayTreeNode queryTerm = (DisplayTreeNode) it.next();
+                        Iterator it2 = queryTerm.getChildren().iterator();
+                        StringBuffer subQueryStr = null;
+                        boolean hasSubTerms = false;
+                        while (it2.hasNext()) {
+                            DisplayTreeNode node = (DisplayTreeNode) it2.next();
+                            if (request.getParameter("chk_" + node.getId()) != null) {
+                                if (!hasSubTerms) {
+                                    subQueryStr = new StringBuffer("(" + queryTerm.getName());
+                                    hasSubTerms = true;
+                                }
+                                // check for phases, quote phrases
+                                if (node.getName().indexOf(" ") > -1) {
+                                    subQueryStr.append(" OR \"").append(node.getName()).append("\"");
+                                } else {
+                                    subQueryStr.append(" OR ").append(node.getName());
+                                }
+                            }
+                            if (!it2.hasNext() && hasSubTerms) {
+                                subQueryStr.append(")");
+                            }
+                        }
+                        if (subQueryStr != null) {
+                            newQueryStr = UtilsQueryString.replaceTerm(newQueryStr, queryTerm.getName(), subQueryStr
+                                    .toString());
+                        }
+                    }
+                    // republish the query
+                    if (!queryStr.toLowerCase().equals(newQueryStr)) {
+                        publishRenderMessage(request, Settings.PARAM_QUERY_STRING, newQueryStr);
+                    }
                 }
+            }
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems performing SimilarTerms ACTION", ex);
             }
         }
 
         // indicate, that no query is necessary, we just have to handle similar terms
-        publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NO_QUERY);
+        SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NO_QUERY);
 
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
@@ -204,13 +212,15 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 && !node.isLoading()) {
             node.setLoading(true);
             IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
-            for (int i = 0; i < hits.length; i++) {
-                Topic hit = (Topic) hits[i];
-                if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                    DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
-                    snsNode.setType(DisplayTreeNode.SNS_TERM);
-                    snsNode.setParent(node);
-                    node.addChild(snsNode);
+            if (hits != null) {
+                for (int i = 0; i < hits.length; i++) {
+                    Topic hit = (Topic) hits[i];
+                    if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
+                        DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+                        snsNode.setType(DisplayTreeNode.SNS_TERM);
+                        snsNode.setParent(node);
+                        node.addChild(snsNode);
+                    }
                 }
             }
             node.setLoading(false);

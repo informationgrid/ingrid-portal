@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.common.GenericServletPortlet;
-import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -37,7 +37,7 @@ import de.ingrid.utils.query.IngridQuery;
  * 
  * @author martin@wemove.com
  */
-public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
+public class SearchResultPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
 
@@ -64,9 +64,6 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
-        // set our message "scope" for inter portlet messaging
-        setTopic(Settings.MSG_TOPIC_SEARCH);
-
         super.init(config);
     }
 
@@ -109,7 +106,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // indicates whether we do a query or we read results from cache
-        String queryType = (String) this.receiveRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+        String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryType == null) {
             queryType = "";
         }
@@ -211,8 +208,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
             // check if query must be executed
             if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
                 rankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
-            }
-            if (rankedHits == null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
+                }
+            } else {
                 // process query, create QueryDescriptor
                 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
                 if (qd != null) {
@@ -241,8 +240,10 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
                 // check if query must be executed
                 if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
                     unrankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-                }
-                if (unrankedHits == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
+                    }
+                } else {
                     // process query, create QueryDescriptor
                     qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
                     if (qd != null) {
@@ -351,7 +352,7 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
         super.doView(request, response);
-        this.cancelRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+        SearchState.resetSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
@@ -359,17 +360,17 @@ public class SearchResultPortlet extends AbstractVelocityMessagingPortlet {
         // check whether page navigation was clicked and send according message (Search state)
         String rankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
         if (rankedStarthit != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
         }
         // currentSelectorPage is set, send according message (Search state)
         String currentSelectorPage = request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE);
         if (currentSelectorPage != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
         }
 
         String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
         if (unrankedStarthit != null) {
-            publishRenderMessage(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
+            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
         }
 
         // adapt SearchState for bookmarking !:
