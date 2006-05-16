@@ -19,7 +19,7 @@
   <h3>$partner.name</h3>
 		#set($providers = $partnerHash.providers)
 		#foreach($provider in $providers)
-			<p>$provider.provider.name</p>
+			<p>#if($provider.provider.url && $provider.provider.url != "")<a href="$provider.provider.url" target="_new">$provider.provider.name</a>#else$provider.provider.name#end</p>
 			<ul>
 			#foreach($plug in $provider.iplugs)
 				<li>$plug.getDataSourceName()</li>
