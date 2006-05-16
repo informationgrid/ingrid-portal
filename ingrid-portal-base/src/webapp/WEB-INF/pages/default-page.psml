@@ -22,6 +22,9 @@
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
+      <preference name="helpKey" readOnly="false">
+        <value>search-topics-1</value>
+      </preference>
     </fragment>
     <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
       <property layout="TwoColumns" name="row" value="2" />
