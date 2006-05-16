@@ -22,5 +22,6 @@
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-cm-2.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-jetspeed-portal-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-file-cache-2.0.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-portal-site-2.0.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal/WEB-INF/classes"/>
 </classpath>
