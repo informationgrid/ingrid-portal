@@ -374,8 +374,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("unrankedSearchFinished", unrankedSearchFinished);
 
         super.doView(request, response);
-
-        SearchState.resetSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
