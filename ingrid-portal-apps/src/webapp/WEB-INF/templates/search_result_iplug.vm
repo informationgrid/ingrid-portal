@@ -9,23 +9,22 @@
       <br />
 
 #if($unrankedResultList && "$unrankedResultList.length()" != "0")
-      #if($unrankedResultList.hits && $unrankedResultList.getHits() > 0)
-    	  <div class="resultset_partner_group">
-            <div class="ico_down_black"><span class="title">$rs.dataSourceName#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
-            <p class="result_description">
+	#foreach($rs in $unrankedResultList.hits)
+		#if($velocityCount == 1)
+		<div class="resultset_partner_group">
+			<div class="ico_down_black"><span class="title">$rs.dataSourceName#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
+			<p class="result_description">
               $rs.dataSourceDescription
-            </p>
-            <p class="result_metadata">
+			</p>
+			<p class="result_metadata">
               Anbieter: $rs.organisation
-            </p>
-          </div>
-    	  #foreach($rs in $unrankedResultList.hits)
-              <div class="resultset">
-                <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
-              </div>
-          #end
-          <br />
-	  #end
+			</p>
+		</div>
+		#end
+		<div class="resultset">
+			<span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
+		</div>
+	#end
 #else
 		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
 #end
