@@ -304,7 +304,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         if (unrankedHits != null) {
-            numberOfUnrankedHits = (int) unrankedHits.getInVolvedPlugs();
+            if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
+                numberOfUnrankedHits = (int) unrankedHits.length();
+            } else {
+                numberOfUnrankedHits = unrankedHits.getInVolvedPlugs();
+            }
         }
         // adapt settings of unranked page navigation
         HashMap unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
