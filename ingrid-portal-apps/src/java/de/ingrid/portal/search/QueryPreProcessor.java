@@ -217,12 +217,6 @@ public class QueryPreProcessor {
             query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
         }
 
-        // set grouping ! ONLY IF NO grouping IN Query String Input !
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
-            // grouping per iPlug !
-            query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
-        }
-
         // set filter params. If no filter is set, process grouping
         // FILTERING AND GROUPING are mutually exclusive 
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
@@ -244,7 +238,11 @@ public class QueryPreProcessor {
                     UtilsSearch.processIPlugs(query, new String[] {subject});
                 }
             }
-            
+        } else {
+            if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
+                // grouping per iPlug !
+                query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
+            }            
         }
         
         // TODO If no query should be submitted, return null

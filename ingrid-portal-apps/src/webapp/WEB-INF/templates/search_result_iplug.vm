@@ -9,7 +9,7 @@
       <br />
 
 #if($unrankedResultList && "$unrankedResultList.length()" != "0")
-      #foreach($rs in $unrankedResultList.hits)
+      #if($unrankedResultList.hits && $unrankedResultList.getHits() > 0)
     	  <div class="resultset_partner_group">
             <div class="ico_down_black"><span class="title">$rs.dataSourceName#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
             <p class="result_description">
@@ -19,17 +19,13 @@
               Anbieter: $rs.organisation
             </p>
           </div>
-
-          <div class="resultset">
-            <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
-          </div>
-      #foreach($sub_rs in $rs.get('subHits'))
-          <div class="resultset">
-            <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($sub_rs.title)</a></strong></span>
-          </div>
-      #end
+    	  #foreach($rs in $unrankedResultList.hits)
+              <div class="resultset">
+                <span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
+              </div>
+          #end
           <br />
-      #end
+	  #end
 #else
 		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
 #end
