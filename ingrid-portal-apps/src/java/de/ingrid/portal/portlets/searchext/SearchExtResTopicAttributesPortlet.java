@@ -13,15 +13,15 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
-import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.UtilsQueryString;
 
 /**
- * This portlet handles the fragment of the attributes input in the extended search
- * for RESEARCH.
- *
+ * This portlet handles the fragment of the attributes input in the extended
+ * search for RESEARCH.
+ * 
  * @author martin@wemove.com
  */
 public class SearchExtResTopicAttributesPortlet extends SearchExtResTopic {
@@ -30,15 +30,16 @@ public class SearchExtResTopicAttributesPortlet extends SearchExtResTopic {
             throws PortletException, IOException {
         Context context = getContext(request);
 
-        SearchExtResTopicAttributesForm f = (SearchExtResTopicAttributesForm) Utils.getActionForm(request, SearchExtResTopicAttributesForm.SESSION_KEY, SearchExtResTopicAttributesForm.class);        
+        SearchExtResTopicAttributesForm f = (SearchExtResTopicAttributesForm) Utils.getActionForm(request,
+                SearchExtResTopicAttributesForm.SESSION_KEY, SearchExtResTopicAttributesForm.class);
 
         String cmd = request.getParameter("cmd");
-        
+
         if (cmd == null) {
             f.init();
         }
         context.put("actionForm", f);
-        
+
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_TOPIC);
         context.put(VAR_SUB_TAB, PARAMV_TAB_ATTRIBUTES);
@@ -58,57 +59,68 @@ public class SearchExtResTopicAttributesPortlet extends SearchExtResTopic {
         if (submittedAddToQuery != null) {
 
             actionResponse.setRenderParameter("cmd", "form_sent");
-            SearchExtResTopicAttributesForm f = (SearchExtResTopicAttributesForm) Utils.getActionForm(request, SearchExtResTopicAttributesForm.SESSION_KEY, SearchExtResTopicAttributesForm.class);        
+            SearchExtResTopicAttributesForm f = (SearchExtResTopicAttributesForm) Utils.getActionForm(request,
+                    SearchExtResTopicAttributesForm.SESSION_KEY, SearchExtResTopicAttributesForm.class);
             f.clearErrors();
-            
+
             f.populate(request);
             if (!f.validate()) {
                 return;
             }
-            
-            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+
+            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                    Settings.PARAM_QUERY_STRING);
             String subTerm = "";
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("institution:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)));
+                subTerm = subTerm.concat("fs_institution:")
+                        .concat(
+                                UtilsQueryString.getPhrasedTerm(f
+                                        .getInput(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)));
             }
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_DB_ORG)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("sponsor:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_ORG)));
+                subTerm = subTerm.concat("fs_project_executing_organisation:").concat(
+                        UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_ORG)));
             }
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_DB_PM)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("supervisor:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_PM)));
+                subTerm = subTerm.concat("fs_projectleader:").concat(
+                        UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_PM)));
             }
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_DB_STAFF)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("parties:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_STAFF)));
+                subTerm = subTerm.concat("fs_participants:").concat(
+                        UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_STAFF)));
             }
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_DB_TITLE)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("project:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_TITLE)));
+                subTerm = subTerm.concat("title:").concat(
+                        UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_DB_TITLE)));
             }
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_TERM_FROM)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("t1:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_TERM_FROM)));
+                subTerm = subTerm.concat("fs_runtime_from:").concat(
+                        UtilsDate.convertDateString(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_TERM_FROM)), "dd.MM.yyyy", "yyyy-MM-dd"));
             }
             if (f.hasInput(SearchExtResTopicAttributesForm.FIELD_TERM_TO)) {
                 if (subTerm.length() > 0) {
                     subTerm = subTerm.concat(" ");
                 }
-                subTerm = subTerm.concat("t2:").concat(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_TERM_FROM)));
+                subTerm = subTerm.concat("fs_runtime_to:").concat(
+                        UtilsDate.convertDateString(UtilsQueryString.getPhrasedTerm(f.getInput(SearchExtResTopicAttributesForm.FIELD_TERM_TO)), "dd.MM.yyyy", "yyyy-MM-dd"));
             }
 
             if (subTerm.length() > 0) {
@@ -119,17 +131,18 @@ public class SearchExtResTopicAttributesPortlet extends SearchExtResTopic {
 
         } else if (submittedRemoveFilter != null) {
 
-            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
-            queryStr = UtilsQueryString.removeField(queryStr, "institution");
-            queryStr = UtilsQueryString.removeField(queryStr, "sponsor");
-            queryStr = UtilsQueryString.removeField(queryStr, "supervisor");
-            queryStr = UtilsQueryString.removeField(queryStr, "parties");
-            queryStr = UtilsQueryString.removeField(queryStr, "project");
-            queryStr = UtilsQueryString.removeField(queryStr, "t1");
-            queryStr = UtilsQueryString.removeField(queryStr, "t2");
+            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                    Settings.PARAM_QUERY_STRING);
+            queryStr = UtilsQueryString.removeField(queryStr, "fs_institution");
+            queryStr = UtilsQueryString.removeField(queryStr, "fs_project_executing_organisation");
+            queryStr = UtilsQueryString.removeField(queryStr, "fs_projectleader");
+            queryStr = UtilsQueryString.removeField(queryStr, "fs_participants");
+            queryStr = UtilsQueryString.removeField(queryStr, "title");
+            queryStr = UtilsQueryString.removeField(queryStr, "fs_runtime_from");
+            queryStr = UtilsQueryString.removeField(queryStr, "fs_runtime_to");
             queryStr = UtilsQueryString.stripQueryWhitespace(queryStr);
             PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, queryStr);
-            
+
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);
