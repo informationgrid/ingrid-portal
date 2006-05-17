@@ -48,7 +48,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
     private final static String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
 
-    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
+    //    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
 
     private static final String TEMPLATE_RESULT_JS = "/WEB-INF/templates/search_result_js.vm";
 
@@ -337,27 +337,26 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         Object rankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
         Object unrankedSearchFinished = SearchState
                 .getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-/*
-// DON'T SHOW separate Template when no results ! This one is never displayed when JS is active and search is performed
-// initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. whene similar terms are
-// clicked, this template is displayed, causing changes of result content (when similar terms are displayed).
-// WE DON'T WANT TO CHANE RESULTS CONTENT, WHEN SIMILAR TERMS ARE CKLICKED (DO we ???)
-        if (rankedSearchFinished != null && unrankedSearchFinished != null && numberOfRankedHits == 0
-                && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)
-                && filter.length() == 0) {
-            // query string will be displayed when no results !
-            String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-            context.put("queryString", queryString);
+        /*
+         // DON'T SHOW separate Template when no results ! This one is never displayed when JS is active and search is performed
+         // initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. whene similar terms are
+         // clicked, this template is displayed, causing changes of result content (when similar terms are displayed).
+         // WE DON'T WANT TO CHANE RESULTS CONTENT, WHEN SIMILAR TERMS ARE CKLICKED (DO we ???)
+         if (rankedSearchFinished != null && unrankedSearchFinished != null && numberOfRankedHits == 0
+         && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)
+         && filter.length() == 0) {
+         // query string will be displayed when no results !
+         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+         context.put("queryString", queryString);
 
-            setDefaultViewPage(TEMPLATE_NO_RESULT);
-            super.doView(request, response);
-            return;
-        }
-*/
+         setDefaultViewPage(TEMPLATE_NO_RESULT);
+         super.doView(request, response);
+         return;
+         }
+         */
         // ----------------------------------
         // prepare view
         // ----------------------------------
-
         // adapt page navigation for grouping 
         if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             rankedPageNavigation.put("currentSelectorPage", new Integer(currentSelectorPage));
