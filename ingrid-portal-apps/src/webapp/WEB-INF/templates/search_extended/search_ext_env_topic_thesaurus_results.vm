@@ -23,7 +23,7 @@
           	  </tr>
 		#foreach($tokenNode in $similarNode.getChildren())
             #set ($action = $renderResponse.createActionURL())
-            $action.setParameter('action','doBrowse')
+            $action.setParameter('action','doBrowseFromTree')
 			$action.setParameter('topicID',$tokenNode.get("topicID"))
           	  <tr>
           	    <td></td>

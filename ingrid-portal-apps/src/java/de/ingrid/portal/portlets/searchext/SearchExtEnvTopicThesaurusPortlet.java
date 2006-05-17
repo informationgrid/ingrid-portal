@@ -3,8 +3,11 @@
  */
 package de.ingrid.portal.portlets.searchext;
 
+import java.util.List;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
@@ -97,11 +100,43 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             setDefaultViewPage(TEMPLATE_RESULTS);
         } else if (action.equals(PARAMV_VIEW_BROWSE)) {
             context.put(CURRENT_TOPIC, request.getPortletSession().getAttribute(CURRENT_TOPIC));
-            context.put(ASSOCIATED_TOPICS, request.getPortletSession().getAttribute(ASSOCIATED_TOPICS));
-            context.put("list_size", new Integer(((IngridHit[])request.getPortletSession().getAttribute(ASSOCIATED_TOPICS)).length + 1));
+            
+            ArrayList narrowerTermAssoc = new ArrayList();
+            ArrayList widerTermAssoc = new ArrayList();
+            ArrayList synonymAssoc = new ArrayList();
+            ArrayList relatedTermsAssoc = new ArrayList();
+            
+            Object obj = request.getPortletSession().getAttribute(ASSOCIATED_TOPICS);
+            if (obj != null) {
+                List hits = (List)obj;
+                for (int i=0; i<hits.size(); i++) {
+                    Topic t = (Topic)hits.get(i);
+                    String assoc = t.getTopicAssoc();
+                    if (assoc.indexOf("narrowerTermAssoc") != -1) {
+                        narrowerTermAssoc.add(t);
+                    } else if (assoc.indexOf("widerTermAssoc") != -1) {
+                        widerTermAssoc.add(t);
+                    } else if (assoc.indexOf("synonymAssoc") != -1) {
+                        synonymAssoc.add(t);
+                    } else if (assoc.indexOf("relatedTermsAssoc") != -1) {
+                        relatedTermsAssoc.add(t);
+                    }
+                }
+                context.put("list_size", new Integer(hits.size() + 1));
+            }
+            context.put("narrowerTermAssoc", narrowerTermAssoc);
+            context.put("widerTermAssoc", widerTermAssoc);
+            context.put("synonymAssoc", synonymAssoc);
+            context.put("relatedTermsAssoc", relatedTermsAssoc);
             
             setDefaultViewPage(TEMPLATE_BROWSE);
         } else if (action.equals(PARAMV_VIEW_SYNONYM)) {
+            context.put(CURRENT_TOPIC, request.getPortletSession().getAttribute(CURRENT_TOPIC));
+            Object obj = request.getPortletSession().getAttribute(ASSOCIATED_TOPICS);
+            if (obj != null) {
+                context.put(ASSOCIATED_TOPICS, obj);
+                context.put("list_size", new Integer(((List)obj).size() + 1));
+            }
             setDefaultViewPage(TEMPLATE_SYNONYM);
         }
 
@@ -252,7 +287,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             }
             actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
 
-        } else if (action.equalsIgnoreCase("doBrowse")) {
+        } else if (action.equalsIgnoreCase("doBrowseFromTree")) {
 
             // SNS Deskriptor browsen
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
@@ -260,15 +295,57 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             Topic currentTopic = getTopicFromTree(similarRoot, topicID);
             request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
             IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
-            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, assocTopics, PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
             actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
 
+        } else if (action.equalsIgnoreCase("doBrowse")) {
+
+            // SNS Deskriptor browsen
+            String topicID = request.getParameter("topicID");
+            String plugID = request.getParameter("plugID");
+            String docID = request.getParameter("docID");
+            
+            Topic hit = new Topic();
+            hit.setDocumentId(Integer.parseInt(docID));
+            hit.setPlugId(plugID);
+            hit.setTopicID(topicID);
+            
+            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit);
+            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
+            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
+
+            // redirect to same page with view param setting view !
+            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
+            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            
         } else if (action.equalsIgnoreCase("doSynonym")) {
 
             // SNS Synonym browsen
+            String topicID = request.getParameter("topicID");
+            String plugID = request.getParameter("plugID");
+            String docID = request.getParameter("docID");
+            
+            Topic hit = new Topic();
+            hit.setDocumentId(Integer.parseInt(docID));
+            hit.setPlugId(plugID);
+            hit.setTopicID(topicID);
+            
+            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit);
+            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
+            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
+            ArrayList descriptors = new ArrayList();
+            for (int i=0; i<assocTopics.length; i++) {
+                Topic t = (Topic)assocTopics[i];
+                String abstr = (String)t.get("abstract");
+                if (abstr.indexOf("descriptorType") != -1) {
+                    descriptors.add(t);
+                }
+            }
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, descriptors, PortletSessionImpl.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_SYNONYM);

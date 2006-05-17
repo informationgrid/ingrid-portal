@@ -161,5 +161,23 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
     
+    public IngridHitDetail getDetailsTopic(IngridHit hit) {
+        try {
+            IngridQuery query = new IngridQuery();
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TOPIC);
+
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+
+            IngridHitDetail detail = iBus.getDetail(hit, query, null);
+
+            return detail;
+        } catch (Exception e) {
+            log.error("Exception while querying sns for detailed topic.", e);
+            return null;
+        }
+        
+    }
+    
 
 }

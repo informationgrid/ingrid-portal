@@ -2,20 +2,32 @@
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_topic_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_topic_thesaurus.vm')
+<input type="hidden" name="list_size" value="$list_size"/>
+<input type="hidden" name="addFromAssociatedTopics" value="1"/>
             <br />
             <div class="line"><hr /></div>
             <div>
 #parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
               <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.synonym.label')</h3>
-              <p>[Landschaftscharakter]</p>
+			  #set($cnt = 0)
+			  <p><input type="checkbox" name="chk_$cnt" value="$current_topic.topicName" />&nbsp;$current_topic.topicName</p>
+              #set($cnt = $cnt + 1)
               <span class="clearer"></span>
             </div>
+#if($associated_topics.size() > 0)
             <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.synonym.alternative')</h3>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doBrowse')
             <p>
-              <input type="checkbox" name="s1_chk1" value="myId" />&nbsp;<a href="$action">Landschaftsbild</a>
+			#foreach($topic in $associated_topics)
+				$action.setParameter('topicID',$topic.get("topicID"))
+				$action.setParameter('plugID',$topic.getPlugId())
+				$action.setParameter('docID',"$topic.getDocumentId()")
+                <input type="checkbox" name="chk_$cnt" value="$topic.topicName" />&nbsp;<a href="$action">$topic.topicName</a><br />
+				#set($cnt = $cnt + 1)
+			#end
             </p>
+#end			
           </div>  
       </div>      
 #parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')

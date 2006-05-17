@@ -73,4 +73,14 @@ public interface SimilarTermsInterface {
      */
     IngridHit[] getTopicsFromTopic(String topicId);
     
+    /**
+     * Get detail from hit.
+     * 
+     * 
+     * @param hit The hit to get the detail from.
+     * @return The detail of the hit.
+     */
+    IngridHitDetail getDetailsTopic(IngridHit hit);
+    
+    
 }
