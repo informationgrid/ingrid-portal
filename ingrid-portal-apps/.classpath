@@ -20,7 +20,6 @@
 	<classpathentry kind="var" path="MAVEN_REPO/commons-pool/jars/commons-pool-1.2.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/dom4j/jars/dom4j-1.4-dev-8.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jta/jars/jta1.0.1.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/cglib/jars/cglib-nodep-2.1_3.jar"/>
 	<classpathentry sourcepath="/EXT_SRC" kind="var" path="MAVEN_REPO/commons-configuration/jars/commons-configuration-1.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-lang/jars/commons-lang-2.1.jar"/>
 	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.1/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
@@ -31,14 +30,11 @@
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-api-2.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-jxta-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jxta/jars/jxta-2.3.6.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/jxta/jars/jxtaext-2.3.6.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jdom/jars/jdom-b10.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/bouncycastle/jars/bcprov-jdk14-124.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-commons-2.0.jar"/>
 	<classpathentry sourcepath="/EXT_SRC" kind="var" path="MAVEN_REPO/org.apache.pluto/jars/pluto-1.0.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/log4j/jars/log4j-1.2.8.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/jaxen/jars/jaxen-1.1-beta-4.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/weta/jars/weta-g-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jal/jars/jal-0.4.jar"/>
 	<classpathentry sourcepath="/JETSPEED_SRC/portal/src/java" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-portal-2.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/activation/jars/activation-1.0.2.jar"/>

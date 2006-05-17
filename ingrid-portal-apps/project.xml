@@ -202,15 +202,6 @@
 	        <war.bundle>true</war.bundle>
 	      </properties>
 	    </dependency>
-        <dependency>
-            <groupId>weta</groupId>
-            <artifactId>weta-g</artifactId>
-            <version>SNAPSHOT</version>
-			<properties>
-	           <war.bundle>true</war.bundle>
-	        </properties>            
-            <type>jar</type>
-        </dependency>
 		<dependency>
             <groupId>weta-components</groupId>
             <artifactId>communication</artifactId>
@@ -250,25 +241,6 @@
 	        </properties>            
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>jxta</groupId>
-            <artifactId>jxtaext</artifactId>
-            <version>2.3.6</version>
-			<properties>
-	           <war.bundle>true</war.bundle>
-	        </properties>            
-            <type>jar</type>
-        </dependency>
-		<dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>2.1_3</version>
-			<properties>
-	           <war.bundle>true</war.bundle>
-	        </properties>            
-            <type>jar</type>
-            <url>http://ibiblio.org/maven</url>
-		</dependency>
 		<dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -373,15 +345,6 @@
             <groupId>jal</groupId>
             <artifactId>jal</artifactId>
             <version>0.4</version>
-			<properties>
-	           <war.bundle>true</war.bundle>
-	        </properties>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>jaxen</groupId>
-            <artifactId>jaxen</artifactId>
-            <version>1.1-beta-4</version>
 			<properties>
 	           <war.bundle>true</war.bundle>
 	        </properties>
