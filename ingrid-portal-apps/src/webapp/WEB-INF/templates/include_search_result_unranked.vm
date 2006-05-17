@@ -44,8 +44,10 @@ $action.setParameter('grouping', 'plugid')
 #end
           <br />
       #end
-#else
+#elseif($unrankedSearchFinished)
 		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
+#else
+		<p><strong>Die Ausgabe der Suchergebnisse wurde vorzeitig unterbrochen.</strong><br /><br /></p>
 #end
       
       <div class="resultset_nav float_left">

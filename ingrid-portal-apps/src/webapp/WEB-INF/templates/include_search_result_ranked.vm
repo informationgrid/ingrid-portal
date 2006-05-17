@@ -101,8 +101,10 @@ $action.setParameter('subject', $groupSubjectKey)
 		  <br />
 		#end
 	  #end
-#else
+#elseif($rankedSearchFinished)
 		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
+#else
+		<p><strong>Die Ausgabe der Suchergebnisse wurde vorzeitig unterbrochen.</strong><br /><br /></p>
 #end  
 
       <div class="resultset_nav float_left">

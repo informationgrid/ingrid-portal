@@ -234,8 +234,14 @@ public class Settings {
     /** cache for ranked search results */
     public static final String MSG_SEARCH_RESULT_RANKED = "search_result_ranked";
 
+    /** when set ranked search has finished */
+    public static final String MSG_SEARCH_FINISHED_RANKED = "search_finished_ranked";
+
     /** cache for unranked search results */
     public static final String MSG_SEARCH_RESULT_UNRANKED = "search_result_unranked";
+
+    /** when set ranked search has finished */
+    public static final String MSG_SEARCH_FINISHED_UNRANKED = "search_finished_unranked";
 
     // ------------- INFORMATION MESSAGES: KEYS (MSG_...) AND VALUES ("MSGV_...") -----------------------------
 

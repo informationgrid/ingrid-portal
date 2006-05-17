@@ -167,7 +167,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         IngridHits hits = null;
         try {
             if (log.isDebugEnabled()) {
-                log.debug("doSearch: IngridQuery = " + UtilsSearch.queryToString(query));
+                log
+                        .debug("doSearch: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout=" + timeout
+                                + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
+                                + requestedHits);
             }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
         } catch (Throwable t) {

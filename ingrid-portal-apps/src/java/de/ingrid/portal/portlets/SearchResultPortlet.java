@@ -55,7 +55,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     private static final String TEMPLATE_RESULT_JS_RANKED = "/WEB-INF/templates/search_result_js_ranked.vm";
 
     private static final String TEMPLATE_RESULT_JS_UNRANKED = "/WEB-INF/templates/search_result_js_unranked.vm";
-    
+
     private static final String TEMPLATE_RESULT_IPLUG = "/WEB-INF/templates/search_result_iplug.vm";
 
     /*
@@ -130,7 +130,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         // get the filter from search state
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
-        
+
         if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             setDefaultViewPage(TEMPLATE_RESULT);
         } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
@@ -139,8 +139,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
             setDefaultViewPage(TEMPLATE_RESULT_IPLUG);
         }
-        
-        
 
         String currentView = getDefaultViewPage();
 
@@ -167,8 +165,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
             // check for js enabled iframe rendering
         } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)
-                && !currentView.equals(TEMPLATE_RESULT_ADDRESS)
-                && !currentView.equals(TEMPLATE_RESULT_IPLUG)) {
+                && !currentView.equals(TEMPLATE_RESULT_ADDRESS) && !currentView.equals(TEMPLATE_RESULT_IPLUG)) {
             // if javascript and new query, set template to javascript enabled iframe template
             // exit method!!
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
@@ -197,10 +194,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // store query in session
         UtilsSearch.addQueryToHistory(request);
-        
+
         // initialize grouping 
         String grouping = null;
-        
+
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
@@ -216,7 +213,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
                 if (qd != null) {
                     controller.addQuery("ranked", qd);
-                    
+                    SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+
                     // check for grouping
                     // this must be done here because grouping will only be 
                     // put into the query created by the pre processor
@@ -239,7 +237,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
                 // check if query must be executed
                 if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
-                    unrankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+                    unrankedHits = (IngridHits) SearchState.getSearchStateObject(request,
+                            Settings.MSG_SEARCH_RESULT_UNRANKED);
                     if (log.isDebugEnabled()) {
                         log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
                     }
@@ -248,6 +247,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
                     if (qd != null) {
                         controller.addQuery("unranked", qd);
+                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
                     }
                 }
             }
@@ -255,7 +255,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // preset currentselector page (needed only for grouping)
         int currentSelectorPage = 1;
-        
+
         // fire query, post process results
         if (controller.hasQueries()) {
             // fire queries
@@ -264,19 +264,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (results.containsKey("ranked")) {
                 rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
+                SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_RANKED, Settings.MSGV_TRUE);
                 // GROUPING ONLY !!!
                 // store start hit for the next page (only when in grouping mode)
                 if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
                     // get the current page number, default to 1
                     try {
-                        currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                        currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE)))
+                                .intValue();
                     } catch (Exception ex) {
                         currentSelectorPage = 1;
                     }
                     // get the grouping starthits history from session
                     // create and initialize if not exists
                     ArrayList groupedStartHits = null;
-                    groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+                    groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
+                            Settings.PARAM_GROUPING_STARTHITS);
                     if (groupedStartHits == null) {
                         groupedStartHits = new ArrayList();
                         groupedStartHits.add(new Integer(0));
@@ -286,13 +289,14 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                         groupedStartHits.add(currentSelectorPage, new Integer(rankedHits.getGoupedHitsLength()));
                     }
                 }
-                
+
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
                 unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"),
                         selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
+                SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_UNRANKED, Settings.MSGV_TRUE);
             }
         }
 
@@ -319,15 +323,28 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (filter != null && filter.length() > 0) {
             context.put("filteredBy", filter);
             if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState
+                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
             } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState
+                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
             } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT),null));
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, SearchState
+                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
             }
         }
-        if (numberOfRankedHits == 0 && numberOfUnrankedHits == 0
-                && (renderOneResultColumnUnranked && renderOneResultColumnRanked) && filter.length() == 0) {
+
+        Object rankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+        Object unrankedSearchFinished = SearchState
+                .getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+/*
+// DON'T SHOW separate Template when no results ! This one is never displayed when JS is active and search is performed
+// initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. whene similar terms are
+// clicked, this template is displayed, causing changes of result content (when similar terms are displayed).
+// WE DON'T WANT TO CHANE RESULTS CONTENT, WHEN SIMILAR TERMS ARE CKLICKED (DO we ???)
+        if (rankedSearchFinished != null && unrankedSearchFinished != null && numberOfRankedHits == 0
+                && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)
+                && filter.length() == 0) {
             // query string will be displayed when no results !
             String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             context.put("queryString", queryString);
@@ -336,7 +353,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             super.doView(request, response);
             return;
         }
-
+*/
         // ----------------------------------
         // prepare view
         // ----------------------------------
@@ -349,13 +366,16 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 rankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
             }
         }
-        
-        
+
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
+        context.put("rankedSearchFinished", rankedSearchFinished);
+        context.put("unrankedSearchFinished", unrankedSearchFinished);
+
         super.doView(request, response);
+
         SearchState.resetSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
     }
 
@@ -388,7 +408,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, request.getParameter(Settings.PARAM_SUBJECT));
             SearchState.adaptSearchState(request, Settings.PARAM_FILTER, request.getParameter(Settings.PARAM_GROUPING));
         }
-        
+
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
     }
