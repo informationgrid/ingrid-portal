@@ -131,10 +131,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // get the filter from search state
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
 
-        if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            setDefaultViewPage(TEMPLATE_RESULT);
-        } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
+        if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
+        } else {
+            setDefaultViewPage(TEMPLATE_RESULT);
         }
         if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
             setDefaultViewPage(TEMPLATE_RESULT_IPLUG);
