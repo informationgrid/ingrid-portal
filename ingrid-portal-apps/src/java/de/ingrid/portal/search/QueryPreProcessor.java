@@ -252,7 +252,7 @@ public class QueryPreProcessor {
         
         // let language for query
         if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, request.getLocale().getLanguage()));
+//            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
         }
         
         // TODO If no query should be submitted, return null
