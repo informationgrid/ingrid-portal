@@ -29,6 +29,9 @@ public class UtilsQueryString {
         int termStartPos = 0;
         int termStopPos = 0;
         String myTerm;
+        if (queryStr == null) {
+            queryStr = "";
+        }
         StringBuffer result = new StringBuffer(queryStr);
         
         while (true) {
