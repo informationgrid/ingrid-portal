@@ -83,7 +83,6 @@ public class HelpPortlet extends GenericVelocityPortlet {
                 Transformer transformer = factory.newTransformer(stylesheet);
                 DocumentResult result = new DocumentResult();
                 String subtree = ((DefaultElement)chapterObj).asXML();
-                DocumentHelper.parseText(subtree);
                 DocumentSource source = new DocumentSource( DocumentHelper.parseText(subtree) );
                 
                 transformer.transform(source, result);
