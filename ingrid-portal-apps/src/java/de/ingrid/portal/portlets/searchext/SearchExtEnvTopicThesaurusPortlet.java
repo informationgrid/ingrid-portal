@@ -112,13 +112,13 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                 for (int i=0; i<hits.size(); i++) {
                     Topic t = (Topic)hits.get(i);
                     String assoc = t.getTopicAssoc();
-                    if (assoc.indexOf("narrowerTermAssoc") != -1) {
+                    if (assoc.indexOf("narrowerTermMember") != -1) {
                         narrowerTermAssoc.add(t);
-                    } else if (assoc.indexOf("widerTermAssoc") != -1) {
+                    } else if (assoc.indexOf("widerTermMember") != -1) {
                         widerTermAssoc.add(t);
-                    } else if (assoc.indexOf("synonymAssoc") != -1) {
+                    } else if (assoc.indexOf("synonymMember") != -1) {
                         synonymAssoc.add(t);
-                    } else if (assoc.indexOf("relatedTermsAssoc") != -1) {
+                    } else if (assoc.indexOf("descriptorMember") != -1) {
                         relatedTermsAssoc.add(t);
                     }
                 }
