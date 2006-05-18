@@ -8,6 +8,7 @@ public class IngridRSSSource {
     private String description;
     private String language;
     private String url;
+    private String categories;
 
     
     /**
@@ -72,6 +73,18 @@ public class IngridRSSSource {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    /**
+     * @return Returns the categories.
+     */
+    public String getCategories() {
+        return categories;
+    }
+    /**
+     * @param categories The categories to set.
+     */
+    public void setCategories(String categories) {
+        this.categories = categories;
     }    
 
 

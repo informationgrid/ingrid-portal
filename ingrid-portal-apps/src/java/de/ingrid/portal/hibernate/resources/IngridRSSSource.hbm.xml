@@ -10,5 +10,6 @@
     	<property name="description" type="java.lang.String"/>
     	<property name="url" type="java.lang.String"/>
     	<property name="language" column="lang" type="java.lang.String"/>
+    	<property name="categories" type="java.lang.String"/>
   </class>
 </hibernate-mapping>

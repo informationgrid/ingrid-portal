@@ -231,4 +231,23 @@ public class UtilsString {
         
     }
     
+    /**
+     * Escape characters in a string for use in regular expressions. 
+     * 
+     * @param str The String.
+     * @return The escaped String.
+     */
+    public static String regExEscape(String str) {
+        final String escapeChars = "\\[({^$.?*+|";
+        StringBuffer buf = new StringBuffer(str.length());
+        for (int i=0; i<str.length(); i++) {
+            String c = str.substring(i, i+1);
+            if (escapeChars.indexOf(c) != -1) {
+                buf.append('\\');
+            }
+            buf.append(c);
+        }
+        return buf.toString();
+    }
+    
 }
