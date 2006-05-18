@@ -2,7 +2,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
-		<h1>Detailinformation - Karte</h1>
+		<h1>Karten</h1>
 	    
 		#if($hKey && $hKey.length() > 0)
 		<span class="portlet_info">

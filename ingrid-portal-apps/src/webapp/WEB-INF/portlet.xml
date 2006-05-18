@@ -677,7 +677,7 @@
             <value>/WEB-INF/templates/show_maps.vm</value>
         </init-param>
         <portlet-name>ShowMapsPortlet</portlet-name>
-        <display-name>Detailinformation - Karte</display-name>
+        <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
         <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
@@ -686,7 +686,7 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Detailinformation - Karte</title>
+            <title>Karten</title>
             <short-title>ShowMapsPortlet</short-title>
         </portlet-info>
     </portlet>
