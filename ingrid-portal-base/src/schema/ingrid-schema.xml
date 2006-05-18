@@ -73,6 +73,7 @@ limitations under the License.
         <column name="description" required="false" size="255" type="VARCHAR"/>
         <column name="url" required="true" size="255" type="VARCHAR"/>
         <column name="lang" required="true" size="255" type="VARCHAR"/>
+        <column name="categories" required="false" size="255" type="VARCHAR"/>
     </table>
 
     <table name="ingrid_rss_store">
