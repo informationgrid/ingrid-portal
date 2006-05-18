@@ -192,7 +192,7 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (2, 
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (3, 'MUF RLP', 'MUF RLP', 'http://www.muf.rlp.de/rss/rss_1_20.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (4, 'BFN', 'BfN-Skripten', 'http://www.bfn.de/rss/skripten.xml', 'de');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (5, 'NI_MU', 'MU_aktuell_PI_GB', 'http://www.niedersachsen.de/rss/rss_19947156_598_20.rss', 'de');
-
+INSERT INTO ingrid_rss_source (id, provider, description, url, lang) VALUES (6, 'MBU', 'BMU', 'http://www.bmu.de/allgemein/rss/35401.rss', 'de');
 
 INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
 INSERT INTO SECURITY_CREDENTIAL VALUES(1,1,'admin',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2004-05-22 16:27:12.572','2004-05-22 16:27:12.572',null,null,null);
