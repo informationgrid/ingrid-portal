@@ -3,6 +3,7 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,6 +28,7 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -119,7 +121,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         int numberOfHits = 0;
         try {
-            hits = doSearch(query, startHit, nextStartHit, HITS_PER_PAGE, messages);
+            hits = doSearch(query, startHit, nextStartHit, HITS_PER_PAGE, messages, request.getLocale());
             if (hits != null) {
                 numberOfHits = (int) hits.length();
             }
@@ -182,7 +184,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources, Locale locale) {
         if (log.isDebugEnabled()) {
             log.debug("Service IngridQuery = " + UtilsSearch.queryToString(query));
         }
@@ -192,6 +194,9 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
+                // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
+            }
             hits = ibus.search(query, hitsPerPage, currentPage, groupedStartHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();

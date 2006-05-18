@@ -166,6 +166,11 @@ public class QueryPreProcessor {
             newStartHit = ((Integer)groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
         
+        // let language for query
+        if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
+            // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
+        }
+        
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage,
                 newStartHit, PortalConfig.getInstance().getInt(
@@ -243,6 +248,11 @@ public class QueryPreProcessor {
                 // grouping per iPlug !
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
             }            
+        }
+        
+        // let language for query
+        if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, request.getLocale().getLanguage()));
         }
         
         // TODO If no query should be submitted, return null

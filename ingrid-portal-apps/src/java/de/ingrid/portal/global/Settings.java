@@ -95,6 +95,8 @@ public class Settings {
 
     // search settings: search sns metadata as well
     public static final String QFIELD_INCL_META = "incl_meta";
+
+    public static final String QFIELD_LANG = "lang";
     
     
     // ------------- query field values -----------------------------
@@ -127,6 +129,9 @@ public class Settings {
 
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS = "dsc_ecs_address";
 
+    public static final String QVALUE_LANG_DE = "de";
+    
+    
     // ===========================================
     // Result data (used in templates for rendering results!)
     // IF POSSIBLE, USE THESE KEYS ALSO TO ACCESS HIT DETAIL DATA !!! 
@@ -343,6 +348,7 @@ public class Settings {
     public final static String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
+
 
 
 
