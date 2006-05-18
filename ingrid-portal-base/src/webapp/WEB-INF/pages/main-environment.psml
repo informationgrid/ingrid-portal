@@ -29,7 +29,7 @@
         <value>envSearch.info.title</value>
       </preference>
       <preference name="infoLink" readOnly="false">
-        <value>/portal/search-extended/search-ext-env-area-contents.psml?select=1</value>
+        <value>/portal/search-extended/search-ext-env-area-contents.psml?select=2</value>
       </preference>
     </fragment>
   </fragment>
