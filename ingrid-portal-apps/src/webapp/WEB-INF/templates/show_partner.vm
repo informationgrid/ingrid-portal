@@ -1,10 +1,12 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
   <p>Wählen Sie einen der folgenden Partner aus. Jedem Partner können mehrere Informationsanbieter zugeordnet sein.</p>
   <ul class="innermenu">
 #foreach( $key in $partners.keySet() ) 
 	#set($partnerHash = $partners.get($key))
 	#set($partner = $partnerHash.partner)
 	#if($partnerHash.providers)
-	<li><a href="#$partner.ident">$partner.name</a></li>
+	#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml#$partner.ident"))
+	<li><a href="$link">$partner.name</a></li>
 	#end
 #end
   </ul>
