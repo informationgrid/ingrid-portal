@@ -6,7 +6,6 @@ package de.ingrid.portal.search;
 import java.util.Iterator;
 import java.util.List;
 
-import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -27,9 +26,14 @@ public class DisplayTreeFactory {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         TermQuery[] terms = UtilsSearch.getAllTerms(query);
+        String term;
         for (int i=0; i<terms.length; i++) {
             if (terms[i].getType() == TermQuery.TERM) {
-                DisplayTreeNode node = new DisplayTreeNode(""+i, terms[i].getTerm(), false);
+                term = terms[i].getTerm();
+                if (term.startsWith("\"")) {
+                    term = term.substring(1, term.length()-1);
+                }
+                DisplayTreeNode node = new DisplayTreeNode(""+i, term, false);
                 node.setType(DisplayTreeNode.SEARCH_TERM);
                 node.setParent(root);
                 root.addChild(node);
