@@ -27,6 +27,7 @@ import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridNewsletterData;
 import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -44,6 +45,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         List partnerList = UtilsDB.getPartners();
+        List providerList = UtilsDB.getProviders();
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
@@ -52,6 +54,58 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
         
         LinkedHashMap partnerMap = new LinkedHashMap();
+
+        Iterator it = partnerList.iterator();
+        while (it.hasNext()) {
+            IngridPartner partner = (IngridPartner)it.next();
+            LinkedHashMap partnerHash = new LinkedHashMap();
+            partnerHash.put("partner", partner);
+            partnerMap.put(partner.getIdent(), partnerHash);
+            Iterator providerIterator = providerList.iterator();
+            while (providerIterator.hasNext()) {
+                IngridProvider provider = (IngridProvider)providerIterator.next();
+                String providerIdent = provider.getIdent();
+                String partnerIdent = "";
+                if (providerIdent != null && providerIdent.length() > 0) {
+                    partnerIdent = providerIdent.substring(0, providerIdent.indexOf("_"));
+                    // hack: "bund" is coded as "bu" in provider idents
+                    if (partnerIdent.equals("bu")) {
+                        partnerIdent = "bund";
+                    }
+                }
+                if (partnerIdent.equals(partner.getIdent())) {
+                    // check for providers
+                    if (!partnerHash.containsKey("providers")) {
+                        partnerHash.put("providers", new LinkedHashMap());
+                    }
+                    // get providers of the partner
+                    HashMap providersHash = (LinkedHashMap)partnerHash.get("providers");
+                    // LinkedHashMap for prvider with a provider id.
+                    if (!providersHash.containsKey(providerIdent)) {
+                        providersHash.put(providerIdent, new LinkedHashMap());
+                    }
+                    // get provider hash map
+                    LinkedHashMap providerHash = (LinkedHashMap)providersHash.get(providerIdent);
+                    // check for provider entry, create if not exists
+                    // initialise with iplug, which contains all information
+                    if (!providerHash.containsKey("provider")) {
+                        providerHash.put("provider", provider);
+                    }
+                }
+            }
+        }
+        
+        context.put("partners", partnerMap);
+        
+        ArrayList plugDescriptions = new ArrayList();
+        for (int i=0; i< plugs.length; i++) {
+            if (!plugDescriptions.contains(plugs[i])) {
+                plugDescriptions.add(plugs[i]);
+            }
+        }
+        
+        context.put("plugs", plugDescriptions);
+        
         
         /*
          * This code builds a structure as follows:
@@ -72,7 +126,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
          * 
          */
         
-        Iterator it = partnerList.iterator();
+        it = partnerList.iterator();
         while (it.hasNext()) {
             IngridPartner partner = (IngridPartner)it.next();
             LinkedHashMap partnerHash = new LinkedHashMap();
@@ -120,7 +174,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
             }
         }
         
-        context.put("partners", partnerMap);
+//        context.put("partners", partnerMap);
         
         super.doView(request, response);
     }

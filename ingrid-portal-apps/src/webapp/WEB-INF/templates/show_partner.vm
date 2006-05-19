@@ -9,24 +9,32 @@
 	<li><a href="$link">$partner.name</a></li>
 	#end
 #end
+	<br/>
+	#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml#databases"))
+    <li><a href="$link">Angeschlossene Datenbanken</a></li>
   </ul>
-  <br />
 #foreach( $key in $partners.keySet() ) 
 	#set($partnerHash = $partners.get($key))
 	#set($partner = $partnerHash.partner)
 	#if($partnerHash.providers)
   <a name="$partner.ident"></a>
   <div class="line"><hr /></div>
-  <br />
   <h3>$partner.name</h3>
+<ul>
 		#set($providers = $partnerHash.providers)
 		#foreach($provider in $providers)
-			<p>#if($provider.provider.url && $provider.provider.url != "")<a href="$provider.provider.url" target="_new">$provider.provider.name</a>#else$provider.provider.name#end</p>
-			<ul>
-			#foreach($plug in $provider.iplugs)
-				<li>$plug.getDataSourceName()</li>
+			#if($provider.provider)
+			<li>#if($provider.provider.url && $provider.provider.url != "")<a href="$provider.provider.url" target="_new">$provider.provider.name</a>#else$provider.provider.name#end</li>
 			#end
-			</ul>
 		#end
+</ul>
 	#end
 #end
+<div class="line"><hr /></div>
+<a name="databases"></a>
+<h3>Angeschlossene Datenbanken:</h3>
+<ul>
+#foreach($plug in $plugs)
+	<li>$plug.getDataSourceName()</li>
+#end
+</ul>
