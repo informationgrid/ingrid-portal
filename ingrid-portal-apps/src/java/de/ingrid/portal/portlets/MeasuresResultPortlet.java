@@ -192,7 +192,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-                // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
+                query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
             }
             hits = ibus.search(query, hitsPerPage, currentPage, groupedStartHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
