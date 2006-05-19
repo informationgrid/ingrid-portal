@@ -107,7 +107,7 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
             }
             for (int i=0; i<meta.length; i++) {
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_ALL)) {
-                    datatypes.put("datatype:meta", "1");
+                    datatypes.put("datatype:metadata", "1");
                     datatypes.remove("-datatype:metadata");
                     // empty meta classes, all metaclasses are selected
                     metaclasses = new LinkedHashMap();
