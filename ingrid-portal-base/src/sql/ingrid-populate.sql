@@ -135,6 +135,7 @@ INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (117, 'th_tlug', 'Thüringer Landesanstalt für Umwelt und Geologie', 'http://www.tlug-jena.de/index.html', 117);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (118, 'th_tmlnu', 'Thüringer Ministerium für Landwirtschaft, Naturschutz und Umwelt', 'http://www.thueringen.de/de/tmlnu/', 118);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (119, 'bu_kug', 'Koordinierungsstelle PortalU', 'http://www.portalu.de/', 119);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (120, 'rp_mufv', 'Ministerium für Umwelt, Forsten und Verbraucherschutz des Landes Rheinland-Pfalz', 'http://www.mufv.rlp.de/', 120);
 
 INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (1, 'abf', 'abfall', 1);
 INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (2, 'alt', 'altlasten', 2);
