@@ -26,6 +26,15 @@ public class IngridResourceBundle {
         try {
             return r.getString(key);
         } catch (Exception e) {
+            return getCommonString(key);
+        }
+    }
+
+    public String getCommonString(String key) {
+        try {
+            ResourceBundle commonRes = ResourceBundle.getBundle("de.ingrid.portal.resources.CommonResources", r.getLocale());
+            return commonRes.getString(key);
+        } catch (Exception e) {
             return key;
         }
     }
