@@ -21,7 +21,6 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
@@ -199,7 +198,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
         if (setUpNewQuery) {
             // set up Ingrid Query -> triggers search in result portlet
-            setUpQuery(request, af.getInput(SearchSimpleForm.FIELD_QUERY));
+            String errCode = setUpQuery(request, af.getInput(SearchSimpleForm.FIELD_QUERY));
+            if (errCode != null) {
+                af.setError(SearchSimpleForm.FIELD_QUERY, messages.getString(errCode));
+            }
         }
 
         // ----------------------------------
@@ -293,16 +295,24 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
     }
 
-    private void setUpQuery(PortletRequest request, String queryString) {
+    /**
+     * Create IngridQuery and add to state.
+     * RETURNS an Error String, if an error occured, which can be displayed in form.
+     * @param request
+     * @param queryString
+     * @return null if OK, otherwise "Error Code" (for resourceBundle)
+     */
+    private String setUpQuery(PortletRequest request, String queryString) {
         // Create IngridQuery
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
-        } catch (ParseException ex) {
+        } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems creating IngridQuery, parsed query string: " + queryString, ex);
+                log.error("Problems creating IngridQuery, parsed query string: " + queryString, t);
             }
-            // TODO create ERROR message when no IngridQuery because of parse error (OR even do that in form ???) 
+
+            return "searchSimple.error.queryFormat";
         }
 
         // set query in state for result portlet
@@ -312,5 +322,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // simpleTermsPortlet and also in resultPortlet to determine whether query should be executed !
         SearchState.adaptSearchState(request, Settings.MSG_QUERY, query);
         SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, queryString);
+        
+        return null;
     }
 }
