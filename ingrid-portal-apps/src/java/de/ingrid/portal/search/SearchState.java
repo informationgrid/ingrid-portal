@@ -70,6 +70,11 @@ public class SearchState {
             String paramValue = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE));
             Utils.appendURLParameter(result, paramValue);
             
+            // current selector page (for unranked results)
+            // (read only from request)
+            paramValue = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED));
+            Utils.appendURLParameter(result, paramValue);
+            
             // query string (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);

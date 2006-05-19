@@ -26,7 +26,7 @@ public class Settings {
     public final static int SEARCH_RANKED_NUM_PAGES_TO_SELECT = 5;
 
     /** number of unranked pages displayed for selection ("selector pages") */
-    public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 3;
+    public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 5;
 
     /** max. number of hits displayed for every iPlug (in unranked search) */
     public final static int SEARCH_NUM_HITS_PER_GROUP = 3;
@@ -326,6 +326,7 @@ public class Settings {
     
     // history of starthits of grouped pages
     public static final String PARAM_GROUPING_STARTHITS = "grouping_starthits";
+    public static final String PARAM_GROUPING_STARTHITS_UNRANKED = "grouping_starthits_unranked";
     
 
     /** this parameter holds the type of filter for search result display (usually same as grouping: partner | provider) **/
@@ -348,6 +349,9 @@ public class Settings {
     public final static String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
+
+    public static final String PARAM_CURRENT_SELECTOR_PAGE_UNRANKED = "currentSelectorPageUnranked";
+
 
 
 

@@ -22,6 +22,10 @@
     <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits weiteren</strong> Datenquellen
 #end
 
+#macro (renderUnrankedResultCounterGrouping $pageSelector)
+    <strong>$pageSelector.numberOfHits weitere</strong> Datenquellen
+#end
+
 #macro (renderRankedPageNavigation $pageSelector)
 #set ($action = $renderResponse.createActionURL())
         (Seite <strong>$pageSelector.currentSelectorPage</strong> von <strong>$pageSelector.numberOfPages</strong>)
@@ -62,6 +66,24 @@
     #if($pageSelector.selectorHasNextPage)
         #set ($pstart = $pageSelector.currentSelectorPage + 1)
     	$action.setParameter('currentSelectorPage', $pstart.toString())
+    		| <a href="$action">&raquo;</a>
+    #end
+#end
+
+#macro (renderUnrankedPageNavigationGrouping $pageSelector)
+#set ($action = $renderResponse.createActionURL())
+	(Seite <strong>$pageSelector.currentSelectorPageUnranked</strong>)
+	#if($pageSelector.currentSelectorPageUnranked > 1)
+        #set ($pstart = $pageSelector.currentSelectorPageUnranked - 1)
+    	$action.setParameter('currentSelectorPageUnranked', $pstart.toString())
+    		<a href="$action">&laquo;</a>
+    	$action.setParameter('currentSelectorPageUnranked', "1")	
+    		| <a href="$action">1</a> ..
+	#end
+    		| $pageSelector.currentSelectorPageUnranked
+    #if($pageSelector.selectorHasNextPage)
+        #set ($pstart = $pageSelector.currentSelectorPageUnranked + 1)
+    	$action.setParameter('currentSelectorPageUnranked', $pstart.toString())
     		| <a href="$action">&raquo;</a>
     #end
 #end

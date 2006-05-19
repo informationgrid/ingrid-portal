@@ -1,13 +1,13 @@
 	<div class="portlet">
       <div class="resultset_nav float_left">
-#renderUnrankedResultCounter($unrankedPageSelector)
+#renderUnrankedResultCounterGrouping($unrankedPageSelector)
       </div>
 
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-#renderUnrankedPageNavigation($unrankedPageSelector)
+#renderUnrankedPageNavigationGrouping($unrankedPageSelector)
       </div>
       <br />
 
@@ -51,13 +51,13 @@ $action.setParameter('grouping', 'plugid')
 #end
       
       <div class="resultset_nav float_left">
-#renderUnrankedResultCounter($unrankedPageSelector)
+#renderUnrankedResultCounterGrouping($unrankedPageSelector)
       </div>
 
       <div class="resultset_nav">
         &nbsp;
       </div>
       <div class="resultset_nav">
-#renderUnrankedPageNavigation($unrankedPageSelector)
+#renderUnrankedPageNavigationGrouping($unrankedPageSelector)
       </div>
     </div> 

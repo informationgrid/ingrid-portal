@@ -12,12 +12,9 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.SearchSettingsForm;
-import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.net.QueryDescriptor;
-import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -249,6 +246,35 @@ public class QueryPreProcessor {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
             }            
         }
+
+        
+        // Compute the new start hit for the always groued unranked query
+        
+        // get the current page number, default to 1
+        int currentSelectorPage;
+        try {
+            currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED))).intValue();
+        } catch (Exception ex) {
+            currentSelectorPage = 1;
+        }
+
+        // get the grouping starthits history from session
+        // create and initialize if not exists
+        ArrayList groupedStartHits = null;
+        groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
+        if (groupedStartHits == null) {
+            groupedStartHits = new ArrayList();
+            groupedStartHits.add(new Integer(0));
+            SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED, groupedStartHits);
+        }
+        // set current page to 0 when the unranked search is showing a page > 0
+        // this will be ignored for showing the first page AND 
+        // navigate in the iplug detail page 'show all result of iplug'
+        if (currentSelectorPage > 1) {
+            currentPage = 0;
+        }
+        int newStartHit = ((Integer)groupedStartHits.get(currentSelectorPage - 1)).intValue();
+        
         
         // let language for query
         if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
@@ -257,7 +283,7 @@ public class QueryPreProcessor {
         
         // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage,
-                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, PortalConfig.getInstance().getInt(
+                newStartHit, PortalConfig.getInstance().getInt(
                         PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, true, null);
     }
 
