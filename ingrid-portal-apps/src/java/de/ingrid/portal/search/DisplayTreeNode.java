@@ -24,6 +24,8 @@ public class DisplayTreeNode extends HashMap {
     public static final int GENERIC = 1;
     public static final int SEARCH_TERM = 2;
     public static final int SNS_TERM = 3;
+    public static final int MESSAGE_NODE = 4;
+
     
 	
 	private boolean isOpen = false;

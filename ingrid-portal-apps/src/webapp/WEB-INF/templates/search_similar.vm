@@ -24,7 +24,11 @@
 		#foreach($tokenNode in $similarNode.getChildren())
           	  <tr>
           	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
+				#if($tokenNode.type == 4)
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$MESSAGES.getString('similar.terms.not.available')</td>
+				#else
+					<td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
+				#end
           	  </tr>
 		#end
 	#else

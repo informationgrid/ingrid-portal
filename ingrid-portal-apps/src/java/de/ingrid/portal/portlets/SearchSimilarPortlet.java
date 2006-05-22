@@ -19,6 +19,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
@@ -58,6 +59,9 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
 
         // ----------------------------------
         // set initial view template
@@ -212,7 +216,12 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 && !node.isLoading()) {
             node.setLoading(true);
             IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
-            if (hits != null) {
+            if (hits == null || hits.length == 0) {
+                DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + 0, "similar.terms.not.available", false);
+                snsNode.setType(DisplayTreeNode.MESSAGE_NODE);
+                snsNode.setParent(node);
+                node.addChild(snsNode);
+            } else {
                 for (int i = 0; i < hits.length; i++) {
                     Topic hit = (Topic) hits[i];
                     if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
