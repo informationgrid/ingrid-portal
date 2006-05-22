@@ -184,6 +184,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             return;
         } else if (currentView.equals(TEMPLATE_RESULT_IPLUG)) {
             renderOneResultColumnRanked = false;
+        } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            renderOneResultColumnUnranked = false;
         }
 
         // create threaded query controller
@@ -392,7 +394,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (renderOneResultColumnUnranked) {
             unrankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, new Integer(currentSelectorPageUnranked));
             // check if we have more results to come
-            if (unrankedHits.getGoupedHitsLength() > 0 && numberOfUnrankedHits > 0) {
+            if (unrankedHits != null && unrankedHits.getGoupedHitsLength() > 0 && numberOfUnrankedHits > 0) {
                 if (numberOfUnrankedHits <= unrankedHits.getGoupedHitsLength()) {
                     unrankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
                 } else {
