@@ -280,16 +280,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     }
                     // get the grouping starthits history from session
                     // create and initialize if not exists
-                    ArrayList groupedStartHits = null;
-                    groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
-                            Settings.PARAM_GROUPING_STARTHITS);
-                    if (groupedStartHits == null) {
-                        groupedStartHits = new ArrayList();
-                        groupedStartHits.add(new Integer(0));
-                        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
-                    } else {
-                        // set start hit for next page (grouping)
-                        groupedStartHits.add(currentSelectorPage, new Integer(rankedHits.getGoupedHitsLength()));
+                    try {
+                        ArrayList groupedStartHits = null;
+                        groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
+                                Settings.PARAM_GROUPING_STARTHITS);
+                        if (groupedStartHits == null) {
+                            groupedStartHits = new ArrayList();
+                            groupedStartHits.add(new Integer(0));
+                            SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
+                        } else {
+                            // set start hit for next page (grouping)
+                            groupedStartHits.add(currentSelectorPage, new Integer(rankedHits.getGoupedHitsLength()));
+                        }
+                    } catch (Exception ex) {
+                        if (log.isInfoEnabled()) {
+                            log.info("Problems processing grouping starthits RANKED", ex);
+                        }
                     }
                 }
 
@@ -311,16 +317,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 }
                 // get the grouping starthits history from session
                 // create and initialize if not exists
-                ArrayList groupedStartHits = null;
-                groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
-                        Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
-                if (groupedStartHits == null) {
-                    groupedStartHits = new ArrayList();
-                    groupedStartHits.add(new Integer(0));
-                    SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED, groupedStartHits);
-                } else {
-                    // set start hit for next page (grouping)
-                    groupedStartHits.add(currentSelectorPageUnranked, new Integer(unrankedHits.getGoupedHitsLength()));
+                try {
+                    ArrayList groupedStartHits = null;
+                    groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
+                            Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
+                    if (groupedStartHits == null) {
+                        groupedStartHits = new ArrayList();
+                        groupedStartHits.add(new Integer(0));
+                        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED, groupedStartHits);
+                    } else {
+                        // set start hit for next page (grouping)
+                        groupedStartHits.add(currentSelectorPageUnranked, new Integer(unrankedHits.getGoupedHitsLength()));
+                    }
+                } catch (Exception ex) {
+                    if (log.isInfoEnabled()) {
+                        log.info("Problems processing grouping starthits UNRANKED", ex);
+                    }
                 }
             }
         }
