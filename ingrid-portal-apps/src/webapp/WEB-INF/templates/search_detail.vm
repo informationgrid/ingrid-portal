@@ -157,7 +157,6 @@
     				#if($myAddress.get("t02_address.lastname"))$myAddress.get("t02_address.lastname")<br/>#end
     				</a>
 				#end	
-				#if($myAddress.get("t02_address.job") && $myAddress.get("t02_address.job") != "")$myAddress.get("t02_address.job")<br/>#end
 				#if($myAddress.get("t02_address.descr") && $myAddress.get("t02_address.descr") != "")$myAddress.get("t02_address.descr")<br/>#end
 				#if($myAddress.get("t02_address.postbox") && $myAddress.get("t02_address.postbox") != "")
 					$MESSAGES.getString("postbox_label") $myAddress.get("t02_address.postbox")<br/>

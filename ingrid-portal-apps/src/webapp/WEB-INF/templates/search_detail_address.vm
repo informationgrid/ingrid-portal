@@ -172,12 +172,13 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
-		<h1>Detailinformation</h1>
+		<h1>$rec.get("title")</h1>
+		<p class="float_right"><span class="smaller">#if($rec.get("t02_address.mod_time"))Generiert am: $rec.get("t02_address.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
+	<br/>
 	<div class="section">
 #if($rec)
-	<p class="float_right">#if($rec.get("t02_address.mod_time"))Generiert am: $rec.get("t02_address.mod_time")#end</p>
 	<p class="float_left">
         #set($udkAddressClass = $rec.get("t02_address.typ"))
         #set($udkAddressClassNameKey = "udk_adr_class_name_$udkAddressClass")
@@ -185,12 +186,10 @@
 		<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_adr_${udkAddressClass}.gif" alt="${udkAddressClassName}" /></span>&nbsp;${udkAddressClassName}&nbsp;<span class="smaller">(Kategorie)</span>
 	</p>
 	<span class="clearer"></span>
-	#renderUDKAddress()
-    #if($rec.get("summary") && $rec.get("summary") != "")
-		<p><strong>$MESSAGES.getString("t02_address.job"):</strong><br>
-		$rec.get("summary")
-		</p>
+    #if($tool.hasContent($rec.get("summary")))
+		<p>$rec.get("summary")</p>
     #end
+	#renderUDKAddress()
 	#renderSuperiorReferences()
 	#renderSubordinatedReferences()
 	#renderUDKAddressFunction()
