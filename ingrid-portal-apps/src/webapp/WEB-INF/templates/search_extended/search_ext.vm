@@ -32,7 +32,7 @@ $action.setParameter('action','doChangeDS')
 			<label class="hide" for="qrytxt">Suche: </label><textarea class="qrytxt" id="qrytxt" cols="20" rows="3" name="q" 
 				onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"'>#getHTMLEscapedFieldValue('q')</textarea>
 			<input class="btn float_right" name="doSubmit" type="submit" value="PortalU Suche" />
-			<input class="btn float_left" name="doSetQuery" type="submit" value="Suchstring übernehmen" />
+			<input class="btn float_left" name="doSetQuery" type="submit" value="Suchanfrage übernehmen" />
 			<span class="clearer"></span>
 		</div>
     </form>
