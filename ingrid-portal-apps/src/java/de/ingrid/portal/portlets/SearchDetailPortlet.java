@@ -27,6 +27,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDate;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -218,7 +219,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     if (columns[i].toIndex()) {
                         String columnName = columns[i].getTargetName();
                         if (readableColumnNames) {
-                            columnName = columnName.replace('_', ' ');
+                            // convert to readable column names
+                            columnName = convert2readableColumnName(columnName);
                         } else {
                             columnName = columnName.toLowerCase();
                         }
@@ -248,6 +250,47 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
     }
 
     
+    /**
+     * Converts string to readable column name:
+     * 
+     *  <ul>
+     *  <li>replaces '_' with ' '</li>
+     *  <li>uppercase words first character (use stopwords configured in ingrid.portal.apps.properties)</li>
+     *  <li>do not convert column names: 'title', 'summary'</li>
+     *  </ul>
+     * 
+     * 
+     * @param The column name.
+     * @return The readable column name.
+     */
+    private String convert2readableColumnName(String columnName) {
+        
+        final String reservedColumnNames =  "|title|summary|";
+        final String ucUpperStopWords = PortalConfig.getInstance().getString(PortalConfig.DETAILS_GENERIC_UCFIRST_STOPWORDS, "");
+        
+        if (reservedColumnNames.indexOf("|".concat(columnName).concat("|")) != -1) {
+            return columnName;
+        }
+        // replace '_' with ' '
+        columnName = columnName.replace('_', ' ');
+        // uppercase words first character
+        String[] words = columnName.split(" ");
+        columnName = ""; 
+        for (int j=0; j<words.length; j++) {
+            if (j > 0) {
+                columnName = columnName.concat(" ");
+            }
+            if (words[j].length() > 0) {
+                if (ucUpperStopWords.indexOf("|".concat(words[j]).concat("|")) == -1) {
+                    columnName = columnName.concat(words[j].replaceFirst(UtilsString.regExEscape(words[j].substring(0,1)), words[j].substring(0,1).toUpperCase()));
+                } else {
+                    columnName = columnName.concat(words[j]);
+                }
+            }
+        }
+        return columnName;
+    }
+    
     private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
         addSubRecords(record, map, locale, 0, readableColumns);
     }
@@ -266,7 +309,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 if (columns[j].toIndex()) {
                     String columnName = columns[j].getTargetName();
                     if (readableColumns) {
-                        columnName = columnName.replace('_', ' ');
+                        // convert to readable column names
+                        columnName = convert2readableColumnName(columnName);
                     } else {
                         columnName = columnName.toLowerCase();
                     }
