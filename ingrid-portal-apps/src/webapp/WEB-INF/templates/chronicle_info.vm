@@ -1,33 +1,16 @@
 <div class="portlet-section-body">
 	<ul>
 		<li>          
-			<p>Der Semantische Netzwerk Service (SNS) des Umweltbundesamts enthält Umweltereignisse und deren Zeitbezüge.
-			</p>
-			<p>Bitte wählen Sie Ereignistyp(en) und/oder den gesuchten Zeitraum aus.
-			</p>
-			<p>Sie können Ihre Auswahl einschränken, indem Sie zusätzlich einen Suchbegriff eingeben, der im Ereignis enthalten sein muss.
-			</p>
+			<p>$MESSAGES.getString('chronicleSearch.info.text')</p>
 			<p class="iconLink">
-				<span class="icon">
-					<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/>
-				</span>
-				<span>
-					<a href="http://www.semantic-network.de" target="_new" title="Link öffnet in neuem Fenster">Semantischer Netzwerk Service (SNS)
-					</a>
-				</span>
-				<span class="clearer">
-				</span>
+				<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.tooltip.icon.extern')"/></span>
+				<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('chronicleSearch.info.link')</a></span>
+				<span class="clearer"></span>
 			</p>
 			<p>
-				<span class="icon">
-				</span>
-				<span>
-					<a href="http://www.semantic-network.de" target="_new" title="Link öffnet in neuem Fenster">
-						<img src="/ingrid-portal-apps/images/sns_big.gif" width="84" height="31" alt="SNS Logo" title="Ein Dienst vom Semantic Network Service" />
-					</a>
-				</span>
-				<span class="clearer">
-				</span>
+				<span class="icon"></span>
+				<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><img src="/ingrid-portal-apps/images/sns_big.gif" width="84" height="31" alt="$MESSAGES.getString('chronicleSearch.info.sns.alt')" title="$MESSAGES.getString('chronicleSearch.info.sns.tooltip')" /></a></span>
+				<span class="clearer"></span>
 			</p>
 		</li>
 	</ul>

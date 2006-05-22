@@ -1,5 +1,3 @@
-<p>$MESSAGES.getString('about.text1')</p>
-<p>$MESSAGES.getString('about.text2')</p>
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
-<p>$MESSAGES.getStringWithMsgParams('about.text3')</p>
+<p>$MESSAGES.getStringWithMsgParams('about.text')</p>
