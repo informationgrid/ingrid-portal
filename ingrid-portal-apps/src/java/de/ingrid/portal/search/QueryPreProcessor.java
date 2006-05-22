@@ -55,9 +55,9 @@ public class QueryPreProcessor {
         
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
         String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
+//        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
             UtilsSearch.processBasicDataTypes(query, ds);
-        }
+//        }
 
         // start hit
         int startHit = 0;
@@ -199,10 +199,10 @@ public class QueryPreProcessor {
         }
 
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
+//        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
             String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
             UtilsSearch.processBasicDataTypes(query, ds);
-        }
+//        }
 
         // start hit
         int startHit = 0;
