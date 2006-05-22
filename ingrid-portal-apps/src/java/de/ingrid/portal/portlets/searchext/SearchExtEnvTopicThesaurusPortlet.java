@@ -3,12 +3,11 @@
  */
 package de.ingrid.portal.portlets.searchext;
 
-import java.util.List;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -383,7 +382,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                 && !node.isLoading()) {
             node.setLoading(true);
             IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(node.getName(), "/thesa");
-            if (hits != null && hits.length > 1) {
+            if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
                     Topic hit = (Topic) hits[i];
                     if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
