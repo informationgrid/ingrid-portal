@@ -160,6 +160,8 @@ public class QueryResultPostProcessor {
                         }
                     } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
                         hit.put(Settings.RESULT_KEY_TYPE, "nutch");
+                    } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
+                        hit.put(Settings.RESULT_KEY_TYPE, "dsc");
                     } else {
                         hit.put(Settings.RESULT_KEY_TYPE, "unknown");
                     }

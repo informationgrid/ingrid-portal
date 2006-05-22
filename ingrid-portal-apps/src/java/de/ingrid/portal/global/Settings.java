@@ -129,6 +129,8 @@ public class Settings {
 
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS = "dsc_ecs_address";
 
+    public static final String QVALUE_DATATYPE_IPLUG_TAMINO = "tamino";
+    
     public static final String QVALUE_LANG_DE = "de";
     
     
@@ -351,6 +353,7 @@ public class Settings {
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE_UNRANKED = "currentSelectorPageUnranked";
+
 
 
 
