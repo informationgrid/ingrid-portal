@@ -6,7 +6,6 @@ package de.ingrid.portal.global;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
@@ -344,7 +343,7 @@ public class UtilsDB {
             
             return domainEntry.getName();
         } catch (Exception e) {
-            return "key not found in domain table (codelistId:"+ codeListId +", domainId:"+ domainId +", langId:"+ langId +").";
+            return String.valueOf(domainId);
         }
     }
 

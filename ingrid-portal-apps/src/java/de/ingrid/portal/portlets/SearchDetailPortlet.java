@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +27,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDate;
+import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
@@ -69,6 +71,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // add velocity utils class
+        context.put("tool", new UtilsVelocity());
         
         int documentId = Integer.parseInt(request.getParameter("docid"));
         String altDocumentId = request.getParameter("altdocid");
@@ -129,7 +134,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     
                     // enrich addresses with institution and units
                     ArrayList addrRecords = getAllTableRows(record, "T02_ADDRESS");
-                    HashMap addrParents = new HashMap();
+                    HashMap addrParents = new LinkedHashMap();
                     // iterate over all addresses and add missing information for the address
                     for (int i=0; i<addrRecords.size(); i++) {
                         Record addrRecord = (Record)addrRecords.get(i);
@@ -137,7 +142,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         // get id of the address
                         String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
                         if (addressType.equals("1") || addressType.equals("2")) {
-                            HashMap parents = new HashMap();
+                            HashMap parents = new LinkedHashMap();
                             getUDKAddressParents(parents, addressId);
                             addrParents.put(addressId, parents);
                         }
@@ -151,7 +156,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
 
                     // enrich address with institution and units
-                    HashMap addrParents = new HashMap();
+                    HashMap addrParents = new LinkedHashMap();
                     String addressType = (String)record.get("T02_ADDRESS.TYP");
                     String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
                     // get id of the address
@@ -183,7 +188,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     }
                     
                     // get related record of the subordinated address references
-                    HashMap subordinatedObjRef = new HashMap();
+                    HashMap subordinatedObjRef = new LinkedHashMap();
                     for (int i=0; i<allAddressChildren.size(); i++) {
                         ArrayList l = getObjectsByAddress((String)((IngridHitDetail)( (IngridHit)allAddressChildren.get(i)).get("detail")).get("T02_address.adr_id"));
                         for (int j=0; j<l.size(); j++) {
@@ -204,7 +209,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 }
                 
                 context.put("record", record);
-                HashMap recordMap = new HashMap();
+                HashMap recordMap = new LinkedHashMap();
                 
                 // serch for column
                 Column[] columns = record.getColumns();
@@ -255,7 +260,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         Record[] subRecords = record.getSubRecords();
 
         for (int i = 0; i < subRecords.length; i++) {
-            HashMap subRecordMap = new HashMap();
+            HashMap subRecordMap = new LinkedHashMap();
             columns = subRecords[i].getColumns();
             for (int j = 0; j < columns.length; j++) {
                 if (columns[j].toIndex()) {
