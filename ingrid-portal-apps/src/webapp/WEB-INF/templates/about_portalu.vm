@@ -1,7 +1,5 @@
-<p>Willkommen bei PortalU, dem Umweltportal Deutschland! Wir bieten Ihnen einen zentralen Zugriff auf mehrere hunderttausend Internetseiten und Datenbankeinträge von öffentlichen Institutionen und Organisationen. Zusätzlich können Sie aktuelle Nachrichten und Veranstaltungshinweise, Umweltmesswerte, Hintergrundinformationen und historische Umweltereignisse über PortalU abrufen.
-</p>
-<p>Die integrierte Suchmaschine ist eine zentrale Komponente von PortalU. Mit ihrer Hilfe können Sie Webseiten und Datenbankeinträge nach Stichworten durchsuchen. Über die Option "Erweiterte Suche" können Sie zusätzlich ein differenziertes Fachvokabular und deutschlandweite Hintergrundkarten zur Zusammenstellung Ihrer Suchanfrage nutzen.
-</p>
-<p>PortalU ist eine Kooperation der Umweltverwaltungen im Bund und in den Ländern. Inhaltlich und technisch wird PortalU von der
-	<a href="http://www.udk-gein.de" target="_new" title="Link öffnet in neuem Fenster">Koordinierungsstelle PortalU</a> im Niedersächsischen Umweltministerium verwaltet. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu optimieren. Bei Fragen und Verbesserungsvorschlägen wenden Sie sich bitte an die <a href="mailto:kug@numis.niedersachsen.de">Koordinierungsstelle PortalU</a>.
-</p>
+<p>$MESSAGES.getString('about.text1')</p>
+<p>$MESSAGES.getString('about.text2')</p>
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
+<p>$MESSAGES.getStringWithMsgParams('about.text3')</p>
