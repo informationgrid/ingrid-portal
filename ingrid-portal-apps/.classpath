@@ -39,5 +39,8 @@
 	<classpathentry sourcepath="/JETSPEED_SRC/portal/src/java" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-portal-2.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/activation/jars/activation-1.0.2.jar"/>
 	<classpathentry sourcepath="/INGRID_IBUS_CLIENT_SRC" kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-ibus-client-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-fpn-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-tamino-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-udk-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>
