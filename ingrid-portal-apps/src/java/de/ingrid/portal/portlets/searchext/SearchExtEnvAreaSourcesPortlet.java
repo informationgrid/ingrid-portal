@@ -16,12 +16,9 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
-import de.ingrid.portal.forms.SearchExtEnvTimeConstraintForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsQueryString;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.query.TermQuery;
 
 /**
  * This portlet handles the fragment of "Sources" input in the extended search
@@ -30,6 +27,19 @@ import de.ingrid.utils.query.TermQuery;
  */
 public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
 
+    private static final String DATATYPE_WWW = "datatype:www";
+    private static final String DATATYPE_METADATA = "datatype:metadata";
+    private static final String DATATYPE_FIS = "datatype:fis";
+    private static final String DATATYPE_DEFAULT = "datatype:default";
+
+    private static final String METACLASS_DATABASE = "metaclass:database";
+    private static final String METACLASS_SERVICE = "metaclass:service";
+    private static final String METACLASS_DOCUMENT = "metaclass:document";
+    private static final String METACLASS_MAP = "metaclass:map";
+    private static final String METACLASS_JOB = "metaclass:job";
+    private static final String METACLASS_PROJECT = "metaclass:project";
+    
+    
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -73,72 +83,72 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
             String subTerm = "";
             String[] sources = f.getInputAsArray(SearchExtEnvAreaSourcesForm.FIELD_CHK_SOURCES);
             String[] meta = f.getInputAsArray(SearchExtEnvAreaSourcesForm.FIELD_CHK_META);
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:www", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:metadata", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:fis", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:database", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:service", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:document", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:map", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:job", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "metaclass:project", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "-datatype:www", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "-datatype:meta", "");
-            queryStr = UtilsQueryString.replaceTerm(queryStr, "-datatype:fis", "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, DATATYPE_WWW, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, DATATYPE_METADATA, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, DATATYPE_FIS, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, METACLASS_DATABASE, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, METACLASS_SERVICE, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, METACLASS_DOCUMENT, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, METACLASS_MAP, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, METACLASS_JOB, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, METACLASS_PROJECT, "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, "-".concat(DATATYPE_WWW), "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, "-".concat(DATATYPE_METADATA), "");
+            queryStr = UtilsQueryString.replaceTerm(queryStr, "-".concat(DATATYPE_FIS), "");
             HashMap datatypes = new LinkedHashMap();
-            HashMap metaclasses = new LinkedHashMap();
             if (sources.length > 0) {
-                datatypes.put("-datatype:www", "1");
-                datatypes.put("-datatype:fis", "1");
-                datatypes.put("-datatype:meta", "1");
+                datatypes.put("-".concat(DATATYPE_WWW), "1");
+                datatypes.put("-".concat(DATATYPE_FIS), "1");
+                datatypes.put("-".concat(DATATYPE_METADATA), "1");
             }
             for (int i=0; i<sources.length; i++) {
                 if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
-                    datatypes.put("datatype:default", "1");
+                    datatypes.put(DATATYPE_DEFAULT, "1");
                 } 
                 if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_WWW)) {
-                    datatypes.put("datatype:www", "1");
-                    datatypes.remove("-datatype:www");
+                    datatypes.put(DATATYPE_WWW, "1");
+                    datatypes.remove("-".concat(DATATYPE_WWW));
                 }
                 if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_FIS)) {
-                    datatypes.put("datatype:fis", "1");
-                    datatypes.remove("-datatype:fis");
+                    datatypes.put(DATATYPE_FIS, "1");
+                    datatypes.remove("-".concat(DATATYPE_FIS));
                 }
             }
+            HashMap metaclasses = new LinkedHashMap();
             for (int i=0; i<meta.length; i++) {
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_ALL)) {
-                    datatypes.put("datatype:metadata", "1");
-                    datatypes.remove("-datatype:metadata");
+                    datatypes.put(DATATYPE_METADATA, "1");
+                    datatypes.remove("-".concat(DATATYPE_METADATA));
                     // empty meta classes, all metaclasses are selected
                     metaclasses = new LinkedHashMap();
                     break;
                 }
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_0)) {
-                    metaclasses.put("metaclass:job", "1");
+                    metaclasses.put(METACLASS_JOB, "1");
                 }
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_1)) {
-                    metaclasses.put("metaclass:map", "1");
+                    metaclasses.put(METACLASS_MAP, "1");
                 }
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_2)) {
-                    metaclasses.put("metaclass:document", "1");
+                    metaclasses.put(METACLASS_DOCUMENT, "1");
                 }
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_3)) {
-                    metaclasses.put("metaclass:service", "1");
+                    metaclasses.put(METACLASS_SERVICE, "1");
                 }
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_4)) {
-                    metaclasses.put("metaclass:project", "1");
+                    metaclasses.put(METACLASS_PROJECT, "1");
                 }
                 if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_5)) {
-                    metaclasses.put("metaclass:database", "1");
+                    metaclasses.put(METACLASS_DATABASE, "1");
                 }
             }
             // remove meta exclusion if we have a meta data class selection
             if (metaclasses.size() > 0) {
-                datatypes.remove("-datatype:metadata");
-                datatypes.put("datatype:metadata", "1");
+                datatypes.remove("-".concat(DATATYPE_METADATA));
+                datatypes.put(DATATYPE_METADATA, "1");
             }
             // build the subquery
-            if (!datatypes.containsKey("datatype:default") && (metaclasses.size() > 0 || datatypes.size() > 0)) {
+            if (!datatypes.containsKey(DATATYPE_DEFAULT) && (metaclasses.size() > 0 || datatypes.size() > 0)) {
                 Iterator it = datatypes.keySet().iterator();
                 while (it.hasNext()) {
                     String datatype = (String)it.next();
