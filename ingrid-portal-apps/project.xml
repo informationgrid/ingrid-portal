@@ -170,9 +170,25 @@
 	        <war.bundle>true</war.bundle>
 	      </properties>
 	    </dependency>
+	    <!--dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>csw-iplug</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency-->
 	    <dependency>
 	      <groupId>ingrid</groupId>
 	      <artifactId>ingrid-iplug-dsc</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-iplug-fpn</artifactId>
 	      <version>0.1-SNAPSHOT</version>
 		  <properties>
 	        <war.bundle>true</war.bundle>
@@ -197,6 +213,22 @@
 	    <dependency>
 	      <groupId>ingrid</groupId>
 	      <artifactId>ingrid-iplug-g2k</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-iplug-tamino</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-iplug-udk</artifactId>
 	      <version>0.1-SNAPSHOT</version>
 		  <properties>
 	        <war.bundle>true</war.bundle>
