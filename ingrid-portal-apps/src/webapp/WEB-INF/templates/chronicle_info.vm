@@ -3,7 +3,7 @@
 		<li>          
 			<p>$MESSAGES.getString('chronicleSearch.info.text')</p>
 			<p class="iconLink">
-				<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.tooltip.icon.extern')"/></span>
+				<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
 				<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('chronicleSearch.info.link')</a></span>
 				<span class="clearer"></span>
 			</p>
