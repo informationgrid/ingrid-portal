@@ -96,11 +96,9 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
             queryStr = UtilsQueryString.replaceTerm(queryStr, "-".concat(DATATYPE_METADATA), "");
             queryStr = UtilsQueryString.replaceTerm(queryStr, "-".concat(DATATYPE_FIS), "");
             HashMap datatypes = new LinkedHashMap();
-            if (sources.length > 0) {
-                datatypes.put("-".concat(DATATYPE_WWW), "1");
-                datatypes.put("-".concat(DATATYPE_FIS), "1");
-                datatypes.put("-".concat(DATATYPE_METADATA), "1");
-            }
+            datatypes.put("-".concat(DATATYPE_WWW), "1");
+            datatypes.put("-".concat(DATATYPE_FIS), "1");
+            datatypes.put("-".concat(DATATYPE_METADATA), "1");
             for (int i=0; i<sources.length; i++) {
                 if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
                     datatypes.put(DATATYPE_DEFAULT, "1");
