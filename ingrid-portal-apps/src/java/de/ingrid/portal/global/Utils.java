@@ -67,7 +67,7 @@ public class Utils {
 
         return af;
     }
-    
+
     /**
      * Convenient method to get the session preferences object.
      * 
@@ -77,14 +77,14 @@ public class Utils {
      * @return
      */
     public static IngridSessionPreferences getSessionPreferences(PortletRequest request, String aKey, Class aClass) {
-        IngridSessionPreferences obj = (IngridSessionPreferences) request.getPortletSession().getAttribute(aKey, PortletSession.APPLICATION_SCOPE);
+        IngridSessionPreferences obj = (IngridSessionPreferences) request.getPortletSession().getAttribute(aKey,
+                PortletSession.APPLICATION_SCOPE);
         if (obj == null) {
             obj = new IngridSessionPreferences();
             request.getPortletSession().setAttribute(aKey, obj, PortletSession.APPLICATION_SCOPE);
         }
         return obj;
     }
-    
 
     /**
      * Convenient method for getting (incl. adding) action forms from
@@ -213,6 +213,9 @@ public class Utils {
             resultB.append("/");
         }
         int maxPathLength = maxLength / 2;
+        if (resultB.length() > maxPathLength) {
+            maxPathLength = maxLength - resultB.length();
+        }
         String[] pathElements = path.split("/");
         if (pathElements.length > 3 && path.length() > maxPathLength) {
             StringBuffer resultPath = new StringBuffer();
@@ -451,7 +454,7 @@ public class Utils {
         }
 
     }
-    
+
     public static String getResourceAsStream(String resource) throws Exception {
         String stripped = resource.startsWith("/") ? resource.substring(1) : resource;
 
@@ -477,6 +480,5 @@ public class Utils {
         }
         return stream;
     }
-
 
 }
