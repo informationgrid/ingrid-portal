@@ -1,5 +1,5 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
-  <p>Wählen Sie einen der folgenden Partner aus. Jedem Partner können mehrere Informationsanbieter zugeordnet sein.</p>
+  <p>$MESSAGES.getString("showpartner.intro")</p>
   <ul class="innermenu">
 #foreach( $key in $partners.keySet() ) 
 	#set($partnerHash = $partners.get($key))
@@ -11,7 +11,7 @@
 #end
 	<br/>
 	#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml#databases"))
-    <li><a href="$link">Angeschlossene Datenbanken</a></li>
+    <li><a href="$link">$MESSAGES.getString("showpartner.connected.databases")</a></li>
   </ul>
 #foreach( $key in $partners.keySet() ) 
 	#set($partnerHash = $partners.get($key))
@@ -32,7 +32,7 @@
 #end
 <div class="line"><hr /></div>
 <a name="databases"></a>
-<h3>Angeschlossene Datenbanken:</h3>
+<h3>$MESSAGES.getString("showpartner.connected.databases"):</h3>
 <ul>
 #foreach($plug in $plugs)
 	<li>$plug.getDataSourceName()</li>
