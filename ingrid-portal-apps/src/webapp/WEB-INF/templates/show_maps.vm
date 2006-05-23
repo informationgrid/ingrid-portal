@@ -2,7 +2,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
-		<h1>Karten</h1>
+		<h1>$MESSAGES.getString("maps.page.title")</h1>
 	    
 		#if($hKey && $hKey.length() > 0)
 		<span class="portlet_info">
@@ -21,12 +21,12 @@
 	<div class="section">    
 		<div class="formbody">
 			<iframe src="$wmsURL" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
-				Leider kann Ihr Browser keine iframes darstellen. 
+				$MESSAGES.getString("maps.error.noframes") 
 			</iframe>
 			<div class="rightmargin" align="right">
 				<span class="iconLink">
-					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
-					<a href="$action">Kartendienste speichern</a>
+					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
+					<a href="$action">$MESSAGES.getString("maps.save.wms.services")</a>
 				</span>
 			</div>
 		</div>  
