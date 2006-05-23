@@ -12,6 +12,7 @@ import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 
 public class InfoPortlet extends GenericVelocityPortlet {
@@ -21,6 +22,9 @@ public class InfoPortlet extends GenericVelocityPortlet {
 
     public final static String DEFAULT_TITLE_KEY = "info.default.title";
 
+    private final static String SITEMAP_TEMPLATE = "/WEB-INF/templates/sitemap.vm";
+    
+    
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
@@ -39,13 +43,16 @@ public class InfoPortlet extends GenericVelocityPortlet {
         String myView = prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);
         String myTitleKey = prefs.getValue("infoTitleKey", DEFAULT_TITLE_KEY);
         String myLink = prefs.getValue("infoLink", "");
-
+        
         setDefaultViewPage(myView);
         response.setTitle(messages.getString(myTitleKey));
         
         if (myLink.length() > 0) {
             String infoLink = response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath() + myLink);
             context.put("infoLink", infoLink);
+        }
+        if (myView.equalsIgnoreCase(SITEMAP_TEMPLATE)) {
+            context.put("webmaster_email", PortalConfig.getInstance().getString(PortalConfig.EMAIL_WEBMASTER, "webmaster@portalu.de"));
         }
 
         super.doView(request, response);

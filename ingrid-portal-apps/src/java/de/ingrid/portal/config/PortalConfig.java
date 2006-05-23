@@ -40,6 +40,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
 
+    public static final String EMAIL_WEBMASTER = "email.webmaster";
+    
     public static final String QUERY_HISTORY_DISPLAY_SIZE = "query.history.display.size";
     
     public static final String DETAILS_GENERIC_UCFIRST_STOPWORDS = "detail.generic.ucfirst.stopwords";
@@ -48,7 +50,6 @@ public class PortalConfig extends PropertiesConfiguration {
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
-
 
 
     public static synchronized PortalConfig getInstance() {

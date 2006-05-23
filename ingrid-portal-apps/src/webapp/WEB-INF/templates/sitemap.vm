@@ -1,63 +1,61 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 <div id="overview">
-	<h1>Inhaltsübersicht
-	</h1>
+	<h1>$MESSAGES.getString("sitemap.content.overview")</h1>
 	<div class="left">
-		<h2>Hauptbereich
-		</h2>
+		<h2>$MESSAGES.getString("sitemap.area.main")</h2>
 		<div class="sitemap">
 			<ul>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-search.psml"))
-					<a href="$link">Suche</a>
-					<p>Schnelles Suchen per einfacher Sucheingabe.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.search")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
 					<ul>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-extended/search-ext-env-topic-terms.psml?ds=1"))
-							<a href="$link">Erweiterte Suche</a>
-							<p>Erstellen Sie Suchanfragen mit Hilfe des Assistenten.</p>
+							<a href="$link">$MESSAGES.getString("sitemap.area.main.extsearch")</a>
+							<p>$MESSAGES.getString("sitemap.area.main.extsearch.description")</p>
 						</li>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-history.psml"))
-							<a href="$link">Suchhistorie</a>
-							<p>Führen Sie frühere oder gespeicherte Suchen erneut aus.</p>
+							<a href="$link">$MESSAGES.getString("sitemap.area.main.history")</a>
+							<p>$MESSAGES.getString("sitemap.area.main.history.description")</p>
 						</li>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-settings.psml"))
-							<a href="$link">Einstellungen</a>
-							<p>Ihre Sucheinstellungen.</p>
+							<a href="$link">$MESSAGES.getString("sitemap.area.main.settings")</a>
+							<p>$MESSAGES.getString("sitemap.area.main.settings.description")</p>
 						</li> 
 					</ul>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-service.psml"))
-					<a href="$link">Service</a>
-					<p>Unser Katalog mit Pressemitteilungen, Publikationen und Veranstaltungshinweisen unserer Informationsanbieter.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.service")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.service.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-measures.psml"))
-					<a href="$link">Messwerte</a>
-					<p>Unser Katalog mit den Messwertseiten unserer Informationsanbieter.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.measures")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-environment.psml"))
-					<a href="$link">Umweltthemen</a>
-					<p>Unser Katalog mit den Themenseiten unserer Informationsanbieter.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.topics")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.topics.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-chronicle.psml"))
-					<a href="$link">Umweltchronik</a>
-					<p>Eine Chronologie von Umweltereignissen, generiert vom <a href="http://www.semantic-network.de/" target="_new" title="Link öffnet in neuem Fenster">Semantischen Netzwerk Service</a> des <a href="http://www.uba.de/" target="_new" title="Link öffnet in neuem Fenster">Umweltbundesamtes</a>.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.chronicle")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.chronicle.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about.psml"))
-					<a href="$link">Über PortalU</a>
-					<p>Lernen Sie uns kennen.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.about")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.about.description")</p>
 					<ul>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml"))
-							<a href="$link">Informationsanbieter</a>
-							<p>Beteiligte Partner und Informationsanbieter.</p>
+							<a href="$link">$MESSAGES.getString("sitemap.area.main.provider")</a>
+							<p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
 						</li>
 					</ul>
 				</li>
@@ -66,51 +64,50 @@
 		</div>  
 	</div>
 	<div class="right">
-		<h2>Servicebereich
-		</h2>
+		<h2>$MESSAGES.getString("sitemap.area.service")</h2>
 		<div class="sitemap">
 			<ul>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/default-page.psml"))
-					<a href="$link">Startseite</a>
-					<p>Ihr zentraler Einstieg.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.service.home")</a>
+					<p>$MESSAGES.getString("sitemap.area.service.home.description")</p>
 					<ul>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/rss-news.psml"))
-							<a href="$link">Weitere Meldungen</a>
-							<p>Unser Archiv aktueller Meldungen.</p>
+							<a href="$link">$MESSAGES.getString("sitemap.area.service.news.rss")</a>
+							<p>$MESSAGES.getString("sitemap.area.service.news.rss.description")</p>
 						</li>
 					</ul>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-myportal.psml"))
-					<a href="$link">Mein PortalU</a>
-					<p>Ihre persönlichen Einstellungen.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.service.myportal")</a>
+					<p>$MESSAGES.getString("sitemap.area.service.myportal.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-sitemap.psml"))
-					<a href="$link">Inhaltsübersicht</a>
-					<p>Diese Seite.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.service.sitemap")</a>
+					<p>$MESSAGES.getString("sitemap.area.service.sitemap.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml"))
 	<script language="JavaScript">
-		document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\">Hilfe</a>");
+		document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString("sitemap.area.service.help")</a>");
 	</script>
 	<noscript>
-					<a href="$link" target="_new">Hilfe</a>
+					<a href="$link" target="_new">$MESSAGES.getString("sitemap.area.service.help")</a>
 	</noscript>
-					<p>Hilfe und häufig gestellte Fragen (FAQs).</p>
+					<p>$MESSAGES.getString("sitemap.area.service.help.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact.psml"))
-					<a href="$link">Kontakt</a>
-					<p>Unsere Kontaktinformationen.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.service.contact")</a>
+					<p>$MESSAGES.getString("sitemap.area.service.contact.description")</p>
 					<ul>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact-newsletter.psml"))
-							<a href="$link">Newsletter</a>
-							<p>Abonnieren Sie unseren Newsletter.</p>
+							<a href="$link">$MESSAGES.getString("sitemap.area.service.newsletter")</a>
+							<p>$MESSAGES.getString("sitemap.area.service.newsletter.description")</p>
 						</li>          
 					</ul>
 				</li>
@@ -121,23 +118,22 @@
 	<div class="clearer">
 	</div>
 	<div class="whole">
-		<h2>Fussbereich
-		</h2>
+		<h2>$MESSAGES.getString("sitemap.area.footer")</h2>
 		<div class="sitemap">  
 			<ul>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/disclaimer.psml"))
-					<a href="$link">Impressum</a>
-					<p>Verantwortliche und Zuständigkeiten.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.footer.disclaimer")</a>
+					<p>$MESSAGES.getString("sitemap.area.footer.disclaimer.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/privacy.psml"))
-					<a href="$link">Datenschutzbestimmung</a>
-					<p>Unsere Datenrichtlinien.</p>
+					<a href="$link">$MESSAGES.getString("sitemap.area.footer.privacy")</a>
+					<p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
 				</li>
 				<li>
-					<a href="mailto:webmaster@portalu.de">Webmaster</a>
-					<p>Kontaktieren Sie unseren Webmaster.</p>
+					<a href="mailto:$webmaster_email">$MESSAGES.getString("sitemap.area.footer.privacy")</a>
+					<p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
 				</li>
 			</ul>
 		</div>  
