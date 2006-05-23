@@ -175,8 +175,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems doing iBus search, query=" + query + ", hitsPerPage=" + hitsPerPage
-                        + ", currentPage=" + currentPage, t);
+                log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
+                        + requestedHits, t);
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
