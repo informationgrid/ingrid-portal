@@ -1,5 +1,5 @@
 #macro (renderUDKEntry $r $entryName)
-	#if($r.get($entryName) && $r.get($entryName) != "")
+	#if($tool.hasContent($r.get($entryName)))
 		<p><strong>$entryName:</strong><br>
 		$r.get($entryName)
 		</p>
@@ -29,14 +29,14 @@
 
 #if($rec)
 	<div class="section-header">
-		<h1>$rec.get("title")</h1>
+		<h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#end</h1>
 	</div>
 	<span class="clearer"></span>
 	<div class="section">
 	<p class="float_right"></p>
 	<p class="float_left"></p>
 	<span class="clearer"></span>
-	<p>#if($rec.get("summary"))$rec.get("summary")#end</p>
+	<p>#if($tool.hasContent($rec.get("summary")))$rec.get("summary")#end</p>
     <div class="line"><hr /></div>
 	#renderRec($rec 0)
 	</div>
