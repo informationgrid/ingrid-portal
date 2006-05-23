@@ -148,8 +148,19 @@ public abstract class ActionForm implements Serializable {
         input.put(field, dataWithSep.substring(0, dataWithSep.length()));
     }
 
+    /**
+     * Clear ALL input
+     */
     public void clearInput() {
         input.clear();
+    }
+
+    /**
+     * Clear input of passed field
+     * @param field
+     */
+    public void clearInput(String field) {
+        input.remove(field);
     }
 
     // ==============
@@ -203,7 +214,7 @@ public abstract class ActionForm implements Serializable {
     }
 
     /**
-     * Clear all Error Messages
+     * Clear ALL Error Messages
      */
     public void clearErrors() {
         errors.clear();

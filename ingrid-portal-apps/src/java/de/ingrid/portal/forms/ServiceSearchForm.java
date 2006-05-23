@@ -28,13 +28,16 @@ public class ServiceSearchForm extends ActionForm {
     /** field name of "grouping" radio group in form */
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
+    /** NOTICE: This is for storage of selected Provider ("Zeige Alle Ergebnisse") and
+     * is NO FIELD in form */
+    public static final String STORAGE_PROVIDER = Settings.PARAM_SUBJECT;
+
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
     protected static String INITIAL_RUBRIC = "";
 
     protected static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
 
     protected static final String INITIAL_GROUPING = "none";
-
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()

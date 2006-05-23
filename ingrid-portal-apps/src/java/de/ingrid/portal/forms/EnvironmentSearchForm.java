@@ -26,6 +26,10 @@ public class EnvironmentSearchForm extends ActionForm {
 
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
+    /** NOTICE: This is for storage of selected Provider ("Zeige Alle Ergebnisse") and
+     * is NO FIELD in form */
+    public static final String STORAGE_PROVIDER = Settings.PARAM_SUBJECT;
+
     /** initial values */
     public static final String INITIAL_THEMES = Settings.PARAMV_ALL;
 
