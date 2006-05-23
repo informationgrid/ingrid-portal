@@ -48,6 +48,7 @@
 	#if($grouping)
       <div class="resultset_partner_group">
 		#set ($groupSubject = "")
+		#set ($groupSubjectKey = "")
 		#if($grouping == 'partner')
 			#set ($groupSubject = "Partner '$rs.partner'")
 			#set ($groupSubjectKey = $rs.partnerKey)
@@ -67,7 +68,7 @@
         <div class="line"><hr /></div>
 		#renderHit($sub_rs $grouping)
     #end
-	#if($rs.get('moreHits'))
+	#if($rs.get('moreHits') && $groupSubjectKey != "")
       <div class="line"><hr /></div>
       <div class="resultset_show_partner">
     #set ($action = $renderResponse.createActionURL())
