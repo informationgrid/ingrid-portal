@@ -10,7 +10,7 @@
 #end
 
 #macro (renderUDKEntry $r $entryName)
-    #if($r.get($entryName) && $r.get($entryName) != "")
+    #if($tool.hasContent($r.get($entryName)))
 		<p><strong>$MESSAGES.getString($entryName):</strong><br>
 		$r.get($entryName)
 		</p>
@@ -40,23 +40,23 @@
 		#end
 	#end
    	#if($rec.get("title") && $rec.get("title")!="")$rec.get("title")<br/>#end
-	#if($rec.get("t02_address.lastname") && $rec.get("t02_address.lastname")!="")
+	#if($tool.hasContent($rec.get("t02_address.lastname")))
     	#if($rec.get("t02_address.address"))$rec.get("t02_address.address")#end
     	#if($rec.get("t02_address.title"))$rec.get("t02_address.title")#end
     	#if($rec.get("t02_address.firstname"))$rec.get("t02_address.firstname")#end
     	#if($rec.get("t02_address.lastname"))$rec.get("t02_address.lastname")<br/>#end
 	#end
 	
-	#if($rec.get("t02_address.job") && $rec.get("t02_address.job") != "")$rec.get("t02_address.job")<br/>#end
-	#if($rec.get("t02_address.descr") && $rec.get("t02_address.descr")!="")$rec.get("t02_address.descr")<br/>#end
-	#if($rec.get("t02_address.postbox") && $rec.get("t02_address.postbox") != "")
+	#if($tool.hasContent($rec.get("t02_address.job")))$rec.get("t02_address.job")<br/>#end
+	#if($tool.hasContent($rec.get("t02_address.descr")))$rec.get("t02_address.descr")<br/>#end
+	#if($tool.hasContent($rec.get("t02_address.postbox")))
 		$MESSAGES.getString("postbox_label") $rec.get("t02_address.postbox")<br/>
 		#if($rec.get("t02_address.postbox_pc"))#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end$rec.get("t02_address.postbox_pc") $rec.get("city")<br/><br/>#end 
 	#else
-		#if($rec.get("street"))$rec.get("street")<br/>#end
-		#if($rec.get("t02_address.state_id"))$rec.get("t02_address.state_id")-#end
-		#if($rec.get("zip"))$rec.get("zip")#end
-		#if($rec.get("city"))$rec.get("city")<br/><br/>#end
+		#if($tool.hasContent($rec.get("street")))$rec.get("street")<br/>#end
+		#if($tool.hasContent($rec.get("t02_address.state_id")))$rec.get("t02_address.state_id")-#end
+		#if($tool.hasContent($rec.get("zip")))$rec.get("zip")#end
+		#if($tool.hasContent($rec.get("city")))$rec.get("city")<br/><br/>#end
 	#end
 	#foreach($myCommunication in $rec.get("t021_communication.adr_id"))
 		#if($myCommunication.get("t021_communication.comm_type") == "Telefon")
@@ -75,7 +75,7 @@
 #end
 
 #macro (renderSuperiorReferences)
-	#if($superiorReferences && !$superiorReferences.isEmpty())
+	#if($tool.hasContent($superiorReferences))
 		<p><strong>$MESSAGES.getString("superior_address"):</strong><br/>
 		#foreach($ref in $superiorReferences)
     		<span class="icon">
@@ -92,7 +92,7 @@
 #end
 
 #macro (renderSubordinatedReferences)
-	#if($subordinatedReferences && !$subordinatedReferences.isEmpty())
+	#if($tool.hasContent($subordinatedReferences))
 		<p><strong>$MESSAGES.getString("subordinated_addresses"):</strong><br/>
 		#foreach($ref in $subordinatedReferences)
 			<span class="icon">
@@ -127,11 +127,11 @@
 #end
 
 #macro (renderUDKAddressRelatedRecords)
-	#if($rec.get("t012_obj_adr.obj_id") || ($subordinatedObjRef && !$subordinatedObjRef.isEmpty()))
+	#if($rec.get("t012_obj_adr.obj_id") || ($tool.hasContent($subordinatedObjRef)))
 		<div class="line"><hr></div>
 		<br />
         <ul>
-        #if($rec.get("t012_obj_adr.obj_id"))
+        #if($tool.hasContent($rec.get("t012_obj_adr.obj_id")))
 		<li><a name="direkt"></a>Datenbezüge
         <ul class="udklist">
 		#foreach($t012_obj_adr in $rec.get("t012_obj_adr.obj_id"))
@@ -149,7 +149,7 @@
 		</ul>
           </li>
 		  #end
-		  #if($subordinatedObjRef && !$subordinatedObjRef.isEmpty())
+		  #if($tool.hasContent($subordinatedObjRef))
 		  <li><a name="alle"></a>Datenbezüge aller nachgeordneter Adressen<ul class="udklist">
 			#foreach($objHits in $subordinatedObjRef)
 				#set($udkObjClass = $objHits.detail.get("T01_object.obj_class"))
@@ -190,9 +190,11 @@
 		<p>$rec.get("summary")</p>
     #end
 	#renderUDKAddress()
-	#renderSuperiorReferences()
-	#renderSubordinatedReferences()
-	#renderUDKAddressFunction()
+	#if($tool.hasContent($subordinatedReferences) || $tool.hasContent($superiorReferences))
+		<div class="line"><hr></div><br/>
+    	#renderSuperiorReferences()
+    	#renderSubordinatedReferences()
+	#end	#renderUDKAddressFunction()
 	#renderUDKAddressRelatedRecords()
     <div class="line"><hr></div>
 	<br />
