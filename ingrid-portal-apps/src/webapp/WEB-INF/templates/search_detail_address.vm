@@ -172,7 +172,16 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 	<div class="section-header">
+#if($rec.get("t02_address.typ") == "2")
+    	<h1>
+		#if($rec.get("t02_address.address"))$rec.get("t02_address.address")#end
+    	#if($rec.get("t02_address.title"))$rec.get("t02_address.title")#end
+    	#if($rec.get("t02_address.firstname"))$rec.get("t02_address.firstname")#end
+    	#if($rec.get("t02_address.lastname"))$rec.get("t02_address.lastname")#end
+		</h1>
+#else
 		<h1>$rec.get("title")</h1>
+#end
 		<p class="float_right"><span class="smaller">#if($rec.get("t02_address.mod_time"))Generiert am: $rec.get("t02_address.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
