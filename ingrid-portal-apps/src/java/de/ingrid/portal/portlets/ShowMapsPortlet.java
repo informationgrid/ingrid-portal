@@ -12,6 +12,7 @@ import javax.portlet.PortletSession;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
@@ -29,6 +30,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
     	Context context = getContext(request);
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
         boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
 
         PortletSession session = request.getPortletSession();

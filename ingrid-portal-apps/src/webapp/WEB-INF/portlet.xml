@@ -689,6 +689,7 @@
             <title>Karten</title>
             <short-title>ShowMapsPortlet</short-title>
         </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
 
     <portlet id="ChronicleSearch">
