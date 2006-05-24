@@ -63,7 +63,11 @@ public class QueryResultPostProcessor {
                     }
 
                     if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        hit.put(Settings.RESULT_KEY_TYPE, "dsc");
+                        if (ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
+                            hit.put(Settings.RESULT_KEY_TYPE, "www-style");
+                        } else {
+                            hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
+                        }
                         
                         // read for all dsc iplugs
 
@@ -159,11 +163,11 @@ public class QueryResultPostProcessor {
 
                         }
                     } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
-                        hit.put(Settings.RESULT_KEY_TYPE, "nutch");
+                        hit.put(Settings.RESULT_KEY_TYPE, "www-style");
                     } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
-                        hit.put(Settings.RESULT_KEY_TYPE, "dsc");
+                        hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
                     } else {
-                        hit.put(Settings.RESULT_KEY_TYPE, "unknown");
+                        hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
                     }
                 } catch (Exception ex) {
                     if (log.isErrorEnabled()) {

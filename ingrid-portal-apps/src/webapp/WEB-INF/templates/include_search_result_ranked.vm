@@ -48,9 +48,9 @@
         	#end
 		  <div class="resultset">
 		  #if ($rs.title)
-		    #if ($rs.type == "nutch")
+		    #if ($rs.type == "www-style")
 			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title) </a></strong></span>
-			#elseif($rs.type == "dsc")
+			#elseif($rs.type == "detail-style")
 			  #if($rs.udk_class)
 				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
 				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))

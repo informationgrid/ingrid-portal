@@ -33,7 +33,7 @@
 			#set($title = "$rs.title")
 		  #end
 		  #if ($title)
-			#if($rs.type == "dsc")
+			#if($rs.type == "detail-style")
 			  #if($rs.udk_class)
 				#set($udkObjClassNameKey = "udk_adr_class_name_$rs.udk_class")
 				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
@@ -48,7 +48,7 @@
             $!rs.abstract 
             </p>
             <p class="result_metadata">
-##		    #if ($rs.type == "nutch")
+##		    #if ($rs.type == "www-style")
 ## NO Partner set in result detail !!! Only in catalogues ?
 ##              Anbieter: $!rs.partner<br />
 ##			#else
