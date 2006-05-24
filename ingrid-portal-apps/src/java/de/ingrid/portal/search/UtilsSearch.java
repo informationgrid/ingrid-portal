@@ -528,19 +528,6 @@ public class UtilsSearch {
                 }
             }
         }
-/*        
-        
-        // don't set anything if "all" is selected
-        if (providers != null && providers.length > 0) {
-            cq = new ClauseQuery(true, false);
-            for (int i = 0; i < providers.length; i++) {
-                if (providers[i] != null) {
-                    cq.addField(new FieldQuery(false, false, Settings.QFIELD_PROVIDER, providers[i]));
-                }
-            }
-            query.addClause(cq);
-        }
-*/
     }
 
     /**
