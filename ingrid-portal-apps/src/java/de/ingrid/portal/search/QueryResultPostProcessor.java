@@ -63,7 +63,7 @@ public class QueryResultPostProcessor {
                     }
 
                     if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        if (ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
+                        if (hit.get(Settings.RESULT_KEY_URL) != null) {
                             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
                         } else {
                             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
