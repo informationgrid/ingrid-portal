@@ -35,12 +35,12 @@ public class SearchState {
      */
     public static String getURLParamsCatalogueSearch(PortletRequest request, ActionForm af) {
         StringBuffer result = new StringBuffer("?");
-        
+
         result.append(Utils.getURLParams(request));
 
         // Generate parameters of form input via ActionForm !
         if (af != null) {
-            String  urlParam = af.toURLParams();
+            String urlParam = af.toURLParams();
             Utils.appendURLParameter(result, urlParam);
         }
 
@@ -65,18 +65,8 @@ public class SearchState {
             String action = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
             Utils.appendURLParameter(result, action);
 
-            // current selector page (set only for grouping)
-            // (read only from request)
-            String paramValue = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE));
-            Utils.appendURLParameter(result, paramValue);
-            
-            // current selector page (for unranked results)
-            // (read only from request)
-            paramValue = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED));
-            Utils.appendURLParameter(result, paramValue);
-            
             // query string (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+            String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
@@ -85,19 +75,9 @@ public class SearchState {
             urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
-            // datasource (read from state)
+            // ranking (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_RANKING);
             urlParam = Utils.toURLParam(Settings.PARAM_RANKING, paramValue);
-            Utils.appendURLParameter(result, urlParam);
-
-            // start hit of ranked search results (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
-            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, paramValue);
-            Utils.appendURLParameter(result, urlParam);
-
-            // start hit of unranked search results (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
-            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_UNRANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // grouping (read from state)
@@ -114,7 +94,31 @@ public class SearchState {
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
             urlParam = Utils.toURLParam(Settings.PARAM_SUBJECT, paramValue);
             Utils.appendURLParameter(result, urlParam);
-            
+
+            // start hits (relevant for NO GROUPING)
+
+            // start hit of ranked search results (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
+            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
+            // start hit of unranked search results (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
+            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_UNRANKED, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
+            // start pages (relevant for GROUPING)
+
+            // current selector page (set only for grouping) (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE);
+            urlParam = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
+            // current selector page (for unranked results) (read from state)
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
+            urlParam = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems generating URL search parameters, WE DON'T PASS SEARCH PARAMETERS IN URL !", ex);
@@ -196,6 +200,8 @@ public class SearchState {
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_RANKED);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_UNRANKED);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_CURRENT_SELECTOR_PAGE);
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_RANKING);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_SUBJECT);

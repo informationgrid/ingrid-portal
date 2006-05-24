@@ -152,6 +152,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_DATASOURCE, request
                 .getParameter(Settings.PARAM_DATASOURCE));
 
+        // grouping
+        SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_GROUPING, request
+                .getParameter(Settings.PARAM_GROUPING));
+
         // ----------------------------------
         // set data for view template 
         // ----------------------------------
@@ -233,10 +237,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             return;
         }
 
-        // adapt SearchState (base for generating URL params):
-        // - reset result pages if action in input fragment, start with first hits
+        // adapt SearchState (base for generating URL params) !
+        // Reset all Stuff which are remains of former state and shouldn't be taken into account
+        // on actions in SimpleSearch form (where NO URL PARAMETERS SHOULD BE GENERATED) !
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
+        SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, null);
+        SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, null);
 
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
             // adapt SearchState (base for generating URL params for render request):
