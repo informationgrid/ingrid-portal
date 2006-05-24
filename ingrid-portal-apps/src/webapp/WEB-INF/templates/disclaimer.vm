@@ -1,3 +1,4 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 <a name="herausgeber"></a>
 <h2>Herausgeber</h2>
 <p>PortalU wird von der Koordinierungsstelle PortalU im Niedersächsischen Umweltministerium auf der Grundlage der Bund-Länder-Verwaltungsvereinbarung PortalU betrieben und weiterentwickelt.</p>
@@ -9,8 +10,8 @@
 	<br />
 	D-30167 Hannover
 	<br />
-	<a href="kontakt.html">Kontakt
-	</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact.psml"))
+	<a href="$link">Kontakt</a>
 </p>
 <br />
 <a name="verantwortlich"></a>
