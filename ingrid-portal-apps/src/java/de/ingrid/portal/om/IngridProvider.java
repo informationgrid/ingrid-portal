@@ -7,6 +7,7 @@ public class IngridProvider {
     private String name;
     private String url;
     private int sortkey;
+    private int sortkeyPartner;
     /**
      * @return Returns the id.
      */
@@ -66,6 +67,18 @@ public class IngridProvider {
      */
     public void setUrl(String url) {
         this.url = url;
+    }
+    /**
+     * @return Returns the sortkeyPartner.
+     */
+    public int getSortkeyPartner() {
+        return sortkeyPartner;
+    }
+    /**
+     * @param sortkeyPartner The sortkeyPartner to set.
+     */
+    public void setSortkeyPartner(int sortkeyPartner) {
+        this.sortkeyPartner = sortkeyPartner;
     }
     
 }

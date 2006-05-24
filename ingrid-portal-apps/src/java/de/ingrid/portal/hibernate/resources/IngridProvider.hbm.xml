@@ -10,5 +10,6 @@
     	<property name="name" type="java.lang.String"/>
     	<property name="url" type="java.lang.String"/>
     	<property name="sortkey" type="int"/>
+    	<property name="sortkeyPartner" column="sortkey_partner" type="int"/>
   </class>
 </hibernate-mapping>

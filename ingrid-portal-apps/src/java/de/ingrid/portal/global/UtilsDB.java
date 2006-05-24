@@ -178,7 +178,7 @@ public class UtilsDB {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
         return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridProvider.class)
-                .addOrder(Order.asc("sortkey")), providers);
+                .addOrder(Order.asc("sortkeyPartner")).addOrder(Order.asc("sortkey")), providers);
     }
 
     /**
