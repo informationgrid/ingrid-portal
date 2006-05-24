@@ -118,7 +118,6 @@ INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (100, 'rp_hmz', 'Landesamt für Wasserwirtschaft Rheinland-Pfalz', 'http://www.hochwasser-rlp.de/', 100);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (101, 'rp_lfug', 'Landesamt für Umweltschutz und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luft-rlp.de/aktuell/messwerte/', 101);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (102, 'rp_lzu', 'Landeszentrale für Umweltaufklärung Rheinland-Pfalz', 'http://www.umdenken.de/', 102);
-INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (103, 'rp_muf', 'Ministerium für Umwelt und Forsten des Landes Rheinland-Pfalz', 'http://www.muf.rlp.de/', 103);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (104, 'sh_lanu', 'Landesamt für Natur und Umwelt Schleswig-Holstein', 'http://www.lanu.landsh.de/', 104);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (105, 'sh_kfue', 'Kernreaktorfernüberwachung Schleswig-Holstein                                                   ', 'http://www.kfue-sh.de/', 105);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`) VALUES (106, 'sh_luesh', 'Lufthygienische Überwachung Schleswig-Holstein', 'http://www.umwelt.schleswig-holstein.de/?196', 106);
