@@ -152,12 +152,35 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             queryType = "";
         }
 
+        // get the filter from search state
+        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
+
+        // set filter params into context for filter display
+        if (filter != null && filter.length() > 0) {
+            context.put("filteredBy", filter);
+            if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState
+                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
+            } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState
+                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
+            } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, SearchState
+                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
+            }
+        }
+
+        // datasource from state
+        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+
+        // IngridQuery from state
+        IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+
         // ----------------------------------
         // set initial view template
         // ----------------------------------
 
         // if no query set display "nothing"
-        IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
         if (query == null) {
             setDefaultViewPage(TEMPLATE_NO_QUERY_SET);
             super.doView(request, response);
@@ -165,13 +188,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
 
         // selected data source ("Umweltinfo", Adressen" or "Forschungsprojekte")
-        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
         }
-        // get the filter from search state
-        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
-
         if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
             setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
         } else {
@@ -372,21 +391,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
-        // set filter params into context for filter display
-        if (filter != null && filter.length() > 0) {
-            context.put("filteredBy", filter);
-            if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState
-                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
-            } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState
-                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
-            } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, SearchState
-                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
-            }
-        }
-
         Object rankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
         Object unrankedSearchFinished = SearchState
                 .getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
@@ -410,6 +414,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // ----------------------------------
         // prepare view
         // ----------------------------------
+
         // GROUPING
         // adapt page navigation for grouping in left column 
         if (renderOneResultColumnRanked) {
