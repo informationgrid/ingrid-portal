@@ -1,18 +1,21 @@
+#parse ('/WEB-INF/templates/include_search_result_filter.vm')
+
 <!-- RESULTS LEFT -->
     <div class="section">  
-      <div class="resultset_nav float_left">
-#renderRankedResultCounter($rankedPageSelector)
-      </div>
-      <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
-      </div>
+#parse ('/WEB-INF/templates/include_search_result_counter.vm')
+#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
       <br />
 
-#if($rankedResultList)
+#if($rankedResultList && "$rankedResultList.length()" != "0")
       #foreach($rs in $rankedResultList.hits)
-		  #if($velocityCount > 1)
-			<div class="line"><hr /></div>
-		  #end		  <div class="resultset">
+        	#if($grouping)
+				#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
+        	#else
+        		#if($velocityCount > 1)
+        			<div class="line"><hr /></div>
+        		#end
+        	#end
+		  <div class="resultset">
 		  #set($title = "")
 		  #if($rs.udk_class == "2")
 			#if($rs.address_salutation)#set($title = "$rs.address_salutation ")#end
@@ -72,17 +75,14 @@
 			<p class="result_link"></p>
 		  #end
           </div>
+		  #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
 	  #end
-#end  
+#else
+		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
+#end
 
-      <div class="resultset_nav float_left">
-#renderRankedResultCounter($rankedPageSelector)
-      </div>
-
-      <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
-      </div>
-
+#parse ('/WEB-INF/templates/include_search_result_counter.vm')
+#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     </div>
 
   <div class="clearer"></div>

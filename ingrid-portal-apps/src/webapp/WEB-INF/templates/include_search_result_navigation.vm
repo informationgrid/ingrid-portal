@@ -1,0 +1,7 @@
+      <div class="resultset_nav">
+#if($grouping)
+	#renderRankedPageNavigationGrouping($rankedPageSelector)
+#else
+	#renderRankedPageNavigation($rankedPageSelector)
+#end
+      </div>

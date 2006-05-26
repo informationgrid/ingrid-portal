@@ -1,0 +1,7 @@
+      <div class="resultset_nav float_left">
+#if($grouping)
+	#renderRankedResultCounterGrouping($rankedPageSelector)
+#else
+	#renderRankedResultCounter($rankedPageSelector)
+#end
+      </div>

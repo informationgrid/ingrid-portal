@@ -1,46 +1,14 @@
-	<div class="section">  
-      <div class="resultset_nav float_left">
-#if($grouping)
-	#renderRankedResultCounterGrouping($rankedPageSelector)
-#else
-	#renderRankedResultCounter($rankedPageSelector)
-#end
-      </div>
+	<div class="section">
+		#parse ('/WEB-INF/templates/include_search_result_counter.vm')
       <div class="resultset_nav">
         &nbsp;
       </div>
-      <div class="resultset_nav">
-#if($grouping)
-	#renderRankedPageNavigationGrouping($rankedPageSelector)
-#else
-	#renderRankedPageNavigation($rankedPageSelector)
-#end
-      </div>
+	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
       <br />
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
 	#foreach($rs in $rankedResultList.hits)
         	#if($grouping)
-              <div class="resultset_partner_group">
-        		#set ($groupSubject = "")
-				#if($grouping == 'partner')
-        			#set ($detailAction = "showAllForPartner")
-        			#set ($groupSubject = "Partner '$!rs.partner'")
-        			#if($rs.partnerKey)
-						#set ($groupSubjectKey = $rs.partnerKey)
-					#else
-						#set ($groupSubjectKey = "")
-					#end
-        		#elseif($grouping == 'provider')
-        			#set ($detailAction = "showAllForProvider")
-        			#set ($groupSubject = "Anbieter '$!rs.provider'")
-        			#if($rs.providerKey)
-						#set ($groupSubjectKey = $rs.providerKey)
-					#else
-						#set ($groupSubjectKey = "")
-					#end
-        		#end
-                <div class="ico_down_black"><span class="title">Gruppierte Ergebnisse für $!{groupSubject}</span></div>
-              </div>
+				#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
         	#else
         		#if($velocityCount > 1)
         			<div class="line"><hr /></div>
@@ -89,40 +57,18 @@
 			<p class="result_link"></p>
 		  #end
           </div>
-        #if($rs.get('moreHits') && $groupSubjectKey != "")
-          <div class="line"><hr /></div>
-          <div class="resultset_show_partner">
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action', $detailAction)
-$action.setParameter('grouping', $grouping)
-$action.setParameter('subject', $groupSubjectKey)
-	      <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Zeige alle Ergebnisse für $!{groupSubject}</a></span>
-		  </div>
-		  <br />
-		#end
-	  #end
+		  #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+	#end
 #elseif($rankedSearchFinished)
 		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
 #else
 		<p><strong>Die Ausgabe der Suchergebnisse wurde vorzeitig unterbrochen.</strong><br /><br /></p>
 #end  
 
-      <div class="resultset_nav float_left">
-#if($grouping)
-	#renderRankedResultCounterGrouping($rankedPageSelector)
-#else
-	#renderRankedResultCounter($rankedPageSelector)
-#end
-      </div>
+		#parse ('/WEB-INF/templates/include_search_result_counter.vm')
       <div class="resultset_nav">
         &nbsp;
       </div>
-      <div class="resultset_nav">
-#if($grouping)
-	#renderRankedPageNavigationGrouping($rankedPageSelector)
-#else
-	#renderRankedPageNavigation($rankedPageSelector)
-#end
-      </div>
+	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
 
     </div>

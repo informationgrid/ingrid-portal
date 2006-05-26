@@ -1,0 +1,13 @@
+#if($filteredBy)
+    #if($filteredBy == 'partner')
+    	#set ($filterSubject = "Partner '$filterSubject'")
+    #elseif($filteredBy == 'provider')
+    	#set ($filterSubject = "Anbieter '$filterSubject'")
+    #end
+
+  <div id="content_full">
+    <div class="resultset_partner_group">
+      <div class="ico_down_black"><span class="title">alle Ergebnisse für $filterSubject</span></div>
+    </div>
+  </div>  
+#end

@@ -1,0 +1,21 @@
+              <div class="resultset_partner_group">
+        		#set ($groupSubject = "")
+				#if($grouping == 'partner')
+        			#set ($detailAction = "showAllForPartner")
+        			#set ($groupSubject = "Partner '$!rs.partner'")
+        			#if($rs.partnerKey)
+						#set ($groupSubjectKey = $rs.partnerKey)
+					#else
+						#set ($groupSubjectKey = "")
+					#end
+        		#elseif($grouping == 'provider')
+        			#set ($detailAction = "showAllForProvider")
+        			#set ($groupSubject = "Anbieter '$!rs.provider'")
+        			#if($rs.providerKey)
+						#set ($groupSubjectKey = $rs.providerKey)
+					#else
+						#set ($groupSubjectKey = "")
+					#end
+        		#end
+                <div class="ico_down_black"><span class="title">Gruppierte Ergebnisse für $!{groupSubject}</span></div>
+              </div>
