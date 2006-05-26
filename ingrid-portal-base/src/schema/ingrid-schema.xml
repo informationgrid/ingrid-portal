@@ -30,7 +30,7 @@ limitations under the License.
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="url" required="true" size="255" type="VARCHAR"/>
         <column name="sortkey" required="true" type="INTEGER"/>
-        <column name="sortkeyPartner" required="true" type="INTEGER"/>
+        <column name="sortkey_partner" required="true" type="INTEGER"/>
     </table>
 
     <table name="ingrid_env_topic" idMethod="native">
