@@ -11,7 +11,7 @@
       </div>
       <br />
 
-#if($unrankedResultList && "$unrankedResultList.length()" != "0")
+#if($unrankedSearchFinished && $unrankedResultList && "$unrankedResultList.length()" != "0")
       #foreach($rs in $unrankedResultList.hits)
     	  <div class="resultset_partner_group">
             <div class="ico_down_black"><span class="title">$rs.dataSourceName#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>

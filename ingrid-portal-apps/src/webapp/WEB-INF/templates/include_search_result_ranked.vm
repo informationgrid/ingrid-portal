@@ -17,7 +17,7 @@
 #end
       </div>
       <br />
-#if($rankedResultList && "$rankedResultList.length()" != "0")
+#if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
 	#foreach($rs in $rankedResultList.hits)
         	#if($grouping)
               <div class="resultset_partner_group">
