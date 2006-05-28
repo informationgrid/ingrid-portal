@@ -69,7 +69,7 @@ public class QueryPreProcessor {
         int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
 
         String[] requestedMetadata = null;
-        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
+        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO) || ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
             requestedMetadata = new String[4];
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
