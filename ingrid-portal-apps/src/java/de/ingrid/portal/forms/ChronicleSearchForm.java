@@ -104,7 +104,7 @@ public class ChronicleSearchForm extends ActionForm {
 
         // check event
         if (!hasInput(FIELD_EVENT)) {
-            setError(FIELD_EVENT, "chronicle.error.noEvent");
+            setError(FIELD_EVENT, "chronicle.form.error.noEvent");
             allOk = false;
         }
 
@@ -122,22 +122,22 @@ public class ChronicleSearchForm extends ActionForm {
             if (inputTimeFrom.length() != 0) {
                 fromDate = getDate(inputTimeFrom);
                 if (fromDate == null) {
-                    setError(FIELD_TIME_FROM, "chronicle.error.invalidTimeFrom");
+                    setError(FIELD_TIME_FROM, "chronicle.form.error.invalidTimeFrom");
                     allOk = false;
                 }
                 if (inputTimeTo.length() == 0) {
-                    setError(FIELD_TIME_TO, "chronicle.error.noTimeTo");
+                    setError(FIELD_TIME_TO, "chronicle.form.error.noTimeTo");
                     allOk = false;
                 }
             }
             if (inputTimeTo.length() != 0) {
                 toDate = getDate(inputTimeTo);
                 if (toDate == null) {
-                    setError(FIELD_TIME_TO, "chronicle.error.invalidTimeTo");
+                    setError(FIELD_TIME_TO, "chronicle.form.error.invalidTimeTo");
                     allOk = false;
                 }
                 if (inputTimeFrom.length() == 0) {
-                    setError(FIELD_TIME_FROM, "chronicle.error.noTimeFrom");
+                    setError(FIELD_TIME_FROM, "chronicle.form.error.noTimeFrom");
                     allOk = false;
                 }
             }
@@ -147,7 +147,7 @@ public class ChronicleSearchForm extends ActionForm {
                 Calendar toCal = new GregorianCalendar();
                 toCal.setTime(toDate);
                 if (fromCal.after(toCal)) {
-                    setError(FIELD_TIME_FROM, "chronicle.error.invalidPeriod");
+                    setError(FIELD_TIME_FROM, "chronicle.form.error.invalidPeriod");
                     // set empty error, just for highlighting field label
                     setError(FIELD_TIME_TO, "");
                     allOk = false;
@@ -160,7 +160,7 @@ public class ChronicleSearchForm extends ActionForm {
 
             if (inputTimeAt.length() != 0) {
                 if (getDate(inputTimeAt) == null) {
-                    setError(FIELD_TIME_AT, "chronicle.error.invalidTimeAt");
+                    setError(FIELD_TIME_AT, "chronicle.form.error.invalidTimeAt");
                     allOk = false;
                 }
             }

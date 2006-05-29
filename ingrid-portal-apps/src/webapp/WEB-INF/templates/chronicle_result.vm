@@ -1,6 +1,6 @@
 	<div class="section ">    
       <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector 'Umweltchronik')
+#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')")
       </div>
       <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)
@@ -12,25 +12,25 @@
 	#end
 		  <div class="resultset">
 		  #if ($rs.title)
-			<span class="result_title"><strong>#if ($rs.title == "")Kein Titel#else$rs.title#end</strong></span><span class="inquiry"><img src="/ingrid-portal-apps/images/icn_magnifier.gif" alt="Icon Lupe" /> <a href="$!rs.searchURL">Recherche</a></span>
+			<span class="result_title"><strong>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</strong></span><span class="inquiry"><img src="/ingrid-portal-apps/images/icn_magnifier.gif" alt="$MESSAGES.getString('chronicle.result.alt.icon.inquiry')" /> <a href="$!rs.searchURL">$MESSAGES.getString('chronicle.result.inquiry')</a></span>
             <p class="result_metadata">
-              Ereignistyp: $!rs.type<br />
-			  Datum: $!rs.date<br />
+              $MESSAGES.getString('chronicle.result.eventType') $!rs.type<br />
+			  $MESSAGES.getString('chronicle.result.eventDate') $!rs.date<br />
             </p>
 			<p class="event_description">
 			$!rs.description
 			</p>
 			<p class="result_link">
-				<a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url_str</a>
+				<a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
 			</p>        
 		  #else
-			<span class="result_title"><strong>Ereignis ist leer</strong></span>
+			<span class="result_title"><strong>$MESSAGES.getString('chronicle.result.emptyEvent')</strong></span>
 			<p class="result_link"></p>
 		  #end
           </div>
 #end
       <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector 'Umweltchronik')
+#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')")
       </div>
       <div class="resultset_nav">
 #renderRankedPageNavigation($rankedPageSelector)
