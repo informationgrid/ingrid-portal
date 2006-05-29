@@ -410,7 +410,7 @@ public class Utils {
 
     public static void sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
 
-        boolean debug = true;
+        boolean debug = log.isDebugEnabled();
 
         Properties props = new Properties();
         props.put("mail.smtp.host", PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_SERVER, "localhost"));
