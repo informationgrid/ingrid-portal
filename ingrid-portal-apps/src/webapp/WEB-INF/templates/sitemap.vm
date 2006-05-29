@@ -45,7 +45,9 @@
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-chronicle.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.chronicle")</a>
-					<p>$MESSAGES.getString("sitemap.area.main.chronicle.description")</p>
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
+					<p>$MESSAGES.getStringWithMsgParams("sitemap.area.main.chronicle.description")</p>
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about.psml"))

@@ -81,7 +81,7 @@ public class IngridResourceBundle {
      * @return
      */
     public String getStringWithMsgParams(String key) {
-        String message = r.getString(key);
+        String message = this.getString(key);
         try {
             MessageFormat mf = new MessageFormat(message);
             return mf.format(this.parameters.toArray());
