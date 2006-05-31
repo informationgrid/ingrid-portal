@@ -174,8 +174,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
         } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+            if (log.isWarnEnabled()) {
+                log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
                         + requestedHits, t);
             }
@@ -197,8 +197,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             detail = bus.getDetail(result, query, requestedFields);
         } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching Detail of result: " + result, t);
+            if (log.isWarnEnabled()) {
+                log.warn("Problems fetching Detail of result: " + result, t);
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
@@ -217,8 +217,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             details = bus.getDetails(results, query, requestedFields);
         } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching Details of results: " + results, t);
+            if (log.isWarnEnabled()) {
+                log.warn("Problems fetching Details of results: " + results, t);
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
@@ -237,8 +237,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             rec = bus.getRecord(result);
         } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems fetching Record of result: " + result, t);
+            if (log.isWarnEnabled()) {
+                log.warn("Problems fetching Record of result: " + result, t);
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {

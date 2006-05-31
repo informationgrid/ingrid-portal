@@ -97,8 +97,8 @@ public class ThreadedQuery extends Thread {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            log.warn("Error while querying the ibus.", t);
         } finally {
             log.info("Finished search '" + this.key + "' in " + (System.currentTimeMillis() - startTime) + "ms.");
             this.controller.addResultSet(this.key, hits);
