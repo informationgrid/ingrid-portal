@@ -173,9 +173,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                                 + requestedHits);
             }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
-        } catch (Throwable t) {
-            if (log.isWarnEnabled()) {
+        } catch (java.io.IOException e) {
+            if (log.isErrorEnabled()) {
                 log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
+                        + requestedHits, e);
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
                         + requestedHits, t);
             }
