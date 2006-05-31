@@ -14,9 +14,6 @@
 
         <property name="current_session_context_class">thread</property>
 
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
-
         <!-- SQL dialect -->
         <!--<property name="dialect">org.hibernate.dialect.HSQLDialect</property>-->
         <!--<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
@@ -25,9 +22,6 @@
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
-
-        <!-- Drop and re-create the database schema on startup -->
-        <!--<property name="hbm2ddl.auto">create</property>-->
 
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridPartner.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridProvider.hbm.xml"/>
