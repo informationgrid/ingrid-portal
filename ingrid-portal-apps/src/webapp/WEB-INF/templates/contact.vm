@@ -1,116 +1,74 @@
-<p>Sie erreichen uns per E-Mail unter der Adresse <a href="mailto:portalu@portalu.de">portalu@portalu.de</a>.</p>
-<p>Unsere Postadresse:</p>
-<p>
-	Niedersächsisches Umweltministerium
-	<br />
-	Koordinierungsstelle PortalU
-	<br />
-	Archivstrasse 2
-	<br />
-	D-30167 Hannover
-	<br />
-</p> 
-<p>Nehmen Sie online Kontakt mit uns auf! Wir werden Ihnen schnellstmöglichst per E-Mail antworten. Die eingegebenen Informationen und Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert und genutzt.
-</p>
+$MESSAGES.getString('contact.intro.praeEmail')
+<a href="mailto:$portalEmail">$portalEmail</a>
+$MESSAGES.getString('contact.intro.postEmail')
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="contact" id="contact">
 	<div class="formbody">
 #displayFormErrors()
 		<h3>
-			<label for="bemerkungen">#displayFieldLabel('message' 'Ihre Nachricht, Fragen oder Anregungen')
-			</label>
+			<label for="bemerkungen">#displayFieldLabel('message' "$MESSAGES.getString('contact.form.message')")</label>
 		</h3>
 		<textarea cols="60" rows="10" name="message" id="bemerkungen">#getFieldValue('message')</textarea>
-		<h3>* Pflichtangaben
-		</h3>
+		<h3>$MESSAGES.getString('contact.form.required')</h3>
 		<p>
-			<label class="float_left col2left_incr" for="xx2">#displayFieldLabel('firstname' 'Vorname*:')
-			</label>
+			<label class="float_left col2left_incr" for="xx2">#displayFieldLabel('firstname' "$MESSAGES.getString('contact.form.firstname')")</label>
 			<input class="float_left col2right inputstyletext" type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')"/>
-			<span class="clearer">
-			</span>    			  
+			<span class="clearer"></span>    			  
 		</p>
 		<p>
-			<label class="float_left col2left_incr" for="xx3">#displayFieldLabel('lastname' 'Nachname*:')
-			</label>
+			<label class="float_left col2left_incr" for="xx3">#displayFieldLabel('lastname' "$MESSAGES.getString('contact.form.lastname')")</label>
 			<input class="float_left col2right inputstyletext" type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')"/>
-			<span class="clearer">
-			</span>
+			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left_incr" for="xx4">Organisation, Firma:
-			</label>
+			<label class="float_left col2left_incr" for="xx4">$MESSAGES.getString('contact.form.company')</label>
 			<input class="float_left col2right inputstyletext" type="text" id="xx4" name="company" value="#getFieldValue('company')"/>
-			<span class="clearer">
-			</span>
+			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left_incr" for="xx5">Telefon:
-			</label>
+			<label class="float_left col2left_incr" for="xx5">$MESSAGES.getString('contact.form.phone')</label>
 			<input class="float_left col2right inputstyletext" type="text" id="xx5" name="phone" value="#getFieldValue('phone')"/>
-			<span class="clearer">
-			</span>    			  
+			<span class="clearer"></span>    			  
 		</p>
 		<p>
-			<label class="float_left col2left_incr" for="xx6">#displayFieldLabel('email' 'E-Mail-Adresse*:')
-			</label>
+			<label class="float_left col2left_incr" for="xx6">#displayFieldLabel('email' "$MESSAGES.getString('contact.form.email')")</label>
 			<input class="float_left col2right inputstyletext" type="text" id="xx6" name="email" value="#getFieldValue('email')"/>
-			<span class="clearer">
-			</span>
+			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left_incr" for="activity">Tätigkeitsbereich:
-			</label>
+			<label class="float_left col2left_incr" for="activity">$MESSAGES.getString('contact.form.activity')</label>
 			<select class="float_left inputstyle" size="1" id="activity" name="activity">
-				<option value="none" #getSelected('activity' 'none')>---
-				</option>
-				<option value="schul" #getSelected('activity' 'schul')>Sch&uuml;ler
-				</option>
-				<option value="hand" #getSelected('activity' 'hand')>Handwerk/Technik
-				</option>
-				<option value="umwe" #getSelected('activity' 'umwe')>Umweltdienstleistungen
-				</option>
-				<option value="beho" #getSelected('activity' 'beho')>Beh&ouml;rde
-				</option>
-				<option value="lehre" #getSelected('activity' 'lehre')>Lehrer
-				</option>
-				<option value="univ" #getSelected('activity' 'univ')>Universit&auml;t
-				</option>
-				<option value="medi" #getSelected('activity' 'medi')>Medien
-				</option>
-				<option value="ande" #getSelected('activity' 'ande')>Anderes
-				</option>
+				<option value="none" #getSelected('activity' 'none')>---</option>
+				<option value="schul" #getSelected('activity' 'schul')>$MESSAGES.getString('contact.report.email.area.of.profession.schul')</option>
+				<option value="hand" #getSelected('activity' 'hand')>$MESSAGES.getString('contact.report.email.area.of.profession.hand')</option>
+				<option value="umwe" #getSelected('activity' 'umwe')>$MESSAGES.getString('contact.report.email.area.of.profession.umwe')</option>
+				<option value="beho" #getSelected('activity' 'beho')>$MESSAGES.getString('contact.report.email.area.of.profession.beho')</option>
+				<option value="lehre" #getSelected('activity' 'lehre')>$MESSAGES.getString('contact.report.email.area.of.profession.lehre')</option>
+				<option value="univ" #getSelected('activity' 'univ')>$MESSAGES.getString('contact.report.email.area.of.profession.univ')</option>
+				<option value="medi" #getSelected('activity' 'medi')>$MESSAGES.getString('contact.report.email.area.of.profession.medi')</option>
+				<option value="ande" #getSelected('activity' 'ande')>$MESSAGES.getString('contact.report.email.area.of.profession.ande')</option>
 			</select>  
-			<span class="clearer">
-			</span>
+			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left_incr" for="type_interest">Mein Interesse an Umweltinformationen ist:
-			</label>
+			<label class="float_left col2left_incr" for="type_interest">$MESSAGES.getString('contact.form.interest')</label>
 			<select class="float_left inputstyle" size="1" id="type_interest" name="interest">
-				<option value="none" #getSelected('interest' 'none')>---
-				</option>
-				<option value="prof" #getSelected('interest' 'prof')>beruflich
-				</option>
-				<option value="priv" #getSelected('interest' 'priv')>privat
-				</option>
+				<option value="none" #getSelected('interest' 'none')>---</option>
+				<option value="prof" #getSelected('interest' 'prof')>$MESSAGES.getString('contact.report.email.interest.in.enviroment.info.prof')</option>
+				<option value="priv" #getSelected('interest' 'priv')>$MESSAGES.getString('contact.report.email.interest.in.enviroment.info.priv')</option>
 			</select>  
-			<span class="clearer">
-			</span>
+			<span class="clearer"></span>
 		</p>        	    
 		<p>
-			<label class="float_left col2left_incr">PortalU Newsletter:
-			</label>
+			<label class="float_left col2left_incr">$MESSAGES.getString('contact.form.newsletter')</label>
 			<input type="checkbox" id="chk1" name="newsletter" value="1" #getChecked('newsletter' '1')/>&nbsp;
-			<label for="chk1">Ich möchte den Newsletter abonnieren.
-			</label>
-			<span class="clearer">
-			</span>
+			<label for="chk1">$MESSAGES.getString('contact.form.newsletter.label')</label>
+			<span class="clearer"></span>
 		</p>
 	</div>
 	<div class="formfooter">
 		<div align="right">
-			<input class="btn" type="submit" value="Absenden" />
+			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.submit')" />
 		</div>
 	</div>
 </form>

@@ -57,6 +57,9 @@ public class ContactPortlet extends GenericVelocityPortlet {
         ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
         context.put("actionForm", cf);
 
+        // contact email address
+        context.put("portalEmail", PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER, "portalu@portalu.de"));
+        
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
         // ----------------------------------
