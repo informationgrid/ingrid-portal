@@ -130,7 +130,7 @@ public class HibernateManager {
      * @throws HibernateException
      */
     public Session getSession() throws HibernateException {
-        if (this.fSession == null) {
+        if (this.fSession == null || !this.fSession.isOpen()) {
             this.fSession = fFactory.openSession();
         }
         return this.fSession;
