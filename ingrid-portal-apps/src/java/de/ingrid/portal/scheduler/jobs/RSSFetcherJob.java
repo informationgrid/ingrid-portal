@@ -152,6 +152,10 @@ public class RSSFetcherJob implements Job {
                                     session.getTransaction().commit();
 
                                     cnt++;
+                                } else {
+                                    for (int i=0; i<rssEntries.size(); i++) {
+                                        session.evict(rssEntries.get(i));
+                                    }
                                 }
                                 rssEntries = null;
                             }
@@ -160,7 +164,11 @@ public class RSSFetcherJob implements Job {
                     }
                     feed = null;
                 } catch (Exception e) {
-                    log.error("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                    if (log.isErrorEnabled()) {
+                        log.error("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                    }
+                } finally {
+                    session.evict(rssSource);
                 }
             }
 
@@ -177,15 +185,16 @@ public class RSSFetcherJob implements Job {
             it = deleteEntries.iterator();
             session.beginTransaction();
             while (it.hasNext()) {
-                session.delete((IngridRSSStore) it.next());
+                Object obj = it.next();
+                session.evict(obj);
+                session.delete((IngridRSSStore) obj);
             }
             session.getTransaction().commit();
-            deleteEntries = null;
-            // since the working on rss feeds can be memory consuming
-            // do GC after job is finished
-            System.gc();
+            deleteEntries.clear();
         } catch (Exception e) {
-            log.error("Error executing quartz job RSSFetcherJob.", e);
+            if (log.isErrorEnabled()) {
+                log.error("Error executing quartz job RSSFetcherJob.", e);
+            }
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, false);
         }
 
