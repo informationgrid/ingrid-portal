@@ -76,21 +76,21 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
         
-        int documentId = Integer.parseInt(request.getParameter("docid"));
-        String altDocumentId = request.getParameter("altdocid");
-        String iplugId = request.getParameter("plugid");
-        
-        IngridHit hit = new IngridHit();
-        hit.setDocumentId(documentId);
-        hit.setPlugId(iplugId);
-        if (altDocumentId != null) {
-            hit.put("alt_document_id", altDocumentId);
-        }
-
-
-        IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        
         try {
+            int documentId = Integer.parseInt(request.getParameter("docid"));
+            String altDocumentId = request.getParameter("altdocid");
+            String iplugId = request.getParameter("plugid");
+            
+            IngridHit hit = new IngridHit();
+            hit.setDocumentId(documentId);
+            hit.setPlugId(iplugId);
+            if (altDocumentId != null) {
+                hit.put("alt_document_id", altDocumentId);
+            }
+    
+    
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+        
             PlugDescription plugDescription = ibus.getIPlug(iplugId);
             
             // flag to make column name readable (not lowercase, character substitution '_' => ' ')
