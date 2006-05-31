@@ -108,12 +108,15 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
                 rslt[i].put("from", anni.getDateFrom());
                 rslt[i].put("until", anni.getDateTo());
                 rslt[i].put("until", anni.getDateTo());
+                session.evict(anni);
             }
 
             return rslt;
 
         } catch (Exception e) {
-            log.error("Exception while querying sns for anniversary.", e);
+            if (log.isErrorEnabled()) {
+                log.error("Exception while querying sns for anniversary.", e);
+            }
             return new DetailedTopic[0];
         }
     }
