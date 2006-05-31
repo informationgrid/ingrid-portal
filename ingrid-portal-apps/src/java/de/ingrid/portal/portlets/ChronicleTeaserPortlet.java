@@ -24,7 +24,7 @@ import de.ingrid.utils.IngridHitDetail;
 
 public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
 
-    public final static String TITLE_KEY = "teaser.chronicle.title";
+    public final static String TITLE_KEY = "chronicle.teaser.title";
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);

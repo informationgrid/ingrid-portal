@@ -1,7 +1,7 @@
 <div class="portlet-section-body">
 #if($snsAnniversary.years && $snsAnniversary.title)
     <p class="iconLink">
-	  <strong>Vor $snsAnniversary.years#if($snsAnniversary.years > 1) Jahren#else Jahr#end: $snsAnniversary.title</strong> ($snsAnniversary.from#if($snsAnniversary.until) - $snsAnniversary.until#end)<br/><br/>
+	  <strong>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years#if($snsAnniversary.years > 1) $MESSAGES.getString('chronicle.teaser.event.years')#else $MESSAGES.getString('chronicle.teaser.event.year')#end: $snsAnniversary.title</strong> ($snsAnniversary.from#if($snsAnniversary.until) - $snsAnniversary.until#end)<br/><br/>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
 $action.setParameter('topId',"$!snsAnniversary.topicId")
@@ -9,20 +9,20 @@ $action.setParameter('topType',"$!snsAnniversary.type")
 ##$action.setParameter('topFrom',"$!snsAnniversary.from")
 ##$action.setParameter('topTo',"$!snsAnniversary.to")
 $action.setParameter('topTerm',"$!snsAnniversary.term")
-	  <a href="$action"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>Details</a>
+	  <a href="$action"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>$MESSAGES.getString('chronicle.teaser.details')</a>
       <span class="clearer"></span>
     </p>
 #else
     <p class="iconLink">
-	  <span><strong>Kein Jahrestag gefunden.</strong></span>
+	  <span><strong>$MESSAGES.getString('chronicle.teaser.noEvent')</strong></span>
       <span class="clearer"></span>
     </p>
 #end
     <p class="iconLink">
-      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
-      <span><a href="$action">Weitere Umweltereignisse</a></span>
+      <span><a href="$action">$MESSAGES.getString('chronicle.teaser.furtherEvents')</a></span>
       <span class="clearer"></span>
     </p>
 </div>
