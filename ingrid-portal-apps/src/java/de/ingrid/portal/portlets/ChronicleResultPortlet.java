@@ -1,7 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -21,7 +20,6 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -36,7 +34,6 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -167,7 +164,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
             if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
                 // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
             }
-            
+
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             IngridHit[] results = hits.getHits();
@@ -195,6 +192,8 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
 
                     if (detail != null) {
                         String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
+                        // remove double quoted stuff '\"'
+                        searchData = searchData.replaceAll("\\\\\"", "");
                         if (searchData != null && searchData.length() > 0) {
                             searchData = UtilsString.htmlescape(searchData.replaceAll("\\,", " OR "));
                         } else {
