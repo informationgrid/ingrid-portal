@@ -22,7 +22,7 @@ INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (4, 'bu_bfs', 'Bundesamt für Strahlenschutz', 'http://www.bfs.de/', 4, 1);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (5, 'bu_bmf', 'Bundesministerium der Finanzen', 'http://www.bundesfinanzministerium.de/', 5, 1);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (6, 'bu_bmbf', 'Bundesministerium für Bildung und Forschung', 'http://www.bmbf.de/', 6, 1);
-INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (7, 'bu_bmevl', 'Bundesministerium für Ernährung, Landwirtschaft und Verbraucherschutz', 'http://www.bmelv.de/cln_044/DE/00-Home/__Homepage__node.html__nnn=true', 7, 1);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (7, 'bu_bmelv', 'Bundesministerium für Ernährung, Landwirtschaft und Verbraucherschutz', 'http://www.bmelv.de/cln_044/DE/00-Home/__Homepage__node.html__nnn=true', 7, 1);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (8, 'bu_bmz', 'Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung', 'http://www.bmz.de/', 8, 1);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (9, 'bu_aa', 'Auswärtiges Amt', 'http://www.auswaertiges-amt.de/', 9, 1);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (10, 'bu_bsh', 'Bundesamt für Seeschifffahrt und Hydrographie', 'http://www.bsh.de/', 10, 1);
@@ -80,7 +80,7 @@ INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (62, 'mv_um', 'Umweltministerium Mecklenburg-Vorpommern', 'http://www.um.mv-regierung.de/', 1, 9);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (63, 'mv_sm', 'Sozialministerium Mecklenburg-Vorpommern', 'http://www.sozial-mv.de/', 2, 9);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (64, 'mv_lung', 'Landesamt für Umwelt, Naturschutz und Geologie Mecklenburg-Vorpommern (LUNG)', 'http://www.lung.mv-regierung.de/', 3, 9);
-INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (65, 'mv_lfg', 'Landesamt für Forsten und Großschutzgebiete Mecklenburg-Vorpommern', 'http://www.lfg-malchin.de/', 4, 9);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (65, 'mv_lfmv', 'Landesforst Mecklenburg-Vorpommern AöR', 'http://www.wald-mv.de/', 4, 9);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (66, 'mv_schaalsee', 'Amt für das Biosphärenreservat Schaalsee', 'http://www.schaalsee.de/', 5, 9);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (67, 'mv_npmueritz', 'Nationalparkamt Müritz', 'http://www.nationalpark-mueritz.de/', 6, 9);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (68, 'mv_nvblmv', 'Nationalparkamt Vorpommersche Boddenlandschaft', 'http://www.nationalpark-vorpommersche-bodde/nlandschaft.de/', 7, 9);
