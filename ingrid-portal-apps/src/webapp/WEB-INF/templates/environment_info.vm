@@ -1,19 +1,8 @@
 <div class="portlet-section-body">
-	<ul>
-		<li>
-			<p>
-				Wenn Sie sich für ganz bestimmte Themen aus dem Bereich "Umwelt" interessieren, sind Sie hier an der richtigen Adresse. Über die PortalU Umweltthemen haben Sie direkten Zugang zu Dokumenten und Daten aus 21 Themengebieten.
-			</p>
-		</li>
-		<li>
-			<p>
-				Sie können die Ergebnisliste auf die gewünschten Themen, Rubriken und Verwaltungsregionen einschränken oder mit der PortalU-Suche die Umweltthemen nach Stichworten durchsuchen.
-			</p>
-		</li>
-	</ul>
+	$MESSAGES.getString('envSearch.info.content')
 	<p class="iconLink">
-		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-		<span><a href="$infoLink">Suche in Umweltthemen</a></span>
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+		<span><a href="$infoLink">$MESSAGES.getString('envSearch.info.link')</a></span>
 		<span class="clearer"></span>
 	</p>
 </div>
