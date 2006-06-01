@@ -2,18 +2,15 @@
 <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
    	<input type="hidden" name="action" value="doSearch"/>
 	<div class="formbody">
-		<h2 class="nospace">$MESSAGES.getString('chronicle.form.criteria')
-		</h2>
+		<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
 		#displayFormErrors()
 		<div class="float_left">  
-			<h3>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")
-			</h3>
+			<h3>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")</h3>
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
 						<input id="chk_all" name="event" type="checkbox" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" value="all" #getChecked('event' 'all')/> 
-						<label for="chk_all">$MESSAGES.getString('chronicle.form.allEventtypes')
-						</label>
+						<label for="chk_all">$MESSAGES.getString('chronicle.form.allEventtypes')</label>
 					</td>
 					<td>
 					</td>
@@ -31,18 +28,15 @@
 #if($velocityCount==1 || $velocityCount==4 || $velocityCount==7 || $velocityCount==10 || $velocityCount==13)<tr>#end
 					<td>
 						<input id="chk_$velocityCount" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="$evtype.FormValue" #getChecked('event' "$evtype.FormValue")/> 
-						<label for="chk_$velocityCount">$MESSAGES.getString("$evtype.QueryValue")
-						</label>
+						<label for="chk_$velocityCount">$MESSAGES.getString("$evtype.QueryValue")</label>
 					</td>
 #if($velocityCount==$numEvtypes || $velocityCount==3 || $velocityCount==6 || $velocityCount==9 || $velocityCount==12 || $velocityCount==15)</tr>#end
 #end
 			</table>
 		</div>  
-		<span class="clearer">
-		</span>
+		<span class="clearer"></span>
 		<div class="float_left">
-			<h3>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")
-			</h3>
+			<h3>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h3>
 			<p>
 				<input type="radio" id="vonbis" name="time_select" value="period" #getChecked('time_select' 'period')/>
 				<label for="from_yy">#displayFieldLabel('time_from' "$MESSAGES.getString('chronicle.form.time.from')")</label>
@@ -58,16 +52,12 @@
 				<br />
 			</p>
 		</div>  
-		<span class="clearer">
-		</span>
+		<span class="clearer"></span>
 		<div class="float_left">
-			<h3>
-				<label class="alignleft" for="qry">#displayFieldLabel('search' "$MESSAGES.getString('chronicle.form.term')")</label>
-			</h3>
+			<h3><label class="alignleft" for="qry">#displayFieldLabel('search' "$MESSAGES.getString('chronicle.form.term')")</label></h3>
 			<input class="qry_chronic inputstyletext" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"/>
 		</div>  
-		<span class="clearer">
-		</span>
+		<span class="clearer"></span>
 	</div>
 	<div class="formfooter">
 		<div align="right">

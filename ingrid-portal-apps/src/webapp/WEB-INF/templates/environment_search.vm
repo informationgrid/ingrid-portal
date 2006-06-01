@@ -2,69 +2,52 @@
 <form action="$action" method="get" name="environment_search" id="environment_search">
    	<input type="hidden" name="action" value="doSearch"/>
 	<div class="formbody">
-		<h2 class="nospace">Auswahlkriterien
-		</h2>
+		<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
 		#displayFormErrors()
 		<div class="float_left">
-			<h3>
-				<label for="xx2">#displayFieldLabel('rubric' $MESSAGES.getString('envSearch.themes'))
-				</label>
-			</h3>
+			<h3><label for="xx2">#displayFieldLabel('rubric' $MESSAGES.getString('envSearch.form.themes'))</label></h3>
 			<select class="env_themes inputstyle" name="rubric" id="xx2" size="5" multiple="multiple">
-				<option value="all" #getSelected('rubric' 'all')>------ Alles auswählen ------</option>
+				<option value="all" #getSelected('rubric' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($topic in $topicList)
 <option value="$topic.FormValue" #getSelected('rubric' "$topic.FormValue")>$MESSAGES.getString("$topic.QueryValue")</option>
 #end
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>
-				<label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envSearch.category'))
-				</label>
-			</h3>
+			<h3><label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envSearch.form.category'))</label></h3>
 			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
-				<option value="all" #getSelected('category' 'all')>------ Alles auswählen ------
-				</option>
+				<option value="all" #getSelected('category' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($category in $categoryList)
 <option value="$category.FormValue" #getSelected('category' "$category.FormValue")>$MESSAGES.getString("$category.QueryValue")</option>
 #end
 			</select>
 		</div>  
-		<span class="clearer">
-		</span>
+		<span class="clearer"></span>
 		<br style="line-height:10px" />
 		<div class="float_left">
-			<h3>
-				<label for="xx4">#displayFieldLabel('partner' $MESSAGES.getString('envSearch.partner'))
-				</label>
-			</h3>
+			<h3><label for="xx4">#displayFieldLabel('partner' $MESSAGES.getString('common.form.partner'))</label></h3>
 			<select class="spacial_relation inputstyle" name="partner" id="xx4" size="5" multiple="multiple">
 				#displayPartner()
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('envSearch.grouping'))
-			</h3>
+			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</h3>
 			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
-			<label class="radiogroup" for="grouping_no">Keine
-			</label>
+			<label class="radiogroup" for="grouping_no">$MESSAGES.getString('common.form.grouping.no')</label>
 			<br />
 			<input type="radio" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
-			<label class="radiogroup" for="grouping_partner">Bund/Länder
-			</label>
+			<label class="radiogroup" for="grouping_partner">$MESSAGES.getString('common.form.grouping.partner')</label>
 			<br />
 			<input type="radio" id="grouping_info" name="grouping" value="provider" #getChecked('grouping' 'provider')/>
-			<label class="radiogroup" for="grouping_info">Informationsanbieter
-			</label>
+			<label class="radiogroup" for="grouping_info">$MESSAGES.getString('common.form.grouping.provider')</label>
 			<br />
 		</div>
 		<br />
-		<span class="clearer">
-		</span>
+		<span class="clearer"></span>
 	</div>
 	<div class="formfooter">
 		<div align="right">
-			<input class="btn" type="submit" value="Anzeigen" />
+			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.show')" />
 		</div>
 	</div>
 </form>
