@@ -24,6 +24,7 @@ import org.dom4j.io.DocumentSource;
 import org.dom4j.io.SAXReader;
 import org.dom4j.tree.DefaultElement;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -41,6 +42,10 @@ public class HelpPortlet extends GenericVelocityPortlet {
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
         // find help file according to the language
         String fileName = "ingrid-portal-help_" + request.getLocale().getLanguage() + ".xml";
         String filePath = null;
