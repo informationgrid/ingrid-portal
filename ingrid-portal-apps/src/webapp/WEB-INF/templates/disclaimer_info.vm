@@ -1,17 +1,17 @@
 <div class="portlet-section-body">
 	<p class="iconLink2">
-		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="Pfeil" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#herausgeber">Herausgeber</a>
+		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#herausgeber">$MESSAGES.getString('disclaimer.info.publisher')</a>
 	</p>       
 	<p class="iconLink2">
-		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="Pfeil" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#verantwortlich">Verantwortlich/Gesamtredaktion</a>
+		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#verantwortlich">$MESSAGES.getString('disclaimer.info.responsible')</a>
 	</p>       
 	<p class="iconLink2">
-		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="Pfeil" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#realisierung">Realisierung</a>
+		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#realisierung">$MESSAGES.getString('disclaimer.info.realization')</a>
 	</p>       
 	<p class="iconLink2">
-		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="Pfeil" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#betrieb">Technischer Betrieb</a>
+		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#betrieb">$MESSAGES.getString('disclaimer.info.operation')</a>
 	</p>       
 	<p class="iconLink2">
-		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="Pfeil" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#haftung">Haftungsausschluss</a>
+		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#haftung">$MESSAGES.getString('disclaimer.info.liability')</a>
 	</p>       
 </div>
