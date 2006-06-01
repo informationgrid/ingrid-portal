@@ -2,7 +2,7 @@
         		#set ($groupSubject = "")
 				#if($grouping == 'partner')
         			#set ($detailAction = "showAllForPartner")
-        			#set ($groupSubject = "Partner '$!rs.partner'")
+        			#set ($groupSubject = "$MESSAGES.getString('common.result.partner') '$!rs.partner'")
         			#if($rs.partnerKey)
 						#set ($groupSubjectKey = $rs.partnerKey)
 					#else
@@ -10,12 +10,12 @@
 					#end
         		#elseif($grouping == 'provider')
         			#set ($detailAction = "showAllForProvider")
-        			#set ($groupSubject = "Anbieter '$!rs.provider'")
+        			#set ($groupSubject = "$MESSAGES.getString('common.result.provider') '$!rs.provider'")
         			#if($rs.providerKey)
 						#set ($groupSubjectKey = $rs.providerKey)
 					#else
 						#set ($groupSubjectKey = "")
 					#end
         		#end
-                <div class="ico_down_black"><span class="title">Gruppierte Ergebnisse für $!{groupSubject}</span></div>
+                <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
               </div>

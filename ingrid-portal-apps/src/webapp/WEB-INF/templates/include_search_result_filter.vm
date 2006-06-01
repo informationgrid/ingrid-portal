@@ -1,13 +1,13 @@
 #if($filteredBy)
     #if($filteredBy == 'partner')
-    	#set ($filterSubject = "Partner '$filterSubject'")
+    	#set ($filterSubject = "$MESSAGES.getString('common.result.partner') '$filterSubject'")
     #elseif($filteredBy == 'provider')
-    	#set ($filterSubject = "Anbieter '$filterSubject'")
+    	#set ($filterSubject = "$MESSAGES.getString('common.result.provider') '$filterSubject'")
     #end
 
   <div id="content_full">
     <div class="resultset_partner_group">
-      <div class="ico_down_black"><span class="title">alle Ergebnisse für $filterSubject</span></div>
+      <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
     </div>
   </div>  
 #end

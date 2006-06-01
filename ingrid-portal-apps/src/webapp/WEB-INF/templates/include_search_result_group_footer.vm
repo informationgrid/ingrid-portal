@@ -1,11 +1,11 @@
-        #if($rs.get('moreHits') && $groupSubjectKey != "")
+#if($rs.get('moreHits') && $groupSubjectKey != "")
           <div class="line"><hr /></div>
           <div class="resultset_show_partner">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action', $detailAction)
 $action.setParameter('grouping', $grouping)
 $action.setParameter('subject', $groupSubjectKey)
-	      <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Zeige alle Ergebnisse für $!{groupSubject}</a></span>
+	      <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</a></span>
 		  </div>
 		  <br />
-		#end
+#end
