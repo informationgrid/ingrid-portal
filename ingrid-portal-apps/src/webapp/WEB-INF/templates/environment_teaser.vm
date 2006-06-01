@@ -1,5 +1,5 @@
 <div class="themen_image">
-    <img src="/ingrid-portal-apps/images/index_themen.jpg" width="140" height="65" alt="Umweltthemen" />
+    <img src="/ingrid-portal-apps/images/index_themen.jpg" width="140" height="65" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
     
 </div>
 <ul class="catalog">
