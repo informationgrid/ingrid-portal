@@ -1,8 +1,8 @@
 <div class="portlet-section-body">
     <p>PortalU am 29.5. in Berlin freigeschaltet!</p>
     <p class="iconLink">
-      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span>
-      <span><a href="http://www.kst.portalu.de/06-05-29_Portalu.pdf" target="_new" title="Link öffnet in neuem Fenster">Pressemitteilung</a></span>
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span>
+      <span><a href="http://www.kst.portalu.de/06-05-29_Portalu.pdf" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">Pressemitteilung</a></span>
       <span class="clearer"></span>
     </p>
 </div>

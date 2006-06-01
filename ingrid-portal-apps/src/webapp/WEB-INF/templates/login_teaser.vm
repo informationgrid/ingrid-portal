@@ -1,11 +1,7 @@
 <div class="portlet-section-body">
 	<p class="iconLink">
-		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
-		</span>
-		<span>
-			<a href="portal/privacy.psml">Datenschutzbestimmungen</a>
-		</span>
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+		<span><a href="portal/privacy.psml">$MESSAGES.getString('login.info.privacy')</a></span>
 		<span class="clearer"></span>
 	</p>
 </div>

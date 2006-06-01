@@ -5,42 +5,40 @@
 <input type="hidden" name="cmd" value="doLogin" />
 <div class="formbody">
 		<div class="optional-links">
-			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="Schluessel-Icon" /><a href="portal/myportal-create-account.psml">Neuer Benutzer</a>&nbsp;&nbsp;  
-			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="Schluessel-Icon" /><a href="portal/myportal-password-forgotten.psml">Kennwort vergessen?</a>
+			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
+			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml">$MESSAGES.getString('login.form.passwdForgotten')</a>
 		</div>
 		<br />
 #displayFormErrors()
 		<p>
-			<label class="hide" for="login">Benutzername: </label><input class="inputstyletext" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onclick="clearUser()" />
+			<label class="hide" for="login">$MESSAGES.getString('login.form.username'): </label><input class="inputstyletext" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onclick="clearUser()" />
 		</p>
 	    <p>
-			<label class="hide" for="passwd">Password: </label><input class="inputstyletext" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.USERNAME)" onclick="clearPasswd()" />
+			<label class="hide" for="passwd">$MESSAGES.getString('login.form.passwd'): </label><input class="inputstyletext" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.USERNAME)" onclick="clearPasswd()" />
 	    </p>
 		<span class="clearer"></span>
 		<br />
         <table cellpadding="0" cellspacing="0" class="formtable">
 		<tr>
 			<td><input id="auto_login" name="xx" type="checkbox" /></td>
-			<td><label for="auto_login"><strong>Automatisches Login</strong></label></td>
+			<td><label for="auto_login"><strong>$MESSAGES.getString('login.form.autoLogin')</strong></label></td>
 	    </tr>
 	    <tr>
 	      <td></td>
-	      <td><span style="padding-left:4px; display:block;">Möchten Sie bei Ihrem nächsten Besuch auf PortalU automatisch eingeloggt werden?</span></td>
+	      <td><span style="padding-left:4px; display:block;">$MESSAGES.getString('login.form.autoLogin.text')</span></td>
 	    </tr>
 		</table>
 		<span class="clearer"></span>
 </div>
 <div class="formfooter">
 	<div align="right">
-		<input class="btn" type="submit" value="Anmelden" />
+		<input class="btn" type="submit" value="$MESSAGES.getString('login.form.button.subscribe')" />
     </div>
 </div>
 </form>
 <!-- BESCHREIBUNG -->
 <p></p>
-<h2>Ihre Vorteile durch die Anmeldung</h2>
+<h2>$MESSAGES.getString('login.description.title')</h2>
 <ul class="anmeldung">
-	<li><strong>Anpassen der Startseite</strong><br />Passen Sie Ihre Startseite nach Ihren Bedürfnissen an.</li>
-	<li><strong>Personalisierung der Suche</strong><br />Schränken Sie Ihre Suche permanent auf bestimmte Bundesländer bzw. den Bund oder einen bestimmten Informationsanbieterkreis ein. Bestimmen Sie die Datenquellen, die Sie interessieren.</li>
-	<li><strong>Kostenlos und sicher</strong><br />Die Registrierung ist freiwillig und kostenlos. Der Schutz Ihrer Privatsphäre ist dabei gesichert.</li>
+$MESSAGES.getString('login.description.content')
 </ul>
