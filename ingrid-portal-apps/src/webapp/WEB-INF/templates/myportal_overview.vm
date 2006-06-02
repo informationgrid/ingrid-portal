@@ -1,23 +1,32 @@
 #set ($userNameGiven = $userAttributes.get("user.name.given", null))
 #set ($userNameFamily = $userAttributes.get("user.name.family", null))
+
+#if($userNameGiven)
+#set ($salutation = " $userNameGiven")
+#end
+#if($userNameFamily)
+#set ($salutation = "$!{salutation} $userNameFamily")
+#end		
 <div class="section">
 	<p>
-		Willkommen#if($userNameGiven) $userNameGiven#end#if($userNameFamily) $userNameFamily#end!
-		<br />
-		Von hier aus haben Sie folgende erweiterte Funktionalitäten:
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$!{salutation}")
+        $MESSAGES.getStringWithMsgParams('overview.welcome')
+	    <br />
+		$MESSAGES.getString('overview.content.description')
 	</p>
 	<ul class="internlinklist2">
 		<li>
-			<a href="index_loggedon.html">Ihre persönliche Startseite</a>
+			<a href="index_loggedon.html">$MESSAGES.getString('overview.content.entry1')</a>
 		</li>
 		<li>
-			<a href="portal/myportal-edit-account.psml">Nutzerprofil bearbeiten</a>
+			<a href="portal/myportal-edit-account.psml">$MESSAGES.getString('overview.content.entry2')</a>
 		</li>
 		<li>
-			<a href="mpu_personalisierung.html">Personalisierung</a>
+			<a href="mpu_personalisierung.html">$MESSAGES.getString('overview.content.entry3')</a>
 		</li>
 		<li>
-			<a href="login/logout">Logout</a>
+			<a href="login/logout">$MESSAGES.getString('overview.content.entry4')</a>
 		</li>
 	</ul>  
 </div>

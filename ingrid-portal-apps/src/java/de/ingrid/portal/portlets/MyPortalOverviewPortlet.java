@@ -18,6 +18,8 @@ import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.global.IngridResourceBundle;
+
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -45,6 +47,10 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
         String userName = request.getUserPrincipal().getName();
         User user = null;
         try {
