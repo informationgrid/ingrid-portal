@@ -428,24 +428,6 @@
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
     </portlet>
 
-    <portlet id="MyPortalNavigationPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal_navigation.vm</value>
-        </init-param>
-        <portlet-name>MyPortalNavigationPortlet</portlet-name>
-        <display-name>MyPortalNavigationPortlet</display-name>
-        <description>This portlet displays the myportal navigation.</description>
-        <portlet-class>de.ingrid.portal.portlets.MyPortalNavigationPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
-    </portlet>
-
     <portlet id="MyPortalCreateAccountPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
