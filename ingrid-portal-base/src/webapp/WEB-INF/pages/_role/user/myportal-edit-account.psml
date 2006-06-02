@@ -24,9 +24,6 @@
       <preference name="currPage" readOnly="false">
         <value>editAccount</value>
       </preference>
-      <preference name="helpKey" readOnly="false">
-        <value>myingrid-1</value>
-      </preference>
     </fragment>
     <fragment id="service-contact-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />
