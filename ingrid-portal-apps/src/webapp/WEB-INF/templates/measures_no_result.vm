@@ -1,12 +1,10 @@
       <div class="section">
         <div class="noresult">
-            <p>Es sind keine Einträge zu Ihren Auswahlkriterien vorhanden.</p>
+            <p>$MESSAGES.getString('measuresSearch.result.noResult1')</p>
             <ul>
-              <li>Versuchen Sie es mit veränderten Auswahlkriterien</li>
-              <li>Suchen Sie auch ausserhalb der Messwertseiten mit der <a href="portal/main-search.psml">Suche</a> oder <a href="portal/search-extended/search-ext-env-topic-terms.psml">Erweiterten Suche</a></li>
-              <li>Stöbern Sie durch andere Seiten von PortalU:
-                  <p></p>
-                  <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-environment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
+              <li>$MESSAGES.getString('measuresSearch.result.noResult2')</li>
+              <li>$MESSAGES.getString('measuresSearch.result.noResult3')</li>
+              <li>$MESSAGES.getString('measuresSearch.result.noResult4')</li>
             </ul>
         </div>
       </div>

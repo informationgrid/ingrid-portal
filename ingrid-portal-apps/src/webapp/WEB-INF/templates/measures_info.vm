@@ -1,16 +1,4 @@
 <div class="portlet-section-body">
-    <ul>
-      <li>
-        <p>
-          Informationen über den aktuellen Zustand Ihrer Umwelt finden Sie auf den Messwertseiten der Umweltbehörden.
-        </p>
-      </li>
-    
-      <li>
-        <p>
-          Sie können die Ergebnisliste auf die gewünschten Rubriken und Verwaltungsregionen einschränken.
-        </p>
-      </li>
-    </ul>
+$MESSAGES.getString('measuresSearch.info.content')
 </div>
 		

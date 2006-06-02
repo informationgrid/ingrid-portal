@@ -1,27 +1,27 @@
 #macro (renderHit $rs $grouping)
 		  <div class="resultset">
 		  #if ($rs.title)
-			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#if ($rs.title == "")Kein Titel#else$rs.title#end </a></strong></span>
+			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end </a></strong></span>
             <p class="result_description">
             $!rs.abstract 
             </p>
             <p class="result_metadata">
 				#if($grouping)
 					#if($grouping == 'partner')
-						Anbieter: $!rs.provider<br />
+						$MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 					#end
 				#else
-              Anbieter: $!rs.provider<br />
+              $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 				#end
-			  Rubrik: $!rs.topic<br />
+			  $MESSAGES.getString('measuresSearch.result.rubric'): $!rs.topic<br />
             </p>
 			#if($rs.url)
 			<p class="result_link">
-              <a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster">$!rs.url_str</a>
+              <a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
             </p>
 			#end
 		  #else
-			<span class="result_title"><strong>Suchergebnis ist leer</strong></span>
+			<span class="result_title"><strong>$MESSAGES.getString('common.result.empty')</strong></span>
 			<p class="result_link"></p>
 		  #end
           </div>
@@ -30,9 +30,9 @@
 	<div class="section ">    
       <div class="resultset_nav float_left">
 #if($grouping)
-	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Messwerte')
+	#renderResultCounterCatalogueGrouping($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
 #else
-	#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+	#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
 #end	
       </div>
       <div class="resultset_nav">
@@ -50,13 +50,13 @@
 		#set ($groupSubject = "")
 		#set ($groupSubjectKey = "")
 		#if($grouping == 'partner')
-			#set ($groupSubject = "Partner '$rs.partner'")
+			#set ($groupSubject = "$MESSAGES.getString('common.result.partner') '$rs.partner'")
 			#set ($groupSubjectKey = $rs.partnerKey)
 		#elseif($grouping == 'provider')
-			#set ($groupSubject = "Anbieter '$rs.provider'")
+			#set ($groupSubject = "$MESSAGES.getString('common.result.provider') '$rs.provider'")
 			#set ($groupSubjectKey = $rs.providerKey)
 		#end
-        <div class="ico_down_black"><span class="title">Gruppierte Ergebnisse für $!{groupSubject}</span></div>
+        <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
       </div>
 	#else
 		#if($velocityCount > 1)
@@ -75,16 +75,16 @@
     $action.setParameter('action', 'showAll')
     $action.setParameter('grouping', $grouping)
     $action.setParameter('subject', $groupSubjectKey)
-        <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Zeige alle Ergebnisse für $!{groupSubject}</a></span>
+        <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</a></span>
       </div>
       <br />
 	#end
 #end
       <div class="resultset_nav float_left">
 #if($grouping)
-	#renderResultCounterCatalogueGrouping($rankedPageSelector 'Messwerte')
+	#renderResultCounterCatalogueGrouping($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
 #else
-	#renderResultCounterCatalogue($rankedPageSelector 'Messwerte')
+	#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
 #end	
       </div>
       <div class="resultset_nav">
