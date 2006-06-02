@@ -1,25 +1,26 @@
+#set ($currPage = $renderRequest.getPreferences().getValue('currPage', ''))
 <div class="portlet-section-body">
 	<p class="iconLink">
-		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-		<span><a href="portal/myportal-edit-account.psml">Nutzerprofil bearbeiten</a></span>
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+#if($currPage=="editAccount")
+		<span><strong>$MESSAGES.getString('myPortal.info.navigation.account')</strong></span>
+#else
+		<span><a href="portal/myportal-edit-account.psml">$MESSAGES.getString('myPortal.info.navigation.account')</a></span>
+#end
 		<span class="clearer"></span>
 	</p>
 	<p class="iconLink">
-		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
-		</span>
-		<span>
-			<a href="mpu_personalisierung.html">Personalisierung</a>
-		</span>
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+#if($currPage=="personalize")
+		<span><strong>$MESSAGES.getString('myPortal.info.navigation.personalize')</strong></span>
+#else
+		<span><a href="mpu_personalisierung.html">$MESSAGES.getString('myPortal.info.navigation.personalize')</a></span>
+#end
 		<span class="clearer"></span>
 	</p>
 	<p class="iconLink">
-		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
-		</span>
-		<span>
-			<a href="login/logout">Logout</a>
-		</span>
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+		<span><a href="login/logout">$MESSAGES.getString('myPortal.info.navigation.logout')</a></span>
 		<span class="clearer"></span>
 	</p>
 </div>

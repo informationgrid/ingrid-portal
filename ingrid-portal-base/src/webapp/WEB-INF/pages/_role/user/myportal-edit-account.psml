@@ -12,9 +12,21 @@
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="myportal-navigation" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MyPortalNavigationPortlet">
+    <fragment id="myportal-navigation" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/myportal_navigation.vm</value>
+      </preference>
+      <preference name="infoTitleKey" readOnly="false">
+        <value>myPortal.info.navigation.title</value>
+      </preference>
+      <preference name="currPage" readOnly="false">
+        <value>editAccount</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>myingrid-1</value>
+      </preference>
     </fragment>
     <fragment id="service-contact-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="1" />
