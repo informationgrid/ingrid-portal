@@ -1,7 +1,7 @@
 <div class="portlet-section-body">
 #foreach ($rubric in $rubricList)
     <p class="iconLink">
-      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
 $action.setParameter('rubric',"$rubric.FormValue")
