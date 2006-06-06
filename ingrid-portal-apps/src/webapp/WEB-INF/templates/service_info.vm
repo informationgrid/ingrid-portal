@@ -2,18 +2,18 @@
     <ul>
       <li>
         <p>
-          Sie wollen wissen, was zum Thema Umwelt "los ist"? Diese Seite führt Sie zu aktuellen Pressemitteilungen, Veröffentlichungen und Veranstaltungshinweisen.
+          $MESSAGES.getString('service.info.text1')
         </p>
       </li>
       <li>
         <p>
-          Sie können die Ergebnisliste auf die gewünschten Rubriken und Verwaltungsregionen einschränken oder mit der PortalU-Suche die Serviceseiten nach Stichworten durchsuchen.
+          $MESSAGES.getString('service.info.text2')
         </p>
       </li>
     </ul>
     <p class="iconLink">
-      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-      <span><a href="$infoLink">Suche in Service</a></span>
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+      <span><a href="$infoLink">$MESSAGES.getString('service.info.link1')</a></span>
       <span class="clearer"></span>
     </p>
 </div>
