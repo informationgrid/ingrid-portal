@@ -2,7 +2,7 @@
     <ul>
       <li>
         <p>
-          Mit der PortalU-Suche können Sie in Webseiten und Datenbanken nach Umweltinformationen suchen. Geben Sie einfach einen oder mehrere Suchbegriffe ein, oder formulieren Sie eine Suchanfrage mit Hilfe des Such-Assistenten (Erweiterte Suche).
+          $MESSAGES.getString('searchSimple.info.text')
         </p>
       </li>
     </ul>
