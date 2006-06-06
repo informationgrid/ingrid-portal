@@ -31,7 +31,7 @@ $MESSAGES.getString('disclaimer.publisher.address')
 <a name="betrieb"></a>
 <h2>$MESSAGES.getString('disclaimer.operation.title')</h2>     
 <h3>
-	<a href="http://www.technidata.de/" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('disclaimer.operation.company1')</a>
+	<a href="http://www.its-technidata.de/" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('disclaimer.operation.company1')</a>
 </h3>
 <br />
 <a name="haftung"></a>
