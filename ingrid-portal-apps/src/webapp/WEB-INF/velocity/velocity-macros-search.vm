@@ -2,28 +2,48 @@
 ## search macros
 ## ------------------------------
 #macro (renderResultCounterCatalogue $pageSelector $catalogueName)
-        <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits</strong> Einträgen in <strong>$!catalogueName</strong>
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam($catalogueName)
+$MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
 #end
 
 #macro (renderResultCounterCatalogueGrouping $pageSelector $catalogueName)
-        <strong>$pageSelector.numberOfHits</strong> Einträge in <strong>$!catalogueName</strong>
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam($catalogueName)
+$MESSAGES.getStringWithMsgParams('common.result.counter.catalog.grouped')
 #end
 
 
 #macro (renderRankedResultCounter $pageSelector)
-    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits bewerteten</strong> Treffern
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderRankedResultCounterGrouping $pageSelector)
-    <strong>$pageSelector.numberOfHits bewertete</strong> Treffer
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
 #end
 
 #macro (renderUnrankedResultCounter $pageSelector)
-    <strong>${pageSelector.numberOfFirstHit} - ${pageSelector.numberOfLastHit}</strong> von <strong>$pageSelector.numberOfHits weiteren</strong> Datenquellen
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.getStringWithMsgParams('common.result.counter.unranked')
 #end
 
 #macro (renderUnrankedResultCounterGrouping $pageSelector)
-    <strong>$pageSelector.numberOfHits weitere</strong> Datenquellen
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.getStringWithMsgParams('common.result.counter.unranked.grouped')
 #end
 
 #macro (renderRankedPageNavigation $pageSelector)
