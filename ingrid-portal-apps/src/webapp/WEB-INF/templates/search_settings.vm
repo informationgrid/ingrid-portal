@@ -4,21 +4,21 @@
       <input type="hidden" name="action" value="doSubmit"/>
       <div class="formbody">
 		#displayFormErrors()
-        <h3>$MESSAGES.getString('searchSettings.title.sortAndGrouping')</h3>
+        <h3>$MESSAGES.getString('searchSettings.title.rankingAndGrouping')</h3>
         <p class="topmargin">
-          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.label.sort')</label>
+          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.label.ranking')</label>
           <select id="ranking" class="group_by inputstyle" name="ranking" size="1">
-            <option value="score" #getSelected('ranking' 'score')>nach Ranking</option>
-            <option value="date" #getSelected('ranking' 'date')>nach Aktualität</option>
+            <option value="score" #getSelected('ranking' 'score')>$MESSAGES.getString('searchSettings.ranking.option.score')</option>
+            <option value="date" #getSelected('ranking' 'date')>$MESSAGES.getString('searchSettings.ranking.option.date')</option>
           </select>
           <span class="clearer"></span>
         </p>
         <p>
           <label class="float_left col2left" for="group_by">$MESSAGES.getString('searchSettings.label.grouping')</label>
           <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
-            <option value="none" #getSelected('grouping' 'none')>Keine</option>
-            <option value="partner" #getSelected('grouping' 'partner')>Nach Bund/Länder</option>
-            <option value="provider" #getSelected('grouping' 'provider')>Nach Informationsanbieter</option>
+            <option value="none" #getSelected('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
+            <option value="partner" #getSelected('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
+            <option value="provider" #getSelected('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
           </select>
           <span class="clearer"></span>
         </p>
@@ -30,8 +30,8 @@
       <div class="formfooter">
         <div align="right">
 $action.setParameter('action','doOriginalSettings')
-          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">Originaleinstellung&nbsp;zurücksetzen</a></span>
-          <input class="btn" type="submit" value="Speichern" />
+          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSettings.action.reset')</a></span>
+          <input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.save')" />
         </div>
       </div>
     </form>
