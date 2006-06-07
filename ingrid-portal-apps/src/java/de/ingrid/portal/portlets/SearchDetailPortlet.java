@@ -212,7 +212,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 context.put("record", record);
                 HashMap recordMap = new LinkedHashMap();
                 
-                // serch for column
+                // search for column
                 Column[] columns = record.getColumns();
                 for (int i = 0; i < columns.length; i++) {
 
@@ -239,7 +239,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 if (addressList != null) {
                     Collections.sort(addressList, new AddressTypeComparator());
                 }
-                
+                if (this.getDefaultViewPage().equals(TEMPLATE_DETAIL_GENERIC)) {
+                    setFieldFromHashTree(recordMap, "Ino:id", null);
+                    setFieldFromHashTree(recordMap, "Tamino Documenttype", null);
+                }
                 context.put("rec", recordMap);
             }
         } catch(Throwable t){
@@ -400,6 +403,36 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             
         }
         return null;
+    }
+
+    /**
+     * Iterate over the hashmap ArrayList structure and set the requested field.
+     * 
+     * @param hash
+     * @param fieldName
+     * @return
+     */
+    private boolean setFieldFromHashTree(HashMap hash,  String fieldName, String value) {
+        Iterator it = hash.keySet().iterator();
+        while (it.hasNext()) {
+            String key = (String)it.next();
+            if (key.equals(fieldName)) {
+                hash.put(key, value);
+                return true;
+            }
+            if (hash.get(key) instanceof ArrayList) {
+                ArrayList array = (ArrayList)hash.get(key);
+                for (int i=0; i<array.size(); i++) {
+                    if (array.get(i) instanceof HashMap) {
+                        if (setFieldFromHashTree((HashMap)array.get(i), fieldName, value)) {
+                            return true; 
+                        }
+                    }
+                }
+            }
+            
+        }
+        return false;
     }
     
     
