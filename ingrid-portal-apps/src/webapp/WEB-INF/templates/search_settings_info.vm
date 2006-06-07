@@ -2,38 +2,33 @@
         <ul>
           <li>
             <p>
-              Hier können Sie einstellen wie die Ergebnisse Ihrer Suchanfrage sortiert und bewertet werden. Zusätzlich können Sie festlegen, ob die Suche auch automatisch vom SNS erzeugte Schlagwörter berücksichtigt.
+              $MESSAGES.getString('searchSettings.info.text1')
             </p>
           </li>
         </ul>
         <p class="iconLink">
-          <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>
-          <span><a href="http://www.semantic-network.de" target="_new" title="öffnet in neuem Fenster">Semantischer Netzwerk Service (SNS)</a></span>
+          <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+          <span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.sns')">$MESSAGES.getString('searchSettings.info.link.sns')</a></span>
           <span class="clearer"></span>
         </p>
         <p>
           <span class="icon"></span>
-          <span><a href="http://www.semantic-network.de" target="_new" title="öffnet in neuem Fenster"><img src="/ingrid-portal-apps/images/sns_big.gif" width="84" height="31" alt="SNS Logo" title="Ein Dienst vom Semantic Network Service" /></a></span>
+          <span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.sns')"><img src="/ingrid-portal-apps/images/sns_big.gif" width="84" height="31" alt="$MESSAGES.getString('common.alt.icon.sns')" title="$MESSAGES.getString('common.tooltip.link.extern.sns')" /></a></span>
           <span class="clearer"></span>
         </p>
         <ul>
           <li>
             <p>
-              Die hier vorgenommenen Einstellungen sind für alle nachfolgenden Suchen gültig.
+              $MESSAGES.getString('searchSettings.info.text2')
             </p>
           </li>
         </ul>
         <ul>
           <li>
             <p>
-              Unter "mein PortalU" (Personalisierung) können Sie die Darstellung der Ergebnisliste dauerhaft Ihren persönlichen Anforderungen anpassen.
+			  $MESSAGES.getString('searchSettings.info.text3')
             </p>
           </li>
         </ul>
-        <p class="iconLink">
-          <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-          <span><a href="mpu_personalisierung.html#einstellungen">Personalisierung in Mein PortalU</a></span>
-          <span class="clearer"></span>
-        </p>
       </div>
 		
