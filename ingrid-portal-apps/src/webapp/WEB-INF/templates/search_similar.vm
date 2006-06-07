@@ -4,11 +4,11 @@
 #set ($action = $renderResponse.createActionURL())
 #if(!$ps.isSimilarOpen)
 	$action.setParameter('action','doOpenSimilar')
-        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
+        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>&nbsp;<a href="$action">$MESSAGES.getString('searchSimilar.headline')</a></h3>
 #else
 	$action.setParameter('action','doCloseSimilar')
-	  <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new" title="Link öffnet in neuem Fenster"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="SNS Logo" title="Ein Dienst vom Semantic Network Service. Link öffnet in neuem Fenster" /></a></span>
-        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;<a href="$action">Ähnliche Begriffe: Suchen Sie nach ...</a></h3>
+	  <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="$MESSAGES.getString('common.alt.icon.sns')" title="$MESSAGES.getString('common.tooltip.link.extern.sns')" /></a></span>
+        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>&nbsp;<a href="$action">$MESSAGES.getString('searchSimilar.headline')</a></h3>
         <span class="clearer"></span>
         	  <div class="leftmargin">
           	  <table>
@@ -18,14 +18,14 @@
 	#if($similarNode.isOpen())
 		$action.setParameter('action','doCloseNode')
 			  <tr>
-				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder.closed')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
           	  </tr>
 		#foreach($tokenNode in $similarNode.getChildren())
           	  <tr>
           	    <td></td>
 				#if($tokenNode.type == 4)
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$MESSAGES.getString('similar.terms.not.available')</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$MESSAGES.getString('searchSimilar.terms.not.available')</td>
 				#else
 					<td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
 				#end
@@ -34,8 +34,8 @@
 	#else
 		$action.setParameter('action','doOpenNode')
           	  <tr>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder.closed')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
           	  </tr>
 	#end
 #end			  
@@ -49,7 +49,7 @@
 #if($ps.isSimilarOpen)
 	  <div class="formfooter">
         <div align="right">
-          <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />
+          <input class="btn" type="submit" value="$MESSAGES.getString('searchSimilar.add.to.query')" />
         </div>
       </div>
 #end
