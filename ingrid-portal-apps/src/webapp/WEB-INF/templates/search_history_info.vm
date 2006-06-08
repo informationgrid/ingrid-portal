@@ -2,12 +2,12 @@
         <ul>
           <li>
             <p>
-              Während Sie PortalU nutzen, werden Ihre Suchanfragen zwischengespeichert. Sie können so alte Suchanfragen verbessern oder auch direkt in eine neue Suche übernehmen.
+              $MESSAGES.getString('searchHistory.info.text1')
             </p>
           </li>
           <li>
             <p>
-              Wenn Sie sich als PortalU-Nutzer eingeloggt haben (Rubrik "Mein PortalU") können Sie Ihre Suchanfragen dauerhaft speichern.
+              $MESSAGES.getString('searchHistory.info.text2')
             </p>
           </li>
         </ul>
