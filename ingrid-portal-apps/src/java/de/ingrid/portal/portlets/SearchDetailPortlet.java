@@ -220,7 +220,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         String columnName = columns[i].getTargetName();
                         if (readableColumnNames) {
                             // convert to readable column names
-                            columnName = convert2readableColumnName(columnName);
+                            columnName = convert2readableColumnName(columnName, messages);
                         } else {
                             columnName = columnName.toLowerCase();
                         }
@@ -232,7 +232,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         }
                     }
                 }
-                addSubRecords(record, recordMap, request.getLocale(), readableColumnNames);
+                addSubRecords(record, recordMap, request.getLocale(), readableColumnNames, messages);
                 
                 recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
                 ArrayList addressList = (ArrayList)getFieldFromHashTree(recordMap, "t012_obj_adr.obj_id");
@@ -257,16 +257,24 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
      * Converts string to readable column name:
      * 
      *  <ul>
+     *  <li>try to find the column name in the localization files, returns if found</li>
+     *  <li>check for special columns (title, summary), returns if found</li>
      *  <li>replaces '_' with ' '</li>
      *  <li>uppercase words first character (use stopwords configured in ingrid.portal.apps.properties)</li>
-     *  <li>do not convert column names: 'title', 'summary'</li>
      *  </ul>
      * 
      * 
-     * @param The column name.
+     * @param columnName The column name.
+     * @param messages The resoure bundle.
      * @return The readable column name.
      */
-    private String convert2readableColumnName(String columnName) {
+    private String convert2readableColumnName(String columnName, IngridResourceBundle messages) {
+        
+        // try to find the column name in the localization
+        String localizedName = messages.getString(columnName);
+        if (!localizedName.equals(columnName)) {
+            return localizedName;
+        }
         
         final String reservedColumnNames =  "|title|summary|";
         final String ucUpperStopWords = PortalConfig.getInstance().getString(PortalConfig.DETAILS_GENERIC_UCFIRST_STOPWORDS, "");
@@ -274,6 +282,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         if (reservedColumnNames.indexOf("|".concat(columnName).concat("|")) != -1) {
             return columnName;
         }
+        
         // replace '_' with ' '
         columnName = columnName.replace('_', ' ');
         // uppercase words first character
@@ -294,12 +303,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         return columnName;
     }
     
-    private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns) {
-        addSubRecords(record, map, locale, 0, readableColumns);
+    private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns, IngridResourceBundle messages) {
+        addSubRecords(record, map, locale, 0, readableColumns, messages);
     }
     
     
-    private void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns) {
+    private void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns, IngridResourceBundle messages) {
         level++;
         Column[] columns;
         ArrayList subRecordList;
@@ -313,7 +322,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                     String columnName = columns[j].getTargetName();
                     if (readableColumns) {
                         // convert to readable column names
-                        columnName = convert2readableColumnName(columnName);
+                        columnName = convert2readableColumnName(columnName, messages);
                     } else {
                         columnName = columnName.toLowerCase();
                     }
@@ -338,7 +347,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             }
             subRecordList.add(subRecordMap);
             // add subrecords
-            addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns);
+            addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns, messages);
         }
         
     }    
