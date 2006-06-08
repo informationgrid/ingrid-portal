@@ -46,7 +46,7 @@
 		<p><strong>$MESSAGES.getString("superior_references"):</strong><br/>
 		#foreach($ref in $superiorReferences)
 		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
+			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		</span>
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
@@ -54,7 +54,7 @@
 		$action.setParameter('plugid', "$ref.getPlugId()")
 		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
-		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
+		<a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -65,7 +65,7 @@
 		<p><strong>$MESSAGES.getString("subordinated_references"):</strong><br/>
 		#foreach($ref in $subordinatedReferences)
 		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
+			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		</span>
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
@@ -73,7 +73,7 @@
 		$action.setParameter('plugid', "$ref.getPlugId()")
 		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
-		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
+		<a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -84,7 +84,7 @@
 		<p><strong>$MESSAGES.getString("cross_references"):</strong><br/>
 		#foreach($ref in $crossReferences)
 		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" />
+			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		</span>
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
@@ -92,7 +92,7 @@
 		$action.setParameter('plugid', "$ref.getPlugId()")
 		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
-		<a href="$action" alt="interner Link">$ref.detail.title</a><br/>
+		<a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$ref.detail.title</a><br/>
 		#end
 		</p>
 	#end
@@ -104,9 +104,9 @@
 		<p><strong>$MESSAGES.getString("www_references"):</strong><br/>
 		#foreach($t017_url_ref in $rec.get("t017_url_ref.obj_id"))
 		<span class="icon">
-			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" />
+			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 		</span>
-		<a href="$t017_url_ref.get("t017_url_ref.url_link")" target="_new" alt="externer Link">$t017_url_ref.get("t017_url_ref.content")</a><br/>
+		<a href="$t017_url_ref.get("t017_url_ref.url_link")" target="_new" alt="$MESSAGES.getString('common.alt.icon.extern')">$t017_url_ref.get("t017_url_ref.content")</a><br/>
 		#end
 		</p>
 	#end
@@ -630,7 +630,7 @@
 #if($rec)
 	<div class="section-header">
 		<h1>$rec.get("title")</h1>
-		<p class="float_right"><span class="smaller">#if($rec.get("t01_object.mod_time"))letzte Änderung am: $rec.get("t01_object.mod_time").substring(0,10)#end</span></p>
+		<p class="float_right"><span class="smaller">#if($rec.get("t01_object.mod_time"))$MESSAGES.getString('search.detail.last.changed') $rec.get("t01_object.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
 	<p><i>#if($rec.get("t01_object.dataset_alternate_name"))$rec.get("t01_object.dataset_alternate_name")#end</i></p>
@@ -641,7 +641,7 @@
             #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
             #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
 			#if($udkObjClass)
-			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}" /></span>&nbsp;<strong>${udkObjClassName}</strong>&nbsp;<span class="smaller">(Objektklasse)</span>
+			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}" /></span>&nbsp;<strong>${udkObjClassName}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span>
 			#end
 		</p>
 		<span class="clearer"></span>
