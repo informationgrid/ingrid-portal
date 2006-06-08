@@ -2,12 +2,12 @@
 
 <!-- RESULTS LEFT -->
   <div id="results_left">
-	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="Sanduhr Ikon" width="10" height="17" /><strong>Ihr Suchergebnis wird angefordert.</strong></p>
+	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="$MESSAGES.getString('common.alt.icon.clock')" width="10" height="17" /><strong>$MESSAGES.getString('searchResult.results.requested')</strong></p>
   </div>
   
 <!-- RESULTS RIGHT -->
   <div id="results_right">
-	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="Sanduhr Ikon" width="10" height="17" /><strong>Ihr Suchergebnis wird angefordert.</strong></p>
+	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="$MESSAGES.getString('common.alt.icon.clock')" width="10" height="17" /><strong>$MESSAGES.getString('searchResult.results.requested')</strong></p>
   </div>
 
   <div class="clearer"></div>
