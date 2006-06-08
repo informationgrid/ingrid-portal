@@ -12,6 +12,7 @@ import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateManager;
 import de.ingrid.portal.om.IngridRSSStore;
 
@@ -43,6 +44,7 @@ public class RssNewsPortlet extends GenericVelocityPortlet
         List rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setFirstResult(noOfEntriesDisplayed).list();
         
         context.put("rssEntries", rssEntries);
+        context.put("strutils", new UtilsString());
         
         super.doView(request, response);
     }

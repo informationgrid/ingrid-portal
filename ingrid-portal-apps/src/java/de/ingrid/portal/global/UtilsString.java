@@ -217,7 +217,7 @@ public class UtilsString {
      */
     public static String cutString(String str, int maxLength) {
         
-        if (str.length() <= maxLength) {
+        if (str == null || str.length() <= maxLength) {
             return str;
         }
         

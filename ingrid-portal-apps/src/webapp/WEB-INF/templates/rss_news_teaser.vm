@@ -2,7 +2,7 @@
   <div class="resultset">
     <span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span><a href="$!rssEntry.link" target="_new" title="Link öffnet in neuem Fenster">$!rssEntry.title</a></strong><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
     <p class="result_description">
-      $!rssEntry.description
+      $strutils.cutString($rssEntry.description, 350)
     </p>
     <p class="result_metadata">
       <br />
