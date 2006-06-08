@@ -7,36 +7,32 @@
 #renderUnrankedPageNavigation($unrankedPageSelector)
       </div>
       <br />
-
 #if($unrankedResultList && "$unrankedResultList.length()" != "0")
 	#foreach($rs in $unrankedResultList.hits)
 		#if($velocityCount == 1)
 		<div class="resultset_partner_group">
-			<div class="ico_down_black"><span class="title">$rs.dataSourceName#if($rs.no_of_hits) ($rs.no_of_hits Treffer)#end</span><br /></div>
+			<div class="ico_down_black"><span class="title">$rs.dataSourceName#if($rs.no_of_hits) ($rs.no_of_hits $MESSAGES.getString('common.result.hits'))#end</span><br /></div>
 			<p class="result_description">
               $rs.dataSourceDescription
 			</p>
 			<p class="result_metadata">
-              Anbieter: $rs.organisation
+              $MESSAGES.getString('common.result.provider'): $rs.organisation
 			</p>
 		</div>
 		#end
 		<div class="resultset">
-			<span class="result_title"><strong><a href="$rs.url" target="_new" title="Link öffnet in neuem Fenster"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link"/></span>#renderTitle($rs.title)</a></strong></span>
+			<span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
 		</div>
 	#end
 #else
-		<p><strong>Keine Suchergebnisse gefunden.</strong><br /><br /></p>
+		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
 #end
-      
       <div class="resultset_nav float_left">
 #renderUnrankedResultCounter($unrankedPageSelector)
       </div>
-
       <div class="resultset_nav">
 #renderUnrankedPageNavigation($unrankedPageSelector)
       </div>
 
     </div>
-
   <div class="clearer"></div>
