@@ -1,12 +1,19 @@
     <div class="section">
         <div class="noresult">
-            <p>Ihre Suche nach <strong>"$!queryString"</strong> hat <strong>0</strong> Treffer ergeben.</p>
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam($queryString)
+        <p>$MESSAGES.getStringWithMsgParams('searchResult.results.noResult1')</p>
             <ul>
-              <li>Versuchen Sie es mit einer neuen <a href="portal/main-search.psml">Suche</a> oder <a href="portal/search-extended/search-ext-env-topic-terms.psml">Erweiterten Suche</a></li>
-              <li>Lesen Sie unsere <a href="javascript:contextHelp()">Suchtipps</a></li>
-              <li>Stöbern Sie durch andere Seiten von PortalU:
-                  <p></p>
-                  <a href="portal/main-service.psml">Service</a>&nbsp;|&nbsp;<a href="portal/main-measures.psml">Messwerte</a>&nbsp;|&nbsp;<a href="portal/main-environment.psml">Umweltthemen</a>&nbsp;|&nbsp;<a href="portal/main-chronicle.psml">Umweltchronik</a></li>
+              <li>$MESSAGES.getString('searchResult.results.noResult2')</li>
+              <li>$MESSAGES.getString('searchResult.results.noResult3') 
+                <script language="JavaScript">
+                	document.write("<a href=\"javascript:ingrid_openWindow('portal/help.psml?hkey=search-tipps-1',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
+                </script>
+                <noscript>
+                	<a href="portal/help.psml?hkey=search-tipps-1" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
+                </noscript>
+			  </li>
+              <li>$MESSAGES.getString('searchResult.results.noResult4')</li>
             </ul>
         </div>
     </div>
