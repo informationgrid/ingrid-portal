@@ -26,7 +26,7 @@
       	<constructor-arg index='0' type="boolean"><value>false</value></constructor-arg>
 		
 		<!-- logToDatabase -->
-      	<constructor-arg  index='1'  type="boolean"><value>true</value></constructor-arg>
+      	<constructor-arg  index='1'  type="boolean"><value>false</value></constructor-arg>
 		
 		<!-- maxRecordToFlush_Portal -->
       	<constructor-arg   index='2' ><value>300</value></constructor-arg>
