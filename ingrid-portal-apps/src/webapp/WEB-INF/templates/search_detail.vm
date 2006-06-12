@@ -151,7 +151,7 @@
 					#if($myAddress.get("t02_address.institution"))<a href="$action">$myAddress.get("t02_address.institution")</a><br/>#end
 				#end
    				#if($myAddress.get("title") && $myAddress.get("title")!="")$myAddress.get("title")<br/>#end
-				#if($myAddress.get("t02_address.lastname") && $myAddress.get("t02_address.lastname") != "")
+				#if($tool.hasContent($myAddress.get("t02_address.lastname")))
 					<a href="$action">
 					#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end
     				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end
