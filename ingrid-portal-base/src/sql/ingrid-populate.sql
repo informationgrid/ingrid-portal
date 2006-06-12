@@ -195,6 +195,7 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories)
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (5, 'NI_MU', 'MU_aktuell_PI_GB', 'http://www.niedersachsen.de/rss/rss_19947156_598_20.rss', 'de', 'all');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (6, 'MBU', 'BMU', 'http://www.bmu.de/allgemein/rss/35401.rss', 'de', 'all');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (7, 'MU SACHSEN', 'MU SACHSEN', 'http://www.medienservice.sachsen.de/app/WebObjects/mspublic.woa/wa/rssFeed', 'de', 'umwelt,landwirtschaft/forst');
+INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (8, 'LfUG Sachsen', 'LfUG Sachsen', 'http://www.umwelt.sachsen.de/de/wu/umwelt/lfug/lfug-internet/start.xml', 'de', 'all');
 
 INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
 INSERT INTO SECURITY_CREDENTIAL VALUES(1,1,'admin',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2004-05-22 16:27:12.572','2004-05-22 16:27:12.572',null,null,null);
