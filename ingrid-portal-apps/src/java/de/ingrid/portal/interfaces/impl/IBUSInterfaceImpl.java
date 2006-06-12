@@ -174,7 +174,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
         } catch (java.io.IOException e) {
-            if (log.isErrorEnabled()) {
+            if (log.isWarnEnabled()) {
                 log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
                         + requestedHits, e);
