@@ -1,1 +1,1 @@
-<h2>Anmeldung erfolgreich.</h2>
+$MESSAGES.getString('contact.newsletter.subscribed')
