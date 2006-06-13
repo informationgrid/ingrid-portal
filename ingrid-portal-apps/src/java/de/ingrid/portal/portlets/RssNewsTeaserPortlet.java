@@ -10,10 +10,11 @@ import javax.portlet.PortletPreferences;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSStore;
 
 
@@ -21,28 +22,37 @@ import de.ingrid.portal.om.IngridRSSStore;
 public class RssNewsTeaserPortlet extends GenericVelocityPortlet
 {
 
-    HibernateManager fHibernateManager = null;
-    
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);
-        fHibernateManager = HibernateManager.getInstance();
-        
     }    
     
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
     {
         
         Context context = getContext(request);
-        Session session = this.fHibernateManager.getSession();
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
 
         // read preferences
         PortletPreferences prefs = request.getPreferences();
 
         int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("noOfEntriesDisplayed", "3"));
         
-        // TODO refactor into UtilsDB class?
-        List rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setMaxResults(noOfEntriesDisplayed).list();
+        List rssEntries = null;
+        
+        try {
+            tx = session.beginTransaction();
+            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setFirstResult(noOfEntriesDisplayed).list();
+            tx.commit();
+        } catch (Throwable t) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new PortletException( t.getMessage() );
+        } finally {
+            HibernateUtil.closeSession();
+        }
         
         context.put("rssEntries", rssEntries);
         context.put("strutils", new UtilsString());

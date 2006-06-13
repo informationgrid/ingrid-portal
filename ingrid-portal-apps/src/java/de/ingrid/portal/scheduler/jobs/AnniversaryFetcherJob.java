@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -18,7 +19,7 @@ import org.quartz.JobExecutionException;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.global.UtilsDate;
-import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
 import de.ingrid.utils.IngridHitDetail;
@@ -32,13 +33,14 @@ public class AnniversaryFetcherJob implements Job {
 
     protected final static Log log = LogFactory.getLog(AnniversaryFetcherJob.class);
 
-    HibernateManager fHibernateManager = null;
-
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
 
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
@@ -57,9 +59,6 @@ public class AnniversaryFetcherJob implements Job {
             queryDateTo.set(Calendar.SECOND, 59);
             queryDateTo.set(Calendar.MILLISECOND, 0);
 
-            fHibernateManager = HibernateManager.getInstance();
-            Session session = this.fHibernateManager.getSession();
-
             IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(queryDate);
             if (details.length > 0) {
 
@@ -67,10 +66,12 @@ public class AnniversaryFetcherJob implements Job {
                     if ((details[i] instanceof DetailedTopic) && details[i].size() > 0) {
                         DetailedTopic detail = (DetailedTopic) details[i];
                         // check if theis item already exists
+                        tx = session.beginTransaction();
                         List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
                                 Restrictions.eq("topicId", detail.getTopicID())).add(
                                 Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
                                 .list();
+                        tx.commit();
                         if (anniversaryList.isEmpty()) {
                             IngridAnniversary anni = new IngridAnniversary();
                             anni.setTopicId(detail.getTopicID());
@@ -95,9 +96,9 @@ public class AnniversaryFetcherJob implements Job {
                             anni.setFetched(new Date());
                             anni.setFetchedFor(queryDate);
 
-                            session.beginTransaction();
+                            tx = session.beginTransaction();
                             session.save(anni);
-                            session.getTransaction().commit();
+                            tx.commit();
                         }
                     }
                 }
@@ -105,18 +106,25 @@ public class AnniversaryFetcherJob implements Job {
             // remove old entries
             cal.setTime(new Date());
             cal.add(Calendar.DATE, -1);
+            tx = session.beginTransaction();
             List deleteEntries = session.createCriteria(IngridAnniversary.class).add(
                     Restrictions.lt("fetchedFor", cal.getTime())).list();
+            tx.commit();
             Iterator it = deleteEntries.iterator();
-            session.beginTransaction();
+            tx = session.beginTransaction();
             while (it.hasNext()) {
                 session.delete((IngridAnniversary) it.next());
             }
-            session.getTransaction().commit();
+            tx.commit();
 
         } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
             log.error("Error executing quartz job AnniversaryFetcherJob.", e);
             throw new JobExecutionException("Error executing quartz job AnniversaryFetcherJob.", e, false);
+        } finally {
+            HibernateUtil.closeSession();
         }
     }
 

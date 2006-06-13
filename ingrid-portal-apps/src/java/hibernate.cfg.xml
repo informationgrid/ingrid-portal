@@ -4,20 +4,18 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-		<property name="connection.datasource">java:/comp/env/jdbc/jetspeed</property>
-      	<property name="dialect">org.hibernate.dialect.SAPDBDialect</property>
+		<property name="connection.datasource">java:/comp/env/jdbc/jetspeed</property> 
 
-        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-        <property name="cache.use_query_cache">false</property>
-        <property name="cache.use_minimal_puts">false</property>
-        <property name="max_fetch_depth">3</property>
-
+        <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 
+<!--
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+-->        
+        <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+        <property name="cache.use_query_cache">true</property>
+
         <!-- SQL dialect -->
-        <!--<property name="dialect">org.hibernate.dialect.HSQLDialect</property>-->
-        <!--<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
-        <!--property name="dialect">org.hibernate.dialect.DerbyDialect</property-->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!-- Echo all executed SQL to stdout -->
@@ -34,8 +32,6 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridRSSSource.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridAnniversary.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridNewsletterData.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridHelpContent.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridHelpStructure.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridSysCodelistDomain.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

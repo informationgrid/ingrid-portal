@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -26,7 +27,7 @@ import de.ingrid.portal.forms.ContactForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridNewsletterData;
 
 public class ContactPortlet extends GenericVelocityPortlet {
@@ -99,24 +100,37 @@ public class ContactPortlet extends GenericVelocityPortlet {
             mailData.put("user.area.of.profession", messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY)));
             mailData.put("user.interest.in.enviroment.info", messages.getString("contact.report.email.interest.in.enviroment.info." + cf.getInput(ContactForm.FIELD_INTEREST)));
             if (cf.hasInput(ContactForm.FIELD_NEWSLETTER)) {
-                Session session = HibernateManager.getInstance().getSession();
+                Session session = HibernateUtil.currentSession();
+                Transaction tx = null;
+                
+                try {
 
-                mailData.put("user.subscribed.to.newsletter", "yes");
-                // check for email address in newsletter list
-                List newsletterDataList = session.createCriteria(IngridNewsletterData.class)
-                .add(Restrictions.eq("emailAddress", cf.getInput(ContactForm.FIELD_EMAIL)))
-                .list();
-                // register for newsletter if not already registered
-                if (newsletterDataList.isEmpty()) {
-                    IngridNewsletterData data = new IngridNewsletterData(); 
-                    data.setFirstName(cf.getInput(ContactForm.FIELD_FIRSTNAME));
-                    data.setLastName(cf.getInput(ContactForm.FIELD_LASTNAME));
-                    data.setEmailAddress(cf.getInput(ContactForm.FIELD_EMAIL));
-                    data.setDateCreated(new Date());
-                    
-                    session.beginTransaction();
-                    session.save(data);
-                    session.getTransaction().commit();
+                    mailData.put("user.subscribed.to.newsletter", "yes");
+                    // check for email address in newsletter list
+                    tx = session.beginTransaction();
+                    List newsletterDataList = session.createCriteria(IngridNewsletterData.class)
+                    .add(Restrictions.eq("emailAddress", cf.getInput(ContactForm.FIELD_EMAIL)))
+                    .list();
+                    tx.commit();
+                    // register for newsletter if not already registered
+                    if (newsletterDataList.isEmpty()) {
+                        IngridNewsletterData data = new IngridNewsletterData(); 
+                        data.setFirstName(cf.getInput(ContactForm.FIELD_FIRSTNAME));
+                        data.setLastName(cf.getInput(ContactForm.FIELD_LASTNAME));
+                        data.setEmailAddress(cf.getInput(ContactForm.FIELD_EMAIL));
+                        data.setDateCreated(new Date());
+                        
+                        tx = session.beginTransaction();
+                        session.save(data);
+                        tx.commit();
+                    }
+                } catch (Throwable t) {
+                    if (tx != null) {
+                        tx.rollback();
+                    }
+                    throw new PortletException( t.getMessage() );
+                } finally {
+                    HibernateUtil.closeSession();
                 }
             } else {
                 mailData.put("user.subscribed.to.newsletter", "no");

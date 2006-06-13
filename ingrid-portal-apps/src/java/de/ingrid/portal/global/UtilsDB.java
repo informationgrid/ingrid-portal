@@ -5,12 +5,16 @@ package de.ingrid.portal.global;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridChronicleEventType;
 import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
@@ -29,6 +33,8 @@ import de.ingrid.portal.om.IngridSysCodelistDomainId;
  */
 public class UtilsDB {
 
+    private final static Log log = LogFactory.getLog(DBAnniversaryInterfaceImpl.class);
+    
     /** this flag controls whether Data is always fetched from Database or from cache  */
     // TODO keep possibilty to always reload data from DB ???? makes it complicated ! maybe instable ?
     private static boolean alwaysReloadDBData = PortalConfig.getInstance().getBoolean(
@@ -75,31 +81,49 @@ public class UtilsDB {
      * @return
      */
     private static List getValuesFromDB(Class objClass, List cacheList) {
-        // TODO: use hibernate caching
-        if (alwaysReloadDBData) {
-            HibernateManager hibernateManager = HibernateManager.getInstance();
-            return hibernateManager.loadAllData(objClass, 0);
-        }
-        synchronized (UtilsDB.class) {
-            if (cacheList == null) {
-                HibernateManager hibernateManager = HibernateManager.getInstance();
-                cacheList = hibernateManager.loadAllData(objClass, 0);
-            }
-        }
-        return cacheList;
+        Session session = HibernateUtil.currentSession();
+        return getValuesFromDB(session.createCriteria(objClass), session, cacheList, true);
     }
 
-    private static List getValuesFromDB(Criteria c, List cacheList) {
+    /**
+     * Convenient generic method for reading stuff from database.
+     * NOTICE: values are always reloaded from database if flag alwaysReloadDBData
+     * in our class is set to true. Otherwise we load the values once and return
+     * our cache !
+     * @param Criteria
+     * @param cacheList
+     * @return
+     */
+    private static List getValuesFromDB(Criteria c, Session session, List cacheList, boolean closeSession) {
         // TODO: use hibernate caching
-        if (alwaysReloadDBData) {
-            return c.list();
-        }
-        synchronized (UtilsDB.class) {
-            if (cacheList == null) {
-                cacheList = c.list();
+        Transaction tx = null;
+        try {
+            if (alwaysReloadDBData) {
+                tx = session.beginTransaction();
+                List ret = c.list();
+                tx.commit();
+                return ret;
+            } else if (cacheList == null) {
+                synchronized (UtilsDB.class) {
+                    tx = session.beginTransaction();
+                    cacheList = c.list();
+                    tx.commit();
+                }
+            }
+            return cacheList;
+        } catch (Throwable t) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Error reading from database.", t);
+            }
+            return null;
+        } finally {
+            if (closeSession) {
+                HibernateUtil.closeSession();
             }
         }
-        return cacheList;
     }
 
     /**
@@ -149,8 +173,9 @@ public class UtilsDB {
     public static List getPartners() {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
-        return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridPartner.class)
-                .addOrder(Order.asc("sortkey")), partners);
+        Session session = HibernateUtil.currentSession();
+        return getValuesFromDB(session.createCriteria(IngridPartner.class)
+                .addOrder(Order.asc("sortkey")), session, partners, true);
     }
 
     /**
@@ -177,8 +202,9 @@ public class UtilsDB {
     public static List getProviders() {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
-        return getValuesFromDB(HibernateManager.getInstance().getSession().createCriteria(IngridProvider.class)
-                .addOrder(Order.asc("sortkeyPartner")).addOrder(Order.asc("sortkey")), providers);
+        Session session = HibernateUtil.currentSession();
+        return getValuesFromDB(session.createCriteria(IngridProvider.class)
+                .addOrder(Order.asc("sortkeyPartner")).addOrder(Order.asc("sortkey")), session, providers, true);
     }
 
     /**
@@ -331,19 +357,24 @@ public class UtilsDB {
      */
     public static String getCodeListEntryName(long codeListId, long domainId, long langId) {
         
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
         try {
             IngridSysCodelistDomainId id = new IngridSysCodelistDomainId();
             id.setCodelistId(new Long(codeListId));
             id.setDomainId(new Long(domainId));
             id.setLangId(new Long(langId));
-            HibernateManager hibernateManager = HibernateManager.getInstance();
-            Session session = hibernateManager.getSession();
-
+            tx = session.beginTransaction();
             IngridSysCodelistDomain domainEntry = (IngridSysCodelistDomain) session.load(IngridSysCodelistDomain.class, id);
-            
+            tx.commit();
             return domainEntry.getName();
         } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
             return String.valueOf(domainId);
+        } finally {
+            HibernateUtil.closeSession();
         }
     }
 

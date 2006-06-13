@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -25,7 +26,7 @@ import com.sun.syndication.io.XmlReader;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.hibernate.HibernateManager;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
 
@@ -42,16 +43,15 @@ public class RSSFetcherJob implements Job {
 
     protected final static Log log = LogFactory.getLog(RSSFetcherJob.class);
 
-    HibernateManager fHibernateManager = null;
-
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
 
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        
         try {
-            fHibernateManager = HibernateManager.getInstance();
-            Session session = this.fHibernateManager.getSession();
 
             SyndFeed feed = null;
             URL feedUrl = null;
@@ -63,7 +63,9 @@ public class RSSFetcherJob implements Job {
             Calendar cal;
 
             // get rss sources from database
+            tx = session.beginTransaction();
             List rssSources = session.createCriteria(IngridRSSSource.class).list();
+            tx.commit();
             Iterator it = rssSources.iterator();
             while (it.hasNext()) {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
@@ -125,9 +127,11 @@ public class RSSFetcherJob implements Job {
                             // configured days
                             if (publishedDate.after(cal.getTime())) {
                                 // check if this entry already exists
+                                tx = session.beginTransaction();
                                 List rssEntries = session.createCriteria(IngridRSSStore.class).add(
                                         Restrictions.eq("link", entry.getLink())).add(
                                         Restrictions.eq("language", feed.getLanguage())).list();
+                                tx.commit();
                                 if (rssEntries.isEmpty()) {
                                     if (entry.getAuthor() == null || entry.getAuthor().length() == 0) {
                                         if (feed.getTitle() != null && feed.getTitle().length() > 0) {
@@ -147,9 +151,9 @@ public class RSSFetcherJob implements Job {
                                     rssEntry.setPublishedDate(publishedDate);
                                     rssEntry.setAuthor(entry.getAuthor());
 
-                                    session.beginTransaction();
+                                    tx = session.beginTransaction();
                                     session.save(rssEntry);
-                                    session.getTransaction().commit();
+                                    tx.commit();
 
                                     cnt++;
                                 } else {
@@ -180,22 +184,29 @@ public class RSSFetcherJob implements Job {
             cal = Calendar.getInstance();
             cal.add(Calendar.MONTH, -1);
 
+            tx = session.beginTransaction();
             List deleteEntries = session.createCriteria(IngridRSSStore.class).add(
                     Restrictions.lt("publishedDate", cal.getTime())).list();
+            tx.commit();
             it = deleteEntries.iterator();
-            session.beginTransaction();
+            tx = session.beginTransaction();
             while (it.hasNext()) {
                 Object obj = it.next();
                 session.evict(obj);
                 session.delete((IngridRSSStore) obj);
             }
-            session.getTransaction().commit();
+            tx.commit();
             deleteEntries.clear();
         } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
             if (log.isErrorEnabled()) {
                 log.error("Error executing quartz job RSSFetcherJob.", e);
             }
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, false);
+        } finally {
+            HibernateUtil.closeSession();
         }
 
     }
