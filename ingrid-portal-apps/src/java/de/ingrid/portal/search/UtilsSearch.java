@@ -127,7 +127,7 @@ public class UtilsSearch {
             String value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_URL);
             if (value.length() > 0) {
                 result.put(Settings.RESULT_KEY_URL, value);
-                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value, 80));
+                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value, 95));
             }
             // Partner
             value = UtilsSearch.getRawDetailValue(detail, Settings.RESULT_KEY_PARTNER);

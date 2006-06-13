@@ -242,6 +242,11 @@ public class Utils {
                 resultB.append("?...");
             }
         }
+
+        if (resultB.length() > maxLength) {
+            return resultB.substring(0, maxLength-3).concat("...");
+        }
+
         return resultB.toString();
     }
 
