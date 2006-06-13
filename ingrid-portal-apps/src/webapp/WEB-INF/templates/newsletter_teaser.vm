@@ -1,12 +1,8 @@
 <div class="portlet-section-body">
-	<p>Sie möchten jederzeit und überall schneller wissen, was los ist ?
-		<br />Dann informiert Sie unser 
-		<strong>Newsletter
-		</strong> per Mail. Der Bezug ist kostenlos.
-	</p>
+	<p>$MESSAGES.getString('teaser.newsletter.content')</p>
 	<p class="iconLink">
-		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /></span>
-		<span><a href="portal/service-contact-newsletter.psml">Newsletter</a></span>
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+		<span><a href="portal/service-contact-newsletter.psml">$MESSAGES.getString('teaser.newsletter.link')</a></span>
 		<span class="clearer"></span>
 	</p>
 </div>
