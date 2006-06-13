@@ -43,7 +43,7 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet
         
         try {
             tx = session.beginTransaction();
-            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setFirstResult(noOfEntriesDisplayed).list();
+            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setMaxResults(noOfEntriesDisplayed).list();
             tx.commit();
         } catch (Throwable t) {
             if (tx != null) {
