@@ -42,5 +42,10 @@
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-fpn-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-tamino-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-udk-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/xstream/jars/xstream-1.1.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/cglib/jars/cglib-full-2.0.2.jar"/>
+	<classpathentry kind="lib" path="/ingrid-portal-base/lib/mysql-connector-java-3.1.11-bin.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ehcache/jars/ehcache-1.1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/xpp3/jars/xpp3-1.1.2a.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

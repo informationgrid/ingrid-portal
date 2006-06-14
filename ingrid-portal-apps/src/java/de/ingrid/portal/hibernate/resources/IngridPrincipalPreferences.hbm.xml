@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridPrincipalPreference" table="ingrid_principal_preference">
+		<id name="id">
+    		<generator class="native"/>
+        </id>
+    	<property name="principalId" type="java.lang.Long" column="principal_id"/>
+    	<property name="prefName" type="java.lang.String" column="pref_name"/>
+    	<property name="prefValue" type="java.lang.String" column="pref_value"/>
+    	<property name="modifiedDate" type="timestamp" column="modified_date"/>
+  </class>
+</hibernate-mapping>
