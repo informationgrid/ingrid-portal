@@ -19,7 +19,7 @@
 		$action.setParameter('action','doCloseNode')
 			  <tr>
 				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder.closed')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
           	  </tr>
 		#foreach($tokenNode in $similarNode.getChildren())
           	  <tr>
@@ -35,7 +35,7 @@
 		$action.setParameter('action','doOpenNode')
           	  <tr>
           	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder.closed')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
           	  </tr>
 	#end
 #end			  

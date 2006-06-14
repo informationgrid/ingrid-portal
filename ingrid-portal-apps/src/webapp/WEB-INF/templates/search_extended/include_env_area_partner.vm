@@ -9,7 +9,7 @@
     	#if($partnerNode.isOpen())
     		$action.setParameter('action','doClosePartner')
     		<p>
-    			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox" /><label for="$partnerNode.id">$partnerNode.name</label>
+    			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox" /><label for="$partnerNode.id">$partnerNode.name</label>
             </p>
     		#foreach($providerNode in $partnerNode.getChildren())
     			$action.setParameter('id',"$providerNode.id")		
@@ -20,7 +20,7 @@
     	#else
     		$action.setParameter('action','doOpenPartner')		
             <p>
-            	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox" /><label for="$partnerNode.id">$partnerNode.name</label>
+            	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox" /><label for="$partnerNode.id">$partnerNode.name</label>
             </p>
 		#end
 	#end
