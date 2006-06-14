@@ -1,2 +1,2 @@
-<h2>Account erfolgreich freigeschaltet</h2>
-<p>Ihr Account wurde erfolgreich freigeschaltet. Sie können sich nun am Portal anmelden.</p>
+<h2>$MESSAGES.getString('account.confirmed.header')</h2>
+<p>$MESSAGES.getString('account.confirmed.content')</p>

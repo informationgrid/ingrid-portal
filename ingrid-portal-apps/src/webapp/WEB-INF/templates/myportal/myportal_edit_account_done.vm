@@ -1,2 +1,2 @@
-<h2>Account erfolgreich aktualisiert</h2>
-<p>Ihr Account wurde erfolgreich aktualisiert.</p>
+<h2>$MESSAGES.getString('account.edited.header')</h2>
+<p>$MESSAGES.getString('account.edited.content')</p>
