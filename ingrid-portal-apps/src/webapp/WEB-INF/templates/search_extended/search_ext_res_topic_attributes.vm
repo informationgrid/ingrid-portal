@@ -43,7 +43,7 @@
       </div>      
 #parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
       <div class="formbody">
-          <p>Sie haben auch die Möglichkeit, <strong>ALLE</strong> hier bereits hinzugefügten Filter wieder aus der Suchanfrage zu entfernen.</p>
+          <p>$MESSAGES.getString('searchExtResTopicAttributes.explanation2')</p>
           <div class="innerform">
             <input class="btn float_right" type="submit" name="submitUnfilter" value="$MESSAGES.getString('searchExtResTopicAttributes.submit2')" />
             <span class="clearer"></span>

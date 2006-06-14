@@ -1,3 +1,4 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearch')
 <div class="formbody">
@@ -52,11 +53,12 @@ $action.setParameter('action','doSearchHistory')
 $action.setParameter('action','doSearchSettings')
 	  <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.settings')</a>
 #end
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=search-tipps-1"))
 <script language="JavaScript">
-	document.write("<img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"$MESSAGES.getString('common.alt.icon.intern')\" /><a href=\"javascript:ingrid_openWindow('portal/help.psml?hkey=search-tipps-1',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
+	document.write("<img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"$MESSAGES.getString('common.alt.icon.intern')\" /><a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
 </script>
 <noscript>
-	<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="javascript:ingrid_openWindow('portal/help.psml?hkey=search-tipps-1',750,550);">$MESSAGES.getString('searchSimple.search.tips')</a>
+	<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$link" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
 </noscript>
 <!-- only for logged on users -->
 <!--          <img src="/ingrid-portal-apps/images/ico_save_search.gif" alt="$MESSAGES.getString('common.alt.icon.save')" /><a href="s_search_speichern.html">$MESSAGES.getString('searchSimple.search.save')</a> -->

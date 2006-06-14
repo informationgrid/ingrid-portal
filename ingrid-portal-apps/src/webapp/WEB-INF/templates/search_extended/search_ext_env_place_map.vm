@@ -10,7 +10,7 @@
         <div class="line" style="width:33em"><hr /></div>
         <div class="float_right rightmargin">
 $action.setParameter('action','doSave')
-          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">$MESSAGES.getString('searchExtEnvPlaceMap.save')</a></span>
+          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchExtEnvPlaceMap.save')</a></span>
         </div>
 		  #displayFormErrors()
           <h3>$MESSAGES.getString('searchExtEnvPlaceMap.title.constraint')</h3>

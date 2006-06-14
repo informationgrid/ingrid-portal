@@ -1,9 +1,7 @@
       <div class="portlet-section-body">
         <ul>
           <li>
-            <p>
-              Über PortalU können Sie Umweltinformationen von Behörden und anderen Informationsanbietern aus 16 Ländern und dem Bund durchsuchen. Geben Sie an, ob Sie die Umweltinformationen aller Informationsanbieter durchsuchen (Voreinstellung), oder die Suche auf bestimmte Länder oder Informationsanbieter einschränken wollen.
-            </p>
+            <p>$MESSAGES.getString('searchExtEnvAreaPartner.info.content')</p>
           </li>
         </ul>
       </div>

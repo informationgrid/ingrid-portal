@@ -1,3 +1,4 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearch')
 <div class="formbody">
@@ -31,20 +32,26 @@ $action.setParameter('action','doChangeDS')
 		<div class="qrytxt">
 			<label class="hide" for="qrytxt">Suche: </label><textarea class="qrytxt" id="qrytxt" cols="20" rows="3" name="q" 
 				onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"'>#getHTMLEscapedFieldValue('q')</textarea>
-			<input class="btn float_right" name="doSubmit" type="submit" value="PortalU Suche" />
-			<input class="btn float_left" name="doSetQuery" type="submit" value="Suchanfrage übernehmen" />
+			<input class="btn float_right" name="doSubmit" type="submit" value="$MESSAGES.getString('searchSimple.query.submit')" />
+			<input class="btn float_left" name="doSetQuery" type="submit" value="$MESSAGES.getString('searchExtended.query.submit2')" />
 			<span class="clearer"></span>
 		</div>
     </form>
     <div class="optional-links">
-      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="aktiver Link" />&nbsp;<span>$MESSAGES.getString('searchSimple.extended')</span>
+      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.extended')</span>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearchHistory')
-      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">$MESSAGES.getString('searchSimple.history')</a>
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.history')</a>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearchSettings')
-	  <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="$action">$MESSAGES.getString('searchSimple.settings')</a>
-      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link" /><a href="javascript:contextHelp()">Suchtipps</a>
+	  <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.settings')</a>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=search-tipps-1"))
+<script language="JavaScript">
+	document.write("<img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"$MESSAGES.getString('common.alt.icon.intern')\" /><a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
+</script>
+<noscript>
+	<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$link" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
+</noscript>
 <!-- only for logged on users -->
 <!--          <img src="/ingrid-portal-apps/images/ico_save_search.gif" alt="Icon Diskette" /><a href="s_search_speichern.html">Suche Speichern</a> -->
     </div>

@@ -25,11 +25,11 @@
 	$action.setParameter('nodeId',$similarNode.id)
 	#if($similarNode.isOpen())
 		$action.setParameter('action','doCloseEvent')
-					<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;&nbsp;<strong>$similarNode.topic.date:</strong>&nbsp;<a href="$action">$similarNode.getName()</a>
+					<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>&nbsp;&nbsp;<strong>$similarNode.topic.date:</strong>&nbsp;<a href="$action">$similarNode.getName()</a>
                     <p class="event_description">$similarNode.topic.description</p>
     #else
 		$action.setParameter('action','doOpenEvent')
-					<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a>&nbsp;&nbsp;<strong>$similarNode.topic.date:</strong>&nbsp;<a href="$action">$similarNode.getName()</a>
+					<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>&nbsp;&nbsp;<strong>$similarNode.topic.date:</strong>&nbsp;<a href="$action">$similarNode.getName()</a>
     #end		
                	    </td>
                	  </tr>
