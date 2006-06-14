@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSStore;
@@ -31,6 +32,11 @@ public class RssNewsPortlet extends GenericVelocityPortlet
     {
         
         Context context = getContext(request);
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
 

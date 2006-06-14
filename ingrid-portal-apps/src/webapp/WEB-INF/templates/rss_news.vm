@@ -1,18 +1,18 @@
-<p>Weitere Meldungen unserer Anbieter sortiert nach Aktualität.</p>
+<p>$MESSAGES.getString('news.archive.header')</p>
 #foreach($rssEntry in $rssEntries)
   <div class="resultset">
-	<span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="externer Link" /></span><a href="$!rssEntry.link" target="_new" title="Link öffnet in neuem Fenster">$!rssEntry.title</a></strong><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
+	<span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a></strong><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
     <p class="result_description">
       $strutils.cutString($rssEntry.description, 350)
     </p>
     <p class="result_metadata">
       <br />
 #if($rssEntry.author && $rssEntry.author != "")
-	  Anbieter: $rssEntry.author
+	  $MESSAGES.getString('news.author'): $rssEntry.author
 #end	  
     </p>
   </div>
   <div class="line"><hr /></div>
 #end	
 <br />
-<div class="ico_linkintern float_right"><p><a href="portal/default-page.psml">Zurück zur Startseite</a></p></div>
+<div class="ico_linkintern float_right"><p><a href="portal/default-page.psml">$MESSAGES.getString('news.archive.back')</a></p></div>

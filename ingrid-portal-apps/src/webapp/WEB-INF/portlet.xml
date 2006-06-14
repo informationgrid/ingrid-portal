@@ -273,6 +273,7 @@
             <title>Aktuelles</title>
             <short-title>RssNewsTeaser</short-title>
         </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
     </portlet>
 
     <portlet id="RssNews">
@@ -290,10 +291,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Weitere Meldungen</title>
-            <short-title>RssNews</short-title>
-        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
     </portlet>
 
     <portlet id="ServiceTeaser">

@@ -13,24 +13,28 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSStore;
 
+public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
 
-
-public class RssNewsTeaserPortlet extends GenericVelocityPortlet
-{
-
-    public void init(PortletConfig config) throws PortletException
-    {
+    public void init(PortletConfig config) throws PortletException {
         super.init(config);
-    }    
-    
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
-    {
-        
+    }
+
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
+            throws PortletException, IOException {
+
         Context context = getContext(request);
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
+        response.setTitle(messages.getString("news.teaser.title"));
+
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
 
@@ -38,25 +42,26 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet
         PortletPreferences prefs = request.getPreferences();
 
         int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("noOfEntriesDisplayed", "3"));
-        
+
         List rssEntries = null;
-        
+
         try {
             tx = session.beginTransaction();
-            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setMaxResults(noOfEntriesDisplayed).list();
+            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate"))
+                    .setMaxResults(noOfEntriesDisplayed).list();
             tx.commit();
         } catch (Throwable t) {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new PortletException( t.getMessage() );
+            throw new PortletException(t.getMessage());
         } finally {
             HibernateUtil.closeSession();
         }
-        
+
         context.put("rssEntries", rssEntries);
         context.put("strutils", new UtilsString());
-        
+
         super.doView(request, response);
     }
 }
