@@ -162,4 +162,12 @@ limitations under the License.
         <column name="maintainable" type="INTEGER"/>
     </table>
     
+    <table name="ingrid_principal_preference" idMethod="native">
+        <column name="id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
+        <column name="principal_id" type="INTEGER" required="true"/>
+        <column name="pref_name" size="100" type="VARCHAR"/>
+        <column name="pref_value" type="LONGVARCHAR"/>
+        <column name="modified_date" type="TIMESTAMP"/>
+    </table>
+    
 </database>

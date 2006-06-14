@@ -14,3 +14,5 @@ drop table ingrid_newsletter_data;
 
 drop table ingrid_sys_codelist_domain;
 drop table ingrid_sys_codelist;
+
+drop table ingrid_principal_preference;
