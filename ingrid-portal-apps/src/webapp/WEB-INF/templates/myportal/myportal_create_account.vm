@@ -5,7 +5,7 @@
 #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
 	<div class="formfooter">
 		<div align="right">
-			<input class="btn" type="submit" value="$MESSAGES.getString('account.new.submit')" />
+			<input class="btn" type="submit" value="$MESSAGES.getString('account.create.submit')" />
 		</div>
 	</div>
 </form>

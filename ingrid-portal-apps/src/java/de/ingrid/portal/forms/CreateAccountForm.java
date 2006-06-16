@@ -88,15 +88,15 @@ public class CreateAccountForm extends ActionForm {
         clearErrors();
 
         if (!hasInput(FIELD_SALUTATION)) {
-            setError(FIELD_SALUTATION, "account.create.error.noSalutation");
+            setError(FIELD_SALUTATION, "account.edit.error.noSalutation");
             allOk = false;
         } 
         if (!hasInput(FIELD_FIRSTNAME)) {
-            setError(FIELD_FIRSTNAME, "account.create.error.noFirstName");
+            setError(FIELD_FIRSTNAME, "account.edit.error.noFirstName");
             allOk = false;
         } 
         if (!hasInput(FIELD_LASTNAME)) {
-            setError(FIELD_LASTNAME, "account.create.error.noLastName");
+            setError(FIELD_LASTNAME, "account.edit.error.noLastName");
             allOk = false;
         } 
         if (!hasInput(FIELD_LOGIN)) {
@@ -108,16 +108,16 @@ public class CreateAccountForm extends ActionForm {
             allOk = false;
         } 
         if (!getInput(FIELD_PASSWORD_CONFIRM).equals(getInput(FIELD_PASSWORD))) {
-            setError(FIELD_PASSWORD_CONFIRM, "account.create.error.noPasswordConfirm");
+            setError(FIELD_PASSWORD_CONFIRM, "account.edit.error.noPasswordConfirm");
             allOk = false;
         } 
         if (!hasInput(FIELD_EMAIL)) {
-            setError(FIELD_EMAIL, "account.create.error.noEmail");
+            setError(FIELD_EMAIL, "account.edit.error.noEmail");
             allOk = false;
         } else {
             String myEmail = getInput(FIELD_EMAIL);
             if (!Utils.isValidEmailAddress(myEmail)) {
-                setError(FIELD_EMAIL, "account.create.error.emailNotValid");
+                setError(FIELD_EMAIL, "account.edit.error.emailNotValid");
                 allOk = false;
             }
         }

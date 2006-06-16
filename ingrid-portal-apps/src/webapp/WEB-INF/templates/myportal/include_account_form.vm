@@ -49,18 +49,18 @@
 		</p>
 #elseif($formType == 'create')
 		<p>
-			<label class="float_left col2left alignleft" for="login">#displayFieldLabel('login' $MESSAGES.getString('account.new.label.username'))*</label>
+			<label class="float_left col2left alignleft" for="login">#displayFieldLabel('login' $MESSAGES.getString('account.create.label.username'))*</label>
 			<input class="float_left col2right inputstyletext" type="text" id="login" name="login" value="#getFieldValue('login')" />
 			<span class="clearer"></span>
 		</p>
 		<div class="line_form"><hr /></div>
 		<p>
-			<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password' $MESSAGES.getString('account.new.label.password'))*</label>
+			<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password' $MESSAGES.getString('account.create.label.password'))*</label>
 			<input class="float_left col2right inputstyletext" type="password" id="password" name="password" value="#getFieldValue('password')" />
 			<span class="clearer"></span>
 		</p>
 		<p>
-			<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_confirm' $MESSAGES.getString('account.new.label.password_confirm'))*</label>
+			<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_confirm' $MESSAGES.getString('account.create.label.password_confirm'))*</label>
 			<input class="float_left col2right inputstyletext" type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" />
 			<span class="clearer"></span>
 		</p>
