@@ -27,8 +27,10 @@ import de.ingrid.portal.om.IngridPrincipalPreference;
  */
 public class IngridPersistencePrefs {
 
+    public static final String SEARCH_SETTINGS = "searchSettings";
+    
+    
     private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
-
     private static final XStream xstream;
 
     static {
@@ -94,7 +96,7 @@ public class IngridPersistencePrefs {
      * @param prefValue
      *            The preference value.
      */
-    public static void setPref(String principalName, String prefName, Object prefValue) throws Exception {
+    public static void setPref(String principalName, String prefName, Object prefValue) {
         if (prefValue == null) {
             return; 
         }
