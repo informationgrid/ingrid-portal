@@ -6,6 +6,8 @@ package de.ingrid.portal.global;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -25,17 +27,31 @@ import de.ingrid.portal.om.IngridPrincipalPreference;
  */
 public class IngridPersistencePrefs {
 
+    private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
+
+    private static final XStream xstream;
+
+    static {
+        try {
+            // Create the SessionFactory
+            xstream = new XStream();
+        } catch (Throwable ex) {
+            log.error("Initial Xstream creation failed.", ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+    
+    
     /**
-     * @param principalId
-     *            The principal's id.
+     * get an object from database storage.
+     * 
+     * @param principalName
+     *            The principal's name.
      * @param prefName
      *            The preference name.
      * @return The preference object.
-     * @throws Exception
      */
-    public static Object getPref(Long principalId, String prefName) throws Exception {
-
-        XStream xstream = new XStream();
+    public static Object getPref(String principalName, String prefName) {
 
         // get xml from db
         Session session = HibernateUtil.currentSession();
@@ -45,7 +61,7 @@ public class IngridPersistencePrefs {
         try {
             tx = session.beginTransaction();
             prefs = session.createCriteria(IngridPrincipalPreference.class).add(
-                    Restrictions.eq("principalId", principalId)).add(Restrictions.eq("prefName", prefName))
+                    Restrictions.eq("principalName", principalName)).add(Restrictions.eq("prefName", prefName))
                     .setMaxResults(1).list();
             tx.commit();
             if (prefs.size() > 0) {
@@ -55,24 +71,33 @@ public class IngridPersistencePrefs {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new Exception(t.getMessage());
+            if (log.isErrorEnabled()) {
+                log.error("Error retrieving persistent preference.", t);
+            }
         } finally {
             HibernateUtil.closeSession();
         }
-        return xstream.fromXML(serializedObject);
+        if (serializedObject == null) {
+            return null;
+        } else {
+            return xstream.fromXML(serializedObject);
+        }
     }
 
     /**
-     * @param principalId
-     *            The principal id.
+     * Set an object in database storage.
+     * 
+     * @param principalName
+     *            The principal's name.
      * @param prefName
      *            The preference name.
      * @param prefValue
      *            The preference value.
-     * @throws Exception
      */
-    public static void setPref(Long principalId, String prefName, Object prefValue) throws Exception {
-        XStream xstream = new XStream();
+    public static void setPref(String principalName, String prefName, Object prefValue) throws Exception {
+        if (prefValue == null) {
+            return; 
+        }
         String serializedObject = xstream.toXML(prefValue);
 
         Session session = HibernateUtil.currentSession();
@@ -82,7 +107,7 @@ public class IngridPersistencePrefs {
         try {
             tx = session.beginTransaction();
             prefs = session.createCriteria(IngridPrincipalPreference.class).add(
-                    Restrictions.eq("principalId", principalId)).add(Restrictions.eq("prefName", prefName)).list();
+                    Restrictions.eq("principalName", principalName)).add(Restrictions.eq("prefName", prefName)).list();
             if (prefs.size() > 0) {
                 pref = (IngridPrincipalPreference) prefs.get(0);
             }
@@ -93,7 +118,7 @@ public class IngridPersistencePrefs {
             } else {
                 pref = new IngridPrincipalPreference();
                 pref.setPrefName(prefName);
-                pref.setPrincipalId(principalId);
+                pref.setPrincipalName(principalName);
                 pref.setPrefValue(serializedObject);
                 pref.setModifiedDate(new Date());
                 session.save(pref);
@@ -103,9 +128,40 @@ public class IngridPersistencePrefs {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new Exception(t.getMessage());
+            if (log.isErrorEnabled()) {
+                log.error("Error storing persistent preference.", t);
+            }
         } finally {
             HibernateUtil.closeSession();
         }
     }
+    
+    /**
+     * Remove an entry from database storage.
+     * 
+     * @param principalName The principal's name.
+     * @param prefName The preference name.
+     */
+    public static void removePref(String principalName, String prefName) {
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.createQuery( "delete IngridPrincipalPreference p where p.principalName = :principalName and p.prefName = :prefName" )
+                 .setString("principalName", principalName)
+                 .setString("prefName", prefName)
+                 .executeUpdate();
+            tx.commit();
+        } catch (Throwable t) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Error removing persistent preference.", t);
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+    }
+    
 }

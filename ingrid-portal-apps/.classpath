@@ -47,5 +47,6 @@
 	<classpathentry kind="lib" path="/ingrid-portal-base/lib/mysql-connector-java-3.1.11-bin.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ehcache/jars/ehcache-1.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/xpp3/jars/xpp3-1.1.2a.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/antlr/jars/antlr-2.7.2.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

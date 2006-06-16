@@ -6,7 +6,7 @@
 		<id name="id">
     		<generator class="native"/>
         </id>
-    	<property name="principalId" type="java.lang.Long" column="principal_id"/>
+    	<property name="principalName" type="java.lang.String" column="principal_name"/>
     	<property name="prefName" type="java.lang.String" column="pref_name"/>
     	<property name="prefValue" type="java.lang.String" column="pref_value"/>
     	<property name="modifiedDate" type="timestamp" column="modified_date"/>

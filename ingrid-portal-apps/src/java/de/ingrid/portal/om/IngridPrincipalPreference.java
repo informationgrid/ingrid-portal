@@ -13,7 +13,7 @@ import java.util.Date;
 public class IngridPrincipalPreference {
 
     Long id;
-    Long principalId;
+    String principalName;
     String prefName;
     String prefValue;
     Date modifiedDate;
@@ -67,16 +67,16 @@ public class IngridPrincipalPreference {
         this.prefValue = prefValue;
     }
     /**
-     * @return Returns the principalId.
+     * @return Returns the principalName.
      */
-    public Long getPrincipalId() {
-        return principalId;
+    public String getPrincipalName() {
+        return principalName;
     }
     /**
-     * @param principalId The principalId to set.
+     * @param principalName The principalName to set.
      */
-    public void setPrincipalId(Long principalId) {
-        this.principalId = principalId;
+    public void setPrincipalName(String principalName) {
+        this.principalName = principalName;
     }
     
 }
