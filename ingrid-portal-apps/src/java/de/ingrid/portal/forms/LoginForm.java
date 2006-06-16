@@ -7,8 +7,6 @@ import javax.portlet.PortletRequest;
 
 import org.apache.jetspeed.login.LoginConstants;
 
-import de.ingrid.portal.global.Utils;
-
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -31,8 +29,9 @@ public class LoginForm extends ActionForm {
      * initial values. can be set from outside and may differ because of Locale
      */
     protected String INITIAL_USERNAME = "";
+
     protected String INITIAL_PASSWORD = "";
-    
+
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -68,7 +67,7 @@ public class LoginForm extends ActionForm {
             allOk = false;
         }
 
-        return allOk;    
+        return allOk;
     }
 
     /**

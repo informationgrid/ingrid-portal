@@ -14,6 +14,8 @@ import de.ingrid.portal.global.Settings;
  */
 public class EnvironmentSearchForm extends ActionForm {
 
+    private static final long serialVersionUID = 5763282738596879712L;
+
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "envsearch_form";
 

@@ -14,6 +14,8 @@ import de.ingrid.portal.global.Utils;
  */
 public class ContactForm extends ActionForm {
 
+    private static final long serialVersionUID = -8772366310279327463L;
+
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "contact_form";
 

@@ -23,6 +23,8 @@ import de.ingrid.portal.global.Settings;
  */
 public class ChronicleSearchForm extends ActionForm {
 
+    private static final long serialVersionUID = 7744744902434768965L;
+
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "chronicles_form";
 

@@ -16,6 +16,8 @@ import de.ingrid.portal.global.Settings;
  */
 public class MeasuresSearchForm extends ActionForm {
 
+    private static final long serialVersionUID = 8882603034022791782L;
+
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "messearch_form";
 

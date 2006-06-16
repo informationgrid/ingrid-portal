@@ -16,6 +16,8 @@ import de.ingrid.portal.global.Settings;
  */
 public class ServiceSearchForm extends ActionForm {
 
+    private static final long serialVersionUID = 2222873033952767302L;
+
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "service_form";
 

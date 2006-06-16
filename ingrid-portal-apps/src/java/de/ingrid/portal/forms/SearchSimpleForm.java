@@ -14,6 +14,8 @@ import de.ingrid.portal.global.Settings;
  */
 public class SearchSimpleForm extends ActionForm {
 
+    private static final long serialVersionUID = -5233532668942607955L;
+
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "search_simple_form";
 
@@ -69,7 +71,7 @@ public class SearchSimpleForm extends ActionForm {
     public void setINITIAL_QUERY(String initialQuery) {
         INITIAL_QUERY = initialQuery;
     }
-    
+
     /**
      * Get initial query which was set from outside (dependent from locale)
      */
