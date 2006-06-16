@@ -4,12 +4,10 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.security.Principal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +18,6 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.app.FieldMethodizer;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.forms.ContactForm;
 import de.ingrid.portal.forms.LoginForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
@@ -38,32 +35,31 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
-        
+
         String errorCode = request.getParameter("errorCode");
         if (errorCode != null) {
             frm.clearErrors();
             if (errorCode.equals(LoginConstants.ERROR_UNKNOWN_USER.toString())) {
-                frm.setError(LoginForm.FIELD_USERNAME, "login.error.noUsername");
+                frm.setError(LoginForm.FIELD_USERNAME, "login.error.unknownUser");
             } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
-                frm.setError(LoginForm.FIELD_PASSWORD, "login.error.noPassword");
+                frm.setError(LoginForm.FIELD_PASSWORD, "login.error.invalidPassword");
             } else {
                 frm.setError("", "login.error.general");
             }
-        } else {
-            // TODO Localize!
-            frm.setINITIAL_USERNAME("Benutzer");
-            frm.setINITIAL_PASSWORD("Password");
+        } else if (!frm.hasErrors()) {
+            frm.setINITIAL_USERNAME(messages.getString("login.form.username.initialValue"));
+            frm.setINITIAL_PASSWORD(messages.getString("login.form.passwd.initialValue"));
             frm.init();
             frm.clearErrors();
         }
         context.put("actionForm", frm);
-        
         context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
 
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
-        context.put("MESSAGES", messages);
         super.doView(request, response);
     }
 
@@ -71,33 +67,41 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-        
+
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
+        frm.clearErrors();
 
         String cmd = request.getParameter("cmd");
         if (cmd != null && cmd.equals("doLogin")) {
-            HttpSession session = ((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getSession(true);
-            
+            HttpSession session = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+                    .getRequest().getSession(true);
+
             frm.populate(request);
-    
+            if (!frm.validate()) {
+                return;
+            }
+
             if (frm.getInput(LoginConstants.DESTINATION) != null)
                 session.setAttribute(LoginConstants.DESTINATION, frm.getInput(LoginConstants.DESTINATION));
             else
                 session.removeAttribute(LoginConstants.DESTINATION);
-    
+
             if (frm.getInput(LoginConstants.USERNAME) != null)
                 session.setAttribute(LoginConstants.USERNAME, frm.getInput(LoginConstants.USERNAME));
             else
                 session.removeAttribute(LoginConstants.USERNAME);
-            
+
             if (frm.getInput(LoginConstants.PASSWORD) != null)
                 session.setAttribute(LoginConstants.PASSWORD, frm.getInput(LoginConstants.PASSWORD));
             else
                 session.removeAttribute(LoginConstants.PASSWORD);
-    
-            response.sendRedirect(response.encodeURL(((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()+ "/login/redirector"));
+
+            response.sendRedirect(response.encodeURL(((RequestContext) request
+                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
+                    + "/login/redirector"));
         } else {
-            Integer errorCode = (Integer)((RequestContext)request.getAttribute(RequestContext.REQUEST_PORTALENV)).getSessionAttribute(LoginConstants.ERRORCODE);
+            Integer errorCode = (Integer) ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+                    .getSessionAttribute(LoginConstants.ERRORCODE);
             if (errorCode != null) {
                 response.setRenderParameter("errorCode", errorCode.toString());
             } else if (request.getUserPrincipal() == null) {
