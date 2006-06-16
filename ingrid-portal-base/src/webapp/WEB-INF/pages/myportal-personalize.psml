@@ -8,8 +8,15 @@
   <metadata name="title" xml:lang="de">Mein PortalU</metadata>
 
   <fragment id="myportal-personalize" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="myportal-personalize-1" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSearchSettingsPortlet">
+    <fragment id="myportal-personalize-4" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeOverviewPortlet">
       <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+      <preference name="titleKey" readOnly="false">
+        <value>personalize.overview.title</value>
+      </preference>
+    </fragment>
+    <fragment id="myportal-personalize-1" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSearchSettingsPortlet">
+      <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>searchSettings.title.rankingAndGrouping</value>
