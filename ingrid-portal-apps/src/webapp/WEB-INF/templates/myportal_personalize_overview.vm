@@ -1,0 +1,10 @@
+<div class="section">
+      <h2>$MESSAGES.getString('personalize.overview.content')</h2>
+      <ul class="innermenu">
+#foreach($portletTitleKey in $portletTitleKeys)		
+		<li><a href="mpu_personalisierung.html#startseite">$MESSAGES.getString($portletTitleKey)</a></li>
+#end		
+      </ul>
+      <div class="line"><hr></div>
+      <br>
+</div>
