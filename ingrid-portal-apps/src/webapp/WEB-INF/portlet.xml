@@ -522,6 +522,25 @@
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="MyPortalPersonalizeSearchSettingsPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_settings.vm</value>
+        </init-param>
+        
+        <portlet-name>MyPortalPersonalizeSearchSettingsPortlet</portlet-name>
+        <display-name>MyPortalPersonalizeSearchSettingsPortlet</display-name>
+        <description>This portlet displays the myportal personalization dialog: SearchSettings.</description>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeSearchSettingsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>            
+    </portlet>
+
 
     <!-- *********************** -->
     <!-- Main Menue              -->

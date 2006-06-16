@@ -23,7 +23,7 @@
 			<a href="portal/myportal-edit-account.psml">$MESSAGES.getString('overview.content.entry2')</a>
 		</li>
 		<li>
-			<a href="mpu_personalisierung.html">$MESSAGES.getString('overview.content.entry3')</a>
+			<a href="portal/myportal-personalize.psml">$MESSAGES.getString('overview.content.entry3')</a>
 		</li>
 		<li>
 			<a href="login/logout">$MESSAGES.getString('overview.content.entry4')</a>

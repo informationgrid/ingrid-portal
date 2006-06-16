@@ -14,7 +14,7 @@
 #if($currPage=="personalize")
 		<span><strong>$MESSAGES.getString('myPortal.info.navigation.personalize')</strong></span>
 #else
-		<span><a href="mpu_personalisierung.html">$MESSAGES.getString('myPortal.info.navigation.personalize')</a></span>
+		<span><a href="portal/myportal-personalize.psml">$MESSAGES.getString('myPortal.info.navigation.personalize')</a></span>
 #end
 		<span class="clearer"></span>
 	</p>
