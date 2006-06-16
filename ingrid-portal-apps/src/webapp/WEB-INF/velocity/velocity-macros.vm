@@ -48,7 +48,7 @@ $fieldLabel#end
 ## display content
 ## ------------------------------
 #macro (displayPartner)
-<option value="all" #getSelected('partner' 'all')>------ Alles auswählen ------</option>
+<option value="all" #getSelected('partner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($partner in $partnerList)
 <option value="$partner.Ident" #getSelected('partner' "$partner.Ident")>$partner.Name</option>
 #end
