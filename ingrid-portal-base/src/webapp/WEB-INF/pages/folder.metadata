@@ -9,12 +9,10 @@
     <separator>
       <text>separator1</text>
     </separator>
-<!--    
     <options>/service-myportal.psml</options>
     <separator>
       <text>separator2</text>
     </separator>
--->
     <options>/service-sitemap.psml</options>
     <separator>
       <text>separator2</text>
