@@ -50,7 +50,6 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
         if (cmd == null) {
             f.clear();
             Principal principal = request.getUserPrincipal();
-            
             HashMap searchSettings = (HashMap)IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.SEARCH_SETTINGS);
             if (searchSettings != null) {
                 f.setInput(SearchSettingsForm.FIELD_RANKING, (String)searchSettings.get(IngridSessionPreferences.SEARCH_SETTING_RANKING));
@@ -96,6 +95,12 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
         searchSettings.put(IngridSessionPreferences.SEARCH_SETTING_RANKING, f.getInput(SearchSettingsForm.FIELD_RANKING));
         searchSettings.put(IngridSessionPreferences.SEARCH_SETTING_GROUPING, f.getInput(SearchSettingsForm.FIELD_GROUPING));
         searchSettings.put(IngridSessionPreferences.SEARCH_SETTING_INCL_META, f.getInput(SearchSettingsForm.FIELD_INCL_META));
+        //update the session preference with the persistent data
+        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+        if (sessionPrefs != null) {
+            sessionPrefs.putAll(searchSettings);
+        }
+        
         IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.SEARCH_SETTINGS, searchSettings);
     }
 
