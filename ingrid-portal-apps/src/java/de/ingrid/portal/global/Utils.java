@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -81,6 +82,14 @@ public class Utils {
                 PortletSession.APPLICATION_SCOPE);
         if (obj == null) {
             obj = new IngridSessionPreferences();
+            // initialize the session preference with persistent data from personalization
+            Principal principal = request.getUserPrincipal();
+            if (principal != null) {
+                HashMap searchSettings = (HashMap)IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.SEARCH_SETTINGS);
+                if (searchSettings != null) {
+                    obj.putAll(searchSettings);
+                }
+            }
             request.getPortletSession().setAttribute(aKey, obj, PortletSession.APPLICATION_SCOPE);
         }
         return obj;
