@@ -752,12 +752,16 @@ public class UtilsSearch {
 
         } else if (action.equalsIgnoreCase("doOpenPartner")) {
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
-            DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
-            node.setOpen(true);
+            if (partnerRoot != null) {
+                DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
+                node.setOpen(true);
+            }
         } else if (action.equalsIgnoreCase("doClosePartner")) {
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
-            DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
-            node.setOpen(false);
+            if (partnerRoot != null) {
+                DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
+                node.setOpen(false);
+            }
         }
     }
 
