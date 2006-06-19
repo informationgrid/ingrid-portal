@@ -69,6 +69,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
         if (action == null) {
             cf.clear();
         } else if (action.equals(PARAMV_ACTION_SUCCESS)) {
+            response.setTitle(messages.getString("contact.success.title"));
             setDefaultViewPage(TEMPLATE_SUCCESS);
         }
 

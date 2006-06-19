@@ -1,1 +1,8 @@
-$MESSAGES.getString('contact.success')
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+<p>$MESSAGES.getString('contact.success')</p>
+<p class="iconLink">
+	<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact.psml"))
+	<span><a href="$link">$MESSAGES.getString('contact.success.link')</a></span>
+	<span class="clearer"></span>
+</p>
