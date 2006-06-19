@@ -28,10 +28,13 @@ import de.ingrid.portal.om.IngridPrincipalPreference;
 public class IngridPersistencePrefs {
 
     public static final String SEARCH_SETTINGS = "searchSettings";
+    public static final String SEARCH_SOURCES = "searchSources";
     
     
     private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
     private static final XStream xstream;
+
+
 
     static {
         try {

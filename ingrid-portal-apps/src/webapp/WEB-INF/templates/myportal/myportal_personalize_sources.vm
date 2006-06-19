@@ -1,0 +1,36 @@
+  <div class="section">    
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="selection_form" id="extsearch">
+      <div class="formbody">
+          <p>$MESSAGES.getString('personalize.sources.explanation')</p>
+          <div class="innerform">
+            <p>
+              <input type="checkbox" name="sources" id="chk_all" onclick="ingrid_checkAll2Groups(document.selection_form.sources, document.selection_form.meta)" onkeypress="ingrid_checkAll2Groups(document.selection_form.sources, document.selection_form.meta)" value="all"#getChecked("sources" "all") /><label for="chk_all">$MESSAGES.getString('personalize.sources.all')</label>
+            </p>
+            <p>
+              <input class="indent1_checkbox" type="checkbox" name="sources" id="chk_internet" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="www"#getChecked("sources" "www") /><label for="chk_internet">$MESSAGES.getString('personalize.sources.web')</label>
+            </p> 
+            <p>
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta" onclick="ingrid_checkAllAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkAllAdapt(document.selection_form.meta, document.selection_form.sources)" value="all"#getChecked("meta" "all") /><label for="chk_meta">$MESSAGES.getString('personalize.sources.meta')</label>
+            </p>
+            <p>
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_0" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_0"#getChecked("meta" "meta_0") /><label for="chk_meta_0">$MESSAGES.getString('personalize.sources.meta1')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_1" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_1"#getChecked("meta" "meta_1") /><label for="chk_meta_1">$MESSAGES.getString('personalize.sources.meta2')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_2" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_2"#getChecked("meta" "meta_2") /><label for="chk_meta_2">$MESSAGES.getString('personalize.sources.meta3')</label>
+    	        <br />
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_3" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_3"#getChecked("meta" "meta_3") /><label for="chk_meta_3">$MESSAGES.getString('personalize.sources.meta4')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_4" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_4"#getChecked("meta" "meta_4") /><label for="chk_meta_4">$MESSAGES.getString('personalize.sources.meta5')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_5" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_5"#getChecked("meta" "meta_5") /><label for="chk_meta_5">$MESSAGES.getString('personalize.sources.meta6')</label>
+            </p> 
+            <p>
+              <input class="indent1_checkbox" type="checkbox" name="sources" id="chk_fis" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="fis"#getChecked("sources" "fis") /><label for="chk_fis">In <acronym title="$MESSAGES.getString('personalize.sources.fis.acronym')">$MESSAGES.getString('personalize.sources.fis')</acronym></label>
+            </p> 
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/myportal/include_form_footer_save.vm')
+    </form>
+  </div>    

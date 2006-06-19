@@ -1,0 +1,31 @@
+  <div class="section">    
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" name="settings_form" id="settings_form">
+      <input type="hidden" name="action" value="doSubmit"/>
+      <div class="formbody">
+		#displayFormErrors()
+        <p class="topmargin">
+          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('personalize.settings.label.ranking')</label>
+          <select id="ranking" class="group_by inputstyle" name="ranking" size="1">
+            <option value="score" #getSelected('ranking' 'score')>$MESSAGES.getString('personalize.settings.ranking.option.score')</option>
+            <option value="date" #getSelected('ranking' 'date')>$MESSAGES.getString('personalize.settings.ranking.option.date')</option>
+          </select>
+          <span class="clearer"></span>
+        </p>
+        <p>
+          <label class="float_left col2left" for="group_by">$MESSAGES.getString('personalize.settings.label.grouping')</label>
+          <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
+            <option value="none" #getSelected('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
+            <option value="partner" #getSelected('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
+            <option value="provider" #getSelected('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
+          </select>
+          <span class="clearer"></span>
+        </p>
+        <div class="line_form"><hr /></div>
+        <p>
+          <input type="checkbox" name="incl_meta" id="incl_meta" #getChecked('incl_meta' 'on') /><label for="incl_meta"> $MESSAGES.getString('personalize.settings.label.activateSNSTerms')</label>
+        </p>
+      </div>
+#parse ('/WEB-INF/templates/myportal/include_form_footer_save.vm')
+    </form>
+  </div>    
