@@ -20,17 +20,19 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.LoginForm;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     /**
-     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
+     *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
@@ -64,7 +66,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
+     *      javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
 
@@ -95,6 +98,10 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 session.setAttribute(LoginConstants.PASSWORD, frm.getInput(LoginConstants.PASSWORD));
             else
                 session.removeAttribute(LoginConstants.PASSWORD);
+
+            // signalize that the user is about to log in
+            // see MyPortalOverviewPortlet::doView()
+            session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
 
             response.sendRedirect(response.encodeURL(((RequestContext) request
                     .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()

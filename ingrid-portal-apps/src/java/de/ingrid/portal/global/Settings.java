@@ -354,6 +354,10 @@ public class Settings {
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE_UNRANKED = "currentSelectorPageUnranked";
 
+    // ------------- Session keys for direct HTTP session manipulation -------------------------
+    
+    public static final String SESSION_LOGIN_STARTED = "session_started";
+
 
 
 
