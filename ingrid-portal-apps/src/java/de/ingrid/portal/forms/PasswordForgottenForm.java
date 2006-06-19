@@ -45,12 +45,12 @@ public class PasswordForgottenForm extends ActionForm {
         clearErrors();
 
         if (!hasInput(FIELD_EMAIL)) {
-            setError(FIELD_EMAIL, "account.password_forgotten.error.noEmail");
+            setError(FIELD_EMAIL, "password.forgotten.error.noEmail");
             allOk = false;
         } else {
             String myEmail = getInput(FIELD_EMAIL);
             if (!Utils.isValidEmailAddress(myEmail)) {
-                setError(FIELD_EMAIL, "account.password_forgotten.error.emailNotValid");
+                setError(FIELD_EMAIL, "password.forgotten.error.emailNotValid");
                 allOk = false;
             }
         }
