@@ -71,7 +71,7 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
                 result.put("years", new Integer(years));
             }
             // fetch search term
-            // TODO use title if bug in iPlug is resolved, see INGRID-901
+            // TODO use longest word as sns search term ? us title if bug in iPlug is resolved, see INGRID-901 ?
             result.put("term", UtilsString.getSearchTerm(detail.getTopicName(), " "));
             //result.put("term", detail.getTopicName());
 

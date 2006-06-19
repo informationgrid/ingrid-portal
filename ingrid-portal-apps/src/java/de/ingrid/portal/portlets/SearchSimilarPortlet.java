@@ -78,7 +78,6 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         // if query assume we have results
         setDefaultViewPage(TEMPLATE_RESULT);
 
-        // TODO remove page state in future, when separate portlets
         // use messages and render parameters instead !!!
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
