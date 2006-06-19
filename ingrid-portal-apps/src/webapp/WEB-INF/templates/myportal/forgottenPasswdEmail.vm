@@ -1,12 +1,11 @@
-Hello  $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
+Hallo  $!{map.get("user.name.given")} $!{map.get("user.name.family")},
 
-You have requested a new password for your account. 
+Sie haben ein neues Passwort für Ihren Account beantragt. 
 
-The account username: $!{map.get("username")}
-The new password is : $!{map.get("password")}
+Ihr Benutzername: $!{map.get("username")}
+Ihr neues Passwort: $!{map.get("password")}
 
 
-Thanks,  
+Mit freundlichen Grüßen,
 
-The Jetspeed Team.
-
+Ihr PortalU Team

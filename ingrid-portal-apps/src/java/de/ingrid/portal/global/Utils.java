@@ -85,7 +85,8 @@ public class Utils {
             // initialize the session preference with persistent data from personalization
             Principal principal = request.getUserPrincipal();
             if (principal != null) {
-                HashMap searchSettings = (HashMap)IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.SEARCH_SETTINGS);
+                HashMap searchSettings = (HashMap) IngridPersistencePrefs.getPref(principal.getName(),
+                        IngridPersistencePrefs.SEARCH_SETTINGS);
                 if (searchSettings != null) {
                     obj.putAll(searchSettings);
                 }
@@ -253,7 +254,7 @@ public class Utils {
         }
 
         if (resultB.length() > maxLength) {
-            return resultB.substring(0, maxLength-3).concat("...");
+            return resultB.substring(0, maxLength - 3).concat("...");
         }
 
         return resultB.toString();
@@ -422,9 +423,20 @@ public class Utils {
         return buffer;
     }
 
-    public static void sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
+    /**
+     * Send email
+     * 
+     * @param from
+     * @param subject
+     * @param to
+     * @param text
+     * @param headers
+     * @return true if email was sent, else false
+     */
+    public static boolean sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
 
         boolean debug = log.isDebugEnabled();
+        boolean emailSent = false;
 
         Properties props = new Properties();
         props.put("mail.smtp.host", PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_SERVER, "localhost"));
@@ -461,12 +473,14 @@ public class Utils {
             msg.setSubject(subject);
             msg.setContent(text, "text/plain");
             Transport.send(msg);
+            emailSent = true;
         } catch (AddressException e) {
             log.error("invalid email address format", e);
         } catch (MessagingException e) {
             log.error("error sending email.", e);
         }
 
+        return emailSent;
     }
 
     public static String getResourceAsStream(String resource) throws Exception {
