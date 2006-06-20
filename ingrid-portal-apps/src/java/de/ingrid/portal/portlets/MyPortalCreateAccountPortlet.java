@@ -26,20 +26,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
-import org.apache.jetspeed.administration.PortalAdministrationImpl;
-import org.apache.jetspeed.administration.PortalConfigurationConstants;
 import org.apache.jetspeed.exception.JetspeedException;
-import org.apache.jetspeed.om.common.SecurityConstraints;
-import org.apache.jetspeed.om.folder.Folder;
-import org.apache.jetspeed.om.page.Page;
-import org.apache.jetspeed.page.FolderNotUpdatedException;
-import org.apache.jetspeed.page.PageManager;
-import org.apache.jetspeed.profiler.Profiler;
-import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
-import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -48,8 +38,6 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.CreateAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.portlets.security.SecurityUtil;
-import de.ingrid.portal.search.net.ThreadedQueryController;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -59,11 +47,15 @@ import de.ingrid.portal.search.net.ThreadedQueryController;
 public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(MyPortalCreateAccountPortlet.class);
-    
+
     private static final String STATE_ACCOUNT_CREATED = "account_created";
 
+    private static final String STATE_ACCOUNT_PROBLEMS_EMAIL = "account_email";
+
+    private static final String STATE_ACCOUNT_PROBLEMS = "account_problems";
+
     private PortalAdministration admin;
-    
+
     private UserManager userManager;
 
     // Init Parameters
@@ -79,18 +71,16 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
 
-    private static final String TEMPLATE_ACCOUNT_CREATED = "/WEB-INF/templates/myportal/myportal_create_account_done.vm";
+    private static final String TEMPLATE_ACCOUNT_DONE = "/WEB-INF/templates/myportal/myportal_create_account_done.vm";
 
-    private static final String TEMPLATE_ACCOUNT_CONFIRMED = "/WEB-INF/templates/myportal/myportal_create_account_confirmed.vm";
+    private static final String TEMPLATE_ACCOUNT_CONFIRM_DONE = "/WEB-INF/templates/myportal/myportal_create_account_confirm_done.vm";
 
-    private static final String TEMPLATE_ACCOUNT_CONFIRM_ERROR = "/WEB-INF/templates/myportal/myportal_create_account_confirm_error.vm";
-    
     /** servlet path of the return url to be printed and href'd in email template */
     private String returnUrlPath;
 
     /** email template to use for merging */
     private String emailTemplate;
-    
+
     /** roles */
     private List roles;
 
@@ -99,20 +89,20 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
     /** profile rules */
     private Map rules;
-    
+
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
-        admin = (PortalAdministration) getPortletContext().getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
-        if (null == admin) { 
-            throw new PortletException("Failed to find the Portal Administration on portlet initialization"); 
+        admin = (PortalAdministration) getPortletContext()
+                .getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
+        if (null == admin) {
+            throw new PortletException("Failed to find the Portal Administration on portlet initialization");
         }
-        userManager = (UserManager)getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-        if (null == userManager)
-        {
+        userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+        if (null == userManager) {
             throw new PortletException("Failed to find the User Manager on portlet initialization");
         }
 
@@ -126,16 +116,13 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         List names = getInitParameterList(config, IP_RULES_NAMES);
         List values = getInitParameterList(config, IP_RULES_VALUES);
         rules = new HashMap();
-        for (int ix = 0; ix < ((names.size() < values.size()) ? names.size()
-                : values.size()); ix++)
-        {
+        for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
             rules.put(names.get(ix), values.get(ix));
         }
-        
-        
+
         this.returnUrlPath = config.getInitParameter(IP_RETURN_URL);
         this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
-        
+
     }
 
     /**
@@ -143,12 +130,13 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
-        
+
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY, CreateAccountForm.class);        
+        CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY,
+                CreateAccountForm.class);
 
         String newUserGUID = request.getParameter("newUserGUID");
         if (newUserGUID != null) {
@@ -160,25 +148,43 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 String userConfirmId = pref.get("user.custom.ingrid.user.confirmid", "invalid");
                 if (userConfirmId.equals(newUserGUID)) {
                     userManager.setUserEnabled(userName, true);
-                    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRMED);
+                    context.put("success", "true");
+                    response.setTitle(messages.getString("account.confirm.title"));
+                    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
                 } else {
-                    f.setError("", "account.confirm.error.invalid.comfirmid");
-                    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_ERROR);
+                    context.put("success", "false");
+                    context.put("problemText", "account.confirm.error.invalid.confirmid");
+                    response.setTitle(messages.getString("account.confirm.error.title"));
+                    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
                 }
             } catch (SecurityException e) {
-                f.setError("", "account.confirm.error.invalid.userid");
-                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_ERROR);
+                context.put("success", "false");
+                context.put("problemText", "account.confirm.error.invalid.userid");
+                response.setTitle(messages.getString("account.confirm.error.title"));
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
             }
         } else {
             String cmd = request.getParameter("cmd");
-            
+
             if (cmd == null) {
                 f.clear();
             } else if (cmd.equals(STATE_ACCOUNT_CREATED)) {
-                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CREATED);
+                context.put("success", "true");
+                response.setTitle(messages.getString("account.created.title"));
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_DONE);
+            } else if (cmd.equals(STATE_ACCOUNT_PROBLEMS_EMAIL)) {
+                context.put("success", "false");
+                context.put("problemText", "account.created.problems.email");
+                response.setTitle(messages.getString("account.created.problems.title"));
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_DONE);
+            } else if (cmd.equals(STATE_ACCOUNT_PROBLEMS)) {
+                context.put("success", "false");
+                context.put("problemText", "account.created.problems.general");
+                response.setTitle(messages.getString("account.created.problems.title"));
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_DONE);
             }
         }
-        
+
         context.put("actionForm", f);
         super.doView(request, response);
     }
@@ -186,36 +192,38 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
+    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
+            IOException {
+
+        Locale locale = request.getLocale();
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
 
         actionResponse.setRenderParameter("cmd", request.getParameter("cmd"));
 
-        CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY, CreateAccountForm.class);
-        
+        CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY,
+                CreateAccountForm.class);
         f.clearErrors();
-        
         f.populate(request);
         if (!f.validate()) {
             return;
         }
-        
+
         try {
             String userName = f.getInput(CreateAccountForm.FIELD_LOGIN);
             String password = f.getInput(CreateAccountForm.FIELD_PASSWORD);
 
             // check if the user name exists
             boolean userIdExistsFlag = true;
-            try  {
-                User user = userManager.getUser(userName);
-            } catch (SecurityException e)  {
+            try {
+                userManager.getUser(userName);
+            } catch (SecurityException e) {
                 userIdExistsFlag = false;
             }
             if (userIdExistsFlag) {
                 f.setError(CreateAccountForm.FIELD_LOGIN, "account.create.error.user.exists");
                 return;
             }
-            
-            
+
             Map userAttributes = new HashMap();
             // we'll assume that these map back to PLT.D values
             userAttributes.put("user.name.prefix", f.getInput(CreateAccountForm.FIELD_SALUTATION));
@@ -231,63 +239,67 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(CreateAccountForm.FIELD_ATTENTION));
             userAttributes.put("user.custom.ingrid.user.interest", f.getInput(CreateAccountForm.FIELD_INTEREST));
             userAttributes.put("user.custom.ingrid.user.profession", f.getInput(CreateAccountForm.FIELD_PROFESSION));
-            userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f.getInput(CreateAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
-            
+            userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
+                    .getInput(CreateAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
+
             // generate login id
-            String confirmId = Utils.getMD5Hash(userName.concat(password).concat(Long.toString(System.currentTimeMillis())));            
+            String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
+                    Long.toString(System.currentTimeMillis())));
             userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
-            
+
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
             // TODO set this to false in production env
             userManager.setUserEnabled(userName, false);
-            
+
             String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 
             HashMap userInfo = new HashMap(userAttributes);
             userInfo.put("returnURL", returnUrl);
-            
-            Locale locale = request.getLocale();
+            // map coded stuff
+            String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
+                    .get("user.name.prefix"));
+            userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
 
             String language = locale.getLanguage();
             String localizedTemplatePath = this.emailTemplate;
             int period = localizedTemplatePath.lastIndexOf(".");
             if (period > 0) {
-                String fixedTempl = localizedTemplatePath.substring(0, period) + "_"
-                        + language + "." + localizedTemplatePath.substring(period + 1);
+                String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
+                        + localizedTemplatePath.substring(period + 1);
                 if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
                     this.emailTemplate = fixedTempl;
                 }
             }
 
-            if (localizedTemplatePath == null) { 
+            if (localizedTemplatePath == null) {
                 log.error("email template not available");
-                f.setError("", "email template not available");
+                actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);
                 return;
             }
-            
-            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                    request.getLocale()));
+
             String emailSubject = messages.getString("account.create.confirmation.email.subject");
 
-            
-            String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER, "foo@bar.com");
+            String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
+                    "foo@bar.com");
             String to = (String) userInfo.get("user.business-info.online.email");
             String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
-            Utils.sendEmail(from, emailSubject, new String[] {to}, text, null);
-            
+            if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
+                actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_CREATED);
+            } else {
+                actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);
+            }
+
         } catch (JetspeedException e) {
             e.printStackTrace();
+            actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS);
         }
-        
-        actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_CREATED);
-        
     }
 
-    protected List getInitParameterList(PortletConfig config, String ipName)
-    {
+    protected List getInitParameterList(PortletConfig config, String ipName) {
         String temp = config.getInitParameter(ipName);
-        if (temp == null) return new ArrayList();
+        if (temp == null)
+            return new ArrayList();
 
         String[] temps = temp.split("\\,");
         for (int ix = 0; ix < temps.length; ix++)
@@ -296,9 +308,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         return Arrays.asList(temps);
     }
 
-    protected String generateReturnURL(PortletRequest request,
-            PortletResponse response, String userName, String urlGUID)
-    {
+    protected String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID) {
         String fullPath = this.returnUrlPath + "?userName=" + userName + "&newUserGUID=" + urlGUID;
         // NOTE: getPortalURL will encode the fullPath for us
         String url = admin.getPortalURL(request, response, fullPath);

@@ -90,4 +90,25 @@ public class IngridResourceBundle {
         }
     }
 
+    /**
+     * Get a message from encapsulated resource, also takes CommonResources into account.
+     * Message key is "generalKey" + "keyPostfix"
+     * @param generalKey
+     * @param keyPostfix
+     * @return "" if message not found !
+     */
+    public String getString(String generalKey, String keyPostfix) {
+        String retValue = "";
+        try {
+            String key = generalKey.concat(keyPostfix);
+            retValue = getString(key);
+            if (retValue.equals(key)) {
+                retValue = "";
+            }
+        } catch (Exception e) {
+            retValue = "";
+        }
+        return retValue;
+    }
+
 }

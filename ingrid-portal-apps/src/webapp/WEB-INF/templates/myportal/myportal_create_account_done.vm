@@ -1,2 +1,5 @@
-<h2>$MESSAGES.getString('account.created.header')</h2>
+#if ($success == 'true')
 <p>$MESSAGES.getString('account.created.content')</p>
+#else
+<p>$!{MESSAGES.getString($problemText)}</p>
+#end

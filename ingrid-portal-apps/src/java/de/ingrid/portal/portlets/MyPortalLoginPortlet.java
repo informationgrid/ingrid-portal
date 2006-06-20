@@ -50,6 +50,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 frm.setError(LoginForm.FIELD_USERNAME, "login.error.unknownUser");
             } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
                 frm.setError(LoginForm.FIELD_PASSWORD, "login.error.invalidPassword");
+            } else if (errorCode.equals(LoginConstants.ERROR_USER_DISABLED.toString())) {
+                frm.setError(LoginForm.FIELD_PASSWORD, "login.error.userDisabled");
             } else {
                 frm.setError("", "login.error.general");
             }

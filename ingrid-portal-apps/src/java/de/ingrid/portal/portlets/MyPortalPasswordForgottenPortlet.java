@@ -131,8 +131,8 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
             return;
         }
 
+        // search user with email
         String email = f.getInput(PasswordForgottenForm.FIELD_EMAIL);
-
         User user;
         try {
             user = admin.lookupUserFromEmail(email);
@@ -159,8 +159,12 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
             // special attributes
             userAttributes.put(CTX_NEW_PASSWORD, newPassword);
             userAttributes.put(CTX_USER_NAME, userName);
-
+            // map coded stuff
             Locale locale = request.getLocale();
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+            String salutationFull = messages.getString("account.edit.salutation.option", (String) userAttributes
+                    .get("user.name.prefix"));
+            userAttributes.put("user.custom.ingrid.user.salutation.full", salutationFull);
 
             String language = locale.getLanguage();
             String localizedTemplatePath = this.emailTemplate;
@@ -175,12 +179,10 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
             if (localizedTemplatePath == null) {
                 log.error("email template not available");
-                f.setError("", "email template not available");
+                actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
                 return;
             }
 
-            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                    request.getLocale()));
             String emailSubject = messages.getString("password.forgotten.email.subject");
 
             String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
@@ -195,6 +197,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
         } catch (Exception e) {
             log.error("error sending new password.", e);
+            actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
         }
 
     }

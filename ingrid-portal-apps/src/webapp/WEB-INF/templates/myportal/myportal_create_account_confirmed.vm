@@ -1,2 +1,0 @@
-<h2>$MESSAGES.getString('account.confirmed.header')</h2>
-<p>$MESSAGES.getString('account.confirmed.content')</p>

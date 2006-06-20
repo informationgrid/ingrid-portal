@@ -1,13 +1,12 @@
-Hello $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
+Hallo $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Welcome to PortalU! 
-Thanks you for registering.
+Willkommen bei PortalU! 
+Vielen Dank für Ihre Anmeldung.
 
-Please verify your registration by following the link below.
+Bitte verifizieren Sie Ihre Anmeldung durch den nachfolgenden Link.
 
 $!{map.get("returnURL")}
 
-You may change your password online.
+Mit freundlichen Grüßen,
 
-Thanks
-
+Ihr PortalU Team
