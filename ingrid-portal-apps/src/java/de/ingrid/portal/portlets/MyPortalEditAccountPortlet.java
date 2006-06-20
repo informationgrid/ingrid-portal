@@ -39,14 +39,14 @@ import de.ingrid.portal.global.Utils;
 public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(MyPortalEditAccountPortlet.class);
-    
+
     private static final String STATE_ACCOUNT_SAVED = "account_saved";
 
     private PortalAdministration admin;
-    
+
     private UserManager userManager;
 
-    private static final String TEMPLATE_ACCOUNT_SAVED = "/WEB-INF/templates/myportal/myportal_edit_account_done.vm";
+    private static final String TEMPLATE_ACCOUNT_DONE = "/WEB-INF/templates/myportal/myportal_edit_account_done.vm";
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
@@ -54,13 +54,13 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
-        admin = (PortalAdministration) getPortletContext().getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
-        if (null == admin) { 
-            throw new PortletException("Failed to find the Portal Administration on portlet initialization"); 
+        admin = (PortalAdministration) getPortletContext()
+                .getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
+        if (null == admin) {
+            throw new PortletException("Failed to find the Portal Administration on portlet initialization");
         }
-        userManager = (UserManager)getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-        if (null == userManager)
-        {
+        userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+        if (null == userManager) {
             throw new PortletException("Failed to find the User Manager on portlet initialization");
         }
     }
@@ -70,17 +70,18 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
-        
+
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
-        
+
         response.setTitle(messages.getString(messages.getString("account.edit.title")));
 
-        EditAccountForm f = (EditAccountForm) Utils.getActionForm(request, EditAccountForm.SESSION_KEY, EditAccountForm.class);        
+        EditAccountForm f = (EditAccountForm) Utils.getActionForm(request, EditAccountForm.SESSION_KEY,
+                EditAccountForm.class);
 
         String cmd = request.getParameter("cmd");
-        
+
         if (cmd == null) {
             f.clear();
             String userName = request.getUserPrincipal().getName();
@@ -93,24 +94,29 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
                 f.setInput(EditAccountForm.FIELD_LASTNAME, userAttributes.get("user.name.family", ""));
                 f.setInput(EditAccountForm.FIELD_EMAIL, userAttributes.get("user.business-info.online.email", ""));
                 f.setInput(EditAccountForm.FIELD_STREET, userAttributes.get("user.business-info.postal.street", ""));
-                f.setInput(EditAccountForm.FIELD_POSTALCODE, userAttributes.get("user.business-info.postal.postalcode", ""));
+                f.setInput(EditAccountForm.FIELD_POSTALCODE, userAttributes.get("user.business-info.postal.postalcode",
+                        ""));
                 f.setInput(EditAccountForm.FIELD_CITY, userAttributes.get("user.business-info.postal.city", ""));
 
                 f.setInput(EditAccountForm.FIELD_AGE, userAttributes.get("user.custom.ingrid.user.age.group", ""));
-                f.setInput(EditAccountForm.FIELD_ATTENTION, userAttributes.get("user.custom.ingrid.user.attention.from", ""));
+                f.setInput(EditAccountForm.FIELD_ATTENTION, userAttributes.get(
+                        "user.custom.ingrid.user.attention.from", ""));
                 f.setInput(EditAccountForm.FIELD_INTEREST, userAttributes.get("user.custom.ingrid.user.interest", ""));
-                f.setInput(EditAccountForm.FIELD_PROFESSION, userAttributes.get("user.custom.ingrid.user.profession", ""));
-                f.setInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER, userAttributes.get("user.custom.ingrid.user.subscribe.newsletter", ""));
+                f.setInput(EditAccountForm.FIELD_PROFESSION, userAttributes.get("user.custom.ingrid.user.profession",
+                        ""));
+                f.setInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER, userAttributes.get(
+                        "user.custom.ingrid.user.subscribe.newsletter", ""));
 
             } catch (SecurityException e) {
                 f.setError("", "account.edit.error.user.notfound");
                 log.error("Error getting current user.", e);
             }
-            
+
         } else if (cmd.equals(STATE_ACCOUNT_SAVED)) {
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_SAVED);
+            response.setTitle(messages.getString("account.edited.title"));
+            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_DONE);
         }
-        
+
         context.put("actionForm", f);
         super.doView(request, response);
     }
@@ -118,19 +124,19 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
+    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
+            IOException {
 
         actionResponse.setRenderParameter("cmd", request.getParameter("cmd"));
 
-        EditAccountForm f = (EditAccountForm) Utils.getActionForm(request, EditAccountForm.SESSION_KEY, EditAccountForm.class);
-        
+        EditAccountForm f = (EditAccountForm) Utils.getActionForm(request, EditAccountForm.SESSION_KEY,
+                EditAccountForm.class);
         f.clearErrors();
-        
         f.populate(request);
         if (!f.validate()) {
             return;
         }
-        
+
         String userName = null;
         User user = null;
         try {
@@ -141,7 +147,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             log.error("Error getting current user.", e);
             return;
         }
-            
+
         Preferences userAttributes = user.getUserAttributes();
         userAttributes.put("user.name.prefix", f.getInput(EditAccountForm.FIELD_SALUTATION));
         userAttributes.put("user.name.given", f.getInput(EditAccountForm.FIELD_FIRSTNAME));
@@ -156,12 +162,14 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
         userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(EditAccountForm.FIELD_ATTENTION));
         userAttributes.put("user.custom.ingrid.user.interest", f.getInput(EditAccountForm.FIELD_INTEREST));
         userAttributes.put("user.custom.ingrid.user.profession", f.getInput(EditAccountForm.FIELD_PROFESSION));
-        userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f.getInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
+        userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
+                .getInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
         try {
             // update password only if a old password was provided
             String oldPassword = f.getInput(EditAccountForm.FIELD_PASSWORD_OLD);
             if (oldPassword != null && oldPassword.length() > 0) {
-                userManager.setPassword(userName, f.getInput(EditAccountForm.FIELD_PASSWORD_OLD), f.getInput(EditAccountForm.FIELD_PASSWORD_NEW));
+                userManager.setPassword(userName, f.getInput(EditAccountForm.FIELD_PASSWORD_OLD), f
+                        .getInput(EditAccountForm.FIELD_PASSWORD_NEW));
             }
         } catch (PasswordAlreadyUsedException e) {
             f.setError(EditAccountForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
@@ -173,9 +181,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             f.setError("", "account.edit.error.wrong.password");
             return;
         }
-        
-        actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_SAVED);
-        
-    }
 
+        actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_SAVED);
+    }
 }

@@ -149,18 +149,18 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 if (userConfirmId.equals(newUserGUID)) {
                     userManager.setUserEnabled(userName, true);
                     context.put("success", "true");
-                    response.setTitle(messages.getString("account.confirm.title"));
+                    response.setTitle(messages.getString("account.confirmed.title"));
                     request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
                 } else {
                     context.put("success", "false");
-                    context.put("problemText", "account.confirm.error.invalid.confirmid");
-                    response.setTitle(messages.getString("account.confirm.error.title"));
+                    context.put("problemText", "account.confirmed.error.invalid.confirmid");
+                    response.setTitle(messages.getString("account.confirmed.error.title"));
                     request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
                 }
             } catch (SecurityException e) {
                 context.put("success", "false");
-                context.put("problemText", "account.confirm.error.invalid.userid");
-                response.setTitle(messages.getString("account.confirm.error.title"));
+                context.put("problemText", "account.confirmed.error.invalid.userid");
+                response.setTitle(messages.getString("account.confirmed.error.title"));
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
             }
         } else {
