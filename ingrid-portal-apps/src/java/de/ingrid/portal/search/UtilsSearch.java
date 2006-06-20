@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -22,6 +23,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
+import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -463,33 +465,66 @@ public class UtilsSearch {
         }
         return false;
     }
+    
+    public static boolean hasDatatype(IngridQuery q, String datatype) {
+        return hasNegativeDataType(q, datatype) || hasPositiveDataType(q, datatype);
+    }
 
     /**
      * Check whether query contains a field of the given name.
      * Ignores whether it is in positive or negative list !
      * NOTICE:
-     * - only FIELD QUERIES and direct map keys are checked, NO CLAUSE QUERIES !
-     * - comparison is done with lowercase representation of field name.
+     * - only FIELD QUERIES and direct map keys are checked in query and all clause queries !
+     * - comparison is done case insensitive.
      * @param query
      * @param fieldName
-     * @return
+     * @return True if the field was found, false if not.
      */
     public static boolean containsField(IngridQuery query, String fieldName) {
-        String fieldNameLowCase = fieldName.toLowerCase();
-        FieldQuery[] fields = query.getDataTypes();
-        int count = fields.length;
-        for (int i = 0; i < count; i++) {
-            if (fields[i].getFieldName().toLowerCase().equals(fieldNameLowCase)) {
+        IngridQuery[] clauses = query.getAllClauses();
+        for (int i=0; i<clauses.length; i++) {
+            FieldQuery[] fields = query.getFields();
+            for (int j = 0; j < fields.length; i++) {
+                if (fields[j].getFieldName().equalsIgnoreCase(fieldName)) {
+                    return true;
+                }
+            }
+            if (query.get(fieldName) != null) {
                 return true;
             }
         }
-        if (query.get(fieldName) != null) {
-            return true;
-        }
-
         return false;
     }
 
+    /**
+     * Check whether query contains a field of the given name and a value.
+     * Ignores whether it is in positive or negative list !
+     * NOTICE:
+     * - only FIELD QUERIES and direct map keys are checked in query and all clause queries !
+     * - comparison is done case insensitive.
+     * 
+     * @param query The query.
+     * @param fieldName The field name.
+     * @param value The field's value
+     * @return True if the field,value was found, false if not.
+     */
+    public static boolean containsField(IngridQuery query, String fieldName, String value) {
+        IngridQuery[] clauses = query.getAllClauses();
+        for (int i=0; i<clauses.length; i++) {
+            FieldQuery[] fields = query.getFields();
+            for (int j = 0; j < fields.length; i++) {
+                if (fields[j].getFieldName().equalsIgnoreCase(fieldName) 
+                        && fields[i].getFieldValue().equalsIgnoreCase(value)) {
+                    return true;
+                }
+            }
+            if (query.get(fieldName) != null && ((String)query.get(fieldName)).equalsIgnoreCase(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * Adapt basic datatypes in query dependent from selected datatype in UserInterface
      * (the ones above the Simple Search Input).
@@ -796,5 +831,116 @@ public class UtilsSearch {
                 }
             }
         }
+    }
+    
+    public static String processSearchSources(String queryString, String[] sources, String[] meta) {
+        HashMap datatypes = new LinkedHashMap();
+        String subTerm = "";
+        String resultingQueryStr;
+        resultingQueryStr = UtilsQueryString.replaceTerm(queryString, Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DATABASE, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_SERVICE, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DOCUMENT, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_MAP, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_JOB, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_PROJECT, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW), "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA), "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS), "");
+
+        datatypes.put("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW), "1");
+        datatypes.put("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS), "1");
+        datatypes.put("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA), "1");
+        for (int i=0; i<sources.length; i++) {
+            if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
+                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_AREA_ENVINFO, "1");
+            } 
+            if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_WWW)) {
+                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW, "1");
+                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW));
+            }
+            if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_FIS)) {
+                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS, "1");
+                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS));
+            }
+        }
+        HashMap metaclasses = new LinkedHashMap();
+        for (int i=0; i<meta.length; i++) {
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_ALL)) {
+                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
+                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+                // empty meta classes, all metaclasses are selected
+                metaclasses = new LinkedHashMap();
+                break;
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_0)) {
+                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_JOB, "1");
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_1)) {
+                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_MAP, "1");
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_2)) {
+                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DOCUMENT, "1");
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_3)) {
+                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_SERVICE, "1");
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_4)) {
+                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_PROJECT, "1");
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_5)) {
+                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DATABASE, "1");
+            }
+        }
+        // remove meta exclusion if we have a meta data class selection
+        if (metaclasses.size() > 0) {
+            datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+            datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
+        }
+        // build the subquery
+        if (!datatypes.containsKey(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_AREA_ENVINFO) && (metaclasses.size() > 0 || datatypes.size() > 0)) {
+            Iterator it = datatypes.keySet().iterator();
+            while (it.hasNext()) {
+                String datatype = (String)it.next();
+                subTerm = subTerm.concat(datatype);
+                if (it.hasNext()) {
+                    subTerm = subTerm.concat(" ");
+                }
+            }
+            
+            it = metaclasses.keySet().iterator();
+            if (it.hasNext()) {
+                subTerm = subTerm.concat(" (");
+                while (it.hasNext()) {
+                    String metaclass = (String)it.next();
+                    subTerm = subTerm.concat(metaclass);
+                    if (it.hasNext()) {
+                        subTerm = subTerm.concat(" OR ");
+                    }
+                }
+                subTerm = subTerm.concat(")");
+            }
+        } 
+        return UtilsQueryString.addTerm(UtilsQueryString.stripQueryWhitespace(resultingQueryStr), subTerm, UtilsQueryString.OP_AND);
+    }
+
+    /**
+     * Get all fields with a specific field name.
+     * 
+     * @param q The query.
+     * @param fieldName The fieldname.
+     * @return The Array of resulting fields.
+     */
+    public static FieldQuery[] getField(IngridQuery q, String fieldName) {
+        FieldQuery[] fields = q.getFields();
+        ArrayList resultFields = new ArrayList();
+        for (int i=0; i<fields.length; i++) {
+            if (fields[i].getFieldName().equals(fieldName)) {
+                resultFields.add(fields[i]);
+            }
+        }
+        return (FieldQuery[]) resultFields.toArray(new FieldQuery[resultFields.size()]);
     }
 }

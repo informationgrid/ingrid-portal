@@ -97,6 +97,9 @@ public class Settings {
     public static final String QFIELD_INCL_META = "incl_meta";
 
     public static final String QFIELD_LANG = "lang";
+
+    public static final String QFIELD_METACLASS = "metaclass";
+    
     
     
     // ------------- query field values -----------------------------
@@ -122,7 +125,7 @@ public class Settings {
     public final static String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
 
     public final static String QVALUE_DATATYPE_SOURCE_FIS = "fis";
-
+    
     // datatype: IPLUG types
     // ---------------------
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
@@ -133,6 +136,15 @@ public class Settings {
     
     public static final String QVALUE_LANG_DE = "de";
     
+    // metaclass: types
+    // ---------------------
+    
+    public static final String QVALUE_METACLASS_DATABASE = "database";
+    public static final String QVALUE_METACLASS_SERVICE = "service";
+    public static final String QVALUE_METACLASS_DOCUMENT = "document";
+    public static final String QVALUE_METACLASS_MAP = "map";
+    public static final String QVALUE_METACLASS_JOB = "job";
+    public static final String QVALUE_METACLASS_PROJECT = "project";
     
     // ===========================================
     // Result data (used in templates for rendering results!)
@@ -357,11 +369,6 @@ public class Settings {
     // ------------- Session keys for direct HTTP session manipulation -------------------------
     
     public static final String SESSION_LOGIN_STARTED = "session_started";
-
-
-
-
-
 
 
 

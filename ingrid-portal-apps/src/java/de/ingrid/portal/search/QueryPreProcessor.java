@@ -3,7 +3,9 @@
  */
 package de.ingrid.portal.search;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.portlet.PortletRequest;
 
@@ -12,9 +14,11 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.net.QueryDescriptor;
+import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -53,8 +57,14 @@ public class QueryPreProcessor {
             }
         }
         
-        // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
+        // get the datasource
         String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+
+        // set search sources according to the persistence preferences
+        // only for ds = PARAMV_DATASOURCE_ENVINFO AND if quer has no custom datatype AND query has no custom metaclass
+        processQuerySources(request, ds, query);
+        
+        // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
 //        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
             UtilsSearch.processBasicDataTypes(query, ds);
 //        }
@@ -102,7 +112,7 @@ public class QueryPreProcessor {
             }
             query.put(IngridQuery.RANKED, ranking);
         }
-
+        
         // set filter params. If no filter is set, process grouping
         // FILTERING AND GROUPING are mutually exclusive 
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
@@ -198,12 +208,19 @@ public class QueryPreProcessor {
             }
         }
 
+        // get the datasource
+        String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+
+        // set search sources according to the persistence preferences
+        // only for ds = PARAMV_DATASOURCE_ENVINFO AND if query has no custom datatype AND query has no custom metaclass
+        processQuerySources(request, ds, query);
+        
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
 //        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
-            String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
             UtilsSearch.processBasicDataTypes(query, ds);
 //        }
-
+            
+            
         // start hit
         int startHit = 0;
         String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
@@ -287,4 +304,50 @@ public class QueryPreProcessor {
                         PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, true, null);
     }
 
+    
+    private static void processQuerySources(PortletRequest request, String ds, IngridQuery query) {
+        // set search sources according to the persistence preferences
+        // only for ds = PARAMV_DATASOURCE_ENVINFO AND if quer has no custom datatype AND query has no custom metaclass
+        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO) && query.getDataTypes().length == 0 && !query.containsField(Settings.QFIELD_METACLASS)) {
+            Principal principal = request.getUserPrincipal();
+            if (principal != null) {
+                HashMap searchSources = (HashMap) IngridPersistencePrefs.getPref(principal.getName(),
+                        IngridPersistencePrefs.SEARCH_SOURCES);
+                if (searchSources != null && searchSources.get("sources") != null && searchSources.get("meta") != null && (((String[])searchSources.get("sources")).length > 0 || ((String[])searchSources.get("meta")).length > 0)) {
+                    String qStr = UtilsSearch.processSearchSources("", (String[])searchSources.get("sources"), (String[])searchSources.get("meta"));
+                    try {
+                        IngridQuery q = QueryStringParser.parse(qStr);
+                        // add datatypes
+                        FieldQuery[] datatypes = q.getDataTypes();
+                        for (int i=0;i<datatypes.length;i++) {
+                            FieldQuery datatype = datatypes[i];
+                            // add datatype if it does not already exist in the query
+//                            if ((!datatype.isProhibited() && !UtilsSearch.hasPositiveDataType(query,datatype.getFieldName())) 
+//                                    || (datatype.isProhibited() && !UtilsSearch.hasPositiveDataType(query,datatype.getFieldName()))) {
+                                query.addField(datatype);
+//                            }
+                        }
+                        // add metaclass
+                        //check for field metaclass (if only one metaclass was selected)
+                        if (q.containsField(Settings.QFIELD_METACLASS)) {
+                            FieldQuery[] metaclassFields = UtilsSearch.getField(q, Settings.QFIELD_METACLASS);
+                            for (int i=0; i<metaclassFields.length; i++) {
+                                query.addField(metaclassFields[i]);
+                            }
+                        // if more metaclasses are selected, they are in a clause query 
+                        } else {
+                            ClauseQuery[] clauses = q.getClauses();
+                            for (int i=0; i<clauses.length; i++) {
+                                query.addClause(clauses[i]);
+                            }
+                        }
+                        
+                    } catch (ParseException e) {
+                        log.error("Error parsing sources query string.", e);
+                    }
+                }
+            }
+        }
+    }
+    
 }
