@@ -81,11 +81,11 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 						</li>
 					</ul>
 				</li>
-##				<li>
-###set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-myportal.psml"))
-##					<a href="$link">$MESSAGES.getString("sitemap.area.service.myportal")</a>
-##					<p>$MESSAGES.getString("sitemap.area.service.myportal.description")</p>
-##				</li>
+				<li>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-myportal.psml"))
+					<a href="$link">$MESSAGES.getString("sitemap.area.service.myportal")</a>
+					<p>$MESSAGES.getString("sitemap.area.service.myportal.description")</p>
+				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-sitemap.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.service.sitemap")</a>
