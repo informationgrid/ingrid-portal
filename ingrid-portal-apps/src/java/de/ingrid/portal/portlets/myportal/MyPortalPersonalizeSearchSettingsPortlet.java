@@ -41,7 +41,7 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
         context.put("MESSAGES", messages);
 
         PortletPreferences prefs = request.getPreferences();
-        String titleKey = prefs.getValue("titleKey", "searchSettings.title.rankingAndGrouping");
+        String titleKey = prefs.getValue("titleKey", "personalize.settings.title.rankingAndGrouping");
         response.setTitle(messages.getString(titleKey));
         
         SearchSettingsForm f = (SearchSettingsForm) Utils.getActionForm(request, SearchSettingsForm.SESSION_KEY, SearchSettingsForm.class);
@@ -83,10 +83,10 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
                 return;
             }
             
-            f.setError("", "searchSettings.message.settings.stored");
+            f.setError("", "personalize.settings.message.settings.stored");
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_ORIGINAL_SETTINGS)) {
             f.init();
-            f.setError("", "searchSettings.message.settings.resetted");
+            f.setError("", "personalize.settings.message.settings.resetted");
         }
 
         Principal principal = request.getUserPrincipal();
