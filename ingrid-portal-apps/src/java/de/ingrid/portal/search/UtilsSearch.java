@@ -723,67 +723,9 @@ public class UtilsSearch {
             String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
                     Settings.PARAM_QUERY_STRING);
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
-            Iterator it = partnerRoot.getChildren().iterator();
-            String chk;
-            HashMap partnerHash = new HashMap();
-            HashMap providerHash = new HashMap();
-            while (it.hasNext()) {
-                DisplayTreeNode partnerNode = (DisplayTreeNode) it.next();
-                chk = request.getParameter("chk_".concat(partnerNode.getId()));
-                if (chk != null && chk.equals("on")) {
-                    partnerHash.put("partner:".concat(partnerNode.getId()), "1");
-                }
-                if (partnerNode.isOpen()) {
-                    Iterator it2 = partnerNode.getChildren().iterator();
-                    while (it2.hasNext()) {
-                        DisplayTreeNode providerNode = (DisplayTreeNode) it2.next();
-                        chk = request.getParameter("chk_".concat(providerNode.getId()));
-                        if (chk != null && chk.equals("on")) {
-                            providerHash.put("provider:".concat(providerNode.getId()), "1");
-                        }
-                    }
-                }
-            }
-
-            String subTerm = "";
-            if (partnerHash.size() > 1) {
-                subTerm = subTerm.concat("(");
-            }
-            it = partnerHash.keySet().iterator();
-            while (it.hasNext()) {
-                String term = (String) it.next();
-                if (it.hasNext()) {
-                    subTerm = subTerm.concat(term).concat(" OR ");
-                } else {
-                    subTerm = subTerm.concat(term);
-                }
-            }
-            if (partnerHash.size() > 1) {
-                subTerm = subTerm.concat(")");
-            }
-            if (partnerHash.size() > 0 && providerHash.size() > 0) {
-                subTerm = subTerm.concat(" ");
-            }
-
-            if (providerHash.size() > 1) {
-                subTerm = subTerm.concat("(");
-            }
-            it = providerHash.keySet().iterator();
-            while (it.hasNext()) {
-                String term = (String) it.next();
-                if (it.hasNext()) {
-                    subTerm = subTerm.concat(term).concat(" OR ");
-                } else {
-                    subTerm = subTerm.concat(term);
-                }
-            }
-            if (providerHash.size() > 1) {
-                subTerm = subTerm.concat(")");
-            }
-            if (subTerm.length() > 0) {
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
-                        UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND));
-            }
+            String resultQuery = processSearchPartner(queryStr, partnerRoot, request);
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
+                    resultQuery);            
 
         } else if (action.equalsIgnoreCase("doOpenPartner")) {
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
@@ -800,6 +742,74 @@ public class UtilsSearch {
         }
     }
 
+    
+    public static String processSearchPartner(String queryStr, DisplayTreeNode partnerRoot, ActionRequest request) {
+        Iterator it = partnerRoot.getChildren().iterator();
+        String chk;
+        HashMap partnerHash = new HashMap();
+        HashMap providerHash = new HashMap();
+        while (it.hasNext()) {
+            DisplayTreeNode partnerNode = (DisplayTreeNode) it.next();
+            chk = request.getParameter("chk_".concat(partnerNode.getId()));
+            if (chk != null && chk.equals("on")) {
+                partnerHash.put("partner:".concat(partnerNode.getId()), "1");
+            }
+            if (partnerNode.isOpen()) {
+                Iterator it2 = partnerNode.getChildren().iterator();
+                while (it2.hasNext()) {
+                    DisplayTreeNode providerNode = (DisplayTreeNode) it2.next();
+                    chk = request.getParameter("chk_".concat(providerNode.getId()));
+                    if (chk != null && chk.equals("on")) {
+                        providerHash.put("provider:".concat(providerNode.getId()), "1");
+                    }
+                }
+            }
+        }
+
+        String subTerm = "";
+        if (partnerHash.size() > 1) {
+            subTerm = subTerm.concat("(");
+        }
+        it = partnerHash.keySet().iterator();
+        while (it.hasNext()) {
+            String term = (String) it.next();
+            if (it.hasNext()) {
+                subTerm = subTerm.concat(term).concat(" OR ");
+            } else {
+                subTerm = subTerm.concat(term);
+            }
+        }
+        if (partnerHash.size() > 1) {
+            subTerm = subTerm.concat(")");
+        }
+        if (partnerHash.size() > 0 && providerHash.size() > 0) {
+            subTerm = subTerm.concat(" ");
+        }
+
+        if (providerHash.size() > 1) {
+            subTerm = subTerm.concat("(");
+        }
+        it = providerHash.keySet().iterator();
+        while (it.hasNext()) {
+            String term = (String) it.next();
+            if (it.hasNext()) {
+                subTerm = subTerm.concat(term).concat(" OR ");
+            } else {
+                subTerm = subTerm.concat(term);
+            }
+        }
+        if (providerHash.size() > 1) {
+            subTerm = subTerm.concat(")");
+        }
+        if (subTerm.length() > 0) {
+            return UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND);
+        } else {
+            return queryStr;
+        }
+    }
+    
+    
+    
     /**
      * Add a querystring to the session querystring history.
      * 

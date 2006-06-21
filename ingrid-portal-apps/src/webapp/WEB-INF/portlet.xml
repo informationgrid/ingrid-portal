@@ -541,6 +541,25 @@
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="MyPortalPersonalizePartnerPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/myportal/myportal_personalize_partner.vm</value>
+        </init-param>
+        
+        <portlet-name>MyPortalPersonalizePartnerPortlet</portlet-name>
+        <display-name>MyPortalPersonalizePartnerPortlet</display-name>
+        <description>This portlet displays the myportal personalization dialog: Partner.</description>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizePartnerPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+    </portlet>
+
     <portlet id="MyPortalPersonalizeSourcesPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

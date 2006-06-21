@@ -129,7 +129,6 @@ public class QueryPreProcessor {
                     UtilsSearch.processProvider(query, new String[] {subject});
                 }
             }
-            
         } else {
             // no grouping when filter is set.
             // set grouping ! ONLY IF NO GROUPING IN Query String Input !
@@ -141,7 +140,9 @@ public class QueryPreProcessor {
                 UtilsSearch.processGrouping(query, grouping);
             }
         }
-        
+        // process persistent partner/provider
+        processQueryPartner(request, ds, query);
+
         
         String inclMetaData = (String)sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_INCL_META);
         if (inclMetaData != null && inclMetaData.equals("on")) {
@@ -264,6 +265,8 @@ public class QueryPreProcessor {
             }            
         }
 
+        // process persistent partner/provider
+        processQueryPartner(request, ds, query);
         
         // Compute the new start hit for the always groued unranked query
         
@@ -346,6 +349,37 @@ public class QueryPreProcessor {
                         log.error("Error parsing sources query string.", e);
                     }
                 }
+            }
+        }
+    }
+    
+    
+    /**
+     * Add persistent partner/provider preferences.
+     *  - ONLY if no partner/provider is added manually or by filter
+     * 
+     * @param request
+     * @param ds
+     * @param query
+     */
+    private static void processQueryPartner(PortletRequest request, String ds, IngridQuery query)  {
+        Principal principal = request.getUserPrincipal();
+        if (principal != null 
+                && query.getPositivePartner().length == 0 
+                && query.getNegativePartner().length == 0
+                && query.getPositiveProvider().length == 0
+                && query.getNegativeProvider().length == 0) {
+            String searchPartnerStr = (String) IngridPersistencePrefs.getPref(principal.getName(),
+                    IngridPersistencePrefs.SEARCH_PARTNER);
+            if (searchPartnerStr != null && searchPartnerStr.length() > 0 ) {
+                try {
+                    IngridQuery q = QueryStringParser.parse(searchPartnerStr);
+                    query.put(IngridQuery.PARTNER, q.get(IngridQuery.PARTNER));
+                    query.put(IngridQuery.PROVIDER, q.get(IngridQuery.PROVIDER));
+                } catch (ParseException e) {
+                    log.error("Error parsing sources query string.", e);
+                }
+                
             }
         }
     }

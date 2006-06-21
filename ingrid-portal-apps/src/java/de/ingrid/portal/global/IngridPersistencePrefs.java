@@ -29,6 +29,7 @@ public class IngridPersistencePrefs {
 
     public static final String SEARCH_SETTINGS = "searchSettings";
     public static final String SEARCH_SOURCES = "searchSources";
+    public static final String SEARCH_PARTNER = "searchPartner";
     
     
     private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
