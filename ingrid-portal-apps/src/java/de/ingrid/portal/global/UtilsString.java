@@ -173,7 +173,7 @@ public class UtilsString {
      * @return
      */
     public static String getSearchTerm(String sentence, String separator) {
-        char[] charsToRemove = new char[] { '.', ':', ',', '!', '?', ';' };
+        char[] charsToRemove = new char[] { '.', ':', ',', '!', '?', ';', '"' };
         String ret = "";
 
         try {
@@ -185,14 +185,25 @@ public class UtilsString {
                     ret = terms[i].trim();
                 }
             }
+            
+            // remove not supported chars from beginning
+            int i = 0;
+            char myChar;
+            while (i < charsToRemove.length && ret.length() > 0) {
+                myChar = ret.charAt(0);
+                if (myChar == charsToRemove[i]) {
+                    ret = ret.substring(1, ret.length()).trim();
+                    i = -1;
+                }
+                i++;
+            }
 
             // remove not supported chars from end
-            int i = 0;
-            char lastChar = ret.charAt(ret.length() - 1);
-            while (i < charsToRemove.length) {
-                if (lastChar == charsToRemove[i]) {
+            i = 0;
+            while (i < charsToRemove.length && ret.length() > 0) {
+                myChar = ret.charAt(ret.length() - 1);
+                if (myChar == charsToRemove[i]) {
                     ret = ret.substring(0, ret.length() - 1).trim();
-                    lastChar = ret.charAt(ret.length() - 1);
                     i = -1;
                 }
                 i++;
@@ -201,6 +212,10 @@ public class UtilsString {
             if (log.isWarnEnabled()) {
                 log.warn("error fetching \"search\" term from string '" + sentence + "'", ex);
             }
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("Search Term from teaser: " + ret);
         }
 
         return ret;

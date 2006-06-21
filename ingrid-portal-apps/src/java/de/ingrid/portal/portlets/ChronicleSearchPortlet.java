@@ -166,7 +166,10 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         // prepare Search, Search will be performed in Result portlet 
         // ----------------------------------
         if (doSearch) {
-            setupQuery(request);
+            String errKey = setupQuery(request);
+            if (errKey != null) {
+                af.setError("", errKey);
+            }
         } else {
             // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
@@ -189,7 +192,13 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, null));
     }
 
-    public void setupQuery(PortletRequest request) {
+    /**
+     * Create IngridQuery and publish it.
+     * RETURNS an Error String, if an error occured, which can be displayed in form.
+     * @param request
+     * @return
+     */
+    public String setupQuery(PortletRequest request) {
         // remove old query message for result portlet
         cancelRenderMessage(request, Settings.MSG_QUERY);
 
@@ -201,7 +210,15 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         try {
             // INPUT: Term
             String inputTerm = af.getInput(ChronicleSearchForm.FIELD_SEARCH).trim();
-            query = QueryStringParser.parse(inputTerm);
+
+            try {
+                query = QueryStringParser.parse(inputTerm);
+            } catch (Throwable t) {
+                if (log.isWarnEnabled()) {
+                    log.warn("Problems creating IngridQuery from input term: " + inputTerm, t);
+                }
+                return "chronicle.form.error.queryFormat";
+            }
 
             // SNS Query criteria
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
@@ -256,9 +273,12 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", ex);
             }
+            return "chronicle.form.error.exception";
         }
 
         // set query message for result portlet
         publishRenderMessage(request, Settings.MSG_QUERY, query);
+
+        return null;
     }
 }
