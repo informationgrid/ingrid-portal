@@ -22,7 +22,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/sitemap.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>sitemap.title</value>
       </preference>
     </fragment>

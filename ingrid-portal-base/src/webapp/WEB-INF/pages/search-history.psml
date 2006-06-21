@@ -28,7 +28,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/search_history_info.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>searchHistory.info.title</value>
       </preference>
     </fragment>

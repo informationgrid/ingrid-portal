@@ -26,7 +26,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/chronicle_info.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>chronicleSearch.info.title</value>
       </preference>
     </fragment>

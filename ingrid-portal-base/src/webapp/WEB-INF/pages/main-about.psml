@@ -22,7 +22,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/about_portalu.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>about.title</value>
       </preference>
       <preference name="helpKey" readOnly="false">
@@ -35,7 +35,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/about_portalu_links.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>about.links.title</value>
       </preference>
     </fragment>
@@ -45,7 +45,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/about_portalu_partner.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>about.partner.title</value>
       </preference>
     </fragment>

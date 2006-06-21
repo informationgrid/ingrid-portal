@@ -28,7 +28,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/search_extended/search_ext_env_area_partner_info.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>searchExtEnvAreaPartner.info.title</value>
       </preference>
     </fragment>

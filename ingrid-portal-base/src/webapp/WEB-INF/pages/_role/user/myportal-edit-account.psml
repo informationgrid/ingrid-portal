@@ -18,7 +18,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/myportal_navigation.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>myPortal.info.navigation.title</value>
       </preference>
       <preference name="currPage" readOnly="false">
@@ -31,7 +31,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/newsletter_teaser.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>teaser.newsletter.title</value>
       </preference>
     </fragment>
@@ -41,7 +41,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/login_teaser.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>teaser.login.title</value>
       </preference>
     </fragment>

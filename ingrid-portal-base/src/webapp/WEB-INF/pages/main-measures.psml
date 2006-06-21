@@ -25,7 +25,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/measures_info.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>measuresSearch.info.title</value>
       </preference>
     </fragment>

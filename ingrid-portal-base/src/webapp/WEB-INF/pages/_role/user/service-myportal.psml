@@ -18,7 +18,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/myportal_navigation.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>myPortal.info.navigation.title</value>
       </preference>
     </fragment>

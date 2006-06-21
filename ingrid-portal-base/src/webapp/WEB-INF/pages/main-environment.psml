@@ -25,7 +25,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/environment_info.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>envSearch.info.title</value>
       </preference>
       <preference name="infoLink" readOnly="false">

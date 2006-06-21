@@ -15,22 +15,29 @@
         <value>personalize.overview.title</value>
       </preference>
     </fragment>
-    <fragment id="myportal-personalize-6" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizePartnerPortlet">
+    <fragment id="myportal-personalize-7" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeHomePortlet">
       <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+      <preference name="titleKey" readOnly="false">
+        <value>personalize.home.title</value>
+      </preference>
+    </fragment>
+    <fragment id="myportal-personalize-6" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizePartnerPortlet">
+      <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>personalize.partner.title</value>
       </preference>
     </fragment>
     <fragment id="myportal-personalize-5" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSourcesPortlet">
-      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>personalize.sources.title</value>
       </preference>
     </fragment>
     <fragment id="myportal-personalize-1" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSearchSettingsPortlet">
-      <property layout="TwoColumns" name="row" value="3" />
+      <property layout="TwoColumns" name="row" value="4" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>personalize.settings.title</value>
@@ -42,7 +49,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/myportal_navigation.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>myPortal.info.navigation.title</value>
       </preference>
       <preference name="currPage" readOnly="false">
@@ -55,7 +62,7 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/login_teaser.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>teaser.login.title</value>
       </preference>
       <preference name="helpKey" readOnly="false">

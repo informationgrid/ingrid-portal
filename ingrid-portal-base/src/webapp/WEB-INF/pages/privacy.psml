@@ -29,7 +29,7 @@ limitations under the License.
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/privacy.vm</value>
       </preference>
-      <preference name="infoTitleKey" readOnly="false">
+      <preference name="titleKey" readOnly="false">
         <value>privacy.title</value>
       </preference>
     </fragment>

@@ -27,7 +27,7 @@
             <preference name="infoTemplate" readOnly="false">
               <value>/WEB-INF/templates/search_simple_info.vm</value>
             </preference>
-            <preference name="infoTitleKey" readOnly="false">
+            <preference name="titleKey" readOnly="false">
               <value>searchSimple.info.title</value>
             </preference>
           </fragment>
