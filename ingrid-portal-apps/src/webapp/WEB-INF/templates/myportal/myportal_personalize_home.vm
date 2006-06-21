@@ -1,0 +1,39 @@
+<div class="section">    
+	#set ($action = $renderResponse.createActionURL())
+	<form action="$action" method="post" name="personalize_home" id="personalize_home">
+		<div class="formbody">
+			<p>$MESSAGES.getString('personalize.home.explanation')</p>
+			<div class="line"><hr/></div>
+			<div class="float_left">
+				<h3>$MESSAGES.getString('personalize.home.content')</h3>
+#foreach($l in $rightColumnFragments)
+				<p>
+					<label for="c1r$velocityCount">$MESSAGES.getString('personalize.home.line') $velocityCount</label>
+					<select class="inputstyle" size="1" id="c1r$velocityCount" name="c1r$velocityCount">
+					<option value="none">$MESSAGES.getString('personalize.home.entry.empty')</option>
+	#foreach($f in $rightColumnFragments)
+					<option value="$f.fragment.getId()"#if($l==$f) selected="selected"#end>$f.title</option>
+	#end
+					</select>
+				</p>
+#end
+			</div>  
+			<div class="float_left marginleft">
+				<h3>$MESSAGES.getString('personalize.home.content.marginal')</h3>
+#foreach($l in $leftColumnFragments)
+				<p>
+					<label for="c2r$velocityCount">$MESSAGES.getString('personalize.home.line') $velocityCount</label>
+					<select class="inputstyle" size="1" id="c2r$velocityCount" name="c2r$velocityCount">
+					<option value="none">$MESSAGES.getString('personalize.home.entry.empty')</option>
+	#foreach($f in $leftColumnFragments)
+					<option value="$f.fragment.getId()"#if($l==$f) selected="selected"#end>$f.title</option>
+	#end
+					</select>
+				</p>
+#end
+			</div>  
+			<span class="clearer"></span>
+		</div>
+			#parse ('/WEB-INF/templates/myportal/include_form_footer_save.vm')
+	</form>
+</div>	

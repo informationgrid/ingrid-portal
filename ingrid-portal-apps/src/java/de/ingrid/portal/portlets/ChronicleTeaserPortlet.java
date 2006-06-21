@@ -9,6 +9,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -24,8 +25,6 @@ import de.ingrid.utils.IngridHitDetail;
 
 public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
 
-    public final static String TITLE_KEY = "chronicle.teaser.title";
-
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
@@ -38,7 +37,9 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        response.setTitle(messages.getString(TITLE_KEY));
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", "chronicle.teaser.title");
+        response.setTitle(messages.getString(titleKey));
 
         // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
         IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date());

@@ -41,7 +41,7 @@ public class InfoPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
 
         String myView = prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);
-        String myTitleKey = prefs.getValue("infoTitleKey", DEFAULT_TITLE_KEY);
+        String myTitleKey = prefs.getValue("titleKey", DEFAULT_TITLE_KEY);
         String myLink = prefs.getValue("infoLink", "");
         
         setDefaultViewPage(myView);

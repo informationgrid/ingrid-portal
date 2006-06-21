@@ -54,24 +54,27 @@ public class MyPortalPersonalizePartnerPortlet extends GenericVelocityPortlet {
         String partnerStr = (String) IngridPersistencePrefs.getPref(principal.getName(),
                 IngridPersistencePrefs.SEARCH_PARTNER);
 
-        PortletSession session = request.getPortletSession();
-        DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
-        Iterator it = partnerRoot.getChildren().iterator();
-        while (it.hasNext()) {
-            DisplayTreeNode partnerNode = (DisplayTreeNode) it.next();
-            if (partnerStr.indexOf(Settings.QFIELD_PARTNER.concat(":").concat(partnerNode.getId())) != -1) {
-                partnerNode.put("checked", "true");
-            } else {
-                partnerNode.remove("checked");
-            }
-            Iterator it2 = partnerNode.getChildren().iterator();
-            while (it2.hasNext()) {
-                DisplayTreeNode providerNode = (DisplayTreeNode) it2.next();
-                if (partnerStr.indexOf(Settings.QFIELD_PROVIDER.concat(":").concat(providerNode.getId())) != -1) {
-                    providerNode.put("checked", "true");
-                    partnerNode.setOpen(true);
+        if (partnerStr != null && partnerStr.length() > 0) {
+        
+            PortletSession session = request.getPortletSession();
+            DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
+            Iterator it = partnerRoot.getChildren().iterator();
+            while (it.hasNext()) {
+                DisplayTreeNode partnerNode = (DisplayTreeNode) it.next();
+                if (partnerStr.indexOf(Settings.QFIELD_PARTNER.concat(":").concat(partnerNode.getId())) != -1) {
+                    partnerNode.put("checked", "true");
                 } else {
-                    providerNode.remove("checked");
+                    partnerNode.remove("checked");
+                }
+                Iterator it2 = partnerNode.getChildren().iterator();
+                while (it2.hasNext()) {
+                    DisplayTreeNode providerNode = (DisplayTreeNode) it2.next();
+                    if (partnerStr.indexOf(Settings.QFIELD_PROVIDER.concat(":").concat(providerNode.getId())) != -1) {
+                        providerNode.put("checked", "true");
+                        partnerNode.setOpen(true);
+                    } else {
+                        providerNode.remove("checked");
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -17,8 +18,6 @@ import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.search.SearchState;
 
 public class MeasuresTeaserPortlet extends GenericVelocityPortlet {
-
-    public final static String TITLE_KEY = "teaser.measures.title";
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
@@ -36,7 +35,9 @@ public class MeasuresTeaserPortlet extends GenericVelocityPortlet {
         List rubrics = UtilsDB.getMeasuresRubrics();
         context.put("rubricList", rubrics);
 
-        response.setTitle(messages.getString(TITLE_KEY));
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", "teaser.measures.title");
+        response.setTitle(messages.getString(titleKey));
 
         super.doView(request, response);
     }

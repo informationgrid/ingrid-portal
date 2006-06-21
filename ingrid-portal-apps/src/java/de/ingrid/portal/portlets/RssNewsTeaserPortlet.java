@@ -33,13 +33,12 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        response.setTitle(messages.getString("news.teaser.title"));
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", "teaser.environment.title");
+        response.setTitle(messages.getString(titleKey));
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
-
-        // read preferences
-        PortletPreferences prefs = request.getPreferences();
 
         int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("noOfEntriesDisplayed", "3"));
 
