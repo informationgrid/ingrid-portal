@@ -15,15 +15,22 @@
         <value>personalize.overview.title</value>
       </preference>
     </fragment>
-    <fragment id="myportal-personalize-5" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSourcesPortlet">
+    <fragment id="myportal-personalize-6" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizePartnerPortlet">
       <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+      <preference name="titleKey" readOnly="false">
+        <value>personalize.partner.title</value>
+      </preference>
+    </fragment>
+    <fragment id="myportal-personalize-5" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSourcesPortlet">
+      <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>personalize.sources.title</value>
       </preference>
     </fragment>
     <fragment id="myportal-personalize-1" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeSearchSettingsPortlet">
-      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="row" value="3" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>personalize.settings.title</value>
