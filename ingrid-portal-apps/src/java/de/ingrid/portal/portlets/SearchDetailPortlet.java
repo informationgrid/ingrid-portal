@@ -45,7 +45,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet
 {
-    private final static Log log = LogFactory.getLog(ServiceResultPortlet.class);
+    private final static Log log = LogFactory.getLog(SearchDetailPortlet.class);
 
     private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
     private final static String TEMPLATE_DETAIL_ECS = "/WEB-INF/templates/search_detail.vm";
