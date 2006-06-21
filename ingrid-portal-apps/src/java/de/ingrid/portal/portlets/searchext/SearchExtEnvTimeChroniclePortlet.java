@@ -20,7 +20,6 @@ import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvTimeChronicleForm;
-import de.ingrid.portal.forms.SearchExtEnvTopicThesaurusForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -48,7 +47,6 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
 
     private final static Log log = LogFactory.getLog(SearchExtEnvTimeChroniclePortlet.class);
 
-    
     // PAGES
     /** our current page, for redirecting with URL params */
     private final static String PAGE_CURRENT = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
@@ -63,9 +61,10 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        SearchExtEnvTimeChronicleForm f = (SearchExtEnvTimeChronicleForm) Utils.getActionForm(request, SearchExtEnvTimeChronicleForm.SESSION_KEY, SearchExtEnvTimeChronicleForm.class);        
+        SearchExtEnvTimeChronicleForm f = (SearchExtEnvTimeChronicleForm) Utils.getActionForm(request,
+                SearchExtEnvTimeChronicleForm.SESSION_KEY, SearchExtEnvTimeChronicleForm.class);
         context.put("actionForm", f);
-        
+
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
         // ----------------------------------
@@ -99,9 +98,10 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
 
         // SEARCH FOR EVENTS
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-            
+
             // check form input
-            SearchExtEnvTimeChronicleForm f = (SearchExtEnvTimeChronicleForm) Utils.getActionForm(request, SearchExtEnvTimeChronicleForm.SESSION_KEY, SearchExtEnvTimeChronicleForm.class);        
+            SearchExtEnvTimeChronicleForm f = (SearchExtEnvTimeChronicleForm) Utils.getActionForm(request,
+                    SearchExtEnvTimeChronicleForm.SESSION_KEY, SearchExtEnvTimeChronicleForm.class);
             f.clearErrors();
             f.populate(request);
             if (f.validate()) {
@@ -185,11 +185,13 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                         f.setError("", "searchExtEnvTimeChronicle.error.no_term_found");
                     }
                     ps.put("similarRoot", similarRoot);
-                    
-                    
-                } catch (Exception e) {
+
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems performing SNS search", t);
+                    }
                     f.setError("", "searchExtEnvTimeChronicle.error.no_term_found");
-                }                
+                }
             }
 
             // redirect to same page with URL parameter indicating that action was called !
@@ -232,6 +234,5 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
         ps.put("similarRoot", null);
         return ps;
     }
-
 
 }
