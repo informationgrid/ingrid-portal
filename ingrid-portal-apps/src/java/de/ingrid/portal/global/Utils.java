@@ -10,6 +10,8 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -82,7 +84,8 @@ public class Utils {
                 PortletSession.APPLICATION_SCOPE);
         if (obj == null) {
             obj = new IngridSessionPreferences();
-            // initialize the session preference with persistent data from personalization
+            // initialize the session preference with persistent data from
+            // personalization
             Principal principal = request.getUserPrincipal();
             if (principal != null) {
                 HashMap searchSettings = (HashMap) IngridPersistencePrefs.getPref(principal.getName(),
@@ -178,7 +181,8 @@ public class Utils {
 
         boolean result = true;
         try {
-            // check for format syntax of RFC822, throws Exception if not valid !
+            // check for format syntax of RFC822, throws Exception if not valid
+            // !
             new InternetAddress(aEmailAddress);
             // check for name and email
             String[] tokens = aEmailAddress.split("@");
@@ -262,8 +266,10 @@ public class Utils {
 
     /**
      * Returns position of given value in given array.
+     * 
      * @param array
-     * @param value value to search for, if null is passed -1 is returned
+     * @param value
+     *            value to search for, if null is passed -1 is returned
      * @return position of value in array or -1
      */
     public static int getPosInArray(String[] array, String value) {
@@ -279,8 +285,9 @@ public class Utils {
     }
 
     /**
-     * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
-     * for all parameters in request !
+     * Returns the "GET" Parameter representation for the URL (WITHOUT leading
+     * "?" or "&") for all parameters in request !
+     * 
      * @param request
      * @return
      */
@@ -302,7 +309,9 @@ public class Utils {
     }
 
     /**
-     * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
+     * Returns the "GET" Parameter representation for the URL (WITHOUT leading
+     * "?" or "&")
+     * 
      * @param values
      * @param paramName
      * @return
@@ -321,8 +330,9 @@ public class Utils {
     }
 
     /**
-     * Returns the "GET" Parameter representation for the URL (WITHOUT leading "?" or "&")
-     * NOTICE: if string is null or empty, return value is ""
+     * Returns the "GET" Parameter representation for the URL (WITHOUT leading
+     * "?" or "&") NOTICE: if string is null or empty, return value is ""
+     * 
      * @param value
      * @param paramName
      * @return
@@ -348,6 +358,7 @@ public class Utils {
 
     /**
      * Append a new urlParameter to the given url Parameters.
+     * 
      * @param currentURLParams
      * @param newURLParam
      */
@@ -363,7 +374,8 @@ public class Utils {
     /**
      * Returns, if the session has been marked as JavaScript- enabled.
      * 
-     * @param request The RenderRequest to check.
+     * @param request
+     *            The RenderRequest to check.
      * @return True for JavaScript enabled, false for not.
      */
     public static boolean isJavaScriptEnabled(RenderRequest request) {
@@ -412,7 +424,8 @@ public class Utils {
 
         try {
             Velocity.init();
-            //            String realTemplatePath = portletConfig.getPortletContext().getRealPath(template);
+            // String realTemplatePath =
+            // portletConfig.getPortletContext().getRealPath(template);
             Template vTemplate = Velocity.getTemplate(template);
             sw = new StringWriter();
             vTemplate.merge(context, sw);
@@ -509,4 +522,17 @@ public class Utils {
         return stream;
     }
 
+    /**
+     * Extend an Arraylist with null values until the capacity size is reached.
+     * 
+     * @param list
+     * @param size
+     */
+    public static void ensureArraySize(ArrayList list, int size) {
+        if (list.size() < size) {
+            Object[] objArray = new Object[size - list.size()];
+            list.ensureCapacity(size);
+            list.addAll(Arrays.asList(objArray));
+        }
+    }
 }

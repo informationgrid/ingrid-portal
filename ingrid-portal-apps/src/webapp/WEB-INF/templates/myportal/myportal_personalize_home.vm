@@ -6,13 +6,19 @@
 			<div class="line"><hr/></div>
 			<div class="float_left">
 				<h3>$MESSAGES.getString('personalize.home.content')</h3>
-#foreach($l in $rightColumnFragments)
+#foreach($l in $leftColumnPortlets)
+	#if($leftColumnFragments.size() >= $velocityCount)
+		#set($idx = $velocityCount - 1)
+		#set($fragment = $leftColumnFragments.get($idx).get("fragment"))
+	#else
+		#set($fragment = "")
+	#end	
 				<p>
 					<label for="c1r$velocityCount">$MESSAGES.getString('personalize.home.line') $velocityCount</label>
 					<select class="inputstyle" size="1" id="c1r$velocityCount" name="c1r$velocityCount">
 					<option value="none">$MESSAGES.getString('personalize.home.entry.empty')</option>
-	#foreach($f in $rightColumnFragments)
-					<option value="$f.fragment.getId()"#if($l==$f) selected="selected"#end>$f.title</option>
+	#foreach($f in $leftColumnPortlets)
+					<option value="$f.portlet.getUniqueName()"#if(${fragment.getName()}==${f.portlet.getUniqueName()}) selected="selected"#end>$f.title</option>
 	#end
 					</select>
 				</p>
@@ -20,13 +26,19 @@
 			</div>  
 			<div class="float_left marginleft">
 				<h3>$MESSAGES.getString('personalize.home.content.marginal')</h3>
-#foreach($l in $leftColumnFragments)
+#foreach($l in $rightColumnPortlets)
+	#if($rightColumnFragments.size() >= $velocityCount)
+		#set($idx = $velocityCount - 1)
+		#set($fragment = $rightColumnFragments.get($idx).get("fragment"))
+	#else
+		#set($fragment = "")
+	#end
 				<p>
 					<label for="c2r$velocityCount">$MESSAGES.getString('personalize.home.line') $velocityCount</label>
 					<select class="inputstyle" size="1" id="c2r$velocityCount" name="c2r$velocityCount">
 					<option value="none">$MESSAGES.getString('personalize.home.entry.empty')</option>
-	#foreach($f in $leftColumnFragments)
-					<option value="$f.fragment.getId()"#if($l==$f) selected="selected"#end>$f.title</option>
+	#foreach($f in $rightColumnPortlets)
+					<option value="$f.portlet.getUniqueName()"#if(${fragment.getName()}==${f.portlet.getUniqueName()}) selected="selected"#end>$f.title</option>
 	#end
 					</select>
 				</p>

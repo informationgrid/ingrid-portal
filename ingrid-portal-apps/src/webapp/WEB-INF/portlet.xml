@@ -234,6 +234,20 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>0</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>searchSimple.title.search</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet id="EnvironmentTeaser">
@@ -252,6 +266,20 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.environment.title</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet id="RssNewsTeaser">
@@ -274,6 +302,20 @@
             <short-title>RssNewsTeaser</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>news.teaser.title</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet id="RssNews">
@@ -294,6 +336,38 @@
         <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
     </portlet>
 
+    <portlet id="IngridInformPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>IngridInformPortlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home-marginal</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>0</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.ingridInform.title</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="ServiceTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -310,6 +384,20 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home-marginal</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.service.title</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet id="MeasuresTeaser">
@@ -328,6 +416,20 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home-marginal</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.measures.title</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet id="ChronicleTeaser">
@@ -346,6 +448,20 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home-marginal</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>3</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>chronicle.teaser.title</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
 
@@ -963,7 +1079,7 @@
             <title>ThemaFachwoerterbuch</title>
             <short-title>TopicThesaurus</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle>
     </portlet>
 
     <portlet id="SearchExtEnvPlaceGeothesaurus">
