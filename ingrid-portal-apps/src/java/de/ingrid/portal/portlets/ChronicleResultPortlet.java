@@ -191,7 +191,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                     topic.put("title", topic.getTopicName());
 
                     if (detail != null) {
-                        String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
+                        String searchData = (String) detail.get(DetailedTopic.ASSOCIATED_OCC);
                         // remove double quoted stuff '\"'
                         searchData = searchData.replaceAll("\\\\\"", "");
                         if (searchData != null && searchData.length() > 0) {

@@ -56,7 +56,7 @@ public class SNSSimilarTermsInterfaceImplTest extends TestCase {
                 System.out.println("to:" + detail.getTo());
                 System.out.println("type:" + detail.getType());
                 System.out.println("administrativeID:" + detail.getAdministrativeID());
-                System.out.println("associatedTermsOcc (suchbegriffe):" + detail.get(DetailedTopic.ASSICIATED_OCC));
+                System.out.println("associatedTermsOcc (suchbegriffe):" + detail.get(DetailedTopic.ASSOCIATED_OCC));
                 System.out.println("sampleOcc (Internetverweis):" + detail.get(DetailedTopic.SAMPLE_OCC));
                 System.out.println("descriptionOcc:" + detail.get(DetailedTopic.DESCRIPTION_OCC));
                 System.out.println("href:" + detail.getArrayList(DetailedTopic.INSTANCE_OF));

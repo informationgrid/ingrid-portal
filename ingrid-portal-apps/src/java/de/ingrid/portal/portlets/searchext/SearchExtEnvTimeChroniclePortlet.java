@@ -145,7 +145,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                             topic.put("title", topic.getTopicName());
 
                             if (detail != null) {
-                                String searchData = (String) detail.get(DetailedTopic.ASSICIATED_OCC);
+                                String searchData = (String) detail.get(DetailedTopic.ASSOCIATED_OCC);
                                 if (searchData != null && searchData.length() > 0) {
                                     searchData = UtilsString.htmlescape(searchData.replaceAll("\\,", " OR "));
                                 } else {
