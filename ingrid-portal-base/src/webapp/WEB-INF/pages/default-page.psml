@@ -42,7 +42,7 @@
         <value>rss-news-1</value>
       </preference>
     </fragment>
-    <fragment id="home-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="home-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::IngridInformPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
