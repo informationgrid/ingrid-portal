@@ -185,7 +185,7 @@
 	#set($currentPage = $site.getPage().url)
 	#foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
-        #if($lastType == "page")
+        #if($lastType != "separator")
 		  #renderServiceLink($element $currentPage $linkUrl $linkTitle $linkName "")
         #end 
         #set($lastType = $element.type)
@@ -194,34 +194,42 @@
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #set($linkPage = $element.url)
         #set($isSelected = $element.isSelected($site))
+#* handle language switch *#
+        #set($defaultTitle = $element.getTitle())
+        #if($defaultTitle == "Sprache")
+			#set($newLocale = 'de')
+			#if($preferedLocale == 'de')
+				#set($newLocale = 'en')
+			#elseif($preferedLocale == 'en')
+				#set($newLocale = 'de')
+			#end
+			#set($linkUrl = "${element.url}?lang=${newLocale}")
+			#set($linkUrl = $jetspeed.getAbsoluteUrl($linkUrl))
+        #end
       #elseif($element.elementType == "separator")
         #set($separatorTitle = $element.getTitle($preferedLocale))
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
-		  #if($lastType == "page")
+		  #if($lastType != "separator")
             #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;&nbsp;|&nbsp;&nbsp;")
           #else
             &nbsp;&nbsp;|&nbsp;&nbsp;
           #end
         #elseif($separatorText == "separator2")
-          #if($lastType == "page")
+          #if($lastType != "separator")
             #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName " - ")
           #else
              - 
           #end
         #else
-          #if($lastType == "page")
+          #if($lastType != "separator")
             #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "")
           #end 
         #end
         #set($lastType = "separator")
       #end
-    #end
-    #if($lastType == "page")
-      #if($isSelected)
-        <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
-      #else
-        <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
-      #end  
+	#end
+    #if($lastType != "separator")
+	  #renderServiceLink($element $currentPage $linkUrl $linkTitle $linkName "")
     #end 
 #end

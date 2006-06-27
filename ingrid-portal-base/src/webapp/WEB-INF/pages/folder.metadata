@@ -21,13 +21,11 @@
     <separator>
       <text>separator2</text>
     </separator>
-    <options>/service-contact.psml</options>
-<!--    
+    <options>/service-contact.psml</options> 
     <separator>
       <text>separator1</text>
     </separator>
-    <options>/service-lang.psml</options>
--->
+    <options>/language.link</options>
   </menu>
 
   <menu name="footer-menu">

@@ -1,0 +1,7 @@
+<link target="top">
+ <!-- NOTICE: default title used for identification in decorator -->
+ <title>Sprache</title>
+ <metadata name="title" xml:lang="de">Englisch</metadata>
+ <metadata name="title" xml:lang="en">German</metadata>
+ <url>/default-page.psml</url>
+</link>
