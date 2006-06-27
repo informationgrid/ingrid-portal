@@ -399,7 +399,7 @@
         <portlet-name>MyPortalLoginPortlet</portlet-name>
         <display-name>MyPortalLoginPortlet</display-name>
         <description>This portlet displayes the login dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.MyPortalLoginPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalLoginPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -417,7 +417,7 @@
         <portlet-name>MyPortalOverviewPortlet</portlet-name>
         <display-name>MyPortalOverviewPortlet</display-name>
         <description>This portlet displays the myportal overview.</description>
-        <portlet-class>de.ingrid.portal.portlets.MyPortalOverviewPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalOverviewPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -470,7 +470,7 @@
         <portlet-name>MyPortalCreateAccountPortlet</portlet-name>
         <display-name>MyPortalCreateAccountPortlet</display-name>
         <description>This portlet displays the myportal create account dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.MyPortalCreateAccountPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalCreateAccountPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -489,7 +489,7 @@
         <portlet-name>MyPortalEditAccountPortlet</portlet-name>
         <display-name>MyPortalEditAccountPortlet</display-name>
         <description>This portlet displays the myportal edit account dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.MyPortalEditAccountPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalEditAccountPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -513,7 +513,7 @@
         <portlet-name>MyPortalPasswordForgottenPortlet</portlet-name>
         <display-name>MyPortalPasswordForgottenPortlet</display-name>
         <description>This portlet displays the myportal password forgotten dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.MyPortalPasswordForgottenPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPasswordForgottenPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

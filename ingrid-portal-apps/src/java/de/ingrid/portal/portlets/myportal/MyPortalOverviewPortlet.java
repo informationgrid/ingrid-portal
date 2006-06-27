@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1997-2006 by wemove GmbH
  */
-package de.ingrid.portal.portlets;
+package de.ingrid.portal.portlets.myportal;
 
 import java.io.IOException;
 import java.security.Principal;
