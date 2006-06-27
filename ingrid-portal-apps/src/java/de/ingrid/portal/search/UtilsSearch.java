@@ -484,14 +484,14 @@ public class UtilsSearch {
         IngridQuery[] clauses = query.getAllClauses();
         for (int i=0; i<clauses.length; i++) {
             FieldQuery[] fields = query.getFields();
-            for (int j = 0; j < fields.length; i++) {
+            for (int j = 0; j < fields.length; j++) {
                 if (fields[j].getFieldName().equalsIgnoreCase(fieldName)) {
                     return true;
                 }
             }
-            if (query.get(fieldName) != null) {
-                return true;
-            }
+        }
+        if (query.get(fieldName) != null) {
+            return true;
         }
         return false;
     }
