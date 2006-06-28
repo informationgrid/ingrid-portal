@@ -85,6 +85,15 @@
                 <war.bundle>true</war.bundle>
             </properties>
         </dependency>
+        <dependency>
+            <groupId>org.apache.portals.jetspeed-2</groupId>
+            <artifactId>jetspeed-page-manager</artifactId>
+            <version>${jetspeed.version}</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
 		<dependency>
 		  <id>org.apache.pluto:pluto</id>
 		  <version>1.0.1</version>

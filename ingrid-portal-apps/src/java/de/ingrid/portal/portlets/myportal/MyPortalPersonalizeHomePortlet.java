@@ -44,6 +44,7 @@ import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsPageLayout;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.UtilsSearch;
 
@@ -171,52 +172,43 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
 
             } else {
                 Page homePage = pageManager.getPage(Folder.USER_FOLDER + principal.getName() + "/default-page.psml");
-                // TODO:
                 // iterate over the left portlets
-                  // get the configured portlet from the request params
-                  // if 'none' remove the fragment with this position from the page
-                  // find the portlet in the current page
-                  // move the portlet to the configured position
-                  // if not found add the portlet to the fragmenet at the spwcified position (see LayoutPortlet)
-                
-                // remove ragment structure
-                homePage.removeFragmentById(homePage.getRootFragment().getId());
-                
-                
-                
-                // build new fragment structure
-                
-                
-                // remove all  
-                pageManager.newPortletFragment();
-                
-                Fragment root = homePage.getRootFragment();
-                List fragments = root.getFragments();
-                ArrayList rightColumnFragments = new ArrayList();
-                ArrayList leftColumnFragments = new ArrayList();
-                for (int i = 0; i < fragments.size(); i++) {
-                    Fragment f = (Fragment) fragments.get(i);
-                    if (f.getLayoutColumn() == 0) {
-                        Utils.ensureArraySize(rightColumnFragments, f.getLayoutRow() + 1);
-                        rightColumnFragments.set(f.getLayoutRow(), f);
-                    } else if (f.getLayoutColumn() == 1) {
-                        Utils.ensureArraySize(leftColumnFragments, f.getLayoutRow() + 1);
-                        leftColumnFragments.set(f.getLayoutRow(), f);
+                for (int i=0; i<leftColumnPortlets.size(); i++) {
+                    // get the configured portlet from the request params
+                    String slotVal = request.getParameter("c1r" + i);
+                    // if 'none' remove the fragment with this position from the page
+                    if (slotVal.equals("none")) {
+                        UtilsPageLayout.removeFragmentByPosition(homePage, i, 0);
+                    } else {
+                        // find the portlet in the current page
+                        Fragment f = UtilsPageLayout.getFragmentFromPosition(homePage.getRootFragment(), i, 0);
+                        if (f != null) {
+                            // move the portlet to the configured position
+                            UtilsPageLayout.moveFragmentToPosition(homePage.getRootFragment(), f, i, 0);
+                        } else {
+                            // if not found add the portlet to the fragmenet at the specified position
+                            UtilsPageLayout.addPortletToPosition(pageManager, homePage.getRootFragment(), f.getName(), i, 0, leftColumnPortlets.size());
+                        }
                     }
                 }
 
-                boolean isHidden = true;
-                for (int i = 0; i < leftColumnFragments.size(); i++) {
-                    Fragment f = (Fragment) leftColumnFragments.get(i);
-                    isHidden = true;
-                    for (int j = 0; j < leftColumnFragments.size(); j++) {
-                        String slotId = request.getParameter("c1r" + j);
-                        if (slotId.equals(f.getId())) {
-                            f.setLayoutRow(j);
-                            isHidden = false;
+                // iterate over the right portlets
+                for (int i=0; i<rightColumnPortlets.size(); i++) {
+                    // get the configured portlet from the request params
+                    String slotVal = request.getParameter("c2r" + i);
+                    // if 'none' remove the fragment with this position from the page
+                    if (slotVal.equals("none")) {
+                        UtilsPageLayout.removeFragmentByPosition(homePage, i, 1);
+                    } else {
+                        // find the portlet in the current page
+                        Fragment f = UtilsPageLayout.getFragmentFromPosition(homePage.getRootFragment(), i, 1);
+                        if (f != null) {
+                            // move the portlet to the configured position
+                            UtilsPageLayout.moveFragmentToPosition(homePage.getRootFragment(), f, i, 1);
+                        } else {
+                            // if not found add the portlet to the fragmenet at the specified position
+                            UtilsPageLayout.addPortletToPosition(pageManager, homePage.getRootFragment(), f.getName(), i, 1, rightColumnPortlets.size());
                         }
-                    }
-                    if (isHidden) {
                     }
                 }
                 pageManager.updatePage(homePage);
@@ -275,17 +267,4 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
         }
         
     }
-    
-    private void removeFragmentByPosition(Page page, int x, int y) {
-        //TODO: implement
-    }
-    
-    private void moveFragmentToPosition(Page page, Fragment fragment, int x, int y) {
-        //TODO: implement
-    }
-
-    private void addPortletToPosition(Page page, String portletUniqueName, int x, int y) {
-        //TODO: implement
-    }
-    
 }
