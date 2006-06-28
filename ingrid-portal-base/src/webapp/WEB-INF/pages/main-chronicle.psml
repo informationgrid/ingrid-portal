@@ -5,8 +5,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Environment Chronicle</title>
-  <metadata name="title" xml:lang="de">Umweltchronik</metadata>
+  <title>ingrid.page.chronicle</title>
 
   <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-chronicle-input" type="portlet" name="ingrid-portal-apps::ChronicleSearch">

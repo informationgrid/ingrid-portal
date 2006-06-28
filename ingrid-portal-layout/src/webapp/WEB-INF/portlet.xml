@@ -49,6 +49,7 @@ limitations under the License.
       <title>IngridClearLayout</title>
       <short-title>IngridClearLayout</short-title>
     </portlet-info>
+    <resource-bundle>de.ingrid.portal.resources.PortalLayoutResources</resource-bundle>
 </portlet>
 
 <portlet id="IngridOneColumn">
@@ -84,6 +85,7 @@ limitations under the License.
       <title>IngridOneColumn</title>
       <short-title>OneColumn</short-title>
     </portlet-info>
+    <resource-bundle>de.ingrid.portal.resources.PortalLayoutResources</resource-bundle>
 </portlet>
 
 <portlet id="IngridTwoColumns">
@@ -119,6 +121,7 @@ limitations under the License.
       <title>IngridTwoColumns</title>
       <short-title>IngridTwoColumns</short-title>
     </portlet-info>
+    <resource-bundle>de.ingrid.portal.resources.PortalLayoutResources</resource-bundle>
 </portlet>
 
 <portlet id="VelocityOneColumn">

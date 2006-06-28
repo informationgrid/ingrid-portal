@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <folder>
-  <title>Administration</title>  
-  <metadata name="title" xml:lang="de">Administration</metadata>
-  <metadata name="title" xml:lang="en">Administration</metadata>
+  <title>ingrid.page.administration</title>  
 
   <menu name="sub-menu">
     <options>/administration/admin-usermanagement.psml</options>
     <options>/administration/admin-edit-help.psml</options>
   </menu>
-
 
   <security-constraints>
     <security-constraints-ref>admin</security-constraints-ref>

@@ -12,8 +12,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
      layout-decorator="ingrid"
      portlet-decorator="clear"
   />
-  <title>Sitemap</title>
-  <metadata name="title" xml:lang="de">Inhalts&uuml;bersicht</metadata>
+  <title>ingrid.page.sitemap</title>
 
   <fragment id="service-sitemap" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="service-sitemap-1" type="portlet" name="ingrid-portal-apps::InfoPortlet">

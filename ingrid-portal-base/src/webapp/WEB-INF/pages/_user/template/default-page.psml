@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Home</title>
-  <metadata name="title" xml:lang="de">Startseite</metadata>
+  <title>ingrid.page.home</title>
 
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <!-- USE id="search-simple-portlet", this one will be shared across pages ! -->

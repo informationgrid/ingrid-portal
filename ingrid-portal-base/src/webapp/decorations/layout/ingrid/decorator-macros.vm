@@ -1,3 +1,5 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+
 #* defines URL parameter string *#
 #macro (defineUrlParams)
 #set ($myParamNames = $renderRequest.getParameterNames())
@@ -84,17 +86,18 @@
       #if($element.elementType == "option")
         #set($tabTitle = $element.getTitle($preferedLocale))
         #set($tabName = $element.getShortTitle($preferedLocale))
+		## read localized title from resource with title from psml as key !
+		#if($tabTitle.startsWith('ingrid'))
+            #set($tabTitle = $MESSAGES.getString($tabTitle))
+            #set($tabName = $MESSAGES.getString($tabName))			
+		#end
         #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
         #if($element.isSelected($site))
           <li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 		#elseif($element.url=="/main-maps.psml")
           <li><a href="$tabUrl" title="$tabTitle" target="_new">$tabName</a></li>
 		#elseif($element.url=="/main-search.psml")
-			#if($currentPage == "/search-settings.psml")
-				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
-			#elseif($currentPage == "/search-history.psml")
-				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
-			#elseif($currentPage.indexOf('search-ext-') != -1)
+			#if($currentPage.startsWith('/search-'))
 				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
 			#else
 				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
@@ -139,6 +142,11 @@
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
+		## read localized title from resource with title from psml as key !
+		#if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))			
+		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #if($velocityCount > 1)
            | 
@@ -180,7 +188,7 @@
   #end  
 #end
 
-#* include service navigation component *#
+## include service navigation component
 #macro (includeServiceNavigation $_menu)
 	#set($currentPage = $site.getPage().url)
 	#foreach($element in $_menu.elements.iterator())
@@ -191,17 +199,21 @@
         #set($lastType = $element.type)
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
+		## read localized title from resource with title from psml as key !
+		#if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))			
+		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #set($linkPage = $element.url)
         #set($isSelected = $element.isSelected($site))
-#* handle language switch *#
+## handle language element
+## NOTICE: defaultTitle is from "psml" or "link" file !
         #set($defaultTitle = $element.getTitle())
-        #if($defaultTitle == "Sprache")
+        #if($defaultTitle == "ingrid.page.language")
 			#set($newLocale = 'de')
-			#if($preferedLocale == 'de')
+			#if($preferedLocale.toString() == 'de')
 				#set($newLocale = 'en')
-			#elseif($preferedLocale == 'en')
-				#set($newLocale = 'de')
 			#end
 			#set($linkUrl = "${element.url}?lang=${newLocale}")
 			#set($linkUrl = $jetspeed.getAbsoluteUrl($linkUrl))

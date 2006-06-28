@@ -4,8 +4,7 @@
      layout-decorator="ingrid-help"
      portlet-decorator="clear"
   />
-  <title>Help</title>
-  <metadata name="title" xml:lang="de">Hilfe</metadata>
+  <title>ingrid.page.help</title>
 
   <fragment id="help" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="help-1" type="portlet" name="ingrid-portal-apps::HelpPortlet">

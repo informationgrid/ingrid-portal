@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Contact</title>
-  <metadata name="title" xml:lang="de">Kontakt</metadata>
+  <title>ingrid.page.contact</title>
 
   <fragment id="service-contact" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="service-contact-1" type="portlet" name="ingrid-portal-apps::Contact">

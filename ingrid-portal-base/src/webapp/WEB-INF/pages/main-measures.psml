@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Measured Data</title>
-  <metadata name="title" xml:lang="de">Messwerte</metadata>
+  <title>ingrid.page.measures</title>
 
   <fragment id="main-measures" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-measures-input" type="portlet" name="ingrid-portal-apps::MeasuresSearch">

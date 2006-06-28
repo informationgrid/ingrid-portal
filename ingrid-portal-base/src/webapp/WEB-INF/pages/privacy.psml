@@ -19,8 +19,7 @@ limitations under the License.
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>data privacy</title>
-  <metadata name="title" xml:lang="de">Datenschutzbestimmung</metadata>
+  <title>ingrid.page.privacy</title>
 
   <fragment id="privacy" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::InfoPortlet">

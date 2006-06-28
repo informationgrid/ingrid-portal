@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Search</title>
-  <metadata name="title" xml:lang="de">Suche</metadata>
+  <title>ingrid.page.search</title>
 
     <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridOneColumn">
         <fragment id="main-search-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">

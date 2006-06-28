@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Login</title>
-  <metadata name="title" xml:lang="de">Mein PortalU</metadata>
+  <title>ingrid.page.myportal</title>
 
   <fragment id="service-myportal" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="myportal-overview" type="portlet" name="ingrid-portal-apps::MyPortalOverviewPortlet">

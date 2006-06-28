@@ -4,8 +4,7 @@
      layout-decorator="ingrid-popup"
      portlet-decorator="clear"
   />
-  <title>Maps</title>
-  <metadata name="title" xml:lang="de">Karten</metadata>
+  <title>ingrid.page.maps</title>
 
   <fragment id="main-maps" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-maps-1" type="portlet" name="ingrid-portal-apps::ShowMapsPortlet">

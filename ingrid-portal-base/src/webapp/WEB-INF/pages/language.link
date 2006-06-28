@@ -1,7 +1,5 @@
 <link target="top">
  <!-- NOTICE: default title used for identification in decorator -->
- <title>Sprache</title>
- <metadata name="title" xml:lang="de">Englisch</metadata>
- <metadata name="title" xml:lang="en">German</metadata>
+ <title>ingrid.page.language</title>
  <url>/default-page.psml</url>
 </link>
