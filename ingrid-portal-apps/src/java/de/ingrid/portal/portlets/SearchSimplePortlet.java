@@ -178,6 +178,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
+
+        // handle change of locale for initial string !
+        if (af.getInput(SearchSimpleForm.FIELD_QUERY).equals(af.getINITIAL_QUERY())) {
+            af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
+            af.setInput(SearchSimpleForm.FIELD_QUERY, af.getINITIAL_QUERY());
+        }
+
         // NOTICE: this may be former query, if no query in request ! we keep that one for convenience
         // (although this state is not bookmarkable !)
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
@@ -329,7 +336,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // simpleTermsPortlet and also in resultPortlet to determine whether query should be executed !
         SearchState.adaptSearchState(request, Settings.MSG_QUERY, query);
         SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, queryString);
-        
+
         return null;
     }
 }
