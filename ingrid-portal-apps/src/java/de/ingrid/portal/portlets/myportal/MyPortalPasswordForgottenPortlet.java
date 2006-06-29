@@ -174,6 +174,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                         + localizedTemplatePath.substring(period + 1);
                 if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
                     this.emailTemplate = fixedTempl;
+                    localizedTemplatePath = fixedTempl;
                 }
             }
 
