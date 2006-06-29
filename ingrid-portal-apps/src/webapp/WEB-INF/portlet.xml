@@ -247,6 +247,10 @@
                 <name>titleKey</name>
                 <value>searchSimple.title.search</value>
             </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -278,6 +282,10 @@
             <preference>
                 <name>titleKey</name>
                 <value>teaser.environment.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-topics-1</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -314,6 +322,14 @@
             <preference>
                 <name>titleKey</name>
                 <value>news.teaser.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>rss-news-1</value>
+            </preference>
+            <preference>
+                <name>noOfEntriesDisplayed</name>
+                <value>4</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -364,6 +380,10 @@
             <preference>
                 <name>titleKey</name>
                 <value>teaser.ingridInform.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>ingrid-inform-1</value>
             </preference>
         </portlet-preferences>
     </portlet>

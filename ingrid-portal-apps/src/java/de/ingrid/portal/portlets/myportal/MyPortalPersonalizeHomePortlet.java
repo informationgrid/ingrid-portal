@@ -36,17 +36,13 @@ import org.apache.jetspeed.page.PageNotFoundException;
 import org.apache.jetspeed.page.PageNotUpdatedException;
 import org.apache.jetspeed.page.document.NodeException;
 import org.apache.pluto.om.common.Preference;
-import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsPageLayout;
-import de.ingrid.portal.search.DisplayTreeNode;
-import de.ingrid.portal.search.UtilsSearch;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -60,8 +56,9 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
     private PageManager pageManager;
 
     private PortletRegistry registry;
-    
+
     private ArrayList rightColumnPortlets = new ArrayList();
+
     private ArrayList leftColumnPortlets = new ArrayList();
 
     /**
@@ -100,10 +97,10 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
         try {
             // get all portlets from the portlet registry
             getIngridPortlet(request);
-            
+
             context.put("rightColumnPortlets", rightColumnPortlets);
             context.put("leftColumnPortlets", leftColumnPortlets);
-            
+
             // get all fragments from the users page
             Page homePage = pageManager.getPage(Folder.USER_FOLDER + principal.getName() + "/default-page.psml");
             Fragment root = homePage.getRootFragment();
@@ -166,51 +163,53 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
             if (action.equalsIgnoreCase("doOriginalSettings")) {
                 // get ingrid portlets from the portlet registry
                 Page homePage = pageManager.getPage(Folder.USER_FOLDER + principal.getName() + "/default-page.psml");
-                Fragment root = homePage.getRootFragment();
-                List fragments = root.getFragments();
-                
 
+                // defragmentation
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
+                
+                // iterate over the left portlets
+                for (int i = 0; i < leftColumnPortlets.size(); i++) {
+                    PortletDefinitionComposite p = (PortletDefinitionComposite)((HashMap)leftColumnPortlets.get(i)).get("portlet");
+                    String portletName = p.getUniqueName();
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), portletName, i, 0);
+                }
+                // iterate over the right portlets
+                for (int i = 0; i < rightColumnPortlets.size(); i++) {
+                    PortletDefinitionComposite p = (PortletDefinitionComposite)((HashMap)rightColumnPortlets.get(i)).get("portlet");
+                    String portletName = p.getUniqueName();
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), portletName, i, 1);
+                }
+                // defragmentation
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
+                
+                pageManager.updatePage(homePage);
+                
             } else {
                 Page homePage = pageManager.getPage(Folder.USER_FOLDER + principal.getName() + "/default-page.psml");
+
+                // defragmentation
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
+                
                 // iterate over the left portlets
-                for (int i=0; i<leftColumnPortlets.size(); i++) {
+                for (int i = 0; i < leftColumnPortlets.size(); i++) {
                     // get the configured portlet from the request params
-                    String slotVal = request.getParameter("c1r" + i);
-                    // if 'none' remove the fragment with this position from the page
-                    if (slotVal.equals("none")) {
-                        UtilsPageLayout.removeFragmentByPosition(homePage, i, 0);
-                    } else {
-                        // find the portlet in the current page
-                        Fragment f = UtilsPageLayout.getFragmentFromPosition(homePage.getRootFragment(), i, 0);
-                        if (f != null) {
-                            // move the portlet to the configured position
-                            UtilsPageLayout.moveFragmentToPosition(homePage.getRootFragment(), f, i, 0);
-                        } else {
-                            // if not found add the portlet to the fragmenet at the specified position
-                            UtilsPageLayout.addPortletToPosition(pageManager, homePage.getRootFragment(), f.getName(), i, 0, leftColumnPortlets.size());
-                        }
-                    }
+                    String slotVal = request.getParameter("c1r" + (i + 1));
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), slotVal, i, 0);
                 }
 
                 // iterate over the right portlets
-                for (int i=0; i<rightColumnPortlets.size(); i++) {
+                for (int i = 0; i < rightColumnPortlets.size(); i++) {
                     // get the configured portlet from the request params
-                    String slotVal = request.getParameter("c2r" + i);
-                    // if 'none' remove the fragment with this position from the page
-                    if (slotVal.equals("none")) {
-                        UtilsPageLayout.removeFragmentByPosition(homePage, i, 1);
-                    } else {
-                        // find the portlet in the current page
-                        Fragment f = UtilsPageLayout.getFragmentFromPosition(homePage.getRootFragment(), i, 1);
-                        if (f != null) {
-                            // move the portlet to the configured position
-                            UtilsPageLayout.moveFragmentToPosition(homePage.getRootFragment(), f, i, 1);
-                        } else {
-                            // if not found add the portlet to the fragmenet at the specified position
-                            UtilsPageLayout.addPortletToPosition(pageManager, homePage.getRootFragment(), f.getName(), i, 1, rightColumnPortlets.size());
-                        }
-                    }
+                    String slotVal = request.getParameter("c2r" + (i + 1));
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), slotVal, i, 1);
                 }
+                // defragmentation
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
+                UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
+                
                 pageManager.updatePage(homePage);
             }
 
@@ -229,9 +228,11 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
                     + "'", e);
         }
     }
-    
+
     private void getIngridPortlet(PortletRequest request) {
         Collection portletDefs = registry.getPortletApplication("ingrid-portal-apps").getPortletDefinitions();
+        leftColumnPortlets.clear();
+        rightColumnPortlets.clear();
         Iterator it = portletDefs.iterator();
 
         while (it.hasNext()) {
@@ -242,8 +243,8 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
                 p = portlet.getPreferenceSet().get("default-vertical-position");
                 int defaultPos = Integer.parseInt((String) p.getValues().next());
                 String resourceBundle = portlet.getResourceBundle();
-                IngridResourceBundle res = new IngridResourceBundle(PropertyResourceBundle.getBundle(
-                        resourceBundle, request.getLocale()));
+                IngridResourceBundle res = new IngridResourceBundle(PropertyResourceBundle.getBundle(resourceBundle,
+                        request.getLocale()));
                 p = portlet.getPreferenceSet().get("titleKey");
                 String portletTitle = res.getString((String) p.getValues().next());
                 if (type.equals("ingrid-home")) {
@@ -265,6 +266,6 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
                 }
             }
         }
-        
+
     }
 }

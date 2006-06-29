@@ -91,8 +91,14 @@ public class UtilsPageLayoutTest extends TestCase {
      */
     public void testRemoveFragmentByPosition() throws Exception {
         this.setUp();
-        UtilsPageLayout.removeFragmentByPosition(page, 1, 0);
-        assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 1, 0));
+        UtilsPageLayout.removeFragmentByPosition(page, page.getRootFragment(), 1, 0);
+        assertNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 1, 0));
+        assertEquals("p-2-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 2, 0).getName());
+        
+        // defragment page layout
+        UtilsPageLayout.defragmentLayoutColumn(page.getRootFragment(), 0);
+        
+        // test: remove non existing fragment
         assertEquals("p-2-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 1, 0).getName());
         assertNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 2, 0));
     }
@@ -152,7 +158,7 @@ public class UtilsPageLayoutTest extends TestCase {
      */
     public void testAddPortletToPosition() throws Exception {
         this.setUp();
-        UtilsPageLayout.addPortletToPosition(pageManager, page.getRootFragment(), "new-portlet", 1, 0, 3);
+        UtilsPageLayout.addPortletToPosition(pageManager, page.getRootFragment(), "new-portlet", 1, 0);
         assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 0, 0));
         assertEquals("p-0-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 0, 0).getName());
         assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 3, 0));
@@ -160,6 +166,23 @@ public class UtilsPageLayoutTest extends TestCase {
         assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 1, 0));
         assertEquals("new-portlet", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 1, 0).getName());
     }
+    
+    /*
+     * Test method for
+     * 'de.ingrid.portal.global.UtilsPageLayout.addPortletToPosition(PageManager,
+     * Fragment, String, int, int, int)'
+     */
+    public void testPositionPortletOnPage() throws Exception {
+        this.setUp();
+        UtilsPageLayout.positionPortletOnPage(pageManager, page, page.getRootFragment(), "new-portlet", 3, 0);
+        assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 3, 0));
+        assertEquals("new-portlet", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 3, 0).getName());
+        UtilsPageLayout.positionPortletOnPage(pageManager, page, page.getRootFragment(), "p-0-0", 2, 0);
+        assertEquals("p-1-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 0, 0).getName());
+        assertEquals("p-2-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 1, 0).getName());
+        assertEquals("p-0-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 2, 0).getName());
+    }
+    
 
     /*
      * Test method for
