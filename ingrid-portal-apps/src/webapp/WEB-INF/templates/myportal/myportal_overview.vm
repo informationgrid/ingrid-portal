@@ -17,7 +17,7 @@
 	</p>
 	<ul class="internlinklist2">
 		<li>
-			<a href="index_loggedon.html">$MESSAGES.getString('overview.content.entry1')</a>
+			<a href="portal/default-page.psml">$MESSAGES.getString('overview.content.entry1')</a>
 		</li>
 		<li>
 			<a href="portal/myportal-edit-account.psml">$MESSAGES.getString('overview.content.entry2')</a>
