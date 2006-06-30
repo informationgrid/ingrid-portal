@@ -70,6 +70,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     /** value of action parameter if "Extended Search" was clicked */
     private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
 
+    /** value of action parameter if "save query" was clicked */
+    private static final String PARAMV_ACTION_SAVE_QUERY = "doSaveQuery";
+    
+    
     // PAGES
 
     /** search-history page -> displays and handles search settings */
@@ -78,6 +82,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     /** search-settings page -> displays and handles search settings */
     private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/search-settings.psml";
 
+    /** save query page -> displays and handles save query functionality */
+    private final static String PAGE_SAVE_QUERY = "/ingrid-portal/portal/save-query.psml";
+    
     /** main extended search page for datasource "environmentinfos" -> envinfo: topic/terms */
     private final static String PAGE_SEARCH_EXT_ENV = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
@@ -86,6 +93,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     /** main extended search page for datasource "research" -> research: topic/terms */
     private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
+
 
     /*
      * (non-Javadoc)
@@ -228,6 +236,11 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
         response.setTitle(messages.getString(titleKey));
 
+        // enable the save button if the query was set AND a user is logged on
+        if (validInput && Utils.getLoggedOn(request)) {
+            context.put("enableSave", "true");
+        }
+        
         super.doView(request, response);
     }
 
@@ -296,6 +309,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_HISTORY)) {
             actionResponse.sendRedirect(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request));
+
+        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SAVE_QUERY)) {
+            actionResponse.sendRedirect(PAGE_SAVE_QUERY + SearchState.getURLParamsMainSearch(request));
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
             String currentDatasource = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);

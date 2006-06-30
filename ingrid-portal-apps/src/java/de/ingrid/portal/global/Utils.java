@@ -535,4 +535,16 @@ public class Utils {
             list.addAll(Arrays.asList(objArray));
         }
     }
+
+    /**
+     * Returns true if a user is logged on, false, if not.
+     * 
+     * @param request The PortletRequest.
+     * @return True if a user is logged on, false, if not.
+     */
+    public static boolean getLoggedOn(PortletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return (principal != null);
+    }
+
 }
