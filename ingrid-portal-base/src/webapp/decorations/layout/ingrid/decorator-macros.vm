@@ -76,6 +76,22 @@
 #end
       </ul>
   </div>
+<!-- logged on message -->
+#if($jetspeed.getLoggedOn())
+	#set($userAttributes = $jetspeed.getUserProperties())
+    #set($userNameGiven = $userAttributes.get("user.name.given", null))
+    #set($userNameFamily = $userAttributes.get("user.name.family", null))
+    
+    #if($userNameGiven)
+    #set ($salutation = " $userNameGiven")
+    #end
+    #if($userNameFamily)
+    #set ($salutation = "$!{salutation} $userNameFamily")
+    #end		
+<div id="logged_on">
+  <a href="portal/myportal-edit-account.psml">$salutation</a> | <a href="login/logout">LOGOUT</a>
+</div>
+#end
 </div>
 #end
 
