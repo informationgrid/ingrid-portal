@@ -83,7 +83,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/search-settings.psml";
 
     /** save query page -> displays and handles save query functionality */
-    private final static String PAGE_SAVE_QUERY = "/ingrid-portal/portal/save-query.psml";
+    private final static String PAGE_SAVE_QUERY = "/ingrid-portal/portal/search-save.psml";
     
     /** main extended search page for datasource "environmentinfos" -> envinfo: topic/terms */
     private final static String PAGE_SEARCH_EXT_ENV = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";

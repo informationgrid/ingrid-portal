@@ -964,6 +964,28 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
     </portlet>
+
+    <portlet id="SearchSavePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_save.vm</value>
+        </init-param>
+        <portlet-name>SearchSavePortlet</portlet-name>
+        <display-name>SearchSavePortlet</display-name>
+        <description>This portlet displays and handles the search save dialog.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchSavePortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>SearchSavePortlet</title>
+            <short-title>SearchSavePortlet</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
+    </portlet>
     
     <portlet id="SearchHistory">
         <init-param>
