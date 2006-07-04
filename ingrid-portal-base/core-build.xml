@@ -288,7 +288,7 @@ limitations under the License.
 		</dependency>
 	    <dependency>
 	      <id>nekohtml</id>
-	      <version>0.9.3</version>
+	      <version>0.9.5</version>
 	      <properties>
 	        <war.bundle>true</war.bundle>
 	      </properties>
@@ -307,7 +307,7 @@ limitations under the License.
 		<dependency>
                    <groupId>org.apache.derby</groupId>
                       <artifactId>derby</artifactId>
-        	   <version>${derby.version}</version>
+        	   <version>10.1.1.0</version>
                    <properties>
                    <war.bundle>false</war.bundle>
                    </properties>

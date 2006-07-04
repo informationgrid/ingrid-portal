@@ -45,7 +45,33 @@ limitations under the License.
   >  	 
        <constructor-arg><ref bean="NavigationalState"/></constructor-arg>
 	   <constructor-arg><ref bean="PortalContext"/></constructor-arg>
+	   <!-- Uncomment this to HARD CODE your portal URL -->
+	   <!-- <constructor-arg><ref bean="BasePortalURL"/></constructor-arg>  -->
   </bean>
+
+  <!-- PortalURL we are currently using -->
+  <bean id="DesktopPortalURL" 
+  	   class="org.apache.jetspeed.container.url.impl.DesktopEncodingPortalURL"
+	   singleton="false"
+  >  	 
+       <constructor-arg index='0'><ref bean="NavigationalState"/></constructor-arg>
+	   <constructor-arg index='1'><ref bean="PortalContext"/></constructor-arg>
+      <!-- javascript function for desktop doRender -->
+       <constructor-arg index='2'><value>javascript:doRender</value></constructor-arg>
+      <!-- javascript function for desktop doAction -->      
+       <constructor-arg index='3'><value>javascript:doAction</value></constructor-arg>      
+	   <!-- Uncomment this to HARD CODE your portal URL -->
+	   <!-- <constructor-arg><ref bean="BasePortalURL"/></constructor-arg>  -->
+  </bean>
+    
+  <!-- Uncomment this to HARD CODE your portal URL -->
+   <!--
+  <bean id="BasePortalURL"
+	    class="org.apache.jetspeed.container.url.impl.BasePortalURLImpl">
+       <constructor-arg><ref bean="ProductionConfiguration"/></constructor-arg>	  
+  </bean>	
+  -->
+		
 	
   <!--  Navigational State component -->
   <bean id="NavigationalStateComponent" 
@@ -53,8 +79,9 @@ limitations under the License.
 	   name="org.apache.jetspeed.container.state.NavigationalStateComponent"
   >  	   
        <constructor-arg index="0"><value>NavigationalState</value></constructor-arg>
-       <constructor-arg index="1"><value>PortalURL</value></constructor-arg>
-	   <constructor-arg><ref bean="PortalContext"/></constructor-arg>
+       <constructor-arg index="1"><value>PortalURL</value></constructor-arg>      
+	   <constructor-arg index='2'><ref bean="PortalContext"/></constructor-arg>
+	   <constructor-arg index='3'><value>DesktopPortalURL</value></constructor-arg>            
   </bean>
 
 </beans>

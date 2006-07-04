@@ -103,6 +103,9 @@
         <constructor-arg>
             <ref bean="org.apache.jetspeed.components.portletentity.PortletEntityAccessComponent" />
         </constructor-arg>
+        <constructor-arg>
+            <ref bean="portletFactory" />
+        </constructor-arg>
         <!-- enable window validation -->
         <constructor-arg type="boolean">
             <value>false</value>
@@ -112,6 +115,9 @@
     <!-- Pluto Portlet Container -->
     <bean id="Pluto" class="org.apache.pluto.PortletContainerImpl" />
 
+    <!-- Desktop Pluto Portlet Container -->
+    <bean id="DesktopPluto" class="org.apache.jetspeed.container.DesktopPortletContainerImpl" />
+    
     <!-- Jetspeed 2's wrapper around Pluto -->
     <!-- settings for this bean will start the underlying pluto portlet container -->
     <bean id="org.apache.pluto.PortletContainer" class="org.apache.jetspeed.container.JetspeedPortletContainerWrapper" init-method="start"
@@ -136,7 +142,30 @@
 		</property>
     </bean>
 
-
+    <!-- Jetspeed 2's wrapper around Desktop Pluto container -->
+    <!-- settings for this bean will start the underlying pluto portlet container -->
+    <bean id="org.apache.pluto.DesktopPortletContainer" class="org.apache.jetspeed.container.JetspeedPortletContainerWrapper" init-method="start"
+        destroy-method="shutdown">
+        <constructor-arg>
+            <ref bean="DesktopPluto" />
+        </constructor-arg>
+        <constructor-arg>
+            <value>${portal.name}Desktop</value>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="ServletConfig" />
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="Engine" />
+        </constructor-arg>
+		<property name="requestFactory">
+			<ref bean="ServletRequestFactory" />
+		</property>
+		<property name="responseFactory">
+			<ref bean="ServletResponseFactory" />
+		</property>
+    </bean>
+    
     <!-- Adds jetspeed.properties as our configuration object to support ${...} vars -->
     <!-- ${applicationRoot} is acutally set as a system property via the SpringEngine -->
 

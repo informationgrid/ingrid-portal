@@ -22,7 +22,7 @@ limitations under the License.
 		<dependency>
 			<id>org.apache.portals.jetspeed-2:jetspeed-portal</id>
 			<version>
-				2.0
+				2.1-dev
 			</version>
 			<properties>
 	           <war.bundle>true</war.bundle>

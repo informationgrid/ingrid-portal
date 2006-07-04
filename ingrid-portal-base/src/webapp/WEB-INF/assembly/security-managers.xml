@@ -57,6 +57,7 @@ limitations under the License.
 				<prop key="revoke*">PROPAGATION_REQUIRED</prop>
 				<prop key="grant*">PROPAGATION_REQUIRED</prop>
 				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
 				<prop key="*">PROPAGATION_SUPPORTS</prop>
 			</props>
 		</property>
