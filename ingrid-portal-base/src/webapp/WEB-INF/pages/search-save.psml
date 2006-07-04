@@ -1,0 +1,30 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Save Search</title>
+  <metadata name="title" xml:lang="de">Suche speichern</metadata>
+
+  <fragment id="search-save-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <property layout="TwoColumns" name="row" value="0"/>
+      <property layout="TwoColumns" name="column" value="0"/>
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.save</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-save-1</value>
+      </preference>
+    </fragment>                                
+    <fragment id="search-save" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchSavePortlet">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
