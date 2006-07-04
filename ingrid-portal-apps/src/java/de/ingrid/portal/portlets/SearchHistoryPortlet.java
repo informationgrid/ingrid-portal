@@ -66,14 +66,16 @@ public class SearchHistoryPortlet extends GenericVelocityPortlet {
         }
 
         Principal principal = request.getUserPrincipal();
-        SavedSearchQueries searchSaveEntries = (SavedSearchQueries) IngridPersistencePrefs.getPref(principal.getName(),
-                IngridPersistencePrefs.SEARCH_SAVE_ENTRIES);
-        if (searchSaveEntries == null) {
-            searchSaveEntries = new SavedSearchQueries();
+        if (principal != null) {
+            SavedSearchQueries searchSaveEntries = (SavedSearchQueries) IngridPersistencePrefs.getPref(principal.getName(),
+                    IngridPersistencePrefs.SEARCH_SAVE_ENTRIES);
+            if (searchSaveEntries == null) {
+                searchSaveEntries = new SavedSearchQueries();
+            }
+            context.put("max_entries", PortalConfig.getInstance().getString(PortalConfig.SAVE_ENTRIES_MAX_NUMBER, "10"));
+            context.put("searchSaveEntries", searchSaveEntries);
+            context.put("no_entries", new Integer(searchSaveEntries.size()));
         }
-        context.put("max_entries", PortalConfig.getInstance().getString(PortalConfig.SAVE_ENTRIES_MAX_NUMBER, "10"));
-        context.put("searchSaveEntries", searchSaveEntries);
-        context.put("no_entries", new Integer(searchSaveEntries.size()));
 
         super.doView(request, response);
     }

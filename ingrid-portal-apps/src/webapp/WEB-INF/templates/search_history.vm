@@ -7,18 +7,18 @@
         <div class="float_left">
           <h3>$MESSAGES.getString('searchHistory.title.lastQueries')</h3>
         </div>  
-##        <div class="float_right">
-###set ($action = $renderResponse.createActionURL())
-##$action.setParameter('action','doShowAllQueries')
-##            <div class="ico_linkintern"><p><a href="$action">$MESSAGES.getString('searchHistory.label.showAllQueries')</a></p></div>  
-##        </div>
         <span class="clearer"></span>
-        <ul class="internlinklist2">
+#if($queries && !$queries.isEmpty())
+		<ul class="internlinklist2">
 #foreach($query in $queries)
 		<li><a href="$query.url">$query.query</a> #if($query.ds == "2")<span class="smaller">$MESSAGES.getString('search.type.address')</span>#elseif($query.ds == "3")<span class="smaller">$MESSAGES.getString('search.type.research')</span>#end</li>
 #end	
 		</ul>
-        <br />
+#else
+	<p>$MESSAGES.getString('searchHistory.msg.no.entries.found')</p>
+#end	
+		<br />
+#if($searchSaveEntries)
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$no_entries")
 $MESSAGES.setMsgParam("$max_entries")
@@ -31,6 +31,7 @@ $MESSAGES.setMsgParam("$max_entries")
           </ul>
           <br>
           <input class="btn" value="$MESSAGES.getString('common.form.button.delete')" name="deleteEntries" type="submit">
+#end
       </div>
     </form>
   </div>
