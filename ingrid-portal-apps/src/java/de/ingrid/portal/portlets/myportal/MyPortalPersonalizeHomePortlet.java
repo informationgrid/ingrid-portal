@@ -220,10 +220,7 @@ public class MyPortalPersonalizeHomePortlet extends GenericVelocityPortlet {
             log
                     .error("Error getting page '" + Folder.USER_FOLDER + principal.getName() + "/default-page.psml"
                             + "'", e);
-        } catch (PageNotUpdatedException e) {
-            log.error("Error updating page '" + Folder.USER_FOLDER + principal.getName() + "/default-page.psml" + "'",
-                    e);
-        } catch (JetspeedException e) {
+        } catch (Exception e) {
             log.error("General Error handling '" + Folder.USER_FOLDER + principal.getName() + "/default-page.psml"
                     + "'", e);
         }

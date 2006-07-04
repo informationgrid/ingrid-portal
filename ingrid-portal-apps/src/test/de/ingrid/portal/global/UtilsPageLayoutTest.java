@@ -2,7 +2,6 @@ package de.ingrid.portal.global;
 
 import junit.framework.TestCase;
 
-import org.apache.jetspeed.exception.JetspeedException;
 import org.apache.jetspeed.om.folder.Folder;
 import org.apache.jetspeed.om.folder.FolderNotFoundException;
 import org.apache.jetspeed.om.folder.InvalidFolderException;
@@ -22,10 +21,12 @@ import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.page.PageNotFoundException;
 import org.apache.jetspeed.page.PageNotRemovedException;
 import org.apache.jetspeed.page.PageNotUpdatedException;
+import org.apache.jetspeed.page.document.DocumentException;
 import org.apache.jetspeed.page.document.DocumentNotFoundException;
 import org.apache.jetspeed.page.document.FailedToDeleteDocumentException;
 import org.apache.jetspeed.page.document.FailedToUpdateDocumentException;
 import org.apache.jetspeed.page.document.NodeException;
+import org.apache.jetspeed.page.document.NodeSet;
 import org.apache.jetspeed.page.document.UnsupportedDocumentTypeException;
 
 public class UtilsPageLayoutTest extends TestCase {
@@ -232,7 +233,12 @@ public class UtilsPageLayoutTest extends TestCase {
             return fragment;
         }
 
-        public Page getPage(String id) throws PageNotFoundException, NodeException {
+        public int addPages(Page[] pages) throws NodeException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        public NodeSet getAll(Folder folder) throws DocumentException {
             // TODO Auto-generated method stub
             return null;
         }
@@ -242,69 +248,104 @@ public class UtilsPageLayoutTest extends TestCase {
             return null;
         }
 
-        public Link getLink(String name) throws DocumentNotFoundException, UnsupportedDocumentTypeException,
-                FolderNotFoundException, NodeException {
+        public Folder getFolder(Folder folder, String name) throws FolderNotFoundException, DocumentException {
             // TODO Auto-generated method stub
             return null;
         }
 
-        public PageSecurity getPageSecurity() throws DocumentNotFoundException, UnsupportedDocumentTypeException,
-                FolderNotFoundException, NodeException {
+        public Folder getFolder(String folderPath) throws FolderNotFoundException, InvalidFolderException, NodeException {
             // TODO Auto-generated method stub
             return null;
         }
 
-        public Folder getFolder(String folderPath) throws FolderNotFoundException, InvalidFolderException,
-                NodeException {
+        public NodeSet getFolders(Folder folder) throws DocumentException {
             // TODO Auto-generated method stub
             return null;
         }
 
-        public void updatePage(Page page) throws JetspeedException, PageNotUpdatedException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void removePage(Page page) throws JetspeedException, PageNotRemovedException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void updateFolder(Folder folder) throws JetspeedException, FolderNotUpdatedException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void removeFolder(Folder folder) throws JetspeedException, FolderNotRemovedException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void updateLink(Link link) throws JetspeedException, LinkNotUpdatedException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void removeLink(Link link) throws JetspeedException, LinkNotRemovedException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void updatePageSecurity(PageSecurity pageSecurity) throws JetspeedException,
-                FailedToUpdateDocumentException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void removePageSecurity(PageSecurity pageSecurity) throws JetspeedException,
-                FailedToDeleteDocumentException {
-            // TODO Auto-generated method stub
-
-        }
-
-        public PageSecurity copyPageSecurity(PageSecurity source) throws JetspeedException {
+        public Link getLink(Folder folder, String name) throws DocumentNotFoundException, NodeException {
             // TODO Auto-generated method stub
             return null;
+        }
+
+        public Link getLink(String name) throws DocumentNotFoundException, UnsupportedDocumentTypeException, NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public NodeSet getLinks(Folder folder) throws NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public Page getPage(Folder folder, String name) throws PageNotFoundException, NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public Page getPage(String path) throws PageNotFoundException, NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public NodeSet getPages(Folder folder) throws NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public PageSecurity getPageSecurity() throws DocumentNotFoundException, UnsupportedDocumentTypeException, NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public PageSecurity getPageSecurity(Folder folder) throws DocumentNotFoundException, NodeException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public void removeFolder(Folder folder) throws NodeException, FolderNotRemovedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void removeLink(Link link) throws NodeException, LinkNotRemovedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void removePage(Page page) throws NodeException, PageNotRemovedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void removePageSecurity(PageSecurity pageSecurity) throws NodeException, FailedToDeleteDocumentException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void updateFolder(Folder folder, boolean deep) throws NodeException, FolderNotUpdatedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void updateFolder(Folder folder) throws NodeException, FolderNotUpdatedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void updateLink(Link link) throws NodeException, LinkNotUpdatedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void updatePage(Page page) throws NodeException, PageNotUpdatedException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        public void updatePageSecurity(PageSecurity pageSecurity) throws NodeException, FailedToUpdateDocumentException {
+            // TODO Auto-generated method stub
+            
         }
     }
 
