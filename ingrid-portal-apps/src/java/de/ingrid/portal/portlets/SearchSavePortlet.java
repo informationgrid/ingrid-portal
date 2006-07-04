@@ -118,8 +118,6 @@ public class SearchSavePortlet extends GenericVelocityPortlet {
 
             f.init();
             f.setError("", "searchSave.msg.entries.deleted");
-        } else if (action.equalsIgnoreCase("doShowQuery")) {
-
         }
     }
 

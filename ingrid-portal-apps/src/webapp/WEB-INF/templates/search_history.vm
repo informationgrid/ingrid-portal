@@ -19,15 +19,18 @@
 #end	
 		</ul>
         <br />
-##        <h3>$MESSAGES.getString('searchHistory.title.savedQueries')<span style="color:#FF0000"> (nur für eingeloggte Benutzer)</span></h3>
-##          <ul class="internlinklist2">
-##            <li><input id="chk_1_1" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Forschungsprojekte Bund</a></li>
-##            <li><input id="chk_1_2" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Messwerte Niedersachsen</a></li>
-##            <li><input id="chk_1_3" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Metadaten Bund</a></li>
-##            <li><input id="chk_1_4" name="chk_1" type="checkbox" /> <a href="s_search_results.html">Umweltverschmutzung Hessen</a></li>
-##          </ul>
-        <br />
-##        <input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.delete')" name="delete" />  
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$no_entries")
+$MESSAGES.setMsgParam("$max_entries")
+        <h3>$MESSAGES.getStringWithMsgParams('searchSave.label.results')</h3>
+          <ul class="internlinklist">
+            #foreach($entry in $searchSaveEntries)
+				#set($idx = $velocityCount - 1)
+				<li><input id="chk_$idx" name="chk_$idx" type="checkbox"> <a href="$entry.url">$entry.title</a> #if($entry.ds == "2")<span class="smaller">$MESSAGES.getString('search.type.address')</span>#elseif($entry.ds == "3")<span class="smaller">$MESSAGES.getString('search.type.research')</span>#end</li>
+			#end
+          </ul>
+          <br>
+          <input class="btn" value="$MESSAGES.getString('common.form.button.delete')" name="deleteEntries" type="submit">
       </div>
     </form>
   </div>
