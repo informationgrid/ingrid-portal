@@ -8,7 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * TODO Describe your created type (class, etc.) here.
+ * Provides access to the ingrid portal preferences.
  *
  * @author joachim@wemove.com
  */
