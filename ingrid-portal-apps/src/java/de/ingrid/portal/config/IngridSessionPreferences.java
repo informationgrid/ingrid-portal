@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import de.ingrid.portal.global.Utils;
 
 /**
- * TODO Describe your created type (class, etc.) here.
+ * encapsulates user session preferences.
  *
  * @author joachim@wemove.com
  */
