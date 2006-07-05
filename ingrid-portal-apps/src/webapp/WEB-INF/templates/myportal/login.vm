@@ -18,17 +18,17 @@
 	    </p>
 		<span class="clearer"></span>
 		<br />
-        <table cellpadding="0" cellspacing="0" class="formtable">
-		<tr>
-			<td><input id="auto_login" name="xx" type="checkbox" /></td>
-			<td><label for="auto_login"><strong>$MESSAGES.getString('login.form.autoLogin')</strong></label></td>
-	    </tr>
-	    <tr>
-	      <td></td>
-	      <td><span style="padding-left:4px; display:block;">$MESSAGES.getString('login.form.autoLogin.text')</span></td>
-	    </tr>
-		</table>
-		<span class="clearer"></span>
+##		<table cellpadding="0" cellspacing="0" class="formtable">
+##		<tr>
+##			<td><input id="auto_login" name="xx" type="checkbox" /></td>
+##			<td><label for="auto_login"><strong>$MESSAGES.getString('login.form.autoLogin')</strong></label></td>
+##	    </tr>
+##	    <tr>
+##	      <td></td>
+##	      <td><span style="padding-left:4px; display:block;">$MESSAGES.getString('login.form.autoLogin.text')</span></td>
+##	    </tr>
+##		</table>
+##		<span class="clearer"></span>
 </div>
 <div class="formfooter">
 	<div align="right">
