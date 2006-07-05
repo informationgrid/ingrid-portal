@@ -28,8 +28,9 @@ public class Settings {
     /** number of unranked pages displayed for selection ("selector pages") */
     public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 5;
 
-    /** max. number of hits displayed for every iPlug (in unranked search) */
-    public final static int SEARCH_NUM_HITS_PER_GROUP = 3;
+    /* max. number of hits displayed for every iPlug (in unranked search) */
+    // NOT NEEDED ANYMORE, WE ALWAYS DISPLAY ONE HIT PER GROUP !
+//    public final static int SEARCH_NUM_HITS_PER_GROUP = 3;
 
     public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 

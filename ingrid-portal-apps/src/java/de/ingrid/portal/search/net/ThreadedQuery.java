@@ -6,7 +6,6 @@ package de.ingrid.portal.search.net;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
@@ -64,7 +63,7 @@ public class ThreadedQuery extends Thread {
                 }
 
                 IngridHit[] subHitArray = null;
-                IngridHitDetail[] subDetailArray = null;
+                //                IngridHitDetail[] subDetailArray = null;
                 for (int i = 0; i < hitArray.length; i++) {
                     // get Plug Description only for top Hits (grouped by iPlugs in right column)
                     if (qd.isGetPlugDescription()) {
@@ -76,24 +75,33 @@ public class ThreadedQuery extends Thread {
                         //                    hitArray[i].put("detail", ibus.getDetail(hitArray[i], qd.getQuery(),
                         //                            qd.getRequestedFields()));
 
-                        // check for grouping and get details of "sub hits"
+                        // check for further hits (grouping)
                         subHitArray = hitArray[i].getGroupHits();
-                        if (subHitArray.length > 0 && Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
-                            // only get Details of the hits we need to render !
-                            int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
-                            if (subHitArray.length > numNeededSubHits) {
-                                IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
-                                System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
-                                subHitArray = tmpHitArray;
-                                hitArray[i].putBoolean("moreHits", true);
-                            }
-                            // separate the subHitArray to render in map !  
-                            hitArray[i].put("subHits", subHitArray);
-                            subDetailArray = ibus.getDetails(subHitArray, qd.getQuery(), qd.getRequestedFields());
-                            for (int j = 0; j < subDetailArray.length; j++) {
-                                subHitArray[j].put("detail", subDetailArray[j]);
-                            }
+                        if (subHitArray != null && subHitArray.length > 0) {
+                            hitArray[i].put("no_of_hits", new Integer(subHitArray.length + 1).toString());
+                            hitArray[i].putBoolean("moreHits", true);
                         }
+                        /*
+                         // NOT NEEDED ANYMORE, WE ALWAYS RENDER ONLY FIRST HIT !!!!
+
+                         // check for grouping and get details of "sub hits"
+                         if (subHitArray.length > 0 && Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
+                         // only get Details of the hits we need to render !
+                         int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
+                         if (subHitArray.length > numNeededSubHits) {
+                         IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
+                         System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
+                         subHitArray = tmpHitArray;
+                         hitArray[i].putBoolean("moreHits", true);
+                         }
+                         // separate the subHitArray to render in map !  
+                         hitArray[i].put("subHits", subHitArray);
+                         subDetailArray = ibus.getDetails(subHitArray, qd.getQuery(), qd.getRequestedFields());
+                         for (int j = 0; j < subDetailArray.length; j++) {
+                         subHitArray[j].put("detail", subDetailArray[j]);
+                         }
+                         }
+                         */
                     }
                 }
             }
