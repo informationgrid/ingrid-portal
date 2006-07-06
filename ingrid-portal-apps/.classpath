@@ -18,7 +18,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/commons-collections/jars/commons-collections-3.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-digester/jars/commons-digester-1.5.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-beanutils/jars/commons-beanutils-1.6.1.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-utils-0.1-SNAPSHOT.jar"/>
+	<classpathentry sourcepath="/INGRID_UTILS_SRC" kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-utils-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-ibus-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-ibus-client-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-0.1-SNAPSHOT.jar"/>
