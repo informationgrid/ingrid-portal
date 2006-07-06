@@ -16,7 +16,8 @@
         	#end
 		  <div class="resultset">
 		  #if ($rs.title)
-		    #if ($rs.type == "www-style")
+##		    #if ($rs.type == "www-style")
+			#if($rs.url)
 			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
 			#elseif($rs.type == "detail-style")
 			  #if($rs.udk_class)

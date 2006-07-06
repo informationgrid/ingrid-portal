@@ -24,7 +24,9 @@
           </div>
 
           <div class="resultset">
-		  #if($rs.type == "detail-style")
+		  #if($rs.url)
+              <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
+		  #elseif($rs.type == "detail-style")
 		    #if($rs.udk_class)
 		      #set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
 		      #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
@@ -33,7 +35,7 @@
 			  <span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
 		    #end
           #else
-              <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
+			  <span class="result_title"><strong>#renderTitle($rs.title)</strong></span>
 		  #end
           </div>
 				
