@@ -125,31 +125,31 @@ public class QueryResultPostProcessor {
                     UtilsSearch.transferHitDetails(hit, detail);
 
                     /*
-                    // NOT NEEDED ANYMORE, WE ALWAYS RENDER ONLY FIRST HIT !!!!
+                     // NOT NEEDED ANYMORE, WE ALWAYS RENDER ONLY FIRST HIT !!!!
 
-                    // check for grouping and transfer details of "sub hits"
-                    subHitArray = hit.getGroupHits();
-                    if (subHitArray.length > 0) {
-                    // only get Details of the hits we need to render !
-                    if (Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
-                    int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
-                    if (numNeededSubHits > subHitArray.length) {
-                    numNeededSubHits = subHitArray.length;
-                    }
-                    for (int j = 0; j < numNeededSubHits; j++) {
-                    hit = subHitArray[j];
-                    if (hit == null) {
-                    continue;
-                    }
+                     // check for grouping and transfer details of "sub hits"
+                     subHitArray = hit.getGroupHits();
+                     if (subHitArray.length > 0) {
+                     // only get Details of the hits we need to render !
+                     if (Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
+                     int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
+                     if (numNeededSubHits > subHitArray.length) {
+                     numNeededSubHits = subHitArray.length;
+                     }
+                     for (int j = 0; j < numNeededSubHits; j++) {
+                     hit = subHitArray[j];
+                     if (hit == null) {
+                     continue;
+                     }
 
-                    detail = (IngridHitDetail) hit.get("detail");
-                    if (detail != null) {
-                    UtilsSearch.transferHitDetails(hit, detail);
-                    }
-                    }
-                    }
-                    */
-                   
+                     detail = (IngridHitDetail) hit.get("detail");
+                     if (detail != null) {
+                     UtilsSearch.transferHitDetails(hit, detail);
+                     }
+                     }
+                     }
+                     */
+
                     tmpString = detail.getIplugClassName();
                     if (tmpString == null) {
                         tmpString = "";
@@ -160,6 +160,10 @@ public class QueryResultPostProcessor {
 
                     if (tmpString.equals("de.ingrid.iplug.udk.UDKPlug")) {
                         processDSCHit(hit, detail, selectedDS);
+                    } else if (tmpString.equals("de.ingrid.iplug.csw.CSWPlug")) {
+                        processDSCHit(hit, detail, selectedDS);
+//                    } else if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+//                        processDSCHit(hit, detail, selectedDS);
                     } else {
                         hit.put(Settings.RESULT_KEY_TYPE, "www-style");
                     }

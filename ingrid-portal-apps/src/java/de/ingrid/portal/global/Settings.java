@@ -135,6 +135,10 @@ public class Settings {
 
     public static final String QVALUE_DATATYPE_IPLUG_TAMINO = "tamino";
     
+    public final static String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
+
+    public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
+
     public static final String QVALUE_LANG_DE = "de";
     
     // metaclass: types

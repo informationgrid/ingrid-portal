@@ -101,11 +101,11 @@ public class UtilsDate {
             } else if (dateString.matches("[0-9][0-9][0-9][0-9]")) {
                 df.applyPattern("yyyy");
                 result = df.parse(dateString);
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
+                df.applyPattern("yyyyMMdd");
+                result = df.parse(dateString.substring(0, 8));
             } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9][0-5][0-9]")) {
                 df.applyPattern("yyyyMMddHHmmss");
-                result = df.parse(dateString);
-            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
-                df.applyPattern("yyyyMMdd");
                 result = df.parse(dateString);
             } else if (dateString.matches("[0-9][0-9][0-9][0-9]0000")) {
                 df.applyPattern("yyyy");
@@ -113,9 +113,9 @@ public class UtilsDate {
             } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
                 df.applyPattern("yyyyMM");
                 result = df.parse(dateString.substring(0, 6));
-            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]000000")) {
+            } else if (dateString.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
                 df.applyPattern("yyyyMMdd");
-                result = df.parse(dateString.substring(0, 8));
+                result = df.parse(dateString);
             }
         } catch (ParseException e) {
             if (log.isWarnEnabled()) {

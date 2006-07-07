@@ -41,107 +41,107 @@ import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
-
-
-public class SearchDetailPortlet extends GenericVelocityPortlet
-{
+public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Log log = LogFactory.getLog(SearchDetailPortlet.class);
 
     private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
+
     private final static String TEMPLATE_DETAIL_ECS = "/WEB-INF/templates/search_detail.vm";
+
     private final static String TEMPLATE_DETAIL_ECS_ADDRESS = "/WEB-INF/templates/search_detail_address.vm";
-    
+
     // ecs fields that represent a date, used for date parsing and formating
     private ArrayList dateFields = new ArrayList();
-    
-    
-    public void init(PortletConfig config) throws PortletException
-    {
+
+    public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
         dateFields.add("t01_object.mod_time");
         dateFields.add("t01_object.time_to");
+        dateFields.add("t0");
         dateFields.add("t01_object.time_from");
+        dateFields.add("t1");
         dateFields.add("t0113_dataset_reference.reference_date");
         dateFields.add("t02_address.mod_time");
-        
-    }    
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
-    {
-    	Context context = getContext(request);
+    }
 
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
+            throws PortletException, IOException {
+        Context context = getContext(request);
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
         context.put("MESSAGES", messages);
-        
+
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
-        
+
         try {
             int documentId = Integer.parseInt(request.getParameter("docid"));
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
-            
+
             IngridHit hit = new IngridHit();
             hit.setDocumentId(documentId);
             hit.setPlugId(iplugId);
             if (altDocumentId != null) {
                 hit.put("alt_document_id", altDocumentId);
             }
-    
-    
+
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        
+
             PlugDescription plugDescription = ibus.getIPlug(iplugId);
-            
+
             // flag to make column name readable (not lowercase, character substitution '_' => ' ')
             boolean readableColumnNames = false;
-            
-            
+
             Record record = ibus.getRecord(hit);
             if (record == null) {
                 log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
             } else {
-                
+
                 // set language code list
                 HashMap sysLangHashs = new HashMap();
-                
+
                 HashMap sysLangHash = new HashMap();
                 sysLangHash.put("sys_language.lang_id", "121");
                 sysLangHash.put("sys_language.name", "Deutsch");
                 sysLangHash.put("sys_language.description", "Deutsch");
                 sysLangHash.put("sys_language.def_lang", "1");
                 sysLangHashs.put("121", sysLangHash);
-                
+
                 sysLangHash = new HashMap();
                 sysLangHash.put("sys_language.lang_id", "94");
                 sysLangHash.put("sys_language.name", "English");
                 sysLangHash.put("sys_language.description", "English");
                 sysLangHash.put("sys_language.def_lang", "1");
                 sysLangHashs.put("94", sysLangHash);
-                
+
                 context.put("sysLangList", sysLangHashs);
-                
+
                 // put codelist fetcher into context
                 context.put("codeList", new IngridSysCodeList(request.getLocale()));
-                
-                if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+
+                if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)
+                        || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_ECS)
+                        || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_CSW)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
-                    
-                    String objId = (String)record.get("T01_OBJECT.OBJ_ID");
+
+                    String objId = (String) record.get("T01_OBJECT.OBJ_ID");
                     // get references
                     ArrayList superiorReferences = getSuperiorObjects(objId);
                     ArrayList subordinatedReferences = getSubordinatedObjects(objId);
                     ArrayList crossReferences = getCrossReferencedObjects(objId);
-                    
+
                     // enrich addresses with institution and units
                     ArrayList addrRecords = getAllTableRows(record, "T02_ADDRESS");
                     HashMap addrParents = new LinkedHashMap();
                     // iterate over all addresses and add missing information for the address
-                    for (int i=0; i<addrRecords.size(); i++) {
-                        Record addrRecord = (Record)addrRecords.get(i);
-                        String addressType = (String)addrRecord.get("T02_ADDRESS.TYP");
+                    for (int i = 0; i < addrRecords.size(); i++) {
+                        Record addrRecord = (Record) addrRecords.get(i);
+                        String addressType = (String) addrRecord.get("T02_ADDRESS.TYP");
                         // get id of the address
-                        String addressId = (String)addrRecord.get("T02_ADDRESS.ADR_ID");
+                        String addressId = (String) addrRecord.get("T02_ADDRESS.ADR_ID");
                         if (addressType.equals("1") || addressType.equals("2")) {
                             HashMap parents = new LinkedHashMap();
                             getUDKAddressParents(parents, addressId);
@@ -149,7 +149,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         }
                     }
                     context.put("addrParents", addrParents);
-                   
+
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
                     context.put("crossReferences", crossReferences);
@@ -158,14 +158,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
 
                     // enrich address with institution and units
                     HashMap addrParents = new LinkedHashMap();
-                    String addressType = (String)record.get("T02_ADDRESS.TYP");
-                    String addrId = (String)record.get("T02_ADDRESS.ADR_ID");
+                    String addressType = (String) record.get("T02_ADDRESS.TYP");
+                    String addrId = (String) record.get("T02_ADDRESS.ADR_ID");
                     // get id of the address
                     if (addressType.equals("1") || addressType.equals("2")) {
                         getUDKAddressParents(addrParents, addrId);
                     }
-                    context.put("addrParents", addrParents);                    
-                    
+                    context.put("addrParents", addrParents);
+
                     // get references
                     ArrayList superiorReferences = new ArrayList();
                     IngridHit h = getParentAddress(addrId);
@@ -173,28 +173,31 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         superiorReferences.add(getParentAddress(addrId));
                     }
                     ArrayList subordinatedReferences = getAddressChildren(addrId);
-                    
+
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
 
                     // get ALL subordinated addresses in the complete hierarchie
                     ArrayList allAddressChildren = new ArrayList();
                     allAddressChildren.addAll(subordinatedReferences);
-                    for (int i=0; i<subordinatedReferences.size(); i++) {
-                        String myAddrId = (String)((IngridHitDetail)((IngridHit)subordinatedReferences.get(i)).get("detail")).get("T02_address.adr_id");
-                        String myAddrType = (String)((IngridHitDetail)((IngridHit)subordinatedReferences.get(i)).get("detail")).get("T02_address.typ");
+                    for (int i = 0; i < subordinatedReferences.size(); i++) {
+                        String myAddrId = (String) ((IngridHitDetail) ((IngridHit) subordinatedReferences.get(i))
+                                .get("detail")).get("T02_address.adr_id");
+                        String myAddrType = (String) ((IngridHitDetail) ((IngridHit) subordinatedReferences.get(i))
+                                .get("detail")).get("T02_address.typ");
                         if (myAddrType.equals("0") || myAddrType.equals("1")) {
                             allAddressChildren.addAll(getAllAddressChildren(myAddrId));
                         }
                     }
-                    
+
                     // get related record of the subordinated address references
                     HashMap subordinatedObjRef = new LinkedHashMap();
-                    for (int i=0; i<allAddressChildren.size(); i++) {
-                        ArrayList l = getObjectsByAddress((String)((IngridHitDetail)( (IngridHit)allAddressChildren.get(i)).get("detail")).get("T02_address.adr_id"));
-                        for (int j=0; j<l.size(); j++) {
-                            IngridHit objHit = (IngridHit)l.get(j);
-                            IngridHitDetail detail = (IngridHitDetail)objHit.get("detail");
+                    for (int i = 0; i < allAddressChildren.size(); i++) {
+                        ArrayList l = getObjectsByAddress((String) ((IngridHitDetail) ((IngridHit) allAddressChildren
+                                .get(i)).get("detail")).get("T02_address.adr_id"));
+                        for (int j = 0; j < l.size(); j++) {
+                            IngridHit objHit = (IngridHit) l.get(j);
+                            IngridHitDetail detail = (IngridHitDetail) objHit.get("detail");
                             String objId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
                             if (!subordinatedObjRef.containsKey(objId)) {
                                 subordinatedObjRef.put(objId, objHit);
@@ -202,16 +205,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         }
                     }
                     context.put("subordinatedObjRef", subordinatedObjRef);
-                    
-                    
+
                 } else {
                     setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                     readableColumnNames = true;
                 }
-                
+
                 context.put("record", record);
                 HashMap recordMap = new LinkedHashMap();
-                
+
                 // search for column
                 Column[] columns = record.getColumns();
                 for (int i = 0; i < columns.length; i++) {
@@ -224,18 +226,20 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         } else {
                             columnName = columnName.toLowerCase();
                         }
-                        
+
                         if (dateFields.contains(columnName)) {
-                            recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i]).trim(), request.getLocale()));
+                            recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i])
+                                    .trim(), request.getLocale()));
                         } else {
-                            recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n", "<br />"));
+                            recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n",
+                                    "<br />"));
                         }
                     }
                 }
                 addSubRecords(record, recordMap, request.getLocale(), readableColumnNames, messages);
-                
+
                 recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
-                ArrayList addressList = (ArrayList)getFieldFromHashTree(recordMap, "t012_obj_adr.obj_id");
+                ArrayList addressList = (ArrayList) getFieldFromHashTree(recordMap, "t012_obj_adr.obj_id");
                 if (addressList != null) {
                     Collections.sort(addressList, new AddressTypeComparator());
                 }
@@ -245,14 +249,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 }
                 context.put("rec", recordMap);
             }
-        } catch(Throwable t){
+        } catch (Throwable t) {
             log.error("Error getting result record.", t);
         }
 
         super.doView(request, response);
     }
 
-    
     /**
      * Converts string to readable column name:
      * 
@@ -269,32 +272,34 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
      * @return The readable column name.
      */
     private String convert2readableColumnName(String columnName, IngridResourceBundle messages) {
-        
+
         // try to find the column name in the localization
         String localizedName = messages.getString(columnName);
         if (!localizedName.equals(columnName)) {
             return localizedName;
         }
-        
-        final String reservedColumnNames =  "|title|summary|";
-        final String ucUpperStopWords = PortalConfig.getInstance().getString(PortalConfig.DETAILS_GENERIC_UCFIRST_STOPWORDS, "");
-        
+
+        final String reservedColumnNames = "|title|summary|";
+        final String ucUpperStopWords = PortalConfig.getInstance().getString(
+                PortalConfig.DETAILS_GENERIC_UCFIRST_STOPWORDS, "");
+
         if (reservedColumnNames.indexOf("|".concat(columnName).concat("|")) != -1) {
             return columnName;
         }
-        
+
         // replace '_' with ' '
         columnName = columnName.replace('_', ' ');
         // uppercase words first character
         String[] words = columnName.split(" ");
-        columnName = ""; 
-        for (int j=0; j<words.length; j++) {
+        columnName = "";
+        for (int j = 0; j < words.length; j++) {
             if (j > 0) {
                 columnName = columnName.concat(" ");
             }
             if (words[j].length() > 0) {
                 if (ucUpperStopWords.indexOf("|".concat(words[j]).concat("|")) == -1) {
-                    columnName = columnName.concat(words[j].replaceFirst(UtilsString.regExEscape(words[j].substring(0,1)), words[j].substring(0,1).toUpperCase()));
+                    columnName = columnName.concat(words[j].replaceFirst(UtilsString.regExEscape(words[j].substring(0,
+                            1)), words[j].substring(0, 1).toUpperCase()));
                 } else {
                     columnName = columnName.concat(words[j]);
                 }
@@ -302,13 +307,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
         return columnName;
     }
-    
-    private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns, IngridResourceBundle messages) {
+
+    private void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns,
+            IngridResourceBundle messages) {
         addSubRecords(record, map, locale, 0, readableColumns, messages);
     }
-    
-    
-    private void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns, IngridResourceBundle messages) {
+
+    private void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns,
+            IngridResourceBundle messages) {
         level++;
         Column[] columns;
         ArrayList subRecordList;
@@ -327,9 +333,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                         columnName = columnName.toLowerCase();
                     }
                     if (dateFields.contains(columnName)) {
-                        subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
+                        subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(
+                                columns[j]).trim(), locale));
                     } else {
-                        subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n", "<br />"));
+                        subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n",
+                                "<br />"));
                     }
                 }
             }
@@ -340,7 +348,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 targetName = targetName.toLowerCase();
             }
             if (map.containsKey(targetName) && map.get(targetName) instanceof ArrayList) {
-                subRecordList = (ArrayList)map.get(targetName);
+                subRecordList = (ArrayList) map.get(targetName);
             } else {
                 subRecordList = new ArrayList();
                 map.put(targetName, subRecordList);
@@ -349,9 +357,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             // add subrecords
             addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns, messages);
         }
-        
-    }    
-    
+
+    }
+
     private void getUDKAddressParents(HashMap result, String addrId) throws Exception {
         // get id of the address
         String addressId = addrId;
@@ -364,25 +372,26 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 // no parent found
                 break;
             }
-            addressType = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_CLASS);
-            addressId = UtilsSearch.getDetailValue((IngridHitDetail)parent.get("detail"), Settings.HIT_KEY_ADDRESS_ADDRID);
+            addressType = UtilsSearch.getDetailValue((IngridHitDetail) parent.get("detail"),
+                    Settings.HIT_KEY_ADDRESS_CLASS);
+            addressId = UtilsSearch.getDetailValue((IngridHitDetail) parent.get("detail"),
+                    Settings.HIT_KEY_ADDRESS_ADDRID);
             if (addressType.equals("0")) {
                 if (!result.containsKey("institutions")) {
                     result.put("institutions", new ArrayList());
                 }
-                ArrayList institutions = (ArrayList)result.get("institutions");
+                ArrayList institutions = (ArrayList) result.get("institutions");
                 institutions.add(parent);
             } else if (addressType.equals("1")) {
                 if (!result.containsKey("units")) {
                     result.put("units", new ArrayList());
                 }
-                ArrayList units = (ArrayList)result.get("units");
+                ArrayList units = (ArrayList) result.get("units");
                 units.add(0, parent);
             }
             // exit loop if parent was NO unit
         } while (addressType.equals("1"));
     }
-    
 
     /**
      * Iterate over the hashmap ArrayList structure and return the requested field.
@@ -391,25 +400,25 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
      * @param fieldName
      * @return
      */
-    private Object getFieldFromHashTree(HashMap hash,  String fieldName) {
+    private Object getFieldFromHashTree(HashMap hash, String fieldName) {
         Iterator it = hash.keySet().iterator();
         while (it.hasNext()) {
-            String key = (String)it.next();
+            String key = (String) it.next();
             if (key.equals(fieldName)) {
                 return hash.get(key);
             }
             if (hash.get(key) instanceof ArrayList) {
-                ArrayList array = (ArrayList)hash.get(key);
-                for (int i=0; i<array.size(); i++) {
+                ArrayList array = (ArrayList) hash.get(key);
+                for (int i = 0; i < array.size(); i++) {
                     if (array.get(i) instanceof HashMap) {
-                        Object val = getFieldFromHashTree((HashMap)array.get(i), fieldName);
+                        Object val = getFieldFromHashTree((HashMap) array.get(i), fieldName);
                         if (val != null) {
                             return val;
                         }
                     }
                 }
             }
-            
+
         }
         return null;
     }
@@ -421,47 +430,47 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
      * @param fieldName
      * @return
      */
-    private boolean setFieldFromHashTree(HashMap hash,  String fieldName, String value) {
+    private boolean setFieldFromHashTree(HashMap hash, String fieldName, String value) {
         Iterator it = hash.keySet().iterator();
         while (it.hasNext()) {
-            String key = (String)it.next();
+            String key = (String) it.next();
             if (key.equals(fieldName)) {
                 hash.put(key, value);
                 return true;
             }
             if (hash.get(key) instanceof ArrayList) {
-                ArrayList array = (ArrayList)hash.get(key);
-                for (int i=0; i<array.size(); i++) {
+                ArrayList array = (ArrayList) hash.get(key);
+                for (int i = 0; i < array.size(); i++) {
                     if (array.get(i) instanceof HashMap) {
-                        if (setFieldFromHashTree((HashMap)array.get(i), fieldName, value)) {
-                            return true; 
+                        if (setFieldFromHashTree((HashMap) array.get(i), fieldName, value)) {
+                            return true;
                         }
                     }
                 }
             }
-            
+
         }
         return false;
     }
-    
-    
-    private ArrayList getAllTableRows(Record record,  String tableName) {
+
+    private ArrayList getAllTableRows(Record record, String tableName) {
         ArrayList result = new ArrayList();
-        
+
         Record[] subRecords = record.getSubRecords();
         for (int i = 0; i < subRecords.length; i++) {
 
             Set keys = subRecords[i].keySet();
             Iterator it = keys.iterator();
-            String firstKey = (String)it.next();
+            String firstKey = (String) it.next();
             if (firstKey.startsWith(tableName)) {
                 result.add(subRecords[i]);
-            }            
-            
+            }
+
             result.addAll(getAllTableRows(subRecords[i], tableName));
         }
         return result;
     }
+
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
@@ -476,7 +485,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
-                    response.setRenderParameter("altdocid", (String)hit.get("alt_document_id"));
+                    response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
             } catch (Exception e) {
                 log.error("Error fetching address data for address id: " + addrId, e);
@@ -488,7 +497,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
-                    response.setRenderParameter("altdocid", (String)hit.get("alt_document_id"));
+                    response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
             } catch (Exception e) {
                 log.error("Error fetching address data for address id: " + objId, e);
@@ -500,7 +509,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 response.setRenderParameter("altdocid", request.getParameter("alt_document_id"));
             }
         }
-        
+
     }
 
     private ArrayList getSuperiorObjects(String objId) {
@@ -509,8 +518,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
-        ArrayList result = getHits("t012_obj_obj.object_to_id:".concat(objId).concat(" t012_obj_obj.typ:0 datatype:default ranking:score"), 
-                requestedMetadata, filter);
+        ArrayList result = getHits("t012_obj_obj.object_to_id:".concat(objId).concat(
+                " t012_obj_obj.typ:0 datatype:default ranking:score"), requestedMetadata, filter);
         return result;
     }
 
@@ -520,35 +529,32 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
-        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(" t012_obj_obj.typ:0 datatype:default ranking:score"), 
-                requestedMetadata, filter);
+        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
+                " t012_obj_obj.typ:0 datatype:default ranking:score"), requestedMetadata, filter);
         return result;
     }
-    
 
-    
     private ArrayList getCrossReferencedObjects(String objId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
-        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(" t012_obj_obj.typ:1 datatype:default ranking:score"), 
-                requestedMetadata, filter);
+        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
+                " t012_obj_obj.typ:1 datatype:default ranking:score"), requestedMetadata, filter);
         return result;
     }
-    
-    
+
     private ArrayList getObjectsByAddress(String addrId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
-        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:default ranking:score"), 
+        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:default ranking:score"),
                 requestedMetadata, filter);
         return result;
     }
-    
+
     private IngridHit getParentAddress(String addrId) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
@@ -560,10 +566,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
-        ArrayList result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" datatype:address ranking:score"), 
+        ArrayList result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" datatype:address ranking:score"),
                 requestedMetadata, filter);
         if (result.size() > 0) {
-            return (IngridHit)result.get(0);
+            return (IngridHit) result.get(0);
         } else {
             return null;
         }
@@ -580,7 +586,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
-        ArrayList result = getHits("T022_adr_adr.adr_from_id:".concat(addrId).concat(" datatype:address ranking:score"), 
+        ArrayList result = getHits(
+                "T022_adr_adr.adr_from_id:".concat(addrId).concat(" datatype:address ranking:score"),
                 requestedMetadata, filter);
         return result;
     }
@@ -594,10 +601,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
         requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:address ranking:score"), 
+        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:address ranking:score"),
                 requestedMetadata, null);
         if (result.size() > 0) {
-            return (IngridHit)result.get(0);
+            return (IngridHit) result.get(0);
         } else {
             return null;
         }
@@ -607,30 +614,29 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        ArrayList result = getHits("T01_object.obj_id:".concat(objId).concat(" datatype:default ranking:score"), 
+        ArrayList result = getHits("T01_object.obj_id:".concat(objId).concat(" datatype:default ranking:score"),
                 requestedMetadata, null);
         if (result.size() > 0) {
-            return (IngridHit)result.get(0);
+            return (IngridHit) result.get(0);
         } else {
             return null;
         }
     }
-    
-    
+
     private ArrayList getAllAddressChildren(String addrId) {
         ArrayList result = getAddressChildren(addrId);
         int size = result.size();
-        for (int i=0; i<size; i++) {
-            IngridHit hit = (IngridHit)result.get(i);
-            IngridHitDetail detail = (IngridHitDetail)hit.get("detail");
-            String addrType = (String)detail.get(Settings.HIT_KEY_ADDRESS_CLASS);
+        for (int i = 0; i < size; i++) {
+            IngridHit hit = (IngridHit) result.get(i);
+            IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+            String addrType = (String) detail.get(Settings.HIT_KEY_ADDRESS_CLASS);
             if (addrType.equals("0") || addrType.equals("1")) {
-                result.addAll(getAllAddressChildren((String)detail.get(Settings.HIT_KEY_ADDRESS_ADDRID)));
+                result.addAll(getAllAddressChildren((String) detail.get(Settings.HIT_KEY_ADDRESS_ADDRID)));
             }
         }
         return result;
     }
-    
+
     private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
         ArrayList result = new ArrayList();
         try {
@@ -639,26 +645,28 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
             int page = 0;
             do {
                 page++;
-                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, 20, PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query, requestedMetaData);
-                for (int j=0; j<details.length; j++) {
-                    IngridHitDetail detail = (IngridHitDetail)details[j];
+                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, 20,
+                        PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
+                IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query,
+                        requestedMetaData);
+                for (int j = 0; j < details.length; j++) {
+                    IngridHitDetail detail = (IngridHitDetail) details[j];
                     boolean include = true;
                     if (filter != null && filter.size() > 0) {
                         Iterator it = filter.entrySet().iterator();
                         while (it.hasNext()) {
-                            Map.Entry entry = (Map.Entry)it.next();
-                            String recordKey = (String)entry.getKey();
-                            String value = (String)entry.getValue();
+                            Map.Entry entry = (Map.Entry) it.next();
+                            String recordKey = (String) entry.getKey();
+                            String value = (String) entry.getValue();
                             if (value.equals(UtilsSearch.getDetailValue(detail, recordKey))) {
                                 include = false;
                                 break;
                             }
                         }
-                    }   
+                    }
                     if (include) {
                         // flatten alle detail fields
-                        for(int i=0; i<requestedMetaData.length; i++) {
+                        for (int i = 0; i < requestedMetaData.length; i++) {
                             detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
                         }
                         hits.getHits()[j].put("detail", detail);
@@ -671,27 +679,26 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
         }
         return result;
     }
-    
+
     /**
      * Inner class: AddressTypeComperator for address sorting;
      *
      * @author joachim@wemove.com
      */
-    private class AddressTypeComparator implements Comparator
-    {
+    private class AddressTypeComparator implements Comparator {
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
-        public final int compare ( Object a, Object b )  {
+        public final int compare(Object a, Object b) {
             int ia;
             int ib;
             try {
-                ia = Integer.parseInt((String)((HashMap) a).get("t012_obj_adr.typ"));
-                ib = Integer.parseInt((String)((HashMap) b).get("t012_obj_adr.typ"));
+                ia = Integer.parseInt((String) ((HashMap) a).get("t012_obj_adr.typ"));
+                ib = Integer.parseInt((String) ((HashMap) b).get("t012_obj_adr.typ"));
             } catch (Exception e) {
                 return 0;
             }
-            
+
             if (ia > ib)
                 return 1;
             else if (ia < ib)
@@ -700,5 +707,5 @@ public class SearchDetailPortlet extends GenericVelocityPortlet
                 return 0;
         }
     }
-    
+
 }
