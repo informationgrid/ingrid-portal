@@ -120,7 +120,8 @@ public class UtilsSearch {
         try {
             result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
             // strip all HTML tags from summary
-            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>", ""), 400));
+            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>",
+                    ""), 400));
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
             result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
@@ -276,7 +277,7 @@ public class UtilsSearch {
         } else if (detailKey.equals(Settings.RESULT_KEY_PROVIDER)) {
             mappedValue = UtilsDB.getProviderFromKey(detailValue);
         } else if (detailKey.equals(Settings.RESULT_KEY_PLUG_ID)) {
-            mappedValue = ((PlugDescription)IBUSInterfaceImpl.getInstance().getIPlug(detailValue)).getDataSourceName();
+            mappedValue = ((PlugDescription) IBUSInterfaceImpl.getInstance().getIPlug(detailValue)).getDataSourceName();
         } else if (resources != null) {
             mappedValue = resources.getString(detailValue);
         }
@@ -465,7 +466,7 @@ public class UtilsSearch {
         }
         return false;
     }
-    
+
     public static boolean hasDatatype(IngridQuery q, String datatype) {
         return hasNegativeDataType(q, datatype) || hasPositiveDataType(q, datatype);
     }
@@ -482,7 +483,7 @@ public class UtilsSearch {
      */
     public static boolean containsField(IngridQuery query, String fieldName) {
         IngridQuery[] clauses = query.getAllClauses();
-        for (int i=0; i<clauses.length; i++) {
+        for (int i = 0; i < clauses.length; i++) {
             FieldQuery[] fields = query.getFields();
             for (int j = 0; j < fields.length; j++) {
                 if (fields[j].getFieldName().equalsIgnoreCase(fieldName)) {
@@ -510,21 +511,21 @@ public class UtilsSearch {
      */
     public static boolean containsField(IngridQuery query, String fieldName, String value) {
         IngridQuery[] clauses = query.getAllClauses();
-        for (int i=0; i<clauses.length; i++) {
+        for (int i = 0; i < clauses.length; i++) {
             FieldQuery[] fields = query.getFields();
             for (int j = 0; j < fields.length; i++) {
-                if (fields[j].getFieldName().equalsIgnoreCase(fieldName) 
+                if (fields[j].getFieldName().equalsIgnoreCase(fieldName)
                         && fields[i].getFieldValue().equalsIgnoreCase(value)) {
                     return true;
                 }
             }
-            if (query.get(fieldName) != null && ((String)query.get(fieldName)).equalsIgnoreCase(value)) {
+            if (query.get(fieldName) != null && ((String) query.get(fieldName)).equalsIgnoreCase(value)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     /**
      * Adapt basic datatypes in query dependent from selected datatype in UserInterface
      * (the ones above the Simple Search Input).
@@ -584,8 +585,7 @@ public class UtilsSearch {
             query.addClause(cq);
         }
     }
-    
-    
+
     /**
      * Add grouping to query
      * @param query
@@ -679,7 +679,6 @@ public class UtilsSearch {
         context.put("partnerRoot", partnerRoot);
     }
 
-
     /**
      * Encapsulates common processAction functionality for all term-adding portlets.
      * 
@@ -687,21 +686,27 @@ public class UtilsSearch {
      * @param response
      * @throws NotSerializableException
      */
-    public static void processActionForTermPortlets(ActionRequest request, ActionResponse response) throws NotSerializableException {
+    public static void processActionForTermPortlets(ActionRequest request, ActionResponse response)
+            throws NotSerializableException {
         String addingType = request.getParameter("adding_type");
         String searchTerm = request.getParameter("search_term");
-        String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+        String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                Settings.PARAM_QUERY_STRING);
         if (addingType.equals("1")) {
-            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString
+                    .addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
         } else if (addingType.equals("2")) {
-            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_OR));
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString
+                    .addTerm(queryStr, searchTerm, UtilsQueryString.OP_OR));
         } else if (addingType.equals("3")) {
-            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_PHRASE));
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString
+                    .addTerm(queryStr, searchTerm, UtilsQueryString.OP_PHRASE));
         } else if (addingType.equals("4")) {
-            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_NOT));
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString
+                    .addTerm(queryStr, searchTerm, UtilsQueryString.OP_NOT));
         }
     }
-    
+
     /**
      * Encapsulates common processAction functionality for all partner selection portlets 
      * @param request
@@ -724,8 +729,7 @@ public class UtilsSearch {
                     Settings.PARAM_QUERY_STRING);
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
             String resultQuery = processSearchPartner(queryStr, partnerRoot, request);
-            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
-                    resultQuery);            
+            PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, resultQuery);
 
         } else if (action.equalsIgnoreCase("doOpenPartner")) {
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
@@ -742,7 +746,6 @@ public class UtilsSearch {
         }
     }
 
-    
     public static String processSearchPartner(String queryStr, DisplayTreeNode partnerRoot, ActionRequest request) {
         Iterator it = partnerRoot.getChildren().iterator();
         String chk;
@@ -807,19 +810,24 @@ public class UtilsSearch {
             return queryStr;
         }
     }
-    
-    
-    
+
     /**
      * Add a querystring to the session querystring history.
      * 
      * @param request The request.
      */
     public static void addQueryToHistory(RenderRequest request) {
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if (action == null || !action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
+            return;
+        }
+
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         String urlStr = Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request);
-        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
-        QueryHistory history = (QueryHistory)sessionPrefs.getInitializedObject(IngridSessionPreferences.QUERY_HISTORY, QueryHistory.class);
+        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+        QueryHistory history = (QueryHistory) sessionPrefs.getInitializedObject(IngridSessionPreferences.QUERY_HISTORY,
+                QueryHistory.class);
         String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
         if (selectedDS == null) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
@@ -837,94 +845,108 @@ public class UtilsSearch {
         if (plugIds != null && plugIds.length > 0) {
             for (int i = 0; i < plugIds.length; i++) {
                 if (plugIds[i] != null) {
-                    query.addToList(IngridQuery.IPLUGS, new FieldQuery(true, false, Settings.QFIELD_PLUG_ID, plugIds[i]));
+                    query.addToList(IngridQuery.IPLUGS,
+                            new FieldQuery(true, false, Settings.QFIELD_PLUG_ID, plugIds[i]));
                 }
             }
         }
     }
-    
+
     public static String processSearchSources(String queryString, String[] sources, String[] meta) {
         HashMap datatypes = new LinkedHashMap();
         String subTerm = "";
         String resultingQueryStr;
-        resultingQueryStr = UtilsQueryString.replaceTerm(queryString, Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DATABASE, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_SERVICE, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DOCUMENT, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_MAP, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_JOB, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_PROJECT, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW), "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA), "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS), "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(queryString, Settings.QFIELD_DATATYPE + ":"
+                + Settings.QVALUE_DATATYPE_SOURCE_WWW, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_DATATYPE + ":"
+                + Settings.QVALUE_DATATYPE_SOURCE_METADATA, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_DATATYPE + ":"
+                + Settings.QVALUE_DATATYPE_SOURCE_FIS, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+                + Settings.QVALUE_METACLASS_DATABASE, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+                + Settings.QVALUE_METACLASS_SERVICE, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+                + Settings.QVALUE_METACLASS_DOCUMENT, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+                + Settings.QVALUE_METACLASS_MAP, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+                + Settings.QVALUE_METACLASS_JOB, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+                + Settings.QVALUE_METACLASS_PROJECT, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE + ":"
+                + Settings.QVALUE_DATATYPE_SOURCE_WWW), "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE + ":"
+                + Settings.QVALUE_DATATYPE_SOURCE_METADATA), "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE + ":"
+                + Settings.QVALUE_DATATYPE_SOURCE_FIS), "");
 
-        datatypes.put("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW), "1");
-        datatypes.put("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS), "1");
-        datatypes.put("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA), "1");
-        for (int i=0; i<sources.length; i++) {
+        datatypes.put("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW), "1");
+        datatypes.put("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS), "1");
+        datatypes.put("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA), "1");
+        for (int i = 0; i < sources.length; i++) {
             if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
-                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_AREA_ENVINFO, "1");
-            } 
+                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_AREA_ENVINFO, "1");
+            }
             if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_WWW)) {
-                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW, "1");
-                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_WWW));
+                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW, "1");
+                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW));
             }
             if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_FIS)) {
-                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS, "1");
-                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_FIS));
+                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS, "1");
+                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS));
             }
         }
         HashMap metaclasses = new LinkedHashMap();
-        for (int i=0; i<meta.length; i++) {
+        for (int i = 0; i < meta.length; i++) {
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_ALL)) {
-                datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
-                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
+                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA));
                 // empty meta classes, all metaclasses are selected
                 metaclasses = new LinkedHashMap();
                 break;
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_0)) {
-                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_JOB, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_JOB, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_1)) {
-                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_MAP, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_MAP, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_2)) {
-                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DOCUMENT, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_DOCUMENT, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_3)) {
-                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_SERVICE, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_SERVICE, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_4)) {
-                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_PROJECT, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_PROJECT, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_5)) {
-                metaclasses.put(Settings.QFIELD_METACLASS+":"+Settings.QVALUE_METACLASS_DATABASE, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_DATABASE, "1");
             }
         }
         // remove meta exclusion if we have a meta data class selection
         if (metaclasses.size() > 0) {
-            datatypes.remove("-".concat(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA));
-            datatypes.put(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
+            datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+            datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
         }
         // build the subquery
-        if (!datatypes.containsKey(Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_AREA_ENVINFO) && (metaclasses.size() > 0 || datatypes.size() > 0)) {
+        if (!datatypes.containsKey(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_AREA_ENVINFO)
+                && (metaclasses.size() > 0 || datatypes.size() > 0)) {
             Iterator it = datatypes.keySet().iterator();
             while (it.hasNext()) {
-                String datatype = (String)it.next();
+                String datatype = (String) it.next();
                 subTerm = subTerm.concat(datatype);
                 if (it.hasNext()) {
                     subTerm = subTerm.concat(" ");
                 }
             }
-            
+
             it = metaclasses.keySet().iterator();
             if (it.hasNext()) {
                 subTerm = subTerm.concat(" (");
                 while (it.hasNext()) {
-                    String metaclass = (String)it.next();
+                    String metaclass = (String) it.next();
                     subTerm = subTerm.concat(metaclass);
                     if (it.hasNext()) {
                         subTerm = subTerm.concat(" OR ");
@@ -932,8 +954,9 @@ public class UtilsSearch {
                 }
                 subTerm = subTerm.concat(")");
             }
-        } 
-        return UtilsQueryString.addTerm(UtilsQueryString.stripQueryWhitespace(resultingQueryStr), subTerm, UtilsQueryString.OP_AND);
+        }
+        return UtilsQueryString.addTerm(UtilsQueryString.stripQueryWhitespace(resultingQueryStr), subTerm,
+                UtilsQueryString.OP_AND);
     }
 
     /**
@@ -946,7 +969,7 @@ public class UtilsSearch {
     public static FieldQuery[] getField(IngridQuery q, String fieldName) {
         FieldQuery[] fields = q.getFields();
         ArrayList resultFields = new ArrayList();
-        for (int i=0; i<fields.length; i++) {
+        for (int i = 0; i < fields.length; i++) {
             if (fields[i].getFieldName().equals(fieldName)) {
                 resultFields.add(fields[i]);
             }
