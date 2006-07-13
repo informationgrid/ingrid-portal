@@ -107,5 +107,59 @@
 	    </j:if>  
   	</goal>
 
+  <!--==================================================================-->
+  <!-- import PSML into Database                                        -->
+  <!-- copied from jetspeed maven.xml in top directory !                -->
+  <!--==================================================================-->    
+    <goal name='import'>
+        <filterset id="dbSet" begintoken="$" endtoken="}">
+          <filter token="{org.apache.jetspeed.database.driver" value="${org.apache.jetspeed.production.database.driver}"/>
+          <filter token="{org.apache.jetspeed.database.url" value="${org.apache.jetspeed.production.database.url}"/>      
+          <filter token="{org.apache.jetspeed.database.user" value="${org.apache.jetspeed.production.database.user}"/>            
+          <filter token="{org.apache.jetspeed.database.password" value="${org.apache.jetspeed.production.database.password}"/>            
+        </filterset>            
+        <copy file="./etc/import/assembly/repository-datasource-spring.xml"
+              tofile="${maven.build.dir}/classes/repository-datasource-spring.xml"
+              overwrite="true"
+              failonerror="true">
+          <filterset refid="dbSet"/>
+        </copy>        
+        <copy todir='${maven.build.dir}/classes'
+          file="./etc/log4j/log4j.properties"/>
+        <copy todir='${maven.build.dir}/classes'>
+          <fileset dir="./etc/db-ojb/"/>
+        </copy>              
+        <copy todir="${maven.build.dir}/classes"
+              file="./etc/import/assembly/import-page-manager.xml"/>
+<!-- ORIGINAL
+        <copy todir="${maven.build.dir}/classes"
+              file="./src/webapp/WEB-INF/assembly/transaction.xml"/>
+        <copy todir="${maven.build.dir}/classes"
+              file="./src/webapp/WEB-INF/assembly/alternate/interceptors.xml"/>        
+-->
+        <copy todir="${maven.build.dir}/classes"
+              file="${maven.build.dir}/ingrid-portal/WEB-INF/assembly/transaction.xml"/>
+        <copy todir="${maven.build.dir}/classes"
+              file="${maven.build.dir}/ingrid-portal/WEB-INF/assembly/alternate/interceptors.xml"/>        
+<!--
+	    <echo message="maven.dependency.classpath: ${maven.dependency.classpath}"/>
+	    <echo message="maven.build.dest: ${maven.build.dest}"/>
+	    <echo message="org.apache.jetspeed.production.jdbc.drivers.path: ${org.apache.jetspeed.production.jdbc.drivers.path}"/>
+-->
+        <java classname="org.apache.jetspeed.page.PageImporter" fork="yes">
+          <classpath>
+<!-- NEW !!! Important to find correct configuration files !!! -->
+            <pathelement path="${maven.build.dir}/classes"/>
+<!-- END NEW !!! -->
+            <path refid="maven.dependency.classpath"/>
+            <pathelement path="${maven.build.dest}"/>
+            <pathelement path="${org.apache.jetspeed.production.jdbc.drivers.path}"/>            
+          </classpath>
+          <sysproperty key="org.apache.jetspeed.page.import.configuration" 
+                       value="./etc/import/import.properties"/>       
+          <sysproperty key="org.apache.jetspeed.page.import.pages"
+                       value="./src/webapp/WEB-INF/pages"/>
+        </java>
+    </goal>
 
 </project>

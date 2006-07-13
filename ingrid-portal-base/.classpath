@@ -12,7 +12,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/content-server-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-components-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-deploy-tools-2.1-dev.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-rdbms-2.1-dev.jar"/>
+	<classpathentry sourcepath="/JETSPEED_COMPONENTS_SRC" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-rdbms-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-prefs-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-search-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-security-2.1-dev.jar"/>

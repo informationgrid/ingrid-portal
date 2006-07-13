@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>		
+
+  <!-- datasource bean -->
+<!--  <bean id="JetspeedDS" class="org.apache.jetspeed.components.rdbms.ojb.ConnectionRepositoryEntry"> -->
+  <bean id="JetspeedDS" class="org.apache.commons.dbcp.BasicDataSource">     
+    <property name="driverClassName">
+      <value>${org.apache.jetspeed.database.driver}</value>
+    </property>
+    <property name="url">
+      <value>${org.apache.jetspeed.database.url}</value>
+    </property>
+    <property name="username">
+      <value>${org.apache.jetspeed.database.user}</value>
+    </property>
+    <property name="password">
+      <value>${org.apache.jetspeed.database.password}</value>
+    </property>
+  </bean>     
+    
+  <bean id="ojbConfigurer" class="org.springframework.orm.ojb.support.LocalOjbConfigurer"/> 
+     
+    <!-- 
+         Dynamically configures Database Platform for OJB by looking at the connection string
+         and figuring out the OJB platform using an OJB metadata utility
+         Its important to get this right otherwise you will be sending the wrong (most likely HSQL)
+         flavor of SQL statements to the backend database.
+     -->
+     <bean id="PlatformConfigurator" 
+           class="org.apache.jetspeed.components.rdbms.ojb.DatabasePlatformConfigurator"
+           init-method="init"
+      >
+    	<constructor-arg index='0'>
+    		<ref bean="JetspeedDS"/>
+    	</constructor-arg>         
+        <!-- JNDI Name -->
+    	<constructor-arg index='1'>
+    		<value>JetspeedDS</value>
+    	</constructor-arg>                  
+     </bean>
+    
+  <!-- properties configurer used to pick up system properties -->
+  <bean id="propertiesConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
+
+</beans>

@@ -52,6 +52,6 @@
 
   </fragment>
   <security-constraints>
-    <security-constraints-ref>public-view</security-constraints-ref>
+    <security-constraints-ref>public-edit</security-constraints-ref>
   </security-constraints>
 </page>

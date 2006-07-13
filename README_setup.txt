@@ -1,3 +1,14 @@
+  PSML in database
+  ================
+- s. mail in J-Userliste von Randy Watler, "Re: Storing PSML in Database" vom Donnerstag, 9. März 2006 18:04
+- mit "maven import" wird alles unter dem pages Verzeichnis in die Datenbank geholt:
+  - aus dem src/etc Verzeichnis wird verschiedenes in den target/classes folder kopiert, in dem dann der import ausgeführt wird
+- !!! ingrid-portal-base IST PER DEFAULT SO KONFIGURIERT, DASS ES PSML IN DER DATENBANK BENUTZT !!!!!!!!!!!!!!!!!!
+  (in src/.../WEB-INF/assembly wurde der entspredchende page-manager.xml und interceptors.xml rein kopiert).
+- Um PSML vom Dateisystem zu benutzen EINFACH page-manager.xml UND interceptors.xml ENTFERNEN (oder andere Endung) UND NEU BUILDEN,
+  DANN WIRD DER DEFAULT PAGE MANAGER BENUTZT !
+
+
   Neue jetspeed Version
   =====================
 
