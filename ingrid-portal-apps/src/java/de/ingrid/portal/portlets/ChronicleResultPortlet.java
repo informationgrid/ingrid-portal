@@ -212,6 +212,22 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         String urlWithType = (String) detail.getArrayList(DetailedTopic.INSTANCE_OF).get(0);
                         String type = urlWithType.split("#")[1].split("Type")[0];
                         topic.put("type", resources.getString(type));
+
+                        // definitions URL's and further infos
+                        /*
+                         ArrayList tmpList = new ArrayList();
+                         tmpList.add("http://www.wemove.com/");
+                         tmpList.add("http://www.media-style.com/");
+                         topic.put("definitions", tmpList);
+                         */
+                        topic.put("definitions", detail.getArrayList(DetailedTopic.DEFINITIONS));
+                        /*                        
+                         tmpList = new ArrayList();
+                         tmpList.add("test title wemove");
+                         tmpList.add("test title media style");
+                         topic.put("titles", tmpList);
+                         */
+                        topic.put("titles", detail.getArrayList(DetailedTopic.TITLES));
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
