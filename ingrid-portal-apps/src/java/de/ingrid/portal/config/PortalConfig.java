@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Provides access to the ingrid portal preferences.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class PortalConfig extends PropertiesConfiguration {
@@ -18,9 +18,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public final static String RSS_HISTORY_DAYS = "rss.history.days";
 
     /**
-     * timout for queries in ms 
-     * should be larger than query.timout.ranked and query.timout.unranked
-     * because ranked and unranked query is encapsulated inside a threaded query
+     * timout for queries in ms should be larger than query.timout.ranked and
+     * query.timout.unranked because ranked and unranked query is encapsulated
+     * inside a threaded query
      */
     public final static String QUERY_TIMEOUT_THREADED = "query.timeout.threaded";
 
@@ -33,7 +33,10 @@ public class PortalConfig extends PropertiesConfiguration {
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
 
-    /** always read values from database or only once and then from cache, true or false */
+    /**
+     * always read values from database or only once and then from cache, true
+     * or false
+     */
     public final static String ALWAYS_REREAD_DB_VALUES = "db.reread";
 
     public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
@@ -41,22 +44,19 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
 
     public static final String EMAIL_WEBMASTER = "email.webmaster";
-    
+
     public static final String EMAIL_CONTACT_FORM_RECEIVER = "email.contact.form.receiver";
-    
+
     public static final String QUERY_HISTORY_DISPLAY_SIZE = "query.history.display.size";
-    
+
     public static final String DETAILS_GENERIC_UCFIRST_STOPWORDS = "detail.generic.ucfirst.stopwords";
 
     public static final String SAVE_ENTRIES_MAX_NUMBER = "save.entries.max.number";
-    
-    
-    
-    // private stuff 
+
+    // private stuff
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
-
 
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {
