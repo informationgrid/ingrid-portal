@@ -37,7 +37,7 @@
 	<siteAddress>http://torwald.gistec-online.de/ingrid/ingrid-portal</siteAddress>
     <siteDirectory>/srv/www/htdocs/ingrid/ingrid-portal</siteDirectory>
    <repository>
-        <connection>scm:svn:https://mb@127.0.0.1:444/svn/ingrid:ingrid-portal</connection>
+        <connection>scm:svn:https://mb@127.0.0.1:444/svn/ingrid/ingrid-portal</connection>
     </repository>
     <dependencies>
     </dependencies>
