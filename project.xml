@@ -41,7 +41,7 @@
     </repository>
     <dependencies>
     </dependencies>
-	<reports>
+	<!--reports>
 		<report>maven-junit-report-plugin</report>
         <report>maven-jcoverage-plugin</report>
         <report>maven-simian-plugin</report>
@@ -56,6 +56,6 @@
         <report>maven-checkstyle-plugin</report>
         <report>maven-jxr-plugin</report>
         <report>maven-changelog-plugin</report>
-	</reports>
+	</reports-->
     <properties/>
 </project>
