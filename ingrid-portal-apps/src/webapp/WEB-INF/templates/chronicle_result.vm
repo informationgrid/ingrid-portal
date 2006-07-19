@@ -25,7 +25,20 @@
 					$MESSAGES.getString('chronicle.result.definitions')
 				#foreach($defURL in $rs.definitions)
 					#set ($titleIndex = $velocityCount - 1)
-					#set ($defTitle = $rs.titles.get($titleIndex))
+					#set ($defTitle = $rs.defTitles.get($titleIndex))
+        				<br /><a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
+				#end
+       			</p>        
+			#end
+			#if ($rs.samples)
+				#if ($rs.definitions)
+					<p class="result_metadata">&nbsp;</p>
+				#end
+       			<p class="result_metadata">
+					$MESSAGES.getString('chronicle.result.samples')
+				#foreach($defURL in $rs.samples)
+					#set ($titleIndex = $velocityCount - 1)
+					#set ($defTitle = $rs.sampleTitles.get($titleIndex))
         				<br /><a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
 				#end
        			</p>        

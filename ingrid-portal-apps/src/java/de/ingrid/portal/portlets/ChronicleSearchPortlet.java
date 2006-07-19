@@ -27,6 +27,7 @@ import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
@@ -210,6 +211,9 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         try {
             // INPUT: Term
             String inputTerm = af.getInput(ChronicleSearchForm.FIELD_SEARCH).trim();
+            
+            // ONLY USE ONE TERM !!! SNS can't process multiple Terms !
+//            inputTerm = inputTerm.split(" ")[0];
 
             try {
                 query = QueryStringParser.parse(inputTerm);

@@ -63,6 +63,7 @@ public class SNSInterfaceTest extends TestCase {
     public void testEVENTS_FROM_TERM() throws Exception {
         System.out.println("########## testEVENTS_FROM_TERM()");
         String term = "UIG";
+//        String term = "UIG lang:de";
         System.out.println("TERM = " + term);
         IngridQuery query = QueryStringParser.parse(term);
         query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
@@ -142,8 +143,10 @@ public class SNSInterfaceTest extends TestCase {
                 System.out.println("sampleOcc (Internetverweis):" + detail.get(DetailedTopic.SAMPLE_OCC));
                 System.out.println("descriptionOcc:" + detail.get(DetailedTopic.DESCRIPTION_OCC));
                 System.out.println("href:" + detail.getArrayList(DetailedTopic.INSTANCE_OF));
-                System.out.println("definitions:" + detail.getArrayList(DetailedTopic.DEFINITIONS));
-                System.out.println("titles:" + detail.getArrayList(DetailedTopic.TITLES));
+                System.out.println("definitions:" + detail.getDefinitions());
+                System.out.println("definitions titles:" + detail.getDefinitionTitles());
+                System.out.println("verwandte Infos:" + detail.getSamples());
+                System.out.println("verwandte Infos titles:" + detail.getSampleTitles());
             }
         } else {
             System.out.println("!!!!!!!!!!!!!!!! NO DETAILS FOUND");

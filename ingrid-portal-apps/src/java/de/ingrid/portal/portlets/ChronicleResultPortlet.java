@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -213,21 +214,36 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         String type = urlWithType.split("#")[1].split("Type")[0];
                         topic.put("type", resources.getString(type));
 
-                        // definitions URL's and further infos
+                        // Definitions: URL's and titles
+                        String[] array = detail.getDefinitions();
+                        if (array != null && array.length > 0) {
+                            topic.put("definitions", Arrays.asList(array));
+                        }
+                        array = detail.getDefinitionTitles();
+                        if (array != null && array.length > 0) {
+                            topic.put("defTitles", Arrays.asList(array));
+                        }
+
+                        // Verwandte Infos: URLs and titles
+                        array = detail.getSamples();
+                        if (array != null && array.length > 0) {
+                            topic.put("samples", Arrays.asList(array));
+                        }
+                        array = detail.getSampleTitles();
+                        if (array != null && array.length > 0) {
+                            topic.put("sampleTitles", Arrays.asList(array));
+                        }
+
                         /*
-                         ArrayList tmpList = new ArrayList();
-                         tmpList.add("http://www.wemove.com/");
-                         tmpList.add("http://www.media-style.com/");
-                         topic.put("definitions", tmpList);
+                         // for testing template
+                         String[] tmpArray = { "http://www.wemove.com/", "http://www.media-style.com/" };
+                         topic.put("definitions", Arrays.asList(tmpArray));
+                         String[] tmpArray2 = { "test title wemove", "test title media style" };
+                         topic.put("defTitles", Arrays.asList(tmpArray2));
+                         topic.put("samples", Arrays.asList(tmpArray));
+                         topic.put("sampleTitles", Arrays.asList(tmpArray2));
                          */
-                        topic.put("definitions", detail.getArrayList(DetailedTopic.DEFINITIONS));
-                        /*                        
-                         tmpList = new ArrayList();
-                         tmpList.add("test title wemove");
-                         tmpList.add("test title media style");
-                         topic.put("titles", tmpList);
-                         */
-                        topic.put("titles", detail.getArrayList(DetailedTopic.TITLES));
+
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
