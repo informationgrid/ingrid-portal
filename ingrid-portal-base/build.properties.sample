@@ -34,7 +34,7 @@ org.apache.jetspeed.catalina.version.major = 5.5
 #org.apache.jetspeed.production.database.url = jdbc:mysql://localhost/ingrid-portal
 #org.apache.jetspeed.production.database.driver = com.mysql.jdbc.Driver
 #org.apache.jetspeed.production.database.user = root
-#org.apache.jetspeed.production.database.password = mkmysql
+#org.apache.jetspeed.production.database.password =
 
 #org.apache.jetspeed.test.jdbc.drivers.path=${org.apache.jetspeed.portal.home}/lib/mysql-connector-java-3.1.11-bin.jar
 #org.apache.jetspeed.production.jdbc.drivers.path=${org.apache.jetspeed.portal.home}/lib/mysql-connector-java-3.1.11-bin.jar
