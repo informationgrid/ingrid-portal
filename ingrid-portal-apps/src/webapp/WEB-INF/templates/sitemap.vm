@@ -134,8 +134,8 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 					<p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
 				</li>
 				<li>
-					<a href="mailto:$webmaster_email">$MESSAGES.getString("sitemap.area.footer.privacy")</a>
-					<p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
+					<a href="mailto:$webmaster_email">$MESSAGES.getString("sitemap.area.footer.webmaster")</a>
+					<p>$MESSAGES.getString("sitemap.area.footer.webmaster.description")</p>
 				</li>
 			</ul>
 		</div>  
