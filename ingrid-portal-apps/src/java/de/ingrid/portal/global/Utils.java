@@ -201,6 +201,26 @@ public class Utils {
         return result;
     }
 
+    public static String[] getShortStrings(String[] myStrings, int maxLength) {
+        if (myStrings == null) {
+            return null;
+        }
+
+        for (int i=0; i < myStrings.length; i++) {
+            myStrings[i] = getShortStr(myStrings[i], maxLength);
+        }
+        
+        return myStrings;
+    }
+
+    public static String getShortStr(String myString, int maxLength) {
+        if (myString.length() > maxLength) {
+            return myString.substring(0, maxLength - 3).concat("...");
+        }
+        
+        return myString;
+    }
+
     public static String getShortURLStr(String urlStr, int maxLength) {
 
         if (urlStr.length() <= maxLength)

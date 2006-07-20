@@ -203,12 +203,15 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         String searchURL = response.encodeURL(searchURLBase.concat(searchData));
                         topic.put("searchURL", searchURL);
                         topic.put("date", UtilsDate.getOutputString(detail.getFrom(), detail.getTo(), locale));
+
                         topic.put("description", detail.get(DetailedTopic.DESCRIPTION_OCC));
-                        String url = (String) detail.get(DetailedTopic.SAMPLE_OCC);
-                        if (url != null && url.length() > 0) {
-                            topic.put("url", url);
-                            topic.put("url_str", Utils.getShortURLStr(url, 80));
-                        }
+                        /*
+                         String[] url = (String[]) detail.get(DetailedTopic.SAMPLE_OCC);
+                         if (url != null && url.length > 0 && url[0].length() > 0) {
+                         topic.put("url", url[0]);
+                         topic.put("url_str", Utils.getShortURLStr(url[0], 80));
+                         }
+                         */
                         // type
                         String urlWithType = (String) detail.getArrayList(DetailedTopic.INSTANCE_OF).get(0);
                         String type = urlWithType.split("#")[1].split("Type")[0];
@@ -221,6 +224,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         }
                         array = detail.getDefinitionTitles();
                         if (array != null && array.length > 0) {
+                            array = Utils.getShortStrings(array, 80);
                             topic.put("defTitles", Arrays.asList(array));
                         }
 
@@ -231,6 +235,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         }
                         array = detail.getSampleTitles();
                         if (array != null && array.length > 0) {
+                            array = Utils.getShortStrings(array, 80);
                             topic.put("sampleTitles", Arrays.asList(array));
                         }
 
