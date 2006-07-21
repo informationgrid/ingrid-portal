@@ -348,7 +348,11 @@ div.portlet .link_descr { margin:0px 0px 0px 15px; }
 div.portlet div.resultset p.result_description { font-size:65%; margin: 10px 0px 0px 0px; line-height:120%;}
 div.portlet div.resultset p.result_link {  font-size:65%; margin:3px 0 8px 0;}
 
-div.portlet div.section-header { height:1em; padding: 0.175em 0.5em 0.05em 0.5em; background:#176798; }
+/* wenn langer Titel:
+   min-height statt height, sonst Probleme in firefox.
+   padding rechts 0 lassen, sonst fliegt in IE das marginal portlet nach l.u. wenn Titel zu lang
+*/
+div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5em; background:#176798; }
 div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font-size:70%; font-weight:bold; line-height:120%; margin:0; text-transform:uppercase; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
 div.portlet div.section-header a { color: #FFFFFF;}
