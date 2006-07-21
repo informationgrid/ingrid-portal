@@ -173,7 +173,6 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             if (providers != null) {
                 context.put("providerOnly", "1");
             }
-
         }
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);

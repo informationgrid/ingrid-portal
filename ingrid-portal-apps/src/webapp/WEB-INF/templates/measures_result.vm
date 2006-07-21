@@ -10,7 +10,7 @@
 					#if($grouping == 'partner')
 						$MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 					#end
-				#else
+				#elseif(!$providerOnly)
               $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 				#end
 			  $MESSAGES.getString('measuresSearch.result.rubric'): $!rs.topic<br />
@@ -61,6 +61,11 @@
 	#else
 		#if($velocityCount > 1)
 			<div class="line"><hr /></div>
+		#elseif($providerOnly)
+			#set ($filterSubject = "$MESSAGES.getString('common.result.provider') '$rs.provider'")
+			<div class="resultset_partner_group">
+				<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
+			</div>
 		#end
 	#end
 	#renderHit($rs $grouping)
