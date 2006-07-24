@@ -65,9 +65,10 @@ public class QueryPreProcessor {
         processQuerySources(request, ds, query);
 
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
-        //        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
-        UtilsSearch.processBasicDataTypes(query, ds);
-        //        }
+        // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
+        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
+            UtilsSearch.processBasicDataTypes(query, ds);
+        }
 
         // start hit
         int startHit = 0;
@@ -175,9 +176,9 @@ public class QueryPreProcessor {
             newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
 
-        // let language for query
+        // set language for query
         if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-            // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
+            //            UtilsSearch.processLanguage(query, request.getLocale());
         }
 
         //      TODO If no query should be submitted, return null
@@ -217,9 +218,9 @@ public class QueryPreProcessor {
         processQuerySources(request, ds, query);
 
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
-        //        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
-        UtilsSearch.processBasicDataTypes(query, ds);
-        //        }
+        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
+            UtilsSearch.processBasicDataTypes(query, ds);
+        }
 
         // start hit
         int startHit = 0;
@@ -298,9 +299,9 @@ public class QueryPreProcessor {
         }
         int newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
 
-        // let language for query
+        // set language for query
         if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-            //            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
+            //            UtilsSearch.processLanguage(query, request.getLocale());
         }
 
         // TODO If no query should be submitted, return null
