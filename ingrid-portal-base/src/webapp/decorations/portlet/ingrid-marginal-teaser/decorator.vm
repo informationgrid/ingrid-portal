@@ -11,10 +11,10 @@
 	#if($hkey && $hkey != "")
 		#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
 	<script language="JavaScript">
-		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\"> ? </a>");
+		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\">?</a>&nbsp;&nbsp;");
 	</script>
 	<noscript>
-		<a href="$hpath" target="_new"> ? </a>
+		<a href="$hpath" target="_new">?</a>&nbsp;&nbsp;
 	</noscript>
 	#end
 	</span>
