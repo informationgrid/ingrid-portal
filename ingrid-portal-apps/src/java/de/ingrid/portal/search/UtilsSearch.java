@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -548,6 +549,23 @@ public class UtilsSearch {
             query
                     .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                             Settings.QVALUE_DATATYPE_AREA_RESEARCH));
+        }
+    }
+
+    /**
+     * Add language to query
+     * @param query
+     * @param myLocale
+     */
+    public static void processLanguage(IngridQuery query, Locale myLocale) {
+        String lang = null;
+        if (myLocale != null) {
+            lang = myLocale.getLanguage();
+        }
+        if (lang != null) {
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, lang));
+        } else {
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
         }
     }
 

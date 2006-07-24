@@ -166,6 +166,9 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
                     .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                             Settings.QVALUE_DATATYPE_AREA_SERVICE));
 
+            // Language
+            UtilsSearch.processLanguage(query, request.getLocale());
+
             // RUBRIC
             String queryValue = null;
             ClauseQuery cq = null;

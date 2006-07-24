@@ -62,8 +62,9 @@ public class SNSInterfaceTest extends TestCase {
 */
     public void testEVENTS_FROM_TERM() throws Exception {
         System.out.println("########## testEVENTS_FROM_TERM()");
-        String term = "UIG";
-//        String term = "UIG lang:de";
+//        String term = "UIG";
+        String term = "UIG lang:de";
+//        String term = "Tschernobyl lang:en";
         System.out.println("TERM = " + term);
         IngridQuery query = QueryStringParser.parse(term);
         query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));

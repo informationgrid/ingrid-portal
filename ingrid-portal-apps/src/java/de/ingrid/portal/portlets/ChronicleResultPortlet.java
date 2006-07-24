@@ -162,10 +162,6 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-                // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
-            }
-
             hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             IngridHit[] results = hits.getHits();
@@ -181,17 +177,17 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
             for (int i = 0; i < results.length; i++) {
                 try {
                     topic = (Topic) results[i];
+                    if (topic == null) {
+                        continue;
+                    }
+
                     detail = null;
                     if (details != null) {
                         detail = (DetailedTopic) details[i];
                     }
-
-                    if (topic == null) {
-                        continue;
-                    }
-                    topic.put("title", topic.getTopicName());
-
                     if (detail != null) {
+                        topic.put("title", detail.getTopicName());
+
                         String searchData = (String) detail.get(DetailedTopic.ASSOCIATED_OCC);
                         // remove double quoted stuff '\"'
                         searchData = searchData.replaceAll("\\\\\"", "");

@@ -28,7 +28,6 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -93,22 +92,23 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             // get the current page number, default to 1
             try {
-                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE)))
+                        .intValue();
             } catch (Exception ex) {
                 currentSelectorPage = 1;
             }
             // get the grouping starthits history from session
             // create and initialize if not exists
-            groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+            groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
             if (groupedStartHits == null || currentSelectorPage == 1) {
                 groupedStartHits = new ArrayList();
                 groupedStartHits.add(new Integer(0));
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
             }
             // set next starthit for grouped search
-            nextStartHit = ((Integer)groupedStartHits.get(currentSelectorPage-1)).intValue();
+            nextStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
-        
+
         // ----------------------------------
         // business logic
         // ----------------------------------
@@ -140,7 +140,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             groupedStartHits.add(currentSelectorPage, new Integer(hits.getGoupedHitsLength()));
         }
-        
+
         // adapt settings of page nagihation
         HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
@@ -187,7 +187,8 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources, Locale locale) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage,
+            IngridResourceBundle resources, Locale locale) {
         if (log.isDebugEnabled()) {
             log.debug("Messwerte IngridQuery = " + UtilsSearch.queryToString(query));
         }
@@ -197,13 +198,11 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-                query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
-            }
             hits = ibus.search(query, hitsPerPage, currentPage, groupedStartHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
-            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER };
+            String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER,
+                    Settings.RESULT_KEY_PROVIDER };
             IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
             if (details == null) {
                 if (log.isErrorEnabled()) {
@@ -211,55 +210,27 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
 
-
             IngridHit[] subHitArray = null;
-          for (int i = 0; i < results.length; i++) {
-              try {
-                  if (results[i] == null) {
-                      continue;
-                  }
-                  if (details[i] != null) {
-                      transferDetailData(results[i], details[i], resources);
-                  }
-                  // check for grouping and get details of "sub hits"
-                  // NO, WE ONLY SHOW ONE HIT !
-                  subHitArray = results[i].getGroupHits();
-                  if (subHitArray.length > 0) {
-                      results[i].putBoolean("moreHits", true);
-                  }
-          } catch (Throwable t) {
-              if (log.isErrorEnabled()) {
-                  log.error("Problems processing Hit, hit = " + results[i] + ", detail = " + details[i], t);
-                  }
-              }
-          }
-/*            
-            
-            IngridHit result = null;
-            IngridHitDetail detail = null;
             for (int i = 0; i < results.length; i++) {
                 try {
-                    result = results[i];
-                    detail = null;
-                    if (details != null) {
-                        detail = details[i];
-                    }
-                    //detail = ibus.getDetail(result, query, requestedFields);
-
-                    if (result == null) {
+                    if (results[i] == null) {
                         continue;
                     }
-                    if (detail != null) {
-                        UtilsSearch.transferHitDetails(result, detail);
-                        result.put("topic", UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_RUBRIC, resources));
+                    if (details[i] != null) {
+                        transferDetailData(results[i], details[i], resources);
+                    }
+                    // check for grouping and get details of "sub hits"
+                    // NO, WE ONLY SHOW ONE HIT !
+                    subHitArray = results[i].getGroupHits();
+                    if (subHitArray.length > 0) {
+                        results[i].putBoolean("moreHits", true);
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
+                        log.error("Problems processing Hit, hit = " + results[i] + ", detail = " + details[i], t);
                     }
                 }
             }
-*/        
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems performing Search !", t);

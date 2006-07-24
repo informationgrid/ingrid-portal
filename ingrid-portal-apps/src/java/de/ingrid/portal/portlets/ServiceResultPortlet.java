@@ -28,7 +28,6 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -84,7 +83,6 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
                 log.debug("No starthit of SERVICE page from render request, set starthit to 0");
             }
         }
-        
 
         // handle grouped page navigation
         String grouping = (String) query.get(Settings.QFIELD_GROUPED);
@@ -94,23 +92,23 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             // get the current page number, default to 1
             try {
-                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE)))
+                        .intValue();
             } catch (Exception ex) {
                 currentSelectorPage = 1;
             }
             // get the grouping starthits history from session
             // create and initialize if not exists
-            groupedStartHits = (ArrayList)SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+            groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
             if (groupedStartHits == null || currentSelectorPage == 1) {
                 groupedStartHits = new ArrayList();
                 groupedStartHits.add(new Integer(0));
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
             }
             // set next starthit for grouped search
-            nextStartHit = ((Integer)groupedStartHits.get(currentSelectorPage-1)).intValue();
+            nextStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
-        
-        
+
         // ----------------------------------
         // business logic
         // ----------------------------------
@@ -137,12 +135,11 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
             super.doView(request, response);
             return;
         }
-        
+
         // store start hit for next page (grouping)
         if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             groupedStartHits.add(currentSelectorPage, new Integer(hits.getGoupedHitsLength()));
         }
-        
 
         // adapt settings of page navigation
         HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
@@ -190,7 +187,8 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources, Locale locale) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage,
+            IngridResourceBundle resources, Locale locale) {
         if (log.isDebugEnabled()) {
             log.debug("Service IngridQuery = " + UtilsSearch.queryToString(query));
         }
@@ -200,9 +198,6 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
-                query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
-            }
             hits = ibus.search(query, hitsPerPage, currentPage, groupedStartHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
