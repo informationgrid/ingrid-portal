@@ -1,3 +1,5 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+
 #* defines URL parameter string *#
 #macro (defineUrlParams)
 #set ($myParamNames = $renderRequest.getParameterNames())
@@ -18,6 +20,11 @@
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
+		## read localized title from resource with title from psml as key !
+		#if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))
+		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #if($velocityCount > 1)
            | 
@@ -29,7 +36,6 @@
         #end
       #end
     #end
-
 #end
 
 #* Adds ingrid javascript *#
