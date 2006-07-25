@@ -65,6 +65,9 @@ public class QueryResultPostProcessor {
 
                     if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
                         processDSCHit(hit, detail, ds);
+                        
+                        // mark ranked dsc hit explicitly, to use different icon in view !
+                        hit.put(Settings.RESULT_KEY_PLUG_TYPE, "dsc");
                     } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
                         hit.put(Settings.RESULT_KEY_TYPE, "www-style");
                     } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
@@ -162,8 +165,11 @@ public class QueryResultPostProcessor {
                         processDSCHit(hit, detail, selectedDS);
                     } else if (tmpString.equals("de.ingrid.iplug.csw.CSWPlug")) {
                         processDSCHit(hit, detail, selectedDS);
+
+                        // JUST FOR TESTING, SHOULD NEVER BE UNRANKED !
 //                    } else if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
 //                        processDSCHit(hit, detail, selectedDS);
+
                     } else {
                         hit.put(Settings.RESULT_KEY_TYPE, "www-style");
                     }

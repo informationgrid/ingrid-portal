@@ -178,6 +178,8 @@ public class Settings {
 
     public final static String RESULT_KEY_TYPE = "type";
 
+    public final static String RESULT_KEY_PLUG_TYPE = "plug_type";
+
     public final static String RESULT_KEY_PLUG_ID = "plugid";
 
     public final static String RESULT_KEY_DOC_ID = "docid";
