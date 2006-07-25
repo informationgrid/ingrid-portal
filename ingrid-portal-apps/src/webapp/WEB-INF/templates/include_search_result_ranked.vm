@@ -19,7 +19,7 @@
 ##		    #if ($rs.type == "www-style")
 			#if($rs.url)
 				#if ($rs.plug_type == "dsc")
-					#set($iconImage = 'icn_dsc_db1.gif')
+					#set($iconImage = 'icn_linkextern_dsc_db1.gif')
 				#else
 					#set($iconImage = 'icn_linkextern.gif')
 				#end
