@@ -9,13 +9,17 @@ package de.ingrid.portal.global;
  * @author joachim@wemove.com
  */
 public class UtilsQueryString {
-    
+
     public final static String OP_AND = "AND";
+
     public final static String OP_OR = "OR";
+
     public final static String OP_NOT = "NOT";
+
     public final static String OP_PHRASE = "PHRASE";
-    
-    
+
+    public final static String OP_SIMPLE = "SIMPLE";
+
     /**
      * This method replaces a term in the query string with the new term. It also
      * takes into account that terms can be surrounded by '"'.
@@ -33,7 +37,7 @@ public class UtilsQueryString {
             queryStr = "";
         }
         StringBuffer result = new StringBuffer(queryStr);
-        
+
         while (true) {
             termStartPos = getTermStartPos(result.toString(), termStopPos);
             if (termStartPos == result.length()) {
@@ -54,7 +58,7 @@ public class UtilsQueryString {
         }
         return result.toString();
     }
-    
+
     /**
      * Add a new Term to the query string. This method tries to figure out
      * how to extend the existing query (i.e. put brackets around it), before
@@ -70,26 +74,31 @@ public class UtilsQueryString {
      */
     public static String addTerm(String queryStr, String str, String operator) {
         StringBuffer result;
-        
+
         if (str == null || operator == null || str.length() == 0) {
             return queryStr;
         }
-        
+
         if (queryStr == null) {
             queryStr = "";
             result = new StringBuffer(str.length());
         } else {
-            result = new StringBuffer(queryStr.length() + str.length());
-            result.append(queryStr);
+            result = new StringBuffer(queryStr.length() + str.length() + 1);
+            result.append(queryStr.trim());
         }
-        
-        if (operator.equals(OP_OR)) {
+
+        if (operator.equals(OP_SIMPLE)) {
+            if (queryStr.trim().length() > 0) {
+                result.append(" ");
+            }
+            result.append(str);
+        } else if (operator.equals(OP_OR)) {
             String[] terms = str.split(" ");
             if (queryStr.length() > 0 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") OR ");
             }
-            for (int i=0; i<terms.length; i++) {
+            for (int i = 0; i < terms.length; i++) {
                 result.append(terms[i]);
                 if (i != terms.length - 1) {
                     result.append(" OR ");
@@ -103,7 +112,7 @@ public class UtilsQueryString {
             } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
                 result.append(" ");
             }
-            for (int i=0; i<terms.length; i++) {
+            for (int i = 0; i < terms.length; i++) {
                 result.append(terms[i]);
                 if (i != terms.length - 1) {
                     result.append(" ");
@@ -117,7 +126,7 @@ public class UtilsQueryString {
             } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
                 result.append(" ");
             }
-            for (int i=0; i<terms.length; i++) {
+            for (int i = 0; i < terms.length; i++) {
                 result.append("-").append(terms[i]);
             }
         } else if (operator.equals(OP_PHRASE)) {
@@ -129,12 +138,11 @@ public class UtilsQueryString {
             }
             result.append("\"").append(str).append("\"");
         }
-        
+
         String resultStr = result.toString();
         // strip empty brackets with operators
         return resultStr;
     }
-    
 
     /**
      * Strips white space from query string. This includes also empty brackets.
@@ -150,8 +158,7 @@ public class UtilsQueryString {
         returnStr = returnStr.replaceAll("\\(\\s*", "(");
         return returnStr.trim();
     }
-    
-    
+
     private static int getTermStartPos(String query, int start) {
         char c;
         if (query == null || query.length() == 0) {
@@ -177,7 +184,7 @@ public class UtilsQueryString {
         }
         return cursor;
     }
-    
+
     private static int getTermStopPos(String query, int start) {
         char c;
         boolean isInPhrase = false;
@@ -196,7 +203,7 @@ public class UtilsQueryString {
                 if (c == '"') {
                     isInPhrase = true;
                     cursor++;
-                } else if(" ()".indexOf(c) > -1) {
+                } else if (" ()".indexOf(c) > -1) {
                     break;
                 } else {
                     cursor++;
@@ -208,7 +215,7 @@ public class UtilsQueryString {
         }
         return cursor;
     }
-    
+
     /**
      * Returns a "phrased" String (surrounded by '"') if the string contains a ' '.
      * 
@@ -235,7 +242,7 @@ public class UtilsQueryString {
         int termStopPos = 0;
         String myTerm;
         StringBuffer result = new StringBuffer(query);
-        
+
         while (true) {
             termStartPos = getTermStartPos(result.toString(), termStopPos);
             if (termStartPos == result.length()) {

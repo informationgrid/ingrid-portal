@@ -788,42 +788,31 @@ public class UtilsSearch {
         }
 
         String subTerm = "";
-        if (partnerHash.size() > 1) {
-            subTerm = subTerm.concat("(");
-        }
         it = partnerHash.keySet().iterator();
         while (it.hasNext()) {
             String term = (String) it.next();
             if (it.hasNext()) {
-                subTerm = subTerm.concat(term).concat(" OR ");
+                subTerm = subTerm.concat(term).concat(" ");
             } else {
                 subTerm = subTerm.concat(term);
             }
-        }
-        if (partnerHash.size() > 1) {
-            subTerm = subTerm.concat(")");
         }
         if (partnerHash.size() > 0 && providerHash.size() > 0) {
             subTerm = subTerm.concat(" ");
         }
 
-        if (providerHash.size() > 1) {
-            subTerm = subTerm.concat("(");
-        }
         it = providerHash.keySet().iterator();
         while (it.hasNext()) {
             String term = (String) it.next();
             if (it.hasNext()) {
-                subTerm = subTerm.concat(term).concat(" OR ");
+                subTerm = subTerm.concat(term).concat(" ");
             } else {
                 subTerm = subTerm.concat(term);
             }
         }
-        if (providerHash.size() > 1) {
-            subTerm = subTerm.concat(")");
-        }
+
         if (subTerm.length() > 0) {
-            return UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_AND);
+            return UtilsQueryString.addTerm(queryStr, subTerm, UtilsQueryString.OP_SIMPLE);
         } else {
             return queryStr;
         }
@@ -870,9 +859,15 @@ public class UtilsSearch {
         }
     }
 
-    public static String processSearchSources(String queryString, String[] sources, String[] meta) {
-        HashMap datatypes = new LinkedHashMap();
-        String subTerm = "";
+    public static String removeSearchCatalogues(String queryStr) {
+        queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:default", "");
+        queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:topics", "");
+        queryStr = UtilsQueryString.replaceTerm(queryStr, "datatype:service", "");
+
+        return queryStr.trim();
+    }
+
+    public static String removeSearchSources(String queryString) {
         String resultingQueryStr;
         resultingQueryStr = UtilsQueryString.replaceTerm(queryString, Settings.QFIELD_DATATYPE + ":"
                 + Settings.QVALUE_DATATYPE_SOURCE_WWW, "");
@@ -892,34 +887,42 @@ public class UtilsSearch {
                 + Settings.QVALUE_METACLASS_JOB, "");
         resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
                 + Settings.QVALUE_METACLASS_PROJECT, "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE + ":"
-                + Settings.QVALUE_DATATYPE_SOURCE_WWW), "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE + ":"
-                + Settings.QVALUE_DATATYPE_SOURCE_METADATA), "");
-        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, "-".concat(Settings.QFIELD_DATATYPE + ":"
-                + Settings.QVALUE_DATATYPE_SOURCE_FIS), "");
 
-        datatypes.put("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW), "1");
-        datatypes.put("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS), "1");
-        datatypes.put("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA), "1");
+        resultingQueryStr = UtilsQueryString.stripQueryWhitespace(resultingQueryStr);
+
+        return resultingQueryStr.trim();
+    }
+
+    public static String processSearchSources(String queryString, String[] sources, String[] meta) {
+        if (sources == null || sources.length == 0) {
+            if (meta == null || meta.length == 0) {
+                return queryString;
+            }
+        }
+
+        HashMap datatypes = new LinkedHashMap();
+        String subTerm = "";
+
+        // clean up query string
+        // ALSO REMOVE Catalogues from other tab, so we get a query that makes sense !
+        String resultingQueryStr = UtilsSearch.removeSearchSources(queryString);
+        resultingQueryStr = UtilsSearch.removeSearchCatalogues(resultingQueryStr);
+
         for (int i = 0; i < sources.length; i++) {
             if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
                 datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_AREA_ENVINFO, "1");
             }
             if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_WWW)) {
                 datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW, "1");
-                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW));
             }
             if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_FIS)) {
                 datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS, "1");
-                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS));
             }
         }
         HashMap metaclasses = new LinkedHashMap();
         for (int i = 0; i < meta.length; i++) {
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_ALL)) {
                 datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
-                datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA));
                 // empty meta classes, all metaclasses are selected
                 metaclasses = new LinkedHashMap();
                 break;
@@ -945,7 +948,6 @@ public class UtilsSearch {
         }
         // remove meta exclusion if we have a meta data class selection
         if (metaclasses.size() > 0) {
-            datatypes.remove("-".concat(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA));
             datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_METADATA, "1");
         }
         // build the subquery
@@ -973,8 +975,7 @@ public class UtilsSearch {
                 subTerm = subTerm.concat(")");
             }
         }
-        return UtilsQueryString.addTerm(UtilsQueryString.stripQueryWhitespace(resultingQueryStr), subTerm,
-                UtilsQueryString.OP_AND);
+        return UtilsQueryString.addTerm(resultingQueryStr, subTerm, UtilsQueryString.OP_SIMPLE);
     }
 
     /**
