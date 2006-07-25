@@ -144,12 +144,12 @@ public class Settings {
     // metaclass: types
     // ---------------------
     
-    public static final String QVALUE_METACLASS_DATABASE = "database";
-    public static final String QVALUE_METACLASS_SERVICE = "service";
-    public static final String QVALUE_METACLASS_DOCUMENT = "document";
-    public static final String QVALUE_METACLASS_MAP = "map";
-    public static final String QVALUE_METACLASS_JOB = "job";
-    public static final String QVALUE_METACLASS_PROJECT = "project";
+    public static final String QVALUE_METACLASS_JOB = "0";
+    public static final String QVALUE_METACLASS_MAP = "1";
+    public static final String QVALUE_METACLASS_DOCUMENT = "2";
+    public static final String QVALUE_METACLASS_SERVICE = "3";
+    public static final String QVALUE_METACLASS_PROJECT = "4";
+    public static final String QVALUE_METACLASS_DATABASE = "5";
     
     // ===========================================
     // Result data (used in templates for rendering results!)
