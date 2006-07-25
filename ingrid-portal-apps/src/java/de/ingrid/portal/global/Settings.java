@@ -34,6 +34,9 @@ public class Settings {
 
     public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 
+    /** maximum length of a row without white space in the left columnn */
+    public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 80;
+    
     // ===========================================
     // PSML pages
     // ===========================================
@@ -172,13 +175,13 @@ public class Settings {
 
     public final static String RESULT_KEY_URL_STR = "url_str";
 
+    public final static String RESULT_KEY_URL_TYPE = "url_type";
+
     public final static String RESULT_KEY_PROVIDER = "provider";
 
     public final static String RESULT_KEY_SOURCE = "source";
 
     public final static String RESULT_KEY_TYPE = "type";
-
-    public final static String RESULT_KEY_PLUG_TYPE = "plug_type";
 
     public final static String RESULT_KEY_PLUG_ID = "plugid";
 

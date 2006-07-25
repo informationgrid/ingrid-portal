@@ -131,7 +131,15 @@ public class UtilsSearch {
             String value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_URL);
             if (value.length() > 0) {
                 result.put(Settings.RESULT_KEY_URL, value);
-                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value, 85));
+                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value,
+                        Settings.SEARCH_RANKED_MAX_ROW_LENGTH));
+
+                String urlLowerCase = value.toLowerCase();
+                if (urlLowerCase.indexOf(".pdf") != -1) {
+                    result.put(Settings.RESULT_KEY_URL_TYPE, "pdf");
+                } else if (urlLowerCase.indexOf(".ppt") != -1) {
+                    result.put(Settings.RESULT_KEY_URL_TYPE, "ppt");
+                }
             }
             // Partner
             value = UtilsSearch.getRawDetailValue(detail, Settings.RESULT_KEY_PARTNER);

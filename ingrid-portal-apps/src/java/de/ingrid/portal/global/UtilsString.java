@@ -185,7 +185,7 @@ public class UtilsString {
                     ret = terms[i].trim();
                 }
             }
-            
+
             // remove not supported chars from beginning
             int i = 0;
             char myChar;
@@ -220,7 +220,7 @@ public class UtilsString {
 
         return ret;
     }
-    
+
     /**
      * Cut a string at a given position. Returns a substring 
      * with max. maxLength or shorter. searches for the last 
@@ -231,21 +231,35 @@ public class UtilsString {
      * @return
      */
     public static String cutString(String str, int maxLength) {
-        
-        if (str == null || str.length() <= maxLength) {
+        if (str == null || str.length() == 0) {
             return str;
         }
-        
+
+        // check for lines without white space which are longer than the max row length
+        int startIndex = 0;
+        int endIndex = startIndex + Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 1;
+        while (endIndex < str.length()) {
+            int nextWhitespace = str.indexOf(' ', startIndex);
+            if (nextWhitespace == -1 || nextWhitespace > endIndex) {
+                str = str.substring(0, endIndex - 3).concat("...");
+                break;
+            }
+            startIndex = endIndex + 1;
+            endIndex = startIndex + Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 1;
+        }
+
+        if (str.length() <= maxLength) {
+            return str;
+        }
+
         int lastWhitespace = str.lastIndexOf(' ', maxLength);
         if (lastWhitespace > 1) {
             return str.substring(0, lastWhitespace).concat("...");
         } else {
-            return str.substring(0, maxLength).concat("...");
+            return str.substring(0, maxLength - 3).concat("...");
         }
-        
-        
     }
-    
+
     /**
      * Escape characters in a string for use in regular expressions. 
      * 
@@ -255,8 +269,8 @@ public class UtilsString {
     public static String regExEscape(String str) {
         final String escapeChars = "\\[({^$.?*+|";
         StringBuffer buf = new StringBuffer(str.length());
-        for (int i=0; i<str.length(); i++) {
-            String c = str.substring(i, i+1);
+        for (int i = 0; i < str.length(); i++) {
+            String c = str.substring(i, i + 1);
             if (escapeChars.indexOf(c) != -1) {
                 buf.append('\\');
             }
@@ -264,5 +278,5 @@ public class UtilsString {
         }
         return buf.toString();
     }
-    
+
 }

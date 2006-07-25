@@ -18,8 +18,12 @@
 		  #if ($rs.title)
 ##		    #if ($rs.type == "www-style")
 			#if($rs.url)
-				#if ($rs.plug_type == "dsc")
+				#if ($rs.url_type == "dsc")
 					#set($iconImage = 'icn_linkextern_dsc_db1.gif')
+				#elseif ($rs.url_type == "pdf")
+					#set($iconImage = 'icn_linkextern_pdf.gif')
+				#elseif ($rs.url_type == "ppt")
+					#set($iconImage = 'icn_linkextern_ppt.gif')
 				#else
 					#set($iconImage = 'icn_linkextern.gif')
 				#end
