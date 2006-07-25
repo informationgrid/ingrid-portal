@@ -129,9 +129,19 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
                     String objId = (String) record.get("T01_OBJECT.OBJ_ID");
                     // get references
-                    ArrayList superiorReferences = getSuperiorObjects(objId);
-                    ArrayList subordinatedReferences = getSubordinatedObjects(objId);
-                    ArrayList crossReferences = getCrossReferencedObjects(objId);
+                    ArrayList superiorReferences = null;
+                    ArrayList subordinatedReferences = null;
+                    ArrayList crossReferences = null;
+                    try {
+                        superiorReferences = getSuperiorObjects(objId);
+                        subordinatedReferences = getSubordinatedObjects(objId);
+                        crossReferences = getCrossReferencedObjects(objId);
+                    } catch (Throwable t) {
+                        log.error("Error getting related objects, obj_id = " + objId, t);
+                        
+                        // we throw again, so no record is rendered !
+                        throw t;
+                    }
 
                     // enrich addresses with institution and units
                     ArrayList addrRecords = getAllTableRows(record, "T02_ADDRESS");
