@@ -356,6 +356,9 @@ div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5
 div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font-size:70%; font-weight:bold; line-height:120%; margin:0; text-transform:uppercase; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
 div.portlet div.section-header a { color: #FFFFFF;}
+/* because of problems in IE rendering underline and background ! */
+div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
+div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { background:#176798; }
 
 div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-left: solid #176798 1px; border-bottom: solid #176798 1px; border-right: solid #176798 1px; }
 
