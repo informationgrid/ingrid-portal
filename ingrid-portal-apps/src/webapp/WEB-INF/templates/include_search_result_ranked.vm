@@ -18,16 +18,19 @@
 		  #if ($rs.title)
 ##		    #if ($rs.type == "www-style")
 			#if($rs.url)
+				#set($urlTitle = 'common.tooltip.link.extern')
 				#if ($rs.url_type == "dsc")
 					#set($iconImage = 'icn_linkextern_dsc_db1.gif')
 				#elseif ($rs.url_type == "pdf")
 					#set($iconImage = 'icn_linkextern_pdf.gif')
+					#set($urlTitle = 'common.tooltip.link.extern.pdf')
 				#elseif ($rs.url_type == "ppt")
 					#set($iconImage = 'icn_linkextern_ppt.gif')
+					#set($urlTitle = 'common.tooltip.link.extern.ppt')
 				#else
 					#set($iconImage = 'icn_linkextern.gif')
 				#end
-			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
+			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString($urlTitle)"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
 			#elseif($rs.type == "detail-style")
 			  #if($rs.udk_class)
 				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
