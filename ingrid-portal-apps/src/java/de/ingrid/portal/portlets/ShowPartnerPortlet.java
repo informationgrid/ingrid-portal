@@ -14,6 +14,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -31,6 +33,8 @@ import de.ingrid.utils.PlugDescription;
  */
 public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
+    private final static Log log = LogFactory.getLog(ShowPartnerPortlet.class);
+
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
@@ -46,75 +50,81 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+        try {
+            PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
 
-        LinkedHashMap partnerMap = new LinkedHashMap();
+            LinkedHashMap partnerMap = new LinkedHashMap();
 
-        /*
-         * This code builds a structure as follows:
-         * 
-         * partnerMap (partner Ident => partnerHash)
-         * 
-         * partnerHash ("partner" => IngridPartner) ("providers" =>
-         * providersHash)
-         * 
-         * providersHash (provider ident of the first iPlug found for this
-         * partner => providerHash)
-         * 
-         * providerHash ("provider" => IngridProvider)
-         * 
-         */
+            /*
+             * This code builds a structure as follows:
+             * 
+             * partnerMap (partner Ident => partnerHash)
+             * 
+             * partnerHash ("partner" => IngridPartner) ("providers" =>
+             * providersHash)
+             * 
+             * providersHash (provider ident of the first iPlug found for this
+             * partner => providerHash)
+             * 
+             * providerHash ("provider" => IngridProvider)
+             * 
+             */
 
-        Iterator it = partnerList.iterator();
-        while (it.hasNext()) {
-            IngridPartner partner = (IngridPartner) it.next();
-            LinkedHashMap partnerHash = new LinkedHashMap();
-            partnerHash.put("partner", partner);
-            partnerMap.put(partner.getIdent(), partnerHash);
-            Iterator providerIterator = providerList.iterator();
-            while (providerIterator.hasNext()) {
-                IngridProvider provider = (IngridProvider) providerIterator.next();
-                String providerIdent = provider.getIdent();
-                String partnerIdent = "";
-                if (providerIdent != null && providerIdent.length() > 0) {
-                    partnerIdent = providerIdent.substring(0, providerIdent.indexOf("_"));
-                    // hack: "bund" is coded as "bu" in provider idents
-                    if (partnerIdent.equals("bu")) {
-                        partnerIdent = "bund";
+            Iterator it = partnerList.iterator();
+            while (it.hasNext()) {
+                IngridPartner partner = (IngridPartner) it.next();
+                LinkedHashMap partnerHash = new LinkedHashMap();
+                partnerHash.put("partner", partner);
+                partnerMap.put(partner.getIdent(), partnerHash);
+                Iterator providerIterator = providerList.iterator();
+                while (providerIterator.hasNext()) {
+                    IngridProvider provider = (IngridProvider) providerIterator.next();
+                    String providerIdent = provider.getIdent();
+                    String partnerIdent = "";
+                    if (providerIdent != null && providerIdent.length() > 0) {
+                        partnerIdent = providerIdent.substring(0, providerIdent.indexOf("_"));
+                        // hack: "bund" is coded as "bu" in provider idents
+                        if (partnerIdent.equals("bu")) {
+                            partnerIdent = "bund";
+                        }
                     }
-                }
-                if (partnerIdent.equals(partner.getIdent())) {
-                    // check for providers
-                    if (!partnerHash.containsKey("providers")) {
-                        partnerHash.put("providers", new LinkedHashMap());
-                    }
-                    // get providers of the partner
-                    HashMap providersHash = (LinkedHashMap) partnerHash.get("providers");
-                    // LinkedHashMap for prvider with a provider id.
-                    if (!providersHash.containsKey(providerIdent)) {
-                        providersHash.put(providerIdent, new LinkedHashMap());
-                    }
-                    // get provider hash map
-                    LinkedHashMap providerHash = (LinkedHashMap) providersHash.get(providerIdent);
-                    // check for provider entry, create if not exists
-                    // initialise with iplug, which contains all information
-                    if (!providerHash.containsKey("provider")) {
-                        providerHash.put("provider", provider);
+                    if (partnerIdent.equals(partner.getIdent())) {
+                        // check for providers
+                        if (!partnerHash.containsKey("providers")) {
+                            partnerHash.put("providers", new LinkedHashMap());
+                        }
+                        // get providers of the partner
+                        HashMap providersHash = (LinkedHashMap) partnerHash.get("providers");
+                        // LinkedHashMap for prvider with a provider id.
+                        if (!providersHash.containsKey(providerIdent)) {
+                            providersHash.put(providerIdent, new LinkedHashMap());
+                        }
+                        // get provider hash map
+                        LinkedHashMap providerHash = (LinkedHashMap) providersHash.get(providerIdent);
+                        // check for provider entry, create if not exists
+                        // initialise with iplug, which contains all information
+                        if (!providerHash.containsKey("provider")) {
+                            providerHash.put("provider", provider);
+                        }
                     }
                 }
             }
-        }
 
-        context.put("partners", partnerMap);
+            context.put("partners", partnerMap);
 
-        ArrayList plugDescriptions = new ArrayList();
-        for (int i = 0; i < plugs.length; i++) {
-            if (!plugDescriptions.contains(plugs[i])) {
-                plugDescriptions.add(plugs[i]);
+            ArrayList plugDescriptions = new ArrayList();
+            for (int i = 0; i < plugs.length; i++) {
+                if (!plugDescriptions.contains(plugs[i])) {
+                    plugDescriptions.add(plugs[i]);
+                }
+            }
+
+            context.put("plugs", plugDescriptions);
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems processing partner/provider and iPlugs.", t);
             }
         }
-
-        context.put("plugs", plugDescriptions);
 
         super.doView(request, response);
     }
