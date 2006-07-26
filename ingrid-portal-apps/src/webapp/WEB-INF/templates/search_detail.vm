@@ -667,9 +667,10 @@
 ##	$rec
 ##    <br/><br/><br/><br/>
 ##    	  #if($record)
+##			<br/>RENDER RECORD:<br/>
 ##    		#renderRecord($record 0)
 ##    	  #else
-##    		no details available.
+##    		no record available.
 ##    	  #end
 ##    -->
 	</div>
