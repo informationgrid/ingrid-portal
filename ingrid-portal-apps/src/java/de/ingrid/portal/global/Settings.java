@@ -34,8 +34,8 @@ public class Settings {
 
     public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 
-    /** maximum length of a row without white space in the left columnn */
-    public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 80;
+    /** maximum length of a row without white space in the left columnn, KEEP 80 ! depends on Characters, Uppercase takes 77 ! */
+    public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 77;
     
     // ===========================================
     // PSML pages

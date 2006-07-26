@@ -119,9 +119,10 @@ public class UtilsSearch {
      */
     public static void transferHitDetails(IngridHit result, IngridHitDetail detail) {
         try {
-            // also cuts title: maximum length 2 Lines, length of first line is shorter because of icon ! 
+            // also cuts title: maximum length = 2 Lines, length of first line is shorter because of icon !
+            int ICON_LENGTH = 15;
             result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(),
-                    2 * Settings.SEARCH_RANKED_MAX_ROW_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 10));
+                    2 * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH));
             // strip all HTML tags from summary
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>",
                     ""), 400));

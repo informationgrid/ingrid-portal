@@ -206,10 +206,10 @@ public class Utils {
             return null;
         }
 
-        for (int i=0; i < myStrings.length; i++) {
+        for (int i = 0; i < myStrings.length; i++) {
             myStrings[i] = getShortStr(myStrings[i], maxLength);
         }
-        
+
         return myStrings;
     }
 
@@ -217,7 +217,7 @@ public class Utils {
         if (myString.length() > maxLength) {
             return myString.substring(0, maxLength - 3).concat("...");
         }
-        
+
         return myString;
     }
 
@@ -242,38 +242,54 @@ public class Utils {
         StringBuffer resultB = new StringBuffer();
         resultB.append(protocoll).append("://").append(host);
         if (port > -1) {
-            resultB.append(":").append(port).append("/");
+            resultB.append(":").append(port);
+        }
+
+        int maxPathLength = maxLength - resultB.length();
+        if (maxPathLength <= 0) {
+            return resultB.substring(0, maxLength - 3).concat("...");
+        }
+        if (path.length() <= maxPathLength) {
+            resultB.append(path);
         } else {
-            resultB.append("/");
-        }
-        int maxPathLength = maxLength / 2;
-        if (resultB.length() > maxPathLength) {
-            maxPathLength = maxLength - resultB.length();
-        }
-        String[] pathElements = path.split("/");
-        if (pathElements.length > 3 && path.length() > maxPathLength) {
-            StringBuffer resultPath = new StringBuffer();
-            for (int i = 1; i < pathElements.length; i++) {
-                resultPath.append(pathElements[i]).append("/");
-                if (resultPath.length() + pathElements[pathElements.length - 1].length() + 5 > maxPathLength) {
-                    resultB.append(resultPath).append(".../").append(pathElements[pathElements.length - 1]);
-                    break;
+            String[] pathElements = path.split("/");
+            // first path element is empty string !
+            if (pathElements != null && pathElements.length >= 2) {
+                StringBuffer resultPath = new StringBuffer();
+                // start from end !
+                // don't take first path element into account, will be processed afterwards (index 1)
+                boolean pathElementsProcessed = true;
+                for (int i = pathElements.length - 1; i > 1; i--) {
+                    // 5 because of "/" which must be added and "/..." which should be addable !
+                    if (resultPath.length() + pathElements[i].length() + 5 <= maxPathLength) {
+                        resultPath.insert(0, "/").insert(1, pathElements[i]);
+                    } else {
+                        resultPath.insert(0, "/...");
+                        pathElementsProcessed = false;
+                        break;
+                    }
                 }
+                if (pathElementsProcessed) {
+                    // try to add missing one !
+                    if (resultPath.length() + pathElements[1].length() + 1 <= maxPathLength) {
+                        resultPath.insert(0, "/").insert(1, pathElements[1]);
+                    } else {
+                        resultPath.insert(0, "/...");
+                    }
+                }
+                resultB.append(resultPath);
             }
-        } else if (path.length() <= maxPathLength) {
-            resultB.append(path.substring(1));
-        } else if (path.length() > maxPathLength) {
-            resultB.append("...").append(path.substring(path.length() - maxPathLength - 1, path.length()));
         }
+
         if (query != null) {
             if (resultB.length() < maxLength) {
-                if (query.length() > maxLength - resultB.length()) {
-                    resultB.append("?").append(query.substring(0, maxLength - resultB.length())).append("...");
-                } else {
+                if (query.length() + 1 < maxLength - resultB.length()) {
                     resultB.append("?").append(query);
+                } else {
+                    resultB.append("?").append(query.substring(0, maxLength - resultB.length() - 4)).append("...");
                 }
             } else {
-                resultB.append("?...");
+//                resultB.append("?...");
             }
         }
 

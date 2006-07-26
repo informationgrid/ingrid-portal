@@ -253,9 +253,12 @@ public class UtilsString {
         int startIndex = 0;
         int endIndex = startIndex + maxLengthFirstRow - 1;
         while (endIndex < str.length()) {
-            int nextWhitespace = str.indexOf(' ', startIndex);
-            if (nextWhitespace == -1 || nextWhitespace > endIndex) {
+            int nextWhitespace = str.lastIndexOf(' ', endIndex);
+            if (nextWhitespace == -1) {
                 str = str.substring(0, endIndex - 3).concat("...");
+                break;
+            } else if (nextWhitespace <= startIndex) {
+                str = str.substring(0, startIndex - 3).concat("...");
                 break;
             }
             startIndex = endIndex + 1;
