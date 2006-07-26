@@ -1,3 +1,5 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+
 #set($decoration = $f.decoration)
 #set($actions = $decoration.actions)
 #set($_actions = $layoutDecoration.actions)
@@ -11,10 +13,10 @@
 	#if($hkey && $hkey != "")
 		#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
 	<script language="JavaScript" type="text/javascript">
-		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\">?</a>&nbsp;&nbsp;");
+		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.title')\">?</a>&nbsp;&nbsp;");
 	</script>
 	<noscript>
-		<a href="$hpath" target="_new">?</a>&nbsp;&nbsp;
+		<a href="$hpath" target="_new" title="$MESSAGES.getString('ingrid.page.help.link.title')">?</a>&nbsp;&nbsp;
 	</noscript>
 	#end
 	</span>

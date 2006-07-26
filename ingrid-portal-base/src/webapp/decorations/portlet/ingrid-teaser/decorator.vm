@@ -15,10 +15,10 @@
 		#if($hkey && $hkey.length() > 0)
 			#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
 		<script language="JavaScript">
-    		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\">[?]</a>");
+    		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.title')\">[?]</a>");
     	</script>
     	<noscript>
-    		<a href="$hpath" target="_new">[?]</a>
+    		<a href="$hpath" target="_new" title="$MESSAGES.getString('ingrid.page.help.link.title')">[?]</a>
     	</noscript>
 		#end
 		</span>
