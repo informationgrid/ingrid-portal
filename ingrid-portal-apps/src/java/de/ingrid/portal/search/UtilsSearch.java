@@ -119,7 +119,9 @@ public class UtilsSearch {
      */
     public static void transferHitDetails(IngridHit result, IngridHitDetail detail) {
         try {
-            result.put(Settings.RESULT_KEY_TITLE, detail.getTitle());
+            // also cuts title: maximum length 2 Lines, length of first line is shorter because of icon ! 
+            result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(),
+                    2 * Settings.SEARCH_RANKED_MAX_ROW_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 10));
             // strip all HTML tags from summary
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>",
                     ""), 400));
@@ -139,6 +141,8 @@ public class UtilsSearch {
                     result.put(Settings.RESULT_KEY_URL_TYPE, "pdf");
                 } else if (urlLowerCase.indexOf(".ppt") != -1) {
                     result.put(Settings.RESULT_KEY_URL_TYPE, "ppt");
+                } else if (urlLowerCase.indexOf(".doc") != -1) {
+                    result.put(Settings.RESULT_KEY_URL_TYPE, "doc");
                 }
             }
             // Partner

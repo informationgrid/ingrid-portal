@@ -231,13 +231,27 @@ public class UtilsString {
      * @return
      */
     public static String cutString(String str, int maxLength) {
+        return cutString(str, maxLength, Settings.SEARCH_RANKED_MAX_ROW_LENGTH);
+    }
+
+    /**
+     * Cut a string at a given position. Also takes the maximumLength of the
+     * first Row into Account, which may differ from the Length of the second row ! 
+     * Returns a substring with max. maxLength or shorter. searches for the last 
+     * occurence of ' '.
+     * 
+     * @param str
+     * @param maxLength
+     * @return
+     */
+    public static String cutString(String str, int maxLength, int maxLengthFirstRow) {
         if (str == null || str.length() == 0) {
             return str;
         }
 
         // check for lines without white space which are longer than the max row length
         int startIndex = 0;
-        int endIndex = startIndex + Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 1;
+        int endIndex = startIndex + maxLengthFirstRow - 1;
         while (endIndex < str.length()) {
             int nextWhitespace = str.indexOf(' ', startIndex);
             if (nextWhitespace == -1 || nextWhitespace > endIndex) {
