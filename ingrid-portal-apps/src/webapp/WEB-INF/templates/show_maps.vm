@@ -7,7 +7,7 @@
 		#if($hKey && $hKey.length() > 0)
 		<span class="portlet_info">
 		#set($hpath = $renderResponse.encodeURL("$contextPath/portal/help.psml?hkey=$hKey"))
-		<script language="JavaScript">
+		<script language="JavaScript" type="text/javascript">
     		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\">[?]</a>");
     	</script>
     	<noscript>

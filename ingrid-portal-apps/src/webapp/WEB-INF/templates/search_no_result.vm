@@ -6,7 +6,7 @@
             <ul>
               <li>$MESSAGES.getString('searchResult.results.noResult2')</li>
               <li>$MESSAGES.getString('searchResult.results.noResult3') 
-                <script language="JavaScript">
+                <script language="JavaScript" type="text/javascript">
                 	document.write("<a href=\"javascript:ingrid_openWindow('portal/help.psml?hkey=search-tipps-1',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
                 </script>
                 <noscript>

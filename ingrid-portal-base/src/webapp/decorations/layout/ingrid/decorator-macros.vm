@@ -193,7 +193,7 @@
 	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
 	#end
   #elseif($el=="/help.psml")
-	<script language="JavaScript">
+	<script language="JavaScript" type="text/javascript">
 		document.write("<li><a href=\"javascript:ingrid_openWindow('$linkUrl',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.title')\">${linkName}</a>$postfix</li>");
 	</script>
 	<noscript>

@@ -54,7 +54,7 @@ $action.setParameter('action','doSearchSettings')
 	  <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.settings')</a>
 #end
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=search-tipps-1"))
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 	document.write("<img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"$MESSAGES.getString('common.alt.icon.intern')\" /><a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
 </script>
 <noscript>

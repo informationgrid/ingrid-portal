@@ -93,7 +93,7 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 				</li>
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml"))
-	<script language="JavaScript">
+	<script language="JavaScript" type="text/javascript">
 		document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString("sitemap.area.service.help")</a>");
 	</script>
 	<noscript>

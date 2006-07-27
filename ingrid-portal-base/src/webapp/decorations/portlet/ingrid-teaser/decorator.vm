@@ -14,7 +14,7 @@
 		#set($hkey = $jetspeed.getPreferenceFirstValue($f, "helpKey")) 
 		#if($hkey && $hkey.length() > 0)
 			#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
-		<script language="JavaScript">
+		<script language="JavaScript" type="text/javascript">
     		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.title')\">[?]</a>");
     	</script>
     	<noscript>
