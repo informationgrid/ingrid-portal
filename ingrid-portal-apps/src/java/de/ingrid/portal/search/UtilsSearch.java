@@ -121,8 +121,9 @@ public class UtilsSearch {
         try {
             // also cuts title: maximum length = 2 Lines, length of first line is shorter because of icon !
             int ICON_LENGTH = 15;
-            result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(),
-                    2 * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH));
+            result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(), 2
+                    * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH
+                    - ICON_LENGTH));
             // strip all HTML tags from summary
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>",
                     ""), 400));
@@ -299,6 +300,13 @@ public class UtilsSearch {
         return mappedValue;
     }
 
+    /**
+     * Get all terms in Query. NOTICE: If multiple TermQuerys contain
+     * the same term, every TermQuery is returned (may differ in "required", "prohibited").
+     * To remove "double" terms use removeDoubleTerms(...).
+     * @param q
+     * @return
+     */
     public static TermQuery[] getAllTerms(IngridQuery q) {
         ArrayList result = new ArrayList();
         TermQuery[] terms = q.getTerms();
@@ -310,6 +318,35 @@ public class UtilsSearch {
         ClauseQuery[] clauses = q.getClauses();
         for (int i = 0; i < clauses.length; i++) {
             result.addAll(Arrays.asList(getAllTerms(clauses[i])));
+        }
+
+        return ((TermQuery[]) result.toArray(new TermQuery[result.size()]));
+    }
+
+    /**
+     * Remove the Terms which contain the same term String !
+     * @param terms
+     * @return
+     */
+    public static TermQuery[] removeDoubleTerms(TermQuery[] terms) {
+        ArrayList result = new ArrayList(Arrays.asList(terms));
+
+        for (int i = 0; i < terms.length; i++) {
+            String term1 = terms[i].getTerm().trim();
+
+            // check for double terms and remove them !
+            Iterator iterator = result.iterator();
+            boolean removeFlag = false;
+            while (iterator.hasNext()) {
+                String term2 = ((TermQuery) iterator.next()).getTerm().trim();
+                if (term2.equals(term1)) {
+                    if (removeFlag) {
+                        iterator.remove();
+                    } else {
+                        removeFlag = true;
+                    }
+                }
+            }
         }
 
         return ((TermQuery[]) result.toArray(new TermQuery[result.size()]));

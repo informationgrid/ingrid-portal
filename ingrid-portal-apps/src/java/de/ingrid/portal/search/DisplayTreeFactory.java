@@ -26,6 +26,7 @@ public class DisplayTreeFactory {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         TermQuery[] terms = UtilsSearch.getAllTerms(query);
+        terms = UtilsSearch.removeDoubleTerms(terms);
         String term;
         for (int i=0; i<terms.length; i++) {
             if (terms[i].getType() == TermQuery.TERM) {
