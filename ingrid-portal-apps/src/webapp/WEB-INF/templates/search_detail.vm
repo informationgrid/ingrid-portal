@@ -219,66 +219,84 @@
 			#end	
 		#end	
 	#elseif($udkClass == "3" && $rec.get("t011_obj_serv.obj_id"))
+		#set ($lineRendered = 0)
 		#foreach($myData in $rec.get("t011_obj_serv.obj_id"))    			
-    		#if($velocityCount == 1)<div class="line"><hr /></div><br/>#end
-    		#renderUDKEntry($myData "t011_obj_serv.type")
-    		#renderUDKEntry($myData "t011_obj_serv.environment")
-    		#renderUDKEntry($myData "t011_obj_serv.history")
-    		#renderUDKEntry($myData "t011_obj_serv.base")
-        	#if($myData.get("t011_obj_serv_version.obj_id"))
-        		<p><strong>$MESSAGES.getString("t011_obj_serv_version.version"):</strong><br/>
-            	#foreach($t011_obj_serv_version in $myData.get("t011_obj_serv_version.obj_id"))
-					#if($t011_obj_serv_version.get("t011_obj_serv_version.version"))$t011_obj_serv_version.get("t011_obj_serv_version.version")#end<br/>
-        		#end
-    			</p>
-        	#end	
-    		
-        	#if($myData.get("t011_obj_serv_operation.obj_id"))
-        		<p><strong>$MESSAGES.getString("t011_obj_serv_operation"):</strong><br/>
-    			<table class="border" border="1">
-    			<tbody>	
-    				<tr>
-    					<th>$MESSAGES.getString("t011_obj_serv_operation.name")</th>
-    					<th>$MESSAGES.getString("t011_obj_serv_operation.descr")</th>
-    					<th>$MESSAGES.getString("t011_obj_serv_operation.invocation_name")</th>
-    				</tr>
-            	#foreach($t011_obj_data_para in $myData.get("t011_obj_serv_operation.obj_id"))
-    				<tr>
-    					<td>#if($t011_obj_data_para.get("t011_obj_serv_operation.name"))$t011_obj_data_para.get("t011_obj_serv_operation.name")#end</td>
-    					<td>#if($t011_obj_data_para.get("t011_obj_serv_operation.descr"))$t011_obj_data_para.get("t011_obj_serv_operation.descr")#end</td>
-    					<td>#if($t011_obj_data_para.get("t011_obj_serv_operation.invocation_name"))$t011_obj_data_para.get("t011_obj_serv_operation.invocation_name")#end</td>
-    				</tr>
-        		#end
-    			</tbody>	
-    			</table>
-    			<br/>
-    			</p>
-        	#end
+			#if($tool.hasContent($myData.get("t011_obj_serv.type")) || $tool.hasContent($myData.get("t011_obj_serv.environment")) || $tool.hasContent($myData.get("t011_obj_serv.history")) ||	$tool.hasContent($myData.get("t011_obj_serv.base")) || $tool.hasContent($myData.get("t011_obj_serv_version.obj_id")) || $tool.hasContent($myData.get("t011_obj_serv_operation.obj_id")))
+    			#if($lineRendered == 0)
+					<div class="line"><hr /></div><br/>
+					#set ($lineRendered = 1)
+				#end
+        		#renderUDKEntry($myData "t011_obj_serv.type")
+        		#renderUDKEntry($myData "t011_obj_serv.environment")
+        		#renderUDKEntry($myData "t011_obj_serv.history")
+        		#renderUDKEntry($myData "t011_obj_serv.base")
+            	#if($myData.get("t011_obj_serv_version.obj_id"))
+            		<p><strong>$MESSAGES.getString("t011_obj_serv_version.version"):</strong><br/>
+                	#foreach($t011_obj_serv_version in $myData.get("t011_obj_serv_version.obj_id"))
+    					#if($t011_obj_serv_version.get("t011_obj_serv_version.version"))$t011_obj_serv_version.get("t011_obj_serv_version.version")#end<br/>
+            		#end
+        			</p>
+            	#end	
+        		
+            	#if($myData.get("t011_obj_serv_operation.obj_id"))
+            		<p><strong>$MESSAGES.getString("t011_obj_serv_operation"):</strong><br/>
+        			<table class="border" border="1">
+        			<tbody>	
+        				<tr>
+        					<th>$MESSAGES.getString("t011_obj_serv_operation.name")</th>
+        					<th>$MESSAGES.getString("t011_obj_serv_operation.descr")</th>
+        					<th>$MESSAGES.getString("t011_obj_serv_operation.invocation_name")</th>
+        				</tr>
+                	#foreach($t011_obj_data_para in $myData.get("t011_obj_serv_operation.obj_id"))
+        				<tr>
+        					<td>#if($t011_obj_data_para.get("t011_obj_serv_operation.name"))$t011_obj_data_para.get("t011_obj_serv_operation.name")#end</td>
+        					<td>#if($t011_obj_data_para.get("t011_obj_serv_operation.descr"))$t011_obj_data_para.get("t011_obj_serv_operation.descr")#end</td>
+        					<td>#if($t011_obj_data_para.get("t011_obj_serv_operation.invocation_name"))$t011_obj_data_para.get("t011_obj_serv_operation.invocation_name")#end</td>
+        				</tr>
+            		#end
+        			</tbody>	
+        			</table>
+        			<br/>
+        			</p>
+				#end
+			#end
 		#end	
 	#elseif($udkClass == "2" && $tool.hasContent($rec.get("t011_obj_literatur.obj_id")))
+		#set ($lineRendered = 0)
 		#foreach($myData in $rec.get("t011_obj_literatur.obj_id"))    			
-    		#if($velocityCount == 1)<div class="line"><hr /></div><br/>#end
-			#renderUDKEntry($myData "t011_obj_literatur.autor")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.publisher")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_in")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.volume")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.sides")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_year")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.isbn")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.publishing")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_loc")
-    		#renderUDKEntryInLine($myData "t011_obj_literatur.typ")
-    		#renderUDKEntry($myData "t011_obj_literatur.doc_info")
-    		#renderUDKEntry($myData "t011_obj_literatur.base")
-    		#renderUDKEntry($myData "t011_obj_literatur.loc")
-    		#renderUDKEntry($myData "t011_obj_literatur.description")
+			#if($tool.hasContent($myData.get("t011_obj_literatur.autor")) || $tool.hasContent($myData.get("t011_obj_literatur.publisher")) || $tool.hasContent($myData.get("t011_obj_literatur.publish_in")) ||	$tool.hasContent($myData.get("t011_obj_literatur.volume")) || $tool.hasContent($myData.get("t011_obj_literatur.sides")) || $tool.hasContent($myData.get("t011_obj_literatur.publish_year")) || $tool.hasContent($myData.get("t011_obj_literatur.isbn")) || $tool.hasContent($myData.get("t011_obj_literatur.publishing")) || $tool.hasContent($myData.get("t011_obj_literatur.publish_loc")) || $tool.hasContent($myData.get("t011_obj_literatur.typ")) || $tool.hasContent($myData.get("t011_obj_literatur.doc_info")) || $tool.hasContent($myData.get("t011_obj_literatur.base")) || $tool.hasContent($myData.get("t011_obj_literatur.loc")) || $tool.hasContent($myData.get("t011_obj_literatur.description")))
+    			#if($lineRendered == 0)
+					<div class="line"><hr /></div><br/>
+					#set ($lineRendered = 1)
+				#end
+    			#renderUDKEntry($myData "t011_obj_literatur.autor")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.publisher")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_in")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.volume")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.sides")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_year")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.isbn")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.publishing")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.publish_loc")
+        		#renderUDKEntryInLine($myData "t011_obj_literatur.typ")
+        		#renderUDKEntry($myData "t011_obj_literatur.doc_info")
+        		#renderUDKEntry($myData "t011_obj_literatur.base")
+        		#renderUDKEntry($myData "t011_obj_literatur.loc")
+        		#renderUDKEntry($myData "t011_obj_literatur.description")
+			#end
 		#end	
 	#elseif($udkClass == "4" && $rec.get("t011_obj_project.obj_id"))
+		#set ($lineRendered = 0)
 		#foreach($myData in $rec.get("t011_obj_project.obj_id"))    			
-    		#if($velocityCount == 1)<div class="line"><hr /></div><br/>#end
-			#renderUDKEntry($myData "t011_obj_project.leader")
-    		#renderUDKEntry($myData "t011_obj_project.member")
-    		#renderUDKEntry($myData "t011_obj_project.description")
+			#if($tool.hasContent($myData.get("t011_obj_project.leader")) || $tool.hasContent($myData.get("t011_obj_project.member")) || $tool.hasContent($myData.get("t011_obj_project.description")))
+    			#if($lineRendered == 0)
+					<div class="line"><hr /></div><br/>
+					#set ($lineRendered = 1)
+				#end
+    			#renderUDKEntry($myData "t011_obj_project.leader")
+        		#renderUDKEntry($myData "t011_obj_project.member")
+        		#renderUDKEntry($myData "t011_obj_project.description")
+			#end
 		#end	
 	#elseif($udkClass == "1" && $rec.get("t011_obj_geo.obj_id"))
 		#foreach($myData in $rec.get("t011_obj_geo.obj_id"))    			

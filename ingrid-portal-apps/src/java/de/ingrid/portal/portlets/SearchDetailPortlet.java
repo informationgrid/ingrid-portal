@@ -138,7 +138,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         crossReferences = getCrossReferencedObjects(objId);
                     } catch (Throwable t) {
                         log.error("Error getting related objects, obj_id = " + objId, t);
-                        
+
                         // we throw again, so no record is rendered !
                         throw t;
                     }
@@ -246,6 +246,24 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         }
                     }
                 }
+                /*
+                 // FOR TESTING !!!
+                 HashMap myHash = new LinkedHashMap();
+                 ArrayList tmpList = new ArrayList();
+                 tmpList.add(myHash);
+                 HashMap myHash2 = new LinkedHashMap();
+                 tmpList.add(myHash2);
+                 recordMap.put("t011_obj_serv.obj_id", tmpList);
+
+                 //myHash.put("t011_obj_serv.type", "mm");
+                 //myHash.put("t011_obj_serv.environment", "mm");
+                 //myHash.put("t011_obj_serv.history", "mm");
+                 //myHash.put("t011_obj_serv.base", "mm");
+                 //myHash.put("t011_obj_serv_version.obj_id", "mm");
+                 //myHash.put("t011_obj_serv_operation.obj_id", "mm");
+
+                 //myHash2.put("t011_obj_literatur.autor", "mm");
+                 */
                 addSubRecords(record, recordMap, request.getLocale(), readableColumnNames, messages);
 
                 recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
