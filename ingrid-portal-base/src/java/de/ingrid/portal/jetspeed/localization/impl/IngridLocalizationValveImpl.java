@@ -35,26 +35,38 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
         try {
             String language = request.getRequestParameter(INGRID_LOCALE__REQUEST_KEY);
 
-            if (language != null) {
-                String[] localeArray = language.split("[-|_]");
+            if (language != null && language.length() > 0) {
+                // Code taken from LocaleSelectorPorltet
                 String country = "";
                 String variant = "";
-                for (int i = 0; i < localeArray.length; i++) {
-                    if (i == 0) {
-                        language = localeArray[i];
-                    } else if (i == 1) {
-                        country = localeArray[i];
-                    } else if (i == 2) {
-                        variant = localeArray[i];
+                int countryIndex = language.indexOf('_');
+                if (countryIndex > -1) {
+                    country = language.substring(countryIndex + 1).trim();
+                    language = language.substring(0, countryIndex).trim();
+                    int vDash = country.indexOf("_");
+                    if (vDash > 0) {
+                        String cTemp = country.substring(0, vDash);
+                        variant = country.substring(vDash + 1);
+                        country = cTemp;
                     }
                 }
 
-                Locale preferedLocale = new Locale(language, country, variant);
+                Locale ingridLocale = new Locale(language, country, variant);
+                if (ingridLocale.getLanguage().length() == 0) {
+                    // not a valid language
+                    ingridLocale = null;
+                    log.error("Invalid or unrecognized INGRID language: " + language);
+                } else {
+                    log.info("INGRID language set: " + ingridLocale);
+                }
 
-                request.setLocale(preferedLocale);
-                request.setSessionAttribute(PortalReservedParameters.PREFERED_LOCALE_ATTRIBUTE, preferedLocale);
+                if (ingridLocale != null) {
+                    // pass it like next org.apache.jetspeed.localization.impl.LocalizationValveImpl reads it !
+                    request.setLocale(ingridLocale);
+                    request.getRequest().getSession().setAttribute(PortalReservedParameters.PREFERED_LOCALE_ATTRIBUTE,
+                            ingridLocale);
+                }
             }
-
         } catch (Exception e) {
             log.warn("Problems processing Ingrid Localization valve", e);
         }
