@@ -166,6 +166,11 @@ public class SearchState {
                 PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, objectKey);
                 msgPublished = false;
             } else {
+                // when setting new query string, replace carriage return with blank !
+                // in extended search, carriage return is possible !
+                if (objectKey.equals(Settings.PARAM_QUERY_STRING)){
+                    objectValue = ((String) objectValue).replaceAll("\r\n", " ");
+                }
                 PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, objectKey, objectValue);
             }
         } catch (Exception ex) {
