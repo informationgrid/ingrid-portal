@@ -162,7 +162,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, hitsPerPage, PortalConfig.getInstance().getInt(
+            hits = ibus.search(query, hitsPerPage, currentPage, 0, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             IngridHit[] results = hits.getHits();
             IngridHitDetail[] details = ibus.getDetails(results, query, null);
