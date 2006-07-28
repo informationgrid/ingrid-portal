@@ -39,6 +39,7 @@ limitations under the License.
   </bean>
   
   <!-- Security: Permission Manager -->
+  <!-- WEMOVE: this is the manager defined in the ingrid-jetspeed-portal project/jar -->
   <bean id="org.apache.jetspeed.security.impl.PermissionManagerImpl" 
   	   class="de.ingrid.usermanagement.jetspeed.IngridPermissionManager"  />
   

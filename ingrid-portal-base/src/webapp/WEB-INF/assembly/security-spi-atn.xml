@@ -35,6 +35,44 @@ limitations under the License.
        <constructor-arg index="1"><ref bean="org.apache.jetspeed.security.spi.CredentialPasswordEncoder"/></constructor-arg>       
   </bean>       
 
+  <!-- A Two-way encoding password service which also implements CredentialPasswordEncoder
+         this Service can be used instead of for example the default provided MessageDigestCredentialPasswordEncoder
+  <bean id="org.apache.jetspeed.security.PasswordEncodingService"
+        name="org.apache.jetspeed.security.spi.CredentialPasswordEncoder"
+        class="org.apache.jetspeed.security.spi.impl.PBEPasswordService">
+    <constructor-arg index="0">
+      <!- secret PBE key password ->
+      <value>********</value>
+    </constructor-arg>       
+  </bean>       
+-->
+
+ <!-- A Two-way encoding password service which also implements CredentialPasswordEncoder
+       Furthermore, this extension of the PBEPasswordService supports lazy upgrading from an old CredentialPasswordEncoder
+       like the default provided MessageDigestCredentialPasswordEncoder
+  ->
+  <bean id="org.apache.jetspeed.security.PasswordEncodingService"
+        name="org.apache.jetspeed.security.spi.CredentialPasswordEncoder"
+        class="org.apache.jetspeed.security.spi.impl.AlgorithmUpgradePBEPasswordService">
+    <constructor-arg index="0">
+      <!- secret PBE key password ->
+      <value>********</value>
+    </constructor-arg>
+    <constructor-arg index="1">
+      <!- old MessageDigestCredentialPasswordEncoder to be upgrading from, using SHA-1 ->
+      <bean class="org.apache.jetspeed.security.spi.impl.MessageDigestCredentialPasswordEncoder">
+       <constructor-arg index="0"><value>SHA-1</value></constructor-arg>       
+      </bean>       
+    </constructor-arg>
+    <constructor-arg index="2">
+      <!- startPBEPasswordEncodingService: date before which old encoded passwords need to be recoded (on authentication)
+           (SimpleDateFormat) format: yyyy-MM-dd HH:mm:ss
+      ->
+      <value>2006-07-02 15:00:00</value>
+    </constructor-arg>
+  </bean>
+-->
+
   <!-- allow multiple InternalPasswordCredentialInterceptors to be used for DefaultCredentialHandler --> 
   <bean id="org.apache.jetspeed.security.spi.InternalPasswordCredentialInterceptor"
        class="org.apache.jetspeed.security.spi.impl.InternalPasswordCredentialInterceptorsProxy">
