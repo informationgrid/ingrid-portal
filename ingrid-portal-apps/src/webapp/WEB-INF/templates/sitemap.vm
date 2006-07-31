@@ -43,6 +43,11 @@
 					<p>$MESSAGES.getString("sitemap.area.main.topics.description")</p>
 				</li>
 				<li>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-maps.psml"))
+					<a href="$link" title="$MESSAGES.getString('common.tooltip.link.extern')" target="_new">$MESSAGES.getString("sitemap.area.main.maps")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.maps.description")</p>
+				</li>
+				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-chronicle.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.chronicle")</a>
 $MESSAGES.resetMsgParams()
@@ -94,10 +99,10 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml"))
 	<script language="JavaScript" type="text/javascript">
-		document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString("sitemap.area.service.help")</a>");
+		document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\" title=\"$MESSAGES.getString('common.tooltip.link.extern')\">$MESSAGES.getString("sitemap.area.service.help")</a>");
 	</script>
 	<noscript>
-					<a href="$link" target="_new">$MESSAGES.getString("sitemap.area.service.help")</a>
+					<a href="$link" title="$MESSAGES.getString('common.tooltip.link.extern')" target="_new">$MESSAGES.getString("sitemap.area.service.help")</a>
 	</noscript>
 					<p>$MESSAGES.getString("sitemap.area.service.help.description")</p>
 				</li>
