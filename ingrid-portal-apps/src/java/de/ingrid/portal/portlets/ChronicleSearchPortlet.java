@@ -65,7 +65,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         String topicFrom = null;
         String topicTo = null;
         String topicTerm = null;
-        if (action.length() != 0) {
+        if (action.length() != 0 || request.getParameter(Settings.PARAM_STARTHIT_RANKED) != null) {
             // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
             doSearch = true;
@@ -149,7 +149,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                 // TODO: at the moment NO SEARCH when called from teaser and no details
                 doSearch = false;
             }
-        } else if (action.length() == 0) {
+        } else if (request.getParameter(Settings.PARAM_STARTHIT_RANKED) == null) {
             // no URL parameters, we're called from other page -> default values
             af.init();
         }
