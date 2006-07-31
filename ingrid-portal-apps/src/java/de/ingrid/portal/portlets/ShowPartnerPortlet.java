@@ -5,6 +5,8 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -119,6 +121,11 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 }
             }
 
+            // sort alphabetical
+            if (plugDescriptions != null) {
+                Collections.sort(plugDescriptions, new PlugNameComparator());
+            }
+
             context.put("plugs", plugDescriptions);
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
@@ -129,4 +136,24 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
+    /**
+     * Inner class: PlugNameComparator for plugs sorting;
+     *
+     * @author Martin Maidhof
+     */
+    private class PlugNameComparator implements Comparator {
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public final int compare(Object a, Object b) {
+            try {
+                String aName = ((PlugDescription) a).getDataSourceName().toLowerCase();
+                String bName = ((PlugDescription) b).getDataSourceName().toLowerCase();
+
+                return aName.compareTo(bName);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }
 }
