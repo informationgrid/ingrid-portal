@@ -114,9 +114,20 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
             context.put("partners", partnerMap);
 
+            // set up plug list for view, remove plugs with same name !
             ArrayList plugDescriptions = new ArrayList();
+            String newName = null;
+            String oldName = null;
             for (int i = 0; i < plugs.length; i++) {
-                if (!plugDescriptions.contains(plugs[i])) {
+                newName = plugs[i].getDataSourceName();
+                boolean found = false;
+                for (int j = 0; j < plugDescriptions.size(); j++) {
+                    oldName = ((PlugDescription) plugDescriptions.get(j)).getDataSourceName();
+                    if (newName != null && oldName != null && newName.equals(oldName)) {
+                        found = true;
+                    }
+                }
+                if (!found) {
                     plugDescriptions.add(plugs[i]);
                 }
             }
