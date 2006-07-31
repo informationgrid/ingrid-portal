@@ -1,7 +1,22 @@
   PSML in database
   ================
 - s. mail in J-Userliste von Randy Watler, "Re: Storing PSML in Database" vom Donnerstag, 9. März 2006 18:04
-- mit "maven import" wird alles unter dem pages Verzeichnis in die Datenbank geholt:
+    "All one had to do is this to get going:
+    
+    1. start with a clean J2 install from source configured properly.
+    2. build and deploy normally... but do not start J2 yet.
+    3. run 'maven import' from the top level J2 directory... the same one 
+    you normally build from.
+    4. copy jetspeed/WEB-INF/assembly/alternate/db-page-manager.xml over top 
+    of jetspeed/WEB-INF/assembly/page-manager.xml
+    5. start tomcat/J2 normally.
+    
+    All should be going to the DB at this point! Note that the portal is not 
+    much use with an empty PSML DB.. that is why we do an import up front. 
+    Take a look at the import goal in maven.xml to customize the DB 
+    PageManager bootstrapping steps."
+
+- mit "maven import" im ingrid-portal-base Verzeichnis wird alles unter dem pages Verzeichnis in die Datenbank geholt:
   - aus dem src/etc Verzeichnis wird verschiedenes in den target/classes folder kopiert, in dem dann der import ausgeführt wird
 - !!! ingrid-portal-base IST PER DEFAULT SO KONFIGURIERT, DASS ES PSML IN DER DATENBANK BENUTZT !!!!!!!!!!!!!!!!!!
   (in src/.../WEB-INF/assembly wurde der entspredchende page-manager.xml und interceptors.xml rein kopiert).

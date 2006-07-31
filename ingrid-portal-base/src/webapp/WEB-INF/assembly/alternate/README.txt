@@ -1,0 +1,1 @@
+this the PageManager configuration for handling PSML files from the file system, meaning NO PSML in the database !
