@@ -378,6 +378,10 @@
                 <value>0</value>
             </preference>
             <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
+            </preference>
+            <preference>
                 <name>titleKey</name>
                 <value>teaser.ingridInform.title</value>
             </preference>
