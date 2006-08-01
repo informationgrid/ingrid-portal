@@ -59,6 +59,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
 
         // ask ibus for anniversary
         IngridQuery query;
+        IngridHits hits = null;
         try {
             query = QueryStringParser.parse(dateStr);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
@@ -66,14 +67,14 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, 10000);
+            hits = iBus.search(query, 10, 1, 10, 10000);
             IngridHit[] hitsArray = hits.getHits();
             if (hitsArray.length > 0) {
                 return iBus.getDetails(hitsArray, query, new String[0]);
             }
             return new DetailedTopic[0];
         } catch (Exception e) {
-            log.error("Exception while querying sns for anniversary.", e);
+            log.error("Exception while querying sns for anniversary. iBus results (hits) = " + hits, e);
             return new DetailedTopic[0];
         }
     }
