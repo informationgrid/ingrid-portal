@@ -82,6 +82,7 @@ import org.apache.jetspeed.page.document.DocumentException;
 import org.apache.jetspeed.page.document.DocumentNotFoundException;
 import org.apache.jetspeed.page.document.FailedToDeleteDocumentException;
 import org.apache.jetspeed.page.document.FailedToUpdateDocumentException;
+import org.apache.jetspeed.page.document.Node;
 import org.apache.jetspeed.page.document.NodeException;
 import org.apache.jetspeed.page.document.NodeSet;
 import org.apache.jetspeed.page.document.impl.NodeImpl;
@@ -983,6 +984,12 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 // update page and mark cache transaction
                 getPersistenceBrokerTemplate().store(page);
                 DatabasePageManagerCache.addTransaction(new TransactionedOperation(page.getPath(), TransactionedOperation.UPDATE_OPERATION));
+
+                // reset parent folder pages cache
+                Node parent = page.getParent();
+                if (parent instanceof FolderImpl) {
+                    ((FolderImpl)parent).resetPages(false);
+                }
                 
                 // notify page manager listeners
                 delegator.notifyUpdatedNode(page);
