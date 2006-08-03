@@ -520,7 +520,7 @@ public class Utils {
 
             // Setting the Subject and Content Type
             msg.setSubject(subject);
-            msg.setContent(text, "text/plain");
+            msg.setContent(text, "text/plain; charset=ISO-8859-1");
             Transport.send(msg);
             emailSent = true;
         } catch (AddressException e) {
