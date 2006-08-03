@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.interfaces;
 
+import java.util.Locale;
+
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 
@@ -18,11 +20,11 @@ public interface SimilarTermsInterface {
      * 
      * @param term
      *            The given term to search similar topics for.
+     * @param language in which language, pass null if default language
      * @return Array of similar topics for term.
      */
-    IngridHit[] getSimilarTerms(String term);
-    
-    
+    IngridHit[] getSimilarTerms(String term, Locale language);
+
     /**
      * Get similar detailed topics from a given term.
      * 
@@ -33,7 +35,6 @@ public interface SimilarTermsInterface {
      */
     IngridHitDetail[] getSimilarDetailedTerms(String term, IngridHit[] hits);
 
-    
     /**
      * Get topics from a given term using the autoclassify method of SNS.
      * 
@@ -42,7 +43,7 @@ public interface SimilarTermsInterface {
      * @return Array of topics found for term.
      */
     IngridHit[] getTopicsFromText(String term, String filter);
-    
+
     /**
      * Get detailed topics from a given term, the hits and a querytype.
      * 
@@ -52,9 +53,7 @@ public interface SimilarTermsInterface {
      * @return Array of detailed topics for term.
      */
     IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType);
-    
-    
-    
+
     /**
      * Get similar location topics from a given topic id.
      * 
@@ -72,7 +71,7 @@ public interface SimilarTermsInterface {
      * @return Array of associated topics for topic.
      */
     IngridHit[] getTopicsFromTopic(String topicId);
-    
+
     /**
      * Get detail from hit.
      * 
@@ -81,6 +80,5 @@ public interface SimilarTermsInterface {
      * @return The detail of the hit.
      */
     IngridHitDetail getDetailsTopic(IngridHit hit);
-    
-    
+
 }

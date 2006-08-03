@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -10,6 +12,7 @@ import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.SimilarTermsInterface;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -59,7 +62,8 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 50, 1, 50,  PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
+            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+                    PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {
@@ -71,15 +75,19 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     /**
      * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getSimilarTerms(java.lang.String)
      */
-    public IngridHit[] getSimilarTerms(String term) {
+    public IngridHit[] getSimilarTerms(String term, Locale language) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARTERMS_FROM_TOPIC);
 
+            // Language
+            UtilsSearch.processLanguage(query, language);
+
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10,  PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
+            IngridHits hits = iBus.search(query, 10, 1, 10, PortalConfig.getInstance().getInt(
+                    PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {
@@ -87,7 +95,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             return null;
         }
     }
-    
+
     /**
      * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getSimilarDetailedTerms(java.lang.String, de.ingrid.utils.IngridHit[])
      */
@@ -115,14 +123,14 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, queryType);
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
-    
+
             return iBus.getDetails(hits, query, null);
         } catch (Exception e) {
             log.error("Exception while querying sns for detailed terms.", e);
             return null;
         }
     }
-    
+
     /**
      * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getTopicSimilarLocationsFromTopic(java.lang.String)
      */
@@ -134,7 +142,8 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
+            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+                    PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {
@@ -143,7 +152,6 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    
     public IngridHit[] getTopicsFromTopic(String topicId) {
         try {
             IngridQuery query = QueryStringParser.parse(topicId);
@@ -152,7 +160,8 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
+            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+                    PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
         } catch (Exception e) {
@@ -160,7 +169,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             return null;
         }
     }
-    
+
     public IngridHitDetail getDetailsTopic(IngridHit hit) {
         try {
             IngridQuery query = new IngridQuery();
@@ -176,8 +185,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             log.error("Exception while querying sns for detailed topic.", e);
             return null;
         }
-        
+
     }
-    
 
 }

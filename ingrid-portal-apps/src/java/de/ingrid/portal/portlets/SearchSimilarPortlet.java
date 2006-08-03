@@ -6,6 +6,7 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -125,7 +126,8 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                     similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
                     session.setAttribute("similarRoot", similarRoot);
                     if (similarRoot.getChildren().size() == 1) {
-                        openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId());
+                        openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId(), request
+                                .getLocale());
                     }
                 }
                 ps.put("similarRoot", similarRoot);
@@ -135,7 +137,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             } else if (action.equalsIgnoreCase("doOpenNode")) {
                 similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
                 if (similarRoot != null) {
-                    openNode(similarRoot, request.getParameter("nodeId"));
+                    openNode(similarRoot, request.getParameter("nodeId"), request.getLocale());
                     ps.put("similarRoot", similarRoot);
                 }
             } else if (action.equalsIgnoreCase("doCloseNode")) {
@@ -208,13 +210,13 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         return ps;
     }
 
-    private void openNode(DisplayTreeNode rootNode, String nodeId) {
+    private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         node.setOpen(true);
         if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
                 && !node.isLoading()) {
             node.setLoading(true);
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName());
+            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName(), language);
             if (hits == null || hits.length == 0) {
                 DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + 0, "similar.terms.not.available", false);
                 snsNode.setType(DisplayTreeNode.MESSAGE_NODE);
