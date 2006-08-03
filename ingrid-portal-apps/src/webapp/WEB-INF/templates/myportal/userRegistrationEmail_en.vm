@@ -3,11 +3,11 @@ Hello $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.na
 Welcome to PortalU! 
 Thank you for registering.
 
-Please verify your registration by following the link below.
+Please confirm your registration by following the link below.
 
 $!{map.get("returnURL")}
 
-Thanks,
+Best regards,
 
 The PortalU Team.
 
