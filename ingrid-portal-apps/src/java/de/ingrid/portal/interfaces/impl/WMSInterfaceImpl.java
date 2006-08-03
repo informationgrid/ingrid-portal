@@ -206,6 +206,19 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
+     * Checks whether a WMS Viewer is configured !
+     * @return
+     */
+    public boolean hasWMSViewer() {
+        String viewerURL = config.getString("display_viewer_url", null);
+        if (viewerURL != null && viewerURL.trim().length() > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSURL(java.lang.String)
      */
     public String getWMSViewerURL(String sessionId, boolean jsEnabled, Locale language) {

@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -171,8 +172,8 @@ public class QueryResultPostProcessor {
                         processDSCHit(hit, detail, selectedDS);
 
                         // JUST FOR TESTING, SHOULD NEVER BE UNRANKED !
-//                    } else if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-//                        processDSCHit(hit, detail, selectedDS);
+                        //                    } else if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                        //                        processDSCHit(hit, detail, selectedDS);
 
                     } else {
                         hit.put(Settings.RESULT_KEY_TYPE, "www-style");
@@ -213,8 +214,10 @@ public class QueryResultPostProcessor {
             // read for all dsc iplugs
 
             // services !
+            
+            // WMS, only process if Viewer is specified !
             Object obj = detail.get(Settings.HIT_KEY_WMS_URL);
-            if (obj != null) {
+            if (obj != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
                 tmpString = "";
                 if (obj instanceof String[]) {
                     // PATCH for wrong data in database -> service string was passed multiple times !
