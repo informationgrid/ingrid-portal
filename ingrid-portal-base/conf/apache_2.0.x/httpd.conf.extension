@@ -1,0 +1,30 @@
+#
+# place this in your httpd.conf or better in your httpd.conf.local and include it into httpd.conf
+#
+
+
+##
+## Load mod_jk for load balancing
+##
+
+#
+# Mod_jk settings
+#
+JkWorkersFile "/etc/apache2/workers.properties"
+JkLogFile "/var/log/apache2/mod_jk.log"
+
+JkLogLevel error
+
+JkMount /ingrid-portal default
+JkMount /ingrid-portal/* default
+JkMount /ingrid-portal-apps default
+JkMount /ingrid-portal-apps/* default
+
+# End of mod_jk settings
+LoadModule jk_module /usr/lib/apache2/mod_jk.so
+
+#
+# ReWriteEngine, rewrite the apache root to the tomcat (portal)
+#
+RewriteEngine on
+RewriteRule ^/$ /ingrid-portal/portal [PT]
