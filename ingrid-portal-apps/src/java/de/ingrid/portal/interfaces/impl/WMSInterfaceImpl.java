@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -37,6 +38,8 @@ import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 public class WMSInterfaceImpl implements WMSInterface {
 
     private final static Log log = LogFactory.getLog(WMSInterfaceImpl.class);
+
+    private final static String LANGUAGE_PARAM = "lang";
 
     private static WMSInterfaceImpl instance = null;
 
@@ -205,7 +208,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSURL(java.lang.String)
      */
-    public String getWMSViewerURL(String sessionId, boolean jsEnabled) {
+    public String getWMSViewerURL(String sessionId, boolean jsEnabled, Locale language) {
         String viewerURL = "";
         if (jsEnabled) {
             viewerURL = config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php");
@@ -214,6 +217,9 @@ public class WMSInterfaceImpl implements WMSInterface {
                     "http://localhost/mapbender/frames/wms_viewer_nojs.php");
         }
         viewerURL = viewerURL.concat("?PHPSESSID=" + sessionId);
+        if (language != null) {
+            viewerURL = viewerURL.concat("&" + LANGUAGE_PARAM + "=" + language.getLanguage());
+        }
 
         return viewerURL;
     }
@@ -221,7 +227,7 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSSearchURL(java.lang.String)
      */
-    public String getWMSSearchURL(String sessionId, boolean jsEnabled) {
+    public String getWMSSearchURL(String sessionId, boolean jsEnabled, Locale language) {
         String searchURL = "";
         if (jsEnabled) {
             searchURL = config.getString("display_search_url", "http://localhost/mapbender/frames/WMS_Search.php");
@@ -230,6 +236,9 @@ public class WMSInterfaceImpl implements WMSInterface {
                     "http://localhost/mapbender/frames/wms_search_nojs.php");
         }
         searchURL = searchURL.concat("?PHPSESSID=" + sessionId);
+        if (language != null) {
+            searchURL = searchURL.concat("&" + LANGUAGE_PARAM + "=" + language.getLanguage());
+        }
 
         return searchURL;
     }
@@ -237,21 +246,22 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.om.WMSServiceDescriptor, java.lang.String)
      */
-    public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled) {
+    public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled,
+            Locale language) {
         ArrayList l = new ArrayList();
         l.add(service);
-        return getWMSAddedServiceURL(l, sessionId, jsEnabled);
+        return getWMSAddedServiceURL(l, sessionId, jsEnabled, language);
     }
 
     /**
      * @throws UnsupportedEncodingException 
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList, java.lang.String)
      */
-    public String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled) {
+    public String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled, Locale language) {
         WMSServiceDescriptor service;
         String serviceURL;
         String serviceName;
-        StringBuffer resultB = new StringBuffer(getWMSViewerURL(sessionId, jsEnabled));
+        StringBuffer resultB = new StringBuffer(getWMSViewerURL(sessionId, jsEnabled, language));
         boolean prequestAdded = false;
 
         // check for invalid service parameter

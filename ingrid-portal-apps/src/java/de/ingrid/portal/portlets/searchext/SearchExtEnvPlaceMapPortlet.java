@@ -12,7 +12,6 @@ import javax.portlet.PortletException;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.forms.PasswordForgottenForm;
 import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -38,21 +37,23 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        SearchExtEnvPlaceMapForm f = (SearchExtEnvPlaceMapForm) Utils.getActionForm(request, SearchExtEnvPlaceMapForm.SESSION_KEY, SearchExtEnvPlaceMapForm.class);        
+        SearchExtEnvPlaceMapForm f = (SearchExtEnvPlaceMapForm) Utils.getActionForm(request,
+                SearchExtEnvPlaceMapForm.SESSION_KEY, SearchExtEnvPlaceMapForm.class);
         String cmd = request.getParameter("cmd");
-        
+
         if (cmd == null) {
             f.init();
         }
         context.put("actionForm", f);
-        
+
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_PLACE);
         context.put(VAR_SUB_TAB, PARAMV_TAB_MAP);
 
         // get and set URL to WMS Server
         WMSInterface service = WMSInterfaceImpl.getInstance();
-        String wmsURL = service.getWMSSearchURL(request.getPortletSession().getId(), hasJavaScript);
+        String wmsURL = service
+                .getWMSSearchURL(request.getPortletSession().getId(), hasJavaScript, request.getLocale());
         context.put("wmsURL", wmsURL);
 
         super.doView(request, response);
@@ -73,15 +74,17 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
 
         if (submittedAddToQuery != null) {
             actionResponse.setRenderParameter("cmd", "form_sent");
-            SearchExtEnvPlaceMapForm f = (SearchExtEnvPlaceMapForm) Utils.getActionForm(request, SearchExtEnvPlaceMapForm.SESSION_KEY, SearchExtEnvPlaceMapForm.class);        
+            SearchExtEnvPlaceMapForm f = (SearchExtEnvPlaceMapForm) Utils.getActionForm(request,
+                    SearchExtEnvPlaceMapForm.SESSION_KEY, SearchExtEnvPlaceMapForm.class);
             f.clearErrors();
-            
+
             f.populate(request);
             if (!f.validate()) {
                 return;
             }
             // Zur Suchanfrage hinzufuegen
-            WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(request.getPortletSession().getId());
+            WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(
+                    request.getPortletSession().getId());
             if (wmsDescriptor == null) {
                 f.setError("", "searchExtEnvPlaceMap.error.no_spacial_constraint");
                 return;
@@ -112,9 +115,11 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
                 } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
                     searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
                 }
-                
-                String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
+
+                String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+                        Settings.PARAM_QUERY_STRING);
+                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
+                        UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
             }
         } else if (action.equalsIgnoreCase("doSave")) {
 

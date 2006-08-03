@@ -5,6 +5,7 @@ package de.ingrid.portal.interfaces;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 import org.apache.commons.configuration.Configuration;
 
@@ -52,9 +53,10 @@ public interface WMSInterface {
      * 
      * @param sessionId The session id.
      * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
+     * @param language pass locale, pass null if default language
      * @return The url of the WMS view script on the Server.
      */
-    String getWMSViewerURL(String sessionId, boolean jsEnabled);
+    String getWMSViewerURL(String sessionId, boolean jsEnabled, Locale language);
 
     /**
      * Returns the URL of the WMS SEARCH "MAP" with search functionality. The URL contains
@@ -63,9 +65,10 @@ public interface WMSInterface {
      * 
      * @param sessionId The session id.
      * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
+     * @param language pass locale, pass null if default language
      * @return The url of the WMS search script on the Server.
      */
-    String getWMSSearchURL(String sessionId, boolean jsEnabled);
+    String getWMSSearchURL(String sessionId, boolean jsEnabled, Locale language);
 
     /**
      * Returns the URL of the WMS VIEWER server. Includes a command to add a service, 
@@ -77,9 +80,10 @@ public interface WMSInterface {
      * the descriptions name is null, no name will be put in the resulting url. 
      * @param sessionId The sessin id.
      * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
+     * @param language pass locale, pass null if default language
      * @return The url of the WMS VIEWER Server including the command to add the service.
      */
-    String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled);
+    String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled, Locale language);
 
     /**
      * Returns the URL of the WMS VIEWER server. Includes a command to add all services, 
@@ -91,8 +95,9 @@ public interface WMSInterface {
      * @param services The ArrayList of WMSServiceDescriptor
      * @param sessionId Thse session id.
      * @param jsEnabled true when to fetch JavaScript version, false when to fetch HTML version
+     * @param language pass locale, pass null if default language
      * @return The url of the WMS Server including the command to add the services.
      */
-    String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled);
+    String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled, Locale language);
 
 }
