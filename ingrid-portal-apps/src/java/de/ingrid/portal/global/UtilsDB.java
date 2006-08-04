@@ -34,7 +34,7 @@ import de.ingrid.portal.om.IngridSysCodelistDomainId;
 public class UtilsDB {
 
     private final static Log log = LogFactory.getLog(DBAnniversaryInterfaceImpl.class);
-    
+
     /** this flag controls whether Data is always fetched from Database or from cache  */
     // TODO keep possibilty to always reload data from DB ???? makes it complicated ! maybe instable ?
     private static boolean alwaysReloadDBData = PortalConfig.getInstance().getBoolean(
@@ -174,8 +174,8 @@ public class UtilsDB {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
-        return getValuesFromDB(session.createCriteria(IngridPartner.class)
-                .addOrder(Order.asc("sortkey")), session, partners, true);
+        return getValuesFromDB(session.createCriteria(IngridPartner.class).addOrder(Order.asc("sortkey")), session,
+                partners, true);
     }
 
     /**
@@ -196,7 +196,7 @@ public class UtilsDB {
     }
 
     /**
-     * Get all the providers.
+     * Get all the providers. Sort by sortkeyPartner, name !
      * @return
      */
     public static List getProviders() {
@@ -204,7 +204,7 @@ public class UtilsDB {
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
         return getValuesFromDB(session.createCriteria(IngridProvider.class)
-                .addOrder(Order.asc("sortkeyPartner")).addOrder(Order.asc("sortkey")), session, providers, true);
+                .addOrder(Order.asc("sortkeyPartner")).addOrder(Order.asc("name")), session, providers, true);
     }
 
     /**
@@ -240,8 +240,7 @@ public class UtilsDB {
         }
         return null;
     }
-    
-    
+
     /**
      * Get all the environment topics.
      * @return
@@ -346,7 +345,7 @@ public class UtilsDB {
         List eventTypes = getChronicleEventTypes();
         return getQueryValueFromFormValue(eventTypes, key);
     }
-    
+
     /**
      * Get a entry from the code list table
      * 
@@ -356,7 +355,7 @@ public class UtilsDB {
      * @return
      */
     public static String getCodeListEntryName(long codeListId, long domainId, long langId) {
-        
+
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
         try {
@@ -365,7 +364,8 @@ public class UtilsDB {
             id.setDomainId(new Long(domainId));
             id.setLangId(new Long(langId));
             tx = session.beginTransaction();
-            IngridSysCodelistDomain domainEntry = (IngridSysCodelistDomain) session.load(IngridSysCodelistDomain.class, id);
+            IngridSysCodelistDomain domainEntry = (IngridSysCodelistDomain) session.load(IngridSysCodelistDomain.class,
+                    id);
             tx.commit();
             return domainEntry.getName();
         } catch (Exception e) {
