@@ -71,13 +71,17 @@ if (xmlhttp) {
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
+#set($langCode = '')
+#if($preferedLocale.toString() == 'en')
+	#set($langCode = "en_")
+#end
 #set($currentPage = $site.getPage().url)
 #if($currentPage == "/main-maps.psml")
-<div id="identity" class="motiv_karten">
+<div id="identity" class="${langCode}motiv_karten">
 #elseif($currentPage == "/search-detail.psml")
-<div id="identity" class="motiv_suche">
+<div id="identity" class="${langCode}motiv_suche">
 #else
-<div id="identity" class="motiv_blank">
+<div id="identity" class="${langCode}motiv_blank">
 #end
   <!-- LOGO -->
   <div id="logo">

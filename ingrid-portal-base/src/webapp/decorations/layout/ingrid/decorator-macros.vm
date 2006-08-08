@@ -35,30 +35,34 @@
 #* include identity component *#
 #macro (includeIdentityArea)
   #set($currentPage = $site.getPage().url)
+  #set($langCode = '')
+  #if($preferedLocale.toString() == 'en')
+	#set($langCode = "en_")
+  #end
   #if($currentPage == "/default-page.psml")
-<div id="identity" class="motiv_start">
+<div id="identity" class="${langCode}motiv_start">
   #elseif($currentPage == "/main-about.psml")
-<div id="identity" class="motiv_start">
+<div id="identity" class="${langCode}motiv_start">
   #elseif($currentPage == "/main-chronicle.psml")
-<div id="identity" class="motiv_umweltchronik">
+<div id="identity" class="${langCode}motiv_umweltchronik">
   #elseif($currentPage == "/main-environment.psml")
-<div id="identity" class="motiv_umweltthemen">
+<div id="identity" class="${langCode}motiv_umweltthemen">
   #elseif($currentPage == "/main-maps.psml")
-<div id="identity" class="motiv_karten">
+<div id="identity" class="${langCode}motiv_karten">
   #elseif($currentPage == "/main-measures.psml")
-<div id="identity" class="motiv_messwerte">
+<div id="identity" class="${langCode}motiv_messwerte">
   #elseif($currentPage == "/main-search.psml")
-<div id="identity" class="motiv_suche">
+<div id="identity" class="${langCode}motiv_suche">
   #elseif($currentPage == "/main-service.psml")
-<div id="identity" class="motiv_service">
+<div id="identity" class="${langCode}motiv_service">
   #elseif($currentPage == "/service-contact.psml")
-<div id="identity" class="motiv_topnavi">
+<div id="identity" class="${langCode}motiv_topnavi">
   #elseif($currentPage == "/help.psml")
-<div id="identity" class="motiv_hilfe">
+<div id="identity" class="${langCode}motiv_hilfe">
   #elseif($currentPage == "/service-myportal.psml")
-<div id="identity" class="motiv_topnavi">
+<div id="identity" class="${langCode}motiv_topnavi">
   #else
-<div id="identity" class="motiv_blank">
+<div id="identity" class="${langCode}motiv_blank">
   #end
 
   <!-- LOGO -->

@@ -48,7 +48,11 @@
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
-<div id="popupheader" class="motiv_hilfe">
+#set($langCode = '')
+#if($preferedLocale.toString() == 'en')
+	#set($langCode = "en_")
+#end
+<div id="popupheader" class="${langCode}motiv_hilfe">
 	<!-- LOGO -->
   <div id="logo">
     <img src="#BaseHref()#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
