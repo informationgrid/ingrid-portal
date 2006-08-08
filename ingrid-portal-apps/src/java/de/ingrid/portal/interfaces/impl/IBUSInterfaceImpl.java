@@ -168,11 +168,14 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             if (log.isInfoEnabled()) {
                 log
-                        .info("doSearch: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout=" + timeout
+                        .info("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout=" + timeout
                                 + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
                                 + requestedHits);
             }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
+            if (log.isInfoEnabled()) {
+                log.info("iBus.search: finished !");
+            }
         } catch (java.io.IOException e) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
