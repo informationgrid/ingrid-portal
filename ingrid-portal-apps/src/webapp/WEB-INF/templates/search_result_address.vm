@@ -51,12 +51,14 @@
             $!rs.abstract 
             </p>
             <p class="result_metadata">
-##		    #if ($rs.type == "www-style")
-## NO Partner set in result detail !!! Only in catalogues ?
 ##              Anbieter: $!rs.partner<br />
-##			#else
+			#if($grouping)
+				#if($grouping == 'partner')
+					$MESSAGES.getString('common.result.provider'): $!rs.provider<br />
+				#end
+			#else
               $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
-##			#end
+			#end
               $MESSAGES.getString('common.result.source'): $!rs.source<br />
 ##              Ranking: $!rs.score<br />
             </p>

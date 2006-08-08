@@ -87,7 +87,7 @@ public class QueryPreProcessor {
             requestedMetadata[2] = Settings.RESULT_KEY_PARTNER;
             requestedMetadata[3] = Settings.RESULT_KEY_PROVIDER;
         } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            requestedMetadata = new String[7];
+            requestedMetadata = new String[9];
             requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
             requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
             requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
@@ -95,6 +95,8 @@ public class QueryPreProcessor {
             requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
             requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
             requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
+            requestedMetadata[7] = Settings.RESULT_KEY_PARTNER;
+            requestedMetadata[8] = Settings.RESULT_KEY_PROVIDER;
         }
 
         // set properties according to the session preferences
