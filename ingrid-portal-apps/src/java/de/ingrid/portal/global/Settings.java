@@ -210,9 +210,10 @@ public class Settings {
 
     public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
 
-    // mapped !
-//    public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
-    public final static String HIT_KEY_UDK_CLASS = "metaclass";
+    // mapped ! NO, NOT MAPPED ANYMORE in Plug Description, instead in iBus when querying.
+    // ECS iPlug has to be adapted (maybe !)
+    public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
+//    public final static String HIT_KEY_UDK_CLASS = "metaclass";
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
     
