@@ -168,9 +168,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         try {
             if (log.isInfoEnabled()) {
                 log
-                        .info("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout=" + timeout
-                                + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                                + requestedHits);
+                        .info("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout="
+                                + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage
+                                + ", length=" + requestedHits);
             }
             hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
             if (log.isInfoEnabled()) {
@@ -204,7 +204,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public IngridHitDetail getDetail(IngridHit result, IngridQuery query, String[] requestedFields) {
         IngridHitDetail detail = null;
         try {
+            if (log.isInfoEnabled()) {
+                log.info("iBus.getDetail: hit = " + result + ", requestedFields = " + requestedFields);
+            }
             detail = bus.getDetail(result, query, requestedFields);
+            if (log.isInfoEnabled()) {
+                log.info("iBus.getDetail: finished !");
+            }
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching Detail of result: " + result, t);
@@ -224,7 +230,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public IngridHitDetail[] getDetails(IngridHit[] results, IngridQuery query, String[] requestedFields) {
         IngridHitDetail[] details = null;
         try {
+            if (log.isInfoEnabled()) {
+                log.info("iBus.getDetails: hits = " + results + ", requestedFields = " + requestedFields);
+            }
             details = bus.getDetails(results, query, requestedFields);
+            if (log.isInfoEnabled()) {
+                log.info("iBus.getDetails: finished !");
+            }
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching Details of results: " + results, t);
