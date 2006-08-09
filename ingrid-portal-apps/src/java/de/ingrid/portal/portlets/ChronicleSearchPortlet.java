@@ -23,7 +23,6 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.FieldQuery;
@@ -58,24 +57,15 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             action = "";
         }
 
+        // may be passed from start page !
+        String topicTerm = request.getParameter("topTerm");
+
         // search if action parameter is passed, every action on page should cause new search 
         boolean doSearch = false;
-        String topicId = null;
-        String topicType = null;
-        String topicFrom = null;
-        String topicTo = null;
-        String topicTerm = null;
         if (action.length() != 0 || request.getParameter(Settings.PARAM_STARTHIT_RANKED) != null) {
             // remove query message for result portlet -> no results
             cancelRenderMessage(request, Settings.MSG_QUERY);
             doSearch = true;
-
-            // fetch topic id from request, we may be called from teaser !
-            topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
-            topicType = request.getParameter("topType");
-            topicFrom = request.getParameter("topFrom");
-            topicTo = request.getParameter("topTo");
-            topicTerm = request.getParameter("topTerm");
         }
 
         // ----------------------------------
@@ -103,51 +93,9 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // initial default values when called from teaser
             af.init();
 
-            // set form values of topic, when special topic is requested 
-            if (topicId != null) {
-
-                // TODO: search topic by ID !?
-
-                // set type
-                if (topicType != null) {
-                    topicType = UtilsDB.getFormValueFromQueryValue(UtilsDB.getChronicleEventTypes(), topicType);
-                    af.setInput(ChronicleSearchForm.FIELD_EVENT, topicType);
-                }
-
-                // set date
-                String formFrom = UtilsDate.getInputDateFrom(topicFrom, request.getLocale());
-                String formTo = UtilsDate.getInputDateTo(topicTo, request.getLocale());
-                if ((formFrom != null) && (formTo != null)) {
-                    if (formFrom.equals(formTo)) {
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_DATE);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_AT, formFrom);
-                    } else {
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT,
-                                ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
-                        af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
-                    }
-                } else if (formFrom != null) {
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, formFrom);
-                    //                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateMax());                    
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, UtilsDate.getInputDateTo(topicFrom, request
-                            .getLocale()));
-                } else if (formTo != null) {
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_SELECT, ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD);
-                    //                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateMin());                    
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_FROM, UtilsDate.getInputDateFrom(topicTo, request
-                            .getLocale()));
-                    af.setInput(ChronicleSearchForm.FIELD_TIME_TO, formTo);
-                }
-
-                // set term
-                if (topicTerm != null) {
-                    af.setInput(ChronicleSearchForm.FIELD_SEARCH, topicTerm);
-                }
-            } else {
-                // TODO: at the moment NO SEARCH when called from teaser and no details
-                doSearch = false;
+            // set term
+            if (topicTerm != null) {
+                af.setInput(ChronicleSearchForm.FIELD_SEARCH, topicTerm);
             }
         } else if (request.getParameter(Settings.PARAM_STARTHIT_RANKED) == null) {
             // no URL parameters, we're called from other page -> default values
@@ -215,6 +163,14 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // ONLY USE ONE TERM !!! SNS can't process multiple Terms !
             //            inputTerm = inputTerm.split(" ")[0];
 
+            // Check whether topicId from start page (Anniversary Event) in request and prepare query accordingly !
+            // HACK: we only want a most simple query to get one Hit !
+            // searching Tschernobyl seems to be fast ;)
+            String topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
+            if (topicId != null) {
+                inputTerm = "Tschernobyl";
+            }
+
             try {
                 query = QueryStringParser.parse(inputTerm);
             } catch (Throwable t) {
@@ -222,6 +178,11 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                     log.warn("Problems creating IngridQuery from input term: " + inputTerm, t);
                 }
                 return "chronicle.form.error.queryFormat";
+            }
+
+            // also pass Topic ID of Anniversary Event from Start Page, so Result Portlet will react accordingly
+            if (topicId != null) {
+                query.put("TEASER_TOPIC_ID", topicId);
             }
 
             // Language

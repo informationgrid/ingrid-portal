@@ -158,34 +158,50 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 .getContextPath()
                 + PAGE_SEARCH + "?action=doSearch&ds=1&q=";
 
-        int currentPage = (int) (startHit / hitsPerPage) + 1;
+        // check whether we're called from teaser on start page and should display ONLY THE TEASER event !
+        String teaserTopicId = (String) query.remove("TEASER_TOPIC_ID");
+
         IngridHits hits = null;
+        IngridHit[] results = null;
+        IngridHitDetail[] details = null;
         try {
+            int currentPage = (int) (startHit / hitsPerPage) + 1;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, 0, PortalConfig.getInstance().getInt(
-                    PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
-            IngridHit[] results = hits.getHits();
-            IngridHitDetail[] details = ibus.getDetails(results, query, null);
-            if (details == null) {
-                if (log.isErrorEnabled()) {
-                    log.error("Problems fetching details of events !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+            if (teaserTopicId == null) {
+                hits = ibus.search(query, hitsPerPage, currentPage, 0, PortalConfig.getInstance().getInt(
+                        PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
+            } else {
+                // HACK: we request ONE Hit to have the correct plug ID !
+                // Then we manipulate the Hit and the IngridHits to get the correct Event and Number Of Events !
+                hits = ibus.search(query, 1, 1, 0, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT,
+                        30000));
+                results = hits.getHits();
+                if (results != null && results.length > 0) {
+                    Topic topic = (Topic) results[0];
+                    // !!! IMPORTANT !!! iBus compares documentId of Topic and DetailedTopic and has to be the same !!!
+                    topic.setDocumentId(teaserTopicId.hashCode());
+                    topic.setTopicID(teaserTopicId);
+                    topic.remove("title");
+                }
+                if (hits.length() > 1) {
+                    hits.putLong("length", 1);
                 }
             }
-
-            Topic topic = null;
-            DetailedTopic detail = null;
-            for (int i = 0; i < results.length; i++) {
-                try {
-                    topic = (Topic) results[i];
-                    if (topic == null) {
-                        continue;
-                    }
-
-                    detail = null;
-                    if (details != null) {
+            results = hits.getHits();
+            details = ibus.getDetails(results, query, null);
+            if (details == null) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems getting details of hits ! hits = " + results + ", details = " + details);
+                }
+            } else {
+                Topic topic = null;
+                DetailedTopic detail = null;
+                for (int i = 0; i < results.length; i++) {
+                    try {
+                        topic = (Topic) results[i];
                         detail = (DetailedTopic) details[i];
-                    }
-                    if (detail != null) {
+
                         topic.put("title", detail.getTopicName());
 
                         String searchData = (String) detail.get(DetailedTopic.ASSOCIATED_OCC);
@@ -194,7 +210,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                         if (searchData != null && searchData.length() > 0) {
                             searchData = UtilsString.htmlescape(searchData.replaceAll("\\,", " OR "));
                         } else {
-                            searchData = UtilsString.htmlescape(topic.getTopicName());
+                            searchData = UtilsString.htmlescape(detail.getTopicName());
                         }
                         String searchURL = response.encodeURL(searchURLBase.concat(searchData));
                         topic.put("searchURL", searchURL);
@@ -244,17 +260,16 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                          topic.put("samples", Arrays.asList(tmpArray));
                          topic.put("sampleTitles", Arrays.asList(tmpArray2));
                          */
-
+                    } catch (Throwable t) {
+                        if (log.isErrorEnabled()) {
+                            log.error("Problems processing " + i + ". Event, hit = " + topic + ", detail = " + detail, t);
+                        }
                     }
-                } catch (Throwable t) {
-                    if (log.isErrorEnabled()) {
-                        log.error("Problems processing Event, hit=" + topic + ", detail=" + detail, t);
-                    }
-                }
+                }                
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems performing Search !", t);
+                log.error("Problems performing SNS Search ! results = " + results + ", details = " + details, t);
             }
         }
 
