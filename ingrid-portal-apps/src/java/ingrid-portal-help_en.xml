@@ -83,7 +83,7 @@
             <header>Functionality Overview</header>
             <content>
                 <p>
-                    <b>Suche:</b> The central functionality of PortalU is the 
+                    <b>Search:</b> The central functionality of PortalU is the 
                     PortalU-Search (<a href="help.psml?hkey=search-1">PortalU Search</a>) engine.
                     It allows to perfom fulltext-searches (<a
                         href="help.psml?hkey=search-1">PortalU Search</a>) on web-pages and database records.
@@ -95,7 +95,7 @@
                     <b>Maps:</b> A map-viewer allows to specify spatial queries and to 
                     visualize digital maps that were retrieved through PortalU Search.</p>
                 <p>
-                    <b>Themenseiten:</b> The PortalU Environmental Topics pages offer a catalog-like, theme-based 
+                    <b>Topics Pages:</b> The PortalU Environmental Topics pages offer a catalog-like, theme-based 
                     access to particularly interesting information and data. </p>
                 <p>
                     <b>News</b>: Environmental news are published "hot-off-the-presses" straight from the 
