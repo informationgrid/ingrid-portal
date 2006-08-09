@@ -66,7 +66,7 @@ $MESSAGES.setMsgParam('DOC')
             </p>
 			#if($rs.wms_url)
 			<p class="result_link">
-				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$rs.wms_url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
+				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$rs.wms_url" target="ingrid_wms" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
 			</p>				
 			#end
 			#if($rs.url)

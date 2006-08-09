@@ -60,6 +60,10 @@ if (xmlhttp) {
     xmlhttp.onreadystatechange = function () {};
     xmlhttp.send(null);
 }	
+
+  #* show window in foreground *#
+self.focus();
+
 </script>
 
   </head>
