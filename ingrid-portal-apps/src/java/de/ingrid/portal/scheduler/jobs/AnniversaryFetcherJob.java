@@ -40,7 +40,7 @@ public class AnniversaryFetcherJob implements Job {
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
-        
+
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
@@ -101,6 +101,10 @@ public class AnniversaryFetcherJob implements Job {
                             tx.commit();
                         }
                     }
+                }
+            } else {
+                if (log.isWarnEnabled()) {
+                    log.warn("!!! SNS query: NO Anniversaries found for date = " + queryDate + " !!!");
                 }
             }
             // remove old entries
