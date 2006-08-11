@@ -6,6 +6,8 @@
   />
   <title>SearchExtended Environment/Time/Constraint</title>
   <metadata name="title" xml:lang="de">Erweiterte Suche Umweltinformationen/Zeit/Zeiteinschraenkung</metadata>
+  <short-title>Environment/Time/Constraint</short-title>
+  <metadata name="short-title" xml:lang="de">Umweltinf./Zeit/Zeiteinschraenkung</metadata>
 
   <fragment id="search-ext-env-time-constraint-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">

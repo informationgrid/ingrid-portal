@@ -6,6 +6,8 @@
   />
   <title>Search Extended Research/Topic/Attributes</title>
   <metadata name="title" xml:lang="de">Erweiterte Suche Forschung/Thema/Attribute</metadata>
+  <short-title>Research/Topic/Attributes</short-title>
+  <metadata name="short-title" xml:lang="de">Forschung/Thema/Attribute</metadata>
 
   <fragment id="search-ext-res-topic-attributes-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
