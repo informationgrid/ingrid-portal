@@ -307,6 +307,14 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getAllIPlugs()
      */
     public PlugDescription[] getAllIPlugs() {
-        return bus.getAllIPlugs();
+        PlugDescription[] plugs = new PlugDescription[0];
+        try {
+            plugs = bus.getAllIPlugs();
+        } catch (Throwable t) {
+            if (log.isWarnEnabled()) {
+                log.warn("Problems fetching iPlugs from iBus !", t);
+            }            
+        }
+        return plugs;
     }
 }
