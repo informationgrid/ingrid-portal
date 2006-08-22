@@ -73,28 +73,28 @@ public class UtilsDB {
 
     /**
      * Convenient generic method for reading stuff from database.
-     * NOTICE: values are always reloaded from database if flag alwaysReloadDBData
-     * in our class is set to true. Otherwise we load the values once and return
-     * our cache !
+     * NOTICE: If passed cacheList is null, we always reload data from database.
+     * If not null we only reload if flag alwaysReloadDBData in our class
+     * is set to true. If flag is set false we just return cacheList. 
      * @param objClass
      * @param cacheList
      * @return
      */
-    private static List getValuesFromDB(Class objClass, List cacheList) {
+    public static List getValuesFromDB(Class objClass, List cacheList) {
         Session session = HibernateUtil.currentSession();
         return getValuesFromDB(session.createCriteria(objClass), session, cacheList, true);
     }
 
     /**
      * Convenient generic method for reading stuff from database.
-     * NOTICE: values are always reloaded from database if flag alwaysReloadDBData
-     * in our class is set to true. Otherwise we load the values once and return
-     * our cache !
+     * NOTICE: If passed cacheList is null, we always reload data from database.
+     * If not null we only reload if flag alwaysReloadDBData in our class
+     * is set to true. If flag is set false we just return cacheList. 
      * @param Criteria
      * @param cacheList
      * @return
      */
-    private static List getValuesFromDB(Criteria c, Session session, List cacheList, boolean closeSession) {
+    public static List getValuesFromDB(Criteria c, Session session, List cacheList, boolean closeSession) {
         // TODO: use hibernate caching
         Transaction tx = null;
         try {
@@ -203,8 +203,8 @@ public class UtilsDB {
         // NOTICE: assign list to our static variable, passed static variable may be null,
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
-        return getValuesFromDB(session.createCriteria(IngridProvider.class)
-                .addOrder(Order.asc("sortkeyPartner")).addOrder(Order.asc("name")), session, providers, true);
+        return getValuesFromDB(session.createCriteria(IngridProvider.class).addOrder(Order.asc("sortkeyPartner"))
+                .addOrder(Order.asc("name")), session, providers, true);
     }
 
     /**

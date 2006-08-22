@@ -1,90 +1,46 @@
-	  <form action="$renderResponse.createActionURL()" method="get" name="frmEditHelp" id="frmEditHelp">
-	  <div class="formbody">
 #set ($action = $renderResponse.createActionURL())
-	$action.setParameter('action','doCloseSimilar')
-        <h3>&nbsp;<a href="$action">Hilfe Inhalte</a></h3>
-        <span class="clearer"></span>
-        	  <div class="leftmargin">
-          	  <table>
-			  <tr>
-				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;&nbsp;<input id="chk_122" name="chk_122" value="1" type="checkbox" /></td>
-          	    <td>&nbsp;<strong>Header des Hilfeeintrages</strong></td>
-          	  </tr>
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_123" name="chk_123" value="1" type="checkbox" /><label for="chk_123">Header des Hilfe Subeintrages</label></td>
-          	  </tr>
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_123" name="chk_123" value="1" type="checkbox" /><label for="chk_123">Header des Hilfe Subeintrages</label></td>
-          	  </tr>
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<a href="#">Neuen Eintrag hinzufügen</a></td>
-          	  </tr>
-			  <tr>
-				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a>&nbsp;&nbsp;<input id="chk_122" name="chk_122" value="1" type="checkbox" /></td>
-          	    <td>&nbsp;<strong>Header des Hilfeeintrages</strong></td>
-          	  </tr>
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_123" name="chk_123" value="1" type="checkbox" /><label for="chk_123">Header des Hilfe Subeintrages</label></td>
-          	  </tr>
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_123" name="chk_123" value="1" type="checkbox" /><label for="chk_123">Header des Hilfe Subeintrages</label></td>
-          	  </tr>
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<a href="#">Neuen Eintrag hinzufügen</a></td>
-          	  </tr>
-          	  </table>
-
-        	  </div>
-      </div>
-	  <div class="formfooter">
-        <div align="right">
-          <input class="btn" type="submit" name="doNewHelpSection" value="neue Hilfe Sektion hinzufügen" />
-          &nbsp;&nbsp;&nbsp;
-		  <input class="btn" type="submit" name="doRemoveHelpSection" value="Hilfe Sektion(en) entfernen" />
-        </div>
-      </div>
-      </form>
-##
-##
-##
-###foreach($similarNode in $ps.similarRoot.getChildren())
-##	#set ($action = $renderResponse.createActionURL())
-##	$action.setParameter('nodeId',$similarNode.id)
-##	#if($similarNode.isOpen())
-##		$action.setParameter('action','doCloseNode')
-##			  <tr>
-##				<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="Icon Minus" /></a></td>
-##          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-##          	  </tr>
-##		#foreach($tokenNode in $similarNode.getChildren())
-##          	  <tr>
-##          	    <td></td>
-##          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
-##          	  </tr>
-##		#end
-##	#else
-##		$action.setParameter('action','doOpenNode')
-##          	  <tr>
-##          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="Icon Plus" /></a></td>
-##          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="Icon Ordner geschlossen" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-##          	  </tr>
-##	#end
-###end			  
-##          	  </table>
-##
-##        	  </div>
-##      </div>
-###if($ps.isSimilarOpen)
-##	  <div class="formfooter">
-##        <div align="right">
-##          <input class="btn" type="submit" value="Zur Suchanfrage hinzufügen" />
-##        </div>
-##      </div>
-###end
-##      </form>
+<form action="$action" method="get" name="frmContentRSS" id="frmContentRSS">
+	<div class="formbody">
+		<h2 class="nospace">RSS Pflege</h2>
+		<p>
+		<table cellpadding="0" cellspacing="0" border=1 width="100%">
+    		<tr>
+            		<td class="contentColumnHead"></td>
+#set ($colNames = ["id", "provider", "description", "url", "language", "categories"])
+#set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
+				#foreach ($colTitle in $colTitles)
+    				#set ($colLink = $renderResponse.createRenderURL())
+    				#set ($colIndex = $velocityCount - 1)
+    				$colLink.setParameter("sortColumn", $colNames.get($colIndex))
+            		<td class="contentColumnHead" onClick="window.location.href='$colLink'">$colTitle
+            		</td>
+				#end
+    		</tr>
+##set ($numRss = $rssSources.size())
+			#foreach ($rssRow in $rssSources)
+        		<tr>
+				#if ($velocityCount % 2 == 0)
+					#set ($rowstyle = "contentRowEven")
+				#else
+					#set ($rowstyle = "contentRowOdd")
+				#end   
+        			<td class="$rowstyle">
+						<input id="chk_$velocityCount" name="id" type="checkbox" value="$rssRow.Id" />
+        			</td>
+#set ($colValues = ["$rssRow.Id", "$rssRow.Provider", "$rssRow.Description", "$rssRow.Url", "$rssRow.Language", "$rssRow.Categories"])
+				#foreach ($colValue in $colValues)
+        			<td class="$rowstyle">
+						$colValue
+					</td>
+				#end
+        		</tr>
+			#end
+		</table>
+	</p>
+	</div>
+	<div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" name="doRefresh" value="Refresh" />
+		</div>
+	</div>
+</form>
