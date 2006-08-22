@@ -14,7 +14,6 @@ import javax.portlet.RenderResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -29,7 +28,7 @@ import de.ingrid.portal.om.IngridRSSSource;
  *
  * @author martin@wemove.com
  */
-public class ContentRSSPortlet extends GenericVelocityPortlet {
+public class ContentRSSPortlet extends ContentPortlet {
 
     private final static Log log = LogFactory.getLog(ContentRSSPortlet.class);
 
@@ -40,20 +39,14 @@ public class ContentRSSPortlet extends GenericVelocityPortlet {
         try {
             Context context = getContext(request);
 
-            // get data from request
-            String sortColumn = request.getParameter("sortColumn");
-            if (sortColumn == null) {
-                sortColumn = "provider";
-            }
-            String sortType = request.getParameter("sortType");
-            if (sortType == null) {
-                sortType = "asc";
-            }
+            // get data from request/session
+            String sortColumn = getSortColumn(request, "provider");
+            boolean ascendingOrder = isAscendingOrder(request);
 
             // get feeds from database
             Session session = HibernateUtil.currentSession();
             Criteria selectCrit = null;
-            if (sortType.equals("asc")) {
+            if (ascendingOrder) {
                 selectCrit = session.createCriteria(IngridRSSSource.class).addOrder(Order.asc(sortColumn));
             } else {
                 selectCrit = session.createCriteria(IngridRSSSource.class).addOrder(Order.desc(sortColumn));
