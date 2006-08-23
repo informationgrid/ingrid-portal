@@ -9,6 +9,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -121,7 +122,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     static protected ContentBrowserState getBrowserState(PortletRequest request) {
-        ContentBrowserState state = (ContentBrowserState) request.getPortletSession().getAttribute(KEY_BROWSER_STATE);
+        ContentBrowserState state = (ContentBrowserState) request.getPortletSession().getAttribute(KEY_BROWSER_STATE,
+                PortletSession.APPLICATION_SCOPE);
         if (state == null) {
             state = new ContentBrowserState();
             setBrowserState(request, state);
@@ -130,11 +132,11 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     static protected void setBrowserState(PortletRequest request, ContentBrowserState state) {
-        request.getPortletSession().setAttribute(KEY_BROWSER_STATE, state);
+        request.getPortletSession().setAttribute(KEY_BROWSER_STATE, state, PortletSession.APPLICATION_SCOPE);
     }
 
     static protected void clearBrowserState(PortletRequest request) {
-        request.getPortletSession().removeAttribute(KEY_BROWSER_STATE);
+        request.getPortletSession().removeAttribute(KEY_BROWSER_STATE, PortletSession.APPLICATION_SCOPE);
     }
 
 }
