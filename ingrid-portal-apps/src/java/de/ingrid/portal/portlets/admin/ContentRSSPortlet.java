@@ -64,7 +64,7 @@ public class ContentRSSPortlet extends ContentPortlet {
             context.put("rssSources", rssSources);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
-                log.error("Problems processing Content of RSS Feeds", ex);
+                log.error("Problems processing doView:", ex);
             }
         }
 

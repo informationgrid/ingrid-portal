@@ -39,8 +39,10 @@
 	</p>
 	</div>
 	<div class="formfooter">
-		<div align="right">
-			<input class="btn" type="submit" name="doRefresh" value="Refresh" />
-		</div>
+		<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
+		<span class="float_left">&nbsp;</span>
+		<input class="btn float_left" type="submit" name="doDelete" value="Löschen" />
+		<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
+		<span class="clearer"></span>
 	</div>
 </form>
