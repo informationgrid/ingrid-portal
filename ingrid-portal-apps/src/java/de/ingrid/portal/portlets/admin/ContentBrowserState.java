@@ -18,6 +18,10 @@ public class ContentBrowserState {
 
     protected final static String PARAM_SORT_COLUMN = "sortColumn";
 
+    public String getSortColumnName() {
+        return sortColumnName;
+    }
+
     public void setSortColumnName(String sortColumnName) {
         this.sortColumnName = sortColumnName;
     }

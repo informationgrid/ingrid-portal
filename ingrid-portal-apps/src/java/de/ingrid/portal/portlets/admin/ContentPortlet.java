@@ -3,10 +3,18 @@
  */
 package de.ingrid.portal.portlets.admin;
 
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 
 /**
  * This portlet is the abstract base class of all content portlets.
@@ -18,9 +26,39 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     //    private final static Log log = LogFactory.getLog(ContentPortlet.class);
 
+    // Parameters/Keys for Attributes in Request /Session
     protected final static String KEY_BROWSER_STATE = "browserState";
 
     protected final static String PARAM_SORT_COLUMN = "sortColumn";
+
+    protected final static String PARAM_PAGE = "currentPage";
+
+    // ACTIONS
+
+    protected static String PARAMV_ACTION_DO_REFRESH = "doRefresh";
+
+    public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
+        StringBuffer urlViewParams = new StringBuffer("?");
+
+        if (request.getParameter(PARAMV_ACTION_DO_REFRESH) != null) {
+            String urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_REFRESH);
+            Utils.appendURLParameter(urlViewParams, urlParam);
+        }
+
+        String currentPage = (String) request.getAttribute(PARAM_PAGE);
+        if (currentPage != null) {
+            response.sendRedirect(currentPage + urlViewParams);
+        }
+    }
+
+    static protected String getAction(PortletRequest request) {
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if (action == null) {
+            action = "";
+        }
+
+        return action;
+    }
 
     /**
      * Get the column to sort after.
@@ -30,17 +68,29 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @return
      */
     static protected String getSortColumn(RenderRequest request, String defaultValue) {
-        String newSortCol = request.getParameter(PARAM_SORT_COLUMN);
-        if (newSortCol == null) {
-            newSortCol = defaultValue;
+        ContentBrowserState state = getBrowserState(request);
+
+        String sortCol = null;
+        if (getAction(request).equals(PARAMV_ACTION_DO_REFRESH)) {
+            sortCol = state.getSortColumnName();
+        } else {
+            sortCol = request.getParameter(PARAM_SORT_COLUMN);
         }
 
-        ContentBrowserState state = getBrowserState(request);
-        state.setSortColumnName(newSortCol);
+        if (sortCol == null) {
+            sortCol = defaultValue;
+        }
 
-        return newSortCol;
+        state.setSortColumnName(sortCol);
+
+        return sortCol;
     }
 
+    /**
+     * Get Sort Order
+     * @param request
+     * @return true = ascending else descending
+     */
     static protected boolean isAscendingOrder(PortletRequest request) {
         ContentBrowserState state = getBrowserState(request);
 

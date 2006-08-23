@@ -32,6 +32,10 @@ public class ContentRSSPortlet extends ContentPortlet {
 
     private final static Log log = LogFactory.getLog(ContentRSSPortlet.class);
 
+    // PAGE
+
+    private final static String MY_PAGE = "/ingrid-portal/portal/administration/admin-content-rss.psml";
+
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
@@ -68,7 +72,7 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-        // TODO Auto-generated method stub
+        request.setAttribute(PARAM_PAGE, MY_PAGE);
         super.processAction(request, response);
     }
 
