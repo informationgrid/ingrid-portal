@@ -9,7 +9,7 @@
 #set ($colNames = ["id", "provider", "description", "url", "language", "categories"])
 #set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
 				#foreach ($colTitle in $colTitles)
-    				#set ($colLink = $renderResponse.createRenderURL())
+    				#set ($colLink = $renderResponse.createActionURL())
     				#set ($colIndex = $velocityCount - 1)
     				$colLink.setParameter("sortColumn", $colNames.get($colIndex))
             		<td class="contentColumnHead" onClick="window.location.href='$colLink'">$colTitle

@@ -33,6 +33,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected final static String PARAM_PAGE = "currentPage";
 
+    protected final static String PARAM_NOT_INITIAL = "notInitial";
+
     // ACTIONS
 
     protected static String PARAMV_ACTION_DO_REFRESH = "doRefresh";
@@ -40,8 +42,16 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         StringBuffer urlViewParams = new StringBuffer("?");
 
+        // append all params from passed request
+        urlViewParams.append(Utils.getURLParams(request));
+
+        // indicates call from same page for rendering
+        String urlParam = Utils.toURLParam(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
+        Utils.appendURLParameter(urlViewParams, urlParam);
+
+        // set action param for rendering
         if (request.getParameter(PARAMV_ACTION_DO_REFRESH) != null) {
-            String urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_REFRESH);
+            urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_REFRESH);
             Utils.appendURLParameter(urlViewParams, urlParam);
         }
 
@@ -58,6 +68,12 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         }
 
         return action;
+    }
+
+    static protected void handleState(RenderRequest request) {
+        if (request.getParameter(PARAM_NOT_INITIAL) == null) {
+            clearBrowserState(request);
+        }
     }
 
     /**
@@ -91,7 +107,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return true = ascending else descending
      */
-    static protected boolean isAscendingOrder(PortletRequest request) {
+    static protected boolean isAscendingOrder(RenderRequest request) {
         ContentBrowserState state = getBrowserState(request);
 
         // if no sort column in request, then keep the state

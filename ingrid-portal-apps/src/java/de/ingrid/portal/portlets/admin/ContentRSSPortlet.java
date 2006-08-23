@@ -43,6 +43,9 @@ public class ContentRSSPortlet extends ContentPortlet {
         try {
             Context context = getContext(request);
 
+            // reset state ? may be necessary when called from other page
+            handleState(request);
+            
             // get data from request/session
             String sortColumn = getSortColumn(request, "provider");
             boolean ascendingOrder = isAscendingOrder(request);
