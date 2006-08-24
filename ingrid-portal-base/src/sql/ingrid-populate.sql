@@ -149,6 +149,7 @@ INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (131, 'sh_npa', 'Nationalpark Schleswig-Holsteinisches Wattenmeer', 'http://www.wattenmeer-nationalpark.de/', 6, 16);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (132, 'th_tmlnu', 'Thüringer Ministerium für Landwirtschaft, Naturschutz und Umwelt', 'http://www.thueringen.de/de/tmlnu/', 1, 17);
 INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (133, 'th_tlug', 'Thüringer Landesanstalt für Umwelt und Geologie', 'http://www.tlug-jena.de/index.html', 2, 17);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (134, 'ni_geoMDK', 'geoMDK Niedersachsen', 'http://www.geomdk.niedersachsen.de/', 21, 10);
 
 INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (1, 'abf', 'abfall', 1);
 INSERT INTO ingrid_env_topic (id, form_value, query_value, sortkey) VALUES (2, 'alt', 'altlasten', 2);
