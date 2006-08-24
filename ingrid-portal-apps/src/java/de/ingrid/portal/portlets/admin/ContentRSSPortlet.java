@@ -17,7 +17,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -58,6 +57,7 @@ public class ContentRSSPortlet extends ContentPortlet {
             boolean doDefaultView = true;
             setDefaultViewPage(TEMPLATE_BROWSE);
 
+            // handle action
             String action = getAction(request);
 
             // EDIT
@@ -122,7 +122,6 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-
         // set page to show
         request.setAttribute(PARAM_PAGE, MY_PAGE);
 
@@ -133,76 +132,24 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doUpdate(javax.portlet.ActionRequest)
      */
     protected void doSave(ActionRequest request) {
-        Transaction tx = null;
-        try {
-            IngridRSSSource rssSource = getEntity(request);
-
-            // save it
-            Session session = HibernateUtil.currentSession();
-            tx = session.beginTransaction();
-            session.save(rssSource);
-            tx.commit();
-        } catch (Exception ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            if (log.isErrorEnabled()) {
-                log.error("Problems saving IngridRSSSource entry to Database:", ex);
-            }
-        } finally {
-            HibernateUtil.closeSession();
-        }
+        IngridRSSSource rssSource = getDBEntity(request);
+        UtilsDB.saveDBObject(rssSource);
     }
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
      */
     protected void doUpdate(ActionRequest request) {
-        Transaction tx = null;
-        try {
-            IngridRSSSource rssSource = getEntity(request);
-
-            // update it
-            Session session = HibernateUtil.currentSession();
-            tx = session.beginTransaction();
-            session.update(rssSource);
-            tx.commit();
-        } catch (Exception ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            if (log.isErrorEnabled()) {
-                log.error("Problems updating IngridRSSSource entry in Database:", ex);
-            }
-        } finally {
-            HibernateUtil.closeSession();
-        }
+        IngridRSSSource rssSource = getDBEntity(request);
+        UtilsDB.updateDBObject(rssSource);
     }
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDelete(javax.portlet.ActionRequest)
      */
     protected void doDelete(ActionRequest request) {
-        Transaction tx = null;
-        try {
-            IngridRSSSource rssSource = getEntity(request);
-
-            // delete it
-            Session session = HibernateUtil.currentSession();
-            tx = session.beginTransaction();
-            session.delete(rssSource);
-            tx.commit();
-        } catch (Exception ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            if (log.isErrorEnabled()) {
-                log.error("Problems deleting IngridRSSSource entry in Database:", ex);
-            }
-        } finally {
-            HibernateUtil.closeSession();
-        }
-
+        IngridRSSSource rssSource = getDBEntity(request);
+        UtilsDB.deleteDBObject(rssSource);
     }
 
     /**
@@ -210,7 +157,7 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @param request
      * @return
      */
-    protected IngridRSSSource getEntity(ActionRequest request) {
+    protected IngridRSSSource getDBEntity(ActionRequest request) {
         // set up entity
         IngridRSSSource rssSource = new IngridRSSSource();
         try {

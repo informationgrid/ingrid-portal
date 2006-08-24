@@ -378,4 +378,76 @@ public class UtilsDB {
         }
     }
 
+    /**
+     * Update given mapped entity (hibernate) in database.
+     * @param dbEntity
+     */
+    public static void updateDBObject(Object dbEntity) {
+        Transaction tx = null;
+        try {
+            // update it
+            Session session = HibernateUtil.currentSession();
+            tx = session.beginTransaction();
+            session.update(dbEntity);
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Problems updating DB entity, mapped entity=" + dbEntity, ex);
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+    }
+
+    /**
+     * Save NEW mapped entity (hibernate) to database.
+     * @param dbEntity
+     */
+    public static void saveDBObject(Object dbEntity) {
+        Transaction tx = null;
+        try {
+            // save it
+            Session session = HibernateUtil.currentSession();
+            tx = session.beginTransaction();
+            session.save(dbEntity);
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Problems saving DB entity, mapped entity=" + dbEntity, ex);
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+    }
+
+    /**
+     * Delete given mapped entity (hibernate) in database.
+     * @param dbEntity
+     */
+    public static void deleteDBObject(Object dbEntity) {
+        Transaction tx = null;
+        try {
+            // delete it
+            Session session = HibernateUtil.currentSession();
+            tx = session.beginTransaction();
+            session.delete(dbEntity);
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Problems deleting DB entity, mapped entity=" + dbEntity, ex);
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+    }
+
 }
