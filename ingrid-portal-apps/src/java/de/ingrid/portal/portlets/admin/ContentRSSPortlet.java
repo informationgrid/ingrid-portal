@@ -74,7 +74,7 @@ public class ContentRSSPortlet extends ContentPortlet {
 
                         // put to render context and switch view
                         context.put("mode", "edit");
-                        context.put("rssSource", rssSource.get(0));
+                        context.put("dbEntity", rssSource.get(0));
                         setDefaultViewPage(TEMPLATE_EDIT);
                         doDefaultView = false;
                     }
@@ -107,7 +107,7 @@ public class ContentRSSPortlet extends ContentPortlet {
                 List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
 
                 // put to render context
-                context.put("rssSources", rssSources);
+                context.put("dbEntities", rssSources);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {

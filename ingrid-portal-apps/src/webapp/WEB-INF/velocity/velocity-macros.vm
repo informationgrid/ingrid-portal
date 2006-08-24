@@ -88,13 +88,51 @@ $fieldLabel#end
 #end
 
 #macro (renderDBBrowserFooter)
-	<div class="formfooter">
-		<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
-		<span class="float_left">&nbsp;</span>
-		<input class="btn float_left" type="submit" name="doDelete" value="Löschen" />
-		<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
-		<span class="float_right">&nbsp;</span>
-		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
-		<span class="clearer"></span>
-	</div>
+<div class="formfooter">
+	<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
+	<span class="float_left">&nbsp;</span>
+	<input class="btn float_left" type="submit" name="doDelete" value="Löschen" />
+	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
+	<span class="float_right">&nbsp;</span>
+	<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
+	<span class="clearer"></span>
+</div>
+#end
+
+#macro (renderDBEditId $mode $id)
+<input type="hidden" name="id" value="$!{id}"/>
+	#if ($mode == 'edit')
+	<p>
+		<label class="float_left col2left_incr">Id</label><span>$!{id}</span>
+        <span class="clearer"></span>
+	</p>
+	#end
+#end
+
+#macro (renderDBEditTextArea $colName $colLabel $colValue)
+<p>
+    <label class="float_left col2left_incr" for="$colName">$colLabel</label>
+    <textarea class="float_left" cols="125" rows="2" name="$colName" id="$colName">$colValue</textarea>
+   	<span class="clearer"></span>
+</p>
+#end
+
+#macro (renderDBEditTextField $colName $colLabel $colValue)
+<p>
+	<label class="float_left col2left_incr" for="$colName">$colLabel</label>
+	<input class="float_left inputstyletext contentInput" type="text" id="$colName" name="$colName" value="$colValue"/>
+   	<span class="clearer"></span>
+</p>
+#end
+
+#macro (renderDBEditFooter $mode)
+<div class="formfooter" align="right">
+	#if ($mode == 'edit')
+		#set ($butAction = 'doUpdate')
+	#elseif ($mode == 'new')
+		#set ($butAction = 'doSave')
+	#end
+	<input class="btn" type="submit" name="$butAction" value="Speichern" />
+	<input class="btn" type="submit" name="doCancel" value="Abbrechen" />
+</div>
 #end

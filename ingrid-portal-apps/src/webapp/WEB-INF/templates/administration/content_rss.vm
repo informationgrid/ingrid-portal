@@ -1,19 +1,18 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody">
-		<h2 class="nospace">RSS Pflege</h2>
 		<p>
 		<table cellpadding="0" cellspacing="0" border=1 width="100%">
 #set ($colNames = ["id", "provider", "description", "url", "language", "categories"])
 #set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
 #renderDBBrowserHeader($colNames $colTitles)
-#foreach ($rssRow in $rssSources)
-	#set ($rowId = $rssRow.Id)
-	#set ($rowValues = [$rssRow.Provider, $rssRow.Description, $rssRow.Url, $rssRow.Language, $rssRow.Categories])
+#foreach ($dbEntity in $dbEntities)
+	#set ($rowId = $dbEntity.Id)
+	#set ($rowValues = [$dbEntity.Provider, $dbEntity.Description, $dbEntity.Url, $dbEntity.Language, $dbEntity.Categories])
 	#renderDBBrowserRow($rowId $rowValues)
 #end
 		</table>
-	</p>
+		</p>
 	</div>
 #renderDBBrowserFooter()
 </form>
