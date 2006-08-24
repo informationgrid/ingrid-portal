@@ -4,47 +4,16 @@
 		<h2 class="nospace">RSS Pflege</h2>
 		<p>
 		<table cellpadding="0" cellspacing="0" border=1 width="100%">
-    		<tr>
-            		<td class="contentColumnHead"></td>
 #set ($colNames = ["id", "provider", "description", "url", "language", "categories"])
 #set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
-				#foreach ($colTitle in $colTitles)
-    				#set ($colLink = $renderResponse.createActionURL())
-    				#set ($colIndex = $velocityCount - 1)
-    				$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-            		<td class="contentColumnHead" onClick="window.location.href='$colLink'">$colTitle
-            		</td>
-				#end
-    		</tr>
-##set ($numRss = $rssSources.size())
-			#foreach ($rssRow in $rssSources)
-        		<tr>
-				#if ($velocityCount % 2 == 0)
-					#set ($rowstyle = "contentRowEven")
-				#else
-					#set ($rowstyle = "contentRowOdd")
-				#end   
-        			<td class="$rowstyle">
-						<input id="chk_$velocityCount" name="id" type="checkbox" value="$rssRow.Id" />
-        			</td>
-#set ($colValues = ["$rssRow.Id", "$rssRow.Provider", "$rssRow.Description", "$rssRow.Url", "$rssRow.Language", "$rssRow.Categories"])
-				#foreach ($colValue in $colValues)
-        			<td class="$rowstyle">
-						$colValue
-					</td>
-				#end
-        		</tr>
-			#end
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($rssRow in $rssSources)
+	#set ($rowId = $rssRow.Id)
+	#set ($rowValues = [$rssRow.Provider, $rssRow.Description, $rssRow.Url, $rssRow.Language, $rssRow.Categories])
+	#renderDBBrowserRow($rowId $rowValues)
+#end
 		</table>
 	</p>
 	</div>
-	<div class="formfooter">
-		<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
-		<span class="float_left">&nbsp;</span>
-		<input class="btn float_left" type="submit" name="doDelete" value="Löschen" />
-		<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
-		<span class="float_right">&nbsp;</span>
-		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
-		<span class="clearer"></span>
-	</div>
+#renderDBBrowserFooter()
 </form>
