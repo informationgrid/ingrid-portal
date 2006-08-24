@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="get" name="frmContentRSS" id="frmContentRSS">
+<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody">
 		<h2 class="nospace">RSS Pflege</h2>
 		<p>
@@ -43,6 +43,8 @@
 		<span class="float_left">&nbsp;</span>
 		<input class="btn float_left" type="submit" name="doDelete" value="Löschen" />
 		<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
+		<span class="float_right">&nbsp;</span>
+		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
 		<span class="clearer"></span>
 	</div>
 </form>

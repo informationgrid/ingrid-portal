@@ -1,0 +1,42 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmEditRSS" id="frmEditRSS">
+	<div class="formbody">
+	#if ($mode == 'edit')
+		<h2 class="nospace">RSS Feed aktualisieren</h2>
+	#elseif ($mode == 'new')
+		<h2 class="nospace">Neuen RSS Feed anlegen</h2>
+	#end
+#set ($colNames = ["provider", "description", "url", "language", "categories"])
+#set ($colLabels = ["Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
+#set ($colValues = ["$!{rssSource.Provider}", "$!{rssSource.Description}", "$!{rssSource.Url}", "$!{rssSource.Language}", "$!{rssSource.Categories}"])
+   		<input type="hidden" name="id" value="$!{rssSource.Id}"/>
+   		#if ($mode == 'edit')
+       		<p>
+       			<label class="float_left col2left_incr">Id</label><span>$!{rssSource.Id}</span>
+            	<span class="clearer"></span>
+            </p>
+		#end
+		#foreach ($colName in $colNames)
+    		#set ($colIndex = $velocityCount - 1)
+       		<p>
+    		#if ($colName == 'description')
+    			<label class="float_left col2left_incr" for="$colName">$colLabels.get($colIndex)</label>
+    			<textarea class="float_left" cols="125" rows="2" name="$colName" id="$colName">$colValues.get($colIndex)</textarea>
+           	#else
+            	<label class="float_left col2left_incr" for="$colName">$colLabels.get($colIndex)</label>
+            	<input class="float_left inputstyletext contentInput" type="text" id="$colName" name="$colName" value="$colValues.get($colIndex)"/>
+          	#end   
+            	<span class="clearer"></span>
+            </p>
+		#end
+	</div>
+	<div class="formfooter" align="right">
+   		#if ($mode == 'edit')
+			#set ($butAction = 'doUpdate')
+		#elseif ($mode == 'new')
+			#set ($butAction = 'doSave')
+		#end
+		<input class="btn" type="submit" name="$butAction" value="Speichern" />
+		<input class="btn" type="submit" name="doCancel" value="Abbrechen" />
+	</div>
+</form>

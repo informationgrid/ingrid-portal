@@ -535,3 +535,5 @@ div.helpcontent li a { font-size:75%; }
 }
 .contentRowEven { background-color:#CCCCCC; color:black; }
 .contentRowOdd { background-color:#999999; color:white; }
+
+.contentInput { width:50em; }

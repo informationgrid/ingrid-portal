@@ -32,11 +32,14 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     // Attributes in Session
     protected final static String KEY_BROWSER_STATE = "browserState";
 
-    // Parameters in Request
+    // Common Parameters in Request
     protected final static String PARAM_SORT_COLUMN = "sortColumn";
 
-    protected final static String PARAM_PAGE = "currentPage";
+    protected final static String PARAM_ID = "id";
 
+    protected final static String PARAM_PAGE = "page";
+
+    /** indicates whether page is called from other page (then not set) or from own page */
     protected final static String PARAM_NOT_INITIAL = "notInitial";
 
     // ACTIONS
@@ -44,9 +47,13 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected static String PARAMV_ACTION_DO_EDIT = "doEdit";
 
-    protected static String PARAMV_ACTION_DO_DELETE = "doDelete";
+    protected static String PARAMV_ACTION_DO_NEW = "doNew";
 
-    protected static String PARAMV_ACTION_DO_SAVE = "doSave";
+    protected static String PARAMV_ACTION_DB_DO_SAVE = "doSave";
+
+    protected static String PARAMV_ACTION_DB_DO_UPDATE = "doUpdate";
+
+    protected static String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
 
     /**
      * Called from sub Portlets. Handles Actions and passes all Request Params then to render method.
@@ -59,42 +66,89 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             // append all params from passed request
             urlViewParams.append(Utils.getURLParams(request));
 
-            // indicates call from same page for rendering
+            // indicates call from same page
             String urlParam = Utils.toURLParam(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
             Utils.appendURLParameter(urlViewParams, urlParam);
 
             // handle ACTIONS and set action Request param for rendering
-
-            // REFRESH
             if (request.getParameter(PARAMV_ACTION_DO_REFRESH) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_REFRESH);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
-                // EDIT
+                // handled in render method
+
+            } else if (request.getParameter(PARAMV_ACTION_DO_NEW) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_NEW);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+
+                // handled in render method
+
             } else if (request.getParameter(PARAMV_ACTION_DO_EDIT) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
-                // DELETE
-            } else if (request.getParameter(PARAMV_ACTION_DO_DELETE) != null) {
-                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_DELETE);
+                // handled in render method
+
+            } else if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_SAVE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
-                // SAVE
-            } else if (request.getParameter(PARAMV_ACTION_DO_SAVE) != null) {
-                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_SAVE);
+                // call sub method
+                doSave(request);
+
+            } else if (request.getParameter(PARAMV_ACTION_DB_DO_UPDATE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_UPDATE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
+
+                // call sub method
+                doUpdate(request);
+
+            } else if (request.getParameter(PARAMV_ACTION_DB_DO_DELETE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_DELETE);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+
+                // call sub method
+                doDelete(request);
             }
 
             // redirect to render method WITH URL PARAMS
-            String currentPage = (String) request.getAttribute(PARAM_PAGE);
-            if (currentPage != null) {
-                response.sendRedirect(currentPage + urlViewParams);
+            String redirectPage = (String) request.getAttribute(PARAM_PAGE);
+            if (redirectPage != null) {
+                response.sendRedirect(redirectPage + urlViewParams);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing action:", ex);
             }
+        }
+    }
+
+    /**
+     * Abstract method for saving a new entity to DB. Must be implemented by subclass 
+     * @param request
+     */
+    abstract protected void doSave(ActionRequest request);
+
+    /**
+     * Abstract method for updating an entity in DB. Must be implemented by subclass 
+     * @param request
+     */
+    abstract protected void doUpdate(ActionRequest request);
+
+    /**
+     * Abstract method for deleteing entity in DB. Must be implemented by subclass 
+     * @param request
+     */
+    abstract protected void doDelete(ActionRequest request);
+
+    /**
+     * Handle browser state dependent from "page state". Resets browser state if page is
+     * entered from other page.
+     * @param request
+     */
+    static protected void handleState(RenderRequest request) {
+        if (request.getParameter(PARAM_NOT_INITIAL) == null) {
+            clearBrowserState(request);
         }
     }
 
@@ -113,23 +167,12 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Handle browser state dependent from "page state". Resets browser state if page is
-     * entered from other page.
-     * @param request
-     */
-    static protected void handleState(RenderRequest request) {
-        if (request.getParameter(PARAM_NOT_INITIAL) == null) {
-            clearBrowserState(request);
-        }
-    }
-
-    /**
      * Get the column to sort after.
      * @param request
      * @param defaultValue The default column
      * @return
      */
-    static protected String getSortColumn(RenderRequest request, String defaultValue) {
+    static protected String getSortColumn(PortletRequest request, String defaultValue) {
         ContentBrowserState state = getBrowserState(request);
 
         String sortCol = request.getParameter(PARAM_SORT_COLUMN);
@@ -150,7 +193,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return true = ascending else descending
      */
-    static protected boolean isAscendingOrder(RenderRequest request) {
+    static protected boolean isAscendingOrder(PortletRequest request) {
         ContentBrowserState state = getBrowserState(request);
 
         // if no sort column in request, then keep the state
@@ -161,6 +204,15 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
         // else process sort column
         return state.isAscendingOrder(sortCol);
+    }
+
+    /**
+     * Get row id.
+     * @param request
+     * @return
+     */
+    static protected String getId(PortletRequest request) {
+        return request.getParameter(PARAM_ID);
     }
 
     /**
