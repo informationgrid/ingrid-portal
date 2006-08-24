@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -148,8 +149,19 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDelete(javax.portlet.ActionRequest)
      */
     protected void doDelete(ActionRequest request) {
-        IngridRSSSource rssSource = getDBEntity(request);
-        UtilsDB.deleteDBObject(rssSource);
+        String[] ids = getIds(request);
+        if (ids == null) {
+            return;
+        }
+        IngridRSSSource[] dbEntities = (IngridRSSSource[]) Array.newInstance(IngridRSSSource.class, ids.length);
+        for (int i = 0; i < ids.length; i++) {
+            try {
+                dbEntities[i] = new IngridRSSSource();
+                dbEntities[i].setId(new Long(ids[i]));
+            } catch (Exception ex) {
+            }
+        }
+        UtilsDB.deleteDBObjects(dbEntities);
     }
 
     /**

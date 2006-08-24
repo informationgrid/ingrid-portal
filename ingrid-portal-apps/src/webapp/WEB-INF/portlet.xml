@@ -98,8 +98,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Content RSS Portlet</title>
-            <short-title>Content RSS Portlet</short-title>
+            <title>Pflege RSS Feeds</title>
+            <short-title>RSS Feeds</short-title>
         </portlet-info>        
     </portlet>
 

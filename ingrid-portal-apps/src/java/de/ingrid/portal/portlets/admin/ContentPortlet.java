@@ -207,12 +207,21 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Get row id.
+     * Get entity id. Notice: if multiple ids in request, first one is returned.
      * @param request
      * @return
      */
     static protected String getId(PortletRequest request) {
         return request.getParameter(PARAM_ID);
+    }
+
+    /**
+     * Get all ids in request.
+     * @param request
+     * @return
+     */
+    static protected String[] getIds(PortletRequest request) {
+        return request.getParameterValues(PARAM_ID);
     }
 
     /**

@@ -450,4 +450,29 @@ public class UtilsDB {
         }
     }
 
+    /**
+     * Delete multiple entities in ONE transaction. Rollback all deletions if something fails.
+     * @param dbEntities
+     */
+    public static void deleteDBObjects(Object[] dbEntities) {
+        Transaction tx = null;
+        try {
+            // delete it
+            Session session = HibernateUtil.currentSession();
+            tx = session.beginTransaction();
+            for (int i = 0; i < dbEntities.length; i++) {
+                session.delete(dbEntities[i]);
+            }
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Problems deleting DB entities, entities=" + dbEntities, ex);
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+    }
 }
