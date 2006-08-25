@@ -2,22 +2,26 @@
 <form action="$action" method="post" name="frmEditRSS" id="frmEditRSS">
 	<div class="formbody">
 	#if ($mode == 'edit')
-		<h2 class="nospace">RSS Feed aktualisieren</h2>
+		<h2 class="nospace">RSS Feed(s) aktualisieren</h2>
 	#elseif ($mode == 'new')
 		<h2 class="nospace">Neuen RSS Feed anlegen</h2>
 	#end
 #set ($colNames = ["provider", "description", "url", "language", "categories"])
 #set ($colLabels = ["Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
-#set ($colValues = ["$!{dbEntity.Provider}", "$!{dbEntity.Description}", "$!{dbEntity.Url}", "$!{dbEntity.Language}", "$!{dbEntity.Categories}"])
-		#renderDBEditId($mode $dbEntity.Id)
-		#foreach ($colName in $colNames)
-    		#set ($colIndex = $velocityCount - 1)
-    		#if ($colName == 'description')
-				#renderDBEditTextArea($colName $colLabels.get($colIndex) $colValues.get($colIndex))
-           	#else
-				#renderDBEditTextField($colName $colLabels.get($colIndex) $colValues.get($colIndex))
-          	#end   
-		#end
+#foreach ($dbEntity in $dbEntities)
+   	#set ($entityIndex = $velocityCount - 1)
+   	#set ($colValues = ["$!{dbEntity.Provider}", "$!{dbEntity.Description}", "$!{dbEntity.Url}", "$!{dbEntity.Language}", "$!{dbEntity.Categories}"])
+   	#renderDBEditId($mode $dbEntity.Id)
+   	#foreach ($colName in $colNames)
+       	#set ($colIndex = $velocityCount - 1)
+       	#if ($colName == 'description')
+   			#renderDBEditTextArea($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+       	#else
+   			#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+       	#end   
+	#end
+	</br>
+#end
 	</div>
 #renderDBEditFooter($mode)
 </form>

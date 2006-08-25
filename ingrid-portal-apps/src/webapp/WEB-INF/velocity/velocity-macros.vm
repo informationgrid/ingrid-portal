@@ -109,18 +109,18 @@ $fieldLabel#end
 	#end
 #end
 
-#macro (renderDBEditTextArea $colName $colLabel $colValue)
+#macro (renderDBEditTextArea  $index $colName $colLabel $colValue)
 <p>
-    <label class="float_left col2left_incr" for="$colName">$colLabel</label>
-    <textarea class="float_left" cols="125" rows="2" name="$colName" id="$colName">$colValue</textarea>
+    <label class="float_left col2left_incr" for="${colName}$!{index}">$colLabel</label>
+    <textarea class="float_left" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
    	<span class="clearer"></span>
 </p>
 #end
 
-#macro (renderDBEditTextField $colName $colLabel $colValue)
+#macro (renderDBEditTextField $index $colName $colLabel $colValue)
 <p>
-	<label class="float_left col2left_incr" for="$colName">$colLabel</label>
-	<input class="float_left inputstyletext contentInput" type="text" id="$colName" name="$colName" value="$colValue"/>
+	<label class="float_left col2left_incr" for="${colName}$!{index}">$colLabel</label>
+	<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
    	<span class="clearer"></span>
 </p>
 #end

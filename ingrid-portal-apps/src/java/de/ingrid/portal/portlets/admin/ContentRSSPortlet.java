@@ -65,17 +65,15 @@ public class ContentRSSPortlet extends ContentPortlet {
             if (action.equals(PARAMV_ACTION_DO_EDIT)) {
                 try {
                     // get data from database
-                    String id = getId(request);
-                    if (id != null) {
+                    Long[] ids = getIds(request);
+                    if (ids != null) {
                         Session session = HibernateUtil.currentSession();
-                        Criteria crit = session.createCriteria(IngridRSSSource.class).add(
-                                Restrictions.eq("id", new Long(id)));
-                        crit.setMaxResults(1);
-                        List rssSource = UtilsDB.getValuesFromDB(crit, session, null, true);
+                        Criteria crit = session.createCriteria(IngridRSSSource.class).add(Restrictions.in("id", ids));
+                        List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
 
                         // put to render context and switch view
-                        context.put("mode", "edit");
-                        context.put("dbEntity", rssSource.get(0));
+                        context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
+                        context.put(CONTEXT_ENTITIES, rssSources);
                         setDefaultViewPage(TEMPLATE_EDIT);
                         doDefaultView = false;
                     }
@@ -88,7 +86,8 @@ public class ContentRSSPortlet extends ContentPortlet {
 
             // NEW
             if (action.equals(PARAMV_ACTION_DO_NEW)) {
-                context.put("mode", "new");
+                context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
+                context.put(CONTEXT_ENTITIES, new IngridRSSSource[] { new IngridRSSSource() });
                 setDefaultViewPage(TEMPLATE_EDIT);
                 doDefaultView = false;
             }
@@ -108,7 +107,7 @@ public class ContentRSSPortlet extends ContentPortlet {
                 List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
 
                 // put to render context
-                context.put("dbEntities", rssSources);
+                context.put(CONTEXT_ENTITIES, rssSources);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -133,35 +132,24 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doUpdate(javax.portlet.ActionRequest)
      */
     protected void doSave(ActionRequest request) {
-        IngridRSSSource rssSource = getDBEntity(request);
-        UtilsDB.saveDBObject(rssSource);
+        IngridRSSSource[] entities = getDBEntities(request);
+        UtilsDB.saveDBObjects(entities);
     }
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
      */
     protected void doUpdate(ActionRequest request) {
-        IngridRSSSource rssSource = getDBEntity(request);
-        UtilsDB.updateDBObject(rssSource);
+        IngridRSSSource[] entities = getDBEntities(request);
+        UtilsDB.updateDBObjects(entities);
     }
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDelete(javax.portlet.ActionRequest)
      */
     protected void doDelete(ActionRequest request) {
-        String[] ids = getIds(request);
-        if (ids == null) {
-            return;
-        }
-        IngridRSSSource[] dbEntities = (IngridRSSSource[]) Array.newInstance(IngridRSSSource.class, ids.length);
-        for (int i = 0; i < ids.length; i++) {
-            try {
-                dbEntities[i] = new IngridRSSSource();
-                dbEntities[i].setId(new Long(ids[i]));
-            } catch (Exception ex) {
-            }
-        }
-        UtilsDB.deleteDBObjects(dbEntities);
+        IngridRSSSource[] entities = getDBEntities(request);
+        UtilsDB.deleteDBObjects(entities);
     }
 
     /**
@@ -169,19 +157,24 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @param request
      * @return
      */
-    protected IngridRSSSource getDBEntity(ActionRequest request) {
-        // set up entity
-        IngridRSSSource rssSource = new IngridRSSSource();
-        try {
-            rssSource.setId(new Long(getId(request)));
-        } catch (Exception ex) {
-        }
-        rssSource.setProvider(request.getParameter("provider"));
-        rssSource.setDescription(request.getParameter("description"));
-        rssSource.setUrl(request.getParameter("url"));
-        rssSource.setLanguage(request.getParameter("language"));
-        rssSource.setCategories(request.getParameter("categories"));
+    protected IngridRSSSource[] getDBEntities(ActionRequest request) {
+        IngridRSSSource[] dbEntities = null;
+        Long[] ids = getIds(request);
 
-        return rssSource;
+        // set up entity
+        if (ids != null) {
+            dbEntities = (IngridRSSSource[]) Array.newInstance(IngridRSSSource.class, ids.length);
+            for (int i = 0; i < ids.length; i++) {
+                dbEntities[i] = new IngridRSSSource();
+                dbEntities[i].setId(ids[i]);
+                dbEntities[i].setProvider(request.getParameter("provider" + i));
+                dbEntities[i].setDescription(request.getParameter("description" + i));
+                dbEntities[i].setUrl(request.getParameter("url" + i));
+                dbEntities[i].setLanguage(request.getParameter("language" + i));
+                dbEntities[i].setCategories(request.getParameter("categories" + i));
+            }
+        }
+
+        return dbEntities;
     }
 }

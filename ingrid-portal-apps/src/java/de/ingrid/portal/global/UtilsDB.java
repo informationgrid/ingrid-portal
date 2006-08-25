@@ -383,19 +383,32 @@ public class UtilsDB {
      * @param dbEntity
      */
     public static void updateDBObject(Object dbEntity) {
+        updateDBObjects(new Object[] { dbEntity });
+    }
+
+    /**
+     * Update multiple entities in ONE transaction. Rollback all updates if something fails.
+     * @param dbEntities
+     */
+    public static void updateDBObjects(Object[] dbEntities) {
+        if (dbEntities == null) {
+            return;
+        }
         Transaction tx = null;
         try {
             // update it
             Session session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
-            session.update(dbEntity);
+            for (int i = 0; i < dbEntities.length; i++) {
+                session.update(dbEntities[i]);
+            }
             tx.commit();
         } catch (Exception ex) {
             if (tx != null) {
                 tx.rollback();
             }
             if (log.isErrorEnabled()) {
-                log.error("Problems updating DB entity, mapped entity=" + dbEntity, ex);
+                log.error("Problems updating DB entity, mapped entities=" + dbEntities, ex);
             }
         } finally {
             HibernateUtil.closeSession();
@@ -407,19 +420,32 @@ public class UtilsDB {
      * @param dbEntity
      */
     public static void saveDBObject(Object dbEntity) {
+        saveDBObjects(new Object[] { dbEntity });
+    }
+
+    /**
+     * Save multiple entities in ONE transaction. Rollback all saves if something fails.
+     * @param dbEntities
+     */
+    public static void saveDBObjects(Object[] dbEntities) {
+        if (dbEntities == null) {
+            return;
+        }
         Transaction tx = null;
         try {
             // save it
             Session session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
-            session.save(dbEntity);
+            for (int i = 0; i < dbEntities.length; i++) {
+                session.save(dbEntities[i]);
+            }
             tx.commit();
         } catch (Exception ex) {
             if (tx != null) {
                 tx.rollback();
             }
             if (log.isErrorEnabled()) {
-                log.error("Problems saving DB entity, mapped entity=" + dbEntity, ex);
+                log.error("Problems saving DB entity, mapped entities=" + dbEntities, ex);
             }
         } finally {
             HibernateUtil.closeSession();
@@ -431,23 +457,7 @@ public class UtilsDB {
      * @param dbEntity
      */
     public static void deleteDBObject(Object dbEntity) {
-        Transaction tx = null;
-        try {
-            // delete it
-            Session session = HibernateUtil.currentSession();
-            tx = session.beginTransaction();
-            session.delete(dbEntity);
-            tx.commit();
-        } catch (Exception ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            if (log.isErrorEnabled()) {
-                log.error("Problems deleting DB entity, mapped entity=" + dbEntity, ex);
-            }
-        } finally {
-            HibernateUtil.closeSession();
-        }
+        deleteDBObjects(new Object[] { dbEntity });
     }
 
     /**
@@ -455,6 +465,9 @@ public class UtilsDB {
      * @param dbEntities
      */
     public static void deleteDBObjects(Object[] dbEntities) {
+        if (dbEntities == null) {
+            return;
+        }
         Transaction tx = null;
         try {
             // delete it

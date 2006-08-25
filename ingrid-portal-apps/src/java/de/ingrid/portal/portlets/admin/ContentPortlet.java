@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -28,6 +29,15 @@ import de.ingrid.portal.global.Utils;
 abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(ContentPortlet.class);
+
+    // Keys/Values for render context, used in subclass
+    protected final static String CONTEXT_MODE = "mode";
+
+    protected final static String CONTEXTV_MODE_NEW = "new";
+
+    protected final static String CONTEXTV_MODE_EDIT = "edit";
+
+    protected final static String CONTEXT_ENTITIES = "dbEntities";
 
     // Attributes in Session
     protected final static String KEY_BROWSER_STATE = "browserState";
@@ -211,8 +221,14 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected String getId(PortletRequest request) {
-        return request.getParameter(PARAM_ID);
+    static protected Long getId(PortletRequest request) {
+        Long longId = null;
+        try {
+            longId = new Long(request.getParameter(PARAM_ID));
+        } catch (Exception ex) {
+        }
+
+        return longId;
     }
 
     /**
@@ -220,8 +236,20 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected String[] getIds(PortletRequest request) {
-        return request.getParameterValues(PARAM_ID);
+    static protected Long[] getIds(PortletRequest request) {
+        Long[] longIds = null;
+        String[] strIds = request.getParameterValues(PARAM_ID);
+        if (strIds != null) {
+            longIds = (Long[]) Array.newInstance(Long.class, strIds.length);
+            for (int i = 0; i < strIds.length; i++) {
+                try {
+                    longIds[i] = new Long(strIds[i]);
+                } catch (Exception ex) {
+                }
+            }
+        }
+
+        return longIds;
     }
 
     /**
