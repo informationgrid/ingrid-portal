@@ -21,6 +21,7 @@
    			#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
        	#end   
 	#end
+	<p class="clearer"></p>
 	</br>
 #end
 	</div>

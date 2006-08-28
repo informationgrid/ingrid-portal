@@ -95,7 +95,7 @@ $fieldLabel#end
 	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
 	<span class="float_right">&nbsp;</span>
 	<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
-	<p class="clearer"></span>
+	<p class="clearer"></p>
 </div>
 #end
 
@@ -104,7 +104,7 @@ $fieldLabel#end
 	#if ($mode == 'edit')
 	<p>
 		<label class="float_left col2left_incr">Id</label><span>$!{id}</span>
-        <p class="clearer"></span>
+        <span class="clearer"></span>
 	</p>
 	#end
 #end
@@ -113,7 +113,7 @@ $fieldLabel#end
 <p>
     <label class="float_left col2left_incr" for="${colName}$!{index}">$colLabel</label>
     <textarea class="float_left" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
-   	<p class="clearer"></span>
+   	<span class="clearer"></span>
 </p>
 #end
 
@@ -121,7 +121,7 @@ $fieldLabel#end
 <p>
 	<label class="float_left col2left_incr" for="${colName}$!{index}">$colLabel</label>
 	<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
-   	<p class="clearer"></span>
+   	<span class="clearer"></span>
 </p>
 #end
 
