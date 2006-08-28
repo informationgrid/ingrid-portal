@@ -1,5 +1,7 @@
 package de.ingrid.portal.global;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -295,5 +297,84 @@ public class UtilsString {
         }
         return buf.toString();
     }
+
+    public static String getShortURLStr(String urlStr, int maxLength) {
+    
+            if (urlStr.length() <= maxLength)
+                return urlStr;
+    
+            URL url = null;
+            try {
+                url = new URL(urlStr);
+            } catch (MalformedURLException e) {
+                return "invalid url syntax";
+            }
+    
+            String path = url.getPath();
+            String host = url.getHost();
+            String protocoll = url.getProtocol();
+            String query = url.getQuery();
+            int port = url.getPort();
+    
+            StringBuffer resultB = new StringBuffer();
+            resultB.append(protocoll).append("://").append(host);
+            if (port > -1) {
+                resultB.append(":").append(port);
+            }
+    
+            int maxPathLength = maxLength - resultB.length();
+            if (maxPathLength <= 0) {
+                return resultB.substring(0, maxLength - 3).concat("...");
+            }
+            if (path.length() <= maxPathLength) {
+                resultB.append(path);
+            } else {
+                String[] pathElements = path.split("/");
+                // first path element is empty string !
+                if (pathElements != null && pathElements.length >= 2) {
+                    StringBuffer resultPath = new StringBuffer();
+                    // start from end !
+                    // don't take first path element into account, will be processed afterwards (index 1)
+                    boolean pathElementsProcessed = true;
+                    for (int i = pathElements.length - 1; i > 1; i--) {
+                        // 5 because of "/" which must be added and "/..." which should be addable !
+                        if (resultPath.length() + pathElements[i].length() + 5 <= maxPathLength) {
+                            resultPath.insert(0, "/").insert(1, pathElements[i]);
+                        } else {
+                            resultPath.insert(0, "/...");
+                            pathElementsProcessed = false;
+                            break;
+                        }
+                    }
+                    if (pathElementsProcessed) {
+                        // try to add missing one !
+                        if (resultPath.length() + pathElements[1].length() + 1 <= maxPathLength) {
+                            resultPath.insert(0, "/").insert(1, pathElements[1]);
+                        } else {
+                            resultPath.insert(0, "/...");
+                        }
+                    }
+                    resultB.append(resultPath);
+                }
+            }
+    
+            if (query != null) {
+                if (resultB.length() < maxLength) {
+                    if (query.length() + 1 < maxLength - resultB.length()) {
+                        resultB.append("?").append(query);
+                    } else {
+                        resultB.append("?").append(query.substring(0, maxLength - resultB.length() - 4)).append("...");
+                    }
+                } else {
+    //                resultB.append("?...");
+                }
+            }
+    
+            if (resultB.length() > maxLength) {
+                return resultB.substring(0, maxLength - 3).concat("...");
+            }
+    
+            return resultB.toString();
+        }
 
 }

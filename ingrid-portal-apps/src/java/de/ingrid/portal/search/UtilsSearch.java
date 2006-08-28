@@ -135,7 +135,7 @@ public class UtilsSearch {
             String value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_URL);
             if (value.length() > 0) {
                 result.put(Settings.RESULT_KEY_URL, value);
-                result.put(Settings.RESULT_KEY_URL_STR, Utils.getShortURLStr(value,
+                result.put(Settings.RESULT_KEY_URL_STR, UtilsString.getShortURLStr(value,
                         Settings.SEARCH_RANKED_MAX_ROW_LENGTH));
 
                 String urlLowerCase = value.toLowerCase();
