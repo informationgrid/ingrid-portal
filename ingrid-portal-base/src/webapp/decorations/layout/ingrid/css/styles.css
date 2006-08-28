@@ -529,11 +529,18 @@ div.helpcontent li a { font-size:75%; }
 
 .contentColumnHead {
   text-decoration:underline;
-  background-color:#6868AB;
-  cursor:hand;
+  background-color:#176798;
   color: white;
 }
-.contentRowEven { background-color:#CCCCCC; color:black; }
-.contentRowOdd { background-color:#999999; color:white; }
+
+a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited {
+  text-decoration:underline;
+  background-color:#176798;
+  color: white;
+}
+
+
+.contentRowEven { background-color: #F4F4F4; }
+.contentRowOdd { background-color: #E0E0E0; }
 
 .contentInput { width:50em; }
