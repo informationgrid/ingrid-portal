@@ -8,12 +8,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
@@ -47,7 +49,50 @@ public class DisplayTreeFactory {
         return root;
     }
 
-    public static DisplayTreeNode getTreeFromPartnerProvider() {
+    /**
+     * Get Partner/Provider Tree Structure FROM Data Base. Simply reads Partner/Providers from Database.
+     * @return
+     */
+    public static DisplayTreeNode getTreeFromPartnerProviderFromDB() {
+        DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
+        root.setType(DisplayTreeNode.ROOT);
+
+        LinkedHashMap partnerProviderMap = UtilsDB.getPartnerProviderMap();
+        Iterator keysPartnerMaps = partnerProviderMap.keySet().iterator();
+
+        // process all partners
+        while (keysPartnerMaps.hasNext()) {
+            LinkedHashMap partnerMap = (LinkedHashMap) partnerProviderMap.get(keysPartnerMaps.next());
+            IngridPartner partner = (IngridPartner) partnerMap.get("partner");
+
+            DisplayTreeNode partnerNode = new DisplayTreeNode(partner.getIdent(), partner.getName(), false);
+            partnerNode.setType(DisplayTreeNode.GENERIC);
+            partnerNode.setParent(root);
+            root.addChild(partnerNode);
+
+            LinkedHashMap providerMaps = (LinkedHashMap) partnerMap.get("providers");
+            Iterator keysProviderMaps = providerMaps.keySet().iterator();
+
+            // process all providers
+            while (keysProviderMaps.hasNext()) {
+                LinkedHashMap providerMap = (LinkedHashMap) providerMaps.get(keysProviderMaps.next());
+                IngridProvider provider = (IngridProvider) providerMap.get("provider");
+
+                DisplayTreeNode providerNode = new DisplayTreeNode(provider.getIdent(), provider.getName(), false);
+                providerNode.setType(DisplayTreeNode.GENERIC);
+                providerNode.setParent(partnerNode);
+                partnerNode.addChild(providerNode);
+            }
+        }
+
+        return root;
+    }
+
+    /**
+     * Get Partner/Provider Tree Structure FROM iBus. Providers are dynamically queried from iBus (iPlugs).
+     * @return
+     */
+    public static DisplayTreeNode getTreeFromPartnerProviderFromBus() {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         List partnerList = UtilsDB.getPartners();

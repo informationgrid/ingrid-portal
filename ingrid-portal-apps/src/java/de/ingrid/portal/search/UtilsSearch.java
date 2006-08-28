@@ -740,7 +740,7 @@ public class UtilsSearch {
         PortletSession session = request.getPortletSession();
         DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
         if (partnerRoot == null) {
-            partnerRoot = DisplayTreeFactory.getTreeFromPartnerProvider();
+            partnerRoot = DisplayTreeFactory.getTreeFromPartnerProviderFromDB();
             session.setAttribute("partnerRoot", partnerRoot);
         }
 

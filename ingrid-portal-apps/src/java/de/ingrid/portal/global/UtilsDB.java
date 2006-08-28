@@ -3,6 +3,9 @@
  */
 package de.ingrid.portal.global;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -487,5 +490,69 @@ public class UtilsDB {
         } finally {
             HibernateUtil.closeSession();
         }
+    }
+
+    /**
+     * Get Partner/Provider Map.
+     * The method builds a structure as follows:
+     * 
+     * partnerMap (partner Ident => partnerHashMap)
+     * 
+     * partnerHashMap ("partner" => IngridPartner) ("providers" =>
+     * providersHashMap)
+     * 
+     * providersHashMap (provider Ident => providerHashMap)
+     * 
+     * providerHashMap ("provider" => IngridProvider)
+     * 
+     * @return
+     */
+    public static LinkedHashMap getPartnerProviderMap() {
+        LinkedHashMap partnerMap = new LinkedHashMap();
+
+        List partnerList = UtilsDB.getPartners();
+        List providerList = UtilsDB.getProviders();
+
+        Iterator it = partnerList.iterator();
+        while (it.hasNext()) {
+            IngridPartner partner = (IngridPartner) it.next();
+            LinkedHashMap partnerHash = new LinkedHashMap();
+            partnerHash.put("partner", partner);
+            partnerMap.put(partner.getIdent(), partnerHash);
+            Iterator providerIterator = providerList.iterator();
+            while (providerIterator.hasNext()) {
+                IngridProvider provider = (IngridProvider) providerIterator.next();
+                String providerIdent = provider.getIdent();
+                String partnerIdent = "";
+                if (providerIdent != null && providerIdent.length() > 0) {
+                    partnerIdent = providerIdent.substring(0, providerIdent.indexOf("_"));
+                    // hack: "bund" is coded as "bu" in provider idents
+                    if (partnerIdent.equals("bu")) {
+                        partnerIdent = "bund";
+                    }
+                }
+                if (partnerIdent.equals(partner.getIdent())) {
+                    // check for providers
+                    if (!partnerHash.containsKey("providers")) {
+                        partnerHash.put("providers", new LinkedHashMap());
+                    }
+                    // get providers of the partner
+                    HashMap providersHash = (LinkedHashMap) partnerHash.get("providers");
+                    // LinkedHashMap for prvider with a provider id.
+                    if (!providersHash.containsKey(providerIdent)) {
+                        providersHash.put(providerIdent, new LinkedHashMap());
+                    }
+                    // get provider hash map
+                    LinkedHashMap providerHash = (LinkedHashMap) providersHash.get(providerIdent);
+                    // check for provider entry, create if not exists
+                    // initialise with iplug, which contains all information
+                    if (!providerHash.containsKey("provider")) {
+                        providerHash.put("provider", provider);
+                    }
+                }
+            }
+        }
+
+        return partnerMap;
     }
 }
