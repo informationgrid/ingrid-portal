@@ -9,6 +9,7 @@
 #set ($colNames = ["provider", "description", "url", "language", "categories"])
 #set ($colLabels = ["Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
 #foreach ($dbEntity in $dbEntities)
+	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)
    	#set ($colValues = ["$!{dbEntity.Provider}", "$!{dbEntity.Description}", "$!{dbEntity.Url}", "$!{dbEntity.Language}", "$!{dbEntity.Categories}"])
    	#renderDBEditId($mode $dbEntity.Id)

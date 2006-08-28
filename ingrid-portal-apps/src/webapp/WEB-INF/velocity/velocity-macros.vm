@@ -104,7 +104,7 @@ $fieldLabel#end
 	#if ($mode == 'edit')
 	<p>
 		<label class="float_left col2left_incr">Id</label><span>$!{id}</span>
-        <span class="clearer"></span>
+        <p class="clearer"></span>
 	</p>
 	#end
 #end
@@ -113,7 +113,7 @@ $fieldLabel#end
 <p>
     <label class="float_left col2left_incr" for="${colName}$!{index}">$colLabel</label>
     <textarea class="float_left" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
-   	<span class="clearer"></span>
+   	<p class="clearer"></span>
 </p>
 #end
 
@@ -121,7 +121,7 @@ $fieldLabel#end
 <p>
 	<label class="float_left col2left_incr" for="${colName}$!{index}">$colLabel</label>
 	<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
-   	<span class="clearer"></span>
+   	<p class="clearer"></span>
 </p>
 #end
 
