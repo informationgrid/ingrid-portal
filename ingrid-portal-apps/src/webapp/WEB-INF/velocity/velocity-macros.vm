@@ -65,7 +65,7 @@ $fieldLabel#end
 		#set ($colLink = $renderResponse.createActionURL())
 		#set ($colIndex = $velocityCount - 1)
 		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-   		<td class="contentColumnHead" onClick="window.location.href='$colLink'">$colTitle</td>
+   		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
 	#end
 </tr>
 #end
@@ -95,7 +95,7 @@ $fieldLabel#end
 	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
 	<span class="float_right">&nbsp;</span>
 	<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
-	<span class="clearer"></span>
+	<p class="clearer"></span>
 </div>
 #end
 

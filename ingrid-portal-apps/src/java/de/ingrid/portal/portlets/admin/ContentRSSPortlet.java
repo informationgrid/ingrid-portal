@@ -21,7 +21,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSSource;
 
@@ -108,12 +110,15 @@ public class ContentRSSPortlet extends ContentPortlet {
 
                 // put to render context
                 context.put(CONTEXT_ENTITIES, rssSources);
+                
+                context.put("UtilsString", new UtilsString());
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing doView:", ex);
             }
         }
+        
 
         super.doView(request, response);
     }

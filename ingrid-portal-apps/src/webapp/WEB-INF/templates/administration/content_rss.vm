@@ -2,13 +2,13 @@
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody">
 		<p>
-		<table cellpadding="0" cellspacing="0" border=1 width="100%">
+		<table class="border fullwidth">
 #set ($colNames = ["id", "provider", "description", "url", "language", "categories"])
 #set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
-	#set ($rowValues = [$dbEntity.Provider, $dbEntity.Description, $dbEntity.Url, $dbEntity.Language, $dbEntity.Categories])
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.Provider, 20, 20), $UtilsString.cutString($dbEntity.Description, 85, 85), $UtilsString.cutString($dbEntity.Url, 40, 40), $dbEntity.Language, $UtilsString.cutString($dbEntity.Categories, 20,20)])
 	#renderDBBrowserRow($rowId $rowValues)
 #end
 		</table>
