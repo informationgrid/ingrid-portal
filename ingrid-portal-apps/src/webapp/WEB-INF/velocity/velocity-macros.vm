@@ -58,6 +58,25 @@ $fieldLabel#end
 ## ------------------------------
 ## Administration macros
 ## ------------------------------
+#macro (renderDBBrowserNavigation $browser)
+<div class="formfooter" align="center">
+	<p>
+	#if ($browser.hasPreviousPage())
+    	<input class="btn" type="submit" name="doFirst" value="<<" />
+    	<span>&nbsp;</span>
+    	<input class="btn" type="submit" name="doPrev" value="<" />
+    	<span>&nbsp;</span>
+	#end
+    	<span>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() von $browser.getTotalNumRows() Einträgen</span>
+	#if ($browser.hasNextPage())
+    	<input class="btn" type="submit" name="doNext" value=">" />
+    	<span>&nbsp;</span>
+    	<input class="btn" type="submit" name="doLast" value=">>" />
+	#end
+	</p>
+</div>
+#end
+
 #macro (renderDBBrowserHeader $colNames $colTitles)
 <tr>
 	<td class="contentColumnHead"></td>

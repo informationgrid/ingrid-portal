@@ -1,6 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody">
+#renderDBBrowserNavigation($browser)
 		<p>
 		<table class="border fullwidth">
 #set ($colNames = ["id", "provider", "description", "url", "language", "categories"])

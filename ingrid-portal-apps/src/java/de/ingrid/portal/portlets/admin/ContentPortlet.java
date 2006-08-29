@@ -40,7 +40,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(ContentPortlet.class);
 
-    // Keys/Values for render context, used in subclass
+    // Keys/Values for velocity render context, used in subclass
     protected final static String CONTEXT_MODE = "mode";
 
     protected final static String CONTEXTV_MODE_NEW = "new";
@@ -48,6 +48,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected final static String CONTEXTV_MODE_EDIT = "edit";
 
     protected final static String CONTEXT_ENTITIES = "dbEntities";
+
+    protected final static String CONTEXT_BROWSER_STATE = "browser";
+
+    protected final static String CONTEXT_UTILS_STRING = "UtilsString";
 
     // Attributes in Session
     protected final static String KEY_BROWSER_STATE = "browserState";
@@ -62,6 +66,14 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     // ACTIONS
     protected static String PARAMV_ACTION_DO_REFRESH = "doRefresh";
+
+    protected static String PARAMV_ACTION_DO_FIRST_PAGE = "doFirst";
+
+    protected static String PARAMV_ACTION_DO_PREV_PAGE = "doPrev";
+
+    protected static String PARAMV_ACTION_DO_NEXT_PAGE = "doNext";
+
+    protected static String PARAMV_ACTION_DO_LAST_PAGE = "doLast";
 
     protected static String PARAMV_ACTION_DO_EDIT = "doEdit";
 
@@ -131,7 +143,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Default method for editing entities.
-     * NOTICE: Uses members "viewEdit" and "dbEntityClass".
+     * NOTICE: "viewEdit" and "dbEntityClass" have to be set in this class.
      * 
      * @param request
      * @return true: all is fine, false: something wrong
@@ -150,20 +162,20 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
                 context.put(CONTEXT_ENTITIES, rssSources);
                 setDefaultViewPage(viewEdit);
+                return true;
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems fetching entities to edit:", ex);
             }
-            return false;
         }
 
-        return true;
+        return false;
     }
 
     /**
      * Default method for adding new entity.
-     * NOTICE: Uses members "viewNew" and "dbEntityClass".
+     * NOTICE: "viewNew" and "dbEntityClass" have to be set in this class.
      * 
      * @param request
      * @return true: all is fine, false: something wrong
@@ -176,41 +188,48 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
             context.put(CONTEXT_ENTITIES, newEntity);
             setDefaultViewPage(viewNew);
+            return true;
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems adding new entity:", ex);
             }
-            return false;
         }
-
-        return true;
+        return false;
     }
 
     /**
      * Default method for doing default view (browsing).
-     * NOTICE: Uses members "viewDefault" and "dbEntityClass".
+     * NOTICE: "viewDefault" and "dbEntityClass" have to be set in this class.
      * 
      * @param request
      * @return true: all is fine, false: something wrong
      */
     protected boolean doDefaultView(RenderRequest request) {
         try {
+            // always refresh !
+            refreshBrowserState(request);
+            ContentBrowserState state = getBrowserState(request);
+
             // get data from database
             String sortColumn = getSortColumn(request, "id");
             boolean ascendingOrder = isAscendingOrder(request);
             Session session = HibernateUtil.currentSession();
-            Criteria crit = null;
+            Criteria crit = session.createCriteria(dbEntityClass);
             if (ascendingOrder) {
-                crit = session.createCriteria(dbEntityClass).addOrder(Order.asc(sortColumn));
+                crit.addOrder(Order.asc(sortColumn));
             } else {
-                crit = session.createCriteria(dbEntityClass).addOrder(Order.desc(sortColumn));
+                crit.addOrder(Order.desc(sortColumn));
             }
+            crit.setFirstResult(state.getFirstRow());
+            crit.setMaxResults(state.getMaxRows());
+
             List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
 
             // put to render context
             Context context = getContext(request);
             context.put(CONTEXT_ENTITIES, rssSources);
-            context.put("UtilsString", new UtilsString());
+            context.put(CONTEXT_UTILS_STRING, new UtilsString());
+            context.put(CONTEXT_BROWSER_STATE, state);
             setDefaultViewPage(viewDefault);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -256,6 +275,34 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
                 // handled in render method
 
+            } else if (request.getParameter(PARAMV_ACTION_DO_FIRST_PAGE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_FIRST_PAGE);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+
+                ContentBrowserState state = getBrowserState(request);
+                state.doFirstPage();
+
+            } else if (request.getParameter(PARAMV_ACTION_DO_PREV_PAGE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_PREV_PAGE);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+
+                ContentBrowserState state = getBrowserState(request);
+                state.doPreviousPage();
+
+            } else if (request.getParameter(PARAMV_ACTION_DO_NEXT_PAGE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_NEXT_PAGE);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+
+                ContentBrowserState state = getBrowserState(request);
+                state.doNextPage();
+
+            } else if (request.getParameter(PARAMV_ACTION_DO_LAST_PAGE) != null) {
+                urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_LAST_PAGE);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+
+                ContentBrowserState state = getBrowserState(request);
+                state.doLastPage();
+
             } else if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_SAVE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
@@ -276,6 +323,11 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
                 // call sub method
                 doDelete(request);
+
+            } else if (request.getParameter(PARAM_SORT_COLUMN) != null) {
+                // jump to first page when column sorting was clicked
+                ContentBrowserState state = getBrowserState(request);
+                state.doFirstPage();
             }
 
             // redirect to render method WITH URL PARAMS
@@ -463,4 +515,25 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         request.getPortletSession().removeAttribute(KEY_BROWSER_STATE, PortletSession.APPLICATION_SCOPE);
     }
 
+    /**
+     * Refresh Browser State (totalNumRows etc.)
+     * @param request
+     * @return
+     */
+    protected void refreshBrowserState(PortletRequest request) {
+        ContentBrowserState state = getBrowserState(request);
+
+        try {
+            Criteria crit = null;
+            Session session = HibernateUtil.currentSession();
+            crit = session.createCriteria(dbEntityClass);
+            List entities = UtilsDB.getValuesFromDB(crit, session, null, true);
+
+            state.setTotalNumRows(entities.size());
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems refreshing browser state:", ex);
+            }
+        }
+    }
 }
