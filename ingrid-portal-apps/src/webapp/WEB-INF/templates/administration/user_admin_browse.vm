@@ -1,0 +1,19 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+	<div class="formbody">
+#renderDBBrowserNavigation($browser)
+	<p>
+		<table class="border fullwidth">
+#set ($colNames = ["id", "firstName", "lastName", "email", "roles", "confirmed"])
+#set ($colTitles = ["Id", "Vorname", "Nachname", "Email", "Rollen", "Aktiv"])
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($dbEntity in $dbEntities)
+	#set ($rowId = $dbEntity.id)
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.confirmed])
+	#renderDBBrowserRow($rowId $rowValues)
+#end
+		</table>
+		</p>
+	</div>
+#renderDBBrowserFooter()
+</form>

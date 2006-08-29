@@ -62,26 +62,6 @@
     <!-- Admin Portlets         -->
     <!-- *********************** -->
 
-    <portlet id="EditHelpPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/administration/edit_help.vm</value>
-        </init-param>
-        <portlet-name>EditHelpPortlet</portlet-name>
-        <display-name>Edit Help Portlet</display-name>
-        <description>The Portlet displays the editor for the help content.</description>
-        <portlet-class>de.ingrid.portal.portlets.admin.EditHelpPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Edit Help Portlet</title>
-            <short-title>Edit Help Portlet</short-title>
-        </portlet-info>        
-    </portlet>
     <portlet id="ContentRSSPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -100,6 +80,27 @@
         <portlet-info>
             <title>Pflege RSS Feeds</title>
             <short-title>RSS Feeds</short-title>
+        </portlet-info>        
+    </portlet>
+
+    <portlet id="UserAdminPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/user_admin_browse.vm</value>
+        </init-param>
+        <portlet-name>UserAdminPortlet</portlet-name>
+        <display-name>UserAdminPortlet</display-name>
+        <description>The Portlet displays the user administration.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.UserAdminPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>User Manmagement</title>
+            <short-title>User Manmagement</short-title>
         </portlet-info>        
     </portlet>
 

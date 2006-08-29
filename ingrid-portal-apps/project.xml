@@ -157,6 +157,14 @@
 	    </dependency>
 	    <dependency>
 	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-portal-utils</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>false</war.bundle>
+	      </properties>
+	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
 	      <artifactId>ingrid-ibus</artifactId>
 	      <version>0.1-SNAPSHOT</version>
 		  <properties>
@@ -514,7 +522,11 @@
     <build> 
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
         <unitTestSourceDirectory>${basedir}/src/test</unitTestSourceDirectory>
-
+        <unitTest>
+            <includes>
+                <include>**/*Test.java</include>
+            </includes>
+        </unitTest>
         <resources>
           <resource>
             <directory>${basedir}/src/java</directory>
