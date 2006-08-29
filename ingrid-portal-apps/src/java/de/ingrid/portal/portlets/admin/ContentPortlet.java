@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -12,13 +13,22 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.velocity.context.Context;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.hibernate.HibernateUtil;
 
 /**
  * This portlet is the abstract base class of all content portlets.
@@ -47,8 +57,6 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected final static String PARAM_ID = "id";
 
-    protected final static String PARAM_PAGE = "page";
-
     /** indicates whether page is called from other page (then not set) or from own page */
     protected final static String PARAM_NOT_INITIAL = "notInitial";
 
@@ -64,6 +72,155 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected static String PARAMV_ACTION_DB_DO_UPDATE = "doUpdate";
 
     protected static String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
+
+    // Data to set in Subclasses
+    // -------------------------
+
+    /** The PSML page to redirect from action to */
+    protected String psmlPage = null;
+
+    /** The view template for default viewing */
+    protected String viewDefault = null;
+
+    /** The view template for editing */
+    protected String viewEdit = null;
+
+    /** The view template for adding new entity */
+    protected String viewNew = null;
+
+    /** The Hibernate Mapping class of the database entity */
+    protected Class dbEntityClass = null;
+
+    /**
+     * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+     */
+    public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        try {
+            // reset state ? may be necessary on initial call (e.g. called from other page)
+            handleState(request);
+
+            // default view
+            boolean doDefaultView = true;
+            setDefaultViewPage(viewDefault);
+
+            // handle action
+            String action = getAction(request);
+
+            // EDIT
+            if (action.equals(PARAMV_ACTION_DO_EDIT)) {
+                doDefaultView = !doEdit(request);
+            }
+
+            // NEW
+            if (action.equals(PARAMV_ACTION_DO_NEW)) {
+                doDefaultView = !doNew(request);
+            }
+
+            // REFRESH, DELETE, SAVE
+            if (doDefaultView) {
+                doDefaultView(request);
+            }
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems processing doView:", ex);
+            }
+        }
+
+        super.doView(request, response);
+    }
+
+    /**
+     * Default method for editing entities.
+     * NOTICE: Uses members "viewEdit" and "dbEntityClass".
+     * 
+     * @param request
+     * @return true: all is fine, false: something wrong
+     */
+    protected boolean doEdit(RenderRequest request) {
+        try {
+            // get data from database
+            Long[] ids = getIds(request);
+            if (ids != null) {
+                Session session = HibernateUtil.currentSession();
+                Criteria crit = session.createCriteria(dbEntityClass).add(Restrictions.in("id", ids));
+                List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
+
+                // put to render context and switch view
+                Context context = getContext(request);
+                context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
+                context.put(CONTEXT_ENTITIES, rssSources);
+                setDefaultViewPage(viewEdit);
+            }
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems fetching entities to edit:", ex);
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Default method for adding new entity.
+     * NOTICE: Uses members "viewNew" and "dbEntityClass".
+     * 
+     * @param request
+     * @return true: all is fine, false: something wrong
+     */
+    protected boolean doNew(RenderRequest request) {
+        try {
+            Object[] newEntity = { dbEntityClass.newInstance() };
+
+            Context context = getContext(request);
+            context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
+            context.put(CONTEXT_ENTITIES, newEntity);
+            setDefaultViewPage(viewNew);
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems adding new entity:", ex);
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Default method for doing default view (browsing).
+     * NOTICE: Uses members "viewDefault" and "dbEntityClass".
+     * 
+     * @param request
+     * @return true: all is fine, false: something wrong
+     */
+    protected boolean doDefaultView(RenderRequest request) {
+        try {
+            // get data from database
+            String sortColumn = getSortColumn(request, "id");
+            boolean ascendingOrder = isAscendingOrder(request);
+            Session session = HibernateUtil.currentSession();
+            Criteria crit = null;
+            if (ascendingOrder) {
+                crit = session.createCriteria(dbEntityClass).addOrder(Order.asc(sortColumn));
+            } else {
+                crit = session.createCriteria(dbEntityClass).addOrder(Order.desc(sortColumn));
+            }
+            List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
+
+            // put to render context
+            Context context = getContext(request);
+            context.put(CONTEXT_ENTITIES, rssSources);
+            context.put("UtilsString", new UtilsString());
+            setDefaultViewPage(viewDefault);
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems processing default view:", ex);
+            }
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Called from sub Portlets. Handles Actions and passes all Request Params then to render method.
@@ -122,9 +279,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             }
 
             // redirect to render method WITH URL PARAMS
-            String redirectPage = (String) request.getAttribute(PARAM_PAGE);
-            if (redirectPage != null) {
-                response.sendRedirect(redirectPage + urlViewParams);
+            if (psmlPage != null) {
+                response.sendRedirect(psmlPage + urlViewParams);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -134,22 +290,42 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Abstract method for saving a new entity to DB. Must be implemented by subclass 
+     * Abstract method for getting the specific Database Entities from request.
+     * Must be implemented in subclass 
      * @param request
+     * @return
      */
-    abstract protected void doSave(ActionRequest request);
+    abstract protected Object[] getDBEntities(ActionRequest request);
 
     /**
-     * Abstract method for updating an entity in DB. Must be implemented by subclass 
+     * Default method for saving entities in DB.
+     * Entities are extracted from request via getDBEntities()
      * @param request
      */
-    abstract protected void doUpdate(ActionRequest request);
+    protected void doSave(ActionRequest request) {
+        Object[] entities = getDBEntities(request);
+        UtilsDB.saveDBObjects(entities);
+    }
 
     /**
-     * Abstract method for deleteing entity in DB. Must be implemented by subclass 
+     * Default method for updating entities in DB.
+     * Entities are extracted from request via getDBEntities()
      * @param request
      */
-    abstract protected void doDelete(ActionRequest request);
+    protected void doUpdate(ActionRequest request) {
+        Object[] entities = getDBEntities(request);
+        UtilsDB.updateDBObjects(entities);
+    }
+
+    /**
+     * Default method for deleting entities in DB.
+     * Entities are extracted from request via getDBEntities()
+     * @param request
+     */
+    protected void doDelete(ActionRequest request) {
+        Object[] entities = getDBEntities(request);
+        UtilsDB.deleteDBObjects(entities);
+    }
 
     /**
      * Handle browser state dependent from "page state". Resets browser state if page is
