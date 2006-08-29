@@ -56,6 +56,14 @@
             <war.bundle>true</war.bundle>
         </properties>
     </dependency>
+    <dependency>
+      <groupId>ingrid</groupId>
+      <artifactId>ingrid-portal-utils</artifactId>
+      <version>0.1-SNAPSHOT</version>
+	  <properties>
+        <war.bundle>false</war.bundle>
+      </properties>
+    </dependency>
 
 	</dependencies>
     <build>
@@ -66,6 +74,14 @@
                 <include>**/*Test.java</include>
             </includes>
         </unitTest>
+        <resources>
+          <resource>
+            <directory>${basedir}/src/java</directory>
+              <excludes>
+                <exclude>**/*.java</exclude>
+              </excludes>
+          </resource>
+        </resources>
     </build>
 	
 </project>

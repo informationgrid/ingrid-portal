@@ -15,17 +15,17 @@
 	<classpathentry sourcepath="/JETSPEED_COMPONENTS_SRC" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-rdbms-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-prefs-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-search-2.1-dev.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-security-2.1-dev.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-registry-2.1-dev.jar"/>
+	<classpathentry sourcepath="/JETSPEED_SRC" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-security-2.1-dev.jar"/>
+	<classpathentry sourcepath="/JETSPEED_SRC" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-registry-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-id-generator-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-file-cache-2.1-dev.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-api-2.1-dev.jar"/>
+	<classpathentry sourcepath="/JETSPEED_SRC" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-api-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-commons-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-locator-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-capability-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-profiler-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-page-manager-2.1-dev.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-portal-site-2.1-dev.jar"/>
+	<classpathentry sourcepath="/JETSPEED_SRC" kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-portal-site-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-portlet-factory-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-sso-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-statistics-2.1-dev.jar"/>
@@ -77,5 +77,6 @@
 	<classpathentry kind="var" path="MAVEN_REPO/directory/jars/apacheds-main-0.9.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/javamail/jars/javamail-1.3.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/activation/jars/activation-1.0.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-portal-utils-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal/WEB-INF/classes"/>
 </classpath>
