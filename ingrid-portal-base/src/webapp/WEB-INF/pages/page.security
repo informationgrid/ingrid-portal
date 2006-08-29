@@ -40,4 +40,19 @@
     </security-constraint>
   </security-constraints-def>
 
+  <!-- define portalu specific constraints -->
+  <security-constraints-def name="admin-portal">
+    <security-constraint>
+      <roles>admin-portal</roles>
+      <permissions>view, edit</permissions>
+    </security-constraint>
+  </security-constraints-def>
+
+  <security-constraints-def name="admin-partner">
+    <security-constraint>
+      <roles>admin-partner</roles>
+      <permissions>view, edit</permissions>
+    </security-constraint>
+  </security-constraints-def>
+
 </page-security>

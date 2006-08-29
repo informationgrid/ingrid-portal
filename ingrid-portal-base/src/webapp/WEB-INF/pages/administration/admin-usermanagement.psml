@@ -7,22 +7,15 @@
   <title>Benutzerverwaltung</title>
   <metadata name="title" xml:lang="en">User Management</metadata>
 
-  <fragment id="admin-usermanagement" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::UserBrowserPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="admin-usermanagement-2" type="portlet" name="ingrid-portal-apps::UserDetailsPortlet">
-      <property layout="TwoColumns" name="row" value="2" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="admin-usermanagement-3" type="portlet" name="j2-admin::LoginPortlet">
-      <property layout="TwoColumns" name="row" value="3" />
-      <property layout="TwoColumns" name="column" value="0" />
+  <fragment id="admin-usermanagement" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::UserAdminPortlet">
+      <property layout="OneColumn" name="row" value="0" />
     </fragment>
   </fragment>
 
   <security-constraints>
-    <security-constraints-ref>public-view</security-constraints-ref>
+    <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-partner</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
   </security-constraints>
 </page>

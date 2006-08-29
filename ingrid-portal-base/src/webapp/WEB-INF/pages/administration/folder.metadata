@@ -6,8 +6,10 @@
     <options>/administration/admin-usermanagement.psml</options>
     <options>/administration/admin-content-rss.psml</options>
   </menu>
-
+  
   <security-constraints>
     <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
+    <security-constraints-ref>admin-partner</security-constraints-ref>
   </security-constraints>
 </folder>
