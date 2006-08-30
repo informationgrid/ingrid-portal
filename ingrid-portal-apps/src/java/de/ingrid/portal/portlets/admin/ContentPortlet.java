@@ -151,7 +151,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected boolean doEdit(RenderRequest request) {
         try {
             // get data from database
-            String[] ids = getIds(request);
+            Long[] ids = convertIds(getIds(request));
             if (ids != null) {
                 Session session = HibernateUtil.currentSession();
                 Criteria crit = session.createCriteria(dbEntityClass).add(Restrictions.in("id", ids));
@@ -445,21 +445,6 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Get entity id. Notice: if multiple ids in request, first one is returned.
-     * @param request
-     * @return
-     */
-    static protected Long getId(PortletRequest request) {
-        Long longId = null;
-        try {
-            longId = new Long(request.getParameter(PARAM_ID));
-        } catch (Exception ex) {
-        }
-
-        return longId;
-    }
-
-    /**
      * Get all ids in request.
      * @param request
      * @return
@@ -467,6 +452,26 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     static protected String[] getIds(PortletRequest request) {
         String[] strIds = request.getParameterValues(PARAM_ID);
         return strIds;
+    }
+
+    /**
+     * Convert Ids from String to Long.
+     * @param strIds
+     * @return
+     */
+    static protected Long[] convertIds(String[] strIds) {
+        Long[] longIds = null;
+        if (strIds != null) {
+            longIds = (Long[]) Array.newInstance(Long.class, strIds.length);
+            for (int i = 0; i < strIds.length; i++) {
+                try {
+                    longIds[i] = new Long(strIds[i]);
+                } catch (Exception ex) {
+                }
+            }
+        }
+
+        return longIds;
     }
 
     /**
