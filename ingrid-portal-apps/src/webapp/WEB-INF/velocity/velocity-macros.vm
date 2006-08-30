@@ -112,7 +112,7 @@ $fieldLabel#end
 <div class="formfooter">
 	<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
 	<span class="float_left">&nbsp;</span>
-	<input class="btn float_left" type="submit" name="doDelete" value="Löschen" />
+	<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
 	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
 	<span class="float_right">&nbsp;</span>
 	<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
