@@ -24,6 +24,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -108,6 +109,11 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         try {
+            // add localization recources to the context
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                    request.getLocale()));
+            getContext(request).put("MESSAGES", messages);
+
             // reset state ? may be necessary on initial call (e.g. called from other page)
             handleState(request);
 

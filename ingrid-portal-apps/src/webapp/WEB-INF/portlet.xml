@@ -83,16 +83,16 @@
         </portlet-info>        
     </portlet>
 
-    <portlet id="UserAdminPortlet">
+    <portlet id="AdminUserPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/administration/user_admin_browse.vm</value>
+            <value>/WEB-INF/templates/administration/admin_user_browser.vm</value>
         </init-param>
-        <portlet-name>UserAdminPortlet</portlet-name>
-        <display-name>UserAdminPortlet</display-name>
+        <portlet-name>AdminUserPortlet</portlet-name>
+        <display-name>AdminUserPortlet</display-name>
         <description>The Portlet displays the user administration.</description>
-        <portlet-class>de.ingrid.portal.portlets.admin.UserAdminPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminUserPortlet</portlet-class>
         <expiration-cache>-1</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -101,7 +101,8 @@
         <portlet-info>
             <title>User Manmagement</title>
             <short-title>User Manmagement</short-title>
-        </portlet-info>        
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
 

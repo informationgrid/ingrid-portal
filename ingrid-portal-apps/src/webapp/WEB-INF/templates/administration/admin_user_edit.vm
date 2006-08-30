@@ -1,0 +1,214 @@
+#set ($action = $renderResponse.createActionURL())
+#if(!$tab)#set($tab = "1")#end
+<div class="tabs">
+	<ul>			
+$action.setParameter('action','doChangeTab')
+#if($tab=='1')
+		<li><a class="selected">Allgemeine Daten</a></li>
+#else
+$action.setParameter('tab','1')
+$action.setParameter('id',$actionForm.getInput("login"))
+        <li><a href="$action">Allgemeine Daten</a></li>
+#end
+#if($tab=='2')
+		<li><a class="selected">Rechte</a></li>
+#else
+$action.setParameter('tab','2')
+$action.setParameter('id',$actionForm.getInput("login"))
+        <li><a href="$action">Rechte</a></li>
+#end
+     </ul>
+	 <br class="clearer" />
+</div>
+
+
+<form action="$action" method="post" name="frmEditRSS" id="frmEditRSS">
+	<input type="hidden" name="tab" value="${tab}"/>
+	<div class="formbody">
+	#if ($mode == 'edit')
+		<h2 class="nospace">Benutzer aktualisieren</h2>
+	#elseif ($mode == 'new')
+		<h2 class="nospace">Neuen Benutzer anlegen</h2>
+	#end
+#foreach ($dbEntity in $dbEntities)
+	<h3>* Pflichtfelder</h3>
+#if($tab=='1')
+	<p>
+		<label class="float_left col2left alignleft" for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
+		<select class="float_left inputstyle" name="salutation" id="salutation" size="1">
+			<option value="0" #getSelected('salutation' '0')>---</option>
+			<option value="1" #getSelected('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
+			<option value="2" #getSelected('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
+			<option value="3" #getSelected('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
+			<option value="4" #getSelected('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
+		</select>
+		<p class="clearer"></p>
+	</p>  
+	<p>
+		<label class="float_left col2left alignleft" for="firstname">#displayFieldLabel('firstname' $MESSAGES.getString('account.edit.label.firstname'))*</label>
+		<input class="float_left col2right inputstyletext" type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" />
+		<p class="clearer"></p>    			  
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="lastname">#displayFieldLabel('lastname' $MESSAGES.getString('account.edit.label.lastname'))*</label>
+		<input class="float_left col2right inputstyletext" type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" />
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="email">#displayFieldLabel('email' $MESSAGES.getString('account.edit.label.email'))*</label>
+		<input class="float_left col2right inputstyletext" type="text" id="email" name="email" value="#getFieldValue('email')" />
+		<p class="clearer"></p>
+	</p>
+	<div class="line_form"><hr /></div>
+#if ($formType == 'edit')
+	<p>
+		<label class="float_left col2left alignleft" for="login">#displayFieldLabel('password_old' $MESSAGES.getString('account.edit.label.password_old'))*</label>
+		<input class="float_left col2right inputstyletext" type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" />
+		<p class="clearer"></p>
+	</p>
+	<div class="line_form"><hr /></div>
+	<p>
+		<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password_new' $MESSAGES.getString('account.edit.label.password_new'))*</label>
+		<input class="float_left col2right inputstyletext" type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" />
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.edit.label.password_new_confirm'))*</label>
+		<input class="float_left col2right inputstyletext" type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" />
+		<p class="clearer"></p>
+	</p>
+#elseif($formType == 'create')
+	<p>
+		<label class="float_left col2left alignleft" for="login">#displayFieldLabel('login' $MESSAGES.getString('account.create.label.username'))*</label>
+		<input class="float_left col2right inputstyletext" type="text" id="login" name="login" value="#getFieldValue('login')" />
+		<p class="clearer"></p>
+	</p>
+	<div class="line_form"><hr /></div>
+	<p>
+		<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password' $MESSAGES.getString('account.create.label.password'))*</label>
+		<input class="float_left col2right inputstyletext" type="password" id="password" name="password" value="#getFieldValue('password')" />
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_confirm' $MESSAGES.getString('account.create.label.password_confirm'))*</label>
+		<input class="float_left col2right inputstyletext" type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" />
+		<p class="clearer"></p>
+	</p>
+#end
+		<div class="line_form"><hr /></div>
+	<h3>$MESSAGES.getString('account.edit.address.information')</h3>
+	<p>
+		<label class="float_left col2left alignleft" for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street'))</label>
+		<input class="float_left col2right inputstyletext" type="text" id="street" name="street" value="#getFieldValue('street')" />
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode'))</label>
+		<input class="float_left col2right inputstyletext" type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city'))</label>
+		<input class="float_left col2right inputstyletext" type="text" id="city" name="city" value="#getFieldValue('city')" />
+		<p class="clearer"></p>
+	</p>
+	<div class="line_form"><hr /></div>
+	<p>
+		<label class="float_left col2left alignleft" for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention'))</label>
+		<input class="float_left col2right inputstyletext" type="text" id="attention" name="attention" value="#getFieldValue('attention')" />
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age'))</label>
+		<select class="float_left inputstyle" name="age" size="1" id="age">
+			<option value="0" #getSelected('age' '0')>---</option>
+			<option value="1" #getSelected('age' '1')>&lt; 20</option>
+			<option value="2" #getSelected('age' '2')>20 - 30</option>
+			<option value="3" #getSelected('age' '3')>30 - 40</option>
+			<option value="4" #getSelected('age' '4')>40 - 50</option>
+			<option value="5" #getSelected('age' '5')>60 - 70</option>
+			<option value="6" #getSelected('age' '6')>&gt; 70</option>
+		</select>
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest'))</label>
+		<select class="float_left inputstyle" name="interest" id="interest" size="1">
+			<option value="0" #getSelected('interest' '0')>---</option>
+			<option value="1" #getSelected('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
+			<option value="2" #getSelected('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
+		</select>
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
+		<select class="float_left inputstyle" size="1" id="profession" name="profession">
+			<option value="0" #getSelected('profession' '0')>---</option>
+			<option value="1" #getSelected('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
+			<option value="2" #getSelected('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
+			<option value="3" #getSelected('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
+			<option value="4" #getSelected('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
+			<option value="5" #getSelected('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
+			<option value="6" #getSelected('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
+			<option value="7" #getSelected('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
+			<option value="8" #getSelected('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
+		</select>  
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.label.newsletter1')</label>
+		<input type="checkbox" id="subscribe_newsletter" name="subscribe_newsletter" value="1" #getChecked('subscribe_newsletter' '1') />&nbsp;<label for="subscribe_newsletter">$MESSAGES.getString('account.edit.label.newsletter2')</label>
+		<p class="clearer"></p>
+	</p>
+	<p class="clearer"></p>
+	</br>
+#elseif($tab=='2')
+	<p>
+		<label class="float_left col2left alignleft"></label>
+		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') />&nbsp;<label for="admin_portal">Admin Portal</label>
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft"></label>
+		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1') />&nbsp;<label for="admin_partner">Admin Partner</label>
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' 'zugeordneter Partner')</label>
+		<select class="float_left inputstyle" size="1" id="partner" name="partner">
+		<option value="0" #getSelected('partner' '0')>---</option>
+		#foreach ($partner in $partnerlist)
+			<option value="$partner.ident" #getSelected('partner' $partner.ident)>$partner.name</option>
+		#end	
+		</select>  
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft"></label>
+		<input type="checkbox" id="admin_index" name="admin_index" value="1" #getChecked('admin_index' '1') />&nbsp;<label for="admin_index">Admin Index</label>
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft"></label>
+		<input type="checkbox" id="admin_catalog" name="admin_catalog" value="1" #getChecked('admin_catalog' '1') />&nbsp;<label for="admin_catalog">Admin Katalog</label>
+		<p class="clearer"></p>
+	</p>
+	<p>
+		<label class="float_left col2left alignleft" for="provider">#displayFieldLabel('provider' 'zugeordnete Anbieter')</label>
+		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
+		<option value="all" #getSelected('provider' 'all')>Alle</option>
+		#foreach ($provider in $providerlist)
+			<option value="$provider.ident" #getSelected('provider' $provider.ident)>$provider.name</option>
+		#end	
+		</select>  
+		<p class="clearer"></p>
+	</p>
+	<p class="clearer"></p>
+	</br>
+#end
+
+
+#end
+	</div>
+#renderDBEditFooter($mode)
+</form>
