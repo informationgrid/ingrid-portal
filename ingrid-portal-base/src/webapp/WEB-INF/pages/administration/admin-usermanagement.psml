@@ -8,7 +8,7 @@
   <metadata name="title" xml:lang="en">User Management</metadata>
 
   <fragment id="admin-usermanagement" type="layout" name="jetspeed-layouts::IngridOneColumn">
-    <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::UserAdminPortlet">
+    <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::AdminUserPortlet">
       <property layout="OneColumn" name="row" value="0" />
     </fragment>
   </fragment>
