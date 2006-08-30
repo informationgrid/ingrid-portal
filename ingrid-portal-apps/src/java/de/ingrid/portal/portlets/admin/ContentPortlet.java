@@ -40,7 +40,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(ContentPortlet.class);
 
-    // Keys/Values for velocity render context, used in subclass
+    // Keys/Values for velocity render context
     protected final static String CONTEXT_MODE = "mode";
 
     protected final static String CONTEXTV_MODE_NEW = "new";
@@ -231,14 +231,14 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             context.put(CONTEXT_BROWSER_STATE, state);
             setDefaultViewPage(viewDefault);
+            return true;
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing default view:", ex);
             }
-            return false;
         }
 
-        return true;
+        return false;
     }
 
     /**
