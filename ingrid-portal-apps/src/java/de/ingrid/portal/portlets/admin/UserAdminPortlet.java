@@ -9,15 +9,19 @@ import java.security.Permissions;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
@@ -61,6 +65,8 @@ public class UserAdminPortlet extends ContentPortlet {
     private final static IngridPortalPermission adminPortalPartnerSTARIngridPortalPermission = new IngridPortalPermission(
             "admin.portal.partner.*");
 
+    private static final String KEY_ENTITIES = "entities";
+
     private UserManager userManager;
 
     private RoleManager roleManager;
@@ -72,7 +78,7 @@ public class UserAdminPortlet extends ContentPortlet {
      */
     protected void refreshBrowserState(PortletRequest request) {
         ContentBrowserState state = getBrowserState(request);
-        // state.setTotalNumRows(entities.size());
+        state.setTotalNumRows(getEntitiesFromSession(request).size());
     }
 
     /**
@@ -99,6 +105,7 @@ public class UserAdminPortlet extends ContentPortlet {
         viewDefault = "/WEB-INF/templates/administration/user_admin_browse.vm";
         viewEdit = "/WEB-INF/templates/administration/user_admin_edit.vm";
         viewNew = "/WEB-INF/templates/administration/user_admin_edit.vm";
+    
     }
 
     /**
@@ -106,54 +113,30 @@ public class UserAdminPortlet extends ContentPortlet {
      */
     protected boolean doDefaultView(RenderRequest request) {
         try {
+            // get entities
+            List rows = getEntities(request);
+            
+            String sortColumn = getSortColumn(request, "id");
+            boolean ascendingOrder = isAscendingOrder(request);
+            orderEntities(rows, sortColumn, ascendingOrder);
+            
+            // put rows into session
+            setEntitiesInSession(request, rows);
+
             // always refresh !
             refreshBrowserState(request);
             ContentBrowserState state = getBrowserState(request);
-
-            // get data from database
-            ArrayList columns = new ArrayList();
-
-            // get current user
-            Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
-
-            // iterate over all users
-            Iterator users = userManager.getUsers("");
-            while (users.hasNext()) {
-                User user = (User) users.next();
-                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-                Permissions userPermissions = getMergedPermissions(userPrincipal);
-
-                // get the user roles
-                Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
-
-                boolean addUser = includeUserByPermission(authUserPermissions, userPermissions)
-                        || includeUserByRole(authUserPermissions, userRoles);
-
-                if (addUser) {
-                    HashMap record = new HashMap();
-                    record.put("id", userPrincipal.getName());
-                    record.put("firstName", user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
-                    record.put("lastName", user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
-                    record.put("email", user.getUserAttributes().get("user.business-info.online.email", ""));
-                    String roleString = "";
-                    Iterator it = userRoles.iterator();
-                    while (it.hasNext()) {
-                        Role r = (Role) it.next();
-                        roleString = roleString.concat(r.getPrincipal().getName());
-                        if (it.hasNext()) {
-                            roleString = roleString.concat(", ");
-                        }
-                    }
-                    record.put("roles", roleString);
-                    record.put("confirmed", "Y");
-                    columns.add(record);
-                }
+            
+            int firstRow = state.getFirstRow();
+            int maxRows = state.getMaxRows();
+            int lastRow = firstRow + maxRows;
+            if (lastRow > rows.size()) {
+                lastRow = rows.size();
             }
-
+            
             // put to render context
             Context context = getContext(request);
-            context.put(CONTEXT_ENTITIES, columns);
+            context.put(CONTEXT_ENTITIES, rows.subList(firstRow, lastRow));
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             context.put(CONTEXT_BROWSER_STATE, state);
             setDefaultViewPage(viewDefault);
@@ -165,6 +148,65 @@ public class UserAdminPortlet extends ContentPortlet {
         }
         return true;
     }
+
+    private void orderEntities(List rows, String sortColumn, boolean ascendingOrder) {
+        Collections.sort(rows, new UserListSortComparator(sortColumn, ascendingOrder));
+    }
+    
+    /**
+     * Internal Comparator class.
+     *
+     * @author joachim@wemove.com
+     */
+    private class UserListSortComparator implements Comparator {
+
+        private boolean ascendingOrder = true;
+        private String sortColumn = "id";
+        
+        public UserListSortComparator(String sortColumn, boolean ascendingOrder) {
+            this.sortColumn = sortColumn;
+            this.ascendingOrder = ascendingOrder;
+        }
+        
+        public int compare(Object arg0, Object arg1) {
+            Object val1 = ((HashMap)arg0).get(sortColumn);
+            Object val2 = ((HashMap)arg1).get(sortColumn);
+            if (val1 == null && val2 == null) {
+                return 0;
+            }
+            if ((val1 == null && val2 != null)) {
+                if (ascendingOrder) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+            if ((val1 != null && val2 == null)) {
+                if (ascendingOrder) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+            if (val1 instanceof String && val2 instanceof String) {
+                if (ascendingOrder) {
+                    return ((String)val1).compareTo((String)val2);
+                } else {
+                    return -1 * ((String)val1).compareTo((String)val2);
+                }
+            }
+            if (val1 instanceof Integer && val2 instanceof Integer) {
+                if (ascendingOrder) {
+                    return ((Integer)val1).compareTo((Integer)val2);
+                } else {
+                    return -1 * ((Integer)val1).compareTo((Integer)val2);
+                }
+            }
+            return 0;
+        }
+        
+    }
+    
 
     /**
      * Merge role permissions with user permissions
@@ -304,6 +346,57 @@ public class UserAdminPortlet extends ContentPortlet {
         return false;
     }
 
+    protected List getEntities(RenderRequest request) {
+        // get data from database
+        ArrayList rows = new ArrayList();
+
+        try {
+            // get current user
+            Principal authUserPrincipal = request.getUserPrincipal();
+            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
+
+            // iterate over all users
+            Iterator users = userManager.getUsers("");
+            while (users.hasNext()) {
+                User user = (User) users.next();
+                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+                Permissions userPermissions = getMergedPermissions(userPrincipal);
+
+                // get the user roles
+                Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
+
+                boolean addUser = includeUserByPermission(authUserPermissions, userPermissions)
+                        || includeUserByRole(authUserPermissions, userRoles);
+
+                if (addUser) {
+                    HashMap record = new HashMap();
+                    record.put("id", userPrincipal.getName());
+                    record.put("firstName", user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
+                    record.put("lastName", user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
+                    record.put("email", user.getUserAttributes().get("user.business-info.online.email", ""));
+                    String roleString = "";
+                    Iterator it = userRoles.iterator();
+                    while (it.hasNext()) {
+                        Role r = (Role) it.next();
+                        roleString = roleString.concat(r.getPrincipal().getName());
+                        if (it.hasNext()) {
+                            roleString = roleString.concat(", ");
+                        }
+                    }
+                    record.put("roles", roleString);
+                    record.put("confirmed", "Y");
+                    rows.add(record);
+                }
+            }
+        } catch (SecurityException e) {
+            if (log.isErrorEnabled()) {
+                log.error("Error getting entities!", e);
+            }
+        }
+        refreshBrowserState(request);
+        return rows;
+    }
+    
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
      */
@@ -356,6 +449,31 @@ public class UserAdminPortlet extends ContentPortlet {
     protected Object[] getDBEntities(ActionRequest request) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /**
+     * Get the entities of the browser portlet.
+     * Only ONE entities object per portlet (PORTLET_SCOPE).
+     * @param request
+     * @return
+     */
+    static protected List getEntitiesFromSession(PortletRequest request) {
+        List entities = (List) request.getPortletSession().getAttribute(KEY_ENTITIES,
+                PortletSession.PORTLET_SCOPE);
+        if (entities == null) {
+            entities = new ArrayList();
+            setEntitiesInSession(request, entities);
+        }
+        return entities;
+    }
+    
+    /**
+     * Set the entities of the browser portlet.
+     * @param request
+     * @param state
+     */
+    static protected void setEntitiesInSession(PortletRequest request, List entities) {
+        request.getPortletSession().setAttribute(KEY_ENTITIES, entities, PortletSession.PORTLET_SCOPE);
     }
 
 }
