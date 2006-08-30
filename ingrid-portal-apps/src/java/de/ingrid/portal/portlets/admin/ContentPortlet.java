@@ -151,7 +151,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected boolean doEdit(RenderRequest request) {
         try {
             // get data from database
-            Long[] ids = getIds(request);
+            String[] ids = getIds(request);
             if (ids != null) {
                 Session session = HibernateUtil.currentSession();
                 Criteria crit = session.createCriteria(dbEntityClass).add(Restrictions.in("id", ids));
@@ -464,20 +464,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected Long[] getIds(PortletRequest request) {
-        Long[] longIds = null;
+    static protected String[] getIds(PortletRequest request) {
         String[] strIds = request.getParameterValues(PARAM_ID);
-        if (strIds != null) {
-            longIds = (Long[]) Array.newInstance(Long.class, strIds.length);
-            for (int i = 0; i < strIds.length; i++) {
-                try {
-                    longIds[i] = new Long(strIds[i]);
-                } catch (Exception ex) {
-                }
-            }
-        }
-
-        return longIds;
+        return strIds;
     }
 
     /**

@@ -41,14 +41,16 @@ public class ContentRSSPortlet extends ContentPortlet {
      */
     protected Object[] getDBEntities(ActionRequest request) {
         IngridRSSSource[] dbEntities = null;
-        Long[] ids = getIds(request);
+        String[] ids = getIds(request);
 
         // set up entity
         if (ids != null) {
             dbEntities = (IngridRSSSource[]) Array.newInstance(IngridRSSSource.class, ids.length);
             for (int i = 0; i < ids.length; i++) {
                 dbEntities[i] = new IngridRSSSource();
-                dbEntities[i].setId(ids[i]);
+                try {
+                    dbEntities[i].setId(new Long(ids[i]));
+                } catch (NumberFormatException e) {}
                 dbEntities[i].setProvider(request.getParameter("provider" + i));
                 dbEntities[i].setDescription(request.getParameter("description" + i));
                 dbEntities[i].setUrl(request.getParameter("url" + i));
