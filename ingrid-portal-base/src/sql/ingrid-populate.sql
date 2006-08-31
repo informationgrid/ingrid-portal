@@ -236,9 +236,9 @@ INSERT INTO SECURITY_PERMISSION VALUES(1200,'de.ingrid.portal.security.permissio
 INSERT INTO SECURITY_PERMISSION VALUES(1201,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
 INSERT INTO SECURITY_PERMISSION VALUES(1202,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner.provider.index','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
 INSERT INTO SECURITY_PERMISSION VALUES(1203,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner.provider.catalog','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1204,'de.ingrid.portal.security.permission.IngridPartnerPermission','partner','he','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1205,'de.ingrid.portal.security.permission.IngridProviderPermission','provider','he_hmulv','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1206,'de.ingrid.portal.security.permission.IngridProviderPermission','provider','he_hlug','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
+INSERT INTO SECURITY_PERMISSION VALUES(1204,'de.ingrid.portal.security.permission.IngridPartnerPermission','partner.he','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
+INSERT INTO SECURITY_PERMISSION VALUES(1205,'de.ingrid.portal.security.permission.IngridProviderPermission','provider.he_hmulv','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
+INSERT INTO SECURITY_PERMISSION VALUES(1206,'de.ingrid.portal.security.permission.IngridProviderPermission','provider.he_hlug','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
 INSERT INTO PRINCIPAL_PERMISSION VALUES(1100,1200);
 INSERT INTO PRINCIPAL_PERMISSION VALUES(1111,1201);
 INSERT INTO PRINCIPAL_PERMISSION VALUES(1111,1204);
