@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.global;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -210,6 +211,27 @@ public class UtilsDB {
                 .addOrder(Order.asc("name")), session, providers, true);
     }
 
+    /**
+     * Get alle providers that corresponded with a partner key.
+     * 
+     * @param key The partner key (use 'bund')
+     * @return The provider of the partner.
+     */
+    public static List getProvidersFromPartnerKey(String key) {
+        ArrayList result = new ArrayList();
+        List provider = getProviders();
+        String providerPartnerKey = Utils.normalizePartnerKey(key, true).concat("_");
+        Iterator it = provider.iterator();
+        while (it.hasNext()) {
+            IngridProvider p = (IngridProvider)it.next();
+            if (p.getIdent().startsWith(providerPartnerKey)) {
+                result.add(p);
+            }
+        }
+        return result;
+    }
+    
+    
     /**
      * Get the name of the Provider with the according ident.
      * @param ident
