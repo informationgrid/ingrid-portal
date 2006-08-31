@@ -502,5 +502,30 @@ public class Utils {
         Principal principal = request.getUserPrincipal();
         return (principal != null);
     }
+    
+    /**
+     * Transforms different syntax for partner key to and from partner <-> provider.
+     * 
+     * provider keys are defined as <partner_key>_<provider_key>. The <partner_key>
+     * is treated different in for providers and partners. 
+     * 
+     * Sample: The partner 'bund' has the provider_key 'bu'. 
+     * 
+     * @param key The partner or provider has the same key
+     * @param fromPartnerToProvider
+     * @return
+     */
+    public static String normalizePartnerKey(String key, boolean fromPartnerToProvider) {
+        if (fromPartnerToProvider) {
+            if (key.equalsIgnoreCase("bund")) {
+                return "bu";
+            }
+        } else {
+            if (key.equalsIgnoreCase("bu")) {
+                return "bund";
+            }
+        }
+        return key.toLowerCase();
+    }
 
 }
