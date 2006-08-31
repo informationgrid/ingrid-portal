@@ -86,6 +86,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected static String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
 
+    protected static String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
+    
     // Data to set in Subclasses
     // -------------------------
 

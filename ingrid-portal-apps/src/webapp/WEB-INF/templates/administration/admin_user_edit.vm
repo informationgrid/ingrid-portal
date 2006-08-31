@@ -1,20 +1,22 @@
 #set ($action = $renderResponse.createActionURL())
-#if(!$tab)#set($tab = "1")#end
+#set($formType = $actionForm.getInput('mode'))
+#set($tab = $actionForm.getInput('tab'))
+#if(!$tab || $tab == "")#set($tab = "1")#end
 <div class="tabs">
 	<ul>			
 $action.setParameter('action','doChangeTab')
+$action.setParameter('id',$actionForm.getInput("id"))
+$action.setParameter('layoutType',$actionForm.getInput("layoutType"))
 #if($tab=='1')
 		<li><a class="selected">Allgemeine Daten</a></li>
 #else
 $action.setParameter('tab','1')
-$action.setParameter('id',$actionForm.getInput("login"))
         <li><a href="$action">Allgemeine Daten</a></li>
 #end
 #if($tab=='2')
 		<li><a class="selected">Rechte</a></li>
 #else
 $action.setParameter('tab','2')
-$action.setParameter('id',$actionForm.getInput("login"))
         <li><a href="$action">Rechte</a></li>
 #end
      </ul>
@@ -23,16 +25,18 @@ $action.setParameter('id',$actionForm.getInput("login"))
 
 
 <form action="$action" method="post" name="frmEditRSS" id="frmEditRSS">
-	<input type="hidden" name="tab" value="${tab}"/>
+	<input type="hidden" name="tab" value="$tab"/>
+	<input type="hidden" name="id" value="$actionForm.getInput('id')"/>
+	<input type="hidden" name="layoutType" value="$actionForm.getInput('layoutType')"/>
 	<div class="formbody">
+#displayFormErrors()		
 	#if ($mode == 'edit')
 		<h2 class="nospace">Benutzer aktualisieren</h2>
 	#elseif ($mode == 'new')
 		<h2 class="nospace">Neuen Benutzer anlegen</h2>
 	#end
-#foreach ($dbEntity in $dbEntities)
-	<h3>* Pflichtfelder</h3>
 #if($tab=='1')
+	<h3>* Pflichtfelder</h3>
 	<p>
 		<label class="float_left col2left alignleft" for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
 		<select class="float_left inputstyle" name="salutation" id="salutation" size="1">
@@ -163,52 +167,61 @@ $action.setParameter('id',$actionForm.getInput("login"))
 	<p class="clearer"></p>
 	</br>
 #elseif($tab=='2')
+#if($actionForm.getInput('layoutType') == "admin.portal" || $actionForm.getInput('layoutType') == "admin")
 	<p>
-		<label class="float_left col2left alignleft"></label>
-		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') />&nbsp;<label for="admin_portal">Admin Portal</label>
+		<label class="float_left col2left alignleft">Admin Portal</label>
+		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') />
 		<p class="clearer"></p>
 	</p>
 	<p>
-		<label class="float_left col2left alignleft"></label>
-		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1') />&nbsp;<label for="admin_partner">Admin Partner</label>
+		<label class="float_left col2left alignleft">Admin Partner</label>
+		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1') />
 		<p class="clearer"></p>
 	</p>
 	<p>
 		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' 'zugeordneter Partner')</label>
 		<select class="float_left inputstyle" size="1" id="partner" name="partner">
-		<option value="0" #getSelected('partner' '0')>---</option>
+		<option value="" #getSelected('partner' '')>---</option>
 		#foreach ($partner in $partnerlist)
 			<option value="$partner.ident" #getSelected('partner' $partner.ident)>$partner.name</option>
 		#end	
 		</select>  
 		<p class="clearer"></p>
 	</p>
+#elseif($actionForm.getInput('layoutType') == "admin.portal.partner")
 	<p>
-		<label class="float_left col2left alignleft"></label>
-		<input type="checkbox" id="admin_index" name="admin_index" value="1" #getChecked('admin_index' '1') />&nbsp;<label for="admin_index">Admin Index</label>
+		<label class="float_left col2left alignleft" for="partner">zugeordneter Partner:</label>$actionForm.getInput('partner_name')
+		<p class="clearer"></p>
+	</p>
+#end
+	<p>
+		<label class="float_left col2left alignleft">Admin Index</label>
+		<input type="checkbox" id="admin_index" name="admin_index" value="1" #getChecked('admin_index' '1') />
 		<p class="clearer"></p>
 	</p>
 	<p>
-		<label class="float_left col2left alignleft"></label>
-		<input type="checkbox" id="admin_catalog" name="admin_catalog" value="1" #getChecked('admin_catalog' '1') />&nbsp;<label for="admin_catalog">Admin Katalog</label>
+		<label class="float_left col2left alignleft">Admin Katalog</label>
+		<input type="checkbox" id="admin_catalog" name="admin_catalog" value="1" #getChecked('admin_catalog' '1') />
 		<p class="clearer"></p>
 	</p>
 	<p>
 		<label class="float_left col2left alignleft" for="provider">#displayFieldLabel('provider' 'zugeordnete Anbieter')</label>
+#if($actionForm.hasInput('partner'))
 		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
-		<option value="all" #getSelected('provider' 'all')>Alle</option>
+		<option value="*" #getSelected('provider' '*')>Alle</option>
 		#foreach ($provider in $providerlist)
-			<option value="$provider.ident" #getSelected('provider' $provider.ident)>$provider.name</option>
+			<option value="$provider.ident" #getSelected('provider' $provider.ident)>$UtilsString.cutString($provider.name, 50, 50)</option>
 		#end	
-		</select>  
+		</select>
+#else
+	Bitte geben Sie zunächst einen Partner an und speichern Sie den Datensatz.
+#end		
 		<p class="clearer"></p>
 	</p>
 	<p class="clearer"></p>
 	</br>
 #end
 
-
-#end
 	</div>
 #renderDBEditFooter($mode)
 </form>

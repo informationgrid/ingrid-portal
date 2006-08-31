@@ -15,7 +15,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
@@ -42,8 +41,8 @@ import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminUserForm;
-import de.ingrid.portal.forms.EditAccountForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -78,12 +77,11 @@ public class AdminUserPortlet extends ContentPortlet {
             "admin.portal.partner.*");
 
     private final static IngridPortalPermission adminPortalPartnerProviderIndexIngridPortalPermission = new IngridPortalPermission(
-    "admin.portal.partner.provider.index");
-    
-    private final static IngridPortalPermission adminPortalPartnerProviderCatalogIngridPortalPermission = new IngridPortalPermission(
-    "admin.portal.partner.provider.catalog");
+            "admin.portal.partner.provider.index");
 
-    
+    private final static IngridPortalPermission adminPortalPartnerProviderCatalogIngridPortalPermission = new IngridPortalPermission(
+            "admin.portal.partner.provider.catalog");
+
     private static final String KEY_ENTITIES = "entities";
 
     private UserManager userManager;
@@ -124,16 +122,14 @@ public class AdminUserPortlet extends ContentPortlet {
         viewDefault = "/WEB-INF/templates/administration/admin_user_browser.vm";
         viewEdit = "/WEB-INF/templates/administration/admin_user_edit.vm";
         viewNew = "/WEB-INF/templates/administration/admin_user_edit.vm";
-    
+
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doView(javax.portlet.RenderRequest,
+     *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        if (request.getParameter("tab") != null) {
-            getContext(request).put("tab", request.getParameter("tab"));
-        }
         super.doView(request, response);
     }
 
@@ -142,28 +138,28 @@ public class AdminUserPortlet extends ContentPortlet {
      */
     protected boolean doDefaultView(RenderRequest request) {
         try {
-            
+
             // get entities
             List rows = getEntities(request);
-            
+
             String sortColumn = getSortColumn(request, "id");
             boolean ascendingOrder = isAscendingOrder(request);
             orderEntities(rows, sortColumn, ascendingOrder);
-            
+
             // put rows into session
             setEntitiesInSession(request, rows);
 
             // always refresh !
             refreshBrowserState(request);
             ContentBrowserState state = getBrowserState(request);
-            
+
             int firstRow = state.getFirstRow();
             int maxRows = state.getMaxRows();
             int lastRow = firstRow + maxRows;
             if (lastRow > rows.size()) {
                 lastRow = rows.size();
             }
-            
+
             // put to render context
             Context context = getContext(request);
             context.put(CONTEXT_ENTITIES, rows.subList(firstRow, lastRow));
@@ -182,25 +178,26 @@ public class AdminUserPortlet extends ContentPortlet {
     private void orderEntities(List rows, String sortColumn, boolean ascendingOrder) {
         Collections.sort(rows, new UserListSortComparator(sortColumn, ascendingOrder));
     }
-    
+
     /**
      * Internal Comparator class.
-     *
+     * 
      * @author joachim@wemove.com
      */
     private class UserListSortComparator implements Comparator {
 
         private boolean ascendingOrder = true;
+
         private String sortColumn = "id";
-        
+
         public UserListSortComparator(String sortColumn, boolean ascendingOrder) {
             this.sortColumn = sortColumn;
             this.ascendingOrder = ascendingOrder;
         }
-        
+
         public int compare(Object arg0, Object arg1) {
-            Object val1 = ((HashMap)arg0).get(sortColumn);
-            Object val2 = ((HashMap)arg1).get(sortColumn);
+            Object val1 = ((HashMap) arg0).get(sortColumn);
+            Object val2 = ((HashMap) arg1).get(sortColumn);
             if (val1 == null && val2 == null) {
                 return 0;
             }
@@ -220,23 +217,22 @@ public class AdminUserPortlet extends ContentPortlet {
             }
             if (val1 instanceof String && val2 instanceof String) {
                 if (ascendingOrder) {
-                    return ((String)val1).compareTo((String)val2);
+                    return ((String) val1).compareTo((String) val2);
                 } else {
-                    return -1 * ((String)val1).compareTo((String)val2);
+                    return -1 * ((String) val1).compareTo((String) val2);
                 }
             }
             if (val1 instanceof Integer && val2 instanceof Integer) {
                 if (ascendingOrder) {
-                    return ((Integer)val1).compareTo((Integer)val2);
+                    return ((Integer) val1).compareTo((Integer) val2);
                 } else {
-                    return -1 * ((Integer)val1).compareTo((Integer)val2);
+                    return -1 * ((Integer) val1).compareTo((Integer) val2);
                 }
             }
             return 0;
         }
-        
+
     }
-    
 
     /**
      * Merge role permissions with user permissions
@@ -332,14 +328,7 @@ public class AdminUserPortlet extends ContentPortlet {
         // <partner_of_auth_user>)
         if (authUserPermissions.implies(adminPortalPartnerIngridPortalPermission)) {
             // get the partner from the auth users permission
-            ArrayList authUserPartner = new ArrayList();
-            en = authUserPermissions.elements();
-            while (en.hasMoreElements()) {
-                p = (Permission) en.nextElement();
-                if (p instanceof IngridPartnerPermission) {
-                    authUserPartner.addAll(((IngridPartnerPermission) p).getPartners());
-                }
-            }
+            ArrayList authUserPartner = getPartnersFromPermissions(authUserPermissions);
             // add users that imply admin.portal.provider.* AND
             // IngridPartnerPermission(partner, <partner_of_auth_user>)
             boolean implyPermission = false;
@@ -351,15 +340,10 @@ public class AdminUserPortlet extends ContentPortlet {
                 // check for permission IngridPartnerPermission(partner,
                 // <partner_of_auth_user>)
                 if (userPermission instanceof IngridPartnerPermission) {
-                    ArrayList userPartners = ((IngridPartnerPermission) userPermission).getPartners();
+                    String userPartner = ((IngridPartnerPermission) userPermission).getPartner();
                     for (int i = 0; i < authUserPartner.size(); i++) {
-                        for (int j = 0; j < userPartners.size(); j++) {
-                            if (((String) authUserPartner.get(i)).equals((String) userPartners.get(j))) {
-                                implyPartner = true;
-                                break;
-                            }
-                        }
-                        if (implyPartner) {
+                        if (((String) authUserPartner.get(i)).equals(userPartner)) {
+                            implyPartner = true;
                             break;
                         }
                     }
@@ -426,73 +410,174 @@ public class AdminUserPortlet extends ContentPortlet {
         refreshBrowserState(request);
         return rows;
     }
-    
+
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
      */
     protected void doSave(ActionRequest request) {
-        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
-                AdminUserForm.class);
-        f.clearErrors();
-        f.populate(request);
-        if (!f.validate()) {
-            return;
-        }
 
-        String userName = null;
-        User user = null;
-        try {
-            userName = request.getUserPrincipal().getName();
-            user = userManager.getUser(userName);
-        } catch (JetspeedException e) {
-            f.setError("", "account.edit.error.user.notfound");
-            log.error("Error getting current user.", e);
-            return;
-        }
-
-        Preferences userAttributes = user.getUserAttributes();
-        userAttributes.put("user.name.prefix", f.getInput(EditAccountForm.FIELD_SALUTATION));
-        userAttributes.put("user.name.given", f.getInput(EditAccountForm.FIELD_FIRSTNAME));
-        userAttributes.put("user.name.family", f.getInput(EditAccountForm.FIELD_LASTNAME));
-        userAttributes.put("user.business-info.online.email", f.getInput(EditAccountForm.FIELD_EMAIL));
-        userAttributes.put("user.business-info.postal.street", f.getInput(EditAccountForm.FIELD_STREET));
-        userAttributes.put("user.business-info.postal.postalcode", f.getInput(EditAccountForm.FIELD_POSTALCODE));
-        userAttributes.put("user.business-info.postal.city", f.getInput(EditAccountForm.FIELD_CITY));
-
-        // theses are not PLT.D values but ingrid specifics
-        userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(EditAccountForm.FIELD_AGE));
-        userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(EditAccountForm.FIELD_ATTENTION));
-        userAttributes.put("user.custom.ingrid.user.interest", f.getInput(EditAccountForm.FIELD_INTEREST));
-        userAttributes.put("user.custom.ingrid.user.profession", f.getInput(EditAccountForm.FIELD_PROFESSION));
-        userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
-                .getInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
-        try {
-            // update password only if a old password was provided
-            String oldPassword = f.getInput(EditAccountForm.FIELD_PASSWORD_OLD);
-            if (oldPassword != null && oldPassword.length() > 0) {
-                userManager.setPassword(userName, f.getInput(EditAccountForm.FIELD_PASSWORD_OLD), f
-                        .getInput(EditAccountForm.FIELD_PASSWORD_NEW));
-            }
-        } catch (PasswordAlreadyUsedException e) {
-            f.setError(EditAccountForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
-            return;
-        } catch (InvalidPasswordException e) {
-            f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
-            return;
-        } catch (SecurityException e) {
-            f.setError("", "account.edit.error.wrong.password");
-            return;
-        }
     }
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doUpdate(javax.portlet.ActionRequest)
      */
     protected void doUpdate(ActionRequest request) {
-        // TODO Auto-generated method stub
+        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+        f.clearErrors();
+        f.populate(request);
+        if (!f.validate()) {
+            return;
+        }
 
+        try {
+
+            String userName = f.getInput(AdminUserForm.FIELD_ID);
+            User user = null;
+            try {
+                user = userManager.getUser(userName);
+            } catch (JetspeedException e) {
+                f.setError("", "account.edit.error.user.notfound");
+                log.error("Error getting current user.", e);
+                return;
+            }
+
+            if (f.getInput(AdminUserForm.FIELD_TAB).equals("1")) {
+
+                Preferences userAttributes = user.getUserAttributes();
+                userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
+                userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
+                userAttributes.put("user.name.family", f.getInput(AdminUserForm.FIELD_LASTNAME));
+                userAttributes.put("user.business-info.online.email", f.getInput(AdminUserForm.FIELD_EMAIL));
+                userAttributes.put("user.business-info.postal.street", f.getInput(AdminUserForm.FIELD_STREET));
+                userAttributes.put("user.business-info.postal.postalcode", f.getInput(AdminUserForm.FIELD_POSTALCODE));
+                userAttributes.put("user.business-info.postal.city", f.getInput(AdminUserForm.FIELD_CITY));
+
+                // theses are not PLT.D values but ingrid specifics
+                userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(AdminUserForm.FIELD_AGE));
+                userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(AdminUserForm.FIELD_ATTENTION));
+                userAttributes.put("user.custom.ingrid.user.interest", f.getInput(AdminUserForm.FIELD_INTEREST));
+                userAttributes.put("user.custom.ingrid.user.profession", f.getInput(AdminUserForm.FIELD_PROFESSION));
+                userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
+                        .getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
+                try {
+                    // update password only if a old password was provided
+                    String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
+                    if (oldPassword != null && oldPassword.length() > 0) {
+                        userManager.setPassword(userName, f.getInput(AdminUserForm.FIELD_PASSWORD_OLD), f
+                                .getInput(AdminUserForm.FIELD_PASSWORD_NEW));
+                    }
+                } catch (PasswordAlreadyUsedException e) {
+                    f.setError(AdminUserForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
+                    return;
+                } catch (InvalidPasswordException e) {
+                    f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
+                    return;
+                } catch (SecurityException e) {
+                    f.setError("", "account.edit.error.wrong.password");
+                    return;
+                }
+            } else if (f.getInput(AdminUserForm.FIELD_TAB).equals("2")) {
+                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+
+                // update the admin.portal permission
+                if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL)) {
+                    permissionManager.grantPermission(userPrincipal, adminPortalIngridPortalPermission);
+                } else {
+                    permissionManager.revokePermission(userPrincipal, adminPortalIngridPortalPermission);
+                }
+
+                // update the admin.portal.partner permission
+                if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)) {
+                    permissionManager.grantPermission(userPrincipal, adminPortalPartnerIngridPortalPermission);
+                } else {
+                    permissionManager.revokePermission(userPrincipal, adminPortalPartnerIngridPortalPermission);
+                }
+
+                // update the admin.portal.partner.provider.index permission
+                if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
+                    permissionManager.grantPermission(userPrincipal,
+                            adminPortalPartnerProviderIndexIngridPortalPermission);
+                } else {
+                    permissionManager.revokePermission(userPrincipal,
+                            adminPortalPartnerProviderIndexIngridPortalPermission);
+                }
+                
+                // update the admin.portal.partner.provider.catalog permission
+                if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)) {
+                    permissionManager.grantPermission(userPrincipal,
+                            adminPortalPartnerProviderCatalogIngridPortalPermission);
+                } else {
+                    permissionManager.revokePermission(userPrincipal,
+                            adminPortalPartnerProviderIndexIngridPortalPermission);
+                }
+
+                // remove all IngridPartnerPermissions, they will be reset if a
+                // provider or partner permission was granted
+                revokePermissionsByClass(userPrincipal, IngridPartnerPermission.class);
+                if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)
+                        || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
+                        || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
+                    // add IngridPartnerPermissions for specified partner
+                    createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner." + f
+                            .getInput(AdminUserForm.FIELD_PARTNER)));
+                }
+
+                // remove all IngridProviderPermissions, they will be reset if a
+                // provider permission was granted
+                revokePermissionsByClass(userPrincipal, IngridProviderPermission.class);
+                // set providers if any provider permission was granted
+                if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
+                        || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
+                    // add IngridProviderPermissions for specified partner
+                    String[] providers = f.getInputAsArray("provider");
+                    for (int i = 0; i < providers.length; i++) {
+                        createAndGrantPermission(userPrincipal, new IngridProviderPermission("provider." + providers[i]));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems saving user.", e);
+            }
+        }
     }
 
+    /**
+     * Remove all permissions of a principal, of a specific class.
+     * 
+     * @param principal
+     * @param permissionClass
+     */
+    private void revokePermissionsByClass(Principal principal, Class permissionClass) {
+        try {
+            Permissions partnerPermissions = permissionManager.getPermissions(principal);
+            Enumeration en = partnerPermissions.elements();
+            while (en.hasMoreElements()) {
+                Permission p = (Permission) en.nextElement();
+                if (permissionClass.isInstance(p)) {
+                    permissionManager.revokePermission(principal, p);
+                }
+            }
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems revoking Permission by Class (" + permissionClass + ").", e);
+            }
+        }
+    }
+
+    private void createAndGrantPermission(Principal principal, Permission permission) {
+        try {
+            if (!permissionManager.permissionExists(permission)) {
+                permissionManager.addPermission(permission);
+            }
+            permissionManager.grantPermission(principal, permission);
+        } catch (SecurityException e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems create or grant permission (" + permission.toString() + ").", e);
+            }
+        }
+    }
+    
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDelete(javax.portlet.ActionRequest)
      */
@@ -506,19 +591,32 @@ public class AdminUserPortlet extends ContentPortlet {
      *      javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-        
+
         String action = getAction(request);
-        
-        if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
+
+        if (request.getParameter(PARAMV_ACTION_DB_DO_UPDATE) != null) {
             // call sub method
-            doSave(request);
-        } else if (action != null && action.equals("doChangeTab")) {
-            // set the tab to render now
-            response.setRenderParameter("tab", request.getParameter("tab"));
-            // save the id of the edited user, to keep the reference
-            response.setRenderParameter("id", request.getParameter("id"));
-            // reset the sction to edit, to show the edit screen and collect all necessary data
+            doUpdate(request);
+            // reset the sction to edit, to show the edit screen and collect all
+            // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
+            response.setRenderParameter("cmd", "action processed");
+        // check for cancel to avoid an unnecesarry "doChangeTab" action
+        } else if (request.getParameter(PARAMV_ACTION_DB_DO_CANCEL) != null) {
+            response.setRenderParameter(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
+            return;
+        } else if (action != null && action.equals("doChangeTab")) {
+            AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
+                    AdminUserForm.class);
+            // save the tab
+            f.setInput(AdminUserForm.FIELD_TAB, request.getParameter("tab"));
+            // save the id of the edited user, to keep the reference
+            f.setInput(AdminUserForm.FIELD_ID, request.getParameter("id"));
+            // reset the sction to edit, to show the edit screen and collect all
+            // necessary data
+            response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
+            response.setRenderParameter("cmd", "action processed");
+
         } else {
             super.processAction(request, response);
         }
@@ -530,108 +628,29 @@ public class AdminUserPortlet extends ContentPortlet {
     protected boolean doEdit(RenderRequest request) {
 
         try {
-            List l = getEntitiesFromSession(request);
-            HashMap entity = new HashMap();
-            
-            String[] ids = getIds(request);
-            String editId = ids[0];
-            Preferences userAttributes = null;
-            User user = null;
 
             AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
                     AdminUserForm.class);
-            
-            ArrayList userPartners = new ArrayList();
-            ArrayList userProviders = new ArrayList();
-            HashMap portalPermissions = new HashMap();
-            
-            for(int i=0; i < l.size(); i++) {
-                HashMap h = (HashMap)l.get(i);
-                String id = (String)h.get("id");
-                if ( id.equals(editId) ) {
-                    try {
-                        user = userManager.getUser(id);
-                        // put all user attributes into context
-                        try {
-                            userAttributes = user.getUserAttributes();
-                            String[] keys = userAttributes.keys();
-                            for (int j=0; j<keys.length; j++) {
-                                entity.put(keys[i], userAttributes.get(keys[i], ""));
-                            }
-                        } catch (BackingStoreException e) {}
 
-                        // get permissions of the user
-                        Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-                        Permissions userPermissions = getMergedPermissions(userPrincipal);
-                        
-                        // add portal permissions (IngridPortalPermissions) to the context
-                        portalPermissions = getIngridPortalPermissionHash(userPermissions);
-                        entity.put("portalPermissions", portalPermissions);
-                        
-                        // get user roles, put into context
-                        Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
-                        entity.put("roles", userRoles);
-                        
-                        // get current user
-                        Principal authUserPrincipal = request.getUserPrincipal();
-                        Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
-                        // set type of layout
-                        String layoutType = getLayoutType(authUserPermissions);
-                        entity.put("layoutType", layoutType);
-
-                        // get partner from permissions, set to context
-                        userPartners = getPartnersFromPermission(userPermissions);
-                        entity.put("partner", userPartners);
-                        // get provider from permissions, set to context
-                        userProviders = getProvidersFromPermission(userPermissions);
-                        entity.put("provider", userProviders);
-                    
-                    } catch (SecurityException e) {}
-                    break;
-                }
-            }
-            ArrayList entities = new ArrayList();
-            entities.add(entity);
-            
-            // put to render context and switch view
             Context context = getContext(request);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
-            context.put(CONTEXT_ENTITIES, entities);
+            context.put(CONTEXT_UTILS_STRING, new UtilsString());
 
-            f.setInput(AdminUserForm.FIELD_LOGIN, editId);
-            f.setInput(AdminUserForm.FIELD_SALUTATION, userAttributes.get("user.name.prefix", ""));
-            f.setInput(AdminUserForm.FIELD_FIRSTNAME, userAttributes.get("user.name.given", ""));
-            f.setInput(AdminUserForm.FIELD_LASTNAME, userAttributes.get("user.name.family", ""));
-            f.setInput(AdminUserForm.FIELD_EMAIL, userAttributes.get("user.business-info.online.email", ""));
-            f.setInput(AdminUserForm.FIELD_STREET, userAttributes.get("user.business-info.postal.street", ""));
-            f.setInput(AdminUserForm.FIELD_POSTALCODE, userAttributes.get("user.business-info.postal.postalcode",
-                    ""));
-            f.setInput(AdminUserForm.FIELD_CITY, userAttributes.get("user.business-info.postal.city", ""));
+            String cmd = request.getParameter("cmd");
+            if (cmd == null) {
+                f.clear();
+                fillEditFormFromStorage(request, f);
+            }
 
-            f.setInput(AdminUserForm.FIELD_AGE, userAttributes.get("user.custom.ingrid.user.age.group", ""));
-            f.setInput(AdminUserForm.FIELD_ATTENTION, userAttributes.get(
-                    "user.custom.ingrid.user.attention.from", ""));
-            f.setInput(AdminUserForm.FIELD_INTEREST, userAttributes.get("user.custom.ingrid.user.interest", ""));
-            f.setInput(AdminUserForm.FIELD_PROFESSION, userAttributes.get("user.custom.ingrid.user.profession",
-                    ""));
-            f.setInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER, userAttributes.get(
-                    "user.custom.ingrid.user.subscribe.newsletter", ""));
-            
-            if (userPartners.size() > 0) {
-                f.setInput(AdminUserForm.FIELD_PARTNER, (String)userPartners.get(0));
-            }
-            if (userProviders.size() > 0) {
-                f.setInput(AdminUserForm.FIELD_PROVIDER, (String[])userProviders.toArray(new String[]{}));
-            }
-            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL, (String)portalPermissions.get("admin.portal"));
-            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER, (String)portalPermissions.get("admin.portal.partner"));
-            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX, (String)portalPermissions.get("admin.portal.partner.provider.index"));
-            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG, (String)portalPermissions.get("admin.portal.partner.provider.catalog"));
             context.put("actionForm", f);
-            
+
             context.put("partnerlist", UtilsDB.getPartners());
-            context.put("providerlist", UtilsDB.getProviders());
-            
+            if (f.hasInput(AdminUserForm.FIELD_PARTNER)) {
+                context
+                        .put("providerlist", UtilsDB
+                                .getProvidersFromPartnerKey(f.getInput(AdminUserForm.FIELD_PARTNER)));
+            }
+
             setDefaultViewPage(viewEdit);
             return true;
         } catch (Exception ex) {
@@ -655,23 +674,24 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * Get the entities of the browser portlet.
-     * Only ONE entities object per portlet (PORTLET_SCOPE).
+     * Get the entities of the browser portlet. Only ONE entities object per
+     * portlet (PORTLET_SCOPE).
+     * 
      * @param request
      * @return
      */
     static protected List getEntitiesFromSession(PortletRequest request) {
-        List entities = (List) request.getPortletSession().getAttribute(KEY_ENTITIES,
-                PortletSession.PORTLET_SCOPE);
+        List entities = (List) request.getPortletSession().getAttribute(KEY_ENTITIES, PortletSession.PORTLET_SCOPE);
         if (entities == null) {
             entities = new ArrayList();
             setEntitiesInSession(request, entities);
         }
         return entities;
     }
-    
+
     /**
      * Set the entities of the browser portlet.
+     * 
      * @param request
      * @param state
      */
@@ -679,33 +699,32 @@ public class AdminUserPortlet extends ContentPortlet {
         request.getPortletSession().setAttribute(KEY_ENTITIES, entities, PortletSession.PORTLET_SCOPE);
     }
 
-    
-    private static ArrayList getPartnersFromPermission(Permissions permissions) {
+    private static ArrayList getPartnersFromPermissions(Permissions permissions) {
         ArrayList result = new ArrayList();
-        
+
         Enumeration en = permissions.elements();
         while (en.hasMoreElements()) {
             Permission p = (Permission) en.nextElement();
             if (p instanceof IngridPartnerPermission) {
-                result.addAll(((IngridPartnerPermission)p).getPartners());
+                result.add(((IngridPartnerPermission) p).getPartner());
             }
         }
         return result;
     }
 
-    private static ArrayList getProvidersFromPermission(Permissions permissions) {
+    private static ArrayList getProvidersFromPermissions(Permissions permissions) {
         ArrayList result = new ArrayList();
-        
+
         Enumeration en = permissions.elements();
         while (en.hasMoreElements()) {
             Permission p = (Permission) en.nextElement();
             if (p instanceof IngridProviderPermission) {
-                result.addAll(((IngridProviderPermission)p).getProviders());
+                result.add(((IngridProviderPermission) p).getProvider());
             }
         }
         return result;
     }
-    
+
     private static String getLayoutType(Permissions editorPermissions) {
         String result = null;
         if (editorPermissions.implies(new IngridPortalPermission("admin"))) {
@@ -719,7 +738,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         return result;
     }
-    
+
     private static HashMap getIngridPortalPermissionHash(Permissions permissions) {
         HashMap result = new HashMap();
         Enumeration en = permissions.elements();
@@ -731,6 +750,90 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         return result;
     }
-    
-    
+
+    private void fillEditFormFromStorage(RenderRequest request, ActionForm f) {
+
+        try {
+            String[] ids = getIds(request);
+            String editId = ids[0];
+            List l = getEntitiesFromSession(request);
+
+            String id = null;
+            boolean entityFound = false;
+            for (int i = 0; i < l.size(); i++) {
+                HashMap h = (HashMap) l.get(i);
+                id = (String) h.get("id");
+                if (id.equals(editId)) {
+                    entityFound = true;
+                    break;
+                }
+            }
+
+            if (!entityFound) {
+                return;
+            }
+
+            User user = userManager.getUser(editId);
+
+            // put all user attributes into form
+            Preferences userAttributes = user.getUserAttributes();
+            f.setInput(AdminUserForm.FIELD_ID, editId);
+            f.setInput(AdminUserForm.FIELD_SALUTATION, userAttributes.get("user.name.prefix", ""));
+            f.setInput(AdminUserForm.FIELD_FIRSTNAME, userAttributes.get("user.name.given", ""));
+            f.setInput(AdminUserForm.FIELD_LASTNAME, userAttributes.get("user.name.family", ""));
+            f.setInput(AdminUserForm.FIELD_EMAIL, userAttributes.get("user.business-info.online.email", ""));
+            f.setInput(AdminUserForm.FIELD_STREET, userAttributes.get("user.business-info.postal.street", ""));
+            f.setInput(AdminUserForm.FIELD_POSTALCODE, userAttributes.get("user.business-info.postal.postalcode", ""));
+            f.setInput(AdminUserForm.FIELD_CITY, userAttributes.get("user.business-info.postal.city", ""));
+
+            f.setInput(AdminUserForm.FIELD_AGE, userAttributes.get("user.custom.ingrid.user.age.group", ""));
+            f.setInput(AdminUserForm.FIELD_ATTENTION, userAttributes.get("user.custom.ingrid.user.attention.from", ""));
+            f.setInput(AdminUserForm.FIELD_INTEREST, userAttributes.get("user.custom.ingrid.user.interest", ""));
+            f.setInput(AdminUserForm.FIELD_PROFESSION, userAttributes.get("user.custom.ingrid.user.profession", ""));
+            f.setInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER, userAttributes.get(
+                    "user.custom.ingrid.user.subscribe.newsletter", ""));
+
+            // get permissions of the user
+            Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+            Permissions userPermissions = getMergedPermissions(userPrincipal);
+
+            // get partner from permissions, set to context
+            List userPartners = getPartnersFromPermissions(userPermissions);
+            List userProviders = getProvidersFromPermissions(userPermissions);
+
+            if (userPartners.size() > 0) {
+                f.setInput(AdminUserForm.FIELD_PARTNER, (String) userPartners.get(0));
+                f.setInput(AdminUserForm.FIELD_PARTNER_NAME, UtilsDB.getPartnerFromKey((String) userPartners.get(0)));
+            }
+            if (userProviders.size() > 0) {
+                f.setInput(AdminUserForm.FIELD_PROVIDER, (String[]) userProviders.toArray(new String[] {}));
+            }
+
+            // add portal permissions (IngridPortalPermissions) to the context
+            HashMap portalPermissions = getIngridPortalPermissionHash(userPermissions);
+            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL, (String) portalPermissions.get("admin.portal"));
+            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER, (String) portalPermissions.get("admin.portal.partner"));
+            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX, (String) portalPermissions
+                    .get("admin.portal.partner.provider.index"));
+            f.setInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG, (String) portalPermissions
+                    .get("admin.portal.partner.provider.catalog"));
+
+            // get current user
+            Principal authUserPrincipal = request.getUserPrincipal();
+            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
+
+            // set type of layout
+            String layoutType = getLayoutType(authUserPermissions);
+            f.setInput(AdminUserForm.FIELD_LAYOUT_TYPE, layoutType);
+            
+            f.setInput(AdminUserForm.FIELD_MODE, "edit");
+
+            // get user roles
+            Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
+
+        } catch (Exception e) {
+        }
+
+    }
+
 }
