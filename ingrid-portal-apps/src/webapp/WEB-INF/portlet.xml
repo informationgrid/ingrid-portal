@@ -100,8 +100,9 @@
         </supports>
         <portlet-info>
             <title>Pflege Partner</title>
-            <short-title>Partner</short-title>
+            <short-title>Pflege Partner</short-title>
         </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
     <portlet id="AdminUserPortlet">

@@ -669,7 +669,7 @@ public class AdminUserPortlet extends ContentPortlet {
         return super.doNew(request);
     }
 
-    protected Object[] getDBEntities(ActionRequest request) {
+    protected Object[] getDBEntities(PortletRequest request) {
         return null;
     }
 

@@ -24,6 +24,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -57,6 +58,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     // Attributes in Session
     protected final static String KEY_BROWSER_STATE = "browserState";
 
+    protected final static String KEY_ACTION_FORM = "actionForm";
+
     // Common Parameters in Request
     protected final static String PARAM_SORT_COLUMN = "sortColumn";
 
@@ -87,7 +90,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected static String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
 
     protected static String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
-    
+
     // Data to set in Subclasses
     // -------------------------
 
@@ -114,10 +117,11 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             // add localization recources to the context
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                     request.getLocale()));
-            getContext(request).put("MESSAGES", messages);
+            Context context = getContext(request);
+            context.put("MESSAGES", messages);
 
             // reset state ? may be necessary on initial call (e.g. called from other page)
-            handleState(request);
+            checkInitialEnter(request);
 
             // default view
             boolean doDefaultView = true;
@@ -132,11 +136,21 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             }
 
             // NEW
-            if (action.equals(PARAMV_ACTION_DO_NEW)) {
+            else if (action.equals(PARAMV_ACTION_DO_NEW)) {
                 doDefaultView = !doNew(request);
             }
 
-            // REFRESH, DELETE, SAVE
+            // After DB Update of entry
+            else if (action.equals(PARAMV_ACTION_DB_DO_UPDATE)) {
+                doDefaultView = doViewAfterUpdate(request);
+            }
+
+            // New DB entry
+            else if (action.equals(PARAMV_ACTION_DB_DO_SAVE)) {
+                doDefaultView = doViewAfterSave(request);
+            }
+
+            // REFRESH, DELETE
             if (doDefaultView) {
                 doDefaultView(request);
             }
@@ -203,6 +217,46 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             }
         }
         return false;
+    }
+
+    /**
+     * Default method for handling viewing after update (handles view dependent from action form errors).
+     * @param request
+     * @return true: all is fine, false: something wrong
+     */
+    protected boolean doViewAfterUpdate(RenderRequest request) {
+        ActionForm af = getActionForm(request);
+        if (af != null && af.hasErrors()) {
+            Context context = getContext(request);
+            context.put("actionForm", af);
+            context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
+            Object[] entities = getDBEntities(request);
+            context.put(CONTEXT_ENTITIES, entities);
+            setDefaultViewPage(viewEdit);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Default method for handling viewing after new entity was saved (handles view dependent from action form errors).
+     * @param request
+     * @return true: all is fine, false: something wrong
+     */
+    protected boolean doViewAfterSave(RenderRequest request) {
+        ActionForm af = getActionForm(request);
+        if (af != null && af.hasErrors()) {
+            Context context = getContext(request);
+            context.put("actionForm", af);
+            context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
+            Object[] entities = getDBEntities(request);
+            context.put(CONTEXT_ENTITIES, entities);
+            setDefaultViewPage(viewNew);
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -355,7 +409,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    abstract protected Object[] getDBEntities(ActionRequest request);
+    abstract protected Object[] getDBEntities(PortletRequest request);
 
     /**
      * Default method for saving entities in DB.
@@ -388,14 +442,17 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Handle browser state dependent from "page state". Resets browser state if page is
-     * entered from other page.
+     * Do initialization when new entry from other page (resets browser state, action form ...).
      * @param request
      */
-    static protected void handleState(RenderRequest request) {
-        if (request.getParameter(PARAM_NOT_INITIAL) == null) {
-            clearBrowserState(request);
+    static protected void checkInitialEnter(RenderRequest request) {
+        if (request.getParameter(PARAM_NOT_INITIAL) != null) {
+            return;
         }
+
+        // do initial stuff
+        clearBrowserState(request);
+        clearActionForm(request);
     }
 
     /**
@@ -480,6 +537,23 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         }
 
         return longIds;
+    }
+
+    /**
+     * Get Action Form if present.
+     * @param request
+     * @return
+     */
+    static protected ActionForm getActionForm(PortletRequest request) {
+        return (ActionForm) request.getPortletSession().getAttribute(KEY_ACTION_FORM);
+    }
+
+    /**
+     * Clear state of ActionForm.
+     * @param request
+     */
+    static protected void clearActionForm(PortletRequest request) {
+        request.getPortletSession().removeAttribute(KEY_ACTION_FORM);
     }
 
     /**

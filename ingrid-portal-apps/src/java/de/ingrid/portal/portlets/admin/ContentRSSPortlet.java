@@ -5,9 +5,9 @@ package de.ingrid.portal.portlets.admin;
 
 import java.lang.reflect.Array;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
 import de.ingrid.portal.om.IngridRSSSource;
 
@@ -39,7 +39,7 @@ public class ContentRSSPortlet extends ContentPortlet {
      * @param request
      * @return
      */
-    protected Object[] getDBEntities(ActionRequest request) {
+    protected Object[] getDBEntities(PortletRequest request) {
         IngridRSSSource[] dbEntities = null;
         Long[] ids = convertIds(getIds(request));
         // set up entity

@@ -8,8 +8,10 @@ import java.lang.reflect.Array;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.forms.AdminContentPartnerForm;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.om.IngridPartner;
 
 /**
@@ -40,7 +42,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
      * @param request
      * @return
      */
-    protected Object[] getDBEntities(ActionRequest request) {
+    protected Object[] getDBEntities(PortletRequest request) {
         IngridPartner[] dbEntities = null;
         Long[] ids = convertIds(getIds(request));
         // set up entity
@@ -66,13 +68,34 @@ public class ContentPartnerPortlet extends ContentPortlet {
     }
 
     /**
-     * Redefine method, we have to check idents.
+     * Redefine method, we have to check stuff.
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doUpdate(javax.portlet.ActionRequest)
+     */
+    protected void doUpdate(ActionRequest request) {
+        AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
+                AdminContentPartnerForm.class);
+        af.populate(request);
+        af.validate();
+        if (af.hasErrors()) {
+            return;
+        }
+
+        super.doUpdate(request);
+    }
+
+    /**
+     * Redefine method, we have to check stuff.
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
      */
     protected void doSave(ActionRequest request) {
-        Object[] entities = getDBEntities(request);
-        UtilsDB.saveDBObjects(entities);
+        AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
+                AdminContentPartnerForm.class);
+        af.populate(request);
+        af.validate();
+        if (af.hasErrors()) {
+            return;
+        }
+
+        super.doSave(request);
     }
-
-
 }

@@ -6,6 +6,7 @@
 	#elseif ($mode == 'new')
 		<h2 class="nospace">Partner anlegen</h2>
 	#end
+	#displayFormErrors()
 #set ($colNames = ["ident", "name", "sortkey"])
 #set ($colLabels = ["Kürzel", "Name", "Sortierung"])
 #foreach ($dbEntity in $dbEntities)
