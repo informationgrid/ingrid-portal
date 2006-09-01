@@ -1,0 +1,19 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentPartner" id="frmContentPartner">
+	<div class="formbody">
+#renderDBBrowserNavigation($browser)
+		<p>
+		<table class="border fullwidth">
+#set ($colNames = ["id", "ident", "name", "sortkey"])
+#set ($colTitles = ["Id", "Kürzel", "Name", "Sortierung"])
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($dbEntity in $dbEntities)
+	#set ($rowId = $dbEntity.Id)
+	#set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $dbEntity.Sortkey])
+	#renderDBBrowserRow($rowId $rowValues)
+#end
+		</table>
+		</p>
+	</div>
+#renderDBBrowserFooter()
+</form>

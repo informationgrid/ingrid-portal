@@ -80,7 +80,28 @@
         <portlet-info>
             <title>Pflege RSS Feeds</title>
             <short-title>RSS Feeds</short-title>
-        </portlet-info>        
+        </portlet-info>
+    </portlet>
+
+    <portlet id="ContentPartnerPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/content_partner.vm</value>
+        </init-param>
+        <portlet-name>ContentPartnerPortlet</portlet-name>
+        <display-name>Content Partner Portlet</display-name>
+        <description>The Portlet displays the editor for the Partners.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.ContentPartnerPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Pflege Partner</title>
+            <short-title>Partner</short-title>
+        </portlet-info>
     </portlet>
 
     <portlet id="AdminUserPortlet">
