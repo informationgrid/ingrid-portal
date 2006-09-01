@@ -184,6 +184,7 @@ public class UtilsDB {
 
     /**
      * Get the name of the partner with the according ident.
+     * NOTICE: comparison is case insensitive !
      * @param ident
      * @return the name of the partner OR the key, if no matching partner was found
      */
@@ -192,7 +193,7 @@ public class UtilsDB {
         IngridPartner partner = null;
         for (int i = 0; i < partners.size(); i++) {
             partner = (IngridPartner) partners.get(i);
-            if (partner.getIdent().equals(ident)) {
+            if (partner.getIdent().toLowerCase().equals(ident.toLowerCase())) {
                 return partner.getName();
             }
         }
@@ -213,6 +214,7 @@ public class UtilsDB {
 
     /**
      * Get alle providers that corresponded with a partner key.
+     * NOTICE: comparison is case insensitive !
      * 
      * @param key The partner key (use 'bund')
      * @return The provider of the partner.
@@ -223,17 +225,17 @@ public class UtilsDB {
         String providerPartnerKey = Utils.normalizePartnerKey(key, true).concat("_");
         Iterator it = provider.iterator();
         while (it.hasNext()) {
-            IngridProvider p = (IngridProvider)it.next();
-            if (p.getIdent().startsWith(providerPartnerKey)) {
+            IngridProvider p = (IngridProvider) it.next();
+            if (p.getIdent().toLowerCase().startsWith(providerPartnerKey.toLowerCase())) {
                 result.add(p);
             }
         }
         return result;
     }
-    
-    
+
     /**
      * Get the name of the Provider with the according ident.
+     * NOTICE: comparison is case insensitive !
      * @param ident
      * @return the name of the provider OR the key, if no matching provider was found
      */
@@ -242,7 +244,7 @@ public class UtilsDB {
         IngridProvider provider = null;
         for (int i = 0; i < providers.size(); i++) {
             provider = (IngridProvider) providers.get(i);
-            if (provider.getIdent().equals(ident)) {
+            if (provider.getIdent().toLowerCase().equals(ident.toLowerCase())) {
                 return provider.getName();
             }
         }
@@ -251,6 +253,7 @@ public class UtilsDB {
 
     /**
      * Get the Provider Object with the according ident.
+     * NOTICE: comparison is case insensitive !
      * @param ident
      * @return The IngridPrivider OR null if no matching was found
      */
@@ -259,7 +262,7 @@ public class UtilsDB {
         IngridProvider provider = null;
         for (int i = 0; i < providers.size(); i++) {
             provider = (IngridProvider) providers.get(i);
-            if (provider.getIdent().equals(ident)) {
+            if (provider.getIdent().toLowerCase().equals(ident.toLowerCase())) {
                 return provider;
             }
         }
