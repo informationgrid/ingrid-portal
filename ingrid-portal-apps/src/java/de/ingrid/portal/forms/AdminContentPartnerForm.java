@@ -17,7 +17,6 @@ import org.hibernate.criterion.Restrictions;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridPartner;
-import de.ingrid.portal.portlets.admin.ContentPartnerPortlet;
 
 /**
  * Form Handler for Content Management of Partners.
@@ -26,7 +25,7 @@ import de.ingrid.portal.portlets.admin.ContentPartnerPortlet;
  */
 public class AdminContentPartnerForm extends ActionForm {
 
-    private final static Log log = LogFactory.getLog(ContentPartnerPortlet.class);
+    private final static Log log = LogFactory.getLog(AdminContentPartnerForm.class);
 
     private static final long serialVersionUID = 8335389649101260309L;
 
