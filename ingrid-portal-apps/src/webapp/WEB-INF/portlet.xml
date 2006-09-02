@@ -80,7 +80,7 @@
         <portlet-info>
             <title>Pflege RSS Feeds</title>
             <short-title>RSS Feeds</short-title>
-        </portlet-info>
+        </portlet-info>        
     </portlet>
 
     <portlet id="ContentPartnerPortlet">
@@ -125,6 +125,34 @@
             <short-title>User Manmagement</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <init-param>
+            <description>This is the template in which you setup an email to be sent after user exists</description>
+            <name>emailTemplate</name>
+            <value>/WEB-INF/templates/administration/userCreatedConfirmationEmail.vm</value>
+        </init-param> 
+<!--
+        This overrides the settings in jetspeed.properties
+        <init-param>
+            <description>This option defines the roles a new user will be registered with</description>
+            <name>roles</name>
+            <value>user</value>
+        </init-param>   
+        <init-param>
+            <description>This option defines the groups a new user will be registered with</description>
+            <name>groups</name>
+            <value></value>
+        </init-param>   
+-->
+        <init-param>
+            <description>This option defines the rule names a new user will be registered with</description>
+            <name>rulesNames</name>
+            <value>user-role-fallback</value>
+        </init-param>   
+        <init-param>
+            <description>This option defines the rule values a new user will be registered with</description>
+            <name>rulesValues</name>
+            <value>page</value>
+        </init-param>   
     </portlet>
 
 

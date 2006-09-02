@@ -89,11 +89,14 @@ public class AdminUserForm extends ActionForm {
         setInput(FIELD_LAYOUT_TYPE, request.getParameter(FIELD_LAYOUT_TYPE));
         
         // if tab 1 was selected onle populate fields from tab1
-        if (this.getInput(FIELD_TAB).equals("1")) {        
+        if (this.getInput(FIELD_TAB).equals("1") || this.getInput(FIELD_MODE).equals("new")) {        
             setInput(FIELD_SALUTATION, request.getParameter(FIELD_SALUTATION));
             setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME));
             setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME));
             setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
+            if (this.getInput(FIELD_MODE).equals("new")) {
+                setInput(FIELD_ID, request.getParameter(FIELD_ID));
+            }
             setInput(FIELD_PASSWORD_OLD, request.getParameter(FIELD_PASSWORD_OLD));
             setInput(FIELD_PASSWORD_NEW, request.getParameter(FIELD_PASSWORD_NEW));
             setInput(FIELD_PASSWORD_NEW_CONFIRM, request.getParameter(FIELD_PASSWORD_NEW_CONFIRM));
@@ -138,21 +141,39 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_TAB, "1");
             allOk = false;
         } 
-        if (!hasInput(FIELD_PASSWORD_OLD) && hasInput(FIELD_PASSWORD_NEW)) {
-            setError(FIELD_PASSWORD_OLD, "account.edit.error.noPasswordOld");
+        if (!hasInput(FIELD_ID)) {
+            setError(FIELD_PASSWORD_OLD, "account.create.error.noLogin");
             setInput(FIELD_TAB, "1");
             allOk = false;
         } 
-        if (hasInput(FIELD_PASSWORD_OLD) && !hasInput(FIELD_PASSWORD_NEW)) {
-            setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
-            setInput(FIELD_TAB, "1");
-            allOk = false;
-        } 
-        if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
-            setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
-            setInput(FIELD_TAB, "1");
-            allOk = false;
-        } 
+        if (this.getInput(FIELD_MODE).equals("new")) {
+            if (!hasInput(FIELD_PASSWORD_NEW)) {
+                setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            } 
+            if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
+                setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            } 
+        } else {
+            if (!hasInput(FIELD_PASSWORD_OLD) && hasInput(FIELD_PASSWORD_NEW)) {
+                setError(FIELD_PASSWORD_OLD, "account.edit.error.noPasswordOld");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            } 
+            if (hasInput(FIELD_PASSWORD_OLD) && !hasInput(FIELD_PASSWORD_NEW)) {
+                setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            } 
+            if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
+                setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            } 
+        }
         if (!hasInput(FIELD_EMAIL)) {
             setError(FIELD_EMAIL, "account.edit.error.noEmail");
             setInput(FIELD_TAB, "1");

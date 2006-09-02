@@ -1,41 +1,12 @@
 #set ($action = $renderResponse.createActionURL())
-#set($tab = $actionForm.getInput('tab'))
-#if(!$tab || $tab == "")#set($tab = "1")#end
-<div class="tabs">
-	<ul>			
-$action.setParameter('action','doChangeTab')
-$action.setParameter('id',$actionForm.getInput("id"))
-$action.setParameter('layoutType',$actionForm.getInput("layoutType"))
-#if($tab=='1')
-		<li><a class="selected">Allgemeine Daten</a></li>
-#else
-$action.setParameter('tab','1')
-        <li><a href="$action">Allgemeine Daten</a></li>
-#end
-#if($tab=='2')
-		<li><a class="selected">Rechte</a></li>
-#else
-$action.setParameter('tab','2')
-        <li><a href="$action">Rechte</a></li>
-#end
-     </ul>
-	 <br class="clearer" />
-</div>
 
-
-<form action="$action" method="post" name="frmEditUser" id="frmEditUser">
-	<input type="hidden" name="tab" value="$tab"/>
-	<input type="hidden" name="id" value="$actionForm.getInput('id')"/>
+<form action="$action" method="post" name="frmCreateUser" id="frmCreateUser">
 	<input type="hidden" name="layoutType" value="$actionForm.getInput('layoutType')"/>
+	<input type="hidden" name="mode" value="new"/>
 	<div class="formbody">
 #displayFormErrors()
 #displayFormMessages()
-	#if ($mode == 'edit')
-		<h2 class="nospace">Benutzer aktualisieren</h2>
-	#elseif ($mode == 'new')
-		<h2 class="nospace">Neuen Benutzer anlegen</h2>
-	#end
-#if($tab=='1')
+	<h2 class="nospace">Neuen Benutzer anlegen</h2>
 	<h3>* Pflichtfelder</h3>
 	<p>
 		<label class="float_left col2left alignleft" for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
@@ -65,23 +36,18 @@ $action.setParameter('tab','2')
 	</p>
 	<div class="line_form"><hr /></div>
 	<p>
-		<label class="float_left col2left alignleft" for="login">#displayFieldLabel('login' $MESSAGES.getString('account.create.label.username'))</label>
-		<p>#getFieldValue('id')</p>
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft" for="login">#displayFieldLabel('password_old' $MESSAGES.getString('account.edit.label.password_old'))</label>
-		<input class="float_left col2right inputstyletext" type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" />
+		<label class="float_left col2left alignleft" for="login">#displayFieldLabel('id' $MESSAGES.getString('account.create.label.username'))*</label>
+		<input class="float_left col2right inputstyletext" type="text" id="id" name="id" value="#getFieldValue('id')" />
 		<p class="clearer"></p>
 	</p>
 	<div class="line_form"><hr /></div>
 	<p>
-		<label class="float_left col2left alignleft" for="password">#displayFieldLabel('password_new' $MESSAGES.getString('account.edit.label.password_new'))</label>
+		<label class="float_left col2left alignleft" for="password_new">#displayFieldLabel('password_new' $MESSAGES.getString('account.create.label.password'))*</label>
 		<input class="float_left col2right inputstyletext" type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" />
 		<p class="clearer"></p>
 	</p>
 	<p>
-		<label class="float_left col2left alignleft" for="password_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.edit.label.password_new_confirm'))</label>
+		<label class="float_left col2left alignleft" for="password_new_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.create.label.password_confirm'))*</label>
 		<input class="float_left col2right inputstyletext" type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" />
 		<p class="clearer"></p>
 	</p>
@@ -152,65 +118,6 @@ $action.setParameter('tab','2')
 	</p>
 	<p class="clearer"></p>
 	</br>
-#elseif($tab=='2')
-#if($actionForm.getInput('layoutType') == "admin.portal" || $actionForm.getInput('layoutType') == "admin")
-	<p>
-		<label class="float_left col2left alignleft">Admin Portal</label>
-		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') />
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft">Admin Partner</label>
-		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1') />
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' 'zugeordneter Partner')</label>
-		<select class="float_left inputstyle" size="1" id="partner" name="partner">
-		<option value="" #getSelected('partner' '')>---</option>
-		#foreach ($partner in $partnerlist)
-			<option value="$partner.ident" #getSelected('partner' $partner.ident)>$partner.name</option>
-		#end	
-		</select>  
-		<p class="clearer"></p>
-	</p>
-#elseif($actionForm.getInput('layoutType') == "admin.portal.partner")
-	<input type="hidden" name="admin_portal" value="#if($actionForm.isCurrentInput('admin_portal','1'))1#end"/>
-	<input type="hidden" name="admin_partner" value="#if($actionForm.isCurrentInput('admin_partner','1'))1#end"/>
-	<input type="hidden" name="partner" value="$actionForm.getInput('partner')"/>
-	<p>
-		<label class="float_left col2left alignleft" for="partner">zugeordneter Partner:</label>$actionForm.getInput('partner_name')
-		<p class="clearer"></p>
-	</p>
-#end
-	<p>
-		<label class="float_left col2left alignleft">Admin Index</label>
-		<input type="checkbox" id="admin_index" name="admin_index" value="1" #getChecked('admin_index' '1') />
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft">Admin Katalog</label>
-		<input type="checkbox" id="admin_catalog" name="admin_catalog" value="1" #getChecked('admin_catalog' '1') />
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft" for="provider">#displayFieldLabel('provider' 'zugeordnete Anbieter')</label>
-#if($actionForm.hasInput('partner'))
-		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
-		<option value="*" #getSelected('provider' '*')>Alle</option>
-		#foreach ($provider in $providerlist)
-			<option value="$provider.ident" #getSelected('provider' $provider.ident)>$UtilsString.cutString($provider.name, 50, 50)</option>
-		#end	
-		</select>
-#else
-	Bitte geben Sie zunächst einen Partner an und speichern Sie den Datensatz.
-#end		
-		<p class="clearer"></p>
-	</p>
-	<p class="clearer"></p>
-	</br>
-#end
-
 	</div>
 #renderDBEditFooter($mode)
 </form>

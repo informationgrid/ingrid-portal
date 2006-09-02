@@ -3,11 +3,14 @@
  */
 package de.ingrid.portal.portlets.admin;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.Permission;
 import java.security.Permissions;
 import java.security.Principal;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +18,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
@@ -25,11 +29,20 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.security.auth.Subject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
+import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
+import org.apache.jetspeed.om.folder.Folder;
+import org.apache.jetspeed.om.folder.FolderNotFoundException;
+import org.apache.jetspeed.om.folder.InvalidFolderException;
+import org.apache.jetspeed.page.PageManager;
+import org.apache.jetspeed.page.document.NodeException;
+import org.apache.jetspeed.profiler.Profiler;
+import org.apache.jetspeed.security.GroupManager;
 import org.apache.jetspeed.security.InvalidPasswordException;
 import org.apache.jetspeed.security.PasswordAlreadyUsedException;
 import org.apache.jetspeed.security.PermissionManager;
@@ -41,8 +54,10 @@ import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminUserForm;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -84,11 +99,44 @@ public class AdminUserPortlet extends ContentPortlet {
 
     private static final String KEY_ENTITIES = "entities";
 
+    // Init Parameters
+    private static final String IP_ROLES = "roles"; // comma separated
+
+    private static final String IP_GROUPS = "groups"; // comma separated
+
+    private static final String IP_RETURN_URL = "returnURL";
+
+    private static final String IP_RULES_NAMES = "rulesNames";
+
+    private static final String IP_RULES_VALUES = "rulesValues";
+
+    private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
+
+    private PortalAdministration admin;
+
     private UserManager userManager;
 
     private RoleManager roleManager;
 
+    private GroupManager groupManager;
+
     private PermissionManager permissionManager;
+
+    private PageManager pageManager;
+
+    private Profiler profiler;
+
+    /** email template to use for merging */
+    private String emailTemplate;
+
+    /** roles */
+    private List roles;
+
+    /** groups */
+    private List groups;
+
+    /** profile rules */
+    private Map rules;
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#refreshBrowserState(javax.portlet.PortletRequest)
@@ -103,6 +151,20 @@ public class AdminUserPortlet extends ContentPortlet {
      */
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
+
+        profiler = (Profiler) getPortletContext().getAttribute(CommonPortletServices.CPS_PROFILER_COMPONENT);
+        if (null == profiler) {
+            throw new PortletException("Failed to find the Portal Profiler on portlet initialization");
+        }
+        pageManager = (PageManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
+        if (null == pageManager) {
+            throw new PortletException("Failed to find the Portal Pagemanager on portlet initialization");
+        }
+        admin = (PortalAdministration) getPortletContext()
+                .getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
+        if (null == admin) {
+            throw new PortletException("Failed to find the Portal Administration on portlet initialization");
+        }
         userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
         if (null == userManager) {
             throw new PortletException("Failed to find the User Manager on portlet initialization");
@@ -111,17 +173,38 @@ public class AdminUserPortlet extends ContentPortlet {
         if (null == roleManager) {
             throw new PortletException("Failed to find the Role Manager on portlet initialization");
         }
+        groupManager = (GroupManager) getPortletContext().getAttribute(
+                CommonPortletServices.CPS_GROUP_MANAGER_COMPONENT);
+        if (null == groupManager) {
+            throw new PortletException("Failed to find the Group Manager on portlet initialization");
+        }
         permissionManager = (PermissionManager) getPortletContext().getAttribute(
                 CommonPortletServices.CPS_PERMISSION_MANAGER);
         if (permissionManager == null) {
             throw new PortletException("Could not get instance of portal permission manager component");
         }
 
+        // roles
+        this.roles = getInitParameterList(config, IP_ROLES);
+
+        // groups
+        this.groups = getInitParameterList(config, IP_GROUPS);
+
+        // rules (name,value pairs)
+        List names = getInitParameterList(config, IP_RULES_NAMES);
+        List values = getInitParameterList(config, IP_RULES_VALUES);
+        rules = new HashMap();
+        for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
+            rules.put(names.get(ix), values.get(ix));
+        }
+
+        this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
+
         // set specific stuff in mother class
         psmlPage = "/ingrid-portal/portal/administration/admin-usermanagement.psml";
         viewDefault = "/WEB-INF/templates/administration/admin_user_browser.vm";
         viewEdit = "/WEB-INF/templates/administration/admin_user_edit.vm";
-        viewNew = "/WEB-INF/templates/administration/admin_user_edit.vm";
+        viewNew = "/WEB-INF/templates/administration/admin_user_new.vm";
 
     }
 
@@ -415,6 +498,109 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
      */
     protected void doSave(ActionRequest request) {
+        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+        f.clearErrors();
+        f.populate(request);
+        if (!f.validate()) {
+            return;
+        }
+
+        try {
+
+            String userName = f.getInput(AdminUserForm.FIELD_ID);
+            String password = f.getInput(AdminUserForm.FIELD_PASSWORD_NEW);
+
+            // check if the user name exists
+            boolean userIdExistsFlag = true;
+            try {
+                userManager.getUser(userName);
+            } catch (SecurityException e) {
+                userIdExistsFlag = false;
+            }
+            if (userIdExistsFlag) {
+                f.setError(AdminUserForm.FIELD_ID, "account.create.error.user.exists");
+                return;
+            }
+
+            Map userAttributes = new HashMap();
+            // we'll assume that these map back to PLT.D values
+            userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
+            userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
+            userAttributes.put("user.name.family", f.getInput(AdminUserForm.FIELD_LASTNAME));
+            userAttributes.put("user.business-info.online.email", f.getInput(AdminUserForm.FIELD_EMAIL));
+            userAttributes.put("user.business-info.postal.street", f.getInput(AdminUserForm.FIELD_STREET));
+            userAttributes.put("user.business-info.postal.postalcode", f.getInput(AdminUserForm.FIELD_POSTALCODE));
+            userAttributes.put("user.business-info.postal.city", f.getInput(AdminUserForm.FIELD_CITY));
+
+            // theses are not PLT.D values but ingrid specifics
+            userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(AdminUserForm.FIELD_AGE));
+            userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(AdminUserForm.FIELD_ATTENTION));
+            userAttributes.put("user.custom.ingrid.user.interest", f.getInput(AdminUserForm.FIELD_INTEREST));
+            userAttributes.put("user.custom.ingrid.user.profession", f.getInput(AdminUserForm.FIELD_PROFESSION));
+            userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
+                    .getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
+
+            // generate login id
+            String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
+                    Long.toString(System.currentTimeMillis())));
+            userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
+
+            admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
+
+            userManager.setUserEnabled(userName, true);
+
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                    request.getLocale()));
+
+            HashMap userInfo = new HashMap(userAttributes);
+            // map coded stuff
+            String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
+                    .get("user.name.prefix"));
+            userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
+            userInfo.put("login", userName);
+            userInfo.put("password", password);
+
+            String language = request.getLocale().getLanguage();
+            String localizedTemplatePath = this.emailTemplate;
+            if (localizedTemplatePath == null) {
+                log.error("email template not available");
+                f.setError("nofield", "account.created.problems.email");
+                return;
+            }
+            int period = localizedTemplatePath.lastIndexOf(".");
+            if (period > 0) {
+                String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
+                        + localizedTemplatePath.substring(period + 1);
+                if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
+                    this.emailTemplate = fixedTempl;
+                    localizedTemplatePath = fixedTempl;
+                }
+            }
+
+            if (localizedTemplatePath == null) {
+                log.error("email template not available");
+                f.setError("nofield", "account.created.problems.email");
+                return;
+            }
+
+            String emailSubject = messages.getString("account.create.confirmation.email.subject");
+
+            String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
+                    "foo@bar.com");
+            String to = (String) userInfo.get("user.business-info.online.email");
+            String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
+            if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
+                f.addMessage("account.created.title");
+            } else {
+                f.setError("", "account.created.problems.email");
+                return;
+            }
+
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems creating new user.", e);
+            }
+        }
 
     }
 
@@ -501,7 +687,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     permissionManager.revokePermission(userPrincipal,
                             adminPortalPartnerProviderIndexIngridPortalPermission);
                 }
-                
+
                 // update the admin.portal.partner.provider.catalog permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)) {
                     permissionManager.grantPermission(userPrincipal,
@@ -518,8 +704,8 @@ public class AdminUserPortlet extends ContentPortlet {
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
                     // add IngridPartnerPermissions for specified partner
-                    createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner." + f
-                            .getInput(AdminUserForm.FIELD_PARTNER)));
+                    createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner."
+                            + f.getInput(AdminUserForm.FIELD_PARTNER)));
                 }
 
                 // remove all IngridProviderPermissions, they will be reset if a
@@ -531,10 +717,13 @@ public class AdminUserPortlet extends ContentPortlet {
                     // add IngridProviderPermissions for specified partner
                     String[] providers = f.getInputAsArray("provider");
                     for (int i = 0; i < providers.length; i++) {
-                        createAndGrantPermission(userPrincipal, new IngridProviderPermission("provider." + providers[i]));
+                        createAndGrantPermission(userPrincipal,
+                                new IngridProviderPermission("provider." + providers[i]));
                     }
                 }
             }
+            f.addMessage("account.edited.title");
+
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("Problems saving user.", e);
@@ -577,13 +766,57 @@ public class AdminUserPortlet extends ContentPortlet {
             }
         }
     }
-    
+
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDelete(javax.portlet.ActionRequest)
      */
     protected void doDelete(ActionRequest request) {
-        // TODO Auto-generated method stub
 
+        String[] ids = (String[]) getDBEntities(request);
+        for (int i = 0; i < ids.length; i++) {
+            try {
+
+                final String innerFolder = Folder.USER_FOLDER;
+                final String innerUserName = ids[i];
+                final PageManager innerPageManager = pageManager;
+                User powerUser = userManager.getUser("admin");
+                JetspeedException pe = (JetspeedException) Subject.doAsPrivileged(powerUser.getSubject(),
+                        new PrivilegedAction() {
+                            public Object run() {
+                                try {
+                                    // remove user's home folder
+                                    Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
+                                    innerPageManager.removeFolder(f);
+
+                                    return null;
+                                } catch (FolderNotFoundException e1) {
+                                    return e1;
+                                } catch (InvalidFolderException e1) {
+                                    return e1;
+                                } catch (NodeException e1) {
+                                    return e1;
+                                }
+                            }
+                        }, null);
+                if (pe == null) {
+                    // remove user creation and cascade roles, groups, etc
+                    try {
+                        if (userManager.getUser(ids[i]) != null) {
+                            userManager.removeUser(ids[i]);
+                        }
+                    } catch (Exception e) {
+                        log.error("Registration Error: Failed to remove user " + ids[i]);
+                    }
+                } else {
+                    log.error("Registration Error: Failed to remove user folders for " + ids[i] + ", " + pe.toString());
+                    throw pe;
+                }
+            } catch (Exception e) {
+                if (log.isErrorEnabled()) {
+                    log.error("Problems deleting user (" + ids[i] + ").", e);
+                }
+            }
+        }
     }
 
     /**
@@ -601,7 +834,15 @@ public class AdminUserPortlet extends ContentPortlet {
             // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
             response.setRenderParameter("cmd", "action processed");
-        // check for cancel to avoid an unnecesarry "doChangeTab" action
+        } else if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
+            // call sub method
+            doSave(request);
+            // reset the sction to edit, to show the edit screen and collect all
+            // necessary data
+            response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_NEW);
+            response.setRenderParameter("cmd", "action processed");
+
+            // check for cancel to avoid an unnecesarry "doChangeTab" action
         } else if (request.getParameter(PARAMV_ACTION_DB_DO_CANCEL) != null) {
             response.setRenderParameter(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
             return;
@@ -665,12 +906,25 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doNew(javax.portlet.RenderRequest)
      */
     protected boolean doNew(RenderRequest request) {
-        // TODO Auto-generated method stub
-        return super.doNew(request);
+        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+
+        Context context = getContext(request);
+        context.put(CONTEXT_MODE, CONTEXTV_MODE_NEW);
+        context.put(CONTEXT_UTILS_STRING, new UtilsString());
+
+        String cmd = request.getParameter("cmd");
+        if (cmd == null) {
+            f.clear();
+        }
+
+        context.put("actionForm", f);
+
+        setDefaultViewPage(viewNew);
+        return true;
     }
 
     protected Object[] getDBEntities(PortletRequest request) {
-        return null;
+        return getIds(request);
     }
 
     /**
@@ -825,8 +1079,6 @@ public class AdminUserPortlet extends ContentPortlet {
             // set type of layout
             String layoutType = getLayoutType(authUserPermissions);
             f.setInput(AdminUserForm.FIELD_LAYOUT_TYPE, layoutType);
-            
-            f.setInput(AdminUserForm.FIELD_MODE, "edit");
 
             // get user roles
             Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
@@ -834,6 +1086,18 @@ public class AdminUserPortlet extends ContentPortlet {
         } catch (Exception e) {
         }
 
+    }
+
+    protected List getInitParameterList(PortletConfig config, String ipName) {
+        String temp = config.getInitParameter(ipName);
+        if (temp == null)
+            return new ArrayList();
+
+        String[] temps = temp.split("\\,");
+        for (int ix = 0; ix < temps.length; ix++)
+            temps[ix] = temps[ix].trim();
+
+        return Arrays.asList(temps);
     }
 
 }

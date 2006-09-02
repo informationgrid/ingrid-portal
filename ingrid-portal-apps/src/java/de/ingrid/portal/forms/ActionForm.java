@@ -43,6 +43,14 @@ public abstract class ActionForm implements Serializable {
     protected LinkedHashMap errors = new LinkedHashMap();
 
     /**
+     * encapsulates form messages at your command. We use LinkedHashMap
+     * to keep insertion order ! NOTICE: LinkedHashMap is NOT SYNCHRONIZED
+     * shouldn't be a problem, there aren't multiple threads accessing this one
+     * (one form per user !)
+     */
+    protected ArrayList messages = new ArrayList();
+    
+    /**
      * initialize form with default values
      */
     public abstract void init();
@@ -220,6 +228,44 @@ public abstract class ActionForm implements Serializable {
         errors.clear();
     }
 
+    // ==============
+    // MESSAGE HANDLING
+    // ==============
+
+    /**
+     * Are there messages encapsulated
+     * 
+     * @return true if there are messages
+     */
+    public boolean hasMessages() {
+        return !messages.isEmpty();
+    }
+
+    /**
+     * Return all encapsulated messages.
+     */
+    public Collection getAllMessages() {
+        if (!messages.contains("") && !messages.contains(null)) {
+            return messages;
+        }
+
+        return messages;
+    }
+
+    /**
+     * Set a message.
+     */
+    public void addMessage(String msg) {
+        messages.add(msg);
+    }
+
+    /**
+     * Clear ALL Messages
+     */
+    public void clearMessages() {
+        messages.clear();
+    }    
+    
     // =======================
     // CHECK SELECTION HELPERS
     // =======================

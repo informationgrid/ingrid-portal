@@ -33,6 +33,21 @@ $actionForm.getInputHTMLEscaped($field)#end
 #displayFormErrorsByForm($actionForm)	
 #end
 
+#macro (displayFormMessagesByForm $form)
+#if ($form.hasMessages())
+<div>
+#foreach ($msg in $form.getAllMessages())
+<h3 class="portlet-msg-info">$MESSAGES.getString($msg)</h3>
+#end
+</div>
+#end
+#end
+
+#macro (displayFormMessages)
+#displayFormMessagesByForm($actionForm)	
+#end
+
+
 #macro (displayFieldLabelByForm $form $fieldName $fieldLabel)
 #if ($form.hasErrorInField($fieldName))
 <span class="portlet-msg-error">$fieldLabel</span>#else

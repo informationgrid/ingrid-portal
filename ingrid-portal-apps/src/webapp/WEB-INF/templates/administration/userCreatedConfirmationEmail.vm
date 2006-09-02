@@ -1,0 +1,13 @@
+Sehr geehrte(r) $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
+
+Willkommen bei PortalU! 
+
+Für Sie wurde ein Zugang angelegt:
+
+Benutzername: $!{map.get("login")}
+Passwort: $!{map.get("password")}
+
+
+Mit freundlichen Grüßen,
+
+Ihr PortalU Team
