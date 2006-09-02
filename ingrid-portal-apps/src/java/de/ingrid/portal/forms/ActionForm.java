@@ -233,7 +233,7 @@ public abstract class ActionForm implements Serializable {
     // ==============
 
     /**
-     * Are there messages encapsulated
+     * Are there messages encapsulated (on validation)
      * 
      * @return true if there are messages
      */
@@ -245,15 +245,11 @@ public abstract class ActionForm implements Serializable {
      * Return all encapsulated messages.
      */
     public Collection getAllMessages() {
-        if (!messages.contains("") && !messages.contains(null)) {
-            return messages;
-        }
-
         return messages;
     }
 
     /**
-     * Set a message.
+     * Set a message for a field
      */
     public void addMessage(String msg) {
         messages.add(msg);
@@ -264,7 +260,8 @@ public abstract class ActionForm implements Serializable {
      */
     public void clearMessages() {
         messages.clear();
-    }    
+    }
+    
     
     // =======================
     // CHECK SELECTION HELPERS
