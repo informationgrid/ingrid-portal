@@ -217,9 +217,9 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDefaultView(javax.portlet.RenderRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewDefault(javax.portlet.RenderRequest)
      */
-    protected boolean doDefaultView(RenderRequest request) {
+    protected boolean doViewDefault(RenderRequest request) {
         try {
 
             // get entities
@@ -495,9 +495,9 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
-    protected void doSave(ActionRequest request) {
+    protected void doActionSave(ActionRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
         f.populate(request);
@@ -605,9 +605,9 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doUpdate(javax.portlet.ActionRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
-    protected void doUpdate(ActionRequest request) {
+    protected void doActionUpdate(ActionRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
         f.populate(request);
@@ -768,9 +768,9 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doDelete(javax.portlet.ActionRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionDelete(javax.portlet.ActionRequest)
      */
-    protected void doDelete(ActionRequest request) {
+    protected void doActionDelete(ActionRequest request) {
 
         String[] ids = (String[]) getDBEntities(request);
         for (int i = 0; i < ids.length; i++) {
@@ -829,14 +829,14 @@ public class AdminUserPortlet extends ContentPortlet {
 
         if (request.getParameter(PARAMV_ACTION_DB_DO_UPDATE) != null) {
             // call sub method
-            doUpdate(request);
+            doActionUpdate(request);
             // reset the sction to edit, to show the edit screen and collect all
             // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
             response.setRenderParameter("cmd", "action processed");
         } else if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
             // call sub method
-            doSave(request);
+            doActionSave(request);
             // reset the sction to edit, to show the edit screen and collect all
             // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_NEW);
@@ -864,9 +864,9 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doEdit(javax.portlet.RenderRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewEdit(javax.portlet.RenderRequest)
      */
-    protected boolean doEdit(RenderRequest request) {
+    protected boolean doViewEdit(RenderRequest request) {
 
         try {
 
@@ -903,9 +903,9 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doNew(javax.portlet.RenderRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewNew(javax.portlet.RenderRequest)
      */
-    protected boolean doNew(RenderRequest request) {
+    protected boolean doViewNew(RenderRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
 
         Context context = getContext(request);

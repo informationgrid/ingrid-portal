@@ -124,7 +124,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             checkInitialEnter(request);
 
             // default view
-            boolean doDefaultView = true;
+            boolean doViewDefault = true;
             setDefaultViewPage(viewDefault);
 
             // handle action
@@ -132,27 +132,27 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
             // EDIT
             if (action.equals(PARAMV_ACTION_DO_EDIT)) {
-                doDefaultView = !doEdit(request);
+                doViewDefault = !doViewEdit(request);
             }
 
             // NEW
             else if (action.equals(PARAMV_ACTION_DO_NEW)) {
-                doDefaultView = !doNew(request);
+                doViewDefault = !doViewNew(request);
             }
 
             // After DB Update of entry
             else if (action.equals(PARAMV_ACTION_DB_DO_UPDATE)) {
-                doDefaultView = doViewAfterUpdate(request);
+                doViewDefault = doViewAfterUpdate(request);
             }
 
             // New DB entry
             else if (action.equals(PARAMV_ACTION_DB_DO_SAVE)) {
-                doDefaultView = doViewAfterSave(request);
+                doViewDefault = doViewAfterSave(request);
             }
 
             // REFRESH, DELETE
-            if (doDefaultView) {
-                doDefaultView(request);
+            if (doViewDefault) {
+                doViewDefault(request);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -170,7 +170,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return true: all is fine, false: something wrong
      */
-    protected boolean doEdit(RenderRequest request) {
+    protected boolean doViewEdit(RenderRequest request) {
         try {
             // get data from database
             Long[] ids = convertIds(getIds(request));
@@ -202,7 +202,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return true: all is fine, false: something wrong
      */
-    protected boolean doNew(RenderRequest request) {
+    protected boolean doViewNew(RenderRequest request) {
         try {
             Object[] newEntity = { dbEntityClass.newInstance() };
 
@@ -266,7 +266,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return true: all is fine, false: something wrong
      */
-    protected boolean doDefaultView(RenderRequest request) {
+    protected boolean doViewDefault(RenderRequest request) {
         try {
             // always refresh !
             refreshBrowserState(request);
@@ -370,21 +370,21 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 // call sub method
-                doSave(request);
+                doActionSave(request);
 
             } else if (request.getParameter(PARAMV_ACTION_DB_DO_UPDATE) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_UPDATE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 // call sub method
-                doUpdate(request);
+                doActionUpdate(request);
 
             } else if (request.getParameter(PARAMV_ACTION_DB_DO_DELETE) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_DELETE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 // call sub method
-                doDelete(request);
+                doActionDelete(request);
 
             } else if (request.getParameter(PARAM_SORT_COLUMN) != null) {
                 // jump to first page when column sorting was clicked
@@ -416,7 +416,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * Entities are extracted from request via getDBEntities()
      * @param request
      */
-    protected void doSave(ActionRequest request) {
+    protected void doActionSave(ActionRequest request) {
         Object[] entities = getDBEntities(request);
         UtilsDB.saveDBObjects(entities);
     }
@@ -426,7 +426,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * Entities are extracted from request via getDBEntities()
      * @param request
      */
-    protected void doUpdate(ActionRequest request) {
+    protected void doActionUpdate(ActionRequest request) {
         Object[] entities = getDBEntities(request);
         UtilsDB.updateDBObjects(entities);
     }
@@ -436,13 +436,13 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * Entities are extracted from request via getDBEntities()
      * @param request
      */
-    protected void doDelete(ActionRequest request) {
+    protected void doActionDelete(ActionRequest request) {
         Object[] entities = getDBEntities(request);
         UtilsDB.deleteDBObjects(entities);
     }
 
     /**
-     * Do initialization when new entry from other page (resets browser state, action form ...).
+     * Do initialization when entering from other page (resets browser state, action form ...).
      * @param request
      */
     static protected void checkInitialEnter(RenderRequest request) {

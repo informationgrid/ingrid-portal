@@ -69,9 +69,9 @@ public class ContentPartnerPortlet extends ContentPortlet {
 
     /**
      * Redefine method, we have to check stuff.
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doUpdate(javax.portlet.ActionRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
-    protected void doUpdate(ActionRequest request) {
+    protected void doActionUpdate(ActionRequest request) {
         AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
                 AdminContentPartnerForm.class);
         af.populate(request);
@@ -80,14 +80,14 @@ public class ContentPartnerPortlet extends ContentPortlet {
             return;
         }
 
-        super.doUpdate(request);
+        super.doActionUpdate(request);
     }
 
     /**
      * Redefine method, we have to check stuff.
-     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doSave(javax.portlet.ActionRequest)
+     * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
-    protected void doSave(ActionRequest request) {
+    protected void doActionSave(ActionRequest request) {
         AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
                 AdminContentPartnerForm.class);
         af.populate(request);
@@ -96,6 +96,6 @@ public class ContentPartnerPortlet extends ContentPortlet {
             return;
         }
 
-        super.doSave(request);
+        super.doActionSave(request);
     }
 }
