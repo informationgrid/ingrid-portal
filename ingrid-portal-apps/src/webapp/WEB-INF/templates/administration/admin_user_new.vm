@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 
 <form action="$action" method="post" name="frmCreateUser" id="frmCreateUser">
-	<input type="hidden" name="layoutType" value="$actionForm.getInput('layoutType')"/>
+	<input type="hidden" name="layoutPermission" value="$actionForm.getInput('layoutPermission')"/>
 	<input type="hidden" name="mode" value="new"/>
 	<div class="formbody">
 #displayFormErrors()

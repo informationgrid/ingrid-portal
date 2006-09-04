@@ -5,7 +5,7 @@
 	<ul>			
 $action.setParameter('action','doChangeTab')
 $action.setParameter('id',$actionForm.getInput("id"))
-$action.setParameter('layoutType',$actionForm.getInput("layoutType"))
+$action.setParameter('layoutPermission',$actionForm.getInput("layoutPermission"))
 #if($tab=='1')
 		<li><a class="selected">Allgemeine Daten</a></li>
 #else
@@ -26,7 +26,7 @@ $action.setParameter('tab','2')
 <form action="$action" method="post" name="frmEditUser" id="frmEditUser">
 	<input type="hidden" name="tab" value="$tab"/>
 	<input type="hidden" name="id" value="$actionForm.getInput('id')"/>
-	<input type="hidden" name="layoutType" value="$actionForm.getInput('layoutType')"/>
+	<input type="hidden" name="layoutPermission" value="$actionForm.getInput('layoutPermission')"/>
 	<div class="formbody">
 #displayFormErrors()
 #displayFormMessages()
@@ -153,7 +153,7 @@ $action.setParameter('tab','2')
 	<p class="clearer"></p>
 	</br>
 #elseif($tab=='2')
-#if($actionForm.getInput('layoutType') == "admin.portal" || $actionForm.getInput('layoutType') == "admin")
+#if($actionForm.getInput('layoutPermission') == "admin.portal" || $actionForm.getInput('layoutPermission') == "admin")
 	<p>
 		<label class="float_left col2left alignleft">Admin Portal</label>
 		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') />
@@ -174,7 +174,7 @@ $action.setParameter('tab','2')
 		</select>  
 		<p class="clearer"></p>
 	</p>
-#elseif($actionForm.getInput('layoutType') == "admin.portal.partner")
+#elseif($actionForm.getInput('layoutPermission') == "admin.portal.partner")
 	<input type="hidden" name="admin_portal" value="#if($actionForm.isCurrentInput('admin_portal','1'))1#end"/>
 	<input type="hidden" name="admin_partner" value="#if($actionForm.isCurrentInput('admin_partner','1'))1#end"/>
 	<input type="hidden" name="partner" value="$actionForm.getInput('partner')"/>

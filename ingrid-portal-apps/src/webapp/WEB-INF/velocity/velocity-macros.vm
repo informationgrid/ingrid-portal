@@ -123,14 +123,50 @@ $fieldLabel#end
 </tr>
 #end
 
+#macro (renderDBBrowserRowWithEditLink $rowId $rowValues)
+<tr>
+#if ($velocityCount % 2 == 0)
+	#set ($rowstyle = "contentRowEven")
+#else
+	#set ($rowstyle = "contentRowOdd")
+#end   
+	<td class="$rowstyle">
+		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+    </td>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('doEdit','Edit')
+$action.setParameter("id",$rowId)
+	<td class="$rowstyle"><a href="$action">$rowId</a></td>
+#foreach ($rowValue in $rowValues)
+	<td class="$rowstyle"><a href="$action">$rowValue</a></td>
+#end
+</tr>
+#end
+
+
 #macro (renderDBBrowserFooter)
+#set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
+#renderDBBrowserFooterButtons($buttons)
+#end
+
+#macro (renderDBBrowserFooterButtons $buttons)
 <div class="formfooter">
-	<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
-	<span class="float_left">&nbsp;</span>
-	<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
-	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
-	<span class="float_right">&nbsp;</span>
-	<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
+#foreach ($button in $buttons)
+	#if($button == "doEdit")
+    	<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
+    	<span class="float_left">&nbsp;</span>
+	#end
+	#if($button == "doDelete")
+		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
+	#end
+	#if($button == "doRefresh")
+    	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
+    	<span class="float_right">&nbsp;</span>
+	#end
+	#if($button == "doNew")
+		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
+	#end
+#end
 	<p class="clearer"></p>
 </div>
 #end

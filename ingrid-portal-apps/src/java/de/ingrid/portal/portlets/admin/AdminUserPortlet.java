@@ -67,6 +67,7 @@ import de.ingrid.portal.portlets.security.SecurityUtil;
 import de.ingrid.portal.security.permission.IngridPartnerPermission;
 import de.ingrid.portal.security.permission.IngridPortalPermission;
 import de.ingrid.portal.security.permission.IngridProviderPermission;
+import de.ingrid.portal.security.role.IngridRole;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -103,8 +104,6 @@ public class AdminUserPortlet extends ContentPortlet {
     private static final String IP_ROLES = "roles"; // comma separated
 
     private static final String IP_GROUPS = "groups"; // comma separated
-
-    private static final String IP_RETURN_URL = "returnURL";
 
     private static final String IP_RULES_NAMES = "rulesNames";
 
@@ -347,18 +346,49 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * Checks for the permission / role combination to include a user.
+     * Checks for the right permission condition to include a user into the user
+     * browser.
      * 
-     * Only users with 'user' as ONLY role will be included for admins with
-     * permission "admin.portal";
+     * The following users will be included:
+     * 
+     * <li>for admins with permission "admin": all users </li>
+     * <li>for admins with permission "admin.portal": users with only role
+     * "user" </li>
+     * <li>for admins with permission "admin.portal": users with a permission
+     * "admin.portal.*" </li>
+     * <li>for admins with permission "admin.portal.partner": users with
+     * IngridPortalPermission("admin.portal.partner.*") AND
+     * IngridPartnerPermission("partner".<partner of the admin></li>
+     * <li>for admins with permission "admin.portal.partner": users with role
+     * "ingrid-provider" AND the IngridPartnerPermission("partner.<partner of
+     * the admin>")</li>
      * 
      * @param authUserPermissions
+     *            The Permissions of the authenticated user.
+     * @param userPermissions
+     *            The Permissions of the user to test.
      * @param userRoles
-     * @return
+     *            The roles of the user to test.
+     * @return true if the auth user has permission to edit the user with
+     *         userPermissions, false if not.
      */
-    public static boolean includeUserByRole(Permissions authUserPermissions, Collection userRoles) {
-        // for permission "admin.portal", include users with role "user"
+    public static boolean includeUserByRoleAndPermission(Permissions authUserPermissions, Collection userRoles,
+            Permissions userPermissions) {
+        Enumeration en;
+
+        // WE ARE KING, STEP ASIDE!
+        if (authUserPermissions.implies(adminIngridPortalPermission)) {
+            return true;
+        }
+        // for permission "admin.portal", include users with permission
+        // "admin.portal.*" OR with the only role "user"
         if (authUserPermissions.implies(adminPortalIngridPortalPermission)) {
+            en = userPermissions.elements();
+            while (en.hasMoreElements()) {
+                if (adminPortalSTARIngridPortalPermission.implies((Permission) en.nextElement())) {
+                    return true;
+                }
+            }
             Iterator it = userRoles.iterator();
             // check for user with no roles, exit
             if (!it.hasNext()) {
@@ -371,40 +401,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     return false;
                 }
             }
-            // user has only one role 'user'
             return true;
-        }
-        // no permission
-        return false;
-    }
-
-    /**
-     * Checks for the right permission condition to include a user.
-     * 
-     * @param authUserPermissions
-     *            The Permissions of the authenticated user.
-     * @param userPermissions
-     *            The Permissions of the user to test.
-     * @return true if the Permissions of the auth user allow to edit the user
-     *         with userPermissions, false if not.
-     */
-    public static boolean includeUserByPermission(Permissions authUserPermissions, Permissions userPermissions) {
-        Permission p;
-        Enumeration en;
-
-        // WE ARE KING, STEP ASIDE!
-        if (authUserPermissions.implies(adminIngridPortalPermission)) {
-            return true;
-        }
-        // for permission "admin.portal", include users with permission
-        // "admin.portal.*"
-        if (authUserPermissions.implies(adminPortalIngridPortalPermission)) {
-            en = userPermissions.elements();
-            while (en.hasMoreElements()) {
-                if (adminPortalSTARIngridPortalPermission.implies((Permission) en.nextElement())) {
-                    return true;
-                }
-            }
         }
         // for permission "admin.portal.partner", include with permission
         // "admin.portal.partner.*" AND IngridPartnerPermission("partner",
@@ -415,12 +412,13 @@ public class AdminUserPortlet extends ContentPortlet {
             // add users that imply admin.portal.provider.* AND
             // IngridPartnerPermission(partner, <partner_of_auth_user>)
             boolean implyPermission = false;
+            boolean implyRole = false;
             boolean implyPartner = false;
             en = userPermissions.elements();
             Permission userPermission;
             while (en.hasMoreElements()) {
                 userPermission = (Permission) en.nextElement();
-                // check for permission IngridPartnerPermission(partner,
+                // check for permission IngridPartnerPermission(partner
                 // <partner_of_auth_user>)
                 if (userPermission instanceof IngridPartnerPermission) {
                     String userPartner = ((IngridPartnerPermission) userPermission).getPartner();
@@ -434,12 +432,23 @@ public class AdminUserPortlet extends ContentPortlet {
                 // check for permission "admin.portal.provider.*"
                 if (adminPortalPartnerSTARIngridPortalPermission.implies(userPermission)) {
                     implyPermission = true;
+                } else {
+                    // check for users with roles admin-provider
+                    Iterator it = userRoles.iterator();
+                    while (it.hasNext()) {
+                        Role r = (Role) it.next();
+                        if (r.getPrincipal().getName().equals(IngridRole.ROLE_ADMIN_PROVIDER)) {
+                            implyRole = true;
+                        }
+                    }
                 }
-                if (implyPartner && implyPermission) {
+                if (implyPartner && (implyPermission || implyRole)) {
                     return true;
                 }
             }
+
         }
+
         return false;
     }
 
@@ -462,8 +471,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 // get the user roles
                 Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
 
-                boolean addUser = includeUserByPermission(authUserPermissions, userPermissions)
-                        || includeUserByRole(authUserPermissions, userRoles);
+                boolean addUser = includeUserByRoleAndPermission(authUserPermissions, userRoles, userPermissions);
 
                 if (addUser) {
                     HashMap record = new HashMap();
@@ -495,11 +503,21 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
+     * Create a 'normal' portal user with the role "user". If the creator has
+     * the permission "admin.portal.partner", the created user will get:
+     * 
+     * <li>role "admin-provider"</li>
+     * <li>copy of all IngridPartnerPermissions of the creator</li>
+     * 
+     * so the creator is able to see the user in his user browser.
+     * 
+     * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
     protected void doActionSave(ActionRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
+        f.clearMessages();
         f.populate(request);
         if (!f.validate()) {
             return;
@@ -560,6 +578,40 @@ public class AdminUserPortlet extends ContentPortlet {
             userInfo.put("login", userName);
             userInfo.put("password", password);
 
+            // set basic permissions and roles depending on the auth users
+            // permission
+            Principal authUserPrincipal = request.getUserPrincipal();
+            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
+            if (getLayoutPermission(authUserPermissions).equalsIgnoreCase("admin.portal.partner")) {
+                // get user
+                User user = null;
+                try {
+                    user = userManager.getUser(userName);
+                } catch (JetspeedException e) {
+                    f.setError("", "account.edit.error.user.notfound");
+                    log.error("Error getting current user.", e);
+                    return;
+                }
+                // get principal
+                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+
+                // add
+                // IngridPartnerPermissions("partner.<partner_of_auth_user>") to
+                // the new user
+                // get current user
+                List partners = getPartnersFromPermissions(authUserPermissions);
+                Iterator it = partners.iterator();
+                while (it.hasNext()) {
+                    String partner = (String) it.next();
+                    // add IngridPartnerPermissions for specified partner
+                    createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner." + partner));
+                }
+
+                // add provider role
+                roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
+            }
+
+            // send confirmation email
             String language = request.getLocale().getLanguage();
             String localizedTemplatePath = this.emailTemplate;
             if (localizedTemplatePath == null) {
@@ -605,11 +657,21 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
+     * Updates a users data and permission.
+     * 
+     * CAUTION: if the admin is "admin.portal.partner", the following specials
+     * apply:
+     * 
+     * <li>the users partner cannot be removed</li>
+     * <li>the users role "admin-provider" will not be removed</li>
+     * 
+     * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
     protected void doActionUpdate(ActionRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
+        f.clearMessages();
         f.populate(request);
         if (!f.validate()) {
             return;
@@ -668,15 +730,19 @@ public class AdminUserPortlet extends ContentPortlet {
                 // update the admin.portal permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL)) {
                     permissionManager.grantPermission(userPrincipal, adminPortalIngridPortalPermission);
+                    roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
                 } else {
                     permissionManager.revokePermission(userPrincipal, adminPortalIngridPortalPermission);
+                    roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
                 }
 
                 // update the admin.portal.partner permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)) {
                     permissionManager.grantPermission(userPrincipal, adminPortalPartnerIngridPortalPermission);
+                    roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
                 } else {
                     permissionManager.revokePermission(userPrincipal, adminPortalPartnerIngridPortalPermission);
+                    roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
                 }
 
                 // update the admin.portal.partner.provider.index permission
@@ -694,18 +760,23 @@ public class AdminUserPortlet extends ContentPortlet {
                             adminPortalPartnerProviderCatalogIngridPortalPermission);
                 } else {
                     permissionManager.revokePermission(userPrincipal,
-                            adminPortalPartnerProviderIndexIngridPortalPermission);
+                            adminPortalPartnerProviderCatalogIngridPortalPermission);
                 }
 
                 // remove all IngridPartnerPermissions, they will be reset if a
                 // provider or partner permission was granted
+                // special: DO RESET the partner if the auth user is
+                // "admin.portal.partner"
                 revokePermissionsByClass(userPrincipal, IngridPartnerPermission.class);
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
-                        || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
+                        || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)
+                        || f.getInput(AdminUserForm.FIELD_LAYOUT_PERMISSION).equals("admin.portal.partner")) {
                     // add IngridPartnerPermissions for specified partner
                     createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner."
                             + f.getInput(AdminUserForm.FIELD_PARTNER)));
+                } else {
+                    f.clearInput(AdminUserForm.FIELD_PARTNER);
                 }
 
                 // remove all IngridProviderPermissions, they will be reset if a
@@ -715,10 +786,19 @@ public class AdminUserPortlet extends ContentPortlet {
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
                     // add IngridProviderPermissions for specified partner
-                    String[] providers = f.getInputAsArray("provider");
+                    String[] providers = f.getInputAsArray(AdminUserForm.FIELD_PROVIDER);
                     for (int i = 0; i < providers.length; i++) {
                         createAndGrantPermission(userPrincipal,
                                 new IngridProviderPermission("provider." + providers[i]));
+                    }
+                    // add provider role
+                    roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
+                } else {
+                    f.clearInput(AdminUserForm.FIELD_PROVIDER);
+                    // DO NOT remove admin-provider permission if the auth user
+                    // is "admin.portal.partner"
+                    if (!f.getInput(AdminUserForm.FIELD_LAYOUT_PERMISSION).equals("admin.portal.partner")) {
+                        roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
                     }
                 }
             }
@@ -849,6 +929,7 @@ public class AdminUserPortlet extends ContentPortlet {
         } else if (action != null && action.equals("doChangeTab")) {
             AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
                     AdminUserForm.class);
+            f.clearMessages();
             // save the tab
             f.setInput(AdminUserForm.FIELD_TAB, request.getParameter("tab"));
             // save the id of the edited user, to keep the reference
@@ -979,7 +1060,7 @@ public class AdminUserPortlet extends ContentPortlet {
         return result;
     }
 
-    private static String getLayoutType(Permissions editorPermissions) {
+    private static String getLayoutPermission(Permissions editorPermissions) {
         String result = null;
         if (editorPermissions.implies(new IngridPortalPermission("admin"))) {
             result = "admin";
@@ -1077,11 +1158,12 @@ public class AdminUserPortlet extends ContentPortlet {
             Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
 
             // set type of layout
-            String layoutType = getLayoutType(authUserPermissions);
-            f.setInput(AdminUserForm.FIELD_LAYOUT_TYPE, layoutType);
+            String layoutPermission = getLayoutPermission(authUserPermissions);
+            f.setInput(AdminUserForm.FIELD_LAYOUT_PERMISSION, layoutPermission);
 
             // get user roles
-            Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
+            // Collection userRoles =
+            // roleManager.getRolesForUser(userPrincipal.getName());
 
         } catch (Exception e) {
         }

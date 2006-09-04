@@ -9,7 +9,7 @@ import de.ingrid.portal.global.Utils;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class AdminUserForm extends ActionForm {
@@ -34,22 +34,22 @@ public class AdminUserForm extends ActionForm {
     public static final String FIELD_PASSWORD_NEW = "password_new";
 
     public static final String FIELD_PASSWORD_NEW_CONFIRM = "password_new_confirm";
-    
+
     public static final String FIELD_STREET = "street";
 
     public static final String FIELD_POSTALCODE = "postalcode";
 
     public static final String FIELD_CITY = "city";
-    
+
     public static final String FIELD_ATTENTION = "attention";
 
     public static final String FIELD_AGE = "age";
-    
+
     public static final String FIELD_INTEREST = "interest";
 
     public static final String FIELD_PROFESSION = "profession";
 
-    public static final String FIELD_SUBSCRIBE_NEWSLETTER = "subscribe_newsletter";    
+    public static final String FIELD_SUBSCRIBE_NEWSLETTER = "subscribe_newsletter";
 
     public static final String FIELD_MODE = "mode";
 
@@ -62,16 +62,15 @@ public class AdminUserForm extends ActionForm {
     public static final String FIELD_CHK_ADMIN_INDEX = "admin_index";
 
     public static final String FIELD_CHK_ADMIN_CATALOG = "admin_catalog";
-    
+
     public static final String FIELD_PARTNER = "partner";
+
     public static final String FIELD_PARTNER_NAME = "partner_name";
-    
+
     public static final String FIELD_PROVIDER = "provider";
 
-    public static final String FIELD_LAYOUT_TYPE = "layoutType";
-    
-    
-    
+    public static final String FIELD_LAYOUT_PERMISSION = "layoutPermission";
+
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -86,10 +85,10 @@ public class AdminUserForm extends ActionForm {
         setInput(FIELD_MODE, request.getParameter(FIELD_MODE));
         setInput(FIELD_ID, request.getParameter(FIELD_ID));
         setInput(FIELD_TAB, request.getParameter(FIELD_TAB));
-        setInput(FIELD_LAYOUT_TYPE, request.getParameter(FIELD_LAYOUT_TYPE));
-        
+        setInput(FIELD_LAYOUT_PERMISSION, request.getParameter(FIELD_LAYOUT_PERMISSION));
+
         // if tab 1 was selected onle populate fields from tab1
-        if (this.getInput(FIELD_TAB).equals("1") || this.getInput(FIELD_MODE).equals("new")) {        
+        if (this.getInput(FIELD_TAB).equals("1") || this.getInput(FIELD_MODE).equals("new")) {
             setInput(FIELD_SALUTATION, request.getParameter(FIELD_SALUTATION));
             setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME));
             setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME));
@@ -108,8 +107,9 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
             setInput(FIELD_PROFESSION, request.getParameter(FIELD_PROFESSION));
             setInput(FIELD_SUBSCRIBE_NEWSLETTER, request.getParameter(FIELD_SUBSCRIBE_NEWSLETTER));
-        // if tab 2 was selected onle populate fields from tab2
+            // if tab 2 was selected onle populate fields from tab2
         } else if (this.getInput(FIELD_TAB).equals("2")) {
+            setInput(FIELD_CHK_ADMIN_PORTAL, request.getParameter(FIELD_CHK_ADMIN_PORTAL));
             setInput(FIELD_CHK_ADMIN_PARTNER, request.getParameter(FIELD_CHK_ADMIN_PARTNER));
             setInput(FIELD_CHK_ADMIN_INDEX, request.getParameter(FIELD_CHK_ADMIN_INDEX));
             setInput(FIELD_CHK_ADMIN_CATALOG, request.getParameter(FIELD_CHK_ADMIN_CATALOG));
@@ -130,49 +130,49 @@ public class AdminUserForm extends ActionForm {
             setError(FIELD_SALUTATION, "account.edit.error.noSalutation");
             setInput(FIELD_TAB, "1");
             allOk = false;
-        } 
+        }
         if (!hasInput(FIELD_FIRSTNAME)) {
             setError(FIELD_FIRSTNAME, "account.edit.error.noFirstName");
             setInput(FIELD_TAB, "1");
             allOk = false;
-        } 
+        }
         if (!hasInput(FIELD_LASTNAME)) {
             setError(FIELD_LASTNAME, "account.edit.error.noLastName");
             setInput(FIELD_TAB, "1");
             allOk = false;
-        } 
+        }
         if (!hasInput(FIELD_ID)) {
             setError(FIELD_PASSWORD_OLD, "account.create.error.noLogin");
             setInput(FIELD_TAB, "1");
             allOk = false;
-        } 
+        }
         if (this.getInput(FIELD_MODE).equals("new")) {
             if (!hasInput(FIELD_PASSWORD_NEW)) {
                 setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
-            } 
+            }
             if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
                 setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
-            } 
+            }
         } else {
             if (!hasInput(FIELD_PASSWORD_OLD) && hasInput(FIELD_PASSWORD_NEW)) {
                 setError(FIELD_PASSWORD_OLD, "account.edit.error.noPasswordOld");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
-            } 
+            }
             if (hasInput(FIELD_PASSWORD_OLD) && !hasInput(FIELD_PASSWORD_NEW)) {
                 setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
-            } 
+            }
             if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
                 setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
-            } 
+            }
         }
         if (!hasInput(FIELD_EMAIL)) {
             setError(FIELD_EMAIL, "account.edit.error.noEmail");
@@ -186,15 +186,24 @@ public class AdminUserForm extends ActionForm {
                 allOk = false;
             }
         }
-        if (!hasInput(FIELD_PARTNER) && (hasInput(FIELD_CHK_ADMIN_PARTNER) || hasInput(FIELD_CHK_ADMIN_INDEX) || hasInput(FIELD_CHK_ADMIN_CATALOG))) {
+        if (!hasInput(FIELD_PARTNER)
+                && (hasInput(FIELD_CHK_ADMIN_PARTNER) || hasInput(FIELD_CHK_ADMIN_INDEX) || hasInput(FIELD_CHK_ADMIN_CATALOG))) {
             setError(FIELD_PARTNER, "account.edit.error.noPartnerSelected");
             // only switch tabs if there where no errors before
             if (allOk) {
                 setInput(FIELD_TAB, "2");
             }
             allOk = false;
-        } 
-        
+        }
+        if (!hasInput(FIELD_PROVIDER) && (hasInput(FIELD_CHK_ADMIN_INDEX) || hasInput(FIELD_CHK_ADMIN_CATALOG))) {
+            setError(FIELD_PROVIDER, "account.edit.error.noProviderSelected");
+            // only switch tabs if there where no errors before
+            if (allOk) {
+                setInput(FIELD_TAB, "2");
+            }
+            allOk = false;
+        }
+
         return allOk;
     }
 }
