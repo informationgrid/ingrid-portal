@@ -1,8 +1,8 @@
 <div class="portlet-section-body">
-    <p>FloraWeb wird jetzt von PortalU mit durchsucht.<br/><br/>Das Informationsangebot des Bundesamtes für Naturschutz bietet umfangreiche Informationen zur Pflanzenwelt in Deutschland.</p>
+    <p>$MESSAGES.getString('teaser.ingridInform.text')</p>
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span>
-      <span><a href="http://www.floraweb.de/" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">www.floraweb.de</a></span>
+      <span><a href="$MESSAGES.getString('teaser.ingridInform.link')" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('teaser.ingridInform.linkname')</a></span>
       <span class="clearer"></span>
     </p>
 </div>
