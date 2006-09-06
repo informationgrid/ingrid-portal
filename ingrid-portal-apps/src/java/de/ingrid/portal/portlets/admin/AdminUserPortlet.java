@@ -61,6 +61,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.portlets.security.SecurityUtil;
@@ -317,35 +318,6 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     /**
-     * Merge role permissions with user permissions
-     * 
-     * @param p
-     *            The Principal of the user to merge the role permission with.
-     * @return The merged Permissions.
-     */
-    private Permissions getMergedPermissions(Principal p) {
-        Permissions result = permissionManager.getPermissions(p);
-        try {
-            Collection roles = roleManager.getRolesForUser(p.getName());
-            Iterator roleIterator = roles.iterator();
-            while (roleIterator.hasNext()) {
-                // check for role based permission to show the user
-                Role role = (Role) roleIterator.next();
-                Permissions rp = permissionManager.getPermissions(role.getPrincipal());
-                Enumeration en = rp.elements();
-                while (en.hasMoreElements()) {
-                    result.add((Permission) en.nextElement());
-                }
-            }
-        } catch (SecurityException e) {
-            if (log.isErrorEnabled()) {
-                log.error("Error merging roles of principal '" + p.getName() + "'!", e);
-            }
-        }
-        return result;
-    }
-
-    /**
      * Checks for the right permission condition to include a user into the user
      * browser.
      * 
@@ -459,14 +431,16 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
             // get current user
             Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
+            Permissions authUserPermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+                    roleManager);
 
             // iterate over all users
             Iterator users = userManager.getUsers("");
             while (users.hasNext()) {
                 User user = (User) users.next();
                 Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-                Permissions userPermissions = getMergedPermissions(userPrincipal);
+                Permissions userPermissions = UtilsSecurity.getMergedPermissions(userPrincipal, permissionManager,
+                        roleManager);
 
                 // get the user roles
                 Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
@@ -581,7 +555,8 @@ public class AdminUserPortlet extends ContentPortlet {
             // set basic permissions and roles depending on the auth users
             // permission
             Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
+            Permissions authUserPermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+                    roleManager);
             if (getLayoutPermission(authUserPermissions).equalsIgnoreCase("admin.portal.partner")) {
                 // get user
                 User user = null;
@@ -1130,7 +1105,8 @@ public class AdminUserPortlet extends ContentPortlet {
 
             // get permissions of the user
             Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-            Permissions userPermissions = getMergedPermissions(userPrincipal);
+            Permissions userPermissions = UtilsSecurity.getMergedPermissions(userPrincipal, permissionManager,
+                    roleManager);
 
             // get partner from permissions, set to context
             List userPartners = getPartnersFromPermissions(userPermissions);
@@ -1155,7 +1131,8 @@ public class AdminUserPortlet extends ContentPortlet {
 
             // get current user
             Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = getMergedPermissions(authUserPrincipal);
+            Permissions authUserPermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+                    roleManager);
 
             // set type of layout
             String layoutPermission = getLayoutPermission(authUserPermissions);
