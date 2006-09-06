@@ -380,7 +380,7 @@ public class AdminUserPortlet extends ContentPortlet {
         // <partner_of_auth_user>)
         if (authUserPermissions.implies(adminPortalPartnerIngridPortalPermission)) {
             // get the partner from the auth users permission
-            ArrayList authUserPartner = getPartnersFromPermissions(authUserPermissions);
+            ArrayList authUserPartner = UtilsSecurity.getPartnersFromPermissions(authUserPermissions);
             // add users that imply admin.portal.provider.* AND
             // IngridPartnerPermission(partner, <partner_of_auth_user>)
             boolean implyPermission = false;
@@ -574,7 +574,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 // IngridPartnerPermissions("partner.<partner_of_auth_user>") to
                 // the new user
                 // get current user
-                List partners = getPartnersFromPermissions(authUserPermissions);
+                List partners = UtilsSecurity.getPartnersFromPermissions(authUserPermissions);
                 Iterator it = partners.iterator();
                 while (it.hasNext()) {
                     String partner = (String) it.next();
@@ -1009,32 +1009,6 @@ public class AdminUserPortlet extends ContentPortlet {
         request.getPortletSession().setAttribute(KEY_ENTITIES, entities, PortletSession.PORTLET_SCOPE);
     }
 
-    private static ArrayList getPartnersFromPermissions(Permissions permissions) {
-        ArrayList result = new ArrayList();
-
-        Enumeration en = permissions.elements();
-        while (en.hasMoreElements()) {
-            Permission p = (Permission) en.nextElement();
-            if (p instanceof IngridPartnerPermission) {
-                result.add(((IngridPartnerPermission) p).getPartner());
-            }
-        }
-        return result;
-    }
-
-    private static ArrayList getProvidersFromPermissions(Permissions permissions) {
-        ArrayList result = new ArrayList();
-
-        Enumeration en = permissions.elements();
-        while (en.hasMoreElements()) {
-            Permission p = (Permission) en.nextElement();
-            if (p instanceof IngridProviderPermission) {
-                result.add(((IngridProviderPermission) p).getProvider());
-            }
-        }
-        return result;
-    }
-
     private static String getLayoutPermission(Permissions editorPermissions) {
         String result = null;
         if (editorPermissions.implies(new IngridPortalPermission("admin"))) {
@@ -1109,8 +1083,8 @@ public class AdminUserPortlet extends ContentPortlet {
                     roleManager);
 
             // get partner from permissions, set to context
-            List userPartners = getPartnersFromPermissions(userPermissions);
-            List userProviders = getProvidersFromPermissions(userPermissions);
+            List userPartners = UtilsSecurity.getPartnersFromPermissions(userPermissions);
+            List userProviders = UtilsSecurity.getProvidersFromPermissions(userPermissions);
 
             if (userPartners.size() > 0) {
                 f.setInput(AdminUserForm.FIELD_PARTNER, (String) userPartners.get(0));
