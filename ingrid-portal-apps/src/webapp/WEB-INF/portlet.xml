@@ -155,6 +155,28 @@
         </init-param>   
     </portlet>
 
+    <portlet id="AdminIPlugPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/admin_iplug.vm</value>
+        </init-param>
+        <portlet-name>AdminIPlugPortlet</portlet-name>
+        <display-name>AdminIPlugPortlet</display-name>
+        <description>The Portlet displays the editor for the iPlugs.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminIPlugPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Pflege iPlugs</title>
+            <short-title>Pflege iPlugs</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
+
 
     <!-- *********************** -->
     <!-- User Management         -->

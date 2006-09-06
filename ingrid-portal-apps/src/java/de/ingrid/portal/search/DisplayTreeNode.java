@@ -113,10 +113,12 @@ public class DisplayTreeNode extends HashMap {
         ArrayList c = node.getChildren();
         for (int i=0; i<c.size(); i++) {
             DisplayTreeNode aNode = (DisplayTreeNode)c.get(i);
-            if (aNode.getId().equals(nodeId)) {
+            if (!aNode.getId().equals(nodeId)) {
+                aNode = getChild(aNode, nodeId);
+            }
+            if (aNode != null) {
                 return aNode;
             }
-            getChild(aNode, nodeId);
         }
         return null;
     }

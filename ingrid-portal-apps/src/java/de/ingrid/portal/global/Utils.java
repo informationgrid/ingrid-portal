@@ -513,7 +513,7 @@ public class Utils {
      * 
      * @param key The partner or provider has the same key
      * @param fromPartnerToProvider
-     * @return
+     * @return The partner key.
      */
     public static String normalizePartnerKey(String key, boolean fromPartnerToProvider) {
         if (fromPartnerToProvider) {

@@ -1,0 +1,41 @@
+#set ($action = $renderResponse.createActionURL())
+	<div class="formbody">
+          <p>$MESSAGES.getString('admin.iplug.description')</p>
+#foreach($partnerNode in $tree.getChildren())
+	$action.setParameter('id',"$partnerNode.id")		
+	#if($partnerNode.isOpen())
+		$action.setParameter('action','doCloseNode')
+		<p><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$partnerNode.name</p>
+        #foreach($providerNode in $partnerNode.getChildren())
+        	$action.setParameter('id',"$providerNode.id")		
+        	#if($providerNode.isOpen())
+        		$action.setParameter('action','doCloseNode')
+        		<p style="margin-left:4.5em"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$providerNode.name</p>
+        		#foreach($plugNode in $providerNode.getChildren())
+                    #set($plug = $plugNode.get("iplug"))
+					<p style="margin-left:9em">
+					#if($plug.getIplugAdminGuiUrl())
+                      <a href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
+					#else
+					  $plugNode.name (kein Administrationsinterface angegeben!)
+					#end	
+                    </p>
+        		#end
+        	#else
+        		$action.setParameter('action','doOpenNode')		
+                <p style="margin-left:4.5em">
+                	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$providerNode.name
+                </p>
+        	#end
+        #end
+
+		
+	#else
+		$action.setParameter('action','doOpenNode')		
+        <p>
+        	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$partnerNode.name
+        </p>
+	#end
+#end
+	</div>
+
