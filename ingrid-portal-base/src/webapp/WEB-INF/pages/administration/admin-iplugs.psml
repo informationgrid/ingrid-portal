@@ -1,0 +1,22 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Admin iPlugs</title>
+  <metadata name="title" xml:lang="en">Admin iPlugs</metadata>
+
+  <fragment id="admin-iplugs" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="admin-iplugs-0" type="portlet" name="ingrid-portal-apps::AdminIPlugPortlet">
+      <property layout="OneColumn" name="row" value="1"/>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
+    <security-constraints-ref>admin-partner</security-constraints-ref>
+    <security-constraints-ref>admin-provider</security-constraints-ref>
+  </security-constraints>
+</page>

@@ -55,4 +55,11 @@
     </security-constraint>
   </security-constraints-def>
 
+  <security-constraints-def name="admin-provider">
+    <security-constraint>
+      <roles>admin-provider</roles>
+      <permissions>view, edit</permissions>
+    </security-constraint>
+  </security-constraints-def>
+
 </page-security>
