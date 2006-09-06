@@ -18,7 +18,6 @@ import org.hibernate.criterion.Order;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridChronicleEventType;
 import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
@@ -37,7 +36,7 @@ import de.ingrid.portal.om.IngridSysCodelistDomainId;
  */
 public class UtilsDB {
 
-    private final static Log log = LogFactory.getLog(DBAnniversaryInterfaceImpl.class);
+    private final static Log log = LogFactory.getLog(UtilsDB.class);
 
     /** this flag controls whether Data is always fetched from Database or from cache  */
     // TODO keep possibilty to always reload data from DB ???? makes it complicated ! maybe instable ?
