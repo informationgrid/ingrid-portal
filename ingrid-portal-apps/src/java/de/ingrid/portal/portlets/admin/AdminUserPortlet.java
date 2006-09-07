@@ -79,26 +79,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
     private final static Log log = LogFactory.getLog(AdminUserPortlet.class);
 
-    private final static IngridPortalPermission adminIngridPortalPermission = new IngridPortalPermission("admin");
-
-    private final static IngridPortalPermission adminPortalIngridPortalPermission = new IngridPortalPermission(
-            "admin.portal");
-
-    private final static IngridPortalPermission adminPortalSTARIngridPortalPermission = new IngridPortalPermission(
-            "admin.portal.*");
-
-    private final static IngridPortalPermission adminPortalPartnerIngridPortalPermission = new IngridPortalPermission(
-            "admin.portal.partner");
-
-    private final static IngridPortalPermission adminPortalPartnerSTARIngridPortalPermission = new IngridPortalPermission(
-            "admin.portal.partner.*");
-
-    private final static IngridPortalPermission adminPortalPartnerProviderIndexIngridPortalPermission = new IngridPortalPermission(
-            "admin.portal.partner.provider.index");
-
-    private final static IngridPortalPermission adminPortalPartnerProviderCatalogIngridPortalPermission = new IngridPortalPermission(
-            "admin.portal.partner.provider.catalog");
-
     private static final String KEY_ENTITIES = "entities";
 
     // Init Parameters
@@ -349,15 +329,15 @@ public class AdminUserPortlet extends ContentPortlet {
         Enumeration en;
 
         // WE ARE KING, STEP ASIDE!
-        if (authUserPermissions.implies(adminIngridPortalPermission)) {
+        if (authUserPermissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)) {
             return true;
         }
         // for permission "admin.portal", include users with permission
         // "admin.portal.*" OR with the only role "user"
-        if (authUserPermissions.implies(adminPortalIngridPortalPermission)) {
+        if (authUserPermissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)) {
             en = userPermissions.elements();
             while (en.hasMoreElements()) {
-                if (adminPortalSTARIngridPortalPermission.implies((Permission) en.nextElement())) {
+                if (UtilsSecurity.ADMIN_PORTAL_STAR_INGRID_PORTAL_PERMISSION.implies((Permission) en.nextElement())) {
                     return true;
                 }
             }
@@ -378,9 +358,9 @@ public class AdminUserPortlet extends ContentPortlet {
         // for permission "admin.portal.partner", include with permission
         // "admin.portal.partner.*" AND IngridPartnerPermission("partner",
         // <partner_of_auth_user>)
-        if (authUserPermissions.implies(adminPortalPartnerIngridPortalPermission)) {
+        if (authUserPermissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION)) {
             // get the partner from the auth users permission
-            ArrayList authUserPartner = UtilsSecurity.getPartnersFromPermissions(authUserPermissions);
+            ArrayList authUserPartner = UtilsSecurity.getPartnersFromPermissions(authUserPermissions, true);
             // add users that imply admin.portal.provider.* AND
             // IngridPartnerPermission(partner, <partner_of_auth_user>)
             boolean implyPermission = false;
@@ -402,7 +382,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     }
                 }
                 // check for permission "admin.portal.provider.*"
-                if (adminPortalPartnerSTARIngridPortalPermission.implies(userPermission)) {
+                if (UtilsSecurity.ADMIN_PORTAL_PARTNER_STAR_INGRID_PORTAL_PERMISSION.implies(userPermission)) {
                     implyPermission = true;
                 } else {
                     // check for users with roles admin-provider
@@ -574,7 +554,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 // IngridPartnerPermissions("partner.<partner_of_auth_user>") to
                 // the new user
                 // get current user
-                List partners = UtilsSecurity.getPartnersFromPermissions(authUserPermissions);
+                List partners = UtilsSecurity.getPartnersFromPermissions(authUserPermissions, true);
                 Iterator it = partners.iterator();
                 while (it.hasNext()) {
                     String partner = (String) it.next();
@@ -704,38 +684,42 @@ public class AdminUserPortlet extends ContentPortlet {
 
                 // update the admin.portal permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL)) {
-                    permissionManager.grantPermission(userPrincipal, adminPortalIngridPortalPermission);
+                    permissionManager.grantPermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
                     roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
                 } else {
-                    permissionManager.revokePermission(userPrincipal, adminPortalIngridPortalPermission);
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
                     roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
                 }
 
                 // update the admin.portal.partner permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)) {
-                    permissionManager.grantPermission(userPrincipal, adminPortalPartnerIngridPortalPermission);
+                    permissionManager.grantPermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
                     roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
                 } else {
-                    permissionManager.revokePermission(userPrincipal, adminPortalPartnerIngridPortalPermission);
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
                     roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
                 }
 
                 // update the admin.portal.partner.provider.index permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
                     permissionManager.grantPermission(userPrincipal,
-                            adminPortalPartnerProviderIndexIngridPortalPermission);
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
                 } else {
                     permissionManager.revokePermission(userPrincipal,
-                            adminPortalPartnerProviderIndexIngridPortalPermission);
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
                 }
 
                 // update the admin.portal.partner.provider.catalog permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)) {
                     permissionManager.grantPermission(userPrincipal,
-                            adminPortalPartnerProviderCatalogIngridPortalPermission);
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
                 } else {
                     permissionManager.revokePermission(userPrincipal,
-                            adminPortalPartnerProviderCatalogIngridPortalPermission);
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
                 }
 
                 // remove all IngridPartnerPermissions, they will be reset if a
@@ -1083,8 +1067,8 @@ public class AdminUserPortlet extends ContentPortlet {
                     roleManager);
 
             // get partner from permissions, set to context
-            List userPartners = UtilsSecurity.getPartnersFromPermissions(userPermissions);
-            List userProviders = UtilsSecurity.getProvidersFromPermissions(userPermissions);
+            List userPartners = UtilsSecurity.getPartnersFromPermissions(userPermissions, true);
+            List userProviders = UtilsSecurity.getProvidersFromPermissions(userPermissions, true);
 
             if (userPartners.size() > 0) {
                 f.setInput(AdminUserForm.FIELD_PARTNER, (String) userPartners.get(0));

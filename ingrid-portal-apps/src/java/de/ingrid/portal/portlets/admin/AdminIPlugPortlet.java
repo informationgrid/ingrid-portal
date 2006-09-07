@@ -126,8 +126,8 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         Permissions permissions = UtilsSecurity.getMergedPermissions(principal, permissionManager, roleManager);
-        ArrayList partners = UtilsSecurity.getPartnersFromPermissions(permissions);
-        ArrayList providers = UtilsSecurity.getProvidersFromPermissions(permissions);
+        ArrayList partners = UtilsSecurity.getPartnersFromPermissions(permissions, false);
+        ArrayList providers = UtilsSecurity.getProvidersFromPermissions(permissions, false);
         for (int i = 0; i < partners.size(); i++) {
             String partnerId = (String) partners.get(i);
             DisplayTreeNode partnerNode = new DisplayTreeNode(partnerId, UtilsDB.getPartnerFromKey(partnerId), false);
