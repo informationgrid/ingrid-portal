@@ -105,6 +105,28 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="ContentProviderPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/content_provider.vm</value>
+        </init-param>
+        <portlet-name>ContentProviderPortlet</portlet-name>
+        <display-name>Content Provider Portlet</display-name>
+        <description>The Portlet displays the editor for the Providers.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.ContentProviderPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Pflege Provider</title>
+            <short-title>Pflege Provider</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
+
     <portlet id="AdminUserPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

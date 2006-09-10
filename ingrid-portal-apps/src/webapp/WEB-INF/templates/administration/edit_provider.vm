@@ -1,0 +1,26 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
+	<div class="formbody">
+	#if ($mode == 'edit')
+		<h2 class="nospace">Anbieter aktualisieren</h2>
+	#elseif ($mode == 'new')
+		<h2 class="nospace">Anbieter anlegen</h2>
+	#end
+	#displayFormErrors()
+#set ($colNames = ["ident", "name", "url", "sortkey", "sortkey_partner"])
+#set ($colLabels = ["Kürzel", "Name", "Link", "Sortierung", "Sortierung Partner"])
+#foreach ($dbEntity in $dbEntities)
+	<div class="line"><hr /></div>
+   	#set ($entityIndex = $velocityCount - 1)
+   	#set ($colValues = ["$!{dbEntity.Ident}", "$!{dbEntity.Name}", "$!{dbEntity.Url}", "$!{dbEntity.Sortkey}", "$!{dbEntity.SortkeyPartner}"])
+   	#renderDBEditId($mode $dbEntity.Id)
+   	#foreach ($colName in $colNames)
+       	#set ($colIndex = $velocityCount - 1)
+		#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+	#end
+	<p class="clearer"></p>
+	</br>
+#end
+	</div>
+#renderDBEditFooter($mode)
+</form>

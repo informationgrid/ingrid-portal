@@ -1,0 +1,19 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+	<div class="formbody">
+#renderDBBrowserNavigation($browser)
+		<p>
+		<table class="border fullwidth">
+#set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
+#set ($colTitles = ["Id", "Kürzel", "Name", "Link", "Sortierung", "Sortierung Partner"])
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($dbEntity in $dbEntities)
+	#set ($rowId = $dbEntity.Id)
+	#set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
+	#renderDBBrowserRow($rowId $rowValues)
+#end
+		</table>
+		</p>
+	</div>
+#renderDBBrowserFooter()
+</form>
