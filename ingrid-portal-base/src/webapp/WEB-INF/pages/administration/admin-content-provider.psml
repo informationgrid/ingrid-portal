@@ -1,0 +1,20 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Content Provider</title>
+  <metadata name="title" xml:lang="en">Content Provider</metadata>
+
+  <fragment id="admin-content-provider" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="admin-content-provider-0" type="portlet" name="ingrid-portal-apps::ContentProviderPortlet">
+      <property layout="OneColumn" name="row" value="1"/>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
+  </security-constraints>
+</page>

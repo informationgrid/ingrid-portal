@@ -6,6 +6,7 @@
     <options>/administration/admin-usermanagement.psml</options>
     <options>/administration/admin-content-rss.psml</options>
     <options>/administration/admin-content-partner.psml</options>
+		<options>/administration/admin-content-provider.psml</options>
     <options>/administration/admin-iplugs.psml</options>
   </menu>
   
