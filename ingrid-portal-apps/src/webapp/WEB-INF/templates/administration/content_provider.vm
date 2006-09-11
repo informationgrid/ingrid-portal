@@ -17,3 +17,23 @@
 	</div>
 #renderDBBrowserFooter()
 </form>
+<p/>
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+	<input type="hidden" name="action" value="doImport">
+	<div class="formbody">
+		<p>
+<label for="csvData">Fügen Sie hier die CSV Liste der Anbieter in folgendem Format ein:<br/>
+id&lt;TAB&gt;Anbieterkennung&lt;TAB&gt;Anbietername&lt;TAB&gt;Link zu Anbieter&lt;TAB&gt;Sortierung innerhalb Partner&lt;TAB&gt;Sortierung des Partners
+</label><br/>
+#if($import_message)
+<br/><span class="portlet-msg-error">$import_message</span><br/>
+#end
+	<textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
+		</p>
+	</div>
+<div class="formfooter" align="right">
+	<input class="btn" type="submit" name="doImport" value="Anbieter Importieren" />
+</div>
+</form>
+
