@@ -34,5 +34,7 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridNewsletterData.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridSysCodelistDomain.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridPrincipalPreferences.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridCMSItem.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridCMS.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

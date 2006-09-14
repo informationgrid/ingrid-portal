@@ -1,0 +1,20 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+	<div class="formbody">
+#renderDBBrowserNavigation($browser)
+	<p>
+		<table class="border fullwidth">
+#set ($colNames = ["id", "itemKey", "itemDescription"])
+#set ($colTitles = ["Id", "Key", "Beschreibung"])
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($dbEntity in $dbEntities)
+	#set ($rowId = $dbEntity.id)
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.itemKey, 40, 40), $dbEntity.itemDescription])
+	#renderDBBrowserRowWithEditLink($rowId $rowValues)
+#end
+		</table>
+		</p>
+	</div>
+#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#renderDBBrowserFooterButtons($buttons)
+</form>

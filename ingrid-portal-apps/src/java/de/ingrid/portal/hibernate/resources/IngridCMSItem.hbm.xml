@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  	<class name="de.ingrid.portal.om.IngridCMSItem" table="ingrid_cms_item">
+		<id name="id">
+    		<generator class="native"/>
+        </id>
+<!--    	<property name="fkIngridCmsId" column="fk_ingrid_cms_id" type="java.lang.Long"/> -->
+    	<property name="itemLang" column="item_lang" type="java.lang.String"/>
+    	<property name="itemTitle" column="item_title" type="java.lang.String"/>
+    	<property name="itemValue" column="item_value" type="java.lang.String"/>
+    	<property name="itemChanged" column="item_changed" type="java.sql.Date"/>
+    	<property name="itemChangedBy" column="item_changed_by" type="java.lang.String"/>
+  </class>
+</hibernate-mapping>

@@ -199,6 +199,29 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="AdminCMSPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/admin_cms_browser.vm</value>
+        </init-param>
+        <portlet-name>AdminCMSPortlet</portlet-name>
+        <display-name>AdminCMSPortlet</display-name>
+        <description>The Portlet displays the editor for the free text content.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminCMSPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Pflege CMS</title>
+            <short-title>Pflege CMS</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
+
+
 
     <!-- *********************** -->
     <!-- User Management         -->

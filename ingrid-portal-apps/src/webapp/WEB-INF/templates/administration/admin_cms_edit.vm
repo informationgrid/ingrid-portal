@@ -1,0 +1,80 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmEditCMS" id="frmEditCMS">
+	<div class="formbody">
+	<input type="hidden" name="mode" value="$mode"/>
+	
+	#if ($mode == 'edit')
+		<h2 class="nospace">Eintrag aktualisieren</h2>
+	#elseif ($mode == 'new')
+		<h2 class="nospace">Eintrag anlegen</h2>
+	#end
+	#displayFormErrors()
+	#displayFormMessages()
+#foreach ($dbEntity in $dbEntities)
+	#renderDBEditId($mode $dbEntity.id)
+	<div class="line"><hr /></div>
+    <p>
+        <label class="float_left col2left_incr" for="item_key">#displayFieldLabel("item_key" "Key")</label>
+		<input class="float_left inputstyletext contentInput" type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey"/>
+       	<p class="clearer"></p>
+    </p>
+    <p>
+        <label class="float_left col2left_incr" for="item_description">#displayFieldLabel("item_description" "Beschreibung")</label>
+		<input class="float_left inputstyletext contentInput" type="text" id="item_description" name="item_description" value="$!dbEntity.itemDescription"/>
+       	<p class="clearer"></p>
+    </p>
+	<div class="line"><hr /></div>
+	#set($itemDE = $dbEntity.getLocalizedEntry('de'))
+    <p>
+        <label class="float_left col2left_incr" for="title_de">#displayFieldLabel("title_de" "Titel (Deutsch)")</label>
+		<input class="float_left inputstyletext contentInput" type="text" id="title_de" name="title_de" value="$!itemDE.itemTitle"/>
+       	<p class="clearer"></p>
+    </p>
+    <p>
+        <label class="float_left col2left_incr" for="value_de">#displayFieldLabel("value_de" "Inhalt (Deutsch)")</label>
+        <textarea class="float_left" cols="125" rows="10" name="value_de" id="value_de">$!itemDE.itemValue</textarea>
+       	<p class="clearer"></p>
+    </p>
+	#if ($mode == 'edit')
+    <p>
+    	<span class="float_left col2left_incr">Geändert am</span>
+    	<span class="float_left">$!itemDE.itemChanged.toString()</span>
+       	<p class="clearer"></p>
+    </p>
+    <p>
+    	<span class="float_left col2left_incr">Geändert von</span>
+    	<span class="float_left">$!itemDE.itemChangedBy</span>
+       	<p class="clearer"></p>
+    </p>
+	#end
+	<div class="line"><hr /></div>
+	#set($itemEN = $dbEntity.getLocalizedEntry('en'))
+    <p>
+        <label class="float_left col2left_incr" for="title_en">#displayFieldLabel("title_en" "Titel (English)")</label>
+		<input class="float_left inputstyletext contentInput" type="text" id="title_en" name="title_en" value="$!itemEN.itemTitle"/>
+       	<p class="clearer"></p>
+    </p>
+    <p>
+        <label class="float_left col2left_incr" for="value_en">#displayFieldLabel("value_en" "Inhalt (English)")</label>
+        <textarea class="float_left" cols="125" rows="10" name="value_en" id="value_en">$!itemEN.itemValue</textarea>
+       	<p class="clearer"></p>
+    </p>
+	#if ($mode == 'edit')
+    <p>
+    	<span class="float_left col2left_incr">Geändert am</span>
+    	<span class="float_left">$!itemEN.itemChanged.toString()</span>
+       	<p class="clearer"></p>
+    </p>
+    <p>
+    	<span class="float_left col2left_incr">Geändert von</span>
+    	<span class="float_left">$!itemEN.itemChangedBy</span>
+       	<p class="clearer"></p>
+    </p>
+	#end
+
+	<p class="clearer"></p>
+	</br>
+#end
+	</div>
+#renderDBEditFooter($mode)
+</form>
