@@ -171,6 +171,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
+#if($rec)
 	<div class="section-header">
 #if($rec.get("t02_address.typ") == "2")
     	<h1>
@@ -180,14 +181,13 @@
     	#if($rec.get("t02_address.lastname"))$rec.get("t02_address.lastname")#end
 		</h1>
 #else
-		<h1>$rec.get("title")</h1>
+		<h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#end</h1>
 #end
 		<p class="float_right"><span class="smaller">#if($rec.get("t02_address.mod_time"))$MESSAGES.getString("search.detail.generated"): $rec.get("t02_address.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
 	<br/>
 	<div class="section">
-#if($rec)
 	<p class="float_left">
         #set($udkAddressClass = $rec.get("t02_address.typ"))
         #set($udkAddressClassNameKey = "udk_adr_class_name_$udkAddressClass")

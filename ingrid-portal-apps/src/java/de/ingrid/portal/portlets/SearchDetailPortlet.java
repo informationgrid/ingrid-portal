@@ -528,7 +528,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
             } catch (Exception e) {
-                log.error("Error fetching address data for address id: " + objId, e);
+                log.error("Error fetching object data for object id: " + objId, e);
             }
         } else if (cmd.equals("doShowDocument")) {
             response.setRenderParameter("docid", request.getParameter("docid"));
