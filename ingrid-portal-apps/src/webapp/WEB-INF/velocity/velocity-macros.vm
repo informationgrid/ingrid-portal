@@ -135,7 +135,7 @@ $fieldLabel#end
     </td>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('doEdit','Edit')
-$action.setParameter("id",$rowId)
+$action.setParameter("id", "$rowId")
 	<td class="$rowstyle"><a href="$action">$rowId</a></td>
 #foreach ($rowValue in $rowValues)
 	<td class="$rowstyle"><a href="$action">$rowValue</a></td>
