@@ -215,40 +215,6 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories)
 INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
 INSERT INTO SECURITY_CREDENTIAL VALUES(1,1,'admin',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2004-05-22 16:27:12.572','2004-05-22 16:27:12.572',null,null,null);
 
-INSERT INTO SECURITY_PRINCIPAL VALUES(1100,'org.apache.jetspeed.security.JetspeedRolePrincipalImpl',0,1,'/role/admin-portal','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PRINCIPAL VALUES(1101,'org.apache.jetspeed.security.JetspeedRolePrincipalImpl',0,1,'/role/admin-partner','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PRINCIPAL VALUES(1102,'org.apache.jetspeed.security.JetspeedRolePrincipalImpl',0,1,'/role/admin-provider','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-
-INSERT INTO SECURITY_PRINCIPAL VALUES(1110,'org.apache.jetspeed.security.JetspeedUserPrincipalImpl',0,1,'/user/adminportal','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PRINCIPAL VALUES(1111,'org.apache.jetspeed.security.JetspeedUserPrincipalImpl',0,1,'/user/adminpartner','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PRINCIPAL VALUES(1112,'org.apache.jetspeed.security.JetspeedUserPrincipalImpl',0,1,'/user/adminprovider','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_CREDENTIAL VALUES(1113,1110,'adminportal',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2006-08-22 16:27:12.572','2006-08-22 16:27:12.572',null,null,null);
-INSERT INTO SECURITY_CREDENTIAL VALUES(1114,1111,'adminpartner',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2006-08-22 16:27:12.572','2006-08-22 16:27:12.572',null,null,null);
-INSERT INTO SECURITY_CREDENTIAL VALUES(1115,1112,'adminprovider',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2006-08-22 16:27:12.572','2006-08-22 16:27:12.572',null,null,null);
-INSERT INTO SECURITY_USER_ROLE VALUES(1110,8);
-INSERT INTO SECURITY_USER_ROLE VALUES(1110,1100);
-INSERT INTO SECURITY_USER_ROLE VALUES(1111,8);
-INSERT INTO SECURITY_USER_ROLE VALUES(1111,1101);
-INSERT INTO SECURITY_USER_ROLE VALUES(1112,8);
-INSERT INTO SECURITY_USER_ROLE VALUES(1112,1102);
-INSERT INTO SECURITY_PERMISSION VALUES(1199,'de.ingrid.portal.security.permission.IngridPortalPermission','admin','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1200,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1201,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1202,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner.provider.index','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1203,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner.provider.catalog','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1204,'de.ingrid.portal.security.permission.IngridPartnerPermission','partner.he','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1205,'de.ingrid.portal.security.permission.IngridProviderPermission','provider.he_hmulv','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO SECURITY_PERMISSION VALUES(1206,'de.ingrid.portal.security.permission.IngridProviderPermission','provider.he_hlug','','2006-08-22 16:27:12.572','2006-08-22 16:27:12.572');
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1100,1200);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1111,1201);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1111,1204);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1202);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1203);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1204);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1205);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1206);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1,1199);
-
 INSERT INTO ingrid_sys_codelist VALUES (100, 'Raumbezugssystem (EPSG)', 1, 1);
 INSERT INTO ingrid_sys_codelist VALUES (101, 'Vertikales Datum', 1, 1);
 INSERT INTO ingrid_sys_codelist VALUES (102, 'Höhe', 1, 1);
