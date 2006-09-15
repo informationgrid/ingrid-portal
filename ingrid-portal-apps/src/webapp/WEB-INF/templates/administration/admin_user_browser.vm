@@ -4,12 +4,12 @@
 #renderDBBrowserNavigation($browser)
 	<p>
 		<table class="border fullwidth">
-#set ($colNames = ["id", "firstName", "lastName", "email", "roles", "confirmed"])
-#set ($colTitles = ["Id", "Vorname", "Nachname", "Email", "Rollen", "Aktiv"])
+#set ($colNames = ["id", "firstName", "lastName", "email", "roles"])
+#set ($colTitles = ["Id", "Vorname", "Nachname", "Email", "Rollen"])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.id)
-	#set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.confirmed])
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles])
 	#renderDBBrowserRowWithEditLink($rowId $rowValues)
 #end
 		</table>

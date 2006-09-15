@@ -443,7 +443,6 @@ public class AdminUserPortlet extends ContentPortlet {
                         }
                     }
                     record.put("roles", roleString);
-                    record.put("confirmed", "Y");
                     rows.add(record);
                 }
             }
