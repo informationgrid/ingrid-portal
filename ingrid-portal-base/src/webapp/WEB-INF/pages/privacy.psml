@@ -22,14 +22,14 @@ limitations under the License.
   <title>ingrid.page.privacy</title>
 
   <fragment id="privacy" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="0" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/privacy.vm</value>
+        <value>/WEB-INF/templates/default_cms.vm</value>
       </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>privacy.title</value>
+      <preference name="cmsKey" readOnly="false">
+        <value>portalu.privacy</value>
       </preference>
     </fragment>
   </fragment>
