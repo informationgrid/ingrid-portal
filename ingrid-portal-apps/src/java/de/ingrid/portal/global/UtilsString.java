@@ -108,6 +108,8 @@ public class UtilsString {
      * @see #htmlunescape(String)
      **/
     public static String htmlescape(String s1) {
+        if (s1 == null) 
+            return null;
         StringBuffer buf = new StringBuffer();
         int i;
         for (i = 0; i < s1.length(); ++i) {
