@@ -27,7 +27,7 @@
 	#set($itemDE = $dbEntity.getLocalizedEntry('de'))
     <p>
         <label class="float_left col2left_incr" for="title_de">#displayFieldLabel("title_de" "Titel (Deutsch)")</label>
-		<input class="float_left inputstyletext contentInput" type="text" id="title_de" name="title_de" value="$!itemDE.itemTitle"/>
+		<input class="float_left inputstyletext contentInput" type="text" id="title_de" name="title_de" value="$!UtilsString.htmlescape($itemDE.itemTitle)"/>
        	<p class="clearer"></p>
     </p>
     <p>
@@ -51,7 +51,7 @@
 	#set($itemEN = $dbEntity.getLocalizedEntry('en'))
     <p>
         <label class="float_left col2left_incr" for="title_en">#displayFieldLabel("title_en" "Titel (English)")</label>
-		<input class="float_left inputstyletext contentInput" type="text" id="title_en" name="title_en" value="$!itemEN.itemTitle"/>
+		<input class="float_left inputstyletext contentInput" type="text" id="title_en" name="title_en" value="$!UtilsString.htmlescape($itemEN.itemTitle)"/>
        	<p class="clearer"></p>
     </p>
     <p>
