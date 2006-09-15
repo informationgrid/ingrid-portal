@@ -27,19 +27,22 @@ import de.ingrid.portal.forms.ContactForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridCMS;
+import de.ingrid.portal.om.IngridCMSItem;
 import de.ingrid.portal.om.IngridNewsletterData;
 
 public class ContactPortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(ContactPortlet.class);
-    
+
     private final static String TEMPLATE_FORM_INPUT = "/WEB-INF/templates/contact.vm";
 
     private final static String TEMPLATE_SUCCESS = "/WEB-INF/templates/contact_success.vm";
 
     private static final String EMAIL_TEMPLATE = "/WEB-INF/templates/contact_email.vm";
-    
+
     public final static String PARAMV_ACTION_SUCCESS = "doSuccess";
 
     public void init(PortletConfig config) throws PortletException {
@@ -54,17 +57,30 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
         setDefaultViewPage(TEMPLATE_FORM_INPUT);
 
-        // put ActionForm to context. use variable name "actionForm" so velocity macros work !
+        // put ActionForm to context. use variable name "actionForm" so velocity
+        // macros work !
         ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
         context.put("actionForm", cf);
 
         // contact email address
-        context.put("portalEmail", PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER, "portalu@portalu.de"));
-        
+        context.put("portalEmail", PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER,
+                "portalu@portalu.de"));
+
+        // address after email
+        Session session = HibernateUtil.currentSession();
+        List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridCMS.class).add(
+                Restrictions.eq("itemKey", "portalu.contact.intro.postEmail")), session, null, true);
+        if (entities.size() > 0) {
+            IngridCMS entry = (IngridCMS) entities.get(0);
+            IngridCMSItem localizedItem = entry.getLocalizedEntry(request.getLocale().getLanguage());
+            context.put("contactIntroPostEmail", localizedItem.getItemValue());
+        }
+
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
         // ----------------------------------
-        // clear form if render request not after action request (e.g. page entered from other page)
+        // clear form if render request not after action request (e.g. page
+        // entered from other page)
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
             cf.clear();
@@ -82,7 +98,8 @@ public class ContactPortlet extends GenericVelocityPortlet {
         ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
         cf.populate(request);
         if (!cf.validate()) {
-            // add URL parameter indicating that portlet action was called before render request
+            // add URL parameter indicating that portlet action was called
+            // before render request
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
             actionResponse.sendRedirect(Settings.PAGE_CONTACT + urlViewParam);
             return;
@@ -98,29 +115,31 @@ public class ContactPortlet extends GenericVelocityPortlet {
             mailData.put("user.employer", cf.getInput(ContactForm.FIELD_COMPANY));
             mailData.put("user.business-info.telecom.telephone", cf.getInput(ContactForm.FIELD_PHONE));
             mailData.put("user.business-info.online.email", cf.getInput(ContactForm.FIELD_EMAIL));
-            mailData.put("user.area.of.profession", messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY)));
-            mailData.put("user.interest.in.enviroment.info", messages.getString("contact.report.email.interest.in.enviroment.info." + cf.getInput(ContactForm.FIELD_INTEREST)));
+            mailData.put("user.area.of.profession", messages.getString("contact.report.email.area.of.profession."
+                    + cf.getInput(ContactForm.FIELD_ACTIVITY)));
+            mailData.put("user.interest.in.enviroment.info", messages
+                    .getString("contact.report.email.interest.in.enviroment.info."
+                            + cf.getInput(ContactForm.FIELD_INTEREST)));
             if (cf.hasInput(ContactForm.FIELD_NEWSLETTER)) {
                 Session session = HibernateUtil.currentSession();
                 Transaction tx = null;
-                
+
                 try {
 
                     mailData.put("user.subscribed.to.newsletter", "yes");
                     // check for email address in newsletter list
                     tx = session.beginTransaction();
-                    List newsletterDataList = session.createCriteria(IngridNewsletterData.class)
-                    .add(Restrictions.eq("emailAddress", cf.getInput(ContactForm.FIELD_EMAIL)))
-                    .list();
+                    List newsletterDataList = session.createCriteria(IngridNewsletterData.class).add(
+                            Restrictions.eq("emailAddress", cf.getInput(ContactForm.FIELD_EMAIL))).list();
                     tx.commit();
                     // register for newsletter if not already registered
                     if (newsletterDataList.isEmpty()) {
-                        IngridNewsletterData data = new IngridNewsletterData(); 
+                        IngridNewsletterData data = new IngridNewsletterData();
                         data.setFirstName(cf.getInput(ContactForm.FIELD_FIRSTNAME));
                         data.setLastName(cf.getInput(ContactForm.FIELD_LASTNAME));
                         data.setEmailAddress(cf.getInput(ContactForm.FIELD_EMAIL));
                         data.setDateCreated(new Date());
-                        
+
                         tx = session.beginTransaction();
                         session.save(data);
                         tx.commit();
@@ -129,7 +148,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
                     if (tx != null) {
                         tx.rollback();
                     }
-                    throw new PortletException( t.getMessage() );
+                    throw new PortletException(t.getMessage());
                 } finally {
                     HibernateUtil.closeSession();
                 }
@@ -137,32 +156,32 @@ public class ContactPortlet extends GenericVelocityPortlet {
                 mailData.put("user.subscribed.to.newsletter", "no");
             }
             mailData.put("message.body", cf.getInput(ContactForm.FIELD_MESSAGE));
-            
+
             Locale locale = request.getLocale();
 
             String language = locale.getLanguage();
             String localizedTemplatePath = EMAIL_TEMPLATE;
             int period = localizedTemplatePath.lastIndexOf(".");
             if (period > 0) {
-                String fixedTempl = localizedTemplatePath.substring(0, period) + "_"
-                        + language + "." + localizedTemplatePath.substring(period + 1);
+                String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
+                        + localizedTemplatePath.substring(period + 1);
                 if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
                     localizedTemplatePath = fixedTempl;
                 }
             }
 
             String emailSubject = messages.getString("contact.report.email.subject");
-            
+
             String from = cf.getInput(ContactForm.FIELD_EMAIL);
             String to = PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER, "foo@bar.com");
-            
+
             String text = Utils.mergeTemplate(getPortletConfig(), mailData, "map", localizedTemplatePath);
-            Utils.sendEmail(from, emailSubject, new String[] {to}, text, null);
+            Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
         } catch (Throwable t) {
             cf.setError("", "Error sending mail from contact form.");
             log.error("Error sending mail from contact form.", t);
         }
-        
+
         // temporarily show same page with content
         String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_SUCCESS);
         actionResponse.sendRedirect(Settings.PAGE_CONTACT + urlViewParam);

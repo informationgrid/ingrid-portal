@@ -1,6 +1,6 @@
 $MESSAGES.getString('contact.intro.praeEmail')
 <a href="mailto:$portalEmail">$portalEmail</a>
-$MESSAGES.getString('contact.intro.postEmail')
+$contactIntroPostEmail
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="contact" id="contact">
 	<div class="formbody">

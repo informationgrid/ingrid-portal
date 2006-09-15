@@ -119,6 +119,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                     request.getLocale()));
             Context context = getContext(request);
             context.put("MESSAGES", messages);
+            context.put(CONTEXT_UTILS_STRING, new UtilsString());
 
             // reset state ? may be necessary on initial call (e.g. called from other page)
             checkInitialEnter(request);
@@ -290,7 +291,6 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             // put to render context
             Context context = getContext(request);
             context.put(CONTEXT_ENTITIES, rssSources);
-            context.put(CONTEXT_UTILS_STRING, new UtilsString());
             context.put(CONTEXT_BROWSER_STATE, state);
             setDefaultViewPage(viewDefault);
             return true;
