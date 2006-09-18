@@ -1,6 +1,29 @@
 #set ($action = $renderResponse.createActionURL())
 	<div class="formbody">
-          <p>$MESSAGES.getString('admin.iplug.description')</p>
+
+#if($ibusURL && $ibusURL != "")
+  <h3>$MESSAGES.getString('admin.iplug.headline.ibus')</h3>
+  <p style="margin-left:4.5em">
+	<a target="_new" href="$ibusURL">$MESSAGES.getString('admin.iplug.headline.ibus')</a>
+  </p>
+#end		  
+
+
+#if($SEIplugs.size() > 0)
+  <h3>$MESSAGES.getString('admin.iplug.headline.webindex')</h3>
+  #foreach($plug in $SEIplugs)
+    <p style="margin-left:4.5em">
+	#if($plug.getIplugAdminGuiUrl())
+      <a target="_new" href="$plug.getIplugAdminGuiUrl()">$plug.getDataSourceName()</a>
+	#else
+	  $plug.getDataSourceName() (kein Administrationsinterface angegeben!)
+	#end	
+    </p>
+  #end
+#end		  
+		  
+<h3>$MESSAGES.getString('admin.iplug.headline.iplug')</h3>
+<p>$MESSAGES.getString('admin.iplug.description')</p>
 #foreach($partnerNode in $tree.getChildren())
 	$action.setParameter('id',"$partnerNode.id")		
 	#if($partnerNode.isOpen())
@@ -15,7 +38,7 @@
                     #set($plug = $plugNode.get("iplug"))
 					<p style="margin-left:9em">
 					#if($plug.getIplugAdminGuiUrl())
-                      <a href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
+                      <a target="_new" href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
 					#else
 					  $plugNode.name (kein Administrationsinterface angegeben!)
 					#end	

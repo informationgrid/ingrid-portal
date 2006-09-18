@@ -22,6 +22,7 @@ import org.apache.jetspeed.security.RoleManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -74,14 +75,61 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
 
         PortletSession session = request.getPortletSession();
         DisplayTreeNode treeRoot = (DisplayTreeNode) session.getAttribute("treeRoot");
+        Principal authUserPrincipal = request.getUserPrincipal();
+        Permissions authUserpermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+                roleManager);
         if (treeRoot == null) {
-            Principal authUserPrincipal = request.getUserPrincipal();
-            treeRoot = getPartnerProviderIPlugs(authUserPrincipal);
+            treeRoot = getPartnerProviderIPlugs(authUserpermissions);
             session.setAttribute("treeRoot", treeRoot);
         }
+
         context.put("tree", treeRoot);
 
+        // check, get for iplug-se edit permissions
+        context.put("SEIplugs", getSEIPlugs(authUserpermissions));
+
+        // check, get for ibus
+        context.put("ibusURL", getIBusAdminURL(authUserpermissions));
+
         super.doView(request, response);
+    }
+
+    private String getIBusAdminURL(Permissions permissions) {
+        String result = null;
+        if (permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)) {
+            result = PortalConfig.getInstance().getString("ibus.admin.url", "");
+        }
+
+        return result;
+    }
+
+    private ArrayList getSEIPlugs(Permissions permissions) {
+        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+        ArrayList result = new ArrayList();
+        if (permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION)) {
+            ArrayList providers = UtilsSecurity.getProvidersFromPermissions(permissions, false);
+            for (int i = 0; i < plugs.length; i++) {
+                PlugDescription plug = plugs[i];
+                // do not include search engine iplugs
+                if (plug.getPlugId().endsWith("-se")) {
+                    String[] plugProviders = plug.getProviders();
+                    for (int j = 0; j < plugProviders.length; j++) {
+                        // check for matching provider AND if the iplug is not
+                        // already added
+                        if (providers.contains(plugProviders[j]) && !result.contains(plug)) {
+                            result.add(plug);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -121,11 +169,10 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      * @param principal
      * @return
      */
-    private DisplayTreeNode getPartnerProviderIPlugs(Principal principal) {
+    private DisplayTreeNode getPartnerProviderIPlugs(Permissions permissions) {
         PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
-        Permissions permissions = UtilsSecurity.getMergedPermissions(principal, permissionManager, roleManager);
         ArrayList partners = UtilsSecurity.getPartnersFromPermissions(permissions, false);
         ArrayList providers = UtilsSecurity.getProvidersFromPermissions(permissions, false);
         for (int i = 0; i < partners.size(); i++) {
@@ -139,37 +186,37 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                             .getProviderFromKey(providerId), false);
                     for (int k = 0; k < plugs.length; k++) {
                         PlugDescription plug = plugs[k];
-                        String[] plugProviders = plug.getProviders();
-                        DisplayTreeNode plugNode = null;
-                        for (int l = 0; l < plugProviders.length; l++) {
-                            if (plugProviders[l].equalsIgnoreCase(providerId)) {
-                                plugNode = new DisplayTreeNode(plug.getPlugId(), plug.getDataSourceName(), false);
-                                plugNode.put("iplug", plug);
-                                plugNode.setType(DisplayTreeNode.GENERIC);
-                                plugNode.setParent(providerNode);
-                                providerNode.addChild(plugNode);
-                                break;
+                        // do not include search engine iplugs
+                        if (!plug.getPlugId().endsWith("-se")) {
+                            String[] plugProviders = plug.getProviders();
+                            DisplayTreeNode plugNode = null;
+                            for (int l = 0; l < plugProviders.length; l++) {
+                                // check for matching provider AND if the iplug
+                                // is not already added
+                                if (plugProviders[l].equalsIgnoreCase(providerId)
+                                        && providerNode.getChild(plug.getPlugId()) == null) {
+                                    plugNode = new DisplayTreeNode(plug.getPlugId(), plug.getDataSourceName(), false);
+                                    plugNode.put("iplug", plug);
+                                    plugNode.setType(DisplayTreeNode.GENERIC);
+                                    plugNode.setParent(providerNode);
+                                    providerNode.addChild(plugNode);
+                                    break;
+                                }
                             }
                         }
                     }
-                    if (providerNode.getChildren().size() == 0) {
-                        DisplayTreeNode messageNode = new DisplayTreeNode("message", "Keine iPlugs gefunden", false);
-                        messageNode.setType(DisplayTreeNode.MESSAGE_NODE);
-                        providerNode.addChild(messageNode);
+                    if (providerNode.getChildren().size() != 0) {
+                        providerNode.setType(DisplayTreeNode.GENERIC);
+                        providerNode.setParent(partnerNode);
+                        partnerNode.addChild(providerNode);
                     }
-                    providerNode.setType(DisplayTreeNode.GENERIC);
-                    providerNode.setParent(partnerNode);
-                    partnerNode.addChild(providerNode);
                 }
             }
-            if (partnerNode.getChildren().size() == 0) {
-                DisplayTreeNode messageNode = new DisplayTreeNode("message", "Keine Provider gefunden.", false);
-                messageNode.setType(DisplayTreeNode.MESSAGE_NODE);
-                partnerNode.addChild(messageNode);
+            if (partnerNode.getChildren().size() != 0) {
+                partnerNode.setType(DisplayTreeNode.GENERIC);
+                partnerNode.setParent(root);
+                root.addChild(partnerNode);
             }
-            partnerNode.setType(DisplayTreeNode.GENERIC);
-            partnerNode.setParent(root);
-            root.addChild(partnerNode);
         }
 
         return root;
