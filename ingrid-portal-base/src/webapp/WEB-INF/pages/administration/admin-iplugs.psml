@@ -4,8 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Admin iPlugs</title>
-  <metadata name="title" xml:lang="en">Admin iPlugs</metadata>
+  <title>iPlugs/iBus</title>
+  <metadata name="title" xml:lang="en">iPlugs/iBus</metadata>
 
   <fragment id="admin-iplugs" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-iplugs-0" type="portlet" name="ingrid-portal-apps::AdminIPlugPortlet">

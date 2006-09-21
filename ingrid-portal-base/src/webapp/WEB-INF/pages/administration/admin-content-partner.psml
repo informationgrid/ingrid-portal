@@ -4,8 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Content Partner</title>
-  <metadata name="title" xml:lang="en">Content Partner</metadata>
+  <title>Partner</title>
+  <metadata name="title" xml:lang="en">Partner</metadata>
 
   <fragment id="admin-content-partner" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-content-partner-0" type="portlet" name="ingrid-portal-apps::ContentPartnerPortlet">

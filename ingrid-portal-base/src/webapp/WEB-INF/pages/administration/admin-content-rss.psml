@@ -4,8 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Content RSS</title>
-  <metadata name="title" xml:lang="en">Content RSS</metadata>
+  <title>RSS</title>
+  <metadata name="title" xml:lang="en">RSS</metadata>
 
   <fragment id="admin-content-rss" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-content-rss-0" type="portlet" name="ingrid-portal-apps::ContentRSSPortlet">

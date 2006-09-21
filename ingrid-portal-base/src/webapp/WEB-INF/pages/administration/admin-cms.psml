@@ -4,8 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>CMS</title>
-  <metadata name="title" xml:lang="en">CMS</metadata>
+  <title>Inhalte</title>
+  <metadata name="title" xml:lang="en">Content</metadata>
 
   <fragment id="admin-cms" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-cms-0" type="portlet" name="ingrid-portal-apps::AdminCMSPortlet">
