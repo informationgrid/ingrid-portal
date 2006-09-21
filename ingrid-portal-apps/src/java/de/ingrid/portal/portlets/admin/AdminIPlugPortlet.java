@@ -30,6 +30,7 @@ import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeNode;
+import de.ingrid.portal.security.util.SecurityHelper;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -76,7 +77,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         PortletSession session = request.getPortletSession();
         DisplayTreeNode treeRoot = (DisplayTreeNode) session.getAttribute("treeRoot");
         Principal authUserPrincipal = request.getUserPrincipal();
-        Permissions authUserpermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+        Permissions authUserpermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                 roleManager);
         if (treeRoot == null) {
             treeRoot = getPartnerProviderIPlugs(authUserpermissions);

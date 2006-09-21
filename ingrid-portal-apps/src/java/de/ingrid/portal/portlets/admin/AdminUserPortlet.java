@@ -69,6 +69,7 @@ import de.ingrid.portal.security.permission.IngridPartnerPermission;
 import de.ingrid.portal.security.permission.IngridPortalPermission;
 import de.ingrid.portal.security.permission.IngridProviderPermission;
 import de.ingrid.portal.security.role.IngridRole;
+import de.ingrid.portal.security.util.SecurityHelper;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -411,7 +412,7 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
             // get current user
             Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+            Permissions authUserPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                     roleManager);
 
             // iterate over all users
@@ -419,7 +420,7 @@ public class AdminUserPortlet extends ContentPortlet {
             while (users.hasNext()) {
                 User user = (User) users.next();
                 Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-                Permissions userPermissions = UtilsSecurity.getMergedPermissions(userPrincipal, permissionManager,
+                Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
                         roleManager);
 
                 // get the user roles
@@ -534,7 +535,7 @@ public class AdminUserPortlet extends ContentPortlet {
             // set basic permissions and roles depending on the auth users
             // permission
             Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+            Permissions authUserPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                     roleManager);
             if (getLayoutPermission(authUserPermissions).equalsIgnoreCase("admin.portal.partner")) {
                 // get user
@@ -1062,7 +1063,7 @@ public class AdminUserPortlet extends ContentPortlet {
 
             // get permissions of the user
             Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-            Permissions userPermissions = UtilsSecurity.getMergedPermissions(userPrincipal, permissionManager,
+            Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
                     roleManager);
 
             // get partner from permissions, set to context
@@ -1088,7 +1089,7 @@ public class AdminUserPortlet extends ContentPortlet {
 
             // get current user
             Principal authUserPrincipal = request.getUserPrincipal();
-            Permissions authUserPermissions = UtilsSecurity.getMergedPermissions(authUserPrincipal, permissionManager,
+            Permissions authUserPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                     roleManager);
 
             // set type of layout
