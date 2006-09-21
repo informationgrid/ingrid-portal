@@ -9,6 +9,7 @@
 	<options>/administration/admin-content-provider.psml</options>
     <options>/administration/admin-iplugs.psml</options>
     <options>/administration/admin-cms.psml</options>
+    <options>/administration/admin-wms.psml</options>
   </menu>
   
   <security-constraints>
