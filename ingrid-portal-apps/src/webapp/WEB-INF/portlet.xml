@@ -221,6 +221,28 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="AdminWMSPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/admin_wms.vm</value>
+        </init-param>
+        <portlet-name>AdminWMSPortlet</portlet-name>
+        <display-name>AdminWMSPortlet</display-name>
+        <description>The Portlet displays the wms admin interface links.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminWMSPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Links zu Pflege WMS</title>
+            <short-title>Links zu Pflege WMS</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
+
 
 
     <!-- *********************** -->

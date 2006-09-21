@@ -24,6 +24,7 @@ import org.hibernate.cfg.Environment;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
 import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
@@ -324,6 +325,16 @@ public class WMSInterfaceImpl implements WMSInterface {
             throw new Exception(resource + " not found");
         }
         return stream;
+    }
+
+    /**
+     * @see de.ingrid.portal.interfaces.WMSInterface#getAdminInterfaceURLs()
+     */
+    public String[] getAdminInterfaceURLs() {
+        String[] result = new String[2];
+        result[0] = PortalConfig.getInstance().getString(PortalConfig.WMS_MAPBENDER_ADMIN_URL, "");
+        result[1] = PortalConfig.getInstance().getString(PortalConfig.WMS_MAPLAB_ADMIN_URL, "");
+        return result;
     }
 
 }

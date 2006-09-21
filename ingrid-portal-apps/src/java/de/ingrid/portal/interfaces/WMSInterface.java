@@ -99,5 +99,15 @@ public interface WMSInterface {
      * @return The url of the WMS Server including the command to add the services.
      */
     String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled, Locale language);
+    
+
+    /**
+     * Returns the admin interfaces for the WMS component. There can be more 
+     * admin interface URLs.
+     * 
+     * @return String Array with admin URLs
+     */
+    String[] getAdminInterfaceURLs();
+    
 
 }

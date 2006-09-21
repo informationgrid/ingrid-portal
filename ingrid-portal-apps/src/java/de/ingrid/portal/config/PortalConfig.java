@@ -53,6 +53,11 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String SAVE_ENTRIES_MAX_NUMBER = "save.entries.max.number";
 
+    public static final String WMS_MAPBENDER_ADMIN_URL = "wms.mapbender.admin.url";
+
+    public static final String WMS_MAPLAB_ADMIN_URL = "wms.maplab.admin.url";
+    
+    
     // private stuff
     private static PortalConfig instance = null;
 
