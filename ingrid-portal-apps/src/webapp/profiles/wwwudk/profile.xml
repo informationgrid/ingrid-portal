@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>wwwudk</name>
+    <description>Portal-Profile für den www-udk</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-service.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-environment.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>administration/admin-content-rss.psml</name>
+            <hidden>true</hidden>
+        </page>
+    </pages>
+    <portalconfig>
+        <property>
+            <name>portal.enable.measure</name>
+            <value>false</value>
+        </property>
+        <property>
+            <name>portal.enable.service</name>
+            <value>false</value>
+        </property>
+        <property>
+            <name>portal.enable.enviroment</name>
+            <value>false</value>
+        </property>
+    </portalconfig>
+    <files>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
+            <dst>ingrid-portal/decorations/layout/ingrid/css/styles.css</dst>
+        </file>
+    </files>
+    <sql>
+        <execute>
+            UPDATE...
+        </execute>    
+        <execute>
+            INSERT...
+        </execute>    
+    </sql>
+</profile>

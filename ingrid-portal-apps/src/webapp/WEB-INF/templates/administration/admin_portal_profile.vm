@@ -1,0 +1,15 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="formbody">
+  <h3>$MESSAGES.getString('admin.portal.profile.headline')</h3>
+  $action.setParameter('action',"switchProfile")		
+  $action.setParameter('profile',"portalu")		
+  <p>
+	<a href="$action">$MESSAGES.getString('admin.portal.profile.portalu')</a>
+  </p>
+  $action.setParameter('action',"switchProfile")		
+  $action.setParameter('profile',"wwwudk")		
+  <p>
+	<a href="$action">$MESSAGES.getString('admin.portal.profile.wwwudk')</a>
+  </p>
+</div>
+
