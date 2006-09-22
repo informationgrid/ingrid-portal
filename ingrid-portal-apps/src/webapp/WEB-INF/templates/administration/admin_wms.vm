@@ -1,9 +1,9 @@
 <div class="formbody">
   <h3>$MESSAGES.getString('admin.wms.headline')</h3>
-  <p style="margin-left:4.5em">
+  <p>
 	<a target="_new" href="$wmsMapbenderInterface">$MESSAGES.getString('admin.wms.mapbender')</a>
   </p>
-  <p style="margin-left:4.5em">
+  <p>
 	<a target="_new" href="$wmsMaplabInterface">$MESSAGES.getString('admin.wms.maplab')</a>
   </p>
 </div>
