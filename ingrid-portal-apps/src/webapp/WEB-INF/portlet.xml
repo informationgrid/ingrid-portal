@@ -265,6 +265,28 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="AdminHomepagePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/admin_homepage.vm</value>
+        </init-param>
+        
+        <portlet-name>AdminHomepagePortlet</portlet-name>
+        <display-name>AdminHomepagePortlet</display-name>
+        <description>This portlet displays the home page personalization dialog.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminHomepagePortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Homepage</title>
+            <short-title>Homepage</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
 
 
     <!-- *********************** -->
@@ -594,6 +616,10 @@
             <preference>
                 <name>helpKey</name>
                 <value>ingrid-inform-1</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.ingridInform.title</value>
             </preference>
             <preference>
                 <name>cmsKey</name>
