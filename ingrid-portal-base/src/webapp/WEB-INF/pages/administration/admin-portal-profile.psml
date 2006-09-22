@@ -1,0 +1,20 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Portal Profile</title>
+  <metadata name="title" xml:lang="en">Portal Profile</metadata>
+
+  <fragment id="admin-portal-profile" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="admin-portal-profile-0" type="portlet" name="ingrid-portal-apps::AdminPortalProfilePortlet">
+      <property layout="OneColumn" name="row" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
+  </security-constraints>
+</page>

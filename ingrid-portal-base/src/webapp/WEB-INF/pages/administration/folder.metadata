@@ -12,6 +12,7 @@
     <options>/administration/admin-cms.psml</options>
     <options>/administration/admin-wms.psml</options>
     <options>/administration/admin-statistics.psml</options>
+    <options>/administration/admin-portal-profile.psml</options>
   </menu>
   
   <security-constraints>
