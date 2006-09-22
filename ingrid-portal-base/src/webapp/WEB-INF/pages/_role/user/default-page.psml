@@ -1,0 +1,83 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>ingrid.page.home</title>
+
+  <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <!-- USE id="search-simple-portlet", this one will be shared across pages ! -->
+    <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.search</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-1</value>
+      </preference>
+    </fragment>
+    <fragment id="home-2" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.environment.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-topics-1</value>
+      </preference>
+    </fragment>
+    <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
+      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="column" value="0" />
+      <preference name="noOfEntriesDisplayed" readOnly="false">
+        <value>4</value>
+      </preference>
+      <preference name="titleKey" readOnly="false">
+        <value>news.teaser.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>rss-news-1</value>
+      </preference>
+    </fragment>
+    <fragment id="home-4" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::IngridInformPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
+      </preference>
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.ingridInform.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>ingrid-inform-1</value>
+      </preference>
+    </fragment>
+    <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ServiceTeaser">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.service.title</value>
+      </preference>
+    </fragment>
+    <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuresTeaser">
+      <property layout="TwoColumns" name="row" value="2" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.measures.title</value>
+      </preference>
+    </fragment>
+    <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ChronicleTeaser">
+      <property layout="TwoColumns" name="row" value="3" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="titleKey" readOnly="false">
+        <value>chronicle.teaser.title</value>
+      </preference>
+    </fragment>
+
+  </fragment>
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
