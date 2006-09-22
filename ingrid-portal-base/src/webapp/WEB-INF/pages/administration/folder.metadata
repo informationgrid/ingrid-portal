@@ -10,6 +10,7 @@
     <options>/administration/admin-iplugs.psml</options>
     <options>/administration/admin-cms.psml</options>
     <options>/administration/admin-wms.psml</options>
+    <options>/administration/admin-statistics.psml</options>
   </menu>
   
   <security-constraints>
