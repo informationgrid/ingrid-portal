@@ -4,6 +4,7 @@
 
   <menu name="sub-menu">
     <options>/administration/admin-usermanagement.psml</options>
+    <options>/administration/admin-homepage.psml</options>
     <options>/administration/admin-content-rss.psml</options>
     <options>/administration/admin-content-partner.psml</options>
 	<options>/administration/admin-content-provider.psml</options>

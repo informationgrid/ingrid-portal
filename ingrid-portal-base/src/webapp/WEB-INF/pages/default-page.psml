@@ -87,5 +87,6 @@
   </fragment>
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
   </security-constraints>
 </page>
