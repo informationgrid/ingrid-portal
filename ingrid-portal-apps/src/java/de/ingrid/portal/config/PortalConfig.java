@@ -56,6 +56,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String WMS_MAPBENDER_ADMIN_URL = "wms.mapbender.admin.url";
 
     public static final String WMS_MAPLAB_ADMIN_URL = "wms.maplab.admin.url";
+
+    public static final String APACHE_STATISTICS_URL = "apache.statistics.url";
     
     
     // private stuff

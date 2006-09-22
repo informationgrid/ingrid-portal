@@ -1,0 +1,7 @@
+<div class="formbody">
+  <h3>$MESSAGES.getString('admin.statistics.headline')</h3>
+  <p>
+	<a target="_new" href="$apacheStatisticsURL">$MESSAGES.getString('admin.statistics.apache')</a>
+  </p>
+</div>
+

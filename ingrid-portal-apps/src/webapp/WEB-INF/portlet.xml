@@ -243,6 +243,28 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
+    <portlet id="AdminStatisticsPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/admin_statistics.vm</value>
+        </init-param>
+        <portlet-name>AdminStatisticsPortlet</portlet-name>
+        <display-name>AdminStatisticsPortlet</display-name>
+        <description>The Portlet displays the links to several statistics.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminStatisticsPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Statistiken</title>
+            <short-title>Statistiken</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
+
 
 
     <!-- *********************** -->
