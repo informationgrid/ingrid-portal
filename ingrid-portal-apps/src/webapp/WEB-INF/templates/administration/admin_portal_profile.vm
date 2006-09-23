@@ -1,6 +1,13 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="formbody">
   <h3>$MESSAGES.getString('admin.portal.profile.headline')</h3>
+  <p>$MESSAGES.getString('admin.portal.profile.description')</p>
+  <div class="line_form"><hr /></div>
+#if($switchedToProfile)
+  <p class="portlet-msg-info">$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile.</p>
+  <p class="portlet-msg-info">$MESSAGES.getString('admin.portal.profile.restart')</p>
+  <div class="line_form"><hr /></div>
+#end	
   $action.setParameter('action',"switchProfile")		
   $action.setParameter('profile',"portalu")		
   <p>

@@ -43,7 +43,11 @@
 	<classpathentry kind="var" path="MAVEN_REPO/commons-dbcp/jars/commons-dbcp-1.2.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/dom4j/jars/dom4j-1.4-dev-8.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jta/jars/jta1.0.1.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-configuration/jars/commons-configuration-1.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-configuration/jars/commons-configuration-1.2.jar">
+		<attributes>
+			<attribute value="http://jakarta.apache.org/commons/configuration/apidocs_1.2/" name="javadoc_location"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-lang/jars/commons-lang-2.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/quartz/jars/quartz-1.5.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>

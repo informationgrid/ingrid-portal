@@ -3,7 +3,12 @@
  */
 package de.ingrid.portal.portlets.admin;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -23,6 +28,7 @@ import org.apache.jetspeed.om.page.Page;
 import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.page.PageNotFoundException;
 import org.apache.jetspeed.page.document.NodeException;
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -36,8 +42,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
     private final static Log log = LogFactory.getLog(AdminPortalProfilePortlet.class);
-    
-    
+
     private PageManager pageManager;
 
     /**
@@ -62,6 +67,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
+        context.put("switchedToProfile", request.getParameter("switchedToProfile"));
+
         super.doView(request, response);
     }
 
@@ -70,25 +77,49 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
      *      javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-        
+
         String action = request.getParameter("action");
-        
+
         if (action != null && action.equals("switchProfile")) {
             String profileName = request.getParameter("profile");
-            String profileDescriptor = getPortletConfig().getPortletContext().getRealPath("/profiles/" + profileName + "/profile.xml");
+            String profileDescriptor = getPortletConfig().getPortletContext().getRealPath(
+                    "/profiles/" + profileName + "/profile.xml");
             String pageName = null;
             try {
                 XMLConfiguration profile = new XMLConfiguration(profileDescriptor);
                 // set pages visible/invisible
                 List pages = profile.getList("pages.page.name");
-                for (int i=0; i<pages.size(); i++) {
-                    pageName = (String)pages.get(i);
+                for (int i = 0; i < pages.size(); i++) {
+                    pageName = (String) pages.get(i);
                     boolean hidden = profile.getBoolean("pages.page(" + i + ").hidden");
                     Page p = pageManager.getPage(Folder.PATH_SEPARATOR + pageName);
                     p.setHidden(hidden);
                     pageManager.updatePage(p);
                 }
-                
+
+                // process files copy actions
+                List fileActions = profile.getList("files.file.action");
+                for (int i = 0; i < fileActions.size(); i++) {
+                    String actionName = (String) fileActions.get(i);
+                    if (actionName.equalsIgnoreCase("copy")) {
+                        String src = profile.getString("files.file(" + i + ").src");
+                        String dst = profile.getString("files.file(" + i + ").dst");
+                        if (dst == null) {
+                            dst = src;
+                        }
+                        String srcFileName = getPortletConfig().getPortletContext().getRealPath(
+                                "/profiles/" + profileName + "/" + src);
+                        String dstContext = dst.substring(0, dst.indexOf("/"));
+                        String dstPath = dst.substring(dst.indexOf("/") + 1);
+                        String dstFileName = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+                                .getConfig().getServletContext().getContext("/" + dstContext).getRealPath(dstPath);
+                        if (!srcFileName.equals(dstFileName)) {
+                            copy(srcFileName, dstFileName);
+                        }
+                    }
+                }
+                response.setRenderParameter("switchedToProfile", profileName);
+
             } catch (ConfigurationException e) {
                 log.error("Error reading profile configuration (" + profileDescriptor + ")", e);
             } catch (PageNotFoundException e) {
@@ -97,9 +128,43 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                 log.error("Error reading page (" + Folder.PATH_SEPARATOR + pageName + ")", e);
             }
         }
-        
-        // TODO Auto-generated method stub
-        super.processAction(request, response);
+    }
+
+    /**
+     * Copy Files in file system.
+     * 
+     * @param source
+     * @param dest
+     * @throws IOException
+     */
+    private static void copy(String source, String dest) throws IOException {
+        copy(new File(source), new File(dest));
+    }
+
+    /**
+     * Copy Files in file system.
+     * 
+     * @param source
+     * @param dest
+     * @throws IOException
+     */
+    private static void copy(File source, File dest) throws IOException {
+        FileChannel in = null, out = null;
+        try {
+            in = new FileInputStream(source).getChannel();
+            out = new FileOutputStream(dest).getChannel();
+
+            in = new FileInputStream(source).getChannel();
+            out = new FileOutputStream(dest).getChannel();
+            in.transferTo(0, in.size(), out);
+        } catch (FileNotFoundException e) {
+            log.error("Error copy files ('" + source.getAbsolutePath() + "' -> '" + dest.getAbsolutePath() + "')", e);
+        } finally {
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
+        }
     }
 
 }

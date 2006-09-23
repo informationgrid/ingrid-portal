@@ -24,25 +24,11 @@
             <hidden>true</hidden>
         </page>
     </pages>
-    <portalconfig>
-        <property>
-            <name>portal.enable.measure</name>
-            <value>false</value>
-        </property>
-        <property>
-            <name>portal.enable.service</name>
-            <value>false</value>
-        </property>
-        <property>
-            <name>portal.enable.enviroment</name>
-            <value>false</value>
-        </property>
-    </portalconfig>
     <files>
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
-            <dst>ingrid-portal/decorations/layout/ingrid/css/styles.css</dst>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties</src>
+            <dst>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties</dst>
         </file>
     </files>
     <sql>
