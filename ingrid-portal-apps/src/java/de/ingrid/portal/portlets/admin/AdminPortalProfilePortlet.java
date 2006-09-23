@@ -158,7 +158,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                 List sqlActions = profile.getList("sql.execute");
                 for (int i = 0; i < sqlActions.size(); i++) {
                     String sqlAction = (String) sqlActions.get(i);
-                    UtilsDB.executeRawSQL(sqlAction);
+                    UtilsDB.executeRawUpdateSQL(sqlAction);
                 }
 
                 response.setRenderParameter("switchedToProfile", profileName);

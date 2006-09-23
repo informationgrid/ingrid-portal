@@ -622,13 +622,21 @@ public class UtilsDB {
         return partnerMap;
     }
 
-    public static void executeRawSQL(String sqlStr) {
+    /**
+     * Execute RAW UPDATE-SQL. Make sure the SQL Statement is valid.
+     * 
+     * @param sqlStr The SQL String.
+     */
+    public static void executeRawUpdateSQL(String sqlStr) {
         Transaction tx = null;
         try {
             // delete it
             Session session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
             Statement st = session.connection().createStatement();
+            if (log.isDebugEnabled()) {
+                log.debug("Execute SQL: " + sqlStr);
+            }
             st.executeUpdate(session.connection().nativeSQL(sqlStr));
             tx.commit();
         } catch (Exception ex) {
