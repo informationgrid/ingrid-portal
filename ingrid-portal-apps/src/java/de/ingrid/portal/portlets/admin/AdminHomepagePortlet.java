@@ -4,7 +4,6 @@
 package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ import de.ingrid.portal.global.UtilsPageLayout;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class AdminHomepagePortlet extends GenericVelocityPortlet {
@@ -57,7 +56,7 @@ public class AdminHomepagePortlet extends GenericVelocityPortlet {
     private ArrayList rightColumnPortlets = new ArrayList();
 
     private ArrayList leftColumnPortlets = new ArrayList();
-    
+
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
@@ -74,7 +73,8 @@ public class AdminHomepagePortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
+     *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
@@ -121,20 +121,18 @@ public class AdminHomepagePortlet extends GenericVelocityPortlet {
             context.put("rightColumnFragments", rightColumnFragments);
             context.put("leftColumnFragments", leftColumnFragments);
         } catch (PageNotFoundException e) {
-            log.error("Error page not found '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'",
-                    e);
+            log.error("Error page not found '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'", e);
             context.put("errorcode", "ERROR_GETTING_HOME_PAGE");
         } catch (NodeException e) {
-            log
-                    .error("Error getting page '" + Folder.PATH_SEPARATOR + "default-page.psml"
-                            + "'", e);
+            log.error("Error getting page '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'", e);
             context.put("errorcode", "ERROR_GETTING_HOME_PAGE");
         }
         super.doView(request, response);
     }
 
     /**
-     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
+     *      javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
@@ -150,62 +148,64 @@ public class AdminHomepagePortlet extends GenericVelocityPortlet {
                 // defragmentation
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
-                
+
                 // iterate over the left portlets
                 for (int i = 0; i < leftColumnPortlets.size(); i++) {
-                    PortletDefinitionComposite p = (PortletDefinitionComposite)((HashMap)leftColumnPortlets.get(i)).get("portlet");
+                    PortletDefinitionComposite p = (PortletDefinitionComposite) ((HashMap) leftColumnPortlets.get(i))
+                            .get("portlet");
                     String portletName = p.getUniqueName();
-                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), portletName, i, 0);
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(),
+                            portletName, i, 0);
                 }
                 // iterate over the right portlets
                 for (int i = 0; i < rightColumnPortlets.size(); i++) {
-                    PortletDefinitionComposite p = (PortletDefinitionComposite)((HashMap)rightColumnPortlets.get(i)).get("portlet");
+                    PortletDefinitionComposite p = (PortletDefinitionComposite) ((HashMap) rightColumnPortlets.get(i))
+                            .get("portlet");
                     String portletName = p.getUniqueName();
-                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), portletName, i, 1);
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(),
+                            portletName, i, 1);
                 }
                 // defragmentation
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
-                
+
                 pageManager.updatePage(homePage);
-                
+
             } else {
                 Page homePage = pageManager.getPage(Folder.PATH_SEPARATOR + "default-page.psml");
 
                 // defragmentation
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
-                
+
                 // iterate over the left portlets
                 for (int i = 0; i < leftColumnPortlets.size(); i++) {
                     // get the configured portlet from the request params
                     String slotVal = request.getParameter("c1r" + (i + 1));
-                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), slotVal, i, 0);
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), slotVal,
+                            i, 0);
                 }
 
                 // iterate over the right portlets
                 for (int i = 0; i < rightColumnPortlets.size(); i++) {
                     // get the configured portlet from the request params
                     String slotVal = request.getParameter("c2r" + (i + 1));
-                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), slotVal, i, 1);
+                    UtilsPageLayout.positionPortletOnPage(pageManager, homePage, homePage.getRootFragment(), slotVal,
+                            i, 1);
                 }
                 // defragmentation
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 0);
                 UtilsPageLayout.defragmentLayoutColumn(homePage.getRootFragment(), 1);
-                
+
                 pageManager.updatePage(homePage);
             }
 
         } catch (PageNotFoundException e) {
-            log.error("Error page not found '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'",
-                    e);
+            log.error("Error page not found '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'", e);
         } catch (NodeException e) {
-            log
-                    .error("Error getting page '" + Folder.PATH_SEPARATOR + "default-page.psml"
-                            + "'", e);
+            log.error("Error getting page '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'", e);
         } catch (Exception e) {
-            log.error("General Error handling '" + Folder.PATH_SEPARATOR + "default-page.psml"
-                    + "'", e);
+            log.error("General Error handling '" + Folder.PATH_SEPARATOR + "default-page.psml" + "'", e);
         }
     }
 
@@ -248,5 +248,5 @@ public class AdminHomepagePortlet extends GenericVelocityPortlet {
         }
 
     }
-    
+
 }
