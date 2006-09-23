@@ -19,6 +19,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,6 +34,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsPageLayout;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -87,14 +89,45 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
             String pageName = null;
             try {
                 XMLConfiguration profile = new XMLConfiguration(profileDescriptor);
-                // set pages visible/invisible
+                // set page configurations
+                // this info will be held in the database
                 List pages = profile.getList("pages.page.name");
                 for (int i = 0; i < pages.size(); i++) {
                     pageName = (String) pages.get(i);
-                    boolean hidden = profile.getBoolean("pages.page(" + i + ").hidden");
+                    
+                    // set visibility of the page
+                    boolean hidden;
                     Page p = pageManager.getPage(Folder.PATH_SEPARATOR + pageName);
-                    p.setHidden(hidden);
+                    try {
+                        hidden = profile.getBoolean("pages.page(" + i + ").hidden");
+                        p.setHidden(hidden);
+                    } catch (ConversionException e) {
+                        log.warn("No tag 'hidden' found for page '" + pageName + "'", e);                    
+                    }
                     pageManager.updatePage(p);
+                    
+                    // set page layout configuration
+                    List portletNames = profile.getList("pages.page(" + i + ").portlets.portlet.name");
+                    if (portletNames != null && portletNames.size() > 0) {
+                        // defragmentation
+                        UtilsPageLayout.defragmentLayoutColumn(p.getRootFragment(), 0);
+                        UtilsPageLayout.defragmentLayoutColumn(p.getRootFragment(), 1);
+                        // remove all fragments
+                        UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 0);
+                        UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 1);
+                        for (int j=0; j < portletNames.size(); j++) {
+                            String portletName = (String) portletNames.get(j);
+                            try {
+                                int row = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@row]");
+                                int col = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@col]");
+                                UtilsPageLayout.positionPortletOnPage(pageManager, p, p.getRootFragment(),
+                                        portletName, row, col);
+                            } catch (ConversionException e) {
+                                log.warn("No 'x' or 'y' attribute found for portlet '" + portletName + "' on page '" + pageName + "'", e);                    
+                            }
+                        }
+                        pageManager.updatePage(p);
+                    }
                 }
 
                 // process files copy actions

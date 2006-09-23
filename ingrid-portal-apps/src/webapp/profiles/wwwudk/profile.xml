@@ -23,7 +23,27 @@
             <name>administration/admin-content-rss.psml</name>
             <hidden>true</hidden>
         </page>
+        <page>
+            <name>administration/admin-homepage.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
     </pages>
+
     <files>
         <file>
             <action>copy</action>

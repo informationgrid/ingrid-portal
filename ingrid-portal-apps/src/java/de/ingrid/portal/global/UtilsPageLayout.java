@@ -44,6 +44,23 @@ public class UtilsPageLayout {
     }
 
     /**
+     * Remove all fragments in a certain column.
+     * 
+     * @param page
+     *            The page.
+     * @param parentFragment
+     *            The parent fragment (usually page.getRootFragment()).
+     * @param y
+     *            The column.
+     */
+    public static void removeAllFragmentsInColumn(Page page, Fragment parentFragment, int y) {
+        int numberOfPortlets = getNumberOfPortletsInColumn(parentFragment, y);
+        for (int i = 0; i < numberOfPortlets; i++) {
+            removeFragmentByPosition(page, parentFragment, i, y);
+        }
+    }
+
+    /**
      * Move an existing fragment to a certain position.
      * 
      * @param parentFragment
