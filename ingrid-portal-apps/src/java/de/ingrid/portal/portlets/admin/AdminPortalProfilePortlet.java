@@ -34,6 +34,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsPageLayout;
 
 /**
@@ -94,7 +95,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                 List pages = profile.getList("pages.page.name");
                 for (int i = 0; i < pages.size(); i++) {
                     pageName = (String) pages.get(i);
-                    
+
                     // set visibility of the page
                     boolean hidden;
                     Page p = pageManager.getPage(Folder.PATH_SEPARATOR + pageName);
@@ -102,10 +103,10 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                         hidden = profile.getBoolean("pages.page(" + i + ").hidden");
                         p.setHidden(hidden);
                     } catch (ConversionException e) {
-                        log.warn("No tag 'hidden' found for page '" + pageName + "'", e);                    
+                        log.warn("No tag 'hidden' found for page '" + pageName + "'", e);
                     }
                     pageManager.updatePage(p);
-                    
+
                     // set page layout configuration
                     List portletNames = profile.getList("pages.page(" + i + ").portlets.portlet.name");
                     if (portletNames != null && portletNames.size() > 0) {
@@ -115,15 +116,16 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                         // remove all fragments
                         UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 0);
                         UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 1);
-                        for (int j=0; j < portletNames.size(); j++) {
+                        for (int j = 0; j < portletNames.size(); j++) {
                             String portletName = (String) portletNames.get(j);
                             try {
                                 int row = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@row]");
                                 int col = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@col]");
-                                UtilsPageLayout.positionPortletOnPage(pageManager, p, p.getRootFragment(),
-                                        portletName, row, col);
+                                UtilsPageLayout.positionPortletOnPage(pageManager, p, p.getRootFragment(), portletName,
+                                        row, col);
                             } catch (ConversionException e) {
-                                log.warn("No 'x' or 'y' attribute found for portlet '" + portletName + "' on page '" + pageName + "'", e);                    
+                                log.warn("No 'x' or 'y' attribute found for portlet '" + portletName + "' on page '"
+                                        + pageName + "'", e);
                             }
                         }
                         pageManager.updatePage(p);
@@ -151,6 +153,14 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                         }
                     }
                 }
+
+                // process sql actions
+                List sqlActions = profile.getList("sql.execute");
+                for (int i = 0; i < sqlActions.size(); i++) {
+                    String sqlAction = (String) sqlActions.get(i);
+                    UtilsDB.executeRawSQL(sqlAction);
+                }
+
                 response.setRenderParameter("switchedToProfile", profileName);
 
             } catch (ConfigurationException e) {

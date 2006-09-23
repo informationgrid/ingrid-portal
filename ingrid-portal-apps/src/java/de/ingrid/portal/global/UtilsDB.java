@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.global;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,8 +39,12 @@ public class UtilsDB {
 
     private final static Log log = LogFactory.getLog(UtilsDB.class);
 
-    /** this flag controls whether Data is always fetched from Database or from cache  */
-    // TODO keep possibilty to always reload data from DB ???? makes it complicated ! maybe instable ?
+    /**
+     * this flag controls whether Data is always fetched from Database or from
+     * cache
+     */
+    // TODO keep possibilty to always reload data from DB ???? makes it
+    // complicated ! maybe instable ?
     private static boolean alwaysReloadDBData = PortalConfig.getInstance().getBoolean(
             PortalConfig.ALWAYS_REREAD_DB_VALUES);
 
@@ -75,10 +80,11 @@ public class UtilsDB {
     }
 
     /**
-     * Convenient generic method for reading stuff from database.
-     * NOTICE: If passed cacheList is null, we always reload data from database.
-     * If not null we only reload if flag alwaysReloadDBData in our class
-     * is set to true. If flag is set false we just return cacheList. 
+     * Convenient generic method for reading stuff from database. NOTICE: If
+     * passed cacheList is null, we always reload data from database. If not
+     * null we only reload if flag alwaysReloadDBData in our class is set to
+     * true. If flag is set false we just return cacheList.
+     * 
      * @param objClass
      * @param cacheList
      * @return
@@ -89,10 +95,11 @@ public class UtilsDB {
     }
 
     /**
-     * Convenient generic method for reading stuff from database.
-     * NOTICE: If passed cacheList is null, we always reload data from database.
-     * If not null we only reload if flag alwaysReloadDBData in our class
-     * is set to true. If flag is set false we just return cacheList. 
+     * Convenient generic method for reading stuff from database. NOTICE: If
+     * passed cacheList is null, we always reload data from database. If not
+     * null we only reload if flag alwaysReloadDBData in our class is set to
+     * true. If flag is set false we just return cacheList.
+     * 
      * @param Criteria
      * @param cacheList
      * @return
@@ -130,8 +137,9 @@ public class UtilsDB {
     }
 
     /**
-     * Convenient method for extracting a QueryValue from a List of IngridFormToQuery
-     * objects, based on the formValue.
+     * Convenient method for extracting a QueryValue from a List of
+     * IngridFormToQuery objects, based on the formValue.
+     * 
      * @param formToQueryList
      * @param formValue
      * @return
@@ -150,8 +158,9 @@ public class UtilsDB {
     }
 
     /**
-     * Convenient method for extracting a FormValue from a List of IngridFormToQuery
-     * objects, based on the QueryValue.
+     * Convenient method for extracting a FormValue from a List of
+     * IngridFormToQuery objects, based on the QueryValue.
+     * 
      * @param formToQueryList
      * @param formValue
      * @return
@@ -171,10 +180,12 @@ public class UtilsDB {
 
     /**
      * Get all the partners.
+     * 
      * @return
      */
     public static List getPartners() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
         return getValuesFromDB(session.createCriteria(IngridPartner.class).addOrder(Order.asc("sortkey")), session,
@@ -182,10 +193,12 @@ public class UtilsDB {
     }
 
     /**
-     * Get the name of the partner with the according ident.
-     * NOTICE: comparison is case insensitive !
+     * Get the name of the partner with the according ident. NOTICE: comparison
+     * is case insensitive !
+     * 
      * @param ident
-     * @return the name of the partner OR the key, if no matching partner was found
+     * @return the name of the partner OR the key, if no matching partner was
+     *         found
      */
     public static String getPartnerFromKey(String ident) {
         List partners = getPartners();
@@ -201,10 +214,12 @@ public class UtilsDB {
 
     /**
      * Get all the providers. Sort by sortkeyPartner, name !
+     * 
      * @return
      */
     public static List getProviders() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
         return getValuesFromDB(session.createCriteria(IngridProvider.class).addOrder(Order.asc("sortkeyPartner"))
@@ -212,10 +227,11 @@ public class UtilsDB {
     }
 
     /**
-     * Get alle providers that corresponded with a partner key.
-     * NOTICE: comparison is case insensitive !
+     * Get alle providers that corresponded with a partner key. NOTICE:
+     * comparison is case insensitive !
      * 
-     * @param key The partner key (use 'bund')
+     * @param key
+     *            The partner key (use 'bund')
      * @return The provider of the partner.
      */
     public static List getProvidersFromPartnerKey(String key) {
@@ -233,10 +249,12 @@ public class UtilsDB {
     }
 
     /**
-     * Get the name of the Provider with the according ident.
-     * NOTICE: comparison is case insensitive !
+     * Get the name of the Provider with the according ident. NOTICE: comparison
+     * is case insensitive !
+     * 
      * @param ident
-     * @return the name of the provider OR the key, if no matching provider was found
+     * @return the name of the provider OR the key, if no matching provider was
+     *         found
      */
     public static String getProviderFromKey(String ident) {
         List providers = getProviders();
@@ -251,8 +269,9 @@ public class UtilsDB {
     }
 
     /**
-     * Get the Provider Object with the according ident.
-     * NOTICE: comparison is case insensitive !
+     * Get the Provider Object with the according ident. NOTICE: comparison is
+     * case insensitive !
+     * 
      * @param ident
      * @return The IngridPrivider OR null if no matching was found
      */
@@ -270,10 +289,12 @@ public class UtilsDB {
 
     /**
      * Get all the environment topics.
+     * 
      * @return
      */
     public static List getEnvTopics() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         envTopics = getValuesFromDB(IngridEnvTopic.class, envTopics);
         return envTopics;
@@ -281,6 +302,7 @@ public class UtilsDB {
 
     /**
      * Get the query value of a topic from the form value (key).
+     * 
      * @param key
      * @return
      */
@@ -291,10 +313,12 @@ public class UtilsDB {
 
     /**
      * Get all the environment functional categories.
+     * 
      * @return
      */
     public static List getEnvFunctCategories() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         envFunctCategories = getValuesFromDB(IngridEnvFunctCategory.class, envFunctCategories);
         return envFunctCategories;
@@ -302,6 +326,7 @@ public class UtilsDB {
 
     /**
      * Get the query value of a functional category from the form value (key).
+     * 
      * @param key
      * @return
      */
@@ -312,10 +337,12 @@ public class UtilsDB {
 
     /**
      * Get the service rubrics.
+     * 
      * @return
      */
     public static List getServiceRubrics() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         serviceRubrics = getValuesFromDB(IngridServiceRubric.class, serviceRubrics);
         return serviceRubrics;
@@ -323,6 +350,7 @@ public class UtilsDB {
 
     /**
      * Get the query value of a service rubric from the form value (key).
+     * 
      * @param key
      * @return
      */
@@ -333,10 +361,12 @@ public class UtilsDB {
 
     /**
      * Get the measures rubrics.
+     * 
      * @return
      */
     public static List getMeasuresRubrics() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         measuresRubrics = getValuesFromDB(IngridMeasuresRubric.class, measuresRubrics);
         return measuresRubrics;
@@ -344,6 +374,7 @@ public class UtilsDB {
 
     /**
      * Get the query value of a measures rubric from the form value (key).
+     * 
      * @param key
      * @return
      */
@@ -354,10 +385,12 @@ public class UtilsDB {
 
     /**
      * Get the event types for chronicle.
+     * 
      * @return
      */
     public static List getChronicleEventTypes() {
-        // NOTICE: assign list to our static variable, passed static variable may be null,
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
         // so there's no call by reference !
         chronicleEventTypes = getValuesFromDB(IngridChronicleEventType.class, chronicleEventTypes);
         return chronicleEventTypes;
@@ -365,6 +398,7 @@ public class UtilsDB {
 
     /**
      * Get the query value of an event type from the form value (key).
+     * 
      * @param key
      * @return
      */
@@ -407,6 +441,7 @@ public class UtilsDB {
 
     /**
      * Update given mapped entity (hibernate) in database.
+     * 
      * @param dbEntity
      */
     public static void updateDBObject(Object dbEntity) {
@@ -414,7 +449,9 @@ public class UtilsDB {
     }
 
     /**
-     * Update multiple entities in ONE transaction. Rollback all updates if something fails.
+     * Update multiple entities in ONE transaction. Rollback all updates if
+     * something fails.
+     * 
      * @param dbEntities
      */
     public static void updateDBObjects(Object[] dbEntities) {
@@ -444,6 +481,7 @@ public class UtilsDB {
 
     /**
      * Save NEW mapped entity (hibernate) to database.
+     * 
      * @param dbEntity
      */
     public static void saveDBObject(Object dbEntity) {
@@ -451,7 +489,9 @@ public class UtilsDB {
     }
 
     /**
-     * Save multiple entities in ONE transaction. Rollback all saves if something fails.
+     * Save multiple entities in ONE transaction. Rollback all saves if
+     * something fails.
+     * 
      * @param dbEntities
      */
     public static void saveDBObjects(Object[] dbEntities) {
@@ -481,6 +521,7 @@ public class UtilsDB {
 
     /**
      * Delete given mapped entity (hibernate) in database.
+     * 
      * @param dbEntity
      */
     public static void deleteDBObject(Object dbEntity) {
@@ -488,7 +529,9 @@ public class UtilsDB {
     }
 
     /**
-     * Delete multiple entities in ONE transaction. Rollback all deletions if something fails.
+     * Delete multiple entities in ONE transaction. Rollback all deletions if
+     * something fails.
+     * 
      * @param dbEntities
      */
     public static void deleteDBObjects(Object[] dbEntities) {
@@ -517,8 +560,7 @@ public class UtilsDB {
     }
 
     /**
-     * Get Partner/Provider Map.
-     * The method builds a structure as follows:
+     * Get Partner/Provider Map. The method builds a structure as follows:
      * 
      * partnerMap (partner Ident => partnerHashMap)
      * 
@@ -579,4 +621,24 @@ public class UtilsDB {
 
         return partnerMap;
     }
+
+    public static void executeRawSQL(String sqlStr) {
+        Transaction tx = null;
+        try {
+            // delete it
+            Session session = HibernateUtil.currentSession();
+            tx = session.beginTransaction();
+            Statement st = session.connection().createStatement();
+            st.executeUpdate(session.connection().nativeSQL(sqlStr));
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            log.error("Problems executing RAW-SQL:" + sqlStr, ex);
+        } finally {
+            HibernateUtil.closeSession();
+        }
+    }
+
 }
