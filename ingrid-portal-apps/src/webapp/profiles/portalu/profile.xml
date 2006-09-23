@@ -64,13 +64,37 @@
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/quartz_jobs.xml</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/01_motiv_blank.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/en/en_01_motiv_blank.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo_footer.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/favicon.ico</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
+        </file>
     </files>
     <sql>
         <execute>
-            UPDATE...
-        </execute>    
+            <![CDATA[UPDATE ingrid_cms_item SET item_title="<span style=\"text-transform: none;\">PortalU INFORMIERT</span>" WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key="portalu.teaser.inform") AND item_lang="de";]]>
+        </execute>
         <execute>
-            INSERT...
+            <![CDATA[UPDATE ingrid_cms_item SET item_title="<span style=\"text-transform: none;\">PortalU INFORMS</span>" WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key="portalu.teaser.inform") AND item_lang="en";]]>
         </execute>    
     </sql>
 </profile>
