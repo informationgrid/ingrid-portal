@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<quartz>
+    <job>
+        <job-detail>
+            <name>AnniversaryFetcherJob</name>
+            <group>DEFAULT</group>
+            <description>job fetching all anniversaries from SNS for tomorrow and store them into DB.</description>
+            <job-class>de.ingrid.portal.scheduler.jobs.AnniversaryFetcherJob</job-class>
+            <volatility>false</volatility>
+            <durability>false</durability>
+            <recover>false</recover>
+        </job-detail>
+        <trigger>
+            <simple>
+                <name>AnniversaryTrigger</name>
+                <group>DEFAULT</group>
+                <job-name>AnniversaryFetcherJob</job-name>
+                <job-group>DEFAULT</job-group>
+                <repeat-count>-1</repeat-count>
+                <repeat-interval>3600000</repeat-interval>
+            </simple>
+        </trigger>
+    </job>
+</quartz>
