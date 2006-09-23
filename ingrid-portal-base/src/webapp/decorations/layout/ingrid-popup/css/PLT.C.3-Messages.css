@@ -32,6 +32,7 @@ limitations under the License.
 }
 
 .portlet-msg-info {
+	color: CC0000;
 }
 
 .portlet-msg-error {
@@ -42,6 +43,7 @@ limitations under the License.
 }
 
 .portlet-msg-success {
+	color: CC0000;
 }
 
 /* font */
