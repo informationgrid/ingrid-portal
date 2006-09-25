@@ -13,6 +13,7 @@ import javax.portlet.RenderResponse;
 
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.search.UtilsSearch;
 
@@ -26,6 +27,10 @@ public class SearchExtEnvAreaPartnerPortlet extends SearchExtEnvArea {
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
+        context.put("enableContents", PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.contents", Boolean.TRUE));
+        context.put("enableSources", PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.sources", Boolean.TRUE));
+        context.put("enablePartner", PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.partner", Boolean.TRUE));
+        
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_AREA);
         context.put(VAR_SUB_TAB, PARAMV_TAB_PARTNER);

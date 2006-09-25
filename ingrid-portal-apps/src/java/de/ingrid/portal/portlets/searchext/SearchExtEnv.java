@@ -11,6 +11,7 @@ import javax.portlet.PortletException;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 
 /**
@@ -47,7 +48,9 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
     protected final static String PAGE_TIME = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
 
     /** page for main tab "search area" */
-    protected final static String PAGE_AREA = "/ingrid-portal/portal/search-extended/search-ext-env-area-contents.psml";
+    protected final static String PAGE_AREA_CONTENTS = "/ingrid-portal/portal/search-extended/search-ext-env-area-contents.psml";
+    protected final static String PAGE_AREA_SOURCES = "/ingrid-portal/portal/search-extended/search-ext-env-area-sources.psml";
+    protected final static String PAGE_AREA_PARTNER = "/ingrid-portal/portal/search-extended/search-ext-env-area-partner.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
@@ -75,7 +78,13 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
         } else if (tab.equals(PARAMV_TAB_TIME)) {
             actionResponse.sendRedirect(PAGE_TIME);
         } else if (tab.equals(PARAMV_TAB_AREA)) {
-            actionResponse.sendRedirect(PAGE_AREA);
+            if (PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.contents", true)) {
+                actionResponse.sendRedirect(PAGE_AREA_CONTENTS);
+            } else if (PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.sources", true)) {
+                actionResponse.sendRedirect(PAGE_AREA_SOURCES);
+            } else if (PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.partner", true)) {
+                actionResponse.sendRedirect(PAGE_AREA_PARTNER);
+            }
         }
     }
 }

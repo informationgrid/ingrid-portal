@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -240,6 +241,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         if (validInput && Utils.getLoggedOn(request)) {
             context.put("enableSave", "true");
         }
+        
+        context.put("enableDatasourceResearch", PortalConfig.getInstance().getBoolean("portal.enable.datasource.research", Boolean.TRUE));
         
         super.doView(request, response);
     }

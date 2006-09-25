@@ -6,7 +6,22 @@
       <div class="formbody">
           <p>$MESSAGES.getString('searchExtEnvAreaSources.explanation')</p>
           <div class="innerform">
+#if($enableSourcesMetaOnly)
             <p>
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_0" value="meta_0"#getChecked("meta" "meta_0") /><label for="chk_meta_0">$MESSAGES.getString('searchExtEnvAreaSources.meta1')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_1" value="meta_1"#getChecked("meta" "meta_1") /><label for="chk_meta_1">$MESSAGES.getString('searchExtEnvAreaSources.meta2')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_2" value="meta_2"#getChecked("meta" "meta_2") /><label for="chk_meta_2">$MESSAGES.getString('searchExtEnvAreaSources.meta3')</label>
+    	        <br />
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_3" value="meta_3"#getChecked("meta" "meta_3") /><label for="chk_meta_3">$MESSAGES.getString('searchExtEnvAreaSources.meta4')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_4" value="meta_4"#getChecked("meta" "meta_4") /><label for="chk_meta_4">$MESSAGES.getString('searchExtEnvAreaSources.meta5')</label>
+    	        <br />                                                                                                                                       
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_5" value="meta_5"#getChecked("meta" "meta_5") /><label for="chk_meta_5">$MESSAGES.getString('searchExtEnvAreaSources.meta6')</label>
+            </p> 
+#else
+			<p>
               <input type="checkbox" name="sources" id="chk_all" onclick="ingrid_checkAll2Groups(document.selection_form.sources, document.selection_form.meta)" onkeypress="ingrid_checkAll2Groups(document.selection_form.sources, document.selection_form.meta)" value="all"#getChecked("sources" "all") /><label for="chk_all">$MESSAGES.getString('searchExtEnvAreaSources.all')</label>
             </p>
             <p>
@@ -31,6 +46,7 @@
             <p>
               <input class="indent1_checkbox" type="checkbox" name="sources" id="chk_fis" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="fis"#getChecked("sources" "fis") /><label for="chk_fis">In <acronym title="$MESSAGES.getString('searchExtEnvAreaSources.fis.acronym')">$MESSAGES.getString('searchExtEnvAreaSources.fis')</acronym></label>
             </p> 
+#end			
           </div>  
       </div>      
 #parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')

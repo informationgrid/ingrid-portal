@@ -62,6 +62,10 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-help.xml</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/quartz_jobs.xml</src>
         </file>
         <file>
