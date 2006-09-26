@@ -53,7 +53,7 @@ CREATE TABLE ingrid_cms
     item_changed_by VARCHAR(255),
     PRIMARY KEY(id)
 );
-ALTER TABLE `ingrid_cms` CHANGE `id` `id` MEDIUMINT( 9 ) NOT NULL AUTO_INCREMENT
+ALTER TABLE `ingrid_cms` CHANGE `id` `id` MEDIUMINT( 9 ) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS ingrid_cms_item;
 CREATE TABLE ingrid_cms_item
@@ -67,7 +67,7 @@ CREATE TABLE ingrid_cms_item
     item_changed_by VARCHAR(255),
     PRIMARY KEY(id)
 );
-ALTER TABLE `ingrid_cms_item` CHANGE `id` `id` MEDIUMINT( 9 ) NOT NULL AUTO_INCREMENT 
+ALTER TABLE `ingrid_cms_item` CHANGE `id` `id` MEDIUMINT( 9 ) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `ingrid_cms` (`id`, `item_key`, `item_description`, `item_changed`, `item_changed_by`) VALUES (1, 'portalu.teaser.inform', 'PortalU informiert Text', '2006-09-15 00:00:00', 'admin');
 INSERT INTO `ingrid_cms` (`id`, `item_key`, `item_description`, `item_changed`, `item_changed_by`) VALUES (15, 'portalu.disclaimer', 'Impressum', '2006-09-15 00:00:00', 'admin');
