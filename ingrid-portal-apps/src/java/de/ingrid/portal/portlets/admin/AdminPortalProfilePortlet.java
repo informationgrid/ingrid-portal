@@ -199,8 +199,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
             in = new FileInputStream(source).getChannel();
             out = new FileOutputStream(dest).getChannel();
-            in.transferTo(0, in.size(), out);
-        } catch (FileNotFoundException e) {
+            out.transferFrom(in, 0, in.size());
+        } catch (Exception e) {
             log.error("Error copy files ('" + source.getAbsolutePath() + "' -> '" + dest.getAbsolutePath() + "')", e);
         } finally {
             if (in != null)
