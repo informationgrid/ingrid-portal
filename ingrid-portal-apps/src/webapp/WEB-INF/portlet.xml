@@ -78,8 +78,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Pflege RSS Feeds</title>
-            <short-title>RSS Feeds</short-title>
+            <title>RSS Feeds administrieren</title>
+            <short-title>RSS Feeds administrieren</short-title>
         </portlet-info>        
     </portlet>
 
@@ -99,8 +99,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Pflege Partner</title>
-            <short-title>Pflege Partner</short-title>
+            <title>Partner administrieren</title>
+            <short-title>Partner administrieren</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
@@ -121,8 +121,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Pflege Provider</title>
-            <short-title>Pflege Provider</short-title>
+            <title>Anbieter administrieren</title>
+            <short-title>Anbieter administrieren</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
@@ -143,8 +143,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>User Manmagement</title>
-            <short-title>User Manmagement</short-title>
+            <title>Benutzer administrieren</title>
+            <short-title>Benutzer administrieren</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
         <init-param>
@@ -193,8 +193,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Pflege iPlugs</title>
-            <short-title>Pflege iPlugs</short-title>
+            <title>iPlugs/iBus administrieren</title>
+            <short-title>iPlugs/iBus administrieren</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
@@ -215,8 +215,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Pflege CMS</title>
-            <short-title>Pflege CMS</short-title>
+            <title>Inhalte administrieren</title>
+            <short-title>Inhalte administrieren</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
@@ -237,8 +237,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Links zu Pflege WMS</title>
-            <short-title>Links zu Pflege WMS</short-title>
+            <title>WMS Administration</title>
+            <short-title>WMS Administration</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
@@ -282,8 +282,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Homepage</title>
-            <short-title>Homepage</short-title>
+            <title>Startseite administrieren</title>
+            <short-title>Startseite administrieren</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
