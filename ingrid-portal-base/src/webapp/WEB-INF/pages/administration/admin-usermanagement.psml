@@ -4,8 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Benutzerverwaltung</title>
-  <metadata name="title" xml:lang="en">User Management</metadata>
+  <title>Benutzer</title>
+  <metadata name="title" xml:lang="en">User</metadata>
 
   <fragment id="admin-usermanagement" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::AdminUserPortlet">

@@ -4,7 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Homepage</title>
+  <title>Startseite</title>
   <metadata name="title" xml:lang="en">Homepage</metadata>
 
   <fragment id="admin-homepage" type="layout" name="jetspeed-layouts::IngridOneColumn">

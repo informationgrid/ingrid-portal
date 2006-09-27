@@ -4,7 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Provider</title>
+  <title>Anbieter</title>
   <metadata name="title" xml:lang="en">Provider</metadata>
 
   <fragment id="admin-content-provider" type="layout" name="jetspeed-layouts::IngridOneColumn">
