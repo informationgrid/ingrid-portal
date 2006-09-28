@@ -832,6 +832,7 @@ public class UtilsSearch {
                     chk = request.getParameter("chk_".concat(providerNode.getId()));
                     if (chk != null && chk.equals("on")) {
                         providerHash.put("provider:".concat(providerNode.getId()), "1");
+                        partnerHash.put("partner:".concat(partnerNode.getId()), "1");
                     }
                 }
             }

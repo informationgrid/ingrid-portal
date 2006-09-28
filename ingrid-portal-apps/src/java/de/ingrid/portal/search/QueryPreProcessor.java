@@ -144,7 +144,7 @@ public class QueryPreProcessor {
             }
         }
         // process persistent partner/provider
-        processQueryPartner(request, ds, query);
+        processQueryPartnerProvider(request, query);
 
         String inclMetaData = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_INCL_META);
         if (inclMetaData != null && inclMetaData.equals("on")) {
@@ -270,7 +270,7 @@ public class QueryPreProcessor {
         }
 
         // process persistent partner/provider
-        processQueryPartner(request, ds, query);
+        processQueryPartnerProvider(request, query);
 
         // Compute the new start hit for the always groued unranked query
 
@@ -367,10 +367,9 @@ public class QueryPreProcessor {
      *  - ONLY if no partner/provider is added manually or by filter
      * 
      * @param request
-     * @param ds
      * @param query
      */
-    private static void processQueryPartner(PortletRequest request, String ds, IngridQuery query) {
+    public static void processQueryPartnerProvider(PortletRequest request, IngridQuery query) {
         Principal principal = request.getUserPrincipal();
         if (principal != null && query.getPositivePartner().length == 0 && query.getNegativePartner().length == 0
                 && query.getPositiveProvider().length == 0 && query.getNegativeProvider().length == 0) {
@@ -389,4 +388,30 @@ public class QueryPreProcessor {
         }
     }
 
+    
+    /**
+     * Add persistent partner preferences.
+     *  - ONLY if no partner/provider is added manually or by filter
+     * 
+     * @param request
+     * @param query
+     */
+    public static void processQueryPartner(PortletRequest request, IngridQuery query) {
+        Principal principal = request.getUserPrincipal();
+        if (principal != null && query.getPositivePartner().length == 0 && query.getNegativePartner().length == 0
+                && query.getPositiveProvider().length == 0 && query.getNegativeProvider().length == 0) {
+            String searchPartnerStr = (String) IngridPersistencePrefs.getPref(principal.getName(),
+                    IngridPersistencePrefs.SEARCH_PARTNER);
+            if (searchPartnerStr != null && searchPartnerStr.length() > 0) {
+                try {
+                    IngridQuery q = QueryStringParser.parse(searchPartnerStr);
+                    query.put(IngridQuery.PARTNER, q.get(IngridQuery.PARTNER));
+                } catch (ParseException e) {
+                    log.error("Error parsing sources query string.", e);
+                }
+
+            }
+        }
+    }
+    
 }

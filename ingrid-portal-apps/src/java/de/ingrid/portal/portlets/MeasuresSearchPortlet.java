@@ -20,6 +20,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.ClauseQuery;
@@ -197,6 +198,11 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             // RANKING
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
 
+            // personalized values
+            
+            // set partner from personalization
+            QueryPreProcessor.processQueryPartner(request, query);
+            
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", t);

@@ -54,7 +54,7 @@ public class MyPortalPersonalizePartnerPortlet extends GenericVelocityPortlet {
         String partnerStr = (String) IngridPersistencePrefs.getPref(principal.getName(),
                 IngridPersistencePrefs.SEARCH_PARTNER);
 
-        if (partnerStr != null && partnerStr.length() > 0) {
+        if (partnerStr != null) {
         
             PortletSession session = request.getPortletSession();
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
