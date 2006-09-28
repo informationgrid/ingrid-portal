@@ -10,12 +10,13 @@
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
 	#set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
-	#renderDBBrowserRow($rowId $rowValues)
+	#renderDBBrowserRowWithEditLink($rowId $rowValues)
 #end
 		</table>
 		</p>
 	</div>
-#renderDBBrowserFooter()
+#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#renderDBBrowserFooterButtons($buttons)
 </form>
 <p/>
 #set ($action = $renderResponse.createActionURL())

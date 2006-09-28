@@ -8,7 +8,7 @@
 	#end
 	#displayFormErrors()
 #set ($colNames = ["ident", "name", "url", "sortkey", "sortkey_partner"])
-#set ($colLabels = ["Kürzel", "Name", "Link", "Sortierung", "Sortierung Partner"])
+#set ($colLabels = ["Kürzel*", "Name*", "Link", "Sortierung", "Sortierung Partner"])
 #foreach ($dbEntity in $dbEntities)
 	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)

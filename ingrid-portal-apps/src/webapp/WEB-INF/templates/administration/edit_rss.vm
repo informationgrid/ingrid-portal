@@ -6,8 +6,9 @@
 	#elseif ($mode == 'new')
 		<h2 class="nospace">Neuen RSS Feed anlegen</h2>
 	#end
+	#displayFormErrors()
 #set ($colNames = ["provider", "description", "url", "language", "categories"])
-#set ($colLabels = ["Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
+#set ($colLabels = ["Anbieter*", "Beschreibung", "URL*", "Sprache*", "Kategorien"])
 #foreach ($dbEntity in $dbEntities)
 	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)
