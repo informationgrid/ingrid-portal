@@ -28,7 +28,6 @@ import javax.mail.internet.MimeMessage;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -331,10 +330,10 @@ public class Utils {
      * Returns, if the session has been marked as JavaScript- enabled.
      * 
      * @param request
-     *            The RenderRequest to check.
+     *            The PortletRequest to check.
      * @return True for JavaScript enabled, false for not.
      */
-    public static boolean isJavaScriptEnabled(RenderRequest request) {
+    public static boolean isJavaScriptEnabled(PortletRequest request) {
         String hasJavaScriptStr = (String) request.getPortletSession().getAttribute(Settings.MSG_HAS_JAVASCRIPT);
         if (hasJavaScriptStr != null && hasJavaScriptStr.equals(Settings.MSGV_TRUE)) {
             return true;
@@ -495,23 +494,26 @@ public class Utils {
     /**
      * Returns true if a user is logged on, false, if not.
      * 
-     * @param request The PortletRequest.
+     * @param request
+     *            The PortletRequest.
      * @return True if a user is logged on, false, if not.
      */
     public static boolean getLoggedOn(PortletRequest request) {
         Principal principal = request.getUserPrincipal();
         return (principal != null);
     }
-    
+
     /**
-     * Transforms different syntax for partner key to and from partner <-> provider.
+     * Transforms different syntax for partner key to and from partner <->
+     * provider.
      * 
-     * provider keys are defined as <partner_key>_<provider_key>. The <partner_key>
-     * is treated different in for providers and partners. 
+     * provider keys are defined as <partner_key>_<provider_key>. The
+     * <partner_key> is treated different in for providers and partners.
      * 
-     * Sample: The partner 'bund' has the provider_key 'bu'. 
+     * Sample: The partner 'bund' has the provider_key 'bu'.
      * 
-     * @param key The partner or provider has the same key
+     * @param key
+     *            The partner or provider has the same key
      * @param fromPartnerToProvider
      * @return The partner key.
      */

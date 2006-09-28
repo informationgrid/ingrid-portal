@@ -9,9 +9,14 @@
         </iframe>
         <div class="line" style="width:33em"><hr /></div>
         <div class="float_right rightmargin">
-$action.setParameter('action','doSave')
-          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchExtEnvPlaceMap.save')</a></span>
+#if($enableSave)
+	$action.setParameter('action','doSaveWMSServices')
+		  <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchExtEnvPlaceMap.save')</a></span>
+#end
         </div>
+#if($wmsServicesSaved)
+				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wms.services.saved")</p>
+#end					
 		  #displayFormErrors()
           <h3>$MESSAGES.getString('searchExtEnvPlaceMap.title.constraint')</h3>
           <p>

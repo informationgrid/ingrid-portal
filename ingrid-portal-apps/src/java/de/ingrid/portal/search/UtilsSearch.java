@@ -5,15 +5,18 @@ package de.ingrid.portal.search;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
@@ -25,13 +28,17 @@ import org.apache.velocity.context.Context;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
+import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
@@ -1046,4 +1053,49 @@ public class UtilsSearch {
         }
         return (FieldQuery[]) resultFields.toArray(new FieldQuery[resultFields.size()]);
     }
+
+    
+    /**
+     * Returns the WMS URL to cal the WMS Server. It adds necessary data such as session id, locale, javascript enabled.
+     * It adds personalized WMS URLs and allows to inject a custom WMS url. 
+     * 
+     * @param request The PortletRequest.
+     * @param wmsServiceUrl The additional to inject WMS Service URL
+     * @param isViewer True to generate a URL to the WMS Viewer Template, alse for the WMS Search template.
+     * @return
+     */
+    public static String getWMSURL(PortletRequest request, String wmsServiceUrl, boolean isViewer) {
+        List wmsServices = null;
+        
+        WMSInterface service = WMSInterfaceImpl.getInstance();
+        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
+        PortletSession session = request.getPortletSession();
+        
+        // check for personalizes wms services
+        if (Utils.getLoggedOn(request)) {
+            Principal principal = request.getUserPrincipal();
+            Object obj = IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES);
+            if (obj != null && obj instanceof List) {
+                wmsServices = (List) obj;
+            }
+        }
+        // make sure the list is not null
+        if (wmsServices == null) {
+            wmsServices = new ArrayList();
+        }
+        
+        // add wms service from request parameters, if exist
+        if (wmsServiceUrl != null && wmsServiceUrl.length() > 0) {
+            wmsServices.add(new WMSServiceDescriptor("", wmsServiceUrl));
+        }
+        
+        // create the wms url
+        if (wmsServices.size() > 0) {
+            return service.getWMSAddedServiceURL(wmsServices, session.getId(),
+                    hasJavaScript, request.getLocale(), isViewer);
+        } else {
+            return service.getWMSViewerURL(session.getId(), hasJavaScript, request.getLocale());
+        }
+    }
+    
 }

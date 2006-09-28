@@ -31,7 +31,7 @@ public class IngridPersistencePrefs {
     public static final String SEARCH_SOURCES = "searchSources";
     public static final String SEARCH_PARTNER = "searchPartner";
     public static final String SEARCH_SAVE_ENTRIES = "searchSaveEntries";
-    
+    public static final String WMS_SERVICES = "wmsServices";
     
     private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
     private static final XStream xstream;

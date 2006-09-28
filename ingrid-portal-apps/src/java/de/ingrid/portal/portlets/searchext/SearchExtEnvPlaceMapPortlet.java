@@ -4,6 +4,8 @@
 package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Collection;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -13,17 +15,18 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
+import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsQueryString;
-import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.search.UtilsSearch;
 
 /**
  * This portlet handles the fragment of the map input in the extended search.
- *
+ * 
  * @author martin@wemove.com
  */
 public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
@@ -31,7 +34,6 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
-        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
@@ -51,18 +53,26 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
         context.put(VAR_SUB_TAB, PARAMV_TAB_MAP);
 
         // get and set URL to WMS Server
-        WMSInterface service = WMSInterfaceImpl.getInstance();
-        String wmsURL = service
-                .getWMSSearchURL(request.getPortletSession().getId(), hasJavaScript, request.getLocale());
+        // add personalized WMS Services to the URL
+        String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
+
+        // enable the save button if the query was set AND a user is logged on
+        if (Utils.getLoggedOn(request)) {
+            context.put("enableSave", "true");
+            context.put("wmsServicesSaved", request.getParameter("wmsServicesSaved"));
+        }
 
         super.doView(request, response);
     }
 
     /**
-     * NOTICE: on actions in same page we redirect to ourself with url param determining the view
-     * template. If no view template is passed per URL param, the start template is rendered !
-     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     * NOTICE: on actions in same page we redirect to ourself with url param
+     * determining the view template. If no view template is passed per URL
+     * param, the start template is rendered !
+     * 
+     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,
+     *      javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
@@ -121,10 +131,12 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
                 PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
                         UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
             }
-        } else if (action.equalsIgnoreCase("doSave")) {
-
-            // Kartendienste speichern
-
+        } else if (action.equalsIgnoreCase("doSaveWMSServices") && Utils.getLoggedOn(request)) {
+            // get the WMS Services
+            Collection c = WMSInterfaceImpl.getInstance().getWMSServices(request.getPortletSession().getId());
+            Principal principal = request.getUserPrincipal();
+            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES, c);
+            actionResponse.setRenderParameter("wmsServicesSaved", "1");
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);

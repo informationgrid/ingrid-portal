@@ -263,10 +263,10 @@ public class WMSInterfaceImpl implements WMSInterface {
      *      java.lang.String)
      */
     public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled,
-            Locale language) {
+            Locale language, boolean isViewer) {
         ArrayList l = new ArrayList();
         l.add(service);
-        return getWMSAddedServiceURL(l, sessionId, jsEnabled, language);
+        return getWMSAddedServiceURL(l, sessionId, jsEnabled, language, isViewer);
     }
 
     /**
@@ -274,11 +274,16 @@ public class WMSInterfaceImpl implements WMSInterface {
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList,
      *      java.lang.String)
      */
-    public String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled, Locale language) {
+    public String getWMSAddedServiceURL(List services, String sessionId, boolean jsEnabled, Locale language, boolean isViewer) {
         WMSServiceDescriptor service;
         String serviceURL;
         String serviceName;
-        StringBuffer resultB = new StringBuffer(getWMSViewerURL(sessionId, jsEnabled, language));
+        StringBuffer resultB;
+        if (isViewer) {
+            resultB = new StringBuffer(getWMSViewerURL(sessionId, jsEnabled, language));
+        } else {
+            resultB = new StringBuffer(this.getWMSSearchURL(sessionId, jsEnabled, language));
+        }
         boolean prequestAdded = false;
 
         // check for invalid service parameter
