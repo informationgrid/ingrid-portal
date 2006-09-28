@@ -14,7 +14,7 @@
 	#renderDBEditId($mode $dbEntity.id)
 	<div class="line"><hr /></div>
     <p>
-        <label class="float_left col2left_incr" for="item_key">#displayFieldLabel("item_key" "Key")</label>
+        <label class="float_left col2left_incr" for="item_key">#displayFieldLabel("item_key" "Key")*</label>
 		<input class="float_left inputstyletext contentInput" type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey"/>
        	<p class="clearer"></p>
     </p>
@@ -31,7 +31,7 @@
        	<p class="clearer"></p>
     </p>
     <p>
-        <label class="float_left col2left_incr" for="value_de">#displayFieldLabel("value_de" "Inhalt (Deutsch)")</label>
+        <label class="float_left col2left_incr" for="value_de">#displayFieldLabel("value_de" "Inhalt (Deutsch)")*</label>
         <textarea class="float_left" cols="125" rows="10" name="value_de" id="value_de">$!itemDE.itemValue</textarea>
        	<p class="clearer"></p>
     </p>
