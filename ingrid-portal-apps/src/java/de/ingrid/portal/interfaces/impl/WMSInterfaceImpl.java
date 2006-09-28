@@ -30,9 +30,9 @@ import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
 import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 
 /**
- * Implements the WMS interface. It allows to communicate with the mapbender
- * WMS server that has been extended for the ingrid project with some
- * interface methods.
+ * Implements the WMS interface. It allows to communicate with the mapbender WMS
+ * server that has been extended for the ingrid project with some interface
+ * methods.
  * 
  * @author joachim@wemove.com
  */
@@ -116,8 +116,8 @@ public class WMSInterfaceImpl implements WMSInterface {
             List nodes = document.selectNodes("//portal_communication/wms_services/wms");
             for (Iterator i = nodes.iterator(); i.hasNext();) {
                 Node node = (Node) i.next();
-                WMSServiceDescriptor wmsServiceDescriptor = new WMSServiceDescriptor(node.valueOf("//name"), node
-                        .valueOf("//url").replace(',', '&'));
+                WMSServiceDescriptor wmsServiceDescriptor = new WMSServiceDescriptor(node.valueOf("name"), node
+                        .valueOf("url").replace(',', '&'));
                 result.add(wmsServiceDescriptor);
             }
 
@@ -208,6 +208,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
     /**
      * Checks whether a WMS Viewer is configured !
+     * 
      * @return
      */
     public boolean hasWMSViewer() {
@@ -258,7 +259,8 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.om.WMSServiceDescriptor, java.lang.String)
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(de.ingrid.portal.interfaces.om.WMSServiceDescriptor,
+     *      java.lang.String)
      */
     public String getWMSAddedServiceURL(WMSServiceDescriptor service, String sessionId, boolean jsEnabled,
             Locale language) {
@@ -268,8 +270,9 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
     /**
-     * @throws UnsupportedEncodingException 
-     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList, java.lang.String)
+     * @throws UnsupportedEncodingException
+     * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList,
+     *      java.lang.String)
      */
     public String getWMSAddedServiceURL(ArrayList services, String sessionId, boolean jsEnabled, Locale language) {
         WMSServiceDescriptor service;
