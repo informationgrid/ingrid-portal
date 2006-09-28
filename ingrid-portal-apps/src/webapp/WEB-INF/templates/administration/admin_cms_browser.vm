@@ -10,11 +10,11 @@
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.id)
 	#set ($rowValues = [$UtilsString.cutString($dbEntity.itemKey, 40, 40), $dbEntity.itemDescription])
-	#renderDBBrowserRowWithEditLink($rowId $rowValues)
+	#renderDBBrowserRowWithEditLinkNoSelection($rowId $rowValues)
 #end
 		</table>
 		</p>
 	</div>
-#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#set ($buttons = ["doRefresh"])
 #renderDBBrowserFooterButtons($buttons)
 </form>

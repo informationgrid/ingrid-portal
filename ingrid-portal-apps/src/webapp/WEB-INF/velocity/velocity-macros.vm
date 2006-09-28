@@ -143,6 +143,25 @@ $action.setParameter("id", "$rowId")
 </tr>
 #end
 
+#macro (renderDBBrowserRowWithEditLinkNoSelection $rowId $rowValues)
+<tr>
+#if ($velocityCount % 2 == 0)
+	#set ($rowstyle = "contentRowEven")
+#else
+	#set ($rowstyle = "contentRowOdd")
+#end   
+	<td class="$rowstyle">
+		<input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
+    </td>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('doEdit','Edit')
+$action.setParameter("id", "$rowId")
+	<td class="$rowstyle"><a href="$action">$rowId</a></td>
+#foreach ($rowValue in $rowValues)
+	<td class="$rowstyle"><a href="$action">$rowValue</a></td>
+#end
+</tr>
+#end
 
 #macro (renderDBBrowserFooter)
 #set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
