@@ -650,6 +650,47 @@
         </portlet-preferences>
     </portlet>
 
+    <portlet id="IngridWelcomePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>IngridWelcomePortlet</portlet-name>
+        <display-name>Generisches Willkommens-Portlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>3</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>ingrid.home.welcome.title</value>
+            </preference>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.home.welcome</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+
     <portlet id="ServiceTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
