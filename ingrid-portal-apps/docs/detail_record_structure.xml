@@ -1,0 +1,1304 @@
+<de.ingrid.utils.dsc.Record>
+	<string>T01_OBJECT.OBJ_NAME</string>
+	<string>Abwasser</string>
+  <string>T01_OBJECT.MOD_TIME</string>
+  <string>20060404093507</string>
+  <string>T01_OBJECT.DATASET_ALTERNATE_NAME</string>
+  <string>Trallala</string>
+  <string>T01_OBJECT.OBJ_CLASS</string>
+  <string>0</string>
+  <string>T01_OBJECT.OBJ_DESCR</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.VERTICAL_EXTENT_MINIMUM</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.VERTICAL_EXTENT_MAXIMUM</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.VERTICAL_EXTENT_UNIT</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.VERTICAL_EXTENT_VDATUM</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.LOC_DESCR</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.TIME_TYPE</string>
+  <string>am</string>
+  <string>T01_OBJECT.TIME_FROM</string>
+  <string>19900101</string>
+  <string>T01_OBJECT.TIME_TO</string>
+  <string>DATUMSFORMAT</string>
+  <string>T01_OBJECT.TIME_STATUS</string>
+  <string>4</string>
+  <string>T01_OBJECT.TIME_PERIOD</string>
+  <string>12</string>
+  <string>T01_OBJECT.TIME_ALLE</string>
+  <string>5</string>
+  <string>T01_OBJECT.TIME_INTERVAL</string>
+  <string>Jahre</string>
+  <string>T01_OBJECT.TIME_DESCR</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.ORDERING_INSTRUCTIONS</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.AVAIL_ACCESS_NOTE</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.FEES</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.METADATA_LANGUAGE</string>
+  <string>121</string>
+  <string>T01_OBJECT.DATA_LANGUAGE</string>
+  <string>121</string>
+  <string>T01_OBJECT.DATASET_USAGE</string>
+  <string>TEXT</string>
+  <string>T01_OBJECT.INFO_NOTE</string>
+  <string>TEXT</string>
+  
+  <string>columns</string>
+  <list>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>OBJ_NAME</fColumnName>
+      <fTargetName>title</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>MOD_TIME</fColumnName>
+      <fTargetName>T01_object.mod_time</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>DATASET_ALTERNATE_NAME</fColumnName>
+      <fTargetName>T01_object.dataset_alternate_name</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>OBJ_CLASS</fColumnName>
+      <fTargetName>T01_object.obj_class</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>OBJ_DESCR</fColumnName>
+      <fTargetName>summary</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>VERTICAL_EXTENT_MINIMUM</fColumnName>
+      <fTargetName>T01_object.vertical_extent_minimum</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>VERTICAL_EXTENT_MAXIMUM</fColumnName>
+      <fTargetName>T01_object.vertical_extent_maximum</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>VERTICAL_EXTENT_UNIT</fColumnName>
+      <fTargetName>T01_object.vertical_extent_unit</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>VERTICAL_EXTENT_VDATUM</fColumnName>
+      <fTargetName>T01_object.vertical_extent_vdatum</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>LOC_DESCR</fColumnName>
+      <fTargetName>T01_object.loc_descr</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_TYPE</fColumnName>
+      <fTargetName>T01_object.time_type</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_FROM</fColumnName>
+      <fTargetName>t0</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_TO</fColumnName>
+      <fTargetName>t1</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_STATUS</fColumnName>
+      <fTargetName>T01_object.time_status</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_PERIOD</fColumnName>
+      <fTargetName>T01_object.time_period</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_ALLE</fColumnName>
+      <fTargetName>T01_object.time_alle</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_INTERVAL</fColumnName>
+      <fTargetName>T01_object.time_interval</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>TIME_DESCR</fColumnName>
+      <fTargetName>T01_object.time_descr</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>ORDERING_INSTRUCTIONS</fColumnName>
+      <fTargetName>T01_object.ordering_instructions</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>AVAIL_ACCESS_NOTE</fColumnName>
+      <fTargetName>T01_object.avail_access_note</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>FEES</fColumnName>
+      <fTargetName>T01_object.fees</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>METADATA_LANGUAGE</fColumnName>
+      <fTargetName>T01_object.metadata_language</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>METADATA_LANGUAGE</fColumnName>
+      <fTargetName>T01_object.metadata_language</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>DATASET_USAGE</fColumnName>
+      <fTargetName>T01_object.dataset_usage</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>INFO_NOTE</fColumnName>
+      <fTargetName>T01_object.info_note</fTargetName>
+    </de.ingrid.utils.dsc.Column>
+  </list>
+
+  <string>subRecords</string>
+  <list>
+    
+    <!-- 1..n WWW Referenzen -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T017_URL_REF.OBJ_ID</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>T017_URL_REF.URL_LINK</string>
+      <string>http://www.geomdk.niedersachsen.de/data/lgn/doku/BasisDLM5000A.pdf</string>
+      <string>T017_URL_REF.CONTENT</string>
+      <string>Basis-DLM Inhalt - Objektbereich 5000 Gew�sser</string>
+      
+      <de.ingrid.utils.dsc.Column>
+        <fTableName>T017_URL_REF</fTableName>
+        <fColumnName>OBJ_ID</fColumnName>
+        <fTargetName>T017_URL_REF.OBJ_ID</fTargetName>
+      </de.ingrid.utils.dsc.Column>
+      <de.ingrid.utils.dsc.Column>
+        <fTableName>T017_URL_REF</fTableName>
+        <fColumnName>URL_LINK</fColumnName>
+        <fTargetName>T017_url_ref.url_link</fTargetName>
+      </de.ingrid.utils.dsc.Column>
+      <de.ingrid.utils.dsc.Column>
+        <fTableName>T017_URL_REF</fTableName>
+        <fColumnName>CONTENT</fColumnName>
+        <fTargetName>T017_url_ref.content</fTargetName>
+      </de.ingrid.utils.dsc.Column>
+    </de.ingrid.utils.dsc.Record>
+    
+    <!-- 1..n address references -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T012_OBJ_ADR.OBJ_ID</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>T012_OBJ_ADR.TYP</string>
+      <string>3</string>
+      <!-- nur bef�llt, wenn T012_OBJ_ADR.TYP <> 0..9 -->
+      <string>T012_OBJ_ADR.SPECIAL_NAME</string>
+      <string>Zentrale</string>
+    	
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T012_OBJ_ADR</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T012_obj_adr.obj_id</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T012_OBJ_ADR</fTableName>
+          <fColumnName>TYP</fColumnName>
+          <fTargetName>T012_obj_adr.typ</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T012_OBJ_ADR</fTableName>
+          <fColumnName>SPECIAL_NAME</fColumnName>
+          <fTargetName>T012_obj_adr.special_name</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>  
+      <string>subRecords</string>
+      <list>
+        
+        <!-- 1..n address records -->
+        <de.ingrid.utils.dsc.Record>
+          <string>T02_ADDRESS.ADR_ID</string>
+          <string>0C2EA4F9-18DE-11D3-AF47-0060084A4596</string>
+          <string>T02_ADDRESS.TYP</string>
+          <string>1</string>
+          <string>T02_ADDRESS.INSTITUTION</string>
+          <string>Info-Line</string>
+          <string>T02_ADDRESS.TITLE</string>
+          <string>Dr.</string>
+          <string>T02_ADDRESS.LASTNAME</string>
+          <string>M�ller</string>
+          <string>T02_ADDRESS.ADDRESS</string>
+          <string>Frau</string>
+          <string>T02_ADDRESS.FIRSTNAME</string>
+          <string>Daniela</string>
+          <string>T02_ADDRESS.DESCR</string>
+          <string>BlaBlaBla</string>
+          <string>T02_ADDRESS.POSTBOX_PC</string>
+          <string>30634</string>
+          <string>T02_ADDRESS.POSTBOX_PC</string>
+          <string>30634</string>
+          <string>T02_ADDRESS.STREET</string>
+          <string>Podbielskistra�e 331</string>
+          <string>T02_ADDRESS.STATE_ID</string>
+          <string>D</string>
+          <string>T02_ADDRESS.POSTCODE</string>
+          <string>30659</string>
+          <string>T02_ADDRESS.CITY</string>
+          <string>Hannover</string>
+		      
+		      <string>columns</string>
+		      <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>ADR_ID</fColumnName>
+              <fTargetName>T02_address.adr_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>TYP</fColumnName>
+              <fTargetName>T02_address.typ</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>INSTITUTION</fColumnName>
+              <fTargetName>T02_address.institution</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>TITLE</fColumnName>
+              <fTargetName>T02_address.title</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>LASTNAME</fColumnName>
+              <fTargetName>T02_address.lastname</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>FIRSTNAME</fColumnName>
+              <fTargetName>T02_address.firstname</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>ADDRESS</fColumnName>
+              <fTargetName>T02_address.address</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>DESCR</fColumnName>
+              <fTargetName>T02_address.descr</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>POSTBOX</fColumnName>
+              <fTargetName>T02_address.postbox</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>POSTBOX_PC</fColumnName>
+              <fTargetName>T02_address.postbox_pc</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>STREET</fColumnName>
+              <fTargetName>street</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>STATE_ID</fColumnName>
+              <fTargetName>T02_address.state_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>POSTCODE</fColumnName>
+              <fTargetName>zip</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T02_ADDRESS</fTableName>
+              <fColumnName>CITY</fColumnName>
+              <fTargetName>city</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+          </list>
+          <string>subRecords</string>
+          <list>
+            <!-- 1..n communication types -->
+            <de.ingrid.utils.dsc.Record>
+              <string>T021_COMMUNICATION.COMM_TYPE</string>
+              <!-- Telefon, Fax, E-Mail|EMail|Email, URL-->
+              <string>Fax</string>
+              <string>T021_COMMUNICATION.COMM_VALUE</string>
+              <string>+49 (511) 6 46 09 163</string>
+              
+              <string>columns</string>
+	            <list>
+                <de.ingrid.utils.dsc.Column>
+                  <fTableName>T021_COMMUNICATION</fTableName>
+                  <fColumnName>COMM_TYPE</fColumnName>
+                  <fTargetName>T021_communication.comm_type</fTargetName>
+                </de.ingrid.utils.dsc.Column>
+                <de.ingrid.utils.dsc.Column>
+                  <fTableName>T021_COMMUNICATION</fTableName>
+                  <fColumnName>COMM_VALUE</fColumnName>
+                  <fTargetName>T021_communication.comm_value</fTargetName>
+                </de.ingrid.utils.dsc.Column>
+	            </list>
+        	</de.ingrid.utils.dsc.Record>
+          </list>	
+        </de.ingrid.utils.dsc.Record>
+      </list>  
+    </de.ingrid.utils.dsc.Record>
+
+    <!-- 1..n Attribute -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T08_ATTR.ATTR_ID</string>
+      <string>51540B50-AD7D-11D3-AA89-0050DA64034D</string>
+      <string>T08_ATTR.DATA</string>
+      <string>UBPK, 1. Akt. / SE</string>
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T08_ATTR</fTableName>
+          <fColumnName>ATTR_ID</fColumnName>
+          <fTargetName>T08_attr.attr_id</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T08_ATTR</fTableName>
+          <fColumnName>DATA</fColumnName>
+          <fTargetName>T08_attr.data</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+
+      <string>subRecords</string>
+      <list>
+        <de.ingrid.utils.dsc.Record>
+          <string>T08_ATTRTYP.ATTR_ID</string>
+          <string>51540B50-AD7D-11D3-AA89-0050DA64034D</string>
+          <string>T08_ATTRTYP.TYP</string>
+          <string>0</string>
+          <string>T08_ATTRTYP.ATTR_NAME</string>
+          <string>Stand der Objektbeschreibung</string>
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T08_ATTRTYP</fTableName>
+              <fColumnName>ATTR_ID</fColumnName>
+              <fTargetName>T08_ATTRTYP.ATTR_ID</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T08_ATTRTYP</fTableName>
+              <fColumnName>TYP</fColumnName>
+              <fTargetName>T08_attrtyp.typ</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T08_ATTRTYP</fTableName>
+              <fColumnName>ATTR_NAME</fColumnName>
+              <fTargetName>T08_attrtyp.attr_name</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+          </list>
+          
+          <string>subRecords</string>
+          <list>
+            <de.ingrid.utils.dsc.Record>
+              <string>T08_ATTRLIST.ATTR_ID</string>
+              <string>51540B50-AD7D-11D3-AA89-0050DA64034D</string>
+              <string>T08_ATTRLIST.DATA</string>
+              <string>Text</string>
+
+              <string>columns</string>
+              <list>
+                <de.ingrid.utils.dsc.Column>
+                  <fTableName>T08_ATTRLIST</fTableName>
+                  <fColumnName>ATTR_ID</fColumnName>
+                  <fTargetName>T08_ATTRLIST.ATTR_ID</fTargetName>
+                </de.ingrid.utils.dsc.Column>
+                <de.ingrid.utils.dsc.Column>
+                  <fTableName>T08_ATTRLIST</fTableName>
+                  <fColumnName>DATA</fColumnName>
+                  <fTargetName>T08_ATTRLIST.DATA</fTargetName>
+                </de.ingrid.utils.dsc.Column>
+              </list>  
+            </de.ingrid.utils.dsc.Record>
+          </list>      
+        
+        </de.ingrid.utils.dsc.Record>  
+      </list>  
+    </de.ingrid.utils.dsc.Record>      
+
+
+    <!-- Raumbezug KGS Schlüssel -->
+    <de.ingrid.utils.dsc.Record>
+      <string>t011_township.obj_id</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t011_township</fTableName>
+          <fColumnName>obj_id</fColumnName>
+          <fTargetName>t011_township.obj_id</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>  
+
+      <string>subRecords</string>
+      <list>
+        <de.ingrid.utils.dsc.Record>
+          <string>t011_town_loc_town.township_no</string>
+          <string>03</string>
+          <string>t011_town_loc_town.name</string>
+          <string>Niedersachsen</string>
+            
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_town_loc_town</fTableName>
+              <fColumnName>township_no</fColumnName>
+              <fTargetName>t011_town_loc_town.township_no</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_town_loc_town</fTableName>
+              <fColumnName>name</fColumnName>
+              <fTargetName>t011_town_loc_town.name</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+          </list>  
+        </de.ingrid.utils.dsc.Record>
+      </list>     
+    </de.ingrid.utils.dsc.Record>
+
+    <!-- 1..n Raumbezüge begrifflich -->
+    <de.ingrid.utils.dsc.Record>
+      <string>t019_coordinates.obj_id</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>t019_coordinates.bezug</string>
+      <string>TEXT</string>
+
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t019_coordinates</fTableName>
+          <fColumnName>obj_id</fColumnName>
+          <fTargetName>t019_coordinates.obj_id</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t019_coordinates</fTableName>
+          <fColumnName>bezug</fColumnName>
+          <fTargetName>t019_coordinates.bezug</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>  
+    </de.ingrid.utils.dsc.Record>  
+
+    <!-- 1..n Zeitbezug des Datensatzes -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T0113_DATASET_REFERENCE.OBJ_ID</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>T0113_DATASET_REFERENCE.TYPE</string>
+      <string>1</string>
+      <string>T0113_DATASET_REFERENCE.REFERENCE_DATE</string>
+      <string>19900101</string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0113_DATASET_REFERENCE</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T0113_DATASET_REFERENCE.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0113_DATASET_REFERENCE</fTableName>
+          <fColumnName>TYPE</fColumnName>
+          <fTargetName>T0113_dataset_reference.type</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0113_DATASET_REFERENCE</fTableName>
+          <fColumnName>REFERENCE_DATE</fColumnName>
+          <fTargetName>T0113_dataset_reference.reference_date</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>  
+      
+    </de.ingrid.utils.dsc.Record>  
+
+
+    <!-- 1..n Verfügbarkeiten -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T0110_AVAIL_FORMAT.OBJ_ID</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>T0110_AVAIL_FORMAT.NAME</string>
+      <string>ACCESS</string>
+      <string>T0110_AVAIL_FORMAT.VERSION</string>
+      <string>TEXT</string>
+      <string>T0110_AVAIL_FORMAT.FILE_DECOMPRESSION_TECHNIQUE</string>
+      <string>TEXT</string>
+      <string>T0110_AVAIL_FORMAT.SPECIFICATION</string>
+      <string>TEXT</string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0110_AVAIL_FORMAT</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T0110_AVAIL_FORMAT.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0110_AVAIL_FORMAT</fTableName>
+          <fColumnName>NAME</fColumnName>
+          <fTargetName>T0110_avail_format.name</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0110_AVAIL_FORMAT</fTableName>
+          <fColumnName>VERSION</fColumnName>
+          <fTargetName>T0110_avail_format.version</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0110_AVAIL_FORMAT</fTableName>
+          <fColumnName>FILE_DECOMPRESSION_TECHNIQUE</fColumnName>
+          <fTargetName>T0110_avail_format.file_decompression_technique</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T0110_AVAIL_FORMAT</fTableName>
+          <fColumnName>SPECIFICATION</fColumnName>
+          <fTargetName>T0110_avail_format.specification</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+    </de.ingrid.utils.dsc.Record>    
+
+    <!-- 1..n Medien Optionen -->
+    <de.ingrid.utils.dsc.Record>
+      <string>t0112_media_option.obj_id</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>t0112_media_option.medium_name</string>
+      <string>18</string>
+      <string>t0112_media_option.transfer_size</string>
+      <string></string>
+      <string>t0112_media_option.medium_note</string>
+      <string></string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t0112_media_option</fTableName>
+          <fColumnName>obj_id</fColumnName>
+          <fTargetName>t0112_media_option.obj_id</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t0112_media_option</fTableName>
+          <fColumnName>medium_note</fColumnName>
+          <fTargetName>t0112_media_option.medium_note</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t0112_media_option</fTableName>
+          <fColumnName>medium_name</fColumnName>
+          <fTargetName>t0112_media_option.medium_name</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>t0112_media_option</fTableName>
+          <fColumnName>transfer_size</fColumnName>
+          <fTargetName>t0112_media_option.transfer_size</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+    </de.ingrid.utils.dsc.Record>
+
+    <!-- 1..n Rechtliche Grundlagen -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T015_LEGIST.OBJ_ID</string>
+      <string>00364DFB-1E02-4595-B406-F2B99055AF65</string>
+      <string>T015_LEGIST.NAME</string>
+      <string>Kreislaufwirtschafts- u. Abfallgesetz (KrW-/AbfG)</string>
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T015_LEGIST</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T015_LEGIST.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T015_LEGIST</fTableName>
+          <fColumnName>NAME</fColumnName>
+          <fTargetName>T015_legist.name</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+    </de.ingrid.utils.dsc.Record>
+
+    <!-- 1..n Suchbegriffe -->
+    <de.ingrid.utils.dsc.Record>
+      <string>T04_SEARCH.OBJ_ID</string>
+      <string>00364DFB-1E02-4595-B406-F2B99055AF65</string>
+      <string>T04_SEARCH.SEARCHTERM</string>
+      <string>Entsorgungsfachbetriebe</string>
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T04_SEARCH</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T04_SEARCH.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T04_SEARCH</fTableName>
+          <fColumnName>SEARCHTERM</fColumnName>
+          <fTargetName>T04_search.searchterm</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+    </de.ingrid.utils.dsc.Record>
+
+
+    <!-- ******************************************************************************************** -->
+    <!-- Fachdaten UDK Klasse 1 -->
+    <!-- ******************************************************************************************** -->
+    
+    <de.ingrid.utils.dsc.Record>
+      <string>T011_OBJ_GEO.OBJ_ID</string>
+      <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+      <string>T011_OBJ_GEO.HIERARCHY_LEVEL</string>
+      <string>5</string>
+      <!-- nur gefüllt, wenn die Daten als vectordaten vorliegen -->
+      <string>T011_OBJ_GEO.VECTOR_TOPOLOGY_LEVEL</string>
+      <string>5</string>
+      <string>T011_OBJ_GEO.REC_GRADE</string>
+      <string>0</string>
+      <string>T011_OBJ_GEO.REFERENCESYSTEM_ID</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_GEO.POS_ACCURACY_VERTICAL</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_GEO.REC_EXACT</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_GEO.SPECIAL_BASE</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_GEO.DATA_BASE</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_GEO.METHOD</string>
+      <string>Digitalisierung</string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T011_OBJ_GEO.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>HIERARCHY_LEVEL</fColumnName>
+          <fTargetName>T011_obj_geo.hierarchy_level</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>VECTOR_TOPOLOGY_LEVEL</fColumnName>
+          <fTargetName>T011_obj_geo.vector_topology_level</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>REC_GRADE</fColumnName>
+          <fTargetName>T011_obj_geo.rec_grade</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>REFERENCESYSTEM_ID</fColumnName>
+          <fTargetName>T011_obj_geo.referencesystem_id</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>POS_ACCURACY_VERTICAL</fColumnName>
+          <fTargetName>T011_obj_geo.pos_accuracy_vertical</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>REC_EXACT</fColumnName>
+          <fTargetName>T011_obj_geo.rec_exact</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>SPECIAL_BASE</fColumnName>
+          <fTargetName>T011_obj_geo.special_base</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>DATA_BASE</fColumnName>
+          <fTargetName>T011_obj_geo.data_base</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_GEO</fTableName>
+          <fColumnName>METHOD</fColumnName>
+          <fTargetName>T011_obj_geo.method</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list> 
+
+      <string>subRecords</string>
+      <list>
+        <!-- 1..n Themenkategorien-->
+        <de.ingrid.utils.dsc.Record>
+          <string>t011_obj_geo_topic_cat.obj_id</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>t011_obj_geo_topic_cat.topic_category</string>
+          <string>7</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_topic_cat</fTableName>
+              <fColumnName>obj_id</fColumnName>
+              <fTargetName>t011_obj_geo_topic_cat.obj_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_topic_cat</fTableName>
+              <fColumnName>topic_category</fColumnName>
+              <fTargetName>t011_obj_geo_topic_cat.topic_category</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+
+        <!-- 1..n einträge im Symbolkatalog-->
+        <de.ingrid.utils.dsc.Record>
+          <string>t011_obj_geo_symc.obj_id</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>t011_obj_geo_symc.symbol_cat</string>
+          <string>7</string>
+          <string>t011_obj_geo_symc.symbol_date</string>
+          <string>UDK Date String</string>
+          <string>t011_obj_geo_symc.edition</string>
+          <string>Bla</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_symc</fTableName>
+              <fColumnName>obj_id</fColumnName>
+              <fTargetName>t011_obj_geo_symc.obj_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_symc</fTableName>
+              <fColumnName>symbol_cat</fColumnName>
+              <fTargetName>t011_obj_geo_symc.symbol_cat</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_symc</fTableName>
+              <fColumnName>symbol_date</fColumnName>
+              <fTargetName>t011_obj_geo_symc.symbol_date</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_symc</fTableName>
+              <fColumnName>edition</fColumnName>
+              <fTargetName>t011_obj_geo_symc.edition</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+
+        <!-- 1..n Einträge im Schlüsselkatalog-->
+        <de.ingrid.utils.dsc.Record>
+          <string>t011_obj_geo_keyc.obj_id</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>t011_obj_geo_keyc.subject_cat</string>
+          <string>Bla</string>
+          <string>t011_obj_geo_keyc.key_date</string>
+          <string>UDK Date String</string>
+          <string>t011_obj_geo_keyc.edition</string>
+          <string>Text</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_keyc</fTableName>
+              <fColumnName>obj_id</fColumnName>
+              <fTargetName>t011_obj_geo_keyc.obj_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_keyc</fTableName>
+              <fColumnName>subject_cat</fColumnName>
+              <fTargetName>t011_obj_geo_keyc.subject_cat</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_keyc</fTableName>
+              <fColumnName>key_date</fColumnName>
+              <fTargetName>t011_obj_geo_keyc.key_date</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_keyc</fTableName>
+              <fColumnName>edition</fColumnName>
+              <fTargetName>t011_obj_geo_keyc.edition</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+
+        <!-- 1..1 Digitale Repräsentation -->
+        <de.ingrid.utils.dsc.Record>
+          <string>t011_obj_geo_spatial_rep.obj_id</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>t011_obj_geo_spatial_rep.type</string>
+          <string>1</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_spatial_rep</fTableName>
+              <fColumnName>obj_id</fColumnName>
+              <fTargetName>t011_obj_geo_spatial_rep.obj_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_spatial_rep</fTableName>
+              <fColumnName>type</fColumnName>
+              <fTargetName>t011_obj_geo_spatial_rep.type</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+
+        <!-- 1..1 Vektorformat -->
+        <de.ingrid.utils.dsc.Record>
+          <string>t011_obj_geo_vector.obj_id</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>t011_obj_geo_vector.geometric_object_type</string>
+          <string>TEXT</string>
+          <string>t011_obj_geo_vector.geometric_object_count</string>
+          <string>TEXT</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_vector</fTableName>
+              <fColumnName>obj_id</fColumnName>
+              <fTargetName>t011_obj_geo_vector.obj_id</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_vector</fTableName>
+              <fColumnName>geometric_object_type</fColumnName>
+              <fTargetName>t011_obj_geo_vector.geometric_object_type</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>t011_obj_geo_vector</fTableName>
+              <fColumnName>geometric_object_count</fColumnName>
+              <fTargetName>t011_obj_geo_vector.geometric_object_count</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+
+        <!-- 1..n Erstellungsmaßstab -->
+        <de.ingrid.utils.dsc.Record>
+          <string>T011_OBJ_GEO_SCALE.OBJ_ID</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>T011_OBJ_GEO_SCALE.RESOLUTION_GROUND</string>
+          <string>TEXT</string>
+          <string>T011_OBJ_GEO_SCALE.RESOLUTION_SCAN</string>
+          <string>TEXT</string>
+          <string>T011_OBJ_GEO_SCALE.SCALE</string>
+          <string>1</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_GEO_SCALE</fTableName>
+              <fColumnName>OBJ_ID</fColumnName>
+              <fTargetName>T011_OBJ_GEO_SCALE.OBJ_ID</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_GEO_SCALE</fTableName>
+              <fColumnName>SCALE</fColumnName>
+              <fTargetName>T011_obj_geo_scale.scale</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_GEO_SCALE</fTableName>
+              <fColumnName>RESOLUTION_GROUND</fColumnName>
+              <fTargetName>T011_obj_geo_scale.resolution_ground</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_GEO_SCALE</fTableName>
+              <fColumnName>RESOLUTION_SCAN</fColumnName>
+              <fTargetName>T011_obj_geo_scale.resolution_scan</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+
+        <!-- 1..n Sachdaten / Attributinformationen -->
+        <de.ingrid.utils.dsc.Record>
+          <string>T011_OBJ_GEO_SUPPLINFO.OBJ_ID</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>T011_OBJ_GEO_SUPPLINFO.FEATURE_TYPE</string>
+          <string>Der Objektbereich 5000 Gewässer wird in folgende Objektgruppen gegliedert:</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_GEO_SUPPLINFO</fTableName>
+              <fColumnName>OBJ_ID</fColumnName>
+              <fTargetName>T011_OBJ_GEO_SUPPLINFO.OBJ_ID</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_GEO_SUPPLINFO</fTableName>
+              <fColumnName>FEATURE_TYPE</fColumnName>
+              <fTargetName>T011_obj_geo_supplinfo.feature_type</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>
+        </de.ingrid.utils.dsc.Record>
+        
+      </list>  
+    </de.ingrid.utils.dsc.Record>
+    <!-- END Fachdaten UDK Klasse 1 -->
+
+    <!-- ******************************************************************************************** -->
+    <!-- Fachdaten UDK Klasse 2 -->
+    <!-- ******************************************************************************************** -->
+    
+    <de.ingrid.utils.dsc.Record>
+      <string>T011_OBJ_LITERATUR.OBJ_ID</string>
+      <string>468192E6-C123-11D4-97E8-00609719E3B4</string>
+      <string>T011_OBJ_LITERATUR.AUTOR</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.PUBLISHER</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.PUBLISH_IN</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.VOLUME</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.SIDES</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.PUBLISH_YEAR</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.ISBN</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.PUBLISHING</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.PUBLISH_LOC</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.TYP</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.DOC_INFO</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.BASE</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.LOC</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_LITERATUR.DESCRIPTION</string>
+      <string>TEXT</string>
+
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T011_OBJ_LITERATUR.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>AUTOR</fColumnName>
+          <fTargetName>T011_obj_literatur.autor</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>PUBLISHER</fColumnName>
+          <fTargetName>T011_obj_literatur.publisher</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>PUBLISH_IN</fColumnName>
+          <fTargetName>T011_obj_literatur.publish_in</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>VOLUME</fColumnName>
+          <fTargetName>T011_obj_literatur.volume</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>SIDES</fColumnName>
+          <fTargetName>T011_obj_literatur.sides</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>PUBLISH_YEAR</fColumnName>
+          <fTargetName>T011_obj_literatur.publish_year</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>ISBN</fColumnName>
+          <fTargetName>T011_obj_literatur.isbn</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>PUBLISHING</fColumnName>
+          <fTargetName>T011_obj_literatur.publishing</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>PUBLISH_LOC</fColumnName>
+          <fTargetName>T011_obj_literatur.publish_loc</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>TYP</fColumnName>
+          <fTargetName>T011_obj_literatur.typ</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>DOC_INFO</fColumnName>
+          <fTargetName>T011_obj_literatur.doc_info</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>BASE</fColumnName>
+          <fTargetName>T011_obj_literatur.base</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>LOC</fColumnName>
+          <fTargetName>T011_obj_literatur.loc</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_LITERATUR</fTableName>
+          <fColumnName>DESCRIPTION</fColumnName>
+          <fTargetName>T011_obj_literatur.description</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+    </de.ingrid.utils.dsc.Record>    
+    <!-- END Fachdaten UDK Klasse 2 -->
+  
+    <!-- ******************************************************************************************** -->
+    <!-- Fachdaten UDK Klasse 3 -->
+    <!-- ******************************************************************************************** -->
+    
+    <de.ingrid.utils.dsc.Record>
+      <string>T011_OBJ_SERV.OBJ_ID</string>
+      <string>468192E6-C123-11D4-97E8-00609719E3B4</string>
+      <string>T011_OBJ_SERV.TYPE</string>
+      <string>Vollzugssystem</string>
+      <string>T011_OBJ_SERV.HISTORY</string>
+      <string>Text</string>
+      <string>T011_OBJ_SERV.ENVIRONMENT</string>
+      <string>ACCESS-Datenbank </string>
+      <string>T011_OBJ_SERV.BASE</string>
+      <string>TEXT</string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_SERV</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T011_OBJ_SERV.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_SERV</fTableName>
+          <fColumnName>TYPE</fColumnName>
+          <fTargetName>T011_obj_serv.type</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_SERV</fTableName>
+          <fColumnName>HISTORY</fColumnName>
+          <fTargetName>T011_obj_serv.history</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_SERV</fTableName>
+          <fColumnName>ENVIRONMENT</fColumnName>
+          <fTargetName>T011_obj_serv.environment</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_SERV</fTableName>
+          <fColumnName>BASE</fColumnName>
+          <fTargetName>T011_obj_serv.base</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+
+      <string>subRecords</string>
+      <list>
+        <!-- 1..n Operationen -->
+        <de.ingrid.utils.dsc.Record>
+          <string>T011_OBJ_SERV_OPERATION.OBJ_ID</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>T011_OBJ_SERV_OPERATION.NAME</string>
+          <string>TEXT</string>
+          <string>T011_OBJ_SERV_OPERATION.DESCR</string>
+          <string>TEXT</string>
+          <string>T011_OBJ_SERV_OPERATION.INVOCATION_NAME</string>
+          <string>TEXT</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_SERV_OPERATION</fTableName>
+              <fColumnName>OBJ_ID</fColumnName>
+              <fTargetName>T011_OBJ_SERV_OPERATION.OBJ_ID</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_SERV_OPERATION</fTableName>
+              <fColumnName>NAME</fColumnName>
+              <fTargetName>T011_OBJ_SERV_OPERATION.NAME</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_SERV_OPERATION</fTableName>
+              <fColumnName>DESCR</fColumnName>
+              <fTargetName>T011_OBJ_SERV_OPERATION.DESCR</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_SERV_OPERATION</fTableName>
+              <fColumnName>INVOCATION_NAME</fColumnName>
+              <fTargetName>T011_OBJ_SERV_OPERATION.INVOCATION_NAME</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+      </list>  
+    </de.ingrid.utils.dsc.Record>    
+    <!-- END Fachdaten UDK Klasse 3 -->
+
+    <!-- ******************************************************************************************** -->
+    <!-- Fachdaten UDK Klasse 4 -->
+    <!-- ******************************************************************************************** -->
+    
+    <de.ingrid.utils.dsc.Record>
+      <string>T011_OBJ_PROJECT.OBJ_ID</string>
+      <string>468192E6-C123-11D4-97E8-00609719E3B4</string>
+      <string>T011_OBJ_PROJECT.LEADER</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_PROJECT.MEMBER</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_PROJECT.DESCRIPTION</string>
+      <string>TEXT</string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_PROJECT</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T011_OBJ_PROJECT.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_PROJECT</fTableName>
+          <fColumnName>LEADER</fColumnName>
+          <fTargetName>T011_obj_project.leader</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_PROJECT</fTableName>
+          <fColumnName>MEMBER</fColumnName>
+          <fTargetName>T011_obj_project.member</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_PROJECT</fTableName>
+          <fColumnName>DESCRIPTION</fColumnName>
+          <fTargetName>T011_obj_project.description</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+    </de.ingrid.utils.dsc.Record>    
+    <!-- END Fachdaten UDK Klasse 4 -->
+
+    <!-- ******************************************************************************************** -->
+    <!-- Fachdaten UDK Klasse 5 -->
+    <!-- ******************************************************************************************** -->
+    
+    <de.ingrid.utils.dsc.Record>
+      <string>T011_OBJ_DATA.OBJ_ID</string>
+      <string>468192E6-C123-11D4-97E8-00609719E3B4</string>
+      <string>T011_OBJ_DATA.BASE</string>
+      <string>TEXT</string>
+      <string>T011_OBJ_DATA.DESCRIPTION</string>
+      
+      <string>columns</string>
+      <list>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_DATA</fTableName>
+          <fColumnName>OBJ_ID</fColumnName>
+          <fTargetName>T011_OBJ_DATA.OBJ_ID</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_DATA</fTableName>
+          <fColumnName>BASE</fColumnName>
+          <fTargetName>T011_obj_data.base</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+        <de.ingrid.utils.dsc.Column>
+          <fTableName>T011_OBJ_DATA</fTableName>
+          <fColumnName>DESCRIPTION</fColumnName>
+          <fTargetName>T011_obj_data.description</fTargetName>
+        </de.ingrid.utils.dsc.Column>
+      </list>
+
+      <string>subRecords</string>
+      <list>
+        <!-- 1..n Inhalte der Datensammlung/Datenbank -->
+        <de.ingrid.utils.dsc.Record>
+          <string>T011_OBJ_DATA_PARA.OBJ_ID</string>
+          <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
+          <string>T011_OBJ_DATA_PARA.PARAMETER</string>
+          <string>TEXT</string>
+          <string>T011_OBJ_DATA_PARA.UNIT</string>
+          <string>TEXT</string>
+          
+          <string>columns</string>
+          <list>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_DATA_PARA</fTableName>
+              <fColumnName>OBJ_ID</fColumnName>
+              <fTargetName>T011_OBJ_DATA_PARA.OBJ_ID</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_DATA_PARA</fTableName>
+              <fColumnName>PARAMETER</fColumnName>
+              <fTargetName>T011_OBJ_DATA_PARA.PARAMETER</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+            <de.ingrid.utils.dsc.Column>
+              <fTableName>T011_OBJ_DATA_PARA</fTableName>
+              <fColumnName>UNIT</fColumnName>
+              <fTargetName>T011_OBJ_DATA_PARA.UNIT</fTargetName>
+            </de.ingrid.utils.dsc.Column>
+         </list>   
+        </de.ingrid.utils.dsc.Record>
+      </list> 
+      
+    </de.ingrid.utils.dsc.Record>    
+    <!-- END Fachdaten UDK Klasse 5 -->
+  
+  </list>
+</de.ingrid.utils.dsc.Record>
+
+<!--
+Um �bergeordnete Objekte anzuzeigen muss das iPlug folgende Suche unterst�tzen:
+
+"t012_obj_obj.object_to_id:<object-id> t012_obj_obj.typ:0 datatype:default ranking:score"
+
+- selektiert alle Objekte, die <object-id> als Kinder haben 
+
+
+Um untergeordnete Objekte anzuzeigen muss das iPlug folgende Suche unterst�tzen:
+
+"t012_obj_obj.object_from_id:<object-id> t012_obj_obj.typ:0 datatype:default ranking:score"
+
+- selektiert alle Objekte, die <object-id> als Parent haben 
+
+
+Um verweisende Objekte anzuzeigen muss das iPlug folgende Suche unterst�tzen:
+
+"t012_obj_obj.object_from_id:<object-id> t012_obj_obj.typ:1 datatype:default ranking:score"
+
+- selektiert alle Objekte, die <object-id> als Verweis haben 
+
+
+Um Adressen zu selektieren, muss das iPlug folgende Suche unterst�tzen:
+
+"T022_adr_adr.adr_to_id:<addrId> datatype:address ranking:score"
+
+        requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
+        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
+        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
+        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
+        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
+        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
+
+
+- selektiert alle Adressen, die auf die <addrId> verweisen.
+
+-->
