@@ -1,6 +1,6 @@
 <de.ingrid.utils.dsc.Record>
-	<string>T01_OBJECT.OBJ_NAME</string>
-	<string>Abwasser</string>
+  <string>T01_OBJECT.OBJ_NAME</string>
+  <string>Abwasser</string>
   <string>T01_OBJECT.MOD_TIME</string>
   <string>20060404093507</string>
   <string>T01_OBJECT.DATASET_ALTERNATE_NAME</string>
