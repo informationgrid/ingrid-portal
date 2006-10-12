@@ -81,6 +81,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
 
+            context.put("plugId", iplugId);
+            
             IngridHit hit = new IngridHit();
             hit.setDocumentId(documentId);
             hit.setPlugId(iplugId);
@@ -96,6 +98,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             boolean readableColumnNames = false;
 
             Record record = ibus.getRecord(hit);
+            
+//            XStream xstream = new XStream();
+//            String serializedObject = xstream.toXML(record);
+            
             if (record == null) {
                 log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
             } else {
@@ -133,9 +139,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     ArrayList subordinatedReferences = null;
                     ArrayList crossReferences = null;
                     try {
-                        superiorReferences = getSuperiorObjects(objId);
-                        subordinatedReferences = getSubordinatedObjects(objId);
-                        crossReferences = getCrossReferencedObjects(objId);
+                        superiorReferences = getSuperiorObjects(objId, iplugId);
+                        subordinatedReferences = getSubordinatedObjects(objId, iplugId);
+                        crossReferences = getCrossReferencedObjects(objId, iplugId);
                     } catch (Throwable t) {
                         log.error("Error getting related objects, obj_id = " + objId, t);
 
@@ -154,7 +160,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         String addressId = (String) addrRecord.get("T02_ADDRESS.ADR_ID");
                         if (addressType.equals("1") || addressType.equals("2")) {
                             HashMap parents = new LinkedHashMap();
-                            getUDKAddressParents(parents, addressId);
+                            getUDKAddressParents(parents, addressId, iplugId);
                             addrParents.put(addressId, parents);
                         }
                     }
@@ -172,17 +178,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     String addrId = (String) record.get("T02_ADDRESS.ADR_ID");
                     // get id of the address
                     if (addressType.equals("1") || addressType.equals("2")) {
-                        getUDKAddressParents(addrParents, addrId);
+                        getUDKAddressParents(addrParents, addrId, iplugId);
                     }
                     context.put("addrParents", addrParents);
 
                     // get references
                     ArrayList superiorReferences = new ArrayList();
-                    IngridHit h = getParentAddress(addrId);
+                    IngridHit h = getParentAddress(addrId, iplugId);
                     if (h != null) {
-                        superiorReferences.add(getParentAddress(addrId));
+                        superiorReferences.add(getParentAddress(addrId, iplugId));
                     }
-                    ArrayList subordinatedReferences = getAddressChildren(addrId);
+                    ArrayList subordinatedReferences = getAddressChildren(addrId, iplugId);
 
                     context.put("superiorReferences", superiorReferences);
                     context.put("subordinatedReferences", subordinatedReferences);
@@ -196,7 +202,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         String myAddrType = (String) ((IngridHitDetail) ((IngridHit) subordinatedReferences.get(i))
                                 .get("detail")).get("T02_address.typ");
                         if (myAddrType.equals("0") || myAddrType.equals("1")) {
-                            allAddressChildren.addAll(getAllAddressChildren(myAddrId));
+                            allAddressChildren.addAll(getAllAddressChildren(myAddrId, iplugId));
                         }
                     }
 
@@ -204,7 +210,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     HashMap subordinatedObjRef = new LinkedHashMap();
                     for (int i = 0; i < allAddressChildren.size(); i++) {
                         ArrayList l = getObjectsByAddress((String) ((IngridHitDetail) ((IngridHit) allAddressChildren
-                                .get(i)).get("detail")).get("T02_address.adr_id"));
+                                .get(i)).get("detail")).get("T02_address.adr_id"), iplugId);
                         for (int j = 0; j < l.size(); j++) {
                             IngridHit objHit = (IngridHit) l.get(j);
                             IngridHitDetail detail = (IngridHitDetail) objHit.get("detail");
@@ -388,14 +394,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
     }
 
-    private void getUDKAddressParents(HashMap result, String addrId) throws Exception {
+    private void getUDKAddressParents(HashMap result, String addrId, String iPlugId) throws Exception {
         // get id of the address
         String addressId = addrId;
         // set initial address type to 1
         String addressType = "";
         do {
             // get the paren address hit + detail
-            IngridHit parent = getParentAddress(addressId);
+            IngridHit parent = getParentAddress(addressId, iPlugId);
             if (parent == null) {
                 // no parent found
                 break;
@@ -508,8 +514,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             return;
         } else if (cmd.equals("doShowAddressDetail")) {
             String addrId = request.getParameter("addrId");
+            String plugId = getAddressPlugIdFromPlugId(request.getParameter("plugid"));
             try {
-                IngridHit hit = getAddressHit(addrId);
+                IngridHit hit = getAddressHit(addrId, plugId);
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
@@ -520,8 +527,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
         } else if (cmd.equals("doShowObjectDetail")) {
             String objId = request.getParameter("objId");
+            String plugId = getPlugIdFromAddressPlugId(request.getParameter("plugid"));
             try {
-                IngridHit hit = getObjectHit(objId);
+                IngridHit hit = getObjectHit(objId, plugId);
                 response.setRenderParameter("docid", hit.getId().toString());
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
@@ -540,50 +548,50 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
     }
 
-    private ArrayList getSuperiorObjects(String objId) {
+    private ArrayList getSuperiorObjects(String objId, String iPlugId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_to_id:".concat(objId).concat(
-                " t012_obj_obj.typ:0 datatype:default ranking:score"), requestedMetadata, filter);
+                " t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
         return result;
     }
 
-    private ArrayList getSubordinatedObjects(String objId) {
+    private ArrayList getSubordinatedObjects(String objId, String iPlugId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
-                " t012_obj_obj.typ:0 datatype:default ranking:score"), requestedMetadata, filter);
+                " t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
         return result;
     }
 
-    private ArrayList getCrossReferencedObjects(String objId) {
+    private ArrayList getCrossReferencedObjects(String objId, String iPlugId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
-                " t012_obj_obj.typ:1 datatype:default ranking:score"), requestedMetadata, filter);
+                " t012_obj_obj.typ:1 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
         return result;
     }
 
-    private ArrayList getObjectsByAddress(String addrId) {
+    private ArrayList getObjectsByAddress(String addrId, String iPlugId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
-        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:default ranking:score"),
+        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, filter);
         return result;
     }
 
-    private IngridHit getParentAddress(String addrId) {
+    private IngridHit getParentAddress(String addrId, String iPlugId) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
         requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -594,7 +602,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
-        ArrayList result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" datatype:address ranking:score"),
+        ArrayList result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, filter);
         if (result.size() > 0) {
             return (IngridHit) result.get(0);
@@ -603,7 +611,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         }
     }
 
-    private ArrayList getAddressChildren(String addrId) {
+    private ArrayList getAddressChildren(String addrId, String iPlugId) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
         requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -615,12 +623,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
         ArrayList result = getHits(
-                "T022_adr_adr.adr_from_id:".concat(addrId).concat(" datatype:address ranking:score"),
+                "T022_adr_adr.adr_from_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, filter);
         return result;
     }
 
-    private IngridHit getAddressHit(String addrId) {
+    private IngridHit getAddressHit(String addrId, String iPlugId) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
         requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -629,7 +637,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
         requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" datatype:address ranking:score"),
+        ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, null);
         if (result.size() > 0) {
             return (IngridHit) result.get(0);
@@ -638,11 +646,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         }
     }
 
-    private IngridHit getObjectHit(String objId) {
+    private IngridHit getObjectHit(String objId, String iPlugId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        ArrayList result = getHits("T01_object.obj_id:".concat(objId).concat(" datatype:default ranking:score"),
+        ArrayList result = getHits("T01_object.obj_id:".concat(objId).concat(" iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, null);
         if (result.size() > 0) {
             return (IngridHit) result.get(0);
@@ -651,15 +659,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         }
     }
 
-    private ArrayList getAllAddressChildren(String addrId) {
-        ArrayList result = getAddressChildren(addrId);
+    private ArrayList getAllAddressChildren(String addrId, String iPlugId) {
+        ArrayList result = getAddressChildren(addrId, iPlugId);
         int size = result.size();
         for (int i = 0; i < size; i++) {
             IngridHit hit = (IngridHit) result.get(i);
             IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
             String addrType = (String) detail.get(Settings.HIT_KEY_ADDRESS_CLASS);
             if (addrType.equals("0") || addrType.equals("1")) {
-                result.addAll(getAllAddressChildren((String) detail.get(Settings.HIT_KEY_ADDRESS_ADDRID)));
+                result.addAll(getAllAddressChildren((String) detail.get(Settings.HIT_KEY_ADDRESS_ADDRID), iPlugId));
             }
         }
         return result;
@@ -706,6 +714,38 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             log.error("Problems accessing the parent address!", e);
         }
         return result;
+    }
+
+    /**
+     * Returns the plug id of the corresponding address plug id. Address plug
+     * id's are detected from the postfix "_addr". The postfix will be stripped.
+     * Plug id's without this postfix remain unchanged.
+     * 
+     * @param plugId
+     * @return
+     */
+    public String getPlugIdFromAddressPlugId(String plugId) {
+        if (plugId.endsWith("_addr")) {
+            return plugId.substring(0, plugId.lastIndexOf("_addr"));
+        } else {
+            return plugId;
+        }
+    }
+
+    /**
+     * Returns the address plug id of the corresponding plug id, by adding the postfix
+     * "_addr" to the plug id. Only plug id's that contain the string "udk-db" and do
+     * not contain the postfix "_addr" will be changed.
+     * 
+     * @param plugId
+     * @return
+     */
+    public String getAddressPlugIdFromPlugId(String plugId) {
+        if (plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
+            return plugId.concat("_addr");
+        } else {
+            return plugId;
+        }
     }
 
     /**

@@ -28,6 +28,7 @@
 			#set ($action = $renderResponse.createActionURL())
     		$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$instituteAddrId")						
+			$action.setParameter('plugid', "$plugId")
 			<a href="$action">$institution.detail.title</a><br/>
 		#end	
 		#set($units = $addrParents.get("units"))
@@ -36,6 +37,7 @@
 			#set ($action = $renderResponse.createActionURL())
     		$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$unitAddrId")						
+			$action.setParameter('plugid', "$plugId")
 			<a href="$action">$unit.detail.title</a><br/>
 		#end
 	#end
@@ -85,6 +87,7 @@
     		#set ($action = $renderResponse.createActionURL())
     		$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$refAddrId")
+			$action.setParameter('plugid', "$plugId")
     		<a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$ref.detail.title</a><br/>
 		#end
 		</p>
@@ -103,6 +106,7 @@
 			#set($refAddrType = $ref.detail.get("T02_address.typ"))
 			$action.setParameter('cmd', "doShowAddressDetail")
     		$action.setParameter('addrId', "$refAddrId")
+			$action.setParameter('plugid', "$plugId")
 			#if($refAddrType == "0" || $refAddrType == "1")
 				<a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$ref.detail.title</a><br/>
 			#else
@@ -143,6 +147,7 @@
         		#set ($action = $renderResponse.createActionURL())
         		$action.setParameter('cmd', "doShowObjectDetail")
         		$action.setParameter('objId', "$udkObjId")
+				$action.setParameter('plugid', $plugId)
 				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}"></span>&nbsp;<a href="$action">$t01_object.get("t01_object.obj_name")</a>&nbsp;</li>
 			#end
 		#end
@@ -159,6 +164,7 @@
         		#set ($action = $renderResponse.createActionURL())
         		$action.setParameter('cmd', "doShowObjectDetail")
         		$action.setParameter('objId', "$udkObjId")
+				$action.setParameter('plugid', $plugId)
 				<li><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}"></span>&nbsp;<a href="$action">$objHits.detail.title</a>&nbsp;</li>
 			#end
 		</ul>
