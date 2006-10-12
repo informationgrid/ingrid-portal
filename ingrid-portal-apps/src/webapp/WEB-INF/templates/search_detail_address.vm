@@ -168,6 +168,16 @@
 	#end	
 #end
 
+#macro (renderUDKSearchTerms)
+	#if($tool.hasContent($rec.get("t04_search.obj_id")))
+    	<div class="line"><hr /></div><br/>
+    	<p><strong>$MESSAGES.getString("search_terms"):</strong><br/>
+		#foreach($t04_search in $rec.get("t04_search.obj_id"))
+			$t04_search.get("t04_search.searchterm")<br/>
+		#end
+		</p>
+	#end
+#end
 
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
@@ -205,6 +215,7 @@
     	#renderSubordinatedReferences()
 	#end	#renderUDKAddressFunction()
 	#renderUDKAddressRelatedRecords()
+    #renderUDKSearchTerms()
     <div class="line"><hr></div>
 	<br />
 	
