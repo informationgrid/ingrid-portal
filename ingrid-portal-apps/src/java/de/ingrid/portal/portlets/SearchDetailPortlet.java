@@ -676,8 +676,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
         ArrayList result = new ArrayList();
         try {
-            IngridQuery query = QueryStringParser.parse(queryStr);
+            IngridQuery query = QueryStringParser.parse(queryStr.concat(" ranking:any datatype:any"));
             IngridHits hits;
+            // request hits in chunks of 20 results per page
             int page = 0;
             do {
                 page++;
@@ -711,7 +712,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             } while (hits.getHits().length == 20);
         } catch (Exception e) {
-            log.error("Problems accessing the parent address!", e);
+            log.error("Problems getting hits from iBus!", e);
         }
         return result;
     }
