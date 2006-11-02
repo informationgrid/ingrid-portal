@@ -563,7 +563,7 @@
 #end
 
 #macro (renderUDKAvailability)
-	#if($tool.hasContent($rec.get("t0110_avail_format.obj_id")) || $tool.hasContent($rec.get("t0112_media_option.obj_id")) || $tool.hasContent($rec.get("t0112_object.ordering_instructions")) || $tool.hasContent($rec.get("t0112_object.avail_access_note")) || $tool.hasContent($rec.get("t0112_object.fees")))
+	#if($tool.hasContent($rec.get("t0110_avail_format.obj_id")) || $tool.hasContent($rec.get("t0112_media_option.obj_id")) || $tool.hasContent($rec.get("t01_object.ordering_instructions")) || $tool.hasContent($rec.get("t01_object.avail_access_note")) || $tool.hasContent($rec.get("t01_object.fees")))
 		<div class="line"><hr /></div><br/>
     	#if($tool.hasContent($rec.get("t0110_avail_format.obj_id")))
     		<p><strong>$MESSAGES.getString("data_format"):</strong><br/>
