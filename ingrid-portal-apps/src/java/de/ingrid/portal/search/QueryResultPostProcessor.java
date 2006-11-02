@@ -166,7 +166,7 @@ public class QueryResultPostProcessor {
                         }
                     }
 
-                    if (tmpString.equals("de.ingrid.iplug.udk.UDKPlug")) {
+                    if (tmpString.equals("de.ingrid.iplug.ecs.UDKPlug")) {
                         processDSCHit(hit, detail, selectedDS);
                     } else if (tmpString.equals("de.ingrid.iplug.csw.CSWPlug")) {
                         processDSCHit(hit, detail, selectedDS);
