@@ -1,4 +1,6 @@
 <de.ingrid.utils.dsc.Record>
+  <string>T01_OBJECT.OBJ_ID</string>
+  <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
   <string>T01_OBJECT.OBJ_NAME</string>
   <string>Abwasser</string>
   <string>T01_OBJECT.MOD_TIME</string>
@@ -52,6 +54,11 @@
   
   <string>columns</string>
   <list>
+    <de.ingrid.utils.dsc.Column>
+      <fTableName>T01_OBJECT</fTableName>
+      <fColumnName>OBJ_ID</fColumnName>
+      <fTargetName>T01_object.obj_id</fTargetName>
+    </de.ingrid.utils.dsc.Column>
     <de.ingrid.utils.dsc.Column>
       <fTableName>T01_OBJECT</fTableName>
       <fColumnName>OBJ_NAME</fColumnName>
@@ -164,8 +171,8 @@
     </de.ingrid.utils.dsc.Column>
     <de.ingrid.utils.dsc.Column>
       <fTableName>T01_OBJECT</fTableName>
-      <fColumnName>METADATA_LANGUAGE</fColumnName>
-      <fTargetName>T01_object.metadata_language</fTargetName>
+      <fColumnName>DATA_LANGUAGE</fColumnName>
+      <fTargetName>T01_object.data_language</fTargetName>
     </de.ingrid.utils.dsc.Column>
     <de.ingrid.utils.dsc.Column>
       <fTableName>T01_OBJECT</fTableName>
@@ -449,7 +456,7 @@
     </de.ingrid.utils.dsc.Record>      
 
 
-    <!-- Raumbezug KGS Schlüssel -->
+    <!-- Raumbezug KGS Schlï¿½ssel -->
     <de.ingrid.utils.dsc.Record>
       <string>t011_township.obj_id</string>
       <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -488,7 +495,7 @@
       </list>     
     </de.ingrid.utils.dsc.Record>
 
-    <!-- 1..n Raumbezüge begrifflich -->
+    <!-- 1..n Raumbezï¿½ge begrifflich -->
     <de.ingrid.utils.dsc.Record>
       <string>t019_coordinates.obj_id</string>
       <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -541,7 +548,7 @@
     </de.ingrid.utils.dsc.Record>  
 
 
-    <!-- 1..n Verfügbarkeiten -->
+    <!-- 1..n Verfï¿½gbarkeiten -->
     <de.ingrid.utils.dsc.Record>
       <string>T0110_AVAIL_FORMAT.OBJ_ID</string>
       <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -672,7 +679,7 @@
       <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
       <string>T011_OBJ_GEO.HIERARCHY_LEVEL</string>
       <string>5</string>
-      <!-- nur gefüllt, wenn die Daten als vectordaten vorliegen -->
+      <!-- nur gefï¿½llt, wenn die Daten als vectordaten vorliegen -->
       <string>T011_OBJ_GEO.VECTOR_TOPOLOGY_LEVEL</string>
       <string>5</string>
       <string>T011_OBJ_GEO.REC_GRADE</string>
@@ -768,7 +775,7 @@
          </list>   
         </de.ingrid.utils.dsc.Record>
 
-        <!-- 1..n einträge im Symbolkatalog-->
+        <!-- 1..n eintrï¿½ge im Symbolkatalog-->
         <de.ingrid.utils.dsc.Record>
           <string>t011_obj_geo_symc.obj_id</string>
           <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -804,7 +811,7 @@
          </list>   
         </de.ingrid.utils.dsc.Record>
 
-        <!-- 1..n Einträge im Schlüsselkatalog-->
+        <!-- 1..n Eintrï¿½ge im Schlï¿½sselkatalog-->
         <de.ingrid.utils.dsc.Record>
           <string>t011_obj_geo_keyc.obj_id</string>
           <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -840,7 +847,7 @@
          </list>   
         </de.ingrid.utils.dsc.Record>
 
-        <!-- 1..1 Digitale Repräsentation -->
+        <!-- 1..1 Digitale Reprï¿½sentation -->
         <de.ingrid.utils.dsc.Record>
           <string>t011_obj_geo_spatial_rep.obj_id</string>
           <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -891,7 +898,7 @@
          </list>   
         </de.ingrid.utils.dsc.Record>
 
-        <!-- 1..n Erstellungsmaßstab -->
+        <!-- 1..n Erstellungsmaï¿½stab -->
         <de.ingrid.utils.dsc.Record>
           <string>T011_OBJ_GEO_SCALE.OBJ_ID</string>
           <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
@@ -932,7 +939,7 @@
           <string>T011_OBJ_GEO_SUPPLINFO.OBJ_ID</string>
           <string>A02C90F4-D58A-11D4-87F6-0060084A4596</string>
           <string>T011_OBJ_GEO_SUPPLINFO.FEATURE_TYPE</string>
-          <string>Der Objektbereich 5000 Gewässer wird in folgende Objektgruppen gegliedert:</string>
+          <string>Der Objektbereich 5000 Gewï¿½sser wird in folgende Objektgruppen gegliedert:</string>
           
           <string>columns</string>
           <list>
