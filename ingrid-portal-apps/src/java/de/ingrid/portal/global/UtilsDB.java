@@ -430,15 +430,15 @@ public class UtilsDB {
             tx.commit();
             return domainEntry.getName();
         } catch (Exception e) {
-            if (tx != null) {
+            if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            return String.valueOf(domainId);
         } finally {
             HibernateUtil.closeSession();
         }
+        return String.valueOf(domainId);
     }
-
+    
     /**
      * Update given mapped entity (hibernate) in database.
      * 
