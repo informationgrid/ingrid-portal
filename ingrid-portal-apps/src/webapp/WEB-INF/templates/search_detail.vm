@@ -129,21 +129,29 @@
 				#if($myAddress.get("t02_address.typ") == "1" || $myAddress.get("t02_address.typ") == "2")
 					#set($institutions = $addrParents.get($myAddress.get("t02_address.adr_id")).get("institutions"))
 					#foreach($institution in $institutions)
-						#set($instituteAddrId = $institution.detail.get("T02_address.adr_id"))
-        				#set ($action = $renderResponse.createActionURL())
-                		$action.setParameter('cmd', "doShowAddressDetail")
-                		$action.setParameter('addrId', "$instituteAddrId")
-						$action.setParameter('plugid', $plugId)
-						<a href="$action">$institution.detail.title</a><br/>
+						#if($tool.hasContent($institution.detail.get("T02_address.adr_id")))
+    						#set($instituteAddrId = $institution.detail.get("T02_address.adr_id"))
+            				#set ($action = $renderResponse.createActionURL())
+    						$action.setParameter('cmd', "doShowAddressDetail")
+                    		$action.setParameter('addrId', "$instituteAddrId")
+    						$action.setParameter('plugid', $plugId)
+    						<a href="$action">$institution.detail.title</a><br/>
+						#else
+							$institution.detail.title<br/>
+						#end
 					#end	
 					#set($units = $addrParents.get($myAddress.get("t02_address.adr_id")).get("units"))
 					#foreach($unit in $units)
-						#set($unitAddrId = $unit.detail.get("T02_address.adr_id"))
-        				#set ($action = $renderResponse.createActionURL())
-                		$action.setParameter('cmd', "doShowAddressDetail")
-                		$action.setParameter('addrId', "$unitAddrId")
-						$action.setParameter('plugid', $plugId)
-						<a href="$action">$unit.detail.title</a><br/>
+						#if($tool.hasContent($unit.detail.get("T02_address.adr_id")))
+    						#set($unitAddrId = $unit.detail.get("T02_address.adr_id"))
+            				#set ($action = $renderResponse.createActionURL())
+                    		$action.setParameter('cmd', "doShowAddressDetail")
+                    		$action.setParameter('addrId', "$unitAddrId")
+    						$action.setParameter('plugid', $plugId)
+    						<a href="$action">$unit.detail.title</a><br/>
+						#else
+							$unit.detail.title<br/>
+						#end
 					#end
 				#end
 				#set ($action = $renderResponse.createActionURL())
@@ -151,16 +159,24 @@
         		$action.setParameter('addrId', $myAddress.get("t02_address.adr_id"))
 				$action.setParameter('plugid', $plugId)
 				#if($myAddress.get("t02_address.typ") == "0" || $myAddress.get("t02_address.typ") == "3")
-					#if($myAddress.get("t02_address.institution"))<a href="$action">$myAddress.get("t02_address.institution")</a><br/>#end
+					#if($tool.hasContent($myAddress.get("t02_address.adr_id")))
+						#if($myAddress.get("t02_address.institution"))<a href="$action">$myAddress.get("t02_address.institution")</a><br/>#end
+					#else
+						$myAddress.get("t02_address.institution")<br/>
+					#end
 				#end
    				#if($myAddress.get("title") && $myAddress.get("title")!="")$myAddress.get("title")<br/>#end
 				#if($tool.hasContent($myAddress.get("t02_address.lastname")))
+					#if($tool.hasContent($myAddress.get("t02_address.adr_id")))
 					<a href="$action">
+					#end	
 					#if($myAddress.get("t02_address.address"))$myAddress.get("t02_address.address")#end
     				#if($myAddress.get("t02_address.title"))$myAddress.get("t02_address.title")#end
     				#if($myAddress.get("t02_address.firstname"))$myAddress.get("t02_address.firstname")#end
     				#if($myAddress.get("t02_address.lastname"))$myAddress.get("t02_address.lastname")<br/>#end
+					#if($tool.hasContent($myAddress.get("t02_address.adr_id")))
     				</a>
+					#end	
 				#end	
 				#if($myAddress.get("t02_address.descr") && $myAddress.get("t02_address.descr") != "")$myAddress.get("t02_address.descr")<br/>#end
 				#if($myAddress.get("t02_address.postbox") && $myAddress.get("t02_address.postbox") != "")
@@ -483,7 +499,11 @@
 			#foreach($t011_township in $rec.get("t011_township.obj_id"))
 				#if($tool.hasContent($t011_township.get("t011_town_loc_town.township_no")))
 					#foreach($t011_town_loc_town in $t011_township.get("t011_town_loc_town.township_no"))
+						#if($tool.hasContent($t011_town_loc_town.get("t011_town_loc_town.name")))
 						$t011_town_loc_town.get("t011_town_loc_town.name") ($t011_town_loc_town.get("t011_town_loc_town.township_no"))<br/>
+						#else
+						($t011_town_loc_town.get("t011_town_loc_town.township_no"))<br/>
+						#end
 					#end
 				#end	
 			#end

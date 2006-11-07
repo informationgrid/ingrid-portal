@@ -245,7 +245,15 @@
 	    </dependency>
 	    <dependency>
 	      <groupId>ingrid</groupId>
-	      <artifactId>ingrid-iplug-udk</artifactId>
+	      <artifactId>ingrid-iplug-ecs</artifactId>
+	      <version>0.1-SNAPSHOT</version>
+		  <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
+	    <dependency>
+	      <groupId>ingrid</groupId>
+	      <artifactId>ingrid-iplug-csw</artifactId>
 	      <version>0.1-SNAPSHOT</version>
 		  <properties>
 	        <war.bundle>true</war.bundle>
