@@ -119,7 +119,7 @@
     		#set($addressId = $myAddressType.get("t02_address.adr_id"))
 			#set($addressType = $myAddressType.get("t012_obj_adr.typ"))
 			#if($addressType != "0" && $addressType != "1" && $addressType != "2" && $addressType != "3" && $addressType != "4" && $addressType != "5" && $addressType != "6" && $addressType != "7" && $addressType != "8" && $addressType != "9")
-				#set($addressTypeKeyName = $myAddressType.get("t012_obj_adr.special_name"))
+				#set($addressTypeKeyName = $MESSAGES.getString($myAddressType.get("t012_obj_adr.special_name")))
 				<p><strong>$addressTypeKeyName:</strong><br/>
 			#else
 				#set($addressTypeKeyName = "t012_obj_adr.typ$addressType")
