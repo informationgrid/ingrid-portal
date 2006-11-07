@@ -354,6 +354,8 @@
           <list>
             <!-- 1..n communication types -->
             <de.ingrid.utils.dsc.Record>
+              <string>T021_COMMUNICATION.ADR_ID</string>
+              <string>0C2EA4F9-18DE-11D3-AF47-0060084A4596</string>
               <string>T021_COMMUNICATION.COMM_TYPE</string>
               <!-- Telefon, Fax, E-Mail|EMail|Email, URL-->
               <string>Fax</string>
@@ -362,6 +364,11 @@
               
               <string>columns</string>
 	            <list>
+                <de.ingrid.utils.dsc.Column>
+                  <fTableName>T021_COMMUNICATION</fTableName>
+                  <fColumnName>ADR_ID</fColumnName>
+                  <fTargetName>T021_communication.adr_id</fTargetName>
+                </de.ingrid.utils.dsc.Column>
                 <de.ingrid.utils.dsc.Column>
                   <fTableName>T021_COMMUNICATION</fTableName>
                   <fColumnName>COMM_TYPE</fColumnName>
