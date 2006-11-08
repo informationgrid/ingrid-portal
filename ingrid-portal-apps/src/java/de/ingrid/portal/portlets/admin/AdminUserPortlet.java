@@ -977,7 +977,12 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     protected boolean doRefresh(RenderRequest request) {
-        return !doViewEdit(request);
+        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+        if (f.hasInput(AdminUserForm.FIELD_TAB) && f.getInput(AdminUserForm.FIELD_TAB).equals("2")) {
+            return !doViewEdit(request);
+        } else {
+            return super.doRefresh(request);
+        }
     }
     
     protected Object[] getDBEntities(PortletRequest request) {
