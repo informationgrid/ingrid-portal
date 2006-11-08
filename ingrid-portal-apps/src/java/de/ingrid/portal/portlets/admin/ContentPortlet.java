@@ -83,6 +83,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected static String PARAMV_ACTION_DO_NEW = "doNew";
 
+    protected static String PARAMV_ACTION_DO_RELOAD = "doReload";
+
     protected static String PARAMV_ACTION_DB_DO_SAVE = "doSave";
 
     protected static String PARAMV_ACTION_DB_DO_UPDATE = "doUpdate";
@@ -91,6 +93,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected static String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
 
+    
     // Data to set in Subclasses
     // -------------------------
 
@@ -136,6 +139,11 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 doViewDefault = !doViewEdit(request);
             }
 
+            // RELOAD PROVIDER
+            if (action.equals(PARAMV_ACTION_DO_REFRESH)) {
+                doViewDefault = doRefresh(request);
+            }
+            
             // NEW
             else if (action.equals(PARAMV_ACTION_DO_NEW)) {
                 doViewDefault = !doViewNew(request);
@@ -240,6 +248,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         return true;
     }
 
+    protected boolean doRefresh(RenderRequest request) {
+        return true;
+    }
+    
     /**
      * Default method for handling viewing after new entity was saved (handles view dependent from action form errors).
      * @param request
@@ -371,7 +383,6 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
                 // call sub method
                 doActionSave(request);
-
             } else if (request.getParameter(PARAMV_ACTION_DB_DO_UPDATE) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DB_DO_UPDATE);
                 Utils.appendURLParameter(urlViewParams, urlParam);

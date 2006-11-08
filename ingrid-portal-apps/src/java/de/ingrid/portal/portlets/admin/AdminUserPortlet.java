@@ -882,6 +882,19 @@ public class AdminUserPortlet extends ContentPortlet {
             response.setRenderParameter("cmd", "action processed");
 
             // check for cancel to avoid an unnecesarry "doChangeTab" action
+        } else if (request.getParameter(PARAMV_ACTION_DO_REFRESH) != null) {
+            AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+            f.clearErrors();
+            f.clearMessages();
+            f.populate(request);
+            // save the tab
+            f.setInput(AdminUserForm.FIELD_TAB, request.getParameter("tab"));
+            // save the id of the edited user, to keep the reference
+            f.setInput(AdminUserForm.FIELD_ID, request.getParameter("id"));
+            f.validate();
+            response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_REFRESH);
+            response.setRenderParameter("cmd", "action processed");
+
         } else if (request.getParameter(PARAMV_ACTION_DB_DO_CANCEL) != null) {
             response.setRenderParameter(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
             return;
@@ -963,6 +976,10 @@ public class AdminUserPortlet extends ContentPortlet {
         return true;
     }
 
+    protected boolean doRefresh(RenderRequest request) {
+        return !doViewEdit(request);
+    }
+    
     protected Object[] getDBEntities(PortletRequest request) {
         return getIds(request);
     }

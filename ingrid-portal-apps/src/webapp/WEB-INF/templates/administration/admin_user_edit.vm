@@ -171,9 +171,10 @@ $action.setParameter('tab','2')
 		#foreach ($partner in $partnerlist)
 			<option value="$partner.ident" #getSelected('partner' $partner.ident)>$partner.name</option>
 		#end	
-		</select>  
-		<p class="clearer"></p>
+		</select>
 	</p>
+	&nbsp;&nbsp;<input class="btn left" type="submit" name="doRefresh" value="Anbieter aktualisieren" />
+	<p class="clearer"></p>
 #elseif($actionForm.getInput('layoutPermission') == "admin.portal.partner")
 	<input type="hidden" name="admin_portal" value="#if($actionForm.isCurrentInput('admin_portal','1'))1#end"/>
 	<input type="hidden" name="admin_partner" value="#if($actionForm.isCurrentInput('admin_partner','1'))1#end"/>
