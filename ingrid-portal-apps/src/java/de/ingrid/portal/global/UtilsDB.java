@@ -590,12 +590,11 @@ public class UtilsDB {
                 IngridProvider provider = (IngridProvider) providerIterator.next();
                 String providerIdent = provider.getIdent();
                 String partnerIdent = "";
-                if (providerIdent != null && providerIdent.length() > 0) {
-                    partnerIdent = providerIdent.substring(0, providerIdent.indexOf("_"));
+                int sepPos = providerIdent.indexOf("_");
+                if (providerIdent != null && providerIdent.length() > 0 && sepPos != -1) {
+                    partnerIdent = providerIdent.substring(0, sepPos);
                     // hack: "bund" is coded as "bu" in provider idents
-                    if (partnerIdent.equals("bu")) {
-                        partnerIdent = "bund";
-                    }
+                    partnerIdent = Utils.normalizePartnerKey(partnerIdent, false);
                 }
                 if (partnerIdent.equals(partner.getIdent())) {
                     // check for providers
