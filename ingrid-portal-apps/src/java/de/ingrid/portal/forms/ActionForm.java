@@ -300,6 +300,7 @@ public abstract class ActionForm implements Serializable {
     public void clear() {
         clearInput();
         clearErrors();
+        clearMessages();
     }
     
     /**
