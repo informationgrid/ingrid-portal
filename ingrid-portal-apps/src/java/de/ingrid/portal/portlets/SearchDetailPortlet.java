@@ -205,6 +205,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                             allAddressChildren.addAll(getAllAddressChildren(myAddrId, iplugId));
                         }
                     }
+                    Collections.sort(subordinatedReferences, new AddressRecordComparator());
+
 
                     // get related record of the subordinated address references
                     HashMap subordinatedObjRef = new LinkedHashMap();
@@ -777,4 +779,27 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         }
     }
 
+    /**
+     * Inner class: AddressTypeComperator for address sorting;
+     *
+     * @author joachim@wemove.com
+     */
+    private class AddressRecordComparator implements Comparator {
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public final int compare(Object a, Object b) {
+            String sa;
+            String sb;
+            try {
+                sa = (String) ((HashMap)((HashMap) a).get("detail")).get("title");
+                sb = (String) ((HashMap)((HashMap) b).get("detail")).get("title");
+            } catch (Exception e) {
+                return 0;
+            }
+
+            return sa.compareTo(sb);
+        }
+    }
+    
 }
