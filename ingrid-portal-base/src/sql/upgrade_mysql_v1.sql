@@ -100,3 +100,13 @@ INSERT INTO `ingrid_provider` ( `id` , `ident` , `name` , `url` , `sortkey` , `s
 INSERT INTO `ingrid_provider` ( `id` , `ident` , `name` , `url` , `sortkey` , `sortkey_partner` ) VALUES (140, 'bw_rp', 'Regierungspräsidien Baden-Württemberg', 'http://www.rp.baden-wuerttemberg.de/', '13', '2');
 INSERT INTO `ingrid_provider` ( `id` , `ident` , `name` , `url` , `sortkey` , `sortkey_partner` ) VALUES (141, 'bw_rps', 'Regierungspräsidium Stuttgart', 'http://www.landentwicklung-mlr.baden-wuerttemberg.de/', '14', '2');
 
+DELETE FROM `ingrid_provider` WHERE `id` =113;
+DELETE FROM `ingrid_provider` WHERE `id` =114;
+INSERT INTO `ingrid_provider` VALUES (137, 'rp_luwg', 'Landesamt für Umwelt, Wasserwirtschaft und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luwg.rlp.de/', 4, 12);
+INSERT INTO `ingrid_provider` VALUES (138, 'rp_lua', 'Landesuntersuchungsamt Rheinland-Pfalz', 'http://www.lua.rlp.de/', 5, 12);
+
+UPDATE `ingrid_provider` SET `sortkey` = 1 WHERE `id` =112;
+UPDATE `ingrid_provider` SET `sortkey` = 2 WHERE `id` =115;
+UPDATE `ingrid_provider` SET `sortkey` = 3 WHERE `id` =116;
+UPDATE `ingrid_provider` SET `sortkey` = 4 WHERE `id` =137;
+UPDATE `ingrid_provider` SET `sortkey` = 5 WHERE `id` =138;
