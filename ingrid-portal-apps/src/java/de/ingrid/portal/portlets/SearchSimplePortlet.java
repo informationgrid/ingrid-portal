@@ -152,6 +152,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // displayed. BUT WE REMOVE THE INGRID QUERY from state -> leads to empty result portlet,
         // empty similar portlet etc.
         String queryInRequest = request.getParameter(Settings.PARAM_QUERY_STRING);
+        
+        // get queryString extension from request
+        String queryExtInRequest = request.getParameter(Settings.PARAM_QUERY_STRING_EXT);
+        if (queryExtInRequest != null) {
+            queryInRequest = queryInRequest.concat(" ").concat(queryExtInRequest);
+        }
+        
         if (!SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_QUERY_STRING, queryInRequest)) {
             SearchState.resetSearchStateObject(request, Settings.MSG_QUERY);
         }

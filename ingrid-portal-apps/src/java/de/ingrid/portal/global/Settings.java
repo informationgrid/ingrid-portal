@@ -343,6 +343,8 @@ public class Settings {
 
     public final static String PARAM_QUERY_STRING = "q";
 
+    public static final String PARAM_QUERY_STRING_EXT = "q_ext";
+    
     public final static String PARAM_STARTHIT_RANKED = "rstart";
 
     public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
