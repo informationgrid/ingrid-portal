@@ -179,10 +179,11 @@
 					#end	
 				#end	
 				#if($myAddress.get("t02_address.descr") && $myAddress.get("t02_address.descr") != "")$myAddress.get("t02_address.descr")<br/>#end
-				#if($myAddress.get("t02_address.postbox") && $myAddress.get("t02_address.postbox") != "")
+				#if($tool.hasContent($myAddress.get("t02_address.postbox")))
 					$MESSAGES.getString("postbox_label") $myAddress.get("t02_address.postbox")<br/>
 					#if($myAddress.get("t02_address.postbox_pc"))#if($myAddress.get("t02_address.state_id"))$myAddress.get("t02_address.state_id")-#end$myAddress.get("t02_address.postbox_pc") $myAddress.get("city")<br/><br/>#end 
-				#else
+				#end	
+				#if($tool.hasContent($myAddress.get("street")))
     				#if($myAddress.get("street"))$myAddress.get("street")<br/>#end
     				#if($myAddress.get("t02_address.state_id"))$myAddress.get("t02_address.state_id")-#end
     				#if($myAddress.get("zip"))$myAddress.get("zip")#end
