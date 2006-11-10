@@ -77,3 +77,41 @@ function clearUser() {
 function clearPasswd() {
     document.getElementById("passwd").value = "";
 }
+
+
+function adaptProviderNodes(partnerElementName, formName) {
+  var partnerIdent = document.forms[formName].elements[partnerElementName].id;
+  if (partnerIdent == "bund") {
+    partnerIdent = "bu";
+  }
+  var checked = document.forms[formName].elements[partnerElementName].checked;
+  for (i=0; i<document.forms[formName].elements.length; i++) {
+    if (document.forms[formName].elements[i].id.indexOf(partnerIdent+'_') == 0) {
+      document.forms[formName].elements[i].checked = checked;
+    }
+  }
+}
+
+function adaptPartnerNode(providerElementName, formName) {
+  var partnerIdent = document.forms[formName].elements[providerElementName].id;
+  partnerIdent = partnerIdent.substring(0, partnerIdent.indexOf('_'));
+  var checked = document.forms[formName].elements[providerElementName].checked;
+  var checkPartner = false;
+  if (!checked) {
+	  for (i=0; i<document.forms[formName].elements.length; i++) {
+	    if (document.forms[formName].elements[i].id.indexOf(partnerIdent+'_') == 0) {
+	      if (document.forms[formName].elements[i].checked) {
+	      	checkPartner = true;
+	      	break;
+	      }
+	    }
+	  }
+  } else {
+      checkPartner = true;
+  }
+  if (partnerIdent == "bu") {
+    partnerIdent = "bund";
+  }
+  document.forms[formName].elements["chk_"+partnerIdent].checked = checkPartner;
+}
+
