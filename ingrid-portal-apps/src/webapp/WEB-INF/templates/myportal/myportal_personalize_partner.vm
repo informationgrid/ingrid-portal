@@ -12,12 +12,12 @@
     	#if($partnerNode.isOpen())
     		$action.setParameter('action','doClosePartner')
     		<p>
-    			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox"#if($partnerNode.checked) checked="checked"#end /><label for="$partnerNode.id">$partnerNode.name</label>
+    			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox"#if($partnerNode.checked) checked="checked"#end onclick="javascript:adaptProviderNodes('chk_$partnerNode.id', 'partner')" /><label for="$partnerNode.id">$partnerNode.name</label>
             </p>
     		#foreach($providerNode in $partnerNode.getChildren())
     			$action.setParameter('id',"$providerNode.id")		
                 <p style="margin-left:4.5em">
-                  <input id="$providerNode.id" name="chk_$providerNode.id" type="checkbox"#if($providerNode.checked) checked="checked"#end /><label for="$providerNode.id">$providerNode.name</label>
+                  <input id="$providerNode.id" name="chk_$providerNode.id" type="checkbox"#if($providerNode.checked) checked="checked"#end onclick="javascript:adaptPartnerNode('chk_$providerNode.id', 'partner')" /><label for="$providerNode.id">$providerNode.name</label>
                 </p>
     		#end
     	#else

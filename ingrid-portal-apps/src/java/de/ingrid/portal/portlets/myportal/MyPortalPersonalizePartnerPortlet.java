@@ -55,13 +55,14 @@ public class MyPortalPersonalizePartnerPortlet extends GenericVelocityPortlet {
                 IngridPersistencePrefs.SEARCH_PARTNER);
 
         if (partnerStr != null) {
-        
+
             PortletSession session = request.getPortletSession();
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
             Iterator it = partnerRoot.getChildren().iterator();
             while (it.hasNext()) {
                 DisplayTreeNode partnerNode = (DisplayTreeNode) it.next();
-                if (partnerStr.indexOf(Settings.QFIELD_PARTNER.concat(":").concat(partnerNode.getId())) != -1) {
+                if (partnerStr.indexOf(Settings.QFIELD_PARTNER.concat(":").concat(partnerNode.getId())) != -1
+                        || partnerNode.get("checked") != null) {
                     partnerNode.put("checked", "true");
                 } else {
                     partnerNode.remove("checked");
@@ -100,6 +101,13 @@ public class MyPortalPersonalizePartnerPortlet extends GenericVelocityPortlet {
             if (partnerRoot != null) {
                 DisplayTreeNode node = partnerRoot.getChild(request.getParameter("id"));
                 node.setOpen(true);
+                if (node.get("checked") != null) {
+                    Iterator it = node.getChildren().iterator();
+                    while (it.hasNext()) {
+                        DisplayTreeNode child = (DisplayTreeNode) it.next();
+                        child.put("checked", "true");
+                    }
+                }
             }
         } else if (action.equalsIgnoreCase("doClosePartner")) {
             DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");

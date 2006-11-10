@@ -59,6 +59,7 @@ public class UtilsSearch {
 
     /**
      * Generate PageNavigation data for rendering
+     * 
      * @param startHit
      * @param hitsPerPage
      * @param numberOfHits
@@ -121,12 +122,14 @@ public class UtilsSearch {
 
     /**
      * Transfer commonly used detail parameters from detail object to hitobject.
+     * 
      * @param hit
      * @param detail
      */
     public static void transferHitDetails(IngridHit result, IngridHitDetail detail) {
         try {
-            // also cuts title: maximum length = 2 Lines, length of first line is shorter because of icon !
+            // also cuts title: maximum length = 2 Lines, length of first line
+            // is shorter because of icon !
             int ICON_LENGTH = 15;
             result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(), 2
                     * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH
@@ -179,6 +182,7 @@ public class UtilsSearch {
 
     /**
      * Transfer commonly used plug parameters from PlugDescription to hitobject.
+     * 
      * @param result
      * @param plugDescr
      */
@@ -198,10 +202,11 @@ public class UtilsSearch {
     }
 
     /**
-     * Returns all values stored with the passed key and returns them as one String (concatenated with ", ").
-     * If no values are stored an emty string is returned !).
-     * NOTICE: Also returns Single Values CORRECTLY ! FURTHER MAPS idValues to correct "names", e.g. partnerId to
-     * partnerName.
+     * Returns all values stored with the passed key and returns them as one
+     * String (concatenated with ", "). If no values are stored an emty string
+     * is returned !). NOTICE: Also returns Single Values CORRECTLY ! FURTHER
+     * MAPS idValues to correct "names", e.g. partnerId to partnerName.
+     * 
      * @param detail
      * @param key
      * @return
@@ -211,8 +216,10 @@ public class UtilsSearch {
     }
 
     /**
-     * The same as getDetailValue(detail, key), but here the result is mapped with the passed resource bundle.
-     * Pass null for the resource bundle, if no resource mapping should occur.
+     * The same as getDetailValue(detail, key), but here the result is mapped
+     * with the passed resource bundle. Pass null for the resource bundle, if no
+     * resource mapping should occur.
+     * 
      * @param detail
      * @param key
      * @param resources
@@ -223,8 +230,9 @@ public class UtilsSearch {
     }
 
     /**
-     * Get raw detail value with given key, meaning no Mapping occurs ! (same as getDetailValue() but
-     * without mapping)
+     * Get raw detail value with given key, meaning no Mapping occurs ! (same as
+     * getDetailValue() but without mapping)
+     * 
      * @param detail
      * @param key
      * @return
@@ -235,6 +243,7 @@ public class UtilsSearch {
 
     /**
      * Private method handling all Detail Fetching (Mapping)
+     * 
      * @param detail
      * @param key
      * @param resources
@@ -285,9 +294,10 @@ public class UtilsSearch {
     }
 
     /**
-     * Map the given value to a "real" value, e.g. map partner id to partner name.
-     * The passed key determines what kind of id the passed value is (this is the
-     * key with which the value was read from result/detail)
+     * Map the given value to a "real" value, e.g. map partner id to partner
+     * name. The passed key determines what kind of id the passed value is (this
+     * is the key with which the value was read from result/detail)
+     * 
      * @param resultKey
      * @param resultValue
      * @return
@@ -308,9 +318,10 @@ public class UtilsSearch {
     }
 
     /**
-     * Get all terms in Query. NOTICE: If multiple TermQuerys contain
-     * the same term, every TermQuery is returned (may differ in "required", "prohibited").
-     * To remove "double" terms use removeDoubleTerms(...).
+     * Get all terms in Query. NOTICE: If multiple TermQuerys contain the same
+     * term, every TermQuery is returned (may differ in "required",
+     * "prohibited"). To remove "double" terms use removeDoubleTerms(...).
+     * 
      * @param q
      * @return
      */
@@ -332,6 +343,7 @@ public class UtilsSearch {
 
     /**
      * Remove the Terms which contain the same term String !
+     * 
      * @param terms
      * @return
      */
@@ -472,22 +484,16 @@ public class UtilsSearch {
 
         return qStr;
 
-        /*        
-         StringBuffer qStr = new StringBuffer();
-         qStr.append(query);
-         qStr.append(", ");
-
-         FieldQuery[] fields = query.getDataTypes();
-         for (int i = 0; i < fields.length; i++) {
-         qStr.append(" ");
-         qStr.append(fields[i]);
-         qStr.append("/required:");
-         qStr.append(fields[i].isRequred());
-         qStr.append("/prohibited:");
-         qStr.append(fields[i].isProhibited());
-         }
-
-         return qStr.toString();
+        /*
+         * StringBuffer qStr = new StringBuffer(); qStr.append(query);
+         * qStr.append(", ");
+         * 
+         * FieldQuery[] fields = query.getDataTypes(); for (int i = 0; i <
+         * fields.length; i++) { qStr.append(" "); qStr.append(fields[i]);
+         * qStr.append("/required:"); qStr.append(fields[i].isRequred());
+         * qStr.append("/prohibited:"); qStr.append(fields[i].isProhibited()); }
+         * 
+         * return qStr.toString();
          */
     }
 
@@ -530,11 +536,11 @@ public class UtilsSearch {
     }
 
     /**
-     * Check whether query contains a field of the given name.
-     * Ignores whether it is in positive or negative list !
-     * NOTICE:
-     * - only FIELD QUERIES and direct map keys are checked in query and all clause queries !
-     * - comparison is done case insensitive.
+     * Check whether query contains a field of the given name. Ignores whether
+     * it is in positive or negative list ! NOTICE: - only FIELD QUERIES and
+     * direct map keys are checked in query and all clause queries ! -
+     * comparison is done case insensitive.
+     * 
      * @param query
      * @param fieldName
      * @return True if the field was found, false if not.
@@ -557,14 +563,16 @@ public class UtilsSearch {
 
     /**
      * Check whether query contains a field of the given name and a value.
-     * Ignores whether it is in positive or negative list !
-     * NOTICE:
-     * - only FIELD QUERIES and direct map keys are checked in query and all clause queries !
-     * - comparison is done case insensitive.
+     * Ignores whether it is in positive or negative list ! NOTICE: - only FIELD
+     * QUERIES and direct map keys are checked in query and all clause queries ! -
+     * comparison is done case insensitive.
      * 
-     * @param query The query.
-     * @param fieldName The field name.
-     * @param value The field's value
+     * @param query
+     *            The query.
+     * @param fieldName
+     *            The field name.
+     * @param value
+     *            The field's value
      * @return True if the field,value was found, false if not.
      */
     public static boolean containsField(IngridQuery query, String fieldName, String value) {
@@ -585,15 +593,16 @@ public class UtilsSearch {
     }
 
     /**
-     * Adapt basic datatypes in query dependent from selected datatype in UserInterface
-     * (the ones above the Simple Search Input).
+     * Adapt basic datatypes in query dependent from selected datatype in
+     * UserInterface (the ones above the Simple Search Input).
+     * 
      * @param query
      * @param selectedDS
      */
     public static void processBasicDataTypes(IngridQuery query, String selectedDS) {
 
         // remove not valid data sources from query
-        //        removeBasicDataTypes(query);
+        // removeBasicDataTypes(query);
         if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
             query
                     .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
@@ -611,6 +620,7 @@ public class UtilsSearch {
 
     /**
      * Add language to query
+     * 
      * @param query
      * @param myLocale
      */
@@ -628,6 +638,7 @@ public class UtilsSearch {
 
     /**
      * Add provider(s) to query
+     * 
      * @param query
      * @param partners
      */
@@ -643,6 +654,7 @@ public class UtilsSearch {
 
     /**
      * Add partner(s) to query
+     * 
      * @param query
      * @param partners
      */
@@ -663,6 +675,7 @@ public class UtilsSearch {
 
     /**
      * Add grouping to query
+     * 
      * @param query
      * @param grouping
      */
@@ -678,68 +691,57 @@ public class UtilsSearch {
 
     /**
      * Remove the passed data type from the query
+     * 
      * @param query
      */
     /*
-     // TODO: remove this helper method if functionality is in IngridQuery
-     public static boolean removeDataType(IngridQuery query, String datatypeValue) {
-     boolean removed = false;
-     FieldQuery[] dataTypesInQuery = query.getDataTypes();
-     if (dataTypesInQuery.length == 0) {
-     return removed;
-     }
-     
-     ArrayList processedDataTypes = new ArrayList(Arrays.asList(dataTypesInQuery));
-     for (Iterator iter = processedDataTypes.iterator(); iter.hasNext();) {
-     FieldQuery field = (FieldQuery) iter.next();
-     String value = field.getFieldValue();
-     if (value != null && value.equals(datatypeValue)) {
-     iter.remove();
-     removed = true;
-     }
-     }
-     // remove all old datatypes and set our new ones
-     query.remove(Settings.QFIELD_DATATYPE);
-     for (int i = 0; i < processedDataTypes.size(); i++) {
-     query.addField((FieldQuery) processedDataTypes.get(i));
-     }
-     
-     return removed;
-     }
+     * // TODO: remove this helper method if functionality is in IngridQuery
+     * public static boolean removeDataType(IngridQuery query, String
+     * datatypeValue) { boolean removed = false; FieldQuery[] dataTypesInQuery =
+     * query.getDataTypes(); if (dataTypesInQuery.length == 0) { return removed; }
+     * 
+     * ArrayList processedDataTypes = new
+     * ArrayList(Arrays.asList(dataTypesInQuery)); for (Iterator iter =
+     * processedDataTypes.iterator(); iter.hasNext();) { FieldQuery field =
+     * (FieldQuery) iter.next(); String value = field.getFieldValue(); if (value !=
+     * null && value.equals(datatypeValue)) { iter.remove(); removed = true; } } //
+     * remove all old datatypes and set our new ones
+     * query.remove(Settings.QFIELD_DATATYPE); for (int i = 0; i <
+     * processedDataTypes.size(); i++) { query.addField((FieldQuery)
+     * processedDataTypes.get(i)); }
+     * 
+     * return removed; }
      */
 
     /**
-     * Remove the Basic DataTypes from the query (the ones above the Simple Search Input) to obtain a "clean" query
+     * Remove the Basic DataTypes from the query (the ones above the Simple
+     * Search Input) to obtain a "clean" query
+     * 
      * @param query
      */
-    /*    
-     // TODO: remove this helper method if functionality is in IngridQuery
-     public static void removeBasicDataTypes(IngridQuery query) {
-     FieldQuery[] dataTypesInQuery = query.getDataTypes();
-     if (dataTypesInQuery.length == 0) {
-     return;
-     }
-     
-     ArrayList processedDataTypes = new ArrayList(Arrays.asList(dataTypesInQuery));
-     for (Iterator iter = processedDataTypes.iterator(); iter.hasNext();) {
-     FieldQuery field = (FieldQuery) iter.next();
-     String value = field.getFieldValue();
-     if (value == null || value.equals(Settings.QVALUE_DATATYPE_AREA_ENVINFO)
-     || value.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS)
-     || value.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH)) {
-     iter.remove();
-     }
-     }
-     // remove all old datatypes and set our new ones
-     query.remove(Settings.QFIELD_DATATYPE);
-     for (int i = 0; i < processedDataTypes.size(); i++) {
-     query.addField((FieldQuery) processedDataTypes.get(i));
-     }
-     }
+    /*
+     * // TODO: remove this helper method if functionality is in IngridQuery
+     * public static void removeBasicDataTypes(IngridQuery query) { FieldQuery[]
+     * dataTypesInQuery = query.getDataTypes(); if (dataTypesInQuery.length ==
+     * 0) { return; }
+     * 
+     * ArrayList processedDataTypes = new
+     * ArrayList(Arrays.asList(dataTypesInQuery)); for (Iterator iter =
+     * processedDataTypes.iterator(); iter.hasNext();) { FieldQuery field =
+     * (FieldQuery) iter.next(); String value = field.getFieldValue(); if (value ==
+     * null || value.equals(Settings.QVALUE_DATATYPE_AREA_ENVINFO) ||
+     * value.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS) ||
+     * value.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH)) { iter.remove(); } } //
+     * remove all old datatypes and set our new ones
+     * query.remove(Settings.QFIELD_DATATYPE); for (int i = 0; i <
+     * processedDataTypes.size(); i++) { query.addField((FieldQuery)
+     * processedDataTypes.get(i)); } }
      */
 
     /**
-     * Encapsulates common doView functionality for all partner selection portlets 
+     * Encapsulates common doView functionality for all partner selection
+     * portlets
+     * 
      * @param request
      * @param context
      */
@@ -755,7 +757,8 @@ public class UtilsSearch {
     }
 
     /**
-     * Encapsulates common processAction functionality for all term-adding portlets.
+     * Encapsulates common processAction functionality for all term-adding
+     * portlets.
      * 
      * @param request
      * @param response
@@ -783,7 +786,9 @@ public class UtilsSearch {
     }
 
     /**
-     * Encapsulates common processAction functionality for all partner selection portlets 
+     * Encapsulates common processAction functionality for all partner selection
+     * portlets
+     * 
      * @param request
      * @param context
      */
@@ -831,6 +836,9 @@ public class UtilsSearch {
             chk = request.getParameter("chk_".concat(partnerNode.getId()));
             if (chk != null && chk.equals("on")) {
                 partnerHash.put("partner:".concat(partnerNode.getId()), "1");
+                partnerNode.put("checked", "true");
+            } else {
+                partnerNode.remove("checked");
             }
             if (partnerNode.isOpen()) {
                 Iterator it2 = partnerNode.getChildren().iterator();
@@ -838,8 +846,11 @@ public class UtilsSearch {
                     DisplayTreeNode providerNode = (DisplayTreeNode) it2.next();
                     chk = request.getParameter("chk_".concat(providerNode.getId()));
                     if (chk != null && chk.equals("on")) {
+                        providerNode.put("checked", "true");
                         providerHash.put("provider:".concat(providerNode.getId()), "1");
                         partnerHash.put("partner:".concat(partnerNode.getId()), "1");
+                    } else {
+                        providerNode.remove("checked");
                     }
                 }
             }
@@ -879,7 +890,8 @@ public class UtilsSearch {
     /**
      * Add a querystring to the session querystring history.
      * 
-     * @param request The request.
+     * @param request
+     *            The request.
      */
     public static void addQueryToHistory(RenderRequest request) {
         String action = request.getParameter(Settings.PARAM_ACTION);
@@ -962,7 +974,8 @@ public class UtilsSearch {
         String subTerm = "";
 
         // clean up query string
-        // ALSO REMOVE Catalogues from other tab, so we get a query that makes sense !
+        // ALSO REMOVE Catalogues from other tab, so we get a query that makes
+        // sense !
         String resultingQueryStr = UtilsSearch.removeSearchSources(queryString);
         resultingQueryStr = UtilsSearch.removeSearchCatalogues(resultingQueryStr);
 
@@ -1039,8 +1052,10 @@ public class UtilsSearch {
     /**
      * Get all fields with a specific field name.
      * 
-     * @param q The query.
-     * @param fieldName The fieldname.
+     * @param q
+     *            The query.
+     * @param fieldName
+     *            The fieldname.
      * @return The Array of resulting fields.
      */
     public static FieldQuery[] getField(IngridQuery q, String fieldName) {
@@ -1054,23 +1069,27 @@ public class UtilsSearch {
         return (FieldQuery[]) resultFields.toArray(new FieldQuery[resultFields.size()]);
     }
 
-    
     /**
-     * Returns the WMS URL to cal the WMS Server. It adds necessary data such as session id, locale, javascript enabled.
-     * It adds personalized WMS URLs and allows to inject a custom WMS url. 
+     * Returns the WMS URL to cal the WMS Server. It adds necessary data such as
+     * session id, locale, javascript enabled. It adds personalized WMS URLs and
+     * allows to inject a custom WMS url.
      * 
-     * @param request The PortletRequest.
-     * @param wmsServiceUrl The additional to inject WMS Service URL
-     * @param isViewer True to generate a URL to the WMS Viewer Template, alse for the WMS Search template.
+     * @param request
+     *            The PortletRequest.
+     * @param wmsServiceUrl
+     *            The additional to inject WMS Service URL
+     * @param isViewer
+     *            True to generate a URL to the WMS Viewer Template, alse for
+     *            the WMS Search template.
      * @return
      */
     public static String getWMSURL(PortletRequest request, String wmsServiceUrl, boolean isViewer) {
         List wmsServices = null;
-        
+
         WMSInterface service = WMSInterfaceImpl.getInstance();
         boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
         PortletSession session = request.getPortletSession();
-        
+
         // check for personalizes wms services
         if (Utils.getLoggedOn(request)) {
             Principal principal = request.getUserPrincipal();
@@ -1083,19 +1102,19 @@ public class UtilsSearch {
         if (wmsServices == null) {
             wmsServices = new ArrayList();
         }
-        
+
         // add wms service from request parameters, if exist
         if (wmsServiceUrl != null && wmsServiceUrl.length() > 0) {
             wmsServices.add(new WMSServiceDescriptor("", wmsServiceUrl));
         }
-        
+
         // create the wms url
         if (wmsServices.size() > 0) {
-            return service.getWMSAddedServiceURL(wmsServices, session.getId(),
-                    hasJavaScript, request.getLocale(), isViewer);
+            return service.getWMSAddedServiceURL(wmsServices, session.getId(), hasJavaScript, request.getLocale(),
+                    isViewer);
         } else {
             return service.getWMSViewerURL(session.getId(), hasJavaScript, request.getLocale());
         }
     }
-    
+
 }
