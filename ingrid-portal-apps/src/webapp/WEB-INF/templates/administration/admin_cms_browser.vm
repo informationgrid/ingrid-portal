@@ -5,7 +5,7 @@
 	<p>
 		<table class="border fullwidth">
 #set ($colNames = ["id", "itemKey", "itemDescription"])
-#set ($colTitles = ["Id", "Key", "Beschreibung"])
+#set ($colTitles = ["Id", "Schluessel", "Beschreibung"])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.id)

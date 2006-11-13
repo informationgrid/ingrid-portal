@@ -14,7 +14,7 @@
 	#renderDBEditId($mode $dbEntity.id)
 	<div class="line"><hr /></div>
     <p>
-        <label class="float_left col2left_incr" for="item_key">#displayFieldLabel("item_key" "Key")*</label>
+        <label class="float_left col2left_incr" for="item_key">#displayFieldLabel("item_key" "Schluessel")*</label>
 		<input class="float_left inputstyletext contentInput" type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey"/>
        	<p class="clearer"></p>
     </p>

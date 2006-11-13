@@ -179,7 +179,7 @@ $action.setParameter("id", "$rowId")
 		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
 	#end
 	#if($button == "doRefresh")
-    	<input class="btn float_right" type="submit" name="doRefresh" value="Refresh" />
+    	<input class="btn float_right" type="submit" name="doRefresh" value="Neu Laden" />
     	<span class="float_right">&nbsp;</span>
 	#end
 	#if($button == "doNew")
@@ -227,6 +227,6 @@ $action.setParameter("id", "$rowId")
 		#set ($butAction = 'doSave')
 	#end
 	<input class="btn" type="submit" name="$butAction" value="Speichern" />
-	<input class="btn" type="submit" name="doCancel" value="Abbrechen" />
+	<input class="btn" type="submit" name="doCancel" value="Zurück zur Übersicht" />
 </div>
 #end
