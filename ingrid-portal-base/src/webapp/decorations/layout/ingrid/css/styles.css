@@ -93,6 +93,7 @@ div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); backgrou
 div.motiv_umweltchronik { background-image:url(../images/01_motiv_umweltchronik.gif); background-repeat:no-repeat; }
 div.motiv_topnavi { background-image:url(../images/01_motiv_topnavi.gif); background-repeat:no-repeat; }
 div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.gif); background-repeat:no-repeat; }
+div.motiv_admin { background-image:url(../images/01_motiv_admin.gif); background-repeat:no-repeat; }
 
 div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 div.en_motiv_start { background-image:url(../images/en/en_01_motiv_start.gif); background-repeat:no-repeat; }
@@ -104,6 +105,7 @@ div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_karten.gif);
 div.en_motiv_umweltchronik { background-image:url(../images/en/en_01_motiv_umweltchronik.gif); background-repeat:no-repeat; }
 div.en_motiv_topnavi { background-image:url(../images/en/en_01_motiv_topnavi.gif); background-repeat:no-repeat; }
 div.en_motiv_hilfe { background-image:url(../images/en/en_01_motiv_hilfe.gif); background-repeat:no-repeat; }
+div.en_motiv_admin { background-image:url(../images/en/en_01_motiv_admin.gif); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
