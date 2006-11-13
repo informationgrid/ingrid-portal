@@ -1112,8 +1112,10 @@ public class UtilsSearch {
         if (wmsServices.size() > 0) {
             return service.getWMSAddedServiceURL(wmsServices, session.getId(), hasJavaScript, request.getLocale(),
                     isViewer);
-        } else {
+        } else if (isViewer) {
             return service.getWMSViewerURL(session.getId(), hasJavaScript, request.getLocale());
+        } else {
+            return service.getWMSSearchURL(session.getId(), hasJavaScript, request.getLocale());
         }
     }
 
