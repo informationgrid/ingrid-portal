@@ -1,6 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody">
+	<p>Klicken Sie auf einen Benutzer um dessen Einstellungen zu ändern.</p>
 #renderDBBrowserNavigation($browser)
 	<p>
 		<table class="border fullwidth">

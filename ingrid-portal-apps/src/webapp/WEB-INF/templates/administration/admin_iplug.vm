@@ -41,7 +41,7 @@
                       <a target="_new" href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
 					#else
 					  $plugNode.name (kein Administrationsinterface angegeben!)
-					#end	
+					#end
                     </p>
         		#end
         	#else

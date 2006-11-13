@@ -80,7 +80,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         Permissions authUserpermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                 roleManager);
         if (treeRoot == null) {
-            treeRoot = getPartnerProviderIPlugs(authUserpermissions);
+            treeRoot = getPartnerProviderIPlugs(authUserpermissions, messages);
             session.setAttribute("treeRoot", treeRoot);
         }
 
@@ -170,7 +170,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      * @param principal
      * @return
      */
-    private DisplayTreeNode getPartnerProviderIPlugs(Permissions permissions) {
+    private DisplayTreeNode getPartnerProviderIPlugs(Permissions permissions, IngridResourceBundle messages) {
         PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
@@ -188,7 +188,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                     for (int k = 0; k < plugs.length; k++) {
                         PlugDescription plug = plugs[k];
                         // do not include search engine iplugs
-                        if (!plug.getPlugId().endsWith("-se")) {
+                        if (!plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
                             String[] plugProviders = plug.getProviders();
                             DisplayTreeNode plugNode = null;
                             for (int l = 0; l < plugProviders.length; l++) {
@@ -197,6 +197,11 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                                 if (plugProviders[l].equalsIgnoreCase(providerId)
                                         && providerNode.getChild(plug.getPlugId()) == null) {
                                     plugNode = new DisplayTreeNode(plug.getPlugId(), plug.getDataSourceName(), false);
+                                    if (plugNode.getId().endsWith("_addr")) {
+                                        plugNode.setName(plugNode.getName().concat(" ").concat(messages.getString("admin.iplug.name.postfix.udk.address")));
+                                    } else if (plugNode.getId().indexOf("udk-db") > -1 && !plugNode.getId().endsWith("_addr")) {
+                                        plugNode.setName(plugNode.getName().concat(" ").concat(messages.getString("admin.iplug.name.postfix.udk.object")));
+                                    }
                                     plugNode.put("iplug", plug);
                                     plugNode.setType(DisplayTreeNode.GENERIC);
                                     plugNode.setParent(providerNode);
