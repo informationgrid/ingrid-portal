@@ -37,9 +37,6 @@ public class QueryResultPostProcessor {
             }
             IngridHit[] hitArray = hits.getHits();
 
-            // TODO: Why not fetch all Details at Once like
-            // IngridHitDetail[] details = ibus.getDetails(hitArray, query, null); ?????????
-
             String tmpString = null;
             IngridHit hit = null;
             IngridHitDetail detail = null;
