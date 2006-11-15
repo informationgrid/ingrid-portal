@@ -30,6 +30,7 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeFactory;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -116,6 +117,8 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                     query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
                     query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
                     query.put(Settings.QFIELD_DATE_TO, "3000-01-01");
+                    // add language to query
+                    UtilsSearch.processLanguage(query, request.getLocale());
                     // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
                     // search in SNS
                     IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
