@@ -110,3 +110,5 @@ UPDATE `ingrid_provider` SET `sortkey` = 2 WHERE `id` =115;
 UPDATE `ingrid_provider` SET `sortkey` = 3 WHERE `id` =116;
 UPDATE `ingrid_provider` SET `sortkey` = 4 WHERE `id` =137;
 UPDATE `ingrid_provider` SET `sortkey` = 5 WHERE `id` =138;
+
+ALTER TABLE `ingrid_anniversary` ADD `language` VARCHAR( 5 ) DEFAULT 'de';
