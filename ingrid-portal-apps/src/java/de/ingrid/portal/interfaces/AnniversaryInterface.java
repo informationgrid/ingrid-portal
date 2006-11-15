@@ -22,8 +22,9 @@ public interface AnniversaryInterface {
      *  3.) year
      * 
      * @param date  The date to search anniveraries for.
+     * @param lang  The language of the anniversary content.
      * @return The DetailedTopic Array representing the anniversaries.
      */
-    IngridHitDetail[] getAnniversaries(java.util.Date date);
+    IngridHitDetail[] getAnniversaries(java.util.Date date, String lang);
 
 }

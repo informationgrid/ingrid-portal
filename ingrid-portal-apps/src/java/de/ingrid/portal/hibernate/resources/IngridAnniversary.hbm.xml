@@ -19,5 +19,6 @@
     	<property name="administrativeId" column="administrative_id" type="java.lang.String"/>
     	<property name="fetched" type="java.sql.Date"/>
     	<property name="fetchedFor" column="fetched_for" type="java.sql.Date"/>
+    	<property name="language" type="java.lang.String"/>
   </class>
 </hibernate-mapping>

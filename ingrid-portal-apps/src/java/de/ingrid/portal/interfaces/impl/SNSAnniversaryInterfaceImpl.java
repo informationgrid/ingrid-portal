@@ -52,7 +52,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
     /**
      * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getAnniversary(java.sql.Date)
      */
-    public IngridHitDetail[] getAnniversaries(Date d) {
+    public IngridHitDetail[] getAnniversaries(Date d, String lang) {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String dateStr = df.format(d);
@@ -63,6 +63,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
         try {
             query = QueryStringParser.parse(dateStr);
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, IDataTypes.SNS));
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, lang));
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();

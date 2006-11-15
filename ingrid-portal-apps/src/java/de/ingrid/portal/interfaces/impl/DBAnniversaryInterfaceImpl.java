@@ -49,7 +49,7 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
     /**
      * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getAnniversary(java.sql.Date)
      */
-    public IngridHitDetail[] getAnniversaries(Date d) {
+    public IngridHitDetail[] getAnniversaries(Date d, String lang) {
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
@@ -75,6 +75,7 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
                     .add(Restrictions.eq("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH))))
                     .add(Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1)))
                     .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                    .add(Restrictions.eq("language", lang))
                     .list();
             tx.commit();
             

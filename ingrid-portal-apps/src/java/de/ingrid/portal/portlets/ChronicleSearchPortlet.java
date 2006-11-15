@@ -168,7 +168,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // searching Tschernobyl seems to be fast ;)
             String topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
             if (topicId != null) {
-                inputTerm = "Tschernobyl";
+                inputTerm = "Greenpeace";
             }
 
             try {

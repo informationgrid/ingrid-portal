@@ -26,7 +26,7 @@ import de.ingrid.utils.IngridHitDetail;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class AnniversaryFetcherJob implements Job {
@@ -37,6 +37,13 @@ public class AnniversaryFetcherJob implements Job {
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
+
+        insertIntoDB("de");
+        insertIntoDB("en");
+
+    }
+
+    private void insertIntoDB(String lang) throws JobExecutionException {
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
@@ -58,17 +65,18 @@ public class AnniversaryFetcherJob implements Job {
             queryDateTo.set(Calendar.MINUTE, 59);
             queryDateTo.set(Calendar.SECOND, 59);
             queryDateTo.set(Calendar.MILLISECOND, 0);
-
-            IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(queryDate);
+            IngridHitDetail[] details = SNSAnniversaryInterfaceImpl.getInstance().getAnniversaries(queryDate, lang);
             if (details.length > 0) {
 
                 for (int i = 0; i < details.length; i++) {
                     if ((details[i] instanceof DetailedTopic) && details[i].size() > 0) {
                         DetailedTopic detail = (DetailedTopic) details[i];
+                        log.debug("Anniversary gefunden! (topic:'" + detail.getTopicID() + "', lang:" + lang + ")");
                         // check if theis item already exists
                         tx = session.beginTransaction();
                         List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
                                 Restrictions.eq("topicId", detail.getTopicID())).add(
+                                Restrictions.eq("language", lang)).add(
                                 Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
                                 .list();
                         tx.commit();
@@ -95,6 +103,7 @@ public class AnniversaryFetcherJob implements Job {
                             anni.setAdministrativeId(detail.getAdministrativeID());
                             anni.setFetched(new Date());
                             anni.setFetchedFor(queryDate);
+                            anni.setLanguage(lang);
 
                             tx = session.beginTransaction();
                             session.save(anni);

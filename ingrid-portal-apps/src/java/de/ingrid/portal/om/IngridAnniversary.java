@@ -19,8 +19,23 @@ public class IngridAnniversary {
     private String administrativeId;
     private Date fetched;
     private Date fetchedFor;
+    private String language;
 
     
+    /**
+     * @return Returns the language.
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * @param language The language to set.
+     */
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public Long getId() {
         return this.id;
     }

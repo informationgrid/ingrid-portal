@@ -42,7 +42,8 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
         response.setTitle(messages.getString(titleKey));
 
         // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
-        IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date());
+        String lang = request.getLocale().getLanguage();
+        IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date(), lang);
 
         HashMap result = new HashMap();
         if (details.length > 0) {
