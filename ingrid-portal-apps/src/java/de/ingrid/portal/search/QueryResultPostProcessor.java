@@ -201,9 +201,9 @@ public class QueryResultPostProcessor {
         String tmpString = null;
 
         try {
+            hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             if (hit.get(Settings.RESULT_KEY_URL) != null) {
                 hit.put(Settings.RESULT_KEY_TYPE, "www-style");
-                hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             } else {
                 hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
             }
