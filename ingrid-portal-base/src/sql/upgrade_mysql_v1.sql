@@ -112,3 +112,5 @@ UPDATE `ingrid_provider` SET `sortkey` = 4 WHERE `id` =137;
 UPDATE `ingrid_provider` SET `sortkey` = 5 WHERE `id` =138;
 
 ALTER TABLE `ingrid_anniversary` ADD `language` VARCHAR( 5 ) DEFAULT 'de';
+
+UPDATE `ingrid_rss_source` SET `url` = 'http://www.mufv.rlp.de/rss/rss_1_20.xml' WHERE `id` =3;
