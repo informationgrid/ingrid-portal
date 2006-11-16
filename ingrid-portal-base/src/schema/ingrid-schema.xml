@@ -103,7 +103,7 @@ limitations under the License.
         <column name="administrative_id" required="false" size="255" type="VARCHAR"/>
         <column name="fetched" required="true" type="TIMESTAMP"/>
         <column name="fetched_for" required="true" type="DATE"/>
-        <column name="language" required="false" size="5" type="VARCHAR"/>
+        <column name="language" required="false" size="5" type="VARCHAR" default="de"/>
     </table>
 
     <table name="groups">
