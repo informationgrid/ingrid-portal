@@ -67,6 +67,7 @@ CREATE TABLE ingrid_cms_item
     item_changed_by VARCHAR(255),
     PRIMARY KEY(id)
 );
+
 ALTER TABLE `ingrid_cms_item` CHANGE `id` `id` MEDIUMINT( 9 ) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `ingrid_cms` (`id`, `item_key`, `item_description`, `item_changed`, `item_changed_by`) VALUES (1, 'portalu.teaser.inform', 'PortalU informiert Text', '2006-09-15 00:00:00', 'admin');
@@ -94,16 +95,14 @@ UPDATE `ingrid_provider` SET `name` = 'Gewerbeaufsicht Baden-Württemberg' WHERE 
 UPDATE `ingrid_rss_source` SET `url` = 'http://www.bfn.de/0502_skripten.100.html' WHERE `id` =4;
 UPDATE `ingrid_provider` SET `name` = 'Landesforsten Rheinland-Pfalz' WHERE `id` =115;
 UPDATE `ingrid_provider` SET `name` = 'Ministerium für Umwelt, Forsten und Verbraucherschutz Rheinland-Pfalz' WHERE `id` =112;
-INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (137, 'rp_luwg', 'Landesamt für Umwelt, Wasserwirtschaft und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luwg.rlp.de/', 6, 12);
-INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (138, 'rp_lua', 'Landesuntersuchungsamt Rheinland-Pfalz', 'http://www.lua.rlp.de/', 7, 12);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (137, 'rp_luwg', 'Landesamt für Umwelt, Wasserwirtschaft und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luwg.rlp.de/', 4, 12);
+INSERT INTO `ingrid_provider` (`id`, `ident`, `name`, `url`, `sortkey`, `sortkey_partner`) VALUES (138, 'rp_lua', 'Landesuntersuchungsamt Rheinland-Pfalz', 'http://www.lua.rlp.de/', 5, 12);
 INSERT INTO `ingrid_provider` ( `id` , `ident` , `name` , `url` , `sortkey` , `sortkey_partner` ) VALUES (139, 'bw_saa', 'SAA Sonderabfallagentur', 'http://www.saa.de/', '12', '2');
 INSERT INTO `ingrid_provider` ( `id` , `ident` , `name` , `url` , `sortkey` , `sortkey_partner` ) VALUES (140, 'bw_rp', 'Regierungspräsidien Baden-Württemberg', 'http://www.rp.baden-wuerttemberg.de/', '13', '2');
 INSERT INTO `ingrid_provider` ( `id` , `ident` , `name` , `url` , `sortkey` , `sortkey_partner` ) VALUES (141, 'bw_rps', 'Regierungspräsidium Stuttgart', 'http://www.landentwicklung-mlr.baden-wuerttemberg.de/', '14', '2');
 
 DELETE FROM `ingrid_provider` WHERE `id` =113;
 DELETE FROM `ingrid_provider` WHERE `id` =114;
-INSERT INTO `ingrid_provider` VALUES (137, 'rp_luwg', 'Landesamt für Umwelt, Wasserwirtschaft und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luwg.rlp.de/', 4, 12);
-INSERT INTO `ingrid_provider` VALUES (138, 'rp_lua', 'Landesuntersuchungsamt Rheinland-Pfalz', 'http://www.lua.rlp.de/', 5, 12);
 
 UPDATE `ingrid_provider` SET `sortkey` = 1 WHERE `id` =112;
 UPDATE `ingrid_provider` SET `sortkey` = 2 WHERE `id` =115;
@@ -111,6 +110,19 @@ UPDATE `ingrid_provider` SET `sortkey` = 3 WHERE `id` =116;
 UPDATE `ingrid_provider` SET `sortkey` = 4 WHERE `id` =137;
 UPDATE `ingrid_provider` SET `sortkey` = 5 WHERE `id` =138;
 
+# comment for local database deployment, because this column will be created from the database definition xml
 ALTER TABLE `ingrid_anniversary` ADD `language` VARCHAR( 5 ) DEFAULT 'de';
 
 UPDATE `ingrid_rss_source` SET `url` = 'http://www.mufv.rlp.de/rss/rss_1_20.xml' WHERE `id` =3;
+
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =3;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =4;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =5;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =50;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =51;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =1110;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =1111;
+UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WHERE `CREDENTIAL_ID` =1112;
+
+# admin-provider can see statistics page
+INSERT INTO `page_constraints_ref` ( `CONSTRAINTS_REF_ID` , `PAGE_ID` , `APPLY_ORDER` , `NAME` ) VALUES ('182', '38', '3', 'admin-provider');
