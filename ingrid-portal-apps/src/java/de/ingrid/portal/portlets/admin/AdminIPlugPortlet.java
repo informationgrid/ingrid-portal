@@ -113,20 +113,11 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                 || permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
                 || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)
                 || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION)) {
-            ArrayList providers = UtilsSecurity.getProvidersFromPermissions(permissions, false);
             for (int i = 0; i < plugs.length; i++) {
                 PlugDescription plug = plugs[i];
                 // do not include search engine iplugs
-                if (plug.getPlugId().endsWith("-se")) {
-                    String[] plugProviders = plug.getProviders();
-                    for (int j = 0; j < plugProviders.length; j++) {
-                        // check for matching provider AND if the iplug is not
-                        // already added
-                        if (providers.contains(plugProviders[j]) && !result.contains(plug)) {
-                            result.add(plug);
-                            break;
-                        }
-                    }
+                if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                    result.add(plug);
                 }
             }
         }
