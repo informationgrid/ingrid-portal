@@ -920,7 +920,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                         TransactionedOperation.ADD_OPERATION));
 
                 // reset parent folder pages cache
-                parent.resetPages(false);
+                if (parent != null) {
+                    parent.resetPages(false);
+                }
 
                 // notify page manager listeners
                 delegator.notifyNewNode(page);
@@ -937,7 +939,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 // parent is holding an out of date copy of
                 // this page that was removed from the cache
                 // before this one was accessed
-                parent.resetPages(false);
+                if (parent != null) {
+                    parent.resetPages(false);
+                }
 
                 // notify page manager listeners
                 delegator.notifyUpdatedNode(page);
@@ -975,7 +979,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 getPersistenceBrokerTemplate().delete(page);
 
                 // reset parent folder pages cache
-                parent.resetPages(false);
+                if (parent != null) {
+                    parent.resetPages(false);
+                }
             } else {
                 // delete page
                 getPersistenceBrokerTemplate().delete(page);
@@ -1036,7 +1042,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                         TransactionedOperation.ADD_OPERATION));
 
                 // reset parent folder folders cache
-                parent.resetFolders(false);
+                if (parent != null) {
+                    parent.resetFolders(false);
+                }
 
                 // notify page manager listeners
                 delegator.notifyNewNode(folder);
@@ -1066,7 +1074,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 // parent is holding an out of date copy of
                 // this folder that was removed from the cache
                 // before this one was accessed
-                parent.resetFolders(false);
+                if (parent != null) {
+                    parent.resetFolders(false);
+                }
 
                 // notify page manager listeners
                 if (newFolder && !folder.getId().equals("0")) {
@@ -1176,7 +1186,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 getPersistenceBrokerTemplate().delete(folder);
 
                 // reset parent folder folders cache
-                parent.resetFolders(false);
+                if (parent != null) {
+                    parent.resetFolders(false);
+                }
             } else {
                 // delete folder: depth recursion
                 getPersistenceBrokerTemplate().delete(folder);
@@ -1286,7 +1298,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                         TransactionedOperation.ADD_OPERATION));
 
                 // reset parent folder links cache
-                parent.resetLinks(false);
+                if (parent != null) {
+                    parent.resetLinks(false);
+                }
 
                 // notify page manager listeners
                 delegator.notifyNewNode(link);
@@ -1303,7 +1317,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 // parent is holding an out of date copy of
                 // this link that was removed from the cache
                 // before this one was accessed
-                parent.resetLinks(false);
+                if (parent != null) {
+                    parent.resetLinks(false);
+                }
 
                 // notify page manager listeners
                 delegator.notifyUpdatedNode(link);
@@ -1338,7 +1354,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 getPersistenceBrokerTemplate().delete(link);
 
                 // reset parent folder links cache
-                parent.resetLinks(false);
+                if (parent != null) {
+                    parent.resetLinks(false);
+                }
             } else {
                 // delete link
                 getPersistenceBrokerTemplate().delete(link);
@@ -1394,7 +1412,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                             TransactionedOperation.ADD_OPERATION));
 
                     // reset parent folder page security cache
-                    parent.resetPageSecurity((PageSecurityImpl) pageSecurity, true);
+                    if (parent != null) {
+                        parent.resetPageSecurity((PageSecurityImpl) pageSecurity, true);
+                    }
                 } catch (Exception e) {
                     throw new FailedToUpdateDocumentException("Parent folder page security exists: " + parentPath);
                 }
@@ -1414,7 +1434,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 // parent is holding an out of date copy of this
                 // page security that was removed from the cache
                 // before this one was accessed
-                parent.resetPageSecurity((PageSecurityImpl) pageSecurity, true);
+                if (parent != null) {
+                    parent.resetPageSecurity((PageSecurityImpl) pageSecurity, true);
+                }
 
                 // notify page manager listeners
                 delegator.notifyUpdatedNode(pageSecurity);
@@ -1452,7 +1474,9 @@ public class DatabasePageManager extends InitablePersistenceBrokerDaoSupport imp
                 getPersistenceBrokerTemplate().delete(pageSecurity);
 
                 // reset parent folder page security cache
-                parent.resetPageSecurity(null, true);
+                if (parent != null) {
+                    parent.resetPageSecurity(null, true);
+                }
             } else {
                 // delete document
                 getPersistenceBrokerTemplate().delete(pageSecurity);
