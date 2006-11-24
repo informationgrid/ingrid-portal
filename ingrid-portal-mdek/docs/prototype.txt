@@ -1,0 +1,88 @@
+Prototypen für verschiedene Testszenarien
+-----------------------------------------
+
+1.) Kommunikation Client <-> Server
+
+- Erstellen einer Baumstruktur aus Testdaten
+- Testdaten liegen auf dem Server vor
+- Testdaten: 1. und 2. Hierarchie eines UDK Testkataloges (Niedersachsen?)
+
+- Wie schnell?
+- Usability?
+
+
+2.) Kommunikation Client <-> Server <-> iBus <-> iPlug <-> UDK-DB
+
+- Erstellen einer Baumstruktur aus Testdaten
+- Testdaten werden direkt aus der Datenbank gezogen
+- Testdaten: 1. und 2. Hierarchie eines UDK Testkataloges (Niedersachsen?)
+
+- Wie schnell?
+- Usability?
+
+
+3.) Oberfläche
+
+- Hauptmenu = jeweils eine neue HTML Seite?
+- Test: Performance (wechsel von Objekt Eingabe zu Objekct Explorer)
+
+- Alternative: Alles Ajax (ggf. isolierte Punkte als HTML Seiten, z.B. Statistik)
+- Problem: Speicherbedarf im Browser, wenn Tree, popup Menus angelegt sind 
+
+4.) Große Daten verwalten
+
+- Aufbau eines realistisch großen Tree Objektes
+- Aufbau von Listen mit realistischen Daten
+- Aufbau von Combobox mit realistischen Daten (Wie schnell ist das Autovervollständigen)
+- Kombination, mehrfaches laden, Ändern von Daten -> Speicherverbrauch des Clients beobachten.
+
+5.) UDK-Explorer
+
+- Tree mit Testdaten vom Server
+- Anzeige Detaildaten
+- "Loading" in Detailansicht implementieren
+- siehe "test_RemotePane.html"
+
+- Wie schnell?
+- Usability
+
+
+6.) UDK Explorer <-> Objekt Eingabe
+
+- Sprung von Objekt Explorer (Tree) in die Objekt Eingabe
+- Evtl. serverseitiger CACHE für 10 sec einrichten? (nur wenn Performance unbefriedigend)
+  Ermöglicht schnelles Laden von Object, nach Voransicht, ohne daß iPlug nochmal angefragt werden muss.
+ 
+
+Beschreibung von Komponenten
+============================
+
+Object Editor
+-------------
+
+- Realisierung nach Mockup
+- Definition von Zonen: 
+  - required (immer sichtbar)
+  - visible (immer sichtbar)
+  - optional (nicht sichtbar aber zuschaltbar)
+  (Randbedingung: Zonen müssen immer in einem horizontalen Bereich gekapselt werden)
+- pro Katalog abzulegen (Katalogmetadaten)
+
+Aktionen (in Button Leiste):
+  - load(OBJECT ID)
+    Lädt Daten eine Objektes vom Server
+    Zugriffsrechte beachten!
+    Objektstati mit der Statusanzeoge synchronisieren
+    
+  - save:
+    Speichert Daten eines Objektes wenn Daten verändert wurden. 
+    Änderung wird durch ein "dirty" Flag signalisiert, das gesetzt wird, wenn eine Eingabe gemacht wurde.
+    
+  - show in Explorer:
+    synchronisiert Explorer mit dem aktuell angezeigten Objekt
+    
+  -     
+
+    
+    
+
