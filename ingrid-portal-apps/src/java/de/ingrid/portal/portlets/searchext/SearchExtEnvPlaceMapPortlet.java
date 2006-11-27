@@ -101,30 +101,34 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
             } else {
                 String searchTerm = "";
                 if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-                    searchTerm = "x1:".concat(Double.toString(wmsDescriptor.getMinX()));
-                    searchTerm = searchTerm.concat(" y1:").concat(Double.toString(wmsDescriptor.getMinY()));
-                    searchTerm = searchTerm.concat(" x2:").concat(Double.toString(wmsDescriptor.getMaxX()));
-                    searchTerm = searchTerm.concat(" y2:").concat(Double.toString(wmsDescriptor.getMaxY()));
-                    String subTerm = "";
+                    String coordinates = "x1:".concat(Double.toString(wmsDescriptor.getMinX()));
+                    coordinates = coordinates.concat(" y1:").concat(Double.toString(wmsDescriptor.getMinY()));
+                    coordinates = coordinates.concat(" x2:").concat(Double.toString(wmsDescriptor.getMaxX()));
+                    coordinates = coordinates.concat(" y2:").concat(Double.toString(wmsDescriptor.getMaxY()));
                     if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
-                        subTerm = subTerm.concat("coord:inside");
+                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
                     }
                     if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
-                        if (subTerm.length() > 0) {
-                            subTerm = subTerm.concat(" OR ");
+                        if (searchTerm.length() > 0) {
+                            searchTerm = searchTerm.concat(" OR ");
                         }
-                        subTerm = subTerm.concat("coord:intersect ");
+                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
                     }
                     if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
-                        if (subTerm.length() > 0) {
-                            subTerm = subTerm.concat(" OR ");
+                        if (searchTerm.length() > 0) {
+                            searchTerm = searchTerm.concat(" OR ");
                         }
-                        subTerm = subTerm.concat("coord:include");
+                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
                     }
-                    searchTerm = searchTerm.concat(" (").concat(subTerm).concat(")");
+                    if (searchTerm.length() == 0) {
+                        searchTerm = searchTerm.concat(coordinates);
+                    }
+                    searchTerm = "(".concat(searchTerm).concat(")");
+                    
                 } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
                     searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
                 }
+                searchTerm = UtilsQueryString.stripQueryWhitespace(searchTerm);
 
                 String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
                         Settings.PARAM_QUERY_STRING);

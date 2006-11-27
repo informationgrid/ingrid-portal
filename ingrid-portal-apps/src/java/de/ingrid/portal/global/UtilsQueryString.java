@@ -156,6 +156,10 @@ public class UtilsQueryString {
         returnStr = returnStr.replaceAll("\\s\\s+", " ");
         returnStr = returnStr.replaceAll("\\s*\\)", ")");
         returnStr = returnStr.replaceAll("\\(\\s*", "(");
+        // strip '((', '))' like "((hallo welt))"
+        returnStr = returnStr.replaceAll("\\((\\([^\\)]*\\))\\)", "$1");
+        // strip '(', ')' like "(name)"
+        returnStr = returnStr.replaceAll("\\(([^\\s]*)\\)", "$1");
         return returnStr.trim();
     }
 
