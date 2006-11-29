@@ -213,13 +213,20 @@ $action.setParameter('tab','2')
 		
 		function adapt() {
 			if (document.frmEditUser.admin_portal.checked == true) {
-				document.frmEditUser.admin_partner.checked = false;
-				
-				document.frmEditUser.admin_partner.disabled = true;
-				document.frmEditUser.partner.disabled = true;
+				if (document.frmEditUser.admin_partner) {
+					document.frmEditUser.admin_partner.checked = false;
+					document.frmEditUser.admin_partner.disabled = true;
+				}	
+				if (document.frmEditUser.partner) {
+					document.frmEditUser.partner.disabled = true;
+				}
 			} else {
-				document.frmEditUser.admin_partner.disabled = false;
-				document.frmEditUser.partner.disabled = false;
+				if (document.frmEditUser.admin_partner) {
+					document.frmEditUser.admin_partner.disabled = false;
+				}
+				if (document.frmEditUser.partner) {
+					document.frmEditUser.partner.disabled = false;
+				}
 			}
 			if (document.frmEditUser.admin_portal.checked == true || document.frmEditUser.admin_partner.checked == true) {
 				document.frmEditUser.admin_index.checked = false;
