@@ -153,15 +153,17 @@ $action.setParameter('tab','2')
 	<p class="clearer"></p>
 	</br>
 #elseif($tab=='2')
+	
+	
 #if($actionForm.getInput('layoutPermission') == "admin.portal" || $actionForm.getInput('layoutPermission') == "admin")
 	<p>
 		<label class="float_left col2left alignleft">Admin Portal</label>
-		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') />
+		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()"/>
 		<p class="clearer"></p>
 	</p>
 	<p>
 		<label class="float_left col2left alignleft">Admin Partner</label>
-		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1') />
+		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1')  onchange="adapt()"/>
 		<p class="clearer"></p>
 	</p>
 	<p>
@@ -206,6 +208,43 @@ $action.setParameter('tab','2')
 #else
 	Bitte geben Sie zunächst einen Partner an und speichern Sie den Datensatz.
 #end		
+
+	<script type="text/javascript">
+		
+		function adapt() {
+			if (document.frmEditUser.admin_portal.checked == true) {
+				document.frmEditUser.admin_partner.checked = false;
+				
+				document.frmEditUser.admin_partner.disabled = true;
+				document.frmEditUser.partner.disabled = true;
+			} else {
+				document.frmEditUser.admin_partner.disabled = false;
+				document.frmEditUser.partner.disabled = false;
+			}
+			if (document.frmEditUser.admin_portal.checked == true || document.frmEditUser.admin_partner.checked == true) {
+				document.frmEditUser.admin_index.checked = false;
+				document.frmEditUser.admin_catalog.checked = false;
+				
+				document.frmEditUser.admin_index.disabled = true;
+				document.frmEditUser.admin_catalog.disabled = true;
+				if (document.frmEditUser.provider) {
+					document.frmEditUser.provider.disabled = true;
+				}
+				document.frmEditUser.doRefresh.style.display = "none";
+			} else {
+				document.frmEditUser.admin_index.disabled = false;
+				document.frmEditUser.admin_catalog.disabled = false;
+				if (document.frmEditUser.provider) {
+					document.frmEditUser.provider.disabled = false;
+				}
+				document.frmEditUser.doRefresh.style.display = "inline";
+			}
+		}
+
+		window.onload = adapt();
+	
+	</script>
+		
 		<p class="clearer"></p>
 	</p>
 	<p class="clearer"></p>

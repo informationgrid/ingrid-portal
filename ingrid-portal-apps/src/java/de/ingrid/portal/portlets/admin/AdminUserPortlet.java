@@ -687,6 +687,18 @@ public class AdminUserPortlet extends ContentPortlet {
                     permissionManager.grantPermission(userPrincipal,
                             UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
                     roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
+
+                    // remove all other roles and permissions
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
+                    roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
+                    
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
+                    
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
+                
                 } else {
                     permissionManager.revokePermission(userPrincipal,
                             UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
@@ -698,6 +710,15 @@ public class AdminUserPortlet extends ContentPortlet {
                     permissionManager.grantPermission(userPrincipal,
                             UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
                     roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
+
+                    // remove all other roles and permissions
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
+                    
+                    permissionManager.revokePermission(userPrincipal,
+                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
+
+                    
                 } else {
                     permissionManager.revokePermission(userPrincipal,
                             UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
