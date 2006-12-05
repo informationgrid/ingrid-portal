@@ -8,16 +8,34 @@
 	#end
 	#displayFormErrors()
 #set ($colNames = ["ident", "name", "url", "sortkey", "sortkey_partner"])
-#set ($colLabels = ["Kürzel*", "Name*", "Link", "Sortierung", "Sortierung Partner"])
+#set ($colLabels = ["Kürzel*", "Name*", "Link", "Sortierung", "Partner"])
 #foreach ($dbEntity in $dbEntities)
 	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)
    	#set ($colValues = ["$!{dbEntity.Ident}", "$!{dbEntity.Name}", "$!{dbEntity.Url}", "$!{dbEntity.Sortkey}", "$!{dbEntity.SortkeyPartner}"])
    	#renderDBEditId($mode $dbEntity.Id)
-   	#foreach ($colName in $colNames)
-       	#set ($colIndex = $velocityCount - 1)
-		#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
-	#end
+ 	#set ($colIndex = 0)
+	#renderDBEditTextField($entityIndex "ident" $colLabels.get($colIndex) $colValues.get($colIndex))
+ 	#set ($colIndex = 1)
+	#renderDBEditTextField($entityIndex "name" $colLabels.get($colIndex) $colValues.get($colIndex))
+ 	#set ($colIndex = 2)
+	#renderDBEditTextField($entityIndex "url" $colLabels.get($colIndex) $colValues.get($colIndex))
+ 	#set ($colIndex = 3)
+	#renderDBEditTextField($entityIndex "sortkey" $colLabels.get($colIndex) $colValues.get($colIndex))
+ 	#set ($colIndex = 4)
+<p>
+	<label class="float_left col2left_incr" for="sortkey_partner$!{entityIndex}">#displayFieldLabel("sortkey_partner$!{entityIndex}" $colLabels.get($colIndex))</label>
+	<select class="float_left inputstyletext contentInput" name="sortkey_partner$!{entityIndex}">
+	#foreach ($partner in $partners)
+		#if($partner.sortkey == $dbEntity.SortkeyPartner)
+			<option value="$partner.sortkey" selected="selected">$partner.name</option>
+		#else
+			<option value="$partner.sortkey">$partner.name</option>
+		#end
+	#end		
+	</select>
+   	<span class="clearer"></span>
+</p>
 	<p class="clearer"></p>
 	</br>
 #end

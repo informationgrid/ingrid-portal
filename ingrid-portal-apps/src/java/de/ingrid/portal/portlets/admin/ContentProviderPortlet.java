@@ -23,8 +23,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.forms.AdminContentPartnerForm;
-import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridProvider;
 
@@ -112,11 +112,9 @@ public class ContentProviderPortlet extends ContentPortlet {
      *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        // add localization recources to the context
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
         Context context = getContext(request);
-        context.put("MESSAGES", messages);
+
+        context.put("partners", UtilsDB.getPartners());
 
         // handle action
         String action = getAction(request);

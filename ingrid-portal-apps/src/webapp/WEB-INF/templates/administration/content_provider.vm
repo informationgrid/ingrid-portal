@@ -5,12 +5,35 @@
 		<p>
 		<table class="border fullwidth">
 #set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
-#set ($colTitles = ["Id", "Kürzel", "Name", "Link", "Sortierung", "Sortierung Partner"])
+#set ($colTitles = ["Id", "Kürzel", "Name", "Link", "Sortierung", "Partner"])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
 	#set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
-	#renderDBBrowserRowWithEditLink($rowId $rowValues)
+    <tr>
+    #if ($velocityCount % 2 == 0)
+    	#set ($rowstyle = "contentRowEven")
+    #else
+    	#set ($rowstyle = "contentRowOdd")
+    #end   
+    	<td class="$rowstyle">
+    		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        </td>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$rowId")
+    	<td class="$rowstyle"><a href="$action">$rowId</a></td>
+    	<td class="$rowstyle"><a href="$action">$dbEntity.Ident</a></td>
+    	<td class="$rowstyle"><a href="$action">$dbEntity.Name</a></td>
+    	<td class="$rowstyle"><a href="$action">$UtilsString.cutString($dbEntity.Url, 20, 20)</a></td>
+    	<td class="$rowstyle"><a href="$action">$dbEntity.Sortkey</a></td>
+    	<td class="$rowstyle"><a href="$action">
+		#foreach ($partner in $partners)
+			#if($partner.sortkey == $dbEntity.SortkeyPartner)
+				$partner.name
+			#end
+		#end</a></td>
+    </tr>
 #end
 		</table>
 		</p>
