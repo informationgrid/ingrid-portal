@@ -202,7 +202,7 @@ $action.setParameter('tab','2')
 		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
 		<option value="*" #getSelected('provider' '*')>Alle</option>
 		#foreach ($provider in $providerlist)
-			<option value="$provider.ident" #getSelected('provider' $provider.ident)>$UtilsString.cutString($provider.name, 50, 50)</option>
+			<option value="$provider.ident" #getSelected('provider' $provider.ident) title="$provider.name">$UtilsString.cutString($provider.name, 50, 50)</option>
 		#end	
 		</select>
 #else
