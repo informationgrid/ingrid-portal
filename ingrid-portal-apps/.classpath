@@ -61,7 +61,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/taglibs/jars/standard-1.0.6.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/taglibs/jars/request-1.0.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/activation/jars/activation-1.0.2.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/xstream/jars/xstream-1.1.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/xstream/jars/xstream-1.2.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/xpp3/jars/xpp3-1.1.2a.jar"/>
 	<classpathentry sourcepath="/INGRID_PORTAL_UTILS_SRC" kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-portal-utils-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-components-2.1-dev.jar"/>
