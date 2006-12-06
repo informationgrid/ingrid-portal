@@ -11,6 +11,12 @@
     <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::AdminUserPortlet">
       <property layout="OneColumn" name="row" value="0" />
     </fragment>
+    <fragment id="admin-usermanagement-0" type="portlet" name="ingrid-portal-apps::AdminUserMigrationPortlet">
+      <property layout="OneColumn" name="row" value="1" />
+      <security-constraints>
+        <security-constraints-ref>admin</security-constraints-ref>
+      </security-constraints>
+    </fragment>
   </fragment>
 
   <security-constraints>
