@@ -4,6 +4,7 @@
 package de.ingrid.portal.global;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -28,15 +29,18 @@ import de.ingrid.portal.om.IngridPrincipalPreference;
 public class IngridPersistencePrefs {
 
     public static final String SEARCH_SETTINGS = "searchSettings";
+
     public static final String SEARCH_SOURCES = "searchSources";
+
     public static final String SEARCH_PARTNER = "searchPartner";
+
     public static final String SEARCH_SAVE_ENTRIES = "searchSaveEntries";
+
     public static final String WMS_SERVICES = "wmsServices";
-    
+
     private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
+
     private static final XStream xstream;
-
-
 
     static {
         try {
@@ -47,8 +51,7 @@ public class IngridPersistencePrefs {
             throw new ExceptionInInitializerError(ex);
         }
     }
-    
-    
+
     /**
      * get an object from database storage.
      * 
@@ -92,6 +95,41 @@ public class IngridPersistencePrefs {
     }
 
     /**
+     * Get all principal preferences for a given principal
+     * 
+     * @param principalName
+     *            The name of the principal.
+     * @return an HashMap containing the deserialized preference objects.
+     */
+    public static HashMap getPrefs(String principalName) {
+        // get xml from db
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        List prefs = null;
+        HashMap result = new HashMap();
+        try {
+            tx = session.beginTransaction();
+            prefs = session.createCriteria(IngridPrincipalPreference.class).add(
+                    Restrictions.eq("principalName", principalName)).list();
+            for (int i = 0; i < prefs.size(); i++) {
+                IngridPrincipalPreference pref = (IngridPrincipalPreference) prefs.get(i);
+                result.put(pref.getPrefName(), pref.getPrefValue());
+            }
+            tx.commit();
+        } catch (Throwable t) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            if (log.isErrorEnabled()) {
+                log.error("Error retrieving persistent preference.", t);
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+        return result;
+    }
+    
+    /**
      * Set an object in database storage.
      * 
      * @param principalName
@@ -103,7 +141,7 @@ public class IngridPersistencePrefs {
      */
     public static void setPref(String principalName, String prefName, Object prefValue) {
         if (prefValue == null) {
-            return; 
+            return;
         }
         String serializedObject = xstream.toXML(prefValue);
 
@@ -142,22 +180,24 @@ public class IngridPersistencePrefs {
             HibernateUtil.closeSession();
         }
     }
-    
+
     /**
      * Remove an entry from database storage.
      * 
-     * @param principalName The principal's name.
-     * @param prefName The preference name.
+     * @param principalName
+     *            The principal's name.
+     * @param prefName
+     *            The preference name.
      */
     public static void removePref(String principalName, String prefName) {
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.createQuery( "delete IngridPrincipalPreference p where p.principalName = :principalName and p.prefName = :prefName" )
-                 .setString("principalName", principalName)
-                 .setString("prefName", prefName)
-                 .executeUpdate();
+            session
+                    .createQuery(
+                            "delete IngridPrincipalPreference p where p.principalName = :principalName and p.prefName = :prefName")
+                    .setString("principalName", principalName).setString("prefName", prefName).executeUpdate();
             tx.commit();
         } catch (Throwable t) {
             if (tx != null) {
@@ -170,5 +210,5 @@ public class IngridPersistencePrefs {
             HibernateUtil.closeSession();
         }
     }
-    
+
 }

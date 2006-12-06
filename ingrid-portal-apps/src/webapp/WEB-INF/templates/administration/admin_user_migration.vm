@@ -1,0 +1,31 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmAdminUserMigration" id="frmAdminUserMigration">
+	<div class="formbody">
+		<p>
+		<textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
+		</p>
+	</div>
+<div class="formfooter" align="right">
+	<input class="btn" type="submit" name="doExport" value="Export" />
+</div>
+</form>
+<form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
+	<div class="formbody">
+		<p>
+		Bitte geben Sie den Pfad zu Ihrem Importfile an.<br/><br/>
+		<input type="text" id="path" name="path" size="100"></input>
+		</p>
+		#if($sqlStatements)
+    		<p>Bitte führen Sie nach dem Import folgende SQL Statements auf der Zieldatenbank aus:</p>
+    		<p>
+			#foreach ($sql in $sqlStatements)
+    			$!sql<br/>
+			#end
+			</p>
+		#end	
+			
+	</div>
+<div class="formfooter" align="right">
+	<input class="btn" type="submit" name="doImport" value="Import" />
+</div>
+</form>
