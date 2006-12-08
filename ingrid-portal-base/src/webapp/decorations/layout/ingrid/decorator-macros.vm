@@ -234,7 +234,7 @@
         #set($defaultTitle = $element.getTitle())
         #if($defaultTitle == "ingrid.page.language")
 			#set($newLocale = 'de')
-			#if($preferedLocale.toString() == 'de')
+			#if($preferedLocale.toString().startsWith('de'))
 				#set($newLocale = 'en')
 			#end
 			#set($linkUrl = "${element.url}?lang=${newLocale}")
