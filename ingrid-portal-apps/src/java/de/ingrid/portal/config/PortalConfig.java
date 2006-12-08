@@ -59,11 +59,15 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String APACHE_STATISTICS_URL = "apache.statistics.url";
     
+    public static final String UDK_FIELDS_DATE = "udk.fields.date";
+
+    public static final String UDK_FIELDS_TRANSLATE = "udk.fields.translate";
     
     // private stuff
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
+
 
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {

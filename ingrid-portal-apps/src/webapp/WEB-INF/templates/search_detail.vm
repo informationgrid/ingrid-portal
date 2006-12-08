@@ -575,7 +575,11 @@
         	#foreach($t0113_dataset_reference in $rec.get("t0113_dataset_reference.obj_id"))
         		#set($t0113_dataset_reference_type = $t0113_dataset_reference.get("t0113_dataset_reference.type"))
         		#set($t0113_dataset_reference_type_key = "t0113_dataset_reference.type$t0113_dataset_reference_type")
-        		$MESSAGES.getString($t0113_dataset_reference_type_key): $t0113_dataset_reference.get("t0113_dataset_reference.reference_date")<br/>
+				#if($MESSAGES.getString($t0113_dataset_reference_type_key) == $t0113_dataset_reference_type_key)
+					$t0113_dataset_reference_type: $t0113_dataset_reference.get("t0113_dataset_reference.reference_date")<br/>
+				#else
+					$MESSAGES.getString($t0113_dataset_reference_type_key): $t0113_dataset_reference.get("t0113_dataset_reference.reference_date")<br/>
+				#end	
         	#end
         	</p>
 		#end	

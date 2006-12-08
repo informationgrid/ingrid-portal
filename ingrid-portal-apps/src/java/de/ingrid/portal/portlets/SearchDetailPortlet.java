@@ -2,11 +2,13 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -51,18 +53,29 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static String TEMPLATE_DETAIL_ECS_ADDRESS = "/WEB-INF/templates/search_detail_address.vm";
 
     // ecs fields that represent a date, used for date parsing and formating
-    private ArrayList dateFields = new ArrayList();
+    private List dateFields = null;
+    
+    private HashMap replacementFields = new HashMap();
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
-        dateFields.add("t01_object.mod_time");
-        dateFields.add("t01_object.time_to");
-        dateFields.add("t0");
-        dateFields.add("t01_object.time_from");
-        dateFields.add("t1");
-        dateFields.add("t0113_dataset_reference.reference_date");
-        dateFields.add("t02_address.mod_time");
+        // get fields from config that should be treated as date fields
+        dateFields = Arrays.asList(PortalConfig.getInstance().getStringArray(PortalConfig.UDK_FIELDS_DATE));
+        
+        // get translation(replacement) rules from config file
+        // map(map)
+        String[] translations = PortalConfig.getInstance().getStringArray(PortalConfig.UDK_FIELDS_TRANSLATE);
+        if (translations != null) {
+            for (int i=0; i<translations.length; i++) {
+                String[] translation = translations[i].split("\\|");
+                if (!replacementFields.containsKey(translation[0])) {
+                    replacementFields.put(translation[0], new HashMap());
+                }
+                Map replacements = (Map)replacementFields.get(translation[0]);
+                replacements.put(translation[1], translation[2]);
+            }
+        }
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -248,6 +261,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         if (dateFields.contains(columnName)) {
                             recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i])
                                     .trim(), request.getLocale()));
+                        } else if (replacementFields.containsKey(columnName)) {
+                            // replace value according to translation config
+                            Map transMap = (Map) replacementFields.get(columnName);
+                            String src = record.getValueAsString(columns[i]).trim();
+                            if (transMap.containsKey(src)) {
+                                recordMap.put(columnName, transMap.get(src));
+                            } else {
+                                recordMap.put(columnName, src);
+                            }
                         } else {
                             recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n",
                                     "<br />"));
@@ -371,6 +393,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     if (dateFields.contains(columnName)) {
                         subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(
                                 columns[j]).trim(), locale));
+                    } else if (replacementFields.containsKey(columnName)) {
+                        // replace value according to translation config
+                        Map transMap = (Map) replacementFields.get(columnName);
+                        String src = record.getValueAsString(columns[i]).trim();
+                        if (transMap.containsKey(src)) {
+                            subRecordMap.put(columnName, transMap.get(src));
+                        } else {
+                            subRecordMap.put(columnName, src);
+                        }
                     } else {
                         subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n",
                                 "<br />"));
