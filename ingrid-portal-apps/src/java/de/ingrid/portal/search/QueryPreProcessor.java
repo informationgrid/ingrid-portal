@@ -66,7 +66,7 @@ public class QueryPreProcessor {
 
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
         // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
+        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
             UtilsSearch.processBasicDataTypes(query, ds);
         }
 
@@ -103,7 +103,7 @@ public class QueryPreProcessor {
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                 IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
-        if (!UtilsSearch.containsField(query, IngridQuery.RANKED)) {
+        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
             // adapt ranking to Search State
             String ranking = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_RANKING);
             if (ranking == null || ranking.length() == 0) {
@@ -122,12 +122,12 @@ public class QueryPreProcessor {
         if (filter != null && filter.length() > 0) {
             String subject = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
             if (filter.equals(Settings.PARAMV_GROUPING_PARTNER)) {
-                if (!UtilsSearch.containsField(query, Settings.QFIELD_PARTNER)) {
+                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PARTNER)) {
                     // set filter for partner 
                     UtilsSearch.processPartner(query, new String[] { subject });
                 }
             } else if (filter.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
-                if (!UtilsSearch.containsField(query, Settings.QFIELD_PROVIDER)) {
+                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PROVIDER)) {
                     // set filter for provider 
                     UtilsSearch.processProvider(query, new String[] { subject });
                 }
@@ -135,7 +135,7 @@ public class QueryPreProcessor {
         } else {
             // no grouping when filter is set.
             // set grouping ! ONLY IF NO GROUPING IN Query String Input !
-            if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
+            if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
                 // adapt ranking to Search State
                 String grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);
 
@@ -179,7 +179,7 @@ public class QueryPreProcessor {
         }
 
         // set language for query
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
+        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
             //            UtilsSearch.processLanguage(query, request.getLocale());
         }
 
@@ -220,7 +220,7 @@ public class QueryPreProcessor {
         processQuerySources(request, ds, query);
 
         // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_DATATYPE)) {
+        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
             UtilsSearch.processBasicDataTypes(query, ds);
         }
 
@@ -234,7 +234,7 @@ public class QueryPreProcessor {
         int currentPage = (int) (startHit / Settings.SEARCH_UNRANKED_HITS_PER_PAGE) + 1;
 
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
-        if (!UtilsSearch.containsField(query, IngridQuery.RANKED)) {
+        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
             // switch ranking OFF
             query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
         }
@@ -244,17 +244,17 @@ public class QueryPreProcessor {
         if (filter != null && filter.length() > 0) {
             String subject = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
             if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
-                if (!UtilsSearch.containsField(query, Settings.QFIELD_PARTNER)) {
+                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PARTNER)) {
                     // set filter for partner 
                     UtilsSearch.processPartner(query, new String[] { subject });
                 }
             } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
-                if (!UtilsSearch.containsField(query, Settings.QFIELD_PROVIDER)) {
+                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PROVIDER)) {
                     // set filter for provider 
                     UtilsSearch.processProvider(query, new String[] { subject });
                 }
             } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                if (!UtilsSearch.containsField(query, Settings.QFIELD_PLUG_ID)) {
+                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PLUG_ID)) {
                     // set filter for iplugs 
                     UtilsSearch.processIPlugs(query, new String[] { subject });
                 }
@@ -263,7 +263,7 @@ public class QueryPreProcessor {
 
         // ALWAYS GROUP BY iPlugs if no iPlug filter !
         if (filter == null || !filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-            if (!UtilsSearch.containsField(query, Settings.QFIELD_GROUPED)) {
+            if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
                 // grouping per iPlug !
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
             }
@@ -302,7 +302,7 @@ public class QueryPreProcessor {
         int newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
 
         // set language for query
-        if (!UtilsSearch.containsField(query, Settings.QFIELD_LANG)) {
+        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
             //            UtilsSearch.processLanguage(query, request.getLocale());
         }
 

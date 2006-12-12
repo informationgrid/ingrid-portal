@@ -545,19 +545,30 @@ public class UtilsSearch {
      * @param fieldName
      * @return True if the field was found, false if not.
      */
-    public static boolean containsField(IngridQuery query, String fieldName) {
+    public static boolean containsFieldOrKey(IngridQuery query, String fieldName) {
         IngridQuery[] clauses = query.getAllClauses();
         for (int i = 0; i < clauses.length; i++) {
-            FieldQuery[] fields = query.getFields();
+            FieldQuery[] fields = clauses[i].getFields();
             for (int j = 0; j < fields.length; j++) {
                 if (fields[j].getFieldName().equalsIgnoreCase(fieldName)) {
                     return true;
                 }
             }
+            if (clauses[i].get(fieldName) != null) {
+                return true;
+            }
         }
         if (query.get(fieldName) != null) {
             return true;
         }
+        FieldQuery[] fields = query.getFields();
+        for (int j = 0; j < fields.length; j++) {
+            if (fields[j].getFieldName().equalsIgnoreCase(fieldName)) {
+                return true;
+            }
+        }
+        
+        
         return false;
     }
 
