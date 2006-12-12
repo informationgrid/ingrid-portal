@@ -547,9 +547,9 @@
 	    #if($tool.hasContent($rec.get("t01_object.time_type")))
         	<p><strong>$MESSAGES.getString("time_reference_content"):</strong><br/>
         	#if($rec.get("t01_object.time_type") == "von")
-        		$MESSAGES.getString('search.detail.time.from'): #echo($rec.get("t0")) $MESSAGES.getString('search.detail.time.to'): #echo($rec.get("t1"))<br/>
+        		$MESSAGES.getString('search.detail.time.from'): #echo($rec.get("t1")) $MESSAGES.getString('search.detail.time.to'): #echo($rec.get("t2"))<br/>
         	#elseif($rec.get("t01_object.time_type") == "seit")
-        		$MESSAGES.getString('search.detail.time.since'): #echo($rec.get("t0"))<br/>
+        		$MESSAGES.getString('search.detail.time.since'): #echo($rec.get("t1"))<br/>
         	#elseif($rec.get("t01_object.time_type") == "am")
         		$MESSAGES.getString('search.detail.time.at'): #echo($rec.get("t0"))<br/>
     		#end
