@@ -297,6 +297,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 addSubRecords(record, recordMap, request.getLocale(), readableColumnNames, messages);
 
                 recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
+                recordMap.put("t0", getFieldFromHashTree(recordMap, "t0"));
+                recordMap.put("t1", getFieldFromHashTree(recordMap, "t1"));
+                recordMap.put("t2", getFieldFromHashTree(recordMap, "t2"));
                 ArrayList addressList = (ArrayList) getFieldFromHashTree(recordMap, "t012_obj_adr.obj_id");
                 if (addressList != null) {
                     Collections.sort(addressList, new AddressTypeComparator());
