@@ -126,3 +126,6 @@ UPDATE `security_credential` SET `IS_ENABLED` = '0', `MODIFIED_DATE` = NOW( ) WH
 
 # admin-provider can see statistics page
 INSERT INTO `page_constraints_ref` ( `CONSTRAINTS_REF_ID` , `PAGE_ID` , `APPLY_ORDER` , `NAME` ) VALUES ('182', '38', '3', 'admin-provider');
+
+INSERT INTO `ingrid_rss_source` (`id`, `provider`, `description`, `url`, `lang`, `categories`) VALUES (12, 'bw_lu', 'Landesanstalt für Umwelt, Messungen und Naturschutz Baden-Württemberg', 'http://www.lubw.baden-wuerttemberg.de/servlet/is/Entry.20732.DisplayRSS2/', 'de', 'all');
+INSERT INTO `ingrid_rss_source` (`id`, `provider`, `description`, `url`, `lang`, `categories`) VALUES (13, 'bw_statistik', 'RSS Badenwürtemberg (Statistik)', 'http://www.statistik.baden-wuerttemberg.de/UmweltVerkehr/rss.aspx', 'de', 'all');
