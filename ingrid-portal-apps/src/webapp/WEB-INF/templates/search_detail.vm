@@ -643,10 +643,10 @@
 	#if($tool.hasContent($rec.get("t01_object.metadata_language")) || $tool.hasContent($rec.get("t01_object.data_language")) || $tool.hasContent($rec.get("t015_legist.obj_id")) || $tool.hasContent($rec.get("t01_object.dataset_usage")) || $tool.hasContent($rec.get("t01_object.info_note")))
     	<div class="line"><hr /></div><br/>
     	#if($tool.hasContent($rec.get("t01_object.metadata_language")))
-    		<p><strong>$MESSAGES.getString("t01_object.metadata_language"):</strong> $sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name")</p>
+    		<p><strong>$MESSAGES.getString("t01_object.metadata_language"):</strong> #if($sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name"))$sysLangList.get($rec.get("t01_object.metadata_language")).get("sys_language.name")#else$rec.get("t01_object.metadata_language")#end</p>
     	#end
     	#if($tool.hasContent($rec.get("t01_object.data_language")))
-    		<p><strong>$MESSAGES.getString("t01_object.data_language"):</strong> $sysLangList.get($rec.get("t01_object.data_language")).get("sys_language.name")</p>
+    		<p><strong>$MESSAGES.getString("t01_object.data_language"):</strong> #if($sysLangList.get($rec.get("t01_object.data_language")).get("sys_language.name"))$sysLangList.get($rec.get("t01_object.data_language")).get("sys_language.name")#else$rec.get("t01_object.data_language")#end</p>
     	#end
     	#if($tool.hasContent($rec.get("t015_legist.obj_id")))
     		<p><strong>$MESSAGES.getString("legal_basis"):</strong><br/>
