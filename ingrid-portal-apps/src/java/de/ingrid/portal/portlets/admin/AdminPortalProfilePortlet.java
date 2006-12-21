@@ -5,10 +5,11 @@ package de.ingrid.portal.portlets.admin;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -33,6 +34,7 @@ import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsPageLayout;
@@ -69,6 +71,18 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+
+        String[] portalProfiles = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_PROFILES);
+        ArrayList profiles = new ArrayList();
+        for (int i = 0; i < portalProfiles.length; i++) {
+            profiles.add(new HashMap());
+            HashMap map = (HashMap) profiles.get(i);
+            map.put("id", portalProfiles[i]);
+            map.put("title_key", PortalConfig.getInstance().getString(
+                    PortalConfig.PORTAL_PROFILE.concat(".").concat(portalProfiles[i]).concat(".title")));
+        }
+
+        context.put("profiles", profiles);
 
         context.put("switchedToProfile", request.getParameter("switchedToProfile"));
 

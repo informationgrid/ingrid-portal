@@ -63,10 +63,16 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String UDK_FIELDS_TRANSLATE = "udk.fields.translate";
     
+    public static final String PORTAL_PROFILES = "portal.profiles";
+
+    public static final String PORTAL_PROFILE = "portal.profile";
+    
     // private stuff
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
+
+
 
 
     public static synchronized PortalConfig getInstance() {

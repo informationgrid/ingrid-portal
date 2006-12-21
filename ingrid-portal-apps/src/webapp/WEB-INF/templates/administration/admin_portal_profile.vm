@@ -9,14 +9,12 @@
   <div class="line_form"><hr /></div>
 #end	
   $action.setParameter('action',"switchProfile")		
-  $action.setParameter('profile',"portalu")		
+#foreach($profile in $profiles)
+  $action.setParameter('profile', "$profile.id")
   <p>
-	<a href="$action">$MESSAGES.getString('admin.portal.profile.portalu')</a>
+	<a href="$action">$MESSAGES.getString("$profile.title_key")</a>
   </p>
-  $action.setParameter('action',"switchProfile")		
-  $action.setParameter('profile',"wwwudk")		
-  <p>
-	<a href="$action">$MESSAGES.getString('admin.portal.profile.wwwudk')</a>
-  </p>
+
+#end	
 </div>
 
