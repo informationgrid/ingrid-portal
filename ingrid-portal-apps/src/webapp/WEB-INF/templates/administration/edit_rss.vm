@@ -7,6 +7,8 @@
 		<h2 class="nospace">Neuen RSS Feed anlegen</h2>
 	#end
 	#displayFormErrors()
+	<p>Hinweis: Als Autor der Einträge wird der Inhalt des Felder Beschreibung verwendet. Wenn Sie das Feld leer lassen, wird versucht, den Autor aus dem RSS-Feed zu ermitteln.</p>
+	
 #set ($colNames = ["provider", "description", "url", "language", "categories"])
 #set ($colLabels = ["Anbieter*", "Beschreibung", "URL*", "Sprache*", "Kategorien"])
 #foreach ($dbEntity in $dbEntities)

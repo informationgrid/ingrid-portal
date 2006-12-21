@@ -76,19 +76,18 @@ public class RSSFetcherJob implements Job {
                     if (feed.getLanguage() == null) {
                         feed.setLanguage(rssSource.getLanguage());
                     }
-                    if (feed.getAuthor() == null || feed.getAuthor().length() == 0) {
-                        feed.setAuthor(rssSource.getProvider());
+                    if (rssSource.getDescription() != null && rssSource.getDescription().trim().length() > 0) {
+                        feed.setAuthor(rssSource.getDescription().trim());
                     }
-
+                    
                     Iterator it2 = feed.getEntries().iterator();
                     // work on all rss items of the feed
                     while (it2.hasNext()) {
                         entry = (SyndEntry) it2.next();
-                        boolean includeEntry = false;
+                        boolean includeEntry = true;
                         String categoryFilter = rssSource.getCategories();
-                        if (categoryFilter == null || categoryFilter.equalsIgnoreCase("all")) {
-                            includeEntry = true;
-                        } else {
+                        if (categoryFilter != null && !categoryFilter.equalsIgnoreCase("all")) {
+                            includeEntry = false;
                             List categories = entry.getCategories();
                             if (categories != null && categories.size() > 0) {
                                 for (int i = 0; i < categories.size(); i++) {
@@ -104,7 +103,11 @@ public class RSSFetcherJob implements Job {
                                     }
                                 }
                             }
-
+                        }
+                        
+                        // filter entries with no title
+                        if (includeEntry && (entry.getTitle() == null ||  entry.getTitle().trim().length() == 0)) {
+                            includeEntry = false;
                         }
 
                         publishedDate = entry.getPublishedDate();
@@ -119,51 +122,63 @@ public class RSSFetcherJob implements Job {
                                 includeEntry = false;
                             }
                         }
+                        
+                        cal = Calendar.getInstance();
+                        
+                        // filter entries with dates in future
+                        if (includeEntry && publishedDate != null && publishedDate.after(cal.getTime())) {
+                            includeEntry = false;
+                        }
+                        // filter dates before RSS entry window
+                        cal.add(Calendar.DATE, -1
+                                * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
+                        if (includeEntry && publishedDate != null && publishedDate.before(cal.getTime())) {
+                            includeEntry = false;
+                        }
+                        
                         if (includeEntry) {
-                            cal = Calendar.getInstance();
-                            cal.add(Calendar.DATE, -1
-                                    * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
-                            // drop items that are older than the number of
-                            // configured days
-                            if (publishedDate.after(cal.getTime())) {
-                                // check if this entry already exists
-                                tx = session.beginTransaction();
-                                List rssEntries = session.createCriteria(IngridRSSStore.class).add(
-                                        Restrictions.eq("link", entry.getLink())).add(
-                                        Restrictions.eq("language", feed.getLanguage())).list();
-                                tx.commit();
-                                if (rssEntries.isEmpty()) {
+                            // check if this entry already exists
+                            tx = session.beginTransaction();
+                            List rssEntries = session.createCriteria(IngridRSSStore.class).add(
+                                    Restrictions.eq("link", entry.getLink())).add(
+                                    Restrictions.eq("language", feed.getLanguage())).list();
+                            tx.commit();
+                            if (rssEntries.isEmpty()) {
+                                if (feed.getAuthor() == null || feed.getAuthor().length() == 0) {
                                     if (entry.getAuthor() == null || entry.getAuthor().length() == 0) {
                                         if (feed.getTitle() != null && feed.getTitle().length() > 0) {
                                             entry.setAuthor(feed.getTitle());
                                         } else {
-                                            entry.setAuthor(feed.getAuthor());
+                                            entry.setAuthor("nicht angegeben / not specified");
                                         }
+                                    } else {
+                                        entry.setAuthor(entry.getAuthor());
                                     }
-
-                                    entry.setTitle(UtilsString.htmlescape(entry.getTitle()));
-
-                                    IngridRSSStore rssEntry = new IngridRSSStore();
-                                    rssEntry.setTitle(entry.getTitle());
-                                    rssEntry.setDescription(UtilsString.htmlescape(entry.getDescription().getValue()));
-                                    rssEntry.setLink(entry.getLink());
-                                    rssEntry.setLanguage(feed.getLanguage());
-                                    rssEntry.setPublishedDate(publishedDate);
-                                    rssEntry.setAuthor(entry.getAuthor());
-
-                                    tx = session.beginTransaction();
-                                    session.save(rssEntry);
-                                    tx.commit();
-
-                                    cnt++;
                                 } else {
-                                    for (int i=0; i<rssEntries.size(); i++) {
-                                        session.evict(rssEntries.get(i));
-                                    }
+                                    entry.setAuthor(feed.getAuthor());
                                 }
-                                rssEntries = null;
-                            }
 
+                                entry.setTitle(UtilsString.htmlescape(entry.getTitle()));
+
+                                IngridRSSStore rssEntry = new IngridRSSStore();
+                                rssEntry.setTitle(entry.getTitle());
+                                rssEntry.setDescription(UtilsString.htmlescape(entry.getDescription().getValue()));
+                                rssEntry.setLink(entry.getLink());
+                                rssEntry.setLanguage(feed.getLanguage());
+                                rssEntry.setPublishedDate(publishedDate);
+                                rssEntry.setAuthor(entry.getAuthor());
+
+                                tx = session.beginTransaction();
+                                session.save(rssEntry);
+                                tx.commit();
+
+                                cnt++;
+                            } else {
+                                for (int i=0; i<rssEntries.size(); i++) {
+                                    session.evict(rssEntries.get(i));
+                                }
+                            }
+                            rssEntries = null;
                         }
                     }
                     feed = null;
