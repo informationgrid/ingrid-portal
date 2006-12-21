@@ -88,18 +88,19 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
                 anniversaryList = session.createCriteria(IngridAnniversary.class)
                         .add(Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
                         .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4"))
-                        // FIX, DO WE NEED THIS ! IS WRONG ?
-//                        .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                        .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                        .add(Restrictions.eq("language", lang))
                         .list();
                 tx.commit();
 
                 if (anniversaryList.isEmpty()) {
-                    // fall back: get all events that only define a year
+                    // fall back: get any event that has been fetched for today
                     fromCal.setTime(d);
 
                     tx = session.beginTransaction();
                     anniversaryList = session.createCriteria(IngridAnniversary.class)
                             .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                            .add(Restrictions.eq("language", lang))
                             .list();
                     tx.commit();
                 }
