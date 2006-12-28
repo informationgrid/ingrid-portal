@@ -15,6 +15,5 @@
 
   <security-constraints>
     <security-constraints-ref>admin</security-constraints-ref>
-    <security-constraints-ref>admin-portal</security-constraints-ref>
   </security-constraints>
 </page>
