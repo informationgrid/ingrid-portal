@@ -27,6 +27,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
 import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -897,6 +898,27 @@ public class UtilsSearch {
             return queryStr;
         }
     }
+    
+    
+    
+    /**
+     * Adds partner restrictions if they are definied in the portal configuration 
+     * AND if no partner has been added to the query so far.
+     * 
+     * @param query
+     */
+    public static void processRestrictingPartners(IngridQuery query) {
+        if (query.getPositivePartner().length > 0  || query.getNegativePartner().length > 0) {
+            return;
+        }
+        String[] partners = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNERS);
+        if (partners == null || partners.length == 0) {
+            return;
+        }
+        
+        processPartner(query, partners);
+    }
+    
 
     /**
      * Add a querystring to the session querystring history.

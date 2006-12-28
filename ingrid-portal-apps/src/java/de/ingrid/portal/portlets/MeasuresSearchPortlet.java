@@ -203,6 +203,9 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             // set partner from personalization
             QueryPreProcessor.processQueryPartner(request, query);
             
+            // set restricting partner from config
+            UtilsSearch.processRestrictingPartners(query);
+            
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", t);

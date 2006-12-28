@@ -68,6 +68,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_PROFILE = "portal.profile";
 
     public static final String PORTAL_ENABLE_SEARCH_TOPICS_SEARCHTERM = "portal.enable.search.topics.searchterm";
+
+    public static final String PORTAL_SEARCH_RESTRICT_PARTNERS = "portal.search.restrict.partners";
     
     // private stuff
     private static PortalConfig instance = null;

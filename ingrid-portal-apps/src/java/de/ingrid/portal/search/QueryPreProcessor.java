@@ -182,6 +182,8 @@ public class QueryPreProcessor {
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
             //            UtilsSearch.processLanguage(query, request.getLocale());
         }
+        
+        UtilsSearch.processRestrictingPartners(query);
 
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, newStartHit, PortalConfig
@@ -305,6 +307,8 @@ public class QueryPreProcessor {
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
             //            UtilsSearch.processLanguage(query, request.getLocale());
         }
+
+        UtilsSearch.processRestrictingPartners(query);
 
         // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, newStartHit,
