@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>mu_ni</name>
+    <description>Portal-Profile für das Ministerium für Umwelt Niedersachsen</description>
+    <pages>
+    </pages>
+    <files>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties</src>
+        </file>
+    </files>
+</profile>

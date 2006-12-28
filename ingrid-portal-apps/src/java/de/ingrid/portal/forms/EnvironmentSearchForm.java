@@ -6,6 +6,7 @@ package de.ingrid.portal.forms;
 import javax.portlet.PortletRequest;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * Form Handler for Environment Search page. Stores and validates form input.
@@ -28,8 +29,12 @@ public class EnvironmentSearchForm extends ActionForm {
 
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
 
-    /** NOTICE: This is for storage of selected Provider ("Zeige Alle Ergebnisse") and
-     * is NO FIELD in form */
+    public static final String FIELD_QUERY_STRING = Settings.PARAM_QUERY_STRING;
+
+    /**
+     * NOTICE: This is for storage of selected Provider ("Zeige Alle
+     * Ergebnisse") and is NO FIELD in form
+     */
     public static final String STORAGE_PROVIDER = Settings.PARAM_SUBJECT;
 
     /** initial values */
@@ -50,6 +55,7 @@ public class EnvironmentSearchForm extends ActionForm {
         setInput(FIELD_FUNCT_CATEGORY, INITIAL_CATEGORY);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
         setInput(FIELD_GROUPING, INITIAL_GROUPING);
+        setInput(FIELD_QUERY_STRING, "");
     }
 
     /**
@@ -57,7 +63,8 @@ public class EnvironmentSearchForm extends ActionForm {
      * params into the according field (but that field then ONLY contains the
      * new values). In this way, we can initialize the form with default values
      * and JUST TAKE OVER THE NEW ONES !. Use clearInput() to clear the form
-     * before populating !  
+     * before populating !
+     * 
      * @see de.ingrid.portal.forms.ActionForm#populate(javax.portlet.PortletRequest)
      */
     public void populate(PortletRequest request) {
@@ -72,6 +79,9 @@ public class EnvironmentSearchForm extends ActionForm {
         }
         if (request.getParameterValues(FIELD_GROUPING) != null) {
             setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
+        }
+        if (request.getParameterValues(FIELD_QUERY_STRING) != null) {
+            setInput(FIELD_QUERY_STRING, request.getParameter(FIELD_QUERY_STRING));
         }
     }
 
@@ -94,6 +104,15 @@ public class EnvironmentSearchForm extends ActionForm {
         if (!hasInput(FIELD_PARTNER)) {
             setError(FIELD_PARTNER, "envSearch.error.noPartner");
             allOk = false;
+        }
+
+        if (hasInput(FIELD_QUERY_STRING)) {
+            try {
+                QueryStringParser.parse(this.getInput(FIELD_QUERY_STRING));
+            } catch (Throwable e) {
+                setError(FIELD_QUERY_STRING, "envSearch.error.invalidSearchTerm");
+                allOk = false;
+            }
         }
 
         return allOk;

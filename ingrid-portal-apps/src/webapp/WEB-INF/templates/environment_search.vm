@@ -42,8 +42,16 @@
 			<label class="radiogroup" for="grouping_info">$MESSAGES.getString('common.form.grouping.provider')</label>
 			<br />
 		</div>
-		<br />
+#if($enable_searchterm)
+		<br style="line-height:10px" />
 		<span class="clearer"></span>
+		<div class="float_left">
+			<h3><label for="q">#displayFieldLabel('q' $MESSAGES.getString('common.form.querystring'))</label></h3>
+			<input class="qrystr inputstyletext" type="text" id="q" name="q" value="#getHTMLEscapedFieldValue('q')" />
+		</div>
+#end
+		<span class="clearer"></span>
+		<br />
 	</div>
 	<div class="formfooter">
 		<div align="right">

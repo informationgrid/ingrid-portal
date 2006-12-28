@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -26,6 +27,7 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -44,6 +46,9 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // check for enabled search term field
+        context.put("enable_searchterm", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_SEARCHTERM, Boolean.FALSE));
 
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
@@ -159,7 +164,14 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         IngridQuery query = null;
         try {
-            query = new IngridQuery();
+            // create query
+            // add search term if exist
+            if (af.hasInput(EnvironmentSearchForm.FIELD_QUERY_STRING)) {
+                query = QueryStringParser.parse(af.getInput(EnvironmentSearchForm.FIELD_QUERY_STRING));
+            } else {
+                query = new IngridQuery();
+            }
+
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                     Settings.QVALUE_DATATYPE_AREA_ENVTOPICS));
 
@@ -201,7 +213,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
 
             // PROVIDER restriction (from hidden Field in ActionForm !)
             UtilsSearch.processProvider(query, af.getInputAsArray(EnvironmentSearchForm.STORAGE_PROVIDER));
-
+            
             // GROUPING
             UtilsSearch.processGrouping(query, af.getInput(EnvironmentSearchForm.FIELD_GROUPING));
 
