@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -15,18 +16,22 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
- * This portlet handles the "Simple Search" input fragment.
- * NOTICE: This portlet is used in the home page AND in the main-search page AND in the extended search page ...
+ * This portlet handles the "Simple Search" input fragment. NOTICE: This portlet
+ * is used in the home page AND in the main-search page AND in the extended
+ * search page ...
  * 
  * created 11.01.2006
  * 
@@ -46,15 +51,22 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     // TITLE KEYS
 
-    /** key of title for default-page (start page) and main-search page, if no search is performed,
-     * passed from default-page per Preferences */
+    /**
+     * key of title for default-page (start page) and main-search page, if no
+     * search is performed, passed from default-page per Preferences
+     */
     private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
 
-    /** key of title for main-search page if results are displayed,
-     * passed from page per Preferences */
+    /**
+     * key of title for main-search page if results are displayed, passed from
+     * page per Preferences
+     */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
 
-    /** key of title for main exstended search pages, passed from page per Preferences */
+    /**
+     * key of title for main exstended search pages, passed from page per
+     * Preferences
+     */
     private final static String TITLE_KEY_EXTENDED = "searchSimple.title.extended";
 
     // ACTION VALUES
@@ -73,8 +85,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     /** value of action parameter if "save query" was clicked */
     private static final String PARAMV_ACTION_SAVE_QUERY = "doSaveQuery";
-    
-    
+
     // PAGES
 
     /** search-history page -> displays and handles search settings */
@@ -85,16 +96,24 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     /** save query page -> displays and handles save query functionality */
     private final static String PAGE_SAVE_QUERY = "/ingrid-portal/portal/search-save.psml";
-    
-    /** main extended search page for datasource "environmentinfos" -> envinfo: topic/terms */
+
+    /**
+     * main extended search page for datasource "environmentinfos" -> envinfo:
+     * topic/terms
+     */
     private final static String PAGE_SEARCH_EXT_ENV = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
 
-    /** main extended search page for datasource "address" -> address: topic/terms */
+    /**
+     * main extended search page for datasource "address" -> address:
+     * topic/terms
+     */
     private final static String PAGE_SEARCH_EXT_ADR = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-terms.psml";
 
-    /** main extended search page for datasource "research" -> research: topic/terms */
+    /**
+     * main extended search page for datasource "research" -> research:
+     * topic/terms
+     */
     private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
-
 
     /*
      * (non-Javadoc)
@@ -120,14 +139,16 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
         // ----------------------------------
         // read PREFERENCES (title passed from page)
-        // NOTICE: this portlet is on different pages (default-page, main-search, search-settings ...)
+        // NOTICE: this portlet is on different pages (default-page,
+        // main-search, search-settings ...)
         // TITLE DETERMINES PAGE
         // ----------------------------------
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
         context.put("titleKey", titleKey);
 
-        // set view template, we use the same portlet for Simple- and Extended Search, just
+        // set view template, we use the same portlet for Simple- and Extended
+        // Search, just
         // the view template differs !
         setDefaultViewPage(TEMPLATE_SEARCH_SIMPLE);
         if (titleKey.equals(TITLE_KEY_EXTENDED)) {
@@ -148,22 +169,25 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
         }
 
-        // NOTICE: if no query string in request, we keep the old query string in state, so it is
-        // displayed. BUT WE REMOVE THE INGRID QUERY from state -> leads to empty result portlet,
+        // NOTICE: if no query string in request, we keep the old query string
+        // in state, so it is
+        // displayed. BUT WE REMOVE THE INGRID QUERY from state -> leads to
+        // empty result portlet,
         // empty similar portlet etc.
         String queryInRequest = request.getParameter(Settings.PARAM_QUERY_STRING);
-        
+
         // get queryString extension from request
         String queryExtInRequest = request.getParameter(Settings.PARAM_QUERY_STRING_EXT);
         if (queryExtInRequest != null) {
             queryInRequest = queryInRequest.concat(" ").concat(queryExtInRequest);
         }
-        
+
         if (!SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_QUERY_STRING, queryInRequest)) {
             SearchState.resetSearchStateObject(request, Settings.MSG_QUERY);
         }
 
-        // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE, so it is
+        // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE,
+        // so it is
         // displayed (but not bookmarkable)
         SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_DATASOURCE, request
                 .getParameter(Settings.PARAM_DATASOURCE));
@@ -173,7 +197,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 .getParameter(Settings.PARAM_GROUPING));
 
         // ----------------------------------
-        // set data for view template 
+        // set data for view template
         // ----------------------------------
 
         // set datasource
@@ -185,7 +209,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         context.put("ds", selectedDS);
 
         // Update Action Form (simple search form content)
-        // NOTICE: we use get method without instantiation, so we can do special initialisation !
+        // NOTICE: we use get method without instantiation, so we can do special
+        // initialisation !
         SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
                 PortletSession.PORTLET_SCOPE);
         if (af == null) {
@@ -201,22 +226,26 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             af.setInput(SearchSimpleForm.FIELD_QUERY, af.getINITIAL_QUERY());
         }
 
-        // NOTICE: this may be former query, if no query in request ! we keep that one for convenience
+        // NOTICE: this may be former query, if no query in request ! we keep
+        // that one for convenience
         // (although this state is not bookmarkable !)
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         af.setInput(SearchSimpleForm.FIELD_QUERY, queryString);
-        // put ActionForm to context. use variable name "actionForm" so velocity macros work !
+        // put ActionForm to context. use variable name "actionForm" so velocity
+        // macros work !
         context.put("actionForm", af);
 
         // ----------------------------------
-        // prepare Search, Search will be performed in SearchResult portlet 
+        // prepare Search, Search will be performed in SearchResult portlet
         // ----------------------------------
-        // NOTICE: af.validate() also checks for default text (and sets default text if empty).
+        // NOTICE: af.validate() also checks for default text (and sets default
+        // text if empty).
         boolean validInput = af.validate();
         boolean setUpNewQuery = true;
         // don't create IngridQuery when:
         // - only datasource was changed
-        // - we have no query parameter in our URL (e.g. we entered from other page)
+        // - we have no query parameter in our URL (e.g. we entered from other
+        // page)
         // - the enterd query is empty or initial value
         if (action.equals(PARAMV_ACTION_NEW_DATASOURCE) || action.equals(PARAMV_ACTION_SEARCH_SETTINGS)
                 || action.equals(PARAMV_ACTION_SEARCH_HISTORY) || action.equals(PARAMV_ACTION_SEARCH_EXTENDED)
@@ -233,11 +262,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
         // ----------------------------------
         // adapt title (passed from page)
-        // NOTICE: this portlet is on different pages (default-page, main-search, search-settings ...)
+        // NOTICE: this portlet is on different pages (default-page,
+        // main-search, search-settings ...)
         // title also depends on search state (query submitted or not ...)
         // ----------------------------------
         if (titleKey.equals(TITLE_KEY_RESULT)) {
-            // we're on main search page, check whether there's a query and adapt title
+            // we're on main search page, check whether there's a query and
+            // adapt title
             if (SearchState.getSearchStateObject(request, Settings.MSG_QUERY) == null) {
                 titleKey = TITLE_KEY_SEARCH;
             }
@@ -248,9 +279,32 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         if (validInput && Utils.getLoggedOn(request)) {
             context.put("enableSave", "true");
         }
-        
-        context.put("enableDatasourceResearch", PortalConfig.getInstance().getBoolean("portal.enable.datasource.research", Boolean.TRUE));
-        
+
+        // enable/disable providers drop down
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)) {
+            String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+            List providers;
+            if (partner == null || partner.length() == 0) {
+                providers = UtilsDB.getProviders();
+            } else {
+                providers = UtilsDB.getProvidersFromPartnerKey(partner);
+            }
+            context.put("providers", providers);
+            context.put("UtilsString", new UtilsString());
+            
+            // get selected provider
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+            String provider = request.getParameter(Settings.PARAM_PROVIDER);
+            if (provider != null) {
+                sessionPrefs.put(IngridSessionPreferences.RESTRICTING_PROVIDER, provider);
+            }
+            context.put("selectedProviderIdent", sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
+        }
+
+        context.put("enableDatasourceResearch", PortalConfig.getInstance().getBoolean(
+                "portal.enable.datasource.research", Boolean.TRUE));
+
         super.doView(request, response);
     }
 
@@ -268,19 +322,22 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
 
         // adapt SearchState (base for generating URL params) !
-        // Reset all Stuff which are remains of former state and shouldn't be taken into account
-        // on actions in SimpleSearch form (where NO URL PARAMETERS SHOULD BE GENERATED) !
+        // Reset all Stuff which are remains of former state and shouldn't be
+        // taken into account
+        // on actions in SimpleSearch form (where NO URL PARAMETERS SHOULD BE
+        // GENERATED) !
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, null);
         SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, null);
 
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-            // adapt SearchState (base for generating URL params for render request):
+            // adapt SearchState (base for generating URL params for render
+            // request):
             // - query string
             SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
                     .getParameter(Settings.PARAM_QUERY_STRING));
-
+            
             // check if submit or requery
             if (request.getParameter("doSetQuery") == null) {
                 // redirect to our page wih parameters for bookmarking
@@ -290,16 +347,22 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
             String newDatasource = request.getParameter(Settings.PARAM_DATASOURCE);
 
-            // adapt SearchState (base for generating URL params for render request):
+            // adapt SearchState (base for generating URL params for render
+            // request):
             // - set datasource
             SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, newDatasource);
 
-            // don't populate action form, this is no submit, so no form parameters are in request !
-            // TODO use JavaScript to submit form on datasource change ! then populate ActionForm, 
-            // in that way we don't loose query changes on data source change, when changes weren't submitted before
+            // don't populate action form, this is no submit, so no form
+            // parameters are in request !
+            // TODO use JavaScript to submit form on datasource change ! then
+            // populate ActionForm,
+            // in that way we don't loose query changes on data source change,
+            // when changes weren't submitted before
 
-            // redirect to MAIN page with parameters for bookmarking, ONLY IF WE'RE "ON MAIN PAGE"
-            // Otherwise go to startpage of extended search for selected datasource without support for bookmarking !
+            // redirect to MAIN page with parameters for bookmarking, ONLY IF
+            // WE'RE "ON MAIN PAGE"
+            // Otherwise go to startpage of extended search for selected
+            // datasource without support for bookmarking !
             if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
                 // we're in main search
                 actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
@@ -336,8 +399,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Create IngridQuery and add to state.
-     * RETURNS an Error String, if an error occured, which can be displayed in form.
+     * Create IngridQuery and add to state. RETURNS an Error String, if an error
+     * occured, which can be displayed in form.
+     * 
      * @param request
      * @param queryString
      * @return null if OK, otherwise "Error Code" (for resourceBundle)
@@ -356,10 +420,14 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
 
         // set query in state for result portlet
-        // NOTICE: DON'T MANIPULATE IngridQuery itself here, we don't use that one
-        // in the Result Portlet anymore, instead we create a new one from the queryString,
-        // to guarantee no shallow copy !!!! BUT KEEP THE QUERY IN THE STATE ! is used in
-        // simpleTermsPortlet and also in resultPortlet to determine whether query should be executed !
+        // NOTICE: DON'T MANIPULATE IngridQuery itself here, we don't use that
+        // one
+        // in the Result Portlet anymore, instead we create a new one from the
+        // queryString,
+        // to guarantee no shallow copy !!!! BUT KEEP THE QUERY IN THE STATE !
+        // is used in
+        // simpleTermsPortlet and also in resultPortlet to determine whether
+        // query should be executed !
         SearchState.adaptSearchState(request, Settings.MSG_QUERY, query);
         SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, queryString);
 

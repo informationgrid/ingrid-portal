@@ -183,7 +183,11 @@ public class QueryPreProcessor {
             //            UtilsSearch.processLanguage(query, request.getLocale());
         }
         
+        // add partner to query if the portal is restricted to a certain partner
         UtilsSearch.processRestrictingPartners(query);
+        
+        // add provider to the query if the provider was selected in simple search form
+        UtilsSearch.processRestrictingProvider(query, (String)sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
 
         //      TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, newStartHit, PortalConfig
@@ -309,6 +313,11 @@ public class QueryPreProcessor {
         }
 
         UtilsSearch.processRestrictingPartners(query);
+
+        // add provider to the query if the provider was selected in simple search form
+        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+        UtilsSearch.processRestrictingProvider(query, (String)sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
 
         // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, newStartHit,

@@ -911,12 +911,29 @@ public class UtilsSearch {
         if (query.getPositivePartner().length > 0  || query.getNegativePartner().length > 0) {
             return;
         }
-        String[] partners = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNERS);
+        String[] partners = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
         if (partners == null || partners.length == 0) {
             return;
         }
         
         processPartner(query, partners);
+    }
+    
+    /**
+     * Add a provider from simple search dialog to the query. Add if the 
+     * query does not already define a provider AND the provider is valid (not null, not empty).
+     * 
+     * @param query The IngridQuery
+     * @param provider The provider ident string.
+     */
+    public static void processRestrictingProvider(IngridQuery query, String provider) {
+        if (query.getPositiveProvider().length > 0  || query.getNegativeProvider().length > 0) {
+            return;
+        }
+        if (provider == null || provider.length() == 0 || provider.equals(Settings.PARAMV_ALL)) {
+            return;
+        }
+        query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, provider));
     }
     
 

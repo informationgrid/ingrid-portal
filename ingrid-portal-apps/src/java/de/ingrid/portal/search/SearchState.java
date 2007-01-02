@@ -64,7 +64,10 @@ public class SearchState {
             // (read only from request)
             String action = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
             Utils.appendURLParameter(result, action);
-
+            
+            // add provider from simple search form
+            Utils.appendURLParameter(result, Utils.toURLParam(Settings.PARAM_PROVIDER, request.getParameter(Settings.PARAM_PROVIDER)));
+            
             // query string (read from state)
             String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
             String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);

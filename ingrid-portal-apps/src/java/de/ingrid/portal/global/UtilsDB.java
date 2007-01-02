@@ -222,7 +222,7 @@ public class UtilsDB {
         // may be null,
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
-        return getValuesFromDB(session.createCriteria(IngridProvider.class).addOrder(Order.asc("sortkeyPartner"))
+        return getValuesFromDB(session.createCriteria(IngridProvider.class)
                 .addOrder(Order.asc("name")), session, providers, true);
     }
 
@@ -232,7 +232,7 @@ public class UtilsDB {
      * 
      * @param key
      *            The partner key (use 'bund')
-     * @return The provider of the partner.
+     * @return The providers of the partner.
      */
     public static List getProvidersFromPartnerKey(String key) {
         ArrayList result = new ArrayList();

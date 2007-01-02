@@ -36,6 +36,19 @@ $action.setParameter('action','doChangeDS')
 		onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"' />
 		<input class="btn" type="submit" value="$MESSAGES.getString('searchSimple.query.submit')" />
           <span class="clearer"></span>
+#if($providers)
+		<h3><label for="providers">Anbieter</label></h3>
+		<select class="inputstyle" name="provider" id="provider">
+			<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
+#foreach($provider in $providers)
+#if($selectedProviderIdent == $provider.ident)
+			<option title="$provider.name" value="$provider.ident" selected="selected">$UtilsString.cutString($provider.name, 60)</option>
+#else
+			<option title="$provider.name" value="$provider.ident">$UtilsString.cutString($provider.name, 60)</option>
+#end
+#end
+		</select>
+#end
     </form>
     <div class="optional-links">
 #set ($action = $renderResponse.createActionURL())

@@ -32,6 +32,8 @@ public class IngridSessionPreferences extends HashMap {
 
     public static final String QUERY_HISTORY = "query_history";
 
+    public static final String RESTRICTING_PROVIDER = "restricting_provider";
+    
     /**
      * Get object from preference map. If it does not exists, create a new
      * instance on the class.

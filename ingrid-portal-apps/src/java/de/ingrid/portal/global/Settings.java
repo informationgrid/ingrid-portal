@@ -369,6 +369,8 @@ public class Settings {
 
     public static final String PARAM_SUBJECT = "subject";
 
+    public static final String PARAM_PROVIDER = "provider";
+    
     public final static String PARAM_GROUPING = "grouping";
 
     public final static String PARAM_ACTION = "action";
