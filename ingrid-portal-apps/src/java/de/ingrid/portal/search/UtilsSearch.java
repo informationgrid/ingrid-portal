@@ -656,7 +656,7 @@ public class UtilsSearch {
     public static void processProvider(IngridQuery query, String[] providers) {
         if (providers != null && providers.length > 0 && Utils.getPosInArray(providers, Settings.PARAMV_ALL) == -1) {
             for (int i = 0; i < providers.length; i++) {
-                if (providers[i] != null) {
+                if (providers[i] != null && providers[i].length() > 0) {
                     query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, providers[i]));
                 }
             }
@@ -676,7 +676,7 @@ public class UtilsSearch {
         if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
             cq = new ClauseQuery(true, false);
             for (int i = 0; i < partners.length; i++) {
-                if (partners[i] != null) {
+                if (partners[i] != null && partners[i].length() > 0) {
                     cq.addField(new FieldQuery(false, false, Settings.QFIELD_PARTNER, partners[i]));
                 }
             }

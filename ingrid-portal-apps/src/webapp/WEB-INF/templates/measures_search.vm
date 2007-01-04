@@ -40,7 +40,7 @@
 			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
 			<label class="radiogroup" for="grouping_no">$MESSAGES.getString('common.form.grouping.no')</label>
 			<br />
-#if($onePartnerOnly != "true")
+#if($onePartnerOnly != "true" || !$onePartnerOnly)
 			<input type="radio" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
 			<label class="radiogroup" for="grouping_partner">$MESSAGES.getString('common.form.grouping.partner')</label>
 			<br />
