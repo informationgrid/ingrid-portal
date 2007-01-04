@@ -65,7 +65,7 @@ $fieldLabel#end
 #macro (displayPartner)
 <option value="all" #getSelected('partner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($partner in $partnerList)
-<option value="$partner.Ident" #getSelected('partner' "$partner.Ident")>$partner.Name</option>
+<option value="$partner.Ident" #getSelected('partner' "$partner.Ident") title="$partner.Name">$UtilsString.cutString($partner.Name, 30)</option>
 #end
 #end
 

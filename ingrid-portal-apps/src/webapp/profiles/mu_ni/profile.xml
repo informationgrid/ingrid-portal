@@ -21,5 +21,65 @@
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources.properties</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/CommonResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/CommonResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/CommonResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/EnvironmentSearchResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/EnvironmentSearchResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/EnvironmentSearchResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MeasuresSearchResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MeasuresSearchResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MeasuresSearchResources.properties</src>
+        </file>
     </files>
 </profile>

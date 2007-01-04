@@ -29,9 +29,9 @@
 		<div class="clearer"></div>
 		<br style="line-height:10px" />
 		<div class="float_left">
-			<h3>#displayFieldLabel('partner' $MESSAGES.getString("common.form.partner"))</h3>
+			<h3>#displayFieldLabel('provider' $MESSAGES.getString("common.form.partner"))</h3>
 			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
-				#displayPartner()
+	#displayPartner()
 			</select>
 		</div>
 		<div class="float_left marginleft">
@@ -39,9 +39,11 @@
 			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
 			<label class="radiogroup" for="grouping_no">$MESSAGES.getString("common.form.grouping.no")</label>
 			<br />
+#if($onePartnerOnly != "true")
 			<input type="radio" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
 			<label class="radiogroup" for="grouping_partner">$MESSAGES.getString("common.form.grouping.partner")</label>
 			<br />
+#end
 			<input type="radio" id="grouping_info" name="grouping" value="provider" #getChecked('grouping' 'provider')/>
 			<label class="radiogroup" for="grouping_info">$MESSAGES.getString("common.form.grouping.provider")</label>
 			<br />

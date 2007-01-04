@@ -654,7 +654,7 @@ public class UtilsSearch {
      * @param partners
      */
     public static void processProvider(IngridQuery query, String[] providers) {
-        if (providers != null && providers.length > 0) {
+        if (providers != null && providers.length > 0 && Utils.getPosInArray(providers, Settings.PARAMV_ALL) == -1) {
             for (int i = 0; i < providers.length; i++) {
                 if (providers[i] != null) {
                     query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, providers[i]));

@@ -15,12 +15,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
@@ -46,9 +48,12 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
-        
+
+        context.put("UtilsString", new UtilsString());
+
         // check for enabled search term field
-        context.put("enable_searchterm", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_SEARCHTERM, Boolean.FALSE));
+        context.put("enable_searchterm", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_SEARCHTERM, Boolean.FALSE));
 
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
@@ -58,7 +63,8 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         if (action == null) {
             action = "";
         }
-        // indicates whether form parameters were passed -> then we're called from Service page !
+        // indicates whether form parameters were passed -> then we're called
+        // from Service page !
         String grouping = request.getParameter(Settings.PARAM_GROUPING);
 
         // search if
@@ -74,12 +80,21 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // ----------------------------------
-        // set data for view template 
+        // set data for view template
         // ----------------------------------
 
-        // get partners
-        List partners = UtilsDB.getPartners();
-        context.put("partnerList", partners);
+        // check for portal restricted to only one partner
+        String partnerRestriction = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+
+        if (partnerRestriction == null || partnerRestriction.length() == 0) {
+            // get partners, if not restricted
+            context.put("partnerList", UtilsDB.getPartners());
+        } else {
+            // get providers of the restrected partner if the portal is
+            // restricted
+            context.put("onePartnerOnly", "true");
+            context.put("partnerList", UtilsDB.getProvidersFromPartnerKey(partnerRestriction));
+        }
 
         // get topics
         List topics = UtilsDB.getEnvTopics();
@@ -102,18 +117,34 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             // no URL parameters, we're called from other page -> default values
             af.init();
         }
+
+        // preset the provider selected in the simple search form
+        if (partnerRestriction != null && partnerRestriction.length() > 0) {
+            // get selected provider
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+            String provider = (String) sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER);
+            if (provider != null) {
+                af.setInput(EnvironmentSearchForm.FIELD_PARTNER, provider);
+            }
+        }
+
         // replaces only the ones in request
         af.populate(request);
 
-        // check for "zeige alle Ergebnisse von" and set the form fields accordingly
+        // check for "zeige alle Ergebnisse von" and set the form fields
+        // accordingly
         String[] subjects = request.getParameterValues(Settings.PARAM_SUBJECT);
         if (subjects != null && subjects.length > 0) {
             if (af.getInput(EnvironmentSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PARTNER)) {
                 af.setInput(EnvironmentSearchForm.FIELD_PARTNER, subjects);
             } else if (af.getInput(EnvironmentSearchForm.FIELD_GROUPING).equals(Settings.PARAMV_GROUPING_PROVIDER)) {
-                // NOTICE: "hidden field" in ActionForm encapsulates passed providers (no real field for this one)
-                // will only be cleared, if new Action in Form is performed (see processAction() ...
-                // in result portlet, the parameters will automatically be generated also for this one (e.g.
+                // NOTICE: "hidden field" in ActionForm encapsulates passed
+                // providers (no real field for this one)
+                // will only be cleared, if new Action in Form is performed (see
+                // processAction() ...
+                // in result portlet, the parameters will automatically be
+                // generated also for this one (e.g.
                 // for page navigation)
                 af.setInput(EnvironmentSearchForm.STORAGE_PROVIDER, subjects);
             }
@@ -129,7 +160,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // ----------------------------------
-        // prepare Search, Search will be performed in Result portlet 
+        // prepare Search, Search will be performed in Result portlet
         // ----------------------------------
         if (doSearch) {
             setupQuery(request);
@@ -208,12 +239,27 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
                 query.addClause(cq);
             }
 
-            // PARTNER
-            UtilsSearch.processPartner(query, af.getInputAsArray(EnvironmentSearchForm.FIELD_PARTNER));
+            // check for portal restricted to only one partner
+            String partnerRestriction = PortalConfig.getInstance().getString(
+                    PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+            if (partnerRestriction == null || partnerRestriction.length() == 0) {
+                // process selected partner, if no partner restriction was set
+                UtilsSearch.processPartner(query, af.getInputAsArray(EnvironmentSearchForm.FIELD_PARTNER));
+            } else {
+                // we have a restriction to one partner
+                // treat Strings in 'partner' property of the form as providers
+                // PROVIDER restriction (from hidden Field in ActionForm !)
+                UtilsSearch.processProvider(query, af.getInputAsArray(EnvironmentSearchForm.FIELD_PARTNER));
+                // set selected provider so session
+                IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                        IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+                sessionPrefs.put(IngridSessionPreferences.RESTRICTING_PROVIDER, af
+                        .getInput(EnvironmentSearchForm.FIELD_PARTNER));
+            }
 
             // PROVIDER restriction (from hidden Field in ActionForm !)
             UtilsSearch.processProvider(query, af.getInputAsArray(EnvironmentSearchForm.STORAGE_PROVIDER));
-            
+
             // GROUPING
             UtilsSearch.processGrouping(query, af.getInput(EnvironmentSearchForm.FIELD_GROUPING));
 
@@ -221,13 +267,13 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
 
             // personalized values
-            
+
             // set partner from personalization
             QueryPreProcessor.processQueryPartner(request, query);
-            
+
             // set restricting partner from config
             UtilsSearch.processRestrictingPartners(query);
-            
+
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems setting up Query !", t);
