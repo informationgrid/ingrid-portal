@@ -16,8 +16,10 @@
           <label class="float_left col2left" for="group_by">$MESSAGES.getString('personalize.settings.label.grouping')</label>
           <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
             <option value="none" #getSelected('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
+#if($onePartnerOnly != "true")
             <option value="partner" #getSelected('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
-            <option value="provider" #getSelected('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
+#end
+			<option value="provider" #getSelected('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
           </select>
           <span class="clearer"></span>
         </p>

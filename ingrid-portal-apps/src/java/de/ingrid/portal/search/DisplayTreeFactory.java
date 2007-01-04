@@ -23,7 +23,7 @@ import de.ingrid.utils.query.TermQuery;
 
 /**
  * TODO Describe your created type (class, etc.) here.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class DisplayTreeFactory {
@@ -50,14 +50,17 @@ public class DisplayTreeFactory {
     }
 
     /**
-     * Get Partner/Provider Tree Structure FROM Data Base. Simply reads Partner/Providers from Database.
+     * Get Partner/Provider Tree Structure FROM Data Base. Simply reads
+     * Partner/Providers from Database. Filters partners by the filter param.
+     * 
+     * @param filter The partners to restrict. null for all partner.
      * @return
      */
-    public static DisplayTreeNode getTreeFromPartnerProviderFromDB() {
+    public static DisplayTreeNode getTreeFromPartnerProviderFromDB(ArrayList filter) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
 
-        LinkedHashMap partnerProviderMap = UtilsDB.getPartnerProviderMap();
+        LinkedHashMap partnerProviderMap = UtilsDB.getPartnerProviderMap(filter);
         Iterator keysPartnerMaps = partnerProviderMap.keySet().iterator();
 
         // process all partners
@@ -89,7 +92,9 @@ public class DisplayTreeFactory {
     }
 
     /**
-     * Get Partner/Provider Tree Structure FROM iBus. Providers are dynamically queried from iBus (iPlugs).
+     * Get Partner/Provider Tree Structure FROM iBus. Providers are dynamically
+     * queried from iBus (iPlugs).
+     * 
      * @return
      */
     public static DisplayTreeNode getTreeFromPartnerProviderFromBus() {
@@ -107,7 +112,8 @@ public class DisplayTreeFactory {
             partnerNode.setParent(root);
             root.addChild(partnerNode);
 
-            // store all providers for the current partner ! every provider only once !
+            // store all providers for the current partner ! every provider only
+            // once !
             HashSet providers = new HashSet();
             for (int i = 0; i < plugs.length; i++) {
                 PlugDescription plug = plugs[i];
@@ -130,7 +136,8 @@ public class DisplayTreeFactory {
                 }
             }
 
-            // get the providers with their full name as nodes and store them in a list !
+            // get the providers with their full name as nodes and store them in
+            // a list !
             ArrayList providerList = new ArrayList(providers.size());
             Iterator itProvider = providers.iterator();
             while (itProvider.hasNext()) {
@@ -174,7 +181,7 @@ public class DisplayTreeFactory {
 
     /**
      * Inner class: ProviderNodeComparator for provider sorting;
-     *
+     * 
      * @author Martin Maidhof
      */
     static private class ProviderNodeComparator implements Comparator {
@@ -192,4 +199,5 @@ public class DisplayTreeFactory {
             }
         }
     }
+
 }

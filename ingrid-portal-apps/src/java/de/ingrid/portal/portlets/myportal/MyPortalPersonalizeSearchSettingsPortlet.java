@@ -18,6 +18,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchSettingsForm;
 import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -39,6 +40,12 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
         
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
         context.put("MESSAGES", messages);
+
+        String partnerRestriction = PortalConfig.getInstance().getString(
+                PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+        if (partnerRestriction != null && partnerRestriction.length() > 0) {
+            context.put("onePartnerOnly", "true");
+        }
 
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "personalize.settings.title.rankingAndGrouping");

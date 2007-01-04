@@ -14,6 +14,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchSettingsForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -46,6 +47,12 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        String partnerRestriction = PortalConfig.getInstance().getString(
+                PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+        if (partnerRestriction != null && partnerRestriction.length() > 0) {
+            context.put("onePartnerOnly", "true");
+        }
 
         SearchSettingsForm f = (SearchSettingsForm) Utils.getActionForm(request, SearchSettingsForm.SESSION_KEY,
                 SearchSettingsForm.class);

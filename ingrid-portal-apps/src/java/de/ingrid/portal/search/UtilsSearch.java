@@ -568,8 +568,7 @@ public class UtilsSearch {
                 return true;
             }
         }
-        
-        
+
         return false;
     }
 
@@ -761,7 +760,15 @@ public class UtilsSearch {
         PortletSession session = request.getPortletSession();
         DisplayTreeNode partnerRoot = (DisplayTreeNode) session.getAttribute("partnerRoot");
         if (partnerRoot == null) {
-            partnerRoot = DisplayTreeFactory.getTreeFromPartnerProviderFromDB();
+            String partnerRestriction = PortalConfig.getInstance().getString(
+                    PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+            if (partnerRestriction == null || partnerRestriction.length() == 0) {
+                partnerRoot = DisplayTreeFactory.getTreeFromPartnerProviderFromDB(null);
+            } else {
+                ArrayList filter = new ArrayList();
+                filter.add(partnerRestriction);
+                partnerRoot = DisplayTreeFactory.getTreeFromPartnerProviderFromDB(filter);
+            }
             session.setAttribute("partnerRoot", partnerRoot);
         }
 
@@ -898,36 +905,37 @@ public class UtilsSearch {
             return queryStr;
         }
     }
-    
-    
-    
+
     /**
-     * Adds partner restrictions if they are definied in the portal configuration 
-     * AND if no partner has been added to the query so far.
+     * Adds partner restrictions if they are definied in the portal
+     * configuration AND if no partner has been added to the query so far.
      * 
      * @param query
      */
     public static void processRestrictingPartners(IngridQuery query) {
-        if (query.getPositivePartner().length > 0  || query.getNegativePartner().length > 0) {
+        if (query.getPositivePartner().length > 0 || query.getNegativePartner().length > 0) {
             return;
         }
         String[] partners = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
         if (partners == null || partners.length == 0) {
             return;
         }
-        
+
         processPartner(query, partners);
     }
-    
+
     /**
-     * Add a provider from simple search dialog to the query. Add if the 
-     * query does not already define a provider AND the provider is valid (not null, not empty).
+     * Add a provider from simple search dialog to the query. Add if the query
+     * does not already define a provider AND the provider is valid (not null,
+     * not empty).
      * 
-     * @param query The IngridQuery
-     * @param provider The provider ident string.
+     * @param query
+     *            The IngridQuery
+     * @param provider
+     *            The provider ident string.
      */
     public static void processRestrictingProvider(IngridQuery query, String provider) {
-        if (query.getPositiveProvider().length > 0  || query.getNegativeProvider().length > 0) {
+        if (query.getPositiveProvider().length > 0 || query.getNegativeProvider().length > 0) {
             return;
         }
         if (provider == null || provider.length() == 0 || provider.equals(Settings.PARAMV_ALL)) {
@@ -935,7 +943,6 @@ public class UtilsSearch {
         }
         query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, provider));
     }
-    
 
     /**
      * Add a querystring to the session querystring history.

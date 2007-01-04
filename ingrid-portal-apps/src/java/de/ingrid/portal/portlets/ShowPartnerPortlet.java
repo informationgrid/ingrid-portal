@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -44,7 +45,15 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
 
         try {
-            context.put("partners", UtilsDB.getPartnerProviderMap());
+            String partnerRestriction = PortalConfig.getInstance().getString(
+                    PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+            if (partnerRestriction == null || partnerRestriction.length() == 0) {
+                context.put("partners", UtilsDB.getPartnerProviderMap(null));
+            } else {
+                ArrayList filter = new ArrayList();
+                filter.add(partnerRestriction);
+                context.put("partners", UtilsDB.getPartnerProviderMap(filter));
+            }
 
             // set up plug list for view, remove plugs with same name !
             PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();

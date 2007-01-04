@@ -9,5 +9,17 @@
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources.properties</src>
+        </file>
     </files>
 </profile>
