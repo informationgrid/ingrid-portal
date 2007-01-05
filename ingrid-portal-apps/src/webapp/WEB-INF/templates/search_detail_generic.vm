@@ -29,7 +29,7 @@
 
 #if($rec)
 	<div class="section-header">
-		<h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#end</h1>
+		<h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h1>
 	</div>
 	<span class="clearer"></span>
 	<div class="section">

@@ -676,7 +676,7 @@
 <div id="content_full">
 #if($rec)
 	<div class="section-header">
-		<h1>$rec.get("title")</h1>
+		<h1>#if($rec.get("title"))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h1>
 		<p class="float_right"><span class="smaller">#if($rec.get("t01_object.mod_time"))$MESSAGES.getString('search.detail.last.changed') $rec.get("t01_object.mod_time").substring(0,10)#end</span></p>
 	</div>
 	<span class="clearer"></span>
