@@ -11,6 +11,14 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-help.xml</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-help_en.xml</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources_de.properties</src>
         </file>
         <file>
