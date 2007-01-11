@@ -310,6 +310,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
                 context.put("rec", recordMap);
             }
+        } catch (NumberFormatException e) {
+            if (log.isDebugEnabled()) {
+                log.debug("Error getting result record. doc id is no valid number", e);
+            } else if (log.isInfoEnabled()) {
+                log.info("Error getting result record. doc id is no valid number" + "(switch to debug mode for exception.)");
+            }
         } catch (Throwable t) {
             log.error("Error getting result record.", t);
         }
@@ -559,7 +565,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
             } catch (Exception e) {
-                log.error("Error fetching address data for address id: " + addrId, e);
+                if (log.isDebugEnabled()) {
+                    log.debug("Error fetching address data for address id: " + addrId, e);
+                } else if (log.isInfoEnabled()) {
+                    log.info("Error fetching address data for address id: " + addrId + "(switch to debug mode for exception.)");
+                }
             }
         } else if (cmd.equals("doShowObjectDetail")) {
             String objId = request.getParameter("objId");
@@ -572,7 +582,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
             } catch (Exception e) {
-                log.error("Error fetching object data for object id: " + objId, e);
+                if (log.isDebugEnabled()) {
+                    log.debug("Error fetching object data for object id: " + objId, e);
+                } else {
+                    log.info("Error fetching object data for object id: " + objId + "(switch to debug mode for exception.)");
+                }
             }
         } else if (cmd.equals("doShowDocument")) {
             response.setRenderParameter("docid", request.getParameter("docid"));
@@ -748,7 +762,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             } while (hits.getHits().length == 20);
         } catch (Exception e) {
-            log.error("Problems getting hits from iBus!", e);
+            if (log.isDebugEnabled()) {
+                log.error("Problems getting hits from iBus!", e);
+            } else {
+                log.info("Problems getting hits from iBus!");
+            }
         }
         return result;
     }

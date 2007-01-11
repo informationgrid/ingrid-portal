@@ -183,16 +183,19 @@ public class RSSFetcherJob implements Job {
                     }
                     feed = null;
                 } catch (Exception e) {
-                    if (log.isErrorEnabled()) {
-                        log.error("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                    if (log.isInfoEnabled()) {
+                        log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + e.getMessage() + "]");
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", e);
                     }
                 } finally {
                     session.evict(rssSource);
                 }
             }
 
-            if (cnt > 0) {
-                log.info("Number of RSS entries added: " + cnt);
+            if (log.isDebugEnabled()) {
+                log.debug("Number of RSS entries added: " + cnt);
             }
 
             // remove old entries

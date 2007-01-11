@@ -44,8 +44,8 @@ public class SearchState {
             Utils.appendURLParameter(result, urlParam);
         }
 
-        if (log.isInfoEnabled()) {
-            log.info("Catalogue: URL parameters: " + result);
+        if (log.isDebugEnabled()) {
+            log.debug("Catalogue: URL parameters: " + result);
         }
 
         return result.substring(0, result.length());
@@ -129,8 +129,8 @@ public class SearchState {
             result = new StringBuffer("");
         }
 
-        if (log.isInfoEnabled()) {
-            log.info("Main Search: URL parameters: " + result);
+        if (log.isDebugEnabled()) {
+            log.debug("Main Search: URL parameters: " + result);
         }
 
         return result.substring(0, result.length());

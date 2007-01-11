@@ -328,7 +328,7 @@ public class UtilsString {
             if (maxPathLength <= 0) {
                 return resultB.substring(0, maxLength - 3).concat("...");
             }
-            if (path.length() <= maxPathLength) {
+            if (path.length() <= maxPathLength && (query == null || query.length() == 0)) {
                 resultB.append(path);
             } else {
                 String[] pathElements = path.split("/");
@@ -340,7 +340,12 @@ public class UtilsString {
                     boolean pathElementsProcessed = true;
                     for (int i = pathElements.length - 1; i > 1; i--) {
                         // 5 because of "/" which must be added and "/..." which should be addable !
-                        if (resultPath.length() + pathElements[i].length() + 5 <= maxPathLength) {
+                        int checkLenth = resultPath.length() + pathElements[i].length() + 5;
+                        if (query != null) {
+                            // if we have a query str, take "?..." into account as well
+                            checkLenth = checkLenth + 4;
+                        }
+                        if (checkLenth <= maxPathLength) {
                             resultPath.insert(0, "/").insert(1, pathElements[i]);
                         } else {
                             resultPath.insert(0, "/...");
@@ -360,20 +365,17 @@ public class UtilsString {
                 }
             }
     
-            if (query != null) {
-                if (resultB.length() < maxLength) {
+            if (query != null && query.length() > 0) {
+                if (resultB.length() < maxLength - 4) {
                     if (query.length() + 1 < maxLength - resultB.length()) {
                         resultB.append("?").append(query);
                     } else {
                         resultB.append("?").append(query.substring(0, maxLength - resultB.length() - 4)).append("...");
                     }
+                    return resultB.toString();
                 } else {
-    //                resultB.append("?...");
+                    return resultB.append("?...").toString();
                 }
-            }
-    
-            if (resultB.length() > maxLength) {
-                return resultB.substring(0, maxLength - 3).concat("...");
             }
     
             return resultB.toString();
