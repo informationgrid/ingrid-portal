@@ -106,7 +106,11 @@ public class ThreadedQuery extends Thread {
                 }
             }
         } catch (Throwable t) {
-            log.warn("Error while querying the ibus.", t);
+            if (log.isDebugEnabled()) {
+                log.debug("Error while querying the ibus.", t);
+            } else {
+                log.info("Error while querying the ibus. Switch to log level debug for exception details.");
+            }
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("Finished search '" + this.key + "' in " + (System.currentTimeMillis() - startTime) + "ms.");

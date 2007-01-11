@@ -412,8 +412,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         try {
             query = QueryStringParser.parse(queryString);
         } catch (Throwable t) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems creating IngridQuery, parsed query string: " + queryString, t);
+            if (log.isDebugEnabled()) {
+                log.debug("Problems creating IngridQuery, parsed query string: " + queryString, t);
+            } else {
+                log.debug("Problems creating IngridQuery, parsed query string: " + queryString + ". switch to log level debug to see the exeption details.");
             }
 
             return "searchSimple.error.queryFormat";

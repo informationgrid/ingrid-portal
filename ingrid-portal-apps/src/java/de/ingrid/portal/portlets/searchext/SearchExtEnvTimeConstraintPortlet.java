@@ -74,11 +74,11 @@ public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnvTime {
                 .concat("t0:").concat(UtilsDate.convertDateString(f.getInput(SearchExtEnvTimeConstraintForm.FIELD_AT), "dd.MM.yyyy", "yyyy-MM-dd"));
             }
             if (f.hasInput(SearchExtEnvTimeConstraintForm.FIELD_CHK1) && f.hasInput(SearchExtEnvTimeConstraintForm.FIELD_CHK2)) {
-                subTerm = subTerm.concat(" (time:intersect OR time:include)");
+                subTerm = "((".concat(subTerm).concat(" time:intersect) OR (").concat(subTerm).concat(" time:include))");
             } else if (f.hasInput(SearchExtEnvTimeConstraintForm.FIELD_CHK1)) {
-                subTerm = subTerm.concat(" time:intersect");
+                subTerm = "(".concat(subTerm).concat(" time:intersect)");
             } else if (f.hasInput(SearchExtEnvTimeConstraintForm.FIELD_CHK2)) {
-                subTerm = subTerm.concat(" time:include");
+                subTerm = "(".concat(subTerm).concat(" time:include)");
             }
             
             String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
