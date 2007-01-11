@@ -796,7 +796,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
      * @return
      */
     public String getAddressPlugIdFromPlugId(String plugId) {
-        if (plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
+        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
             return plugId.concat("_addr");
         } else {
             return plugId;
