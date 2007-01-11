@@ -82,7 +82,7 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
         try
         {            
             PortletWindow actionWindow = request.getActionWindow();
-            if (actionWindow != null)
+            if (actionWindow != null && actionWindow.getPortletEntity() != null)
             {
                 initWindow(actionWindow, request);
                 HttpServletResponse response = request.getResponseForWindow(actionWindow);
