@@ -12,9 +12,9 @@ public class UtilsString {
 
     private final static Log log = LogFactory.getLog(UtilsString.class);
 
-    //  see http://hotwired.lycos.com/webmonkey/reference/special_characters/
+    // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
-    // {"#39", new Integer(39)},       // ' - apostrophe
+    // {"#39", new Integer(39)}, // ' - apostrophe
             { "quot", new Integer(34) }, // " - double-quote
             { "amp", new Integer(38) }, // & - ampersand
             { "lt", new Integer(60) }, // < - less-than
@@ -24,7 +24,8 @@ public class UtilsString {
             { "reg", new Integer(174) }, // ® - registered trademark
             { "Agrave", new Integer(192) }, // À - uppercase A, grave accent
             { "Aacute", new Integer(193) }, // Á - uppercase A, acute accent
-            { "Acirc", new Integer(194) }, // Â - uppercase A, circumflex accent
+            { "Acirc", new Integer(194) }, // Â - uppercase A, circumflex
+            // accent
             { "Atilde", new Integer(195) }, // Ã - uppercase A, tilde
             { "Auml", new Integer(196) }, // Ä - uppercase A, umlaut
             { "Aring", new Integer(197) }, // Å - uppercase A, ring
@@ -32,30 +33,35 @@ public class UtilsString {
             { "Ccedil", new Integer(199) }, // Ç - uppercase C, cedilla
             { "Egrave", new Integer(200) }, // È - uppercase E, grave accent
             { "Eacute", new Integer(201) }, // É - uppercase E, acute accent
-            { "Ecirc", new Integer(202) }, // Ê - uppercase E, circumflex accent
+            { "Ecirc", new Integer(202) }, // Ê - uppercase E, circumflex
+            // accent
             { "Euml", new Integer(203) }, // Ë - uppercase E, umlaut
             { "Igrave", new Integer(204) }, // Ì - uppercase I, grave accent
             { "Iacute", new Integer(205) }, // Í - uppercase I, acute accent
-            { "Icirc", new Integer(206) }, // Î - uppercase I, circumflex accent
+            { "Icirc", new Integer(206) }, // Î - uppercase I, circumflex
+            // accent
             { "Iuml", new Integer(207) }, // Ï - uppercase I, umlaut
             { "ETH", new Integer(208) }, // Ð - uppercase Eth, Icelandic
             { "Ntilde", new Integer(209) }, // Ñ - uppercase N, tilde
             { "Ograve", new Integer(210) }, // Ò - uppercase O, grave accent
             { "Oacute", new Integer(211) }, // Ó - uppercase O, acute accent
-            { "Ocirc", new Integer(212) }, // Ô - uppercase O, circumflex accent
+            { "Ocirc", new Integer(212) }, // Ô - uppercase O, circumflex
+            // accent
             { "Otilde", new Integer(213) }, // Õ - uppercase O, tilde
             { "Ouml", new Integer(214) }, // Ö - uppercase O, umlaut
             { "Oslash", new Integer(216) }, // Ø - uppercase O, slash
             { "Ugrave", new Integer(217) }, // Ù - uppercase U, grave accent
             { "Uacute", new Integer(218) }, // Ú - uppercase U, acute accent
-            { "Ucirc", new Integer(219) }, // Û - uppercase U, circumflex accent
+            { "Ucirc", new Integer(219) }, // Û - uppercase U, circumflex
+            // accent
             { "Uuml", new Integer(220) }, // Ü - uppercase U, umlaut
             { "Yacute", new Integer(221) }, // Ý - uppercase Y, acute accent
             { "THORN", new Integer(222) }, // Þ - uppercase THORN, Icelandic
             { "szlig", new Integer(223) }, // ß - lowercase sharps, German
             { "agrave", new Integer(224) }, // à - lowercase a, grave accent
             { "aacute", new Integer(225) }, // á - lowercase a, acute accent
-            { "acirc", new Integer(226) }, // â - lowercase a, circumflex accent
+            { "acirc", new Integer(226) }, // â - lowercase a, circumflex
+            // accent
             { "atilde", new Integer(227) }, // ã - lowercase a, tilde
             { "auml", new Integer(228) }, // ä - lowercase a, umlaut
             { "aring", new Integer(229) }, // å - lowercase a, ring
@@ -63,27 +69,32 @@ public class UtilsString {
             { "ccedil", new Integer(231) }, // ç - lowercase c, cedilla
             { "egrave", new Integer(232) }, // è - lowercase e, grave accent
             { "eacute", new Integer(233) }, // é - lowercase e, acute accent
-            { "ecirc", new Integer(234) }, // ê - lowercase e, circumflex accent
+            { "ecirc", new Integer(234) }, // ê - lowercase e, circumflex
+            // accent
             { "euml", new Integer(235) }, // ë - lowercase e, umlaut
             { "igrave", new Integer(236) }, // ì - lowercase i, grave accent
             { "iacute", new Integer(237) }, // í - lowercase i, acute accent
-            { "icirc", new Integer(238) }, // î - lowercase i, circumflex accent
+            { "icirc", new Integer(238) }, // î - lowercase i, circumflex
+            // accent
             { "iuml", new Integer(239) }, // ï - lowercase i, umlaut
             { "igrave", new Integer(236) }, // ì - lowercase i, grave accent
             { "iacute", new Integer(237) }, // í - lowercase i, acute accent
-            { "icirc", new Integer(238) }, // î - lowercase i, circumflex accent
+            { "icirc", new Integer(238) }, // î - lowercase i, circumflex
+            // accent
             { "iuml", new Integer(239) }, // ï - lowercase i, umlaut
             { "eth", new Integer(240) }, // ð - lowercase eth, Icelandic
             { "ntilde", new Integer(241) }, // ñ - lowercase n, tilde
             { "ograve", new Integer(242) }, // ò - lowercase o, grave accent
             { "oacute", new Integer(243) }, // ó - lowercase o, acute accent
-            { "ocirc", new Integer(244) }, // ô - lowercase o, circumflex accent
+            { "ocirc", new Integer(244) }, // ô - lowercase o, circumflex
+            // accent
             { "otilde", new Integer(245) }, // õ - lowercase o, tilde
             { "ouml", new Integer(246) }, // ö - lowercase o, umlaut
             { "oslash", new Integer(248) }, // ø - lowercase o, slash
             { "ugrave", new Integer(249) }, // ù - lowercase u, grave accent
             { "uacute", new Integer(250) }, // ú - lowercase u, acute accent
-            { "ucirc", new Integer(251) }, // û - lowercase u, circumflex accent
+            { "ucirc", new Integer(251) }, // û - lowercase u, circumflex
+            // accent
             { "uuml", new Integer(252) }, // ü - lowercase u, umlaut
             { "yacute", new Integer(253) }, // ý - lowercase y, acute accent
             { "thorn", new Integer(254) }, // þ - lowercase thorn, Icelandic
@@ -102,13 +113,17 @@ public class UtilsString {
     }
 
     /**
-     * Turns funky characters into HTML entity equivalents<p>
-     * e.g. <tt>"bread" & "butter"</tt> => <tt>&amp;quot;bread&amp;quot; &amp;amp; &amp;quot;butter&amp;quot;</tt>.
-     * Update: supports nearly all HTML entities, including funky accents. See the source code for more detail.
+     * Turns funky characters into HTML entity equivalents
+     * <p>
+     * e.g. <tt>"bread" & "butter"</tt> =>
+     * <tt>&amp;quot;bread&amp;quot; &amp;amp; &amp;quot;butter&amp;quot;</tt>.
+     * Update: supports nearly all HTML entities, including funky accents. See
+     * the source code for more detail.
+     * 
      * @see #htmlunescape(String)
-     **/
+     */
     public static String htmlescape(String s1) {
-        if (s1 == null) 
+        if (s1 == null)
             return null;
         StringBuffer buf = new StringBuffer();
         int i;
@@ -129,16 +144,15 @@ public class UtilsString {
     }
 
     /**
-     * Given a string containing entity escapes, returns a string
-     * containing the actual Unicode characters corresponding to the
-     * escapes.
-     *
-     * Note: nasty bug fixed by Helge Tesgaard (and, in parallel, by
-     * Alex, but Helge deserves major props for emailing me the fix).
-     * 15-Feb-2002 Another bug fixed by Sean Brown <sean@boohai.com>
-     *
+     * Given a string containing entity escapes, returns a string containing the
+     * actual Unicode characters corresponding to the escapes.
+     * 
+     * Note: nasty bug fixed by Helge Tesgaard (and, in parallel, by Alex, but
+     * Helge deserves major props for emailing me the fix). 15-Feb-2002 Another
+     * bug fixed by Sean Brown <sean@boohai.com>
+     * 
      * @see #htmlescape(String)
-     **/
+     */
     public static String htmlunescape(String s1) {
         StringBuffer buf = new StringBuffer();
         int i;
@@ -158,7 +172,10 @@ public class UtilsString {
                     iso = (Integer) e2i.get(entity);
                 }
                 if (iso == null) {
-                    buf.append("&" + entity + ";");
+                    // entity not found in entity list
+                    // presume non entity character
+                    buf.append(ch);
+                    continue;
                 } else {
                     buf.append((char) (iso.intValue()));
                 }
@@ -171,9 +188,12 @@ public class UtilsString {
     }
 
     /**
-     * Extracts a search term (single word) from a sentence (normally the longest word)
+     * Extracts a search term (single word) from a sentence (normally the
+     * longest word)
+     * 
      * @param sentence
-     * @param separator separator between words in sentence (regex for split method)
+     * @param separator
+     *            separator between words in sentence (regex for split method)
      * @return
      */
     public static String getSearchTerm(String sentence, String separator) {
@@ -226,9 +246,8 @@ public class UtilsString {
     }
 
     /**
-     * Cut a string at a given position. Returns a substring 
-     * with max. maxLength or shorter. searches for the last 
-     * occurence of ' '.
+     * Cut a string at a given position. Returns a substring with max. maxLength
+     * or shorter. searches for the last occurence of ' '.
      * 
      * @param str
      * @param maxLength
@@ -240,9 +259,9 @@ public class UtilsString {
 
     /**
      * Cut a string at a given position. Also takes the maximumLength of the
-     * first Row into Account, which may differ from the Length of the second row ! 
-     * Returns a substring with max. maxLength or shorter. searches for the last 
-     * occurence of ' '.
+     * first Row into Account, which may differ from the Length of the second
+     * row ! Returns a substring with max. maxLength or shorter. searches for
+     * the last occurence of ' '.
      * 
      * @param str
      * @param maxLength
@@ -253,7 +272,8 @@ public class UtilsString {
             return str;
         }
 
-        // check for lines without white space which are longer than the max row length
+        // check for lines without white space which are longer than the max row
+        // length
         int startIndex = 0;
         int endIndex = startIndex + maxLengthFirstRow - 1;
         while (endIndex < str.length()) {
@@ -282,9 +302,10 @@ public class UtilsString {
     }
 
     /**
-     * Escape characters in a string for use in regular expressions. 
+     * Escape characters in a string for use in regular expressions.
      * 
-     * @param str The String.
+     * @param str
+     *            The String.
      * @return The escaped String.
      */
     public static String regExEscape(String str) {
@@ -301,84 +322,111 @@ public class UtilsString {
     }
 
     public static String getShortURLStr(String urlStr, int maxLength) {
-    
-            if (urlStr.length() <= maxLength)
-                return urlStr;
-    
-            URL url = null;
-            try {
-                url = new URL(urlStr);
-            } catch (MalformedURLException e) {
-                return "invalid url syntax";
-            }
-    
-            String path = url.getPath();
-            String host = url.getHost();
-            String protocoll = url.getProtocol();
-            String query = url.getQuery();
-            int port = url.getPort();
-    
-            StringBuffer resultB = new StringBuffer();
-            resultB.append(protocoll).append("://").append(host);
-            if (port > -1) {
-                resultB.append(":").append(port);
-            }
-    
-            int maxPathLength = maxLength - resultB.length();
-            if (maxPathLength <= 0) {
-                return resultB.substring(0, maxLength - 3).concat("...");
-            }
-            if (path.length() <= maxPathLength && (query == null || query.length() == 0)) {
-                resultB.append(path);
-            } else {
-                String[] pathElements = path.split("/");
-                // first path element is empty string !
-                if (pathElements != null && pathElements.length >= 2) {
-                    StringBuffer resultPath = new StringBuffer();
-                    // start from end !
-                    // don't take first path element into account, will be processed afterwards (index 1)
-                    boolean pathElementsProcessed = true;
-                    for (int i = pathElements.length - 1; i > 1; i--) {
-                        // 5 because of "/" which must be added and "/..." which should be addable !
-                        int checkLenth = resultPath.length() + pathElements[i].length() + 5;
-                        if (query != null) {
-                            // if we have a query str, take "?..." into account as well
-                            checkLenth = checkLenth + 4;
-                        }
-                        if (checkLenth <= maxPathLength) {
-                            resultPath.insert(0, "/").insert(1, pathElements[i]);
-                        } else {
-                            resultPath.insert(0, "/...");
-                            pathElementsProcessed = false;
-                            break;
-                        }
-                    }
-                    if (pathElementsProcessed) {
-                        // try to add missing one !
-                        if (resultPath.length() + pathElements[1].length() + 1 <= maxPathLength) {
-                            resultPath.insert(0, "/").insert(1, pathElements[1]);
-                        } else {
-                            resultPath.insert(0, "/...");
-                        }
-                    }
-                    resultB.append(resultPath);
-                }
-            }
-    
-            if (query != null && query.length() > 0) {
-                if (resultB.length() < maxLength - 4) {
-                    if (query.length() + 1 < maxLength - resultB.length()) {
-                        resultB.append("?").append(query);
-                    } else {
-                        resultB.append("?").append(query.substring(0, maxLength - resultB.length() - 4)).append("...");
-                    }
-                    return resultB.toString();
-                } else {
-                    return resultB.append("?...").toString();
-                }
-            }
-    
-            return resultB.toString();
+
+        if (urlStr.length() <= maxLength)
+            return urlStr;
+
+        URL url = null;
+        try {
+            url = new URL(urlStr);
+        } catch (MalformedURLException e) {
+            return "invalid url syntax";
         }
+
+        String path = url.getPath();
+        String host = url.getHost();
+        String protocoll = url.getProtocol();
+        String query = url.getQuery();
+        int port = url.getPort();
+
+        StringBuffer resultB = new StringBuffer();
+        resultB.append(protocoll).append("://").append(host);
+        if (port > -1) {
+            resultB.append(":").append(port);
+        }
+
+        int maxPathLength = maxLength - resultB.length();
+        if (maxPathLength <= 0) {
+            return resultB.substring(0, maxLength - 3).concat("...");
+        }
+        if (path.length() <= maxPathLength && (query == null || query.length() == 0)) {
+            resultB.append(path);
+        } else {
+            String[] pathElements = path.split("/");
+            // first path element is empty string !
+            if (pathElements != null && pathElements.length >= 2) {
+                StringBuffer resultPath = new StringBuffer();
+                // start from end !
+                // don't take first path element into account, will be processed
+                // afterwards (index 1)
+                boolean pathElementsProcessed = true;
+                for (int i = pathElements.length - 1; i > 1; i--) {
+                    // 5 because of "/" which must be added and "/..." which
+                    // should be addable !
+                    int checkLenth = resultPath.length() + pathElements[i].length() + 5;
+                    if (query != null) {
+                        // if we have a query str, take "?..." into account as
+                        // well
+                        checkLenth = checkLenth + 4;
+                    }
+                    if (checkLenth <= maxPathLength) {
+                        resultPath.insert(0, "/").insert(1, pathElements[i]);
+                    } else {
+                        resultPath.insert(0, "/...");
+                        pathElementsProcessed = false;
+                        break;
+                    }
+                }
+                if (pathElementsProcessed) {
+                    // try to add missing one !
+                    if (resultPath.length() + pathElements[1].length() + 1 <= maxPathLength) {
+                        resultPath.insert(0, "/").insert(1, pathElements[1]);
+                    } else {
+                        resultPath.insert(0, "/...");
+                    }
+                }
+                resultB.append(resultPath);
+            }
+        }
+
+        if (query != null && query.length() > 0) {
+            if (resultB.length() < maxLength - 4) {
+                if (query.length() + 1 < maxLength - resultB.length()) {
+                    resultB.append("?").append(query);
+                } else {
+                    resultB.append("?").append(query.substring(0, maxLength - resultB.length() - 4)).append("...");
+                }
+                return resultB.toString();
+            } else {
+                return resultB.append("?...").toString();
+            }
+        }
+
+        return resultB.toString();
+    }
+
+    /**
+     * Strip HTML tags from a string.
+     * 
+     * @param s
+     *            The String with HTML tags.
+     * @return The String without HTML tags.
+     */
+    public static String stripHTMLTags(String s) {
+        return s.replaceAll("\\<(.|\n)*?\\>", "");
+    }
+
+    /**
+     * Strips HTML tags but conserves AND encodes HTML entities.
+     * 
+     * "&quot;<b>portalu®</b>&quot;" will result in "&quot;portalu&reg;&quot;"
+     * 
+     * @param s
+     *            The input String.
+     * @return The transformed output.
+     */
+    public static String stripHTMLTagsAndHTMLEncode(String s) {
+        return UtilsString.htmlescape(UtilsString.stripHTMLTags(UtilsString.htmlunescape(s)));
+    }
 
 }

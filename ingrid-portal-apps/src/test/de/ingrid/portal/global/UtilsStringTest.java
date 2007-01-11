@@ -16,5 +16,14 @@ public class UtilsStringTest extends TestCase {
         assertTrue(80 == UtilsString.getShortURLStr("http://www.lubw.baden-wuerttemberg.de/servlet/is/13512/abbruch_von_gebaeuden.pdf?", 80).length());
         assertTrue(79 >= UtilsString.getShortURLStr("http://www.lubw.baden-wuerttemberg.de/servlet/is/13512/abbruch_von_gebaeuden.pdf?", 79).length());
     }
+    
+    public void testStripTags() {
+        assertEquals("hallo portal .", UtilsString.stripHTMLTags("hallo <b>portal </u>."));
+        assertEquals("hallo portal .", UtilsString.stripHTMLTags("hallo <b>portal </u\n\n>."));
+    }
+    
+    public void testStripHTMLTagsAndHTMLEncode() {
+        assertEquals("hallo &amp; portal &reg;&euro;&copy;&reg;.", UtilsString.stripHTMLTagsAndHTMLEncode("hallo & <b>portal &reg;€©®</u>."));
+    }
 
 }

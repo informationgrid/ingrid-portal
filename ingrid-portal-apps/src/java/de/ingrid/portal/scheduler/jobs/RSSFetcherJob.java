@@ -50,7 +50,7 @@ public class RSSFetcherJob implements Job {
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
-        
+
         try {
 
             SyndFeed feed = null;
@@ -79,7 +79,7 @@ public class RSSFetcherJob implements Job {
                     if (rssSource.getDescription() != null && rssSource.getDescription().trim().length() > 0) {
                         feed.setAuthor(rssSource.getDescription().trim());
                     }
-                    
+
                     Iterator it2 = feed.getEntries().iterator();
                     // work on all rss items of the feed
                     while (it2.hasNext()) {
@@ -104,9 +104,9 @@ public class RSSFetcherJob implements Job {
                                 }
                             }
                         }
-                        
+
                         // filter entries with no title
-                        if (includeEntry && (entry.getTitle() == null ||  entry.getTitle().trim().length() == 0)) {
+                        if (includeEntry && (entry.getTitle() == null || entry.getTitle().trim().length() == 0)) {
                             includeEntry = false;
                         }
 
@@ -122,20 +122,19 @@ public class RSSFetcherJob implements Job {
                                 includeEntry = false;
                             }
                         }
-                        
+
                         cal = Calendar.getInstance();
-                        
+
                         // filter entries with dates in future
                         if (includeEntry && publishedDate != null && publishedDate.after(cal.getTime())) {
                             includeEntry = false;
                         }
                         // filter dates before RSS entry window
-                        cal.add(Calendar.DATE, -1
-                                * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
+                        cal.add(Calendar.DATE, -1 * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
                         if (includeEntry && publishedDate != null && publishedDate.before(cal.getTime())) {
                             includeEntry = false;
                         }
-                        
+
                         if (includeEntry) {
                             // check if this entry already exists
                             tx = session.beginTransaction();
@@ -158,11 +157,10 @@ public class RSSFetcherJob implements Job {
                                     entry.setAuthor(feed.getAuthor());
                                 }
 
-                                entry.setTitle(UtilsString.htmlescape(entry.getTitle()));
-
                                 IngridRSSStore rssEntry = new IngridRSSStore();
-                                rssEntry.setTitle(entry.getTitle());
-                                rssEntry.setDescription(UtilsString.htmlescape(entry.getDescription().getValue()));
+                                rssEntry.setTitle(UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle()));
+                                rssEntry.setDescription(UtilsString.stripHTMLTagsAndHTMLEncode(entry.getDescription()
+                                        .getValue()));
                                 rssEntry.setLink(entry.getLink());
                                 rssEntry.setLanguage(feed.getLanguage());
                                 rssEntry.setPublishedDate(publishedDate);
@@ -174,7 +172,7 @@ public class RSSFetcherJob implements Job {
 
                                 cnt++;
                             } else {
-                                for (int i=0; i<rssEntries.size(); i++) {
+                                for (int i = 0; i < rssEntries.size(); i++) {
                                     session.evict(rssEntries.get(i));
                                 }
                             }
