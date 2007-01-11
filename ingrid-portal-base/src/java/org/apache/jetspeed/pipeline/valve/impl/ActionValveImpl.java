@@ -133,6 +133,10 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
             log.error("Illegal State Exception. Response was written to in Action Phase", e);
             responseCommitted = true;
         }
+        catch (Throwable t)
+        {
+            log.error("Unknown exception processing Action", t);
+        }
         finally
         {
             // Check if an action was processed and if its response has been committed
