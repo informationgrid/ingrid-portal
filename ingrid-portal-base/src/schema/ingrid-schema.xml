@@ -22,6 +22,9 @@ limitations under the License.
         <column name="ident" required="true" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="sortkey" required="true" type="INTEGER"/>
+        <index name="IX_ingrid_partner_1">
+            <index-column name="sortkey"/>
+        </index>
     </table>
 
     <table name="ingrid_provider" idMethod="native">
@@ -31,6 +34,15 @@ limitations under the License.
         <column name="url" required="true" size="255" type="VARCHAR"/>
         <column name="sortkey" required="true" type="INTEGER"/>
         <column name="sortkey_partner" required="true" type="INTEGER"/>
+        <index name="IX_ingrid_provider_1">
+            <index-column name="sortkey_partner"/>
+        </index>
+        <index name="IX_ingrid_provider_2">
+            <index-column name="sortkey"/>
+        </index>
+        <index name="IX_ingrid_provider_3">
+            <index-column name="ident"/>
+        </index>
     </table>
 
     <table name="ingrid_env_topic" idMethod="native">
@@ -61,7 +73,7 @@ limitations under the License.
         <column name="sortkey" required="true" type="INTEGER"/>
     </table>
 
-    <table name="ingrid_chronicle_eventtypes" idMethod="native">
+    <table name="ingrid_chron_eventtypes" idMethod="native">
         <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
         <column name="form_value" required="true" size="255" type="VARCHAR"/>
         <column name="query_value" required="true" size="255" type="VARCHAR"/>
@@ -86,6 +98,12 @@ limitations under the License.
         <column name="language" required="false" size="255" type="VARCHAR"/>
         <column name="published_date" required="false" type="TIMESTAMP"/>
         <column name="title" required="false" size="255" type="VARCHAR"/>
+        <index name="IX_ingrid_rss_store_1">
+            <index-column name="published_date"/>
+        </index>
+        <index name="IX_ingrid_rss_store_2">
+            <index-column name="language"/>
+        </index>
     </table>
 
     <table name="ingrid_anniversary" idMethod="native">
@@ -104,39 +122,12 @@ limitations under the License.
         <column name="fetched" required="true" type="TIMESTAMP"/>
         <column name="fetched_for" required="true" type="DATE"/>
         <column name="language" required="false" size="5" type="VARCHAR" default="de"/>
-    </table>
-
-    <table name="groups">
-        <column name="name" primaryKey="true" required="true" size="255" type="VARCHAR"/>
-    </table>
-
-    <table name="roles">
-        <column name="name" primaryKey="true" required="true" size="255" type="VARCHAR"/>
-    </table>
-
-    <table name="users">
-        <column name="name" primaryKey="true" required="true" size="255" type="VARCHAR"/>
-        <column name="password" size="255" type="VARCHAR"/>
-    </table>
-
-    <table name="userpartner">
-        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
-        <column name="username" size="255" type="VARCHAR"/>
-        <column name="partner_ident" size="255" type="VARCHAR"/>
-    </table>
-
-    <table name="userprovider">
-        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
-        <column name="username" size="255" type="VARCHAR"/>
-        <column name="provider_ident" size="255" type="VARCHAR"/>
-    </table>
-
-
-    <table name="usergrouprole" idMethod="native">
-        <column name="id" primaryKey="true" required="true" type="INTEGER" autoIncrement="true"/>
-        <column name="username" size="255" type="VARCHAR"/>
-        <column name="groupname" size="255" type="VARCHAR"/>
-        <column name="rolename" size="255" type="VARCHAR"/>
+        <index name="IX_ingrid_anniversary_1">
+            <index-column name="fetched_for"/>
+        </index>
+        <index name="IX_ingrid_anniversary_2">
+            <index-column name="language"/>
+        </index>
     </table>
 
     <table name="ingrid_newsletter_data" idMethod="native">
@@ -145,9 +136,12 @@ limitations under the License.
         <column name="lastname" size="255" type="VARCHAR"/>
         <column name="email" size="255" type="VARCHAR"/>
         <column name="created" required="false" type="TIMESTAMP"/>
+        <index name="IX_email_1">
+            <index-column name="email"/>
+        </index>
     </table>
 
-    <table name="ingrid_sys_codelist_domain">
+    <table name="ingrid_codelist_domain">
         <column name="codelist_id" type="BIGINT" primaryKey="true"/>
         <column name="domain_id" type="BIGINT" primaryKey="true"/>
         <column name="lang_id" type="BIGINT" primaryKey="true"/>
@@ -156,19 +150,49 @@ limitations under the License.
         <column name="def_domain" type="INTEGER"/>
     </table>
 
-    <table name="ingrid_sys_codelist">
+    <table name="ingrid_codelist">
         <column name="codelist_id" type="BIGINT" primaryKey="true"/>
         <column name="name" size="50" type="VARCHAR"/>
         <column name="default_enabled" type="INTEGER"/>
         <column name="maintainable" type="INTEGER"/>
     </table>
     
-    <table name="ingrid_principal_preference" idMethod="native">
+    <table name="ingrid_principal_pref" idMethod="native">
         <column name="id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
         <column name="principal_name" size="251" type="VARCHAR" required="true"/>
         <column name="pref_name" size="251" type="VARCHAR" required="true"/>
         <column name="pref_value" type="LONGVARCHAR"/>
         <column name="modified_date" type="TIMESTAMP"/>
+    </table>
+
+    <table name="ingrid_lookup" idMethod="native">
+        <column name="id" type="BIGINT" primaryKey="true" autoIncrement="true"/>
+        <column name="item_key" size="255" type="VARCHAR"/>
+        <column name="item_value" size="255" type="VARCHAR"/>
+    </table>
+
+    <table name="ingrid_cms" idMethod="native">
+        <column name="id" type="BIGINT" primaryKey="true" autoIncrement="true"/>
+        <column name="item_key" size="255" type="VARCHAR"/>
+        <column name="item_description" size="255" type="VARCHAR"/>
+        <column name="item_changed" type="TIMESTAMP"/>
+        <column name="item_changed_by" size="255" type="VARCHAR"/>
+    </table>
+    
+    <table name="ingrid_cms_item" idMethod="native">
+        <column name="id" type="BIGINT" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ingrid_cms_id" type="BIGINT"/>
+        <column name="item_lang" size="6" type="VARCHAR"/>
+        <column name="item_title" size="255" type="VARCHAR"/>
+        <column name="item_value" type="CLOB"/>
+        <column name="item_changed" type="TIMESTAMP"/>
+        <column name="item_changed_by" size="255" type="VARCHAR"/>
+        <foreign-key foreignTable="ingrid_cms" name="FK_ingrid_cms_1">
+            <reference foreign="id" local="fk_ingrid_cms_id"/>
+        </foreign-key>
+        <index name="IX_ingrid_cms_item_1">
+            <index-column name="fk_ingrid_cms_id"/>
+        </index>
     </table>
     
 </database>
