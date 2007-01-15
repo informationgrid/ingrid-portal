@@ -122,7 +122,7 @@ limitations under the License.
         <column name="PARENT_ID" required="true" type="INTEGER"/>
         <column name="CLASS_NAME" required="true" size="255" type="VARCHAR"/>
         <column name="NAME" required="true" size="80" type="VARCHAR"/>
-        <column name="PARAMETER_VALUE" required="true" type="LONGVARCHAR"/>
+        <column name="PARAMETER_VALUE" type="LONGVARCHAR"/>
     </table>
 
     <!--
