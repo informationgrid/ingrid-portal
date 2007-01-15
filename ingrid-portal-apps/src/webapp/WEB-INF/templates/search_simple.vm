@@ -15,11 +15,13 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
 &nbsp;&nbsp;&nbsp;&nbsp;
+#if($enableDatasourceAddresses)
 #if($ds=="2")
 	<strong>$MESSAGES.getString('searchSimple.area.addresses')</strong>
 #else
     $action.setParameter('ds','2')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.addresses')</a>	
+#end
 #end
 #if($enableDatasourceResearch)
 &nbsp;&nbsp;&nbsp;&nbsp;
