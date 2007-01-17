@@ -1049,17 +1049,6 @@
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
         </section>
-        <section help-key="search-tipps-5">
-            <header>Ich möchte zwar die persönlichen Einstellungen nutzen, aber
-                mir ist das Einloggen über Benutzernamen und Kennwort zu umständlich!</header>
-            <content>
-                <p>Sie können ein automatisches Einloggen über Benutzernamen und
-                    Kennwort konfigurieren. So  arbeiten Sie immer mit Ihren
-                    persönlichen Einstellungen, aber ohne zusätzliche Eingabe
-                    von Benutzernamen und Kennwort (siehe hierzu <a
-                        href="help.psml?hkey=myingrid-1">Mein PortalU</a>)</p>
-            </content>
-        </section>
     </chapter>
     <chapter>
         <header>Erweiterte Suche nach Adressen</header>
