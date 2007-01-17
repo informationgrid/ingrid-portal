@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -11,8 +12,13 @@ import javax.portlet.PortletException;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
 
 /**
  * This portlet is the abstract base class of all "wizard" portlets in the EnvironmentInfo
@@ -66,6 +72,29 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // enable/disable providers drop down
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)) {
+            String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+            List providers;
+            if (partner == null || partner.length() == 0) {
+                providers = UtilsDB.getProviders();
+            } else {
+                providers = UtilsDB.getProvidersFromPartnerKey(partner);
+            }
+            context.put("displayProviders", Boolean.TRUE);
+            context.put("providers", providers);
+            context.put("UtilsString", new UtilsString());
+            
+            // get selected provider
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+            String provider = request.getParameter(Settings.PARAM_PROVIDER);
+            if (provider != null) {
+                sessionPrefs.put(IngridSessionPreferences.RESTRICTING_PROVIDER, provider);
+            }
+            context.put("selectedProviderIdent", sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
+        }
 
         super.doView(request, response);
     }

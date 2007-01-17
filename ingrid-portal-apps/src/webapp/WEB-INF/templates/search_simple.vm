@@ -38,7 +38,7 @@ $action.setParameter('action','doChangeDS')
 		onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"' />
 		<input class="btn" type="submit" value="$MESSAGES.getString('searchSimple.query.submit')" />
           <span class="clearer"></span>
-#if($providers)
+#if($displayProviders)
 		<h3><label for="providers">Anbieter</label></h3>
 		<select class="inputstyle" name="provider" id="provider">
 			<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>

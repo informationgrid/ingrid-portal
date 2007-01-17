@@ -289,6 +289,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             } else {
                 providers = UtilsDB.getProvidersFromPartnerKey(partner);
             }
+            context.put("displayProviders", Boolean.TRUE);
             context.put("providers", providers);
             context.put("UtilsString", new UtilsString());
             

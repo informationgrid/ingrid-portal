@@ -40,6 +40,19 @@ $action.setParameter('action','doChangeDS')
 			<input class="btn float_left" name="doSetQuery" type="submit" value="$MESSAGES.getString('searchExtended.query.submit2')" />
 			<span class="clearer"></span>
 		</div>
+#if($displayProviders)
+    		<h3><label for="providers">Anbieter</label></h3>
+			&nbsp;<select class="inputstyle" name="provider" id="provider">
+				<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
+#foreach($provider in $providers)
+#if($selectedProviderIdent == $provider.ident)
+		        <option title="$provider.name" value="$provider.ident" selected="selected">$UtilsString.cutString($provider.name, 60)</option>
+#else
+			    <option title="$provider.name" value="$provider.ident">$UtilsString.cutString($provider.name, 60)</option>
+#end
+#end
+		</select>
+#end
     </form>
     <div class="optional-links">
       <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.extended')</span>
