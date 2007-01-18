@@ -99,6 +99,21 @@ limitations under the License.
       <name>minEvictableIdleTimeMillis</name>
       <value>60000</value>
     </parameter>
+
+    <!-- abandoned connections properties, time in seconds -->
+    <parameter>
+      <name>removeAbandoned</name>
+      <value>true</value>
+    </parameter>
+    <parameter>
+      <name>removeAbandonedTimeout</name>
+      <value>60</value>
+    </parameter>
+    <parameter>
+      <name>logAbandoned</name>
+      <value>true</value>
+    </parameter>
+
         
   </ResourceParams>
 </Context>

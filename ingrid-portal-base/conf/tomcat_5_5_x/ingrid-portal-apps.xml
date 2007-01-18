@@ -29,6 +29,7 @@ limitations under the License.
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
           type="javax.sql.DataSource" username="xxxxxxxx" password="xxxxxxxx"
           driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ingrid-portal"
-          maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1"/> 
+          maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1"
+          removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true"/> 
 
 </Context>
