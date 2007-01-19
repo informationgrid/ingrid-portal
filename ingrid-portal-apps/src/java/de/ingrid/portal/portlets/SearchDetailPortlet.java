@@ -780,7 +780,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
      * @return
      */
     public String getPlugIdFromAddressPlugId(String plugId) {
-        if (plugId.endsWith("_addr")) {
+        if (plugId == null) {
+            return "";
+        } else  if (plugId.endsWith("_addr")) {
             return plugId.substring(0, plugId.lastIndexOf("_addr"));
         } else {
             return plugId;
