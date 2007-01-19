@@ -858,18 +858,17 @@ public class AdminUserPortlet extends ContentPortlet {
                                 }
                             }
                         }, null);
-                if (pe == null) {
-                    // remove user creation and cascade roles, groups, etc
-                    try {
-                        if (userManager.getUser(ids[i]) != null) {
-                            userManager.removeUser(ids[i]);
-                        }
-                    } catch (Exception e) {
-                        log.error("Registration Error: Failed to remove user " + ids[i]);
-                    }
-                } else {
+                
+                if (pe != null) {
                     log.error("Registration Error: Failed to remove user folders for " + ids[i] + ", " + pe.toString());
-                    throw pe;
+                }
+                // remove user creation and cascade roles, groups, etc
+                try {
+                    if (userManager.getUser(ids[i]) != null) {
+                        userManager.removeUser(ids[i]);
+                    }
+                } catch (Exception e) {
+                    log.error("Registration Error: Failed to remove user " + ids[i]);
                 }
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {
