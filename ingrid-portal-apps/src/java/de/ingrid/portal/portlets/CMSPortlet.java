@@ -62,9 +62,15 @@ public class CMSPortlet extends GenericVelocityPortlet {
         if (entities.size() > 0) {
             IngridCMS entry = (IngridCMS) entities.get(0);
             IngridCMSItem localizedItem = entry.getLocalizedEntry(request.getLocale().getLanguage());
-            response.setTitle(localizedItem.getItemTitle());
-            context.put("cmsItemTitle", localizedItem.getItemTitle());
-            context.put("cmsItemValue", localizedItem.getItemValue());
+            if (localizedItem == null) {
+                response.setTitle("");
+                context.put("cmsItemTitle", "");
+                context.put("cmsItemValue", "");
+            } else {
+                response.setTitle(localizedItem.getItemTitle());
+                context.put("cmsItemTitle", localizedItem.getItemTitle());
+                context.put("cmsItemValue", localizedItem.getItemValue());
+            }
         }
 
         super.doView(request, response);

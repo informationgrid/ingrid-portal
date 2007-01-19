@@ -365,8 +365,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                                 .getGoupedHitsLength()));
                     }
                 } catch (Exception ex) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Problems processing grouping starthits UNRANKED", ex);
+                    }
                     if (log.isInfoEnabled()) {
-                        log.info("Problems processing grouping starthits UNRANKED", ex);
+                        log.info("Problems processing grouping starthits UNRANKED. switch to debug level to get the exception logged.");
                     }
                 }
             }
