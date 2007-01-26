@@ -77,7 +77,7 @@
 	    <!--attainGoal name="j2:_db.production.properties"/-->
 	    
 	    <j:set var="portal.sql.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
-	    <j:set var="database.arg.script" value="${portal.sql.dir}/oracle/populate-userinfo-for-default-psml.sql"/>
+	    <j:set var="database.arg.script" value="${portal.sql.dir}/${org.apache.jetspeed.database.default.name}/populate-userinfo-for-default-psml.sql"/>
 	    <!--echo message="database.arg.script: ${database.arg.script}"/-->
 	    <j:set var="database.arg.onerror" value="continue"/>
 	    <!--attainGoal name="j2:_db.execute"/-->
