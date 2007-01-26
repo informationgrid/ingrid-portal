@@ -213,7 +213,7 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories)
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (9, 'MLUV Brandenburg', 'RSS MLUV Brandenburg', 'http://www.mluv.brandenburg.de/cms/list.php/mluv_presse_rss', 'de', 'all');
 
 INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
-INSERT INTO SECURITY_CREDENTIAL VALUES(1,1,'admin',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,'2004-05-22 16:27:12.572','2004-05-22 16:27:12.572',null,null,null);
+UPDATE SECURITY_CREDENTIAL SET UPDATE_REQUIRED = '0' WHERE CREDENTIAL_ID =1;
 
 INSERT INTO ingrid_codelist VALUES (100, 'Raumbezugssystem (EPSG)', 1, 1);
 INSERT INTO ingrid_codelist VALUES (101, 'Vertikales Datum', 1, 1);
