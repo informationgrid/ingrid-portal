@@ -1,0 +1,496 @@
+/**
+ * Inlcude CSS styles for portlets (standardized classes)
+ * See: Section PLT.C of the Portlet Specfication 1.0
+ */
+@import url("./PLT.C.All.css");
+
+
+/********************************************************************
+  standard styles 
+*********************************************************************/
+
+body { padding: 0; margin: 0; color: #111111; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+
+img { border:0; }
+span.icon { margin-right:4px; margin-top:5px; float:left; width:12px; }
+span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height:14px; }
+/* no float for detail page in OPERA */
+span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
+span.normaltext { font-weight:normal; text-transform:none; }
+span.smaller {font-size: 83%}
+ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
+p { margin-top:0; margin-bottom:1em; font-size:75%}
+strong {font-weight:bold}
+
+div.line { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 0 0; padding:0 }
+div.line_form { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 10px 0; padding:0}
+/* for CSS1 browsers */ 
+div.line hr { display: none;}
+div.line_form hr { display: none;}
+/* for CSS2 browsers */
+div.line * { display: none;}
+div.line_form * { display: none;}
+
+a, a:link { color: #821115; text-decoration: none; }
+a:visited { color: #821115; }
+a:hover, a:focus { color: #821115; text-decoration: underline; }
+a:active { color: #821115; text-decoration: none; }
+a.selected { font-weight:bold; }
+
+h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:0em; }
+h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+
+table.border { border-collapse:collapse; }
+table.fullwidth { width:100%; }
+th {font-size: 75%; vertical-align:top; padding:3px;}
+td {font-size: 75%; vertical-align:top; padding-left:3px;}
+table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
+td.iconwidth { width:9px; }
+
+
+/********************************************************************
+  helper styles 
+*********************************************************************/
+
+.hide { position: absolute; left: -1000em; width:500em; line-height:0px; }
+.clearer { clear:both; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
+.float { float:left; }
+.float_left { float:left; }
+.float_right { float:right; }
+.bgred {background-color:#FF0000}
+.top { margin-top:0; }
+.nobottommargin { margin-bottom:0; }
+.leftmargin {margin-left: 12px; }
+.leftmargin_big {margin-left: 84px; }
+.nospace { margin-bottom:0; padding-bottom:0; }
+.rightmargin { margin-right:1.5em; }
+
+div.ico_linkintern {margin: 0 0 0.3em 0;padding-left: 15px; background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em;}
+div.ico_arrowup {margin: 0 0 0.3em 0;padding-left: 15px; background-image:url("../images/arrow_up.gif");background-repeat: no-repeat;background-position: 0.0em .4em;}
+div.ico_down_black {margin: 0 0 0.3em 0;padding-left: 10px; background-image:url("../images/ico_down_black.gif");background-repeat: no-repeat;background-position: 0.0em -.1em;}
+
+/********************************************************************
+  breadcrumb styles 
+*********************************************************************/
+
+div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; background-color:#FFFFFF; font-size: 75%; }
+
+/********************************************************************
+  identity area styles
+*********************************************************************/
+
+div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#FDFCE7; overflow:visible; }
+div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.gif); background-repeat:no-repeat; }
+
+div.en_motiv_hilfe { background-image:url(../images/en/en_01_motiv_hilfe.gif); background-repeat:no-repeat; }
+
+/********************************************************************
+  logo styles 
+*********************************************************************/
+
+div#logo { float: left; }
+
+/********************************************************************
+  logged on styles 
+*********************************************************************/
+
+div#logged_on {float: right; clear:right; font-size: 65%; padding:3.5em 1.2em 0 0; color:#C7E7FF;}
+div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#C7E7FF; text-decoration: none}
+div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #111111; text-decoration: underline; }
+
+/********************************************************************
+  service navigation styles
+*********************************************************************/
+
+div#servicenav { padding:0.1em 1.2em 0.1em 1.5em; background-color:#FFFFFF; float: right; }
+#servicenav { font-size: 70%; }
+div#servicenav ul { list-style: none; padding: 0; margin: 0; }
+div#servicenav ul li { display:inline; }
+div#servicenav ul li a.selected { text-decoration:none; color:#111111; font-weight:normal;}
+div#servicenav ul li a.selected:hover { text-decoration:underline; color:#111111; font-weight:normal; }
+
+/********************************************************************
+  main navigation styles
+*********************************************************************/
+
+/* IE Win needs this to show background-color \*/
+html body div#mainnav { height: 1%; }
+/* End Hack */
+
+div#mainnav { background-color:#1B78B1; margin:0; padding:0; width:59.5em; height:2.0625em; }  
+div#mainnav ul { list-style: none; padding: 7px 0 4px 56px; margin: 0;}
+div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold;}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+div#mainnav ul li a {float:none;}
+/* End IE5-Mac hack */
+
+div#mainnav ul li a,  
+div#mainnav ul li a:link, 
+div#mainnav ul li a:visited 
+ { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:3px; margin:0; font-size: 95%; }  
+
+div#mainnav ul li a.selected,
+div#mainnav ul li a.selected:link, 
+div#mainnav ul li a.selected:visited 
+ { text-decoration:none; color:#111; background-color:#DDE9BD; margin:0; padding:3px 6px 5px 6px; border-bottom: solid #FFFFFF 10px; font-size: 95%; }  
+
+div#mainnav ul li a:hover,
+div#mainnav ul li a:active
+ { color:#111111; text-decoration:none; background-color:#F2FFCF; padding:3px 6px 5px 6px; border-bottom: solid #111111 10px; margin:0; font-size: 95%;}
+
+/********************************************************************
+  sub navigation styles
+*********************************************************************/
+
+div#subnav { position:relative; border-top: solid #FFFFFF 1px; background-color:#DDE9BD; width:59.5em; height:1.375em; z-index:12;}
+div#subnav ul { list-style:none; padding: 0px 7px 1px 63px; margin:0; line-height:120%; color:#111111; }
+div#subnav ul li { display:inline; font-size: 65%; }
+
+div#subnav ul li a.selected { text-decoration:none; color:#111111; font-weight:bold; }
+div#subnav ul li a,
+div#subnav ul li a:link,
+div#subnav ul li a:visited,
+div#subnav ul li a:active {text-decoration:none; color:#111111;}  
+div#subnav ul li a:hover, div#subnav ul li a:focus {color:#111111;text-decoration:underline;}
+
+div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#DDE9BD}
+div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#DDE9BD}
+
+/********************************************************************
+  content block styles
+  base layout for content area and marginal column  
+*********************************************************************/
+
+div#container { width:56em; margin:22px 0 0 63px; }
+
+/*** alt ***/
+div#content { float:left; width:37.1875em; }
+div#marginal { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+
+/*** portlat column styles, replacing div#content and div#marginal ***/
+div.portal-layout-column-1 { float:left; width:37.1875em; }
+div.portal-layout-column-2 { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+
+
+/*** Ergebnis-Spalten: 2/3 zu 1/3 ***/
+div#results_left { float:left; width:35.2917em; }
+div#results_right { float:left; width:17.6458em; margin: 0px 0px 0 2.625em; }
+
+/*** Ergebnis-Spalten: 1/2 zu 1/2 
+div#results_left { float:left; width:26.2917em; }
+div#results_right { float:left; width:26.6458em; margin: 0px 0px 0 2.625em; }
+***/
+
+/* full width content area styles */
+div#content_full { float:left; width:55.5625em; }
+div#content_full .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
+
+
+/********************************************************************
+  main block styles  
+*********************************************************************/
+
+.iconLink { margin:0px 0px 5px 0px; font-size:70%;}
+/* ich will all die beknackten Abhängigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
+deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abhängigkeiten, mm */
+.iconLink2 { margin:0px 0px 5px 0px; font-size:70%;}
+
+div.left { float:left; width:15.75em; padding:0; }
+div.right { float:left; margin-left:2.625em; width:15.75em; padding:0; }
+div.whole { width:34.125em; padding:0; }
+div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
+
+div.section { margin: 0 0 0px 0; padding:0; }
+div.section p a { text-decoration:underline; }
+div.section div p a { text-decoration:none; }
+div.section-header { margin-top:0; padding:0; }
+div.section-header h1 { display:inline; float:left; padding-top:0.2em; padding-bottom:0.2em; }
+div.section-header span.portlet_info { float:right; font-size:80%}
+/* nötig für Firefox, sonst zerreissts Überschrift ! */
+div.section-header span.clearer { display:block; }
+
+/* nötig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
+div.portal-layout-column-1 .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
+
+div.section p.iconLink span.icon { margin: 7px 0 0 0; }
+
+div.section ul.catalog { margin:0; padding:0; }
+div.section ul.catalog li { display:inline; }
+div.section ul.catalog li a { display:inline; margin-right:0.2em; }
+div.section ul.catalog span.separator { background: url(../images/list_dot.gif) no-repeat center center; margin-right:0.1em; margin-left:0.2em; }
+/*
+div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
+div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
+*/
+div.section ul li { font-size:83%}
+
+div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
+div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
+
+div.section ul.udklist { list-style-type:none; line-height: 180%; font-size:93% }
+
+div.section ul.extlinklist {list-style: none; margin: 0 0 0 0.0em;}
+div.section ul.extlinklist li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("images/icn_linkextern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
+
+div.section ul.internlinklist {list-style: none; margin: 0 0 0 .5em;}
+div.section ul.internlinklist li { font-size:70%;margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .5em; }
+
+div.section ul.internlinklist2 {list-style: none; margin: 0 0 0 .5em;}
+div.section ul.internlinklist2 li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .5em; }
+
+div.section ul.anmeldung li { margin-top: 0.5em;}
+
+
+div.section div.indent {margin-left: 1em}
+
+
+/* SEARCH RESULT LIST */
+
+div.noresult { margin-top:20px; }
+div.noresult ul { line-height:2em; }
+
+div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 0px 4px; font-size:75%; }
+div.resultset_nav a { text-decoration:underline; font-weight: bold;}
+
+div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
+div.resultset a { text-decoration:none; font-size:100%;color: #176798;line-height:140%}
+div.resultset a:hover { text-decoration:underline;color: #111111;}
+div.resultset p.result_title { font-size:90%; margin: 10px 0px 10px 0px; }
+div.resultset p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
+div.resultset p.event_description { margin: 10px 0px 10px 0px; line-height:120%}
+div.resultset p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%}
+div.resultset p.result_metadata_adress { font-size:65%; color:#999999; margin:7px 0 8px 0; line-height:120%}
+div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 8px 0; }
+div.resultset p.result_link img { position:relative; top:1px; }
+div.resultset p.result_link a { text-decoration:none; }
+div.resultset p.result_link a:hover { text-decoration:underline; }
+div.resultset span.result_title { font-size:75%;}
+div.resultset span.inquiry { margin-left:20px; font-size:83%}
+div.resultset em.date { font-style:normal; font-size: 83%; color:#111111; }
+
+div.resultset_partner_group {background-color:#D1E4F1; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
+div.resultset_partner_group span.title {font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
+div.resultset_partner_group p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
+div.resultset_partner_group p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%; margin-bottom:2px;}
+
+div.resultset_partner_only {background-color:#D1E4F1; margin: 0 0 20px 0;padding: 0.25em 0.875em 0.2em 0.7em;}
+
+div.resultset_show_partner {text-decoration:none;font-size:75%;margin: 10px 0px 10px 0px;}
+
+
+/* TAB, EXTENDED SEARCH */
+div.tabs {margin: 20px 0 0 0;}
+div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
+div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 80%;}
+div.tabs ul li a.selected,
+div.tabs ul li a.selected:link, 
+div.tabs ul li a.selected:visited 
+  { position:relative; top: -2px; text-decoration:none; color:#111111; background-color:#DDE9BD; margin:0; padding:3px 7px 5px 5px; border-bottom: solid #FFFFFF 0px; }  
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+div.tabs ul li a {float:none;}
+/* End IE5-Mac hack */
+
+div.tabs ul li a,  
+div.tabs ul li a:link, 
+div.tabs ul li a:visited 
+ { text-decoration:none; color:#FFFFFF; background-color: #1B78B1; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 90%;}  
+
+div.tabs ul li a:hover,
+div.tabs ul li a:active, 
+div.tabs ul li a:focus { color:#111111; text-decoration:none; background-color:#F2FFCF; padding:3px 7px 5px 7px; border-bottom: solid #111111 0px; margin:0; font-size: 90%;}
+
+/* TAB MENU, EXTENDED SEARCH */
+
+div.tabmenu {position:relative; background-color:#DDE9BD; padding: 6px 0px 6px 0px; width:100%; margin:1px 0px 1px 0px;font-size:100%;z-index:12;}
+div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#111111; }
+div.tabmenu ul li { display:inline; }
+
+div.tabmenu ul li a.selected { text-decoration:none; color:#111111; font-weight:bold; }
+div.tabmenu ul li a,
+div.tabmenu ul li a:link,
+div.tabmenu ul li a:visited,
+div.tabmenu ul li a:active { text-decoration:none; color:#111111; }  
+div.tabmenu ul li a:hover, 
+div.tabmenu ul li a:focus { color:#111111; text-decoration:underline;}
+
+
+/* SEARCH DETAILS */
+
+h3#search_detail {  text-decoration:underline; margin-top:1em; }
+
+
+/********************************************************************
+  marginal portlet block styles  
+*********************************************************************/
+
+div.portlet { margin-bottom:10px; padding:0;}
+div.portlet p { font-size:70%; line-height:140%;}
+div.portlet p.hitrow { font-size:83%; line-height:140%;}
+div.portlet ul { margin: 0 0 -5px 14px;}
+
+/* nötig fuer Firefox: sonst fällt Link aus Portlet, vgl. Einstellungen */
+div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
+
+div.portlet .iconLink a { float:left; line-height:140%}
+div.portlet .link_descr { margin:0px 0px 0px 15px; }
+
+div.portlet div.resultset p.result_description { font-size:65%; margin: 10px 0px 0px 0px; line-height:120%;}
+div.portlet div.resultset p.result_link {  font-size:65%; margin:3px 0 8px 0;}
+
+div.portlet div.section-header { height:1em; padding: 0.175em 0.5em 0.05em 0.5em; background:#176798; }
+div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font-size:70%; font-weight:bold; line-height:120%; margin:0; text-transform:uppercase; }
+div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
+div.portlet div.section-header a { color: #FFFFFF;}
+
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-left: solid #176798 1px; border-bottom: solid #176798 1px; border-right: solid #176798 1px; }
+
+
+/********************************************************************
+  form block styles  
+*********************************************************************/
+
+form, input { padding:0; margin:0; }
+select { padding:0; margin:0; border: 0px inset #FFFFFF;}
+
+div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-size: 75%; line-height: 120%; text-transform: uppercase; border-bottom: 1px solid #13547d; background-color: #176798;}
+
+div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
+div.formheader span.portlet_info a { color: #FFFFFF; }
+
+div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #F4F4F4;}
+/* Sonderbehandlung für IE: dieser übernimmt die Farbe des übergeordneten divs nicht für rollover Link Auszeichnungen 
+   siehe auch http://jira.media-style.com/browse/INGRID-192
+*/
+div.formbody div {background-color: #F4F4F4;}
+div.formbody div.line {background-color: #CCCCCC;}
+div.formbody div.line_form {background-color: #CCCCCC;}
+div.formbody p { padding:0; margin: 0.5em  0.0em; }
+div.formbody .nospace { padding-bottom:0; margin-bottom:0; }
+div.formbody h3 { font-weight:bold; margin: 0.7em 0; }
+div.formbody h2 { font-weight:bold; margin-top: 0.8em; }
+div.formbody p.datasource_selection {font-size:75%}
+div.formbody div.marginleft {margin-left:4em}
+div.formbody .indent1_checkbox {margin-left:2em}
+div.formbody .indent2_checkbox {margin-left:4em}
+
+div.formbody select.env_themes, 
+div.formbody select.spacial_relation { width:15em;}
+div.formbody select.funct_class  { width:20em;}
+div.formbody select.info_provider  { width:22em; border: 0px inset #FFFFFF; padding:4px; }
+div.formbody select.group_by { width:15em;}
+
+div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; line-height: 130%; }
+div.formbody .inputstyle {border: 1px inset #FFFFFF;}
+div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
+div.formbody input.large {width:15em;}
+
+div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
+
+div.formbody label { margin: 0px 10px 0px 0px; padding: 0px 4px 0px 4px; line-height: 130%; }
+div.formbody label.alignleft { padding: 0px 4px 0px 0px;}
+div.formbody label.lbl_qrystr { margin: 0; padding: 0; line-height: 180%; font-size: 80%}
+div.formbody label.radiogroup {font-size: 80%; line-height:160%}
+div.formbody .spacer_search_form {margin-top: 15px}
+
+.col2left { width:14em; }
+.col2right { width:15em; }
+
+div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border: 1px solid #176798; background-color: #CCCCCC; }
+div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
+
+input.btn { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #176798; cursor: pointer; }
+
+label.left {width:5.5em; float:left;}
+label.login {width:8em; float:left;}
+div.optional-links { margin:5px 0 0 0 ; padding:0; }
+div.optional-links img, ul.optional-links img { margin:0; padding:0; }
+div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:65%; }
+
+ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
+ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
+
+/*** sitemap ***/
+
+div.sitemap ul {list-style: none; margin: 0.5em 0 0 0.5em;}
+div.sitemap li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
+div.sitemap li a { font-size:75%; }
+div.sitemap li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#111111}
+div.sitemap li p a { font-size:100%;}
+div.sitemap li li a { font-size:75%;}
+div.sitemap li li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#111111}
+
+/*** Formular Anmeldung ***/
+
+div.formbody input.fld_logon {width: 10em; line-height: 100%;}
+
+
+/*** Formular Umweltchronik ***/
+
+div.formbody td p { margin-top:0; font-size: 100%; }
+div.formbody input.qry_chronic {width: 25em; font-size: 83%; line-height: 100%;}
+
+/*** Formular Einfache Suche Start Seite ***/
+
+div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
+
+/*** Formular Erweiterte Suche ***/
+
+div.formbody div.qrytxt {width:34.5em; padding: 5px 5px 5px 5px;text-align:right;}
+div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
+div.formbody input.search_term { height:auto;width: 100%;font-size: 83%;}
+div.formbody div.innerform {width:34.5em;}
+div.formbody input.thesaurus_term {width: 45%;font-size: 83%; line-height: 120%;}
+div.formbody input.address_space {width: 55%;}
+
+div.formbody td label {font-size: 100%;}
+div.formbody input.btn_show_provider {margin: 3em 0 0 0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:80%; line-height: 130%; font-weight:bold; border: solid 1px #000; background-color: #176798; cursor: pointer; }
+div.formbody p.event_description { margin-left: 20px; font-size:100%; line-height:120%}
+
+div.intend {margin:0 0 0 2em}
+
+/*** Formular Suchhistorie ***/
+
+div.formbody a.smaller { font-size:70%;}
+
+/*** Formular Einstellungen (Suche) ***/
+
+div.formbody p.topmargin { margin-top:1.5em }
+
+/*** Formular Aehnliche Begriffe Suchergebnisse ***/
+
+div.formbody .snslogo_margin {margin-top: 8px; }
+
+/********************************************************************
+  footer block styles  
+*********************************************************************/
+
+div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo_footer.gif) no-repeat; padding: 0px 0px 30px 112px; }
+#footercontent { font-size: 65%; line-height: 120% }
+
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
+div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
+
+div#finalfootercontainer { float: left; width: 59.5em; }
+div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
+
+/********************************************************************
+  popup + overview styles  
+*********************************************************************/
+
+div#popupheader { padding:0; margin:0; height: 80px; width:100%; background-color:#FDFCE7; overflow: visible; }  
+div#popupContent, div#popupOverview { margin:27px 0 27px 56px; }
+div#popupContent div.left { float:left;  width:196px; margin: 0 28px 0 0; background-color:#EFEFEF; }
+div#popupContent div.right { float:left; width:25em; margin:0 0 42px; padding:0; }
+
+div#popupContent h1, div#popupOverview h1, div#overview h1 { margin-top:0.4em;; margin-bottom:1.7em; }
+div#popupContent div.left h3, div#popupContent div.left p, div#popupContent div.left ul { padding-left:8px; padding-right:8px; }
+
+div#popupOverview h2, div#overview h2 { height:auto; padding: 2px 14px 2px 8px; margin:0 0 10px 0; border-bottom: 1px solid #13547D; background:#176798; color:#FFF; font-size:70%; font-weight:bold; line-height:140%; text-transform:uppercase; }
+
+div.helpcontent ul {list-style: none; margin: 0.0em 0 0 0.5em; padding:0;}
+div.helpcontent li { margin: 0 0 0.3em 0;padding: 0 0 0 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
+
+div#popupContent li { font-size:75%; }
