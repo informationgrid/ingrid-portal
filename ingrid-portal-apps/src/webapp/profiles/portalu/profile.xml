@@ -172,6 +172,60 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/corner_sub_nav.gif</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/arrow_up.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_down.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_linkdoc.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_linkextern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_linkintern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_magnifier.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_portlet_info.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_up.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/ico_down_black.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/ico_synon_close.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/ico_synon_open.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/list_dot.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/portlet_header.gif</src>
+        </file>
+        
+        
 
         <file>
             <action>copy</action>
@@ -197,6 +251,59 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-help/images/en/en_01_motiv_hilfe.gif</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/arrow_up.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_down.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkdoc.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkextern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkintern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_magnifier.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_portlet_info.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_up.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/ico_down_black.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/ico_synon_close.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/ico_synon_open.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/list_dot.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/portlet_header.gif</src>
+        </file>
+
 
         <file>
             <action>copy</action>
@@ -238,6 +345,59 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-popup/images/en/en_01_motiv_suche.gif</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/arrow_up.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_down.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_linkdoc.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_linkextern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_linkintern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_magnifier.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_portlet_info.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/icn_up.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/ico_down_black.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/ico_synon_close.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/ico_synon_open.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/list_dot.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/portlet_header.gif</src>
+        </file>
+
 
         <file>
             <action>copy</action>
@@ -330,6 +490,18 @@
         <file>
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MeasuresSearchResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/images/icn_down.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/images/icn_linkextern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/images/icn_linkintern.gif</src>
         </file>
     </files>
     <sql>

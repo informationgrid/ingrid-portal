@@ -255,7 +255,7 @@ div.section div.indent {margin-left: 1em}
 div.noresult { margin-top:20px; }
 div.noresult ul { line-height:2em; }
 
-div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 0px 4px; font-size:75%; }
+div.resultset_nav { text-align:right; background-color:#EFEFEF; padding:0px 4px 0px 4px; font-size:75%; }
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
@@ -274,12 +274,12 @@ div.resultset span.result_title { font-size:75%;}
 div.resultset span.inquiry { margin-left:20px; font-size:83%}
 div.resultset em.date { font-style:normal; font-size: 83%; color:#111111; }
 
-div.resultset_partner_group {background-color:#D1E4F1; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
+div.resultset_partner_group {background-color:#EFEFEF; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
 div.resultset_partner_group span.title {font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
 div.resultset_partner_group p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
 div.resultset_partner_group p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%; margin-bottom:2px;}
 
-div.resultset_partner_only {background-color:#D1E4F1; margin: 0 0 20px 0;padding: 0.25em 0.875em 0.2em 0.7em;}
+div.resultset_partner_only {background-color:#EFEFEF; margin: 0 0 20px 0;padding: 0.25em 0.875em 0.2em 0.7em;}
 
 div.resultset_show_partner {text-decoration:none;font-size:75%;margin: 10px 0px 10px 0px;}
 
@@ -364,11 +364,11 @@ div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-siz
 div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
-div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #F4F4F4;}
+div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #EFEFEF;}
 /* Sonderbehandlung für IE: dieser übernimmt die Farbe des übergeordneten divs nicht für rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
-div.formbody div {background-color: #F4F4F4;}
+div.formbody div {background-color: #EFEFEF;}
 div.formbody div.line {background-color: #CCCCCC;}
 div.formbody div.line_form {background-color: #CCCCCC;}
 div.formbody p { padding:0; margin: 0.5em  0.0em; }
