@@ -346,6 +346,18 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources_de.properties</src>
         </file>
         <file>
@@ -415,6 +427,18 @@
         <file>
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MeasuresSearchResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources.properties</src>
         </file>
         <file>
             <action>copy</action>

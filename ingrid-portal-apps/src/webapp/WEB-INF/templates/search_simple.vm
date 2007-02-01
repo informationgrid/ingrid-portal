@@ -39,7 +39,7 @@ $action.setParameter('action','doChangeDS')
 		<input class="btn" type="submit" value="$MESSAGES.getString('searchSimple.query.submit')" />
           <span class="clearer"></span>
 #if($displayProviders)
-		<h3><label for="providers">Anbieter</label></h3>
+		<h3><label for="providers">$MESSAGES.getString('searchsimple.title.select.provider')</label></h3>
 		<select class="inputstyle" name="provider" id="provider">
 			<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
 #foreach($provider in $providers)

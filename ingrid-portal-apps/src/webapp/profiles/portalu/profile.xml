@@ -493,6 +493,18 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal-apps/images/icn_down.gif</src>
         </file>
         <file>

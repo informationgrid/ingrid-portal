@@ -41,7 +41,7 @@ $action.setParameter('action','doChangeDS')
 			<span class="clearer"></span>
 		</div>
 #if($displayProviders)
-    		<h3><label for="providers">Anbieter</label></h3>
+    		<h3><label for="providers">$MESSAGES.getString('searchsimple.title.select.provider')</label></h3>
 			&nbsp;<select class="inputstyle" name="provider" id="provider">
 				<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
 #foreach($provider in $providers)
