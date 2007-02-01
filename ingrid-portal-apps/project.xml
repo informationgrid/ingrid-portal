@@ -384,7 +384,7 @@
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
-            <version>1.4-dev-8</version>
+            <version>1.4</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
