@@ -18,11 +18,11 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.udk.UtilsDate;
 
 /**
  * TODO Describe your created type (class, etc.) here.

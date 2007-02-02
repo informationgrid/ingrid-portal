@@ -28,7 +28,6 @@ import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -42,6 +41,7 @@ import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.udk.UtilsDate;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Log log = LogFactory.getLog(SearchDetailPortlet.class);

@@ -23,7 +23,6 @@ import de.ingrid.portal.forms.SearchExtEnvTimeChronicleForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -38,6 +37,7 @@ import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.udk.UtilsDate;
 
 /**
  * This portlet handles the fragment of the time references (events in chronicle) in the extended search

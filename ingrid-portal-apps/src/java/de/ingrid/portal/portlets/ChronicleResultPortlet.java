@@ -26,7 +26,6 @@ import de.ingrid.portal.forms.ChronicleSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -36,6 +35,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.udk.UtilsDate;
 
 public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
 

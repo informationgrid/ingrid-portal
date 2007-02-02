@@ -15,8 +15,8 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.forms.SearchExtEnvTimeConstraintForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.UtilsQueryString;
+import de.ingrid.utils.udk.UtilsDate;
 
 /**
  * This portlet handles the fragment of the time constraint input in the extended search

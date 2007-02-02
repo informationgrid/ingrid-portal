@@ -17,11 +17,11 @@ import org.apache.velocity.context.Context;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.UtilsDate;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.udk.UtilsDate;
 
 public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
 
