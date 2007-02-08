@@ -5,6 +5,8 @@ package de.ingrid.portal.global;
 
 import java.util.Locale;
 
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
+
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -27,7 +29,7 @@ public class IngridSysCodeList {
         if (locale.getLanguage().equals(new Locale("en", "", "").getLanguage())) {
             langId = 94;
         }
-        return UtilsDB.getCodeListEntryName(codeListId, domainId, langId);
+        return UtilsUDKCodeLists.getCodeListEntryName(new Long(codeListId), new Long(domainId), new Long(langId));
     }
     
     public String getName(String codeListId, String domainId) {

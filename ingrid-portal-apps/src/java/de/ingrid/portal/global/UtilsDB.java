@@ -27,8 +27,6 @@ import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.om.IngridServiceRubric;
-import de.ingrid.portal.om.IngridSysCodelistDomain;
-import de.ingrid.portal.om.IngridSysCodelistDomainId;
 
 /**
  * Global STATIC data and utility methods for Database.
@@ -222,8 +220,8 @@ public class UtilsDB {
         // may be null,
         // so there's no call by reference !
         Session session = HibernateUtil.currentSession();
-        return getValuesFromDB(session.createCriteria(IngridProvider.class)
-                .addOrder(Order.asc("name")), session, providers, true);
+        return getValuesFromDB(session.createCriteria(IngridProvider.class).addOrder(Order.asc("name")), session,
+                providers, true);
     }
 
     /**
@@ -408,38 +406,6 @@ public class UtilsDB {
     }
 
     /**
-     * Get a entry from the code list table
-     * 
-     * @param codeListId
-     * @param domainId
-     * @param langId
-     * @return
-     */
-    public static String getCodeListEntryName(long codeListId, long domainId, long langId) {
-
-        Session session = HibernateUtil.currentSession();
-        Transaction tx = null;
-        try {
-            IngridSysCodelistDomainId id = new IngridSysCodelistDomainId();
-            id.setCodelistId(new Long(codeListId));
-            id.setDomainId(new Long(domainId));
-            id.setLangId(new Long(langId));
-            tx = session.beginTransaction();
-            IngridSysCodelistDomain domainEntry = (IngridSysCodelistDomain) session.load(IngridSysCodelistDomain.class,
-                    id);
-            tx.commit();
-            return domainEntry.getName();
-        } catch (Exception e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-        } finally {
-            HibernateUtil.closeSession();
-        }
-        return String.valueOf(domainId);
-    }
-    
-    /**
      * Update given mapped entity (hibernate) in database.
      * 
      * @param dbEntity
@@ -560,7 +526,7 @@ public class UtilsDB {
     }
 
     /**
-     * Get Partner/Provider Map. 
+     * Get Partner/Provider Map.
      * 
      * The partners can be filtered by the partner identification.
      * 
@@ -574,8 +540,10 @@ public class UtilsDB {
      * providersHashMap (provider Ident => providerHashMap)
      * 
      * providerHashMap ("provider" => IngridProvider)
-     *
-     * @param partnerFilter List of partner identifications. If filter is null, alle partners are returned.
+     * 
+     * @param partnerFilter
+     *            List of partner identifications. If filter is null, alle
+     *            partners are returned.
      * @return
      */
     public static LinkedHashMap getPartnerProviderMap(ArrayList partnerFilter) {
@@ -631,7 +599,8 @@ public class UtilsDB {
     /**
      * Execute RAW UPDATE-SQL. Make sure the SQL Statement is valid.
      * 
-     * @param sqlStr The SQL String.
+     * @param sqlStr
+     *            The SQL String.
      */
     public static void executeRawUpdateSQL(String sqlStr) {
         Transaction tx = null;
