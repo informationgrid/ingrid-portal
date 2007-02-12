@@ -4,14 +4,19 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.request.RequestContext;
@@ -57,6 +62,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     private static final String TEMPLATE_RESULT_JS_UNRANKED = "/WEB-INF/templates/search_result_js_unranked.vm";
 
     private static final String TEMPLATE_RESULT_IPLUG = "/WEB-INF/templates/search_result_iplug.vm";
+    
+    private HttpClient client;
 
     /*
      * (non-Javadoc)
@@ -65,6 +72,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
      */
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
+        client = new HttpClient();
+        client.getHttpConnectionManager().getParams().setConnectionTimeout(1000);
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -313,6 +322,45 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (controller.hasQueries()) {
             // fire queries
             HashMap results = controller.search();
+            
+            // check for zero results
+            // log the result to the resource logger
+            Iterator it = results.keySet().iterator();
+            boolean noResults = true;
+            String queryTypes = "";
+            while (it.hasNext()) {
+                Object key = it.next();
+                if (queryTypes.length() > 0) {
+                    queryTypes = queryTypes.concat(",");
+                } else {
+                    queryTypes = queryTypes.concat(key.toString());
+                }
+                IngridHits hits = (IngridHits)results.get(key);
+                if (hits != null && hits.length() > 0) {
+                    noResults = false;
+                    break;
+                }
+            }
+            if (noResults) {
+                String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);                
+                String url = PortalConfig.getInstance().getString(PortalConfig.PORTAL_LOGGER_RESOURCE).concat("?code=NO_RESULTS_FOR_QUERY&q=").concat(URLEncoder.encode(queryString)).concat("&qtypes=").concat(URLEncoder.encode(queryTypes));
+                HttpMethod method = null;
+                try{
+                    method = new GetMethod(url);
+                    method.setFollowRedirects(true);
+                    client.executeMethod(method);
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.info("Cannot make connection to logger resource: ".concat(url), t);
+                    }
+                } finally {
+                    if (method != null) {
+                        method.releaseConnection();
+                    }
+                }
+            }
+            
+            
             // post process ranked hits if exists
             if (results.containsKey("ranked")) {
                 rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);

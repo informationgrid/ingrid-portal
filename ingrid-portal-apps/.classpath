@@ -66,5 +66,7 @@
 	<classpathentry sourcepath="/INGRID_PORTAL_UTILS_SRC" kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-portal-utils-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-components-2.1-dev.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-cm-2.1-dev.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-httpclient/jars/commons-httpclient-3.0.1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-codec/jars/commons-codec-1.2.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

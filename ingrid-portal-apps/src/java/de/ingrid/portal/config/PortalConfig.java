@@ -77,6 +77,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS = "portal.search.display.providers";
     
+    public static final String PORTAL_LOGGER_RESOURCE = "portal.logger.resource";
+
+    
     // private stuff
     private static PortalConfig instance = null;
 
