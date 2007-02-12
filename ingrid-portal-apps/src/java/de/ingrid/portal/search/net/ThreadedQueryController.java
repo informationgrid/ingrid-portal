@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.ingrid.utils.IngridHits;
 
 /**
@@ -15,6 +18,8 @@ import de.ingrid.utils.IngridHits;
  * @author joachim@wemove.com
  */
 public class ThreadedQueryController {
+
+    private final static Log log = LogFactory.getLog(ThreadedQueryController.class);
 
     private Object threadMonitor;
 
@@ -66,14 +71,19 @@ public class ThreadedQueryController {
             it = mySearches.iterator();
             while (it.hasNext()) {
                 ThreadedQuery myThread = (ThreadedQuery) it.next();
-                myThread.interrupt();
+                if (myThread.isAlive() && !myThread.isInterrupted()) {
+                    myThread.interrupt();
+                    if (log.isDebugEnabled()) {
+                        log.debug("Interrupt query thread: " + myThread.getKey());
+                    }
+                }
             }
             mySearches.clear();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        
         return ingridResults;
     }
 

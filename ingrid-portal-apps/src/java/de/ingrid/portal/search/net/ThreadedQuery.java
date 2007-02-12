@@ -118,4 +118,11 @@ public class ThreadedQuery extends Thread {
             this.controller.addResultSet(this.key, hits);
         }
     }
+
+    /**
+     * @return Returns the key.
+     */
+    public String getKey() {
+        return key;
+    }
 }
