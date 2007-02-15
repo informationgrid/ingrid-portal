@@ -3,7 +3,7 @@
 		  #if ($rs.title)
 			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end </a></strong></span>
             <p class="result_description">
-            $!rs.abstract 
+##            $!rs.abstract 
             </p>
             <p class="result_metadata">
 				#if($grouping)
