@@ -1,0 +1,14 @@
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN"
+    "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
+<dwr>
+  <allow>
+    <create creator="new" javascript="JDate">
+      <param name="class" value="java.util.Date"/>
+    </create>
+    <create creator="new" javascript="IngridSearcher">
+      <param name="class" value="de.ingrid.portal.servlet.IngridSearcher"/>
+      <convert converter="map" match="java.util.Map"/>
+    </create>
+  </allow>
+</dwr>

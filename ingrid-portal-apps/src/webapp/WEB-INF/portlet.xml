@@ -6,6 +6,31 @@
     <!-- Generic Portlets           -->
     <!-- ************************** -->
 
+    <portlet id="DWRTestPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/dwr_test.vm</value>
+        </init-param>
+        <portlet-name>DWRTestPortlet</portlet-name>
+        <display-name>DWRTestPortlet</display-name>
+        <description>DWRTestPortlet</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>-1</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/dwr_test.vm</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+
     <portlet id="InfoPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
