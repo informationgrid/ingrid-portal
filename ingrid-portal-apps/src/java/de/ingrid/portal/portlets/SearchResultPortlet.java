@@ -356,7 +356,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     }
                 } finally {
                     if (method != null) {
-                        method.releaseConnection();
+                        try{
+                            method.releaseConnection();
+                        } catch (Throwable t) {
+                            if (log.isErrorEnabled()) {
+                                log.info("Cannot close connection to logger resource: ".concat(url), t);
+                            }
+                        }
                     }
                 }
             }
@@ -403,7 +409,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     ArrayList groupedStartHits = null;
                     groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
                             Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
-                    if (groupedStartHits == null) {
+                    if (groupedStartHits == null || unrankedHits == null) {
                         groupedStartHits = new ArrayList();
                         groupedStartHits.add(new Integer(0));
                         SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED,

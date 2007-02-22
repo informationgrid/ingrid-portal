@@ -180,11 +180,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isDebugEnabled()) {
                 log.debug("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                        + requestedHits + "[cause:" + e.getCause().getMessage() + "]", e);
+                        + requestedHits, e);
             } else if (log.isInfoEnabled()) {
                 log.info("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                        + requestedHits + "[cause:" + e.getCause().getMessage() + "]");
+                        + requestedHits + "[cause:" + e.getMessage() + "]");
             } else {
                 log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
@@ -252,11 +252,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
         } catch (Throwable t) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching Details of results: " + results + "[cause:" + t.getCause().getMessage() + "]", t);
+                log.debug("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]", t);
             } else if (log.isInfoEnabled()) {
-                log.info("Problems fetching Details of results: " + results + "[cause:" + t.getCause().getMessage() + "]");
+                log.info("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]");
             } else {
-                log.warn("Problems fetching Details of results: " + results + "[cause:" + t.getCause().getMessage() + "]", t);
+                log.warn("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]", t);
             }
             // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
             if (!enJXTACommunication) {
