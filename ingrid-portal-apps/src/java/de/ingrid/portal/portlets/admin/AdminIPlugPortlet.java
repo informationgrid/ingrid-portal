@@ -74,20 +74,25 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
+        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+        
         PortletSession session = request.getPortletSession();
         DisplayTreeNode treeRoot = (DisplayTreeNode) session.getAttribute("treeRoot");
         Principal authUserPrincipal = request.getUserPrincipal();
         Permissions authUserpermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                 roleManager);
         if (treeRoot == null) {
-            treeRoot = getPartnerProviderIPlugs(authUserpermissions, messages);
+            treeRoot = getPartnerProviderIPlugs(authUserpermissions, messages, plugs);
             session.setAttribute("treeRoot", treeRoot);
         }
 
         context.put("tree", treeRoot);
 
-        // check, get for iplug-se edit permissions
-        context.put("SEIplugs", getSEIPlugs(authUserpermissions));
+        // get iplug-se iplugs
+        context.put("SEIplugs", getSEIPlugs(plugs));
+        
+        // get iplug-se indexer iplugs the user has permissions for
+        context.put("SEIndexIplugs", getSEIndexIPlugs(authUserpermissions, plugs));
 
         // check, get for ibus
         context.put("ibusURL", getIBusAdminURL(authUserpermissions));
@@ -105,8 +110,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         return result;
     }
 
-    private ArrayList getSEIPlugs(Permissions permissions) {
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+    private ArrayList getSEIndexIPlugs(Permissions permissions, PlugDescription[] plugs) {
         ArrayList result = new ArrayList();
         if (permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION)
                 || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION)
@@ -116,13 +120,30 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
             for (int i = 0; i < plugs.length; i++) {
                 PlugDescription plug = plugs[i];
                 // do not include search engine iplugs
-                if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                if (plug.getIPlugClass().equals("org.apache.nutch.admin.IndexIPlug")) {
                     result.add(plug);
                 }
             }
         }
         return result;
     }
+
+    
+    private ArrayList getSEIPlugs(PlugDescription[] plugs) {
+        ArrayList result = new ArrayList();
+        for (int i = 0; i < plugs.length; i++) {
+            PlugDescription plug = plugs[i];
+            // do not include search engine iplugs
+            if (plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                result.add(plug);
+            }
+        }
+        return result;
+    }
+    
+    
+    
+    
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
@@ -161,8 +182,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      * @param principal
      * @return
      */
-    private DisplayTreeNode getPartnerProviderIPlugs(Permissions permissions, IngridResourceBundle messages) {
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+    private DisplayTreeNode getPartnerProviderIPlugs(Permissions permissions, IngridResourceBundle messages, PlugDescription[] plugs) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         ArrayList partners = UtilsSecurity.getPartnersFromPermissions(permissions, false);
