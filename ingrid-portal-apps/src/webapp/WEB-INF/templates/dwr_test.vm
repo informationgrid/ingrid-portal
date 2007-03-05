@@ -128,7 +128,9 @@ function handleSearchResults(results) {
 	endDoSearch = new Date().getTime();
 	var hits = results["hits"];
     
+	startClearTableData = new Date().getTime();
 	filteringTable.store.clearData();
+	startPrepareData = new Date().getTime();
 	
 	var data = new Array(hits.length);
 	
@@ -140,10 +142,11 @@ function handleSearchResults(results) {
 		obj["Titel"] = hits[x]["detail"]["title"];
 		data[x] = obj;
     }
+	startPopulatingData = new Date().getTime();
   	filteringTable.store.setData(data);
   	dlg.hide();
 	end = new Date().getTime();
-	dojo.byId("benchmark").innerHTML = "search: " + (endDoSearch - start) + " ms ; populating: " + (end - endDoSearch) + " ms.";
+	dojo.byId("benchmark").innerHTML = "search: " + (endDoSearch - start) + " ms ; populating: " + (end - endDoSearch) + " ms ; clearing data array: " + (startPrepareData - startClearTableData) + " ms ; prepare data array: " + (startPopulatingData - startPrepareData) + " ms ; populating data into component: " + (end - startPopulatingData) + "ms.";
 }
 
 </script>
