@@ -41,7 +41,7 @@
         <display-name>Generisches Informationsportlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>10</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -54,7 +54,7 @@
         <display-name>javascript detection portlet</display-name>
         <description>The Portlet is called only via javascript</description>
         <portlet-class>de.ingrid.portal.portlets.DetectJavaScriptPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -75,7 +75,7 @@
         <display-name>Help Portlet</display-name>
         <description>The Portlet displays help content.</description>
         <portlet-class>de.ingrid.portal.portlets.HelpPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -97,7 +97,7 @@
         <display-name>Content RSS Portlet</display-name>
         <description>The Portlet displays the editor for the RSS feeds.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.ContentRSSPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -118,7 +118,7 @@
         <display-name>Content Partner Portlet</display-name>
         <description>The Portlet displays the editor for the Partners.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.ContentPartnerPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -140,7 +140,7 @@
         <display-name>Content Provider Portlet</display-name>
         <description>The Portlet displays the editor for the Providers.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.ContentProviderPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -162,7 +162,7 @@
         <display-name>AdminUserPortlet</display-name>
         <description>The Portlet displays the user administration.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminUserPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -212,7 +212,7 @@
         <display-name>AdminIPlugPortlet</display-name>
         <description>The Portlet displays the editor for the iPlugs.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminIPlugPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -234,7 +234,7 @@
         <display-name>AdminCMSPortlet</display-name>
         <description>The Portlet displays the editor for the free text content.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminCMSPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -256,7 +256,7 @@
         <display-name>AdminWMSPortlet</display-name>
         <description>The Portlet displays the wms admin interface links.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminWMSPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -278,7 +278,7 @@
         <display-name>AdminStatisticsPortlet</display-name>
         <description>The Portlet displays the links to several statistics.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminStatisticsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -301,7 +301,7 @@
         <display-name>AdminHomepagePortlet</display-name>
         <description>This portlet displays the home page personalization dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminHomepagePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -323,7 +323,7 @@
         <display-name>AdminPortalProfilePortlet</display-name>
         <description>The Portlet displays the portal profile admin interface.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminPortalProfilePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -345,7 +345,7 @@
         <display-name>AdminUserMigrationPortlet</display-name>
         <description>The Portlet displays the portal user migration interface.</description>
         <portlet-class>de.ingrid.portal.portlets.admin.AdminUserMigrationPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -371,7 +371,7 @@
         <display-name>Einfache Suche</display-name>
         <description>This portlet displayes a search box for the home AND main search page.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSimplePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -407,7 +407,7 @@
         <display-name>Environment Teaser</display-name>
         <description>This portlet displays the rubrics of the Environment catalogue page on the home page for quick search.</description>
         <portlet-class>de.ingrid.portal.portlets.EnvironmentTeaserPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>60</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -443,7 +443,7 @@
         <display-name>Aktuelles</display-name>
         <description>This portlet displays the rss news list.</description>
         <portlet-class>de.ingrid.portal.portlets.RssNewsTeaserPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -487,7 +487,7 @@
         <display-name>Weitere Meldungen</display-name>
         <description>This portlet displays the rss news list.</description>
         <portlet-class>de.ingrid.portal.portlets.RssNewsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -505,7 +505,7 @@
         <display-name>CMS portlet</display-name>
         <description>This portlet displays a content entry from the cms, specified by the preference 'cmsKey'.</description>
         <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -529,7 +529,7 @@
         <display-name>Generisches Informationsportlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -573,7 +573,7 @@
         <display-name>Generisches Willkommens-Portlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -614,7 +614,7 @@
         <display-name>Service Teaser</display-name>
         <description>This portlet displays the rubrics of the Service page on the home page for quick search.</description>
         <portlet-class>de.ingrid.portal.portlets.ServiceTeaserPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>60</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -646,7 +646,7 @@
         <display-name>Measures Teaser</display-name>
         <description>This portlet displays the rubrics of the Measures page on the home page for quick search.</description>
         <portlet-class>de.ingrid.portal.portlets.MeasuresTeaserPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>60</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -678,7 +678,7 @@
         <display-name>Umweltchronik Teaser</display-name>
         <description>This portlet displays an anniversary event on the home page.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleTeaserPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -715,7 +715,7 @@
         <display-name>Contact</display-name>
         <description>This portlet displayes an environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.ContactPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -733,7 +733,7 @@
         <display-name>ContactNewsletterPortlet</display-name>
         <description>TODO: Describe the portlet.</description>
         <portlet-class>de.ingrid.portal.portlets.ContactNewsletterPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -752,7 +752,7 @@
         <display-name>MyPortalLoginPortlet</display-name>
         <description>This portlet displayes the login dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalLoginPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -770,7 +770,7 @@
         <display-name>MyPortalOverviewPortlet</display-name>
         <description>This portlet displays the myportal overview.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalOverviewPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -823,7 +823,7 @@
         <display-name>MyPortalCreateAccountPortlet</display-name>
         <description>This portlet displays the myportal create account dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalCreateAccountPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -842,7 +842,7 @@
         <display-name>MyPortalEditAccountPortlet</display-name>
         <description>This portlet displays the myportal edit account dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalEditAccountPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -866,7 +866,7 @@
         <display-name>MyPortalPasswordForgottenPortlet</display-name>
         <description>This portlet displays the myportal password forgotten dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPasswordForgottenPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -885,7 +885,7 @@
         <display-name>MyPortalPersonalizeOverviewPortlet</display-name>
         <description>This portlet displays the myportal personalization dialog: OverView.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeOverviewPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -904,7 +904,7 @@
         <display-name>MyPortalPersonalizeHomePortlet</display-name>
         <description>This portlet displays the myportal personalization dialog: home.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeHomePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -923,7 +923,7 @@
         <display-name>MyPortalPersonalizePartnerPortlet</display-name>
         <description>This portlet displays the myportal personalization dialog: Partner.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizePartnerPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -942,7 +942,7 @@
         <display-name>MyPortalPersonalizeSourcesPortlet</display-name>
         <description>This portlet displays the myportal personalization dialog: Sources.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeSourcesPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -961,7 +961,7 @@
         <display-name>MyPortalPersonalizeSearchSettingsPortlet</display-name>
         <description>This portlet displays the myportal personalization dialog: SearchSettings.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeSearchSettingsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -985,7 +985,7 @@
         <display-name>ShowPartnerPortlet</display-name>
         <description>TODO: describe the portlet</description>
         <portlet-class>de.ingrid.portal.portlets.ShowPartnerPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1003,7 +1003,7 @@
         <display-name>Service</display-name>
         <description>This portlet displayes a service search box.</description>
         <portlet-class>de.ingrid.portal.portlets.ServiceSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1020,7 +1020,7 @@
         <display-name>Service Suchergebnis</display-name>
         <description>This portlet displays the search results of the service search (service catalogue).</description>
         <portlet-class>de.ingrid.portal.portlets.ServiceResultPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1038,7 +1038,7 @@
         <display-name>Messwerte</display-name>
         <description>This portlet displayes a service search box.</description>
         <portlet-class>de.ingrid.portal.portlets.MeasuresSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1055,7 +1055,7 @@
         <display-name>Messwerte Suchergebnis</display-name>
         <description>This portlet displays the search results of the measures search (measures catalogue).</description>
         <portlet-class>de.ingrid.portal.portlets.MeasuresResultPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1073,7 +1073,7 @@
         <display-name>Umweltthemen</display-name>
         <description>This portlet displays an environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.EnvironmentSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1090,7 +1090,7 @@
         <display-name>Umweltthemen Suchergebnis</display-name>
         <description>This portlet displays the search results of the environment topics search (environment topics catalogue).</description>
         <portlet-class>de.ingrid.portal.portlets.EnvironmentResultPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1108,7 +1108,7 @@
         <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
         <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1130,7 +1130,7 @@
         <display-name>Umweltchronik</display-name>
         <description>This portlet displayes a environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleSearchPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1147,7 +1147,7 @@
         <display-name>Umweltchronik Suchergebnis</display-name>
         <description>This portlet displays the search results of the environment chronicle search.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleResultPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1169,7 +1169,7 @@
         <display-name>Sucheinstellungen</display-name>
         <description>This portlet displays and handles the search settings.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSettingsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1191,7 +1191,7 @@
         <display-name>SearchSavePortlet</display-name>
         <description>This portlet displays and handles the search save dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSavePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1213,7 +1213,7 @@
         <display-name>Suchhistorie</display-name>
         <description>This portlet displays and handles the search history.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchHistoryPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1235,7 +1235,7 @@
         <display-name>Similar Terms</display-name>
         <description>This portlet handles the "Similar Terms" fragment of the search result page.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSimilarPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>30</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1256,7 +1256,7 @@
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1278,7 +1278,7 @@
         <display-name>Detailinformation</display-name>
         <description>This portlet displays the search detail for dsc results.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchDetailPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1306,7 +1306,7 @@
         <display-name>ErweiterteSucheUmwThemaSuchbegriffe</display-name>
         <description>This portlet handles the input of the terms in the extended search for environment info.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTopicTermsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1328,7 +1328,7 @@
         <display-name>ErweiterteSucheUmwThemaFachwoerterbuch</display-name>
         <description>This portlet handles the input of the thesaurus terms in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTopicThesaurusPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1350,7 +1350,7 @@
         <display-name>ErweiterteSucheUmwRaumGeothesaurus</display-name>
         <description>This portlet handles the input of the geothesaurus terms in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvPlaceGeothesaurusPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1372,7 +1372,7 @@
         <display-name>ErweiterteSucheUmwRaumKarte</display-name>
         <description>This portlet handles the input of the map page in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvPlaceMapPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1394,7 +1394,7 @@
         <display-name>ErweiterteSucheUmwZeitEinschraenkung</display-name>
         <description>This portlet handles the input of the time constraint fragment in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTimeConstraintPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1416,7 +1416,7 @@
         <display-name>ErweiterteSucheUmwZeitChronik</display-name>
         <description>This portlet handles the input of the time references (chronicle) in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTimeChroniclePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1438,7 +1438,7 @@
         <display-name>ErweiterteSucheUmwSuchbereichInhalte</display-name>
         <description>This portlet handles the input of the "search area"/"contents" fragment in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaContentsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1460,7 +1460,7 @@
         <display-name>ErweiterteSucheUmwSuchbereichDatenquellen</display-name>
         <description>This portlet handles the input of the "searcharea"/"sources" fragment in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaSourcesPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1482,7 +1482,7 @@
         <display-name>ErweiterteSucheUmwSuchbereichBundLaender</display-name>
         <description>This portlet handles the input of the "envinfo"/"searcharea"/"partner" fragment in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaPartnerPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1504,7 +1504,7 @@
         <display-name>ErweiterteSucheAdrThemaSuchbegriffe</display-name>
         <description>This portlet handles the input of the terms in the extended search for addresses.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrTopicTermsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1526,7 +1526,7 @@
         <display-name>ErweiterteSucheAdrThemaSuchmodus</display-name>
         <description>This portlet handles the input of the mode in the extended search for addresses.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrTopicModePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1548,7 +1548,7 @@
         <display-name>ErweiterteSucheAdrRaumRaumbezug</display-name>
         <description>This portlet handles the input of the place reference in the extended search for addresses.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrPlaceReferencePortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1570,7 +1570,7 @@
         <display-name>ErweiterteSucheAdrSuchbereichBundLaender</display-name>
         <description>This portlet handles the input of the "addresses"/"searcharea"/"partner" fragment in the extended search.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrAreaPartnerPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1592,7 +1592,7 @@
         <display-name>ErweiterteSucheForschungThemaSuchbegriffe</display-name>
         <description>This portlet handles the input of the terms in the extended search for research.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtResTopicTermsPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1614,7 +1614,7 @@
         <display-name>ErweiterteSucheForschungThemaAttribute</display-name>
         <description>This portlet handles the input of the attributes in the extended search for research.</description>
         <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtResTopicAttributesPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
