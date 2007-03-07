@@ -405,7 +405,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     } else if (replacementFields.containsKey(columnName)) {
                         // replace value according to translation config
                         Map transMap = (Map) replacementFields.get(columnName);
-                        String src = record.getValueAsString(columns[j]).trim();
+                        String src = subRecords[i].getValueAsString(columns[j]).trim();
                         if (transMap.containsKey(src)) {
                             subRecordMap.put(columnName, transMap.get(src));
                         } else {
