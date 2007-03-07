@@ -25,17 +25,14 @@ limitations under the License.
   </bean>
   
   <!-- Navigation state we are currently using -->
-<!-- JETSPEED DEFAULT, has all render parameters in session, so bookmarking doesn't work -->
-  <!--bean id="NavigationalState" 
-  	   class="org.apache.jetspeed.container.state.impl.SessionFullNavigationalState"
-	   singleton="false"
-  -->  	 
-<!-- WEMOVE, stores render parameters in URL, so bookmarking works -->
   <bean id="NavigationalState" 
   	   class="org.apache.jetspeed.container.state.impl.SessionNavigationalState"
 	   singleton="false"
   >  	 
        <constructor-arg><ref bean="NavigationalStateCodec"/></constructor-arg>
+       <constructor-arg>
+        	<ref bean="portletContentCache"/>
+        </constructor-arg>       
   </bean>
   
   <!-- PortalURL we are currently using -->

@@ -16,6 +16,9 @@
 package org.apache.jetspeed.pipeline.valve.impl;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.portlet.PortletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.PortalReservedParameters;
+import org.apache.jetspeed.cache.JetspeedCache;
 import org.apache.jetspeed.container.window.PortletWindowAccessor;
-import org.apache.jetspeed.messaging.PortletMessagingImpl;
+import org.apache.jetspeed.exception.JetspeedException;
 import org.apache.jetspeed.om.common.portlet.MutablePortletEntity;
+import org.apache.jetspeed.om.common.portlet.PortletDefinitionComposite;
+import org.apache.jetspeed.om.page.ContentFragment;
+import org.apache.jetspeed.om.page.ContentFragmentImpl;
+import org.apache.jetspeed.om.page.ContentPage;
 import org.apache.jetspeed.om.page.Fragment;
 import org.apache.jetspeed.om.page.Page;
 import org.apache.jetspeed.pipeline.PipelineException;
@@ -36,6 +44,7 @@ import org.apache.jetspeed.pipeline.valve.ValveContext;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.om.window.PortletWindow;
 
 /**
@@ -49,7 +58,7 @@ import org.apache.pluto.om.window.PortletWindow;
  * place.
  * 
  * @author <a href="mailto:weaver@apache.org">Scott T. Weaver</a>
- * @version $Id: ActionValveImpl.java 423286 2006-07-18 23:06:33Z taylor $
+ * @version $Id: ActionValveImpl.java 506339 2007-02-12 07:03:07Z taylor $
  *
  */
 public class ActionValveImpl extends AbstractValve implements ActionValve
@@ -59,17 +68,20 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
     private PortletContainer container;
     private PortletWindowAccessor windowAccessor;
     private boolean patchResponseCommitted = false;
+    private JetspeedCache portletContentCache;
 
-    public ActionValveImpl(PortletContainer container, PortletWindowAccessor windowAccessor)
+    public ActionValveImpl(PortletContainer container, PortletWindowAccessor windowAccessor, JetspeedCache portletContentCache)
     {
         this.container = container;
         this.windowAccessor = windowAccessor;
+        this.portletContentCache = portletContentCache;
     }
     
-    public ActionValveImpl(PortletContainer container, PortletWindowAccessor windowAccessor, boolean patchResponseCommitted)
+    public ActionValveImpl(PortletContainer container, PortletWindowAccessor windowAccessor, JetspeedCache portletContentCache, boolean patchResponseCommitted)
     {
         this.container = container;
         this.windowAccessor = windowAccessor;
+        this.portletContentCache = portletContentCache;        
         this.patchResponseCommitted = patchResponseCommitted;
     }
 
@@ -82,8 +94,24 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
         try
         {            
             PortletWindow actionWindow = request.getActionWindow();
-            if (actionWindow != null && actionWindow.getPortletEntity() != null)
+            if (actionWindow != null)
             {
+                // If portlet entity is null, try to refresh the actionWindow.
+                // Under some clustered environments, a cached portlet window could have null entity.
+                if (null == actionWindow.getPortletEntity())
+                {
+                    try 
+                    {
+                        Fragment fragment = request.getPage().getFragmentById(actionWindow.getId().toString());
+                        ContentFragment contentFragment = new ContentFragmentImpl(fragment, new HashMap());
+                        actionWindow = this.windowAccessor.getPortletWindow(contentFragment);
+                    } 
+                    catch (Exception e)
+                    {
+                        log.error("Failed to refresh action window.", e);
+                    }
+                }
+
                 initWindow(actionWindow, request);
                 HttpServletResponse response = request.getResponseForWindow(actionWindow);
                 HttpServletRequest requestForWindow = request.getRequestForWindow(actionWindow);
@@ -100,6 +128,9 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
                 // so there is no need to continue the pipeline
                 
                 //msg.processActionMessage("todo", request);
+                
+                // clear the cache for all portlets on the current page
+                clearPortletCacheForPage(request, actionWindow);
                 
                 if (patchResponseCommitted)
                 {
@@ -154,6 +185,93 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
 
     }
 
+    protected void clearPortletCacheForPage(RequestContext request, PortletWindow actionWindow)
+    throws JetspeedException
+    {
+        ContentPage page = request.getPage();
+        if (null == page)
+        {
+            throw new JetspeedException("Failed to find PSML Pin ContentPageAggregator.build");
+        }
+        ContentFragment root = page.getRootContentFragment();
+        if (root == null)
+        {
+            throw new JetspeedException("No root ContentFragment found in ContentPage");
+        }
+        if (!isNonStandardAction(actionWindow))
+        {
+            notifyFragments(root, request, page);
+        }
+        else
+        {
+            ContentFragment fragment = page.getContentFragmentById(actionWindow.getId().toString());
+            clearTargetCache(fragment, request);
+        }
+    }
+    
+    /**
+     * Actions can be marked as non-standard if they don't participate in
+     * JSR-168 standard action behavior. By default, actions are supposed
+     * to clear the cache of all other portlets on the page.
+     * By setting this parameter, we can ignore the standard behavior
+     * and not clear the cache on actions. This is useful for portlets
+     * which never participate with other portlets.
+     * 
+     */    
+    protected boolean isNonStandardAction(PortletWindow actionWindow)
+    {
+        PortletEntity entity = actionWindow.getPortletEntity();
+        if (entity != null)
+        {
+            PortletDefinitionComposite portletDefinition = (PortletDefinitionComposite)entity.getPortletDefinition();
+            if (portletDefinition != null)
+            {
+                Collection actionList = null;
+        
+                if (portletDefinition != null)
+                {
+                    actionList = portletDefinition.getMetadata().getFields(PortalReservedParameters.PORTLET_EXTENDED_DESCRIPTOR_NON_STANDARD_ACTION);
+                }
+                if (actionList != null) 
+                {
+                    if (!actionList.isEmpty())
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+   
+    protected void notifyFragments(ContentFragment f, RequestContext context, ContentPage page)
+    {
+        if (f.getContentFragments() != null && f.getContentFragments().size() > 0)
+        {
+            Iterator children = f.getContentFragments().iterator();
+            while (children.hasNext())
+            {
+                ContentFragment child = (ContentFragment) children.next();
+                if (!"hidden".equals(f.getState()))
+                {
+                    notifyFragments(child, context, page);
+                }
+            } 
+        }    
+        String cacheKey = portletContentCache.createCacheKey(context.getUserPrincipal().getName(), f.getId());
+        if (portletContentCache.isKeyInCache(cacheKey))
+        {
+            portletContentCache.remove(cacheKey);
+        }
+    }
+
+    protected void clearTargetCache(ContentFragment f, RequestContext context)
+    {
+        String cacheKey = portletContentCache.createCacheKey(context.getUserPrincipal().getName(), f.getId());
+        if (portletContentCache.isKeyInCache(cacheKey))
+        {
+            portletContentCache.remove(cacheKey);
+        }
+    }
+    
     /**
      * @see java.lang.Object#toString()
      */

@@ -51,11 +51,15 @@
     </bean>
 
     <bean id="Powertools" class="org.apache.jetspeed.velocity.JetspeedPowerToolFactory">
-        <constructor-arg>
+        <constructor-arg index="0">
             <value>de.ingrid.portal.jetspeed.velocity.IngridPowerToolImpl</value>
         </constructor-arg>
-        <constructor-arg>
+        <constructor-arg index="1">
             <ref bean="DynamicTitleService" />
+        </constructor-arg>
+		<!-- Added so we can render portlets in JPT -->
+		<constructor-arg index="2">
+            <ref bean="org.apache.jetspeed.aggregator.PortletRenderer" />
         </constructor-arg>
     </bean>
 
@@ -100,14 +104,17 @@
     <!-- Portlet Window Component -->
     <bean id="PortletWindowAccessor" class="org.apache.jetspeed.container.window.impl.PortletWindowAccessorImpl"
         name="org.apache.jetspeed.container.window.PortletWindowAccessor">
-        <constructor-arg>
+        <constructor-arg index='0'>
             <ref bean="org.apache.jetspeed.components.portletentity.PortletEntityAccessComponent" />
         </constructor-arg>
-        <constructor-arg>
+        <constructor-arg index='1'>
             <ref bean="portletFactory" />
         </constructor-arg>
+        <constructor-arg index='2'>
+            <ref bean="org.apache.jetspeed.components.portletregistry.PortletRegistry" />
+        </constructor-arg>        
         <!-- enable window validation -->
-        <constructor-arg type="boolean">
+        <constructor-arg type="boolean" index='3'>
             <value>false</value>
         </constructor-arg>
     </bean>

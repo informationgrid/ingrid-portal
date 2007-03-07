@@ -212,9 +212,6 @@ INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories)
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (8, 'LfUG Sachsen', 'LfUG Sachsen', 'http://www.umwelt.sachsen.de/de/wu/umwelt/lfug/lfug-internet/start.xml', 'de', 'all');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (9, 'MLUV Brandenburg', 'RSS MLUV Brandenburg', 'http://www.mluv.brandenburg.de/cms/list.php/mluv_presse_rss', 'de', 'all');
 
-INSERT INTO PRINCIPAL_RULE_ASSOC VALUES ('admin', 'page', 'role-fallback');
-UPDATE SECURITY_CREDENTIAL SET UPDATE_REQUIRED = '0' WHERE CREDENTIAL_ID =1;
-
 INSERT INTO ingrid_codelist VALUES (100, 'Raumbezugssystem (EPSG)', 1, 1);
 INSERT INTO ingrid_codelist VALUES (101, 'Vertikales Datum', 1, 1);
 INSERT INTO ingrid_codelist VALUES (102, 'Höhe', 1, 1);

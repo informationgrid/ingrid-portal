@@ -21,7 +21,6 @@ limitations under the License.
         init-method="initialize"
   >
   </bean> 
-  
   <bean id="localizationValve"
         class="org.apache.jetspeed.localization.impl.LocalizationValveImpl"
         init-method="initialize"
@@ -104,9 +103,22 @@ limitations under the License.
        default page specified in PSML, (or the first page in
        the folder), is always selected
    -->
-   <constructor-arg index="4"><value>false</value></constructor-arg>    
-  </bean> 
-  
+   <constructor-arg index="4"><value>true</value></constructor-arg>    
+  </bean>
+     
+  <!-- 
+      To create a new page when a user first logs in from their roles,
+      add this valve after each profilerValve entry in the pipeline configs 
+      below
+   -->  
+  <bean id="createPageValve"
+        class="org.apache.jetspeed.profiler.impl.CreatePageValveImpl"
+  >
+   <constructor-arg index="0">
+       <ref bean="PortletActionSecurityBehavior" />
+   </constructor-arg>
+  </bean>
+
   <bean id="containerValve"
         class="org.apache.jetspeed.container.ContainerValve"
         init-method="initialize"
@@ -121,7 +133,10 @@ limitations under the License.
    </constructor-arg>
    <constructor-arg>   
        <ref bean="PortletWindowAccessor" />    
-   </constructor-arg>   
+   </constructor-arg>
+   <constructor-arg>
+    	<ref bean="portletContentCache"/>
+   </constructor-arg>      
     <!-- 
          Setting to true will force Action response isCommitted to true
          as there is a bug in Websphere 5 where request.isCommitted always returns false
@@ -129,7 +144,7 @@ limitations under the License.
     <constructor-arg type="boolean">
         <value>false</value>
     </constructor-arg>                
-        -->       
+        -->          	
   </bean> 
 
   <bean id="desktopActionValve"
@@ -142,6 +157,17 @@ limitations under the License.
    <constructor-arg>   
        <ref bean="PortletWindowAccessor" />    
    </constructor-arg>   
+   <constructor-arg>
+    	<ref bean="portletContentCache"/>
+   </constructor-arg>      
+    <!-- 
+         Setting to true will force Action response isCommitted to true
+         as there is a bug in Websphere 5 where request.isCommitted always returns false
+         Set this boolean to TRUE if running on Websphere 5 pre-cumulative fix 5.1.1.9  
+    <constructor-arg type="boolean">
+        <value>false</value>
+    </constructor-arg>                
+        -->          	
   </bean> 
       
   <bean id="portletValve"
@@ -150,6 +176,15 @@ limitations under the License.
   >
    <constructor-arg>
        <ref bean="org.apache.jetspeed.aggregator.PortletAggregator"/>
+   </constructor-arg>
+  </bean> 
+
+  <bean id="portletValveTitleInHeader"
+        class="org.apache.jetspeed.aggregator.PortletValve"
+        init-method="initialize"
+  >
+   <constructor-arg>
+       <ref bean="org.apache.jetspeed.aggregator.PortletAggregatorTitleInHeader"/>
    </constructor-arg>
   </bean> 
 
@@ -171,7 +206,25 @@ limitations under the License.
        <ref bean="org.apache.jetspeed.aggregator.PageAggregator"/>
    </constructor-arg>
   </bean> 
-  
+
+  <bean id="headerAggregatorValvePortal"
+        class="org.apache.jetspeed.aggregator.HeaderAggregatorValve"
+        init-method="initialize"
+  >
+   <constructor-arg>
+       <ref bean="HeaderAggregatorPortal"/>
+   </constructor-arg>
+  </bean> 
+
+  <bean id="headerAggregatorValveDesktop"
+        class="org.apache.jetspeed.aggregator.HeaderAggregatorValve"
+        init-method="initialize"
+  >
+   <constructor-arg>
+       <ref bean="HeaderAggregatorDesktop"/>
+   </constructor-arg>
+  </bean> 
+      
   <bean id="cleanUpValve"
         class="org.apache.jetspeed.pipeline.valve.impl.CleanupValveImpl"
         init-method="initialize"
@@ -183,8 +236,11 @@ limitations under the License.
         init-method="initialize"
   >
    <constructor-arg>
-       <ref bean="AJAXService"/>
+       <ref bean="AJAXService"/>     
    </constructor-arg>
+    <constructor-arg>
+        <ref bean="RolesSecurityBehavior"/>        
+    </constructor-arg>    	
   </bean> 
   
   <bean id="DecorationValve"
@@ -227,7 +283,6 @@ limitations under the License.
       <ref bean="capabilityValve"/>
       <ref bean="portalURLValve"/>
       <ref bean="securityValve"/>
-      <ref bean="ingridLocalizationValve"/>
       <ref bean="localizationValve"/>
       <ref bean="passwordCredentialValve"/>
       <ref bean="loginValidationValve"/>
@@ -235,6 +290,7 @@ limitations under the License.
       <ref bean="containerValve"/>
       <ref bean="actionValve"/>
       <ref bean="DecorationValve" />
+      <ref bean="headerAggregatorValvePortal"/>  
       <ref bean="aggregatorValve"/>
       <ref bean="cleanUpValve"/>
     </list>
@@ -251,7 +307,6 @@ limitations under the License.
    <constructor-arg>
     <list>
       <ref bean="capabilityValve"/>
-      <ref bean="ingridLocalizationValve"/>
       <ref bean="localizationValve"/>
       <ref bean="loginViewValve"/>
     </list>
@@ -267,7 +322,6 @@ limitations under the License.
    </constructor-arg>
    <constructor-arg>
     <list>
-        <ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>
@@ -309,11 +363,10 @@ limitations under the License.
         <ref bean="portalURLValve"/>                
         <ref bean="capabilityValve"/>        
         <ref bean="securityValve"/>                
-        <ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
-        <ref bean="portletValve"/>    
+        <ref bean="portletValveTitleInHeader"/>    
     </list>
     </constructor-arg>
   </bean> 
@@ -330,12 +383,31 @@ limitations under the License.
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>                
         <ref bean="securityValve"/>                
-        <ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
-        <!-- TODO: replace layout valve with Ajax valve -->
+        <!--  this is the standard Jetspeed API entry point -->
         <ref bean="layoutValve"/>
+    </list>
+    </constructor-arg>
+  </bean> 
+
+  <bean id="ajax-direct-pipeline"
+        class="org.apache.jetspeed.pipeline.JetspeedPipeline"
+        init-method="initialize"
+  >
+   <constructor-arg>
+       <value>AjaxDirectPipeline</value>
+   </constructor-arg>
+   <constructor-arg>
+    <list>
+        <ref bean="capabilityValve"/>
+        <ref bean="portalURLValve"/>                
+        <ref bean="securityValve"/>                
+        <ref bean="localizationValve"/>
+        <ref bean="profilerValve"/>                        
+        <ref bean="containerValve"/>
+        <ref bean="AJAXValve"/>
     </list>
     </constructor-arg>
   </bean> 
@@ -351,7 +423,6 @@ limitations under the License.
     <list>
         <ref bean="portalURLValve"/>                
         <ref bean="securityValve"/>                
-        <ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
@@ -375,6 +446,7 @@ limitations under the License.
         <ref bean="securityValve"/>                
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
+        <ref bean="headerAggregatorValveDesktop"/>          
         <ref bean="desktopValve"/>
     </list>
     </constructor-arg>
@@ -399,12 +471,15 @@ limitations under the License.
             <entry key='/fileserver'>
                 <value>fileserver-pipeline</value>
             </entry>                        
-            <entry key='/desktop'>
-                <value>desktop-pipeline</value>
+            <entry key='/desktop'>                <!-- the key "/desktop" cannot be changed without editing core.js (at least) -->
+                <value>desktop-pipeline</value>   <!--    must be set in third argument in JetspeedDesktop bean initialization -->
             </entry>                                    
             <entry key='/action'>
                 <value>desktop-action-pipeline</value>
             </entry>                                                
+            <entry key='/ajax'>
+                <value>ajax-direct-pipeline</value>
+            </entry>
         </map>        
     </constructor-arg>        
   </bean>

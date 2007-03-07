@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Snapshot name="standard-jetspeed2.xml"
+    xmlns="http://portals.apache.org/jetspeed"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<softwareVersion value="1"/>
+	<softwareSubVersion value="0"/>
+	<default_rule value="j2"/>
+	<encryption value=""/>
+	<Roles/>
+	<Groups/>
+	<Users>
+		<User name="admin">
+			<credentials password="admin" enabled="TRUE" requiresUpdate="FALSE"/>
+			<roles>user,admin</roles>
+			<groups></groups>
+			<userinfo>
+				<preference>
+					<name value="user.name.given"/>
+					<value value="System"/>
+				</preference>
+				<preference>
+					<name value="user.name.family"/>
+					<value value="Administrator"/>
+				</preference>
+			</userinfo>
+			<Rules>
+				<Rule locator="page" rule="role-fallback"/>
+			</Rules>
+		</User>
+	</Users>	
+	<Permissions>
+		<Permission class="de.ingrid.portal.security.permission.IngridPortalPermission" resource="admin" actions="">
+			<roles></roles>
+			<groups></groups>
+			<users>admin</users>
+		</Permission>
+		<Permission class="de.ingrid.portal.security.permission.IngridPortalPermission" resource="admin.portal" actions="">
+			<roles></roles>
+			<groups></groups>
+			<users></users>
+		</Permission>
+		<Permission class="de.ingrid.portal.security.permission.IngridPortalPermission" resource="admin.portal.partner" actions="">
+			<roles></roles>
+			<groups></groups>
+			<users></users>
+		</Permission>
+		<Permission class="de.ingrid.portal.security.permission.IngridPortalPermission" resource="admin.portal.partner.provider.index" actions="">
+			<roles></roles>
+			<groups></groups>
+			<users></users>
+		</Permission>
+		<Permission class="de.ingrid.portal.security.permission.IngridPortalPermission" resource="admin.portal.partner.provider.catalog" actions="">
+			<roles></roles>
+			<groups></groups>
+			<users></users>
+		</Permission>
+	</Permissions>
+</Snapshot>

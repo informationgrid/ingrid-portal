@@ -9,6 +9,7 @@ import javax.portlet.PortletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.jetspeed.Jetspeed;
+import org.apache.jetspeed.aggregator.PortletRenderer;
 import org.apache.jetspeed.om.page.ContentFragment;
 import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.request.RequestContext;
@@ -23,8 +24,8 @@ import org.apache.pluto.om.common.PreferenceSet;
 public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
     private static UserManager userManager = null;
 
-    public IngridPowerToolImpl(RequestContext requestContext, DynamicTitleService titleService) throws Exception {
-        super(requestContext, titleService);
+    public IngridPowerToolImpl(RequestContext requestContext, DynamicTitleService titleService,PortletRenderer renderer) throws Exception {
+        super(requestContext, titleService, renderer);
         if (userManager == null) {
             userManager = (UserManager) Jetspeed.getComponentManager().getComponent(UserManager.class.getName());
             if (null == userManager) {

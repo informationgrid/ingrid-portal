@@ -1,38 +1,5 @@
 INSERT INTO ingrid_lookup (id, item_key, item_value) VALUES (1, 'ingrid_db_version', '1');
 
-INSERT INTO SECURITY_PRINCIPAL VALUES(1100,'org.apache.jetspeed.security.JetspeedRolePrincipalImpl',0,1,'/role/admin-portal',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PRINCIPAL VALUES(1101,'org.apache.jetspeed.security.JetspeedRolePrincipalImpl',0,1,'/role/admin-partner',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PRINCIPAL VALUES(1102,'org.apache.jetspeed.security.JetspeedRolePrincipalImpl',0,1,'/role/admin-provider',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-
-INSERT INTO SECURITY_PRINCIPAL VALUES(1110,'org.apache.jetspeed.security.JetspeedUserPrincipalImpl',0,1,'/user/adminportal',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PRINCIPAL VALUES(1111,'org.apache.jetspeed.security.JetspeedUserPrincipalImpl',0,1,'/user/adminpartner',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PRINCIPAL VALUES(1112,'org.apache.jetspeed.security.JetspeedUserPrincipalImpl',0,1,'/user/adminprovider',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_CREDENTIAL VALUES(1113,1110,'adminportal',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),null,null,null);
-INSERT INTO SECURITY_CREDENTIAL VALUES(1114,1111,'adminpartner',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),null,null,null);
-INSERT INTO SECURITY_CREDENTIAL VALUES(1115,1112,'adminprovider',0,'org.apache.jetspeed.security.spi.impl.DefaultPasswordCredentialImpl',0,0,1,0,0,to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),null,null,null);
-INSERT INTO SECURITY_USER_ROLE VALUES(1110,8);
-INSERT INTO SECURITY_USER_ROLE VALUES(1110,1100);
-INSERT INTO SECURITY_USER_ROLE VALUES(1111,8);
-INSERT INTO SECURITY_USER_ROLE VALUES(1111,1101);
-INSERT INTO SECURITY_USER_ROLE VALUES(1112,8);
-INSERT INTO SECURITY_USER_ROLE VALUES(1112,1102);
-INSERT INTO SECURITY_PERMISSION VALUES(1199,'de.ingrid.portal.security.permission.IngridPortalPermission','admin',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1200,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1201,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1202,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner.provider.index',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1203,'de.ingrid.portal.security.permission.IngridPortalPermission','admin.portal.partner.provider.catalog',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1204,'de.ingrid.portal.security.permission.IngridPartnerPermission','partner.he',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1205,'de.ingrid.portal.security.permission.IngridProviderPermission','provider.he_hmulv',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO SECURITY_PERMISSION VALUES(1206,'de.ingrid.portal.security.permission.IngridProviderPermission','provider.he_hlug',' ',to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'),to_date('2006-08-22 16:27:12','YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1100,1200);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1111,1201);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1111,1204);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1202);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1203);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1204);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1205);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1112,1206);
-INSERT INTO PRINCIPAL_PERMISSION VALUES(1,1199);
 
 INSERT INTO ingrid_cms (id, item_key, item_description, item_changed, item_changed_by) VALUES (1, 'portalu.teaser.inform', 'PortalU informiert Text', to_date('2006-09-15 00:00:00','YYYY-MM-DD HH24:MI:SS'), 'admin');
 INSERT INTO ingrid_cms (id, item_key, item_description, item_changed, item_changed_by) VALUES (15, 'portalu.disclaimer', 'Impressum', to_date('2006-09-15 00:00:00','YYYY-MM-DD HH24:MI:SS'), 'admin');
@@ -75,15 +42,6 @@ UPDATE ingrid_provider SET sortkey = 4 WHERE id =137;
 UPDATE ingrid_provider SET sortkey = 5 WHERE id =138;
 
 UPDATE ingrid_rss_source SET url = 'http://www.mufv.rlp.de/rss/rss_1_20.xml' WHERE id =3;
-
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =3;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =4;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =5;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =50;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =51;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =1110;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =1111;
-UPDATE security_credential SET IS_ENABLED = '0', MODIFIED_DATE = sysdate WHERE CREDENTIAL_ID =1112;
 
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (12, 'bw_lu', 'Landesanstalt für Umwelt, Messungen und Naturschutz Baden-Württemberg', 'http://www.lubw.baden-wuerttemberg.de/servlet/is/Entry.20732.DisplayRSS2/', 'de', 'all');
 INSERT INTO ingrid_rss_source (id, provider, description, url, lang, categories) VALUES (13, 'bw_statistik', 'RSS Badenwürtemberg (Statistik)', 'http://www.statistik.baden-wuerttemberg.de/UmweltVerkehr/rss.aspx', 'de', 'all');

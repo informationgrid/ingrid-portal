@@ -19,7 +19,7 @@
     </property>
   </bean>     
     
-  <bean id="ojbConfigurer" class="org.springframework.orm.ojb.support.LocalOjbConfigurer"/> 
+  <bean id="ojbConfigurer" class="org.springmodules.orm.ojb.support.LocalOjbConfigurer"/> 
      
     <!-- 
          Dynamically configures Database Platform for OJB by looking at the connection string
