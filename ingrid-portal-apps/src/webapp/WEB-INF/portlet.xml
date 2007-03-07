@@ -16,7 +16,7 @@
         <display-name>DWRTestPortlet</display-name>
         <description>DWRTestPortlet</description>
         <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>-1</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
