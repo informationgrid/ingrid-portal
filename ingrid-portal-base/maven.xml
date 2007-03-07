@@ -19,7 +19,7 @@
 	      </ant:copy>
 	    </j:if>
 	</postGoal>
-
+	
     <goal name='createdb'>
 	    <attainGoal name="ingrid:portal.conf.sql"/>
 <!-- BEGIN: COPIED FROM J2 PLUGIN, to have variables in our session, see below -->
@@ -81,6 +81,11 @@
 	    <!--echo message="database.arg.script: ${database.arg.script}"/-->
 	    <j:set var="database.arg.onerror" value="continue"/>
 	    <!--attainGoal name="j2:_db.execute"/-->
+	    
+	    <echo message="-----------------------------------------------------------------------"/>
+	    <echo message=" seed database !"/>
+	    <echo message="-----------------------------------------------------------------------"/>
+	    <attainGoal name="j2:db.entities"/>
 
 <!-- BEGIN: COPIED FROM J2 PLUGIN, attainGoal doesnt't work, USES OLD VARIABLES !!!!???? -->
     <j:set var="webinflocation" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.target.dir}" />
@@ -143,12 +148,92 @@
     
     </goal>
 
+
+  <!--==================================================================-->
+  <!-- create portal database structure                                 -->
+  <!--==================================================================-->    
+	<goal name="ingrid:create_db">
+	    <!-- set basic variables -->
+	    <j:set var="portal.sql.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
+	    
+	    <!-- set database variables -->
+	    <attainGoal name="j2:_db.production.properties"/>
+	    
+	    <!-- copy ingrid specifics -->
+	    <attainGoal name="ingrid:portal.conf.sql"/>
+		
+		<!-- copy ingrid specific drop file to target -->
+	    <j:set var="portal.sql.src.dir" value="${basedir}/src/sql/drop/${org.apache.jetspeed.database.default.name}"/>
+	    <copy todir="${portal.sql.dir}" overwrite="true" verbose="true" failonerror="false" flatten="true">
+	      <fileset dir="${portal.sql.src.dir}">
+	        <include name="*.sql"/>
+	      </fileset>
+	    </copy>
+	    
+	    <!-- drop ingrid tables -->
+      	<j:set var="database.arg.script" value="${portal.sql.dir}/ingrid-drop.sql"/>
+      	<j:set var="database.arg.onerror" value="continue"/>
+      	<attainGoal name="j2:_db.execute"/>
+	    
+	    <!-- create portal tables -->
+	    <attainGoal name="j2:db.create.production"/>
+	    
+	    <!-- populate seed data -->
+	    <attainGoal name="ingrid:seed_db"/>
+	</goal>
+	
+  <!--==================================================================-->
+  <!-- populate portal database seed data                               -->
+  <!--==================================================================-->    
+	<goal name="ingrid:seed_db">
+		<!-- seed portal data -->
+		<attainGoal name="j2:db.entities"/>
+		
+		<!-- seed ingrid specific -->
+	    <!-- set database variables -->
+	    <attainGoal name="j2:_db.production.properties"/>
+		
+	    <!-- populate ingrid specific data-->
+	    <!-- set basic variables -->
+	    <j:set var="portal.sql.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
+	    <j:set var="sql.src.path" value="${portal.sql.dir}/${org.apache.jetspeed.database.default.name}"/>
+	    <echo>populate ingrid specific sql from  ${sql.src.path} ...</echo>
+	    <!-- process user custom SQL -->
+	    <util:available file="${sql.src.path}">
+	      <echo>Running SQL scripts in directory ${sql.src.path}...</echo>
+	      <util:file name="${sql.src.path}" var="sqldir"/>
+	      <j:set var="fileList" value="${sqldir.listFiles()}"/>
+	      <j:forEach items="${fileList}" var="sqlfile" >
+	        <j:if test="${sqlfile.name.endsWith('.sql')}" >
+	          <echo>populate ingrid specific sql from  ${sqlfile.absolutePath} ...</echo>
+	          <j:set var="database.arg.script" value="${sqlfile.absolutePath}"/>
+   	 	  	  <j:set var="database.arg.onerror" value="abort"/> 
+              <j:set var="parentScope" scope="parent" value=""/>
+              <sql driver="${org.apache.jetspeed.database.driver}" url="${org.apache.jetspeed.database.url}"
+                     userid="${org.apache.jetspeed.database.user}" password="${org.apache.jetspeed.database.password}"
+                     src="${database.arg.script}"
+                     autocommit="true"
+                     onerror="${database.arg.onerror}">
+                  <classpath>
+                    <pathelement path="${plugin.getDependencyPath('org.apache.derby:derby')}"/>
+                    <pathelement path="${org.apache.jetspeed.jdbc.drivers.path}"/>
+                    <pathelement path="${plugin.getDependencyPath('hsqldb')}"/>
+                  </classpath>
+                </sql>
+	        </j:if>
+	      </j:forEach>
+	    </util:available>
+	</goal>
+	
+  	
+  <!--==================================================================-->
+  <!-- generate portal sql scripts                                      -->
+  <!--==================================================================-->    
   	<goal name="ingrid:portal.conf.sql" prereqs="j2:_check.required.properties">
 	    <j:set var="portal.sql.src.dir" value="${basedir}/src/sql"/>
 	    <j:set var="torque.schema.dir" value="${basedir}/src/schema"/>
 	    <j:set var="portal.sql.target.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
 	    
-	
 	    <mkdir dir="${portal.sql.target.dir}" failonerror="false"/>
 	          
 	    <copy todir="${portal.sql.target.dir}" overwrite="true" verbose="true" failonerror="false" flatten="true">
@@ -232,6 +317,96 @@
           <sysproperty key="org.apache.jetspeed.page.import.pages"
                        value="./src/webapp/WEB-INF/pages"/>
         </java>
+    </goal>
+
+  <!--==================================================================-->
+  <!-- ============== Data-Serializer for seed data============== -->
+  <!-- copied from plugin.jelly in maven jetspeed plugin !                -->
+  <!--==================================================================-->    
+
+	<goal name="j2:db.entities">
+    	<!-- Copy over ingrid specific seed data -->
+		<attainGoal name="ingrid:copy_seed_data"/>
+		<!-- apply seed data to database -->
+		<attainGoal name="j2:_db.production.properties"/>
+		<attainGoal name="j2:_db.entities"/>
+	</goal>
+	
+	<goal name="ingrid:copy_seed_data">
+	    <j:set var="portal.sql.src.dir" value="${basedir}/src/sql"/>
+	    <j:set var="portal.sql.target.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}"/>
+	    <echo>copy custom seed files from ${portal.sql.src.dir} to ${portal.sql.target.dir} ...</echo>
+	    <copy todir="${portal.sql.target.dir}/min" overwrite="true" verbose="true" failonerror="false" flatten="true">
+	      <fileset dir="${portal.sql.src.dir}">
+	        <include name="*seed.xml"/>
+	      </fileset>
+	    </copy>        
+	</goal>
+    <goal name="j2:_db.production.properties">
+	    <j:set var="org.apache.jetspeed.database.default.name" value="${org.apache.jetspeed.production.database.default.name}"/>
+	    <j:set var="org.apache.jetspeed.database.url" value="${org.apache.jetspeed.production.database.url}"/>
+	    <j:set var="org.apache.jetspeed.database.driver" value="${org.apache.jetspeed.production.database.driver}"/>
+	    <j:set var="org.apache.jetspeed.database.user" value="${org.apache.jetspeed.production.database.user}"/>
+	    <j:set var="org.apache.jetspeed.database.password" value="${org.apache.jetspeed.production.database.password}"/>
+	    <j:set var="org.apache.jetspeed.jdbc.drivers.path" value="${org.apache.jetspeed.production.jdbc.drivers.path}"/>
+    </goal>
+
+	<goal name="j2:_db.entities">
+		<echo>Running JETSPEED seed scripts...</echo> 
+        <j:set var="DATAFILE" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.sql.dir}/min/${org.apache.jetspeed.portal.seed.data}"/>
+		<attainGoal name="j2:_db.seed"/>
+	</goal>
+
+
+    <goal name='j2:_db.seed'>
+    	<!-- ensure we have valid ojb properties -->
+	   <j:set var="portal.target.dir" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.target.dir}"/>      
+		<j:set var="portal.webapp.dir.assembly" value="${portal.target.dir}/WEB-INF/assembly/"/>      
+
+     <j:set var="temp.assembly.dir" value="${org.apache.jetspeed.portal.sql.dir}/assembly"/>      
+
+    <mkdir dir="${temp.assembly.dir}"/>
+
+	<copy todir="${temp.assembly.dir}" overwrite="true" failonerror="true">
+      <fileset dir="${portal.webapp.dir.assembly}">
+        <include name="security*.xml"/>
+		<include name="capabilities.xml"/>           
+		<include name="prefs.xml"/>           
+		<include name="profiler.xml"/>      
+		<include name="registry.xml"/>       
+		<include name="transaction.xml"/>       
+		<include name="cache.xml"/>    
+      </fileset>
+     </copy>
+
+	<copy todir="${temp.assembly.dir}" overwrite="true" failonerror="true">
+      <fileset dir="${portal.webapp.dir.assembly}/alternate/">
+        <include name="request-context.xml"/>
+      </fileset>
+     </copy>
+
+    <mkdir dir="${temp.assembly.dir}/boot"/>
+
+	<copy todir="${temp.assembly.dir}/boot" overwrite="true" failonerror="true">
+      <fileset dir="${portal.webapp.dir.assembly}/boot">
+        <include name="*.xml"/>
+      </fileset>
+    </copy>
+    
+    <path id="classpath">
+      <pathelement path="${portal.target.dir}/WEB-INF/classes"/>
+      <pathelement path="${maven.build.dest}"/>
+      <pathelement path="${org.apache.jetspeed.plugin.root}"/>
+      <pathelement path="${org.apache.jetspeed.production.jdbc.drivers.path}"/>                          
+      <path refid="maven.dependency.classpath"/>
+    </path>
+
+    <java classname="org.apache.jetspeed.serializer.JetspeedSerializerApplication" fork="yes">
+      <classpath>
+        <path refid="classpath"/>
+      </classpath>
+        <arg line="-I &quot;${DATAFILE}&quot; -a ./target/${org.apache.jetspeed.portal.artifactId} -b ${temp.assembly.dir}/boot/ -c ${temp.assembly.dir}/ -dc ${org.apache.jetspeed.database.driver} -ds ${org.apache.jetspeed.database.url} -du ${org.apache.jetspeed.database.user} -dp ${org.apache.jetspeed.database.password}"/>  
+    </java>
     </goal>
 
 </project>

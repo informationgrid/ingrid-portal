@@ -75,12 +75,19 @@ limitations under the License.
 
         <!-- Spring Framework and dependencies -->
 	    <dependency>
-	      <id>springframework:spring</id>
-	      <version>1.1.5</version>
+          <id>springframework:spring</id>
+	      <version>2.0</version>
 	      <properties>
 	        <war.bundle>true</war.bundle>
 	      </properties>
 	    </dependency>   
+        <dependency>
+            <id>springmodules:spring-modules-ojb</id>        
+            <version>0.6</version>
+  	        <properties>
+	          <war.bundle>true</war.bundle>
+ 	         </properties>            
+        </dependency>            
 	    <dependency>
 	      <id>cglib</id>
 	      <version>full-2.0.2</version>
@@ -95,11 +102,19 @@ limitations under the License.
 	        <war.bundle>true</war.bundle>
 	      </properties>
 	    </dependency>
+	    <dependency>
+	      <id>ehcache</id>
+	      <version>1.2.4</version>
+	      <properties>
+	        <war.bundle>true</war.bundle>
+	      </properties>
+	    </dependency>
 		
 		<!-- jakarta commons and other misc. jakarta projects -->
 		<dependency>
-			<id>lucene</id>
-			<version>1.4.1</version>
+			<id>lucene-core</id>            
+            <groupId>lucene</groupId>
+			<version>2.0.0</version>
 			<properties>
 	          <war.bundle>true</war.bundle>
 	        </properties>
@@ -134,7 +149,7 @@ limitations under the License.
 		</dependency>
 	    <dependency>
 	      <id>commons-lang</id>
-	      <version>2.0</version>
+	      <version>2.1</version>
 		  <properties>
 	        <war.bundle>true</war.bundle>
 	      </properties>
@@ -156,7 +171,7 @@ limitations under the License.
         </dependency>
 		<dependency>
           <id>commons-httpclient</id>
-          <version>2.0</version>
+          <version>3.0</version>
 		  <properties>
 	        <war.bundle>true</war.bundle>
 	      </properties>
@@ -177,7 +192,7 @@ limitations under the License.
 	    </dependency>	
 	    <dependency>
 	      <id>commons-collections</id>
-	      <version>3.0</version>
+	      <version>3.1</version>
 		  <properties>
 	        <war.bundle>true</war.bundle>
 	      </properties>
@@ -334,8 +349,44 @@ limitations under the License.
             <war.bundle>true</war.bundle>
           </properties>
         </dependency>
-        
-	 </dependencies>	
-     
-     
+    
+    	<!--  Serializer -->
+	  	<dependency>
+	      <id>commons-beanutils</id>
+	      <version>1.6.1</version>
+	      <properties>
+	         <war.bundle>true</war.bundle>
+	      </properties>          
+	    </dependency>	
+	  	<dependency>
+	      <id>commons-betwixt</id>
+	      <version>20061115</version>
+	      <properties>
+	         <war.bundle>true</war.bundle>
+	      </properties>          
+	    </dependency>	
+	  	<dependency>
+	      <id>javolution</id>
+	      <version>4.0.2</version>
+	      <properties>
+	         <war.bundle>true</war.bundle>
+	      </properties>          
+	    </dependency>	
+	    <dependency>
+	      <id>ddlutils</id>
+	      <version>1.0-RC1-PATCHED</version>
+	      <properties>
+	         <war.bundle>true</war.bundle>
+	      </properties>          
+	    </dependency>
+	    <dependency>
+	      <id>ant</id>
+	      <version>1.6.5</version>
+	      <properties>
+	         <war.bundle>true</war.bundle>
+	      </properties>          
+	    </dependency>
+    
+	 
+	  </dependencies>     
 </project>
