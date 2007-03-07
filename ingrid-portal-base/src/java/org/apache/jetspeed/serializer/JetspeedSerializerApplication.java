@@ -374,32 +374,27 @@ public class JetspeedSerializerApplication
     	
         if ((doImport) && (importList != null) && (importList.length > 0))
         {
-			for (int i = 0; i < importList.length; i++)
-			{
-				try
-			    {
-			        System.out.println("processing import  " + importList[i]);
-			        if (processHelper == 2)
-			        {
-			        	serializer = new JetspeedSerializerSecondaryImpl(starter.getComponentManager());
-			        }
-			        else
-			        	serializer = new JetspeedSerializerImpl(starter.getComponentManager());
-			        serializer.importData(importList[i], settings);
-			        System.out.println("processing import  " + importList[i] + " done");
-			        
-			    } 
-			    catch (Exception e)
-			    {
-			        System.err.println("Failed to process XML import for " + importList[i] + ":" + e);
-			        e.printStackTrace();
-			    }
-			    finally
-			    {
-			        if (serializer != null)
-			            serializer.closeUp();
-			    }
-			 }
+            for (int i = 0; i < importList.length; i++)
+            {
+                try
+                {
+                    System.out.println("processing import  " + importList[i]);
+                    if (processHelper == 2)
+                    {
+                        serializer = new JetspeedSerializerSecondaryImpl(starter.getComponentManager());
+                    }
+                    else
+                        serializer = new JetspeedSerializerImpl(starter.getComponentManager());
+                    serializer.importData(importList[i], settings);
+                    System.out.println("processing import  " + importList[i] + " done");
+                    
+                } 
+                catch (Exception e)
+                {
+                    System.err.println("Failed to process XML import for " + importList[i] + ":" + e);
+                    e.printStackTrace();
+                }
+             }
         }
         if (doExport)
         {
@@ -413,22 +408,19 @@ public class JetspeedSerializerApplication
 		        else
 		        	serializer = new JetspeedSerializerImpl(starter.getComponentManager());
 
-		        serializer.exportData(name, fileName, settings);
-	        } 
-	        catch (Exception e)
-	        {
-	            System.err.println("Failed to process XML export of " + fileName + ": " + e);
-	            e.printStackTrace();
-	        }
-	        finally
-	        {
-	            if (serializer != null)
-	                serializer.closeUp();
- 	        }
+                serializer.exportData(name, fileName, settings);
+            } 
+            catch (Exception e)
+            {
+                System.err.println("Failed to process XML export of " + fileName + ": " + e);
+                e.printStackTrace();
+            }
 
         }
         try
         {
+            if (serializer != null)
+                serializer.closeUp();
            starter.tearDown();
            logger.setLevel(level);;
         }

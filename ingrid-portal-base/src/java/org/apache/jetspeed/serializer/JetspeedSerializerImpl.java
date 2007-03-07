@@ -15,6 +15,7 @@
  */
 package org.apache.jetspeed.serializer;
 
+import java.security.Permission;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -787,8 +788,7 @@ public class JetspeedSerializerImpl extends JetspeedSerializerBase implements Je
      */
     private void recreatePermissions() throws SerializerException
     {
-    	logMe("recreatePermissions - started");
-        Object o = null;
+        logMe("recreatePermissions - started");
         PermissionManager pm = (PermissionManager) getCM()
                 .getComponent("org.apache.jetspeed.security.PermissionManager");
         if (pm == null)
@@ -811,8 +811,8 @@ public class JetspeedSerializerImpl extends JetspeedSerializerBase implements Je
         while (list.hasNext())
         {
             JSPermission _js = (JSPermission)list.next();
-            PortalResourcePermission perm = _js.getPermissionForType();
-            if ((perm != null) && (perm instanceof PortalResourcePermission))
+            Permission perm = _js.getPermission();
+            if ((perm != null) && (perm instanceof Permission))
             {
             	try
                 {
@@ -1625,7 +1625,12 @@ public class JetspeedSerializerImpl extends JetspeedSerializerBase implements Je
                 _js.setResource(p.getName());
                 _js.setActions(p.getActions());
                 _js.setId(p.getPermissionId());
-                _js.setType(_js.getTypeForClass(p.getClassname()));
+                String className = _js.getTypeForClass(p.getClassname());
+                if (className != null && className.length() > 0) {
+                    _js.setType(_js.getTypeForClass(p.getClassname()));
+                } else {
+                    _js.setPermissionClass(p.getClassname());
+                }
 
                 Iterator list2 = p.getPrincipals().iterator();
                 while (list2.hasNext())
