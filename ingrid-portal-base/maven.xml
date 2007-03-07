@@ -400,6 +400,11 @@
       <pathelement path="${org.apache.jetspeed.production.jdbc.drivers.path}"/>                          
       <path refid="maven.dependency.classpath"/>
     </path>
+    
+<!--
+    <property name="cp" refid="classpath"/>
+    <echo message="cp: ${cp}"/>
+-->
 
     <java classname="org.apache.jetspeed.serializer.JetspeedSerializerApplication" fork="yes">
       <classpath>
