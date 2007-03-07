@@ -125,7 +125,7 @@
         <dependency>
             <groupId>velocity-tools</groupId>
             <artifactId>velocity-tools</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
             <type>jar</type>
             <url>http://jakarta.apache.org/velocity</url>
             <properties>
@@ -155,6 +155,7 @@
             <artifactId>ingrid-utils</artifactId>
             <version>0.1-SNAPSHOT</version>
             <type>jar</type>
+            <url>http://harrison.its-technidata.de/ingrid/maven/ingrid</url>
             <properties>
                 <war.bundle>true</war.bundle>
             </properties>
@@ -164,6 +165,7 @@
             <artifactId>ingrid-portal-utils</artifactId>
             <version>0.1-SNAPSHOT</version>
             <type>jar</type>
+            <url>http://harrison.its-technidata.de/ingrid/maven/ingrid</url>
             <properties>
                 <war.bundle>false</war.bundle>
             </properties>
@@ -546,24 +548,26 @@
                 <war.bundle>true</war.bundle>
             </properties>
         </dependency>
-		<dependency>
-		    <groupId>commons-httpclient</groupId>
-		    <artifactId>commons-httpclient</artifactId>
-		    <version>3.0.1</version>
-		    <url>http://jakarta.apache.org/commons/httpclient/</url>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.0.1</version>
+            <type>jar</type>
+            <url>http://jakarta.apache.org/commons/httpclient/</url>
             <properties>
                 <war.bundle>true</war.bundle>
             </properties>
-		</dependency>
-		<dependency>
-		    <groupId>commons-codec</groupId>
-		    <artifactId>commons-codec</artifactId>
-		    <version>1.2</version>
-		    <url>http://jakarta.apache.org/commons/codec/</url>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.2</version>
+            <type>jar</type>
+            <url>http://jakarta.apache.org/commons/codec/</url>
             <properties>
                 <war.bundle>true</war.bundle>
             </properties>
-		</dependency>
+        </dependency>
         <!--dependency>
 	      <groupId>ingrid</groupId>
 	      <artifactId>csw-iplug</artifactId>
