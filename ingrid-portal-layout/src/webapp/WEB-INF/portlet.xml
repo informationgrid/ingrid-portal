@@ -40,7 +40,7 @@ limitations under the License.
       <value>OneColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -76,7 +76,7 @@ limitations under the License.
       <value>OneColumn</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -112,7 +112,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -148,7 +148,7 @@ limitations under the License.
       <value>OneColumn</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -185,7 +185,7 @@ limitations under the License.
       <value>OneColumn</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -222,7 +222,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -259,7 +259,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -297,7 +297,7 @@ limitations under the License.
       <value>ThreeColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -334,7 +334,7 @@ limitations under the License.
       <value>ThreeColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -371,7 +371,7 @@ limitations under the License.
       <value>OneColumn</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -406,7 +406,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -441,7 +441,7 @@ limitations under the License.
       <value>ThreeColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -475,7 +475,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -510,7 +510,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -547,7 +547,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -582,7 +582,7 @@ limitations under the License.
       <value>Frame</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
@@ -617,7 +617,7 @@ limitations under the License.
       <value>TwoColumns</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>-1</expiration-cache>
+    <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
