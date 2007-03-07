@@ -347,6 +347,11 @@ public class UtilsPageLayoutTest extends TestCase {
             // TODO Auto-generated method stub
             
         }
+
+        public boolean checkConstraint(String securityConstraintName, String actions) {
+            // TODO Auto-generated method stub
+            return true;
+        }
     }
 
 }
