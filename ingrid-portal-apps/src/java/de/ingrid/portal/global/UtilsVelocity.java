@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.global;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,5 +51,14 @@ public class UtilsVelocity {
         return new Boolean(false);
         
     }
+    
+    public static String urlencode(String str) {
+        try {
+            return URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return str;
+        }
+    }
+    
     
 }
