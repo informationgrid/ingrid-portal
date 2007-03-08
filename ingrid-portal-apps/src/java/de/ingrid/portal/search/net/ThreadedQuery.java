@@ -78,7 +78,14 @@ public class ThreadedQuery extends Thread {
                         // check for further hits (grouping)
                         subHitArray = hitArray[i].getGroupHits();
                         if (subHitArray != null && subHitArray.length > 0) {
-                            hitArray[i].put("no_of_hits", new Integer(subHitArray.length + 1).toString());
+                            String noOfHitsPerIPlug = (String)hitArray[i].get("no_of_hits");
+                            if (noOfHitsPerIPlug == null) {
+                                noOfHitsPerIPlug = (String)details[i].get("no_of_hits");
+                            }
+                            if (noOfHitsPerIPlug == null) {
+                                noOfHitsPerIPlug = String.valueOf(subHitArray.length + 1);
+                            }
+                            hitArray[i].put("no_of_hits", noOfHitsPerIPlug);
                             hitArray[i].putBoolean("moreHits", true);
                         }
                         /*
