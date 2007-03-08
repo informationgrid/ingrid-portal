@@ -74,7 +74,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+        PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugsWithoutTimeLimitation();
         
         PortletSession session = request.getPortletSession();
         DisplayTreeNode treeRoot = (DisplayTreeNode) session.getAttribute("treeRoot");

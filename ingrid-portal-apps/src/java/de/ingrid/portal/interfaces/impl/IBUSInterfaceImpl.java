@@ -338,4 +338,16 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
         return plugs;
     }
+
+    public PlugDescription[] getAllIPlugsWithoutTimeLimitation() {
+        PlugDescription[] plugs = new PlugDescription[0];
+        try {
+            plugs = bus.getAllIPlugsWithoutTimeLimitation();
+        } catch (Throwable t) {
+            if (log.isWarnEnabled()) {
+                log.warn("Problems fetching iPlugs from iBus !", t);
+            }            
+        }
+        return plugs;
+    }
 }

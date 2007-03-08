@@ -86,4 +86,12 @@ public interface IBUSInterface {
      */
     PlugDescription[] getAllIPlugs();
 
+    /**
+     * Returns the PlugDescriptions of all iPlugs without any time limitation.
+     * Also inactive iplugs, that failed the heartbeat will be returned.
+     * 
+     * @return
+     */
+    PlugDescription[] getAllIPlugsWithoutTimeLimitation();
+    
 }
