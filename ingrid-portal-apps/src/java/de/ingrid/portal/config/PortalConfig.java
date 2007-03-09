@@ -79,11 +79,17 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_LOGGER_RESOURCE = "portal.logger.resource";
 
+    public static final String PORTAL_ENABLE_MEASURE = "portal.enable.measure";
+
+    public static final String PORTAL_ENABLE_SERVICE = "portal.enable.service";
     
+    public static final String PORTAL_ENABLE_ENVIROMENT = "portal.enable.enviroment";
+
     // private stuff
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
+
 
 
 

@@ -16,9 +16,6 @@
                         <a href="help.psml?hkey=search-topics-1">Umweltthemen</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-service-1">Service</a>
-                    </li>
-                    <li>
                         <a href="help.psml?hkey=search-measure-1">Messwerte</a>
                     </li>
                     <li>
@@ -114,10 +111,6 @@
                     den Pressestellen der beteiligten Behörden und
                     Organisationen eingeblendet.</p>
                 <p>
-                    <b>Service</b>: Hier finden Sie Nachrichten und
-                    Informationen über Veranstaltungen und aktuelle
-                    Publikationen im Umweltbereich.</p>
-                <p>
                     <b>Messwerte</b>: PortalU informiert Sie rund um die Uhr
                     über den aktuellen Zustand Ihrer Umwelt.</p>
                 <p>
@@ -177,7 +170,6 @@
                 <ul>
                     <li>Umweltinformationen: behördliche Informationen zur Umwelt</li>
                     <li>Adressen: Zuständigkeiten</li>
-                    <li>Forschungsprojekte: Projekte zur Umweltforschung</li>
                 </ul>
                 <p>Die Suche kann auf einen Informationsanbieter eingeschränkt werden.</p>
             </content>
@@ -195,11 +187,6 @@
                     <li>
                         <a href="help.psml?hkey=ext-search-address-1">Erweiterte
                             Suche nach Adressen</a>
-                    </li>
-                    <li>
-                        <a
-                            href="help.psml?hkey=ext-search-research-1">Erweiterte
-                            Suche nach Forschungsprojekten</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-history-1">Suchhistorie</a>
@@ -885,10 +872,8 @@
             <header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Umweltinformationen (auch Umweltthemen und Service)
-                    durchsuchen wollen, oder ob Sie nur in den Umweltthemen oder
-                    nur in den Service-Seiten (Pressemitteilungen, Publikationen
-                    und Veranstaltungen) suchen möchten.</p>
+                    Umweltinformationen (auch Umweltthemen)
+                    durchsuchen wollen, oder ob Sie nur in den Umweltthemen suchen möchten.</p>
             </content>
         </section>
         <section help-key="ext-search-area-2">
@@ -1138,46 +1123,6 @@
         </section>
     </chapter>
     <chapter>
-        <header>Erweiterte Suche nach Forschungsprojekten</header>
-        <section help-key="ext-search-research-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, in dem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND)</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER)</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-research-2">
-            <header>Attribute</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach
-                    Forschungsprojekten den Projektnamen, die beteiligten
-                    Institutionen, den Projektleiter, weitere Beteiligte, den
-                    Projektträger und die Laufzeit einschränken.</p>
-                <p>Bitte beachten Sie, dass sich die Suche bei der Nutzung
-                    dieser Filtermöglichkeiten ausschließlich auf Datenbanken
-                    beschränkt, die eine Suche in dem jeweiligen Attribut
-                    unterstützen. Sie schränken den Suchraum dadurch ggf.
-                    erheblich ein.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
         <header>Suche Speichern</header>
         <section help-key="search-save-1">
             <header>Suche Speichern</header>
@@ -1348,8 +1293,7 @@
                         <td>datatype</td>
                         <td>Ein vom System unterstützter Datentyp, z.B.: dsc_ecs
                             (UDK Daten), dsc_ecs_address (UDK Adressdaten),
-                            dsc_other (Andere Datenbanken), service (Service),
-                            measure (Messwerte), topics (Umweltthemen).</td>
+                            dsc_other (Andere Datenbanken), measure (Messwerte), topics (Umweltthemen).</td>
                     </tr>
                 </table>
             </content>
@@ -1543,59 +1487,6 @@
                     Einstellung &#8222;keine&#8220; wählen.</p>
                 <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
                     die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Service</header>
-        <section help-key="search-service-1">
-            <header>Service</header>
-            <content>
-                <p>Unter &#8222;Service&#8220; werden die Rubriken
-                    &#8222;Pressemitteilungen&#8220;,
-                    &#8222;Publikationen&#8220; und
-                    &#8222;Veranstaltungen&#8220; der Informationsanbieter.</p>
-                <p>Von diesem Menüpunkt gelangen Sie zu den entsprechenden
-                    Seiten der Informationsanbieter.</p>
-                <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Umweltthemen gekommen sind, ist die
-                    Rubrik  bereits vorgewählt und die unter dieser Rubrik zur
-                    Verfügung stehenden Seiten werden direkt angezeigt.</p>
-                <p>Sie können die Ergebnismenge zusätzlich über die Eingabe
-                    eines Suchbegriffes einschränken.</p>
-            </content>
-        </section>
-        <section help-key="search-service-2">
-            <header>Rubriken</header>
-            <content>
-                <p>In diesem Bereich können Sie bestimmte Rubriken auswählen.
-                    Nach dem Klick auf den Button &#8222;Anzeigen&#8220;
-                    werden Ihnen die zu den angekreuzten Rubriken zur Verfügung
-                    stehenden Seiten angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-service-3">
-            <header>Anbieter</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern Sie die Informationen wünschen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die
-                    Informationsanbieter klicken.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-service-4">
-            <header>Gruppierung</header>
-            <content>
-                <p>Sie können sich die Ergebnisse nach den einzelnen
-                    Informationsanbietern (z.B. Umweltbundesamt) gruppiert
-                    anzeigen lassen. Das heißt, alle Informationen eines
-                    Anbieters werden zu einer Gruppe zusammengefasst und
-                    zusammen angezeigt.</p>
-                <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung &#8222;keine&#8220; wählen.</p>
             </content>
         </section>
     </chapter>
@@ -1959,11 +1850,6 @@
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
                     &#8222;Weitere Meldungen&#8220; klicken.</p>
-                <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
-                    sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
-                    auf den Orginal-Servern der jeweiligen Informationsanbieter
-                    finden. Klicken Sie hierzu auf <a
-                        href="help.psml?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
             </content>
         </section>
     </chapter>
@@ -2099,7 +1985,7 @@
                         Sie angezeigten Informationen nur auf einzelne
                         Informationsanbieter (z.B. Umweltbundesamt) einschränken sollen.</p>
                     <p>Die Einstellungen beziehen sich auf die Suche, sowie auf
-                        die Bereiche Themenseiten, Messwerte und Service.</p>
+                        die Bereiche Themenseiten, Messwerte.</p>
                     <p>Die Einstellungen werden permanent als Voreinstellungen
                         gespeichert. Sie können sie aber über die
                         Einstellungsmöglichkeiten in den oben genannten

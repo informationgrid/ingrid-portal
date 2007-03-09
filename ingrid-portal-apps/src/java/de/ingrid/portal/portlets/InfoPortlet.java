@@ -53,6 +53,9 @@ public class InfoPortlet extends GenericVelocityPortlet {
         }
         if (myView.equalsIgnoreCase(SITEMAP_TEMPLATE)) {
             context.put("webmaster_email", PortalConfig.getInstance().getString(PortalConfig.EMAIL_WEBMASTER, "webmaster@portalu.de"));
+            context.put("enableMeasure", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MEASURE, Boolean.FALSE));
+            context.put("enableService", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SERVICE, Boolean.FALSE));
+            context.put("enableEnviroment", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ENVIROMENT, Boolean.FALSE));
         }
 
         super.doView(request, response);

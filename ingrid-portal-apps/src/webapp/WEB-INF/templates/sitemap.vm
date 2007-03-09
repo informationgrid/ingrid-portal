@@ -27,21 +27,27 @@
 						</li> 
 					</ul>
 				</li>
+#if($enableService)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-service.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.service")</a>
 					<p>$MESSAGES.getString("sitemap.area.main.service.description")</p>
 				</li>
+#end
+#if($enableMeasure)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-measures.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.measures")</a>
 					<p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
 				</li>
+#end
+#if($enableEnviroment)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-environment.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.topics")</a>
 					<p>$MESSAGES.getString("sitemap.area.main.topics.description")</p>
 				</li>
+#end
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-maps.psml"))
 					<a href="$link" title="$MESSAGES.getString('common.tooltip.link.extern')" target="_new">$MESSAGES.getString("sitemap.area.main.maps")</a>

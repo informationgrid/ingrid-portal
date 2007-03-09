@@ -12,8 +12,10 @@
             </p> 
             <p>
               <input class="indent1_checkbox" type="radio" name="content_type" id="topics" value="2"#getChecked("content_type" "2") /><label for="topics">$MESSAGES.getString('searchExtEnvAreaContents.label.topics')</label>
-    	        <br />
+#if($enableService)
+				<br />
               <input class="indent1_checkbox" type="radio" name="content_type" id="service" value="3"#getChecked("content_type" "3") /><label for="service">$MESSAGES.getString('searchExtEnvAreaContents.label.service')</label>
+#end
             </p> 
           </div>  
       </div>      

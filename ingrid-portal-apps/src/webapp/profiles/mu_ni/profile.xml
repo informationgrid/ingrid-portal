@@ -3,6 +3,34 @@
     <name>mu_ni</name>
     <description>Portal-Profile für das Ministerium für Umwelt Niedersachsen</description>
     <pages>
+        <page>
+            <name>main-service.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
     </pages>
     <files>
         <file>
