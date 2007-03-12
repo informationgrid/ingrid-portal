@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.global;
 
+import java.io.FileReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -32,7 +33,6 @@ import javax.portlet.PortletSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.administration.AdministrationEmailException;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.hibernate.cfg.Environment;
@@ -378,12 +378,12 @@ public class Utils {
         StringWriter sw = new StringWriter();
 
         try {
-            Velocity.init();
-            // String realTemplatePath =
-            // portletConfig.getPortletContext().getRealPath(template);
-            Template vTemplate = Velocity.getTemplate(template);
+            String realTemplatePath = portletConfig.getPortletContext().getRealPath(template);
+            FileReader templateReader = new FileReader(realTemplatePath);
+
             sw = new StringWriter();
-            vTemplate.merge(context, sw);
+            Velocity.evaluate(context, sw, "UserEmailProcessor", templateReader);
+
         } catch (Exception e) {
             log.error("failed to merge velocity template: " + template, e);
         }
