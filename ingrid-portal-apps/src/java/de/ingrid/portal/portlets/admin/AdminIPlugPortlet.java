@@ -199,7 +199,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                     for (int k = 0; k < plugs.length; k++) {
                         PlugDescription plug = plugs[k];
                         // do not include search engine iplugs
-                        if (!plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                        if (!plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher") && !plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug")) {
                             String[] plugProviders = plug.getProviders();
                             DisplayTreeNode plugNode = null;
                             for (int l = 0; l < plugProviders.length; l++) {
