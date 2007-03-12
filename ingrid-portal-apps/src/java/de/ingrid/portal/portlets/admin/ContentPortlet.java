@@ -33,9 +33,9 @@ import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 
 /**
- * This portlet is the abstract base class of all content portlets.
- * Encapsulates common stuff.
- *
+ * This portlet is the abstract base class of all content portlets. Encapsulates
+ * common stuff.
+ * 
  * @author martin@wemove.com
  */
 abstract public class ContentPortlet extends GenericVelocityPortlet {
@@ -65,7 +65,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected final static String PARAM_ID = "id";
 
-    /** indicates whether page is called from other page (then not set) or from own page */
+    /**
+     * indicates whether page is called from other page (then not set) or from
+     * own page
+     */
     protected final static String PARAM_NOT_INITIAL = "notInitial";
 
     // ACTIONS
@@ -93,7 +96,6 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     protected static String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
 
-    
     // Data to set in Subclasses
     // -------------------------
 
@@ -113,7 +115,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected Class dbEntityClass = null;
 
     /**
-     * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+     * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
+     *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         try {
@@ -124,7 +127,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             context.put("MESSAGES", messages);
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
 
-            // reset state ? may be necessary on initial call (e.g. called from other page)
+            // reset state ? may be necessary on initial call (e.g. called from
+            // other page)
             checkInitialEnter(request);
 
             // default view
@@ -143,7 +147,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             if (action.equals(PARAMV_ACTION_DO_REFRESH)) {
                 doViewDefault = doRefresh(request);
             }
-            
+
             // NEW
             else if (action.equals(PARAMV_ACTION_DO_NEW)) {
                 doViewDefault = !doViewNew(request);
@@ -173,8 +177,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Default method for editing entities.
-     * NOTICE: "viewEdit" and "dbEntityClass" have to be set in this class.
+     * Default method for editing entities. NOTICE: "viewEdit" and
+     * "dbEntityClass" have to be set in this class.
      * 
      * @param request
      * @return true: all is fine, false: something wrong
@@ -205,8 +209,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Default method for adding new entity.
-     * NOTICE: "viewNew" and "dbEntityClass" have to be set in this class.
+     * Default method for adding new entity. NOTICE: "viewNew" and
+     * "dbEntityClass" have to be set in this class.
      * 
      * @param request
      * @return true: all is fine, false: something wrong
@@ -229,7 +233,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Default method for handling viewing after update (handles view dependent from action form errors).
+     * Default method for handling viewing after update (handles view dependent
+     * from action form errors).
+     * 
      * @param request
      * @return true: all is fine, false: something wrong
      */
@@ -251,9 +257,11 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected boolean doRefresh(RenderRequest request) {
         return true;
     }
-    
+
     /**
-     * Default method for handling viewing after new entity was saved (handles view dependent from action form errors).
+     * Default method for handling viewing after new entity was saved (handles
+     * view dependent from action form errors).
+     * 
      * @param request
      * @return true: all is fine, false: something wrong
      */
@@ -273,8 +281,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Default method for doing default view (browsing).
-     * NOTICE: "viewDefault" and "dbEntityClass" have to be set in this class.
+     * Default method for doing default view (browsing). NOTICE: "viewDefault"
+     * and "dbEntityClass" have to be set in this class.
      * 
      * @param request
      * @return true: all is fine, false: something wrong
@@ -316,15 +324,15 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Called from sub Portlets. Handles Actions and passes all Request Params then to render method.
-     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     * Called from sub Portlets. Handles Actions and passes all Request Params
+     * then to render method.
+     * 
+     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,
+     *      javax.portlet.ActionResponse)
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         try {
             StringBuffer urlViewParams = new StringBuffer("?");
-
-            // append all params from passed request
-            urlViewParams.append(Utils.getURLParams(request));
 
             // indicates call from same page
             String urlParam = Utils.toURLParam(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
@@ -345,6 +353,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
             } else if (request.getParameter(PARAMV_ACTION_DO_EDIT) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
+                Utils.appendURLParameter(urlViewParams, urlParam);
+                urlParam = Utils.toURLParam("id", request.getParameter("id"));
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 // handled in render method
@@ -398,6 +408,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 doActionDelete(request);
 
             } else if (request.getParameter(PARAM_SORT_COLUMN) != null) {
+                urlParam = Utils.toURLParam("sortColumn", request.getParameter("sortColumn"));
+                Utils.appendURLParameter(urlViewParams, urlParam);
                 // jump to first page when column sorting was clicked
                 ContentBrowserState state = getBrowserState(request);
                 state.doFirstPage();
@@ -416,15 +428,17 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Abstract method for getting the specific Database Entities from request.
-     * Must be implemented in subclass 
+     * Must be implemented in subclass
+     * 
      * @param request
      * @return
      */
     abstract protected Object[] getDBEntities(PortletRequest request);
 
     /**
-     * Default method for saving entities in DB.
-     * Entities are extracted from request via getDBEntities()
+     * Default method for saving entities in DB. Entities are extracted from
+     * request via getDBEntities()
+     * 
      * @param request
      */
     protected void doActionSave(ActionRequest request) {
@@ -433,8 +447,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Default method for updating entities in DB.
-     * Entities are extracted from request via getDBEntities()
+     * Default method for updating entities in DB. Entities are extracted from
+     * request via getDBEntities()
+     * 
      * @param request
      */
     protected void doActionUpdate(ActionRequest request) {
@@ -443,8 +458,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Default method for deleting entities in DB.
-     * Entities are extracted from request via getDBEntities()
+     * Default method for deleting entities in DB. Entities are extracted from
+     * request via getDBEntities()
+     * 
      * @param request
      */
     protected void doActionDelete(ActionRequest request) {
@@ -453,7 +469,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Do initialization when entering from other page (resets browser state, action form ...).
+     * Do initialization when entering from other page (resets browser state,
+     * action form ...).
+     * 
      * @param request
      */
     static protected void checkInitialEnter(RenderRequest request) {
@@ -468,6 +486,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Get current Action from request. returns "" if no action found.
+     * 
      * @param request
      * @return
      */
@@ -482,8 +501,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Get the column to sort after.
+     * 
      * @param request
-     * @param defaultValue The default column
+     * @param defaultValue
+     *            The default column
      * @return
      */
     static protected String getSortColumn(PortletRequest request, String defaultValue) {
@@ -504,6 +525,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Get Sort Order
+     * 
      * @param request
      * @return true = ascending else descending
      */
@@ -522,6 +544,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Get all ids in request.
+     * 
      * @param request
      * @return
      */
@@ -532,6 +555,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Convert Ids from String to Long.
+     * 
      * @param strIds
      * @return
      */
@@ -552,6 +576,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Get Action Form if present.
+     * 
      * @param request
      * @return
      */
@@ -561,6 +586,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Clear state of ActionForm.
+     * 
      * @param request
      */
     static protected void clearActionForm(PortletRequest request) {
@@ -568,8 +594,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Get current state of DB Browser.
-     * NOTICE: Only ONE state for all DB Browsers (APPLICATION_SCOPE).
+     * Get current state of DB Browser. NOTICE: Only ONE state for all DB
+     * Browsers (APPLICATION_SCOPE).
+     * 
      * @param request
      * @return
      */
@@ -584,8 +611,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Set state of Browser.
-     * NOTICE: Only ONE state for all DB Browsers (APPLICATION_SCOPE).
+     * Set state of Browser. NOTICE: Only ONE state for all DB Browsers
+     * (APPLICATION_SCOPE).
+     * 
      * @param request
      * @param state
      */
@@ -594,8 +622,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     }
 
     /**
-     * Clear state of Browser.
-     * NOTICE: Only ONE state for all DB Browsers (APPLICATION_SCOPE).
+     * Clear state of Browser. NOTICE: Only ONE state for all DB Browsers
+     * (APPLICATION_SCOPE).
+     * 
      * @param request
      */
     static protected void clearBrowserState(PortletRequest request) {
@@ -604,6 +633,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 
     /**
      * Refresh Browser State (totalNumRows etc.)
+     * 
      * @param request
      * @return
      */
