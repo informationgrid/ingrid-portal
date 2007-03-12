@@ -7,7 +7,9 @@ import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jetspeed.Jetspeed;
 import org.apache.jetspeed.PortalReservedParameters;
+import org.apache.jetspeed.cache.JetspeedCache;
 import org.apache.jetspeed.pipeline.PipelineException;
 import org.apache.jetspeed.pipeline.valve.AbstractValve;
 import org.apache.jetspeed.pipeline.valve.LocalizationValve;
@@ -16,19 +18,24 @@ import org.apache.jetspeed.request.RequestContext;
 
 /**
  * Ingrid Valve handling ingrid localization for Jetspeed Pipeline.
- *
+ * 
  * @author Martin Maidhof
+ * @author Joachim Müller
  */
 public class IngridLocalizationValveImpl extends AbstractValve implements LocalizationValve {
     private static final Log log = LogFactory.getLog(IngridLocalizationValveImpl.class);
 
     private static final String INGRID_LOCALE__REQUEST_KEY = "lang";
 
+    private JetspeedCache contentCache;
+
     public IngridLocalizationValveImpl() {
+        this.contentCache = (JetspeedCache) Jetspeed.getComponentManager().getComponent("portletContentCache");
     }
 
     /**
-     * @see org.apache.jetspeed.pipeline.valve.Valve#invoke(org.apache.jetspeed.request.RequestContext, org.apache.jetspeed.pipeline.valve.ValveContext)
+     * @see org.apache.jetspeed.pipeline.valve.Valve#invoke(org.apache.jetspeed.request.RequestContext,
+     *      org.apache.jetspeed.pipeline.valve.ValveContext)
      */
     public void invoke(RequestContext request, ValveContext context) throws PipelineException {
 
@@ -36,6 +43,10 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
             String language = request.getRequestParameter(INGRID_LOCALE__REQUEST_KEY);
 
             if (language != null && language.length() > 0) {
+
+                // invalidate portlet content cache
+                contentCache.clear();
+
                 // Code taken from LocaleSelectorPorltet
                 String country = "";
                 String variant = "";
@@ -61,7 +72,9 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
                 }
 
                 if (ingridLocale != null) {
-                    // pass it like next org.apache.jetspeed.localization.impl.LocalizationValveImpl reads it !
+                    // pass it like next
+                    // org.apache.jetspeed.localization.impl.LocalizationValveImpl
+                    // reads it !
                     request.setLocale(ingridLocale);
                     request.getRequest().getSession().setAttribute(PortalReservedParameters.PREFERED_LOCALE_ATTRIBUTE,
                             ingridLocale);

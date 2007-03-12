@@ -283,6 +283,7 @@ limitations under the License.
       <ref bean="capabilityValve"/>
       <ref bean="portalURLValve"/>
       <ref bean="securityValve"/>
+      <ref bean="ingridLocalizationValve"/>
       <ref bean="localizationValve"/>
       <ref bean="passwordCredentialValve"/>
       <ref bean="loginValidationValve"/>
@@ -307,6 +308,7 @@ limitations under the License.
    <constructor-arg>
     <list>
       <ref bean="capabilityValve"/>
+      <ref bean="ingridLocalizationValve"/>
       <ref bean="localizationValve"/>
       <ref bean="loginViewValve"/>
     </list>
@@ -322,6 +324,7 @@ limitations under the License.
    </constructor-arg>
    <constructor-arg>
     <list>
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>
@@ -341,6 +344,7 @@ limitations under the License.
    <constructor-arg>
     <list>
         <ref bean="securityValve"/>                        
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>
@@ -363,6 +367,7 @@ limitations under the License.
         <ref bean="portalURLValve"/>                
         <ref bean="capabilityValve"/>        
         <ref bean="securityValve"/>                
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
@@ -383,6 +388,7 @@ limitations under the License.
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>                
         <ref bean="securityValve"/>                
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
@@ -404,6 +410,7 @@ limitations under the License.
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>                
         <ref bean="securityValve"/>                
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
@@ -423,6 +430,7 @@ limitations under the License.
     <list>
         <ref bean="portalURLValve"/>                
         <ref bean="securityValve"/>                
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="containerValve"/>
@@ -444,6 +452,7 @@ limitations under the License.
         <ref bean="capabilityValve"/>
         <ref bean="portalURLValve"/>                
         <ref bean="securityValve"/>                
+      	<ref bean="ingridLocalizationValve"/>
         <ref bean="localizationValve"/>
         <ref bean="profilerValve"/>                        
         <ref bean="headerAggregatorValveDesktop"/>          
