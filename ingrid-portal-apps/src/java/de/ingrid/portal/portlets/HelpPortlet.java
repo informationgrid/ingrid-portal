@@ -82,7 +82,14 @@ public class HelpPortlet extends GenericVelocityPortlet {
         if (chapterObj == null) {
             context.put("help_content", "<p>help key (" + helpKey + ") not found!</p>");
         } else {
-            TransformerFactory factory = TransformerFactory.newInstance();
+            TransformerFactory factory;
+            try {
+                factory = TransformerFactory.newInstance();
+            } catch (Throwable t) {
+                System.setProperty("javax.xml.transform.TransformerFactory", "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+                factory = TransformerFactory.newInstance();
+            }
+            
             try {
                 StreamSource stylesheet = new StreamSource(Utils.getResourceAsStream("ingrid-portal-help.xsl"));
                 Transformer transformer = factory.newTransformer(stylesheet);
