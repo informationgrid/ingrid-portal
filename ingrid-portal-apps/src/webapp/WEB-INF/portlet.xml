@@ -41,7 +41,7 @@
         <display-name>Generisches Informationsportlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>10</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -407,7 +407,7 @@
         <display-name>Environment Teaser</display-name>
         <description>This portlet displays the rubrics of the Environment catalogue page on the home page for quick search.</description>
         <portlet-class>de.ingrid.portal.portlets.EnvironmentTeaserPortlet</portlet-class>
-        <expiration-cache>60</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -443,7 +443,7 @@
         <display-name>Aktuelles</display-name>
         <description>This portlet displays the rss news list.</description>
         <portlet-class>de.ingrid.portal.portlets.RssNewsTeaserPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -487,7 +487,7 @@
         <display-name>Weitere Meldungen</display-name>
         <description>This portlet displays the rss news list.</description>
         <portlet-class>de.ingrid.portal.portlets.RssNewsPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -505,7 +505,7 @@
         <display-name>CMS portlet</display-name>
         <description>This portlet displays a content entry from the cms, specified by the preference 'cmsKey'.</description>
         <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -529,7 +529,7 @@
         <display-name>Generisches Informationsportlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -573,7 +573,7 @@
         <display-name>Generisches Willkommens-Portlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -614,7 +614,7 @@
         <display-name>Service Teaser</display-name>
         <description>This portlet displays the rubrics of the Service page on the home page for quick search.</description>
         <portlet-class>de.ingrid.portal.portlets.ServiceTeaserPortlet</portlet-class>
-        <expiration-cache>60</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -646,7 +646,7 @@
         <display-name>Measures Teaser</display-name>
         <description>This portlet displays the rubrics of the Measures page on the home page for quick search.</description>
         <portlet-class>de.ingrid.portal.portlets.MeasuresTeaserPortlet</portlet-class>
-        <expiration-cache>60</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -678,7 +678,7 @@
         <display-name>Umweltchronik Teaser</display-name>
         <description>This portlet displays an anniversary event on the home page.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleTeaserPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -752,7 +752,7 @@
         <display-name>MyPortalLoginPortlet</display-name>
         <description>This portlet displayes the login dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalLoginPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -770,7 +770,7 @@
         <display-name>MyPortalOverviewPortlet</display-name>
         <description>This portlet displays the myportal overview.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalOverviewPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -985,7 +985,7 @@
         <display-name>ShowPartnerPortlet</display-name>
         <description>TODO: describe the portlet</description>
         <portlet-class>de.ingrid.portal.portlets.ShowPartnerPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1169,7 +1169,7 @@
         <display-name>Sucheinstellungen</display-name>
         <description>This portlet displays and handles the search settings.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSettingsPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1191,7 +1191,7 @@
         <display-name>SearchSavePortlet</display-name>
         <description>This portlet displays and handles the search save dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSavePortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1213,7 +1213,7 @@
         <display-name>Suchhistorie</display-name>
         <description>This portlet displays and handles the search history.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchHistoryPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -1235,7 +1235,7 @@
         <display-name>Similar Terms</display-name>
         <description>This portlet handles the "Similar Terms" fragment of the search result page.</description>
         <portlet-class>de.ingrid.portal.portlets.SearchSimilarPortlet</portlet-class>
-        <expiration-cache>30</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
