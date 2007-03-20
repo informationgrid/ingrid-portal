@@ -4,6 +4,7 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -21,6 +22,8 @@ import org.quartz.JobExecutionException;
 import com.sun.syndication.feed.synd.SyndCategoryImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndPerson;
+import com.sun.syndication.feed.synd.SyndPersonImpl;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
@@ -143,19 +146,23 @@ public class RSSFetcherJob implements Job {
                                     Restrictions.eq("language", feed.getLanguage())).list();
                             tx.commit();
                             if (rssEntries.isEmpty()) {
+                                List authors = new ArrayList();
+                                SyndPerson author = new SyndPersonImpl();
+                                authors.add(author);
                                 if (feed.getAuthor() == null || feed.getAuthor().length() == 0) {
                                     if (entry.getAuthor() == null || entry.getAuthor().length() == 0) {
                                         if (feed.getTitle() != null && feed.getTitle().length() > 0) {
-                                            entry.setAuthor(feed.getTitle());
+                                            author.setName(feed.getTitle());
                                         } else {
-                                            entry.setAuthor("nicht angegeben / not specified");
+                                            author.setName("nicht angegeben / not specified");
                                         }
                                     } else {
-                                        entry.setAuthor(entry.getAuthor());
+                                        author.setName(entry.getAuthor());
                                     }
                                 } else {
-                                    entry.setAuthor(feed.getAuthor());
+                                    author.setName(feed.getAuthor());
                                 }
+                                entry.setAuthors(authors);
 
                                 IngridRSSStore rssEntry = new IngridRSSStore();
                                 rssEntry.setTitle(UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle()));
