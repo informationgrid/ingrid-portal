@@ -52,7 +52,11 @@
         <servlet-class>de.ingrid.portal.servlet.IngridPortalSchedulerServlet</servlet-class>
         <load-on-startup>20</load-on-startup>
     </servlet>
-    
+
+    <listener>
+        <listener-class>de.ingrid.portal.servlet.IngridComponentMonitorStartListener</listener-class>
+    </listener> 
+        
     <!-- Map *.vm files to Velocity  -->
 	<servlet-mapping>
 		<servlet-name>velocity</servlet-name>
