@@ -28,7 +28,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-sns-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-g2k-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-tamino-0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-udk-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-ecs-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-sockets-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-jxta-SNAPSHOT.jar"/>
@@ -49,7 +49,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-lang/jars/commons-lang-2.1.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/quartz/jars/quartz-1.5.0.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/quartz/jars/quartz-1.6.0.jar" sourcepath="/EXT_SRC/quartz-1.6.0/src/java">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/data/wemove/ingrid/ext_src/quartz-1.6.0/docs/api/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/rome/jars/rome-0.8.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jal/jars/jal-0.4.jar"/>
@@ -66,8 +70,12 @@
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-portal-utils-0.1-SNAPSHOT.jar" sourcepath="/INGRID_PORTAL_UTILS_SRC"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-components-2.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.apache.portals.jetspeed-2/jars/jetspeed-cm-2.1.jar" sourcepath="/JETSPEED_SRC"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-3.1.13-bin.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-httpclient/jars/commons-httpclient-3.0.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-codec/jars/commons-codec-1.2.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
+	<classpathentry kind="src" path="/jetspeed"/>
+	<classpathentry kind="lib" path="/ingrid-portal-base/lib/mysql-connector-java-3.1.13-bin.jar"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

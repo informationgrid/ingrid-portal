@@ -11,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
 
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 
@@ -21,7 +21,6 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
 
     private final static Log log = LogFactory.getLog(IngridPortalSchedulerServlet.class);
 
-    SchedulerFactory schedFact = null;
     Scheduler sched = null;
 
     
@@ -38,8 +37,9 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
             }
             
             try {
-                schedFact = new org.quartz.impl.StdSchedulerFactory();
-                sched = schedFact.getScheduler();
+                StdSchedulerFactory sf = new StdSchedulerFactory();
+                sf.initialize("quartz.properties");
+                sched = sf.getScheduler();
                 sched.start();
             } catch (SchedulerException e) {
                 log.error("Failed to start scheduler.", e);

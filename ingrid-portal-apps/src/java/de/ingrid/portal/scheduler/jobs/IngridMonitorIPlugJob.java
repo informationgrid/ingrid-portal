@@ -3,9 +3,7 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -24,45 +22,61 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 
-    public static String ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
-    
-    /**
-     * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
-     */
-    public void execute(JobExecutionContext context) throws JobExecutionException {
-        
-        JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-        String query = dataMap.getString(QUERY);
-        int timeout = dataMap.getInt(TIMEOUT);
-        if (timeout == 0) {
-            timeout = 30000;
-            dataMap.put(TIMEOUT, timeout);
-        }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
-        dataMap.put(LAST_CHECK, dateFormat.format(new Date()));
-        
-        try {
-            IngridQuery q = QueryStringParser.parse(query);
-            IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 1, timeout);
-            if (hits.length() == 0) {
-                dataMap.putAsString(STATUS, STATUS_ERROR);
-                dataMap.put(STATUS_CODE, ERROR_NO_HITS);
-            } else {
-                dataMap.putAsString(STATUS, STATUS_OK);
-                dataMap.put(STATUS_CODE, NO_ERROR);
-            }
-        } catch (ParseException e) {
-            dataMap.putAsString(STATUS, STATUS_ERROR);
-            dataMap.put(STATUS_CODE, ERROR_QUERY_PARSE_EXCEPTION);
-        } catch (InterruptedException e) {
-            dataMap.putAsString(STATUS, STATUS_ERROR);
-            dataMap.put(STATUS_CODE, ERROR_TIMEOUT);
-        } catch (Throwable e) {
-            dataMap.putAsString(STATUS, STATUS_ERROR);
-            dataMap.put(STATUS_CODE, ERROR_UNSPECIFIC);
-        }
-    }
-    
-    
+	public static String ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
 
+	/**
+	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
+	 */
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+
+		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+		String query = dataMap.getString(PARAM_QUERY);
+		int timeout = dataMap.getInt(PARAM_TIMEOUT);
+		if (timeout == 0) {
+			timeout = 30000;
+			dataMap.put(PARAM_TIMEOUT, timeout);
+		}
+		dataMap.put(PARAM_LAST_CHECK, new Date());
+
+		int status = 0;
+		String statusCode = null;
+		try {
+			IngridQuery q = QueryStringParser.parse(query);
+			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 1, timeout);
+			if (hits.length() == 0) {
+				status = STATUS_ERROR;
+				statusCode = STATUS_CODE_ERROR_NO_HITS;
+			} else {
+				status = STATUS_OK;
+				statusCode = STATUS_CODE_NO_ERROR;
+			}
+		} catch (ParseException e) {
+			status = STATUS_ERROR;
+			statusCode = ERROR_QUERY_PARSE_EXCEPTION;
+		} catch (InterruptedException e) {
+			status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+		} catch (Throwable e) {
+			status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
+		}
+
+		int eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
+		int previousStatus = dataMap.getInt(PARAM_STATUS);
+		String previousStatusCode = dataMap.getString(PARAM_STATUS_CODE);
+
+		// if we have exactly the same result like the previous check
+		// increase event occurences
+		if (status == previousStatus && previousStatusCode.equals(statusCode)) {
+			eventOccurences++;
+		} else {
+			eventOccurences = 1;
+		}
+
+		dataMap.put(PARAM_STATUS, status);
+		dataMap.put(PARAM_STATUS_CODE, statusCode);
+		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
+
+		sendAlertMail(dataMap);
+	}
 }

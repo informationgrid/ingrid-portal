@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<quartz>
+<quartz xmlns="http://www.opensymphony.com/quartz/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        overwrite-existing-jobs="true">
     <job>
         <job-detail>
             <name>RSSFetcherJob</name>

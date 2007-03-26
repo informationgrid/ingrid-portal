@@ -34,10 +34,9 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
         }
 
         // start monitor scheduler
-        try {
-            IngridMonitorFacade.instance();
-        } catch (SchedulerException e) {
-            log.error("Failed to start ingrid monitor scheduler.", e);
+        IngridMonitorFacade monitor = IngridMonitorFacade.instance();
+        if (monitor == null) {
+        	log.error("Failed to start ingrid component monitor component.");
         }
     }
 
