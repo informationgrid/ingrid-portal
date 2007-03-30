@@ -1,0 +1,20 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Überwachung</title>
+  <metadata name="title" xml:lang="en">Monitoring</metadata>
+
+  <fragment id="admin-component-monitor" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="admin-component-monitor-0" type="portlet" name="ingrid-portal-apps::AdminComponentMonitorPortlet">
+      <property layout="OneColumn" name="row" value="1"/>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
+  </security-constraints>
+</page>
