@@ -25,6 +25,10 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static int STATUS_ERROR = 1;
 
+	public static int ACTIVE_ON = 1;
+
+	public static int ACTIVE_OFF = 0;
+	
 	public static String STATUS_CODE_ERROR_NO_HITS = "component.monitor.general.error.no.hits";
 
 	public static String STATUS_CODE_ERROR_UNSPECIFIC = "component.monitor.general.error.unspecific";
@@ -32,8 +36,6 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	public static String STATUS_CODE_ERROR_TIMEOUT = "component.monitor.general.error.timout";
 
 	public static String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
-
-	public static String TYPE_IPLUG = "component.monitor.general.type.iplug";
 
 	public static String TYPE_CSW = "component.monitor.general.type.csw";
 
@@ -55,6 +57,10 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static String PARAM_LAST_CHECK = "component.monitor.general.last.check";
 
+	public static String PARAM_CHECK_INTERVAL = "component.monitor.general.check.interval";
+
+	public static String PARAM_ACTIVE = "component.monitor.general.active";
+	
 	public static String PARAM_QUERY = "component.monitor.general.query";
 
 	public static String PARAM_CONTACTS = "component.monitor.general.contacts";

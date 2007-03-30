@@ -1,0 +1,64 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+	<input name="modelSize" type="hidden" value="$model.size()" />
+	<div class="formbody">
+		<p>
+		<table class="border fullwidth">
+#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.check.interval", "component.monitor.general.active"])
+#set ($colTitles = ["Komponente", "Typ", "Status", "letzte Überprüfung", "Prüfintervall [sec]", "aktiv"])
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($entry in $model)
+	#set ($jobId = $entry.name)
+	#set ($jobData = $entry.getJobDataMap())
+	#set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
+    <tr>
+    #if ($velocityCount % 2 == 0)
+    	#if ($jobStatus == 0)
+			#set ($rowstyle = "contentRowEven")
+		#else
+			#set ($rowstyle = "contentRowEvenError")
+		#end
+    #else
+    	#if ($jobStatus == 0)
+			#set ($rowstyle = "contentRowOdd")
+		#else
+			#set ($rowstyle = "contentRowOddError")
+		#end
+    #end   
+    	<td class="$rowstyle">
+    		<input id="chk_$velocityCount" name="id" type="checkbox" value="$jobId" />
+        </td>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$jobId")
+    	<td class="$rowstyle"><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
+    	<td class="$rowstyle"><a href="$action">$jobData.getString("component.monitor.general.type")</a></td>
+    	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.status.code"))</a></td>
+    	<td class="$rowstyle"><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$jobData.get("component.monitor.general.last.check")#end</a></td>
+    	<td class="$rowstyle"><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>
+    	<td class="$rowstyle"><a href="$action">#if($jobData.getInt("component.monitor.general.active")==0) AUS#else AN#end</a></td>
+    </tr>
+#end
+		</table>
+		</p>
+	</div>
+#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#renderDBBrowserFooterButtons($buttons)
+</form>
+<p/>
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+	<input type="hidden" name="action" value="doImport">
+	<div class="formbody">
+		<p>
+			Importieren Sie alle am iBus angemeldeten iPlugs in die Überwachungskomponente. <b>ACHTUNG!!! Es werden dabei alle Komponenten vom Typ iPlug gelöscht.</b>
+#if($import_message)
+<br/><br/><span class="portlet-msg-error">$import_message</span><br/>
+#end
+		</p>
+	</div>
+<div class="formfooter" align="right">
+	<input class="btn" type="submit" name="doImport" value="iPlugs Importieren" />
+</div>
+</form>
+

@@ -87,6 +87,28 @@
     <!-- Admin Portlets         -->
     <!-- *********************** -->
 
+    <portlet id="AdminComponentMonitorPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/administration/component_monitor.vm</value>
+        </init-param>
+        <portlet-name>AdminComponentMonitorPortlet</portlet-name>
+        <display-name>AdminComponentMonitorPortlet</display-name>
+        <description>The Portlet displays the monitor component of the portlet.</description>
+        <portlet-class>de.ingrid.portal.portlets.admin.AdminComponentMonitorPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Komponentenüberwachung</title>
+            <short-title>Komponentenüberwachung</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+    </portlet>
+
     <portlet id="ContentRSSPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

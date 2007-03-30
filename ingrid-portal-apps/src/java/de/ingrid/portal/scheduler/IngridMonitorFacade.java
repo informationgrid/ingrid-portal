@@ -10,11 +10,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.servlet.IngridComponentMonitorStartListener;
 
 /**
@@ -80,6 +83,48 @@ public class IngridMonitorFacade {
 		}
 		return result;
 	}
+	
+	public boolean deleteAllJobs(String jobType) {
+		try {
+			if (scheduler != null && !scheduler.isShutdown()) {
+				String[] jobsInGroup = scheduler.getJobNames(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+				
+				for (int i = 0; i < jobsInGroup.length; i++) {
+					JobDataMap data = scheduler.getJobDetail(jobsInGroup[i], IngridMonitorFacade.SCHEDULER_GROUP_NAME).getJobDataMap();
+					if (jobType == null || data.getString(IngridMonitorAbstractJob.PARAM_COMPONENT_TYPE).equals(jobType)) {
+						this.deleteJob(jobsInGroup[i]);
+					}
+				}
+				return true;
+			}
+		} catch (SchedulerException e) {
+			log.error("Error deleting all jobs from scheduler.", e);
+		}
+		return false;
+	}
+	
+	public boolean deleteJob(String jobName) {
+		try {
+			if (scheduler != null && !scheduler.isShutdown()) {
+				scheduler.deleteJob(jobName, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+				return true;
+			}
+		} catch (SchedulerException e) {
+			log.error("Error deleting job (" + jobName + ") from scheduler.", e);
+		}
+		return false;
+	}
+	
+	public void scheduleJob(JobDetail job, Trigger trigger) {
+		try {
+			if (scheduler != null && !scheduler.isShutdown()) {
+				scheduler.scheduleJob(job, trigger);
+			}
+		} catch (SchedulerException e) {
+			log.error("Error scheduling job (" + job.getName() + ") with trigger (" + trigger.getName() + ").", e);
+		}
+	}
+	
 
 	private class JobDetailComparator implements Comparator {
 

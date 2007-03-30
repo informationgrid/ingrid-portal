@@ -5,6 +5,8 @@ package de.ingrid.portal.scheduler.jobs;
 
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -22,7 +24,11 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 
-	public static String ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
+	public static final String STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
+
+	public static final String COMPONENT_TYPE = "component.monitor.general.type.iplug";
+
+	private final static Log log = LogFactory.getLog(IngridMonitorIPlugJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -30,6 +36,21 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+		long startTime = 0;
+
+		boolean isActive = dataMap.getInt(PARAM_ACTIVE) == 1;
+		if (!isActive) {
+			if (log.isDebugEnabled()) {
+				log.debug("Job (" + context.getJobDetail().getName() + ") is inactive. Exiting.");
+			}
+			return;
+		} else {
+			if (log.isDebugEnabled()) {
+				startTime = System.currentTimeMillis();
+				log.debug("Job (" + context.getJobDetail().getName() + ") is executed...");
+			}
+		}
+
 		String query = dataMap.getString(PARAM_QUERY);
 		int timeout = dataMap.getInt(PARAM_TIMEOUT);
 		if (timeout == 0) {
@@ -52,7 +73,7 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			}
 		} catch (ParseException e) {
 			status = STATUS_ERROR;
-			statusCode = ERROR_QUERY_PARSE_EXCEPTION;
+			statusCode = STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION;
 		} catch (InterruptedException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
@@ -78,5 +99,10 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
 
 		sendAlertMail(dataMap);
+
+		if (log.isDebugEnabled()) {
+			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "
+					+ (System.currentTimeMillis() - startTime) + " ms.");
+		}
 	}
 }
