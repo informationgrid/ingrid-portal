@@ -78,7 +78,7 @@ public abstract class ActionForm implements Serializable {
      */
     public String getInput(String field) {
         String inputVal = (String) input.get(field);
-        if (inputVal == null) {
+        if (inputVal == null || inputVal.length() < 2) {
             return "";
         }
         String result = inputVal.substring(1, inputVal.length() - 1);

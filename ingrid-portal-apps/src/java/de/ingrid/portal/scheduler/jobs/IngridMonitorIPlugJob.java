@@ -52,7 +52,12 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		}
 
 		String query = dataMap.getString(PARAM_QUERY);
-		int timeout = dataMap.getInt(PARAM_TIMEOUT);
+		int timeout;
+		try {
+			timeout = dataMap.getInt(PARAM_TIMEOUT);
+		} catch (Exception e1) {
+			timeout = 0;
+		}
 		if (timeout == 0) {
 			timeout = 30000;
 			dataMap.put(PARAM_TIMEOUT, timeout);
@@ -82,7 +87,14 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 		}
 
-		int eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
+		
+		int eventOccurences;
+		try {
+			eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
+		} catch (Exception e) {
+			eventOccurences = 0;
+		}
+		
 		int previousStatus = dataMap.getInt(PARAM_STATUS);
 		String previousStatusCode = dataMap.getString(PARAM_STATUS_CODE);
 
@@ -99,6 +111,8 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
 
 		sendAlertMail(dataMap);
+		
+		
 
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "

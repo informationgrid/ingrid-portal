@@ -11,7 +11,7 @@
 	#set ($jobId = $entry.name)
 	#set ($jobData = $entry.getJobDataMap())
 	#set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
-    <tr>
+	<tr>
     #if ($velocityCount % 2 == 0)
     	#if ($jobStatus == 0)
 			#set ($rowstyle = "contentRowEven")
@@ -32,7 +32,7 @@
     $action.setParameter('doEdit','Edit')
     $action.setParameter("id", "$jobId")
     	<td class="$rowstyle"><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
-    	<td class="$rowstyle"><a href="$action">$jobData.getString("component.monitor.general.type")</a></td>
+    	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
     	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.status.code"))</a></td>
     	<td class="$rowstyle"><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$jobData.get("component.monitor.general.last.check")#end</a></td>
     	<td class="$rowstyle"><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>

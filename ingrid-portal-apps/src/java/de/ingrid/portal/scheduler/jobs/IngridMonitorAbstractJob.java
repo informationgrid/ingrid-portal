@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -72,7 +73,7 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	public static String PARAM_COMPONENT_TITLE = "component.monitor.general.title";
 
 	public static String PARAM_COMPONENT_TYPE = "component.monitor.general.type";
-
+	
 	protected void sendAlertMail(JobDataMap dataMap) {
 
 		int eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
@@ -100,8 +101,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 						mailData.put(PARAM_STATUS_CODE, statusCode);
 						mailData.put(PARAM_COMPONENT_TITLE, componentTitle);
 
-						String templatePath = PortalConfig.getInstance().getString(
-								PortalConfig.COMPONENT_MONITOR_ALERT_EMAIL_TEMPLATE, "monitor_alert_email.vm");
+						URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/monitor_alert_email.vm");
+						String templatePath = url.getPath();
 						String emailSubject = PortalConfig.getInstance().getString(
 								PortalConfig.COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT, "ingrid component monitor alert");
 						emailSubject = emailSubject.concat(" [").concat(componentTitle).concat("]");

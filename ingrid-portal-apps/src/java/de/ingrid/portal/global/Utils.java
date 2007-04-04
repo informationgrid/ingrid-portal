@@ -386,7 +386,8 @@ public class Utils {
 			FileReader templateReader = new FileReader(realTemplatePath);
 
 			sw = new StringWriter();
-			Velocity.evaluate(context, sw, "UserEmailProcessor", templateReader);
+			Velocity.mergeTemplate(realTemplatePath, "UTF-8", context, sw);
+//			Velocity.evaluate(context, sw, "UserEmailProcessor", templateReader);
 
 		} catch (Exception e) {
 			log.error("failed to merge velocity template: " + realTemplatePath, e);
