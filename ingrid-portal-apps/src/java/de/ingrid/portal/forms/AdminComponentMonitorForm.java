@@ -34,6 +34,8 @@ public class AdminComponentMonitorForm extends ActionForm {
 
 	public static final String FIELD_INTERVAL = "interval";
 
+	public static final String FIELD_TIMEOUT = "timeout";
+	
 	public static final String FIELD_ACTIVE = "active";
 
 	public static final String FIELD_CONTACT_EMAILS = "contact_email";
@@ -60,9 +62,11 @@ public class AdminComponentMonitorForm extends ActionForm {
 	public void populate(PortletRequest request) {
 		clear();
 		setInput(FIELD_TITLE, request.getParameter(FIELD_TITLE));
+		setInput(FIELD_ID, request.getParameter(FIELD_ID));
 		setInput(FIELD_TYPE, request.getParameter(FIELD_TYPE));
 		setInput(FIELD_QUERY, request.getParameter(FIELD_QUERY));
 		setInput(FIELD_INTERVAL, request.getParameter(FIELD_INTERVAL));
+		setInput(FIELD_TIMEOUT, request.getParameter(FIELD_TIMEOUT));
 		setInput(FIELD_ACTIVE, request.getParameter(FIELD_ACTIVE));
 		setInput(FIELD_CONTACT_EMAIL_NEW, request.getParameter(FIELD_CONTACT_EMAIL_NEW));
 		setInput(FIELD_CONTACT_THRESHOLD_NEW, request.getParameter(FIELD_CONTACT_THRESHOLD_NEW));
@@ -80,6 +84,10 @@ public class AdminComponentMonitorForm extends ActionForm {
 		// check input
 		try {
 
+			if (!hasInput(FIELD_ID)) {
+				setError(FIELD_ID, "component.monitor.form.error.missing.id");
+				allOk = false;
+			}
 			if (!hasInput(FIELD_TITLE)) {
 				setError(FIELD_TITLE, "component.monitor.form.error.missing.title");
 				allOk = false;
@@ -91,11 +99,21 @@ public class AdminComponentMonitorForm extends ActionForm {
 			try {
 				int interval = Integer.parseInt(getInput(FIELD_INTERVAL));
 				if (interval < 30) {
-					setError(FIELD_INTERVAL, "component.monitor.form.error.wrong.interval");
+					setError(FIELD_INTERVAL, "component.monitor.form.error.invalid.interval");
 					allOk = false;
 				}
 			} catch (Exception e) {
-				setError(FIELD_INTERVAL, "component.monitor.form.error.wrong.interval");
+				setError(FIELD_INTERVAL, "component.monitor.form.error.invalid.interval");
+				allOk = false;
+			}
+			try {
+				int interval = Integer.parseInt(getInput(FIELD_TIMEOUT));
+				if (interval < 500) {
+					setError(FIELD_TIMEOUT, "component.monitor.form.error.invalid.timeout");
+					allOk = false;
+				}
+			} catch (Exception e) {
+				setError(FIELD_TIMEOUT, "component.monitor.form.error.invalid.timeout");
 				allOk = false;
 			}
 			if (hasInput(FIELD_CONTACT_EMAIL_NEW) && !Utils.isValidEmailAddress(getInput(FIELD_CONTACT_EMAIL_NEW))) {

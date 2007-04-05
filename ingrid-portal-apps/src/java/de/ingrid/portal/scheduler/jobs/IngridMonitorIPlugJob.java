@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.io.IOException;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -82,11 +83,13 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		} catch (InterruptedException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+		} catch (IOException e) {
+			status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_TIMEOUT;
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 		}
-
 		
 		int eventOccurences;
 		try {
@@ -110,9 +113,7 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		dataMap.put(PARAM_STATUS_CODE, statusCode);
 		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
 
-		sendAlertMail(dataMap);
-		
-		
+		sendAlertMail(context.getJobDetail());
 
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "

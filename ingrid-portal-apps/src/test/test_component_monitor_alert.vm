@@ -15,4 +15,3 @@ Komponentenbeschreibung: $JOB_DATA.getString("component.monitor.general.title")
 Meldung: $MESSAGES.getString($JOB_DATA.getString("component.monitor.general.status.code"))
 Ausgeführte Query: $JOB_DATA.getString("component.monitor.general.query")
 Timeout [ms]: $JOB_DATA.getInt("component.monitor.general.timeout")
-

@@ -2,7 +2,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
-	<input type="hidden" name="id" value="#getFieldValue('id')"/>
+	<input type="hidden" name="mode" value="$mode"/>
 	<div class="formbody">
 	#if ($mode == 'edit')
 		<h2 class="nospace">Überwachung aktualisieren</h2>
@@ -12,8 +12,14 @@
 	#displayFormErrors()
 	
 	<p>
+	#if ($mode == 'edit')
 		<label class="float_left col2left_incr">Komponenten ID</label>
 		<span>#getFieldValue('id')</span>
+		<input type="hidden" name="id" value="#getFieldValue('id')"/>
+	#elseif ($mode == 'new')
+      	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' 'Komponenten ID')*</label>
+      	<input class="float_left inputstyletext contentInput" id="id" name="id" value="#getFieldValue('id')" type="text">
+	#end
 	</p>
 	<p class="clearer" />
    	<p>
@@ -38,6 +44,11 @@
 	<p>
       	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' 'Überprüfung alle [sec]')*</label>
       	<input class="float_left inputstyletext contentInput" id="interval" name="interval" value="#getFieldValue('interval')" type="text">
+  	</p>
+	<p class="clearer" />
+	<p>
+      	<label class="float_left col2left_incr" for="timeout">#displayFieldLabel('timeout' 'Timeout [ms]')*</label>
+      	<input class="float_left inputstyletext contentInput" id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text">
   	</p>
 	<p class="clearer" />
     <p>

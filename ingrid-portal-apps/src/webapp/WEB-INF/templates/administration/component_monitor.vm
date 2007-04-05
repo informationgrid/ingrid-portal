@@ -1,3 +1,15 @@
+#macro (renderDBBrowserHeader $colNames $colTitles)
+<tr>
+	<td class="contentColumnHead"></td>
+	#foreach ($colTitle in $colTitles)
+		#set ($colLink = $renderResponse.createActionURL())
+		#set ($colIndex = $velocityCount - 1)
+		$colLink.setParameter("action", "doSort")
+		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
+   		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
+	#end
+</tr>
+#end
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input name="modelSize" type="hidden" value="$model.size()" />
@@ -34,7 +46,7 @@
     	<td class="$rowstyle"><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
     	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
     	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.status.code"))</a></td>
-    	<td class="$rowstyle"><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$jobData.get("component.monitor.general.last.check")#end</a></td>
+    	<td class="$rowstyle"><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$date.format('yyyy-MM-dd H:m:s',$jobData.get("component.monitor.general.last.check"))#end</a></td>
     	<td class="$rowstyle"><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>
     	<td class="$rowstyle"><a href="$action">#if($jobData.getInt("component.monitor.general.active")==0) AUS#else AN#end</a></td>
     </tr>
@@ -56,6 +68,11 @@
 <br/><br/><span class="portlet-msg-error">$import_message</span><br/>
 #end
 		</p>
+        <p>
+            <label class="float_left col2left_incr" for="activate">Überwachung sofort aktivieren?</label>
+            <input class="" id="activate" name="activate" value="1" type="checkbox">
+        </p>
+    	<p class="clearer" />
 	</div>
 <div class="formfooter" align="right">
 	<input class="btn" type="submit" name="doImport" value="iPlugs Importieren" />

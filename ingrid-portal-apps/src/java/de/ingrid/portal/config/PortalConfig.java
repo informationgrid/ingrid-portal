@@ -85,18 +85,18 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_ENVIROMENT = "portal.enable.enviroment";
 
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "componebt.monitor.alert.email.subject";
+	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
     
-    // private stuff
+	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
+
+	public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
+
+	// private stuff
     private static PortalConfig instance = null;
 
     private final static Log log = LogFactory.getLog(PortalConfig.class);
 
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
-
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_TEMPLATE = "component.monitor.alert.email.template";
-
-
+	
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {
             try {
