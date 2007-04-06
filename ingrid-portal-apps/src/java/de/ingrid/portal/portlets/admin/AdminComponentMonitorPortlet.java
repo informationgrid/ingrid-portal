@@ -211,11 +211,11 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						JobDataMap dataMap = jobDetail.getJobDataMap();
 
 						dataMap.put(IngridMonitorIPlugJob.PARAM_ACTIVE, cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_ACTIVE, Integer.valueOf(0)));
+								AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0)));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_INTERVAL, Integer.valueOf(30)));
+								AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_TIMEOUT, cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_TIMEOUT, Integer.valueOf(500)));
+								AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE, cf
 								.getInput(AdminComponentMonitorForm.FIELD_TITLE));
 						String componentType = cf.getInput(AdminComponentMonitorForm.FIELD_TYPE);
@@ -245,7 +245,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
 						jobDetail.setRequestsRecovery(false);
 						Trigger trigger = TriggerUtils.makeSecondlyTrigger(cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_INTERVAL, Integer.valueOf(30)).intValue());
+								AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)).intValue());
 						trigger.setStartTime(new Date());
 						trigger.setName(id);
 						trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
@@ -286,11 +286,11 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						JobDataMap dataMap = jobDetail.getJobDataMap();
 
 						dataMap.put(IngridMonitorIPlugJob.PARAM_ACTIVE, cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_ACTIVE, Integer.valueOf(0)));
+								AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0)));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_INTERVAL, Integer.valueOf(30)));
+								AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_TIMEOUT, cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_TIMEOUT, Integer.valueOf(500)));
+								AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE, cf
 								.getInput(AdminComponentMonitorForm.FIELD_TITLE));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE, cf
@@ -316,7 +316,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						jobDetail.setRequestsRecovery(false);
 
 						Trigger trigger = TriggerUtils.makeSecondlyTrigger(cf.getInputAsInteger(
-								AdminComponentMonitorForm.FIELD_INTERVAL, Integer.valueOf(1800)).intValue());
+								AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(1800)).intValue());
 						trigger.setStartTime(new Date());
 						trigger.setName(id);
 						trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
