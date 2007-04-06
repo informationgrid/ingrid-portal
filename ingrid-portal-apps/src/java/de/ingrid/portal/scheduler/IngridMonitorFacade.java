@@ -6,6 +6,7 @@ package de.ingrid.portal.scheduler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -145,14 +146,33 @@ public class IngridMonitorFacade {
 				JobDetail jobA = (JobDetail) a;
 				JobDetail jobB = (JobDetail) b;
 
-				String aName = jobA.getJobDataMap().getString(sortBy).toLowerCase();
-				String bName = jobB.getJobDataMap().getString(sortBy).toLowerCase();
+				Object aName = jobA.getJobDataMap().get(sortBy);
+				Object bName = jobB.getJobDataMap().get(sortBy);
 
 				if (ascending) {
-					return aName.compareTo(bName);
+					if (aName instanceof String) {
+						return ((String)aName).toLowerCase().compareTo(((String)bName).toLowerCase());
+					} else if (aName instanceof Integer) {
+						return ((Integer)aName).compareTo(((Integer)bName));
+					} else if (aName instanceof Date) {
+						if (bName == null) {
+							return -1;
+						}
+						return ((Date)aName).compareTo(((Date)bName));
+					}
 				} else {
-					return aName.compareTo(bName) * -1;
+					if (aName instanceof String) {
+						return ((String)aName).toLowerCase().compareTo(((String)bName).toLowerCase()) * -1;
+					} else if (aName instanceof Integer) {
+						return ((Integer)aName).compareTo(((Integer)bName)) * -1;
+					} else if (aName instanceof Date) {
+						if (bName == null) {
+							return 1;
+						}
+						return ((Date)aName).compareTo(((Date)bName)) * -1;
+					}
 				}
+				return 0;
 			} catch (Exception e) {
 				return 0;
 			}

@@ -4,9 +4,16 @@
 	#foreach ($colTitle in $colTitles)
 		#set ($colLink = $renderResponse.createActionURL())
 		#set ($colIndex = $velocityCount - 1)
-		$colLink.setParameter("action", "doSort")
+		$colLink.setParameter("doSort", "true")
 		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-   		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
+   		#if ($sortColumn == $colNames.get($colIndex))
+			#if($sortAsc)
+				$colLink.setParameter("desc", "true")
+			#else
+				$colLink.setParameter("desc", "false")
+			#end
+		#end
+		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
 	#end
 </tr>
 #end

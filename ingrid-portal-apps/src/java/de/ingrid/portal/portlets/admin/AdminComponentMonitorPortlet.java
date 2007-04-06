@@ -36,7 +36,6 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
-import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
 import de.ingrid.utils.PlugDescription;
 
@@ -55,9 +54,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
 	private static final String VIEW_NEW = "/WEB-INF/templates/administration/component_monitor_edit.vm";
 
-	private static final String[] component_types = { "component.monitor.general.type.iplug",
-			"component.monitor.general.type.csw", "component.monitor.general.type.csw",
-			"component.monitor.general.type.g2k" };
+	private static final String[] component_types = { "component.monitor.general.type.iplug" };
 
 	/**
 	 * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -87,9 +84,13 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		String action = request.getParameter(Settings.PARAM_ACTION);
 		if (action == null) {
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_DEFAULT);
-			String sortBy = request.getParameter("sortby");
+			String sortColumn = request.getParameter("sortColumn");
 			boolean ascending = request.getParameter("desc") == null || !request.getParameter("desc").equals("true");
-			context.put("model", IngridMonitorFacade.instance().getJobs(sortBy, ascending));
+			if (sortColumn != null) {
+				context.put("sortColumn", sortColumn);
+				context.put("sortAsc", new Boolean(ascending));
+			}
+			context.put("model", IngridMonitorFacade.instance().getJobs(sortColumn, ascending));
 		} else if (action.equals("viewEdit")) {
 			String id = request.getParameter("id");
 			if (id != null) {
@@ -109,15 +110,10 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			context.put("mode", "new");
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_NEW);
 		} else if (action.equals("addContact")) {
-//			String id = request.getParameter("id");
-			
-//			initActionForm(cf, id, context);
 			context.put("componentTypes", component_types);
 			context.put("mode", request.getParameter("mode"));
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
 		} else if (action.equals("deleteContact")) {
-			String id = request.getParameter("id");
-//			initActionForm(cf, id, context);
 			context.put("mode", request.getParameter("mode"));
 			context.put("componentTypes", component_types);
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
@@ -261,6 +257,15 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			}
 		} else if (request.getParameter("doNew") != null) {
 			response.setRenderParameter("action", "viewNew");
+		} else if (request.getParameter("doSort") != null) {
+			String sortColumn = request.getParameter("sortColumn");
+			if (sortColumn != null) {
+				response.setRenderParameter("sortColumn", sortColumn);
+			}
+			String desc = request.getParameter("desc");
+			if (desc != null) {
+				response.setRenderParameter("desc", desc);
+			}
 		} else if (request.getParameter("doSave") != null) {
 			String id = request.getParameter("id");
 			response.setRenderParameter("mode", request.getParameter("mode"));
@@ -298,7 +303,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
 								.getInput(AdminComponentMonitorForm.FIELD_QUERY));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_STATUS, IngridMonitorIPlugJob.STATUS_OK);
-						dataMap.put(IngridMonitorIPlugJob.PARAM_STATUS_CODE,
+						dataMap
+								.put(IngridMonitorIPlugJob.PARAM_STATUS_CODE,
 										IngridMonitorIPlugJob.STATUS_CODE_NO_ERROR);
 						dataMap.put(IngridMonitorIPlugJob.PARAM_EVENT_OCCURENCES, 1);
 
@@ -365,24 +371,10 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 				}
 				emailList.add(cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAIL_NEW));
 				thresholdList.add(cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLD_NEW));
-				cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS, (String[])emailList.toArray(new String[]{}));
-				cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS, (String[])thresholdList.toArray(new String[]{}));
-				
-//							cf.setInput(field, dataArray)
-/*							JobDataMap jobData = job.getJobDataMap();
-							ArrayList contacts = (ArrayList) jobData.get(IngridMonitorAbstractJob.PARAM_CONTACTS);
-							if (contacts == null) {
-								contacts = new ArrayList();
-							}
-							HashMap contact = new HashMap();
-							contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL, cf
-									.getInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAIL_NEW));
-							contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
-									.valueOf(cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLD_NEW)));
-							contacts.add(contact);
-							jobData.put(IngridMonitorAbstractJob.PARAM_CONTACTS, contacts);
-							monitor.getScheduler().addJob(job, true);
-*/							
+				cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS, (String[]) emailList
+						.toArray(new String[] {}));
+				cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS, (String[]) thresholdList
+						.toArray(new String[] {}));
 				cf.clearInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAIL_NEW);
 				cf.clearInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLD_NEW);
 			}
@@ -447,8 +439,10 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 				if (request.getParameter("doDeleteContact_" + i) != null) {
 					emailList.remove(i - 1);
 					thresholdList.remove(i - 1);
-					cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS, (String[])emailList.toArray(new String[]{}));
-					cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS, (String[])thresholdList.toArray(new String[]{}));
+					cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS, (String[]) emailList
+							.toArray(new String[] {}));
+					cf.setInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS, (String[]) thresholdList
+							.toArray(new String[] {}));
 					if (id != null) {
 						response.setRenderParameter("id", id);
 					}

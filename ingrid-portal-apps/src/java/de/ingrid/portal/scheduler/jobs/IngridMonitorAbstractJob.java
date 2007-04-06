@@ -42,16 +42,6 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
 
-	public static final String TYPE_CSW = "component.monitor.general.type.csw";
-
-	public static final String TYPE_ECS = "component.monitor.general.type.ecs";
-
-	public static final String TYPE_FPN = "component.monitor.general.type.fpn";
-
-	public static final String TYPE_SNS = "component.monitor.general.type.sns";
-
-	public static final String TYPE_G2K = "component.monitor.general.type.g2k";
-
 	public static final String PARAM_STATUS = "component.monitor.general.status";
 
 	public static final String PARAM_STATUS_CODE = "component.monitor.general.status.code";
