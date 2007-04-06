@@ -1,10 +1,18 @@
+<!DOCTYPE doc [
+<!-- 
+for more entities look at
+http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
+-->
+<!ENTITY Uuml	"&#x00DC;">
+]>
+
 <page>
   <defaults
      skin="orange"
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Überwachung</title>
+  <title>&Uuml;berwachung</title>
   <metadata name="title" xml:lang="en">Monitoring</metadata>
 
   <fragment id="admin-component-monitor" type="layout" name="jetspeed-layouts::IngridOneColumn">
