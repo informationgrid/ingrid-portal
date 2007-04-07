@@ -42,6 +42,11 @@
   	</p>
 	<p class="clearer" />
 	<p>
+      	<label class="float_left col2left_incr" for="serviceurl">#displayFieldLabel('serviceurl' 'Service URL (nicht für Typ IPLUG benötigt)')</label>
+      	<input class="float_left inputstyletext contentInput" id="serviceurl" name="serviceurl" value="#getHTMLEscapedFieldValue('serviceurl')" type="text">
+  	</p>
+	<p class="clearer" />
+	<p>
       	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' 'Überprüfung alle [sec]')*</label>
       	<input class="float_left inputstyletext contentInput" id="interval" name="interval" value="#getFieldValue('interval')" type="text">
   	</p>

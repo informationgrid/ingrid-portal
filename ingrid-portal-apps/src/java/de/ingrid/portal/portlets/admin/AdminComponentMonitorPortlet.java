@@ -36,6 +36,8 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorG2KJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
 import de.ingrid.utils.PlugDescription;
 
@@ -54,7 +56,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
 	private static final String VIEW_NEW = "/WEB-INF/templates/administration/component_monitor_edit.vm";
 
-	private static final String[] component_types = { "component.monitor.general.type.iplug" };
+	private static final String[] component_types = { "component.monitor.general.type.iplug", "component.monitor.general.type.g2k" };
 
 	/**
 	 * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -147,7 +149,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 					.getInt(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)));
 			cf.setInput(AdminComponentMonitorForm.FIELD_TIMEOUT, String.valueOf(dataMap
 					.getInt(IngridMonitorIPlugJob.PARAM_TIMEOUT)));
-			cf.setInput(AdminComponentMonitorForm.FIELD_QUERY, dataMap.getString(IngridMonitorIPlugJob.PARAM_QUERY));
+			cf.setInput(AdminComponentMonitorForm.FIELD_QUERY, dataMap.getString(IngridMonitorAbstractJob.PARAM_QUERY));
+			cf.setInput(AdminComponentMonitorForm.FIELD_SERVICE_URL, dataMap.getString(IngridMonitorAbstractJob.PARAM_SERVICE_URL));
 			cf.setInput(AdminComponentMonitorForm.FIELD_TITLE, dataMap
 					.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE));
 			cf.setInput(AdminComponentMonitorForm.FIELD_TYPE, dataMap
@@ -221,6 +224,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						}
 						dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
 								.getInput(AdminComponentMonitorForm.FIELD_QUERY));
+						dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
+								.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_STATUS, IngridMonitorIPlugJob.STATUS_OK);
 						dataMap
 								.put(IngridMonitorIPlugJob.PARAM_STATUS_CODE,
@@ -283,6 +288,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 					Class jobClass = null;
 					if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
 						jobClass = IngridMonitorIPlugJob.class;
+					} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
+						jobClass = IngridMonitorG2KJob.class;
 					}
 					if (jobClass != null) {
 						JobDetail jobDetail = new JobDetail(cf.getInput(AdminComponentMonitorForm.FIELD_ID),
@@ -302,6 +309,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 								.getInput(AdminComponentMonitorForm.FIELD_TYPE));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
 								.getInput(AdminComponentMonitorForm.FIELD_QUERY));
+						dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
+								.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_STATUS, IngridMonitorIPlugJob.STATUS_OK);
 						dataMap
 								.put(IngridMonitorIPlugJob.PARAM_STATUS_CODE,

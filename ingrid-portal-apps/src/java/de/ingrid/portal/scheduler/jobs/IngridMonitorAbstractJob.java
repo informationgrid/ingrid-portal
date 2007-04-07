@@ -68,6 +68,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String PARAM_COMPONENT_TYPE = "component.monitor.general.type";
 
+	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
+
 	protected void sendAlertMail(JobDetail job) {
 
 		JobDataMap dataMap = job.getJobDataMap();
