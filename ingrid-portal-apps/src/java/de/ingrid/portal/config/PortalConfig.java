@@ -91,6 +91,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
 	public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
 
+	public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
+
+	public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
+	
 	// private stuff
     private static PortalConfig instance = null;
 

@@ -8,23 +8,19 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.util.Date;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import de.ingrid.iplug.g2k.G2kQueryBuilder;
-import de.ingrid.iplug.g2k.G2kResultAnalyzer;
+import de.ingrid.iplug.ecs.UDKResultAnalyzer;
+import de.ingrid.iplug.ecs.builder.request.UDKQueryBuilder;
+import de.ingrid.iplug.ecs.tools.AxisQuerySender;
+import de.ingrid.iplug.ecs.tools.AxisTools;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -34,7 +30,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  * 
  * @author joachim@wemove.com
  */
-public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
+public class IngridMonitorECSJob extends IngridMonitorAbstractJob {
 
 	public static final String STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
 
@@ -42,14 +38,9 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 
 	public static final String STATUS_CODE_ERROR_INVALID_HTTP_REQUEST = "component.monitor.general.g2k.invalid.http.request";
 
-	public static final String COMPONENT_TYPE = "component.monitor.general.type.g2k";
+	public static final String COMPONENT_TYPE = "component.monitor.general.type.ecs";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorG2KJob.class);
-
-	/**
-	 * Coding
-	 */
-	public static final String CODING = "ISO-8859-1";
+	private final static Log log = LogFactory.getLog(IngridMonitorECSJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -91,12 +82,20 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
-			G2kQueryBuilder qBuilder = new G2kQueryBuilder();
-			IngridQuery q = QueryStringParser.parse(query);
-			final String answer = sendQuery(qBuilder.createSimpleSearchString(q, "de"), serviceUrl, timeout);
 
-			G2kResultAnalyzer rAnalyser = new G2kResultAnalyzer("dummy_id");
-			IngridHits hits = rAnalyser.analyzeResult(answer, 0, 1);
+			UDKQueryBuilder fQueryBuilder = new UDKQueryBuilder();
+			AxisQuerySender fQuerySender = new AxisQuerySender(serviceUrl);
+			PlugDescription plugDescription = new PlugDescription();
+			plugDescription.setProxyServiceURL("test_id");
+			plugDescription.setDataSourceName("monitor_component");
+			UDKResultAnalyzer fResultAnalyser = new UDKResultAnalyzer(plugDescription);
+
+			IngridQuery q = QueryStringParser.parse(query);
+
+			Message mRequest = AxisTools.createSOAPMessage(fQueryBuilder.createUDKQuery(q), 11);
+			Message mResponse = fQuerySender.sendSOAPMessage(mRequest, timeout);
+			// Analyse Result and build IngridHits
+			IngridHits hits = fResultAnalyser.analyzeResult(mResponse, 0, 1);
 
 			if (hits.length() == 0) {
 				status = STATUS_ERROR;
@@ -111,14 +110,6 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		} catch (MalformedURLException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_INVALID_SERVICE_URL;
-		} catch (HttpException e) {
-			status = STATUS_ERROR;
-			try {
-				int httpError = Integer.parseInt(e.getMessage());
-				statusCode = "HTTP ERROR: " + httpError;
-			} catch (NumberFormatException e1) {
-				statusCode = STATUS_CODE_ERROR_INVALID_HTTP_REQUEST;
-			}
 		} catch (SocketTimeoutException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
@@ -157,57 +148,6 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "
 					+ (System.currentTimeMillis() - startTime) + " ms.");
-		}
-	}
-
-	/**
-	 * <code>query</code> will be sent to the specified <code>g2kUrl</code>.
-	 * In case of an error <code>null</code> we be returned.
-	 * 
-	 * @param query
-	 *            G2k XML query
-	 * @param g2kUrl
-	 *            Target URL of the G2k service
-	 * @return The response as XML string
-	 * @throws MalformedURLException
-	 */
-	private String sendQuery(String query, String g2kUrl, int timeout) throws MalformedURLException, HttpException,
-			IOException {
-
-		if (g2kUrl == null || g2kUrl == "") {
-			log.error("Error: no g2k-URL specified. Returning NULL!");
-			return null;
-		}
-
-		// Create an instance of HttpClient.
-		HttpClient client = new HttpClient();
-		client.getParams().setParameter(HttpClientParams.SO_TIMEOUT, new Integer(timeout));
-		// Create a method instance.
-		PostMethod method = new PostMethod(g2kUrl);
-		// Provide custom retry handler is necessary
-		method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(0, false));
-		method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, new Integer(timeout));
-		method.setRequestEntity(new StringRequestEntity(query));
-
-		try {
-			// Execute the method.
-			int statusCode = client.executeMethod(method);
-
-			if (statusCode != HttpStatus.SC_OK) {
-				if (log.isDebugEnabled()) {
-					log.debug("Method failed:" + method.getStatusLine());
-				}
-				throw new HttpException(String.valueOf(statusCode));
-			}
-
-			// Read the response body.
-			byte[] responseBody = method.getResponseBody();
-
-			// Deal with the response.
-			return new String(responseBody);
-		} finally {
-			// Release the connection.
-			method.releaseConnection();
 		}
 	}
 }

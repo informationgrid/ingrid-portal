@@ -37,8 +37,11 @@ import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorCSWJob;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorECSJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorG2KJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorSNSJob;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -56,7 +59,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
 	private static final String VIEW_NEW = "/WEB-INF/templates/administration/component_monitor_edit.vm";
 
-	private static final String[] component_types = { "component.monitor.general.type.iplug", "component.monitor.general.type.g2k" };
+	private static final String[] component_types = { "component.monitor.general.type.iplug", "component.monitor.general.type.g2k", "component.monitor.general.type.csw", "component.monitor.general.type.ecs", "component.monitor.general.type.sns" };
 
 	/**
 	 * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -221,6 +224,14 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE, componentType);
 						if (componentType.equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
 							jobDetail.setJobClass(IngridMonitorIPlugJob.class);
+						} else if (componentType.equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
+							jobDetail.setJobClass(IngridMonitorG2KJob.class);
+						} else if (componentType.equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
+							jobDetail.setJobClass(IngridMonitorECSJob.class);
+						} else if (componentType.equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
+							jobDetail.setJobClass(IngridMonitorCSWJob.class);
+						} else if (componentType.equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
+							jobDetail.setJobClass(IngridMonitorSNSJob.class);
 						}
 						dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
 								.getInput(AdminComponentMonitorForm.FIELD_QUERY));
@@ -290,6 +301,12 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 						jobClass = IngridMonitorIPlugJob.class;
 					} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
 						jobClass = IngridMonitorG2KJob.class;
+					} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
+						jobClass = IngridMonitorECSJob.class;
+					} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
+						jobClass = IngridMonitorCSWJob.class;
+					} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
+						jobClass = IngridMonitorSNSJob.class;
 					}
 					if (jobClass != null) {
 						JobDetail jobDetail = new JobDetail(cf.getInput(AdminComponentMonitorForm.FIELD_ID),

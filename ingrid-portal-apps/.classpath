@@ -28,7 +28,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-sns-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-g2k-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-tamino-0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-ecs-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-ecs-0.1-SNAPSHOT.jar" sourcepath="/INGRID_PROJECT/ingrid-iplug-ecs/trunk"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-sockets-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/weta-components/jars/communication-jxta-SNAPSHOT.jar"/>
@@ -77,5 +77,10 @@
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
 	<classpathentry kind="src" path="/jetspeed"/>
 	<classpathentry kind="lib" path="/ingrid-portal-base/lib/mysql-connector-java-3.1.13-bin.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/uba/jars/xtmStubs-2.1.0.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/axis/jars/axis-1.2.1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/axis/jars/axis-jaxrpc-1.2.1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/axis/jars/axis-saaj-1.2.1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ingrid/jars/ingrid-iplug-csw-0.1-SNAPSHOT.jar" sourcepath="/INGRID_PROJECT/ingrid-iplug-csw/trunk"/>
 	<classpathentry kind="output" path="target/ingrid-portal-apps/WEB-INF/classes"/>
 </classpath>

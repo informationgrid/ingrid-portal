@@ -4,27 +4,27 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.util.Date;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
-import de.ingrid.iplug.g2k.G2kQueryBuilder;
-import de.ingrid.iplug.g2k.G2kResultAnalyzer;
-import de.ingrid.utils.IngridHits;
+import de.ingrid.iplug.csw.CSWQueryBuilder;
+import de.ingrid.iplug.ecs.tools.AxisQuerySender;
+import de.ingrid.iplug.ecs.tools.AxisTools;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -34,7 +34,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  * 
  * @author joachim@wemove.com
  */
-public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
+public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 
 	public static final String STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
 
@@ -42,14 +42,9 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 
 	public static final String STATUS_CODE_ERROR_INVALID_HTTP_REQUEST = "component.monitor.general.g2k.invalid.http.request";
 
-	public static final String COMPONENT_TYPE = "component.monitor.general.type.g2k";
+	public static final String COMPONENT_TYPE = "component.monitor.general.type.csw";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorG2KJob.class);
-
-	/**
-	 * Coding
-	 */
-	public static final String CODING = "ISO-8859-1";
+	private final static Log log = LogFactory.getLog(IngridMonitorCSWJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -91,14 +86,30 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
-			G2kQueryBuilder qBuilder = new G2kQueryBuilder();
+
 			IngridQuery q = QueryStringParser.parse(query);
-			final String answer = sendQuery(qBuilder.createSimpleSearchString(q, "de"), serviceUrl, timeout);
+			CSWQueryBuilder qBuilder = new CSWQueryBuilder();
+			AxisQuerySender qSender = new AxisQuerySender(serviceUrl);
 
-			G2kResultAnalyzer rAnalyser = new G2kResultAnalyzer("dummy_id");
-			IngridHits hits = rAnalyser.analyzeResult(answer, 0, 1);
+			// Send and receive SOAP-Message
+			String cswQuery = qBuilder.createCSWQuery(q, 0, 1);
+			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 11);
 
-			if (hits.length() == 0) {
+			Message mResponse = qSender.sendSOAPMessage(mRequest, timeout);
+			// Analyse Result and build IngridHits
+			org.w3c.dom.Document bodyDOM = getBodyAsDOM(mResponse);
+
+			// get number of hits matched
+			String numberOfMatchedHitsStr = null;
+			int numberOfMatchedHits = 0;
+			NodeList nl = bodyDOM.getElementsByTagName("SearchResults");
+			if (nl != null && nl.getLength() >= 1) {
+				Element e = (Element) nl.item(0);
+				numberOfMatchedHitsStr = e.getAttribute("numberOfRecordsMatched");
+				numberOfMatchedHits = Integer.parseInt(numberOfMatchedHitsStr);
+			}
+
+			if (numberOfMatchedHits == 0) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_HITS;
 			} else {
@@ -111,14 +122,6 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		} catch (MalformedURLException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_INVALID_SERVICE_URL;
-		} catch (HttpException e) {
-			status = STATUS_ERROR;
-			try {
-				int httpError = Integer.parseInt(e.getMessage());
-				statusCode = "HTTP ERROR: " + httpError;
-			} catch (NumberFormatException e1) {
-				statusCode = STATUS_CODE_ERROR_INVALID_HTTP_REQUEST;
-			}
 		} catch (SocketTimeoutException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
@@ -161,53 +164,48 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 	}
 
 	/**
-	 * <code>query</code> will be sent to the specified <code>g2kUrl</code>.
-	 * In case of an error <code>null</code> we be returned.
+	 * Extracting pure XML body out of the SOAP message. If the exracted SOAP
+	 * body is surrounded by the "<soapenv:Body ...>" tag, this tag will be
+	 * removed. In case of an parsing error an empty <code>String</code> will
+	 * be returned.
 	 * 
-	 * @param query
-	 *            G2k XML query
-	 * @param g2kUrl
-	 *            Target URL of the G2k service
-	 * @return The response as XML string
-	 * @throws MalformedURLException
+	 * @param msg
+	 *            SOAP message
+	 * @return extracted XML message
 	 */
-	private String sendQuery(String query, String g2kUrl, int timeout) throws MalformedURLException, HttpException,
-			IOException {
-
-		if (g2kUrl == null || g2kUrl == "") {
-			log.error("Error: no g2k-URL specified. Returning NULL!");
-			return null;
-		}
-
-		// Create an instance of HttpClient.
-		HttpClient client = new HttpClient();
-		client.getParams().setParameter(HttpClientParams.SO_TIMEOUT, new Integer(timeout));
-		// Create a method instance.
-		PostMethod method = new PostMethod(g2kUrl);
-		// Provide custom retry handler is necessary
-		method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(0, false));
-		method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, new Integer(timeout));
-		method.setRequestEntity(new StringRequestEntity(query));
-
+	private String getBodyAsXMLString(final Message msg) {
 		try {
-			// Execute the method.
-			int statusCode = client.executeMethod(method);
-
-			if (statusCode != HttpStatus.SC_OK) {
-				if (log.isDebugEnabled()) {
-					log.debug("Method failed:" + method.getStatusLine());
-				}
-				throw new HttpException(String.valueOf(statusCode));
+			String xml = msg.getSOAPEnvelope().getBody().toString();
+			// remove surrounding SOAP body tag if exists:
+			if (xml.startsWith("<soapenv:Body") || xml.startsWith("<ns1:Body")) {
+				xml = xml.substring(xml.indexOf('>') + 1, xml.lastIndexOf('<'));
 			}
-
-			// Read the response body.
-			byte[] responseBody = method.getResponseBody();
-
-			// Deal with the response.
-			return new String(responseBody);
-		} finally {
-			// Release the connection.
-			method.releaseConnection();
+			return xml;
+		} catch (Exception e) {
+			log.error("Can't extract XML message from SOAP body! Message was: " + e.getMessage());
+			return "";
 		}
 	}
+
+	/**
+	 * Extracting pure XML body out of the SOAP message. If the exracted SOAP
+	 * body is surrounded by the "<soapenv:Body ...>" tag, this tag will be
+	 * removed. In case of an parsing error an empty <code>Document</code>
+	 * will be returned.
+	 * 
+	 * @param msg
+	 *            SOAP message
+	 * @return extracted XML message
+	 */
+	private org.w3c.dom.Document getBodyAsDOM(final Message msg) throws Exception {
+		log.debug("Removing SOAP envelope...");
+		String xml = getBodyAsXMLString(msg);
+		// log.debug(xml);
+
+		// Create DOM document out of the AXIS message
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		return builder.parse(new InputSource(new StringReader(xml)));
+	}
+
 }
