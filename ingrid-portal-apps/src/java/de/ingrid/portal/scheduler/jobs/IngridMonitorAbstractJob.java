@@ -11,8 +11,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.SchedulerException;
 import org.quartz.StatefulJob;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -25,6 +29,8 @@ import de.ingrid.portal.global.Utils;
  * @author joachim@wemove.com
  */
 public abstract class IngridMonitorAbstractJob implements StatefulJob {
+
+	private final static Log log = LogFactory.getLog(IngridMonitorAbstractJob.class);
 
 	public static final int STATUS_OK = 0;
 
@@ -70,6 +76,41 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
 
+	protected void updateJobData(JobDataMap dataMap, int status, String statusCode, JobExecutionContext context) {
+		int eventOccurences;
+		try {
+			eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
+		} catch (Exception e) {
+			eventOccurences = 0;
+		}
+
+		int previousStatus = dataMap.getInt(PARAM_STATUS);
+		String previousStatusCode = dataMap.getString(PARAM_STATUS_CODE);
+
+		// if we have exactly the same result like the previous check
+		// increase event occurences
+		if (log.isDebugEnabled()) {
+			log.debug("Previous status code:" + previousStatusCode);
+			log.debug("New status code:" + statusCode);
+		}
+		if (status == previousStatus && previousStatusCode.equals(statusCode)) {
+			eventOccurences++;
+		} else {
+			eventOccurences = 1;
+		}
+
+		dataMap.put(PARAM_STATUS, status);
+		dataMap.put(PARAM_STATUS_CODE, statusCode);
+		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
+		try {
+			context.getScheduler().addJob(context.getJobDetail(), true);
+		} catch (SchedulerException e) {
+			log.error("Error updating job " + context.getJobDetail().getName());
+		}
+		
+	}
+	
+	
 	protected void sendAlertMail(JobDetail job) {
 
 		JobDataMap dataMap = job.getJobDataMap();
@@ -84,6 +125,9 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 					String contactEmails = (String) contact.get(PARAM_CONTACT_EMAIL);
 					// if the previous number of occurences for this status hits the
 					// threshhold for the alert
+					if (log.isDebugEnabled()) {
+						log.debug("Check sending alert email to " + contactEmails + ". (Event occured " + eventOccurences + " times, contact threshold is " + contactEventOccurencesBeforeAlert + ")");
+					}
 					if (contactEventOccurencesBeforeAlert == eventOccurences) {
 						String[] emails = contactEmails.split(",");
 						for (int i = 0; i < emails.length; i++) {
@@ -103,6 +147,9 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	}
 
 	private void sendEmail(JobDetail job, String email) {
+		if (log.isDebugEnabled()) {
+			log.debug("Try to sent alert email to " + email);
+		}
 		HashMap mailData = new HashMap();
 		mailData.put("JOB", job);
 		ResourceBundle resources = ResourceBundle.getBundle("de.ingrid.portal.resources.AdminPortalResources",
@@ -122,6 +169,9 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 		String to = email;
 		String text = Utils.mergeTemplate(templatePath, mailData, "map");
 		Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
+		if (log.isDebugEnabled()) {
+			log.debug("Sent alert email to " + to);
+		}
 	}
 
 }

@@ -237,10 +237,6 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 								.getInput(AdminComponentMonitorForm.FIELD_QUERY));
 						dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
 								.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
-						dataMap.put(IngridMonitorIPlugJob.PARAM_STATUS, IngridMonitorIPlugJob.STATUS_OK);
-						dataMap
-								.put(IngridMonitorIPlugJob.PARAM_STATUS_CODE,
-										IngridMonitorIPlugJob.STATUS_CODE_NO_ERROR);
 
 						ArrayList contacts = new ArrayList();
 						String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);

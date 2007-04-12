@@ -120,28 +120,7 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 		}
 
-		int eventOccurences;
-		try {
-			eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
-		} catch (Exception e) {
-			eventOccurences = 0;
-		}
-
-		int previousStatus = dataMap.getInt(PARAM_STATUS);
-		String previousStatusCode = dataMap.getString(PARAM_STATUS_CODE);
-
-		// if we have exactly the same result like the previous check
-		// increase event occurences
-		if (status == previousStatus && previousStatusCode.equals(statusCode)) {
-			eventOccurences++;
-		} else {
-			eventOccurences = 1;
-		}
-
-		dataMap.put(PARAM_STATUS, status);
-		dataMap.put(PARAM_STATUS_CODE, statusCode);
-		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
-
+		updateJobData(dataMap, status, statusCode, context);
 		sendAlertMail(context.getJobDetail());
 
 		if (log.isDebugEnabled()) {
