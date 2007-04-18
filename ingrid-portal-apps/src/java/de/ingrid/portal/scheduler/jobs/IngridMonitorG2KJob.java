@@ -130,8 +130,9 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 		}
 
-		updateJobData(dataMap, status, statusCode, context);
-		sendAlertMail(context.getJobDetail());
+		updateJobData(context, status, statusCode);
+		sendAlertMail(context);
+		updateJob(context);
 
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "

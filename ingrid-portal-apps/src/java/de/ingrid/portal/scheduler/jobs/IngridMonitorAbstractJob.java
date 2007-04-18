@@ -68,6 +68,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String PARAM_CONTACT_EMAIL = "component.monitor.general.contact.email";
 
+	public static final String PARAM_CONTACT_LAST_ALERTED_EVENT = "component.monitor.general.contact.last.alerted.event";
+
 	public static final String PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT = "component.monitor.general.contact.event.occurence.before.alert";
 
 	public static final String PARAM_COMPONENT_TITLE = "component.monitor.general.title";
@@ -76,7 +78,9 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
 
-	protected void updateJobData(JobDataMap dataMap, int status, String statusCode, JobExecutionContext context) {
+	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
+		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+		
 		int eventOccurences;
 		try {
 			eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
@@ -111,15 +115,21 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	}
 	
 	
-	protected void sendAlertMail(JobDetail job) {
+	protected void sendAlertMail(JobExecutionContext context) {
 
+		JobDetail job = context.getJobDetail();
 		JobDataMap dataMap = job.getJobDataMap();
 		int eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
+		String currentStatusCode = dataMap.getString(PARAM_STATUS_CODE);
 		List contacts = (List) dataMap.get(PARAM_CONTACTS);
 		if (contacts != null) {
 			for (Iterator it = contacts.iterator(); it.hasNext();) {
 				Map contact = (Map) it.next();
 				if (contact != null) {
+					String lastAlertedEvent = (String)contact.get(PARAM_CONTACT_LAST_ALERTED_EVENT);
+					if (lastAlertedEvent == null) {
+						lastAlertedEvent = "";
+					}
 					int contactEventOccurencesBeforeAlert = ((Integer) contact
 							.get(PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT)).intValue();
 					String contactEmails = (String) contact.get(PARAM_CONTACT_EMAIL);
@@ -128,11 +138,18 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 					if (log.isDebugEnabled()) {
 						log.debug("Check sending alert email to " + contactEmails + ". (Event occured " + eventOccurences + " times, contact threshold is " + contactEventOccurencesBeforeAlert + ")");
 					}
-					if (contactEventOccurencesBeforeAlert == eventOccurences) {
+					if (contactEventOccurencesBeforeAlert == eventOccurences && !lastAlertedEvent.equals(currentStatusCode) ) {
 						String[] emails = contactEmails.split(",");
 						for (int i = 0; i < emails.length; i++) {
 							String email = emails[i].trim();
 							sendEmail(job, email);
+						}
+						// set last alerted event in contact
+						contact.put(PARAM_CONTACT_LAST_ALERTED_EVENT, currentStatusCode);
+						try {
+							context.getScheduler().addJob(context.getJobDetail(), true);
+						} catch (SchedulerException e) {
+							log.error("Error updating job " + context.getJobDetail().getName());
 						}
 					}
 				}
@@ -172,6 +189,15 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 		if (log.isDebugEnabled()) {
 			log.debug("Sent alert email to " + to);
 		}
+	}
+	
+	protected void updateJob(JobExecutionContext context) {
+		try {
+			context.getScheduler().addJob(context.getJobDetail(), true);
+		} catch (SchedulerException e) {
+			log.error("Error updating job " + context.getJobDetail().getName());
+		}
+		
 	}
 
 }

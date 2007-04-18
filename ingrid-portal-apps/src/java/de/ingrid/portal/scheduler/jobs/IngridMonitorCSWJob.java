@@ -134,8 +134,9 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 			log.error("Unspecific Error!", e);
 		}
 
-		updateJobData(dataMap, status, statusCode, context);
-		sendAlertMail(context.getJobDetail());
+		updateJobData(context, status, statusCode);
+		sendAlertMail(context);
+		updateJob(context);
 
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "
