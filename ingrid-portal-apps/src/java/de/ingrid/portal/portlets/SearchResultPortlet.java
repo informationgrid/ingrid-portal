@@ -344,15 +344,16 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (noResults) {
                 String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);                
                 
-                String url = PortalConfig.getInstance().getString(PortalConfig.PORTAL_LOGGER_RESOURCE).concat("?code=NO_RESULTS_FOR_QUERY&q=").concat(URLEncoder.encode(queryString, "UTF-8")).concat("&qtypes=").concat(URLEncoder.encode(queryTypes, "UTF-8"));
                 HttpMethod method = null;
+                String url = null;
                 try{
+                    url = PortalConfig.getInstance().getString(PortalConfig.PORTAL_LOGGER_RESOURCE).concat("?code=NO_RESULTS_FOR_QUERY&q=").concat(URLEncoder.encode(queryString, "UTF-8")).concat("&qtypes=").concat(URLEncoder.encode(queryTypes, "UTF-8"));
                     method = new GetMethod(url);
                     method.setFollowRedirects(true);
                     client.executeMethod(method);
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.info("Cannot make connection to logger resource: ".concat(url), t);
+                        log.error("Cannot make connection to logger resource: ".concat(url), t);
                     }
                 } finally {
                     if (method != null) {
@@ -360,7 +361,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                             method.releaseConnection();
                         } catch (Throwable t) {
                             if (log.isErrorEnabled()) {
-                                log.info("Cannot close connection to logger resource: ".concat(url), t);
+                                log.error("Cannot close connection to logger resource: ".concat(url), t);
                             }
                         }
                     }
