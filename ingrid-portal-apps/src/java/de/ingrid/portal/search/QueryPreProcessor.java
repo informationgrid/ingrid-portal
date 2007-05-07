@@ -305,7 +305,16 @@ public class QueryPreProcessor {
         if (currentSelectorPage > 1) {
             currentPage = 0;
         }
-        int newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
+        
+        int newStartHit;
+        // set new starthit to next expected result
+        // if we navigate through the iplug detail page 'show all result of iplug' use the former calulated start hit as a start
+        // otherwise use the grouped hit history to obtain the nest start hit.
+        if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
+            newStartHit = startHit;
+        } else {
+            newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
+        }
 
         // set language for query
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
