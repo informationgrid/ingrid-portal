@@ -66,7 +66,7 @@
     	<table class="border">
     	<tr>
     		<td class="contentColumnHead">Email</td>
-    		<td class="contentColumnHead">Grenzwert</td>
+    		<td class="contentColumnHead">Schwellwert&sup1;</td>
 			<td class="contentColumnHead">Aktion</td>
     	</tr>
     #set($thresholds = $actionForm.getInputAsArray('contact_threshold'))
@@ -101,8 +101,13 @@
     	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="Hinzufügen" /></td>
     	</tr>
     	</table>
+    	<br/>
+    	<br/>
+    	<p>* Pflichtangaben.</p>
+    	<p>&sup1; Gibt an, wie oft ein Ereignis auftreten muss, bis eine Meldung versendet wird. Ein Wert > 1 stellt sicher, dass einmalig auftretende Fehler nicht gemeldet werden.</p>
 	</p>
 	<br/>
+	
 	</div>
 #renderDBEditFooter($mode)
 </form>

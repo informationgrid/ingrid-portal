@@ -20,6 +20,11 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input name="modelSize" type="hidden" value="$model.size()" />
+      <ul class="innermenu">
+		<li><a href="portal/administration/admin-component-monitor.psml#import">Import aller angeschlossener iPlugs</a></li>
+      </ul>
+      <br/>
+      <br/>
 	<div class="formbody">
 		<p>
 		<table class="border fullwidth">
@@ -66,6 +71,7 @@
 </form>
 <p/>
 #set ($action = $renderResponse.createActionURL())
+<a name="import"></a>
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input type="hidden" name="action" value="doImport">
 	<div class="formbody">
