@@ -92,10 +92,10 @@
     	<td colspan="3">&nbsp;</td>
 		</tr>
         <tr>
-    	<td class="$rowstyle">
+    	<td>
     		<input class="#getInputStyleText('contact_email_new')" size="50" maxlength="255" id="contact_email_new" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text">
     	</td>
-    	<td class="$rowstyle">
+    	<td>
     		<input class="#getInputStyleText('contact_threshold_new')" size="3" maxlength="3" id="contact_threshold_new" name="contact_threshold_new" value="#getFieldValue('contact_threshold_new')" type="text">
     	</td>
     	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="Hinzufügen" /></td>

@@ -6,12 +6,14 @@
 		#set ($colIndex = $velocityCount - 1)
 		$colLink.setParameter("doSort", "true")
 		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-   		#if ($sortColumn == $colNames.get($colIndex))
+   		#if ($sortColumn && $sortColumn == $colNames.get($colIndex))
 			#if($sortAsc)
 				$colLink.setParameter("desc", "true")
 			#else
 				$colLink.setParameter("desc", "false")
 			#end
+		#else
+			$colLink.setParameter("desc", "false")
 		#end
 		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
 	#end
