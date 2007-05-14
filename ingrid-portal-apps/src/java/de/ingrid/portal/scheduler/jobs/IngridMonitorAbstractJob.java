@@ -171,6 +171,11 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 				"ingrid component monitor alert");
 		emailSubject = emailSubject.concat(" [").concat(job.getJobDataMap().getString(PARAM_COMPONENT_TITLE)).concat(
 				"]");
+		if (job.getJobDataMap().getInt(PARAM_STATUS) == STATUS_OK) {
+			emailSubject = emailSubject.concat("[OK]");
+		} else {
+			emailSubject = emailSubject.concat("[FAILED]");
+		}
 
 		String from = PortalConfig.getInstance().getString(PortalConfig.COMPONENT_MONITOR_ALERT_EMAIL_SENDER,
 				"foo@bar.com");

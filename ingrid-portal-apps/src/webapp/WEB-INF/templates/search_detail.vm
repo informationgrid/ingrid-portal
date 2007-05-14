@@ -501,7 +501,7 @@
 #end
 
 #macro (renderUDKSpacialReference)
-	#if(($tool.hasContent($rec.get("t011_township.obj_id")) && $tool.hasContent($rec.get("t011_township.obj_id").get(0).get("t011_town_loc_town.township_no"))) || $tool.hasContent($rec.get("t019_coordinates.obj_id")) || $tool.hasContent($rec.get("t01_object.loc_descr")))
+	#if(($tool.hasContent($rec.get("t011_township.obj_id")) && $tool.hasContent($rec.get("t011_township.obj_id").get(0).get("t011_town_loc_town.township_no"))) || ($tool.hasContent($rec.get("t011_township.obj_id")) && $tool.hasContent($rec.get("t011_township.obj_id").get(0).get("areaid"))) || $tool.hasContent($rec.get("t019_coordinates.obj_id")) || $tool.hasContent($rec.get("t01_object.loc_descr")))
 		<div class="line"><hr /></div><br/>
     	#if($tool.hasContent($rec.get("t011_township.obj_id")) && $tool.hasContent($rec.get("t011_township.obj_id").get(0).get("t011_town_loc_town.township_no")))
        		<p><strong>$MESSAGES.getString("t011_township.township_no"):</strong><br/>
@@ -517,7 +517,15 @@
 				#end	
 			#end
 			</p>
-		#end	
+		#elseif($tool.hasContent($rec.get("t011_township.obj_id")) && $tool.hasContent($rec.get("t011_township.obj_id").get(0).get("areaid")))
+       		<p><strong>$MESSAGES.getString("t011_township.township_no"):</strong><br/>
+			#foreach($t011_township in $rec.get("t011_township.obj_id"))
+				#if($tool.hasContent($t011_township.get("areaid")))
+					($t011_township.get("areaid"))<br/>
+				#end	
+			#end
+			</p>
+		#end
     	#if($tool.hasContent($rec.get("t019_coordinates.obj_id")))
     		<p><strong>$MESSAGES.getString("t019_coordinates.bezug"):</strong><br/>
 			#foreach($t019_coordinates in $rec.get("t019_coordinates.obj_id"))
@@ -718,8 +726,8 @@
     #renderUDKAdditionalInformation()
     #renderUDKSearchTerms()
 
-##	<!--
-##	$rec
+	<!--
+	$rec
 ##   <br/><br/><br/><br/>
 ##    	  #if($record)
 ##			<br/>RENDER RECORD:<br/>
@@ -727,7 +735,7 @@
 ##    	  #else
 ##    		no record available.
 ##    	  #end
-##    -->
+    -->
 	</div>
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
