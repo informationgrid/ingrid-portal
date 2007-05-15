@@ -77,7 +77,7 @@ $action.setParameter('action','doSearchSettings')
 <noscript>
 	<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$link" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
 </noscript>
-#if($enableSave == "true")
+#if($enableSave && $enableSave == "true")
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSaveQuery')
 <!-- only for logged on users -->
