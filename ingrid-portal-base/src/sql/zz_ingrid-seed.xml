@@ -6,7 +6,11 @@
 	<softwareSubVersion value="0"/>
 	<default_rule value="j2"/>
 	<encryption value=""/>
-	<Roles/>
+	<Roles>
+		<Role>admin-portal</Role>
+		<Role>admin-partner</Role>
+		<Role>admin-provider</Role>
+	</Roles>
 	<Groups/>
 	<Users>
 		<User name="admin">
