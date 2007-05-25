@@ -44,6 +44,7 @@ import org.apache.jetspeed.page.document.NodeException;
 import org.apache.jetspeed.profiler.Profiler;
 import org.apache.jetspeed.security.GroupManager;
 import org.apache.jetspeed.security.InvalidPasswordException;
+import org.apache.jetspeed.security.JSSubject;
 import org.apache.jetspeed.security.PasswordAlreadyUsedException;
 import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.Role;
@@ -52,6 +53,7 @@ import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
+import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -840,12 +842,15 @@ public class AdminUserPortlet extends ContentPortlet {
                 final String innerUserName = ids[i];
                 final PageManager innerPageManager = pageManager;
                 User powerUser = userManager.getUser("admin");
-                JetspeedException pe = (JetspeedException) Subject.doAsPrivileged(powerUser.getSubject(),
+                JetspeedException pe = (JetspeedException) JSSubject.doAsPrivileged(powerUser.getSubject(),
                         new PrivilegedAction() {
                             public Object run() {
                                 try {
                                     // remove user's home folder
-                                    Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
+                                    if (log.isDebugEnabled()) {
+                                    	log.debug("Try to remove folder: " + innerFolder + innerUserName);
+                                    }
+                                	Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
                                     innerPageManager.removeFolder(f);
 
                                     return null;
@@ -870,6 +875,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 } catch (Exception e) {
                     log.error("Registration Error: Failed to remove user " + ids[i]);
                 }
+
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {
                     log.error("Problems deleting user (" + ids[i] + ").", e);
