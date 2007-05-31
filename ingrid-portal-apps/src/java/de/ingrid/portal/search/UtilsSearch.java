@@ -136,7 +136,11 @@ public class UtilsSearch {
                     * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH
                     - ICON_LENGTH));
             // strip all HTML tags from summary
-            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(detail.getSummary().replaceAll("\\<.*?\\>",
+            String summary = detail.getSummary();
+            if (summary == null) {
+            	summary = "".intern();
+            }
+            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
                     ""), 400));
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
             result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
