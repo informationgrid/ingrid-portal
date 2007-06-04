@@ -20,9 +20,9 @@
     <extend>full-portal.xml</extend>
     <pomVersion>3</pomVersion>
     <groupId>ingrid</groupId>
-    <artifactId>ingrid-portal</artifactId>
+    <artifactId>ingrid-portal-0.2.0-SNAPSHOT</artifactId>
     <name>Ingrid Portal</name>
-    <currentVersion>0.1</currentVersion>
+    <currentVersion></currentVersion>
 	<dependencies>
     <dependency>
         <id>commons-logging</id>
