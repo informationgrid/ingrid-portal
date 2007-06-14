@@ -5,10 +5,6 @@ package de.ingrid.portal.interfaces.impl;
 
 import java.net.URL;
 
-import net.weta.components.communication.ICommunication;
-import net.weta.components.communication_sockets.SocketCommunication;
-import net.weta.components.communication_sockets.util.AddressUtil;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
@@ -39,13 +35,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     private static IBus bus = null;
 
-    private static Object communication = null;
-
     static BusClient client = null;
 
     private static Configuration config;
-
-    private static boolean enJXTACommunication = false;
 
     private static boolean initInProgress = false;
 
@@ -69,22 +61,10 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isInfoEnabled()) {
                 log.info("SHUT DOWN IBUSInterface!");
             }
-
-            if (client != null) {
-                client.shutdown();
-
-            } else if (communication != null) {
-                try {
-                    ((SocketCommunication) communication).shutdown();
-                } catch (RuntimeException e) {
-                    log.error("error shutting down socket communication.", e);
-                }
-            }
-            communication = null;
-
+            client.shutdown();
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems SHUTTING DPWN IBUSInterface", t);
+                log.error("Problems SHUTTING DOWN IBUSInterface", t);
             }
         } finally {
             if (instance != null) {
@@ -102,40 +82,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
         try {
 
-            enJXTACommunication = config.getString("enable_jxta", "0").equals("1");
-
-            if (enJXTACommunication) {
-
-                String iBusUrl = config.getString("ibus_wetag_url", "wetag:///kug-group:kug-ibus");
-
-                client = BusClient.instance();
-                String jxtaConf = config.getString("jxta_conf_filename", "/jxta.properties");
-
-                client.setBusUrl(iBusUrl);
-                client.setJxtaConfigurationPath(jxtaConf);
-
-                bus = client.getBus();
-            } else {
-
-                communication = new SocketCommunication();
-
-                ((SocketCommunication) communication).setMulticastPort(Integer.parseInt(config.getString(
-                        "multicast_port", "11114")));
-                ((SocketCommunication) communication).setUnicastPort(Integer.parseInt(config.getString("unicast_port",
-                        "50000")));
-
-                ((SocketCommunication) communication).startup();
-
-                String iBusUrl = AddressUtil.getWetagURL(config.getString("ibus_server", "localhost"), Integer
-                        .parseInt(config.getString("ibus_port", "11112")));
-                if (log.isInfoEnabled()) {
-                    log.info("!!!!!!!!!! Connecting with iBus URL: " + iBusUrl);
-                }
-
-                bus = (IBus) net.weta.components.communication.reflect.ProxyService.createProxy(
-                        (ICommunication) communication, IBus.class, iBusUrl);
-            }
-
+            client = BusClient.instance();
+            bus = client.getBus();
             if (bus == null) {
                 throw new Exception("FATAL ERROR! iBus == null, FAILED to create bus instance.");
             }
@@ -196,10 +144,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
                         + requestedHits, t);
             }
-            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
-            if (!enJXTACommunication) {
-                shutdown();
-            }
             throw new Exception(t);
         }
 
@@ -227,11 +171,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             } else {
                 log.warn("Problems fetching Detail of results: " + result + "[cause:" + t.getCause().getMessage() + "]", t);
             }
-            
-            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
-            if (!enJXTACommunication) {
-                shutdown();
-            }
         }
 
         return detail;
@@ -258,10 +197,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             } else {
                 log.warn("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]", t);
             }
-            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
-            if (!enJXTACommunication) {
-                shutdown();
-            }
         }
 
         return details;
@@ -281,10 +216,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 log.info("Problems fetching Record of result: " + result + "[cause:" + t.getCause().getMessage() + "]");
             } else {
                 log.warn("Problems fetching Record of result: " + result + "[cause:" + t.getCause().getMessage() + "]", t);
-            }
-            // !!! we reset Singleton when socket communication, so new Instance is created next time !!!
-            if (!enJXTACommunication) {
-                shutdown();
             }
         }
 

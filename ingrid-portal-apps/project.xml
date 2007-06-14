@@ -153,7 +153,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-utils</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <url>http://harrison.its-technidata.de/ingrid/maven/ingrid</url>
             <properties>
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-portal-utils</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <url>http://harrison.its-technidata.de/ingrid/maven/ingrid</url>
             <properties>
@@ -173,7 +173,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-ibus</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -182,7 +182,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-ibus-client</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -191,7 +191,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -200,7 +200,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-dsc</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -209,7 +209,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-fpn</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -218,7 +218,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-se</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -227,7 +227,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-sns</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -236,7 +236,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-g2k</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -245,7 +245,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-tamino</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -254,7 +254,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-ecs</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -263,50 +263,11 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-csw</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
             </properties>
-        </dependency>
-        <dependency>
-            <groupId>weta-components</groupId>
-            <artifactId>communication</artifactId>
-            <version>SNAPSHOT</version>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-            <type>jar</type>
-            <url>http://www.weta-group.net/maven/</url>
-        </dependency>
-        <dependency>
-            <groupId>weta-components</groupId>
-            <artifactId>communication-sockets</artifactId>
-            <version>SNAPSHOT</version>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-            <type>jar</type>
-            <url>http://www.weta-group.net/maven/</url>
-        </dependency>
-        <dependency>
-            <groupId>weta-components</groupId>
-            <artifactId>communication-jxta</artifactId>
-            <version>SNAPSHOT</version>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-            <type>jar</type>
-            <url>http://www.weta-group.net/maven/</url>
-        </dependency>
-        <dependency>
-            <groupId>jxta</groupId>
-            <artifactId>jxta</artifactId>
-            <version>2.3.6</version>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
@@ -459,15 +420,6 @@
             <groupId>jal</groupId>
             <artifactId>jal</artifactId>
             <version>0.4</version>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>bouncycastle</groupId>
-            <artifactId>bcprov</artifactId>
-            <version>jdk14-124</version>
             <properties>
                 <war.bundle>true</war.bundle>
             </properties>
@@ -627,7 +579,15 @@
                 <war.bundle>true</war.bundle>
             </properties>
 		</dependency>
-        <!-- Servlets, JSTL -->
+        <dependency>
+            <groupId>ingrid</groupId>
+            <artifactId>ingrid-communication</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
