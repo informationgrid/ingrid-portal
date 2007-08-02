@@ -31,7 +31,7 @@
 		<echo file="./ingrid-portal-base/target/ingrid-portal/version.txt" append="false">${pom.currentVersion}</echo>
     <maven:reactor basedir="${basedir}"
             includes="ingrid-portal-base/project.xml"
-            goals="war:install" banner="Creating war file (war:install) ..."
+            goals="war:deploy" banner="Creating war file (war:deploy) ..."
             postProcessing="false" ignoreFailures="false" />
     <move file="./ingrid-portal-base/target/ingrid-portal.war" tofile="./ingrid-portal-base/target/ingrid-portal-${pom.currentVersion}.war"/>
   </goal>
