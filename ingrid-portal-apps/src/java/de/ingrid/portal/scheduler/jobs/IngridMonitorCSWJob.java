@@ -93,7 +93,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 
 			// Send and receive SOAP-Message
 			String cswQuery = qBuilder.createCSWQuery(q, 0, 1);
-			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 12);
+			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 11);
 
 			Message mResponse = qSender.sendSOAPMessage(mRequest, timeout);
 			// Analyse Result and build IngridHits
@@ -102,7 +102,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 			// get number of hits matched
 			String numberOfMatchedHitsStr = null;
 			int numberOfMatchedHits = 0;
-			NodeList nl = bodyDOM.getElementsByTagName("csw:SearchResults");
+			NodeList nl = bodyDOM.getElementsByTagName("SearchResults");
 			if (nl != null && nl.getLength() >= 1) {
 				Element e = (Element) nl.item(0);
 				numberOfMatchedHitsStr = e.getAttribute("numberOfRecordsMatched");
