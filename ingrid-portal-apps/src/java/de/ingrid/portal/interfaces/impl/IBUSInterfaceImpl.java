@@ -6,6 +6,7 @@ package de.ingrid.portal.interfaces.impl;
 import java.net.URL;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,19 +38,12 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 
     static BusClient client = null;
 
-    private static Configuration config;
-
-    private static boolean initInProgress = false;
-
     public static synchronized IBUSInterface getInstance() {
-        if (instance == null && !initInProgress) {
+        if (instance == null) {
             try {
                 instance = new IBUSInterfaceImpl();
             } catch (Exception e) {
-                initInProgress = false;
-                if (log.isFatalEnabled()) {
-                    log.fatal("Error initiating the iBus interface.", e);
-                }
+                log.fatal("Error initiating the iBus interface.", e);
             }
         }
 
@@ -70,16 +64,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (instance != null) {
                 instance = null;
             }
-            initInProgress = false;
         }
     }
 
     private IBUSInterfaceImpl() throws Exception {
         super();
-        initInProgress = true;
-        String configFilename = getResourceAsStream("/ibus_interface.properties");
-        config = new PropertiesConfiguration(configFilename);
-
         try {
 
             client = BusClient.instance();
@@ -94,8 +83,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             shutdown();
             throw new Exception("Error Constructor IBUSInterfaceImpl", t);
-        } finally {
-            initInProgress = false;
         }
     }
 
@@ -103,7 +90,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getConfig()
      */
     public Configuration getConfig() {
-        return config;
+        try {
+			String configFilename = getResourceAsStream(client.getJxtaConfigurationPath());
+			return new PropertiesConfiguration(configFilename);
+		} catch (Exception e) {
+			log.error("Error retrieving configuration.", e);
+			return null;
+		}
     }
 
     /**
