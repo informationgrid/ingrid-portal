@@ -109,15 +109,25 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 		} catch (MalformedURLException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_INVALID_SERVICE_URL;
+			if (log.isDebugEnabled()) {
+				log.debug("Error checking SNS Interface.", e);
+			}
 		} catch (SocketTimeoutException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+			if (log.isDebugEnabled()) {
+				log.debug("Error checking SNS Interface.", e);
+			}
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+			if (log.isDebugEnabled()) {
+				log.debug("Error checking SNS Interface.", e);
+			}
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
+			log.error("Error checking SNS Interface.", e);
 		}
 
 		updateJobData(context, status, statusCode);
