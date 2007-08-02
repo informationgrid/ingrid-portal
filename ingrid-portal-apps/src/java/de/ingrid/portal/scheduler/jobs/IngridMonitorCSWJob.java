@@ -23,8 +23,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import de.ingrid.iplug.csw.CSWQueryBuilder;
-import de.ingrid.iplug.ecs.tools.AxisQuerySender;
-import de.ingrid.iplug.ecs.tools.AxisTools;
+import de.ingrid.iplug.csw.tools.AxisQuerySender;
+import de.ingrid.iplug.csw.tools.AxisTools;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -93,7 +93,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 
 			// Send and receive SOAP-Message
 			String cswQuery = qBuilder.createCSWQuery(q, 0, 1);
-			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 11);
+			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 12);
 
 			Message mResponse = qSender.sendSOAPMessage(mRequest, timeout);
 			// Analyse Result and build IngridHits
@@ -102,7 +102,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 			// get number of hits matched
 			String numberOfMatchedHitsStr = null;
 			int numberOfMatchedHits = 0;
-			NodeList nl = bodyDOM.getElementsByTagName("SearchResults");
+			NodeList nl = bodyDOM.getElementsByTagName("csw:SearchResults");
 			if (nl != null && nl.getLength() >= 1) {
 				Element e = (Element) nl.item(0);
 				numberOfMatchedHitsStr = e.getAttribute("numberOfRecordsMatched");
@@ -119,15 +119,27 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		} catch (ParseException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION;
+			if (log.isDebugEnabled()) {
+				log.debug("Error processing SOAP call.", e);
+			}
 		} catch (MalformedURLException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_INVALID_SERVICE_URL;
+			if (log.isDebugEnabled()) {
+				log.debug("Error processing SOAP call.", e);
+			}
 		} catch (SocketTimeoutException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+			if (log.isDebugEnabled()) {
+				log.debug("Error processing SOAP call.", e);
+			}
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+			if (log.isDebugEnabled()) {
+				log.debug("Error processing SOAP call.", e);
+			}
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
