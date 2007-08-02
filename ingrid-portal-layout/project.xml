@@ -21,7 +21,7 @@
     <name>Jetspeed-2 Layout Portlets</name>
     <description>Layout Portlets</description>
     <shortDescription>Layouts.</shortDescription>
-    <currentVersion>2.0</currentVersion>
+    <currentVersion>2.1</currentVersion>
 
     <repository>
         <connection>scm:svn:http://svn.apache.org/repos/asf/portals/jetspeed-2/trunk/layout-portlets</connection>
