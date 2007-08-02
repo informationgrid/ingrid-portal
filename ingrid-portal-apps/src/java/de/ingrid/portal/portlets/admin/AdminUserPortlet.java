@@ -414,6 +414,13 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
             // get current user
             Principal authUserPrincipal = request.getUserPrincipal();
+            if (log.isDebugEnabled()) {
+            	if (authUserPrincipal == null) {
+                	log.debug("GetUsers request by the following principal: NULL");
+            	} else {
+            		log.debug("GetUsers request by the following principal:" + authUserPrincipal.getName() + ", class:" + authUserPrincipal.getClass().getName());
+            	}
+            }
             Permissions authUserPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                     roleManager);
 
