@@ -171,9 +171,37 @@
 	    </copy>
 	    
 	    <!-- drop ingrid tables -->
+      	<echo>drop ingrid specific tables ${portal.sql.dir}/ingrid-drop.sql ...</echo>
       	<j:set var="database.arg.script" value="${portal.sql.dir}/ingrid-drop.sql"/>
       	<j:set var="database.arg.onerror" value="continue"/>
-      	<attainGoal name="j2:_db.execute"/>
+        <!-- copied from j2:_db.execute -->
+        <j:set var="webinflocation" value="${org.apache.jetspeed.portal.home}/${org.apache.jetspeed.portal.target.dir}" />
+        <j:set var="parentScope" scope="parent" value=""/>
+        <j:set var="tempvarA" value="${org.apache.jetspeed.database.driver}" />
+    <!--
+        leave this section out for now.  Ultimately we'd like to find a way to install the derby DB somewhere path relative
+        at run time, but for now leave it with /tmp  it works on both platforms, but doesn't confuse things with 
+        build/install  orders.   Specifically the DB during j2:quickStart, after the WAR files are created, so the DB is not
+        copied into WEB-INF, unless things are run twice without a clean.
+    
+    
+        <j:if test="${tempvarA == 'org.apache.derby.jdbc.EmbeddedDriver'}">
+          <j:set var="org.apache.jetspeed.database.url" value="jdbc:derby:${webinflocation}/WEB-INF/productiondb;create=true" /> 
+       </j:if>
+    -->
+       <sql driver="${org.apache.jetspeed.database.driver}" url="${org.apache.jetspeed.database.url}"
+             userid="${org.apache.jetspeed.database.user}" password="${org.apache.jetspeed.database.password}"
+             src="${database.arg.script}"
+             autocommit="true"
+             onerror="${database.arg.onerror}">
+          <classpath>
+            <pathelement path="${plugin.getDependencyPath('org.apache.derby:derby')}"/>
+            <pathelement path="${org.apache.jetspeed.jdbc.drivers.path}"/>
+            <pathelement path="${plugin.getDependencyPath('hsqldb')}"/>
+          </classpath>
+        </sql>
+        <!-- END copied from j2:_db.execute -->
+      <!--	<attainGoal name="j2:_db.execute"/> -->
 	    
 	    <!-- create portal tables -->
 	    <attainGoal name="j2:db.create.production"/>
