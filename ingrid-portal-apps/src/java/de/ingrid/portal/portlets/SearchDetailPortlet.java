@@ -732,7 +732,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             int page = 0;
             do {
                 page++;
-                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, 20,
+                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, (page-1) * 20,
                         PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
                 IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query,
                         requestedMetaData);
