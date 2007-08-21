@@ -194,11 +194,15 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
+        
+        if (groupedStartHit > 0) {
+        	startHit = groupedStartHit;
+        }
 
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, groupedStartHit, PortalConfig.getInstance().getInt(
+            hits = ibus.search(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
             IngridHit[] results = hits.getHits();
             String[] requestedFields = { Settings.RESULT_KEY_RUBRIC, Settings.RESULT_KEY_PARTNER,

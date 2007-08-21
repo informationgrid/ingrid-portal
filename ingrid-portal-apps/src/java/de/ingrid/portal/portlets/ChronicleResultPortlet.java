@@ -169,7 +169,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 
             if (teaserTopicId == null) {
-                hits = ibus.search(query, hitsPerPage, currentPage, 0, PortalConfig.getInstance().getInt(
+                hits = ibus.search(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
                         PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             } else {
                 // HACK: we request ONE Hit to have the correct plug ID !
