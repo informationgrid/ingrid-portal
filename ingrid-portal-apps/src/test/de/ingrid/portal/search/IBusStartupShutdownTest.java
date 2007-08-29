@@ -1,23 +1,6 @@
 package de.ingrid.portal.search;
 
-import java.lang.reflect.Method;
-import java.net.URL;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import junit.framework.TestCase;
-import net.weta.components.communication.ICommunication;
-import net.weta.components.peer.PeerService;
-
-import org.apache.commons.configuration.ConfigurationUtils;
-import org.hibernate.cfg.Environment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xml.sax.InputSource;
-
-import de.ingrid.utils.queryparser.ParseException;
 
 public class IBusStartupShutdownTest extends TestCase {
 
@@ -25,9 +8,8 @@ public class IBusStartupShutdownTest extends TestCase {
 
         super.setUp();
     }
-
+/*
     public void testStartupShutdown() {
-        /*
          String iBusUrl = "wetag:///torwald-ibus:ibus-torwald";
          
          try {
@@ -66,7 +48,6 @@ public class IBusStartupShutdownTest extends TestCase {
          assertNotNull(null);
          e.printStackTrace();
          }
-         */
     }
 
     private static String getResourceAsStream(String resource) throws Exception {
@@ -146,4 +127,5 @@ public class IBusStartupShutdownTest extends TestCase {
 
         return communication;
     }
+*/
 }

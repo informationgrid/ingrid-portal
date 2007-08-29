@@ -94,6 +94,18 @@
                 <war.bundle>true</war.bundle>
             </properties>
         </dependency>
+        <!-- ================================================== -->
+        <!-- NEEDED FOR TESTCASES -->
+        <dependency>
+            <groupId>org.apache.portals.jetspeed-2</groupId>
+            <artifactId>jetspeed-rdbms</artifactId>
+            <version>${jetspeed.version}</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+        <!-- ================================================== -->
         <dependency>
             <groupId>org.apache.pluto</groupId>
             <artifactId>pluto</artifactId>
