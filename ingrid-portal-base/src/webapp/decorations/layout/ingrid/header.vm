@@ -25,8 +25,13 @@
   <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-  #IncludeStylesheets()
+  #includeHeaderResource()
+  #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
+  <style>
+	html, body { width: auto; height: auto; }
+  </style>
   #includeJavaScriptForHead()
+  #IncludeStylesheets()
 
   #* our decorator macros, see ./decorator-macros.vm *#
   #decoratorIncludeJavaScriptForHead()
@@ -97,11 +102,19 @@ if (xmlhttp) {
 <div id="subnav"><a name="subnav"></a>
   <div class="subnav_corner"><div class="subnav_corner_img"></div></div>
 #set($subMenu = $site.getMenu("sub-menu"))
-#if(!$subMenu.empty)
+#if($subMenu && !$subMenu.isEmpty())
   #includeSubNavigation($subMenu)
+#else
+  ## HACK: check current site and render "global" sub menue dependent from site ! -> thus we don't have to restructure pages in subfolders !
+  #set($currentPage = $site.getPage().url)
+  #if($currentPage.startsWith('/search-') || $currentPage.startsWith('/main-search'))
+	#set($subMenu = $site.getMenu("sub-menu-search"))
+	#if($subMenu && !$subMenu.empty)
+	  #includeSubNavigation($subMenu)
+	#end
+  #end
 #end
 </div>
-  
 
 <!-- CONTENT BLOCK -->
 <div id="container">

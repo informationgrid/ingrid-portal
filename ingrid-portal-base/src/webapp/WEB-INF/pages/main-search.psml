@@ -4,7 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.search</title>
+  <title>ingrid.page.search.free</title>
 
     <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridOneColumn">
         <fragment id="main-search-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">

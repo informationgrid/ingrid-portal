@@ -114,45 +114,79 @@
             #set($tabName = $MESSAGES.getString($tabName))			
 		#end
         #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
+		## flags indicating how to render menu item
+        #set($elemSelected = false)
+        #set($elemRender = true)
+		## different menu item name than title in psml !
+		#if($element.url=="/main-search.psml")
+            #set($tabTitle = $MESSAGES.getString('ingrid.page.search'))
+            #set($tabName = $MESSAGES.getString('ingrid.page.search'))
+		#end
+		## process and set flags accordingly
         #if($element.isSelected($site))
-          <li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+			#set($elemSelected = true)
 		#elseif($element.url=="/main-maps.psml")
-          <li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
+			<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
+			#set($elemRender = false)
 		#elseif($element.url=="/main-search.psml")
 			#if($currentPage.startsWith('/search-'))
-				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
-			#else
-				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+				#set($elemSelected = true)
 			#end
 		#elseif($element.url=="/main-about.psml")
-			#if($currentPage == "/main-about-partner.psml")
-				<li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
-			#else
-				<li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+			#if($currentPage.startsWith('/main-about'))
+				#set($elemSelected = true)
 			#end
-		#else
-          <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
-        #end
+		#end
+		## render menue item dependent from flags
+		#if ($elemRender)
+    		#if ($elemSelected)
+              <li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+            #else
+              <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+    		#end
+		#end
       #end
     #end
 #end
 
 #* include sub navigation component *#
 #macro (includeSubNavigation $_menu)
+    #set($currentPage = $site.getPage().url)
     <ul>
 	#foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
+		## read localized title from resource with title from psml as key !
+		#if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))			
+		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #if($velocityCount > 1)
            | 
-        #end
+		#end
+		## flags indicating how to render menu item
+        #set($elemSelected = false)
+		## process and set flags accordingly
         #if($element.isSelected($site))
+			#set($elemSelected = true)
+		#elseif($_menu.Name=='sub-menu-search')
+			#if($element.url.startsWith('/main-search'))
+				#if (!$currentPage.startsWith('/search-catalog'))
+					#set($elemSelected = true)
+				#end
+			#elseif($element.url.startsWith('/search-catalog'))
+				#if ($currentPage.startsWith('/search-catalog'))
+					#set($elemSelected = true)
+				#end
+			#end
+		#end
+		#if ($elemSelected)
           <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
         #else
           <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
-        #end
+		#end
       #end
 	#end
 	</ul>
