@@ -526,7 +526,7 @@
 			#end
 			</p>
 		#end
-    	#if($tool.hasContent($rec.get("t019_coordinates.obj_id")))
+    	#if($tool.hasContent($rec.get("t019_coordinates.obj_id").get(0).get("t019_coordinates.bezug")))
     		<p><strong>$MESSAGES.getString("t019_coordinates.bezug"):</strong><br/>
 			#foreach($t019_coordinates in $rec.get("t019_coordinates.obj_id"))
 	    		$t019_coordinates.get("t019_coordinates.bezug")<br/>
