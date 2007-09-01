@@ -727,7 +727,7 @@
     #renderUDKSearchTerms()
 
 	<!--
-	$rec
+##	$rec
 ##   <br/><br/><br/><br/>
 ##    	  #if($record)
 ##			<br/>RENDER RECORD:<br/>
