@@ -62,7 +62,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+            IngridHits hits = iBus.search(query, 50, 1, 0, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
@@ -86,7 +86,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 10, 1, 10, PortalConfig.getInstance().getInt(
+            IngridHits hits = iBus.search(query, 10, 1, 0, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
@@ -142,7 +142,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+            IngridHits hits = iBus.search(query, 50, 1, 0, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();
@@ -160,7 +160,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHits hits = iBus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+            IngridHits hits = iBus.search(query, 50, 1, 0, PortalConfig.getInstance().getInt(
                     PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
 
             return hits.getHits();

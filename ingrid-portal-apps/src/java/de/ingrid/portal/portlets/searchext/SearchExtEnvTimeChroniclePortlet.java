@@ -122,7 +122,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                     // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
                     // search in SNS
                     IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-                    IngridHits hits = ibus.search(query, 50, 1, 50, PortalConfig.getInstance().getInt(
+                    IngridHits hits = ibus.search(query, 50, 1, 0, PortalConfig.getInstance().getInt(
                             PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
                     IngridHit[] results = hits.getHits();
                     IngridHitDetail[] details = ibus.getDetails(results, query, null);

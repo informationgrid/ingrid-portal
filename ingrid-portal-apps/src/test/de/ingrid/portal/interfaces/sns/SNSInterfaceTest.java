@@ -71,7 +71,7 @@ public class SNSInterfaceTest extends TestCase {
         query.putInt(Topic.REQUEST_TYPE, Topic.EVENT_FROM_TOPIC);
 
         IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, HITS_PER_PAGE, TIMEOUT);
+        IngridHits hits = ibus.search(query, HITS_PER_PAGE, CURRENT_PAGE, 0, TIMEOUT);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
         showHits(hitsArray);

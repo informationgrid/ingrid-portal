@@ -69,7 +69,7 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		String statusCode = null;
 		try {
 			IngridQuery q = QueryStringParser.parse(query);
-			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 1, timeout);
+			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 0, timeout);
 			if (hits.length() == 0) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_HITS;

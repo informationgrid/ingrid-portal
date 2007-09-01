@@ -33,7 +33,7 @@ public class SNSSimilarTermsInterfaceImplTest extends TestCase {
         query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TEXT);
 
         IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
-        IngridHits hits = iBus.search(query, 10, 1, 10, 30000);
+        IngridHits hits = iBus.search(query, 10, 1, 0, 30000);
         IngridHit[] hitsArray = hits.getHits();
         assertNotNull(hitsArray);
         showHits(hitsArray);

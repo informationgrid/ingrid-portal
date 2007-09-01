@@ -22,7 +22,7 @@ public class IngridSearcher {
     public HashMap search(String query, int noHits, int timeout) throws Exception {
         IngridQuery q = QueryStringParser.parse(query);
         
-        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, noHits, 1, 1, timeout);
+        IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, noHits, 1, 0, timeout);
         IngridHit[] hitArray = hits.getHits();
         IngridHitDetail[] details =  IBUSInterfaceImpl.getInstance().getDetails(hitArray, q, null);
         for (int i = 0; i < hitArray.length; i++) {
