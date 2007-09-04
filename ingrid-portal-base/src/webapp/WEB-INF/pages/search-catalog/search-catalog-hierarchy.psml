@@ -6,13 +6,10 @@
   />
   <title>ingrid.page.search.catalog</title>
 
-    <fragment id="search-catalog-hierarchy-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <!--
+    <fragment id="search-catalog-hierarchy-page" type="layout" name="jetspeed-layouts::IngridOneColumn">
 	    <fragment id="search-catalog-hierarchy" type="portlet" name="ingrid-portal-apps::SearchCatalogHierarchy">
-	      <property layout="TwoColumns" name="row" value="0"/>
-	      <property layout="TwoColumns" name="column" value="0"/>
+            <property layout="OneColumn" name="row" value="0"/>
 	    </fragment>
-	-->
     </fragment>
 
   <security-constraints>

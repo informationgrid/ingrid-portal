@@ -189,10 +189,14 @@ VALUES (
 (SELECT max_key FROM ojb_hl_seq where tablename='seq_fragment'),
 NULL, 
 (SELECT max_key FROM ojb_hl_seq where tablename='seq_page'), -- page id
-'jetspeed-layouts::IngridTwoColumns', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL, NULL, NULL, NULL, NULL);
+'jetspeed-layouts::IngridOneColumn', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL, NULL, NULL, NULL, NULL);
 
 -- portlet fragment
--- TODO ONE PORTLET !!! id = max_key+1 (so id of next fragment is correct, see below)
+INSERT INTO fragment (FRAGMENT_ID, PARENT_ID, PAGE_ID, NAME, TITLE, SHORT_TITLE, TYPE, SKIN, DECORATOR, STATE, PMODE, LAYOUT_ROW, LAYOUT_COLUMN, LAYOUT_SIZES, LAYOUT_X, LAYOUT_Y, LAYOUT_Z, LAYOUT_WIDTH, LAYOUT_HEIGHT, EXT_PROP_NAME_1, EXT_PROP_VALUE_1, EXT_PROP_NAME_2, EXT_PROP_VALUE_2, OWNER_PRINCIPAL) 
+VALUES (
+(SELECT max_key+1 FROM ojb_hl_seq where tablename='seq_fragment'),
+(SELECT max_key FROM ojb_hl_seq where tablename='seq_fragment'), -- layout fragment (parent)
+NULL, 'ingrid-portal-apps::SearchCatalogHierarchy', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, -1, NULL, -1, -1, -1, -1, -1, NULL, NULL, NULL, NULL, NULL);
 
 -- page: search-catalog-thesaurus.psml
 
@@ -205,7 +209,11 @@ NULL,
 'jetspeed-layouts::IngridTwoColumns', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL, NULL, NULL, NULL, NULL);
 
 -- portlet fragment
--- TODO
+INSERT INTO fragment (FRAGMENT_ID, PARENT_ID, PAGE_ID, NAME, TITLE, SHORT_TITLE, TYPE, SKIN, DECORATOR, STATE, PMODE, LAYOUT_ROW, LAYOUT_COLUMN, LAYOUT_SIZES, LAYOUT_X, LAYOUT_Y, LAYOUT_Z, LAYOUT_WIDTH, LAYOUT_HEIGHT, EXT_PROP_NAME_1, EXT_PROP_VALUE_1, EXT_PROP_NAME_2, EXT_PROP_VALUE_2, OWNER_PRINCIPAL) 
+VALUES (
+(SELECT max_key+3 FROM ojb_hl_seq where tablename='seq_fragment'),
+(SELECT max_key+2 FROM ojb_hl_seq where tablename='seq_fragment'), -- layout fragment (parent)
+NULL, 'ingrid-portal-apps::SearchCatalogThesaurus', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, 0, NULL, -1, -1, -1, -1, -1, NULL, NULL, NULL, NULL, NULL);
 
 -- am Ende ALLE BENUTZTEN SEQUENZEN hoch setzen
 -- =====================
