@@ -88,7 +88,8 @@ public class AnniversaryFetcherJob implements Job {
                             anni.setDateFrom(from);
                             if (from != null) {
                                 // !!! trim, sns date may have white spaces !!! :-(
-                                anni.setDateFrom(from.trim());
+                            	from = from.trim();
+                                anni.setDateFrom(from);
                                 Date fromDate = UtilsDate.parseDateString(from);
                                 cal.setTime(fromDate);
                                 anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
@@ -99,7 +100,8 @@ public class AnniversaryFetcherJob implements Job {
                             anni.setDateTo(to);
                             if (to != null) {
                                 // !!! trim, sns date may have white spaces !!! :-(
-                                anni.setDateTo(to.trim());
+                            	to = to.trim();
+                                anni.setDateTo(to);
                                 Date toDate = UtilsDate.parseDateString(to);
                                 cal.setTime(toDate);
                                 anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
