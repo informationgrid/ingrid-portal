@@ -26,8 +26,6 @@ public class DisplayTreeNode extends HashMap {
     public static final int SNS_TERM = 3;
     public static final int MESSAGE_NODE = 4;
 
-    
-	
 	private boolean isOpen = false;
     private boolean isLoading = false;
     private int type;
@@ -179,4 +177,18 @@ public class DisplayTreeNode extends HashMap {
         this.type = type;
     }
 
+    /**
+     * ONLY USE ON ROOT NODE !!! Id is stored in node !
+     */
+    public int getNextId() {
+    	String KEY_NEXT_ID = "nextId";
+        Integer nextId = (Integer) this.get(KEY_NEXT_ID);
+        if (nextId == null) {
+        	nextId = new Integer(0);
+        }
+
+    	this.put(KEY_NEXT_ID, new Integer(nextId.intValue() + 1));
+    	
+    	return nextId.intValue();
+    }
 }

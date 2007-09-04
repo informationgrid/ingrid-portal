@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.global.IPlugHelper;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
@@ -175,6 +177,58 @@ public class DisplayTreeFactory {
             node.setParent(root);
             node.put("topic", results[i]);
             root.addChild(node);
+        }
+        return root;
+    }
+
+    public static DisplayTreeNode getTreeFromIPlugs(PlugDescription[] plugs) {
+        DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
+        root.setType(DisplayTreeNode.ROOT);
+        
+        DisplayTreeNode partnerNode = null;
+        DisplayTreeNode catalogNode = null;
+
+        for (int i = 0; i < plugs.length; i++) {
+        	PlugDescription plug = plugs[i];
+
+            String[] partners = plug.getPartners();
+            StringBuffer partnerNameBuffer = new StringBuffer("");
+            for (int j = 0; j < partners.length; j++) {
+            	partnerNameBuffer.append(UtilsDB.getPartnerFromKey(partners[j]));
+            }
+
+            // Partner node
+            String partnerName = partnerNameBuffer.toString();
+            if (partnerNode == null || 
+            		!partnerNode.getName().equals(partnerName)) {
+                partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);            	
+                partnerNode.setType(DisplayTreeNode.GENERIC);
+                partnerNode.setParent(root);
+                root.addChild(partnerNode);
+            }
+
+            // catalog node
+            String catalogName = plug.getDataSourceName();
+            if (catalogNode == null || 
+            		!catalogNode.getName().equals(catalogName)) {
+            	catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);            	
+            	catalogNode.setType(DisplayTreeNode.GENERIC);
+            	catalogNode.setParent(partnerNode);
+            	partnerNode.addChild(catalogNode);
+            }
+
+            // iPlug Node
+            String name = "searchCatHierarchy.tree.unknown";
+            if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+            	name = "searchCatHierarchy.tree.objects";
+            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+            	name = "searchCatHierarchy.tree.addresses";
+            }
+            DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
+            node.setType(DisplayTreeNode.GENERIC);
+//            node.put("plugdescr", plugs[i]);
+            node.setParent(catalogNode);
+            catalogNode.addChild(node);
         }
         return root;
     }

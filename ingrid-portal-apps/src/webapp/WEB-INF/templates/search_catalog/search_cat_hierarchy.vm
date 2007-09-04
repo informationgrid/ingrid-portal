@@ -1,0 +1,55 @@
+#macro (renderNode $node)
+	#set ($action = $renderResponse.createActionURL())
+	$action.setParameter('nodeId',$node.id)
+	<p>
+	## while loop ! --> indent !
+    #foreach ($cnt in [1..$node.level])
+		##$cnt
+		#if ($cnt != 1)
+			&nbsp;&nbsp;
+		#end
+    #end
+	#if($node.isOpen())
+		$action.setParameter('action','doCloseNode')
+		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
+		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+		#foreach($childNode in $node.getChildren())
+			#renderNode($childNode)
+		#end
+	#else
+		#if($tool.hasContent($node.getChildren()))
+    		$action.setParameter('action','doOpenNode')
+    		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
+		#else
+			&nbsp;&nbsp;
+		#end
+   		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+	#end
+	</p>
+#end
+
+<div class="section">    
+#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
+#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_hierarchy.vm')
+
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+      <div class="formbody">
+          <div class="innerform">
+        <div>
+			  <input type="hidden" name="addFromDisplayTree" value="1"/>
+          	  <div>
+#foreach($plugNode in $ps.plugsRoot.getChildren())
+	#renderNode($plugNode)
+#end			  
+          	  </div>
+          </div>
+        </div>  ## innerform
+    </div> ## formbody
+    <div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
+		</div>
+    </div>
+  </form>
+</div>    

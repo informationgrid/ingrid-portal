@@ -1313,6 +1313,66 @@
     </portlet>
 
     <!-- *********************** -->
+    <!-- Catalog Search         -->
+    <!-- *********************** -->
+
+    <portlet id="SearchCatalogHierarchy">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm</value>
+        </init-param>
+        <portlet-name>SearchCatalogHierarchy</portlet-name>
+        <display-name>KatalogSucheHierarchiebaum</display-name>
+        <description>This portlet handles the browsing of the UDK in the catalog search.</description>
+        <portlet-class>de.ingrid.portal.portlets.searchcatalog.SearchCatalogHierarchyPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>KatalogsucheHierarchiebaum</title>
+            <short-title>CatalogHierarchy</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>helpKey</name>
+                <value>search-1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="SearchCatalogThesaurus">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm</value>
+        </init-param>
+        <portlet-name>SearchCatalogThesaurus</portlet-name>
+        <display-name>KatalogSucheThesaurus</display-name>
+        <description>This portlet handles the Search in the UDKs via Thesaurus browsing.</description>
+        <portlet-class>de.ingrid.portal.portlets.searchcatalog.SearchCatalogThesaurusPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>KatalogsucheThesaurus</title>
+            <short-title>CatalogThesaurus</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>helpKey</name>
+                <value>search-1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <!-- *********************** -->
     <!-- Extended Search         -->
     <!-- *********************** -->
 
