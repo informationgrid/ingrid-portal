@@ -13,8 +13,8 @@ import javax.portlet.PortletSession;
 
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
-import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -68,13 +68,29 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         }
 
         if (ps.get("plugsRoot") == null) {
-            // set up ECS plug list for view
-            PlugDescription[] allPlugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
-            String[] plugTypes = new String[]{Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS};
-            PlugDescription[] plugs = IPlugHelper.filterIPlugs(allPlugs, plugTypes, new IPlugHelper.PlugComparatorECS());
 
-            DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromIPlugs(plugs);
-            processSubTree(plugsRoot, 0);
+        	// set up ECS plug list for view
+        	
+        	// all iplugs
+            PlugDescription[] allPlugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+            
+            // filter types
+            String[] plugTypes = new String[]{Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS};
+            PlugDescription[] plugs = IPlugHelper.filterIPlugsByType(allPlugs, plugTypes);
+
+        	// filter partners
+            String partnerRestriction = PortalConfig.getInstance().getString(
+                    PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+            if (partnerRestriction != null && partnerRestriction.length() > 0) {
+                ArrayList filter = new ArrayList();
+                filter.add(partnerRestriction);
+                plugs = IPlugHelper.filterIPlugsByPartner(plugs, filter);
+            }
+
+            // sort
+            plugs = IPlugHelper.sortPlugs(plugs, new IPlugHelper.PlugComparatorECS());
+
+            DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
             ps.put("plugsRoot", plugsRoot);
         }
         
@@ -161,16 +177,6 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 node.setLoading(false);
             }
 */
-        }
-    }
-
-    private void processSubTree(DisplayTreeNode node, int nodeLevel) {
-    	node.put("level", new Integer(nodeLevel));
-    	
-    	ArrayList c = node.getChildren();
-        for (int i=0; i<c.size(); i++) {
-            DisplayTreeNode aNode = (DisplayTreeNode)c.get(i);
-        	processSubTree(aNode, nodeLevel + 1);
         }
     }
 }

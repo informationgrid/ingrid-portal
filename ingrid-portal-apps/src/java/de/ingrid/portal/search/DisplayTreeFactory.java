@@ -181,9 +181,10 @@ public class DisplayTreeFactory {
         return root;
     }
 
-    public static DisplayTreeNode getTreeFromIPlugs(PlugDescription[] plugs) {
+    public static DisplayTreeNode getTreeFromECSIPlugs(PlugDescription[] plugs) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
+        root.put("level", new Integer(0));
         
         DisplayTreeNode partnerNode = null;
         DisplayTreeNode catalogNode = null;
@@ -203,6 +204,7 @@ public class DisplayTreeFactory {
             		!partnerNode.getName().equals(partnerName)) {
                 partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);            	
                 partnerNode.setType(DisplayTreeNode.GENERIC);
+                partnerNode.put("level", new Integer(1));
                 partnerNode.setParent(root);
                 root.addChild(partnerNode);
             }
@@ -213,6 +215,7 @@ public class DisplayTreeFactory {
             		!catalogNode.getName().equals(catalogName)) {
             	catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);            	
             	catalogNode.setType(DisplayTreeNode.GENERIC);
+            	catalogNode.put("level", new Integer(2));
             	catalogNode.setParent(partnerNode);
             	partnerNode.addChild(catalogNode);
             }
@@ -226,7 +229,7 @@ public class DisplayTreeFactory {
             }
             DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
             node.setType(DisplayTreeNode.GENERIC);
-//            node.put("plugdescr", plugs[i]);
+            node.put("level", new Integer(3));
             node.setParent(catalogNode);
             catalogNode.addChild(node);
         }

@@ -4,8 +4,10 @@
 package de.ingrid.portal.global;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import de.ingrid.utils.PlugDescription;
 
@@ -34,14 +36,30 @@ public class IPlugHelper {
     }
 
     /**
-     * Returns only iPlugs of given type from given iPlugs-> sorted by given Comparator (pass null if no sort)  
+     * Return true if the given iPlug has a specific partner.
+     * 
+     * @param iPlug The PlugDescription to work on.
+     * @param partnerId The partner to search for (pass id)
+     * @return True if the iPlug has the partner, false if not.
+     */
+    public static boolean hasPartner(PlugDescription iPlug, String partnerId) {
+        String[] partners = iPlug.getPartners();
+        for (int i=0; i<partners.length; i++) {
+            if (partners[i].equals(partnerId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns only iPlugs of given type from given iPlugs  
      * 
      * @param iPlugs iPlugs of different types which will be filtered
      * @param plugTypes The DataTypes to look for
-     * @param plugComparator comparator for sorting, pass null if no sorting !
      * @return Array containing filtered iPlugs or empty
      */
-    public static PlugDescription[] filterIPlugs(PlugDescription[] iPlugs, String[] plugTypes, Comparator plugComparator) {
+    public static PlugDescription[] filterIPlugsByType(PlugDescription[] iPlugs, String[] plugTypes) {
         ArrayList result = new ArrayList();
         for (int i = 0; i < iPlugs.length; i++) {
             PlugDescription plug = iPlugs[i];
@@ -53,12 +71,36 @@ public class IPlugHelper {
             }
         }
 
-        // sort ?
-        if (plugComparator != null) {
-            Collections.sort(result, plugComparator);        	
+        return (PlugDescription[]) result.toArray(new PlugDescription[result.size()]);
+    }
+
+    /**
+     * Returns only iPlugs of given Partner from given iPlugs  
+     * 
+     * @param iPlugs iPlugs of different partners which will be filtered
+     * @param partners The partners to look for
+     * @return Array containing filtered iPlugs or empty
+     */
+    public static PlugDescription[] filterIPlugsByPartner(PlugDescription[] iPlugs, ArrayList partners) {
+        ArrayList result = new ArrayList();
+        for (int i = 0; i < iPlugs.length; i++) {
+            PlugDescription plug = iPlugs[i];
+            for (int j = 0; j < partners.size(); j++) {
+            	if (hasPartner(plug, (String)partners.get(j))) {
+            		result.add(plug);
+            		break;
+                }
+            }
         }
 
         return (PlugDescription[]) result.toArray(new PlugDescription[result.size()]);
+    }
+
+    public static PlugDescription[] sortPlugs(PlugDescription[] iPlugs, Comparator plugComparator) {
+        List plugList = Arrays.asList(iPlugs);
+        Collections.sort(plugList, plugComparator);
+
+        return (PlugDescription[]) plugList.toArray(new PlugDescription[plugList.size()]);
     }
 
     /**
