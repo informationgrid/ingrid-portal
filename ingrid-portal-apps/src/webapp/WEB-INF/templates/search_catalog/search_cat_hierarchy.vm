@@ -10,20 +10,21 @@
 		#end
     #end
 	#if($node.isOpen())
-		$action.setParameter('action','doCloseNode')
-		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+		#if($tool.hasContent($node.getChildren()))
+			$action.setParameter('action','doCloseNode')
+			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
+			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+		#else
+			&nbsp;&nbsp;
+			<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" />&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+		#end
 		#foreach($childNode in $node.getChildren())
 			#renderNode($childNode)
 		#end
 	#else
-		#if($tool.hasContent($node.getChildren()))
-    		$action.setParameter('action','doOpenNode')
-    		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-		#else
-			&nbsp;&nbsp;
-		#end
-   		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+   		$action.setParameter('action','doOpenNode')
+   		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
+		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
 	#end
 	</p>
 #end
