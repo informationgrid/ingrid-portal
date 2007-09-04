@@ -84,17 +84,23 @@ public class AnniversaryFetcherJob implements Job {
                             IngridAnniversary anni = new IngridAnniversary();
                             anni.setTopicId(detail.getTopicID());
                             anni.setTopicName(detail.getTopicName());
-                            anni.setDateFrom(detail.getFrom());
-                            if (detail.getFrom() != null) {
-                                Date fromDate = UtilsDate.parseDateString(detail.getFrom());
+                            String from = detail.getFrom();
+                            anni.setDateFrom(from);
+                            if (from != null) {
+                                // !!! trim, sns date may have white spaces !!! :-(
+                                anni.setDateFrom(from.trim());
+                                Date fromDate = UtilsDate.parseDateString(from);
                                 cal.setTime(fromDate);
                                 anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
                                 anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH) + 1));
                                 anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
                             }
-                            anni.setDateTo(detail.getTo());
-                            if (detail.getTo() != null) {
-                                Date toDate = UtilsDate.parseDateString(detail.getTo());
+                            String to = detail.getTo();
+                            anni.setDateTo(to);
+                            if (to != null) {
+                                // !!! trim, sns date may have white spaces !!! :-(
+                                anni.setDateTo(to.trim());
+                                Date toDate = UtilsDate.parseDateString(to);
                                 cal.setTime(toDate);
                                 anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
                                 anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH) + 1));
