@@ -1,14 +1,10 @@
 #macro (renderNode $node)
 	#set ($action = $renderResponse.createActionURL())
 	$action.setParameter('nodeId',$node.id)
-	<p>
-	## while loop ! --> indent !
-    #foreach ($cnt in [1..$node.level])
-		##$cnt
-		#if ($cnt != 1)
-			&nbsp;&nbsp;&nbsp;
-		#end
-    #end
+	## highest nodes have level 1 ! (only root has level 0)
+	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
+	#set ($leftMargin = ($node.level - 1) * (2))
+	<p style="margin-left:${leftMargin}em">	
 	## UDK Object/Address render params
 	#set($nodeTitle = $MESSAGES.getString($node.getName()))
 	#if($tool.hasContent(${node.udk_class}))
@@ -56,28 +52,19 @@
 	</p>
 #end
 
-<div class="section">    
+<div class="section">
 #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
 #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_hierarchy.vm')
 
 #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-      <div class="formbody">
-          <div class="innerform">
-        <div>
-			  <input type="hidden" name="addFromDisplayTree" value="1"/>
-          	  <div>
+	<div class="formbody">
 #foreach($plugNode in $ps.plugsRoot.getChildren())
 	#renderNode($plugNode)
-#end			  
-          	  </div>
-          </div>
-        </div>  ## innerform
-    </div> ## formbody
-    <div class="formfooter">
+#end
+	</div>
+	<div class="formfooter">
 		<div align="right">
 			<input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
 		</div>
-    </div>
-  </form>
-</div>    
+	</div>
+</div>
