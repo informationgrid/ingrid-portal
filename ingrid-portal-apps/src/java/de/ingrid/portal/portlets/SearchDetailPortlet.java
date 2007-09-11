@@ -25,6 +25,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
+import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -35,12 +36,9 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
-import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsDate;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
@@ -610,14 +608,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private ArrayList getSubordinatedObjects(String objId, String iPlugId) {
-        String[] requestedMetadata = new String[2];
-        requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
-        requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        HashMap filter = new HashMap();
-        filter.put(Settings.HIT_KEY_OBJ_ID, objId);
-        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
-                " t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
-        return result;
+    	return IPlugHelperDscEcs.getSubordinatedObjects(objId, iPlugId);
     }
 
     private ArrayList getCrossReferencedObjects(String objId, String iPlugId) {
@@ -662,20 +653,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private ArrayList getAddressChildren(String addrId, String iPlugId) {
-        String[] requestedMetadata = new String[7];
-        requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
-        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
-        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
-        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
-        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
-        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
-        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        HashMap filter = new HashMap();
-        filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
-        ArrayList result = getHits(
-                "T022_adr_adr.adr_from_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
-                requestedMetadata, filter);
-        return result;
+    	return IPlugHelperDscEcs.getAddressChildren(addrId, iPlugId);
     }
 
     private IngridHit getAddressHit(String addrId, String iPlugId) {
@@ -724,85 +702,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
-        ArrayList result = new ArrayList();
-        try {
-            IngridQuery query = QueryStringParser.parse(queryStr.concat(" ranking:any datatype:any"));
-            IngridHits hits;
-            // request hits in chunks of 20 results per page
-            int page = 0;
-            do {
-                page++;
-                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, (page-1) * 20,
-                        PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query,
-                        requestedMetaData);
-                for (int j = 0; j < details.length; j++) {
-                    IngridHitDetail detail = (IngridHitDetail) details[j];
-                    boolean include = true;
-                    if (filter != null && filter.size() > 0) {
-                        Iterator it = filter.entrySet().iterator();
-                        while (it.hasNext()) {
-                            Map.Entry entry = (Map.Entry) it.next();
-                            String recordKey = (String) entry.getKey();
-                            String value = (String) entry.getValue();
-                            if (value.equals(UtilsSearch.getDetailValue(detail, recordKey))) {
-                                include = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (include) {
-                        // flatten alle detail fields
-                        for (int i = 0; i < requestedMetaData.length; i++) {
-                            detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
-                        }
-                        hits.getHits()[j].put("detail", detail);
-                        result.add(hits.getHits()[j]);
-                    }
-                }
-            } while (hits.getHits().length == 20);
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.error("Problems getting hits from iBus!", e);
-            } else {
-                log.info("Problems getting hits from iBus!");
-            }
-        }
-        return result;
+    	return IPlugHelperDscEcs.getHits(queryStr, requestedMetaData, filter);
     }
 
-    /**
-     * Returns the plug id of the corresponding address plug id. Address plug
-     * id's are detected from the postfix "_addr". The postfix will be stripped.
-     * Plug id's without this postfix remain unchanged.
-     * 
-     * @param plugId
-     * @return
-     */
     public String getPlugIdFromAddressPlugId(String plugId) {
-        if (plugId == null) {
-            return "";
-        } else  if (plugId.endsWith("_addr")) {
-            return plugId.substring(0, plugId.lastIndexOf("_addr"));
-        } else {
-            return plugId;
-        }
+    	return IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId);
     }
 
-    /**
-     * Returns the address plug id of the corresponding plug id, by adding the postfix
-     * "_addr" to the plug id. Only plug id's that contain the string "udk-db" and do
-     * not contain the postfix "_addr" will be changed.
-     * 
-     * @param plugId
-     * @return
-     */
     public String getAddressPlugIdFromPlugId(String plugId) {
-        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
-            return plugId.concat("_addr");
-        } else {
-            return plugId;
-        }
+    	return IPlugHelperDscEcs.getAddressPlugIdFromPlugId(plugId);
     }
 
     /**

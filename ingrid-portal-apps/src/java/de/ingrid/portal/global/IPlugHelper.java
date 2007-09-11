@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1997-2006 by wemove GmbH
+ * Copyright (c) 1997-2007 by wemove GmbH
  */
 package de.ingrid.portal.global;
 
@@ -101,43 +101,5 @@ public class IPlugHelper {
         Collections.sort(plugList, plugComparator);
 
         return (PlugDescription[]) plugList.toArray(new PlugDescription[plugList.size()]);
-    }
-
-    /**
-     * Inner class: PlugComparator for ECS plugs sorting -> sorted by "Partner"/"Name"/"Type" (Object before Address ECS)
-     */
-    static public class PlugComparatorECS implements Comparator {
-        /**
-         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-         */
-        public final int compare(Object a, Object b) {
-            try {
-            	PlugDescription[] plugs = new PlugDescription[] {
-            		(PlugDescription) a,
-            		(PlugDescription) b
-            	}; 
-            	String[] plugSortCriteria = new String[plugs.length];
-            	
-            	for (int i = 0; i < plugs.length; i++) {
-                    String[] partners = plugs[i].getPartners();
-                    String name = plugs[i].getDataSourceName().toLowerCase();
-                    // object ECS before Address ECS !
-                    String type = hasDataType(plugs[i], Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) ? "0" : "1";
-
-                    StringBuffer sortString = new StringBuffer("");
-                    for (int j = 0; j < partners.length; j++) {
-                    	sortString.append(UtilsDB.getPartnerFromKey(partners[j]));
-                    }
-                    sortString.append(name);
-                    sortString.append(type);
-                    
-                    plugSortCriteria[i] = sortString.toString();
-            	}
-
-                return plugSortCriteria[0].compareTo(plugSortCriteria[1]);
-            } catch (Exception e) {
-                return 0;
-            }
-        }
     }
 }

@@ -429,4 +429,17 @@ public class UtilsString {
         return UtilsString.htmlescape(UtilsString.stripHTMLTags(UtilsString.htmlunescape(s)));
     }
 
+    public static String concatStringsIfNotNull(String[] strings, String separator)  {
+    	StringBuffer result = new StringBuffer();
+    	for (int i=0; i < strings.length; i++) {
+    		if (strings[i] != null) {
+    			if (result.length() > 0) {
+    				result.append(separator);
+    			}
+				result.append(strings[i]);
+    		}
+    	}
+    	
+    	return result.toString();
+    }
 }

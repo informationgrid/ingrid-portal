@@ -6,25 +6,52 @@
     #foreach ($cnt in [1..$node.level])
 		##$cnt
 		#if ($cnt != 1)
-			&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;
 		#end
     #end
+	## UDK Object/Address render params
+	#set($nodeTitle = $MESSAGES.getString($node.getName()))
+	#if($tool.hasContent(${node.udk_class}))
+		#if ($node.plugType == 'dsc_ecs')
+			## objects
+			#set($nodeIcon = "icn_udk_obj_${node.udk_class}.gif")
+			#set($nodeAlt = $MESSAGES.getString("udk_obj_class_name_${node.udk_class}"))
+		#else
+			## addresses
+			#set($nodeIcon = "icn_udk_adr_${node.udk_class}.gif")
+			#set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
+		#end
+		#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+		#set($nodeSpacer = '')
+	#else
+		#set($nodeIcon = "ico_tree_folder_close.gif")
+		#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
+		#set($nodeUrl = '')
+		#set($nodeSpacer = '&nbsp;&nbsp;')
+	#end
+	## render
 	#if($node.isOpen())
 		#if($tool.hasContent($node.getChildren()))
+			## render "-" and icon WITH ACTION -> node can be closed
 			$action.setParameter('action','doCloseNode')
 			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+			<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 		#else
+			## render " " and icon WITHOUT ACTION -> node can't be closed
 			&nbsp;&nbsp;
-			<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" />&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+			<img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" />
 		#end
+		## render node text
+		${nodeSpacer}<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
 		#foreach($childNode in $node.getChildren())
 			#renderNode($childNode)
 		#end
 	#else
+		## render "+" and icon and text, node not opened yet ! 
    		$action.setParameter('action','doOpenNode')
    		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$MESSAGES.getString($node.getName())</strong>
+		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+		${nodeSpacer}<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
 	#end
 	</p>
 #end

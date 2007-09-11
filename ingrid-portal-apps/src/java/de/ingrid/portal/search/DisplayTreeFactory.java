@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1997-2006 by wemove GmbH
+ * Copyright (c) 1997-2007 by wemove GmbH
  */
 package de.ingrid.portal.search;
 
@@ -13,12 +13,15 @@ import java.util.List;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.IPlugHelper;
+import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
@@ -29,6 +32,14 @@ import de.ingrid.utils.query.TermQuery;
  * @author joachim@wemove.com
  */
 public class DisplayTreeFactory {
+	
+	// keys for accessing node data
+	static private String NODE_LEVEL = "level"; 
+	static private String NODE_PLUG_TYPE = "plugType"; 
+	static private String NODE_PLUG_ID = "plugId"; 
+	static private String NODE_DOC_ID = "docId"; 
+	static private String NODE_UDK_DOC_ID = "udk_docId"; 
+	static private String NODE_UDK_CLASS = "udk_class"; 
 
     public static DisplayTreeNode getTreeFromQueryTerms(IngridQuery query) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
@@ -184,7 +195,7 @@ public class DisplayTreeFactory {
     public static DisplayTreeNode getTreeFromECSIPlugs(PlugDescription[] plugs) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
-        root.put("level", new Integer(0));
+        root.put(NODE_LEVEL, new Integer(0));
         
         DisplayTreeNode partnerNode = null;
         DisplayTreeNode catalogNode = null;
@@ -204,7 +215,8 @@ public class DisplayTreeFactory {
             		!partnerNode.getName().equals(partnerName)) {
                 partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);            	
                 partnerNode.setType(DisplayTreeNode.GENERIC);
-                partnerNode.put("level", new Integer(1));
+                partnerNode.put(NODE_LEVEL, new Integer(1));
+                // no "plugid", no "docid" !
                 partnerNode.setParent(root);
                 root.addChild(partnerNode);
             }
@@ -215,31 +227,121 @@ public class DisplayTreeFactory {
             		!catalogNode.getName().equals(catalogName)) {
             	catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);            	
             	catalogNode.setType(DisplayTreeNode.GENERIC);
-            	catalogNode.put("level", new Integer(2));
+            	catalogNode.put(NODE_LEVEL, new Integer(2));
+                // no "plugid", no "docid" !
             	catalogNode.setParent(partnerNode);
             	partnerNode.addChild(catalogNode);
             }
 
             // iPlug Node
             String name = "searchCatHierarchy.tree.unknown";
+            String type = null;
             if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
             	name = "searchCatHierarchy.tree.objects";
+            	type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
             } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
             	name = "searchCatHierarchy.tree.addresses";
+            	type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
             }
             DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
             node.setType(DisplayTreeNode.GENERIC);
-            node.put("level", new Integer(3));
+            node.put(NODE_LEVEL, new Integer(3));
+        	// only "plugid", no "docid" !
+            node.put(NODE_PLUG_TYPE, type);
+            node.put(NODE_PLUG_ID, plug.getPlugId());
             node.setParent(catalogNode);
             catalogNode.addChild(node);
         }
         return root;
     }
 
+    public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen) {
+
+    	int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
+        String plugType = (String) nodeToOpen.get(NODE_PLUG_TYPE);
+        String plugId = (String) nodeToOpen.get(NODE_PLUG_ID);
+        String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
+        
+        if (plugType == null || plugId == null) {
+        	// no iplug node, is parent folder
+        	return;
+        }
+
+        // get children IngridHits
+        String detailKey_udkDocId = "";
+        String detailKey_udkClass = "";
+        ArrayList hits = new ArrayList();
+    	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+    		if (udkDocId == null) {
+    			hits = IPlugHelperDscEcs.getTopObjects(plugId);
+    		} else {
+    			hits = IPlugHelperDscEcs.getSubordinatedObjects(udkDocId, plugId);
+    		}
+
+            detailKey_udkDocId = Settings.HIT_KEY_OBJ_ID;
+            detailKey_udkClass = Settings.HIT_KEY_UDK_CLASS;
+
+    	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+    		if (udkDocId == null) {
+    			hits = IPlugHelperDscEcs.getTopAddresses(plugId);
+    		} else {
+    			hits = IPlugHelperDscEcs.getAddressChildren(udkDocId, plugId);
+    		}
+
+            detailKey_udkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
+            detailKey_udkClass = Settings.HIT_KEY_ADDRESS_CLASS;
+    	}
+
+        // set up according children nodes in tree
+    	int childrenLevel = parentLevel + 1;
+        ArrayList childrenNodes = new ArrayList(hits.size());
+        Iterator it = hits.iterator();
+        while (it.hasNext()) {
+            IngridHit hit = (IngridHit) it.next();
+            IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+            udkDocId = UtilsSearch.getDetailValue(detail, detailKey_udkDocId);
+            String udkClass = UtilsSearch.getDetailValue(detail, detailKey_udkClass);
+
+            String nodeName = detail.getTitle();
+            // different node text, when person
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+            	if (udkClass.equals("2")) {
+            		String[] titleElements = new String[] {
+            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
+            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
+            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
+            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
+            		};
+            		nodeName =  UtilsString.concatStringsIfNotNull(titleElements, " ");
+            	}
+            }
+            
+            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
+            childNode.setType(DisplayTreeNode.GENERIC);
+            childNode.put(NODE_LEVEL, new Integer(childrenLevel));
+            childNode.put(NODE_PLUG_TYPE, plugType);
+            childNode.put(NODE_PLUG_ID, plugId);
+            childNode.put(NODE_DOC_ID, hit.getId());
+            childNode.put(NODE_UDK_DOC_ID, udkDocId);
+            childNode.put(NODE_UDK_CLASS, udkClass);
+
+            childrenNodes.add(childNode);
+        }
+
+        // sort children nodes
+        Collections.sort(childrenNodes, new DisplayTreeFactory.ECSDocumentNodeComparator());
+
+        // and add them to the parent
+        it = childrenNodes.iterator();
+        while (it.hasNext()) {
+            DisplayTreeNode childNode = (DisplayTreeNode) it.next();
+            childNode.setParent(nodeToOpen);
+            nodeToOpen.addChild(childNode);
+        }
+    }
+
     /**
-     * Inner class: ProviderNodeComparator for provider sorting;
-     * 
-     * @author Martin Maidhof
+     * Inner class: for provider sorting;
      */
     static private class ProviderNodeComparator implements Comparator {
         /**
@@ -257,4 +359,22 @@ public class DisplayTreeFactory {
         }
     }
 
+    /**
+     * Inner class: for sorting of ECS Documents;
+     */
+    static private class ECSDocumentNodeComparator implements Comparator {
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public final int compare(Object a, Object b) {
+            try {
+                String aName = ((DisplayTreeNode) a).getName().toLowerCase();
+                String bName = ((DisplayTreeNode) b).getName().toLowerCase();
+
+                return aName.compareTo(bName);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }
 }

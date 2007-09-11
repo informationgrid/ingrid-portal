@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 20067 wemove digital solutions. All rights reserved.
+ * Copyright (c) 2007 wemove digital solutions. All rights reserved.
  */
 package de.ingrid.portal.portlets.searchcatalog;
 
@@ -15,6 +15,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
+import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -24,7 +25,7 @@ import de.ingrid.portal.search.PageState;
 import de.ingrid.utils.PlugDescription;
 
 /**
- * This portlet handles the fragment of the hirarchy browser in the search/catalog section.
+ * This portlet handles the fragment of the hierarchy browser in the search/catalog section.
  *
  * @author martin@wemove.com
  */
@@ -88,7 +89,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             }
 
             // sort
-            plugs = IPlugHelper.sortPlugs(plugs, new IPlugHelper.PlugComparatorECS());
+            plugs = IPlugHelper.sortPlugs(plugs, new IPlugHelperDscEcs.PlugComparatorECS());
 
             DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
             ps.put("plugsRoot", plugsRoot);
@@ -97,11 +98,6 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         super.doView(request, response);
     }
 
-    /**
-     * NOTICE: on actions in same page we redirect to ourself with url param determining the view
-     * template. If no view template is passed per URL param, the start template is rendered !
-     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
-     */
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
@@ -126,7 +122,6 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         	DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
             if (root != null) {
                 openNode(root, request.getParameter("nodeId"));
-                ps.put("plugsRoot", root);
             }
 
         } else if (action.equalsIgnoreCase("doCloseNode")) {
@@ -154,29 +149,16 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         if (node != null) {
             node.setOpen(true);
-/*
-            if (node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
-                    && !node.isLoading()) {
-                node.setLoading(true);
-                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(node.getName(), "/thesa");
-                if (hits != null && hits.length > 0) {
-                    for (int i=0; i<hits.length; i++) {
-                        Topic hit = (Topic) hits[i];
-                        if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                            DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
-                            snsNode.setType(DisplayTreeNode.SNS_TERM);
-                            snsNode.setParent(node);
-                            snsNode.put("topicID", hit.getTopicID());
-                            snsNode.put("topic", hit);
-                            node.addChild(snsNode);
-                        }
-                    }
-                } else {
-                    // TODO remove node from display tree
-                }
+            
+            // only load if not loaded yet !
+            if (!node.isLoading() && node.getChildren().size() == 0) {
+            	node.setLoading(true);
+            	
+            	// handles all stuff
+            	DisplayTreeFactory.openECSNode(rootNode, node);
+
                 node.setLoading(false);
             }
-*/
         }
     }
 }

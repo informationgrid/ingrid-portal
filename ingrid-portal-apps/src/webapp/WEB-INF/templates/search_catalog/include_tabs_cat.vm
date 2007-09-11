@@ -8,12 +8,13 @@ $action.setParameter('action','doChangeTab')
 $action.setParameter('tab','1')
           <li><a href="$action">$MESSAGES.getString('searchCatHierarchy.title')</a></li>
 #end
-#if($tab=='2')
-          <li><a class="selected">$MESSAGES.getString('searchCatThesaurus.title')</a></li>
-#else
-$action.setParameter('tab','2')
-          <li><a href="$action">$MESSAGES.getString('searchCatThesaurus.title')</a></li>
-#end
+## Uncomment when Thesaurus Browser Tab should be shown
+## #if($tab=='2')
+##           <li><a class="selected">$MESSAGES.getString('searchCatThesaurus.title')</a></li>
+## #else
+## $action.setParameter('tab','2')
+##           <li><a href="$action">$MESSAGES.getString('searchCatThesaurus.title')</a></li>
+## #end
         </ul>
         <br class="clearer" />
       </div>
