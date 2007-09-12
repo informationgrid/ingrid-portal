@@ -47,21 +47,35 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     }
 
     /**
-     * Get subordinated ECS Objects as a List of IngridHits (containing metadata ID and UDK_CLASS)
+     * Get Restricted Number of subordinated ECS Objects as a List of IngridHits (containing metadata ID and UDK_CLASS).
+     * Or pass null to request ALL objects
      *  
      * @param objId parent object
      * @param iPlugId plug id
+     * @param maxNumber how many objects requested ? pass null if all objects !
      * @return List of IngridHit
      */
-    static public ArrayList getSubordinatedObjects(String objId, String iPlugId) {
+    static private ArrayList getSubordinatedObjects(String objId, String iPlugId, Integer maxNumber) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
-                " t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
+        	" t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
+        	requestedMetadata, filter, maxNumber);
         return result;
+    }
+    
+    /**
+     * Get ALL subordinated ECS Objects as a List of IngridHits (containing metadata ID and UDK_CLASS)
+     *  
+     * @param objId parent object
+     * @param iPlugId plug id
+     * @return List of IngridHit
+     */
+    static public ArrayList getSubordinatedObjects(String objId, String iPlugId) {
+    	return getSubordinatedObjects(objId, iPlugId, null);
     }
 
     /**
@@ -86,7 +100,11 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         return result;
     }
 
-    static public ArrayList getAddressChildren(String addrId, String iPlugId) {
+    /**
+     * Get a restricted Number of Sub Addresses or all Sub Addresses
+     * @param maxNumber how many addresses requested ? pass null if all addresses !
+     */
+    static private ArrayList getAddressChildren(String addrId, String iPlugId, Integer maxNumber) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
         requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -99,8 +117,50 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
         ArrayList result = getHits(
                 "T022_adr_adr.adr_from_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
-                requestedMetadata, filter);
-        return result;
+                requestedMetadata, filter, maxNumber);
+        return result;    	
+    }
+
+    /**
+     * Get ALL Sub Addresses !
+     */
+    static public ArrayList getAddressChildren(String addrId, String iPlugId) {
+    	return getAddressChildren(addrId, iPlugId, null);
+    }
+
+    static public ArrayList getTopDocs(String plugId, String plugType) {
+        ArrayList hits = new ArrayList();
+    	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+    		hits = IPlugHelperDscEcs.getTopObjects(plugId);
+    	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+    		hits = IPlugHelperDscEcs.getTopAddresses(plugId);
+    	}
+
+        return hits;
+    }
+
+    /**
+     * Get a restricted Number of Sub UDK Documents or all Sub Documents
+     * NOTICE: DUE TO BUG IN BACKEND REQUEST MAXNUMBER = 1 DOESN'T WORK !!!! IS SET TO 2 INTERNALLY !!!
+     * @param maxNumber how many docs requested ? HAS TO BE > 1 due to bug in backend !!!!
+     * IF 1 IS PASSED IT IS SET TO 2 !!! pass null if all documents !
+     */
+    static public ArrayList getSubDocs(String docParentId, String plugId, String plugType, Integer maxNumber) {
+        ArrayList hits = new ArrayList();
+        
+        // TODO: REMOVE FIX TO BUG IN BACKEND WHEN BACKEND IS FIXED !!!
+        if (maxNumber != null && maxNumber.intValue() == 1) {
+        	maxNumber = new Integer(2);
+        }
+
+    	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+   			hits = IPlugHelperDscEcs.getSubordinatedObjects(docParentId, plugId, maxNumber);
+
+    	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+    			hits = IPlugHelperDscEcs.getAddressChildren(docParentId, plugId, maxNumber);
+    	}
+
+        return hits;
     }
 
     /**
@@ -137,16 +197,31 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         }
     }
 
-    static public ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
+    /**
+     * Get a restricted Number of Hits or all hits.
+     * @param maxNumberOfHits how many hits requested ? pass null if all hits !
+     * @return
+     */
+    static private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumberOfHits) {
         ArrayList result = new ArrayList();
+        
+        // request hits in chunks of 20 results per page, when all hits requested !
+        int chunkSize = 20;
+        boolean getAllHits = true;
+        if (maxNumberOfHits != null) {
+            // restricted number of hits, requested all at once !
+            getAllHits = false;
+            chunkSize = maxNumberOfHits.intValue();
+        }
+
         try {
             IngridQuery query = QueryStringParser.parse(queryStr.concat(" ranking:any datatype:any"));
             IngridHits hits;
-            // request hits in chunks of 20 results per page
+            // request hits in chunks or all at once, when restricted number of hits !
             int page = 0;
             do {
                 page++;
-                hits = IBUSInterfaceImpl.getInstance().search(query, 20, page, (page-1) * 20,
+                hits = IBUSInterfaceImpl.getInstance().search(query, chunkSize, page, (page-1) * chunkSize,
                         PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
                 IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query,
                         requestedMetaData);
@@ -174,7 +249,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                         result.add(hits.getHits()[j]);
                     }
                 }
-            } while (hits.getHits().length == 20);
+            } while (hits.getHits().length == chunkSize && getAllHits);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.error("Problems getting hits from iBus!", e);
@@ -185,6 +260,12 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         return result;
     }
 
+    /**
+     * Get ALL hits
+     */
+    static public ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
+    	return getHits(queryStr, requestedMetaData, filter, null);
+    }
 
 
     /**

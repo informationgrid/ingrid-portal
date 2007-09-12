@@ -40,6 +40,7 @@ public class DisplayTreeFactory {
 	static private String NODE_DOC_ID = "docId"; 
 	static private String NODE_UDK_DOC_ID = "udk_docId"; 
 	static private String NODE_UDK_CLASS = "udk_class"; 
+	static private String NODE_EXPANDABLE = "expandable"; 
 
     public static DisplayTreeNode getTreeFromQueryTerms(IngridQuery query) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
@@ -216,6 +217,7 @@ public class DisplayTreeFactory {
                 partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);            	
                 partnerNode.setType(DisplayTreeNode.GENERIC);
                 partnerNode.put(NODE_LEVEL, new Integer(1));
+                partnerNode.put(NODE_EXPANDABLE, new Boolean(true));
                 // no "plugid", no "docid" !
                 partnerNode.setParent(root);
                 root.addChild(partnerNode);
@@ -228,6 +230,7 @@ public class DisplayTreeFactory {
             	catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);            	
             	catalogNode.setType(DisplayTreeNode.GENERIC);
             	catalogNode.put(NODE_LEVEL, new Integer(2));
+            	catalogNode.put(NODE_EXPANDABLE, new Boolean(true));
                 // no "plugid", no "docid" !
             	catalogNode.setParent(partnerNode);
             	partnerNode.addChild(catalogNode);
@@ -249,6 +252,7 @@ public class DisplayTreeFactory {
         	// only "plugid", no "docid" !
             node.put(NODE_PLUG_TYPE, type);
             node.put(NODE_PLUG_ID, plug.getPlugId());
+            node.put(NODE_EXPANDABLE, new Boolean(true));
             node.setParent(catalogNode);
             catalogNode.addChild(node);
         }
@@ -257,50 +261,45 @@ public class DisplayTreeFactory {
 
     public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen) {
 
-    	int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
         String plugType = (String) nodeToOpen.get(NODE_PLUG_TYPE);
         String plugId = (String) nodeToOpen.get(NODE_PLUG_ID);
-        String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
-        
+
         if (plugType == null || plugId == null) {
         	// no iplug node, is parent folder
         	return;
         }
 
-        // get children IngridHits
-        String detailKey_udkDocId = "";
-        String detailKey_udkClass = "";
+        // get ALL children (IngridHits)
+        String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
+        String key_udkDocId = "";
+        String key_udkClass = "";
         ArrayList hits = new ArrayList();
-    	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-    		if (udkDocId == null) {
-    			hits = IPlugHelperDscEcs.getTopObjects(plugId);
-    		} else {
-    			hits = IPlugHelperDscEcs.getSubordinatedObjects(udkDocId, plugId);
-    		}
+		if (udkDocId == null) {
+			hits = IPlugHelperDscEcs.getTopDocs(plugId, plugType);
+		} else {
+			hits = IPlugHelperDscEcs.getSubDocs(udkDocId, plugId, plugType, null);			
+		}
 
-            detailKey_udkDocId = Settings.HIT_KEY_OBJ_ID;
-            detailKey_udkClass = Settings.HIT_KEY_UDK_CLASS;
+		// keys for extracting data
+    	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+            key_udkDocId = Settings.HIT_KEY_OBJ_ID;
+            key_udkClass = Settings.HIT_KEY_UDK_CLASS;
 
     	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    		if (udkDocId == null) {
-    			hits = IPlugHelperDscEcs.getTopAddresses(plugId);
-    		} else {
-    			hits = IPlugHelperDscEcs.getAddressChildren(udkDocId, plugId);
-    		}
-
-            detailKey_udkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
-            detailKey_udkClass = Settings.HIT_KEY_ADDRESS_CLASS;
+            key_udkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
+            key_udkClass = Settings.HIT_KEY_ADDRESS_CLASS;
     	}
 
         // set up according children nodes in tree
+    	int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
     	int childrenLevel = parentLevel + 1;
-        ArrayList childrenNodes = new ArrayList(hits.size());
+        ArrayList childNodes = new ArrayList(hits.size());
         Iterator it = hits.iterator();
         while (it.hasNext()) {
             IngridHit hit = (IngridHit) it.next();
             IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
-            udkDocId = UtilsSearch.getDetailValue(detail, detailKey_udkDocId);
-            String udkClass = UtilsSearch.getDetailValue(detail, detailKey_udkClass);
+            udkDocId = UtilsSearch.getDetailValue(detail, key_udkDocId);
+            String udkClass = UtilsSearch.getDetailValue(detail, key_udkClass);
 
             String nodeName = detail.getTitle();
             // different node text, when person
@@ -315,6 +314,13 @@ public class DisplayTreeFactory {
             		nodeName =  UtilsString.concatStringsIfNotNull(titleElements, " ");
             	}
             }
+
+            // check whether child node has children as well -> request only 1 child !
+            boolean hasChildren = false;
+            ArrayList subHits = IPlugHelperDscEcs.getSubDocs(udkDocId, plugId, plugType, new Integer(1));
+            if (subHits.size() > 0) {
+            	hasChildren = true;
+            }
             
             DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
             childNode.setType(DisplayTreeNode.GENERIC);
@@ -324,15 +330,16 @@ public class DisplayTreeFactory {
             childNode.put(NODE_DOC_ID, hit.getId());
             childNode.put(NODE_UDK_DOC_ID, udkDocId);
             childNode.put(NODE_UDK_CLASS, udkClass);
+            childNode.put(NODE_EXPANDABLE, new Boolean(hasChildren));
 
-            childrenNodes.add(childNode);
+            childNodes.add(childNode);
         }
 
         // sort children nodes
-        Collections.sort(childrenNodes, new DisplayTreeFactory.ECSDocumentNodeComparator());
+        Collections.sort(childNodes, new DisplayTreeFactory.ECSDocumentNodeComparator());
 
         // and add them to the parent
-        it = childrenNodes.iterator();
+        it = childNodes.iterator();
         while (it.hasNext()) {
             DisplayTreeNode childNode = (DisplayTreeNode) it.next();
             childNode.setParent(nodeToOpen);

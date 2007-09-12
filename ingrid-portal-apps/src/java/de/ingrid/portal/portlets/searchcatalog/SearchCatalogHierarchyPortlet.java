@@ -32,10 +32,7 @@ import de.ingrid.utils.PlugDescription;
 public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
-
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
-
-    // PARAMETER VALUES
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {

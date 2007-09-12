@@ -25,29 +25,33 @@
 		#set($nodeUrl = '')
 		#set($nodeSpacer = '&nbsp;&nbsp;')
 	#end
-	## render
+	## render +/- and icon
 	#if($node.isOpen())
-		#if($tool.hasContent($node.getChildren()))
-			## render "-" and icon WITH ACTION -> node can be closed
-			$action.setParameter('action','doCloseNode')
-			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-			<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+		#set ($renderSubNodes = true)
+		## render "-" and icon WITH ACTION -> node can be closed
+		$action.setParameter('action','doCloseNode')
+		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
+		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+	#else
+		#set ($renderSubNodes = false)
+		#if ($node.expandable)
+    		## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
+       		$action.setParameter('action','doOpenNode')
+       		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
+    		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 		#else
-			## render " " and icon WITHOUT ACTION -> node can't be closed
+			## render " " and icon WITHOUT ACTION -> node can't be expanded
 			&nbsp;&nbsp;
 			<img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" />
 		#end
-		## render node text
-		${nodeSpacer}<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
-		#foreach($childNode in $node.getChildren())
-			#renderNode($childNode)
-		#end
-	#else
-		## render "+" and icon and text, node not opened yet ! 
-   		$action.setParameter('action','doOpenNode')
-   		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
-		${nodeSpacer}<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+	#end
+	## render node text
+	${nodeSpacer}<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+	## render sub nodes
+	#if ($renderSubNodes)
+    	#foreach($childNode in $node.getChildren())
+    		#renderNode($childNode)
+    	#end
 	#end
 	</p>
 #end
@@ -56,15 +60,17 @@
 #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
 #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_hierarchy.vm')
 
-#set ($action = $renderResponse.createActionURL())
 	<div class="formbody">
 #foreach($plugNode in $ps.plugsRoot.getChildren())
 	#renderNode($plugNode)
 #end
 	</div>
-	<div class="formfooter">
-		<div align="right">
-			<input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
-		</div>
-	</div>
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+    	<div class="formfooter">
+    		<div align="right">
+    			<input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
+    		</div>
+    	</div>
+	</form>
 </div>
