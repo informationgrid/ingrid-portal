@@ -141,14 +141,16 @@ public class IPlugHelperDscEcs extends IPlugHelper {
 
     /**
      * Get a restricted Number of Sub UDK Documents or all Sub Documents
-     * NOTICE: DUE TO BUG IN BACKEND REQUEST MAXNUMBER = 1 DOESN'T WORK !!!! IS SET TO 2 INTERNALLY !!!
-     * @param maxNumber how many docs requested ? HAS TO BE > 1 due to bug in backend !!!!
-     * IF 1 IS PASSED IT IS SET TO 2 !!! pass null if all documents !
+     * @param maxNumber how many docs requested ? NOTICE: returned number of docs may be
+     * one less than requested, because parentDoc is also delivered by backend and filtered !
+     * If you pass 1 as maxNumber it will be set to 2 internally to guarantee at least one subHit !
      */
     static public ArrayList getSubDocs(String docParentId, String plugId, String plugType, Integer maxNumber) {
         ArrayList hits = new ArrayList();
         
-        // TODO: REMOVE FIX TO BUG IN BACKEND WHEN BACKEND IS FIXED !!!
+        // If only one Hit requested, set to 2, because backend also
+        // delivers Parent object itself as hit, which will be filtered.
+        // So we at least have the second hit. If no 2. hit, there are no subdocs !
         if (maxNumber != null && maxNumber.intValue() == 1) {
         	maxNumber = new Integer(2);
         }
