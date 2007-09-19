@@ -196,6 +196,9 @@
                     <li>
                         <a href="help.psml?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
+                    <li>
+                        <a href="help.psml?hkey=search-catalog-1">Datenkataloge</a>
+                    </li>
                 </ul>
             </content>
         </section>
@@ -1441,6 +1444,22 @@
                     dem zugeordneten Suchbegriff hinzugefügt und zwar so, dass
                     ein Dokument gefunden wird, wenn entweder der Suchbegriff
                     oder der ähnliche Begriff enthalten ist (ODER-Verknüpfung).</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Datenkataloge</header>
+        <section help-key="search-catalog-1">
+            <header>Hierarchiebaum</header>
+            <content>
+                <p>Die angeschlossenen Datenkataloge und deren Inhalte werden in 
+                	einem Hierarchie-Baum dargestellt, gegliedert nach Bund/Länder.
+                	In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
+                	oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
+                	erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich 
+                	wie in der <a
+                    href="help.psml?hkey=search-results-2">Hauptergebnisliste</a> bei 
+                    der freien Suche.</p>
             </content>
         </section>
     </chapter>
