@@ -111,9 +111,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     /**
      * main extended search page for datasource "research" -> research:
-     * topic/terms
+     * topic/attributes
      */
-    private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
+    private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-attributes.psml";
 
     /*
      * (non-Javadoc)
@@ -335,14 +335,20 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, null);
 
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-            // adapt SearchState (base for generating URL params for render
+        	// adapt SearchState (base for generating URL params for render
             // request):
             // - query string
-            SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
-                    .getParameter(Settings.PARAM_QUERY_STRING));
+        	
+        	// set querystring to search state if the delete button was not pressed
+        	if (request.getParameter("doDeleteQuery") == null) {        	
+	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
+	                    .getParameter(Settings.PARAM_QUERY_STRING));
+        	} else {
+	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, "");
+        	}
             
-            // check if submit or requery
-            if (request.getParameter("doSetQuery") == null) {
+            // check if submit or requery or delete query
+            if (request.getParameter("doSetQuery") == null && request.getParameter("doDeleteQuery") == null) {
                 // redirect to our page wih parameters for bookmarking
                 actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
             }

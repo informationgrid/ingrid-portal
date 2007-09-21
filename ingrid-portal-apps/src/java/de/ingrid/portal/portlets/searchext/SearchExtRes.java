@@ -29,7 +29,7 @@ abstract class SearchExtRes extends GenericVelocityPortlet {
     // START PAGES FOR MAIN TABS
 
     /** page for main tab "topic" */
-    protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
+    protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-res-topic-attributes.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
