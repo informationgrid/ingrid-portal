@@ -152,7 +152,6 @@ public class QueryPreProcessor {
         }
 
         // if grouping, adapt search parameters to deliver the startHit for the next ibus query
-        int newStartHit = 0;
         if (query.getGrouped() != null && query.getGrouped().length() > 0
                 && !query.getGrouped().equals(IngridQuery.GROUPED_OFF)) {
 
@@ -175,7 +174,7 @@ public class QueryPreProcessor {
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
             }
             currentPage = 0;
-            newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
+            startHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
 
         // set language for query
@@ -190,7 +189,7 @@ public class QueryPreProcessor {
         UtilsSearch.processRestrictingProvider(query, (String)sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
 
         //      TODO If no query should be submitted, return null
-        return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, newStartHit, PortalConfig
+        return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, startHit, PortalConfig
                 .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, false, requestedMetadata);
     }
 

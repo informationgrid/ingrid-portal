@@ -103,7 +103,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @throws Exception 
      * @see de.ingrid.portal.interfaces.IBUSInterface#search(de.ingrid.utils.query.IngridQuery, int, int, int, int)
      */
-    public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int requestedHits, int timeout)
+    public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout)
             throws Exception {
         IngridHits hits = null;
         try {
@@ -111,31 +111,31 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 log
                         .debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout="
                                 + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage
-                                + ", length=" + requestedHits);
+                                + ", startHit=" + startHit);
             }
-            hits = bus.search(query, hitsPerPage, currentPage, requestedHits, timeout);
+            hits = bus.search(query, hitsPerPage, currentPage, startHit, timeout);
             if (log.isDebugEnabled()) {
                 log.debug("iBus.search: finished !");
             }
         } catch (java.io.IOException e) {
             if (log.isDebugEnabled()) {
                 log.debug("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                        + requestedHits, e);
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
+                        + startHit, e);
             } else if (log.isInfoEnabled()) {
                 log.info("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                        + requestedHits + "[cause:" + e.getMessage() + "]");
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
+                        + startHit + "[cause:" + e.getMessage() + "]");
             } else {
                 log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                        + requestedHits + "[cause:" + e.getCause().getMessage() + "]", e);
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
+                        + startHit + "[cause:" + e.getCause().getMessage() + "]", e);
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", length="
-                        + requestedHits, t);
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
+                        + startHit, t);
             }
             throw new Exception(t);
         }
