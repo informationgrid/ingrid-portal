@@ -3,8 +3,10 @@
 	$action.setParameter('nodeId',$node.id)
 	## highest nodes have level 1 ! (only root has level 0)
 	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
-	#set ($leftMargin = ($node.level - 1) * (2))
-	<p style="margin-left:${leftMargin}em">	
+	#set ($leftMargin = ($node.level - 1) * 25)
+	#set ($iconLayerWidth = 40)
+	#set ($textLayerWidth = 870 - $leftMargin - $iconLayerWidth)
+	<p style="margin-left:${leftMargin}px; clear:left; overflow:hidden">	
 	## UDK Object/Address render params
 	#set($nodeTitle = $MESSAGES.getString($node.getName()))
 	#if($tool.hasContent(${node.udk_class}))
@@ -18,14 +20,13 @@
 			#set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
 		#end
 		#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
-		#set($nodeSpacer = '')
 	#else
 		#set($nodeIcon = "ico_tree_folder_close.gif")
 		#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
 		#set($nodeUrl = '')
-		#set($nodeSpacer = '&nbsp;&nbsp;')
 	#end
 	## render +/- and icon
+	<span style="float:left; width:${iconLayerWidth}px">
 	#if($node.isOpen())
 		#set ($renderSubNodes = true)
 		## render "-" and icon WITH ACTION -> node can be closed
@@ -45,15 +46,18 @@
 			<img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" />
 		#end
 	#end
+	</span>
 	## render node text
-	${nodeSpacer}<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+	<span style="float:left; width:${textLayerWidth}px">
+	<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+	</span>
+	</p>
 	## render sub nodes
 	#if ($renderSubNodes)
     	#foreach($childNode in $node.getChildren())
     		#renderNode($childNode)
     	#end
 	#end
-	</p>
 #end
 
 <div class="section">
