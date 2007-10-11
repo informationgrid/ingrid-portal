@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
@@ -56,14 +57,21 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @return List of IngridHit
      */
     static private ArrayList getSubordinatedObjects(String objId, String iPlugId, Integer maxNumber) {
-        String[] requestedMetadata = new String[2];
+        String[] requestedMetadata = new String[5];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_OBJ_OBJ_FROM;
+        requestedMetadata[3] = Settings.HIT_KEY_OBJ_OBJ_TYP;
+        requestedMetadata[4] = Settings.HIT_KEY_OBJ_OBJ_TO;
         HashMap filter = new HashMap();
+        // gleiches Objekt raus filtern
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
         	" t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
         	requestedMetadata, filter, maxNumber);
+        // add on ! Additional check if hits are of requested relation ! backend can't resolve exactly due to flatened
+        // index (array in indexfield !)
+    	result = IPlugHelperDscEcs.filterRelationHits(objId, "0", null, result);
         return result;
     }
     
@@ -243,7 +251,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                         }
                     }
                     if (include) {
-                        // flatten alle detail fields
+                        // flatten alle detail fields into a string ...
                         for (int i = 0; i < requestedMetaData.length; i++) {
                             detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
                         }
@@ -269,6 +277,98 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	return getHits(queryStr, requestedMetaData, filter, null);
     }
 
+    /**
+     * Returns only the Hits which satisfy a specific object relation.
+     * Pass the description of the relation (from, to, type) and the unfiltered hits after initial query.
+     * This is necessary due to problems in backend to exactly resolve a relation query (index is flattended
+     * and index fields contain multiple relation values). 
+     * @param fromObjId udk ObjectID of the source, pass null if this is the one you search for
+     * @param relationType udk type of the relation
+     * @param toObjId udk ObjectID of the target, pass null if this is the one you search for
+     * @param unfilteredHits the unfiltered hits after the initial query
+     * @return
+     */
+    static public ArrayList filterRelationHits(String fromObjId, String relationType, String toObjId, ArrayList unfilteredHits) {
+    	ArrayList filteredHits = new ArrayList();
+    	
+    	for (int i=0; i<unfilteredHits.size(); i++) {
+    		IngridHit hit = (IngridHit) unfilteredHits.get(i);
+    		IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+
+    		if (detail != null) {
+            	// hit data
+            	String hitObjId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
+            	String hitFromObjIds = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_FROM);
+            	String hitTypes = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_TYP);
+            	String hitToObjIds = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_TO);
+            	
+            	if (hitObjId == null || hitFromObjIds == null || hitTypes == null || hitToObjIds == null) {
+            		log.warn("NO Relation Data in HIT !");
+            		continue;
+            	}
+
+            	// split values in string into array
+            	String[] hitObjIds = hitObjId.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+            	String[] fromObjIds = hitFromObjIds.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+            	String[] toObjIds = hitToObjIds.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+            	String[] types = hitTypes.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+            	
+            	if (hitObjIds.length > 1) {
+            		log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
+            		continue;
+            	}
+            	if (fromObjIds.length != types.length ||
+            		fromObjIds.length != toObjIds.length) {
+            		log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
+            		continue;
+            	}
+            	if (fromObjIds.length == 0) {
+            		log.warn("NO from Relation Data in HIT !");
+            		continue;            		
+            	}
+            	
+            	// ok, start filtering
+            	for (int j = 0; j < fromObjIds.length; j++) {
+            		if (fromObjId != null) {
+            			if (!fromObjIds[j].equals(fromObjId)) {
+            				continue;
+            			}
+            		}
+            		if (relationType != null) {
+            			if (!types[j].equals(relationType)) {
+            				continue;
+            			}
+            		}
+            		if (toObjId != null) {
+            			if (!toObjIds[j].equals(toObjId)) {
+            				continue;
+            			}
+            		}
+
+            		// valid relation ! also valid result id ?
+            		if (fromObjId == null) {
+            			// searching from
+            			if (!fromObjIds[j].equals(hitObjId)) {
+                    		log.warn("HIT object ID is different from found FROM object ID ! we skip hit ");
+                    		continue;
+            			}
+            		}
+            		if (toObjId == null) {
+            			// searching to
+            			if (!toObjIds[j].equals(hitObjId)) {
+                    		log.warn("HIT object ID is different from found TO object ID ! we skip hit ");
+                    		continue;
+            			}
+            		}
+            		
+            		// VALID HIT, add to list
+            		filteredHits.add(hit);
+            	}
+    		}
+    	}
+    	
+    	return filteredHits;
+    }
 
     /**
      * Inner class: PlugComparator for ECS plugs sorting -> sorted by "Partner"/"Name"/"Type" (Object before Address ECS)

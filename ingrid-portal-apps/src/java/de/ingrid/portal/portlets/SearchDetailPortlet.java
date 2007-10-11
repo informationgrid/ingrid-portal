@@ -597,13 +597,20 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private ArrayList getSuperiorObjects(String objId, String iPlugId) {
-        String[] requestedMetadata = new String[2];
+        String[] requestedMetadata = new String[5];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_OBJ_OBJ_FROM;
+        requestedMetadata[3] = Settings.HIT_KEY_OBJ_OBJ_TYP;
+        requestedMetadata[4] = Settings.HIT_KEY_OBJ_OBJ_TO;
         HashMap filter = new HashMap();
+        // gleiches Objekt raus filtern
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_to_id:".concat(objId).concat(
                 " t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
+        // add on ! Additional check if hits are of requested relation type ! backend can't resolve exactly due to flatened
+        // index (array in indexfield !)
+    	result = IPlugHelperDscEcs.filterRelationHits(null, "0", objId, result);
         return result;
     }
 
@@ -612,14 +619,20 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     }
 
     private ArrayList getCrossReferencedObjects(String objId, String iPlugId) {
-        String[] requestedMetadata = new String[2];
+        String[] requestedMetadata = new String[5];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_OBJ_OBJ_FROM;
+        requestedMetadata[3] = Settings.HIT_KEY_OBJ_OBJ_TYP;
+        requestedMetadata[4] = Settings.HIT_KEY_OBJ_OBJ_TO;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
                 " t012_obj_obj.typ:1 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
-        return result;
+        // add on ! Additional check if hits are of requested relation type ! backend can't resolve exactly due to flatened
+        // index (array in indexfield !)
+    	result = IPlugHelperDscEcs.filterRelationHits(objId, "1", null, result);
+    	return result;
     }
 
     private ArrayList getObjectsByAddress(String addrId, String iPlugId) {

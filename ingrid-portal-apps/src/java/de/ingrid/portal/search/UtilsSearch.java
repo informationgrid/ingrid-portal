@@ -58,6 +58,8 @@ public class UtilsSearch {
 
     private final static Log log = LogFactory.getLog(UtilsSearch.class);
 
+    public final static String DETAIL_VALUES_SEPARATOR = ", ";
+
     /**
      * Generate PageNavigation data for rendering
      * 
@@ -266,7 +268,7 @@ public class UtilsSearch {
             String[] valueArray = (String[]) obj;
             for (int i = 0; i < valueArray.length; i++) {
                 if (i != 0) {
-                    values.append(", ");
+                    values.append(DETAIL_VALUES_SEPARATOR);
                 }
                 if (raw) {
                     values.append(valueArray[i]);
@@ -278,7 +280,7 @@ public class UtilsSearch {
             ArrayList valueList = (ArrayList) obj;
             for (int i = 0; i < valueList.size(); i++) {
                 if (i != 0) {
-                    values.append(", ");
+                    values.append(DETAIL_VALUES_SEPARATOR);
                 }
                 if (raw) {
                     values.append(valueList.get(i).toString());
