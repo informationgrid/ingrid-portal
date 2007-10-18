@@ -16,6 +16,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>main-maps.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>service-sitemap.psml</name>
             <hidden>false</hidden>
         </page>
@@ -224,6 +228,14 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/portlet_header.gif</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/decorator-macros.vm</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/footer.vm</src>
+        </file>
         
         
 
@@ -302,6 +314,18 @@
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-help/images/portlet_header.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/header.vm</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/footer.vm</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/header.vm</src>
         </file>
 
 

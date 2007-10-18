@@ -1,0 +1,101 @@
+
+#* Add the current layouts configuration values to the context *#
+#defineLayoutObjects()
+
+#* Loads our custom macros *#
+#parse($layoutDecoration.getResource("decorator-macros.vm"))
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+  <base href="#BaseHref()" />
+  <title>PortalU</title>
+  <meta http-equiv="Content-type" content="#ContentType()" />
+  <meta http-equiv="Content-style-type" content="text/css" />   
+  <meta http-equiv="content-language" content="DE" />
+  <meta name="description" content="#PageDescription()" />
+  <meta name="author" content="wemove digital solutions" />
+  <meta name="keywords" content="" />
+  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="robots" content="index,follow" />
+  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
+
+  #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+  #IncludeStylesheets()
+
+  #* our decorator macros, see ./decorator-macros.vm *#
+  #decoratorIncludeJavaScriptForHead()
+  
+<script language="JavaScript" type="text/javascript">
+var xmlhttp=false;
+/*@cc_on @*/
+/*@if (@_jscript_version >= 5)
+// JScript gives us Conditional compilation, we can cope with old IE versions.
+// and security blocked creation of the objects.
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+   		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  	} catch (E) {
+   		xmlhttp = false;
+  	}
+}
+@end @*/
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+	try {
+		xmlhttp = new XMLHttpRequest();
+	} catch (e) {
+		xmlhttp=false;
+	}
+}
+if (!xmlhttp && window.createRequest) {
+	try {
+		xmlhttp = window.createRequest();
+	} catch (e) {
+		xmlhttp=false;
+	}
+}
+if (xmlhttp) {
+    xmlhttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+    xmlhttp.onreadystatechange = function () {};
+    xmlhttp.send(null);
+}	
+
+  #* show window in foreground *#
+self.focus();
+
+</script>
+
+  </head>
+  <body class="#PageBaseCSSClass()">
+    <noscript>
+	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+    </noscript>
+<!--  BEGIN: layout/html/portalu/decorator.vm -->
+    <div class="#PageBaseCSSClass()">
+
+<!-- IDENTITY AREA -->
+#set($langCode = '')
+#if($preferedLocale.toString() == 'en')
+	#set($langCode = "en_")
+#end
+#set($currentPage = $site.getPage().url)
+#if($currentPage == "/main-maps.psml")
+<div id="identity" class="${langCode}motiv_karten">
+#elseif($currentPage == "/search-detail.psml")
+<div id="identity" class="${langCode}motiv_suche">
+#else
+<div id="identity" class="${langCode}motiv_blank">
+#end
+  <!-- LOGO -->
+  <div id="logo">
+    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
+  </div>
+</div>
+
+<!-- CONTENT BLOCK -->
+<div id="container">
+  
+## $jetspeed.include($jetspeed.currentFragment)
+
+<!--  END: layout/html/portalu/decorator.vm -->

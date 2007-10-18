@@ -1,0 +1,61 @@
+
+#* Add the current layouts configuration values to the context *#
+#defineLayoutObjects()
+
+#* Loads our custom macros *#
+#parse($layoutDecoration.getResource("decorator-macros.vm"))
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+  <title>PortalU</title>
+  <meta http-equiv="Content-type" content="#ContentType()" />
+  <meta http-equiv="Content-style-type" content="text/css" />   
+  <meta http-equiv="content-language" content="DE" />
+  <meta name="description" content="#PageDescription()" />
+  <meta name="version" content="#SiteVersionTag()" />
+  <meta name="author" content="wemove digital solutions" />
+  <meta name="keywords" content="" />
+  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="robots" content="index,follow" />
+  <link rel="shortcut icon" href="#BaseHref()#GetPageResource('images/favicon.ico')" />
+
+  #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+  #foreach($style in $theme.styleSheets)        
+  	<link rel="stylesheet" type="text/css" media="screen, projection" href="#BaseHref()$style"  />
+  #end
+  
+<script language="JavaScript" type="text/javascript">
+	/*@cc_on @if (@_win32 && @_jscript_version >= 5) if (!window.XMLHttpRequest)
+    function XMLHttpRequest() { return new ActiveXObject('Microsoft.XMLHTTP') }
+    @end @*/
+	
+	var xmlHttp = new XMLHttpRequest;
+
+	if (xmlHttp) {
+        xmlHttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+        xmlHttp.onreadystatechange = function () {
+        };
+        xmlHttp.send(null);
+    }	
+</script>
+
+  </head>
+  <body class="#PageBaseCSSClass()">
+    <noscript>
+	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+    </noscript>
+<!--  BEGIN: layout/html/portalu/decorator.vm -->
+    <div class="#PageBaseCSSClass()">
+
+<!-- IDENTITY AREA -->
+#set($langCode = '')
+#if($preferedLocale.toString() == 'en')
+	#set($langCode = "en_")
+#end
+<div id="popupheader" class="${langCode}motiv_hilfe">&nbsp;</div>
+
+<!-- CONTENT BLOCK -->
+  
+## $jetspeed.include($jetspeed.currentFragment)
+
+<!--  END: layout/html/portalu/decorator.vm -->
