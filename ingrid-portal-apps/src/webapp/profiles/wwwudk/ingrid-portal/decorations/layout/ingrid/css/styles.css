@@ -39,11 +39,11 @@ a.selected { font-weight:bold; }
 
 h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:1em; }
 h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
-h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4; margin-bottom:0.3em; }
+h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
 table.border { border-collapse:collapse; }
 table.fullwidth { width:100%; }
-th {font-size: 75%; vertical-align:top; padding:3;}
+th {font-size: 75%; vertical-align:top; padding:3px;}
 td {font-size: 75%; vertical-align:top; padding-left:3px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
@@ -176,7 +176,7 @@ div#subnav ul li a:active {text-decoration:none; color:#111111;}
 div#subnav ul li a:hover, div#subnav ul li a:focus {color:#111111;text-decoration:underline;}
 
 div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#DDE9BD}
-div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;bottom;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#DDE9BD}
+div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#DDE9BD}
 
 /********************************************************************
   content block styles
@@ -414,6 +414,7 @@ div.formbody select.group_by { width:15em;}
 
 div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; line-height: 130%; }
 div.formbody .inputstyle {border: 1px inset #FFFFFF;}
+div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody input.large {width:15em;}
 
@@ -540,5 +541,7 @@ div.helpcontent li a { font-size:75%; }
 a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#176798; color: white; }
 
 .contentRowEven { background-color: #F4F4F4; }
+.contentRowEvenError { background-color: #F4D4D4; }
 .contentRowOdd { background-color: #E0E0E0; }
+.contentRowOddError { background-color: #E0C0C0; }
 .contentInput { width:50em; }

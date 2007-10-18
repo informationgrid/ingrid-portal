@@ -416,6 +416,7 @@ div.formbody select.group_by { width:15em;}
 
 div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; line-height: 130%; }
 div.formbody .inputstyle {border: 1px inset #FFFFFF;}
+div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody input.large {width:15em;}
 
@@ -542,5 +543,7 @@ div.helpcontent li a { font-size:75%; }
 a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#176798; color: white; }
 
 .contentRowEven { background-color: #F4F4F4; }
+.contentRowEvenError { background-color: #F4D4D4; }
 .contentRowOdd { background-color: #E0E0E0; }
+.contentRowOddError { background-color: #E0C0C0; }
 .contentInput { width:50em; }
