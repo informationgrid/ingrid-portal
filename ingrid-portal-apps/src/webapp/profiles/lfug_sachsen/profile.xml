@@ -15,6 +15,14 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-help.xml</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-help_en.xml</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
         </file>
         <file>
@@ -129,6 +137,18 @@
             <action>copy</action>
             <src>ingrid-portal-apps/images/icn_linkintern.gif</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources.properties</src>
+        </file>
     </files>
     <sql>
         <execute>
@@ -136,6 +156,9 @@
         </execute>    
         <execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title="About Sachsen PortalU" WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key="portalu.about") AND item_lang="en";]]>
-        </execute>    
+        </execute>
+        <execute>
+            <![CDATA[UPDATE LINK SET URL="mailto:Poststelle.LfUG@smul.sachsen.de" WHERE NAME="webmaster.link";]]>
+        </execute>
     </sql>
 </profile>

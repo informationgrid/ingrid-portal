@@ -47,7 +47,7 @@
   
   <!-- TITLE -->
   <div id="title">
-    <img src="#GetPageResource('images/title.gif')" alt="Titel der Seite" />
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/title.gif')" alt="Titel der Seite" /></a>
   </div>
 
   <!-- LOGO -->
@@ -55,7 +55,7 @@
     <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo_sachsen.gif')" alt="Logo Sachsen PortalU" /></a>
   </div>
 
-  <div style="padding:0.15em 1.2em 0.15em 0.6em; background-color:#FFFFFF; float: left;"><img src="#GetPageResource('images/logo_portalu_sachsen.gif')"/></div>
+  <div style="padding:0.15em 1.2em 0.15em 0.6em; background-color:#FFFFFF; float: left;"><a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo_portalu_sachsen.gif')"/></a></div>
   
   <!-- SERVICE-NAVIGATION -->
   <div id="servicenav"><a name="servicenav"></a>
@@ -186,7 +186,7 @@
 		## read localized title from resource with title from psml as key !
 		#if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))			
+            #set($linkName = $MESSAGES.getString($linkName))
 		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #if($velocityCount > 1)

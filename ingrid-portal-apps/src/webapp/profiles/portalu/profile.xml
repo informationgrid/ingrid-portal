@@ -553,6 +553,8 @@
         <execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title="About PortalU" WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key="portalu.about") AND item_lang="en";]]>
         </execute>    
-
+        <execute>
+            <![CDATA[UPDATE LINK SET URL="mailto:webmaster@portalu.de" WHERE NAME="webmaster.link";]]>
+        </execute>
     </sql>
 </profile>
