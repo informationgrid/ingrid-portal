@@ -963,8 +963,8 @@
                     Suchausdruck) oder nach Aktualität (die neusten Seiten
                     stehen vorne) sortiert anzeigen lassen.</p>
                 <p>&#8222;Gruppierung&#8220; bedeutet, dass die
-                    Suchergebnisse nach Bund/Ländern oder Informationsanbietern
-                    zusammengefasst angezeigt werden.</p>
+                    Suchergebnisse nach Bund/Ländern, Informationsanbietern
+                    oder Domänen zusammengefasst angezeigt werden.</p>
             </content>
         </section>
         <section help-key="search-settings-3">
@@ -2131,7 +2131,8 @@
                     <p>Gruppierung bedeutet, dass alle Suchergebnisse einer
                         Seite zu Gruppen zusammengefasst werden. Je nach
                         Einstellung werden alle Suchergebnisse des Bundes oder
-                        eines Landes zusammengefasst oder die aller Anbieter.</p>
+                        eines Landes zusammengefasst oder die aller Anbieter
+                        oder Domänen.</p>
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>

@@ -204,6 +204,9 @@
                     <li>
                         <a href="help.psml?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
+                    <li>
+                        <a href="help.psml?hkey=search-catalog-1">Datenkataloge</a>
+                    </li>
                 </ul>
             </content>
         </section>
@@ -1057,17 +1060,6 @@
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
         </section>
-        <section help-key="search-tipps-5">
-            <header>Ich möchte zwar die persönlichen Einstellungen nutzen, aber
-                mir ist das Einloggen über Benutzernamen und Kennwort zu umständlich!</header>
-            <content>
-                <p>Sie können ein automatisches Einloggen über Benutzernamen und
-                    Kennwort konfigurieren. So  arbeiten Sie immer mit Ihren
-                    persönlichen Einstellungen, aber ohne zusätzliche Eingabe
-                    von Benutzernamen und Kennwort (siehe hierzu <a
-                        href="help.psml?hkey=myingrid-1">Mein PortalU</a>)</p>
-            </content>
-        </section>
     </chapter>
     <chapter>
         <header>Erweiterte Suche nach Adressen</header>
@@ -1464,6 +1456,21 @@
         </section>
     </chapter>
     <chapter>
+        <header>Datenkataloge</header>
+        <section help-key="search-catalog-1">
+            <header>Hierarchiebaum</header>
+            <content>
+                <p>Die angeschlossenen Datenkataloge und deren Inhalte werden in 
+                	einem Hierarchie-Baum dargestellt, gegliedert nach Bund/Länder.
+                	In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
+                	oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
+                	erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich 
+                	wie in der <a
+                    href="help.psml?hkey=search-results-2">Hauptergebnisliste</a> bei 
+                    der freien Suche.</p>
+            </content>
+        </section>
+    </chapter>
         <header>Umweltchronik</header>
         <section help-key="search-chronicle-1">
             <header>Umweltchronik</header>
