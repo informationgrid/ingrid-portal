@@ -22,6 +22,7 @@
 			<option value="partner" #getSelected('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
 #end
 			<option value="provider" #getSelected('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
+			<option value="domain" #getSelected('grouping' 'domain')>$MESSAGES.getString('common.form.grouping.domain')</option>
           </select>
           <span class="clearer"></span>
         </p>

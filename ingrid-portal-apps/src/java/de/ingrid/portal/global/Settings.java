@@ -65,35 +65,31 @@ public class Settings {
 
     // ------------- query field names -----------------------------
 
-    public final static String QFIELD_DATATYPE = IngridQuery.DATA_TYPE;
-
     // grouped Field
     public final static String QFIELD_GROUPED = "grouped";
 
     public final static String QFIELD_PARTNER = "partner";
-
     public static final String QFIELD_PROVIDER = "provider";
 
+    public static final String QFIELD_WWW_DOMAIN = "site";
     public static final String QFIELD_PLUG_ID = "plugid";
-    
+    public final static String QFIELD_DATATYPE = IngridQuery.DATA_TYPE;
+    public static final String QFIELD_METACLASS = "metaclass";
+
     // "service", "measures"; rubric
     public final static String QFIELD_RUBRIC = "topic";
 
     // "environment topics": first category
     public final static String QFIELD_TOPIC = "topic";
-
     // "environment topics": second category
     public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
 
     // "environment chronicle": event type
     public final static String QFIELD_EVENT_TYPE = "eventtype";
-
     // "environment chronicle", ...: at date
     public final static String QFIELD_DATE_AT = "t0";
-
     // "environment chronicle", ...: from date
     public final static String QFIELD_DATE_FROM = "t1";
-
     // "environment chronicle", ...: to date
     public final static String QFIELD_DATE_TO = "t2";
 
@@ -102,44 +98,30 @@ public class Settings {
 
     public static final String QFIELD_LANG = "lang";
 
-    public static final String QFIELD_METACLASS = "metaclass";
-    
-    
-    
+
     // ------------- query field values -----------------------------
 
     // datatype: area types
     // --------------------
     public final static String QVALUE_DATATYPE_AREA_SERVICE = "service";
-
     public final static String QVALUE_DATATYPE_AREA_MEASURES = "measure";
-
     public final static String QVALUE_DATATYPE_AREA_ENVTOPICS = "topics";
-
     public final static String QVALUE_DATATYPE_AREA_ENVINFO = "default";
-
     public final static String QVALUE_DATATYPE_AREA_ADDRESS = "address";
-
     public final static String QVALUE_DATATYPE_AREA_RESEARCH = "research";
 
     // datatype: source types
     // ----------------------
     public final static String QVALUE_DATATYPE_SOURCE_WWW = "www";
-
     public final static String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
-
     public final static String QVALUE_DATATYPE_SOURCE_FIS = "fis";
     
     // datatype: IPLUG types
     // ---------------------
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
-
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS = "dsc_ecs_address";
-
     public static final String QVALUE_DATATYPE_IPLUG_TAMINO = "tamino";
-    
     public final static String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
-
     public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
 
     public static final String QVALUE_LANG_DE = "de";
@@ -160,47 +142,38 @@ public class Settings {
     // ===========================================
 
     public final static String RESULT_KEY_TITLE = "title";
-
     public final static String RESULT_KEY_ABSTRACT = "abstract";
 
-    public final static String RESULT_KEY_PARTNER = "partner";
-
     public final static String RESULT_KEY_RUBRIC = "topic";
-
     public final static String RESULT_KEY_TOPIC = "topic";
-
     public final static String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
 
     public final static String RESULT_KEY_URL = "url";
-
     public final static String RESULT_KEY_URL_STR = "url_str";
-
+    public final static String RESULT_KEY_URL_DOMAIN = "url_domain";
     public final static String RESULT_KEY_URL_TYPE = "url_type";
 
+    public final static String RESULT_KEY_PARTNER = "partner";
     public final static String RESULT_KEY_PROVIDER = "provider";
 
     public final static String RESULT_KEY_SOURCE = "source";
-
     public final static String RESULT_KEY_TYPE = "type";
 
     public final static String RESULT_KEY_PLUG_ID = "plugid";
-
     public final static String RESULT_KEY_DOC_ID = "docid";
 
     public final static String RESULT_KEY_WMS_URL = "wms_url";
 
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
-
     public final static String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";
-
     public final static String RESULT_KEY_UDK_ADDRESS_LASTNAME = "address_lastname";
-
     public final static String RESULT_KEY_UDK_ADDRESS_TITLE = "address_title";
-
     public final static String RESULT_KEY_UDK_ADDRESS_SALUTATION = "address_salutation";
-
     public static final String RESULT_KEY_UDK_ADDRESS_PARENTS = "address_parents";
-    
+
+    public static final String RESULT_KEY_SUB_HIT = "subhit";
+    public static final String RESULT_KEY_DETAIL = "detail";
+
     // ===========================================
     // Hit Detail data (get data from hit details)
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
@@ -216,15 +189,10 @@ public class Settings {
 //    public final static String HIT_KEY_UDK_CLASS = "metaclass";
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
-    
     public static final String HIT_KEY_ADDRESS_FIRSTNAME = "T02_address.firstname";
-    
     public static final String HIT_KEY_ADDRESS_LASTNAME = "T02_address.lastname";
-
     public static final String HIT_KEY_ADDRESS_TITLE = "T02_address.title";
-
     public static final String HIT_KEY_ADDRESS_ADDRESS = "T02_address.address";
-
     public static final String HIT_KEY_ADDRESS_ADDRID = "T02_address.adr_id";
 
     // Object relations
@@ -319,39 +287,29 @@ public class Settings {
 
     // ACTION VALUES used by multiple portlets
     public final static String PARAMV_ACTION_SUBMIT = "doSubmit";
-
     public final static String PARAMV_ACTION_ORIGINAL_SETTINGS = "doOriginalSettings";
-
     public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
-
     public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-
     public final static String PARAMV_ACTION_CHANGE_TAB = "doChangeTab";
 
     // DATASOURCE VALUES
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";
-
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
-
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 
     // GROUPING VALUES
     public final static String PARAMV_GROUPING_OFF = "none";
-
     public final static String PARAMV_GROUPING_PARTNER = "partner";
-
     public final static String PARAMV_GROUPING_PROVIDER = "provider";
-
+    public final static String PARAMV_GROUPING_DOMAIN = "domain";
     public final static String PARAMV_GROUPING_PLUG_ID = "plugid";
     
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
     public final static String PARAM_QUERY_STRING = "q";
-
     public static final String PARAM_QUERY_STRING_EXT = "q_ext";
     
     public final static String PARAM_STARTHIT_RANKED = "rstart";
-
     public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
     public final static String PARAM_DATASOURCE = "ds";
@@ -369,23 +327,20 @@ public class Settings {
     // ------------- PARAM Keys, NOT used for messaging, just for access in Request -----------------------------
 
     public final static String PARAM_RUBRIC = "rubric";
+    public final static String PARAM_TOPIC_ID = "topId";
 
     public final static String PARAM_PARTNER = "partner";
+    public static final String PARAM_PROVIDER = "provider";
 
     public static final String PARAM_SUBJECT = "subject";
-
-    public static final String PARAM_PROVIDER = "provider";
     
     public final static String PARAM_GROUPING = "grouping";
 
     public final static String PARAM_ACTION = "action";
 
-    public final static String PARAM_TOPIC_ID = "topId";
-
     public final static String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
-
     public static final String PARAM_CURRENT_SELECTOR_PAGE_UNRANKED = "currentSelectorPageUnranked";
 
     // ------------- Session keys for direct HTTP session manipulation -------------------------

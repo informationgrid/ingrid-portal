@@ -154,6 +154,7 @@ public class UtilsSearch {
                 result.put(Settings.RESULT_KEY_URL, value);
                 result.put(Settings.RESULT_KEY_URL_STR, UtilsString.getShortURLStr(value,
                         Settings.SEARCH_RANKED_MAX_ROW_LENGTH));
+                result.put(Settings.RESULT_KEY_URL_DOMAIN, UtilsString.getURLDomain(value));
 
                 String urlLowerCase = value.toLowerCase();
                 if (urlLowerCase.indexOf(".pdf") != -1) {
@@ -691,6 +692,44 @@ public class UtilsSearch {
     }
 
     /**
+     * Add domain to query
+     * 
+     * @param query
+     * @param domain
+     */
+    public static void processDomain(IngridQuery query, String subject) {
+        if (subject != null && subject.trim().length() > 0) {
+        	// domain subject already contains key, e.g. "site:..." or "plugid:..."
+        	String[] keyValuePair = getDomainKeyValuePair(subject);
+        	String domainKey = keyValuePair[0];
+        	String domainValue = keyValuePair[1];
+        	// domain can be plugid or site or ...
+        	// we extract the according value from our subject
+        	if (domainKey.equals(Settings.QFIELD_PLUG_ID)) {
+        		processIPlugs(query, new String[] { domainValue });
+        	} else {
+        		if (!UtilsSearch.containsFieldOrKey(query, domainKey)) {
+                	query.addField(new FieldQuery(true, false, domainKey, domainValue));
+                }        		
+        	}
+        }
+    }
+
+    /**
+     * When grouping by domain is active and all results of one domain should be shown
+     * then this method extracts the key/value pair from the domain subject (was passed
+     * in request from "Zeige alle ...").
+     * NOTICE: a domain can be a datasource (plugid) or a top level domain of a URL ...
+     * ( e.g. domain subject like "site:???" or "plugid:???")  
+     * 
+     * @param domainSubject the subject as its was passed from "Zeige alle" request
+     * @param key/value Pair for ingrid query (String[0]=key, String[1]=value)
+     */
+    public static String[] getDomainKeyValuePair(String domainSubject) {
+    	return domainSubject.split("::");
+    }
+
+    /**
      * Add grouping to query
      * 
      * @param query
@@ -702,6 +741,10 @@ public class UtilsSearch {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PARTNER);
             } else if (grouping.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_ORGANISATION);
+            } else if (grouping.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
+                query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_DATASOURCE);
+            } else {
+                query.remove(Settings.QFIELD_GROUPED);
             }
         }
     }

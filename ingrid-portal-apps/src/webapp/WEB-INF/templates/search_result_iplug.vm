@@ -1,48 +1,60 @@
-<!-- RESULTS LEFT -->
-    <div class="section">  
-      <div class="resultset_nav float_left">
-#renderUnrankedResultCounter($unrankedPageSelector)
-      </div>
-      <div class="resultset_nav">
-#renderUnrankedPageNavigation($unrankedPageSelector)
-      </div>
-      <br />
-#if($unrankedResultList && "$unrankedResultList.length()" != "0")
-	#foreach($rs in $unrankedResultList.hits)
-		#if($velocityCount == 1)
-		<div class="resultset_partner_group">
-			<div class="ico_down_black"><span class="title">$rs.dataSourceName</span><br /></div>
-			<p class="result_description">
-              $rs.dataSourceDescription
-			</p>
-			<p class="result_metadata">
-              $MESSAGES.getString('common.result.provider'): $rs.organisation
-			</p>
-		</div>
-		#end
-		<div class="resultset">
-		  #if($rs.type == "detail-style")
-		    #if($rs.udk_class)
-		      #set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
-		      #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
-			  <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
-		    #else
-			  <span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
-		    #end
-          #else
-			  <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
-		  #end
-		</div>
-	#end
-#else
-		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+#if ($IS_RANKED)
+	## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
+	#parse ('/WEB-INF/templates/include_search_result_filter.vm')
 #end
-      <div class="resultset_nav float_left">
-#renderUnrankedResultCounter($unrankedPageSelector)
-      </div>
-      <div class="resultset_nav">
-#renderUnrankedPageNavigation($unrankedPageSelector)
-      </div>
 
+	<div class="section">  
+	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+      <br />
+
+#if ($IS_RANKED)
+	## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
+    #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
+    	#foreach($rs in $rankedResultList.hits)
+           	#if($velocityCount > 1)
+           		<div class="line"><hr /></div>
+           	#end
+    		#set ($topHit = true)
+    		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+    	#end
+    #else
+    		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+    #end
+#else
+	## UNRANKED -> CALLED FROM RIGHT COLUMN (where grouped by iplug)
+    #if($unrankedResultList && "$unrankedResultList.length()" != "0")
+    	#foreach($rs in $unrankedResultList.hits)
+    		#if($velocityCount == 1)
+    		<div class="resultset_partner_group">
+    			<div class="ico_down_black"><span class="title">$rs.dataSourceName</span><br /></div>
+    			<p class="result_description">
+                  $rs.dataSourceDescription
+    			</p>
+    			<p class="result_metadata">
+                  $MESSAGES.getString('common.result.provider'): $rs.organisation
+    			</p>
+    		</div>
+    		#end
+    		<div class="resultset">
+    		  #if($rs.type == "detail-style")
+    		    #if($rs.udk_class)
+    		      #set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
+    		      #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+    			  <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
+    		    #else
+    			  <span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
+    		    #end
+              #else
+    			  <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
+    		  #end
+    		</div>
+    	#end
+    #else
+    		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+    #end
+#end
+	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     </div>
   <div class="clearer"></div>

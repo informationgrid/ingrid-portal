@@ -1,3 +1,6 @@
+## set flag indicating how to render stuff (e.g. in includes)
+#set ($IS_RANKED = true)
+
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
 <!-- RESULTS LEFT -->

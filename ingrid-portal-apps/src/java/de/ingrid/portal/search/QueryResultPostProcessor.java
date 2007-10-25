@@ -37,44 +37,24 @@ public class QueryResultPostProcessor {
             }
             IngridHit[] hitArray = hits.getHits();
 
-            String tmpString = null;
             IngridHit hit = null;
             IngridHitDetail detail = null;
 
             for (int i = 0; i < hitArray.length; i++) {
                 try {
                     hit = hitArray[i];
+                    detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
-                    detail = (IngridHitDetail) hit.get("detail");
+                    processRankedHit(hit, detail, ds);
+                    
+                    // also process group sub hits !
+                    hit = (IngridHit) hit.get(Settings.RESULT_KEY_SUB_HIT);
+                    if (hit != null) {
+                        detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
-                    // if no detail, skip processing OF THIS HIT !
-                    if (detail == null) {
-                        if (log.isErrorEnabled()) {
-                            log.error("Ranked Hit Detail is NULL !!!!!!!!!!!!!!!!! hit=" + hit);
-                        }
-                        continue;
+                        processRankedHit(hit, detail, ds);
                     }
 
-                    UtilsSearch.transferHitDetails(hit, detail);
-
-                    tmpString = detail.getIplugClassName();
-                    if (tmpString == null) {
-                        tmpString = "";
-                        if (log.isErrorEnabled()) {
-                            log.error("Ranked Hit Detail has no IplugClassName !!!! hit=" + hit + ", detail=" + detail);
-                        }
-                    }
-
-                    if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        processDSCHit(hit, detail, ds);
-                    } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
-                        hit.put(Settings.RESULT_KEY_TYPE, "www-style");
-                    } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
-                        hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
-                        hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
-                    } else {
-                        hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
-                    }
                 } catch (Exception ex) {
                     if (log.isErrorEnabled()) {
                         log.error("Problems processing Ranked Hit ! hit = " + hit + ", detail=" + detail, ex);
@@ -88,6 +68,37 @@ public class QueryResultPostProcessor {
         }
 
         return hits;
+    }
+
+    private static void processRankedHit(IngridHit hit, IngridHitDetail detail, String ds) {
+        // if no detail, skip processing OF THIS HIT !
+        if (detail == null) {
+            if (log.isErrorEnabled()) {
+                log.error("Ranked Hit Detail is NULL !!!!!!!!!!!!!!!!! hit=" + hit);
+            }
+            return;
+        }
+
+        UtilsSearch.transferHitDetails(hit, detail);
+
+        String tmpString = detail.getIplugClassName();
+        if (tmpString == null) {
+            tmpString = "";
+            if (log.isErrorEnabled()) {
+                log.error("Ranked Hit Detail has no IplugClassName !!!! hit=" + hit + ", detail=" + detail);
+            }
+        }
+
+        if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+            processDSCHit(hit, detail, ds);
+        } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
+            hit.put(Settings.RESULT_KEY_TYPE, "www-style");
+        } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
+            hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
+            hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
+        } else {
+            hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
+        }
     }
 
     public static IngridHits processUnrankedHits(IngridHits hits, String selectedDS) {
@@ -118,7 +129,7 @@ public class QueryResultPostProcessor {
                         UtilsSearch.transferPlugDescription(hit, plugDescr);
                     }
 
-                    detail = (IngridHitDetail) hit.get("detail");
+                    detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
                     // if no detail, skip processing OF THIS HIT !
                     if (detail == null) {
@@ -148,7 +159,7 @@ public class QueryResultPostProcessor {
                      continue;
                      }
 
-                     detail = (IngridHitDetail) hit.get("detail");
+                     detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
                      if (detail != null) {
                      UtilsSearch.transferHitDetails(hit, detail);
                      }

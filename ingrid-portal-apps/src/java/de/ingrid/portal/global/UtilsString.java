@@ -405,6 +405,20 @@ public class UtilsString {
         return resultB.toString();
     }
 
+    public static String getURLDomain(String urlStr) {
+
+        URL url = null;
+        try {
+            url = new URL(urlStr);
+        } catch (MalformedURLException e) {
+            return "invalid url syntax";
+        }
+
+        String host = url.getHost();
+        
+        return host;
+    }
+
     /**
      * Strip HTML tags from a string.
      * 

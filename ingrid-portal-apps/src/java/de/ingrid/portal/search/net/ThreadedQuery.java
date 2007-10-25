@@ -6,11 +6,13 @@ package de.ingrid.portal.search.net;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.IngridQuery;
 
 /**
  * Class for threaded ibus search. Queries the ibus in the run method and optionally
@@ -63,52 +65,64 @@ public class ThreadedQuery extends Thread {
                 }
 
                 IngridHit[] subHitArray = null;
-                //                IngridHitDetail[] subDetailArray = null;
                 for (int i = 0; i < hitArray.length; i++) {
+
                     // get Plug Description only for top Hits (grouped by iPlugs in right column)
                     if (qd.isGetPlugDescription()) {
                         hitArray[i].put("plugDescr", ibus.getIPlug(hitArray[i].getPlugId()));
                     }
                     // get details for all hits to display
                     if (qd.isGetDetails()) {
-                        hitArray[i].put("detail", details[i]);
-                        //                    hitArray[i].put("detail", ibus.getDetail(hitArray[i], qd.getQuery(),
-                        //                            qd.getRequestedFields()));
+                        hitArray[i].put(Settings.RESULT_KEY_DETAIL, details[i]);
 
                         // check for further hits (grouping)
                         subHitArray = hitArray[i].getGroupHits();
                         if (subHitArray != null && subHitArray.length > 0) {
-                            String noOfHitsPerIPlug = (String)hitArray[i].get("no_of_hits");
-                            if (noOfHitsPerIPlug == null) {
-                                noOfHitsPerIPlug = (String)details[i].get("no_of_hits");
-                            }
-                            if (noOfHitsPerIPlug == null) {
-                                noOfHitsPerIPlug = String.valueOf(subHitArray.length + 1);
-                            }
-                            hitArray[i].put("no_of_hits", noOfHitsPerIPlug);
-                            hitArray[i].putBoolean("moreHits", true);
-                        }
-                        /*
-                         // NOT NEEDED ANYMORE, WE ALWAYS RENDER ONLY FIRST HIT !!!!
+                        	
+                        	// determine number of hits in group
+                        	String groupLength = null;
+                        	boolean groupLengthException = false;
+                        	try {
+                        		// set in backend when grouping by domain (datasource)
+                            	groupLength = new Integer(hitArray[i].getGroupTotalHitLength()).toString();
+                        	} catch (Exception ex) {
+                        		// EXCEPTION MIGHT OCCUR DEPENDENT HOW HIT WAS SET UP IN BACKEND !
+                        		groupLengthException = true;
+                        	}
+                        	// set in "normal" grouping (partner, provider ...)
+                            if (groupLength == null) {
+                                groupLength = (String)hitArray[i].get("no_of_hits");                            	
 
-                         // check for grouping and get details of "sub hits"
-                         if (subHitArray.length > 0 && Settings.SEARCH_NUM_HITS_PER_GROUP > 1) {
-                         // only get Details of the hits we need to render !
-                         int numNeededSubHits = Settings.SEARCH_NUM_HITS_PER_GROUP - 1;
-                         if (subHitArray.length > numNeededSubHits) {
-                         IngridHit[] tmpHitArray = new IngridHit[numNeededSubHits];
-                         System.arraycopy(subHitArray, 0, tmpHitArray, 0, numNeededSubHits);
-                         subHitArray = tmpHitArray;
-                         hitArray[i].putBoolean("moreHits", true);
-                         }
-                         // separate the subHitArray to render in map !  
-                         hitArray[i].put("subHits", subHitArray);
-                         subDetailArray = ibus.getDetails(subHitArray, qd.getQuery(), qd.getRequestedFields());
-                         for (int j = 0; j < subDetailArray.length; j++) {
-                         subHitArray[j].put("detail", subDetailArray[j]);
-                         }
-                         }
-                         */
+                                if (groupLength == null) {
+                                	groupLength = (String)details[i].get("no_of_hits");
+
+                                	if (groupLength == null) {
+                                    	groupLength = String.valueOf(subHitArray.length + 1);
+                                    }
+                                }
+                            }
+
+                            hitArray[i].put("no_of_hits", groupLength);
+                            // default grouping: only top hit is shown, so we always have more hits
+                            hitArray[i].putBoolean("moreHits", true);
+                            
+                            // grouping by domain ? -> one sub hit is shown, we need details of first sub hit ...
+                            String grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
+                            if (IngridQuery.GROUPED_BY_DATASOURCE.equals(grouping)) {
+                            	IngridHit subHit = subHitArray[0];
+                                IngridHitDetail subDetail = ibus.getDetail(subHit, qd.getQuery(), qd.getRequestedFields());
+                                subHit.put(Settings.RESULT_KEY_DETAIL, subDetail);
+                                hitArray[i].put(Settings.RESULT_KEY_SUB_HIT, subHit);
+                                
+                                // 2 hits already shown, do we have more ?
+                                if (groupLengthException) {
+                                	// problems extracting group length -> assume we have more hits !
+                                	subHit.putBoolean("moreHits", true);
+                                } else if (new Integer(groupLength).intValue() > 2) {
+                                	subHit.putBoolean("moreHits", true);
+                                }
+                            }
+                        }
                     }
                 }
             }

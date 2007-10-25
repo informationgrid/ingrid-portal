@@ -116,7 +116,7 @@ public class QueryPreProcessor {
             query.put(IngridQuery.RANKED, ranking);
         }
 
-        // set filter params. If no filter is set, process grouping
+        // set filter params. If no filter is set, process GROUPING
         // FILTERING AND GROUPING are mutually exclusive 
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
         if (filter != null && filter.length() > 0) {
@@ -131,18 +131,24 @@ public class QueryPreProcessor {
                     // set filter for provider 
                     UtilsSearch.processProvider(query, new String[] { subject });
                 }
+            } else if (filter.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
+                // set filter for domain 
+                UtilsSearch.processDomain(query, subject);
             }
         } else {
             // no grouping when filter is set.
-            // set grouping ! ONLY IF NO GROUPING IN Query String Input !
+            // set GROUPING ! ONLY IF NO GROUPING IN Query String Input !
             if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
-                // adapt ranking to Search State
+                // adapt grouping to preferences
                 String grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);
 
                 // set grouping
                 UtilsSearch.processGrouping(query, grouping);
             }
         }
+        // adapt search state after processing grouping
+        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, query.get(Settings.QFIELD_GROUPED));
+
         // process persistent partner/provider
         processQueryPartnerProvider(request, query);
 

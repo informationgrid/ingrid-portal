@@ -255,7 +255,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                         for (int i = 0; i < requestedMetaData.length; i++) {
                             detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
                         }
-                        hits.getHits()[j].put("detail", detail);
+                        hits.getHits()[j].put(Settings.RESULT_KEY_DETAIL, detail);
                         result.add(hits.getHits()[j]);
                     }
                 }
@@ -293,7 +293,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	
     	for (int i=0; i<unfilteredHits.size(); i++) {
     		IngridHit hit = (IngridHit) unfilteredHits.get(i);
-    		IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+    		IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
     		if (detail != null) {
             	// hit data

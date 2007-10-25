@@ -1,14 +1,12 @@
-	<div class="portlet">
-      <div class="resultset_nav float_left">
-#renderUnrankedResultCounterGrouping($unrankedPageSelector)
-      </div>
+## set flag indicating how to render stuff (e.g. in includes)
+#set ($IS_RANKED = false)
 
+	<div class="portlet">
+	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
       <div class="resultset_nav">
         &nbsp;
       </div>
-      <div class="resultset_nav">
-#renderUnrankedPageNavigationGrouping($unrankedPageSelector)
-      </div>
+	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
       <br />
 
 #if($unrankedSearchFinished && $unrankedResultList && "$unrankedResultList.length()" != "0")
@@ -63,14 +61,9 @@ $action.setParameter('grouping', 'plugid')
 		<p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
 #end
       
-      <div class="resultset_nav float_left">
-#renderUnrankedResultCounterGrouping($unrankedPageSelector)
-      </div>
-
+	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
       <div class="resultset_nav">
         &nbsp;
       </div>
-      <div class="resultset_nav">
-#renderUnrankedPageNavigationGrouping($unrankedPageSelector)
-      </div>
+	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     </div> 

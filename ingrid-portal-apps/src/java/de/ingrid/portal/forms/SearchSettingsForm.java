@@ -22,7 +22,7 @@ public class SearchSettingsForm extends ActionForm {
     public static final String FIELD_GROUPING = "grouping";
     public static final String FIELD_INCL_META = "incl_meta";
 
-    private static final String VALUE_GROUPING_INIT = "none";
+    private static final String VALUE_GROUPING_INIT = "domain";
     private static final String VALUE_RANKING_INIT = "score";
     
     

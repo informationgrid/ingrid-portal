@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -34,6 +35,13 @@ public class IngridSessionPreferences extends HashMap {
 
     public static final String RESTRICTING_PROVIDER = "restricting_provider";
     
+    public IngridSessionPreferences() {
+    	// initial values
+    	
+    	// default grouping
+    	this.put(IngridSessionPreferences.SEARCH_SETTING_GROUPING, Settings.PARAMV_GROUPING_DOMAIN);
+    }
+
     /**
      * Get object from preference map. If it does not exists, create a new
      * instance on the class.

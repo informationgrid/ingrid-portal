@@ -1,5 +1,5 @@
-              <div class="resultset_partner_group">
         		#set ($groupSubject = "")
+        		#set ($showGroupHeader = true)
 				#if($grouping == 'partner')
         			#set ($detailAction = "showAllForPartner")
         			#set ($groupSubject = "$MESSAGES.getString('common.result.partner') '$!rs.partner'")
@@ -16,6 +16,19 @@
 					#else
 						#set ($groupSubjectKey = "")
 					#end
+        		#elseif($grouping == 'domain')
+        			#set ($detailAction = "showAllForDomain")
+					#set ($showGroupHeader = false)
+        			#if($rs.url_type == "dsc")
+						#set ($groupSubject = $!rs.source)
+						#set ($groupSubjectKey = "plugid::$!rs.plugid")
+					#else
+						#set ($groupSubject = $!rs.url_domain)
+						#set ($groupSubjectKey = "site::$!rs.url_domain")
+					#end
         		#end
-                <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
-              </div>
+       			#if($showGroupHeader)
+					<div class="resultset_partner_group">
+						<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
+					</div>
+				#end

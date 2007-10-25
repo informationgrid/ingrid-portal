@@ -209,9 +209,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     allAddressChildren.addAll(subordinatedReferences);
                     for (int i = 0; i < subordinatedReferences.size(); i++) {
                         String myAddrId = (String) ((IngridHitDetail) ((IngridHit) subordinatedReferences.get(i))
-                                .get("detail")).get("T02_address.adr_id");
+                                .get(Settings.RESULT_KEY_DETAIL)).get("T02_address.adr_id");
                         String myAddrType = (String) ((IngridHitDetail) ((IngridHit) subordinatedReferences.get(i))
-                                .get("detail")).get("T02_address.typ");
+                                .get(Settings.RESULT_KEY_DETAIL)).get("T02_address.typ");
                         if (myAddrType.equals("0") || myAddrType.equals("1")) {
                             allAddressChildren.addAll(getAllAddressChildren(myAddrId, iplugId));
                         }
@@ -223,10 +223,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     HashMap subordinatedObjRef = new LinkedHashMap();
                     for (int i = 0; i < allAddressChildren.size(); i++) {
                         ArrayList l = getObjectsByAddress((String) ((IngridHitDetail) ((IngridHit) allAddressChildren
-                                .get(i)).get("detail")).get("T02_address.adr_id"), iplugId);
+                                .get(i)).get(Settings.RESULT_KEY_DETAIL)).get("T02_address.adr_id"), iplugId);
                         for (int j = 0; j < l.size(); j++) {
                             IngridHit objHit = (IngridHit) l.get(j);
-                            IngridHitDetail detail = (IngridHitDetail) objHit.get("detail");
+                            IngridHitDetail detail = (IngridHitDetail) objHit.get(Settings.RESULT_KEY_DETAIL);
                             String objId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
                             if (!subordinatedObjRef.containsKey(objId)) {
                                 subordinatedObjRef.put(objId, objHit);
@@ -446,9 +446,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 // no parent found
                 break;
             }
-            addressType = UtilsSearch.getDetailValue((IngridHitDetail) parent.get("detail"),
+            addressType = UtilsSearch.getDetailValue((IngridHitDetail) parent.get(Settings.RESULT_KEY_DETAIL),
                     Settings.HIT_KEY_ADDRESS_CLASS);
-            addressId = UtilsSearch.getDetailValue((IngridHitDetail) parent.get("detail"),
+            addressId = UtilsSearch.getDetailValue((IngridHitDetail) parent.get(Settings.RESULT_KEY_DETAIL),
                     Settings.HIT_KEY_ADDRESS_ADDRID);
             if (addressType.equals("0")) {
                 if (!result.containsKey("institutions")) {
@@ -705,7 +705,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         int size = result.size();
         for (int i = 0; i < size; i++) {
             IngridHit hit = (IngridHit) result.get(i);
-            IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+            IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
             String addrType = (String) detail.get(Settings.HIT_KEY_ADDRESS_CLASS);
             if (addrType.equals("0") || addrType.equals("1")) {
                 result.addAll(getAllAddressChildren((String) detail.get(Settings.HIT_KEY_ADDRESS_ADDRID), iPlugId));
@@ -767,8 +767,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String sa;
             String sb;
             try {
-                sa = (String) ((HashMap)((HashMap) a).get("detail")).get("title");
-                sb = (String) ((HashMap)((HashMap) b).get("detail")).get("title");
+                sa = (String) ((HashMap)((HashMap) a).get(Settings.RESULT_KEY_DETAIL)).get("title");
+                sb = (String) ((HashMap)((HashMap) b).get(Settings.RESULT_KEY_DETAIL)).get("title");
             } catch (Exception e) {
                 return 0;
             }

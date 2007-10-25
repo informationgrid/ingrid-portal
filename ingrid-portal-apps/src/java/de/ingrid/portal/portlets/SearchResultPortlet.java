@@ -61,7 +61,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
     private static final String TEMPLATE_RESULT_JS_UNRANKED = "/WEB-INF/templates/search_result_js_unranked.vm";
 
-    private static final String TEMPLATE_RESULT_IPLUG = "/WEB-INF/templates/search_result_iplug.vm";
+    private static final String TEMPLATE_RESULT_FILTERED_ONECOLUMN = "/WEB-INF/templates/search_result_iplug.vm";
     
     private HttpClient client;
 
@@ -167,15 +167,23 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // set filter params into context for filter display
         if (filter != null && filter.length() > 0) {
             context.put("filteredBy", filter);
-            if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, SearchState
-                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
-            } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, SearchState
-                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
-            } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, SearchState
-                        .getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT), null));
+            String filterSubject = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
+            if (filter.equals(Settings.PARAMV_GROUPING_PARTNER)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, filterSubject, null));
+            } else if (filter.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PROVIDER, filterSubject, null));
+            } else if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
+                context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, filterSubject, null));
+            } else if (filter.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
+            	String[] keyValuePair = UtilsSearch.getDomainKeyValuePair(filterSubject);
+            	String domainKey = keyValuePair[0];
+            	String domainValue = keyValuePair[1];
+            	// domain can be plugid or site or ...
+            	// we extract the according value from our subject
+            	if (domainKey.equals(Settings.QFIELD_PLUG_ID)) {
+            		domainValue = UtilsSearch.mapResultValue(Settings.RESULT_KEY_PLUG_ID, domainValue, null);
+            	}
+            	context.put("filterSubject", domainValue);
             }
         }
 
@@ -205,8 +213,18 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         } else {
             setDefaultViewPage(TEMPLATE_RESULT);
         }
-        if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-            setDefaultViewPage(TEMPLATE_RESULT_IPLUG);
+
+        // default: right column IS grouped (by plugid)
+    	// set in context e.g. to show grouped navigation
+    	context.put("grouping_right", new Boolean(true));
+        if (filter != null) {
+        	// set one column result template if "Zeige alle ..." of plug or domain
+        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) ||
+        		filter.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
+                setDefaultViewPage(TEMPLATE_RESULT_FILTERED_ONECOLUMN);
+            	// only one column to render we switch off grouping_right to show ungrouped navigation !
+                context.put("grouping_right", new Boolean(false));
+        	}
         }
 
         String currentView = getDefaultViewPage();
@@ -219,22 +237,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
 
         // find out if we have to render only one result column
-        boolean renderOneResultColumnRanked = true;
-        boolean renderOneResultColumnUnranked = true;
+        boolean renderResultColumnRanked = true;
+        boolean renderResultColumnUnranked = true;
         reqParam = request.getParameter("js_ranked");
         // check for one column rendering
         if (reqParam != null) {
             // check if we have to render only the ranked column
             if (reqParam.equals("true")) {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
-                renderOneResultColumnUnranked = false;
+                renderResultColumnUnranked = false;
             } else {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_UNRANKED);
-                renderOneResultColumnRanked = false;
+                renderResultColumnRanked = false;
             }
             // check for js enabled iframe rendering
         } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)
-                && !currentView.equals(TEMPLATE_RESULT_ADDRESS) && !currentView.equals(TEMPLATE_RESULT_IPLUG)) {
+                && !currentView.equals(TEMPLATE_RESULT_ADDRESS) && !currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
             // if javascript and new query, set template to javascript enabled iframe template
             // exit method!!
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
@@ -251,10 +269,17 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     + "&js_ranked=false"));
             super.doView(request, response);
             return;
-        } else if (currentView.equals(TEMPLATE_RESULT_IPLUG)) {
-            renderOneResultColumnRanked = false;
+        } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
+        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
+                renderResultColumnRanked = false;
+                context.put("IS_RANKED", new Boolean(false));
+        	} else {
+        		// grouping by domain
+                renderResultColumnUnranked = false;
+                context.put("IS_RANKED", new Boolean(true));
+        	}
         } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            renderOneResultColumnUnranked = false;
+            renderResultColumnUnranked = false;
         }
 
         // create threaded query controller
@@ -266,13 +291,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // store query in session
         UtilsSearch.addQueryToHistory(request);
 
-        // initialize grouping 
-        String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
-
         // RANKED
         IngridHits rankedHits = null;
         int numberOfRankedHits = 0;
-        if (renderOneResultColumnRanked) {
+        if (renderResultColumnRanked) {
             // check if query must be executed
             if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
                 rankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
@@ -286,19 +308,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     controller.addQuery("ranked", qd);
                     SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
                 }
-
-                // check for grouping
-                // this must be done here because grouping will only be 
-                // put into the query created by the pre processor
-                grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
-                SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, grouping);
             }
         }
 
         // UNRANKED
         IngridHits unrankedHits = null;
         int numberOfUnrankedHits = 0;
-        if (renderOneResultColumnUnranked) {
+        if (renderResultColumnUnranked) {
             if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
                 // check if query must be executed
                 if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
@@ -317,6 +333,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 }
             }
         }
+
+        // get grouping AFTER PREPROCESSING QUERY ! 
+        String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
 
         // fire query, post process results
         if (controller.hasQueries()) {
@@ -478,7 +497,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // GROUPING
         // adapt page navigation for grouping in left column 
-        if (renderOneResultColumnRanked) {
+        if (renderResultColumnRanked) {
             if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
                 rankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, new Integer(currentSelectorPage));
                 // check if we have more results to come
@@ -490,11 +509,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     context.put("grouping", "partner");
                 } else if (grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {
                     context.put("grouping", "provider");
+                } else if (grouping.equals(IngridQuery.GROUPED_BY_DATASOURCE)) {
+                    context.put("grouping", "domain");
                 }
             }
         }
         // adapt page navigation for right column (always grouped)
-        if (renderOneResultColumnUnranked) {
+        if (renderResultColumnUnranked) {
             unrankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, new Integer(
                     currentSelectorPageUnranked));
             // check if we have more results to come

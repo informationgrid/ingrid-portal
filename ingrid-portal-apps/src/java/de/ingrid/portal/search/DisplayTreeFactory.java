@@ -297,7 +297,7 @@ public class DisplayTreeFactory {
         Iterator it = hits.iterator();
         while (it.hasNext()) {
             IngridHit hit = (IngridHit) it.next();
-            IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+            IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
             udkDocId = UtilsSearch.getDetailValue(detail, key_udkDocId);
             String udkClass = UtilsSearch.getDetailValue(detail, key_udkClass);
 

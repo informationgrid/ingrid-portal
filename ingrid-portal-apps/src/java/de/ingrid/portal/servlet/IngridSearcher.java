@@ -5,6 +5,7 @@ package de.ingrid.portal.servlet;
 
 import java.util.HashMap;
 
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -26,7 +27,7 @@ public class IngridSearcher {
         IngridHit[] hitArray = hits.getHits();
         IngridHitDetail[] details =  IBUSInterfaceImpl.getInstance().getDetails(hitArray, q, null);
         for (int i = 0; i < hitArray.length; i++) {
-            hitArray[i].put("detail", details[i]);
+            hitArray[i].put(Settings.RESULT_KEY_DETAIL, details[i]);
         }
         
         return hits;
