@@ -164,8 +164,8 @@ public class QueryPreProcessor {
             // get the current page number, default to 1
             int currentSelectorPage;
             try {
-                currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE)))
-                        .intValue();
+                currentSelectorPage =
+                	(new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
             } catch (Exception ex) {
                 currentSelectorPage = 1;
             }

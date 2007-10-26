@@ -293,7 +293,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // RANKED
         IngridHits rankedHits = null;
-        int numberOfRankedHits = 0;
         if (renderResultColumnRanked) {
             // check if query must be executed
             if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
@@ -313,7 +312,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // UNRANKED
         IngridHits unrankedHits = null;
-        int numberOfUnrankedHits = 0;
         if (renderResultColumnUnranked) {
             if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
                 // check if query must be executed
@@ -338,6 +336,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
 
         // fire query, post process results
+        boolean rankedColumnHasMoreGroupedPages = true;
         if (controller.hasQueries()) {
             // fire queries
             HashMap results = controller.search();
@@ -400,16 +399,29 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     // get the grouping starthits history from session
                     // create and initialize if not exists
                     try {
-                        ArrayList groupedStartHits = null;
-                        groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
-                                Settings.PARAM_GROUPING_STARTHITS);
+                        ArrayList groupedStartHits = 
+                        	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
                         if (groupedStartHits == null) {
                             groupedStartHits = new ArrayList();
                             groupedStartHits.add(new Integer(0));
                             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
                         } else {
                             // set start hit for next page (grouping)
-                            groupedStartHits.add(currentSelectorPage, new Integer(rankedHits.getGoupedHitsLength()));
+                        	int nextStartHit = rankedHits.getGoupedHitsLength();
+                            groupedStartHits.add(currentSelectorPage, new Integer(nextStartHit));
+                        }
+
+                        // check whether there are more pages for grouped hits !
+                        if (rankedHits.length() <= rankedHits.getGoupedHitsLength()) {
+                            // total number of hits (ungrouped) already processed -> no more pages
+                        	rankedColumnHasMoreGroupedPages = false;                        	
+                        } else {
+                        	int currentStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
+                        	int nextStartHit = rankedHits.getGoupedHitsLength();
+                        	if (nextStartHit == currentStartHit) {
+                                // start hit for next page same as start hit for current page -> no more pages
+                            	rankedColumnHasMoreGroupedPages = false;
+                        	}
                         }
                     } catch (Exception ex) {
                         if (log.isInfoEnabled()) {
@@ -428,9 +440,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 // get the grouping starthits history from session
                 // create and initialize if not exists
                 try {
-                    ArrayList groupedStartHits = null;
-                    groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
-                            Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
+                    ArrayList groupedStartHits = 
+                    	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
                     if (groupedStartHits == null || unrankedHits == null) {
                         groupedStartHits = new ArrayList();
                         groupedStartHits.add(new Integer(0));
@@ -438,8 +449,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                                 groupedStartHits);
                     } else {
                         // set start hit for next page (grouping)
-                        groupedStartHits.add(currentSelectorPageUnranked, new Integer(unrankedHits
-                                .getGoupedHitsLength()));
+                    	int nextStartHit = unrankedHits.getGoupedHitsLength();
+                        groupedStartHits.add(currentSelectorPageUnranked, new Integer(nextStartHit));
                     }
                 } catch (Exception ex) {
                     if (log.isDebugEnabled()) {
@@ -452,13 +463,16 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
+        int numberOfRankedHits = 0;
         if (rankedHits != null) {
             numberOfRankedHits = (int) rankedHits.length();
         }
         // adapt settings of ranked page navigation
         HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
-                Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits, Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
+                Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits,
+                Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
+        int numberOfUnrankedHits = 0;
         if (unrankedHits != null) {
             if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
                 numberOfUnrankedHits = (int) unrankedHits.length();
@@ -472,8 +486,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
         Object rankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
-        Object unrankedSearchFinished = SearchState
-                .getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+        Object unrankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
         /*
          // DON'T SHOW separate Template when no results ! This one is never displayed when JS is active and search is performed
          // initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. whene similar terms are
@@ -501,7 +514,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
                 rankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, new Integer(currentSelectorPage));
                 // check if we have more results to come
-                if (numberOfRankedHits <= rankedHits.getGoupedHitsLength()) {
+                if (!rankedColumnHasMoreGroupedPages) {
                     rankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
                 }
                 // prepare view
