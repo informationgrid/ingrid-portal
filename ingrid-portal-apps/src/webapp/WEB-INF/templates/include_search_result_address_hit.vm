@@ -1,0 +1,68 @@
+## Renders Single Hit
+	## different margins dependent from grouping
+    #if($topHit)
+		<div class="resultset">
+	#else
+		<div class="resultset" style="margin-left:${subHitLeftMargin}px;">
+	#end
+		  #set($title = "")
+		  #if($rs.udk_class == "2")
+			#if($rs.address_salutation)#set($title = "$rs.address_salutation ")#end
+			#if($rs.address_lastname)#set($title = "$title$rs.address_lastname")#end
+			#if($rs.address_firstname)#set($title = "$title, $rs.address_firstname")#end
+		  #elseif($rs.udk_class == "3")
+			#if($rs.title && $rs.title != "")#set($title = "$rs.title ")#end
+			#if($rs.address_salutation && $rs.address_salutation != "")#set($title = "$title, $rs.address_salutation ")#end
+			#if($rs.address_lastname && $rs.address_lastname != "")#set($title = "$title$rs.address_lastname")#end
+			#if($rs.address_firstname && $rs.address_firstname != "")#set($title = "$title, $rs.address_firstname")#end
+		  #elseif($rs.udk_class == "1")
+			#foreach($parent in $rs.address_parents)
+				#set($title="$title$parent.title")
+				#set($title="$title, ")
+			#end
+			#set($title = "$title$rs.title")
+		  #else
+			#set($title = "$rs.title")
+		  #end
+		  #if ($title)
+			#if($rs.type == "detail-style")
+			  #if($rs.udk_class)
+				#set($udkObjClassNameKey = "udk_adr_class_name_$rs.udk_class")
+				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_adr_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($title) </a></strong></span>
+			  #else
+				<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($title)</a></strong></span>
+			  #end
+			#else
+			  <span class="result_title"><strong>#renderTitle($title) </strong></span>
+			#end		
+            <p class="result_description">
+            $!rs.abstract 
+            </p>
+            <p class="result_metadata">
+##              Anbieter: $!rs.partner<br />
+			#if($grouping)
+				#if($grouping == 'partner')
+					$MESSAGES.getString('common.result.provider'): $!rs.provider<br />
+				#end
+			#else
+              $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
+			#end
+              $MESSAGES.getString('common.result.source'): $!rs.source<br />
+##              Ranking: $!rs.score<br />
+            </p>
+			#if($rs.wms_url)
+			<p class="result_link">
+				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$rs.wms_url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
+			</p>				
+			#end
+			#if($rs.url)
+			<p class="result_link">
+              <a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
+            </p>
+			#end
+		  #else
+			<span class="result_title"><strong>$MESSAGES.getString('common.result.empty')</strong></span>
+			<p class="result_link"></p>
+		  #end
+          </div>

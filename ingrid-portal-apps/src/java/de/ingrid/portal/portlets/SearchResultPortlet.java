@@ -212,20 +212,21 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             setDefaultViewPage(TEMPLATE_RESULT_ADDRESS);
         } else {
             setDefaultViewPage(TEMPLATE_RESULT);
+
+            // default: right column IS grouped (by plugid)
+        	// set in context e.g. to show grouped navigation
+        	context.put("grouping_right", new Boolean(true));
+            if (filter != null) {
+            	// set one column result template if "Zeige alle ..." of plug or domain
+            	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) ||
+            		filter.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
+                    setDefaultViewPage(TEMPLATE_RESULT_FILTERED_ONECOLUMN);
+                	// only one column to render we switch off grouping_right to show ungrouped navigation !
+                    context.put("grouping_right", new Boolean(false));
+            	}
+            }
         }
 
-        // default: right column IS grouped (by plugid)
-    	// set in context e.g. to show grouped navigation
-    	context.put("grouping_right", new Boolean(true));
-        if (filter != null) {
-        	// set one column result template if "Zeige alle ..." of plug or domain
-        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) ||
-        		filter.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
-                setDefaultViewPage(TEMPLATE_RESULT_FILTERED_ONECOLUMN);
-            	// only one column to render we switch off grouping_right to show ungrouped navigation !
-                context.put("grouping_right", new Boolean(false));
-        	}
-        }
 
         String currentView = getDefaultViewPage();
 
@@ -514,8 +515,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
                 rankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, new Integer(currentSelectorPage));
                 // check if we have more results to come
-                if (!rankedColumnHasMoreGroupedPages) {
-                    rankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
+                if (rankedColumnHasMoreGroupedPages) {
+                    rankedPageNavigation.put("selectorHasNextPage", new Boolean(true));
+                } else {
+                    rankedPageNavigation.put("selectorHasNextPage", new Boolean(false));                	
                 }
                 // prepare view
                 if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
