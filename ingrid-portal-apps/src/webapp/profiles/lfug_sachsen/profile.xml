@@ -7,7 +7,83 @@
             <name>main-maps.psml</name>
             <hidden>true</hidden>
         </page>
-    </pages>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>false</hidden>
+        </page>
+      </pages>
     <files>
         <file>
             <action>copy</action>
@@ -149,6 +225,18 @@
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources.properties</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources.properties</src>
+        </file>
     </files>
     <sql>
         <execute>
@@ -159,6 +247,9 @@
         </execute>
         <execute>
             <![CDATA[UPDATE LINK SET URL="mailto:Poststelle.LfUG@smul.sachsen.de" WHERE NAME="webmaster.link";]]>
+        </execute>
+        <execute>
+            <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value="radiation";]]>
         </execute>
     </sql>
 </profile>

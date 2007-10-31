@@ -48,11 +48,13 @@
 					<p>$MESSAGES.getString("sitemap.area.main.topics.description")</p>
 				</li>
 #end
+#if($enableMaps)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-maps.psml"))
 					<a href="$link" title="$MESSAGES.getString('common.tooltip.link.extern')" target="_new">$MESSAGES.getString("sitemap.area.main.maps")</a>
 					<p>$MESSAGES.getString("sitemap.area.main.maps.description")</p>
 				</li>
+#end
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-chronicle.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.chronicle")</a>

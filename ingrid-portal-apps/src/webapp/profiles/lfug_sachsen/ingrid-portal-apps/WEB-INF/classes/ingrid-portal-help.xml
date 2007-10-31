@@ -25,13 +25,10 @@
                         <a href="help.psml?hkey=search-chronicle-1">Umweltchronik</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=maps-1">Karten</a>
-                    </li>
-                    <li>
                         <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ingrid-inform-1">PortalU informiert</a>
+                        <a href="help.psml?hkey=ingrid-inform-1">Sachsen PortalU informiert</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>
@@ -119,7 +116,7 @@
                     Informationen über Veranstaltungen und aktuelle
                     Publikationen im Umweltbereich.</p>
                 <p>
-                    <b>Messwerte</b>: PortalU informiert Sie rund um die Uhr
+                    <b>Messwerte</b>: Sachsen PortalU informiert Sie rund um die Uhr
                     über den aktuellen Zustand Ihrer Umwelt.</p>
                 <p>
                     <b>Umweltchronik</b>: Wann trat das Kyoto-Protokoll in
@@ -178,8 +175,8 @@
                 <ul>
                     <li>Umweltinformationen: behördliche Informationen zur Umwelt</li>
                     <li>Adressen: Zuständigkeiten</li>
-                    <li>Forschungsprojekte: Projekte zur Umweltforschung</li>
                 </ul>
+                <p>Die Suche kann auf einen Informationsanbieter eingeschränkt werden.</p>
             </content>
         </section>
         <section help-key="search-2">
@@ -195,11 +192,6 @@
                     <li>
                         <a href="help.psml?hkey=ext-search-address-1">Erweiterte
                             Suche nach Adressen</a>
-                    </li>
-                    <li>
-                        <a
-                            href="help.psml?hkey=ext-search-research-1">Erweiterte
-                            Suche nach Forschungsprojekten</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-history-1">Suchhistorie</a>
@@ -986,8 +978,8 @@
                     Suchausdruck) oder nach Aktualität (die neusten Seiten
                     stehen vorne) sortiert anzeigen lassen.</p>
                 <p>&#8222;Gruppierung&#8220; bedeutet, dass die
-                    Suchergebnisse nach Bund/Ländern, Informationsanbietern
-                    oder Domänen zusammengefasst angezeigt werden.</p>
+                    Suchergebnisse nach Bund/Ländern oder Informationsanbietern
+                    zusammengefasst angezeigt werden.</p>
             </content>
         </section>
         <section help-key="search-settings-3">
@@ -1129,46 +1121,6 @@
             <content>
                 <p>In diesem Bereich können Sie die Suche nach einer Adresse auf
                     eine Strasse, eine Postleitzahl oder einen Ort einschränken</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Forschungsprojekten</header>
-        <section help-key="ext-search-research-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, in dem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND)</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER)</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-research-2">
-            <header>Attribute</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach
-                    Forschungsprojekten den Projektnamen, die beteiligten
-                    Institutionen, den Projektleiter, weitere Beteiligte, den
-                    Projektträger und die Laufzeit einschränken.</p>
-                <p>Bitte beachten Sie, dass sich die Suche bei der Nutzung
-                    dieser Filtermöglichkeiten ausschließlich auf Datenbanken
-                    beschränkt, die eine Suche in dem jeweiligen Attribut
-                    unterstützen. Sie schränken den Suchraum dadurch ggf.
-                    erheblich ein.</p>
             </content>
         </section>
     </chapter>
@@ -1980,9 +1932,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>PortalU informiert</header>
+        <header>Sachsen PortalU informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>PortalU informiert</header>
+            <header>Sachsen PortalU informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
                     Betreiber des Portals bereitgestellt werden.</p>
@@ -2152,8 +2104,7 @@
                     <p>Gruppierung bedeutet, dass alle Suchergebnisse einer
                         Seite zu Gruppen zusammengefasst werden. Je nach
                         Einstellung werden alle Suchergebnisse des Bundes oder
-                        eines Landes zusammengefasst oder die aller Anbieter
-                        oder Domänen.</p>
+                        eines Landes zusammengefasst oder die aller Anbieter.</p>
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
