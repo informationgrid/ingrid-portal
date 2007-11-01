@@ -37,9 +37,10 @@ public class IngridSessionPreferences extends HashMap {
     
     public IngridSessionPreferences() {
     	// initial values
-    	
-    	// default grouping
-    	this.put(IngridSessionPreferences.SEARCH_SETTING_GROUPING, Settings.PARAMV_GROUPING_DOMAIN);
+    	if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN, false)) {
+	    	// default grouping
+	    	this.put(IngridSessionPreferences.SEARCH_SETTING_GROUPING, Settings.PARAMV_GROUPING_DOMAIN);
+    	}
     }
 
     /**

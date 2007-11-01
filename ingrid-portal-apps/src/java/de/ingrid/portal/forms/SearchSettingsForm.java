@@ -5,6 +5,8 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.config.PortalConfig;
+
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -23,6 +25,7 @@ public class SearchSettingsForm extends ActionForm {
     public static final String FIELD_INCL_META = "incl_meta";
 
     private static final String VALUE_GROUPING_INIT = "domain";
+    private static final String VALUE_GROUPING_NONE = "none";
     private static final String VALUE_RANKING_INIT = "score";
     
     
@@ -31,7 +34,11 @@ public class SearchSettingsForm extends ActionForm {
      */
     public void init() {
         clear();
-        setInput(FIELD_GROUPING, VALUE_GROUPING_INIT);
+    	if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN, false)) {
+    		setInput(FIELD_GROUPING, VALUE_GROUPING_INIT);
+    	} else {
+    		setInput(FIELD_GROUPING, VALUE_GROUPING_NONE);
+    	}
         setInput(FIELD_RANKING, VALUE_RANKING_INIT);
     }
 
