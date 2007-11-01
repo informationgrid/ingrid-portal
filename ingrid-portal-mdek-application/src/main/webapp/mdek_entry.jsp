@@ -1,0 +1,2098 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>MDEK Demo V4</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+<script type="text/javascript">
+	var djConfig = {isDebug: true, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
+</script>
+<script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="js/message.js"></script>
+<script type="text/javascript" src="js/includes.js"></script>
+<script type="text/javascript" src="js/recherche.js"></script>
+
+<script type="text/javascript">
+dojo.require("ingrid.widget.FormErfassungObjektContent");
+dojo.require("ingrid.widget.FormErfassungAdresseContent");
+</script>
+
+<script type="text/javascript" src="js/dialog.js"></script>
+<script type="text/javascript" src="js/erfassung.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
+
+<script type="text/javascript">
+
+// click handler for main menus
+var menus = [{menu:"page1", submenus:[]}, 
+			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]},
+			 {menu:"page3", submenus:[]},
+			 {menu:"page4", submenus:["page4", "page4Sub2"]}
+			];
+var currentMenu = null;
+var currentSubMenu = new Array();
+
+function clickMenu(menuName, submenuName) {
+	for(var i=0; i<menus.length; i++) {
+		var menu = menus[i].menu;
+		var submenus = menus[i].submenus;
+		if (menu != menuName) {
+			dojo.widget.byId(menu).hide();
+			dojo.html.removeClass(dojo.byId(menu+"Menu"), "current");
+			dojo.byId(menu+"Subnavi").style.display="none";
+			for (var j=0; j<submenus.length; j++) {
+				dojo.widget.byId(submenus[j]).hide();
+			}
+		} else {
+			dojo.widget.byId(menu).show();
+			dojo.html.addClass(dojo.byId(menu+"Menu"), "current");
+			dojo.byId(menu+"Subnavi").style.display="block";
+			
+			if (!submenuName)  {
+				submenuName = currentSubMenu[menu];
+			}
+			for (var j=0; j<submenus.length; j++) {
+				if (!submenuName)  {
+					submenuName = submenus[j];
+				}
+				if (submenus[j] != submenuName) {
+					dojo.widget.byId(submenus[j]).hide();
+					dojo.html.removeClass(dojo.byId(menu+"Subnavi"+(j+1)), "current");
+				} else {
+					dojo.widget.byId(submenus[j]).show();
+					dojo.html.addClass(dojo.byId(menu+"Subnavi"+(j+1)), "current");
+					currentSubMenu[menu] = submenus[j];
+				}
+			}
+		}
+	}
+}
+  
+
+
+  
+function hideSplash(){
+        dojo.byId("splash").style.display="none";
+        dojo.byId("layout").style.top="0px";
+}
+
+</script>
+
+
+<link rel="StyleSheet" href="css/main.css" type="text/css" />
+<link rel="StyleSheet" href="css/recherche.css" type="text/css" />
+<link rel="StyleSheet" href="css/erfassung.css" type="text/css" />
+
+</head>
+
+<body>
+
+<div id="splash" style="position: absolute; top: 0px; width: 100%;z-index: 100; height:2000px;background-color:#FFFFFF">
+<div style="position: relative; width: 100%;z-index: 100;top:200px">
+   <div align="center" style="line-height:16px">
+        <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
+        <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
+          <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px"> Metadaten Erfassungskomponenten</p>
+          <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>
+          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">loading...</p>
+        </div>
+   </div>
+</div>
+</div>
+
+
+<div dojoType="LayoutContainer" id="layout" class="layout" layoutChildPriority="top-bottom">
+
+  <div dojoType="FloatingPane" title="Dojo Debug Console" constrainToContainer="true" resizable="true" id="dojoDebugConsole"
+    displayMinimizeAction="true" displayMaximizeAction="true" displayCloseAction="true"	style="width:300px; height:500px; left:1000px; top:0; visibility:hidden;">
+    <div dojoType="ContentPane" id="dojoDebugOutput"></div>
+  </div>
+
+  <!-- NAVIGATION START -->
+	<div dojoType="ContentPane" id="headSection" layoutAlign="top">
+  	<div dojoType="ContentPane" style="height:70px; background-image:url(img/head_bg.gif);">
+  	  <div id="logo"><img src="img/logo.gif" width="119" height="24" alt="PortalU" /></div>
+  	  <div id="title"><img src="img/title_erfassung.gif" width="158" height="24" alt="Metadatenerfassung" /></div>
+  	  <div id="metaNavi">
+  	    <ul>
+  	      <li>Fred Kruse · Rollenbezeichnung · Katalog Niedersachsen</li>
+  	      <li class="seperator">|</li>
+  	      <li><a href="#" title="Hilfe">Hilfe</a></li>
+  	      <li class="seperator">|</li>
+  	      <li><a href="#" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum">Impressum</a></li>
+  	      <li class="seperator">|</li>
+  	      <li><a href="#" title="English">English</a></li>
+  	      <li class="seperator">|</li>
+  	      <li><a href="#" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
+  	    </ul>
+  	  </div>
+  	  <div id="navi">
+  	    <ul>
+  	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="#" class="current" title="Hierarchie & Erfassung">Hierarchie & Erfassung</a></li>
+  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="#" title="Recherche">Recherche</a></li>
+  	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="#" title="Statistik">Statistik</a></li>
+  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="#" title="Qualitätssicherung">Qualitätssicherung</a></li>
+  	    </ul>
+  	  </div>
+  	  
+	  <div id="page1Subnavi" class="subnavi" style="display:none"></div>
+	  <div id="page2Subnavi" class="subnavi" style="display:none">
+  	    <ul>
+  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="#" class="current" title="Suche">Suche</a></li>
+  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="#" title="Thesaurus-Navigator">Thesaurus-Navigator</a></li>
+  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="#" title="Datenbank-Suche">Datenbank-Suche</a></li>
+  	    </ul>
+  	  </div>
+	  <div id="page3Subnavi" class="subnavi" style="display:none"></div>
+	  <div id="page4Subnavi" class="subnavi" style="display:none">
+  	    <ul>
+   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="#" class="current" title="Bearbeitung/Verantwortlich">Bearbeitung/Verantwortlich</a></li>
+  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="#" title="Qualitätssicherung">Qualitätssicherung</a></li>
+  	    </ul>
+  	  </div>
+    </div>
+  
+  </div>
+  <!-- NAVIGATION END -->
+  
+  <div widgetId="page1" dojoType="LayoutContainer" layoutAlign="client">
+    <div dojoType="ContentPane" style="height:28px; background-image:url(img/toolbar_bg.gif);" layoutAlign="top">
+      <div id="toolbarLeft">
+      	<div dojoType="ToolbarContainer" templateCssPath="js/dojo/widget/templates/Toolbar.css">
+          <div dojoType="ingrid:Toolbar" widgetId="leftToolbar" id="leftToolbar"><!-- add items in addOnLoad //--></div>
+        </div>
+      </div>
+      
+      <div id="toolbarRight">
+      	<div dojoType="ToolbarContainer" templateCssPath="js/dojo/widget/templates/Toolbar.css">
+          <div dojoType="ingrid:Toolbar" widgetId="rightToolbar" id="rightToolbar"><!-- add items in addOnLoad //--></div>
+        </div>
+      </div>
+    </div>
+  <!-- SPLIT CONTAINER START -->
+  <div dojoType="SplitContainer" id="contentSection" class="contentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+    <!-- LEFT CONTENT PANE START -->
+  	<div dojoType="ContentPane" id="treeContainer" class="treeContainer">
+      <!-- tree components -->
+      <div dojoType="ingrid:TreeController" widgetId="treeController" RpcUrl="server/treelistener.php"></div>
+      <div dojoType="ingrid:TreeListener" widgetId="treeListener"></div>	
+      <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIcons"></div>	
+      <div dojoType="ingrid:TreeDecorator" listener="treeListener"></div>
+      
+      <!-- context menus -->
+      <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
+      <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu2"></div>
+      
+      <!-- tree -->
+      <div dojoType="ingrid:Tree" listeners="treeController;treeListener;contextMenu1;contextMenu2;treeDocIcons" widgetId="tree">
+        <!-- uncomment the next 2 lines in production
+      	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt"></div>
+      	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+        end of uncomment -->
+        <!-- remove the next lines in production -->
+      	<div dojoType="ingrid:TreeNode" title="Objekte" widgetId="o1" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt">
+        	<div dojoType="ingrid:TreeNode" title="Rechtsgrundlagen" widgetId="o2" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+        		<div dojoType="ingrid:TreeNode" title="Niedersächsische Rechtsgrundlagen" widgetId="o3" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+          		<div dojoType="ingrid:TreeNode" title="Gesetze des Landes Niedersachsen" widgetId="o31" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="o311" contextMenu="contextMenu1" nodeDocType="Class1" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="o312" contextMenu="contextMenu1" nodeDocType="Class2" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="o313" contextMenu="contextMenu1" nodeDocType="Class4" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="o314" contextMenu="contextMenu1" nodeDocType="Class5" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="o315" contextMenu="contextMenu1" nodeDocType="Class6" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="o316" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Elftes Gesetz zur Änderung des Niedersächsischen Wassergesetzes" widgetId="o317" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Niedersächsisches Wattenmeer'" widgetId="o318" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Abwasserabgabengesetz (Nds. AG AbwAG)" widgetId="o319" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+          		</div>
+          		<div dojoType="ingrid:TreeNode" title="Verordnungen und Vorschriften des Landes Niedersachsen" widgetId="o32" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="o321" contextMenu="contextMenu1" nodeDocType="Class1_B" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="o322" contextMenu="contextMenu1" nodeDocType="Class2_B" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="o323" contextMenu="contextMenu1" nodeDocType="Class4_B" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="o324" contextMenu="contextMenu1" nodeDocType="Class5_B" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="o325" contextMenu="contextMenu1" nodeDocType="Class6_B" nodeAppType="Objekt"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="o326" contextMenu="contextMenu1" nodeDocType="Class3_B" nodeAppType="Objekt"></div>
+              </div>
+        		</div>
+        		<div dojoType="ingrid:TreeNode" title="Bundesdeutsche Rechtsgrundlagen" widgetId="o4" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+        		<div dojoType="ingrid:TreeNode" title="Europäische und internationale Rechtsgrundlagen" widgetId="o5" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+        	</div>
+      	</div>
+      	<div dojoType="ingrid:TreeNode" title="Adressen" widgetId="a0" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse">
+        	<div dojoType="ingrid:TreeNode" title="Freie Adressen" widgetId="a1fa" contextMenu="contextMenu1" nodeDocType="PersonAddress" nodeAppType="Adresse">
+      		  <div dojoType="ingrid:TreeNode" title="Albers, Hans" widgetId="a1fa1" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
+      		  <div dojoType="ingrid:TreeNode" title="Bergmann, Ingrid" widgetId="a1fa2" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
+          </div>
+        	<div dojoType="ingrid:TreeNode" title="NDS. UMWELTMINISTERIUM" widgetId="a1" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+        		<div dojoType="ingrid:TreeNode" title="Abteilung 3: Immissionsschutz, Kreislaufwirtschaft und Abfall" widgetId="a11" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+        		<div dojoType="ingrid:TreeNode" title="Referatsgruppe Natur und Landschaft" widgetId="a12" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Artenschutz" widgetId="a121" contextMenu="contextMenu1" nodeDocType="InstitutionUnit" nodeAppType="Adresse"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Albers, Hans" widgetId="a1211" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
+          		  <div dojoType="ingrid:TreeNode" title="Bergmann, Ingrid" widgetId="a1212" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
+        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Naturparke" widgetId="a122" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
+        		</div>
+        		<div dojoType="ingrid:TreeNode" title="Abteilung 4: Energie, Atomaufsicht und Strahlenschutz" widgetId="a13" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Strahlenschutz" widgetId="a131" contextMenu="contextMenu1" nodeDocType="InstitutionUnit_B" nodeAppType="Adresse"></div>
+        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Energiepolitik" widgetId="a132" contextMenu="contextMenu1" nodeDocType="InstitutionPerson_Q" nodeAppType="Adresse"></div>
+        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Kernenergie" widgetId="a133" contextMenu="contextMenu1" nodeDocType="PersonAddress_R" nodeAppType="Adresse"></div>
+        		</div>
+        		<div dojoType="ingrid:TreeNode" title="Abteilung 1: Zentrale Aufgaben" widgetId="a14" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+        		<div dojoType="ingrid:TreeNode" title="Abteilung 2: Wasserwirtschaft" widgetId="a15" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+        	</div>
+      	</div>
+        <!-- end of remove -->
+      </div>
+  	</div>
+    <!-- LEFT CONTENT PANE END -->
+
+    <!-- RIGHT CONTENT PANE -->
+    <div dojoType="ContentPane" id="contentContainer" class="contentContainer" sizeMin="734" widgetId="content" style="overflow:hidden;">
+      <!-- START CONTENT OBJECT -->
+	  <div id="contentObject" style="display:block">
+	      <div dojoType="ContentPane" widgetId="headerFrame" id="sectionTopObject" class="sectionTop">
+	        <form method="get" id="headerFormObject">
+	          	<table cellspacing="0">
+	            	<tbody>
+	            		<tr>
+	            		  <td class="label"><label for="objectName">Objektname</label></td>
+	            		  <td colspan="2"><input type="text" id="objectName" name="objectName" class="w550" dojoType="ingrid:ValidationTextBox" /></td></tr>
+	            		<tr>
+	            		  <td class="label col1"><label for="objectClass">Objektklasse</label></td>
+	            		  <td class="col2">
+	                    <select dojoType="ingrid:Select" style="width:386px;" id="objectClass" name="objectClass">
+	                      <!-- TODO: fill in jsp -->
+	                      <option value="Class0">Organisationseinheit/Fachaufgabe</option>
+	                      <option value="Class1">Geo-Information/Karte</option>
+	                      <option value="Class2">Dokument/Bericht/Literatur</option>
+	                      <option value="Class3">Dienst/Anwendung/Informationssystem</option>
+	                      <option value="Class4">Vorhaben/Projekt/Programm</option>
+	                      <option value="Class5">Datensammlung/Datenbank</option>
+	                    </select>
+	                  </td>
+	            		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
+	            		<tr>
+	            		  <td class="label"><label for="objectOwner">Verantwortlicher</label></td>
+	            		  <td><input dojoType="ingrid:Select" dataUrl="js/data/owner.js" style="width:386px;" id="objectOwner" name="objectOwner" mode="remote" /></td>
+	            		  <td class="note"><strong>Status:</strong> in Bearbeitung</td></tr>
+	            		<tr>
+	            		  <td class="note" colspan="3"><strong>Erstellt am:</strong> 26.06.1998 | <strong>Ge&auml;ndert am:</strong> 27.09.2000 | <strong>Von:</strong> <span id="last_editor">Dezernat 501 Abfallwirtschaft, Abfallrecht</span></td></tr>
+	            	</tbody>
+	          	</table>
+	      	</form>
+	      </div>
+
+	      <!-- FORM -->
+	      <div dojoType="ContentPane" widgetId="contentFrameObject" id="contentFrameObject" class="sectionBottom" style="overflow:auto;">
+	        <form dojoType="ingrid:FormErfassungObjektContent" widgetId="contentFormObject" selectedClass="Class0" method="get" id="contentFormObject" action="">
+
+	        <div dojoType="ContentPane" id="contentFrameBodyObject" class="sectionBottomContent">
+
+	          <!-- ALLGEMEINES //-->
+	          <div id="general" class="contentBlock firstBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('general');" title="Nur Pflichtfelder aufklappen"><img id="generalRequiredToggle" src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Allgemeines')">Allgemeines</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="generalContent" class="content">
+
+	              <div class="inputContainer notRequired">
+	                <span class="label"><label for="generalShortDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kurzbezeichnung')">Kurzbezeichnung</label></span>
+	                <span class="input"><input type="text" id="generalShortDesc" name="generalShortDesc" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
+	          	  </div>
+
+	              <div class="inputContainer">
+	                <span class="label required"><label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
+	                <span class="input"><textarea id="generalDesc" name="generalDesc" class="w668 h055" /></textarea></span>
+	          	  </div>
+
+	              <div class="inputContainer noSpaceBelow h108">
+	                <span class="label required"><label for="generalAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'erfassung_modal_adresse.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                <div id="generalAddressTable" class="tableContainer rows4">
+	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="information" dataType="String" width="120">Auskunft</th>
+	                  			<th field="icon" dataType="String" width="35"></th>
+	                  			<th field="names" dataType="String" width="520">Namen</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            		      <tr value="1">
+	            		        <td>Auswertung</td>
+	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+	            		        <td><a href="#" title="Adresse &ouml;ffnen: Gerdes, G&uuml;nther">Gerdes, G&uuml;nther</a></td></tr>
+	            		      <tr value="2">
+	            		        <td>Auskunft</td>
+	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+	            		        <td><a href="#" title="Adresse &ouml;ffnen: Altm&uuml;ller, Reinhard">Altm&uuml;ller, Reinhard</a></td></tr>
+	            		      <tr value="3">
+	            		        <td>Datenhaltung</td>
+	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+	            		        <td><a href="#" title="Adresse &ouml;ffnen: Backhaus, Hermann">Backhaus, Hermann</a></td></tr>
+	            		      <tr value="4">
+	            		        <td>Datenhaltung</td>
+	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+	            		        <td><a href="#" title="Adresse &ouml;ffnen: Backhaus, Hermann">Backhaus, Hermann</a></td></tr>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	            </div>
+	          </div>
+
+	          <!-- FACHBEZUG CLASS 1 - GEO-INFORMATION/KARTE //-->
+	          <div id="refClass1" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass1');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="ref1Content" class="content">
+
+	              <div class="inputContainer required">
+	                <div class="half left">
+	                  <span class="label required"><label for="ref1DataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datensatz/Datenserie')">Datensatz/Datenserie*</label></span>
+	                  <span class="input spaceBelow"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:302px;" id="ref1DataSet" name="ref1DataSet" /></span>
+	                  <span class="label"><label for="ref1Coverage" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erfassungsgrad')">Erfassungsgrad</label></span>
+	                  <span class="input"><input type="text" id="ref1Coverage" name="ref1Coverage" class="w038" dojoType="ingrid:ValidationTextBox" /> %</span>
+	            	  </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="ref1Representation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Digitale Repr&auml;sentation')">Digitale Repr&auml;sentation</label></span>
+	                  <div class="tableContainer rows4">
+	                    <div class="cellEditors" id="ref1RepresentationEditors">
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/digital_representations.js" style="width:279px;" widgetId="ref1RepresentationCombobox"></div>
+	                    </div>
+	               	    <table id="ref1Representation" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="representation" dataType="String" editor="ref1RepresentationCombobox">Digitale Repräsentation</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td>Rasterdaten</td></tr>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+	            	  <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired h154">
+	                <span id="ref1VFormatLabel" class="label"><label class="inActive">Vektorformat</label></span>
+	                <div id="ref1VFormat" class="outlined h110">
+	                  <div class="thirdInside left">
+	                    <span class="label"><label for="ref1VFormatTopology" onclick="javascript:dialog.showContextHelp(arguments[0], 'Topologieinformation')">Topologieinformation</label></span>
+	                    <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:129px;" id="ref1VFormatTopology" name="ref1VFormatTopology" /></span>
+	                  </div>
+
+	                  <div class="thirdInside2">
+	                    <span class="label hidden"><label for="ref1VFormatDetails" onclick="javascript:dialog.showContextHelp(arguments[0], 'weitere Angaben')">weitere Angaben</label></span>
+	                    <div class="tableContainer rows5">
+	                      <div class="cellEditors" id="ref1VFormatDetailsEditors">
+	                        <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:120px;" widgetId="geometryTypeEditor"></div>
+	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="elementNumberEditor"></div>
+	                      </div>
+	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive thirdInside2">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="geometryType" dataType="String" width="120" editor="geometryTypeEditor">Geometrietyp</th>
+	                      			<th field="elementNumber" dataType="String" width="200" editor="elementNumberEditor">Elementanzahl</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                	      </tbody>
+	                	    </table>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <span class="label"><label for="ref1SpatialSystem" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezugssystem')">Raumbezugssystem</label></span>
+	                <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:649px;" id="ref1SpatialSystem" name="ref1SpatialSystem" /></span>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h130">
+	                <span class="label">Erstellungsma&szlig;stab</span>
+	                <div class="tableContainer rows5">
+	                  <div class="cellEditors" id="ref1ScaleEditors">
+	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScale"></div>
+	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleGroundResolution"></div>
+	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScanResolution"></div>
+	                  </div>
+	            	    <table id="ref1Scale" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="scale" dataType="String" width="105" editor="ref1ScaleScale">Ma&szlig;stab</th>
+	                  			<th field="groundResolution" dataType="String" width="285" editor="ref1ScaleGroundResolution">Bodenaufl&ouml;sung (m)</th>
+	                  			<th field="scanResolution" dataType="String" width="285" editor="ref1ScaleScanResolution">Scanaufl&ouml;sung (DPI)</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref1AltAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 'H&ouml;hengenauigkeit (m)')">H&ouml;hengenauigkeit (m)</label></span>
+	                  <span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="ref1PosAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 'Lagegenauigkeit (m)')">Lagegenauigkeit (m)</label></span>
+	                  <span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+	                </div>
+	                <div class="fill"></div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h126">
+	                <span class="label"><label for="ref1SymbolsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Symbolkatalog')">Symbolkatalog</label></span>
+	                <span id="ref1SymbolsTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	              	<div id="ref1SymbolsTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1SymbolsTab1">
+	               		<div id="ref1SymbolsTab1" dojoType="ContentPane" label="Text">
+	                    <div class="tableContainer rows4">
+	                      <div class="cellEditors" id="ref1SymbolsTextEditors">
+	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:77px;" widgetId="ref1SymbolsTitleCombobox"></div>
+	                        <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="ref1SymbolsDateDatePicker"></div>
+	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1SymbolsVersion"></div>
+	                      </div>
+	                	    <table id="ref1SymbolsText" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="title" dataType="String" width="110" editor="ref1SymbolsTitleCombobox">Titel</th>
+	                      			<th field="date" dataType="String" width="120" editor="ref1SymbolsDateDatePicker">Datum</th>
+	                      			<th field="version" dataType="String" width="445" editor="ref1SymbolsVersion">Version</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                	      </tbody>
+	                	    </table>
+	                	  </div>
+	                	</div>
+	              		<div id="ref1SymbolsTab2" dojoType="ContentPane" label="Verweise">
+	                    <table id="ref1SymbolsLinks" width="676" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="type" dataType="String" width="30"></th>
+	                    			<th field="name" dataType="String" width="645">Namen</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	              		      <tr value="2">
+	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	              		      <tr value="3">
+	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	              	      </tbody>
+	              	    </table>
+	              		</div>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h126">
+	                <span class="label"><label for="ref1KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Schl&uuml;sselkatalog')">Schl&uuml;sselkatalog</label></span>
+	                <span id="ref1KeysTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	              	<div id="ref1KeysTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1KeysTab1">
+	              		<div id="ref1KeysTab1" dojoType="ContentPane" label="Text">
+	                    <div class="tableContainer rows4">
+	                      <div class="cellEditors" id="ref1KeysTextEditors">
+	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:77px;" widgetId="ref1KeysTitleCombobox"></div>
+	                        <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="ref1KeysDateDatePicker"></div>
+	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1KeysVersion"></div>
+	                      </div>
+	                	    <table id="ref1KeysText" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="title" dataType="String" width="110" editor="ref1KeysTitleCombobox">Titel</th>
+	                      			<th field="date" dataType="String" width="120" editor="ref1KeysDateDatePicker">Datum</th>
+	                      			<th field="version" dataType="String" width="445" editor="ref1KeysVersion">Version</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                	      </tbody>
+	                	    </table>
+	                	  </div>
+	              		</div>
+	              		<div id="ref1KeysTab2" dojoType="ContentPane" label="Verweise">
+	              	    <table id="ref1KeysLinks" width="676" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="type" dataType="String" width="30"></th>
+	                    			<th field="name" dataType="String" width="645">Namen</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	              		      <tr value="2">
+	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	              		      <tr value="3">
+	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	              	      </tbody>
+	              	    </table>
+	              		</div>
+	              	</div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h108">
+	                <span class="label">Verweis zu Dienst</span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                <div class="tableContainer rows4">
+	            	    <table id="ref1ServiceLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="type" dataType="String" width="30"></th>
+	                  			<th field="name" dataType="String" width="645">Namen</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            		      <tr value="1">
+	            		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="UDK Klasse 2" /></td>
+	            		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	            		      <tr value="3">
+	            		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="UDK Klasse 2" /></td>
+	            		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired">
+	                <span class="label"><label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachliche Grundlage')">Fachliche Grundlage</label></span>
+	                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	              	<div id="ref1BasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1BasisTab1">
+	              		<div id="ref1BasisTab1" dojoType="ContentPane" label="Text">
+	                    <span class="input"><textarea id="ref1BasisText" name="ref1BasisText" class="w668 h083" /></textarea></span>
+	              		</div>
+	              		<div id="ref1BasisTab2" dojoType="ContentPane" label="Verweise">
+	                    <div class="tableContainer rows4">
+	                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="type" dataType="String" width="30"></th>
+	                      			<th field="name" dataType="String" width="645">Namen</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                		      <tr value="1">
+	                		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                		      <tr value="2">
+	                		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                	      </tbody>
+	                	    </table>
+	                    </div>
+	              		</div>
+	              	</div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired">
+	                <span class="label"><label for="ref1DataBasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datengrundlage')">Datengrundlage</label></span>
+	                <span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	              	<div id="ref1DataBasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1DataBasisTab1">
+	              		<div id="ref1DataBasisTab1" dojoType="ContentPane" label="Text">
+	                    <span class="input"><textarea id="ref1DataBasisText" name="ref1DataBasisText" class="w668 h083" /></textarea></span>
+	              		</div>
+	              		<div id="ref1DataBasisTab2" dojoType="ContentPane" label="Verweise">
+	                    <div class="tableContainer rows4">
+	                	    <table id="ref1DataBasisLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="type" dataType="String" width="30"></th>
+	                      			<th field="name" dataType="String" width="645">Namen</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                		      <tr value="1">
+	                		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                		      <tr value="2">
+	                		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                	      </tbody>
+	                	    </table>
+	                    </div>
+	              		</div>
+	              	</div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h088">
+	                <span class="label"><label for="ref1Data" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sachdaten/Attributinformation')">Sachdaten/Attributinformation</label></span>
+	                <div class="tableContainer rows3">
+	                  <div class="cellEditors" id="ref1DataEditors">
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" class="w659" widgetId="ref1DataEditor"></div>
+	                  </div>
+	             	    <table id="ref1Data" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="data" dataType="String" editor="ref1DataEditor">Sachdaten</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <span class="label"><label for="ref1ProcessTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Herstellungsprozess')">Herstellungsprozess</label></span>
+	                <span id="ref1ProcessTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	              	<div id="ref1ProcessTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1ProcessTab1">
+	              		<div id="ref1ProcessTab1" dojoType="ContentPane" label="Text">
+	                    <span class="input"><textarea id="ref1DataBasisText" name="ref1DataBasisText" class="w668 h083" /></textarea></span>
+	              		</div>
+	              		<div id="ref1ProcessTab2" dojoType="ContentPane" label="Verweise">
+	                    <div class="tableContainer rows4">
+	                	    <table id="ref1ProcessLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="type" dataType="String" width="30"></th>
+	                      			<th field="name" dataType="String" width="645">Namen</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                		      <tr value="1">
+	                		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                		      <tr value="2">
+	                		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                	      </tbody>
+	                	    </table>
+	                    </div>
+	              		</div>
+	              	</div>
+	          	  </div>
+
+	            </div>
+	          </div>
+
+	          <!-- FACHBEZUG CLASS 2 - DOKUMENT/BERICHT/LITERATUR //-->
+	          <div id="refClass2" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass2');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="ref2Content" class="content">
+
+	              <div class="inputContainer notRequired">
+	                <span class="label"><label for="ref2Author" onclick="javascript:dialog.showContextHelp(arguments[0], 'Autor/Verfasser')">Autor/Verfasser</label></span>
+	                <span class="input"><textarea id="ref2Author" name="ref2Author" class="w668 h038" /></textarea></span>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <span class="label"><label for="ref2Publisher" onclick="javascript:dialog.showContextHelp(arguments[0], 'Herausgeber')">Herausgeber</label></span>
+	                <span class="input"><input type="text" id="ref2Publisher" name="ref2Publisher" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref2PublishedIn" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erschienen in')">Erschienen in</label></span>
+	                  <span class="input"><input type="text" id="ref2PublishedIn" name="ref2PublishedIn" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="ref2PublishLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erscheinungsort')">Erscheinungsort</label></span>
+	                  <span class="input"><input type="text" id="ref2PublishLocation" name="ref2PublishLocation" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <div id="ref2PublishedInDetails1">
+	                    <span class="entry first">
+	                      <span class="label"><label for="ref2PublishedInIssue" onclick="javascript:dialog.showContextHelp(arguments[0], 'Band/Heft')">Band/Heft</label></span>
+	                      <span class="input spaceBelow"><input type="text" id="ref2PublishedInIssue" name="ref2PublishedInIssue" class="w085" dojoType="ingrid:ValidationTextBox" /></span>
+	                    </span>
+	                    <span class="entry">
+	                      <span class="label"><label for="ref2PublishedInPages" onclick="javascript:dialog.showContextHelp(arguments[0], 'Seiten')">Seiten</label></span>
+	                      <span class="input spaceBelow"><input type="text" id="ref2PublishedInPages" name="ref2PublishedInPages" class="w085" dojoType="ingrid:ValidationTextBox" /></span>
+	                    </span>
+	                    <span class="entry rightAlign">
+	                      <span class="label"><label for="ref2PublishedInYear" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erscheinungsjahr')">Erscheinungsjahr</label></span>
+	                      <span class="input spaceBelow"><input type="text" id="ref2PublishedInYear" name="ref2PublishedInYear" class="w085" dojoType="ingrid:ValidationTextBox" /></span>
+	                    </span>
+	                  </div>
+
+	                  <div id="ref2PublishedInDetails2">
+	                    <span class="entry first">
+	                      <span class="label"><label for="ref2PublishedISBN" onclick="javascript:dialog.showContextHelp(arguments[0], 'ISBN-Nr.')">ISBN-Nr.</label></span>
+	                      <span class="input"><input type="text" id="ref2PublishedISBN" name="ref2PublishedISBN" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
+	                    </span>
+	                    <span class="entry">
+	                      <span class="label"><label for="ref2PublishedPublisher" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verlag')">Verlag</label></span>
+	                      <span class="input"><input type="text" id="ref2PublishedPublisher" name="ref2PublishedPublisher" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
+	                    </span>
+	                  </div>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="ref2LocationTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Standort')">Standort</label></span>
+	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                	<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2LocationTab1">
+	                		<div id="ref2LocationTab1" dojoType="ContentPane" label="Text">
+								<span class="input"><textarea id="ref2LocationText" name="ref2LocationText" class="w320 h038" /></textarea></span>
+	                		</div>
+	                		<div id="ref2LocationTab2" dojoType="ContentPane" label="Verweise">
+	                      <div class="tableContainer rows2">
+	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
+	                  	      <thead>
+	                  		      <tr>
+	                        			<th field="type" dataType="String" width="30"></th>
+	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                  		      </tr>
+	                  	      </thead>
+	                  	      <tbody>
+	                  		      <tr value="1">
+	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                  		      <tr value="2">
+	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                  		      <tr value="3">
+	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	                  	      </tbody>
+	                  	    </table>
+	                      </div>
+	                		</div>
+	                	</div>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref2DocumentType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Dokumententyp')">Dokumententyp</label></span>
+	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref2DocumentType" name="ref2DocumentType" /></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="ref2BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Basisdaten')">Basisdaten</label></span>
+	                  <span id="ref2BaseDataTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                	<div id="ref2BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2BaseDataTab1">
+	                		<div id="ref2BaseDataTab1" dojoType="ContentPane" label="Text">
+	                      <span class="input"><textarea id="ref2BaseDataText" name="ref2BaseDataText" class="w320 h038" /></textarea></span>
+	                		</div>
+	                		<div id="ref2BaseDataTab2" dojoType="ContentPane" label="Verweise">
+	                      <div class="tableContainer rows2">
+	                  	    <table id="ref2BaseDataLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
+	                  	      <thead>
+	                  		      <tr>
+	                        			<th field="type" dataType="String" width="30"></th>
+	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                  		      </tr>
+	                  	      </thead>
+	                  	      <tbody>
+	                  		      <tr value="1">
+	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                  		      <tr value="2">
+	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                  		      <tr value="3">
+	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	                  	      </tbody>
+	                  	    </table>
+	                      </div>
+	                		</div>
+	                	</div>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref2BibDataIn" onclick="javascript:dialog.showContextHelp(arguments[0], 'Weitere bibliographische Angaben')">Weitere bibliographische Angaben</label></span>
+	                  <span class="input"><textarea id="ref2BibDataIn" name="ref2BibDataIn" class="w320 h038" /></textarea></span>
+	                </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="ref2Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="input"><textarea id="ref2Explanation" name="ref2Explanation" class="w320 h038" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	            </div>
+	          </div>
+
+	          <!-- FACHBEZUG CLASS 3 - DIENST/ANWENDUNG/INFORMATIONSSYSTEM //-->
+	          <div id="refClass3" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass3');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="ref3Content" class="content">
+
+	              <div class="inputContainer required">
+	                <div class="half left">
+	                  <span class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Servicetyp')">Servicetyp*</label></span>
+	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
+	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref3ServiceType" name="ref3ServiceType" /></span>
+	            	  </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 'Version des Services')">Version des Services</label></span>
+	                  <div class="tableContainer rows5">
+	                    <div class="cellEditors" id="ref3ServiceVersionEditors">
+	                      <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref3ServiceVersionServiceType"></div>
+	                    </div>
+	               	    <table id="ref3ServiceVersion" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="serviceType" dataType="String" editor="ref3ServiceVersionServiceType">Version des Services</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td>Gerdes, G&uuml;nther</td></tr>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+	            	  <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 'Systemumgebung')">Systemumgebung</label></span>
+	                  <span class="input"><textarea id="ref3SystemEnv" name="ref3SystemEnv" class="w320 h038" /></textarea></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 'Historie')">Historie</label></span>
+	                  <span class="input"><textarea id="ref3History" name="ref3History" class="w320 h038" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Basisdaten')">Basisdaten</label></span>
+	                  <span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref3BaseDataTab1">
+	                		<div id="ref3BaseDataTab1" dojoType="ContentPane" label="Text">
+	                      <span class="input"><textarea id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" /></textarea></span>
+	                		</div>
+	                		<div id="ref3MethodTab2" dojoType="ContentPane" label="Verweise">
+	                      <div class="tableContainer rows2">
+	                  	    <table id="ref3BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
+	                  	      <thead>
+	                  		      <tr>
+	                        			<th field="type" dataType="String" width="30"></th>
+	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                  		      </tr>
+	                  	      </thead>
+	                  	      <tbody>
+	                  		      <tr value="1">
+	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                  		      <tr value="2">
+	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                  		      <tr value="3">
+	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	                  	      </tbody>
+	                  	    </table>
+	                      </div>
+	                		</div>
+	                	</div>
+	                </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="input"><textarea id="ref3Explanation" name="ref3Explanation" class="w320 h055" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	          	  </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired h130">
+	                <span class="label">Operationen</span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Operation hinzuf&uuml;gen/bearbeiten', 'erfassung_modal_operationen.html', 735, 725, true);" title="Operation hinzuf&uuml;gen/bearbeiten [Popup]">Operation hinzuf&uuml;gen/bearbeiten</a></span>
+	                <div class="tableContainer rows5">
+	            	    <table id="ref3Operation" dojoType="ingrid:FilteringTable" multiple="false" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="name" dataType="String" width="165">Name</th>
+	                  			<th field="description" dataType="String" width="510">Beschreibung</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	            </div>
+	          </div>
+
+	          <!-- FACHBEZUG CLASS 4 - VORHABEN/PROJEKT/PROGRAMM //-->
+	          <div id="refClass4" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass4');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="ref4Content" class="content">
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beteiligte')">Beteiligte</label></span>
+	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4ParticipantsTab1">
+	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
+	                      <span class="input"><textarea id="ref4ParticipantsText" name="ref4ParticipantsText" class="w320 h038" /></textarea></span>
+	                		</div>
+	                		<div id="ref4ParticipantsTab2" dojoType="ContentPane" label="Verweise">
+	                      <div class="tableContainer rows2">
+	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="12" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
+	                  	      <thead>
+	                  		      <tr>
+	                        			<th field="type" dataType="String" width="30"></th>
+	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                  		      </tr>
+	                  	      </thead>
+	                  	      <tbody>
+	                  		      <tr value="1">
+	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                  		      <tr value="2">
+	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="url" /></td>
+	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                  		      <tr value="3">
+	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	                  	      </tbody>
+	                  	    </table>
+	                      </div>
+	                		</div>
+	                	</div>
+	                </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Projektleiter')">Projektleiter</label></span>
+	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4PMTab1">
+	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
+	                      <span class="input"><textarea id="ref4PMText" name="ref4PMText" class="w320 h038" /></textarea></span>
+	                		</div>
+	                		<div id="ref4PMTab2" dojoType="ContentPane" label="Verweise">
+	                      <div class="tableContainer rows2">
+	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
+	                  	      <thead>
+	                  		      <tr>
+	                        			<th field="type" dataType="String" width="30"></th>
+	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                  		      </tr>
+	                  	      </thead>
+	                  	      <tbody>
+	                  		      <tr value="1">
+	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                  		      <tr value="2">
+	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                  		      <tr value="3">
+	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	                  	      </tbody>
+	                  	    </table>
+	                      </div>
+	                		</div>
+	                	</div>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <span class="label"><label for="ref4Explanations" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                <span class="input"><textarea id="ref4Explanations" name="ref4Explanations" class="w668 h055" /></textarea></span>
+	          	  </div>
+
+	            </div>
+	          </div>
+
+	          <!-- FACHBEZUG CLASS 5 - DATENSAMMLUNG/DATENBANK //-->
+	          <div id="refClass5" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass5');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="ref5Content" class="content">
+
+	              <div class="inputContainer notRequired h130">
+	                <span class="label"><label for="ref5Scale" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalte der Datensammlung/Datenbank')">Inhalte der Datensammlung/Datenbank</label></span>
+	                <div class="tableContainer rows5">
+	                  <div class="cellEditors" id="ref5ScaleEditors">
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5ScaleParameter"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5ScaleAdditionalData"></div>
+	                  </div>
+	            	    <table id="ref5Scale" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="parameter" dataType="String" width="335" editor="ref5ScaleParameter">Parameter</th>
+	                  			<th field="additionalData" dataType="String" width="340" editor="ref5ScaleAdditionalData">Erg&auml;nzende Angaben</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Methode/Datengrundlage')">Methode/Datengrundlage</label></span>
+	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref5MethodTab1">
+	                		<div id="ref5MethodTab1" dojoType="ContentPane" label="Text">
+	                      <span class="input"><textarea id="ref5MethodText" name="ref5MethodText" class="w320 h038" /></textarea></span>
+	                		</div>
+	                		<div id="ref5MethodTab2" dojoType="ContentPane" label="Verweise">
+	                      <div class="tableContainer rows2">
+	                  	    <table id="ref5MethodLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
+	                  	      <thead>
+	                  		      <tr>
+	                        			<th field="type" dataType="String" width="30"></th>
+	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                  		      </tr>
+	                  	      </thead>
+	                  	      <tbody>
+	                  		      <tr value="1">
+	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	                  		      <tr value="2">
+	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	                  		      <tr value="3">
+	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	                  	      </tbody>
+	                  	    </table>
+	                      </div>
+	                		</div>
+	                	</div>
+	                </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="ref5Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="input"><textarea id="ref5Explanation" name="ref5Explanation" class="w320 h055" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	          	  </div>
+	          	  
+	            </div>
+	          </div>
+	          
+	          <!-- RAUMBEZUG //-->
+	          <div id="spatialRef" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('spatialRef');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezug')">Raumbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="spatialRefContent" class="content">
+
+	              <div class="inputContainer noSpaceBelow h130">
+	                <span class="label required">Geothesaurus-Raumbezug*</span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'erfassung_modal_einheit.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
+	                <div class="tableContainer rows5">
+	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="information" dataType="String" width="315">Geothesaurus-Raumbezug</th>
+	                  			<th field="latitude1" dataType="String" width="90">Breite 1</th>
+	                  			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
+	                  			<th field="latitude2" dataType="String" width="90">Breite 2</th>
+	                  			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            		      <tr value="1">
+	            		        <td>Bundesland Niedersachsen</td>
+	            		        <td>8,5502</td>
+	            		        <td>46,7589</td>
+	            		        <td>11,5500</td>
+	            		        <td>52,1256</td></tr>
+	            		      <tr value="2">
+	            		        <td>Bundesland Hessen</td>
+	            		        <td>8,5502</td>
+	            		        <td>46,7589</td>
+	            		        <td>11,5500</td>
+	            		        <td>52,1256</td></tr>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div id="spatialRefCoordsAdminUnit" class="infobox">
+	                  <span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsAdminUnit');" title="Info aufklappen">Umgerechnete Koordinaten:
+	                    <img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+	                  <div id="spatialRefCoordsAdminUnitContent">
+	              	    <table dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="information" dataType="String" width="245">Geothesaurus-Raumbezug</th>
+	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
+	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
+	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
+	                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td>GK / Potsdam Datum</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td></tr>
+	              		      <tr value="2">
+	              		        <td>UTM / ETRS89</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td></tr>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired h130">
+	                <span class="label">Freier Raumbezug</span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a></span>
+	                <div class="tableContainer rows5">
+	                  <div class="cellEditors" id="spatialRefLocationEditors">
+	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:300px;" widgetId="informationEditor"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude1Editor"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude1Editor"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude2Editor"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude2Editor"></div>
+	                  </div>
+	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="information" dataType="String" width="315" editor="informationEditor">Freier Raumbezug</th>
+	                  			<th field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
+	                  			<th field="longitude1" dataType="String" width="90" editor="longitude1Editor">L&auml;nge 1</th>
+	                  			<th field="latitude2" dataType="String" width="90" editor="latitude2Editor">Breite 2</th>
+	                  			<th field="longitude2" dataType="String" width="90" editor="longitude2Editor">L&auml;nge 2</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            		      <tr value="1">
+	            		        <td>Bundesland Niedersachsen</td>
+	            		        <td>8,5502</td>
+	            		        <td>46,7589</td>
+	            		        <td>11,5500</td>
+	            		        <td>52,1256</td></tr>
+	            		      <tr value="2">
+	            		        <td>Bundesland Hessen</td>
+	            		        <td>8,5502</td>
+	            		        <td>46,7589</td>
+	            		        <td>11,5500</td>
+	            		        <td>52,1256</td></tr>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	          	  </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div id="spatialRefCoordsLocation" class="infobox">
+	                  <span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="Info aufklappen">Umgerechnete Koordinaten:
+	                    <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+	                  <div id="spatialRefCoordsLocationContent">
+	              	    <table dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="information" dataType="String" width="245">Freier Raumbezug</th>
+	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
+	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
+	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
+	                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td>GK / Potsdam Datum</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td></tr>
+	              		      <tr value="2">
+	              		        <td>UTM / ETRS89</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td>
+	              		        <td>6567556</td></tr>
+	              	      </tbody>
+	              	    </table>
+	              	  </div>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div class="half left">
+	                  <span class="label">H&ouml;he</span>
+	                  <div id="spatialRefAltitude">
+	                    <span class="entry">
+	                      <span class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 'Minimum')">Minimum</label></span>
+	                      <span class="input"><input type="text" id="spatialRefAltMin" name="spatialRefAltMin" class="w080" dojoType="RealNumberTextBox" /></span>
+	                    </span>
+	                    <span class="entry">
+	                      <span class="label"><label for="spatialRefAltMax" onclick="javascript:dialog.showContextHelp(arguments[0], 'Maximum')">Maximum</label></span>
+	                      <span class="input"><input type="text" id="spatialRefAltMax" name="spatialRefAltMax" class="w080" dojoType="RealNumberTextBox" /></span>
+	                    </span>
+	                    <span class="entry">
+	                      <span class="label"><label for="spatialRefAltMeasure" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ma&szlig;einheit')">Ma&szlig;einheit</label></span>
+	                      <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/units.js" style="width:58px;" id="spatialRefAltMeasure" name="spatialRefAltMeasure" /></span>
+	                    </span>
+	                    <span class="entry">
+	                      <span class="label"><label for="spatialRefAltVDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vertikaldatum')">Vertikaldatum</label></span>
+	                      <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/verticaldate.js" style="width:266px;" id="spatialRefAltVDate" name="spatialRefAltVDate" mode="remote" /></span>
+	                    </span>
+	                  </div>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="spatialRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="input"><textarea id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	            </div>
+	          </div>
+
+	          <!-- ZEITBEZUG //-->
+	          <div id="timeRef" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('timeRef');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')">Zeitbezug</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="timeRefContent" class="content">
+	        	  
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Dateninhaltes')">Zeitbezug des Dateninhaltes</label></span>
+	                  <div id="timeRefRef">
+	                    <span class="entry first">
+	                      <span class="label hidden"><label for="timeRefRefType">Typ</label></span>
+	                      <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/time_ref_type.js" style="width:61px;" id="timeRefRefType" name="timeRefRefType" mode="remote" /></span>
+	                    </span>
+	                    <span class="entry">
+	                      <span class="label hidden"><label for="timeRefRefDate1">Datum 1 [TT.MM.JJJJ]</label></span>
+	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefRefDate1"  name="timeRefRefDate1"></div><br />TT.MM.JJJJ</span>
+	                    </span>
+	                    <span class="entry last" id="timeRefRefDate2Editor">
+	                      <span class="label hidden"><label for="timeRefRefDate2">Datum 2 [TT.MM.JJJJ]</label></span>
+	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefRefDate2" name="timeRefRefDate2"></div><br />TT.MM.JJJJ</span>
+	                    </span>
+	                  </div>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="timeRefStatus" onclick="javascript:dialog.showContextHelp(arguments[0], 'Status')">Status</label></span>
+	                  <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:301px;" id="timeRefStatus" name="timeRefStatus" /></span>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="timeRefReriodicity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Periodizit&auml;t')">Periodizit&auml;t</label></span>
+	                  <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:302px;" id="timeRefReriodicity" name="timeRefReriodicity" /></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Im Intervall')">Im Intervall</label></span>
+	                  <div id="timeRefInterval">
+	                    <span>Alle</span>
+	                    <span class="label hidden"><label for="timeRefIntervalNum">Intervall Anzahl</label></span>
+	                    <span class="input"><input type="text" id="timeRefIntervalNum" name="timeRefIntervalNum" class="w038" dojoType="ingrid:ValidationTextBox" /></span>
+	                    <span class="label hidden"><label for="timeRefIntervalUnit">Intervall Einheit</label></span>
+	                    <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:223px;" id="timeRefIntervalUnit" name="timeRefIntervalUnit" /></span>
+	                  </div>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="timeRefRef2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
+	                  <div class="tableContainer rows5">
+	                    <div class="cellEditors" id="timeRefRef2Editors">
+	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="timeRefRefDateDatePicker"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:155px;" widgetId="timeRefRefTypeCombobox"></div>
+	                    </div>
+	              	    <table id="timeRefRef2" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="date" dataType="String" width="120" editor="timeRefRefDateDatePicker">Datum</th>
+	                    			<th field="type" dataType="String" width="200" editor="timeRefRefTypeCombobox">Typ</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td>11.08.2006</td>
+	              		        <td>Publikation</td></tr>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="timeRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="input"><textarea id="timeRefExplanation" name="timeRefExplanation" class="w320 h105" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	            </div>
+	          </div>
+
+	          <!-- ZUSATZINFORMATION //-->
+	          <div id="extraInfo" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('extraInfo');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zusatzinformation')">Zusatzinformation</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="extraInfoContent" class="content">
+	        	  
+	              <div class="inputContainer">
+	                <div class="half left">
+	                  <span class="label required"><label for="extraInfoLangMetaData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Metadatensatzes')">Sprache des Metadatensatzes*</label></span>
+	                  <select dojoType="ingrid:Select" style="width:302px;" id="extraInfoLangMetaData" name="extraInfoLangMetaData">
+	                    <!-- TODO: fill in jsp -->
+	                    <option value="Deutsch">Deutsch</option>
+	                    <option value="Englisch">Englisch</option>
+	                  </select>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label required"><label for="extraInfoLangData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Datensatzes')">Sprache des Datensatzes*</label></span>
+	                  <select dojoType="ingrid:Select" style="width:302px;" id="extraInfoLangData" name="extraInfoLangData">
+	                    <!-- TODO: fill in jsp -->
+	                    <option value="Deutsch">Deutsch</option>
+	                    <option value="Englisch">Englisch</option>
+	                  </select>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="extraInfoPublishArea" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ver&ouml;ffentlichung')">Ver&ouml;ffentlichung</label></span>
+	                  <select dojoType="ingrid:Select" style="width:302px;" id="extraInfoPublishArea" name="extraInfoPublishArea">
+	                    <!-- TODO: fill in jsp -->
+	                    <option value="Internet">Internet</option>
+	                    <option value="Intranet">Intranet</option>
+	                    <option value="amtsintern">amtsintern</option>
+	                    <option value="nicht freigegeben">nicht freigegeben</option>
+	                  </select>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired h110">
+	                <div class="third1 left">
+	                  <span class="label"><label for="extraInfoXMLExport" onclick="javascript:dialog.showContextHelp(arguments[0], 'XML-Export-Kriterium')">XML-Export-Kriterium</label></span>
+	                  <div class="tableContainer rows5">
+	                    <div class="cellEditors" id="extraInfoXMLExportEditors">
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:161px;" widgetId="extraInfoXMLExportCriteriaCombobox"></div>
+	                    </div>
+	              	    <table id="extraInfoXMLExport" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third1">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="XMLExportCriteria" dataType="String" editor="extraInfoXMLExportCriteriaCombobox">XML-Export-Kriterium</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+	          
+	                <div class="third2">
+	                  <span class="label"><label for="extraInfoLegalBasics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rechtliche Grundlagen')">Rechtliche Grundlagen</label></span>
+	                  <div class="tableContainer rows5">
+	                    <div class="cellEditors" id="extraInfoLegalBasicsEditors">
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:397px;" widgetId="extraInfoLegalBasicsCombobox"></div>
+	                    </div>
+	              	    <table id="extraInfoLegalBasics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third2">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="legalBasics" dataType="String" editor="extraInfoLegalBasicsCombobox">Rechtliche Grundlagen</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="extraInfoPurpose" onclick="javascript:dialog.showContextHelp(arguments[0], 'Herstellungszweck')">Herstellungszweck</label></span>
+	                  <span class="input"><textarea id="extraInfoPurpose" name="extraInfoPurpose" class="w320 h038" /></textarea></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="extraInfoUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Eignung/Nutzung')">Eignung/Nutzung</label></span>
+	                  <span class="input"><textarea id="extraInfoUse" name="extraInfoUse" class="w320 h038" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	            </div>
+	          </div>
+
+	          <!-- VERFÜGBARKEIT //-->
+	          <div id="availability" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('availability');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verf&uuml;gbarkeit')">Verf&uuml;gbarkeit</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="availabilityContent" class="content">
+	        	  
+	              <div class="inputContainer notRequired h130">
+	                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenformat')">Datenformat</label></span>
+	                <div class="tableContainer rows5">
+	                  <div class="cellEditors" id="availabilityDataFormatEditors">
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatName"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatVersion"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatCompression"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatPixelDepth"></div>
+	                  </div>
+	            	    <table id="availabilityDataFormat" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="name" dataType="String" width="170" editor="availabilityDataFormatName">Name</th>
+	                  			<th field="version" dataType="String" width="125" editor="availabilityDataFormatVersion">Version</th>
+	                  			<th field="compression" dataType="String" width="205" editor="availabilityDataFormatCompression">Kompressionstechnik</th>
+	                  			<th field="pixelDepth" dataType="String" width="175" editor="availabilityDataFormatPixelDepth">Bildpunkttiefe</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer notRequired h130">
+	                <span class="label"><label for="availabilityMediaOptions" onclick="javascript:dialog.showContextHelp(arguments[0], 'Medienoption')">Medienoption</label></span>
+	                <div class="tableContainer rows5">
+	                  <div class="cellEditors" id="availabilityMediaOptionsEditors">
+	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:117px;" widgetId="availabilityMediaOptionsMediumCombobox"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsSize"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsLocation"></div>
+	                  </div>
+	            	    <table id="availabilityMediaOptions" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="medium" dataType="String" width="150" editor="availabilityMediaOptionsMediumCombobox">Medium</th>
+	                  			<th field="size" dataType="String" width="250" editor="availabilityMediaOptionsSize">Datenvolumen (MB)</th>
+	                  			<th field="location" dataType="String" width="275" editor="availabilityMediaOptionsLocation">Speicherort</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bestellinformation')">Bestellinformation</label></span>
+	                  <span class="input"><textarea id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" /></textarea></span>
+	                </div>
+	          
+	                <div class="half">
+	                  <span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nutzungsanmerkung')">Nutzungsanmerkung</label></span>
+	                  <span class="input"><textarea id="availabilityNoteUse" name="availabilityNoteUse" class="w320 h038" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired">
+	                <div class="half left">
+	                  <span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kosten')">Kosten</label></span>
+	                  <span class="input"><textarea id="availabilityCosts" name="availabilityCosts" class="w320 h038" /></textarea></span>
+	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	            </div>
+	          </div>
+
+	          <!-- VERSCHLAGWORTUNG //-->
+	          <div id="thesaurus" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('thesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verschlagwortung')">Verschlagwortung</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="thesaurusContent" class="content">
+	        	  
+	              <div class="inputContainer h088">
+	                <span class="label required important"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'erfassung_modal_verschlagwortungsassistent.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
+	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'erfassung_modal_thesaurus.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+	                <div class="tableContainer rows4">
+	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	      <thead>
+	            		      <tr>
+	                  			<th field="term" dataType="String">Term</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+	              </div>
+
+	              <div class="inputContainer h110">
+	                <div class="half left">
+	                  <span class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorie')">Themenkategorie*</label></span>
+	                  <div class="tableContainer rows4">
+	                    <div class="cellEditors" id="thesaurusTopicsEditors">
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:279px;" widgetId="thesaurusTopicsCombobox"></div>
+	                    </div>
+	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="topics" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+
+	                <div class="half">
+	                  <span class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
+	                  <div class="tableContainer rows3 spaceBelow" style="left:364px">
+	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="freeTerms" dataType="String">Freie Suchbegriffe</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              	      </tbody>
+	              	    </table>
+	              	  </div>
+	                  <span class="input" style="position:relative; top:-8px"><input type="text" id="thesaurusFreeTerms" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a></span>
+	            	  </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer noSpaceBelow notRequired h185">
+	                <span class="label">Umweltthemen</span>
+	                <div id="thesaurusEnvironment" class="outlined h140">
+	                  <div class="checkboxContainer">
+	                    <span class="input"><input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Als Katalogseite anzeigen')">Als Katalogseite anzeigen</label></span>
+	                  </div>
+	                  
+	                  <div class="halfInside left">
+	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Umweltthemen')">Umweltthemen</label></span>
+	                    <div class="tableContainer rows5">
+	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
+	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/env_topics.js" style="width:263px;" widgetId="thesaurusEnvTopicsCombobox"></div>
+	                      </div>
+	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive halfInside">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="topics" dataType="String" editor="thesaurusEnvTopicsCombobox">Umweltthemen</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                	      </tbody>
+	                	    </table>
+	                    </div>
+	                  </div>
+
+	                  <div class="halfInside">
+	                    <span id="thesaurusEnvCatsLabel" class="label"><label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 'Umweltkategorien')">Umweltkategorien</label></span>
+	                    <div class="tableContainer rows5">
+	                      <div class="cellEditors" id="thesaurusEnvCatsEditors">
+	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/env_categories.js" style="width:263px;" widgetId="thesaurusEnvCatsCombobox"></div>
+	                      </div>
+	                	    <table id="thesaurusEnvCats" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive halfInside">
+	                	      <thead>
+	                		      <tr>
+	                      			<th field="topics" dataType="String" editor="thesaurusEnvCatsCombobox">Umweltkategorien</th>
+	                		      </tr>
+	                	      </thead>
+	                	      <tbody>
+	                	      </tbody>
+	                	    </table>
+	                    </div>
+	                  </div>
+	                  <div class="fill"></div>
+	                </div>
+	              </div>
+
+	            </div>
+	          </div>
+
+	          <!-- VERWEISE //-->
+	          <div id="links" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('links');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verweise')">Verweise</div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="linksContent" class="content">
+	        	  
+	              <div class="inputContainer noSpaceBelow notRequired h164">
+	                <div class="half left">
+	                  <span class="label">Verweise zu</span>
+	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <div class="tableContainer rows4">
+	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="type" dataType="String" width="30"></th>
+	                    			<th field="name" dataType="String" width="290">Objekte</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	              		      <tr value="2">
+	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	              		      <tr value="3">
+	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	              		      <tr value="4">
+	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	              		      <tr value="5">
+	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	              		      <tr value="6">
+	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+
+	                <div class="half">
+	                  <span class="label">Verweise von</span>
+	                  <div class="tableContainer rows4">
+	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="type" dataType="String" width="30"></th>
+	                    			<th field="name" dataType="String" width="290">Objekte</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              		      <tr value="1">
+	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	              		      <tr value="2">
+	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	              		      <tr value="3">
+	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	              		      <tr value="4">
+	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
+	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
+	              		      <tr value="5">
+	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
+	              		      <tr value="6">
+	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
+	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+	            	  </div>
+	              <div class="fill"></div>
+	              </div>
+
+	            </div>
+	          </div>
+	        </div>
+
+	        </form>
+	      </div>   
+	  </div>
+	  <!-- END CONTENT OBJECT -->
+	  
+	  <!-- START CONTENT ADDRESS -->
+	  <div id="contentAddress" style="display:block">
+		<div dojoType="ContentPane" widgetId="headerFrameAddress" id="sectionTopAddress" class="sectionTop">
+		  <form method="get" id="headerFormAddress" action="">
+			<table cellspacing="0">
+		  	<tbody>
+		  		<tr>
+		  		  <td class="label"><label for="addressTitle">Adresstitel</label></td>
+		  		  <td colspan="2"><input type="text" id="addressTitle" name="addressTitle" class="w550" disabled="true" dojoType="ingrid:ValidationTextBox" /></td></tr>
+		  		<tr>
+		  		  <td class="label col1"><label for="addressType">Adresstyp</label></td>
+		  		  <td class="col2">
+		          <select dojoType="ingrid:Select" style="width:386px;" id="addressType" name="addressType">
+		            <!-- TODO: fill in jsp -->
+		            <option value="AddressType0">Institution</option>
+		            <option value="AddressType1">Einheit</option>
+		            <option value="AddressType2">Person</option>
+		            <option value="AddressType3">Freie Adresse</option>
+		          </select>
+		        </td>
+		  		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
+		  		<tr>
+		  		  <td class="label"><label for="addressOwner">Verantwortlicher</label></td>
+		  		  <td><input dojoType="ingrid:Select" dataUrl="js/data/owner.js" style="width:386px;" id="addressOwner" name="addressOwner" mode="remote" /></td>
+		  		  <td class="note"><strong>Status:</strong> in Bearbeitung</td></tr>
+		  		<tr>
+		  		  <td class="note" colspan="3"><strong>Erstellt am:</strong> 26.06.1998 | <strong>Ge&auml;ndert am:</strong> 27.09.2000 | <strong>Von:</strong> <span id="last_editor">Dezernat 501 Abfallwirtschaft, Abfallrecht</span></td></tr>
+		  	</tbody>
+			</table>
+			</form>
+		</div>
+		<div dojoType="ContentPane" widgetId="contentFrameAddress" id="contentFrameAddress" class="sectionBottom" style="overflow:auto;">
+			
+      <form dojoType="ingrid:FormErfassungAdresseContent" widgetId="contentFormAddress" selectedClass="AddressType0" method="get" id="contentFormAddress" action="">
+
+			<div dojoType="ContentPane" id="contentFrameBodyAddress" class="sectionBottomContent">
+
+			  <!-- GREY FIELD //-->
+			  <!-- ADDRESS TYPE 0 //-->
+			  <div id="headerAddressType0" class="contentBlock firstBlock grey">
+				<div id="headerAddressType0Content" class="content">
+
+			      <div class="inputContainer noSpaceBelow">
+			        <span class="label required"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
+			        <span class="input"><textarea id="headerAddressType0Institution" name="headerAddressType0Institution" class="w668 h038" />Alfred Toepfer Akademie f&uuml;r Naturschutz NNA</textarea></span>
+			  	  </div>
+
+			    </div>
+			  </div>
+
+			  <!-- ADDRESS TYPE 1 //-->
+			  <div id="headerAddressType1" class="contentBlock firstBlock grey">
+				  <div id="headerAddressType1Content" class="content">
+
+			      <div class="inputContainer">
+			        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+			        <span class="input"><textarea id="headerAddressType1Institution" name="headerAddressType1Institution" class="w668 h038 noEdit" disabled="disabled">Alfred Toepfer, Akademie f&uuml;r Naturschutz NNA</textarea></span>
+			  	  </div>
+			  	  
+			      <div class="inputContainer noSpaceBelow">
+			        <span class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
+			        <span class="input"><textarea id="headerAddressType1Unit" name="headerAddressType1Unit" class="w668 h038" />Fachbereich Forschung</textarea></span>
+			  	  </div>
+
+			    </div>
+			  </div>
+
+			  <!-- ADDRESS TYPE 2 //-->
+			  <div id="headerAddressType2" class="contentBlock firstBlock grey">
+				  <div id="headerAddressType2Content" class="content">
+
+			      <div class="inputContainer">
+			        <span class="label"><label for="headerAddressType2Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+			        <span class="input"><textarea id="headerAddressType2Institution" name="headerAddressType2Institution" class="w668 h038 noEdit" disabled="disabled">Alfred Toepfer, Akademie f&uuml;r Naturschutz NNA</textarea></span>
+			  	  </div>
+			  	  
+			      <div class="inputContainer">
+			        <div class="half left">
+			          <span class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+			          <span class="input"><input type="text" id="headerAddressType2Lastname" name="headerAddressType2Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+			        </div>
+			  
+			        <div class="half">
+			          <span class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+			          <span class="input"><input type="text" id="headerAddressType2Firstname" name="headerAddressType2Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+			        </div>
+			        <div class="fill"></div>
+			  	  </div>
+
+			      <div class="inputContainer noSpaceBelow">
+			        <div class="half left">
+			          <span class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
+			          <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/salutations.js" style="width:129px;" id="headerAddressType2Style" name="headerAddressType2Style" /></span>
+			        </div>
+			  
+			        <div class="half">
+			          <span class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+			          <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/titles.js" style="width:129px;" id="headerAddressType2Title" name="headerAddressType2Title" /></span>
+			        </div>
+			        <div class="fill"></div>
+			  	  </div>
+
+			    </div>
+			  </div>
+
+			  <!-- ADDRESS TYPE 3 //-->
+			  <div id="headerAddressType3" class="contentBlock firstBlock grey">
+				  <div id="headerAddressType3Content" class="content">
+
+			      <div class="inputContainer">
+			        <div class="half left">
+			          <span class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+			            <span class="input"><input type="text" id="headerAddressType3Lastname" name="headerAddressType3Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+			        </div>
+			  
+			        <div class="half">
+			          <span class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+			            <span class="input"><input type="text" id="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+			        </div>
+			        <div class="fill"></div>
+			  	  </div>
+
+			      <div class="inputContainer">
+			        <div class="half left">
+			          <span class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
+			          <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/salutations.js" style="width:129px;" id="headerAddressType3Style" name="headerAddressType3Style" /></span>
+			        </div>
+			  
+			        <div class="half">
+			          <span class="label"><label for="headerAddressType3Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+			          <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/titles.js" style="width:129px;" id="headerAddressType3Title" name="headerAddressType3Title" /></span>
+			        </div>
+			        <div class="fill"></div>
+			  	  </div>
+
+			      <div class="inputContainer noSpaceBelow">
+			        <span class="label"><label for="headerAddressType3Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution</label></span>
+			        <span class="input"><textarea id="headerAddressType3Institution" name="headerAddressType3Institution" class="w668 h038" /></textarea></span>
+			  	  </div>
+
+			    </div>
+			  </div>
+
+			  <!-- ADRESSE UND AUFGABEN //-->
+			  <div id="address" class="contentBlock">
+			  	<div class="titleBar">
+			  	  <div class="titleIcon"><a href="javascript:toggleFields('address');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adresse und Aufgaben')">Adresse und Aufgaben</div>
+				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+			  	</div>
+				  <div id="addressContent" class="content">
+
+			      <div class="inputContainer">
+			        <div class="half left">
+			          <span id="addressStreetLabel" class="label required"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Stra&szlig;e/Hausnummer')">Stra&szlig;e/Hausnummer*</label></span>
+			          <span class="input spaceBelow"><input type="text" id="addressStreet" name="addressStreet" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+
+			          <div id="addressDetails1">
+			            <span class="entry first">
+			              <span class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
+			              <span class="input spaceBelow"><input dojoType="ingrid:Select" dataUrl="js/data/states.js" style="width:43px;" id="addressCountry" name="addressCountry" /></span>
+			            </span>
+			            <span class="entry">
+			              <span id="addressZipCodeLabel" class="label required"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 'PLZ')">PLZ*</label></span>
+			              <span class="input spaceBelow"><input type="text" id="addressZipCode" name="addressZipCode" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
+			            </span>
+			            <span class="entry">
+			              <span class="label required"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ort')">Ort*</label></span>
+			              <span class="input spaceBelow"><input type="text" id="addressCity" name="addressCity" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
+			            </span>
+			          </div>
+
+			          <div id="addressDetails2">
+			            <span class="entry first">
+			              <span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 'Postfach')">Postfach</label></span>
+			              <span class="input"><input type="text" id="addressPOBox" name="addressPOBox" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
+			            </span>
+			            <span class="entry">
+			              <span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 'PLZ (Postfach)')">PLZ (Postfach)</label></span>
+			              <span class="input"><input type="text" id="addressZipPOBox" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
+			            </span>
+			          </div>
+			        </div>
+			  
+			        <div class="half">
+			          <span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 'Notizen')">Notizen</label></span>
+			          <span class="input"><textarea id="addressNotes" name="addressNotes" class="w320 h120" /></textarea></span>
+			        </div>
+			        <div class="fill"></div>
+			      </div>
+
+			      <div class="inputContainer noSpaceBelow notRequired">
+			        <div class="half left">
+			          <span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kommunikation')">Kommunikation</label></span>
+			          <div class="tableContainer rows5">
+			            <div class="cellEditors" id="addressComEditors">
+			              <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/comclasses.js" style="width:37px;" widgetId="addressComType"></div>
+			              <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="addressComConnection"></div>
+			            </div>
+			      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half editable">
+			      	      <thead>
+			      		      <tr>
+			            			<th field="type" dataType="String" width="65" editor="addressComType">Art</th>
+			            			<th field="connection" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
+			      		      </tr>
+			      	      </thead>
+			      	      <tbody>
+			      		      <tr value="1">
+			      		        <td>Telefon</td>
+			      		        <td>05199 989-0</td></tr>
+			      		      <tr value="2">
+			      		        <td>Fax</td>
+			      		        <td>05199 989-46</td></tr>
+			      		      <tr value="3">
+			      		        <td>E-Mail</td>
+			      		        <td>nna@nna.de</td></tr>
+			      		      <tr value="4">
+			      		        <td>URL</td>
+			      		        <td>http://www.nna.de</td></tr>
+			      	      </tbody>
+			      	    </table>
+			      	  </div>
+			        </div>
+
+			        <div class="half">
+			          <span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aufgaben')">Aufgaben</label></span>
+			          <span class="input"><textarea id="addressTasks" name="addressTasks" class="w320 h105" /></textarea></span>
+			        </div>
+			        <div class="fill"></div>
+			      </div>
+
+			    </div>
+			  </div>
+
+			  <!-- VERSCHLAGWORTUNG //-->
+			  <div id="thesaurus" class="contentBlock">
+			  	<div class="titleBar">
+			  	  <div class="titleIcon"><a href="javascript:toggleFields('thesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verschlagwortung')">Verschlagwortung</div>
+				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+			  	</div>
+				  <div id="thesaurusContent" class="content">
+				  
+			      <div class="inputContainer notRequired h088">
+			        <span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>
+			        <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'erfassung_modal_thesaurus.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+			        <div class="tableContainer rows4">
+			    	    <table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+			    	      <thead>
+			    		      <tr>
+			          			<th field="term" dataType="String">Term</th>
+			    		      </tr>
+			    	      </thead>
+			    	      <tbody>
+			    	      </tbody>
+			    	    </table>
+			        </div>
+			      </div>
+
+			      <div class="inputContainer noSpaceBelow notRequired h116">
+			        <div class="full">
+			          <span class="label"><label for="thesaurusFreeTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
+			          <span class="input"><input type="text" id="thesaurusFreeTermsAddress" name="thesaurusFreeTerms" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a></span>
+			          <div class="fill"></div>
+			          <div class="tableContainer">
+			      	    <table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+			      	      <thead>
+			      		      <tr>
+			            			<th field="freeTerms" dataType="String">Freie Suchbegriffe</th>
+			      		      </tr>
+			      	      </thead>
+			      	      <tbody>
+			      	      </tbody>
+			      	    </table>
+			      	  </div>
+			        </div>
+			        <div class="fill"></div>
+			      </div>
+
+			    </div>
+			  </div>
+			  
+			  <!-- ZUGEORDNETE OBJEKTE //-->
+			  <div id="associatedObj" class="contentBlock">
+			  	<div class="titleBar">
+			  	  <div class="titleIcon"><a href="javascript:toggleFields('associatedObj');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugeordnete Objekte')">Zugeordnete Objekte</div>
+				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+			  	</div>
+				  <div id="associatedObjContent" class="content">
+			  
+			      <div class="inputContainer noSpaceBelow notRequired h098">
+			        <div class="spacer"></div>
+			        <div class="tableContainer rows4">
+			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+			    	      <thead>
+			    		      <tr>
+			          			<th field="information" dataType="String" width="80"></th>
+			          			<th field="names" dataType="String" width="595">Name</th>
+			    		      </tr>
+			    	      </thead>
+			    	      <tbody>
+			    		      <tr value="1">
+			    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+			    		        <td><a href="#" title="Objekt &ouml;ffnen: Alfred Toepfer Akademie f&uuml;r Naturschutz">Alfred Toepfer Akademie f&uuml;r Naturschutz</a></td></tr>
+			    		      <tr value="2">
+			    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+			    		        <td><a href="#" title="Objekt &ouml;ffnen: Dokumentation zum Naturschutzgebiet L&uuml;neburger Heide">Dokumentation zum Naturschutzgebiet L&uuml;neburger Heide</a></td></tr>
+			    	      </tbody>
+			    	    </table>
+			        </div>
+			      </div>
+
+			    </div>
+			  </div>
+			</div>
+
+			</form>
+		</div>
+	  </div>
+	  <!-- END CONTENT ADDRESS -->
+      <div id="contentNone">No Object/Adress selected</div>
+    </div>
+
+  </div>
+  <!-- SPLIT CONTAINER END -->
+  </div>
+
+  <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_search.html" preload="true"></div>
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true"></div>
+  <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true"></div>
+  <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
+  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="true"></div>
+  <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.html" preload="true"></div>
+  </div>
+
+</body>
+</html>

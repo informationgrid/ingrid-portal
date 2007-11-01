@@ -1,0 +1,81 @@
+.dojoComboBoxOuter {
+	border: 0px !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	background: transparent !important;
+	white-space: nowrap !important;
+}
+
+.dojoComboBox {
+  border-top:1px solid #838383 !important;
+  border-left:1px solid #838383 !important;
+  border-bottom:1px solid #add9f9 !important;
+  border-right:1px solid #add9f9 !important;
+  font:normal 11px/16px Verdana, Arial, Helvetica, sans-serif;
+  color:#000;
+  background-color:#fff;
+	margin: 0px;
+  height:18px !important;
+	vertical-align: middle !important;
+	float: none !important;
+	position: static !important;
+	display: inline !important;
+}
+
+/* the input box */
+input.dojoComboBox {
+	border-right-width: 0px !important; 
+  padding:1.5px 0 0 6px !important;
+	margin-right: 0px !important;
+  height:17px !important;
+}
+
+/* the down arrow */
+img.dojoComboBox {
+	border-left-width: 0px !important;
+	padding-left: 0px !important;
+	margin-left: 0px !important;
+  height:18.5px !important;
+  width:18.5px !important;
+}
+
+/* IE vertical-alignment calculations can be off by +-1 but these margins are collapsed away */
+.dj_ie img.dojoComboBox {
+	margin-top: 0; 
+	margin-bottom: 0; 
+}
+
+/* the drop down */
+.dojoComboBoxOptions {
+	font:normal 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	background-color: white;
+  border-top:1px solid #838383 !important;
+  border-left:1px solid #838383 !important;
+  border-bottom:1px solid #add9f9 !important;
+  border-right:1px solid #add9f9 !important;
+	position: absolute;
+	margin-top:1px;
+	z-index: 1000;
+	overflow: auto;
+	cursor: default;
+}
+
+.dojoComboBoxItem {
+  height: 18px;
+	padding-left: 6px;
+	padding-top: 2px;
+	margin: 0px;
+}
+
+.dojoComboBoxItemEven {
+	background-color: #efefef;
+}
+
+.dojoComboBoxItemOdd {
+	background-color: white;
+}
+
+.dojoComboBoxItemHighlight {
+	background-color: #c5c5c5;
+	color: white;
+}

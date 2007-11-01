@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+</head>
+
+<body>
+
+  <!-- CONTENT START -->
+  <form method="get" id="SearchThesaurusForm" action="">
+  <div dojoType="ContentPane" layoutAlign="client">
+  
+    <div id="researchThesaurusContentSection" class="contentBlockWhite top">
+      <div id="winNavi">
+        <a href="#" title="Hilfe">[?]</a>
+  	  </div>
+  	  <div id="thesaurus" class="content">
+
+        <!-- LEFT HAND SIDE CONTENT START -->
+        <span class="label"><label for="thesaurusSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Einstieg in die Thesaurus-Hierarchie:</label></span>
+        <div class="inputContainer field grey noSpaceBelow">
+          <span class="input"><input type="text" id="thesaurusSearch" name="thesaurusSearch" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+          <div class="spacerField"></div>
+    	  </div>
+
+        <div class="inputContainer">
+          <span class="button w644"><a href="#" class="buttonBlue" title="In Thesaurus suchen">In Thesaurus suchen</a></span>
+    	  </div>
+
+        <span class="label"><label>Thesaurus-Hierarchie</label></span>
+        <div class="inputContainer grey w684">
+        	<div dojoType="ContentPane" id="thesaurusTreeContainer">
+            <!-- tree components -->
+            <div dojoType="ingrid:TreeController" widgetId="treeControllerSearchThesaurus" RpcUrl="server/treelistener.php"></div>
+            <div dojoType="ingrid:TreeListener" widgetId="treeListenerSearchThesaurus"></div>	
+            <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsSearchThesaurus"></div>	
+            <div dojoType="ingrid:TreeDecorator" listener="treeListenerSearchThesaurus"></div>
+            
+            <!-- context menus -->
+            <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1SearchThesaurus"></div>
+            <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu2SearchThesaurus"></div>
+            
+            <!-- tree -->
+            <div dojoType="ingrid:Tree" listeners="treeControllerSearchThesaurus;treeListenerSearchThesaurus;contextMenu1SearchThesaurus;contextMenu2SearchThesaurus;treeDocIconsSearchThesaurus" widgetId="treeSearchThesaurus">
+              <!-- uncomment the next 2 lines in production
+            	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt"></div>
+            	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+              end of uncomment -->
+              <!-- remove the next lines in production -->
+            	<div dojoType="ingrid:TreeNode" title="Allgemeine und übergreifende Begriffe - Soziales und Politisches" widgetId="sth_o1" contextMenu="contextMenu2" nodeDocType="Catalog">
+              	<div dojoType="ingrid:TreeNode" title="Berufsgruppe" widgetId="sth_o11" contextMenu="contextMenu1">
+              		<div dojoType="ingrid:TreeNode" title="Bergmann" widgetId="sth_o111" contextMenu="contextMenu1"></div>
+              		<div dojoType="ingrid:TreeNode" title="Landschaftsarchitekt" widgetId="sth_o112" contextMenu="contextMenu1SearchThesaurus"></div>
+              		<div dojoType="ingrid:TreeNode" title="Schornsteinfeger" widgetId="sth_o113" contextMenu="contextMenu1SearchThesaurus"></div>
+                </div>
+              	<div dojoType="ingrid:TreeNode" title="Eigenverantwortung" widgetId="sth_o12" contextMenu="contextMenu1SearchThesaurus"></div>
+              	<div dojoType="ingrid:TreeNode" title="Entwicklungshilfe" widgetId="sth_o13" contextMenu="contextMenu1SearchThesaurus"></div>
+              	<div dojoType="ingrid:TreeNode" title="Handlungsorientierung" widgetId="sth_o14" contextMenu="contextMenu1SearchThesaurus"></div>
+              	<div dojoType="ingrid:TreeNode" title="Handlungsprinzip" widgetId="sth_o15" contextMenu="contextMenu1SearchThesaurus"></div>
+              	<div dojoType="ingrid:TreeNode" title="Reformismus" widgetId="sth_o16" contextMenu="contextMenu1SearchThesaurus"></div>
+            	</div>
+            	<div dojoType="ingrid:TreeNode" title="Allgemeine und übergreifende Begriffe - Umweltnutzung, Technik" widgetId="sth_o2" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Atmosphäre und Klima" widgetId="sth_o3" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Belastungen und Auswirkungen" widgetId="sth_o4" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Biosphäre - Organismen, biologische Systeme und Prozesse" widgetId="sth_o5" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Chemische Stoffe und Prozesse" widgetId="sth_o6" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Energie - Ressource" widgetId="sth_o7" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Erde und Weltraum" widgetId="sth_o8" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+            	<div dojoType="ingrid:TreeNode" title="Erholung, Freizeit, Fremdenverkehr" widgetId="sth_o9" contextMenu="contextMenu2SearchThesaurus" nodeDocType="Catalog"></div>
+              <!-- end of remove -->
+            </div>
+        	</div>
+        	<div class="spacer"></div>
+        </div>
+        <!-- LEFT HAND SIDE CONTENT END -->
+        
+        <!-- RIGHT HAND SIDE CONTENT START -->
+        <div id="resultsThesaurus" class="inputContainer">
+          <span class="label"><label class="inActive" for="thesaurusDescList">Trefferliste</label></span>
+        
+         	<div id="SearchThesaurusNavResultContainer" dojoType="ingrid:TabContainer" doLayout="false" class="w364" selectedChild="SearchThesaurusNavObjects">
+
+            <!-- TAB 1 START -->
+        		<div id="SearchThesaurusNavObjects" dojoType="ContentPane" class="blueTopBorder" label="Objekte">
+              <div class="listInfo w364">
+                <span class="searchResultsInfo">1-10 von 240 Treffern</span>
+                <span class="searchResultsPaging">(Seite 1 von 24)
+                  <em>1</em>
+                  <a href="#" title="Seite 2">2</a>
+                  <a href="#" title="Seite 3">3</a>
+                  <a href="#" title="Seite 4">4</a>
+                  <a href="#" title="weiter">></a>
+                </span>
+            	  <div class="fill"></div>
+              </div>
+      
+              <div dojoType="ContentPane" class="scrollable">
+          	    <table id="SearchThesaurusNavObjectsList" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTable w364 relativePos">
+          	      <thead>
+          		      <tr>
+                			<th field="type" dataType="String" width="25" nosort="true"></th>
+                			<th field="name" dataType="String" width="230" nosort="true">Name</th>
+          		      </tr>
+          	      </thead>
+          	      <tbody>
+          		      <tr value="1">
+          		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="Dienst / Anwendung / Informationssystem" /></td>
+          		        <td><a href="erfassung.html?nodeAppType=Objekt" title="Objekt &ouml;ffnen: Altablagerungen Niedersachsen">Altablagerungen Niedersachsen</a></td></tr>
+          		      <tr value="2">
+          		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+          		        <td><a href="erfassung.html?nodeAppType=Objekt" title="Objekt &ouml;ffnen: WABIS - Altablagerungen">WABIS - Altablagerungen</a></td></tr>
+          	      </tbody>
+          	    </table>
+              </div>
+          	</div>
+            <!-- TAB 1 END -->
+
+            <!-- TAB 2 START -->
+        		<div id="SearchThesaurusNavAddresses" dojoType="ContentPane" class="blueTopBorder" label="Adressen">
+              <div class="listInfo w364">
+                <span class="searchResultsInfo">1-10 von 240 Treffern</span>
+                <span class="searchResultsPaging">(Seite 1 von 24)
+                  <em>1</em>
+                  <a href="#" title="Seite 2">2</a>
+                  <a href="#" title="Seite 3">3</a>
+                  <a href="#" title="Seite 4">4</a>
+                  <a href="#" title="weiter">></a>
+                </span>
+            	  <div class="fill"></div>
+              </div>
+      
+              <div dojoType="ContentPane" class="scrollable">
+
+          	    <table id="SearchThesaurusNavAddressesList" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTable w364 relativePos">
+          	      <thead>
+          		      <tr>
+                			<th field="type" dataType="String" width="25" nosort="true"></th>
+                			<th field="name" dataType="String" width="230" nosort="true">Name</th>
+          		      </tr>
+          	      </thead>
+          	      <tbody>
+          		      <tr value="1">
+          		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+          		        <td><a href="erfassung.html?nodeAppType=Adresse" title="Adresse &ouml;ffnen: Altablagerungen Niedersachsen">Altablagerungen Niedersachsen</a></td></tr>
+          		      <tr value="2">
+          		        <td><img src="img/UDK/addr_free_l.gif" width="16" height="16" alt="Person" /></td>
+          		        <td><a href="erfassung.html?nodeAppType=Adresse" title="Adresse &ouml;ffnen: WABIS - Altablagerungen">WABIS - Altablagerungen</a></td></tr>
+          		      <tr value="3">
+          		        <td><img src="img/UDK/addr_free_l.gif" width="16" height="16" alt="Person" /></td>
+          		        <td><a href="erfassung.html?nodeAppType=Adresse" title="Adresse &ouml;ffnen: WABIS - Altablagerungen 2">WABIS - Altablagerungen 2</a></td></tr>
+          	      </tbody>
+          	    </table>
+              </div>
+          	</div>
+            <!-- TAB 2 END -->
+
+          	</div>
+          </div>
+          
+        </div>
+        <!-- RIGHT HAND SIDE CONTENT END -->
+
+      </div>
+    </div>
+  </form>
+  <!-- CONTENT END -->
+
+</body>
+</html>

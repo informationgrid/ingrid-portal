@@ -1,0 +1,46 @@
+/* ---- button --- */
+.dojoButton {
+	cursor: pointer;
+  float: left !important;
+}
+
+.dojoButton .dojoButtonContents {
+	text-align: center;		/* if icon and label are split across two lines, center icon */
+  font-size:9px;
+  line-height:19px;
+  color:#fff;
+  text-decoration:none;
+  background:#156496;
+  border-left:1px solid #eee;
+  border-top:1px solid #eee;
+  border-right:1px solid #8a8a8c;
+  border-bottom:1px solid #8a8a8c;
+  white-space: nowrap;
+}
+
+.dojoButtonContents {
+	padding:0 7px;
+}
+
+.dojoButtonDisabled {
+	cursor: url("images/no.gif"), default;
+}
+
+.dojoButtonContents img {
+	vertical-align: middle;	/* if icon and label are on same line, center them */
+}
+
+/* -------- colors ------------ */
+
+.dojoButtonHover .dojoButtonContents {
+  border-left:1px solid #8a8a8c;
+  border-top:1px solid #8a8a8c;
+  border-right:1px solid #eee;
+  border-bottom:1px solid #eee;
+}
+
+.dojoButtonDepressed .dojoButtonContents {
+}
+
+.dojoButtonDisabled .dojoButtonContents {
+}
