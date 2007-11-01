@@ -5,6 +5,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
+
+
 <script type="text/javascript">
 	var djConfig = {isDebug: true, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
 </script>
@@ -78,6 +83,7 @@ function hideSplash(){
         dojo.byId("splash").style.display="none";
         dojo.byId("layout").style.top="0px";
 }
+
 
 </script>
 

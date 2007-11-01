@@ -4,7 +4,7 @@
 <dwr>
 	<allow>
 		<create creator="spring" javascript="EntryService">
-			<param name="beanName" value="EntryService" />
+			<param name="beanName" value="entryService" />
 		</create>
 	</allow>
 </dwr>
