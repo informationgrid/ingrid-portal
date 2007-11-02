@@ -17,36 +17,6 @@ dojo.widget.defineWidget(
   nodeToCut: null,
   nodeToCutOldColor: "",
 
-	/**
-   * Overidden to inject error handling
-	 * kw = { url, sync, params }
-	 */
-	runRpc: function(kw) {
-		var _this = this;
-		var deferred = new dojo.Deferred();
-		
-		dojo.io.bind({
-			url: kw.url,			
-			handle: this.getDeferredBindHandler(deferred),
-      error: function(type, errorObj) {
-        // show the error
-        dialog.show(message.get('general.error'), message.get('general.error')+": "+errorObj.message, dialog.WARNING);
-        // reset the processed node
-        var node = null;
-        if (kw.params.node)
-          node = dojo.widget.byId(kw.params.node.widgetId);
-        else if (kw.params.parent)
-          node = dojo.widget.byId(kw.params.parent.widgetId);
-        if (node != null)
-          _this.finishProcessing(node);
-      },
-			mimetype: "text/javascript",
-			preventCache: this.preventCache,
-			sync: kw.sync,
-			content: { data: dojo.json.serialize(kw.params) }
-		});
-		return deferred;
-	},
 
   /*
    * method overidden to select node after creation
@@ -150,5 +120,34 @@ dojo.widget.defineWidget(
       this.move(this.nodeToCut, node, node.children.length/*, true*/);
       this.nodeToCut = null; // don't paste cut object twice
     }
+	},
+	/**
+	 * Load children of the node from server
+	 * Synchroneous loading doesn't break control flow
+	 * I need sync mode for DnD
+	 *
+	 * Overwritten to work with dwr.
+	*/
+	loadRemote: function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+		
+		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:5000,
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+		
+		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addErrback(function(res) { alert(res.message); });
+		return deferred;
+
 	}
 });

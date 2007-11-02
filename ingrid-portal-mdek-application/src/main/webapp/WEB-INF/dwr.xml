@@ -6,5 +6,6 @@
 		<create creator="spring" javascript="EntryService">
 			<param name="beanName" value="entryService" />
 		</create>
+		<convert match="java.lang.Exception" converter="exception"/>
 	</allow>
 </dwr>

@@ -7,34 +7,82 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 </head>
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
+<script
+	src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
+<script type="text/javascript">
+	var djConfig = {isDebug: true, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
+</script>
+<script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
 
 <script>
+dojo.require("dojo.widget.TreeSelectorV3");
+dojo.require("ingrid.widget.Tree");
+dojo.require("ingrid.widget.TreeNode");
+dojo.require("ingrid.widget.TreeContextMenu");
+dojo.require("ingrid.widget.TreeController");
+dojo.require("ingrid.widget.TreeDocIcons");
+dojo.require("ingrid.widget.TreeListener");
+dojo.require("ingrid.widget.TreeDecorator");	
+dojo.require("ingrid.widget.TreeExpandOnSelect");	
 
+dojo.addOnLoad(function()
+{
+  initTree();
+});
 
-function handleGetData(str) {
-  alert(str);
+function initTree() {
+  var contextMenu1 = dojo.widget.byId('contextMenu1');
+  contextMenu1.treeController = dojo.widget.byId('treeController');
+  contextMenu1.addItem('new', 'addChild', function(menuItem) {createItemClicked(menuItem)});
+  contextMenu1.addItem('preview', 'open', 'previewItemClicked');
+  contextMenu1.addSeparator();
+  contextMenu1.addItem('cut', 'cut', 'cutItemClicked');
+  contextMenu1.addItem('copy', 'copy', 'copySingleItemClicked');
+  contextMenu1.addItem('paste', 'copy', 'copyItemClicked');
+  contextMenu1.addItem('paste as node', 'paste', 'pasteItemClicked');
+  contextMenu1.addSeparator();
+  contextMenu1.addItem('mark deleted', 'detach', 'markDeletedItemClicked');
+//  contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', 'deleteItemClicked');
+
+  var contextMenu2 = dojo.widget.byId('contextMenu2');
+  contextMenu2.treeController = dojo.widget.byId('treeController');
+  contextMenu2.addItem('new', 'addChild', function(menuItem) {createItemClicked(menuItem)});
+
+  // attach node selection handler
+  var treeListener = dojo.widget.byId('treeListener');
+  dojo.event.topic.subscribe(treeListener.eventNames.select, "nodeSelected");
 }
 
-EntryService.getSubTree("12345", "o", 1, handleGetData);
+function handleGetData(str) {
+	var tree = dojo.widget.byId('tree');
+	tree.setChildren(str);
+}
+
+EntryService.getSubTree(null, null, 1, handleGetData);
 
 </script>
 
-<body onload="window.setTimeout('loadit()', 1000);">
+<body>
 
-<div id="splash" style="position: absolute; top: 0px; width: 100%;z-index: 100; height:2000px;background-color:#FFFFFF">
-<div style="position: relative; width: 100%;z-index: 100;top:200px">
-   <div align="center" style="line-height:16px">
-        <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
-        <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
-          <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px"> Metadaten Erfassungskomponenten</p>
-          <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>
-          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">loading...</p>
-        </div>
-   </div>
-</div>
-</div>
+<!-- tree components -->
+<div dojoType="ingrid:TreeController" widgetId="treeController"
+	RpcUrl="server/treelistener.php"></div>
+<div dojoType="ingrid:TreeListener" widgetId="treeListener"></div>
+<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIcons"></div>
+<div dojoType="ingrid:TreeDecorator" listener="treeListener"></div>
+
+<!-- context menus -->
+<div dojoType="ingrid:TreeContextMenu" toggle="plain"
+	contextMenuForWindow="false" widgetId="contextMenu1"></div>
+<div dojoType="ingrid:TreeContextMenu" toggle="plain"
+	contextMenuForWindow="false" widgetId="contextMenu2"></div>
+
+<!-- tree -->
+<div dojoType="ingrid:Tree"
+	listeners="treeController;treeListener;contextMenu1;contextMenu2;treeDocIcons"
+	widgetId="tree"></div>
 
 </body>
 </html>

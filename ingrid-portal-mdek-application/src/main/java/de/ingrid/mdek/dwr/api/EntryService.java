@@ -53,7 +53,7 @@ public interface EntryService {
 	 *            The depth of the returned tree structure. Must be > 0.
 	 * @return A List of HashMaps representing the tree.
 	 */
-	public List getSubTree(String nodeUuid, String nodeType, int depth);
+	public List getSubTree(String nodeUuid, String nodeType, int depth) throws Exception;
 
 	/**
 	 * Returns partly opened tree structure encapsulated in Lists of HashMaps.

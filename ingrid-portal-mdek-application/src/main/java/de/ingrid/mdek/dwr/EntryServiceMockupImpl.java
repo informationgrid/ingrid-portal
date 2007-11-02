@@ -3,6 +3,7 @@
  */
 package de.ingrid.mdek.dwr;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,8 +50,69 @@ public class EntryServiceMockupImpl implements EntryService {
 	/* (non-Javadoc)
 	 * @see de.ingrid.mdek.dwr.api.EntryService#getSubTree(java.lang.String, java.lang.String, int)
 	 */
-	public List getSubTree(String nodeUuid, String nodeType, int depth) {
-		return null;
+	public List getSubTree(String nodeUuid, String nodeType, int depth) throws Exception {
+
+		if (nodeUuid == null && nodeType == null) {
+			ArrayList list = new ArrayList(2);
+			HashMap o = new HashMap();
+			o.put("id", "objectRoot");
+			o.put("title", "Objekte");
+			o.put("dojoType", "ingrid:TreeNode");
+			o.put("contextMenu", "contextMenu1");
+			o.put("nodeDocType", "Objects");
+			o.put("nodeAppType", "Objekt");
+			o.put("isFolder", "true");
+			list.add(o);
+
+			o = new HashMap();
+			o.put("id", "addressRoot");
+			o.put("title", "Adressen");
+			o.put("dojoType", "ingrid:TreeNode");
+			o.put("contextMenu", "contextMenu2");
+			o.put("nodeDocType", "Addresses");
+			o.put("nodeAppType", "Adresse");
+			o.put("isFolder", "true");
+			list.add(o);
+			return list;
+		} else if (nodeUuid.equals("objectRoot")) {
+			ArrayList list = new ArrayList(2);
+			HashMap o = new HashMap();
+
+			o = new HashMap();
+			o.put("id", "o1");
+			o.put("title", "Test Objekt 1");
+			o.put("dojoType", "ingrid:TreeNode");
+			o.put("contextMenu", "contextMenu2");
+			o.put("nodeDocType", "Class1");
+			o.put("nodeAppType", "Objekt");
+			list.add(o);
+			o = new HashMap();
+			o.put("id", "o11");
+			o.put("title", "Test Objekt 1.1");
+			o.put("dojoType", "ingrid:TreeNode");
+			o.put("contextMenu", "contextMenu2");
+			o.put("nodeDocType", "Class3");
+			o.put("nodeAppType", "Objekt");
+			list.add(o);
+			
+			return list;
+		} else if (nodeUuid.equals("addressRoot")) {
+			ArrayList list = new ArrayList(2);
+			HashMap o = new HashMap();
+			o = new HashMap();
+			o.put("id", "a1");
+			o.put("title", "Test Adresse 1");
+			o.put("dojoType", "ingrid:TreeNode");
+			o.put("contextMenu", "contextMenu2");
+			o.put("nodeDocType", "Class3");
+			o.put("nodeAppType", "Adresse");
+			o.put("isFolder", "true");
+			list.add(o);
+			return list;
+		} else {
+			throw new IllegalArgumentException("invalid parameters");
+		}
+
 	}
 
 	/* (non-Javadoc)
