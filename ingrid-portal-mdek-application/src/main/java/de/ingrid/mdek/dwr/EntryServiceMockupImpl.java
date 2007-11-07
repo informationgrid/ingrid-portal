@@ -3,9 +3,12 @@
  */
 package de.ingrid.mdek.dwr;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.mdek.dwr.api.EntryService;
 
@@ -15,6 +18,23 @@ import de.ingrid.mdek.dwr.api.EntryService;
  */
 public class EntryServiceMockupImpl implements EntryService {
 
+	private XStream xstream;
+	private List dummyDataList; 
+	
+	public EntryServiceMockupImpl() {
+		xstream = new XStream();
+        try {
+            // Create the SessionFactory
+            InputStream resourceAsStream = EntryServiceMockupImpl.class.getResourceAsStream("tree_dummy_data.xml");
+            if (resourceAsStream == null) {
+                resourceAsStream = EntryServiceMockupImpl.class.getClassLoader().getResourceAsStream("tree_dummy_data.xml");
+            }
+            dummyDataList = (List)xstream.fromXML(resourceAsStream);
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+	}
+	
 	/* (non-Javadoc)
 	 * @see de.ingrid.mdek.dwr.api.EntryService#copyNode(java.lang.String, java.lang.String, java.lang.Boolean)
 	 */
@@ -73,6 +93,7 @@ public class EntryServiceMockupImpl implements EntryService {
 			o.put("nodeAppType", "Adresse");
 			o.put("isFolder", "true");
 			list.add(o);
+			xstream.toXML(list);
 			return list;
 		} else if (nodeUuid.equals("objectRoot")) {
 			ArrayList list = new ArrayList(2);
