@@ -8,148 +8,185 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.mdek.dwr.api.EntryService;
 
 /**
  * @author joachim
- *
+ * 
  */
 public class EntryServiceMockupImpl implements EntryService {
 
 	private XStream xstream;
-	private List dummyDataList; 
-	
+	private List dummyDataList;
+
 	public EntryServiceMockupImpl() {
 		xstream = new XStream();
-        try {
-            // Create the SessionFactory
-            InputStream resourceAsStream = EntryServiceMockupImpl.class.getResourceAsStream("tree_dummy_data.xml");
-            if (resourceAsStream == null) {
-                resourceAsStream = EntryServiceMockupImpl.class.getClassLoader().getResourceAsStream("tree_dummy_data.xml");
-            }
-            dummyDataList = (List)xstream.fromXML(resourceAsStream);
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
+		try {
+			// Create the SessionFactory
+			InputStream resourceAsStream = EntryServiceMockupImpl.class
+					.getResourceAsStream("tree_dummy_data.xml");
+			if (resourceAsStream == null) {
+				resourceAsStream = EntryServiceMockupImpl.class
+						.getClassLoader().getResourceAsStream(
+								"tree_dummy_data.xml");
+			}
+			dummyDataList = (List) xstream.fromXML(resourceAsStream);
+		} catch (Throwable ex) {
+			throw new ExceptionInInitializerError(ex);
+		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#copyNode(java.lang.String, java.lang.String, java.lang.Boolean)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#copyNode(java.lang.String,
+	 *      java.lang.String, java.lang.Boolean)
 	 */
-	public String copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren) {
+	public String copyNode(String nodeUuid, String dstNodeUuid,
+			Boolean includeChildren) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#deleteNode(java.lang.String, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#deleteNode(java.lang.String,
+	 *      java.lang.Boolean)
 	 */
 	public String deleteNode(String nodeUuid, Boolean markOnly) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#getNodeData(java.lang.String, java.lang.String, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#getNodeData(java.lang.String,
+	 *      java.lang.String, java.lang.Boolean)
 	 */
-	public HashMap getNodeData(String nodeUuid, String nodeType, Boolean useWorkingCopy) {
+	public HashMap getNodeData(String nodeUuid, String nodeType,
+			Boolean useWorkingCopy) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#getOpenTree(java.lang.String, java.lang.String, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#getOpenTree(java.lang.String,
+	 *      java.lang.String, java.lang.Boolean)
 	 */
-	public List getOpenTree(String nodeUuid, String nodeType, Boolean allRootTypes) {
+	public List getOpenTree(String nodeUuid, String nodeType,
+			Boolean allRootTypes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#getSubTree(java.lang.String, java.lang.String, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#getSubTree(java.lang.String,
+	 *      java.lang.String, int)
 	 */
 	public List getSubTree(String nodeUuid, String nodeType, int depth) throws Exception {
 
-		if (nodeUuid == null && nodeType == null) {
-			ArrayList list = new ArrayList(2);
-			HashMap o = new HashMap();
-			o.put("id", "objectRoot");
-			o.put("title", "Objekte");
-			o.put("dojoType", "ingrid:TreeNode");
-			o.put("contextMenu", "contextMenu1");
-			o.put("nodeDocType", "Objects");
-			o.put("nodeAppType", "Objekt");
-			o.put("isFolder", "true");
-			list.add(o);
-
-			o = new HashMap();
-			o.put("id", "addressRoot");
-			o.put("title", "Adressen");
-			o.put("dojoType", "ingrid:TreeNode");
-			o.put("contextMenu", "contextMenu2");
-			o.put("nodeDocType", "Addresses");
-			o.put("nodeAppType", "Adresse");
-			o.put("isFolder", "true");
-			list.add(o);
-			xstream.toXML(list);
-			return list;
-		} else if (nodeUuid.equals("objectRoot")) {
-			ArrayList list = new ArrayList(2);
-			HashMap o = new HashMap();
-
-			o = new HashMap();
-			o.put("id", "o1");
-			o.put("title", "Test Objekt 1");
-			o.put("dojoType", "ingrid:TreeNode");
-			o.put("contextMenu", "contextMenu2");
-			o.put("nodeDocType", "Class1");
-			o.put("nodeAppType", "Objekt");
-			list.add(o);
-			o = new HashMap();
-			o.put("id", "o11");
-			o.put("title", "Test Objekt 1.1");
-			o.put("dojoType", "ingrid:TreeNode");
-			o.put("contextMenu", "contextMenu2");
-			o.put("nodeDocType", "Class3");
-			o.put("nodeAppType", "Objekt");
-			list.add(o);
-			
-			return list;
-		} else if (nodeUuid.equals("addressRoot")) {
-			ArrayList list = new ArrayList(2);
-			HashMap o = new HashMap();
-			o = new HashMap();
-			o.put("id", "a1");
-			o.put("title", "Test Adresse 1");
-			o.put("dojoType", "ingrid:TreeNode");
-			o.put("contextMenu", "contextMenu2");
-			o.put("nodeDocType", "Class3");
-			o.put("nodeAppType", "Adresse");
-			o.put("isFolder", "true");
-			list.add(o);
+		List list = getChildren( nodeUuid, nodeType);
+		if (list != null) {
 			return list;
 		} else {
 			throw new IllegalArgumentException("invalid parameters");
 		}
-
 	}
 
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#moveNode(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#moveNode(java.lang.String,
+	 *      java.lang.String)
 	 */
 	public String moveNode(String nodeUuid, String dstNodeUuid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap,
+	 *      java.lang.Boolean)
 	 */
 	public String saveNodeData(HashMap data, Boolean useWorkingCopy) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	private List getChildren(String id, String type) {
+		List srcList = null;
+		if (id == null && type == null) {
+			srcList = dummyDataList;
+		} else {
+			srcList = findChildrenOfNodeInList(dummyDataList, id);
+		}
+		if (srcList == null) {
+			return null;
+		}
+		List dstList = new ArrayList();
+		for (int i = 0; i < srcList.size(); i++) {
+			HashMap hash = new HashMap();
+			hash.putAll((HashMap) srcList.get(i));
+			if (hash.get("children") != null) {
+				hash.put("isFolder", "true");
+				hash.remove("children");
+			}
+			hash.put("title", StringEscapeUtils.escapeHtml(((String)hash.get("title")).trim()));
+			dstList.add(hash);
+		}
+		return dstList;
+	}
+
+	private List findChildrenOfNodeInList(List list, String id) {
+		HashMap node;
+		for (int i = 0; i < list.size(); i++) {
+			node = (HashMap) list.get(i);
+			if (node.get("id").equals(id)) {
+				return (List) node.get("children");
+			}
+		}
+
+		List dstList;
+		for (int i = 0; i < list.size(); i++) {
+			node = (HashMap) list.get(i);
+			if (node.get("children") != null) {
+				dstList = findChildrenOfNodeInList((List) node.get("children"), id);
+				if (dstList != null) {
+					return dstList;
+				}
+			}
+		}
+		return null;
+	}
+
+	
+	private String encodeHTML(String s)
+	{
+	    StringBuffer out = new StringBuffer();
+	    for(int i=0; i<s.length(); i++)
+	    {
+	        char c = s.charAt(i);
+	        if(c > 127 || c=='"' || c=='<' || c=='>')
+	        {
+	           out.append("&#"+(int)c+";");
+	        }
+	        else
+	        {
+	            out.append(c);
+	        }
+	    }
+	    return out.toString();
+	}
 }
