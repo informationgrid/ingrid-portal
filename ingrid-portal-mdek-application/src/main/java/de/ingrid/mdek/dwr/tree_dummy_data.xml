@@ -2,7 +2,7 @@
 	<map>
 		<entry>
 			<string>contextMenu</string>
-			<string>contextMenu1</string>
+			<string>contextMenu2</string>
 		</entry>
 		<entry>
 			<string>nodeDocType</string>
@@ -10,7 +10,7 @@
 		</entry>
 		<entry>
 			<string>title</string>
-			<string>Objekte</string>
+			<string>Oe</string>
 		</entry>
 		<entry>
 			<string>dojoType</string>
@@ -18,7 +18,7 @@
 		</entry>
 		<entry>
 			<string>nodeAppType</string>
-			<string>Objekt</string>
+			<string>O</string>
 		</entry>
 		<entry>
 			<string>id</string>
@@ -46,7 +46,7 @@
 					</entry>
 					<entry>
 						<string>nodeAppType</string>
-						<string>Objekt</string>
+						<string>O</string>
 					</entry>
 					<entry>
 						<string>id</string>
@@ -74,7 +74,7 @@
 								</entry>
 								<entry>
 									<string>nodeAppType</string>
-									<string>Objekt</string>
+									<string>O</string>
 								</entry>
 								<entry>
 									<string>id</string>
@@ -103,7 +103,7 @@
 					</entry>
 					<entry>
 						<string>nodeAppType</string>
-						<string>Objekt</string>
+						<string>O</string>
 					</entry>
 					<entry>
 						<string>id</string>
@@ -131,7 +131,7 @@
 								</entry>
 								<entry>
 									<string>nodeAppType</string>
-									<string>Objekt</string>
+									<string>O</string>
 								</entry>
 								<entry>
 									<string>id</string>
@@ -157,7 +157,7 @@
 								</entry>
 								<entry>
 									<string>nodeAppType</string>
-									<string>Objekt</string>
+									<string>O</string>
 								</entry>
 								<entry>
 									<string>id</string>
@@ -186,7 +186,7 @@
 					</entry>
 					<entry>
 						<string>nodeAppType</string>
-						<string>Objekt</string>
+						<string>O</string>
 					</entry>
 					<entry>
 						<string>id</string>
@@ -214,7 +214,7 @@
 								</entry>
 								<entry>
 									<string>nodeAppType</string>
-									<string>Objekt</string>
+									<string>O</string>
 								</entry>
 								<entry>
 									<string>id</string>
@@ -242,7 +242,7 @@
 											</entry>
 											<entry>
 												<string>nodeAppType</string>
-												<string>Objekt</string>
+												<string>O</string>
 											</entry>
 											<entry>
 												<string>id</string>
@@ -268,7 +268,7 @@
 											</entry>
 											<entry>
 												<string>nodeAppType</string>
-												<string>Objekt</string>
+												<string>O</string>
 											</entry>
 											<entry>
 												<string>id</string>
@@ -294,7 +294,7 @@
 											</entry>
 											<entry>
 												<string>nodeAppType</string>
-												<string>Objekt</string>
+												<string>O</string>
 											</entry>
 											<entry>
 												<string>id</string>
@@ -320,7 +320,7 @@
 											</entry>
 											<entry>
 												<string>nodeAppType</string>
-												<string>Objekt</string>
+												<string>O</string>
 											</entry>
 											<entry>
 												<string>id</string>
@@ -346,7 +346,7 @@
 											</entry>
 											<entry>
 												<string>nodeAppType</string>
-												<string>Objekt</string>
+												<string>O</string>
 											</entry>
 											<entry>
 												<string>id</string>
@@ -375,7 +375,7 @@
 								</entry>
 								<entry>
 									<string>nodeAppType</string>
-									<string>Objekt</string>
+									<string>O</string>
 								</entry>
 								<entry>
 									<string>id</string>
@@ -401,7 +401,7 @@
 								</entry>
 								<entry>
 									<string>nodeAppType</string>
-									<string>Objekt</string>
+									<string>O</string>
 								</entry>
 								<entry>
 									<string>id</string>
@@ -430,7 +430,7 @@
 					</entry>
 					<entry>
 						<string>nodeAppType</string>
-						<string>Objekt</string>
+						<string>O</string>
 					</entry>
 					<entry>
 						<string>id</string>
@@ -441,6 +441,10 @@
 					<entry>
 						<string>contextMenu</string>
 						<string>contextMenu1</string>
+					</entry>
+					<entry>
+						<string>isFolder</string>
+						<string></string>
 					</entry>
 					<entry>
 						<string>nodeDocType</string>
@@ -456,7 +460,7 @@
 					</entry>
 					<entry>
 						<string>nodeAppType</string>
-						<string>Objekt</string>
+						<string>O</string>
 					</entry>
 					<entry>
 						<string>id</string>
@@ -489,7 +493,7 @@
 		</entry>
 		<entry>
 			<string>nodeAppType</string>
-			<string>Adresse</string>
+			<string>A</string>
 		</entry>
 		<entry>
 			<string>id</string>

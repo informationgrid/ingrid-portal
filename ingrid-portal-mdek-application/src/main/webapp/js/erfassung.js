@@ -179,7 +179,7 @@ function createItemClicked(menuItem)
 {
 	var selectedNode = menuItem.getTreeNode();
   var dlg = 'erfassung_objekt_anlegen.html';
-  if (selectedNode.nodeAppType == "Adresse")
+  if (selectedNode.nodeAppType == "A")
     dlg = 'erfassung_adresse_anlegen.html';
   dialog.showPage(message.get('tree.nodeNew'), dlg, 502, 130, true, 
         {treeId:'tree', controllerId:'treeController', nodeId:selectedNode.widgetId});
@@ -252,13 +252,13 @@ function selectContentClass(className, formClass)
 
 function nodeSelected(message)
 {
-  if (message.node.nodeAppType == "Adresse") {
+  if (message.node.nodeAppType == "A") {
     mdek.entry.type = "a";
     dojo.byId("contentAddress").style.display="block";
     dojo.byId("contentObject").style.display="none";
     dojo.byId("contentNone").style.display="none";
   }
-  else if (message.node.nodeAppType == "Objekt") {
+  else if (message.node.nodeAppType == "O") {
     mdek.entry.type = "o";
     dojo.byId("contentAddress").style.display="none";
     dojo.byId("contentObject").style.display="block";

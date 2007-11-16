@@ -89,6 +89,15 @@ function initForm() {
 
 
 function initTree() {
+
+	// initially load data (first hierarchy level) from server 
+	EntryService.getSubTree(null, null, 1, 
+		function (str) {
+			var tree = dojo.widget.byId('tree');
+			tree.setChildren(str);
+		}
+	);
+
   var contextMenu1 = dojo.widget.byId('contextMenu1');
   contextMenu1.treeController = dojo.widget.byId('treeController');
   contextMenu1.addItem(message.get('tree.nodeNew'), 'addChild', function(menuItem) {createItemClicked(menuItem)});
@@ -114,6 +123,30 @@ function initTree() {
   var treeListener = dojo.widget.byId('treeListener');
   dojo.event.topic.subscribe(treeListener.eventNames.select, "nodeSelected");
 
+  // Load children of the node from server
+  // Overwritten to work with dwr.
+  var treeController = dojo.widget.byId('treeController');
+  treeController.loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+		
+		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:5000,
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+		
+		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addErrback(function(res) { alert(res.message); });
+		return deferred;
+	};
   
 }
 
@@ -140,7 +173,7 @@ function initToolbar() {
                                 dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
                               else {
                                 var dlg = 'erfassung_objekt_anlegen.html';
-                                if (selectedNode.nodeAppType == "Adresse")
+                                if (selectedNode.nodeAppType == "A")
                                   dlg = 'erfassung_adresse_anlegen.html';
                                 dialog.showPage(message.get('tree.nodeNew'), dlg, 502, 130, true, {treeId:'tree', controllerId:'treeController', nodeId:selectedNode.widgetId});
                               }

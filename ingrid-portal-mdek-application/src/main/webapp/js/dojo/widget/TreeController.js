@@ -121,33 +121,4 @@ dojo.widget.defineWidget(
       this.nodeToCut = null; // don't paste cut object twice
     }
 	},
-	/**
-	 * Load children of the node from server
-	 * Synchroneous loading doesn't break control flow
-	 * I need sync mode for DnD
-	 *
-	 * Overwritten to work with dwr.
-	*/
-	loadRemote: function(node, sync){
-		var _this = this;
-
-		var params = {
-			node: this.getInfo(node),
-			tree: this.getInfo(node.tree)
-		};
-
-		var deferred = new dojo.Deferred();
-		
-		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
-  			callback:function(res) { deferred.callback(res); },
-			timeout:5000,
-			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
-			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
-  		});
-		
-		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
-		deferred.addErrback(function(res) { alert(res.message); });
-		return deferred;
-
-	}
 });

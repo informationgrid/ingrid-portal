@@ -53,14 +53,39 @@ function initTree() {
   // attach node selection handler
   var treeListener = dojo.widget.byId('treeListener');
   dojo.event.topic.subscribe(treeListener.eventNames.select, "nodeSelected");
+  
+  // Load children of the node from server
+  // Overwritten to work with dwr.
+  var treeController = dojo.widget.byId('treeController');
+  treeController.loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+		
+		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:5000,
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+		
+		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addErrback(function(res) { alert(res.message); });
+		return deferred;
+	};
 }
 
-function handleGetData(str) {
-	var tree = dojo.widget.byId('tree');
-	tree.setChildren(str);
-}
-
-EntryService.getSubTree(null, null, 1, handleGetData);
+// initially load data (first hierachy level) from server 
+EntryService.getSubTree(null, null, 1, 
+	function (str) {
+		var tree = dojo.widget.byId('tree');
+		tree.setChildren(str);
+	});
 
 </script>
 

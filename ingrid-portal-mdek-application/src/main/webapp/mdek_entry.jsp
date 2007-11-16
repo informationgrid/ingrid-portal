@@ -194,61 +194,6 @@ function hideSplash(){
       
       <!-- tree -->
       <div dojoType="ingrid:Tree" listeners="treeController;treeListener;contextMenu1;contextMenu2;treeDocIcons" widgetId="tree">
-        <!-- uncomment the next 2 lines in production
-      	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt"></div>
-      	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse"></div>
-        end of uncomment -->
-        <!-- remove the next lines in production -->
-      	<div dojoType="ingrid:TreeNode" title="Objekte" widgetId="o1" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt">
-        	<div dojoType="ingrid:TreeNode" title="Rechtsgrundlagen" widgetId="o2" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
-        		<div dojoType="ingrid:TreeNode" title="Niedersächsische Rechtsgrundlagen" widgetId="o3" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
-          		<div dojoType="ingrid:TreeNode" title="Gesetze des Landes Niedersachsen" widgetId="o31" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="o311" contextMenu="contextMenu1" nodeDocType="Class1" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="o312" contextMenu="contextMenu1" nodeDocType="Class2" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="o313" contextMenu="contextMenu1" nodeDocType="Class4" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="o314" contextMenu="contextMenu1" nodeDocType="Class5" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="o315" contextMenu="contextMenu1" nodeDocType="Class6" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="o316" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Elftes Gesetz zur Änderung des Niedersächsischen Wassergesetzes" widgetId="o317" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Niedersächsisches Wattenmeer'" widgetId="o318" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Abwasserabgabengesetz (Nds. AG AbwAG)" widgetId="o319" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
-          		</div>
-          		<div dojoType="ingrid:TreeNode" title="Verordnungen und Vorschriften des Landes Niedersachsen" widgetId="o32" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="o321" contextMenu="contextMenu1" nodeDocType="Class1_B" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="o322" contextMenu="contextMenu1" nodeDocType="Class2_B" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="o323" contextMenu="contextMenu1" nodeDocType="Class4_B" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="o324" contextMenu="contextMenu1" nodeDocType="Class5_B" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="o325" contextMenu="contextMenu1" nodeDocType="Class6_B" nodeAppType="Objekt"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="o326" contextMenu="contextMenu1" nodeDocType="Class3_B" nodeAppType="Objekt"></div>
-              </div>
-        		</div>
-        		<div dojoType="ingrid:TreeNode" title="Bundesdeutsche Rechtsgrundlagen" widgetId="o4" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
-        		<div dojoType="ingrid:TreeNode" title="Europäische und internationale Rechtsgrundlagen" widgetId="o5" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
-        	</div>
-      	</div>
-      	<div dojoType="ingrid:TreeNode" title="Adressen" widgetId="a0" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse">
-        	<div dojoType="ingrid:TreeNode" title="Freie Adressen" widgetId="a1fa" contextMenu="contextMenu1" nodeDocType="PersonAddress" nodeAppType="Adresse">
-      		  <div dojoType="ingrid:TreeNode" title="Albers, Hans" widgetId="a1fa1" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
-      		  <div dojoType="ingrid:TreeNode" title="Bergmann, Ingrid" widgetId="a1fa2" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
-          </div>
-        	<div dojoType="ingrid:TreeNode" title="NDS. UMWELTMINISTERIUM" widgetId="a1" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
-        		<div dojoType="ingrid:TreeNode" title="Abteilung 3: Immissionsschutz, Kreislaufwirtschaft und Abfall" widgetId="a11" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
-        		<div dojoType="ingrid:TreeNode" title="Referatsgruppe Natur und Landschaft" widgetId="a12" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
-        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Artenschutz" widgetId="a121" contextMenu="contextMenu1" nodeDocType="InstitutionUnit" nodeAppType="Adresse"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Albers, Hans" widgetId="a1211" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Bergmann, Ingrid" widgetId="a1212" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
-        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Naturparke" widgetId="a122" contextMenu="contextMenu1" nodeDocType="InstitutionPerson" nodeAppType="Adresse"></div>
-        		</div>
-        		<div dojoType="ingrid:TreeNode" title="Abteilung 4: Energie, Atomaufsicht und Strahlenschutz" widgetId="a13" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
-        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Strahlenschutz" widgetId="a131" contextMenu="contextMenu1" nodeDocType="InstitutionUnit_B" nodeAppType="Adresse"></div>
-        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Energiepolitik" widgetId="a132" contextMenu="contextMenu1" nodeDocType="InstitutionPerson_Q" nodeAppType="Adresse"></div>
-        		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Kernenergie" widgetId="a133" contextMenu="contextMenu1" nodeDocType="PersonAddress_R" nodeAppType="Adresse"></div>
-        		</div>
-        		<div dojoType="ingrid:TreeNode" title="Abteilung 1: Zentrale Aufgaben" widgetId="a14" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
-        		<div dojoType="ingrid:TreeNode" title="Abteilung 2: Wasserwirtschaft" widgetId="a15" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
-        	</div>
-      	</div>
-        <!-- end of remove -->
       </div>
   	</div>
     <!-- LEFT CONTENT PANE END -->

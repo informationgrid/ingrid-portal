@@ -95,6 +95,10 @@ public class EntryServiceMockupImpl implements EntryService {
 	 */
 	public List getSubTree(String nodeUuid, String nodeType, int depth) throws Exception {
 
+		if (nodeUuid!=null && nodeType == null) {
+			throw new IllegalArgumentException("Wrong arguments on method getSubTree(): nodeType must be set if nodeUuid is set!");
+		}
+		
 		List list = getChildren( nodeUuid, nodeType);
 		if (list != null) {
 			return list;
