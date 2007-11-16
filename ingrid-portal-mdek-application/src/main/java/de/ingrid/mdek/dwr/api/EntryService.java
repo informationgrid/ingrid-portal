@@ -23,18 +23,20 @@ public interface EntryService {
 	 * is represented by a HashMap which contains the following keys:
 	 * 
 	 * <ul>
-	 * <li><b>(String) uuid</b> - uuid of the node</li>
-	 * <li><b>(String) type</b> - type of the node ('o' for Object or 'a' for
-	 * Address)</li>
-	 * <li><b>(String) class</b> - class of the object (UDK class for Objects,
-	 * type for Adresses)</li>
+	 * <li><b>(String) id</b> - uuid of the node</li>
+	 * <li><b>(String) nodeAppType</b> - type of the node ('O' for Object or 'A' for Address or 'C' for catalog)</li>
+	 * <li><b>(String) nodeDocType</b> possible values: "Class1...Class6" for UDK objects,
+	 * "Institution|InstitutionUnit|InstitutionPerson|InstitutionUnit_B|InstitutionPerson_Q|PersonAddress_R" for UDK Adresses, 
+	 * "Objects" for object root node, "Adresses" for address root node </li>
 	 * <li><b>(String) title</b> - title of the node</li>
-	 * <li><b>(Boolean) hasChildren</b> - node has children</li>
+	 * <li><b>(String) isFolder</b> - "true" if node has children, null if not</li>
+	 * <li><b>(String) contextMenu</b> - type of context menu to be displayed
+	 * on the node: contextMenu1 for all data nodes, contextMenu2 for the two root nodes</li>
 	 * <li><b>children</b> - list of children of the node</li>
 	 * </ul>
 	 * 
 	 * The Method returns all children from a node (object or address) depending
-	 * in its uuid and its type.
+	 * in its nodeUuid and its nodeType.
 	 * 
 	 * If nodeUuid is null all root nodes of the given nodeType are returned up
 	 * until a defined depth. If nodeType is also null, all root node types
@@ -53,7 +55,8 @@ public interface EntryService {
 	 *            The depth of the returned tree structure. Must be > 0.
 	 * @return A List of HashMaps representing the tree.
 	 */
-	public List getSubTree(String nodeUuid, String nodeType, int depth) throws Exception;
+	public List getSubTree(String nodeUuid, String nodeType, int depth)
+			throws Exception;
 
 	/**
 	 * Returns partly opened tree structure encapsulated in Lists of HashMaps.
@@ -63,19 +66,20 @@ public interface EntryService {
 	 * following keys:
 	 * 
 	 * <ul>
-	 * <li><b>(String) uuid</b> - uuid of the node</li>
-	 * <li><b>(String) type</b> - type of the node ('o' for Object or 'a' for
-	 * Address)</li>
-	 * <li><b>(String) class</b> - class of the object (UDK class for Objects,
-	 * type for Adresses)</li>
+	 * <li><b>(String) id</b> - uuid of the node</li>
+	 * <li><b>(String) nodeAppType</b> - type of the node ('O' for Object or 'A' for Address or 'C' for catalog)</li>
+	 * <li><b>(String) nodeDocType</b> possible values: "Class1...Class6" for UDK objects,
+	 * "Institution|InstitutionUnit|InstitutionPerson|InstitutionUnit_B|InstitutionPerson_Q|PersonAddress_R" for UDK Adresses, 
+	 * "Objects" for object root node, "Adresses" for address root node </li>
 	 * <li><b>(String) title</b> - title of the node</li>
-	 * <li><b>(Boolean) isOpen</b> - node is open</li>
-	 * <li><b>(Boolean) hasChildren</b> - node has children</li>
+	 * <li><b>(String) isFolder</b> - "true" if node has children, null if not</li>
+	 * <li><b>(String) contextMenu</b> - type of context menu to be displayed
+	 * on the node: contextMenu1 for all data nodes, contextMenu2 for the two root nodes</li>
 	 * <li><b>children</b> - list of children of the node</li>
 	 * </ul>
 	 * 
 	 * The Method returns a tree structure with a branch opened to an node
-	 * specified by uuid. For all parent nodes based on the node with nodeUuid
+	 * specified by nodeUuid. For all parent nodes based on the node with nodeUuid
 	 * all direct children are returned as well. The tree structure must be
 	 * ready for display.
 	 * 
@@ -85,16 +89,17 @@ public interface EntryService {
 	 * 
 	 * 
 	 * @param nodeUuid
-	 *            The uuid of the node to be opened. Must not be null.
+	 *            The nodeUuid of the node to be opened. Must not be null.
 	 * @param nodeType
 	 *            The type of the node to open ('o' for object, 'a' for
 	 *            address).
 	 * @param allRootTypes
-	 *            True to return alle root nodes, regardless of their type,
+	 *            True to return all root nodes, regardless of their type,
 	 *            False to return only root nodes of type nodeType.
 	 * @return
 	 */
-	public List getOpenTree(String nodeUuid, String nodeType, Boolean allRootTypes);
+	public List getOpenTree(String nodeUuid, String nodeType,
+			Boolean allRootTypes);
 
 	/**
 	 * Retrieves all relevant data of a node. Data is encapsulated in a HashMap.
@@ -116,7 +121,8 @@ public interface EntryService {
 	 *            synchronize the working copy with the original data.
 	 * @return
 	 */
-	public HashMap getNodeData(String nodeUuid, String nodeType, Boolean useWorkingCopy);
+	public HashMap getNodeData(String nodeUuid, String nodeType,
+			Boolean useWorkingCopy);
 
 	/**
 	 * Saves or updates the Object.
@@ -145,7 +151,8 @@ public interface EntryService {
 	 *            only the node.
 	 * @return 'success' or error message.
 	 */
-	public String copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);
+	public String copyNode(String nodeUuid, String dstNodeUuid,
+			Boolean includeChildren);
 
 	/**
 	 * Move a node. All children of the specified node are moved as well. This
@@ -168,7 +175,8 @@ public interface EntryService {
 	 * @param nodeUuid
 	 *            The uuid of the node to delete.
 	 * @param markOnly
-	 *            If set true the working copy of the node will only be marked for deletion.
+	 *            If set true the working copy of the node will only be marked
+	 *            for deletion.
 	 * @return 'success' or error message.
 	 */
 	public String deleteNode(String nodeUuid, Boolean markOnly);
