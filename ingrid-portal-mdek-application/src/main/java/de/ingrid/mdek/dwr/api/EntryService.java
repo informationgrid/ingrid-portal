@@ -97,9 +97,10 @@ public interface EntryService {
 	 *            True to return all root nodes, regardless of their type,
 	 *            False to return only root nodes of type nodeType.
 	 * @return
+	 * @throws Exception 
 	 */
 	public List getOpenTree(String nodeUuid, String nodeType,
-			Boolean allRootTypes);
+			Boolean allRootTypes) throws Exception;
 
 	/**
 	 * Retrieves all relevant data of a node. Data is encapsulated in a HashMap.

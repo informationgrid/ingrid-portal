@@ -82,8 +82,13 @@ public class EntryServiceMockupImpl implements EntryService {
 	 *      java.lang.String, java.lang.Boolean)
 	 */
 	public List getOpenTree(String nodeUuid, String nodeType,
-			Boolean allRootTypes) {
-		// TODO Auto-generated method stub
+			Boolean allRootTypes) throws Exception {
+		HashMap node = findNodeInTree(dummyDataList, nodeUuid);
+		if (node == null) {
+			throw new Exception("Node (" + nodeUuid + ") not found!");
+		}
+		
+		// TODO: build tree top down until the node with nodeUuid is reached
 		return null;
 	}
 
@@ -99,7 +104,7 @@ public class EntryServiceMockupImpl implements EntryService {
 			throw new IllegalArgumentException("Wrong arguments on method getSubTree(): nodeType must be set if nodeUuid is set!");
 		}
 		
-		List list = getChildren( nodeUuid, nodeType);
+		List list = getChildren( nodeUuid, nodeType, depth, 0);
 		if (list != null) {
 			return list;
 		} else {
@@ -129,12 +134,14 @@ public class EntryServiceMockupImpl implements EntryService {
 		return null;
 	}
 
-	private List getChildren(String id, String type) {
+	private List getChildren(String id, String type, int depth, int level) {
+		int internalLevel = level + 1;
 		List srcList = null;
 		if (id == null && type == null) {
 			srcList = dummyDataList;
 		} else {
-			srcList = findChildrenOfNodeInList(dummyDataList, id);
+			HashMap srcNode = findNodeInTree(dummyDataList, id);
+			srcList = (List)srcNode.get("children");
 		}
 		if (srcList == null) {
 			return null;
@@ -148,49 +155,27 @@ public class EntryServiceMockupImpl implements EntryService {
 				hash.remove("children");
 			}
 			hash.put("title", StringEscapeUtils.escapeHtml(((String)hash.get("title")).trim()));
+			if (internalLevel < depth) {
+				hash.put("children", getChildren((String)hash.get("id"), type, depth, internalLevel));
+			}
 			dstList.add(hash);
 		}
 		return dstList;
 	}
 
-	private List findChildrenOfNodeInList(List list, String id) {
+	private HashMap findNodeInTree(List list, String id) {
 		HashMap node;
 		for (int i = 0; i < list.size(); i++) {
 			node = (HashMap) list.get(i);
 			if (node.get("id").equals(id)) {
-				return (List) node.get("children");
-			}
-		}
-
-		List dstList;
-		for (int i = 0; i < list.size(); i++) {
-			node = (HashMap) list.get(i);
-			if (node.get("children") != null) {
-				dstList = findChildrenOfNodeInList((List) node.get("children"), id);
-				if (dstList != null) {
-					return dstList;
+				return node;
+			} else if (node.get("children") != null) {
+				node = findNodeInTree((List) node.get("children"), id);
+				if (node != null) {
+					return node;
 				}
 			}
 		}
 		return null;
-	}
-
-	
-	private String encodeHTML(String s)
-	{
-	    StringBuffer out = new StringBuffer();
-	    for(int i=0; i<s.length(); i++)
-	    {
-	        char c = s.charAt(i);
-	        if(c > 127 || c=='"' || c=='<' || c=='>')
-	        {
-	           out.append("&#"+(int)c+";");
-	        }
-	        else
-	        {
-	            out.append(c);
-	        }
-	    }
-	    return out.toString();
 	}
 }
