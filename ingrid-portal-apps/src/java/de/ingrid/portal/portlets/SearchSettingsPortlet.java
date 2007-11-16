@@ -109,6 +109,8 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
                 .getInput(SearchSettingsForm.FIELD_GROUPING));
         sessionPrefs.put(IngridSessionPreferences.SEARCH_SETTING_INCL_META, f
                 .getInput(SearchSettingsForm.FIELD_INCL_META));
-
+        
+        // adapt SearchState to New Settings !
+        sessionPrefs.adaptSearchState(request);
     }
 }

@@ -737,11 +737,12 @@ public class UtilsSearch {
      */
     public static void processGrouping(IngridQuery query, String grouping) {
         if (grouping != null) {
-            if (grouping.equals(Settings.PARAMV_GROUPING_PARTNER)) {
+        	// check Frontend-Consts (when from IngridSessionPreferences) and Backend-consts (when from IngridQuery/SearchState)
+            if (grouping.equals(Settings.PARAMV_GROUPING_PARTNER) || grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PARTNER);
-            } else if (grouping.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
+            } else if (grouping.equals(Settings.PARAMV_GROUPING_PROVIDER) || grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_ORGANISATION);
-            } else if (grouping.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
+            } else if (grouping.equals(Settings.PARAMV_GROUPING_DOMAIN) || grouping.equals(IngridQuery.GROUPED_BY_DATASOURCE)) {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_DATASOURCE);
             } else {
                 query.remove(Settings.QFIELD_GROUPED);

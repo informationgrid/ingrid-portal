@@ -324,18 +324,19 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             return;
         }
 
-        // adapt SearchState (base for generating URL params) !
+        // adapt SearchState (base for generating URL params FOR BOOKMARKING !!!)
         // Reset all Stuff which are remains of former state and shouldn't be
-        // taken into account
-        // on actions in SimpleSearch form (where NO URL PARAMETERS SHOULD BE
-        // GENERATED) !
+        // taken into account on any action in SimpleSearch form
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, null);
         SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, null);
 
+        SearchState.adaptSearchState(request, Settings.PARAM_FILTER, null);
+        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, null);        
+
         if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-        	// adapt SearchState (base for generating URL params for render
+        	// adapt current SearchState (base for generating URL params for render
             // request):
             // - query string
         	
@@ -346,7 +347,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         	} else {
 	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, "");
         	}
-            
+
+        	// Adapt search state to settings of IngridSessionPreferences !!!
+        	// On new search, no temporary stuff from bookmarks etc. should be used !
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
+                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+            sessionPrefs.adaptSearchState(request);
+
             // check if submit or requery or delete query
             if (request.getParameter("doSetQuery") == null && request.getParameter("doDeleteQuery") == null) {
                 // redirect to our page wih parameters for bookmarking

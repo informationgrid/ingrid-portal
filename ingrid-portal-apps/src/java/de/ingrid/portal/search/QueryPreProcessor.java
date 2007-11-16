@@ -139,13 +139,21 @@ public class QueryPreProcessor {
             // no grouping when filter is set.
             // set GROUPING ! ONLY IF NO GROUPING IN Query String Input !
             if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
-                // adapt grouping to preferences
-                String grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);
+            	
+            	// IF NO GROUPING IN Query String input then use request parameters !!!
+            	// bookmarking has higher prio than user preferences (see below) !
+                String grouping = request.getParameter(Settings.PARAM_GROUPING);
+
+                // If no grouping yet, adapt grouping to USER preferences
+                if (grouping == null) {
+                    grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);                	
+                }
 
                 // set grouping
                 UtilsSearch.processGrouping(query, grouping);
             }
         }
+
         // adapt search state after processing grouping
         SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, query.get(Settings.QFIELD_GROUPED));
 

@@ -161,13 +161,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             queryType = "";
         }
 
-        // get the filter from search state
-        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
+        // get the filter from REQUEST, not search state ! -> so back button works !
+        // ALSO ADAPT SEARCH STATE, so following steps (query pre processor) work !
+        String filter = request.getParameter(Settings.PARAM_FILTER);
+        if (filter != null && filter.length() == 0) {
+        	filter = null;
+        }
+        SearchState.adaptSearchState(request, Settings.PARAM_FILTER, filter);
+        String filterSubject = request.getParameter(Settings.PARAM_SUBJECT);
+        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, filterSubject);        
 
         // set filter params into context for filter display
-        if (filter != null && filter.length() > 0) {
+        if (filter != null) {
             context.put("filteredBy", filter);
-            String filterSubject = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
             if (filter.equals(Settings.PARAMV_GROUPING_PARTNER)) {
                 context.put("filterSubject", UtilsSearch.mapResultValue(Settings.RESULT_KEY_PARTNER, filterSubject, null));
             } else if (filter.equals(Settings.PARAMV_GROUPING_PROVIDER)) {
@@ -187,10 +193,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
-        // datasource from state
+        // datasource from state (set in SimpleSearch Portlet)
         String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
 
-        // IngridQuery from state
+        // IngridQuery from state  (set in SimpleSearch Portlet)
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
 
         // ----------------------------------
@@ -252,8 +258,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 renderResultColumnRanked = false;
             }
             // check for js enabled iframe rendering
-        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)
-                && !currentView.equals(TEMPLATE_RESULT_ADDRESS) && !currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
+
+        } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
+        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
+                renderResultColumnRanked = false;
+                context.put("IS_RANKED", new Boolean(false));
+        	} else {
+        		// grouping by domain
+                renderResultColumnUnranked = false;
+                context.put("IS_RANKED", new Boolean(true));
+        	}
+
+        } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            renderResultColumnUnranked = false;
+
+            // check for js enabled iframe rendering
+        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)) {
             // if javascript and new query, set template to javascript enabled iframe template
             // exit method!!
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
@@ -270,17 +290,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     + "&js_ranked=false"));
             super.doView(request, response);
             return;
-        } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
-        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
-                renderResultColumnRanked = false;
-                context.put("IS_RANKED", new Boolean(false));
-        	} else {
-        		// grouping by domain
-                renderResultColumnUnranked = false;
-                context.put("IS_RANKED", new Boolean(true));
-        	}
-        } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            renderResultColumnUnranked = false;
         }
 
         // create threaded query controller
@@ -395,6 +404,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_RANKED, Settings.MSGV_TRUE);
+
                 // GROUPING ONLY !!!
                 if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
                     // get the grouping starthits history from session

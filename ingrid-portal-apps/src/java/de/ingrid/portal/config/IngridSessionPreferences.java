@@ -5,11 +5,14 @@ package de.ingrid.portal.config;
 
 import java.util.HashMap;
 
+import javax.portlet.ActionRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.search.SearchState;
 
 /**
  * encapsulates user session preferences.
@@ -68,4 +71,15 @@ public class IngridSessionPreferences extends HashMap {
         return obj;
     }
 
+    /**
+     * Adapts the current SearchState to the User Settings here !
+     * So temporary values from bookmarking are replaced with UI settings (UserPreferences ...).
+     * Next time when generating URL params from SearchState these ones will be used !   
+     */
+    public void adaptSearchState(ActionRequest request) {
+        SearchState.adaptSearchState(request, Settings.PARAM_RANKING,
+        	this.get(SEARCH_SETTING_RANKING));
+        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING,
+        	this.get(SEARCH_SETTING_GROUPING));
+    }
 }
