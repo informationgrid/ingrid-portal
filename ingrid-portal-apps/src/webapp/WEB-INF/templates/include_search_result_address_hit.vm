@@ -39,9 +39,8 @@
             <p class="result_description">
             $!rs.abstract 
             </p>
-	        #if($topHit)
+##	        #if($topHit)
                 <p class="result_metadata">
-##                 Anbieter: $!rs.partner<br />
            		#set ($showProvider = true)
     			#if($grouping == 'provider')
     				#set ($showProvider = false)
@@ -49,10 +48,9 @@
        			#if($showProvider)
                   $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
     			#end
-                  $MESSAGES.getString('common.result.source'): $!rs.source<br />
-##                 Ranking: $!rs.score<br />
+                $MESSAGES.getString('common.result.source'): $!rs.source<br />
                 </p>
-			#end
+##			#end
 			#if($rs.wms_url)
 			<p class="result_link">
 				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$rs.wms_url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
