@@ -190,8 +190,10 @@ public class UtilsSearch {
             		
         		// if start hit of this page already "out of bounds" set former page as last page
         		if (currStartHit >= totalNumberOfHits) {
-        			lastSelectorPage = i;
-        			hasMoreGroupedPages = false;
+        			if (i <= lastSelectorPage) {
+            			lastSelectorPage = i;        				
+            			hasMoreGroupedPages = false;
+        			}
         			break;
         		}
 
