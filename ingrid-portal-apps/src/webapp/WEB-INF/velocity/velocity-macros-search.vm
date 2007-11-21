@@ -75,6 +75,33 @@ $MESSAGES.getStringWithMsgParams('common.result.navigation.ranked')
     #end
 #end
 
+#macro (renderRankedPageNavigationGroupingWithPages $pageSelector)
+#set ($action = $renderResponse.createActionURL())
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+$MESSAGES.getStringWithMsgParams('common.result.navigation.ranked.grouped')
+	#if($pageSelector.selectorHasPreviousPage)
+        #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    	$action.setParameter('currentSelectorPage', $pstart.toString())
+    		<a href="$action">&laquo;</a>
+    	$action.setParameter('currentSelectorPage', "1")
+    		| <a href="$action">1</a> ..
+	#end
+	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+    	#if($pageId == $pageSelector.currentSelectorPage)
+    		| $pageId
+    	#else
+			$action.setParameter('currentSelectorPage', $pageId.toString())
+    		| <a href="$action">$pageId</a>
+    	#end
+	#end
+    #if($pageSelector.selectorHasNextPage)
+        #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    	$action.setParameter('currentSelectorPage', $pstart.toString())
+    		| <a href="$action">&raquo;</a>
+    #end
+#end
+
 #macro (renderRankedPageNavigationGrouping $pageSelector)
 #set ($action = $renderResponse.createActionURL())
 $MESSAGES.resetMsgParams()

@@ -409,26 +409,29 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
                     // get the grouping starthits history from session
                     // create and initialize if not exists
+                	// NOTICE: when grouping by domain the navigation is like ungrouped navigation, so multiple pages are rendered !
                     try {
                         ArrayList groupedStartHits = 
                         	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
                         if (groupedStartHits == null) {
                             groupedStartHits = new ArrayList();
-                            groupedStartHits.add(new Integer(0));
                             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
-                        } else {
-                            // set start hit for next page (grouping)
-                        	int nextStartHit = rankedHits.getGoupedHitsLength();
-                            groupedStartHits.add(currentSelectorPage, new Integer(nextStartHit));
                         }
+                        // set starthit of NEXT page ! ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
+                    	while (currentSelectorPage >= groupedStartHits.size()) {
+                    		groupedStartHits.add(new Integer(0));
+                    	}
+                        // set start hit for next page (grouping)
+                    	int nextStartHit = rankedHits.getGoupedHitsLength();
+                        groupedStartHits.set(currentSelectorPage, new Integer(nextStartHit));
 
-                        // check whether there are more pages for grouped hits !
+                        // check whether there are more pages for grouped hits ! this is done due to former Bug in Backend !
+                        // still necessary ? well, these former checks don't damage anything ...
                         if (rankedHits.length() <= rankedHits.getGoupedHitsLength()) {
                             // total number of hits (ungrouped) already processed -> no more pages
                         	rankedColumnHasMoreGroupedPages = false;                        	
                         } else {
                         	int currentStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
-                        	int nextStartHit = rankedHits.getGoupedHitsLength();
                         	if (nextStartHit == currentStartHit) {
                                 // start hit for next page same as start hit for current page -> no more pages
                             	rankedColumnHasMoreGroupedPages = false;
@@ -523,14 +526,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // adapt page navigation for grouping in left column 
         if (renderResultColumnRanked) {
             if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
-                rankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, new Integer(currentSelectorPage));
-                // check if we have more results to come
-                if (rankedColumnHasMoreGroupedPages) {
-                    rankedPageNavigation.put("selectorHasNextPage", new Boolean(true));
-                } else {
-                    rankedPageNavigation.put("selectorHasNextPage", new Boolean(false));                	
-                }
-                // prepare view
+            	UtilsSearch.adaptRankedPageNavigationToGrouping(
+               		rankedPageNavigation, currentSelectorPage, rankedColumnHasMoreGroupedPages, numberOfRankedHits, request);
+
                 if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
                     context.put("grouping", "partner");
                 } else if (grouping.equals(IngridQuery.GROUPED_BY_ORGANISATION)) {

@@ -2,7 +2,11 @@
 #if ($IS_RANKED)
 	## RANKED (left column stuff)
 	#if($grouping)
-		#renderRankedPageNavigationGrouping($rankedPageSelector)
+		#if($grouping == 'domain')
+			#renderRankedPageNavigationGroupingWithPages($rankedPageSelector)
+		#else
+			#renderRankedPageNavigationGrouping($rankedPageSelector)
+		#end
 	#else
 		#renderRankedPageNavigation($rankedPageSelector)
 	#end

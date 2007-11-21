@@ -124,6 +124,92 @@ public class UtilsSearch {
     }
 
     /**
+     * Transform "normal" page navigation to the grouped navigation dependent from grouping state !
+     */
+    public static HashMap adaptRankedPageNavigationToGrouping(
+    	HashMap pageNavi,
+    	int currentPage,
+    	boolean hasMoreGroupedPages,
+    	int totalNumberOfHits,
+    	RenderRequest request)
+    {
+        String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
+        if (totalNumberOfHits <= 0 ||
+        	grouping == null || 
+        	grouping.equals(IngridQuery.GROUPED_OFF))
+        {
+        	return pageNavi;
+        }
+
+        // NOTICE: when grouping by domain the navigation is DIFFERENT !
+        // partner/provider grouping: only current page in navigation followed by ">>" 
+        // domain grouping: multiple pages in navigation -> equals ungrouped navigation ! 
+        // we take care, that navigation data is set up correctly !
+
+        if (grouping.equals(IngridQuery.GROUPED_BY_DATASOURCE)) {
+        	
+            int firstSelectorPage = 1;
+            boolean selectorHasPreviousPage = false;
+
+            if (currentPage >= Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT) {
+                firstSelectorPage = currentPage - (int) (Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT / 2);
+                selectorHasPreviousPage = true;
+            }
+            // default last page
+            int lastSelectorPage = firstSelectorPage + Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT - 1;
+            
+        	// add missing positions in array containing starthits of pages
+            ArrayList groupedStartHits = 
+            	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+        	while (lastSelectorPage > groupedStartHits.size()) {
+        		groupedStartHits.add(new Integer(0));
+        	}
+
+        	// fill missing starthits of pages and set whether there are further pages !
+        	// also reduce number of last page if necessary
+            int prevStartHit = 0;
+			hasMoreGroupedPages = true;
+            // start with second position, first one is always 0 (start at beginning)
+            for (int i=1; i < groupedStartHits.size(); i++) {
+
+            	// check whether current start hit is a remain from former calculation
+            	int currStartHit = ((Integer) groupedStartHits.get(i)).intValue();
+            	int updatedStartHit = prevStartHit + Settings.SEARCH_RANKED_HITS_PER_PAGE;
+            	// ADAPT already calculated starthits of pages ! -> number of pages CHANGES !
+            	boolean updateCurrent = currStartHit < updatedStartHit ? true : false;
+
+            	// update if not set yet or outdated !
+            	if (currStartHit == 0 || updateCurrent) {
+            		currStartHit = updatedStartHit;
+            		// reduce starthit if already beyond total number of hits -> show last hit on that page !
+            		if (updatedStartHit >= totalNumberOfHits) {
+            			updatedStartHit = totalNumberOfHits - 1;
+            		}
+            		groupedStartHits.set(i, new Integer(updatedStartHit));
+            	}
+            		
+        		// if start hit of this page already "out of bounds" set former page as last page
+        		if (currStartHit >= totalNumberOfHits) {
+        			lastSelectorPage = i;
+        			hasMoreGroupedPages = false;
+        			break;
+        		}
+
+            	prevStartHit = currStartHit;
+            }
+            
+            pageNavi.put("firstSelectorPage", new Integer(firstSelectorPage));
+            pageNavi.put("lastSelectorPage", new Integer(lastSelectorPage));
+            pageNavi.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
+        }
+
+        pageNavi.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, new Integer(currentPage));
+        pageNavi.put("selectorHasNextPage", new Boolean(hasMoreGroupedPages));
+
+        return pageNavi;
+    }
+
+    /**
      * Transfer commonly used detail parameters from detail object to hitobject.
      * 
      * @param hit

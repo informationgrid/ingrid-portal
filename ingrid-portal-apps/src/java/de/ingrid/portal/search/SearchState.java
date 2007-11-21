@@ -214,6 +214,8 @@ public class SearchState {
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_SUBJECT);
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_FILTER);
+            // this one is still missing when generating URL params !
+            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING_STARTHITS);
 
             // further state for logic, caching etc.
             PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
