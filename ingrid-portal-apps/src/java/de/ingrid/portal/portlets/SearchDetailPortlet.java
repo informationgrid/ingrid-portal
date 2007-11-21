@@ -17,18 +17,21 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -88,6 +91,16 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("tool", new UtilsVelocity());
 
         try {
+        	// check whether we come from google (no IngridSessionPreferences)
+        	boolean noIngridSession = false;
+    		IngridSessionPreferences ingridPrefs =
+    			(IngridSessionPreferences) request.getPortletSession().getAttribute(
+    				IngridSessionPreferences.SESSION_KEY, PortletSession.APPLICATION_SCOPE);
+    		if (ingridPrefs == null) {
+            	noIngridSession = true;    			
+    		}
+            context.put("noIngridSession", new Boolean(noIngridSession));
+
             int documentId = Integer.parseInt(request.getParameter("docid"));
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");

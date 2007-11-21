@@ -27,6 +27,17 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 
+## render "zurueck" link if no IngridSession (entry via google)
+#if($noIngridSession)
+	<div class="section-header">
+		<p class="iconLink">
+    		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+    		<span><a href="portal/default-page.psml">$MESSAGES.getString('search.detail.back')</a></span>
+    		<span class="clearer"></span>
+		</p>
+	</div>
+#end
+
 #if($rec)
 	<div class="section-header">
 		<h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h1>
