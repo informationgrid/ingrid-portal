@@ -51,7 +51,7 @@
 <div id="identity" class="${langCode}motiv_karten">
   #elseif($currentPage == "/main-measures.psml")
 <div id="identity" class="${langCode}motiv_messwerte">
-  #elseif($currentPage == "/main-search.psml")
+  #elseif($currentPage == "/main-search.psml" || $currentPage.startsWith('/search-catalog'))
 <div id="identity" class="${langCode}motiv_suche">
   #elseif($currentPage == "/main-service.psml")
 <div id="identity" class="${langCode}motiv_service">
