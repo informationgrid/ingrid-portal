@@ -83,10 +83,6 @@
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>true</hidden>
         </page>
-        <page>
-            <name>search-catalog/search-catalog-thesaurus.psml</name>
-            <hidden>true</hidden>
-        </page>
     </pages>
     <files>
         <file>

@@ -46,10 +46,6 @@
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>false</hidden>
         </page>
-        <page>
-            <name>search-catalog/search-catalog-thesaurus.psml</name>
-            <hidden>false</hidden>
-        </page>
     </pages>
 
     <files>
