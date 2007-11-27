@@ -85,6 +85,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_ENVIROMENT = "portal.enable.enviroment";
 
+	public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
+
 	public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
 
 	public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";

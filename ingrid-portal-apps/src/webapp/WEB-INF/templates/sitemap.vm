@@ -55,6 +55,7 @@
 					<p>$MESSAGES.getString("sitemap.area.main.maps.description")</p>
 				</li>
 #end
+#if($enableChronicle)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-chronicle.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.chronicle")</a>
@@ -62,6 +63,7 @@ $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 					<p>$MESSAGES.getStringWithMsgParams("sitemap.area.main.chronicle.description")</p>
 				</li>
+#end
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.about")</a>

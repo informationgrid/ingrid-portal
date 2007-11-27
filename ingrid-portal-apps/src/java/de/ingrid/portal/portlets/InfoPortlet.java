@@ -57,6 +57,7 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableService", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SERVICE, Boolean.FALSE));
             context.put("enableEnviroment", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ENVIROMENT, Boolean.FALSE));
             context.put("enableMaps", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, Boolean.FALSE));
+            context.put("enableChronicle", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_CHRONICLE, Boolean.FALSE));
         }
 
         super.doView(request, response);
