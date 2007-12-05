@@ -71,4 +71,6 @@ public interface DataConnectionInterface {
 	 * @return A Map representing the node identified by uuid.
 	 */	
 	public HashMap<String, Object> getNodeDetail(String uuid);
+
+	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }

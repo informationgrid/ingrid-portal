@@ -22,6 +22,12 @@
     </property>
   </bean>
 
-  <bean id="MdekDataConnection" class="de.ingrid.mdek.SimpleUDKConnection"/>
+  <bean id="MdekDataConnection" class="de.ingrid.mdek.SimpleUDKConnection">
+    <property name="dataMapper">
+      <ref local="MdekDataMapper"/>
+    </property>    
+  </bean>
+
+  <bean id="MdekDataMapper" class="de.ingrid.mdek.SimpleMdekMapper"/>
 
 </beans>

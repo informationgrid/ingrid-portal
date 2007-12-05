@@ -10,11 +10,14 @@ import de.ingrid.utils.IngridDocument;
 public class SimpleUDKConnection implements DataConnectionInterface {
 
 	private IMdekCaller mdekCaller; 
+	private DataMapperInterface dataMapper;
 
 	// TODO Load the file dynamically from a cfg file 	
 	private final static String ENTRY_SERVICE_CFG_FILE = "C:\\_projekte\\ingrid\\ingrid-SVN\\ingrid-mdek\\trunk\\ingrid-mdek-api\\src\\main\\resources\\communication.properties";
 	// TODO The OBJECT_ROOT_UUID is used as an entry point for the db. Should be replaced with another method call 'getRootObjects'
-	private final static String OBJECT_ROOT_UUID = "9A347535-4754-11D4-BB4F-00105A378751";
+//	private final static String OBJECT_ROOT_UUID = "9A347535-4754-11D4-BB4F-00105A378751";
+//	private final static String OBJECT_ROOT_UUID = "19654CB2-C510-11D3-BADE-0060971A0BF7";
+//	private final static String OBJECT_ROOT_UUID = "1C549049-F243-11D2-9A86-080000507261";
 
 
 	public SimpleUDKConnection() {
@@ -29,52 +32,50 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		mdekCaller = null;
 	}
 
+	public DataMapperInterface getDataMapper() {
+		return dataMapper;
+	}
+
+
+	public void setDataMapper(DataMapperInterface dataMapper) {
+		this.dataMapper = dataMapper;
+	}
+
+
 	public HashMap<String, Object> getNodeDetail(String uuid) {
-		System.out.println(uuid);
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootAddresses() {
-		// TODO Auto-generated method stub
-		return null;
+		IngridDocument response = mdekCaller.fetchTopAddresses();
+		return extractAddressesFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
-		// TODO Replace with fetchRootObjects
-		IngridDocument response = mdekCaller.fetchSubObjects(OBJECT_ROOT_UUID);
-		IngridDocument result = MdekCaller.getResult(response);
-
-		ArrayList<HashMap<String, Object>> nodeList = null;
-		
-		if (result != null) {
-			nodeList = new ArrayList<HashMap<String, Object>>();
-			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-			for (IngridDocument objEntity : objs) {
-
-				String entityUUID = (String) objEntity.get(MdekKeys.UUID);
-				String entityName = (String) objEntity.get(MdekKeys.TITLE);
-				Integer entityClass = (Integer) objEntity.get(MdekKeys.CLASS); 
-
-				HashMap<String, Object> node = new HashMap<String, Object>();
-				node.put("id", entityUUID);
-				node.put("title", entityName);
-				node.put("nodeDocType", "Class"+entityClass.toString());
-				node.put("isFolder", hasChildren(entityUUID));
-
-				nodeList.add(node);
-			}
-		} else {
-			System.out.println(MdekCaller.getErrorMsg(response));			
-		}
-
-		return nodeList;
+		IngridDocument response = mdekCaller.fetchTopObjects();
+		return extractObjectsFromResponse(response);
 	}
 
 
 	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth) {
 		IngridDocument response = mdekCaller.fetchSubObjects(uuid);
-		IngridDocument result = MdekCaller.getResult(response);
+		return extractObjectsFromResponse(response);
+	}
+
+	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth) {
+		IngridDocument response = mdekCaller.fetchSubAddresses(uuid);
+		return extractObjectsFromResponse(response);
+	}
+
+
+	
+	// ------------------------ Helper Methods ---------------------------------------	
+
+	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response)
+	{
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+		
 
 		ArrayList<HashMap<String, Object>> nodeList = null;
 		
@@ -82,37 +83,42 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			nodeList = new ArrayList<HashMap<String, Object>>();
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			for (IngridDocument objEntity : objs) {
-
-				String entityUUID = (String) objEntity.get(MdekKeys.UUID);
-				String entityName = (String) objEntity.get(MdekKeys.TITLE);
-				Integer entityClass = (Integer) objEntity.get(MdekKeys.CLASS); 
-
-				HashMap<String, Object> node = new HashMap<String, Object>();
-				node.put("id", entityUUID);
-				node.put("title", entityName);
-				node.put("nodeDocType", "Class"+entityClass.toString());
-				node.put("isFolder", hasChildren(entityUUID));
-
-				nodeList.add(node);
+				nodeList.add(dataMapper.getSimpleMdekRepresentation(objEntity));
 			}
 		} else {
-			System.out.println(MdekCaller.getErrorMsg(response));			
+			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
 		}
+		return nodeList;
+	}
+	
+	private ArrayList<HashMap<String, Object>> extractAddressesFromResponse(IngridDocument response)
+	{
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
+		ArrayList<HashMap<String, Object>> nodeList = null;
+		
+		if (result != null) {
+			nodeList = new ArrayList<HashMap<String, Object>>();
+			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
+			for (IngridDocument adrEntity : adrs) {
+				nodeList.add(dataMapper.getSimpleMdekRepresentation(adrEntity));
+			}
+		} else {
+			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
+		}
 		return nodeList;
 	}
 
 	
-	// ------------------------ Helper Methods ---------------------------------------	
-
 	// TODO Temporary method. This information should come directly from the db query
+	@Deprecated
 	private boolean hasChildren(String uuid)
 	{
 		IngridDocument response = mdekCaller.fetchSubObjects(uuid);
-		IngridDocument result = MdekCaller.getResult(response);
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
 		if (result == null) {
-			System.out.println(MdekCaller.getErrorMsg(response));			
+			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
 			return false;
 		}
 		List<IngridDocument> objectEntities = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
