@@ -16,7 +16,12 @@
 	limitations under the License.
 -->
 <beans>
-	<bean id="entryService"
-		class="de.ingrid.mdek.dwr.EntryServiceMockupImpl">
-	</bean>
+  <bean id="entryService" class="de.ingrid.mdek.dwr.EntryServiceImpl">
+    <property name="dataConnection">
+      <ref local="MdekDataConnection"/>
+    </property>
+  </bean>
+
+  <bean id="MdekDataConnection" class="de.ingrid.mdek.SimpleUDKConnection"/>
+
 </beans>

@@ -18,7 +18,7 @@ function sizeContent()
 function selectNode() {
 	alert("selectNode");
 }
-	
+
 
 function toggleFields(section)
 {

@@ -36,7 +36,7 @@ public interface EntryService {
 	 * </ul>
 	 * 
 	 * The Method returns all children from a node (object or address) depending
-	 * in its nodeUuid and its nodeType.
+	 * on its nodeUuid and its nodeType.
 	 * 
 	 * If nodeUuid is null all root nodes of the given nodeType are returned up
 	 * until a defined depth. If nodeType is also null, all root node types
@@ -78,7 +78,7 @@ public interface EntryService {
 	 * <li><b>children</b> - list of children of the node</li>
 	 * </ul>
 	 * 
-	 * The Method returns a tree structure with a branch opened to an node
+	 * The Method returns a tree structure with a branch opened to a node
 	 * specified by nodeUuid. For all parent nodes based on the node with nodeUuid
 	 * all direct children are returned as well. The tree structure must be
 	 * ready for display.
@@ -170,7 +170,7 @@ public interface EntryService {
 
 	/**
 	 * Delete a node. Deletion is only successful, if the node has no children.
-	 * This method deletes the original data and the working copy of markes the
+	 * This method deletes the original data and the working copy. Marks the
 	 * working copy as deleted if markOnly is set true.
 	 * 
 	 * @param nodeUuid

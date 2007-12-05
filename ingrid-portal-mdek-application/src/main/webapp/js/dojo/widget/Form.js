@@ -1,13 +1,14 @@
 dojo.provide("ingrid.widget.Form");
 
 dojo.require("dojo.widget.ContentPane");
+dojo.require("dojo.widget.Form");
 
 /**
  * Baseclass for Object/Address Forms
  */
 dojo.widget.defineWidget(
 	"ingrid.widget.Form",
-	dojo.widget.ContentPane,
+    [dojo.widget.ContentPane, dojo.widget.Form],
 {
   cacheContent: false,
   loadingMessage: "Lade Daten ...",

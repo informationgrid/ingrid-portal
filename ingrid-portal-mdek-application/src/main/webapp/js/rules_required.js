@@ -57,15 +57,15 @@ function applyRule2() {
 
 // RULE 3
 
-// Applies to: erfassung object -> zeitbezug -> Zeitbezug des Dateninhaltes Id = timeRefRefType
-// Rule: If value == 'von' then timeRefRefDate2 is visible
-var refTypeList = dojo.widget.byId("timeRefRefType");
+// Applies to: erfassung object -> zeitbezug -> Zeitbezug des Dateninhaltes Id = timeRefType
+// Rule: If value == 'von' then timeRefDate2 is visible
+var refTypeList = dojo.widget.byId("timeRefType");
 if (refTypeList) {
   dojo.event.connect(refTypeList, "onValueChanged", function(value) {applyRule3(value);});
 }
 function applyRule3(value) {
 dojo.debug(value);
-  var datePickerNode = dojo.byId("timeRefRefDate2Editor");
+  var datePickerNode = dojo.byId("timeRefDate2Editor");
   if (datePickerNode) {
     if (value.indexOf("von") == 0)
       datePickerNode.style.display = "block";

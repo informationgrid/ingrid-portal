@@ -18,10 +18,14 @@
 <script type="text/javascript" src="js/message.js"></script>
 <script type="text/javascript" src="js/includes.js"></script>
 <script type="text/javascript" src="js/recherche.js"></script>
+<script type="text/javascript" src="js/treeEventHandler.js"></script>
+<script type="text/javascript" src="js/menuEventHandler.js"></script>
+
 
 <script type="text/javascript">
 dojo.require("ingrid.widget.FormErfassungObjektContent");
 dojo.require("ingrid.widget.FormErfassungAdresseContent");
+dojo.require("ingrid.widget.Form");
 </script>
 
 <script type="text/javascript" src="js/dialog.js"></script>
@@ -203,7 +207,7 @@ function hideSplash(){
       <!-- START CONTENT OBJECT -->
 	  <div id="contentObject" style="display:block">
 	      <div dojoType="ContentPane" widgetId="headerFrame" id="sectionTopObject" class="sectionTop">
-	        <form method="get" id="headerFormObject">
+	        <form dojoType="ingrid:Form" method="get" id="headerFormObject">
 	          	<table cellspacing="0">
 	            	<tbody>
 	            		<tr>
@@ -1256,16 +1260,16 @@ function hideSplash(){
 	                  <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Dateninhaltes')">Zeitbezug des Dateninhaltes</label></span>
 	                  <div id="timeRefRef">
 	                    <span class="entry first">
-	                      <span class="label hidden"><label for="timeRefRefType">Typ</label></span>
-	                      <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/time_ref_type.js" style="width:61px;" id="timeRefRefType" name="timeRefRefType" mode="remote" /></span>
+	                      <span class="label hidden"><label for="timeRefType">Typ</label></span>
+	                      <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/time_ref_type.js" style="width:61px;" id="timeRefType" name="timeRefType" mode="remote" /></span>
 	                    </span>
 	                    <span class="entry">
-	                      <span class="label hidden"><label for="timeRefRefDate1">Datum 1 [TT.MM.JJJJ]</label></span>
-	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefRefDate1"  name="timeRefRefDate1"></div><br />TT.MM.JJJJ</span>
+	                      <span class="label hidden"><label for="timeRefDate1">Datum 1 [TT.MM.JJJJ]</label></span>
+	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefDate1"  name="timeRefDate1"></div><br />TT.MM.JJJJ</span>
 	                    </span>
-	                    <span class="entry last" id="timeRefRefDate2Editor">
-	                      <span class="label hidden"><label for="timeRefRefDate2">Datum 2 [TT.MM.JJJJ]</label></span>
-	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefRefDate2" name="timeRefRefDate2"></div><br />TT.MM.JJJJ</span>
+	                    <span class="entry last" id="timeRefDate2Editor">
+	                      <span class="label hidden"><label for="timeRefDate2">Datum 2 [TT.MM.JJJJ]</label></span>
+	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefDate2" name="timeRefDate2"></div><br />TT.MM.JJJJ</span>
 	                    </span>
 	                  </div>
 	                </div>
@@ -1278,8 +1282,8 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="timeRefReriodicity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Periodizit&auml;t')">Periodizit&auml;t</label></span>
-	                  <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:302px;" id="timeRefReriodicity" name="timeRefReriodicity" /></span>
+	                  <span class="label"><label for="timeRefPeriodicity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Periodizit&auml;t')">Periodizit&auml;t</label></span>
+	                  <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:302px;" id="timeRefPeriodicity" name="timeRefPeriodicity" /></span>
 	                </div>
 	          
 	                <div class="half">
@@ -1297,17 +1301,17 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="timeRefRef2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
+	                  <span class="label"><label for="timeRef2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
 	                  <div class="tableContainer rows5">
-	                    <div class="cellEditors" id="timeRefRef2Editors">
-	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="timeRefRefDateDatePicker"></div>
-	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:155px;" widgetId="timeRefRefTypeCombobox"></div>
+	                    <div class="cellEditors" id="timeRef2Editors">
+	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="timeRefDateDatePicker"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:155px;" widgetId="timeRefTypeCombobox"></div>
 	                    </div>
-	              	    <table id="timeRefRef2" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="timeRef2" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="date" dataType="String" width="120" editor="timeRefRefDateDatePicker">Datum</th>
-	                    			<th field="type" dataType="String" width="200" editor="timeRefRefTypeCombobox">Typ</th>
+	                    			<th field="date" dataType="String" width="120" editor="timeRefDateDatePicker">Datum</th>
+	                    			<th field="type" dataType="String" width="200" editor="timeRefTypeCombobox">Typ</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1712,7 +1716,7 @@ function hideSplash(){
 	  <!-- START CONTENT ADDRESS -->
 	  <div id="contentAddress" style="display:block">
 		<div dojoType="ContentPane" widgetId="headerFrameAddress" id="sectionTopAddress" class="sectionTop">
-		  <form method="get" id="headerFormAddress" action="">
+		  <form dojoType="ingrid:Form" method="get" id="headerFormAddress" action="">
 			<table cellspacing="0">
 		  	<tbody>
 		  		<tr>

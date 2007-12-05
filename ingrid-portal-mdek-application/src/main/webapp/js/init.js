@@ -98,6 +98,9 @@ function initTree() {
 		}
 	);
 
+/*
+  -- Event Handling has been moved to a separate class 'menuEventHandler' -- 
+
   var contextMenu1 = dojo.widget.byId('contextMenu1');
   contextMenu1.treeController = dojo.widget.byId('treeController');
   contextMenu1.addItem(message.get('tree.nodeNew'), 'addChild', function(menuItem) {createItemClicked(menuItem)});
@@ -114,10 +117,31 @@ function initTree() {
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
   contextMenu2.addItem(message.get('tree.nodeNew'), 'addChild', function(menuItem) {createItemClicked(menuItem)});
+*/
+
+  var contextMenu1 = dojo.widget.byId('contextMenu1');
+  contextMenu1.treeController = dojo.widget.byId('treeController');
+  contextMenu1.addItem(message.get('tree.nodeNew'), 'addChild', menuEventHandler.handleNewEntity);
+  contextMenu1.addItem(message.get('tree.nodePreview'), 'open', menuEventHandler.handlePreview);
+  contextMenu1.addSeparator();
+  contextMenu1.addItem(message.get('tree.nodeCut'), 'cut', menuEventHandler.handleCut);
+  contextMenu1.addItem(message.get('tree.nodeCopySingle'), 'copy', menuEventHandler.handleCopyEntity);
+  contextMenu1.addItem(message.get('tree.nodeCopy'), 'copy', menuEventHandler.handleCopyTree);
+  contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
+  contextMenu1.addSeparator();
+  contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
+
+  var contextMenu2 = dojo.widget.byId('contextMenu2');
+  contextMenu2.treeController = dojo.widget.byId('treeController');
+  contextMenu2.addItem(message.get('tree.nodeNew'), 'addChild', menuEventHandler.handleNewEntity);
+
+
 
   var tree = dojo.widget.byId("tree");
-  if (tree)
-    dojo.event.connect(tree, "onValueChanged", "selectUDKClass");
+
+  // TODO Was macht diese Verbindung?? Die 'onValueChanged' Tree Methode bzw. das Event gibt es nicht...
+//  if (tree)
+//    dojo.event.connect(tree, "onValueChanged", "selectUDKClass");
 
   // attach node selection handler
   var treeListener = dojo.widget.byId('treeListener');
@@ -135,7 +159,7 @@ function initTree() {
 		};
 
 		var deferred = new dojo.Deferred();
-		
+
 		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
 			timeout:5000,
@@ -147,7 +171,6 @@ function initTree() {
 		deferred.addErrback(function(res) { alert(res.message); });
 		return deferred;
 	};
-  
 }
 
 
@@ -166,88 +189,71 @@ function initToolbar() {
   
   var leftToolbar = dojo.widget.byId('leftToolbar');
   leftToolbar.addChild("img/ic_new.gif", "after", {
-                            onClick:function() {
-                              var tree = dojo.widget.byId('tree');
-                              var selectedNode = tree.selectedNode;
-                              if (!selectedNode)
-                                dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-                              else {
-                                var dlg = 'erfassung_objekt_anlegen.html';
-                                if (selectedNode.nodeAppType == "A")
-                                  dlg = 'erfassung_adresse_anlegen.html';
-                                dialog.showPage(message.get('tree.nodeNew'), dlg, 502, 130, true, {treeId:'tree', controllerId:'treeController', nodeId:selectedNode.widgetId});
-                              }
-                            },
+                            onClick:menuEventHandler.handleNewEntity,
                             caption:"Neu anlegen"
                           });
   leftToolbar.addChild("img/ic_preview.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handlePreview,
                             caption:"Vorschau und Druckansicht"
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   leftToolbar.addChild("img/ic_cut.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleCut,
                             caption:"Objekt/Adresse/Teilbaum ausschneiden"
                           });
   leftToolbar.addChild("img/ic_copy.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleCopyEntity,
                             caption:"Objekt/Adresse kopieren"
                           });
   leftToolbar.addChild("img/ic_copy_tree.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleCopyTree,
                             caption:"Teilbaum kopieren"
                           });
   leftToolbar.addChild("img/ic_paste.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handlePaste,
                             caption:"Einfügen"
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   leftToolbar.addChild("img/ic_save.gif", "after", {
-                            onClick:function(){
-                                dialog.show("Zwischenspeichern", 'Der aktuelle Datensatz befindet sich in der Bearbeitung. Wollen Sie wirklich speichern?', dialog.WARNING, 
-                                      [{caption:"OK",action:function(){alert("OK")}},{caption:"Cancel",action:dialog.CLOSE_ACTION}]);},
+                            onClick:menuEventHandler.handleSave,
                             caption:"Zwischenspeichern"
                           });
   leftToolbar.addChild("img/ic_undo.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleUndo,
                             caption:"Rückgängig"
                           });
   leftToolbar.addChild("img/ic_discard.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleDiscard,
                             caption:"Änderungen am aktuellen MD-S verwerfen"
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   leftToolbar.addChild("img/ic_submit_qs.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleForwardToQS,
                             caption:"An QS überweisen"
                           });
   leftToolbar.addChild("img/ic_submit_inact.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleFinalSave,
                             disabled:true,
                             caption:"Abschließendes Speichern"
                           });
   leftToolbar.addChild("img/ic_delete.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleMarkDeleted,
                             caption:"Als gelöscht markieren"
                           });
   leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
-                            onClick:function(){},
+                            onClick:menuEventHandler.handleUnmarkDeleted,
                             caption:"Löschen aufheben"
                           });
   leftToolbar.addChild("img/ic_original.gif", "after", {
-                            onClick:function(){
-                            		var win = window.open("qs_vergleich.html", 'preview', 'width=720, height=690, resizable=yes, scrollbars=yes, status=yes');
-                            		win.focus();
-                            	},
+                            onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"
                           });
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   leftToolbar.addChild("img/ic_comment.gif", "after", {
-                            onClick:function(){
-                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
+                            onClick:menuEventHandler.handleShowComment,
                             caption:"Kommentar ansehen/hinzufügen"
                           });
 

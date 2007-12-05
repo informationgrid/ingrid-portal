@@ -7,12 +7,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
 import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.mdek.dwr.api.EntryService;
+
 
 /**
  * @author joachim
@@ -71,10 +74,32 @@ public class EntryServiceMockupImpl implements EntryService {
 	 */
 	public HashMap getNodeData(String nodeUuid, String nodeType,
 			Boolean useWorkingCopy) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap node = findNodeInTree(dummyDataList, nodeUuid);
+		if (node == null)
+		{
+			map.put("id", nodeUuid);
+			map.put("nodeAppType", nodeType);
+			return map;
+		}
+
+		for (Map.Entry<String, Object> element : (Set<Map.Entry<String, Object>>) node.entrySet()) {
+			String key = element.getKey();
+			Object val = element.getValue();
+
+//			System.out.println("Value: "+element.getValue());
+//			System.out.println("Key: "+element.getKey());				
+			
+			if (val instanceof String)
+			{
+				map.put(key, (String) val);
+			}
+		}
+
+		return map;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -103,7 +128,7 @@ public class EntryServiceMockupImpl implements EntryService {
 		if (nodeUuid!=null && nodeType == null) {
 			throw new IllegalArgumentException("Wrong arguments on method getSubTree(): nodeType must be set if nodeUuid is set!");
 		}
-		
+
 		List list = getChildren( nodeUuid, nodeType, depth, 0);
 		if (list != null) {
 			return list;

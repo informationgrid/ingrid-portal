@@ -7,20 +7,30 @@
   <name>ingrid-portal-mdek-application Maven Webapp</name>
   <version>1.0-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
+
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>
-					<executable>${java.home}/../bin/javac</executable>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-		</plugins>
+	  <plugins>
+	    <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-compiler-plugin</artifactId>
+		  <configuration>
+		    <fork>true</fork>
+			<executable>${java.home}/../bin/javac</executable>
+			<source>1.5</source>
+			<target>1.5</target>
+	      </configuration>
+		</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <wtpversion>1.5</wtpversion>
+          <downloadSources>1.5</downloadSources>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
   <dependencies>
     <dependency>
@@ -92,5 +102,14 @@
 		<version>1.1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
+	<repositories>
+		<repository>
+			<snapshots/>
+			<id>ingrid-repository</id>
+			<name>ingrid-repository</name>
+			<url>http://harrison.its-technidata.de/ingrid/maven</url>
+			<layout>legacy</layout>
+		</repository>
+	</repositories>
 </project>
 

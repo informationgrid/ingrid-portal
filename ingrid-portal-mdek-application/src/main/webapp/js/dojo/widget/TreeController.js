@@ -50,8 +50,8 @@ dojo.widget.defineWidget(
 		);			
 	},
 	doPreview: function(node) {
-    node.viewSelect();
-    alert("Vorschau");
+//    node.viewSelect();
+      alert("Vorschau");
 	},
 
   /*
