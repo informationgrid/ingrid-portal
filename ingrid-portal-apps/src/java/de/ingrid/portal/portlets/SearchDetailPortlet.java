@@ -468,7 +468,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     result.put("institutions", new ArrayList());
                 }
                 ArrayList institutions = (ArrayList) result.get("institutions");
-                institutions.add(parent);
+                institutions.add(0,parent);
             } else if (addressType.equals("1")) {
                 if (!result.containsKey("units")) {
                     result.put("units", new ArrayList());
@@ -477,7 +477,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 units.add(0, parent);
             }
             // exit loop if parent was NO unit
-        } while (addressType.equals("1"));
+        } while (true);
     }
 
     /**
