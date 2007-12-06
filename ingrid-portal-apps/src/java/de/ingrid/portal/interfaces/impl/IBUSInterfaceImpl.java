@@ -204,11 +204,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             rec = bus.getRecord(result);
         } catch (Throwable t) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems fetching Record of result: " + result + "[cause:" + t.getCause().getMessage() + "]", t);
+                log.debug("Problems fetching Record of result: " + result + "[cause:" + t.getCause() + "]", t);
             } else if (log.isInfoEnabled()) {
-                log.info("Problems fetching Record of result: " + result + "[cause:" + t.getCause().getMessage() + "]");
+                log.info("Problems fetching Record of result: " + result + "[cause:" + t.getCause() + "]");
             } else {
-                log.warn("Problems fetching Record of result: " + result + "[cause:" + t.getCause().getMessage() + "]", t);
+                log.warn("Problems fetching Record of result: " + result + "[cause:" + t.getCause() + "]", t);
             }
         }
 
