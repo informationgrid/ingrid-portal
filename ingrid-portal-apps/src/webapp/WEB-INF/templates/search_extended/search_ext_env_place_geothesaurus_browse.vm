@@ -8,9 +8,9 @@
 #parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
               <h3>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.browse.keyword')</h3>
               <p>
-#set($topicId = $current_topic.topicID)
+#set($nativeKey = $current_topic.getTopicNativeKey())
 #set($topicRef = $current_topic.topic_ref)
-                <input type="checkbox" name="chk_topic" value="$topicId" />&nbsp;$current_topic.title<span class="smaller">, $MESSAGES.getString("sns.topic.ref.${topicRef}")</span>
+                <input type="checkbox" name="chk_topic" value="$nativeKey" />&nbsp;$current_topic.title<span class="smaller">, $MESSAGES.getString("sns.topic.ref.${topicRef}")</span>
               </p>
               <span class="clearer"></span>
             </div>
@@ -20,10 +20,12 @@
 $action.setParameter('action','doBrowse')
 <input type="hidden" name="list_size" value="$list_size"/>
 #foreach($topic in $similar_topics)
-	#set($topicId = $topic.topicID)
-	#set($topicRef = $topic.topic_ref)
-	$action.setParameter("similar_topic_id", "$topicId")
-	<input type="checkbox" name="chk$velocityCount" value="$topicId" />&nbsp;<a href="$action">$topic.title</a>, <span class="smaller">$MESSAGES.getString("sns.topic.ref.${topicRef}")</span><br />
+	#set($nativeKey = $topic.topicNativeKey)
+	#if($nativeKey && $nativeKey != "")
+		#set($topicRef = $topic.topic_ref)
+		$action.setParameter("similar_native_key", "$nativeKey")
+		<input type="checkbox" name="chk$velocityCount" value="$nativeKey" />&nbsp;<a href="$action">$topic.title</a>, <span class="smaller">$MESSAGES.getString("sns.topic.ref.${topicRef}")</span><br />
+	#end
 #end
             </p>
           </div>

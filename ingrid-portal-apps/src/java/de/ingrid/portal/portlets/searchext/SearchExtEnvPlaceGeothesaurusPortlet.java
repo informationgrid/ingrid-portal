@@ -13,6 +13,7 @@ import org.apache.pluto.core.impl.PortletSessionImpl;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -140,7 +141,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                     if (subTerm.length() > 0) {
                         subTerm = subTerm.concat(" OR ");
                     }
-                    subTerm = subTerm.concat("areaid:").concat(SNSUtil.transformSpacialReference(chkVal));
+                    subTerm = subTerm.concat("areaid:").concat(SNSUtil.transformSpacialReference(null, chkVal));
                 }
             }
             if (subTerm.length() > 0) {
@@ -164,29 +165,30 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
 
             // SNS Deskriptor browsen
             IngridHit[] hits = null;
-            String topicId = request.getParameter("topic_id");
-            if (topicId != null) {
+            String nativeKey = request.getParameter("native_key");
+            if (nativeKey != null) {
                 hits = (IngridHit[])request.getPortletSession().getAttribute(TOPICS);
             } else {
-                topicId = request.getParameter("similar_topic_id");
-                if (topicId != null) {
+            	nativeKey = request.getParameter("similar_native_key");
+                if (nativeKey != null) {
                     hits = (IngridHit[])request.getPortletSession().getAttribute(SIMILAR_TOPICS);
                 }
             }
 
             if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
+                	String nkey = UtilsSearch.getDetailValue(hits[i], "nativeKeyOcc");
                     String tid = UtilsSearch.getDetailValue(hits[i], "topicID");
-                    if (tid != null && tid.equals(topicId)) {
+                    if (nkey != null && nkey.equals(nativeKey)) {
                         request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSessionImpl.PORTLET_SCOPE);
-                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId);
+                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(tid);
                         if (similarHits == null) {
                             SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);
                             f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");
                             break;
                         }
                         for (int j=0; j<similarHits.length; j++) {
-                            String href = UtilsSearch.getDetailValue(similarHits[j], "abstract");
+                        	String href = UtilsSearch.getDetailValue(similarHits[j], "abstract");
                             if (href != null && href.lastIndexOf("#") != -1) {
                                 similarHits[j].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
                             }
