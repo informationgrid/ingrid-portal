@@ -6,18 +6,16 @@
   />
   <title>ingrid.page.search.catalog</title>
 
-    <fragment id="search-catalog-thesaurus-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+	<fragment id="search-catalog-thesaurus-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">
 	    <fragment id="search-catalog-thesaurus" type="portlet" name="ingrid-portal-apps::SearchCatalogThesaurus">
 	      <property layout="TwoColumns" name="row" value="0"/>
 	      <property layout="TwoColumns" name="column" value="0"/>
 	    </fragment>
-    <!--
-	    <fragment id="search-catalog-thesaurus-results" type="portlet" name="ingrid-portal-apps::SearchCatalogResult">
-	      <property layout="TwoColumns" name="row" value="0" />
-	      <property layout="TwoColumns" name="column" value="1" />
-	    </fragment>
-	-->
-    </fragment>
+          <fragment id="search-catalog-thesaurus-result" type="portlet" name="ingrid-portal-apps::SearchCatalogThesaurusResult">
+            <property layout="TwoColumns" name="row" value="0"/>
+            <property layout="TwoColumns" name="column" value="1"/>
+          </fragment>
+      </fragment>
 
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
