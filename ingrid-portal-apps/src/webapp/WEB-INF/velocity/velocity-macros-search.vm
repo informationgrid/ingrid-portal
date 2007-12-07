@@ -75,6 +75,8 @@ $MESSAGES.getStringWithMsgParams('common.result.navigation.ranked')
     #end
 #end
 
+## this navigation is used when "grouping by domain"
+## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
 #macro (renderRankedPageNavigationGroupingWithPages $pageSelector)
 #set ($action = $renderResponse.createActionURL())
 $MESSAGES.resetMsgParams()
@@ -102,6 +104,8 @@ $MESSAGES.getStringWithMsgParams('common.result.navigation.ranked.grouped')
     #end
 #end
 
+## this navigation is used when grouping is active and is not "grouping by domain" (then see above) 
+## -> renders only current page with ">>" to next page
 #macro (renderRankedPageNavigationGrouping $pageSelector)
 #set ($action = $renderResponse.createActionURL())
 $MESSAGES.resetMsgParams()
