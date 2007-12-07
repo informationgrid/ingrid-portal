@@ -51,12 +51,24 @@ public class SearchState {
         return result.substring(0, result.length());
     }
 
-    /**
+   	/**
      * Returns the URL Parameters of the current state of the main search for bookmarking.
+     * Redirects to getURLParamsMainSearch(PortletRequest, String) with the standard Topic.
      * @param request
      * @return
      */
     public static String getURLParamsMainSearch(PortletRequest request) {
+    	return getURLParamsMainSearch(request, Settings.MSG_TOPIC_SEARCH);
+    }
+   	
+    
+    /**
+     * Returns the URL Parameters of the current state of the main search for bookmarking.
+     * @param request
+     * @param msgTopic	
+     * @return
+     */
+    public static String getURLParamsMainSearch(PortletRequest request, String msgTopic) {
         StringBuffer result = new StringBuffer("?");
 
         try {
@@ -69,56 +81,56 @@ public class SearchState {
             Utils.appendURLParameter(result, Utils.toURLParam(Settings.PARAM_PROVIDER, request.getParameter(Settings.PARAM_PROVIDER)));
             
             // query string (read from state)
-            String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+            String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING, msgTopic);
             String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // datasource (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // ranking (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_RANKING);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_RANKING, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_RANKING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // grouping (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_GROUPING);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_GROUPING, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_GROUPING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // filter (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_FILTER, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_FILTER, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // subject for filter (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_SUBJECT, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // start hits (relevant for NO GROUPING)
 
             // start hit of ranked search results (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // start hit of unranked search results (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_UNRANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // start pages (relevant for GROUPING)
 
             // current selector page (set only for grouping) (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
             // current selector page (for unranked results) (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
@@ -140,19 +152,49 @@ public class SearchState {
      * Add the passed Object (Message) to the Search State, ONLY IF NOT NULL. If the object
      * is null, the Search State keeps its former value and false is returned. Otherwise
      * the value is set in the SearchState and true is returned (former value is replaced).
+     * Redirects to adaptSearchStateIfNotNull(PortletRequest, String, Object, String) with the standard Topic.
+     * @param request
+     * @param objectKey
+     * @param objectValue
+     * @param msgTopic
+     * @return
+     */
+    public static boolean adaptSearchStateIfNotNull(PortletRequest request, String objectKey, Object objectValue) {
+            return adaptSearchStateIfNotNull(request, objectKey, objectValue, Settings.MSG_TOPIC_SEARCH);
+    }
+
+    /**
+     * Add the passed Object (Message) to the Search State, ONLY IF NOT NULL. If the object
+     * is null, the Search State keeps its former value and false is returned. Otherwise
+     * the value is set in the SearchState and true is returned (former value is replaced).
      * @param request
      * @param objectKey
      * @param objectValue
      * @return
      */
-    public static boolean adaptSearchStateIfNotNull(PortletRequest request, String objectKey, Object objectValue) {
+    public static boolean adaptSearchStateIfNotNull(PortletRequest request, String objectKey, Object objectValue, String msgTopic) {
         if (objectValue != null) {
-            return adaptSearchState(request, objectKey, objectValue);
+            return adaptSearchState(request, objectKey, objectValue, msgTopic);
         }
 
         return false;
     }
 
+    
+    /**
+     * Add the passed Object (Message) to the Search State. If the passed object is null,
+     * the object is removed from the state and false is returned. Otherwise the object is
+     * added and true is returned.
+     * Redirects to adaptSearchState(PortletRequest, String, Object, String) with the standard Topic.
+     * @param request
+     * @param objectKey (=messageKey)
+     * @param objectValue (=messageValue)
+     * @return true = object added, false = object removed
+     */
+    public static boolean adaptSearchState(PortletRequest request, String objectKey, Object objectValue) {
+    	return adaptSearchState(request, objectKey, objectValue, Settings.MSG_TOPIC_SEARCH);
+    }
+    	
     /**
      * Add the passed Object (Message) to the Search State. If the passed object is null,
      * the object is removed from the state and false is returned. Otherwise the object is
@@ -160,13 +202,14 @@ public class SearchState {
      * @param request
      * @param objectKey (=messageKey)
      * @param objectValue (=messageValue)
+     * @param msgTopic
      * @return true = object added, false = object removed
      */
-    public static boolean adaptSearchState(PortletRequest request, String objectKey, Object objectValue) {
+    public static boolean adaptSearchState(PortletRequest request, String objectKey, Object objectValue, String msgTopic) {
         boolean msgPublished = true;
         try {
             if (objectValue == null) {
-                PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, objectKey);
+                PortletMessaging.cancel(request, msgTopic, objectKey);
                 msgPublished = false;
             } else {
                 // when setting new query string, replace carriage return with blank !
@@ -174,7 +217,7 @@ public class SearchState {
                 if (objectKey.equals(Settings.PARAM_QUERY_STRING)){
                     objectValue = ((String) objectValue).replaceAll("\r\n", " ");
                 }
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, objectKey, objectValue);
+                PortletMessaging.publish(request, msgTopic, objectKey, objectValue);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -188,42 +231,64 @@ public class SearchState {
 
     /**
      * Reset the given object in the SearchState, meaning the object is removed !
+     *  Redirects to resetSearchState(PortletRequest, String) with the standard Topic.
      * @param request
      * @param objectKey
      */
     public static void resetSearchStateObject(PortletRequest request, String objectKey) {
-        adaptSearchState(request, objectKey, null);
+    	resetSearchStateObject(request, objectKey, Settings.MSG_TOPIC_SEARCH);
+    }
+    
+    /**
+     * Reset the given object in the SearchState, meaning the object is removed !
+     * @param request
+     * @param objectKey
+     * @param msgTopic
+     */
+    public static void resetSearchStateObject(PortletRequest request, String objectKey, String msgTopic) {
+        adaptSearchState(request, objectKey, null, msgTopic);
     }
 
     /**
      * Clear the search state meaning remove all search data from the state (query string, search parameters,
-     * result cache, messages ...)
+     * result cache, messages ...). Redirects to resetSearchState(PortletRequest, String) with the standard Topic.
      * @param request
      */
     public static void resetSearchState(PortletRequest request) {
+    	resetSearchState(request, Settings.MSG_TOPIC_SEARCH);
+    }
+    
+    
+    /**
+     * Clear the search state meaning remove all search data from the state (query string, search parameters,
+     * result cache, messages ...)
+     * @param request
+     * @param msgTopic
+     */
+    public static void resetSearchState(PortletRequest request, String msgTopic) {
         try {
             // state for parameters in URL !
             // NOTICE: don't set INITIAL VALUES, will be transformed to URL parameters (not necessary for initial values) !
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_DATASOURCE);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_RANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_STARTHIT_UNRANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_CURRENT_SELECTOR_PAGE);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_RANKING);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_SUBJECT);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_FILTER);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_QUERY_STRING);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_DATASOURCE);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_STARTHIT_RANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_STARTHIT_UNRANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_CURRENT_SELECTOR_PAGE);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_RANKING);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_GROUPING);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_SUBJECT);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_FILTER);
             // this one is still missing when generating URL params !
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_GROUPING_STARTHITS);
+            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_GROUPING_STARTHITS);
 
             // further state for logic, caching etc.
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_FINISHED_RANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_RANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_SEARCH_RESULT_UNRANKED);
-            PortletMessaging.cancel(request, Settings.MSG_TOPIC_SEARCH, Settings.MSG_QUERY_EXECUTION_TYPE);
+            PortletMessaging.cancel(request, msgTopic, Settings.MSG_QUERY);
+            PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_FINISHED_RANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_RESULT_RANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_RESULT_UNRANKED);
+            PortletMessaging.cancel(request, msgTopic, Settings.MSG_QUERY_EXECUTION_TYPE);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("FAILED to reset Search State", ex);
@@ -232,24 +297,49 @@ public class SearchState {
     }
 
     /**
-     * Get the Object with the given key from search state. Returns null if object is not set
+     * Get the Object with the given key from search state. Returns null if object is not set.
+     * Redirects to getSearchStateObject(PortletRequest, String, String) with the standard Topic. 
      * @param request
      * @param objectKey
      * @return
      */
     public static Object getSearchStateObject(PortletRequest request, String objectKey) {
-        return PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, objectKey);
+    	return getSearchStateObject(request, objectKey, Settings.MSG_TOPIC_SEARCH);
+    }
+
+    /**
+     * Get the Object with the given key from search state. Returns null if object is not set
+     * @param request
+     * @param objectKey
+     * @param msgTopic
+     * @return
+     */
+    public static Object getSearchStateObject(PortletRequest request, String objectKey, String msgTopic) {
+        return PortletMessaging.receive(request, msgTopic, objectKey);
     }
 
     /**
      * Get the Object with the given Key as String. Returns "" if object is not set.
+     * Redirects to getSearchStateObjectAsString(PortletRequest, String, String) with the standard Topic.
      * @param request
      * @param objectKey
      * @return
      */
     public static String getSearchStateObjectAsString(PortletRequest request, String objectKey) {
+    	return getSearchStateObjectAsString(request, objectKey, Settings.MSG_TOPIC_SEARCH);
+    }
+
+    
+    /**
+     * Get the Object with the given Key as String. Returns "" if object is not set.
+     * @param request
+     * @param objectKey
+     * @param msgTopic
+     * @return
+     */
+    public static String getSearchStateObjectAsString(PortletRequest request, String objectKey, String msgTopic) {
         String returnString = "";
-        Object stateObject = getSearchStateObject(request, objectKey);
+        Object stateObject = getSearchStateObject(request, objectKey, msgTopic);
         if (stateObject != null) {
             returnString = stateObject.toString();
         }

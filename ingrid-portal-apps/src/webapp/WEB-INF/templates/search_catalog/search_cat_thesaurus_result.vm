@@ -1,0 +1,9 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus_result.vm')
+#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus_result_env.vm')
+
+#if ($ps.rankedResultList)
+	#set ($rankedResultList = $ps.rankedResultList)
+	#set ($rankedSearchFinished = true)
+	#parse ('/WEB-INF/templates/search_catalog/include_thesaurus_result.vm')
+#end

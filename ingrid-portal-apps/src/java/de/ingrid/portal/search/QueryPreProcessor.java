@@ -184,9 +184,13 @@ public class QueryPreProcessor {
             groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
             if (groupedStartHits == null) {
                 groupedStartHits = new ArrayList();
-                groupedStartHits.add(new Integer(0));
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
             }
+            // ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
+        	while (currentSelectorPage >= groupedStartHits.size()) {
+        		groupedStartHits.add(new Integer(0));
+        	}
+
             currentPage = 0;
             startHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }

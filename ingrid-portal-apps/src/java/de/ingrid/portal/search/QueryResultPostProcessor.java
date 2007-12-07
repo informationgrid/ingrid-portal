@@ -81,6 +81,10 @@ public class QueryResultPostProcessor {
 
         UtilsSearch.transferHitDetails(hit, detail);
 
+        PlugDescription plugDescr = (PlugDescription) hit.get("plugDescr");
+        if (plugDescr != null) {
+            UtilsSearch.transferPlugDescription(hit, plugDescr);
+        }
         String tmpString = detail.getIplugClassName();
         if (tmpString == null) {
             tmpString = "";

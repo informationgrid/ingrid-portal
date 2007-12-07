@@ -4,54 +4,72 @@
 package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.net.URLEncoder;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
+import org.apache.jetspeed.container.url.PortalURL;
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * This portlet handles the fragment of the hirarchy browser in the search/catalog section.
  *
- * @author martin@wemove.com
+ * @author martin@wemove.com, michael.benz@wemove.com
  */
 public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
-
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm";
-    private final static String TEMPLATE_BROWSE = "/WEB-INF/templates/search_extended/search_cat_thesaurus_browse.vm";
 
-    // PARAMETER VALUES
+    // TEMPORARY Thesaurus settings. Currently we have can't receive the top terms from the SNS
+    // TODO Remove this and use the getHierarchy() function when it's available
+    private final static String THESAURUS_ASSOCIATION = "narrowerTermMember";
+    private final static String THESAURUS_START_TOPIC = "(Hydrosphäre - Wasser und Gewässer)";
+    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_49252";
+//    private final static String THESAURUS_ASSOCIATION = "widerTermMember";
+//    private final static String THESAURUS_START_TOPIC = "Horizontalfilterbrunnen";
+//    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_12891";
 
-    private final static String PARAMV_VIEW_START = "1";
-    private final static String PARAMV_VIEW_BROWSE = "2";
-
-    private final static String CURRENT_OBJ = "current_obj";
-    private final static String SUB_OBJECTS = "sub_objects";
     
-
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+
+        // add velocity utils class
+        context.put("tool", new UtilsVelocity());
 
         // set positions in main tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_THESAURUS);
 
         setDefaultViewPage(TEMPLATE_START);
 
-/*
+        // TODO remove page state in future, when separate portlets
+        // use messages and render parameters instead !!!
+        PortletSession session = request.getPortletSession();
+        PageState ps = (PageState) session.getAttribute("portlet_state");
+        if (ps == null) {
+            ps = new PageState(this.getClass().getName());
+            ps = initPageState(ps);
+            session.setAttribute("portlet_state", ps);
+        }
+        context.put("ps", ps);
+
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
         // ----------------------------------
@@ -59,61 +77,29 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         if (action == null) {
             action = "";
         }
-        if (action.equals(PARAMV_VIEW_RESULTS)) {
-            // TODO remove page state in future, when separate portlets
-            // use messages and render parameters instead !!!
-            PortletSession session = request.getPortletSession();
-            PageState ps = (PageState) session.getAttribute("portlet_state");
-            if (ps == null) {
-                ps = new PageState(this.getClass().getName());
-                ps = initPageState(ps);
-                session.setAttribute("portlet_state", ps);
-            }
-            context.put("ps", ps);
-            
-            setDefaultViewPage(TEMPLATE_RESULTS);
-        } else if (action.equals(PARAMV_VIEW_BROWSE)) {
-            context.put(CURRENT_TOPIC, request.getPortletSession().getAttribute(CURRENT_TOPIC));
-            
-            ArrayList narrowerTermAssoc = new ArrayList();
-            ArrayList widerTermAssoc = new ArrayList();
-            ArrayList synonymAssoc = new ArrayList();
-            ArrayList relatedTermsAssoc = new ArrayList();
-            
-            Object obj = request.getPortletSession().getAttribute(ASSOCIATED_TOPICS);
-            if (obj != null) {
-                List hits = (List)obj;
-                for (int i=0; i<hits.size(); i++) {
-                    Topic t = (Topic)hits.get(i);
-                    String assoc = t.getTopicAssoc();
-                    if (assoc.indexOf("narrowerTermMember") != -1) {
-                        narrowerTermAssoc.add(t);
-                    } else if (assoc.indexOf("widerTermMember") != -1) {
-                        widerTermAssoc.add(t);
-                    } else if (assoc.indexOf("synonymMember") != -1) {
-                        synonymAssoc.add(t);
-                    } else if (assoc.indexOf("descriptorMember") != -1) {
-                        relatedTermsAssoc.add(t);
-                    }
-                }
-                context.put("list_size", new Integer(hits.size() + 1));
-            }
-            context.put("narrowerTermAssoc", narrowerTermAssoc);
-            context.put("widerTermAssoc", widerTermAssoc);
-            context.put("synonymAssoc", synonymAssoc);
-            context.put("relatedTermsAssoc", relatedTermsAssoc);
-            
-            setDefaultViewPage(TEMPLATE_BROWSE);
-        } else if (action.equals(PARAMV_VIEW_SYNONYM)) {
-            context.put(CURRENT_TOPIC, request.getPortletSession().getAttribute(CURRENT_TOPIC));
-            Object obj = request.getPortletSession().getAttribute(ASSOCIATED_TOPICS);
-            if (obj != null) {
-                context.put(ASSOCIATED_TOPICS, obj);
-                context.put("list_size", new Integer(((List)obj).size() + 1));
-            }
-            setDefaultViewPage(TEMPLATE_SYNONYM);
+
+        if (ps.get("thesRoot") == null) {
+            // 1. Get initial data from the SNS IPlug (Top Terms)
+        	// 2. sort Terms (needed?)
+            // 3. Create Tree from the initial Terms and put them into the Page State 
+        	
+        	// Create a test term tree from a search query 
+        	IngridQuery query = null;
+            try {
+                query = QueryStringParser.parse("Trinkwasser");
+            } catch (ParseException e) {}
+
+//			DisplayTreeNode thesRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
+            DisplayTreeNode thesRoot = new DisplayTreeNode("root", "root", true);
+            thesRoot.setType(DisplayTreeNode.ROOT);
+
+            session.setAttribute("thesRoot", thesRoot);
+			initTree(thesRoot);
+
+        	// ------ END TEST CODE --------
+        	
+            ps.put("thesRoot", thesRoot);
         }
-*/
         super.doView(request, response);
     }
 
@@ -136,197 +122,63 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             ps = initPageState(ps);
             session.setAttribute("portlet_state", ps);
         }
+    	
+        // Build the URL to the current psml
+        RequestContext requestContext = (RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV);                	
+    	PortalURL portalURL = requestContext.getPortalURL(); 
+    	String redirectPage = portalURL.getBasePath() + portalURL.getPath(); 
 
-        String submittedSearch = request.getParameter("submitSearch");
-        String submittedAddToQuery = request.getParameter("submitAddToQuery");
+    	String submittedReload = request.getParameter("submitReload");
 
-        DisplayTreeNode similarRoot = null;
-        if (submittedSearch != null) {
-/*
-        	// In Thesaurus suchen
-            SearchExtEnvTopicThesaurusForm f = (SearchExtEnvTopicThesaurusForm) Utils.getActionForm(request, SearchExtEnvTopicThesaurusForm.SESSION_KEY, SearchExtEnvTopicThesaurusForm.class);        
-            f.clearErrors();
-            f.populate(request);
-            if (f.validate()) {
-                // get terms from querystring
-                IngridQuery query = null;
-                try {
-                    query = QueryStringParser.parse(f.getInput(SearchExtEnvTopicThesaurusForm.FIELD_SEARCH_TERM));
-                } catch (ParseException e) {
-                }
-                if (query == null) {
-                    f.setError("", "searchExtEnvTopicThesaurus.error.no_term_found");
-                } else {
-                    ps.putBoolean("isSimilarOpen", true);
-                    if (similarRoot == null) {
-                        similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
-                        if (similarRoot.getChildren().size() > 0) {
-                            session.setAttribute("similarRoot", similarRoot);
-                            if (similarRoot.getChildren().size() == 1) {
-                                openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId());
-                            }
-                        } else {
-                            f.setError("", "searchExtEnvTopicThesaurus.error.no_term_found");
-                        }
-                    }
-                }
-                ps.put("similarRoot", similarRoot);
-            }
-            
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+        if (submittedReload != null) {
+        	SearchState.resetSearchState(request);
+            initPageState(ps);
+        	actionResponse.sendRedirect(redirectPage);
 
         } else if (action.equalsIgnoreCase("doOpenNode")) {
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                openNode(similarRoot, request.getParameter("nodeId"));
-                ps.put("similarRoot", similarRoot);
+        	DisplayTreeNode root = (DisplayTreeNode) session.getAttribute("thesRoot");
+            if (root != null) {
+                DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
+            	openNode(node);
+
+            	// REDIRECT to current page with parameters
+            	redirectPage += "?action=nav";
+            	actionResponse.sendRedirect(redirectPage);
             }
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+
         } else if (action.equalsIgnoreCase("doCloseNode")) {
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            if (similarRoot != null) {
-                DisplayTreeNode node = similarRoot.getChild(request.getParameter("nodeId"));
+        	DisplayTreeNode root = (DisplayTreeNode) ps.get("thesRoot");
+            if (root != null) {
+                DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
                 if (node != null) {
                     node.setOpen(false);
+
+                	// REDIRECT to current page with parameters
+                	redirectPage += "?action=nav";
+                	actionResponse.sendRedirect(redirectPage);
                 }
             }
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
-        } else if (submittedAddToQuery != null) {
 
-            // Zur Suchanfrage hinzufuegen
+        } else if (action.equalsIgnoreCase("doSearch")) {
+        	DisplayTreeNode root = (DisplayTreeNode) ps.get("thesRoot");
+            if (root != null) {
+                DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
+                if (node != null) {
+                	// TODO: 1. Gather the search parameters
+                	// TODO: 1.1 Modify the URL and redirect to self
+                	// ----- 2-4 are executed in the Result Portlet (SearchCatalogThesaurusResultPortlet) -----
+                	// TODO: 2. Execute the search
+                	// TODO: 3. Post-process search result
+                	// TODO: 4. Display -> velocity template
 
-            String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING);
+                	// REDIRECT to current page with parameters
+                	redirectPage +=  "?"+Settings.PARAM_ACTION+"="+Settings.PARAMV_ACTION_NEW_SEARCH;
+                	redirectPage +=  "&"+Settings.PARAM_QUERY_STRING+"=" + URLEncoder.encode(node.getName(), "UTF-8");
 
-            if (request.getParameter("addFromDisplayTree") != null) {
-                String subQueryStr = "";
-                similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-                if (similarRoot != null) {
-                    ArrayList queryTerms = similarRoot.getAllChildren();
-                    Iterator it = queryTerms.iterator();
-                    while (it.hasNext()) {
-                        DisplayTreeNode node = (DisplayTreeNode) it.next();
-                        if (request.getParameter("chk_" + node.getId()) != null) {
-                            if (subQueryStr.length() > 0) {
-                                subQueryStr = subQueryStr.concat(" OR ");
-                            }
-                            // check for phases, quote phrases
-                            if (node.getName().indexOf(" ") > -1) {
-                                subQueryStr = subQueryStr.concat("\"").concat(node.getName()).concat("\"");
-                            } else {
-                                subQueryStr = subQueryStr.concat(node.getName());
-                            }
-                        }
-                    }
-                    if (subQueryStr != null) {
-                        subQueryStr = "(".concat(subQueryStr).concat(")");
-                        PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subQueryStr, UtilsQueryString.OP_AND));
-                    }
-                }            
-            } else if (request.getParameter("addFromAssociatedTopics") != null) {
-                String subQueryStr = "";
-                int listSize = Integer.parseInt(request.getParameter("list_size"));
-                for (int i=0; i<listSize; i++) {
-                    String val = request.getParameter("chk_" + i);
-                    if (val != null) {
-                        if (subQueryStr.length() > 0) {
-                            subQueryStr = subQueryStr.concat(" OR ");
-                        }
-                        // check for phases, quote phrases
-                        if (val.indexOf(" ") > -1) {
-                            subQueryStr = subQueryStr.concat("\"").concat(val).concat("\"");
-                        } else {
-                            subQueryStr = subQueryStr.concat(val);
-                        }
-                    }
-                }
-                if (subQueryStr != null) {
-                    subQueryStr = "(".concat(subQueryStr).concat(")");
-                    PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING, UtilsQueryString.addTerm(queryStr, subQueryStr, UtilsQueryString.OP_AND));
+                	actionResponse.sendRedirect(redirectPage);
                 }
             }
-            
-            // redirect to same page with view param where we currently are (so we keep view !)
-            String currView = getDefaultViewPage();
-            String urlViewParam = "";
-            if (currView.equals(TEMPLATE_RESULTS)) {
-                urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            } else if (currView.equals(TEMPLATE_BROWSE)) {
-                urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
-            } else if (currView.equals(TEMPLATE_SYNONYM)) {
-                urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_SYNONYM);
-            }
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
 
-        } else if (action.equalsIgnoreCase("doBrowseFromTree")) {
-
-            // SNS Deskriptor browsen
-            similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
-            String topicID = request.getParameter("topicID");
-            Topic currentTopic = getTopicFromTree(similarRoot, topicID);
-            request.getPortletSession().setAttribute(CURRENT_OBJ, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
-            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
-            request.getPortletSession().setAttribute(SUB_OBJECTS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
-
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
-
-        } else if (action.equalsIgnoreCase("doBrowse")) {
-
-            // SNS Deskriptor browsen
-            String topicID = request.getParameter("topicID");
-            String plugID = request.getParameter("plugID");
-            String docID = request.getParameter("docID");
-            
-            Topic hit = new Topic();
-            hit.setDocumentId(Integer.parseInt(docID));
-            hit.setPlugId(plugID);
-            hit.setTopicID(topicID);
-            
-            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit);
-            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
-            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
-            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
-
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
-            
-        } else if (action.equalsIgnoreCase("doSynonym")) {
-
-            // SNS Synonym browsen
-            String topicID = request.getParameter("topicID");
-            String plugID = request.getParameter("plugID");
-            String docID = request.getParameter("docID");
-            
-            Topic hit = new Topic();
-            hit.setDocumentId(Integer.parseInt(docID));
-            hit.setPlugId(plugID);
-            hit.setTopicID(topicID);
-            
-            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit);
-            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
-            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
-            ArrayList descriptors = new ArrayList();
-            for (int i=0; i<assocTopics.length; i++) {
-                Topic t = (Topic)assocTopics[i];
-                String abstr = (String)t.get("abstract");
-                if (abstr.indexOf("descriptorType") != -1) {
-                    descriptors.add(t);
-                }
-            }
-            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, descriptors, PortletSessionImpl.PORTLET_SCOPE);
-
-            // redirect to same page with view param setting view !
-            String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_SYNONYM);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
-*/
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
@@ -334,40 +186,104 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         }
     }
 
-    private Topic getTopicFromTree(DisplayTreeNode similarRoot, String topicId) {
-        ArrayList queryTerms = similarRoot.getAllChildren();
-        Iterator it = queryTerms.iterator();
-        while (it.hasNext()) {
-            DisplayTreeNode node = (DisplayTreeNode) it.next();
-            if (topicId.equals((String)node.get("topicID"))) {
-                return (Topic)node.get("topic");
-            }
-        }
-        return null;
-    }
-
     private PageState initPageState(PageState ps) {
-        ps.putBoolean("isSimilarOpen", false);
-        ps.put("similarRoot", null);
+    	ps.put("thesRoot", null);
         return ps;
     }
-    
-    private void openNode(DisplayTreeNode rootNode, String nodeId) {
-        DisplayTreeNode node = rootNode.getChild(nodeId);
-        node.setOpen(true);
-        if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
-                && !node.isLoading()) {
-            node.setLoading(true);
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(node.getName(), "/thesa");
+
+
+    private void initTree(DisplayTreeNode rootNode) {
+    	// TODO: Check if rootNode != null, etc.
+    	DisplayTreeNode node = rootNode;
+        rootNode.put("level", new Integer(0));
+
+    	// TODO: Remove Test code if we get the full hierarchy from the backend (SNS) 
+    	// ---------- BEGIN Test Code ------------------
+    	node.put("topicID", THESAURUS_START_TOPIC_ID);
+        node.put("level", new Integer(1));
+        node.put("expandable", new Boolean(true));
+        node.setName(THESAURUS_START_TOPIC);
+        // ---------- END Test Code --------------------
+
+        if (node.getChildren().size() == 0) {
+            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(THESAURUS_START_TOPIC_ID);
             if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
                     Topic hit = (Topic) hits[i];
-                    if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
+                    String assoc = hit.getTopicAssoc();
+                    if (assoc == null)
+                    	assoc = THESAURUS_ASSOCIATION;
+                    
+                    if (assoc.indexOf(THESAURUS_ASSOCIATION) != -1 && !hit.getTopicName().equalsIgnoreCase(node.getName())) {
                         DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+
+                        // Check if the snsNode has displayable children and can be expanded
+                        IngridHit[] nodeHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(hit.getTopicID());
+                        boolean expandable = false;
+                        for (int j = 0; j < nodeHits.length; j++) {
+                            Topic subHit = (Topic) nodeHits[j];
+                        	String subAssoc = subHit.getTopicAssoc();
+                            if (subAssoc == null)
+                            	subAssoc = THESAURUS_ASSOCIATION;
+
+                            if (subAssoc.indexOf(THESAURUS_ASSOCIATION) != -1)
+                        		expandable = true;
+                        }
+                        snsNode.put("expandable", new Boolean(expandable));    
+
                         snsNode.setType(DisplayTreeNode.SNS_TERM);
                         snsNode.setParent(node);
                         snsNode.put("topicID", hit.getTopicID());
                         snsNode.put("topic", hit);
+                        snsNode.put("level", new Integer(1));
+                        node.addChild(snsNode);
+                    }
+                }
+            } else {
+                // TODO remove node from display tree
+            }
+        }
+    }
+
+    
+    private void openNode(DisplayTreeNode node) {
+        node.setOpen(true);
+        String topicId = (String) node.get("topicID");
+
+        if (node != null && node.getChildren().size() == 0 && !node.isLoading()) {
+            node.setLoading(true);
+
+            int nodeLevel = ((Integer) node.get("level")).intValue();
+            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicId);
+            if (hits != null && hits.length > 0) {
+                for (int i=0; i<hits.length; i++) {
+                    Topic hit = (Topic) hits[i];
+                    String assoc = hit.getTopicAssoc();
+                    if (assoc == null)
+                    	assoc = THESAURUS_ASSOCIATION;
+
+                    if (assoc.indexOf(THESAURUS_ASSOCIATION) != -1 && !hit.getTopicName().equalsIgnoreCase(node.getName())) {
+                    	DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+
+                        // Check if the snsNode has displayable children and can be expanded
+                        IngridHit[] nodeHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(hit.getTopicID());
+                        boolean expandable = false;
+                        for (int j = 0; j < nodeHits.length; j++) {
+                            Topic subHit = (Topic) nodeHits[j];
+                        	String subAssoc = subHit.getTopicAssoc();
+                            if (subAssoc == null)
+                            	subAssoc = THESAURUS_ASSOCIATION;
+
+                            if (subAssoc.indexOf(THESAURUS_ASSOCIATION) != -1)
+                        		expandable = true;
+                        }
+                        snsNode.put("expandable", new Boolean(expandable));    
+                    	
+                    	snsNode.setType(DisplayTreeNode.SNS_TERM);
+                        snsNode.setParent(node);
+                        snsNode.put("topicID", hit.getTopicID());
+                        snsNode.put("topic", hit);
+                        snsNode.put("level", new Integer(nodeLevel+1));
                         node.addChild(snsNode);
                     }
                 }
@@ -377,5 +293,4 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             node.setLoading(false);
         }
     }
-    
 }

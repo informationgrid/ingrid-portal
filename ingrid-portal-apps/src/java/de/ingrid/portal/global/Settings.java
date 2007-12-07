@@ -215,6 +215,9 @@ public class Settings {
     /** message "scope" for search pages (start page, simple search, extended search ...) */
     public final static String MSG_TOPIC_SEARCH = "search";
 
+    /** message "scope" for the Thesaurus search page */
+    public final static String MSG_TOPIC_SEARCH_THESAURUS = "searchThes";
+
     /** set message "scope" service page */
     public final static String MSG_TOPIC_SERVICE = "service";
 

@@ -1,45 +1,64 @@
-<div class="section">    
-#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
-#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus.vm')
-
-#set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-      <div class="formbody">
-          <div class="innerform">
-        <div>
-			  <input type="hidden" name="addFromDisplayTree" value="1"/>
-          	  <div>
-            	  <table class="fullwidth">
-#foreach($similarNode in $ps.similarRoot.getChildren())
+#macro (renderNode $node)
+	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
+	#set ($leftMargin = ($node.level - 1) * 25)
+	#set ($iconLayerWidth = 40)
+	#set ($textLayerWidth = 870 - $leftMargin - $iconLayerWidth)
+    
 	#set ($action = $renderResponse.createActionURL())
-	$action.setParameter('nodeId',$similarNode.id)
-	#if($similarNode.isOpen())
+	$action.setParameter('topicID',$node.get("topicID"))
+	$action.setParameter('nodeId',$node.id)
+	<p style="margin-left:${leftMargin}px; clear:left; overflow:hidden">	
+	## render +/- and icon
+	#set($nodeIcon = "ico_tree_folder_close.gif")
+	#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
+
+	#if($node.isOpen())
+		#set ($renderSubNodes = true)
+		## render "-" and icon WITH ACTION -> node can be closed
 		$action.setParameter('action','doCloseNode')
-			  <tr>
-				<td class="iconwidth"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-          	  </tr>
-		#foreach($tokenNode in $similarNode.getChildren())
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter('action','doBrowseFromTree')
-			$action.setParameter('topicID',$tokenNode.get("topicID"))
-          	  <tr>
-          	    <td></td>
-          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/>&nbsp;&nbsp;<a href="$action">$tokenNode.name</a></td>
-          	  </tr>
-		#end
+		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
+   		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 	#else
-		$action.setParameter('action','doOpenNode')
-          	  <tr>
-          	    <td class="iconwidth"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a></td>
-          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-          	  </tr>
+		#set ($renderSubNodes = false)
+		#if ($node.expandable)
+			## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
+			$action.setParameter('action','doOpenNode')
+			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
+   		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+		#else
+			## render " " and icon WITHOUT ACTION -> node can't be expanded
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		#end
 	#end
-#end			  
-            	  </table>
-          	  </div>
-          </div>
-        </div>  ## innerform
-    </div> ## formbody
+
+
+	## render node text
+    $action.setParameter('action','doSearch')
+    ##	<a href="$action">$node.name (Node Level: $node.level, numChildren: $node.getChildren().size())</a>
+	<strong><a href="$action">$node.name</a></strong>
+	</p>
+
+	#if ($renderSubNodes)
+		#foreach($childNode in $node.getChildren())
+			#renderNode($childNode)
+		#end
+	#end
+#end
+
+<div class="section">    
+  #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
+  #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus.vm')
+  <div class="formbody">
+	#foreach($termNode in $ps.thesRoot.getChildren())
+	  #renderNode($termNode)
+    #end
+  </div>
+  #set ($action = $renderResponse.createActionURL())
+  <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+    <div class="formfooter">
+      <div align="right">
+        <input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
+      </div>
+    </div>
   </form>
-</div>    
+</div>

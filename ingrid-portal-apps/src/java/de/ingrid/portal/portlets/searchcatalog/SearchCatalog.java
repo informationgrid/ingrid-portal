@@ -11,6 +11,7 @@ import javax.portlet.PortletException;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 
 /**
@@ -48,7 +49,10 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
-        
+
+        context.put("enable_thesaurus", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS, Boolean.FALSE));
+
         super.doView(request, response);
     }
 
