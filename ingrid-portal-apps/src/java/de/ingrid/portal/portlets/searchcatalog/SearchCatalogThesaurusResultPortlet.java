@@ -126,7 +126,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
         		CURRENT_QUERY_TERM = queryTerm;
 
         	// Build query Term (append the correct datatype depending on the current Tab)
-        	if (CURRENT_TAB.equals(PARAMV_TAB_ENV) && !queryTerm.contains(Settings.QFIELD_DATATYPE))
+        	if (CURRENT_TAB.equals(PARAMV_TAB_ENV) && queryTerm.indexOf(Settings.QFIELD_DATATYPE) == -1)
             	queryTerm += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
             else
             	queryTerm += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
