@@ -122,8 +122,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // starthit UNRANKED
 
-        // TODO Remove NO GROUPING for unranked search column -> ALWAYS GROUPED !
         // NO GROUPING !!!
+        // Do we need to read unrankedStartHit, is passed from navi when not grouped but UNRANKED SEARCH IS ALWAYS GROUPED !!!
         int unrankedStartHit = 0;
         try {
             reqParam = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
