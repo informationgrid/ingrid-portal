@@ -832,6 +832,8 @@ public class UtilsSearch {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_ORGANISATION);
             } else if (grouping.equals(Settings.PARAMV_GROUPING_DOMAIN) || grouping.equals(IngridQuery.GROUPED_BY_DATASOURCE)) {
                 query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_DATASOURCE);
+            } else if (grouping.equals(Settings.PARAMV_GROUPING_PLUG_ID) || grouping.equals(IngridQuery.GROUPED_BY_PLUGID)) {
+                query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
             } else {
                 query.remove(Settings.QFIELD_GROUPED);
             }

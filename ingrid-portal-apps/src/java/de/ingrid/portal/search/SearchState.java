@@ -156,7 +156,6 @@ public class SearchState {
      * @param request
      * @param objectKey
      * @param objectValue
-     * @param msgTopic
      * @return
      */
     public static boolean adaptSearchStateIfNotNull(PortletRequest request, String objectKey, Object objectValue) {
@@ -170,6 +169,7 @@ public class SearchState {
      * @param request
      * @param objectKey
      * @param objectValue
+     * @param msgTopic
      * @return
      */
     public static boolean adaptSearchStateIfNotNull(PortletRequest request, String objectKey, Object objectValue, String msgTopic) {

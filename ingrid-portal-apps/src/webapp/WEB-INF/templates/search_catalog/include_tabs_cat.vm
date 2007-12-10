@@ -10,7 +10,6 @@ $action.setParameter('action','doChangeTab')
 #end
 
 #if($enable_thesaurus)
-	## Uncomment when Thesaurus Browser Tab should be shown
 	#if($tab=='2')
 		<li><a class="selected">$MESSAGES.getString('searchCatThesaurus.title')</a></li>
 	#else

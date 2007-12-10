@@ -1366,7 +1366,7 @@
         <portlet-preferences>
             <preference>
                 <name>helpKey</name>
-                <value>search-1</value>
+                <value>search-catalog-1</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>

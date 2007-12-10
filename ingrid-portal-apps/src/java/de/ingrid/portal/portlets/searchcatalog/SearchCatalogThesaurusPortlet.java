@@ -4,7 +4,6 @@
 package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,6 +45,8 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 //    private final static String THESAURUS_START_TOPIC = "Horizontalfilterbrunnen";
 //    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_12891";
 
+    /* Defines which search state to use */
+    private final static String SEARCH_STATE_TOPIC = Settings.MSG_TOPIC_SEARCH;
     
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -131,9 +132,8 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     	String submittedReload = request.getParameter("submitReload");
 
         if (submittedReload != null) {
-        	SearchState.resetSearchState(request);
             initPageState(ps);
-        	actionResponse.sendRedirect(redirectPage);
+        	actionResponse.sendRedirect(redirectPage + "?action=reload");
 
         } else if (action.equalsIgnoreCase("doOpenNode")) {
         	DisplayTreeNode root = (DisplayTreeNode) session.getAttribute("thesRoot");
@@ -141,9 +141,9 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                 DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
             	openNode(node);
 
-            	// REDIRECT to current page with parameters
-            	redirectPage += "?action=nav";
-            	actionResponse.sendRedirect(redirectPage);
+                // NOTICE: also Action is encoded as Param + further stuff (so bookmarking or back button works)
+                String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
+            	actionResponse.sendRedirect(redirectPage + urlParams);
             }
 
         } else if (action.equalsIgnoreCase("doCloseNode")) {
@@ -153,9 +153,9 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                 if (node != null) {
                     node.setOpen(false);
 
-                	// REDIRECT to current page with parameters
-                	redirectPage += "?action=nav";
-                	actionResponse.sendRedirect(redirectPage);
+                    // NOTICE: also Action is encoded as Param + further stuff (so bookmarking or back button works)
+                    String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
+                	actionResponse.sendRedirect(redirectPage + urlParams);
                 }
             }
 
@@ -171,11 +171,16 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                 	// TODO: 3. Post-process search result
                 	// TODO: 4. Display -> velocity template
 
-                	// REDIRECT to current page with parameters
-                	redirectPage +=  "?"+Settings.PARAM_ACTION+"="+Settings.PARAMV_ACTION_NEW_SEARCH;
-                	redirectPage +=  "&"+Settings.PARAM_QUERY_STRING+"=" + URLEncoder.encode(node.getName(), "UTF-8");
+                    // adapt SearchState (base for generating URL params for render request FOR BOOKMARKING AND BACK BUTTON)
+                    // query string
+                    SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, node.getName(), SEARCH_STATE_TOPIC);
+                    // ALSO GROUPING, so we guarantee this is part of Request (has highest priority in Query Preprocessor)
+                    SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, Settings.PARAMV_GROUPING_PLUG_ID, SEARCH_STATE_TOPIC);
 
-                	actionResponse.sendRedirect(redirectPage);
+                    // NOTICE: also Action is encoded as Param ! serves as indicator for new search in result portlet
+                    String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
+
+                	actionResponse.sendRedirect(redirectPage + urlParams);
                 }
             }
 
