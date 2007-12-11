@@ -3,8 +3,11 @@
  */
 package de.ingrid.mdek.dwr.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import de.ingrid.mdek.dwr.MdekDataBean;
 
 /**
  * @author joachim
@@ -103,8 +106,7 @@ public interface EntryService {
 			Boolean allRootTypes) throws Exception;
 
 	/**
-	 * Retrieves all relevant data of a node. Data is encapsulated in a HashMap.
-	 * Sub lists are encapsulated in ArrayLists inside the HashMap.
+	 * Retrieves all relevant data of a node. Data is encapsulated in a MdekDataBean.
 	 * 
 	 * If useWorkingCopy is true, tries to get the working copy of the data. In
 	 * case no working copy exists a new working copy will be created.
@@ -122,7 +124,7 @@ public interface EntryService {
 	 *            synchronize the working copy with the original data.
 	 * @return
 	 */
-	public HashMap getNodeData(String nodeUuid, String nodeType,
+	public MdekDataBean getNodeData(String nodeUuid, String nodeType,
 			Boolean useWorkingCopy);
 
 	/**
@@ -135,7 +137,8 @@ public interface EntryService {
 	 *            over the original data and remove the working copy.
 	 * @return 'success' or error message.
 	 */
-	public String saveNodeData(HashMap data, Boolean useWorkingCopy);
+	// TODO Change return type String to something meaningful (void, bool?)
+	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy);
 
 	/**
 	 * Copy a node. The parameter includeChildren specifies if the children of

@@ -72,18 +72,16 @@ public class EntryServiceMockupImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#getNodeData(java.lang.String,
 	 *      java.lang.String, java.lang.Boolean)
 	 */
-	public HashMap getNodeData(String nodeUuid, String nodeType,
+	public MdekDataBean getNodeData(String nodeUuid, String nodeType,
 			Boolean useWorkingCopy) {
 
-		HashMap<String, String> map = new HashMap<String, String>();
+		MdekDataBean data = new MdekDataBean();
 		HashMap node = findNodeInTree(dummyDataList, nodeUuid);
-		if (node == null)
-		{
-			map.put("id", nodeUuid);
-			map.put("nodeAppType", nodeType);
-			return map;
-		}
 
+		data.setId(nodeUuid);
+		data.setNodeAppType(nodeType);
+		return data;
+/*
 		for (Map.Entry<String, Object> element : (Set<Map.Entry<String, Object>>) node.entrySet()) {
 			String key = element.getKey();
 			Object val = element.getValue();
@@ -98,6 +96,7 @@ public class EntryServiceMockupImpl implements EntryService {
 		}
 
 		return map;
+*/
 	}
 	
 	/*
@@ -154,7 +153,7 @@ public class EntryServiceMockupImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap,
 	 *      java.lang.Boolean)
 	 */
-	public String saveNodeData(HashMap data, Boolean useWorkingCopy) {
+	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
 		// TODO Auto-generated method stub
 		return null;
 	}

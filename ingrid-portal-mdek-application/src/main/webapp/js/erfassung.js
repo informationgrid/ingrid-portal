@@ -252,7 +252,13 @@ function selectContentClass(className, formClass)
 
 function nodeSelected(message)
 {
-  if (message.node.nodeAppType == "A") {
+  // TODO Add: if ... addressRoot ...
+  if (message.node.id == 'objectRoot') {
+    dojo.byId("contentAddress").style.display="none";
+    dojo.byId("contentObject").style.display="none";
+    dojo.byId("contentNone").style.display="block";
+  }
+  else if (message.node.nodeAppType == "A") {
     mdek.entry.type = "a";
     dojo.byId("contentAddress").style.display="block";
     dojo.byId("contentObject").style.display="none";

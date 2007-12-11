@@ -145,7 +145,7 @@ function initTree() {
 
   // attach node selection handler
   var treeListener = dojo.widget.byId('treeListener');
-  dojo.event.topic.subscribe(treeListener.eventNames.select, "nodeSelected");
+  dojo.event.topic.subscribe(treeListener.eventNames.select, 'nodeSelected');
 
   // Load children of the node from server
   // Overwritten to work with dwr.

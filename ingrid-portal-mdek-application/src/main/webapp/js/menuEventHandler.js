@@ -56,9 +56,12 @@ menuEventHandler.handleCopyEntity = function() {alertNotImplementedYet();}
 menuEventHandler.handleCopyTree = function() {alertNotImplementedYet();}
 menuEventHandler.handlePaste = function() {alertNotImplementedYet();}
 
-menuEventHandler.handleSave = function() {alertNotImplementedYet();}
+menuEventHandler.handleSave = function() {
 //                                dialog.show("Zwischenspeichern", 'Der aktuelle Datensatz befindet sich in der Bearbeitung. Wollen Sie wirklich speichern?', dialog.WARNING, 
 //                                      [{caption:"OK",action:function(){alert("OK")}},{caption:"Cancel",action:dialog.CLOSE_ACTION}]);},
+  dojo.debug('Publishing event: /saveRequest');
+  dojo.event.topic.publish("/saveRequest");
+}
 
 menuEventHandler.handleUndo = function() {alertNotImplementedYet();}
 menuEventHandler.handleDiscard = function() {alertNotImplementedYet();}

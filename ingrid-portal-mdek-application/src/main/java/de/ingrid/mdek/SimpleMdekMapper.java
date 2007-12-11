@@ -2,9 +2,11 @@ package de.ingrid.mdek;
 
 import java.util.HashMap;
 
+import de.ingrid.mdek.dwr.MdekDataBean;
+
 public class SimpleMdekMapper implements DataMapperInterface {
 	
-	public HashMap<String, Object> getDetailedMdekRepresentation(
+	public MdekDataBean getDetailedMdekRepresentation(
 			HashMap<String, Object> obj) {
 
 		// by default, assertions are disabled at runtime.
@@ -12,15 +14,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		try { assert testInputConformity(obj); }
 		catch (AssertionError e) { e.printStackTrace(); }
 
-		HashMap<String, Object> mdekObj = new HashMap<String, Object>();
+		MdekDataBean mdekObj = new MdekDataBean();
 
-		mdekObj.put(MDEK_GENERAL_DESC, obj.get(MdekKeys.ABSTRACT));
-		mdekObj.put(MDEK_OBJECT_UUID, obj.get(MdekKeys.UUID));
-		mdekObj.put(MDEK_OBJECT_TITLE, obj.get(MdekKeys.TITLE));
-		mdekObj.put(MDEK_OBJECT_CLASS, obj.get(MdekKeys.CLASS));
-		mdekObj.put(MDEK_OBJECT_DOCTYPE, "Class"+((Integer) obj.get(MdekKeys.CLASS) + 1));
-		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
-		mdekObj.put(MDEK_OBJECT_NAME, obj.get(MdekKeys.TITLE));
+		mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
+		mdekObj.setId((String) obj.get(MdekKeys.UUID));
+		mdekObj.setTitle((String) obj.get(MdekKeys.TITLE));
+		mdekObj.setObjectClass((Integer) obj.get(MdekKeys.CLASS));
+		mdekObj.setNodeDocType("Class"+((Integer) obj.get(MdekKeys.CLASS) + 1));
+		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
+		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
 
 		return mdekObj;
 	}
@@ -43,6 +45,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return mdekObj;
 	}
 
+
+	public Object convertFromMdekRepresentation(MdekDataBean data){
+		HashMap<String, Object> udkObj = new HashMap<String, Object>();
+
+		udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
+		udkObj.put(MdekKeys.UUID, data.getId());
+		udkObj.put(MdekKeys.TITLE, data.getTitle());
+		udkObj.put(MdekKeys.CLASS, data.getObjectClass());
+		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());
+
+		return udkObj;
+	}
 
 	
 	

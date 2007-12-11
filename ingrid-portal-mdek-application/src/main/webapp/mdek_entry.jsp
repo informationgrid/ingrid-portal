@@ -20,6 +20,7 @@
 <script type="text/javascript" src="js/recherche.js"></script>
 <script type="text/javascript" src="js/treeEventHandler.js"></script>
 <script type="text/javascript" src="js/menuEventHandler.js"></script>
+<script type="text/javascript" src="js/udkDataProxy.js"></script>
 
 
 <script type="text/javascript">
@@ -260,7 +261,7 @@ function hideSplash(){
 
 	              <div class="inputContainer">
 	                <span class="label required"><label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
-	                <span class="input"><textarea id="generalDesc" name="generalDesc" class="w668 h055" /></textarea></span>
+	                <span class="input"><input type="text" id="generalDesc" name="generalDesc" class="w668 h055" dojoType="ingrid:ValidationTextBox" /></span>
 	          	  </div>
 
 	              <div class="inputContainer noSpaceBelow h108">

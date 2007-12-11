@@ -2,6 +2,8 @@ package de.ingrid.mdek;
 
 import java.util.HashMap;
 
+import de.ingrid.mdek.dwr.MdekDataBean;
+
 /**
  * @author mbenz
  * 
@@ -13,15 +15,20 @@ import java.util.HashMap;
  */
 public interface DataMapperInterface {
 
+	// TODO Change return type to MdekDataBean and argument to object
 	public HashMap<String, Object> getSimpleMdekRepresentation(HashMap<String, Object> obj);
-	public HashMap<String, Object> getDetailedMdekRepresentation(HashMap<String, Object> obj);
+	public MdekDataBean getDetailedMdekRepresentation(HashMap<String, Object> obj);
+	
+	// We return an Object since we don't know all the possible target types in advance 
+	public Object convertFromMdekRepresentation(MdekDataBean data);
+
 	
 	// Miscellaneous
-	// TODO: Some values are duplicates. Merge them!
 	public final static String MDEK_OBJECT_UUID = "id";
 	public final static String MDEK_OBJECT_HAS_CHILDREN = "isFolder";
-	public final static String MDEK_OBJECT_DOCTYPE = "nodeDocType";
+	// TODO: Some values are duplicates. Merge them!
 	public final static String MDEK_OBJECT_TITLE = "title";
+	public final static String MDEK_OBJECT_DOCTYPE = "nodeDocType";
 
 
 	// Identification 

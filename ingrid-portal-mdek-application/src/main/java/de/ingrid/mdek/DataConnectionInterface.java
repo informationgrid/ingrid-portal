@@ -3,6 +3,8 @@ package de.ingrid.mdek;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.ingrid.mdek.dwr.MdekDataBean;
+
 /**
  * @author mbenz
  * 
@@ -68,9 +70,11 @@ public interface DataConnectionInterface {
 	 * <li><b>(String) hasChildren</b> - 'true' if node has children, 'false' if not</li>
 	 * </ul>
 	 * 
-	 * @return A Map representing the node identified by uuid.
+	 * @return A MdekDataBean representing the node identified by uuid.
 	 */	
-	public HashMap<String, Object> getNodeDetail(String uuid);
+	public MdekDataBean getNodeDetail(String uuid);
 
+	public void saveNode(MdekDataBean data);
+	
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }

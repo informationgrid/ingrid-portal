@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
 public class SimpleUDKConnection implements DataConnectionInterface {
@@ -14,18 +15,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	// TODO Load the file dynamically from a cfg file 	
 	private final static String ENTRY_SERVICE_CFG_FILE = "C:\\_projekte\\ingrid\\ingrid-SVN\\ingrid-mdek\\trunk\\ingrid-mdek-api\\src\\main\\resources\\communication.properties";
-	// TODO The OBJECT_ROOT_UUID is used as an entry point for the db. Should be replaced with another method call 'getRootObjects'
-//	private final static String OBJECT_ROOT_UUID = "9A347535-4754-11D4-BB4F-00105A378751";
-//	private final static String OBJECT_ROOT_UUID = "19654CB2-C510-11D3-BADE-0060971A0BF7";
-//	private final static String OBJECT_ROOT_UUID = "1C549049-F243-11D2-9A86-080000507261";
-
 
 	public SimpleUDKConnection() {
 		File file = new File(ENTRY_SERVICE_CFG_FILE);
 		MdekCaller.initialize(file);
 		mdekCaller = MdekCaller.getInstance();
 	}
-
 
 	protected void finalize() {
 		MdekCaller.shutdown();
@@ -42,9 +37,9 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 
-	public HashMap<String, Object> getNodeDetail(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+	public MdekDataBean getNodeDetail(String uuid) {
+		IngridDocument response = mdekCaller.fetchObjDetails(uuid);
+		return extractSingleObjectFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootAddresses() {
@@ -57,7 +52,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractObjectsFromResponse(response);
 	}
 
-
 	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth) {
 		IngridDocument response = mdekCaller.fetchSubObjects(uuid);
 		return extractObjectsFromResponse(response);
@@ -68,6 +62,10 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractObjectsFromResponse(response);
 	}
 
+	public void saveNode(MdekDataBean data) {
+		// TODO Add the right mdekCaller Method here
+		// mdekCaller.storeNode(dataMapper.convertFromMdekRepresentation(data));
+	}
 
 	
 	// ------------------------ Helper Methods ---------------------------------------	
@@ -75,7 +73,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response)
 	{
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
-		
 
 		ArrayList<HashMap<String, Object>> nodeList = null;
 		
@@ -107,23 +104,26 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
 		}
 		return nodeList;
-	}
+	}	
 
-	
-	// TODO Temporary method. This information should come directly from the db query
-	@Deprecated
-	private boolean hasChildren(String uuid)
+	private MdekDataBean extractSingleObjectFromResponse(IngridDocument response)
 	{
-		IngridDocument response = mdekCaller.fetchSubObjects(uuid);
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
-		if (result == null) {
+		if (result != null) {
+			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+			if (objs == null) {
+				System.out.println("Error in SimpleUDKConnection.extractSingleObjectFromResponse. No object entities returned.");				
+			}
+			else if (objs.size() != 1) {
+				System.out.println("Error in SimpleUDKConnection.extractSingleObjectFromResponse. Number of returned objects != 1.");				
+			}
+			else {
+				return dataMapper.getDetailedMdekRepresentation(objs.get(0));
+			}
+		} else {
 			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
-			return false;
 		}
-		List<IngridDocument> objectEntities = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-
-		return (objectEntities.size() > 0);
+		return null;
 	}
-
 }

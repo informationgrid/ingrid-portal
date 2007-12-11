@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import de.ingrid.mdek.dwr.api.EntryService;
 
 import de.ingrid.mdek.DataConnectionInterface;
+import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.IMdekCaller;
 import de.ingrid.mdek.MdekCaller;
 import de.ingrid.mdek.MdekKeys;
@@ -77,23 +78,42 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#getNodeData(java.lang.String,
 	 *      java.lang.String, java.lang.Boolean)
 	 */
-	public HashMap getNodeData(String nodeUuid, String nodeType,
+	public MdekDataBean getNodeData(String nodeUuid, String nodeType,
 			Boolean useWorkingCopy) {
-		HashMap<String, Object> node = null;
-		node = dataConnection.getNodeDetail(nodeUuid);
-		// TODO check for errors and throw an exception?
-		if (node != null) {
-			return node;
-		} else
-		{
-			node = new HashMap<String, Object>();
+		
+		MdekDataBean data = null; 
+		
+		try {
+			data = dataConnection.getNodeDetail(nodeUuid);
+		} catch (Exception e) {e.printStackTrace();}
 
-			node.put("id", nodeUuid);
-			node.put("nodeAppType", nodeType);
-			node.put("nodeDocType", "Class1");
+		// TODO check for errors and throw an exception?
+		if (data == null) {
+			data = new MdekDataBean();
+
+			data.setId(nodeUuid);
+			data.setNodeDocType("Class1");
+			data.setNodeAppType(nodeType);
+
+			ArrayList<HashMap<String, String>> addressTable = new ArrayList<HashMap<String, String>>(); 
+			HashMap<String, String> entry1 = new HashMap<String, String>();
+			HashMap<String, String> entry2 = new HashMap<String, String>();
+			entry1.put("Id", "1");
+			entry1.put("information", "Auswertung");
+			entry1.put("icon", "<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
+			entry1.put("names", "<a href=\"#\" title=\"Adresse &ouml;ffnen: Gerdes, G&uuml;nther\">Gerdes, G&uuml;nther</a>");
+			addressTable.add(entry1);
+
+			entry2.put("Id", "2");
+			entry2.put("information", "Auskunft");
+			entry2.put("icon", "<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
+			entry2.put("names", "<a href=\"#\" title=\"Adresse &ouml;ffnen: Altm&uuml;ller, Reinhard\">Altm&uuml;ller, Reinhard</a>");
+			addressTable.add(entry2);
+
+			data.setGeneralAddressTable(addressTable);
 		}
 
-		return node;
+		return data;
 	}
 
 	/*
@@ -157,9 +177,19 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap,
 	 *      java.lang.Boolean)
 	 */
-	public String saveNodeData(HashMap data, Boolean useWorkingCopy) {
+	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("ID: "+ data.getId());
+		System.out.println("generalAddressTable: "+ data.getGeneralAddressTable());
+
+		
+		try
+		{
+		  dataConnection.saveNode(data);
+		}
+		catch (Exception e) {e.printStackTrace(); return e.toString();};
+		
+		return "success";
 	}
 
 
