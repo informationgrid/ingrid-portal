@@ -1426,6 +1426,22 @@
                     der freien Suche.</p>
             </content>
         </section>
+        <section help-key="search-catalog-2">
+            <header>Thesaurus-Navigator</header>
+            <content>
+                <p>Die Darstellung des Thesaurus-Wortgutes erfolgt in einer Baumstruktur, 
+                ausgehend von den Topterms des SNS. Bei Auswahl eines Thesaurus-Begriffs 
+                (Deskriptor) erfolgt die Darstellung der Metadatensätze der zur Verfügung 
+                stehenden Kataloge (Objekt- bzw. Adress-iPlugs), die mit dem ausgewählten 
+                Deskriptor verschlagwortet sind, in einer neben dem Hierarchiebaum stehenden 
+                "Trefferliste". Die Auflistung der Metadatensätze ist in dieser Liste nach 
+                den Katalogen gruppiert. Die Detaildarstellung eines Metadatensatzes erfolgt 
+                erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich wie in der Liste 
+                der Suchergebnisse bei der freien Suche. Das Umschalten zwischen 
+                "Umweltinformationen" (Objekten) und "Adressen" erfolgt direkt im Bereich 
+                der Trefferliste.</p>
+            </content>
+        </section>
     </chapter>
     <chapter>
         <header>Umweltthemen</header>
