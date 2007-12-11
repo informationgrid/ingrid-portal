@@ -27,6 +27,27 @@
 						</li> 
 					</ul>
 				</li>
+#if($enableSearchCatalog)
+				<li>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-catalog/search-catalog-hierarchy.psml"))
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.search.catalogs")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
+					<ul>
+						<li>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-catalog/search-catalog-hierarchy.psml"))
+							<a href="$link">$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")</a>
+							<p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
+						</li>
+#if($enableSearchCatalogThesaurus)
+						<li>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/search-catalog/search-catalog-thesaurus.psml"))
+							<a href="$link">$MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus")</a>
+							<p>$MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus.description")</p>
+						</li>
+#end
+					</ul>
+				</li>
+#end
 #if($enableService)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-service.psml"))
