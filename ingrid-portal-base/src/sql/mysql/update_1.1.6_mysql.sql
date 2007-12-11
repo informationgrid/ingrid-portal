@@ -1,9 +1,9 @@
-===================================================================================================================================================================
-  Suche/Datenkataloge/Thesaurus-Navigator: Result Portlet in PSML integriert
-  AM ??.??.???? IN LIVE DB EINGESPIELT !
-===================================================================================================================================================================
+-- ===================================================================================================================================================================
+--  Suche/Datenkataloge/Thesaurus-Navigator: Result Portlet in PSML integriert
+--  AM ??.??.20?? IN KST LIVE DB EINGESPIELT (Portal version 1.1.6)
+-- ===================================================================================================================================================================
 
--- Temp Table um fragment id von Layout zwischen zu speichern (subselect in insert auf gleiche Tabell nicht möglich, s.u.)
+-- Temp Table um fragment id von Layout zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich, s.u.)
 DROP TABLE IF EXISTS ingrid_temp;
 CREATE TABLE ingrid_temp (
   value mediumint

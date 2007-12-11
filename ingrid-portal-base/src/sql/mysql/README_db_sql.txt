@@ -96,7 +96,7 @@ WHERE tablename='seq_fragment';
 
 ===================================================================================================================================================================
   submenue in main search, statt einer Haupt-Seite (main-search.psml)
-  AM 12.10.2007 IN LIVE DB EINGESPIELT !
+  AM 12.10.2007 IN LIVE DB EINGESPIELT ! (s. update_1.1.4_mysql.sql in distribution "start-ingrid-portal")
 ===================================================================================================================================================================
 
 -- Folder anlegen -> folder
