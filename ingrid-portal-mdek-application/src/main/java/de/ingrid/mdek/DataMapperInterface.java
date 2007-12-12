@@ -15,10 +15,10 @@ import de.ingrid.mdek.dwr.MdekDataBean;
  */
 public interface DataMapperInterface {
 
-	// TODO Change return type to MdekDataBean and argument to object
-	public HashMap<String, Object> getSimpleMdekRepresentation(HashMap<String, Object> obj);
-	public MdekDataBean getDetailedMdekRepresentation(HashMap<String, Object> obj);
-	
+	// TODO Change return type to MdekDataBean?
+	public HashMap<String, Object> getSimpleMdekRepresentation(Object obj);
+	public MdekDataBean getDetailedMdekRepresentation(Object obj);
+
 	// We return an Object since we don't know all the possible target types in advance 
 	public Object convertFromMdekRepresentation(MdekDataBean data);
 

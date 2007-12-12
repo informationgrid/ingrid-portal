@@ -5,8 +5,24 @@ import java.util.HashMap;
 import de.ingrid.mdek.dwr.MdekDataBean;
 
 public class SimpleMdekMapper implements DataMapperInterface {
-	
-	public MdekDataBean getDetailedMdekRepresentation(
+
+	// -- Dispatch to the local private methods --
+	public MdekDataBean getDetailedMdekRepresentation(Object obj) {
+		if (obj instanceof HashMap)
+			return getDetailedMdekRepresentation((HashMap<String, Object>) obj);
+		else
+			return null;		
+	}
+	public HashMap<String, Object> getSimpleMdekRepresentation(Object obj) {
+		if (obj instanceof HashMap)
+			return getSimpleMdekRepresentation((HashMap<String, Object>) obj);
+		else
+			return null;
+	}
+	// --
+
+
+	private MdekDataBean getDetailedMdekRepresentation(
 			HashMap<String, Object> obj) {
 
 		// by default, assertions are disabled at runtime.
@@ -27,7 +43,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return mdekObj;
 	}
 
-	public HashMap<String, Object> getSimpleMdekRepresentation(
+	private HashMap<String, Object> getSimpleMdekRepresentation(
 			HashMap<String, Object> obj) {
 		
 		// by default, assertions are disabled at runtime.
@@ -44,7 +60,6 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		return mdekObj;
 	}
-
 
 	public Object convertFromMdekRepresentation(MdekDataBean data){
 		HashMap<String, Object> udkObj = new HashMap<String, Object>();
