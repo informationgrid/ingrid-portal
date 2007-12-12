@@ -32,10 +32,22 @@
 	#end
 
 
-	## render node text
-    $action.setParameter('action','doSearch')
+	## render node text differently depending on the type and if it's currently selected
+	$action.setParameter('action','doSearch')
     ##	<a href="$action">$node.name (Node Level: $node.level, numChildren: $node.getChildren().size())</a>
-	<strong><a href="$action">$node.name</a></strong>
+	#if ($node.type == 0) ## TopTerm Type
+	    <strong>$node.name</strong>
+	#elseif ($node.type == 1) ## NodeLabel Type
+	    <strong>$node.name</strong>
+	#elseif ($node.type == 2) ## Descriptor Type
+	  #if ($node.name == $ps.currentQueryTerm)
+	    <strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>
+	  #else
+	    <strong><a href="$action">$node.name</a></strong>
+	  #end
+	#else
+		<strong>$node.name</strong>
+	#end
 	</p>
 
 	#if ($renderSubNodes)

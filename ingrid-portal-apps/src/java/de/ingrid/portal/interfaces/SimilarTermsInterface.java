@@ -81,4 +81,21 @@ public interface SimilarTermsInterface {
      */
     IngridHitDetail getDetailsTopic(IngridHit hit);
 
+    
+    /**
+     * Get a hierarchy of topics from a given topic id.
+     * 
+     * @param topicId
+     *            The given topic id that serves as a root topic. "toplevel" serves as the root
+     * @param includeSiblings
+     *            "true" or "false", if siblings should be included in the hierarchy
+     * @param association
+     *            "narrowerTermAssoc" is the only supported association at the moment
+     * @param depth
+     *            Search depth.
+     * @param direction
+     *            "up" or "down", search direction.
+     * @return Array representing the resulting hierarchy.
+     */
+    IngridHit[] getHierarchy(String topicId, String includeSiblings, String association, String depth, String direction);
 }

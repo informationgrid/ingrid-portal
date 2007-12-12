@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.apache.commons.logging.Log;
@@ -170,6 +171,51 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
+    public IngridHit[] getHierarchy(String topicId, String includeSiblings, String association, String depth, String direction) {
+    	// We set the number of hits large enough to get all hits in one query.
+    	// If not we have to query the SNS multiple times which is VERY costly! 
+    	final int CHUNK_SIZE = 1500;
+    	
+    	ArrayList result = new ArrayList();
+    	try {
+            IngridQuery query = QueryStringParser.parse(topicId);
+            query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
+            query.addField(new FieldQuery(true, false, "lang", "de"));
+            query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_HIERACHY);
+            query.put("includeSiblings", includeSiblings);
+            query.put("association", association);
+            query.put("depth", depth);
+            query.put("direction", direction);
+
+            IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
+
+            int page = 0;
+            IngridHits queryResult = null;
+            IngridHit[] hits = null;
+            do
+            {
+            	page++;
+            	queryResult = iBus.search(query, CHUNK_SIZE, page, (page-1) * CHUNK_SIZE,
+            			PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT, 60000));
+            	hits = queryResult.getHits();
+
+            	for (int i = 0; i < hits.length; ++i)
+            		result.add(hits[i]);
+
+            } while (hits.length == CHUNK_SIZE);
+
+            hits = new IngridHit[result.size()];
+            for (int i = 0; i < result.size(); ++i)
+            	hits[i] = (IngridHit) result.get(i);
+            return hits;
+
+    	} catch (Exception e) {
+            log.error("Exception while querying sns for hierarchy.", e);
+            return null;
+        }
+    }
+
+    
     public IngridHitDetail getDetailsTopic(IngridHit hit) {
         try {
             IngridQuery query = new IngridQuery();
@@ -185,7 +231,5 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             log.error("Exception while querying sns for detailed topic.", e);
             return null;
         }
-
     }
-
 }

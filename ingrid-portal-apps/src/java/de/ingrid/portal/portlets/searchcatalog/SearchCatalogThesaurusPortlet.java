@@ -4,6 +4,12 @@
 package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
+import java.text.Collator;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -15,6 +21,7 @@ import org.apache.jetspeed.request.RequestContext;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
@@ -22,9 +29,6 @@ import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * This portlet handles the fragment of the hirarchy browser in the search/catalog section.
@@ -35,22 +39,33 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm";
-
-    // TEMPORARY Thesaurus settings. Currently we have can't receive the top terms from the SNS
-    // TODO Remove this and use the getHierarchy() function when it's available
-    private final static String THESAURUS_ASSOCIATION = "narrowerTermMember";
-    private final static String THESAURUS_START_TOPIC = "(Hydrosphäre - Wasser und Gewässer)";
-    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_49252";
-//    private final static String THESAURUS_ASSOCIATION = "widerTermMember";
-//    private final static String THESAURUS_START_TOPIC = "Horizontalfilterbrunnen";
-//    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_12891";
-
+    
+//    private final static String THESAURUS_ASSOCIATION = "narrowerTermMember";
+//    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_40282";
+	private final static String THESAURUS_START_TOPIC_ID = "toplevel";
+    private final static String SNS_TOPTERM = "topTermType";
+    private final static String SNS_NODELABEL = "nodeLabelType";
+    private final static String SNS_DESCRIPTOR = "descriptorType";
+    private final static int SNS_TOPTERM_TYPE = 0;
+    private final static int SNS_NODELABEL_TYPE = 1;
+    private final static int SNS_DESCRIPTOR_TYPE = 2;
+    
+    private String snsErrorString = null;
+    
+    
     /* Defines which search state to use */
     private final static String SEARCH_STATE_TOPIC = Settings.MSG_TOPIC_SEARCH;
     
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
-        Context context = getContext(request);
+
+    	if (snsErrorString == null) {
+    		IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+    		snsErrorString = messages.getString("searchCatThesaurus.tree.snsErrorText");
+    	}
+
+    	Context context = getContext(request);
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
@@ -83,24 +98,20 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             // 1. Get initial data from the SNS IPlug (Top Terms)
         	// 2. sort Terms (needed?)
             // 3. Create Tree from the initial Terms and put them into the Page State 
-        	
-        	// Create a test term tree from a search query 
-        	IngridQuery query = null;
-            try {
-                query = QueryStringParser.parse("Trinkwasser");
-            } catch (ParseException e) {}
 
-//			DisplayTreeNode thesRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
             DisplayTreeNode thesRoot = new DisplayTreeNode("root", "root", true);
             thesRoot.setType(DisplayTreeNode.ROOT);
 
             session.setAttribute("thesRoot", thesRoot);
 			initTree(thesRoot);
 
-        	// ------ END TEST CODE --------
-        	
             ps.put("thesRoot", thesRoot);
         }
+
+        // Put the current query term in the search state so we can highlight it in the tree
+        String queryThesaurusTerm = request.getParameter(Settings.PARAM_QUERY_STRING);
+        ps.put("currentQueryTerm", queryThesaurusTerm);
+        	
         super.doView(request, response);
     }
 
@@ -198,104 +209,172 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
 
     private void initTree(DisplayTreeNode rootNode) {
-    	// TODO: Check if rootNode != null, etc.
-    	DisplayTreeNode node = rootNode;
         rootNode.put("level", new Integer(0));
 
-    	// TODO: Remove Test code if we get the full hierarchy from the backend (SNS) 
-    	// ---------- BEGIN Test Code ------------------
-    	node.put("topicID", THESAURUS_START_TOPIC_ID);
-        node.put("level", new Integer(1));
-        node.put("expandable", new Boolean(true));
-        node.setName(THESAURUS_START_TOPIC);
-        // ---------- END Test Code --------------------
+        // Get the initial list of TopTerm Topics
+		IngridHit[] results = SNSSimilarTermsInterfaceImpl.getInstance().getHierarchy(THESAURUS_START_TOPIC_ID, "false", "narrowerTermAssoc", "1", "down");
+		
+		// If we don't get any results (or multiple results) there's a problem with the SNS service
+		if (results.length != 1) {
+			return;
+		}
 
-        if (node.getChildren().size() == 0) {
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(THESAURUS_START_TOPIC_ID);
-            if (hits != null && hits.length > 0) {
-                for (int i=0; i<hits.length; i++) {
-                    Topic hit = (Topic) hits[i];
-                    String assoc = hit.getTopicAssoc();
-                    if (assoc == null)
-                    	assoc = THESAURUS_ASSOCIATION;
-                    
-                    if (assoc.indexOf(THESAURUS_ASSOCIATION) != -1 && !hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                        DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+		// Here we extract the TopTerm Topics from the results. The rootHit represents the 'toplevel' node 
+		Topic rootHit = (Topic) results[0];
+		// getSuccessors() returns the nodes at level 1 (TopTerms in this case)
+		List hits = rootHit.getSuccessors();
 
-                        // Check if the snsNode has displayable children and can be expanded
-                        IngridHit[] nodeHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(hit.getTopicID());
-                        boolean expandable = false;
-                        for (int j = 0; j < nodeHits.length; j++) {
-                            Topic subHit = (Topic) nodeHits[j];
-                        	String subAssoc = subHit.getTopicAssoc();
-                            if (subAssoc == null)
-                            	subAssoc = THESAURUS_ASSOCIATION;
+		// Sort the List alphabetically. We put it in a set to filter duplicates
+		TreeSet hitSet = new TreeSet(new SNSTopicComparator());
+		hitSet.addAll(hits);
 
-                            if (subAssoc.indexOf(THESAURUS_ASSOCIATION) != -1)
-                        		expandable = true;
-                        }
-                        snsNode.put("expandable", new Boolean(expandable));    
+        int nodeIndex = 0;
+        // Analyze each topic and add it to the rootNode if it's a TopTerm
+        for (Iterator it = hitSet.iterator(); it.hasNext();) {
+            Topic hit = (Topic) it.next();
 
-                        snsNode.setType(DisplayTreeNode.SNS_TERM);
-                        snsNode.setParent(node);
-                        snsNode.put("topicID", hit.getTopicID());
-                        snsNode.put("topic", hit);
-                        snsNode.put("level", new Integer(1));
-                        node.addChild(snsNode);
-                    }
-                }
-            } else {
-                // TODO remove node from display tree
+            // The hitSummary is a String with the nodeType at the end
+            String nodeType = hit.getSummary();
+
+            // Only add TopTerms as entry nodes (initial nodes at level 1)
+            if (nodeType.indexOf(SNS_TOPTERM) != -1)
+            {
+            	// Create new TreeNode
+            	// TODO Do we set the id right? Are multiple nodes with the same id allowed?
+            	DisplayTreeNode snsNode = new DisplayTreeNode(rootNode.getId() + nodeIndex, hit.getTopicName(), false);
+
+            	// -- Check if the Topic has subTopics (is expandable) --
+        		// We need a search with depth = 2 for this
+            	List succ = hit.getSuccessors();
+        		if (succ.size() == 0)
+        			snsNode.put("expandable", new Boolean(false));
+        		else
+        			snsNode.put("expandable", new Boolean(true));
+        		// --
+
+        		// We checked this earlier. Set the node type to make them distinguishable
+        		snsNode.setType(SNS_TOPTERM_TYPE);
+
+        		// Add general information
+                snsNode.setParent(rootNode);
+                snsNode.put("topicID", hit.getTopicID());
+                snsNode.put("topic", hit);
+                snsNode.put("level", new Integer(1));
+
+                // Attach the current snsNode to the rootNode 
+                rootNode.addChild(snsNode);
+                nodeIndex++;
             }
         }
     }
 
     
     private void openNode(DisplayTreeNode node) {
-        node.setOpen(true);
-        String topicId = (String) node.get("topicID");
+		if (node == null)
+			return;
 
-        if (node != null && node.getChildren().size() == 0 && !node.isLoading()) {
-            node.setLoading(true);
+        // Entry checks
+		node.setOpen(true);
+		if (node.getChildren().size() != 0 || node.isLoading()) {
+    		return;
+    	}
 
-            int nodeLevel = ((Integer) node.get("level")).intValue();
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicId);
-            if (hits != null && hits.length > 0) {
-                for (int i=0; i<hits.length; i++) {
-                    Topic hit = (Topic) hits[i];
-                    String assoc = hit.getTopicAssoc();
-                    if (assoc == null)
-                    	assoc = THESAURUS_ASSOCIATION;
+        node.setLoading(true);
 
-                    if (assoc.indexOf(THESAURUS_ASSOCIATION) != -1 && !hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                    	DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+        int nodeLevel = ((Integer) node.get("level")).intValue();
+        // Get the hierarchy of subNodes starting from node
+        IngridHit[] results = SNSSimilarTermsInterfaceImpl.getInstance().getHierarchy((String) node.get("topicID"), "false", "narrowerTermAssoc", "2", "down");
 
-                        // Check if the snsNode has displayable children and can be expanded
-                        IngridHit[] nodeHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(hit.getTopicID());
-                        boolean expandable = false;
-                        for (int j = 0; j < nodeHits.length; j++) {
-                            Topic subHit = (Topic) nodeHits[j];
-                        	String subAssoc = subHit.getTopicAssoc();
-                            if (subAssoc == null)
-                            	subAssoc = THESAURUS_ASSOCIATION;
+		// If we don't get any results (or multiple results) there's a problem with the SNS service
+        if (results.length != 1) {
 
-                            if (subAssoc.indexOf(THESAURUS_ASSOCIATION) != -1)
-                        		expandable = true;
-                        }
-                        snsNode.put("expandable", new Boolean(expandable));    
-                    	
-                    	snsNode.setType(DisplayTreeNode.SNS_TERM);
-                        snsNode.setParent(node);
-                        snsNode.put("topicID", hit.getTopicID());
-                        snsNode.put("topic", hit);
-                        snsNode.put("level", new Integer(nodeLevel+1));
-                        node.addChild(snsNode);
-                    }
-                }
-            } else {
-                // TODO remove node from display tree
-            }
+        	node.setLoading(false);
+        	node.addChild(createErrorNode(node, snsErrorString));
+    		return;
+        }
+
+        Topic rootHit = (Topic) results[0];
+		List hits = rootHit.getSuccessors();
+
+        if (hits == null || hits.size() == 0) {
             node.setLoading(false);
+        	node.addChild(createErrorNode(node, snsErrorString));
+            return;
+        }
+
+		// Sort the List alphabetically. We put it in a set to filter duplicates
+		TreeSet hitSet = new TreeSet(new SNSTopicComparator());
+		hitSet.addAll(hits);
+
+        int nodeIndex = 0;
+        // Analyze each topic and add it to the rootNode if it's a TopTerm
+        for (Iterator it = hitSet.iterator(); it.hasNext();) {
+        	Topic hit = (Topic) it.next();
+
+            // The hitSummary is a String with the nodeType at the end        	
+        	String nodeType = hit.getSummary();
+
+    		DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + nodeIndex, hit.getTopicName(), false);
+
+        	// -- Check if the Topic has subTopics (is expandable) --
+    		List succ = hit.getSuccessors();
+    		if (succ.size() == 0)
+    			snsNode.put("expandable", new Boolean(false));
+    		else
+    			snsNode.put("expandable", new Boolean(true));
+    		// --
+
+    		// -- Check the nodeType and set the corresponding Type of the SNSNode -- 
+    		if (nodeType.indexOf(SNS_TOPTERM) != -1) 
+    			snsNode.setType(SNS_TOPTERM_TYPE);
+    		else if (nodeType.indexOf(SNS_NODELABEL) != -1) 
+    			snsNode.setType(SNS_NODELABEL_TYPE);
+    		else if (nodeType.indexOf(SNS_DESCRIPTOR) != -1) 
+    			snsNode.setType(SNS_DESCRIPTOR_TYPE);
+    		// --
+
+    		// -- Set general Node Information --
+    		snsNode.setParent(node);
+    		snsNode.put("topicID", hit.getTopicID());
+    		snsNode.put("topic", hit);
+    		snsNode.put("level", new Integer(nodeLevel+1));
+    		// --
+
+    		node.addChild(snsNode);
+    		nodeIndex++;
+        }
+	}
+
+    private static DisplayTreeNode createErrorNode(DisplayTreeNode node, String errorText) {
+    	DisplayTreeNode errorNode = new DisplayTreeNode("errorNode", errorText, false);
+        int nodeLevel = ((Integer) node.get("level")).intValue();
+
+        errorNode.put("expandable", new Boolean(false));
+		errorNode.setType(-1);
+		errorNode.setParent(node);
+		errorNode.put("topicID", "Error");
+		errorNode.put("topic", "Error");
+		errorNode.put("level", new Integer(nodeLevel + 1));
+		// --
+		
+		return errorNode;
+    }
+
+    
+    
+    static public class SNSTopicComparator implements Comparator {
+    	public final int compare(Object a, Object b) {
+            try {
+            	Topic topicA = (Topic) a;
+            	Topic topicB = (Topic) b;
+
+            	// Get the collator for the German Locale 
+            	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
+            	return gerCollator.compare(topicA.getTopicName(), topicB.getTopicName());
+            } catch (Exception e) {
+                return 0;
+            }
         }
     }
+
 }
