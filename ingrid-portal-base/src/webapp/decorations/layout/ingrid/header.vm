@@ -84,7 +84,7 @@ if (xmlhttp) {
     <div class="#PageBaseCSSClass()">
 
 <!-- Identity Area inkl. service menu -->
-#includeIdentityArea()  
+#includeIdentityArea()
 
 <!-- MAIN-NAVIGATION -->
 <div id="mainnav">
@@ -102,7 +102,7 @@ if (xmlhttp) {
 <div id="subnav"><a name="subnav"></a>
   <div class="subnav_corner"><div class="subnav_corner_img"></div></div>
 #set($subMenu = $site.getMenu("sub-menu"))
-#if($subMenu && !$subMenu.isEmpty())
+#if($subMenu && !$subMenu.empty)
   #includeSubNavigation($subMenu)
 #else
   ## HACK: check current site and render "global" sub menue dependent from site ! -> thus we don't have to restructure pages in subfolders !
