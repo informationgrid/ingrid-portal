@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.search;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.IPlugHelper;
@@ -378,7 +380,9 @@ public class DisplayTreeFactory {
                 String aName = ((DisplayTreeNode) a).getName().toLowerCase();
                 String bName = ((DisplayTreeNode) b).getName().toLowerCase();
 
-                return aName.compareTo(bName);
+            	// Get the collator for the German Locale (for correct sorting of ä,ö,ü ...)  
+            	Collator germanCollator = Collator.getInstance(Locale.GERMAN);
+            	return germanCollator.compare(aName, bName);
             } catch (Exception e) {
                 return 0;
             }

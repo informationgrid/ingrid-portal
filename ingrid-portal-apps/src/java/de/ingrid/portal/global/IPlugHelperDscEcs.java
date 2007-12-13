@@ -3,10 +3,12 @@
  */
 package de.ingrid.portal.global;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -401,7 +403,9 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                     plugSortCriteria[i] = sortString.toString();
             	}
 
-                return plugSortCriteria[0].compareTo(plugSortCriteria[1]);
+            	// Get the collator for the German Locale (for correct sorting of ä,ö,ü ...)  
+            	Collator germanCollator = Collator.getInstance(Locale.GERMAN);
+            	return germanCollator.compare(plugSortCriteria[0], plugSortCriteria[1]);
             } catch (Exception e) {
                 return 0;
             }
