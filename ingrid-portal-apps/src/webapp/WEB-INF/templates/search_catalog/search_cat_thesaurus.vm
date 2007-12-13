@@ -45,8 +45,10 @@
 	  #else
 	    <strong><a href="$action">$node.name</a></strong>
 	  #end
-	#else
-		<strong>$node.name</strong>
+	#elseif ($node.type == -1) ## SNS Error Type
+		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>
+	#else ## We could display a local error here
+		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>
 	#end
 	</p>
 

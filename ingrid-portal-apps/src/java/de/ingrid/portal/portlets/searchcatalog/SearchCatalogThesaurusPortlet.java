@@ -49,23 +49,15 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     private final static int SNS_TOPTERM_TYPE = 0;
     private final static int SNS_NODELABEL_TYPE = 1;
     private final static int SNS_DESCRIPTOR_TYPE = 2;
+    private final static int NODE_ERROR_TYPE = -1;
     
-    private String snsErrorString = null;
-    
-    
-    /* Defines which search state to use */
+	/* Defines which search state to use */
     private final static String SEARCH_STATE_TOPIC = Settings.MSG_TOPIC_SEARCH;
     
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 
-    	if (snsErrorString == null) {
-    		IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
-    		snsErrorString = messages.getString("searchCatThesaurus.tree.snsErrorText");
-    	}
-
-    	Context context = getContext(request);
+		Context context = getContext(request);
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
@@ -289,7 +281,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         if (results.length != 1) {
 
         	node.setLoading(false);
-        	node.addChild(createErrorNode(node, snsErrorString));
+        	node.addChild(createErrorNode(node));
     		return;
         }
 
@@ -298,7 +290,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
         if (hits == null || hits.size() == 0) {
             node.setLoading(false);
-        	node.addChild(createErrorNode(node, snsErrorString));
+        	node.addChild(createErrorNode(node));
             return;
         }
 
@@ -345,17 +337,16 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         }
 	}
 
-    private static DisplayTreeNode createErrorNode(DisplayTreeNode node, String errorText) {
-    	DisplayTreeNode errorNode = new DisplayTreeNode("errorNode", errorText, false);
+    private static DisplayTreeNode createErrorNode(DisplayTreeNode node) {
+    	DisplayTreeNode errorNode = new DisplayTreeNode("errorNode", "Error", false);
         int nodeLevel = ((Integer) node.get("level")).intValue();
 
         errorNode.put("expandable", new Boolean(false));
-		errorNode.setType(-1);
+		errorNode.setType(NODE_ERROR_TYPE);
 		errorNode.setParent(node);
 		errorNode.put("topicID", "Error");
 		errorNode.put("topic", "Error");
 		errorNode.put("level", new Integer(nodeLevel + 1));
-		// --
 		
 		return errorNode;
     }
