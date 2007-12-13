@@ -24,6 +24,7 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
@@ -168,7 +169,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
 
     	// Build query Term !
         // we extend thesaurus term with restrictions for correct query (iplug, sns keywords ...)
-    	fullQueryZeigeAlle = "t04_search.searchterm:" + queryThesaurusTerm;
+    	fullQueryZeigeAlle = "t04_search.searchterm:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\"";
     	if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
     		fullQueryZeigeAlle += " t04_search.type:2";
     		fullQueryZeigeAlle += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;

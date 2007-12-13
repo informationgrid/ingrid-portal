@@ -456,4 +456,22 @@ public class UtilsString {
     	
     	return result.toString();
     }
+
+    /**
+     * Escape chars in a string. The chars to escape are in the second passed string.  
+     * @param str the string to escape
+     * @param charsToEscape all chars in this string will be escaped in the string above
+     * @return the escaped string
+     */
+    public static String escapeChars(String str, String charsToEscape) {
+        StringBuffer buf = new StringBuffer(str.length());
+        for (int i = 0; i < str.length(); i++) {
+            String c = str.substring(i, i + 1);
+            if (charsToEscape.indexOf(c) != -1) {
+                buf.append('\\');
+            }
+            buf.append(c);
+        }
+        return buf.toString();
+    }
 }
