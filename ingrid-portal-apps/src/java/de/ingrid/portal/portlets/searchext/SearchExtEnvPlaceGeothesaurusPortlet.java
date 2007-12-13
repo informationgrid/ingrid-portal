@@ -165,23 +165,22 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
 
             // SNS Deskriptor browsen
             IngridHit[] hits = null;
-            String nativeKey = request.getParameter("native_key");
-            if (nativeKey != null) {
+            String topicId = request.getParameter("topic_id");
+            if (topicId != null) {
                 hits = (IngridHit[])request.getPortletSession().getAttribute(TOPICS);
             } else {
-            	nativeKey = request.getParameter("similar_native_key");
-                if (nativeKey != null) {
+                topicId = request.getParameter("similar_topic_id");
+                if (topicId != null) {
                     hits = (IngridHit[])request.getPortletSession().getAttribute(SIMILAR_TOPICS);
                 }
             }
 
             if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
-                	String nkey = UtilsSearch.getDetailValue(hits[i], "nativeKeyOcc");
                     String tid = UtilsSearch.getDetailValue(hits[i], "topicID");
-                    if (nkey != null && nkey.equals(nativeKey)) {
+                    if (tid != null && tid.equals(topicId)) {
                         request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSessionImpl.PORTLET_SCOPE);
-                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(tid);
+                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId);
                         if (similarHits == null) {
                             SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);
                             f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");

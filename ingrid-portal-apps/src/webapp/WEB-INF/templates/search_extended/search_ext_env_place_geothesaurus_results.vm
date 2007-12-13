@@ -14,12 +14,14 @@
 $action.setParameter('action','doBrowse')
 <input type="hidden" name="list_size" value="$list_size"/>
 #foreach($topic in $topics)
+	#set($topicId = $topic.topicID)
+	#set($topicRef = $topic.topic_ref)
 	#set($nativeKey = $topic.topicNativeKey)
-	#if($nativeKey && $nativeKey != "")
-		#set($topicRef = $topic.topic_ref)
-		$action.setParameter("native_key", "$nativeKey")
-		<input type="checkbox" name="chk$velocityCount" value="$nativeKey" />&nbsp;<a href="$action">$topic.title</a>, <span class="smaller">$MESSAGES.getString("sns.topic.ref.${topicRef}")</span><br />
-	#end		
+	#if (!$nativeKey || $nativeKey=="")
+		#set($nativeKey = $topicId)
+	#end
+	$action.setParameter("topic_id", "$topicId")
+	<input type="checkbox" name="chk$velocityCount" value="$nativeKey"#if(!$nativeKey || $nativeKey == "") disabled="disabled"#end />&nbsp;<a href="$action">$topic.title</a>, <span class="smaller">$MESSAGES.getString("sns.topic.ref.${topicRef}")</span><br />
 #end
             </p>
           </div>
