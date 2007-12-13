@@ -1,8 +1,8 @@
 #macro (renderNode $node)
 	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
 	#set ($leftMargin = ($node.level - 1) * 25)
-	#set ($iconLayerWidth = 40)
-	#set ($textLayerWidth = 870 - $leftMargin - $iconLayerWidth)
+	#set ($iconLayerWidth = 30)
+	#set ($textLayerWidth = 568 - $leftMargin - $iconLayerWidth)
     
 	#set ($action = $renderResponse.createActionURL())
 	$action.setParameter('topicID',$node.get("topicID"))
@@ -12,6 +12,8 @@
 	#set($nodeIcon = "ico_tree_folder_close.gif")
 	#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
 
+	## render +/- and icon
+	<span style="float:left; width:${iconLayerWidth}px;">
 	#if($node.isOpen())
 		#set ($renderSubNodes = true)
 		## render "-" and icon WITH ACTION -> node can be closed
@@ -26,32 +28,34 @@
 			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
    		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 		#else
-			## render " " and icon WITHOUT ACTION -> node can't be expanded
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			## render nothing
+			&nbsp;
 		#end
 	#end
-
+	</span>
 
 	## render node text differently depending on the type and if it's currently selected
-	$action.setParameter('action','doSearch')
-    ##	<a href="$action">$node.name (Node Level: $node.level, numChildren: $node.getChildren().size())</a>
-	#if ($node.type == 0) ## TopTerm Type
-	    <strong>$node.name</strong>
-	#elseif ($node.type == 1) ## NodeLabel Type
-	    <strong>$node.name</strong>
-	#elseif ($node.type == 2) ## Descriptor Type
-	  #if ($node.name == $ps.currentQueryTerm)
-	    <strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>
-	  #else
-	    <strong><a href="$action">$node.name</a></strong>
-	  #end
-	#elseif ($node.type == -1) ## SNS Error Type
-		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>
-	#else ## We could display a local error here
-		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>
-	#end
+	<span style="float:left; width:${textLayerWidth}px;">
+    	$action.setParameter('action','doSearch')
+        ##	<a href="$action">$node.name (Node Level: $node.level, numChildren: $node.getChildren().size())</a>
+    	#if ($node.type == 0) ## TopTerm Type
+    	    <strong>$node.name</strong>
+    	#elseif ($node.type == 1) ## NodeLabel Type
+    	    <strong>$node.name</strong>
+    	#elseif ($node.type == 2) ## Descriptor Type
+    	  #if ($node.name == $ps.currentQueryTerm)
+    	    <strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>
+    	  #else
+    	    <strong><a href="$action">$node.name</a></strong>
+    	  #end
+    	#elseif ($node.type == -1) ## SNS Error Type
+    		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>
+    	#else ## We could display a local error here
+    		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>
+    	#end
+	</span>
 	</p>
-
+	## render sub nodes
 	#if ($renderSubNodes)
 		#foreach($childNode in $node.getChildren())
 			#renderNode($childNode)
