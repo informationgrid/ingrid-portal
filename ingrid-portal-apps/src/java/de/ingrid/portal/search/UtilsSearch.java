@@ -511,7 +511,13 @@ public class UtilsSearch {
             }
 
             if (hasPositiveDataType(q, IDataTypes.SNS)) {
-                int rType = q.getInt(Topic.REQUEST_TYPE);
+            	FieldQuery[] fq = getField(q, Topic.REQUEST_TYPE);
+                int rType;
+                if (fq != null && fq.length > 0) {
+                	rType = Integer.parseInt(fq[0].getFieldValue());
+                } else {
+                	rType = q.getInt(Topic.REQUEST_TYPE);
+                }
                 if (rType == Topic.ANNIVERSARY_FROM_TOPIC) {
                     qStr = qStr.concat(" ").concat(Topic.REQUEST_TYPE).concat(":").concat(Integer.toString(rType))
                             .concat("(ANNIVERSARY_FROM_TOPIC)");
