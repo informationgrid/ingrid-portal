@@ -17,8 +17,8 @@ import org.quartz.JobExecutionException;
 
 import com.slb.taxi.webservice.xtm.stubs.FieldsType;
 import com.slb.taxi.webservice.xtm.stubs.SearchType;
-import com.slb.taxi.webservice.xtm.stubs._topicMapFragment;
-import com.slb.taxi.webservice.xtm.stubs.xtm._topic;
+import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
+import com.slb.taxi.webservice.xtm.stubs.xtm.Topic;
 
 import de.ingrid.iplug.sns.SNSClient;
 import de.ingrid.portal.config.PortalConfig;
@@ -90,9 +90,9 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 				snsClient = new SNSClient("ms", "m3d1asyl3", "de", new URL(serviceUrl));
 			}
 			snsClient.setTimeout(timeout);
-			_topicMapFragment mapFragment = snsClient.findTopics(query, "/thesa/descriptor", SearchType.exact,
+			TopicMapFragment mapFragment = snsClient.findTopics(query, "/thesa/descriptor", SearchType.exact,
 					FieldsType.captors, 0, "de");
-			_topic[] topics = null;
+			Topic[] topics = null;
 			if (null != mapFragment) {
 				topics = mapFragment.getTopicMap().getTopic();
 			}
