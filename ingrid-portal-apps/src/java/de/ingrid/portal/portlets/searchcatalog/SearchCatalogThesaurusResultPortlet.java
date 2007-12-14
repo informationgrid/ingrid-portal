@@ -82,6 +82,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
 
         // pure thesaurus query
     	String queryThesaurusTerm = request.getParameter(Settings.PARAM_QUERY_STRING);
+    	ps.put("queryTerm", UtilsString.cutString(queryThesaurusTerm, 26));
 
         // Page Navigation, only set if really navigated results before !
         String currentSelectorPage = request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE);

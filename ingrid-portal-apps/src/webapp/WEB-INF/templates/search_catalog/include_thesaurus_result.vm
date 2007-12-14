@@ -7,6 +7,9 @@
 &nbsp;
 </div>
 #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+
+<div class="resultset_nav" style="text-align:center; margin-top:5px"><strong>$ps.queryTerm</strong></div>
+
 <br />
 
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
