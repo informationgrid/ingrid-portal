@@ -180,7 +180,7 @@ public class DisplayTreeNode extends HashMap {
     /**
      * ONLY USE ON ROOT NODE !!! Id is stored in node !
      */
-    public int getNextId() {
+    synchronized public int getNextId() {
     	String KEY_NEXT_ID = "nextId";
         Integer nextId = (Integer) this.get(KEY_NEXT_ID);
         if (nextId == null) {
