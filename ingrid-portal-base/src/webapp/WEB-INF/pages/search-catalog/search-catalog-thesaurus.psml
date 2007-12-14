@@ -11,11 +11,21 @@
 	      <property layout="TwoColumns" name="row" value="0"/>
 	      <property layout="TwoColumns" name="column" value="0"/>
 	    </fragment>
-          <fragment id="search-catalog-thesaurus-result" type="portlet" name="ingrid-portal-apps::SearchCatalogThesaurusResult">
-            <property layout="TwoColumns" name="row" value="0"/>
-            <property layout="TwoColumns" name="column" value="1"/>
-          </fragment>
-      </fragment>
+        <fragment id="search-catalog-thesaurus-result" type="portlet" name="ingrid-portal-apps::SearchCatalogThesaurusResult">
+          <property layout="TwoColumns" name="row" value="0"/>
+          <property layout="TwoColumns" name="column" value="1"/>
+        </fragment>
+	    <fragment id="search-catalog-thesaurus-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+	      <property layout="TwoColumns" name="row" value="1" />
+	      <property layout="TwoColumns" name="column" value="1" />
+	      <preference name="infoTemplate" readOnly="false">
+	        <value>/WEB-INF/templates/search_catalog/search_cat_thesaurus_info_sns.vm</value>
+	      </preference>
+	      <preference name="titleKey" readOnly="false">
+	        <value>searchCatThesaurus.info.title</value>
+	      </preference>
+	    </fragment>
+	</fragment>
 
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
