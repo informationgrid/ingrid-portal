@@ -11,18 +11,9 @@
 
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
 	#foreach($rs in $rankedResultList.hits)
-		#set ($showLine = true)
         #if($grouping)
 			#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
-			#if ($grouping != 'domain')
-				#set ($showLine = false)
-        	#end
         #end
-        #if($showLine)
-        	#if($velocityCount > 1)
-        		<div class="line"><hr /></div>
-        	#end
-		#end
 		#set ($topHit = true)
 		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
         #if($rs.subhit)

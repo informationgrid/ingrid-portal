@@ -12,11 +12,9 @@
 	## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
     #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
     	#foreach($rs in $rankedResultList.hits)
-           	#if($velocityCount > 1)
-           		<div class="line"><hr /></div>
-           	#end
     		#set ($topHit = true)
     		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+			#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
     	#end
     #else
     		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>

@@ -1,6 +1,5 @@
 #if($rs.get('moreHits') && $groupSubjectKey != "")
-	#if ($grouping != 'domain')
-		<div class="line"><hr /></div>
+	#if ($grouping != 'domain' || $doNotIndent)
 		<div class="resultset_show_partner">
 	#else
 		<div class="resultset_show_partner" style="margin-left:${subHitLeftMargin}px; margin-top:0px; margin-bottom:0px;">
@@ -11,5 +10,6 @@ $action.setParameter('grouping', $grouping)
 $action.setParameter('subject', $groupSubjectKey)
 	    <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</a></span>
 	</div>
-	<br />
 #end
+	<div class="line"><hr /></div>
+	<br />

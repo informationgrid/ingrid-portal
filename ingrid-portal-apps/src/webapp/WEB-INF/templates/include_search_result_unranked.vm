@@ -44,15 +44,14 @@
 ##      #end
 
 ## manually set stuff for group footer. normally done in group header, but we don't have that one
-    	#if($rs.get('moreHits'))
     		#set ($groupSubject = $rs.dataSourceName)
     		#set ($groupSubjectKey = $rs.plugId)
     		#set ($detailAction = "showAllFromIPlug")
+			## save grouping and reset after calling group footer (for subnavigation !)
+			#set ($saveGrouping = $grouping)		
     		#set ($grouping = 'plugid')
     		#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-    	#else
-              <br />
-    	#end
+			#set ($grouping = $saveGrouping)
       #end
 #elseif($unrankedSearchFinished)
 		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
