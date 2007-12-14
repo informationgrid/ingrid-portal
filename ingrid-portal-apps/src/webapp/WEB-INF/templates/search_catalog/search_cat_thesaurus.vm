@@ -26,7 +26,7 @@
 			## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
 			$action.setParameter('action','doOpenNode')
 			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-   		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+			<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 		#else
 			## render nothing
 			&nbsp;
@@ -35,7 +35,7 @@
 	</span>
 
 	## render node text differently depending on the type and if it's currently selected
-	<span style="float:left; width:${textLayerWidth}px;">
+	<span id="$node.id" style="float:left; width:${textLayerWidth}px;">
     	$action.setParameter('action','doSearch')
         ##	<a href="$action">$node.name (Node Level: $node.level, numChildren: $node.getChildren().size())</a>
     	#if ($node.type == 0) ## TopTerm Type

@@ -161,7 +161,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
                 // NOTICE: also Action is encoded as Param + further stuff (so bookmarking or back button works)
                 String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
-            	actionResponse.sendRedirect(redirectPage + urlParams);
+            	actionResponse.sendRedirect(redirectPage + urlParams + "#" + request.getParameter("nodeId"));
             }
 
         } else if (action.equalsIgnoreCase("doCloseNode")) {
@@ -173,7 +173,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
                     // NOTICE: also Action is encoded as Param + further stuff (so bookmarking or back button works)
                     String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
-                	actionResponse.sendRedirect(redirectPage + urlParams);
+                	actionResponse.sendRedirect(redirectPage + urlParams + "#" + request.getParameter("nodeId"));
                 }
             }
 
