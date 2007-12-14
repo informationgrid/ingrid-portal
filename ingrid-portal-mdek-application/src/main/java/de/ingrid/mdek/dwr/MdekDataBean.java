@@ -1,6 +1,7 @@
 package de.ingrid.mdek.dwr;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -27,58 +28,58 @@ public class MdekDataBean {
 	public String generalDescription;
 	public ArrayList<HashMap<String, String>> generalAddressTable;
 
-	/*
 	// Spatial
-	public String spatialRefAdminUnit;
-	public String spatialRefCoordsAdminUnit;
-	public String spatialRefLocation;
-	public String spatialRefCoordsLocation;
-	public String spatialRefAltMin;
-	public String spatialRefAltMax;
+	public ArrayList<HashMap<String, String>> spatialRefAdminUnitTable;
+	public ArrayList<HashMap<String, String>> spatialRefCoordsAdminUnitTable;
+	public ArrayList<HashMap<String, String>> spatialRefLocationTable;
+	public ArrayList<HashMap<String, String>> spatialRefCoordsLocationTable;
+	public Float spatialRefAltMin;
+	public Float spatialRefAltMax;
 	public String spatialRefAltMeasure;
 	public String spatialRefAltVDate;
 	public String spatialRefExplanation;
 
 	// Time
 	public String timeRefType;
-	public String timeRefDate1;
-	public String timeRefDate2;
+	public Date timeRefDate1;
+	public Date timeRefDate2;
 	public String timeRefStatus;
 	public String timeRefPeriodicity;
 	public String timeRefIntervalNum;
 	public String timeRefIntervalUnit;
-	public String timeRef2;
+	public ArrayList<HashMap<String, String>> timeRefTable;
 	public String timeRefExplanation;
 
 	// ExtraInfo
 	public String extraInfoLangMetaData;
 	public String extraInfoLangData;
 	public String extraInfoPublishArea;
-	public String extraInfoXMLExport;
-	public String extraInfoLegalBasics;
+	public ArrayList<String> extraInfoXMLExportTable;
+	public ArrayList<String> extraInfoLegalBasicsTable;
 	public String extraInfoPurpose;
 	public String extraInfoUse;
 	
+
 	// Availability
-	public String availabilityDataFormat;
-	public String availabilityMediaOptions;
+	public ArrayList<HashMap<String, String>> availabilityDataFormatTable;
+	public ArrayList<HashMap<String, String>> availabilityMediaOptionsTable;
 	public String availabilityOrderInfo;
 	public String availabilityNoteUse;
 	public String availabilityCosts;
 	
 	// Thesaurus
-	public String thesaurusTerms;
-	public String thesaurusTopics;
-	public String thesaurusFreeTermsList;
-	public String thesaurusEnvExtRes;
-	public String thesaurusEnvTopics;
-	public String thesaurusEnvCats;
+	public ArrayList<HashMap<String, String>> thesaurusTermsTable;
+	public ArrayList<String> thesaurusTopicsList;
+	public ArrayList<String> thesaurusFreeTermsList;
+	public Boolean thesaurusEnvExtRes;
+	public ArrayList<String> thesaurusEnvTopicsList;
+	public ArrayList<String> thesaurusEnvCatsList;
 
 	// Links
-	public String linksTo;
-	public String linksFrom;
+	public ArrayList<HashMap<String, String>> linksToTable;
+	public ArrayList<HashMap<String, String>> linksFromTable;
 
-
+/*
 	// TODO Subclass this?
 	// Object class 1 (Geoinformation/Karte)
 	public String ref1DataSet;
@@ -135,6 +136,103 @@ public class MdekDataBean {
 	
 	
 	
+	public ArrayList<HashMap<String, String>> getLinksToTable() {
+		return linksToTable;
+	}
+
+
+
+	public void setLinksToTable(ArrayList<HashMap<String, String>> linksToTable) {
+		this.linksToTable = linksToTable;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getLinksFromTable() {
+		return linksFromTable;
+	}
+
+
+
+	public void setLinksFromTable(ArrayList<HashMap<String, String>> linksFromTable) {
+		this.linksFromTable = linksFromTable;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getThesaurusTermsTable() {
+		return thesaurusTermsTable;
+	}
+
+
+
+	public void setThesaurusTermsTable(
+			ArrayList<HashMap<String, String>> thesaurusTermsTable) {
+		this.thesaurusTermsTable = thesaurusTermsTable;
+	}
+
+
+
+	public ArrayList<String> getThesaurusTopicsList() {
+		return thesaurusTopicsList;
+	}
+
+
+
+	public void setThesaurusTopicsList(ArrayList<String> thesaurusTopicsList) {
+		this.thesaurusTopicsList = thesaurusTopicsList;
+	}
+
+
+
+	public ArrayList<String> getThesaurusFreeTermsList() {
+		return thesaurusFreeTermsList;
+	}
+
+
+
+	public void setThesaurusFreeTermsList(ArrayList<String> thesaurusFreeTermsList) {
+		this.thesaurusFreeTermsList = thesaurusFreeTermsList;
+	}
+
+
+
+	public Boolean getThesaurusEnvExtRes() {
+		return thesaurusEnvExtRes;
+	}
+
+
+
+	public void setThesaurusEnvExtRes(Boolean thesaurusEnvExtRes) {
+		this.thesaurusEnvExtRes = thesaurusEnvExtRes;
+	}
+
+
+
+	public ArrayList<String> getThesaurusEnvTopicsList() {
+		return thesaurusEnvTopicsList;
+	}
+
+
+
+	public void setThesaurusEnvTopicsList(ArrayList<String> thesaurusEnvTopicsList) {
+		this.thesaurusEnvTopicsList = thesaurusEnvTopicsList;
+	}
+
+
+
+	public ArrayList<String> getThesaurusEnvCatsList() {
+		return thesaurusEnvCatsList;
+	}
+
+
+
+	public void setThesaurusEnvCatsList(ArrayList<String> thesaurusEnvCatsList) {
+		this.thesaurusEnvCatsList = thesaurusEnvCatsList;
+	}
+
+
+
 	public MdekDataBean(){}
 
 	
@@ -233,5 +331,377 @@ public class MdekDataBean {
 
 	public void setNodeAppType(String nodeAppType) {
 		this.nodeAppType = nodeAppType;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getSpatialRefAdminUnitTable() {
+		return spatialRefAdminUnitTable;
+	}
+
+
+
+	public void setSpatialRefAdminUnitTable(
+			ArrayList<HashMap<String, String>> spatialRefAdminUnitTable) {
+		this.spatialRefAdminUnitTable = spatialRefAdminUnitTable;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getSpatialRefCoordsAdminUnitTable() {
+		return spatialRefCoordsAdminUnitTable;
+	}
+
+
+
+	public void setSpatialRefCoordsAdminUnitTable(
+			ArrayList<HashMap<String, String>> spatialRefCoordsAdminUnitTable) {
+		this.spatialRefCoordsAdminUnitTable = spatialRefCoordsAdminUnitTable;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getSpatialRefLocationTable() {
+		return spatialRefLocationTable;
+	}
+
+
+
+	public void setSpatialRefLocationTable(
+			ArrayList<HashMap<String, String>> spatialRefLocationTable) {
+		this.spatialRefLocationTable = spatialRefLocationTable;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getSpatialRefCoordsLocationTable() {
+		return spatialRefCoordsLocationTable;
+	}
+
+
+
+	public void setSpatialRefCoordsLocationTable(
+			ArrayList<HashMap<String, String>> spatialRefCoordsLocationTable) {
+		this.spatialRefCoordsLocationTable = spatialRefCoordsLocationTable;
+	}
+
+
+
+	public Float getSpatialRefAltMin() {
+		return spatialRefAltMin;
+	}
+
+
+
+	public void setSpatialRefAltMin(Float spatialRefAltMin) {
+		this.spatialRefAltMin = spatialRefAltMin;
+	}
+
+
+
+	public Float getSpatialRefAltMax() {
+		return spatialRefAltMax;
+	}
+
+
+
+	public void setSpatialRefAltMax(Float spatialRefAltMax) {
+		this.spatialRefAltMax = spatialRefAltMax;
+	}
+
+
+
+	public String getSpatialRefAltMeasure() {
+		return spatialRefAltMeasure;
+	}
+
+
+
+	public void setSpatialRefAltMeasure(String spatialRefAltMeasure) {
+		this.spatialRefAltMeasure = spatialRefAltMeasure;
+	}
+
+
+
+	public String getSpatialRefAltVDate() {
+		return spatialRefAltVDate;
+	}
+
+
+
+	public void setSpatialRefAltVDate(String spatialRefAltVDate) {
+		this.spatialRefAltVDate = spatialRefAltVDate;
+	}
+
+
+
+	public String getSpatialRefExplanation() {
+		return spatialRefExplanation;
+	}
+
+
+
+	public void setSpatialRefExplanation(String spatialRefExplanation) {
+		this.spatialRefExplanation = spatialRefExplanation;
+	}
+
+
+
+	public String getTimeRefType() {
+		return timeRefType;
+	}
+
+
+
+	public void setTimeRefType(String timeRefType) {
+		this.timeRefType = timeRefType;
+	}
+
+
+
+	public Date getTimeRefDate1() {
+		return timeRefDate1;
+	}
+
+
+
+	public void setTimeRefDate1(Date timeRefDate1) {
+		this.timeRefDate1 = timeRefDate1;
+	}
+
+
+
+	public Date getTimeRefDate2() {
+		return timeRefDate2;
+	}
+
+
+
+	public void setTimeRefDate2(Date timeRefDate2) {
+		this.timeRefDate2 = timeRefDate2;
+	}
+
+
+
+	public String getTimeRefStatus() {
+		return timeRefStatus;
+	}
+
+
+
+	public void setTimeRefStatus(String timeRefStatus) {
+		this.timeRefStatus = timeRefStatus;
+	}
+
+
+
+	public String getTimeRefPeriodicity() {
+		return timeRefPeriodicity;
+	}
+
+
+
+	public void setTimeRefPeriodicity(String timeRefPeriodicity) {
+		this.timeRefPeriodicity = timeRefPeriodicity;
+	}
+
+
+
+	public String getTimeRefIntervalNum() {
+		return timeRefIntervalNum;
+	}
+
+
+
+	public void setTimeRefIntervalNum(String timeRefIntervalNum) {
+		this.timeRefIntervalNum = timeRefIntervalNum;
+	}
+
+
+
+	public String getTimeRefIntervalUnit() {
+		return timeRefIntervalUnit;
+	}
+
+
+
+	public void setTimeRefIntervalUnit(String timeRefIntervalUnit) {
+		this.timeRefIntervalUnit = timeRefIntervalUnit;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getTimeRefTable() {
+		return timeRefTable;
+	}
+
+
+
+	public void setTimeRefTable(ArrayList<HashMap<String, String>> timeRefTable) {
+		this.timeRefTable = timeRefTable;
+	}
+
+
+
+	public String getTimeRefExplanation() {
+		return timeRefExplanation;
+	}
+
+
+
+	public void setTimeRefExplanation(String timeRefExplanation) {
+		this.timeRefExplanation = timeRefExplanation;
+	}
+
+
+
+	public String getExtraInfoLangMetaData() {
+		return extraInfoLangMetaData;
+	}
+
+
+
+	public void setExtraInfoLangMetaData(String extraInfoLangMetaData) {
+		this.extraInfoLangMetaData = extraInfoLangMetaData;
+	}
+
+
+
+	public String getExtraInfoLangData() {
+		return extraInfoLangData;
+	}
+
+
+
+	public void setExtraInfoLangData(String extraInfoLangData) {
+		this.extraInfoLangData = extraInfoLangData;
+	}
+
+
+
+	public String getExtraInfoPublishArea() {
+		return extraInfoPublishArea;
+	}
+
+
+
+	public void setExtraInfoPublishArea(String extraInfoPublishArea) {
+		this.extraInfoPublishArea = extraInfoPublishArea;
+	}
+
+
+
+	public ArrayList<String> getExtraInfoXMLExportTable() {
+		return extraInfoXMLExportTable;
+	}
+
+
+
+	public void setExtraInfoXMLExport(ArrayList<String> extraInfoXMLExportTable) {
+		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
+	}
+
+
+
+	public ArrayList<String> getExtraInfoLegalBasicsTable() {
+		return extraInfoLegalBasicsTable;
+	}
+
+
+
+	public void setExtraInfoLegalBasicsTable(ArrayList<String> extraInfoLegalBasicsTable) {
+		this.extraInfoLegalBasicsTable = extraInfoLegalBasicsTable;
+	}
+
+
+
+	public String getExtraInfoPurpose() {
+		return extraInfoPurpose;
+	}
+
+
+
+	public void setExtraInfoPurpose(String extraInfoPurpose) {
+		this.extraInfoPurpose = extraInfoPurpose;
+	}
+
+
+
+	public String getExtraInfoUse() {
+		return extraInfoUse;
+	}
+
+
+
+	public void setExtraInfoUse(String extraInfoUse) {
+		this.extraInfoUse = extraInfoUse;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getAvailabilityDataFormatTable() {
+		return availabilityDataFormatTable;
+	}
+
+
+
+	public void setAvailabilityDataFormatTable(
+			ArrayList<HashMap<String, String>> availabilityDataFormatTable) {
+		this.availabilityDataFormatTable = availabilityDataFormatTable;
+	}
+
+
+
+	public ArrayList<HashMap<String, String>> getAvailabilityMediaOptionsTable() {
+		return availabilityMediaOptionsTable;
+	}
+
+
+
+	public void setAvailabilityMediaOptionsTable(
+			ArrayList<HashMap<String, String>> availabilityMediaOptionsTable) {
+		this.availabilityMediaOptionsTable = availabilityMediaOptionsTable;
+	}
+
+
+
+	public String getAvailabilityOrderInfo() {
+		return availabilityOrderInfo;
+	}
+
+
+
+	public void setAvailabilityOrderInfo(String availabilityOrderInfo) {
+		this.availabilityOrderInfo = availabilityOrderInfo;
+	}
+
+
+
+	public String getAvailabilityNoteUse() {
+		return availabilityNoteUse;
+	}
+
+
+
+	public void setAvailabilityNoteUse(String availabilityNoteUse) {
+		this.availabilityNoteUse = availabilityNoteUse;
+	}
+
+
+
+	public String getAvailabilityCosts() {
+		return availabilityCosts;
+	}
+
+
+
+	public void setAvailabilityCosts(String availabilityCosts) {
+		this.availabilityCosts = availabilityCosts;
+	}
+
+
+
+	public void setExtraInfoXMLExportTable(ArrayList<String> extraInfoXMLExportTable) {
+		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
 	};
 }

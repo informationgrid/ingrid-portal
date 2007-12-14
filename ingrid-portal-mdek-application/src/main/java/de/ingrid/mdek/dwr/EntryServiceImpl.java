@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.dwr.api.EntryService;
 
@@ -17,6 +18,7 @@ import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.IMdekCaller;
 import de.ingrid.mdek.MdekCaller;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.SimpleMdekMapper;
 import de.ingrid.utils.IngridDocument;
 
 
@@ -26,6 +28,8 @@ import de.ingrid.utils.IngridDocument;
  */
 public class EntryServiceImpl implements EntryService {
 
+	private final static Logger log = Logger.getLogger(EntryServiceImpl.class);	
+	
 	private DataConnectionInterface dataConnection;
 
 	// OBJECT_ROOT specifies the uuid for the object root node. 
@@ -90,7 +94,7 @@ public class EntryServiceImpl implements EntryService {
 		// TODO check for errors and throw an exception?
 		if (data == null) {
 			data = new MdekDataBean();
-
+		
 			data.setId(nodeUuid);
 			data.setNodeDocType("Class1");
 			data.setNodeAppType(nodeType);
@@ -111,6 +115,7 @@ public class EntryServiceImpl implements EntryService {
 			addressTable.add(entry2);
 
 			data.setGeneralAddressTable(addressTable);
+			return data;
 		}
 
 		return data;
@@ -178,11 +183,7 @@ public class EntryServiceImpl implements EntryService {
 	 *      java.lang.Boolean)
 	 */
 	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
-		// TODO Auto-generated method stub
-		System.out.println("ID: "+ data.getId());
-		System.out.println("generalAddressTable: "+ data.getGeneralAddressTable());
-
-		
+		log.debug("Saving node with ID: "+data.getId());
 		try
 		{
 		  dataConnection.saveNode(data);

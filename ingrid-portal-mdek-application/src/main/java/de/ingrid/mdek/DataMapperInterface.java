@@ -40,7 +40,11 @@ public interface DataMapperInterface {
 	// General
 	public final static String MDEK_GENERAL_SHORT_DESC = "generalShortDesc";
 	public final static String MDEK_GENERAL_DESC = "generalDesc";
-	public final static String MDEK_GENERAL_ADDRESS = "generalAddress";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE = "generalAddress";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_ID = "Id";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_INFO = "information";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_CLASS = "icon";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_NAME = "name";
 
 	// Object class 1 (Geoinformation/Karte)
 	public final static String MDEK_OBJ_CLASS1_DATASET = "ref1DataSet";
@@ -113,7 +117,7 @@ public interface DataMapperInterface {
 	public final static String MDEK_TIME_PERIOD = "timeRefPeriodicity";
 	public final static String MDEK_TIME_INTERVAL = "timeRefIntervalNum";
 	public final static String MDEK_TIME_UNIT = "timeRefIntervalUnit";
-	public final static String MDEK_TIME_REF = "timeRef2";
+	public final static String MDEK_TIME_REF = "timeRefTable";
 	public final static String MDEK_TIME_DESCR = "timeRefExplanation";
 
 	// ExtraInfo

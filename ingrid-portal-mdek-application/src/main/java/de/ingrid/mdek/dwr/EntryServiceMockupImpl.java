@@ -81,22 +81,6 @@ public class EntryServiceMockupImpl implements EntryService {
 		data.setId(nodeUuid);
 		data.setNodeAppType(nodeType);
 		return data;
-/*
-		for (Map.Entry<String, Object> element : (Set<Map.Entry<String, Object>>) node.entrySet()) {
-			String key = element.getKey();
-			Object val = element.getValue();
-
-//			System.out.println("Value: "+element.getValue());
-//			System.out.println("Key: "+element.getKey());				
-			
-			if (val instanceof String)
-			{
-				map.put(key, (String) val);
-			}
-		}
-
-		return map;
-*/
 	}
 	
 	/*

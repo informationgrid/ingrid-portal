@@ -126,11 +126,21 @@ udkDataProxy._setObjectData = function(nodeData)
   // --- General ---
   dojo.widget.byId('generalShortDesc').setValue(nodeData.generalShortDescription);
   dojo.widget.byId('generalDesc').setValue(nodeData.generalDescription);
-
   dojo.widget.byId('generalAddress').store.setData(nodeData.generalAddressTable);
 
-/*
   // -- Spatial --
+//  dojo.widget.byId('spatialRefAdminUnit').store.setData(nodeData.spatialRefAdminUnitTable);
+//  dojo.widget.byId('spatialRefCoordsAdminUnit').store.setData(nodeData.spatialRefCoordsAdminUnitTable);
+//  dojo.widget.byId('spatialRefLocation').store.setData(nodeData.spatialRefLocationTable);
+//  dojo.widget.byId('spatialRefCoordsLocation').store.setData(nodeData.spatialRefCoordsLocationTable);
+
+  dojo.widget.byId('spatialRefAltMin').setValue(nodeData.spatialRefAltMin);
+  dojo.widget.byId('spatialRefAltMax').setValue(nodeData.spatialRefAltMax);
+  dojo.widget.byId('spatialRefAltMeasure').setValue(nodeData.spatialRefAltMeasure);
+  dojo.widget.byId('spatialRefAltVDate').setValue(nodeData.spatialRefAltVDate);
+  dojo.widget.byId('spatialRefExplanation').setValue(nodeData.spatialRefExplanation);
+
+/*
   //  var tableId = dojo.widget.byId('spatialRefAdminUnit').valueField;
   dojo.widget.byId('spatialRefAdminUnit').store.clearData();
   dojo.widget.byId('spatialRefAdminUnit').store.addData({Id: '1', information:'info one', latitude1:'3.14', longitude1:'0.1123', latitude2:'1.234', longitude2:'2.345'});
@@ -299,7 +309,7 @@ udkDataProxy._getObjectData = function(nodeData)
   // ------------------ Header ------------------
   var formWidget = dojo.widget.byId('headerFormObject');
 
-  dojo.debug("HeaderObjectForm values: " + dojo.json.serialize(formWidget.getValues()));
+//  dojo.debug("HeaderObjectForm values: " + dojo.json.serialize(formWidget.getValues()));
 
   nodeData.objectName = dojo.widget.byId('objectName').getValue();
   nodeData.nodeDocType = dojo.widget.byId('objectClass').getValue();
@@ -307,11 +317,11 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // ------------------ Object Content ------------------
   formWidget = dojo.widget.byId('contentFormObject');
-  dojo.debug("ContentFormObject values: " + dojo.json.serialize(formWidget.getValues()));
+//  dojo.debug("ContentFormObject values: " + dojo.json.serialize(formWidget.getValues()));
 
   // --- General ---
-  nodeData.generalShortDesc = dojo.widget.byId('generalShortDesc').getValue();
-  nodeData.generalDesc = dojo.widget.byId('generalDesc').getValue();
+  nodeData.generalShortDescription = dojo.widget.byId('generalShortDesc').getValue();
+  nodeData.generalDescription = dojo.widget.byId('generalDesc').getValue();
 
   nodeData.generalAddressTable = udkDataProxy._getTableData('generalAddress');
 
@@ -404,16 +414,4 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 udkDataProxy._getTableData = function(tableName)
 {
   return dojo.widget.byId(tableName).store.getData();
-  
-/*
-  var data = dojo.widget.byId(tableName).store.get();
-
-  var arr = [];
-  for(var i = 0; i < data.length; i++){
-    var tempEntry = data[i].src;
-    tempEntry.id = data[i].key;
-    arr.push(tempEntry);
-  }
-  return arr;	//	array
-*/
 }

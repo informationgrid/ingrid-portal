@@ -261,8 +261,14 @@ function hideSplash(){
 
 	              <div class="inputContainer">
 	                <span class="label required"><label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
-	                <span class="input"><input type="text" id="generalDesc" name="generalDesc" class="w668 h055" dojoType="ingrid:ValidationTextBox" /></span>
+               		<span class="input"><input type="text" id="generalDesc" name="generalDesc" class="w668 h055" dojoType="ingrid:ValidationTextBox" /></span> 
 	          	  </div>
+<!-- The TextBox doesn't support multiline content. Create a new dojoType for this
+				  <div class="inputContainer">
+	                <span class="label required"><label for="generalDescTextarea" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
+				    <span class="input"><textarea wrap=virtual id="generalDescTextarea" class="w668 h055" dojoType="ingrid:ValidationTextarea">abc</textarea></span>
+				  </div>
+ -->				  
 
 	              <div class="inputContainer noSpaceBelow h108">
 	                <span class="label required"><label for="generalAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
@@ -273,7 +279,7 @@ function hideSplash(){
 	            		      <tr>
 	                  			<th field="information" dataType="String" width="120">Auskunft</th>
 	                  			<th field="icon" dataType="String" width="35"></th>
-	                  			<th field="names" dataType="String" width="520">Namen</th>
+	                  			<th field="name" dataType="String" width="520">Namen</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -1239,7 +1245,8 @@ function hideSplash(){
 	          
 	                <div class="half">
 	                  <span class="label"><label for="spatialRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
-	                  <span class="input"><textarea id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" /></textarea></span>
+<!--                  <span class="input"><textarea id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" /></textarea></span>  -->
+               		  <span class="input"><input type="text" id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" dojoType="ingrid:ValidationTextBox" /></span> 
 	                </div>
 	                <div class="fill"></div>
 	              </div>
@@ -1302,13 +1309,13 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="timeRef2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
+	                  <span class="label"><label for="timeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
 	                  <div class="tableContainer rows5">
-	                    <div class="cellEditors" id="timeRef2Editors">
+	                    <div class="cellEditors" id="timeRefTableEditors">
 	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="timeRefDateDatePicker"></div>
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:155px;" widgetId="timeRefTypeCombobox"></div>
 	                    </div>
-	              	    <table id="timeRef2" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="date" dataType="String" width="120" editor="timeRefDateDatePicker">Datum</th>

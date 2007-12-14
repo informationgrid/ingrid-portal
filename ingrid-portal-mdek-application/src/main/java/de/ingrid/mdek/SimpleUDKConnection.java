@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
 public class SimpleUDKConnection implements DataConnectionInterface {
 
+	private final static Logger log = Logger.getLogger(SimpleUDKConnection.class);
+	
 	private IMdekCaller mdekCaller; 
 	private DataMapperInterface dataMapper;
 
@@ -25,6 +29,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	protected void finalize() {
 		MdekCaller.shutdown();
 		mdekCaller = null;
+		dataMapper = null;
 	}
 
 	public DataMapperInterface getDataMapper() {
@@ -63,8 +68,11 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public void saveNode(MdekDataBean data) {
-		// TODO Add the right mdekCaller Method here
-		// mdekCaller.storeNode(dataMapper.convertFromMdekRepresentation(data));
+		IngridDocument obj = wrapObject((IngridDocument) dataMapper.convertFromMdekRepresentation(data));
+		log.debug("Sending the following object:");
+		log.debug(obj);
+
+		mdekCaller.storeObjDetails(obj);
 	}
 
 	
@@ -83,7 +91,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 				nodeList.add(dataMapper.getSimpleMdekRepresentation(objEntity));
 			}
 		} else {
-			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
+			log.error(mdekCaller.getErrorMsgFromResponse(response));			
 		}
 		return nodeList;
 	}
@@ -101,7 +109,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 				nodeList.add(dataMapper.getSimpleMdekRepresentation(adrEntity));
 			}
 		} else {
-			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
+			log.error(mdekCaller.getErrorMsgFromResponse(response));			
 		}
 		return nodeList;
 	}	
@@ -113,17 +121,26 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			if (objs == null) {
-				System.out.println("Error in SimpleUDKConnection.extractSingleObjectFromResponse. No object entities returned.");				
+				log.error("Error in SimpleUDKConnection.extractSingleObjectFromResponse. No object entities returned.");				
 			}
 			else if (objs.size() != 1) {
-				System.out.println("Error in SimpleUDKConnection.extractSingleObjectFromResponse. Number of returned objects != 1.");				
+				log.error("Error in SimpleUDKConnection.extractSingleObjectFromResponse. Number of returned objects != 1.");				
 			}
 			else {
 				return dataMapper.getDetailedMdekRepresentation(objs.get(0));
 			}
 		} else {
-			System.out.println(mdekCaller.getErrorMsgFromResponse(response));			
+			log.error(mdekCaller.getErrorMsgFromResponse(response));			
 		}
 		return null;
+	}
+
+	private IngridDocument wrapObject(IngridDocument obj) {
+		ArrayList<IngridDocument> list = new ArrayList();
+		IngridDocument doc = new IngridDocument();
+
+		list.add(obj);
+		doc.put(MdekKeys.OBJ_ENTITIES, list);
+		return doc;
 	}
 }
