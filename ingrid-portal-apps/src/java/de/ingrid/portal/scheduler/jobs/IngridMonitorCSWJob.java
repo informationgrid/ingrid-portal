@@ -93,16 +93,16 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 
 			// Send and receive SOAP-Message
 			String cswQuery = qBuilder.createCSWQuery(q, 0, 1);
-			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 11);
+			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 12);
 
 			Message mResponse = qSender.sendSOAPMessage(mRequest, timeout);
 			// Analyse Result and build IngridHits
 			org.w3c.dom.Document bodyDOM = getBodyAsDOM(mResponse);
-
+			
 			// get number of hits matched
 			String numberOfMatchedHitsStr = null;
 			int numberOfMatchedHits = 0;
-			NodeList nl = bodyDOM.getElementsByTagName("SearchResults");
+			NodeList nl = bodyDOM.getElementsByTagNameNS("*", "SearchResults");
 			if (nl != null && nl.getLength() >= 1) {
 				Element e = (Element) nl.item(0);
 				numberOfMatchedHitsStr = e.getAttribute("numberOfRecordsMatched");
@@ -197,6 +197,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 
 		// Create DOM document out of the AXIS message
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		return builder.parse(new InputSource(new StringReader(xml)));
 	}
