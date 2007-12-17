@@ -8,8 +8,9 @@
 #parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
               <h3>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.browse.keyword')</h3>
               <p>
-#set($nativeKey = $current_topic.getTopicNativeKey())
-#if (!$nativeKey || $nativeKey=="")
+#if ($current_topic.getTopicNativeKey() && $current_topic.getTopicNativeKey() != "")
+	#set($nativeKey = $current_topic.getTopicNativeKey())
+#else
 	#set($nativeKey = $current_topic.topicID)
 #end
 #set($topicRef = $current_topic.topic_ref)
@@ -25,8 +26,9 @@ $action.setParameter('action','doBrowse')
 #foreach($topic in $similar_topics)
 	#set($topicId = $topic.topicID)
 	#set($topicRef = $topic.topic_ref)
-	#set($nativeKey = $topic.getTopicNativeKey())
-	#if (!$nativeKey || $nativeKey=="")
+	#if ($topic.getTopicNativeKey() && $topic.getTopicNativeKey() != "")
+		#set($nativeKey = $topic.getTopicNativeKey())
+	#else
 		#set($nativeKey = $topicId)
 	#end
 	$action.setParameter("similar_topic_id", "$topicId")

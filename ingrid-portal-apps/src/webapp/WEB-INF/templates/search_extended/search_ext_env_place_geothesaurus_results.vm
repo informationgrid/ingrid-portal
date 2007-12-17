@@ -16,8 +16,9 @@ $action.setParameter('action','doBrowse')
 #foreach($topic in $topics)
 	#set($topicId = $topic.topicID)
 	#set($topicRef = $topic.topic_ref)
-	#set($nativeKey = $topic.topicNativeKey)
-	#if (!$nativeKey || $nativeKey=="")
+	#if ($topic.topicNativeKey && $topic.topicNativeKey != "")
+		#set($nativeKey = $topic.topicNativeKey)
+	#else
 		#set($nativeKey = $topicId)
 	#end
 	$action.setParameter("topic_id", "$topicId")
