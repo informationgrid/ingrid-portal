@@ -6,6 +6,8 @@ package de.ingrid.portal.search;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -256,14 +258,27 @@ public class QueryResultPostProcessor {
                 }
             }
 
-            // check our selected "data source" and read
-            // according data
-            if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
+            // determine type of hit dependent from plug description !!!
+            PlugDescription plugDescr = (PlugDescription) hit.get("plugDescr");
+            boolean isObject = true;
+            if (plugDescr != null) {
+            	List typesPlug = Arrays.asList(plugDescr.getDataTypes());
+            	for (int i=0; i < Settings.QVALUES_DATATYPES_ADDRESS.length; i++) {
+                	if (typesPlug.contains(Settings.QVALUES_DATATYPES_ADDRESS[i])) {
+                		isObject = false;
+                		break;
+                	}
+            	}
+            }
+            if (isObject) {
+                hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(false));
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
                 if (tmpString.length() > 0) {
                     hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                 }
-            } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
+            } else {
+                hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(true));
+
                 String addrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
                 hit.put(Settings.RESULT_KEY_UDK_CLASS, addrClass);
                 if (addrClass.equals("2") || addrClass.equals("3")) {

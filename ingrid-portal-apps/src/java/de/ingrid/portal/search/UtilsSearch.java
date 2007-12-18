@@ -705,29 +705,111 @@ public class UtilsSearch {
     }
 
     /**
-     * Adapt basic datatypes in query dependent from selected datatype in
-     * UserInterface (the ones above the Simple Search Input).
+     * Process basic datatype in query dependent from selected datatype in
+     * UserInterface (the ones above the Simple Search Input) and entered datatypes.
+     * May add basic datatype to query.
+     * NOTICE: see http://jira.media-style.com/browse/INGRID-1076
      * 
      * @param query
      * @param selectedDS
      */
-    public static void processBasicDataTypes(IngridQuery query, String selectedDS) {
+    public static void processBasicDataType(IngridQuery query, String selectedDS) {
+        // !!! NOTICE: see http://jira.media-style.com/browse/INGRID-1076
 
-        // remove not valid data sources from query
-        // removeBasicDataTypes(query);
-        if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            query
-                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                            Settings.QVALUE_DATATYPE_AREA_ENVINFO));
-        } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            query
-                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                            Settings.QVALUE_DATATYPE_AREA_ADDRESS));
-        } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-            query
-                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                            Settings.QVALUE_DATATYPE_AREA_RESEARCH));
+    	String basicDatatypeForQuery = null;
+    	
+    	// DO NOT ALWAYS ADD BASIC DATA TYPE !!! datatypes are connected with OR !!!
+    	// see http://jira.media-style.com/browse/INGRID-1076
+        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
+            if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
+            	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_ENVINFO;
+
+            } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
+            	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_ADDRESS;
+
+            } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
+            	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_RESEARCH;
+            }        	
         }
+
+        if (basicDatatypeForQuery != null) {
+            query.addField(new FieldQuery(true, false,
+                	Settings.QFIELD_DATATYPE, basicDatatypeForQuery));        	
+        }
+    }
+
+    /**
+     * Compares current datasource in GUI (selected search area above query input) with the entered
+     * datatypes. Returns the final PORTAL datasource according to input and selection. 
+     * @param currentPortalDS selection in GUI ("envinfo", "address", "research")
+     * @param q the entered IngridQuery
+     * @return the final datasource
+     */
+    public static String determineFinalPortalDatasource(String currentPortalDS, IngridQuery q) {
+        String qDS = UtilsSearch.getBasicDataTypeFromQuery(q);
+        if (qDS != null) {
+        	return mapQueryBasicDatasourceToPortalDatasource(qDS);
+        }
+        
+        if (isAddressQuery(q)) {
+        	return mapQueryBasicDatasourceToPortalDatasource(Settings.QVALUE_DATATYPE_AREA_ADDRESS);
+        }
+
+        return currentPortalDS;
+    	
+    }
+
+    /**
+     * Tries to extract the basic datatype (="search area" above query input) dependent from entered datatypes in query !
+     * @param q
+     * @return null if no datatype in query
+     */
+    private static String getBasicDataTypeFromQuery(IngridQuery q) {
+    	String ret = null;
+    	if (q != null) {
+        	List basicDataTypes = Arrays.asList(Settings.QVALUES_DATATYPE_AREAS_BASIC);
+            FieldQuery[] dtFields = q.getDataTypes();
+            for (int i = 0; i < dtFields.length; i++) {
+                String dt = dtFields[i].getFieldValue();
+                if (basicDataTypes.contains(dt)) {
+                    // return the first basic type discovered !
+                	ret = dt;
+                	break;
+                }
+            }    		
+    	}
+
+    	return ret;
+    }
+
+    /**
+     * Returns true if the query contains explicit datatypes for addresses else false
+     */
+    private static boolean isAddressQuery(IngridQuery q) {
+    	if (q != null) {
+        	List addressDataTypes = Arrays.asList(Settings.QVALUES_DATATYPES_ADDRESS);
+            FieldQuery[] dtFields = q.getDataTypes();
+            for (int i = 0; i < dtFields.length; i++) {
+                String dt = dtFields[i].getFieldValue();
+                if (addressDataTypes.contains(dt)) {
+                	return true;
+                }
+            }    		
+    	}
+
+    	return false;
+    }
+
+    private static String mapQueryBasicDatasourceToPortalDatasource(String qDatatype) {
+        if (qDatatype.equals(Settings.QVALUE_DATATYPE_AREA_ENVINFO))
+        	return Settings.PARAMV_DATASOURCE_ENVINFO;
+        if (qDatatype.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS))
+        	return Settings.PARAMV_DATASOURCE_ADDRESS;
+        if (qDatatype.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH))
+        	return Settings.PARAMV_DATASOURCE_RESEARCH;
+
+        // default
+        return Settings.PARAMV_DATASOURCE_ENVINFO;
     }
 
     /**

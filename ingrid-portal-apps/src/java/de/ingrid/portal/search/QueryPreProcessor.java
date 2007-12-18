@@ -64,11 +64,12 @@ public class QueryPreProcessor {
         // only for ds = PARAMV_DATASOURCE_ENVINFO AND if quer has no custom datatype AND query has no custom metaclass
         processQuerySources(request, ds, query);
 
-        // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
+        // add basic data type dependent from query and GUI ! may manipulate the query.
         // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
-            UtilsSearch.processBasicDataTypes(query, ds);
-        }
+        UtilsSearch.processBasicDataType(query, ds);
+
+        // change datasource dependent from query input
+        ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
 
         // start hit
         int startHit = 0;
@@ -79,25 +80,21 @@ public class QueryPreProcessor {
 
         int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
 
-        String[] requestedMetadata = null;
-        if (ds.equals(Settings.PARAMV_DATASOURCE_ENVINFO) || ds.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-            requestedMetadata = new String[4];
-            requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
-            requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-            requestedMetadata[2] = Settings.RESULT_KEY_PARTNER;
-            requestedMetadata[3] = Settings.RESULT_KEY_PROVIDER;
-        } else if (ds.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-            requestedMetadata = new String[9];
-            requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
-            requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
-            requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
-            requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
-            requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
-            requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
-            requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-            requestedMetadata[7] = Settings.RESULT_KEY_PARTNER;
-            requestedMetadata[8] = Settings.RESULT_KEY_PROVIDER;
-        }
+        // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are enterd in query !
+        String[] requestedMetadata = new String[10];
+        // udk object metadata
+        requestedMetadata[0] = Settings.HIT_KEY_UDK_CLASS;
+        // udk address metadata
+        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
+        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
+        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
+        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
+        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
+        // both
+        requestedMetadata[7] = Settings.HIT_KEY_WMS_URL;
+        requestedMetadata[8] = Settings.RESULT_KEY_PARTNER;
+        requestedMetadata[9] = Settings.RESULT_KEY_PROVIDER;
 
         // set properties according to the session preferences
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
@@ -207,8 +204,9 @@ public class QueryPreProcessor {
         UtilsSearch.processRestrictingProvider(query, (String)sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
 
         //      TODO If no query should be submitted, return null
+        // now with PlugDescription for determining type of Hit (Address, Object)
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, startHit, PortalConfig
-                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, false, requestedMetadata);
+        		.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
     }
 
     /**
@@ -242,10 +240,12 @@ public class QueryPreProcessor {
         // only for ds = PARAMV_DATASOURCE_ENVINFO AND if query has no custom datatype AND query has no custom metaclass
         processQuerySources(request, ds, query);
 
-        // set basic datatype according to GUI ! ONLY IF NO DATATYPE IN Query String Input !
-        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
-            UtilsSearch.processBasicDataTypes(query, ds);
-        }
+        // add basic data type dependent from query and GUI ! may manipulate the query.
+        // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
+        UtilsSearch.processBasicDataType(query, ds);
+
+        // change datasource dependent from query input
+        ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
 
         // start hit
         int startHit = 0;

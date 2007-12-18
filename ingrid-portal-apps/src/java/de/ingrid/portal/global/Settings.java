@@ -109,6 +109,11 @@ public class Settings {
     public final static String QVALUE_DATATYPE_AREA_ENVINFO = "default";
     public final static String QVALUE_DATATYPE_AREA_ADDRESS = "address";
     public final static String QVALUE_DATATYPE_AREA_RESEARCH = "research";
+    public final static String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
+    	QVALUE_DATATYPE_AREA_ENVINFO,
+    	QVALUE_DATATYPE_AREA_ADDRESS,
+    	QVALUE_DATATYPE_AREA_RESEARCH
+    };
 
     // datatype: source types
     // ----------------------
@@ -123,6 +128,12 @@ public class Settings {
     public static final String QVALUE_DATATYPE_IPLUG_TAMINO = "tamino";
     public final static String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
     public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
+
+    // all sub datatypes indicating address search (switch to address rendering of results) 
+    public final static String[] QVALUES_DATATYPES_ADDRESS = new String[] {
+    	QVALUE_DATATYPE_AREA_ADDRESS,
+    	QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS
+    };
 
     public static final String QVALUE_LANG_DE = "de";
     
@@ -164,6 +175,7 @@ public class Settings {
 
     public final static String RESULT_KEY_WMS_URL = "wms_url";
 
+    public final static String RESULT_KEY_UDK_IS_ADDRESS = "is_address";
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
     public final static String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";
     public final static String RESULT_KEY_UDK_ADDRESS_LASTNAME = "address_lastname";

@@ -198,6 +198,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // IngridQuery from state  (set in SimpleSearch Portlet)
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+        
+        // change datasource dependent from query input
+        selectedDS = UtilsSearch.determineFinalPortalDatasource(selectedDS, query);
 
         // ----------------------------------
         // set initial view template
@@ -342,7 +345,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
-        // get grouping AFTER PREPROCESSING QUERY ! 
+        // get possible changes AFTER PREPROCESSING QUERY !!!
+
+        // Grouping may have changed !
         String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
 
         // fire query, post process results
