@@ -1,3 +1,11 @@
+#macro (renderHit $hit)
+	#if($hit.is_address)
+		#parse ('/WEB-INF/templates/include_search_result_address_hit.vm')
+	#else
+		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+	#end
+#end
+	
 ## set flag indicating how to render stuff (e.g. in includes)
 #set ($IS_RANKED = true)
 
@@ -15,12 +23,12 @@
 			#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
         #end
 		#set ($topHit = true)
-		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+		#renderHit($rs)
         #if($rs.subhit)
 			#set ($rs = $rs.subhit)
 			#set ($topHit = false)
 			#set ($subHitLeftMargin = 40)
-			#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+			#renderHit($rs)
 		#end
 		#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
 	#end
