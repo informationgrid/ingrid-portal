@@ -4,23 +4,70 @@
 
 var menuEventHandler = {};
 
+// Singleton
+// menuEventHandler = new function MenuEventHandler() {}
 
-menuEventHandler.handleNewEntity = function() {
+menuEventHandler.selectedNode = {};
+
+
+menuEventHandler.handleNewEntity = function(mes) {
 // TODO Dialog fuer neue Objekte / Adressen anzeigen. Reicht der Objektbezeichner im Baum?
 //      Muss eine Nachricht an das Backend gesendet werden?
 //      Nachricht an Backend ja? Id generiert in der Datenbank.
-  var tree = dojo.widget.byId('tree');
-  var selectedNode = tree.selectedNode;
-  if (!selectedNode)
-    dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-  else {
-    var dlg = 'erfassung_objekt_anlegen.html';
-    if (selectedNode.nodeAppType == "A")
-      dlg = 'erfassung_adresse_anlegen.html';
-    dialog.showPage(message.get('tree.nodeNew'), dlg, 502, 130, true, {treeId:'tree', controllerId:'treeController', nodeId:selectedNode.widgetId});
-  }
+	dojo.debug('handleNewEntity()');
+	var selectedNode = getSelectedNode(mes);
+
+	if (!selectedNode) {
+    	dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
+	} else {
+/*
+    	var dlg = 'erfassung_objekt_anlegen.html';
+    	if (selectedNode.nodeAppType == "A")
+      	dlg = 'erfassung_adresse_anlegen.html';
+    	dialog.showPage(message.get('tree.nodeNew'), dlg, 502, 130, true, {treeId:'tree', controllerId:'treeController', nodeId:selectedNode.widgetId});
+*/
+		// TODO if current node was not saved... 
+
+		if (!selectedNode.isFolder) {
+			selectedNode.setFolder();
+			// TODO? Don't load children from the db. The new node is the only children.
+			selectedNode.expand();
+			menuEventHandler.selectedNode = selectedNode;
+			attachNewNode();
+		}
+		else if (!selectedNode.isExpanded) {
+    		var tree = selectedNode.tree;
+    		var treeController = dojo.widget.byId('treeController');
+			menuEventHandler.selectedNode = selectedNode;
+
+			dojo.event.topic.subscribe(tree.eventNames.afterExpand, 'attachNewNode');
+			treeController.expand(selectedNode);
+  		}
+  		else {
+			menuEventHandler.selectedNode = selectedNode;
+			attachNewNode();
+  		}
+  	}
 }
 
+
+attachNewNode = function() {
+    var tree = dojo.widget.byId('tree');
+    var treeListener = dojo.widget.byId('treeListener');
+    var selectedNode = menuEventHandler.selectedNode;
+
+	dojo.event.topic.unsubscribe(tree.eventNames.afterExpand, 'attachNewNode');
+//	dojo.event.disconnect('after', selectedNode, 'setChildren', menuEventHandler, 'attachNewNode');
+	dojo.debug('testMethod()');
+
+	var newNode = tree.createNode(createNewNode());
+	selectedNode.addChild(newNode);
+
+	tree.selectedNode = newNode;
+    dojo.event.topic.publish(treeListener.eventNames.deselect, {node: selectedNode});    
+    dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+
+}
 
 menuEventHandler.handlePreview = function(message) {
 // Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
@@ -78,7 +125,32 @@ menuEventHandler.handleShowComment = function() {alertNotImplementedYet();}
 //                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
 
 
+
+// ------------------------- Helper functions -------------------------
+
 function alertNotImplementedYet()
 {
   alert("Diese Funktionalität ist noch nicht implementiert.");
+}
+
+function getSelectedNode(message) {
+  if (message instanceof dojo.widget.TreeMenuItemV3)
+  {
+    return message.getTreeNode();
+  }
+  else
+  {
+    return dojo.widget.byId('tree').selectedNode;
+  }
+}
+
+function createNewNode()
+{
+	return {contextMenu: 'contextMenu1',
+			isFolder: false,
+			nodeDocType: 'Class1',
+			title: message.get('tree.newNodeName'),
+			dojoType: 'ingrid:TreeNode',
+			nodeAppType: 'O',
+			id: 'newNode'};
 }

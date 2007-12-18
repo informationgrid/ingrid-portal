@@ -258,11 +258,17 @@ function hideSplash(){
 	                <span class="label"><label for="generalShortDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kurzbezeichnung')">Kurzbezeichnung</label></span>
 	                <span class="input"><input type="text" id="generalShortDesc" name="generalShortDesc" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
 	          	  </div>
-
 	              <div class="inputContainer">
 	                <span class="label required"><label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
                		<span class="input"><input type="text" id="generalDesc" name="generalDesc" class="w668 h055" dojoType="ingrid:ValidationTextBox" /></span> 
 	          	  </div>
+<!-- 
+	              <div class="inputContainer">
+	                <span class="label required"><label for="generalDescTextArea" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
+				    <span class="input"><textarea id="generalDescTextArea" name="generalDescTextArea" class="w668 h055" dojoType="Editor"/></span>
+	          	  </div>
+ -->				  
+
 <!-- The TextBox doesn't support multiline content. Create a new dojoType for this
 				  <div class="inputContainer">
 	                <span class="label required"><label for="generalDescTextarea" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
@@ -274,7 +280,7 @@ function hideSplash(){
 	                <span class="label required"><label for="generalAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'erfassung_modal_adresse.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                <div id="generalAddressTable" class="tableContainer rows4">
-	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" valueField="id" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
 	                  			<th field="information" dataType="String" width="120">Auskunft</th>

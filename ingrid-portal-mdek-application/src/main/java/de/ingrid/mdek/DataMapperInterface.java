@@ -45,8 +45,24 @@ public interface DataMapperInterface {
 	public final static String MDEK_GENERAL_ADDRESS_TABLE_INFO = "information";
 	public final static String MDEK_GENERAL_ADDRESS_TABLE_CLASS = "icon";
 	public final static String MDEK_GENERAL_ADDRESS_TABLE_NAME = "name";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_ORGANISATION = "organisation";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_GIVENNAME = "givenName";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_NAME_FORM = "nameForm";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_TITLEORFUNC = "titleOrFunction";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_STREET = "street";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_COUNTRY_CODE = "countryCode";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_CITY = "city";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_POBOX_POSTAL = "poboxPostalCode";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_POBOX = "pobox";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_FUNCTION = "function";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_DESCRIPTION = "addressDescription";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM = "communication";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM_MEDIUM = "communicationMedium";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM_VALUE = "communicationValue";
+	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM_DESCRIPTION = "communicationDescription";
 
-	// Object class 1 (Geoinformation/Karte)
+    
+    // Object class 1 (Geoinformation/Karte)
 	public final static String MDEK_OBJ_CLASS1_DATASET = "ref1DataSet";
 	public final static String MDEK_OBJ_CLASS1_COVERAGE = "ref1Coverage";
 	public final static String MDEK_OBJ_CLASS1_REPRESENTATION = "ref1Representation";	

@@ -99,19 +99,19 @@ public class EntryServiceImpl implements EntryService {
 			data.setNodeDocType("Class1");
 			data.setNodeAppType(nodeType);
 
-			ArrayList<HashMap<String, String>> addressTable = new ArrayList<HashMap<String, String>>(); 
-			HashMap<String, String> entry1 = new HashMap<String, String>();
-			HashMap<String, String> entry2 = new HashMap<String, String>();
-			entry1.put("Id", "1");
-			entry1.put("information", "Auswertung");
-			entry1.put("icon", "<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
-			entry1.put("names", "<a href=\"#\" title=\"Adresse &ouml;ffnen: Gerdes, G&uuml;nther\">Gerdes, G&uuml;nther</a>");
+			ArrayList<MdekAddressBean> addressTable = new ArrayList<MdekAddressBean>(); 
+			MdekAddressBean entry1 = new MdekAddressBean();
+			MdekAddressBean entry2 = new MdekAddressBean();
+			entry1.setId("1");
+			entry1.setInformation("Auswertung");
+			entry1.setIcon("<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
+			entry1.setName("<a href=\"#\" title=\"Adresse &ouml;ffnen: Gerdes, G&uuml;nther\">Gerdes, G&uuml;nther</a>");
 			addressTable.add(entry1);
 
-			entry2.put("Id", "2");
-			entry2.put("information", "Auskunft");
-			entry2.put("icon", "<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
-			entry2.put("names", "<a href=\"#\" title=\"Adresse &ouml;ffnen: Altm&uuml;ller, Reinhard\">Altm&uuml;ller, Reinhard</a>");
+			entry2.setId("2");
+			entry2.setInformation("Auskunft");
+			entry2.setIcon("<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
+			entry2.setName("<a href=\"#\" title=\"Adresse &ouml;ffnen: Altm&uuml;ller, Reinhard\">Altm&uuml;ller, Reinhard</a>");
 			addressTable.add(entry2);
 
 			data.setGeneralAddressTable(addressTable);

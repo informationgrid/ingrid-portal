@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -56,7 +57,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setNodeDocType("Class"+((Integer) obj.get(MdekKeys.CLASS) + 1));
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
-		mdekObj.setGeneralAddressTable((ArrayList<HashMap<String, String>>) mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
+		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
 
 		// Spatial
 //		mdekObj.setSpatialRefAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -155,12 +156,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	 * Mapping from the Mdek gui representation to the IngridDocument Structure *
 	 ****************************************************************************/
 	
-	private static ArrayList<IngridDocument> mapFromGeneralAddressTable(ArrayList<HashMap<String, String>>  adrTable) {
+	private static ArrayList<IngridDocument> mapFromGeneralAddressTable(ArrayList<MdekAddressBean> adrTable) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 
-		for (HashMap<String, String> tableRow : adrTable) {
+		for (MdekAddressBean address : adrTable) {
 			IngridDocument mappedEntry = new IngridDocument();
-			mappedEntry.put(MdekKeys.UUID, tableRow.get("Id"));
+			mappedEntry.put(MdekKeys.UUID, address.getId());
 			resultList.add(mappedEntry);
 		}
 		return resultList;
@@ -173,25 +174,52 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
 	 ****************************************************************************/
 
-	private static ArrayList<HashMap<String, String>> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
-		ArrayList<HashMap<String, String>> resultTable = new ArrayList<HashMap<String, String>>(); 
+	private static ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
+		ArrayList<MdekAddressBean> resultTable = new ArrayList<MdekAddressBean>(); 
 
 		for (HashMap<String, Object> tableRow : adrTable) {
-			HashMap<String, String> mappedEntry = new HashMap<String, String>();
+			MdekAddressBean address = new MdekAddressBean();
 
-			// TODO replace with correct values
-			mappedEntry.put(MDEK_GENERAL_ADDRESS_TABLE_ID, (String) tableRow.get(MdekKeys.UUID));
-			mappedEntry.put(MDEK_GENERAL_ADDRESS_TABLE_INFO, (String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
-			mappedEntry.put(MDEK_GENERAL_ADDRESS_TABLE_CLASS, ((Integer) tableRow.get(MdekKeys.CLASS)).toString());
+			address.setId((String) tableRow.get(MdekKeys.UUID));
+			address.setInformation((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
+			address.setIcon(((Integer) tableRow.get(MdekKeys.CLASS)).toString());
+			address.setGivenName((String) tableRow.get(MdekKeys.GIVEN_NAME));
+			address.setStreet((String) tableRow.get(MdekKeys.STREET));
+			address.setCountryCode((String) tableRow.get(MdekKeys.POSTAL_CODE_OF_COUNTRY));
+			address.setCity((String) tableRow.get(MdekKeys.CITY));
+			address.setPoboxPostalCode((String) tableRow.get(MdekKeys.POST_BOX_POSTAL_CODE));
+			address.setPoboxPostalCode((String) tableRow.get(MdekKeys.POST_BOX));
+			address.setFunction((String) tableRow.get(MdekKeys.FUNCTION));
+			address.setAddressDescription((String) tableRow.get(MdekKeys.ADDRESS_DESCRIPTION));
+			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));
+			address.setNameForm((String) tableRow.get(MdekKeys.NAME_FORM));
+			address.setTitleOrFunction((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
 
+			// Build name
 			if (tableRow.get(MdekKeys.NAME) != null) {
 				String name = (String) tableRow.get(MdekKeys.NAME) + ", " + (String) tableRow.get(MdekKeys.GIVEN_NAME); 
-				mappedEntry.put(MDEK_GENERAL_ADDRESS_TABLE_NAME, name);
+				address.setName(name);
 			}
-			else if (tableRow.get(MdekKeys.ORGANISATION) != null) 
-				mappedEntry.put(MDEK_GENERAL_ADDRESS_TABLE_NAME, (String) tableRow.get(MdekKeys.ORGANISATION));
+			else if (tableRow.get(MdekKeys.ORGANISATION) != null) {
+				address.setName((String) tableRow.get(MdekKeys.ORGANISATION));
+			}
 
-			resultTable.add(mappedEntry);
+			// Build communication map
+			List<HashMap<String, String>> commMap = (List<HashMap<String, String>>) tableRow.get(MdekKeys.COMMUNICATION);
+			ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
+			
+			if (commMap != null) {
+				for (HashMap<String, String> comm : commMap) {
+					HashMap<String, String> resultComm = new HashMap<String, String>();
+					resultComm.put(MDEK_GENERAL_ADDRESS_TABLE_COMM_DESCRIPTION, comm.get((String) MdekKeys.COMMUNICATION_DESCRIPTION));
+					resultComm.put(MDEK_GENERAL_ADDRESS_TABLE_COMM_MEDIUM, comm.get((String) MdekKeys.COMMUNICATION_MEDIUM));
+					resultComm.put(MDEK_GENERAL_ADDRESS_TABLE_COMM_VALUE, comm.get((String) MdekKeys.COMMUNICATION_VALUE));
+					resultCommMap.add(resultComm);
+				}
+			}
+			address.setCommunication(resultCommMap);
+
+			resultTable.add(address);
 		}
 		return resultTable;
 	}

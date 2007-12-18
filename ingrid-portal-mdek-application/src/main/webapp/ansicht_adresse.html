@@ -1,0 +1,59 @@
+<head>
+<script type="text/javascript">
+var address = addressData;
+dojo.debugShallow(addressData);
+
+var addressForm = document.getElementById('addressForm');
+addressForm.addressInstitution.value = addressData.name;
+addressForm.addressUnit.value = addressData.icon;
+addressForm.addressName.value = addressData.name;
+addressForm.addressPostal.value = addressData.street;
+if (addressData.poboxPostalCode)
+	addressForm.addressAreaCode.value = addressData.poboxPostalCode+' '+addressData.city;
+else
+	addressForm.addressAreaCode.value = addressData.city;
+
+for (i in addressData.communication)
+{
+	var comm = addressData.communication[i];
+	if (comm.communicationDescription)
+		addressForm.addressContact.value += comm.communicationMedium+': '+comm.communicationValue+' '+comm.communicationDescription+'; ';
+	else
+		addressForm.addressContact.value += comm.communicationMedium+': '+comm.communicationValue+'; ';
+}
+
+</script>
+</head>
+
+<body>
+<form dojoType="Form" id="addressForm">
+	<table cellspacing="0">
+		<tbody>
+			<tr>
+				<td class="label"><label for="addressInstitution">Institution: </label></td>
+				<td colspan="2"><input type="text" id="addressInstitution" name="addressInstitution" class="w308" readonly/></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="addressUnit">Einheit: </label></td>
+				<td colspan="2"><input type="text" id="addressUnit" name="addressUnit" class="w308" readonly/></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="addressName">Name: </label></td>
+				<td colspan="2"><input type="text" id="addressName" name="addressName" class="w308" readonly/></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="addressPostal">Postfach oder Stra&szlig;e und Hausnummer: </label></td>
+				<td colspan="2"><input type="text" id="addressPostal" name="addressPostal" class="w308" readonly/></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="addressAreaCode">PLZ und Ort: </label></td>
+				<td colspan="2"><input type="text" id="addressAreaCode" name="addressAreaCode" class="w308" readonly/></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="addressContact">Telefon, Telefax, E-Mail, URL: </label></td>
+				<td colspan="2"><input type="text" id="addressContact" name="addressContact" class="w308" readonly/></td>
+			</tr>
+		</tbody>
+  	</table>
+</form>
+</body>

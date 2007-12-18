@@ -26,7 +26,7 @@ public class MdekDataBean {
 	// General
 	public String generalShortDescription;
 	public String generalDescription;
-	public ArrayList<HashMap<String, String>> generalAddressTable;
+	public ArrayList<MdekAddressBean> generalAddressTable;
 
 	// Spatial
 	public ArrayList<HashMap<String, String>> spatialRefAdminUnitTable;
@@ -245,11 +245,11 @@ public class MdekDataBean {
 		this.id = id;
 	}
 
-	public ArrayList<HashMap<String, String>> getGeneralAddressTable() {
+	public ArrayList<MdekAddressBean> getGeneralAddressTable() {
 		return generalAddressTable;
 	}
 
-	public void setGeneralAddressTable(ArrayList<HashMap<String, String>> generalAddress) {
+	public void setGeneralAddressTable(ArrayList<MdekAddressBean> generalAddress) {
 		this.generalAddressTable = generalAddress;
 	}
 

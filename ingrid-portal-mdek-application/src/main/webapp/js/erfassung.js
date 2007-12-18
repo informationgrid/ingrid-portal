@@ -275,8 +275,17 @@ function nodeSelected(message)
 
 function showAddress(menuItem)
 {
-  // TODO get address id from the selected context menu (menuItem.parent)
-  var addressId = null;
-  var params = {id:addressId};
-  dialog.showPage('Adresse', 'ansicht_adresse.html', 330, 240, false, params);
+  dojo.debug("getTabFromContext menuItem: " + menuItem);
+
+  var menu = menuItem.parent;
+  var rowData = menu.getRowData();
+
+//  dojo.debugShallow(rowData);
+
+  addressData = rowData;
+  var params = {};
+  dialog.showPage('Adresse', 'ansicht_adresse.html', 500, 240, false, params);
+  dojo.debug('After showPage()');
 }
+// TODO pass data directly to the dialog!
+var addressData = {};

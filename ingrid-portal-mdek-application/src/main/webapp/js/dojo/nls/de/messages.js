@@ -22,6 +22,7 @@
     "tree.assistant2":"Allgemeiner Erfassungsassistent",
     "tree.noAssistant":"Kein Assistent",
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
+    "tree.newNodeName":"Neues Datenobjekt",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",
