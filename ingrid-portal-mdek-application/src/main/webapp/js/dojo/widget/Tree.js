@@ -47,6 +47,7 @@ dojo.widget.defineWidget(
         // select last node
         this.selectNode(dojo.widget.byId(ids[ids.length-1]));
         // publish the select event
+        // TODO Does this event exist?        
         dojo.event.topic.publish(this.eventNames.select, {node:this.selectedNode, event:{target:this.selectedNode.domNode}} );
     	}
     }

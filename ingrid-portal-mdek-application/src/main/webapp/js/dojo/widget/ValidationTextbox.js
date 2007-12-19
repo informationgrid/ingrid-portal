@@ -20,6 +20,8 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
   trim: false,
   ucfirst: false,
 
+  mode: "textbox",
+
   /*
    * Readonly support
    */
@@ -29,13 +31,45 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
    * Do initialization here. Override this in subclasses to add functionality
    * but don't forget to call the parent class method
    */ 
+
   initialize: function(args) {
     dojo.widget.ValidationTextbox.superclass.initialize.apply(this, arguments);
+
     if (this.disabled == true) {
       this.textbox.setAttribute('disabled', 'disabled');
       dojo.html.addClass(this.textbox, 'noEdit');
     }
+
+	var ee = this[this.mode.toLowerCase()];
+	if(this.mode.toLowerCase()=="textarea"){
+		this.textarea.style.display = "block";
+		this.textbox.style.display = "none";
+	} else {
+		this.textarea.style.display = "none";
+		this.textbox.style.display = "";
+	}
   },
+
+	getValue: function() {
+		var ee = this[this.mode.toLowerCase()];				
+		return ee.value;
+	},
+
+	setValue: function(value) {
+		var ee = this[this.mode.toLowerCase()];				
+		ee.value = value;
+		this.update();
+	},
+
+
+	isEmpty: function() {
+		// summary: Checks for whitespace
+		var ee = this[this.mode.toLowerCase()];				
+		return ( /^\s*$/.test(ee.value) ); // Boolean
+	},
+
+// TODO write missing functions (update, highlight, ...)
+
 
   enable: function() {
     dojo.widget.ValidationTextbox.superclass.enable.apply(this, arguments);

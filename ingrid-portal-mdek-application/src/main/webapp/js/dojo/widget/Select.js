@@ -13,7 +13,7 @@ dojo.widget.defineWidget(
   buttonSrc: dojo.uri.moduleUri("ingrid", "widget/templates/images/combo_box_arrow.png"),
   dropdownToggle: "none",
 
-  // NOTE: we use dojo.widget.basicComboBoxDataProvider for simplifity. Drawback is that it loads
+  // NOTE: we use dojo.widget.basicComboBoxDataProvider for simplicity. Drawback is that it loads
   // all data on initialization. So if there is much data in the comboboxes, we should implement 
   // an own provider, that allows to search for a value (like the default one) AND for a key 
   // (not supported by default implementations).
@@ -40,10 +40,11 @@ dojo.widget.defineWidget(
    * Checks if the value is valid and sets it if valid. Sets the first value found otherwise.
    */
   setValue: function(value) {
-    if (this.dataProvider)
+    if (this.dataProvider) {
   	  this.dataProvider.startSearch(this._getDisplayValueForValue(value), dojo.lang.hitch(this, "_setValueOrFirst"));
-    else
+    } else {
       dojo.debug("ingrid.widget.Select.setValue: initialization not finished.");
+	}
   },
 
   _setValueOrFirst: function(/*Array*/ results){

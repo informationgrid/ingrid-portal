@@ -16,11 +16,33 @@ dojo.addOnLoad(function()
   {
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, 'handleLoadRequest');
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, 'handleSaveRequest');
+
+
+	// Connect the widgets onChange methods to the setDirtyFlag Method
+    dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('objectName'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('objectClass'), 'onValueChanged', 'setDirtyFlag');
+
+    dojo.event.connect(dojo.widget.byId('generalShortDesc'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
+
+    // TODO Handle Table changes
+    // dojo.event.connect(dojo.widget.byId('generalAddress'), '', 'setDirtyFlag');
+
   }
 );
 
+setDirtyFlag = function()
+{
+	dirtyFlag = true;
+}
 
 var udkDataProxy = {};
+
+
+// This flag is set when any value in the gui changes
+var dirtyFlag = false;
+
 
 // In currentUdk we cache the currently loaded udk in it's original representation.
 // Changes are not tracked here! We need it to access static information that is not

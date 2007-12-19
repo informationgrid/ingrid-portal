@@ -22,6 +22,7 @@
     "tree.assistant2":"General Assistant",
     "tree.noAssistant":"No Assistant",
     "tree.selectNodeHint":"Please select a parent node.",
+    "tree.selectNodeCutHint":"Please select a node to cut.",
     "tree.newNodeName":"New Object",
 
     "table.selectAll":"Select all rows",

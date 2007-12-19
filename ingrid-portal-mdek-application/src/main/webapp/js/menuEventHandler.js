@@ -63,10 +63,13 @@ attachNewNode = function() {
 	var newNode = tree.createNode(createNewNode());
 	selectedNode.addChild(newNode);
 
-	tree.selectedNode = newNode;
+	var treeController = dojo.widget.byId('treeController');
+
+	tree.selectNode(newNode);
     dojo.event.topic.publish(treeListener.eventNames.deselect, {node: selectedNode});    
     dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
 
+//	tree.selectedNode = newNode;
 }
 
 menuEventHandler.handlePreview = function(message) {
@@ -98,7 +101,22 @@ menuEventHandler.handlePreview = function(message) {
 //  alertNotImplementedYet();
 }
 
-menuEventHandler.handleCut = function() {alertNotImplementedYet();}
+menuEventHandler.handleCut = function(mes) {
+	var selectedNode = getSelectedNode(mes);
+	if (!selectedNode || selectedNode.id == 'objectRoot') {
+    	dialog.show(message.get('general.hint'), message.get('tree.selectNodeCutHint'), dialog.WARNING);
+	}
+	else {
+		if (!selectedNode.isFolder) {
+			var treeController = dojo.widget.byId('treeController');
+			treeController.cut(selectedNode);
+		} else {
+    		dialog.show(message.get('general.hint'), message.get('tree.selectNodeCutHint'), dialog.WARNING);
+		}
+	}
+}
+
+
 menuEventHandler.handleCopyEntity = function() {alertNotImplementedYet();}
 menuEventHandler.handleCopyTree = function() {alertNotImplementedYet();}
 menuEventHandler.handlePaste = function() {alertNotImplementedYet();}
@@ -110,7 +128,19 @@ menuEventHandler.handleSave = function() {
   dojo.event.topic.publish("/saveRequest");
 }
 
-menuEventHandler.handleUndo = function() {alertNotImplementedYet();}
+menuEventHandler.handleUndo = function(mes) {
+	var selectedNode = getSelectedNode(mes);
+
+	if (!selectedNode || selectedNode.id == 'objectRoot') {
+    	dialog.show(message.get('general.hint'), message.get('tree.selectNodeCutHint'), dialog.WARNING);
+	}
+	else {
+    	dojo.debug('Publishing event: /loadRequest('+selectedNode.id+', '+selectedNode.nodeAppType+')');
+    	dojo.event.topic.publish("/loadRequest", {id: selectedNode.id, appType: selectedNode.nodeAppType});
+	}
+}
+
+
 menuEventHandler.handleDiscard = function() {alertNotImplementedYet();}
 
 menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
