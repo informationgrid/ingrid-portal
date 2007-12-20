@@ -315,7 +315,7 @@ function hideSplash(){
 	              <div class="inputContainer required">
 	                <div class="half left">
 	                  <span class="label required"><label for="ref1DataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datensatz/Datenserie')">Datensatz/Datenserie*</label></span>
-	                  <span class="input spaceBelow"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:302px;" id="ref1DataSet" name="ref1DataSet" /></span>
+	                  <span class="input spaceBelow"><input dojoType="ingrid:Select" dataUrl="js/data/ref1Type.js" style="width:302px;" id="ref1DataSet" name="ref1DataSet" /></span>
 	                  <span class="label"><label for="ref1Coverage" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erfassungsgrad')">Erfassungsgrad</label></span>
 	                  <span class="input"><input type="text" id="ref1Coverage" name="ref1Coverage" class="w038" dojoType="ingrid:ValidationTextBox" /> %</span>
 	            	  </div>
@@ -347,14 +347,14 @@ function hideSplash(){
 	                <div id="ref1VFormat" class="outlined h110">
 	                  <div class="thirdInside left">
 	                    <span class="label"><label for="ref1VFormatTopology" onclick="javascript:dialog.showContextHelp(arguments[0], 'Topologieinformation')">Topologieinformation</label></span>
-	                    <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:129px;" id="ref1VFormatTopology" name="ref1VFormatTopology" /></span>
+	                    <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/ref1TopologyType.js" style="width:129px;" id="ref1VFormatTopology" name="ref1VFormatTopology" /></span>
 	                  </div>
 
 	                  <div class="thirdInside2">
 	                    <span class="label hidden"><label for="ref1VFormatDetails" onclick="javascript:dialog.showContextHelp(arguments[0], 'weitere Angaben')">weitere Angaben</label></span>
 	                    <div class="tableContainer rows5">
 	                      <div class="cellEditors" id="ref1VFormatDetailsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:120px;" widgetId="geometryTypeEditor"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref1GeometryType.js" style="width:120px;" widgetId="geometryTypeEditor"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="elementNumberEditor"></div>
 	                      </div>
 	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive thirdInside2">
@@ -375,7 +375,7 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <span class="label"><label for="ref1SpatialSystem" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezugssystem')">Raumbezugssystem</label></span>
-	                <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:649px;" id="ref1SpatialSystem" name="ref1SpatialSystem" /></span>
+	                <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/ref1SpatialSystemType.js" style="width:649px;" id="ref1SpatialSystem" name="ref1SpatialSystem" /></span>
 	          	  </div>
 
 	              <div class="inputContainer notRequired h130">
@@ -742,7 +742,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref2DocumentType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Dokumententyp')">Dokumententyp</label></span>
-	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref2DocumentType" name="ref2DocumentType" /></span>
+	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/ref2DocumentType.js" style="width:302px;" id="ref2DocumentType" name="ref2DocumentType" /></span>
 	                </div>
 	          
 	                <div class="half">

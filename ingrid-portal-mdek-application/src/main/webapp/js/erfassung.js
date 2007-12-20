@@ -283,7 +283,7 @@ function showAddress(menuItem)
 //  dojo.debugShallow(rowData);
 
   addressData = rowData;
-  var params = {};
+  var params = rowData;
   dialog.showPage('Adresse', 'ansicht_adresse.html', 500, 240, false, params);
   dojo.debug('After showPage()');
 }
