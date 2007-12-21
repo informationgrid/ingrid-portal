@@ -48,8 +48,9 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootAddresses() {
-		IngridDocument response = mdekCaller.fetchTopAddresses();
-		return extractAddressesFromResponse(response);
+//		IngridDocument response = mdekCaller.fetchTopAddresses();
+//		return extractAddressesFromResponse(response);
+		return null;
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
@@ -63,8 +64,9 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth) {
-		IngridDocument response = mdekCaller.fetchSubAddresses(uuid);
-		return extractObjectsFromResponse(response);
+//		IngridDocument response = mdekCaller.fetchSubAddresses(uuid);
+//		return extractObjectsFromResponse(response);
+		return null;
 	}
 
 	public void saveNode(MdekDataBean data) {
