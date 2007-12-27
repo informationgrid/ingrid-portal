@@ -1,0 +1,304 @@
+<html>
+<head>
+<script type="text/javascript" src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
+<script type="text/javascript" src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+ 		init();
+});
+
+// The treeController and root Tree are initialized here
+init = function() {
+	var treeController = dojo.widget.byId('thesTreeController');
+
+	treeController.loadRemote = function(node, sync) {
+
+		var _this = this;
+		var deferred = new dojo.Deferred();
+	
+		SNSService.getSubTopics(node.topicId, '2', 'down', {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:0,
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+	
+  		deferred.addCallback(function(res) {
+  			for (i in res) {
+  				res[i].isFolder = (res[i].children.length > 0);
+  				res[i].children = [];
+  			}
+  			return _this.loadProcessResponse(node,res);
+  		});
+		deferred.addErrback(function(res) { alert(res.message); });
+		return deferred;
+	};
+
+	// Register the node click handler 
+	var treeListener = dojo.widget.byId('thesTreeListener');
+	dojo.event.topic.subscribe(treeListener.eventNames.select, "handleSelectNode");
+
+	// Populate the descriptor list
+	var srcStore = dojo.widget.byId("thesaurusTerms").store;
+	var destStore = dojo.widget.byId("thesaurusDescList").store;
+	destStore.setData(srcStore.getData());
+}
+
+// initially load data (first hierachy level) from server 
+SNSService.getRootTopics(handleRootTopics);
+
+// Callback Handler for the root topics.
+// This function gets called when the tree is initialized.
+// @param topicList - List of Topics from the SNSService   
+//
+// The function adds the topics in 'topicList' as children to the tree 
+function handleRootTopics(topicList) {
+	for (i in topicList) {
+		topicList[i].isFolder = true;
+	}
+
+	var tree = dojo.widget.byId('thesTree');
+	tree.setChildren(topicList);
+}
+
+
+// Handler for SelectNode events (node title clicked)
+// Currently displays the information about the clicked node and path to/from a TopTerm
+function handleSelectNode(msg) {
+	dojo.debug(msg.node.topicId+' '+msg.node.title+' '+msg.node.type);	
+	SNSService.getSubTopics(msg.node.topicId, '0', 'up', showPath);
+}
+
+
+// Expands the tree to the topic with id 'topicID'
+// A valid topicID can be acquired by calling SNSService.findTopic()
+function expandToTopicWithId(topicID) {
+	SNSService.getSubTopicsWithRoot(topicID, '0', 'up', function(res) {
+		var tree = dojo.widget.byId('thesTree');
+		var topTerm = getTopTermNode(res[0]);
+		dojo.debug('Top Term: '+topTerm.topicId);
+		dojo.debug('Target Node: '+res[0].topicId);
+		expandPath(tree, topTerm, res[0]);	
+	});	
+}
+
+// Expands the tree
+// This is an internal function and should not be called. Call expandToTopicWithId(topicID) instead
+// @param tree - Tree/TreeNode. Current position in the tree   
+// @param currentNode - SNSTopic. The current node we are looking for to expand
+// @param targetNode - SNSTopic. Last node in the tree. return when we found this node. 
+//
+// The function iterates over tree.children and locates a TreeNode with topicID == currentNode.topicID
+// This node is then expanded and passed to expandPath recursively in a callback function.
+function expandPath(tree, currentNode, targetNode) {
+	
+	// Break Condition
+	if (currentNode.topicId == targetNode.topicId) {
+		// Mark the target node as selected
+		for(i in tree.children) {
+			if (tree.children[i].topicId == currentNode.topicId) {
+				dojo.widget.byId('thesTree').selectNode(tree.children[i]);
+				// Scroll the contentPane to tree.children[i]
+				var dest = tree.children[i].domNode.offsetTop - dojo.byId('thesTreeContainer').offsetTop;
+				dest -= 100;
+				if (dest > 0)
+					dojo.byId('thesTreeContainer').scrollTop = dest;
+				else
+					dojo.byId('thesTreeContainer').scrollTop = 0;
+				return;
+			}
+		}
+		return;
+	}
+
+	// Iterate over tree.children and locate the node next node in the path
+	for(i in tree.children) {
+		var curTreeNode = tree.children[i];
+		if (curTreeNode.topicId == currentNode.topicId)
+		{
+			// A node with the correct topicId was found. If the node is not expanded and
+			// it's children have not been loaded yet, load the children via callback and
+			// do the recursion afterwards.
+			if (!curTreeNode.isExpanded && curTreeNode.children.length == 0) {
+				var treeController = dojo.widget.byId('thesTreeController');
+//				dojo.debug('Passed the following node to callback: '+curTreeNode.topicId+' '+curTreeNode.widgetId);
+				var widgetId = curTreeNode.widgetId;
+				treeController.expand(curTreeNode).addCallback(function(res) {
+//					dojo.debug('Callback got the following node: '+dojo.widget.byId(widgetId).topicId+' '+widgetId);
+					expandPath(dojo.widget.byId(widgetId), currentNode.parents[0], targetNode);
+				});
+			}
+			// If the children have been loaded, expand the node and continue with the recursion
+			else {
+				curTreeNode.expand();
+				expandPath(curTreeNode, currentNode.parents[0], targetNode);
+			}
+		}
+	}
+}
+
+
+// Walks through a 'SNSTopic' structure (from SNSService.getSubTopics()) and returns a TOP_TERM
+function getTopTermNode(node) {
+	if (node.type == 'TOP_TERM') {
+		return node;
+	}
+	else {
+		if (node.children != null && node.children.length != 0) {
+			return getTopTermNode(node.children[0]);
+		}
+		else {
+			dojo.debug('Error in getTopTermNode: No parent of type TOP_TERM found.');
+			return node;
+		}
+	}
+}
+
+
+// Search Button onClick function.
+//
+// This function reads the value of the TextBox 'thesSearch' and expands the tree from the root
+// to the corresponding node
+findTopic = function() {
+
+	var textBox = dojo.widget.byId('thesSearch');
+
+	SNSService.findTopic(textBox.getValue(), function(result) {
+		if (result)
+			expandToTopicWithId(result.topicId);
+		else
+			alert('Not found.');
+	});
+};
+
+
+// AddTopic Button onClick function.
+//
+// This function adds the currently selected node to the descriptorList if it isn't already in the store.
+// The function also checks if a descriptor is selected (TODO: Shouldn't be done here?)
+addSelectedTopic = function() {
+	var selectedNode = dojo.widget.byId('thesTree').selectedNode;
+    var descStore = dojo.widget.byId('thesaurusDescList').store;
+	
+	if (descStore.getByKey(selectedNode.topicId) || selectedNode.type != "DESCRIPTOR")
+		return;
+	else
+		descStore.addData({Id: selectedNode.topicId, name: selectedNode.title}, selectedNode.topicId);
+
+};
+
+// Cancel Button onClick function.
+//
+// This function closes the dialog without saving any changes.
+closeDialog = function() {
+	_container_.closeWindow();
+}
+
+// Finish Button onClick function.
+//
+// This function copies the descriptor list to the main mdek searchtopic list
+acceptTopicList = function() {
+	// TODO store.update()?
+	var srcStore = dojo.widget.byId("thesaurusDescList").store;
+	var destStore = dojo.widget.byId("thesaurusTerms").store;
+
+	destStore.setData(srcStore.getData());
+	closeDialog();
+}
+
+</script>
+</head>
+
+
+
+
+<body>
+<form method="get" id="contentForm" action="">
+
+<div dojoType="ContentPane">
+
+  <div id="thesaurus" class="contentBlockWhite top wideBlock">
+    <div id="winNavi">
+      <a href="#" title="Hilfe">[?]</a>
+	  </div>
+	  <div id="thesaurusContent" class="content">
+
+      <!-- LEFT HAND SIDE CONTENT START -->
+      <div class="spacer"></div>
+      <div class="inputContainer field grey noSpaceBelow fullField">
+
+        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suche nach')">Suche nach</label></span>
+        <span class="input"><input type="text" id="thesSearch" name="thesSearch" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+        <div class="spacerField"></div>
+  	  </div>
+
+      <div class="inputContainer full">
+<!--
+        <span class="button w644"><a href="#" class="buttonBlue" title="In Thesaurus suchen">In Thesaurus suchen</a></span>
+-->
+        <span class="button w644"><button dojoType="Button" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic">In Thesaurus suchen</button></span>
+   	  </div>
+
+      <div class="inputContainer grey full noSpaceBelow">
+      	<div dojoType="ContentPane" id="thesTreeContainer"  style="height: 200px; width: 100%; overflow: auto;">
+          <!-- tree components -->
+          <div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
+          <div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
+           <div dojoType="ingrid:TreeDecorator" listener="thesTreeListener"></div>
+<!--		
+<div dojoType="ingrid:TreeDocIcons" widgetId="thesTreeDocIcons"></div>	
+ -->          
+          
+          <!-- tree -->
+<!-- 
+		<div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener;thesTreeDocIcons" widgetId="thesTree">
+ -->          
+         <div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener" widgetId="thesTree">
+          </div>
+      	</div>
+
+      	<div class="spacer"></div>
+      </div>
+
+      <div class="inputContainer full">
+<!-- 
+        <span class="button w644"><a href="#" class="buttonBlue" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
+ -->
+         <span class="button w644">
+         	<button dojoType="Button" onClick="addSelectedTopic">Hinzuf&uuml;gen</button>
+         	<button dojoType="Button" onClick="closeDialog">Abbrechen</button>
+         </span>
+  	  </div>
+      <!-- LEFT HAND SIDE CONTENT END -->
+
+      <!-- RIGHT HAND SIDE CONTENT START -->
+      <div id="listThesaurus" class="inputContainer">
+        <span class="label"><label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Liste der Deskriptoren')">Liste der Deskriptoren</label></span>
+        <div class="listInfo third">
+<!--      <span class="searchResultsInfo">2 Deskriptor(en) hinzugef&uuml;gt</span>  --> 
+      	  <div class="fill"></div>
+        </div>
+
+        <div dojoType="ContentPane">
+    	    <table id="thesaurusDescList" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive third relativePos">
+    	      <thead>
+    		      <tr>
+          			<th field="name" dataType="String" width="255" sort="desc">&nbsp;</th>
+    		      </tr>
+    	      </thead>
+    	    </table>
+        </div>
+
+        <div class="inputContainer w264 noSpaceBelow">
+          <span class="buttonNoBg w264"><button dojoType="Button" class="buttonGrey" onClick="acceptTopicList">&Uuml;bernehmen</button></span>
+    	  </div>
+    	</div>
+      <!-- RIGHT HAND SIDE CONTENT END -->
+
+    </div>
+  </div>
+</div>
+
+</form>
+</body>
+</html>

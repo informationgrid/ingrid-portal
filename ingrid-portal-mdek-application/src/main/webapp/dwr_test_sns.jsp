@@ -112,7 +112,7 @@ function expandToTopicWithId(topicID) {
 }
 
 
-// Goes through a 'SNSTopic' structure (from SNSService.getSubTopics()) and returns a TOP_TERM
+// Walks through a 'SNSTopic' structure (from SNSService.getSubTopics()) and returns a TOP_TERM
 function getTopTermNode(node) {
 	if (node.type == 'TOP_TERM') {
 		return node;
@@ -129,15 +129,18 @@ function getTopTermNode(node) {
 }
 
 // Expands the tree
-// This is an recursive internal function and should not be called. Call expandToTopicWithId(topicID) instead
+// This is an internal function and should not be called. Call expandToTopicWithId(topicID) instead
 // @param tree - Tree/TreeNode. Current position in the tree   
 // @param currentNode - SNSTopic. The current node we are looking for to expand
 // @param targetNode - SNSTopic. Last node in the tree. return when we found this node. 
 //
 // The function iterates over tree.children and locates a TreeNode with topicID == currentNode.topicID
-// The found node is expanded and passed to expandPath recursively in a callback function.
+// This node is then expanded and passed to expandPath recursively in a callback function.
 function expandPath(tree, currentNode, targetNode) {
+	
+	// Break Condition
 	if (currentNode.topicId == targetNode.topicId) {
+		// Mark the target node as selected
 		for(i in tree.children) {
 			if (tree.children[i].topicId == currentNode.topicId) {
 				dojo.widget.byId('snsTree').selectNode(tree.children[i]);
@@ -147,13 +150,16 @@ function expandPath(tree, currentNode, targetNode) {
 		return;
 	}
 
+	// Iterate over tree.children and locate the node next node in the path
 	for(i in tree.children) {
 		var curTreeNode = tree.children[i];
 		if (curTreeNode.topicId == currentNode.topicId)
 		{
+			// A node with the correct topicId was found. If the node is not expanded and
+			// it's children have not been loaded yet, load the children via callback and
+			// do the recursion afterwards.
 			if (!curTreeNode.isExpanded && curTreeNode.children.length == 0) {
 				var treeController = dojo.widget.byId('snsTreeController');
-
 //				dojo.debug('Passed the following node to callback: '+curTreeNode.topicId+' '+curTreeNode.widgetId);
 				var widgetId = curTreeNode.widgetId;
 				treeController.expand(curTreeNode).addCallback(function(res) {
@@ -161,6 +167,7 @@ function expandPath(tree, currentNode, targetNode) {
 					expandPath(dojo.widget.byId(widgetId), currentNode.parents[0], targetNode);
 				});
 			}
+			// If the children have been loaded, expand the node and continue with the recursion
 			else {
 				curTreeNode.expand();
 				expandPath(curTreeNode, currentNode.parents[0], targetNode);
@@ -169,9 +176,13 @@ function expandPath(tree, currentNode, targetNode) {
 	}
 }
 
+// Callback Handler for the root topics.
+// This function gets called when the tree is initialized.
+// @param topicList - List of Topics from the SNSService   
+//
+// The function adds the topics in 'topicList' as children to the tree 
 function handleRootTopics(topicList) {
 	for (i in topicList) {
-//		topicList[i].isFolder = (topicList[i].children.length > 0);
 		topicList[i].isFolder = true;
 	}
 
@@ -179,7 +190,13 @@ function handleRootTopics(topicList) {
 	tree.setChildren(topicList);
 }
 
-function findTopics() {
+
+
+// Button onClick function.
+//
+// This function reads the value of textBox and expands the tree from the root
+// to the corresponding node
+function findTopic() {
 
 	var textBox = dojo.widget.byId('textBox');
 
@@ -190,6 +207,9 @@ function findTopics() {
 }
 
 
+// Test function
+//
+// This function expands the tree to level 10.
 function expandAll(node) {
 	var tree = dojo.widget.byId('snsTree');
 	var treeController = dojo.widget.byId('snsTreeController');
@@ -223,7 +243,7 @@ function expandAll(node) {
 
 <div dojoType="Textbox" disabled="true" value="Warmwasserspeicherung"
 	id="textBox" type="text"></div>
-<button dojoType="Button" onClick="findTopics">Find Topic</button>
+<button dojoType="Button" onClick="findTopic">Find Topic</button>
 <button dojoType="Button" onClick="expandAll">Expand All</button>
 
 

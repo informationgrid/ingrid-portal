@@ -7,6 +7,7 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 
@@ -1521,16 +1522,14 @@ function hideSplash(){
 	              <div class="inputContainer h088">
 	                <span class="label required important"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'erfassung_modal_verschlagwortungsassistent.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
-	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'erfassung_modal_thesaurus.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_modal_thesaurus.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 	                <div class="tableContainer rows4">
 	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="term" dataType="String">Term</th>
+	                  			<th field="name" dataType="String">&nbsp;</th>
 	            		      </tr>
 	            	      </thead>
-	            	      <tbody>
-	            	      </tbody>
 	            	    </table>
 	                </div>
 	              </div>
