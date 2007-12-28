@@ -218,7 +218,8 @@ function hideSplash(){
 	            <tr>
 	              <td class="label col1"><label for="objectClass">Objektklasse</label></td>
 	              <td class="col2">
-	                <select dojoType="ingrid:Select" style="width:386px;" id="objectClass" name="objectClass" dataUrl="js/data/objectclasses.js" mode="remote" />
+	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
+	                <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectClass" name="objectClass" dataUrl="js/data/objectclasses.js" mode="remote" />
  	              </td>
 	              <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
 	            </tr>

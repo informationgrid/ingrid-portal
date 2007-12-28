@@ -1,14 +1,22 @@
 package de.ingrid.mdek;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.MissingResourceException;
+import java.util.Properties;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.IMdekCaller.Quantity;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
+
 
 public class SimpleUDKConnection implements DataConnectionInterface {
 
@@ -17,16 +25,23 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	private IMdekCaller mdekCaller; 
 	private DataMapperInterface dataMapper;
 
-	// TODO Load the file dynamically from a cfg file 	
-	private final static String ENTRY_SERVICE_CFG_FILE = "C:\\_projekte\\ingrid\\ingrid-SVN\\ingrid-mdek\\trunk\\ingrid-mdek-api\\src\\main\\resources\\communication.properties";
+	// Init Method is called by the Spring Framework on initialization
+	public void init() {
+		ResourceBundle res = ResourceBundle.getBundle("mdek");
+		String fileName = res.getString("mdekCaller.properties");
 
-	public SimpleUDKConnection() {
-		File file = new File(ENTRY_SERVICE_CFG_FILE);
+		File file = null;
+		if (fileName == null) {
+			throw new IllegalStateException("Please specify the location of the communication.properties file via the Property 'mdekCaller.properties' in /src/resources/mdek.properties");
+		} else {
+			file = new File(fileName);
+		}
 		MdekCaller.initialize(file);
 		mdekCaller = MdekCaller.getInstance();
 	}
 
-	protected void finalize() {
+	// Shutdown Method is called by the Spring Framework on shutdown
+	public void destroy() {
 		MdekCaller.shutdown();
 		mdekCaller = null;
 		dataMapper = null;
@@ -43,7 +58,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 
 	public MdekDataBean getNodeDetail(String uuid) {
-		IngridDocument response = mdekCaller.fetchObjDetails(uuid);
+		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY);
 		return extractSingleObjectFromResponse(response);
 	}
 
@@ -74,7 +89,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following object:");
 		log.debug(obj);
 
-		mdekCaller.storeObjDetails(obj);
+		mdekCaller.storeObject(obj);
 	}
 
 	

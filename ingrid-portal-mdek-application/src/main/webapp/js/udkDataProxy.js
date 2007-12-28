@@ -1,7 +1,7 @@
 /*
  * This proxy is used to read from and write to the different gui elements.
  * Additional checks are performed to ensure that no data is lost in the process (e.g.
- * asking the user if unsaved changes should be discarded)
+ * asking the user if unsaved changes should really be discarded)
  *
  * The proxy is called indirectly via the following topics (dojo.event.topic.publish(topic, message)):
  *   topic = '/loadRequest' - argument: {id: nodeUuid, appType: appType}
@@ -17,7 +17,6 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, 'handleLoadRequest');
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, 'handleSaveRequest');
 
-
 	// Connect the widgets onChange methods to the setDirtyFlag Method
     dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
     dojo.event.connect(dojo.widget.byId('objectName'), 'onkeyup', 'setDirtyFlag');
@@ -28,7 +27,6 @@ dojo.addOnLoad(function()
 
     // TODO Handle Table changes
     // dojo.event.connect(dojo.widget.byId('generalAddress'), '', 'setDirtyFlag');
-
   }
 );
 
@@ -96,8 +94,6 @@ udkDataProxy._setData = function(nodeData)
   {
     dojo.debug(property+": "+ nodeData[property]);
   }
-
-//  dojo.debug("Node Data received (from callback): [ID="+nodeData.id +", Type="+nodeData.nodeAppType+", title="+nodeData.title+"]");
 
   // -- We check if we received an Address or Object and call the corresponding function --
   switch (nodeData.nodeAppType.toUpperCase())
@@ -224,15 +220,10 @@ udkDataProxy._setObjectData = function(nodeData)
       break;
   }  
 
-  /* 
-   * Select box values can't be set through the form(?).   
-   * We set all values in the Widgets directly.
-   */
-
-
 //  dojo.debug("ContentFormObject after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
-
+// The values are set with the corresponding setter methods
+// We could also set the values through the form
 //  dojo.widget.byId('contentFormObject').setValues(myObj);
 //  dojo.widget.byId('headerFormAddress').setValues(myObj);
 //  dojo.widget.byId('contentFormAddress').setValues(myObj);
@@ -270,9 +261,9 @@ udkDataProxy._setObjectDataClass5 = function(nodeData)
 
 
 
-/********************************************
- * Methods for sending data to the database *
- ********************************************/
+/*******************************************
+ * Methods for sending data to the backend *
+ *******************************************/
 
 udkDataProxy._getData = function()
 {
@@ -325,7 +316,7 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // ------------- General Static Data -------------
   nodeData.id = currentUdk.id;
-  nodeData.hasChildren = currentUdk.hasChildren; 
+  nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
 
 
   // ------------------ Header ------------------

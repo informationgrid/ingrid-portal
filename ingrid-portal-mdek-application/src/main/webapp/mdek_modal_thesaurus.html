@@ -58,7 +58,9 @@ function handleRootTopics(topicList) {
 	}
 
 	var tree = dojo.widget.byId('thesTree');
-	tree.setChildren(topicList);
+	// Check if the tree exists. If the user closed the dialog it won't.
+	if (tree)
+		tree.setChildren(topicList);
 }
 
 
@@ -99,12 +101,15 @@ function expandPath(tree, currentNode, targetNode) {
 			if (tree.children[i].topicId == currentNode.topicId) {
 				dojo.widget.byId('thesTree').selectNode(tree.children[i]);
 				// Scroll the contentPane to tree.children[i]
+				dojo.html.scrollIntoView(tree.children[i].domNode);
+/*
 				var dest = tree.children[i].domNode.offsetTop - dojo.byId('thesTreeContainer').offsetTop;
 				dest -= 100;
 				if (dest > 0)
 					dojo.byId('thesTreeContainer').scrollTop = dest;
 				else
 					dojo.byId('thesTreeContainer').scrollTop = 0;
+*/
 				return;
 			}
 		}
