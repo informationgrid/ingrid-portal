@@ -92,34 +92,7 @@ public class EntryServiceImpl implements EntryService {
 		} catch (Exception e) {e.printStackTrace();}
 
 		// TODO check for errors and throw an exception?
-		if (data == null) {
-			data = new MdekDataBean();
-		
-//			data.setId(nodeUuid);
-			data.setUuid(nodeUuid);
-			data.setNodeDocType("Class1");
-			data.setNodeAppType(nodeType);
-
-			ArrayList<MdekAddressBean> addressTable = new ArrayList<MdekAddressBean>(); 
-			MdekAddressBean entry1 = new MdekAddressBean();
-			MdekAddressBean entry2 = new MdekAddressBean();
-			entry1.setId(new Long(0));
-			entry1.setUuid("0");
-			entry1.setInformation("Auswertung");
-			entry1.setIcon("<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
-			entry1.setName("<a href=\"#\" title=\"Adresse &ouml;ffnen: Gerdes, G&uuml;nther\">Gerdes, G&uuml;nther</a>");
-			addressTable.add(entry1);
-
-			entry2.setId(new Long(1));
-			entry1.setUuid("1");
-			entry2.setInformation("Auskunft");
-			entry2.setIcon("<img src=\"img/UDK/addr_institution.gif\" width=\"16\" height=\"16\" alt=\"Institution\" />");
-			entry2.setName("<a href=\"#\" title=\"Adresse &ouml;ffnen: Altm&uuml;ller, Reinhard\">Altm&uuml;ller, Reinhard</a>");
-			addressTable.add(entry2);
-
-			data.setGeneralAddressTable(addressTable);
-			return data;
-		}
+		if (data == null) { }
 
 		return data;
 	}

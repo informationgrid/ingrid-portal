@@ -272,31 +272,33 @@ function hideSplash(){
 	                <span class="label required"><label for="generalAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'erfassung_modal_adresse.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                <div id="generalAddressTable" class="tableContainer rows4">
+<!-- 
+	                    <div class="cellEditors" id="thesaurusTopicsEditors">
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/thesCategories.js" style="width:279px;" widgetId="thesaurusTopicsCombobox"></div>
+	                    </div>
+	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	      <thead>
+	              		      <tr>
+	                    			<th field="topics" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              	      </tbody>
+	              	    </table>
+
+ -->
+	                    <div class="cellEditors" id="generalAddressEditors">
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/extraInfoLegal.js" style="width:120px;" widgetId="generalAddressCombobox"></div>
+	                    </div>
 	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" valueField="id" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="information" dataType="String" width="120"></th>
+	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox" width="120"></th>
 	                  			<th nosort="true" field="icon" dataType="String" width="35"></th>
 	                  			<th nosort="true" field="name" dataType="String" width="520">Namen</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
-	            		      <tr value="1">
-	            		        <td>Auswertung</td>
-	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-	            		        <td><a href="#" title="Adresse &ouml;ffnen: Gerdes, G&uuml;nther">Gerdes, G&uuml;nther</a></td></tr>
-	            		      <tr value="2">
-	            		        <td>Auskunft</td>
-	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-	            		        <td><a href="#" title="Adresse &ouml;ffnen: Altm&uuml;ller, Reinhard">Altm&uuml;ller, Reinhard</a></td></tr>
-	            		      <tr value="3">
-	            		        <td>Datenhaltung</td>
-	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-	            		        <td><a href="#" title="Adresse &ouml;ffnen: Backhaus, Hermann">Backhaus, Hermann</a></td></tr>
-	            		      <tr value="4">
-	            		        <td>Datenhaltung</td>
-	            		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-	            		        <td><a href="#" title="Adresse &ouml;ffnen: Backhaus, Hermann">Backhaus, Hermann</a></td></tr>
 	            	      </tbody>
 	            	    </table>
 	                </div>

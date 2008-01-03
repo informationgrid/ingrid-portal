@@ -78,7 +78,7 @@ public class EntryServiceMockupImpl implements EntryService {
 		MdekDataBean data = new MdekDataBean();
 		HashMap node = findNodeInTree(dummyDataList, nodeUuid);
 
-		data.setId(nodeUuid);
+		data.setUuid(nodeUuid);
 		data.setNodeAppType(nodeType);
 		return data;
 	}

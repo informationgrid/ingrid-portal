@@ -71,7 +71,7 @@ dojo.widget.defineWidget(
     // parse properties from string if necessary
     this.multiple = this.multiple == "true" || this.multiple == true;
     this.customContextMenu = this.customContextMenu == "true" || this.customContextMenu == true;
-
+	
     ingrid.widget.FilteringTable.superclass.initialize.apply(this, arguments);
   },
 
@@ -186,32 +186,79 @@ dojo.widget.defineWidget(
    * Overidden to guarantee minRows in table
    */
 	render: function() {
-    ingrid.widget.FilteringTable.superclass.render.apply(this, arguments);
-    var body = this.domNode.tBodies[0];
+	    ingrid.widget.FilteringTable.superclass.render.apply(this, arguments);
+	    var body = this.domNode.tBodies[0];
+	
+	    // remove empty rows
+	    if (body.rows.length > 0) {
+	      var lastRow = body.rows[body.rows.length-1];
+	  		while (lastRow && dojo.html.hasAttribute(lastRow, "emptyRow")) {
+	  			body.removeChild(lastRow);
+	        if (body.rows.length > 0)
+	          lastRow = body.rows[body.rows.length-1];
+	        else
+	          lastRow = null;
+	  		}
+	    }
+	
+	    // if the table is interactive add at least one empty ror for insert
+	    if(dojo.html.hasClass(this.domNode, 'interactive') && !dojo.html.hasClass(this.domNode, 'readonly'))
+	      this.addEmptyRow();
+	
+	    // add additional rows to fill minRows
+	    var rows = body.rows;
+	    while (rows.length < this.minRows) {
+	      this.addEmptyRow();
+	      rows = body.rows;
+	    }
 
-    // remove empty rows
-    if (body.rows.length > 0) {
-      var lastRow = body.rows[body.rows.length-1];
-  		while (lastRow && dojo.html.hasAttribute(lastRow, "emptyRow")) {
-  			body.removeChild(lastRow);
-        if (body.rows.length > 0)
-          lastRow = body.rows[body.rows.length-1];
-        else
-          lastRow = null;
-  		}
-    }
-
-    // if the table is interactive add at least one empty ror for insert
-    if(dojo.html.hasClass(this.domNode, 'interactive') && !dojo.html.hasClass(this.domNode, 'readonly'))
-      this.addEmptyRow();
-
-    // add additional rows to fill minRows
-    var rows = body.rows;
-    while (rows.length < this.minRows) {
-      this.addEmptyRow();
-      rows = body.rows;
-    }
-  },
+		// Update the displayed values. This needs to be done so we can use the various
+		// functions from the underlying store (e.g. setData). Otherwise the displayed values
+		// will not be resolved properly (key is displayed instead of the 'displayValue()').
+		
+		// Iterate over all columns and check if the column is associated with an editor
+		for (var j=0; j<this.columns.length; j++) {
+			if (this.columns[j].editor) {
+				// the current column j has an editor attached
+				var currentEditor = this.columns[j].editor;
+				var rows = this.domNode.tBodies[0].rows;
+				// Iterate over all rows and update the displayed values
+				for(var i=0; i<rows.length; i++){
+					var rowData = this.getDataByRow(rows[i]);
+					// We have to check if the row exists(?)
+					if (rowData) {
+						var fieldContent = rowData[this.columns[j].getField()];
+						// Set the value of the current Editor, get the displayed value
+						// and update the displayed value of the table 
+						currentEditor.setValue(fieldContent);
+						if (currentEditor.getDisplayValue) {
+					       	var displayValue = currentEditor.getDisplayValue();
+      						this.fillCell(rows[i].cells[j], this.columns[j], displayValue);
+					    }
+					}
+				}
+			}
+		}
+/*
+		var rows = this.domNode.tBodies[0].rows;
+		for(var i=0; i<rows.length; i++){
+			for (var j=0; j<this.columns.length; j++) {
+				if (this.columns[j].editor) {
+					var currentEditor = this.columns[j].editor;
+					var rowData = this.getDataByRow(rows[i]);
+					if (rowData) {
+						var fieldContent = rowData[this.columns[j].getField()];
+						currentEditor.setValue(fieldContent);
+						if (currentEditor.getDisplayValue) {
+					       	var displayValue = currentEditor.getDisplayValue();
+      						this.fillCell(rows[i].cells[j], this.columns[j], displayValue);
+					    }
+					}
+				}
+			}
+		}
+*/
+	},
 
   addEmptyRow: function() {
     var body = this.domNode.tBodies[0];

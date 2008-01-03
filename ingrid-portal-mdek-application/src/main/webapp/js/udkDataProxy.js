@@ -34,7 +34,7 @@ dojo.addOnLoad(function()
 	var treeListener = dojo.widget.byId("treeListener");
 	dojo.event.topic.subscribe(treeListener.eventNames.deselect, function(arg) {
 //			arg.node:this.selectedNode, arg.target:event.target	
-			dojo.debug("Setting prev selected node to: "+arg.node.id);
+//			dojo.debug("Setting prev selected node to: "+arg.node.id);
 			udkDataProxy.prevSelectedNode = arg.node;
 		}
 	);
@@ -209,7 +209,7 @@ udkDataProxy.handleSaveRequest = function()
 	dojo.debug('udkDataProxy calling EntryService.saveNodeData('+nodeData.uuid);
 	EntryService.saveNodeData(nodeData, 'false',
 		{
-			callback: function(){udkDataProxy.onAfterSave();},
+			callback: function(){resetDirtyFlag(); udkDataProxy._updateTree(nodeData); udkDataProxy.onAfterSave();},
 			timeout:5000,
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
 		}
@@ -237,6 +237,7 @@ udkDataProxy._setData = function(nodeData)
       break;
     case 'O':
       udkDataProxy._setObjectData(nodeData);
+      udkDataProxy._updateTree(nodeData);
       break;
     default:
       dojo.debug('Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!');
@@ -279,6 +280,7 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId('generalShortDesc').setValue(nodeData.generalShortDescription);
   dojo.widget.byId('generalDesc').setValue(nodeData.generalDescription);
   dojo.widget.byId('generalAddress').store.setData(nodeData.generalAddressTable);
+  dojo.widget.byId('generalAddress').render();
 
   // -- Spatial --
 //  dojo.widget.byId('spatialRefAdminUnit').store.setData(nodeData.spatialRefAdminUnitTable);
@@ -352,7 +354,7 @@ udkDataProxy._setObjectData = function(nodeData)
     default:
       dojo.debug('Error in udkDataProxy._setObjectData - Object Class must be 0...5!');
       break;
-  }  
+  }
 
 //  dojo.debug("ContentFormObject after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
@@ -403,19 +405,6 @@ udkDataProxy._getData = function()
 {
   var nodeData = {};
 
-/*
-  // Safety check if the currentUdk really is the selected Node
-  var node = dojo.widget.byId('tree').selectedNode;
-  if (!node) {
-    dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-    return nodeData;
-  }
-  else if (node.id != currentUdk.id) {
-    dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-    return nodeData;
-  }
-*/
-  // The currentUdk is the selected node so we can continue loading  
   nodeData.nodeAppType = currentUdk.nodeAppType;
 
   // -- We check which node needs to get saved --
@@ -560,7 +549,18 @@ udkDataProxy._getObjectDataClass4 = function(nodeData) {};
 udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 
 
-// ---------------- Helper Functions ----------------
+/*******************************************
+ *            Helper functions             *
+ *******************************************/
+
+// Looks for the node widget with uuid = nodeData.uuid and updates the
+// tree data (label, type, etc.) according to the given nodeData
+udkDataProxy._updateTree = function(nodeData) {
+	var node = dojo.widget.byId(nodeData.uuid);
+	node.nodeDocType = nodeData.nodeDocType;	
+	node.setTitle(nodeData.objectName);
+}
+
 
 // Returns an array representing the data of the table with name 'tableName'
 // The keys are stored in the fields named: 'Id' 
