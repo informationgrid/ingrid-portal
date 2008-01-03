@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MdekAddressBean {
-	public String Id;
+	
+	public Long id;
+	public String uuid;
 	public String information;
 
 	public String icon;
@@ -20,15 +22,10 @@ public class MdekAddressBean {
 	public String pobox;
 	public String function;
 	public String addressDescription;
+	public Integer typeOfRelation;
 	public ArrayList<HashMap<String, String>> communication;
 
 	
-	public String getId() {
-		return Id;
-	}
-	public void setId(String id) {
-		Id = id;
-	}
 	public String getInformation() {
 		return information;
 	}
@@ -118,5 +115,23 @@ public class MdekAddressBean {
 	}
 	public void setCommunication(ArrayList<HashMap<String, String>> communication) {
 		this.communication = communication;
+	}
+	public Integer getTypeOfRelation() {
+		return typeOfRelation;
+	}
+	public void setTypeOfRelation(Integer typeOfRelation) {
+		this.typeOfRelation = typeOfRelation;
+	}
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

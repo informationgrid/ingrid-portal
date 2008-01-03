@@ -85,14 +85,13 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public void saveNode(MdekDataBean data) {
-		IngridDocument obj = wrapObject((IngridDocument) dataMapper.convertFromMdekRepresentation(data));
+		IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
 		log.debug("Sending the following object:");
 		log.debug(obj);
 
 		mdekCaller.storeObject(obj);
 	}
 
-	
 	// ------------------------ Helper Methods ---------------------------------------	
 
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response)
@@ -131,6 +130,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return nodeList;
 	}	
 
+/*
 	private MdekDataBean extractSingleObjectFromResponse(IngridDocument response)
 	{
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
@@ -151,7 +151,19 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 		return null;
 	}
+*/
+	private MdekDataBean extractSingleObjectFromResponse(IngridDocument response)
+	{
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
+		if (result != null) {
+			return dataMapper.getDetailedMdekRepresentation(result);
+		} else {
+			log.error(mdekCaller.getErrorMsgFromResponse(response));			
+			return null;
+		}
+	}
+	
 	private IngridDocument wrapObject(IngridDocument obj) {
 		ArrayList<IngridDocument> list = new ArrayList();
 		IngridDocument doc = new IngridDocument();

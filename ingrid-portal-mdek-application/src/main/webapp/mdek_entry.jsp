@@ -656,7 +656,10 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <span class="label"><label for="ref2Author" onclick="javascript:dialog.showContextHelp(arguments[0], 'Autor/Verfasser')">Autor/Verfasser</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref2Author" name="ref2Author" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!-- 
 	                <span class="input"><textarea id="ref2Author" name="ref2Author" class="w668 h038" /></textarea></span>
+ -->
 	              </div>
 
 	              <div class="inputContainer notRequired">
@@ -784,12 +787,18 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref2BibDataIn" onclick="javascript:dialog.showContextHelp(arguments[0], 'Weitere bibliographische Angaben')">Weitere bibliographische Angaben</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref2BibDataIn" name="ref2BibDataIn" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!-- 
 	                  <span class="input"><textarea id="ref2BibDataIn" name="ref2BibDataIn" class="w320 h038" /></textarea></span>
-	                </div>
+ -->
+ 	                </div>
 
 	                <div class="half">
 	                  <span class="label"><label for="ref2Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref2Explanation" name="ref2Explanation" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!-- 
 	                  <span class="input"><textarea id="ref2Explanation" name="ref2Explanation" class="w320 h038" /></textarea></span>
+ -->
 	                </div>
 	                <div class="fill"></div>
 	              </div>
@@ -838,13 +847,19 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 'Systemumgebung')">Systemumgebung</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref3SystemEnv" name="ref3SystemEnv" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!-- 
 	                  <span class="input"><textarea id="ref3SystemEnv" name="ref3SystemEnv" class="w320 h038" /></textarea></span>
-	                </div>
+ -->
+ 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label"><label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 'Historie')">Historie</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref3History" name="ref3History" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="ref3History" name="ref3History" class="w320 h038" /></textarea></span>
-	                </div>
+-->
+  	                </div>
 	                <div class="fill"></div>
 	              </div>
 
@@ -884,7 +899,10 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref3Explanation" name="ref3Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="ref3Explanation" name="ref3Explanation" class="w320 h055" /></textarea></span>
+-->
 	                </div>
 	                <div class="fill"></div>
 	          	  </div>
@@ -989,7 +1007,10 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <span class="label"><label for="ref4Explanations" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
-	                <span class="input"><textarea id="ref4Explanations" name="ref4Explanations" class="w668 h055" /></textarea></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref4Explanations" name="ref4Explanations" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
+  	                <span class="input"><textarea id="ref4Explanations" name="ref4Explanations" class="w668 h055" /></textarea></span>
+  -->
 	          	  </div>
 
 	            </div>
@@ -1060,8 +1081,11 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="ref5Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref5Explanation" name="ref5Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="ref5Explanation" name="ref5Explanation" class="w320 h055" /></textarea></span>
-	                </div>
+-->
+  	                </div>
 	                <div class="fill"></div>
 	          	  </div>
 	          	  
@@ -1243,9 +1267,11 @@ function hideSplash(){
 	          
 	                <div class="half">
 	                  <span class="label"><label for="spatialRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
-<!--                  <span class="input"><textarea id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" /></textarea></span>  -->
+               		<span class="input"><input type="text" mode="textarea" id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
                		  <span class="input"><input type="text" id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" dojoType="ingrid:ValidationTextBox" /></span> 
-	                </div>
+-->
+ 	                </div>
 	                <div class="fill"></div>
 	              </div>
 
@@ -1331,7 +1357,10 @@ function hideSplash(){
 	          
 	                <div class="half">
 	                  <span class="label"><label for="timeRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="timeRefExplanation" name="timeRefExplanation" class="w320 h105" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="timeRefExplanation" name="timeRefExplanation" class="w320 h105" /></textarea></span>
+-->
 	                </div>
 	                <div class="fill"></div>
 	              </div>
@@ -1419,12 +1448,18 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="extraInfoPurpose" onclick="javascript:dialog.showContextHelp(arguments[0], 'Herstellungszweck')">Herstellungszweck</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="extraInfoPurpose" name="extraInfoPurpose" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="extraInfoPurpose" name="extraInfoPurpose" class="w320 h038" /></textarea></span>
+-->
 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label"><label for="extraInfoUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Eignung/Nutzung')">Eignung/Nutzung</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="extraInfoUse" name="extraInfoUse" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="extraInfoUse" name="extraInfoUse" class="w320 h038" /></textarea></span>
+-->
 	                </div>
 	                <div class="fill"></div>
 	              </div>
@@ -1490,20 +1525,29 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bestellinformation')">Bestellinformation</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" /></textarea></span>
+-->
 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nutzungsanmerkung')">Nutzungsanmerkung</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="availabilityNoteUse" name="availabilityNoteUse" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!-- 
 	                  <span class="input"><textarea id="availabilityNoteUse" name="availabilityNoteUse" class="w320 h038" /></textarea></span>
-	                </div>
+-->
+ 	                </div>
 	                <div class="fill"></div>
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kosten')">Kosten</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="availabilityCosts" name="availabilityCosts" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+<!--
 	                  <span class="input"><textarea id="availabilityCosts" name="availabilityCosts" class="w320 h038" /></textarea></span>
+-->
 	                </div>
 	                <div class="fill"></div>
 	              </div>

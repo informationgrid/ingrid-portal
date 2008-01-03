@@ -15,21 +15,23 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-<beans>
-  <bean id="entryService" class="de.ingrid.mdek.dwr.EntryServiceImpl">
-    <property name="dataConnection">
-      <ref local="MdekDataConnection"/>
-    </property>
-  </bean>
+<beans default-init-method="init">
+	<bean id="entryService"
+		class="de.ingrid.mdek.dwr.EntryServiceImpl">
+		<property name="dataConnection">
+			<ref local="MdekDataConnection" />
+		</property>
+	</bean>
 
-  <bean id="MdekDataConnection" class="de.ingrid.mdek.SimpleUDKConnection">
-    <property name="dataMapper">
-      <ref local="MdekDataMapper"/>
-    </property>    
-  </bean>
+	<bean id="MdekDataConnection"
+		class="de.ingrid.mdek.SimpleUDKConnection">
+		<property name="dataMapper">
+			<ref local="MdekDataMapper" />
+		</property>
+	</bean>
 
-  <bean id="MdekDataMapper" class="de.ingrid.mdek.SimpleMdekMapper"/>
+	<bean id="MdekDataMapper" class="de.ingrid.mdek.SimpleMdekMapper" />
 
-  <bean id="snsService" class="de.ingrid.mdek.dwr.sns.SNSService"/>
+	<bean id="snsService" class="de.ingrid.mdek.dwr.sns.SNSService" />
 
 </beans>

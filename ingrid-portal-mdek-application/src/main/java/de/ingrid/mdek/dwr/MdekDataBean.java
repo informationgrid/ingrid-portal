@@ -10,7 +10,8 @@ import java.util.HashMap;
  */
 public class MdekDataBean {
 
-	public String id;
+	public Long id;
+	public String uuid;
 	public Boolean hasChildren;
 
 	public String title;
@@ -237,11 +238,11 @@ public class MdekDataBean {
 
 	
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -703,5 +704,17 @@ public class MdekDataBean {
 
 	public void setExtraInfoXMLExportTable(ArrayList<String> extraInfoXMLExportTable) {
 		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
+	}
+
+
+
+	public String getUuid() {
+		return uuid;
+	}
+
+
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	};
 }

@@ -12,31 +12,8 @@
  *   ...
  */
 
-dojo.addOnLoad(function()
-  {
-    dojo.event.topic.subscribe("/loadRequest", udkDataProxy, 'handleLoadRequest');
-    dojo.event.topic.subscribe("/saveRequest", udkDataProxy, 'handleSaveRequest');
-
-	// Connect the widgets onChange methods to the setDirtyFlag Method
-    dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('objectName'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('objectClass'), 'onValueChanged', 'setDirtyFlag');
-
-    dojo.event.connect(dojo.widget.byId('generalShortDesc'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
-
-    // TODO Handle Table changes
-    // dojo.event.connect(dojo.widget.byId('generalAddress'), '', 'setDirtyFlag');
-  }
-);
-
-setDirtyFlag = function()
-{
-	dirtyFlag = true;
-}
 
 var udkDataProxy = {};
-
 
 // This flag is set when any value in the gui changes
 var dirtyFlag = false;
@@ -47,54 +24,211 @@ var dirtyFlag = false;
 // displayed in the gui (e.g. nodeUUID).
 var currentUdk = {}; 
 
+
+// TODO Move Dirty Flag handling to another file? 
+dojo.addOnLoad(function()
+  {
+    dojo.event.topic.subscribe("/loadRequest", udkDataProxy, 'handleLoadRequest');
+    dojo.event.topic.subscribe("/saveRequest", udkDataProxy, 'handleSaveRequest');
+
+	var treeListener = dojo.widget.byId("treeListener");
+	dojo.event.topic.subscribe(treeListener.eventNames.deselect, function(arg) {
+//			arg.node:this.selectedNode, arg.target:event.target	
+			dojo.debug("Setting prev selected node to: "+arg.node.id);
+			udkDataProxy.prevSelectedNode = arg.node;
+		}
+	);
+
+
+	// Connect the widgets onChange methods to the setDirtyFlag Method
+    dojo.event.connect(dojo.widget.byId('objectName'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('objectClass'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('objectOwner'), 'onValueChanged', 'setDirtyFlag');
+
+    dojo.event.connect(dojo.widget.byId('generalShortDesc'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('generalAddress').store);
+
+    dojo.event.connect(dojo.widget.byId('ref1DataSet'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref1Coverage'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref1Representation'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref1VFormatTopology'), 'onValueChanged', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1VFormatDetails').store);
+    dojo.event.connect(dojo.widget.byId('ref1SpatialSystem'), 'onValueChanged', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1Scale').store);
+    dojo.event.connect(dojo.widget.byId('ref1AltAccuracy'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref1PosAccuracy'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1SymbolsText').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1KeysText').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1ServiceLink').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1BasisLink').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1DataBasisLink').store);
+    dojo.event.connect(dojo.widget.byId('ref1Data'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1ProcessLink').store);
+
+    dojo.event.connect(dojo.widget.byId('ref2Author'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2Publisher'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishedIn'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishLocation'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishedInIssue'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishedInPages'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishedInYear'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishedISBN'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2PublishedPublisher'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref2LocationLink').store);
+    dojo.event.connect(dojo.widget.byId('ref2DocumentType'), 'onValueChanged', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref2BaseDataLink').store);
+    dojo.event.connect(dojo.widget.byId('ref2BibDataIn'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref2Explanation'), 'onkeyup', 'setDirtyFlag');
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3ServiceType').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3ServiceVersion').store);
+    dojo.event.connect(dojo.widget.byId('ref3SystemEnv'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('ref3History'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3BaseDataLink').store);
+    dojo.event.connect(dojo.widget.byId('ref3Explanation'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3Operation').store);
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref4ParticipantsLink').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref4PMLink').store);
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref5Scale').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('ref5MethodLink').store);
+    dojo.event.connect(dojo.widget.byId('ref5Explanation'), 'onkeyup', 'setDirtyFlag');
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefAdminUnit').store);
+//	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefCoordsAdminUnit').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefLocation').store);
+//	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefCoordsLocation').store);
+    dojo.event.connect(dojo.widget.byId('spatialRefAltMin'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('spatialRefAltMax'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('spatialRefAltMeasure'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('spatialRefAltVDate'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('spatialRefExplanation'), 'onkeyup', 'setDirtyFlag');
+
+    dojo.event.connect(dojo.widget.byId('timeRefType'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('timeRefDate1'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('timeRefDate2'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('timeRefStatus'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('timeRefPeriodicity'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('timeRefIntervalNum'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('timeRefIntervalUnit'), 'onValueChanged', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('timeRefTable').store);
+    dojo.event.connect(dojo.widget.byId('timeRefExplanation'), 'onkeyup', 'setDirtyFlag');
+
+    dojo.event.connect(dojo.widget.byId('extraInfoLangMetaData'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('extraInfoLangData'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('extraInfoPublishArea'), 'onValueChanged', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('extraInfoXMLExport').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('extraInfoLegalBasics').store);
+    dojo.event.connect(dojo.widget.byId('extraInfoPurpose'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('extraInfoUse'), 'onkeyup', 'setDirtyFlag');
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('availabilityDataFormat').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('availabilityMediaOptions').store);
+    dojo.event.connect(dojo.widget.byId('availabilityOrderInfo'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('availabilityNoteUse'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId('availabilityCosts'), 'onkeyup', 'setDirtyFlag');
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusTerms').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusTopics').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusFreeTermsList').store);
+    dojo.event.connect(dojo.widget.byId('thesaurusEnvExtRes'), 'onValueChanged', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusEnvTopics').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusEnvCats').store);
+
+	_connectStoreWithDirtyFlag(dojo.widget.byId('linksTo').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId('linksFrom').store);
+
+	dojo.event.connect(udkDataProxy, '_setData', 'resetDirtyFlag');
+/*
+	// Table
+	_connectStoreWithDirtyFlag(dojo.widget.byId('TABLENAME').store);
+	// SelectBox
+    dojo.event.connect(dojo.widget.byId('SELECTBOXNAME'), 'onValueChanged', 'setDirtyFlag');
+	// ValidationTextbox
+    dojo.event.connect(dojo.widget.byId('TEXTBOXNAME'), 'onkeyup', 'setDirtyFlag');
+*/
+  }
+);
+
+setDirtyFlag = function()
+{
+	dirtyFlag = true;
+}
+
+resetDirtyFlag = function()
+{
+	dirtyFlag = false;
+}
+
+_connectStoreWithDirtyFlag = function(store)
+{
+	dojo.event.connect(store, 'onSetData', 'setDirtyFlag');
+	dojo.event.connect(store, 'onAddData', 'setDirtyFlag');
+	dojo.event.connect(store, 'onAddDataRange', 'setDirtyFlag');
+	dojo.event.connect(store, 'onRemoveData', 'setDirtyFlag');
+	dojo.event.connect(store, 'onUpdateField', 'setDirtyFlag');
+	dojo.event.connect(store, 'onSetData', 'setDirtyFlag');
+}
+
+
 udkDataProxy.handleLoadRequest = function(node)
 {
-  // TODO Check if we are in a state where it's safe to load data.
-  //      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
-
-  dojo.debug('udkDataProxy calling EntryService.getNodeData('+node.id+', '+node.appType+')');
-  // ---- DWR call to load the data ----
-  EntryService.getNodeData(node.id, node.appType, 'false',
-    {
-      callback:udkDataProxy._setData,
-      timeout:5000,
-      errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }
-    }
-  );
+	// TODO Check if we are in a state where it's safe to load data.
+	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
+	if (dirtyFlag == true) {
+		dialog.showPage('Save changes', 'mdek_save_changes.html', 342, 220, true);
+		udkDataProxy.lastNodeLoadRequest = node;
+		return;
+	} else {
+		dojo.debug('udkDataProxy calling EntryService.getNodeData('+node.id+', '+node.appType+')');
+		// ---- DWR call to load the data ----
+		EntryService.getNodeData(node.id, node.appType, 'false',
+			{
+				callback:udkDataProxy._setData,
+				timeout:5000,
+				errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }
+			}
+		);
+	}
 }
 
 
 udkDataProxy.handleSaveRequest = function()
 {
- /* TODO Check if we are in a state where it's safe to save data.
-  *      If we are, read all the fields and send the collected data to
-  *      the EntryService. If not delay the call and bounce back the message (e.g. query user).
-  */
-
-  // Construct an MdekDataBean from the available data
-  var nodeData = udkDataProxy._getData();
-
-  // ---- DWR call to store the data ----
-  EntryService.saveNodeData(nodeData, 'false',
-    {
-      callback: function(){dojo.debug('Data saved successfully.');},
-      timeout:5000,
-      errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
-    }
-  );
+	/* TODO Check if we are in a state where it's safe to save data (always?)
+	 *      If we are, read all the fields and send the collected data to
+	 *      the EntryService. If not delay the call and bounce back the message (e.g. query user).
+	 */
+	
+	// Construct an MdekDataBean from the available data
+	var nodeData = udkDataProxy._getData();
+	
+	// ---- DWR call to store the data ----
+	dojo.debug('udkDataProxy calling EntryService.saveNodeData('+nodeData.uuid);
+	EntryService.saveNodeData(nodeData, 'false',
+		{
+			callback: function(){udkDataProxy.onAfterSave();},
+			timeout:5000,
+			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
+		}
+	);
 }
 
+// event.connect point. Called when data has been saved 
+udkDataProxy.onAfterSave = function() {}
 
 udkDataProxy._setData = function(nodeData)
 {
   currentUdk = nodeData;
-
+/*
   dojo.debug("NodeData Properties: ");
   for (property in nodeData)
   {
     dojo.debug(property+": "+ nodeData[property]);
   }
-
+*/
   // -- We check if we received an Address or Object and call the corresponding function --
   switch (nodeData.nodeAppType.toUpperCase())
   {
@@ -269,6 +403,7 @@ udkDataProxy._getData = function()
 {
   var nodeData = {};
 
+/*
   // Safety check if the currentUdk really is the selected Node
   var node = dojo.widget.byId('tree').selectedNode;
   if (!node) {
@@ -279,7 +414,7 @@ udkDataProxy._getData = function()
     dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
     return nodeData;
   }
-
+*/
   // The currentUdk is the selected node so we can continue loading  
   nodeData.nodeAppType = currentUdk.nodeAppType;
 
@@ -304,7 +439,7 @@ udkDataProxy._getObjectData = function(nodeData)
 {
   /* 
    * 1. Get the static data that is not displayed in the gui which is:
-   *    nodeUuid, hasChildren
+   *    nodeUuid, id, hasChildren
    * 
    * 2. Get the data common to all objects which is:
    *    Header, General, Spatial, Time, Extra Info,
@@ -315,6 +450,7 @@ udkDataProxy._getObjectData = function(nodeData)
    */
 
   // ------------- General Static Data -------------
+  nodeData.uuid = currentUdk.uuid;
   nodeData.id = currentUdk.id;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
 
@@ -374,6 +510,10 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Links --
 */
+
+  dojo.debug("------ NODE DATA ------");
+  dojo.debugShallow(nodeData);
+  dojo.debug("------ NODE DATA END ------");
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)

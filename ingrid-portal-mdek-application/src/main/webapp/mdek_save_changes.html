@@ -1,0 +1,77 @@
+<html>
+<head>
+<style type="text/css">
+span.floatLeft {float:left;}
+</style>
+
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+ 		init();
+});
+
+init = function() {}
+
+// 'Yes Button' onClick function
+// This function resets the dirty flag and publishes another save request
+// TODO: After a successful save we have to load the clicked node 
+saveChanges = function() {
+	resetDirtyFlag();
+
+	// We create a deferred object so the load and save calls don't overlap
+	var d = new dojo.Deferred();
+	d.addCallback(function() {
+		// Disconnect this function after it was called once 
+		dojo.event.disconnect('after', udkDataProxy, 'onAfterSave', d, 'callback');
+		dojo.event.topic.publish("/loadRequest", udkDataProxy.lastNodeLoadRequest);
+		_container_.closeWindow();
+	});
+
+	dojo.event.connectOnce('after', udkDataProxy, 'onAfterSave', d, 'callback');
+	dojo.event.topic.publish("/saveRequest");
+}
+
+// 'No Button' onClick function
+// This function resets the dirty flag and publishes another load request 
+discardChanges = function() {
+	resetDirtyFlag();
+    dojo.event.topic.publish("/loadRequest", udkDataProxy.lastNodeLoadRequest);
+	_container_.closeWindow();
+}
+
+// 'Cancel Button' onClick function
+// This function closes the dialog without saving or loading.
+closeDialog = function() {
+	dojo.debug("close dialog called");
+	dojo.widget.byId('tree').selectNode(udkDataProxy.prevSelectedNode);
+	dojo.widget.byId('treeListener').selectedNode = udkDataProxy.prevSelectedNode;
+
+	_container_.closeWindow();
+}
+
+</script>
+</head>
+
+
+
+<body>
+<div dojoType="ContentPane">
+	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="dialogContent" class="content">
+			<div class="field grey">
+				Es wurden &Auml;nderungen am aktuellen Datensatz vorgenommen. M&ouml;chten Sie die &Auml;nderungen speichern?		
+			</div>
+
+			<div class="inputContainer noSpaceBelow h108 half">
+		        <span class="floatLeft"><button dojoType="Button" title="Ja" onClick="saveChanges">Ja</button></span>
+		        <span class="floatLeft"><button dojoType="Button" title="Nein" onClick="discardChanges">Nein</button></span>
+		        <span class="floatLeft"><button dojoType="Button" title="Abbrechen" onClick="closeDialog">Abbrechen</button></span>
+			</div>
+	  	</div>
+	</div>
+</div>
+</body>
+</html>

@@ -51,10 +51,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// General
 //		mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.MISSING));
 		mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
-		mdekObj.setId((String) obj.get(MdekKeys.UUID));
+		mdekObj.setId((Long) obj.get(MdekKeys.ID));
+		mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
 		mdekObj.setTitle((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setObjectClass((Integer) obj.get(MdekKeys.CLASS));
-		mdekObj.setNodeDocType("Class"+((Integer) obj.get(MdekKeys.CLASS) + 1));
+		mdekObj.setNodeDocType("Class"+((Integer) obj.get(MdekKeys.CLASS)));
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
@@ -137,10 +138,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		IngridDocument udkObj = new IngridDocument();
 
 		udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
-		udkObj.put(MdekKeys.UUID, data.getId());
+		udkObj.put(MdekKeys.ID, data.getId());
+		udkObj.put(MdekKeys.UUID, data.getUuid());
 		udkObj.put(MdekKeys.TITLE, data.getObjectName());
 		// extrahieren des int Wertes für die Objekt-Klasse
-		udkObj.put(MdekKeys.CLASS, Integer.parseInt(data.getNodeDocType().substring(5)) + 1);
+		udkObj.put(MdekKeys.CLASS, Integer.parseInt(data.getNodeDocType().substring(5)));
 //		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());
 		udkObj.put(MdekKeys.ADR_ENTITIES, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 		
@@ -161,7 +163,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (MdekAddressBean address : adrTable) {
 			IngridDocument mappedEntry = new IngridDocument();
-			mappedEntry.put(MdekKeys.UUID, address.getId());
+			mappedEntry.put(MdekKeys.ID, address.getId());
+			mappedEntry.put(MdekKeys.UUID, address.getUuid());
+			mappedEntry.put(MdekKeys.TYPE_OF_RELATION, address.getTypeOfRelation());
 			resultList.add(mappedEntry);
 		}
 		return resultList;
@@ -180,7 +184,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		for (HashMap<String, Object> tableRow : adrTable) {
 			MdekAddressBean address = new MdekAddressBean();
 
-			address.setId((String) tableRow.get(MdekKeys.UUID));
+			address.setId((Long) tableRow.get(MdekKeys.ID));
+			address.setUuid((String) tableRow.get(MdekKeys.UUID));
 			address.setInformation((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
 			address.setIcon(((Integer) tableRow.get(MdekKeys.CLASS)).toString());
 			address.setGivenName((String) tableRow.get(MdekKeys.GIVEN_NAME));
@@ -194,6 +199,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));
 			address.setNameForm((String) tableRow.get(MdekKeys.NAME_FORM));
 			address.setTitleOrFunction((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
+			address.setTypeOfRelation((Integer) tableRow.get(MdekKeys.TYPE_OF_RELATION));
 
 			// Build name
 			if (tableRow.get(MdekKeys.NAME) != null) {

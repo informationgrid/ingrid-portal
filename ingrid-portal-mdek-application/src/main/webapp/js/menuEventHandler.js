@@ -13,7 +13,7 @@ menuEventHandler.selectedNode = {};
 menuEventHandler.handleNewEntity = function(mes) {
 // TODO Dialog fuer neue Objekte / Adressen anzeigen. Reicht der Objektbezeichner im Baum?
 //      Muss eine Nachricht an das Backend gesendet werden?
-//      Nachricht an Backend ja? Id generiert in der Datenbank.
+
 	dojo.debug('handleNewEntity()');
 	var selectedNode = getSelectedNode(mes);
 
@@ -58,7 +58,6 @@ attachNewNode = function() {
 
 	dojo.event.topic.unsubscribe(tree.eventNames.afterExpand, 'attachNewNode');
 //	dojo.event.disconnect('after', selectedNode, 'setChildren', menuEventHandler, 'attachNewNode');
-	dojo.debug('testMethod()');
 
 	var newNode = tree.createNode(createNewNode());
 	selectedNode.addChild(newNode);
