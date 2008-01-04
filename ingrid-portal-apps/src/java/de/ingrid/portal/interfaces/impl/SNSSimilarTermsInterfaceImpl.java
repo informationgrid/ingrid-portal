@@ -54,7 +54,11 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
      */
     public IngridHit[] getTopicsFromText(String term, String filter) {
         try {
-            IngridQuery query = QueryStringParser.parse(term);
+        	// enclose term in '"' if the term has a space, otherwise no results will be returned from SNS
+        	if (term.indexOf(" ") != -1 && !term.startsWith("\"") && !term.endsWith("\"")) {
+        		term = "\"".concat(term).concat("\"");
+        	}
+        	IngridQuery query = QueryStringParser.parse(term);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             if (filter != null) {
                 query.put("filter", filter);
@@ -137,7 +141,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
      */
     public IngridHit[] getTopicSimilarLocationsFromTopic(String topicId) {
         try {
-            IngridQuery query = QueryStringParser.parse(topicId);
+        	IngridQuery query = QueryStringParser.parse(topicId);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARLOCATIONS_FROM_TOPIC);
 
