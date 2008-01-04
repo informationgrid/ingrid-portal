@@ -81,21 +81,30 @@ public class QueryPreProcessor {
         int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
 
         // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are enterd in query !
-        String[] requestedMetadata = new String[10];
-        // udk object metadata
-        requestedMetadata[0] = Settings.HIT_KEY_UDK_CLASS;
-        // udk address metadata
-        requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
-        requestedMetadata[2] = Settings.HIT_KEY_ADDRESS_FIRSTNAME;
-        requestedMetadata[3] = Settings.HIT_KEY_ADDRESS_LASTNAME;
-        requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
-        requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
-        requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        // both
-        requestedMetadata[7] = Settings.HIT_KEY_WMS_URL;
-        requestedMetadata[8] = Settings.RESULT_KEY_PARTNER;
-        requestedMetadata[9] = Settings.RESULT_KEY_PROVIDER;
-
+        String[] requestedMetadata = new String[] {
+        		// udk object metadata
+        		Settings.HIT_KEY_UDK_CLASS,
+        		// udk address metadata
+        		Settings.HIT_KEY_ADDRESS_CLASS,
+        		Settings.HIT_KEY_ADDRESS_CLASS2,
+        		Settings.HIT_KEY_ADDRESS_CLASS3,
+        		Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+        		Settings.HIT_KEY_ADDRESS_LASTNAME,
+        		Settings.HIT_KEY_ADDRESS_TITLE,
+        		Settings.HIT_KEY_ADDRESS_ADDRESS,
+        		Settings.HIT_KEY_ADDRESS_ADDRID,
+        		Settings.HIT_KEY_ADDRESS_ADDRID2,
+        		Settings.HIT_KEY_ADDRESS_ADDRID3,
+        		Settings.HIT_KEY_ADDRESS_INSTITUTION2,
+        		Settings.HIT_KEY_ADDRESS_INSTITUTION3,
+        		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
+        		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
+        		// both
+        		Settings.HIT_KEY_WMS_URL,
+        		Settings.RESULT_KEY_PARTNER,
+        		Settings.RESULT_KEY_PROVIDER
+        };
+        
         // set properties according to the session preferences
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                 IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);

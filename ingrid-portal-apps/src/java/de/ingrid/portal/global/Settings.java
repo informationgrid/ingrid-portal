@@ -181,7 +181,7 @@ public class Settings {
     public final static String RESULT_KEY_UDK_ADDRESS_LASTNAME = "address_lastname";
     public final static String RESULT_KEY_UDK_ADDRESS_TITLE = "address_title";
     public final static String RESULT_KEY_UDK_ADDRESS_SALUTATION = "address_salutation";
-    public static final String RESULT_KEY_UDK_ADDRESS_PARENTS = "address_parents";
+    public static final String RESULT_KEY_UDK_TITLE = "title";
 
     public static final String RESULT_KEY_SUB_HIT = "subhit";
     public static final String RESULT_KEY_DETAIL = "detail";
@@ -201,11 +201,20 @@ public class Settings {
 //    public final static String HIT_KEY_UDK_CLASS = "metaclass";
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
+	public static final String HIT_KEY_ADDRESS_CLASS2 = "T02_address2.typ";
+	public static final String HIT_KEY_ADDRESS_CLASS3 = "T02_address3.typ";
     public static final String HIT_KEY_ADDRESS_FIRSTNAME = "T02_address.firstname";
     public static final String HIT_KEY_ADDRESS_LASTNAME = "T02_address.lastname";
     public static final String HIT_KEY_ADDRESS_TITLE = "T02_address.title";
+	public static final String HIT_KEY_ADDRESS_INSTITUTION = "title";
+	public static final String HIT_KEY_ADDRESS_INSTITUTION2 = "title2";
+	public static final String HIT_KEY_ADDRESS_INSTITUTION3 = "title3";
     public static final String HIT_KEY_ADDRESS_ADDRESS = "T02_address.address";
     public static final String HIT_KEY_ADDRESS_ADDRID = "T02_address.adr_id";
+	public static final String HIT_KEY_ADDRESS_ADDRID2 = "T02_address2.adr_id";
+	public static final String HIT_KEY_ADDRESS_ADDRID3 = "T02_address3.adr_id";
+	public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID = "t022_adr_adr.adr_from_id";
+	public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID3 = "t022_adr_adr3.adr_from_id";
 
     // Object relations
     public static final String HIT_KEY_OBJ_OBJ_FROM = "T012_obj_obj.object_from_id";
@@ -361,6 +370,10 @@ public class Settings {
     // ------------- Session keys for direct HTTP session manipulation -------------------------
     
     public static final String SESSION_LOGIN_STARTED = "session_started";
+
+
+
+
 
 
 

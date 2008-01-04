@@ -281,8 +281,10 @@ public class QueryResultPostProcessor {
 
                 String addrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
                 hit.put(Settings.RESULT_KEY_UDK_CLASS, addrClass);
+                
                 if (addrClass.equals("2") || addrClass.equals("3")) {
-                    hit.put(Settings.RESULT_KEY_UDK_ADDRESS_FIRSTNAME, UtilsSearch.getDetailValue(detail,
+                    // person and free person entry 
+                	hit.put(Settings.RESULT_KEY_UDK_ADDRESS_FIRSTNAME, UtilsSearch.getDetailValue(detail,
                             Settings.HIT_KEY_ADDRESS_FIRSTNAME));
                     hit.put(Settings.RESULT_KEY_UDK_ADDRESS_LASTNAME, UtilsSearch.getDetailValue(detail,
                             Settings.HIT_KEY_ADDRESS_LASTNAME));
@@ -290,12 +292,63 @@ public class QueryResultPostProcessor {
                             Settings.HIT_KEY_ADDRESS_TITLE));
                     hit.put(Settings.RESULT_KEY_UDK_ADDRESS_SALUTATION, UtilsSearch.getDetailValue(detail,
                             Settings.HIT_KEY_ADDRESS_ADDRESS));
-                } else if (addrClass.equals("1")) {
-                    String currentAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
+                } 
+                
+                if (addrClass.equals("1") || addrClass.equals("0") || addrClass.equals("2")) {
+                    // person, unit, institution
+                	String currentAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
                     String newAddressId = null;
-                    ArrayList parentAddr = new ArrayList();
                     boolean skipSearch = false;
-                    while (!skipSearch) {
+                    
+                    String tmpAddressInstitution = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_INSTITUTION2);
+                    String tmpAddrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS2);
+                    String tmpAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID2);
+                    String tmpTitle = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_INSTITUTION);
+                    if (tmpTitle == null) {
+                    	tmpTitle = "";
+                    }
+                    
+                    if (tmpAddressId != null && tmpAddressId.length()>0) {
+        	            // we do have parent addresses included in the original result
+                    	for (int i=0; i<2; i++) {
+        	            	if (i==1) {
+        	                    tmpAddressInstitution = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_INSTITUTION3);
+        	                    tmpAddrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS3);
+        	                    tmpAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID3);
+        	                    String tmpAddressFromId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3);
+        	                    // check for more address parents, skip further querying if no more parents are available
+        	                    if (tmpAddressFromId == null || tmpAddressFromId.length() == 0) {
+        	                    	skipSearch = true;
+        	                    }
+        	            	}
+        	                if (tmpAddressInstitution != null && tmpAddressInstitution.length() > 0) {
+        	                    if (tmpTitle.length() > 0) {
+        	                    	tmpTitle = tmpAddressInstitution.concat(
+        	                                ", ").concat(tmpTitle);
+        	                    } else {
+        	                    	tmpTitle = tmpAddressInstitution;
+        	                    }
+        	                }
+        	                if (tmpAddrClass == null || tmpAddrClass.length() == 0) {
+        	              		// no more parent addresses available than included in original results, skip parent address retrieval
+        	               		skipSearch = true;
+        	                	break;
+        	                }
+        	            }
+                    } else {
+                        String tmpAddressFromId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID);
+                        // check for more address parents, skip further querying if no more parents are available
+                        if (tmpAddressFromId == null || tmpAddressFromId.length() == 0 ||  tmpAddressFromId.equals(currentAddressId)) {
+                        	skipSearch = true;
+                        }
+                    }                    
+                    
+    	            // if a parent address id was included in orinal request, use this for further querying
+                	if (tmpAddressId != null && tmpAddressId.length() > 0) {
+    	            	currentAddressId = tmpAddressId;
+    	            }
+
+                	while (!skipSearch) {
                         IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId)
                                 .concat(" datatype:address ranking:score"));
                         IngridHits results = IBUSInterfaceImpl.getInstance().search(query, 10, 1, 0,
@@ -311,7 +364,13 @@ public class QueryResultPostProcessor {
                                 newAddressId = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_ADDRID);
                                 if ((addrClass.equals("0") || addrClass.equals("1"))
                                         && !currentAddressId.equals(newAddressId)) {
-                                    parentAddr.add(0, addrDetail);
+                                	tmpAddressInstitution = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_INSTITUTION);
+                                	if (tmpTitle.length() > 0) {
+            	                    	tmpTitle = tmpAddressInstitution.concat(
+            	                                ", ").concat(tmpTitle);
+            	                    } else {
+            	                    	tmpTitle = tmpAddressInstitution;
+            	                    }
                                     break;
                                 }
                             }
@@ -325,7 +384,7 @@ public class QueryResultPostProcessor {
                             skipSearch = true;
                         }
                     }
-                    hit.put(Settings.RESULT_KEY_UDK_ADDRESS_PARENTS, parentAddr);
+                    hit.put(Settings.RESULT_KEY_UDK_TITLE, tmpTitle);
                 }
             }
         } catch (Exception ex) {
