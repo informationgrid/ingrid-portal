@@ -14,6 +14,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekAddressBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSLocationTopic"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.sns.Type"/>
 	</allow>
 </dwr>

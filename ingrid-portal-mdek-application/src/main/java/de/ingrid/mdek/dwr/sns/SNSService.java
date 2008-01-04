@@ -3,6 +3,7 @@ package de.ingrid.mdek.dwr.sns;
 import java.net.URL;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -15,6 +16,7 @@ import com.slb.taxi.webservice.xtm.stubs.SearchType;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
 
 import de.ingrid.iplug.sns.*;
+import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
@@ -51,8 +53,8 @@ public class SNSService {
 
     	snsClient = new SNSClient(
         		(String) fPlugDescription.get("username"),
-        		(String)fPlugDescription.get("password"),
-        		(String)fPlugDescription.get("language"),
+        		(String) fPlugDescription.get("password"),
+        		(String) fPlugDescription.get("language"),
         		new URL((String) fPlugDescription.get("serviceUrl")));
 
         snsController = new SNSController(snsClient, "ags:");
@@ -167,7 +169,7 @@ public class SNSService {
 			return Type.TOP_TERM;
     }
     
-    
+/*    
     public ArrayList<SNSTopic> findTopics(String q) {
     	ArrayList<SNSTopic> results = new ArrayList<SNSTopic>();
 
@@ -193,7 +195,7 @@ public class SNSService {
         }
         return results;
     }
-
+*/
 
     public void testIncludeSiblings() {
         // getHierarchy?root=uba_thes_27118&user=ingrid_test&password=ingrid_test&depth=2&direction=up&includeSiblings=true
@@ -240,6 +242,90 @@ public class SNSService {
 	    }
 	    return null;
     }
+
+    public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
+    	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	int[] totalSize = new int[1];
+	    totalSize[0] = 0;
+	    Topic[] snsResults = new Topic[0];
+	    try {
+		    // Get the locations for the given queryTerm
+	    	snsResults = snsController.getTopicsForText(queryTerm, (Integer) fPlugDescription.get("maxWordAnalyzing"),
+	                "/location", "mdek", "de", totalSize, false);
+	    }
+	    catch (Exception e) {log.error(e);}
+
+	    totalSize[0] = snsResults.length;
+	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
+	    IngridHit[] hits = res.getHits();
+
+
+	    // Iterate over the result array and query for additional data (wgs84 coordinates)
+	    // TODO We don't really need to get the detailed information for all the topics here
+	    //		Construct incomplete SNSLocationTopics (without wgs84box and qualifier) here?
+	    if (hits != null) {
+            for (IngridHit ingridHit : hits) {
+                DetailedTopic dt = (DetailedTopic) ingridHit;
+                SNSLocationTopic topic = getDetailedLocationTopicInfo(dt.getTopicID());
+                if (topic != null) {
+//					log.debug(topic);
+                    resultList.add(topic);
+                }
+            }
+        	Collections.sort(resultList, new SNSLocationTopicComparator());
+        }
+	    return resultList;
+    }
+
+    public SNSLocationTopic getDetailedLocationTopicInfo(String topicID) {
+        TopicMapFragment mapFragment = null;
+    	try {
+    		// Query for additional info
+    		mapFragment = snsClient.getPSI(topicID, 0, "/location");
+	    } catch (Exception e) {
+	    	log.error(e);
+	    }
+
+	    if (null != mapFragment) {
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	    	for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+	            if (topic.getId().equals(topicID)) {
+	            	// A match was found. Add the type from the href parameter
+	            	//   and check if there are wgs84 coordinates.
+//	            	log.debug("Topic Found: "+topicID);
+//	            	log.debug("Type: "+topic.getInstanceOf(0).getTopicRef().getHref());
+	            	return createLocationTopic(topic);
+	            }
+	        }
+	    }
+    	return null;
+    }
+
+    private static SNSLocationTopic createLocationTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	SNSLocationTopic result = new SNSLocationTopic();
+    	result.setId(topic.getId());
+    	result.setName(topic.getBaseName(0).getBaseNameString().get_value());
+    	String typeHref = topic.getInstanceOf(0).getTopicRef().getHref();
+    	result.setType(typeHref.substring(typeHref.lastIndexOf("#")+1));
+
+    	// Iterate over all occurrences and extract the relevant information (bounding box wgs84 coords and the qualifier)
+    	for(int i = 0; i < topic.getOccurrence().length; ++i) {
+//    		log.debug(topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref());
+    		if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("wgs84BoxOcc")) {
+//    			log.debug("WGS84 Coordinates: "+topic.getOccurrence(i).getResourceData().get_value());        	            			
+        		String coords = topic.getOccurrence(i).getResourceData().get_value();
+        		String[] ar = coords.split("\\s|,");
+        		if (ar.length == 4) {
+        			result.setBoundingBox(new Float(ar[0]), new Float(ar[1]), new Float(ar[2]), new Float(ar[3]));
+        		}
+    		}
+    		if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("qualifier")) {
+//    			log.debug("Qualifier: "+topic.getOccurrence(i).getResourceData().get_value());        	            			
+        		result.setQualifier(topic.getOccurrence(i).getResourceData().get_value());
+    		}
+    	}
+    	return result;
+    }
     
     private static void printTopic(Topic t) {
     	System.out.println("ID: "+t.getTopicID());
@@ -259,6 +345,19 @@ public class SNSService {
             	// Get the collator for the German Locale 
             	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
             	return gerCollator.compare(topicA.getTopicName(), topicB.getTopicName());
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }
+    static public class SNSLocationTopicComparator implements Comparator<SNSLocationTopic> {
+    	public final int compare(SNSLocationTopic topicA, SNSLocationTopic topicB) {
+            try {
+            	// Get the collator for the German Locale 
+            	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
+            	String labelA = topicA.getName()+" "+topicA.getQualifier();
+            	String labelB = topicB.getName()+" "+topicB.getQualifier();
+            	return gerCollator.compare(labelA, labelB);
             } catch (Exception e) {
                 return 0;
             }

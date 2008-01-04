@@ -288,7 +288,7 @@ function hideSplash(){
 
  -->
 	                    <div class="cellEditors" id="generalAddressEditors">
-	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/extraInfoLegal.js" style="width:120px;" widgetId="generalAddressCombobox"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/addressReferenceTypes.js" style="width:120px;" widgetId="generalAddressCombobox"></div>
 	                    </div>
 	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" valueField="id" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
@@ -1105,31 +1105,19 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow h130">
 	                <span class="label required">Geothesaurus-Raumbezug*</span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'erfassung_modal_einheit.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
 	                <div class="tableContainer rows5">
 	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="information" dataType="String" width="315">Geothesaurus-Raumbezug</th>
-	                  			<th nosort="true" field="latitude1" dataType="String" width="90">Breite 1</th>
+	                  			<th nosort="true" field="name" dataType="String" width="315">Geothesaurus-Raumbezug</th>
 	                  			<th nosort="true" field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
-	                  			<th nosort="true" field="latitude2" dataType="String" width="90">Breite 2</th>
+	                  			<th nosort="true" field="latitude1" dataType="String" width="90">Breite 1</th>
 	                  			<th nosort="true" field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	                  			<th nosort="true" field="latitude2" dataType="String" width="90">Breite 2</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
-	            		      <tr value="1">
-	            		        <td>Bundesland Niedersachsen</td>
-	            		        <td>8,5502</td>
-	            		        <td>46,7589</td>
-	            		        <td>11,5500</td>
-	            		        <td>52,1256</td></tr>
-	            		      <tr value="2">
-	            		        <td>Bundesland Hessen</td>
-	            		        <td>8,5502</td>
-	            		        <td>46,7589</td>
-	            		        <td>11,5500</td>
-	            		        <td>52,1256</td></tr>
 	            	      </tbody>
 	            	    </table>
 	                </div>

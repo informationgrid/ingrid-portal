@@ -280,7 +280,6 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId('generalShortDesc').setValue(nodeData.generalShortDescription);
   dojo.widget.byId('generalDesc').setValue(nodeData.generalDescription);
   dojo.widget.byId('generalAddress').store.setData(nodeData.generalAddressTable);
-  dojo.widget.byId('generalAddress').render();
 
   // -- Spatial --
 //  dojo.widget.byId('spatialRefAdminUnit').store.setData(nodeData.spatialRefAdminUnitTable);

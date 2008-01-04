@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Raumbezug festlegen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+<style type="text/css">
+.floatLeft {float:left;}
+</style>
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+ 		init();
+});
+_container_.addOnUnload(function() {
+ 		deleteComboboxWidgets();
+});
+init = function() {}
+
+var checkboxArray = new Array();
+
+
+deleteComboboxWidgets = function() {
+	while (checkboxArray.length > 0) {
+		var checkBox = checkboxArray.pop();
+		checkBox.destroy();
+	}
+}
+
+resetResultDiv = function() {
+	var resultDiv = dojo.byId("resultList");
+	if (resultDiv) {
+		while (resultDiv.lastChild)
+			resultDiv.removeChild(resultDiv.lastChild);
+	}
+}
+
+setResultList = function(topicList)
+{
+	if (topicList != null) {
+		resetResultDiv();
+		deleteComboboxWidgets();
+
+		for (var i in topicList) {
+			var checkboxDiv = dojo.byId("resultList");
+			if (checkboxDiv) {
+				var label = topicList[i].name+", "+topicList[i].qualifier;
+				var checkBox = dojo.widget.createWidget("checkbox", {
+						id: topicList[i].id,
+						name: label,
+						topic: topicList[i]
+					});
+				checkboxArray.push(checkBox);
+				var labelNode = document.createTextNode(label);
+				var divElement = document.createElement("div");
+				checkboxDiv.appendChild(divElement);
+				divElement.appendChild(checkBox.domNode);
+				divElement.appendChild(labelNode);
+			}
+		}
+	} else {
+		// TODO Show error or clear results
+	}
+}
+
+// 'Search Button' onClick function
+// This function queries the SNSService for location topics
+findLocationTopics = function() {
+	var queryTerm = dojo.widget.byId("locationTextBox").getValue();
+
+	SNSService.getLocationTopics(queryTerm, {
+		callback:setResultList,
+		timeout:0
+	});
+}
+
+// 'Add Button' onClick function
+// This function adds the location topics to the main geothesaurus table
+addLocationTopics = function() {
+	var store = dojo.widget.byId("spatialRefAdminUnit").store;
+	
+	// Iterate over all the checkboxes and add the checked values
+	for (var i = 0; i < checkboxArray.length; ++i) {
+		if (checkboxArray[i].checked) {
+		var topic = checkboxArray[i].topic;
+			if (store.getByKey(topic.id)) {
+				// Element is already in the table. Do nothing.
+			} else {
+				store.addData({
+						Id: topic.id,
+						name: topic.name+", "+topic.qualifier,
+						longitude1: topic.boundingBox[0],
+						latitude1: topic.boundingBox[1],
+						longitude2: topic.boundingBox[2],
+						latitude2: topic.boundingBox[3]},
+					checkboxArray[i].id);
+			}
+		}
+	}
+	_container_.closeWindow();
+}
+
+</script>
+</head>
+
+<body>
+
+<div dojoType="ContentPane">
+
+	<div id="catalogueSpatialRef" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="spatialRefContent" class="content">
+
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<!-- CONTENT START -->
+			<div class="inputContainer w478 noSpaceBelow">
+        		<span class="label"><label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 'R&auml;umliche Einheit festlegen')">R&auml;umliche Einheit festlegen</label></span>
+       			<div class="input spaceBelow">
+       				<span class="floatLeft">
+       					<input type="text" id="locationTextBox" size="20" name="locationTextBox" class="w292" dojoType="ingrid:ValidationTextBox" />
+					</span>
+
+       				<span class="buttonGrey floatLeft" style="margin-left:22px;">
+       					<button dojoType="Button" title="In Geo-Thesaurus suchen" onClick="findLocationTopics">In Geo-Thesaurus suchen</button>
+       				</span>
+        		</div>
+
+        		<div>&nbsp</div>
+        
+        		<span class="label">Auswahl</span>
+        		<span class="floatLeft">
+        			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
+        		</span>
+          		<span class="button w085 transparent" style="margin-top: 58px; margin-left: 373px;">
+					<button dojoType="Button" title="Auswählen" onClick="addLocationTopics">Ausw&auml;hlen</button>          		
+          		</span>
+			</div>
+      		<!-- CONTENT END -->
+		</div>
+	</div>
+</div>
+
+</form>
+</body>
+</html>
