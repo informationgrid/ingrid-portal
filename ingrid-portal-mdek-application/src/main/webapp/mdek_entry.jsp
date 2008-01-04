@@ -229,7 +229,7 @@ function hideSplash(){
 	              <td class="note"><strong>Status:</strong> in Bearbeitung</td>
 	            </tr>
 	            <tr>
-	              <td class="note" colspan="3"><strong>Erstellt am:</strong> 26.06.1998 | <strong>Ge&auml;ndert am:</strong> 27.09.2000 | <strong>Von:</strong> <span id="last_editor">---</span></td>
+	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="creationTime">26.06.1998</span> | <strong>Ge&auml;ndert am:</strong> <span id="modificationTime">27.09.2000</span> | <strong>Von:</strong> <span id="last_editor">---</span></td>
 	            </tr>
 	          </tbody>
 	        </table>

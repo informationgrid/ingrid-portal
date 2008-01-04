@@ -22,6 +22,8 @@ public class MdekDataBean {
 	public String objectName;
 	public Integer objectClass;
 	public String objectOwner;
+	public String creationTime;
+	public String modificationTime;
 	public String lastEditor;
 
 	// General
@@ -716,5 +718,29 @@ public class MdekDataBean {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+
+
+	public String getCreationTime() {
+		return creationTime;
+	}
+
+
+
+	public void setCreationTime(String creationTime) {
+		this.creationTime = creationTime;
+	}
+
+
+
+	public String getModificationTime() {
+		return modificationTime;
+	}
+
+
+
+	public void setModificationTime(String modificationTime) {
+		this.modificationTime = modificationTime;
 	};
 }

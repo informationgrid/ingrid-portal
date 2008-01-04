@@ -60,6 +60,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
 
+		mdekObj.setCreationTime(MdekUtils.timestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_CREATION)));
+		mdekObj.setModificationTime(MdekUtils.timestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+
 		// Spatial
 //		mdekObj.setSpatialRefAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setSpatialRefCoordsAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefCoordsAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -165,7 +168,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			IngridDocument mappedEntry = new IngridDocument();
 			mappedEntry.put(MdekKeys.ID, address.getId());
 			mappedEntry.put(MdekKeys.UUID, address.getUuid());
-			mappedEntry.put(MdekKeys.TYPE_OF_RELATION, address.getTypeOfRelation());
+			mappedEntry.put(MdekKeys.RELATION_TYPE, address.getTypeOfRelation());
 			resultList.add(mappedEntry);
 		}
 		return resultList;
@@ -199,7 +202,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));
 			address.setNameForm((String) tableRow.get(MdekKeys.NAME_FORM));
 			address.setTitleOrFunction((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
-			address.setTypeOfRelation((Integer) tableRow.get(MdekKeys.TYPE_OF_RELATION));
+			address.setTypeOfRelation((Integer) tableRow.get(MdekKeys.RELATION_TYPE));
 
 			// Build name
 			if (tableRow.get(MdekKeys.NAME) != null) {

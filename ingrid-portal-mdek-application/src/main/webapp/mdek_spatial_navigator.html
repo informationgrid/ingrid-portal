@@ -45,7 +45,7 @@ setResultList = function(topicList)
 		for (var i in topicList) {
 			var checkboxDiv = dojo.byId("resultList");
 			if (checkboxDiv) {
-				var label = topicList[i].name+", "+topicList[i].qualifier;
+				var label = topicList[i].name+", "+topicList[i].type;
 				var checkBox = dojo.widget.createWidget("checkbox", {
 						id: topicList[i].id,
 						name: label,
@@ -89,7 +89,7 @@ addLocationTopics = function() {
 			} else {
 				store.addData({
 						Id: topic.id,
-						name: topic.name+", "+topic.qualifier,
+						name: topic.name+", "+topic.type,
 						longitude1: topic.boundingBox[0],
 						latitude1: topic.boundingBox[1],
 						longitude2: topic.boundingBox[2],

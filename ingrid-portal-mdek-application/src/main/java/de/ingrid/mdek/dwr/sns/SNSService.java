@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -15,12 +16,12 @@ import com.slb.taxi.webservice.xtm.stubs.FieldsType;
 import com.slb.taxi.webservice.xtm.stubs.SearchType;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
 
-import de.ingrid.iplug.sns.*;
+import de.ingrid.iplug.sns.SNSClient;
+import de.ingrid.iplug.sns.SNSController;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
@@ -31,35 +32,26 @@ public class SNSService {
 
 	private final static Logger log = Logger.getLogger(SNSService.class);	
 
-	// TODO Read from properties file
-	private static PlugDescription fPlugDescription;
-
-    static {
-        fPlugDescription = new PlugDescription();
-        fPlugDescription.setProxyServiceURL("aPlugId");
-        fPlugDescription.put("serviceUrl", "http://www.semantic-network.de/service-xtm-2.0/xtm/soap");
-        fPlugDescription.put("username", "ingrid_test");
-        fPlugDescription.put("password", "ingrid_test");
-        fPlugDescription.put("language", "de");
-        fPlugDescription.putInt("maxWordAnalyzing", 100);
-	}
-
-    private static String SNS_ROOT_TOPIC = "toplevel"; 
+	private static String SNS_ROOT_TOPIC = "toplevel"; 
     private static String THESAURUS_LANGUAGE_FILTER = "de";
+
+    // Settings and language specific values
+    private ResourceBundle resourceBundle; 
     private SNSController snsController;
     private SNSClient snsClient;
     
-    public SNSService() throws Exception {
+	// Init Method is called by the Spring Framework on initialization
+    public void init() throws Exception {
+		resourceBundle = ResourceBundle.getBundle("sns");
 
     	snsClient = new SNSClient(
-        		(String) fPlugDescription.get("username"),
-        		(String) fPlugDescription.get("password"),
-        		(String) fPlugDescription.get("language"),
-        		new URL((String) fPlugDescription.get("serviceUrl")));
-
+    			resourceBundle.getString("sns.username"),
+    			resourceBundle.getString("sns.password"),
+    			resourceBundle.getString("sns.language"),
+        		new URL(resourceBundle.getString("sns.serviceURL")));
         snsController = new SNSController(snsClient, "ags:");
     }
-
+	
     public ArrayList<SNSTopic> getRootTopics() {
     	return getSubTopics(SNS_ROOT_TOPIC, 1, "down");
     }
@@ -250,7 +242,7 @@ public class SNSService {
 	    Topic[] snsResults = new Topic[0];
 	    try {
 		    // Get the locations for the given queryTerm
-	    	snsResults = snsController.getTopicsForText(queryTerm, (Integer) fPlugDescription.get("maxWordAnalyzing"),
+	    	snsResults = snsController.getTopicsForText(queryTerm, Integer.valueOf(resourceBundle.getString("sns.maxWordAnalyzing")),
 	                "/location", "mdek", "de", totalSize, false);
 	    }
 	    catch (Exception e) {log.error(e);}
@@ -301,12 +293,16 @@ public class SNSService {
     	return null;
     }
 
-    private static SNSLocationTopic createLocationTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    private SNSLocationTopic createLocationTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	if (topic.getOccurrence() == null)
+    		return null;
+
     	SNSLocationTopic result = new SNSLocationTopic();
     	result.setId(topic.getId());
     	result.setName(topic.getBaseName(0).getBaseNameString().get_value());
-    	String typeHref = topic.getInstanceOf(0).getTopicRef().getHref();
-    	result.setType(typeHref.substring(typeHref.lastIndexOf("#")+1));
+    	String type = topic.getInstanceOf(0).getTopicRef().getHref();
+    	type = type.substring(type.lastIndexOf("#")+1);
+    	result.setType(resourceBundle.getString("sns.topic.ref."+type));
 
     	// Iterate over all occurrences and extract the relevant information (bounding box wgs84 coords and the qualifier)
     	for(int i = 0; i < topic.getOccurrence().length; ++i) {
@@ -324,6 +320,8 @@ public class SNSService {
         		result.setQualifier(topic.getOccurrence(i).getResourceData().get_value());
     		}
     	}
+    	if (result.getQualifier() == null)
+    		result.setQualifier(result.getType());
     	return result;
     }
     

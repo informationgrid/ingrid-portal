@@ -262,12 +262,15 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // ------------------ Header ------------------
   var formWidget = dojo.widget.byId('headerFormObject');
-  
+
 //  dojo.debug("HeaderObjectForm before setting values: " + dojo.json.serialize(formWidget.getValues()));
 
   dojo.widget.byId('objectName').setValue(nodeData.objectName);
   dojo.widget.byId('objectClass').setValue(nodeData.nodeDocType);
-  //  dojo.widget.byId('last_editor').setValue('test last editor');
+  dojo.byId('creationTime').innerHTML = nodeData.creationTime;
+  dojo.byId('modificationTime').innerHTML = nodeData.modificationTime;
+
+//  dojo.widget.byId('last_editor').setValue('test last editor');
 
 //  dojo.debug("HeaderObjectForm after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
