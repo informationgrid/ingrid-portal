@@ -86,13 +86,23 @@ public class EntryServiceImpl implements EntryService {
 			Boolean useWorkingCopy) {
 		
 		MdekDataBean data = null; 
-		
-		try {
-			data = dataConnection.getNodeDetail(nodeUuid);
-		} catch (Exception e) {e.printStackTrace();}
 
-		// TODO check for errors and throw an exception?
-		if (data == null) { }
+		if (nodeUuid.equalsIgnoreCase("newNode")) {
+			log.debug("--- New node ---");		
+			data = new MdekDataBean();
+			data.setNodeAppType(OBJECT_APPTYPE);
+			data.setNodeDocType("Class1");
+			data.setUuid(nodeUuid); // "newNode"
+		} else {
+			try {
+				data = dataConnection.getNodeDetail(nodeUuid);
+			} catch (Exception e) {e.printStackTrace();}
+	
+			// TODO check for errors and throw an exception?
+			// Return a newly created node
+			if (data == null) {
+			}
+		}
 
 		return data;
 	}
@@ -158,15 +168,15 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap,
 	 *      java.lang.Boolean)
 	 */
-	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
+	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
 		log.debug("Saving node with ID: "+data.getId());
-		try
-		{
-		  dataConnection.saveNode(data);
+
+		try {
+		  return dataConnection.saveNode(data);
 		}
-		catch (Exception e) {e.printStackTrace(); return e.toString();};
-		
-		return "success";
+		catch (Exception e) {e.printStackTrace();};
+
+		return null;
 	}
 
 
@@ -200,7 +210,7 @@ public class EntryServiceImpl implements EntryService {
 		node.put("contextMenu", NODE_MENU_ID);
 		node.put("dojoType", NODE_DOJO_TYPE);
 		node.put("nodeAppType", OBJECT_APPTYPE);
-
+		
 //		node.put("isFolder", hasChildren);
 //		node.put("nodeDocType", "Class"+entityClass.toString());
 //		node.put("title", name);

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
@@ -49,13 +51,17 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		MdekDataBean mdekObj = new MdekDataBean();
 
 		// General
-//		mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.MISSING));
+		mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
 		mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
 		mdekObj.setId((Long) obj.get(MdekKeys.ID));
 		mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
 		mdekObj.setTitle((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setObjectClass((Integer) obj.get(MdekKeys.CLASS));
-		mdekObj.setNodeDocType("Class"+((Integer) obj.get(MdekKeys.CLASS)));
+
+		WorkState workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, (String) obj.get(MdekKeys.WORK_STATE));
+		mdekObj.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
+		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
+
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
@@ -68,11 +74,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 //		mdekObj.setSpatialRefCoordsAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefCoordsAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setSpatialRefLocationTable((ArrayList<HashMap<String, String>>) mapToSpatialRefLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setSpatialRefCoordsLocationTable((ArrayList<HashMap<String, String>>) mapToSpatialRefCoordsLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setSpatialRefAltMin((Float) obj.get(MdekKeys.MISSING));
-//		mdekObj.setSpatialRefAltMax((Float) obj.get(MdekKeys.MISSING));
-//		mdekObj.setSpatialRefAltMeasure((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setSpatialRefAltVDate((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setSpatialRefExplanation((String) obj.get(MdekKeys.MISSING));
+		mdekObj.setSpatialRefAltMin((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MINIMUM));
+		mdekObj.setSpatialRefAltMax((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MAXIMUM));
+		mdekObj.setSpatialRefAltMeasure((Integer) obj.get(MdekKeys.VERTICAL_EXTENT_UNIT));
+		mdekObj.setSpatialRefAltVDate((Integer) obj.get(MdekKeys.VERTICAL_EXTENT_VDATUM));
+		mdekObj.setSpatialRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_SPATIAL_DOMAIN));
 
 		// Time
 //		mdekObj.setTimeRefType((String) obj.get(MdekKeys.MISSING));
@@ -112,9 +118,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		
+
+
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekObj.setNodeAppType("O");
+		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
+		// If workState... nodeDocType += "_"+workState ?		
+		if (workState.getDbValue().equalsIgnoreCase("B")) {
+			nodeDocType += "_B";
+		}
+		mdekObj.setNodeDocType(nodeDocType);
+
 
 		return mdekObj;
 	}
@@ -131,8 +146,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		mdekObj.put(MDEK_OBJECT_UUID, obj.get(MdekKeys.UUID));
 		mdekObj.put(MDEK_OBJECT_TITLE, obj.get(MdekKeys.TITLE));
-		mdekObj.put(MDEK_OBJECT_DOCTYPE, "Class"+((Integer) obj.get(MdekKeys.CLASS) + 1));
 		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
+		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
+		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
+		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
+		// If workState... nodeDocType += "_"+workState ?		
+		if (workState.equalsIgnoreCase("B")) {
+			nodeDocType += "_B";
+		}
+
+		mdekObj.put(MDEK_OBJECT_DOCTYPE, nodeDocType);
 
 		return mdekObj;
 	}
@@ -141,14 +164,23 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		IngridDocument udkObj = new IngridDocument();
 
 		udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
+		udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
 		udkObj.put(MdekKeys.ID, data.getId());
 		udkObj.put(MdekKeys.UUID, data.getUuid());
+		udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());
 		udkObj.put(MdekKeys.TITLE, data.getObjectName());
 		// extrahieren des int Wertes für die Objekt-Klasse
-		udkObj.put(MdekKeys.CLASS, Integer.parseInt(data.getNodeDocType().substring(5)));
+		udkObj.put(MdekKeys.CLASS, data.getObjectClass());
 //		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());
 		udkObj.put(MdekKeys.ADR_ENTITIES, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
-		
+
+		udkObj.put(MdekKeys.VERTICAL_EXTENT_MINIMUM, data.getSpatialRefAltMin());
+		udkObj.put(MdekKeys.VERTICAL_EXTENT_MAXIMUM, data.getSpatialRefAltMax());
+		udkObj.put(MdekKeys.VERTICAL_EXTENT_UNIT, data.getSpatialRefAltMeasure());
+		udkObj.put(MdekKeys.VERTICAL_EXTENT_VDATUM, data.getSpatialRefAltVDate());
+		udkObj.put(MdekKeys.DESCRIPTION_OF_SPATIAL_DOMAIN, data.getSpatialRefExplanation());
+
+
 		return udkObj;
 	}
 

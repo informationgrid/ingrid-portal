@@ -137,7 +137,7 @@ public class EntryServiceMockupImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap,
 	 *      java.lang.Boolean)
 	 */
-	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
+	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -27,17 +27,29 @@ var currentUdk = {};
 
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
-  {
+{
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, 'handleLoadRequest');
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, 'handleSaveRequest');
 
 	var treeListener = dojo.widget.byId("treeListener");
-	dojo.event.topic.subscribe(treeListener.eventNames.deselect, function(arg) {
-//			arg.node:this.selectedNode, arg.target:event.target	
-//			dojo.debug("Setting prev selected node to: "+arg.node.id);
-			udkDataProxy.prevSelectedNode = arg.node;
-		}
-	);
+
+
+	// Before a node is selected we ask the user if he wants to save unsaved changes.
+	// Connection to the onClick function does not work for some odd reasons (?)
+	// We connect to the processNode function instead.
+	var aroundTreeClick = function(invocation) {
+    	if (dojo.html.hasClass(invocation.args[1].target, "TreeLabel")) {	
+			var deferred = udkDataProxy.checkForUnsavedChanges();
+			var stdCallback = function() {return invocation.proceed();};
+			var errorCallback = function() {dojo.debug("Select cancelled.");};
+
+			deferred.addCallbacks(stdCallback, errorCallback);
+			return deferred;
+		} else {
+			return invocation.proceed();
+		}	
+	}
+	dojo.event.connect("around", treeListener, "processNode", aroundTreeClick);
 
 
 	// Connect the widgets onChange methods to the setDirtyFlag Method
@@ -172,16 +184,48 @@ _connectStoreWithDirtyFlag = function(store)
 	dojo.event.connect(store, 'onSetData', 'setDirtyFlag');
 }
 
+// This function has to be called before any UI functions that are about to change the
+// state of the tree or the currently displayed dataset. It checks if there are unsaved changes
+// and queries the user if he wants to save changes, discard them or abort.
+// The function returns a deferred object users can attach callbacks to.
+// The deferred object signals an error if the user canceled the operation. No state changes
+// should be done in this case.
+udkDataProxy.checkForUnsavedChanges = function()
+{
+	dojo.debug("Check for unsaved changes called.");
+
+	var deferred = new dojo.Deferred();
+	if (dirtyFlag == true) {
+		dialog.showPage('Save changes', 'mdek_save_changes.html', 342, 220, true, {resultHandler: deferred});
+		
+		// If the user was editing a newly created node and he wants to discard the changes
+		// delete the newly created node.
+		if (currentUdk.uuid == "newNode") {
+			var discardNewNode = function(arg) {
+				if (arg == "DISCARD") {
+					dojo.debug("Discarding the newly created node.");
+					var newNode = dojo.widget.byId("newNode");
+					newNode.destroy();
+				}
+			};
+			deferred.addCallback(discardNewNode);
+		
+		}
+	} else {
+		deferred.callback();
+	}
+
+	return deferred;
+}
+
 
 udkDataProxy.handleLoadRequest = function(node)
 {
 	// TODO Check if we are in a state where it's safe to load data.
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
-	if (dirtyFlag == true) {
-		dialog.showPage('Save changes', 'mdek_save_changes.html', 342, 220, true);
-		udkDataProxy.lastNodeLoadRequest = node;
-		return;
-	} else {
+	var deferred = udkDataProxy.checkForUnsavedChanges();
+	var loadErrback = function() {return;}
+	var loadCallback = function() {
 		dojo.debug('udkDataProxy calling EntryService.getNodeData('+node.id+', '+node.appType+')');
 		// ---- DWR call to load the data ----
 		EntryService.getNodeData(node.id, node.appType, 'false',
@@ -191,7 +235,9 @@ udkDataProxy.handleLoadRequest = function(node)
 				errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }
 			}
 		);
-	}
+	};
+
+	deferred.addCallbacks(loadCallback, loadErrback);
 }
 
 
@@ -201,15 +247,15 @@ udkDataProxy.handleSaveRequest = function()
 	 *      If we are, read all the fields and send the collected data to
 	 *      the EntryService. If not delay the call and bounce back the message (e.g. query user).
 	 */
-	
+
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
 	
 	// ---- DWR call to store the data ----
-	dojo.debug('udkDataProxy calling EntryService.saveNodeData('+nodeData.uuid);
+	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+")");
 	EntryService.saveNodeData(nodeData, 'false',
 		{
-			callback: function(){resetDirtyFlag(); udkDataProxy._updateTree(nodeData); udkDataProxy.onAfterSave();},
+			callback: function(res){resetDirtyFlag(); udkDataProxy._setData(res); udkDataProxy._updateTree(res); udkDataProxy.onAfterSave();},
 			timeout:5000,
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
 		}
@@ -217,7 +263,7 @@ udkDataProxy.handleSaveRequest = function()
 }
 
 // event.connect point. Called when data has been saved 
-udkDataProxy.onAfterSave = function() {}
+udkDataProxy.onAfterSave = function() { dojo.debug("onAfterSave()"); }
 
 udkDataProxy._setData = function(nodeData)
 {
@@ -237,7 +283,6 @@ udkDataProxy._setData = function(nodeData)
       break;
     case 'O':
       udkDataProxy._setObjectData(nodeData);
-      udkDataProxy._updateTree(nodeData);
       break;
     default:
       dojo.debug('Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!');
@@ -266,7 +311,8 @@ udkDataProxy._setObjectData = function(nodeData)
 //  dojo.debug("HeaderObjectForm before setting values: " + dojo.json.serialize(formWidget.getValues()));
 
   dojo.widget.byId('objectName').setValue(nodeData.objectName);
-  dojo.widget.byId('objectClass').setValue(nodeData.nodeDocType);
+  dojo.widget.byId('objectClass').setValue("Class"+nodeData.objectClass);
+  dojo.byId('workState').innerHTML = nodeData.workState;
   dojo.byId('creationTime').innerHTML = nodeData.creationTime;
   dojo.byId('modificationTime').innerHTML = nodeData.modificationTime;
 
@@ -444,6 +490,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.uuid = currentUdk.uuid;
   nodeData.id = currentUdk.id;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
+  nodeData.parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
 
 
   // ------------------ Header ------------------
@@ -452,7 +499,6 @@ udkDataProxy._getObjectData = function(nodeData)
 //  dojo.debug("HeaderObjectForm values: " + dojo.json.serialize(formWidget.getValues()));
 
   nodeData.objectName = dojo.widget.byId('objectName').getValue();
-  nodeData.nodeDocType = dojo.widget.byId('objectClass').getValue();
 //  nodeData.last_editor = dojo.widget.byId('last_editor').getValue();
 
   // ------------------ Object Content ------------------
@@ -462,11 +508,19 @@ udkDataProxy._getObjectData = function(nodeData)
   // --- General ---
   nodeData.generalShortDescription = dojo.widget.byId('generalShortDesc').getValue();
   nodeData.generalDescription = dojo.widget.byId('generalDesc').getValue();
+  nodeData.objectClass = dojo.widget.byId("objectClass").getValue()[5]; // Value is a string: 'Classx' where x is the class
 
   nodeData.generalAddressTable = udkDataProxy._getTableData('generalAddress');
 
-/*
   // -- Spatial --
+  nodeData.spatialRefAltMin = dojo.widget.byId('spatialRefAltMin').getValue();
+  nodeData.spatialRefAltMax = dojo.widget.byId('spatialRefAltMax').getValue();
+  nodeData.spatialRefAltMeasure = dojo.widget.byId('spatialRefAltMeasure').getValue();
+  nodeData.spatialRefAltVDate = dojo.widget.byId('spatialRefAltVDate').getValue();
+  nodeData.spatialRefExplanation = dojo.widget.byId('spatialRefExplanation').getValue();
+
+
+/*
   //  var tableId = dojo.widget.byId('spatialRefAdminUnit').valueField;
   dojo.widget.byId('spatialRefAdminUnit').store.clearData();
   dojo.widget.byId('spatialRefAdminUnit').store.addData({Id: '1', information:'info one', latitude1:'3.14', longitude1:'0.1123', latitude2:'1.234', longitude2:'2.345'});
@@ -558,9 +612,17 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 // Looks for the node widget with uuid = nodeData.uuid and updates the
 // tree data (label, type, etc.) according to the given nodeData
 udkDataProxy._updateTree = function(nodeData) {
+	dojo.debug("_updateTree() "+nodeData.uuid);
+	
 	var node = dojo.widget.byId(nodeData.uuid);
-	node.nodeDocType = nodeData.nodeDocType;	
-	node.setTitle(nodeData.objectName);
+	if (node) {
+		dojo.debug("nodeDocType: "+nodeData.nodeDocType);
+		node.nodeDocType = nodeData.nodeDocType;	
+		dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(node);
+		node.setTitle(nodeData.objectName);
+	} else {
+		dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
+	}
 }
 
 

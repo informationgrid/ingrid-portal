@@ -84,12 +84,20 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return null;
 	}
 
-	public void saveNode(MdekDataBean data) {
+	public MdekDataBean saveNode(MdekDataBean data) {
 		IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
+
+		// Handle store of a new node. Should this be handled by the EntryService?
+		if (data.getUuid().equalsIgnoreCase("newNode")) {
+			obj.remove(MdekKeys.UUID);
+			obj.remove(MdekKeys.ID);
+		}
+
 		log.debug("Sending the following object:");
 		log.debug(obj);
 
-		mdekCaller.storeObject(obj);
+		IngridDocument response = mdekCaller.storeObject(obj);
+		return extractSingleObjectFromResponse(response);
 	}
 
 	// ------------------------ Helper Methods ---------------------------------------	

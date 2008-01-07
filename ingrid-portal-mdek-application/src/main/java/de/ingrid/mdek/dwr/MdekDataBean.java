@@ -12,7 +12,9 @@ public class MdekDataBean {
 
 	public Long id;
 	public String uuid;
+	public String parentUuid;	// Only set when storing new objects
 	public Boolean hasChildren;
+	public String workState;
 
 	public String title;
 	public String nodeDocType;
@@ -36,10 +38,10 @@ public class MdekDataBean {
 	public ArrayList<HashMap<String, String>> spatialRefCoordsAdminUnitTable;
 	public ArrayList<HashMap<String, String>> spatialRefLocationTable;
 	public ArrayList<HashMap<String, String>> spatialRefCoordsLocationTable;
-	public Float spatialRefAltMin;
-	public Float spatialRefAltMax;
-	public String spatialRefAltMeasure;
-	public String spatialRefAltVDate;
+	public Double spatialRefAltMin;
+	public Double spatialRefAltMax;
+	public Integer spatialRefAltMeasure;
+	public Integer spatialRefAltVDate;
 	public String spatialRefExplanation;
 
 	// Time
@@ -136,7 +138,10 @@ public class MdekDataBean {
 	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 	 */
-	
+
+	public MdekDataBean(){
+		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
+	}
 	
 	
 	public ArrayList<HashMap<String, String>> getLinksToTable() {
@@ -234,11 +239,6 @@ public class MdekDataBean {
 		this.thesaurusEnvCatsList = thesaurusEnvCatsList;
 	}
 
-
-
-	public MdekDataBean(){}
-
-	
 	
 	public Long getId() {
 		return id;
@@ -390,49 +390,49 @@ public class MdekDataBean {
 
 
 
-	public Float getSpatialRefAltMin() {
+	public Double getSpatialRefAltMin() {
 		return spatialRefAltMin;
 	}
 
 
 
-	public void setSpatialRefAltMin(Float spatialRefAltMin) {
+	public void setSpatialRefAltMin(Double spatialRefAltMin) {
 		this.spatialRefAltMin = spatialRefAltMin;
 	}
 
 
 
-	public Float getSpatialRefAltMax() {
+	public Double getSpatialRefAltMax() {
 		return spatialRefAltMax;
 	}
 
 
 
-	public void setSpatialRefAltMax(Float spatialRefAltMax) {
+	public void setSpatialRefAltMax(Double spatialRefAltMax) {
 		this.spatialRefAltMax = spatialRefAltMax;
 	}
 
 
 
-	public String getSpatialRefAltMeasure() {
+	public Integer getSpatialRefAltMeasure() {
 		return spatialRefAltMeasure;
 	}
 
 
 
-	public void setSpatialRefAltMeasure(String spatialRefAltMeasure) {
+	public void setSpatialRefAltMeasure(Integer spatialRefAltMeasure) {
 		this.spatialRefAltMeasure = spatialRefAltMeasure;
 	}
 
 
 
-	public String getSpatialRefAltVDate() {
+	public Integer getSpatialRefAltVDate() {
 		return spatialRefAltVDate;
 	}
 
 
 
-	public void setSpatialRefAltVDate(String spatialRefAltVDate) {
+	public void setSpatialRefAltVDate(Integer spatialRefAltVDate) {
 		this.spatialRefAltVDate = spatialRefAltVDate;
 	}
 
@@ -742,5 +742,25 @@ public class MdekDataBean {
 
 	public void setModificationTime(String modificationTime) {
 		this.modificationTime = modificationTime;
+	}
+
+
+	public String getWorkState() {
+		return workState;
+	}
+
+
+	public void setWorkState(String workState) {
+		this.workState = workState;
+	}
+
+
+	public String getParentUuid() {
+		return parentUuid;
+	}
+
+
+	public void setParentUuid(String parentUuid) {
+		this.parentUuid = parentUuid;
 	};
 }

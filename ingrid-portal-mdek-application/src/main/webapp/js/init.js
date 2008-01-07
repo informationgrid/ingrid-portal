@@ -168,7 +168,7 @@ function initTree() {
   		});
 		
 		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
-		deferred.addErrback(function(res) { alert(res.message); });
+		deferred.addErrback(function(res) { alert("Error while loading data from the server. Please check your connection and try again!"); return res;});
 		return deferred;
 	};
 }

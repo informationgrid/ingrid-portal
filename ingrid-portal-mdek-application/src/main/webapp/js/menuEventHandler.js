@@ -1,3 +1,5 @@
+<script type="text/javascript" src="js/udkDataProxy.js"></script>
+
 /*
  * Menu Event Handler. Static Methods
  */
@@ -13,41 +15,37 @@ menuEventHandler.selectedNode = {};
 menuEventHandler.handleNewEntity = function(mes) {
 // TODO Dialog fuer neue Objekte / Adressen anzeigen. Reicht der Objektbezeichner im Baum?
 //      Muss eine Nachricht an das Backend gesendet werden?
+	var deferred = udkDataProxy.checkForUnsavedChanges();
 
-	dojo.debug('handleNewEntity()');
-	var selectedNode = getSelectedNode(mes);
+	var createNodeErrback = function(){dojo.debug("New node operation cancelled.");};
+	var createNodeCallback = function() {
+		dojo.debug("Deferred callback");
+		var selectedNode = getSelectedNode(mes);
+		if (!selectedNode) {
+    		dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
+		} else {
+			if (!selectedNode.isFolder) {
+				selectedNode.setFolder();
+				// TODO? Don't load children from the db. The new node is the only children.
+				selectedNode.expand();
+				menuEventHandler.selectedNode = selectedNode;
+				attachNewNode();
+			} else if (!selectedNode.isExpanded) {
+    			var tree = selectedNode.tree;
+    			var treeController = dojo.widget.byId('treeController');
+				menuEventHandler.selectedNode = selectedNode;
 
-	if (!selectedNode) {
-    	dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-	} else {
-/*
-    	var dlg = 'erfassung_objekt_anlegen.html';
-    	if (selectedNode.nodeAppType == "A")
-      	dlg = 'erfassung_adresse_anlegen.html';
-    	dialog.showPage(message.get('tree.nodeNew'), dlg, 502, 130, true, {treeId:'tree', controllerId:'treeController', nodeId:selectedNode.widgetId});
-*/
-		// TODO if current node was not saved... 
-
-		if (!selectedNode.isFolder) {
-			selectedNode.setFolder();
-			// TODO? Don't load children from the db. The new node is the only children.
-			selectedNode.expand();
-			menuEventHandler.selectedNode = selectedNode;
-			attachNewNode();
-		}
-		else if (!selectedNode.isExpanded) {
-    		var tree = selectedNode.tree;
-    		var treeController = dojo.widget.byId('treeController');
-			menuEventHandler.selectedNode = selectedNode;
-
-			dojo.event.topic.subscribe(tree.eventNames.afterExpand, 'attachNewNode');
-			treeController.expand(selectedNode);
+				dojo.event.topic.subscribe(tree.eventNames.afterExpand, 'attachNewNode');
+				treeController.expand(selectedNode);
+  			}
+  			else {
+				menuEventHandler.selectedNode = selectedNode;
+				attachNewNode();
+  			}
   		}
-  		else {
-			menuEventHandler.selectedNode = selectedNode;
-			attachNewNode();
-  		}
-  	}
+	};
+
+	deferred.addCallbacks(createNodeCallback, createNodeErrback);
 }
 
 
@@ -59,17 +57,23 @@ attachNewNode = function() {
 	dojo.event.topic.unsubscribe(tree.eventNames.afterExpand, 'attachNewNode');
 //	dojo.event.disconnect('after', selectedNode, 'setChildren', menuEventHandler, 'attachNewNode');
 
-	var newNode = tree.createNode(createNewNode());
+	var newNode = tree.createNode(_createNewNode());
 	selectedNode.addChild(newNode);
 
 	var treeController = dojo.widget.byId('treeController');
-
+/*
 	tree.selectNode(newNode);
     dojo.event.topic.publish(treeListener.eventNames.deselect, {node: selectedNode});    
     dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
-
-//	tree.selectedNode = newNode;
+*/
+	tree.selectNode(newNode);
+	tree.selectedNode = newNode;
+	// TODO Add New Node event
+   	dojo.debug('Publishing event: /loadRequest('+newNode.id+', '+newNode.nodeAppType+')');
+   	dojo.event.topic.publish("/loadRequest", {id: newNode.id, appType: newNode.nodeAppType});
 }
+
+
 
 menuEventHandler.handlePreview = function(message) {
 // Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
@@ -173,11 +177,11 @@ function getSelectedNode(message) {
   }
 }
 
-function createNewNode()
+function _createNewNode()
 {
 	return {contextMenu: 'contextMenu1',
 			isFolder: false,
-			nodeDocType: 'Class1',
+			nodeDocType: 'Class1',	// Initial display type of a new node
 			title: message.get('tree.newNodeName'),
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: 'O',

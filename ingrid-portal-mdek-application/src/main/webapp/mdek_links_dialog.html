@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Verweise anlegen/bearbeiten</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+<script type="text/javascript" src="js/erfassung_forms.js"></script>
+</head>
+
+<body>
+
+<form method="get" id="contentForm" action="">
+
+<div dojoType="ContentPane">
+
+  <div id="links" class="contentBlockWhite top wideBlock">
+    <div id="winNavi">
+      <a href="#" title="Hilfe">[?]</a>
+	  </div>
+	  <div id="linksContent" class="content">
+
+      <!-- LEFT HAND SIDE CONTENT START -->
+      <div class="spacer"></div>
+      <div class="inputContainer field grey noSpaceBelow fullField">
+        <span class="label">Verweis von</span>
+        <div class="outlined w616">
+          <span class="label"><label class="inActive" for="linksFromObjectName">Objektname</label></span>
+          <span class="input spaceBelow"><input type="text" id="linksFromObjectName" name="linksFromObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" value="WABIS - Altablagerungen" /></span>
+          <span class="label required"><label for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
+          <span class="input"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:590px;" widgetId="linksFromFieldName"></div></span>
+        </div>
+        <span class="button transparent"><a href="#" class="buttonBlue" title="Neu">Neu</a></span>
+
+        <span class="label required"><label class="inActive" for="linksLinkType">Verweistyp*</label></span>
+        <div class="checkboxContainer">
+          <span><input type="radio" name="LinksLinktype" id="linksLinkType1" class="radio" checked /><label class="inActive" for="linksLinkType1">Objekt</label></span>
+          <span><input type="radio" name="linksLinkType" id="linksLinkType2" class="radio" /><label class="inActive" for="linksLinkType2">URL</label></span>
+        </div>
+
+        <div class="spacer"></div>
+        <span class="label">Verweis auf</span>
+
+        <!-- VERWEIS AUF OBJEKT -->
+        <div id="linkToObject" class="outlined w616">
+          <span class="label required"><label for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname*</label></span>
+          <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Objekt ausw&auml;hlen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);" title="Objekt ausw&auml;hlen [Popup]">Objekt ausw&auml;hlen</a></span>
+          <span class="input spaceBelow"><input type="text" id="linksToObjectName" name="linksToObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+          <span class="label required"><label class="inActive" for="linksToObjectClass">Objektklasse*</label></span>
+          <span class="input spaceBelow"><input type="text" id="linksToObjectClass" name="linksToObjectClass" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+          <span class="input"><textarea id="linksToDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
+        </div>
+
+        <!-- VERWEIS AUF URL -->
+        <div id="linkToURL" class="outlined w616">
+          <span class="label required"><label for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bezeichnung des Verweises')">Bezeichnung des Verweises*</label></span>
+          <span class="input spaceBelow"><input type="text" id="linksToName" name="linksToName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+          <span class="label required"><label for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'WWW-Adresse (URL)')">WWW-Adresse (URL)*</label></span>
+          <span class="input spaceBelow"><input type="text" id="linksToURL" name="linksToURL" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+
+          <div class="inputContainer">
+            <span class="entry first">
+              <span class="label required"><label for="linksToDataType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datentyp')">Datentyp*</label></span>
+              <span class="input"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/datatypes.js" style="width:274px;" widgetId="linksToDataType"></div></span>
+            </span>
+            <span class="entry">
+              <span class="label"><label for="linksToDataVolume" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenvolumen')">Datenvolumen</label></span>
+              <span class="input"><input type="text" id="linksToDataVolume" name="linksToDataVolume" class="w134" dojoType="ingrid:ValidationTextBox" /></span>
+            </span>
+            <span class="entry">
+              <span class="label"><label for="linksToURLType" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL-Typ')">URL-Typ</label></span>
+              <span class="input"><div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/urltypes.js" style="width:116px;" widgetId="linksToURLType"></div></span>
+            </span>
+            <div class="fill"></div>
+          </div>
+
+          <div class="inputContainer spaceBelow">
+            <span class="entry first">
+              <span class="label"><label for="linksToIconURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Icon-URL')">Icon-URL</label></span>
+              <span class="input"><input type="text" id="linksToIconURL" name="linksToIconURL" class="w292" dojoType="ingrid:ValidationTextBox" /></span>
+            </span>
+            <span class="entry">
+              <span class="label"><label for="linksToIconText" onclick="javascript:dialog.showContextHelp(arguments[0], 'Icon-Text')">Icon-Text</label></span>
+              <span class="input"><input type="text" id="linksToIconText" name="linksToIconText" class="w292" dojoType="ingrid:ValidationTextBox" /></span>
+            </span>
+            <div class="fill"></div>
+          </div>
+
+          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+          <span class="input"><textarea id="linksToDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
+        </div>
+        <div class="spacerField"></div>
+  	  </div>
+
+      <div class="inputContainer full noSpaceBelow">
+        <span class="button w644"><a href="#" class="buttonBlue" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
+  	  </div>
+      <!-- LEFT HAND SIDE CONTENT END -->
+
+      <!-- RIGHT HAND SIDE CONTENT START -->
+      <div id="listLinks" class="inputContainer">
+        <span class="label"><label class="inActive" for="linkList">Verweisliste</label></span>
+
+        <div dojoType="ContentPane" class="scrollable">
+          <span class="label"><label for="linkListObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objekte')">Objekte</label></span>
+    	    <table id="linkListObject" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
+    	      <thead>
+    		      <tr>
+          			<th field="type" dataType="String" width="30">&nbsp;</th>
+          			<th field="name" dataType="String" width="225" sort="desc">&nbsp;</th>
+    		      </tr>
+    	      </thead>
+    	      <tbody>
+    		      <tr value="1">
+                <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
+                <td>Bibliographie zum Naturschutzgebiet L&uuml;neburger Heide</td></tr>
+    		      <tr value="2">
+                <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
+                <td>Bibliographie zum Naturschutzgebiet Schorfheide</td></tr>
+    	      </tbody>
+    	    </table>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div dojoType="ContentPane" class="scrollable">
+          <span class="label"><label for="linkListURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL')">URL</label></span>
+    	    <table id="linkListURL" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
+    	      <thead>
+    		      <tr>
+          			<th field="type" dataType="String" width="30">&nbsp;</th>
+          			<th field="name" dataType="String" width="225" sort="desc">&nbsp;</th>
+    		      </tr>
+    	      </thead>
+    	      <tbody>
+    		      <tr value="1">
+                <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+                <td>http://www.nature.com</td></tr>
+    		      <tr value="2">
+                <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
+                <td>http://www.bund.net</td></tr>
+    	      </tbody>
+    	    </table>
+        </div>
+        
+    	</div>
+      <!-- RIGHT HAND SIDE CONTENT END -->
+
+    </div>
+  </div>
+</div>
+
+</form>
+</body>
+</html>

@@ -6,28 +6,30 @@ span.floatLeft {float:left;}
 
 
 <script type="text/javascript">
-_container_.addOnLoad(function() {
- 		init();
+_container_.addOnLoad(function() {});
+
+_container_.addOnUnload(function() {
+	// If the dialog was cancelled via the dialogs close button
+	// we need to signal an error (cancel action)
+	if (_container_.customParams.resultHandler.fired == -1) {
+		_container_.customParams.resultHandler.errback();
+	}
 });
 
-init = function() {}
 
 // 'Yes Button' onClick function
 // This function resets the dirty flag and publishes another save request
 // TODO: After a successful save we have to load the clicked node 
 saveChanges = function() {
-	resetDirtyFlag();
 
-	// We create a deferred object so the load and save calls don't overlap
-	var d = new dojo.Deferred();
-	d.addCallback(function() {
-		// Disconnect this function after it was called once 
-		dojo.event.disconnect('after', udkDataProxy, 'onAfterSave', d, 'callback');
-		dojo.event.topic.publish("/loadRequest", udkDataProxy.lastNodeLoadRequest);
+	var def = new dojo.Deferred();
+	def.addCallback(function(){
+		dojo.event.disconnect('after', udkDataProxy, 'onAfterSave', def, 'callback');
+		_container_.customParams.resultHandler.callback("SAVE");
 		_container_.closeWindow();
-	});
+		}); 
 
-	dojo.event.connectOnce('after', udkDataProxy, 'onAfterSave', d, 'callback');
+	dojo.event.connectOnce('after', udkDataProxy, 'onAfterSave', def, 'callback');
 	dojo.event.topic.publish("/saveRequest");
 }
 
@@ -35,17 +37,14 @@ saveChanges = function() {
 // This function resets the dirty flag and publishes another load request 
 discardChanges = function() {
 	resetDirtyFlag();
-    dojo.event.topic.publish("/loadRequest", udkDataProxy.lastNodeLoadRequest);
+	_container_.customParams.resultHandler.callback("DISCARD");
 	_container_.closeWindow();
 }
 
 // 'Cancel Button' onClick function
 // This function closes the dialog without saving or loading.
 closeDialog = function() {
-	dojo.debug("close dialog called");
-	dojo.widget.byId('tree').selectNode(udkDataProxy.prevSelectedNode);
-	dojo.widget.byId('treeListener').selectedNode = udkDataProxy.prevSelectedNode;
-
+	_container_.customParams.resultHandler.errback();
 	_container_.closeWindow();
 }
 

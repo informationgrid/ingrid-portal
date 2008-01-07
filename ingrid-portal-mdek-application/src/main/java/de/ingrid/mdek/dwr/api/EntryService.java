@@ -135,10 +135,9 @@ public interface EntryService {
 	 * @param useWorkingCopy
 	 *            If true saves data only to the working copy, if false save it
 	 *            over the original data and remove the working copy.
-	 * @return 'success' or error message.
+	 * @return The stored node is returned with updated values (id, work state, etc.)
 	 */
-	// TODO Change return type String to something meaningful (void, bool?)
-	public String saveNodeData(MdekDataBean data, Boolean useWorkingCopy);
+	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy);
 
 	/**
 	 * Copy a node. The parameter includeChildren specifies if the children of

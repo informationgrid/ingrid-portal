@@ -226,7 +226,7 @@ function hideSplash(){
 	            <tr>
 	              <td class="label"><label for="objectOwner">Verantwortlicher</label></td>
 	              <td><input dojoType="ingrid:Select" disabled="true" dataUrl="js/data/owner.js" style="width:386px;" id="objectOwner" name="objectOwner" mode="remote" /></td>
-	              <td class="note"><strong>Status:</strong> in Bearbeitung</td>
+	              <td class="note"><strong>Status:</strong> <span id="workState"></span></td>
 	            </tr>
 	            <tr>
 	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="creationTime">26.06.1998</span> | <strong>Ge&auml;ndert am:</strong> <span id="modificationTime">27.09.2000</span> | <strong>Von:</strong> <span id="last_editor">---</span></td>
@@ -1667,7 +1667,7 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired h164">
 	                <div class="half left">
 	                  <span class="label">Verweise zu</span>
-	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                  <div class="tableContainer rows4">
 	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
