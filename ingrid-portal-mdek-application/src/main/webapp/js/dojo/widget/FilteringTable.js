@@ -19,6 +19,11 @@ dojo.widget.defineWidget(
   	this.maxSortable=1;  // how many columns can be sorted at once.
   	// Use alternate row CSS classes to show zebra striping.
   	this.alternateRows="true";
+  	// Filter function map contains objects with two values:
+  	//  target - string identifying the target field fo the filter func
+  	//  filterFunction - function with one argument (value) which returns true if the row should be displayed
+  	//                   and false otherwise
+  	this.filterFunctionMap=[];
   },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/FilteringTable.css"),
@@ -188,7 +193,7 @@ dojo.widget.defineWidget(
 	render: function() {
 	    ingrid.widget.FilteringTable.superclass.render.apply(this, arguments);
 	    var body = this.domNode.tBodies[0];
-	
+
 	    // remove empty rows
 	    if (body.rows.length > 0) {
 	      var lastRow = body.rows[body.rows.length-1];
@@ -206,11 +211,38 @@ dojo.widget.defineWidget(
 	      this.addEmptyRow();
 	
 	    // add additional rows to fill minRows
+		// While adding rows to reach minRows the hidden rows have to be included too.
+		// First we check how many rows are hidden and add enough rows to reach 'this.minRows' number of rows
 	    var rows = body.rows;
-	    while (rows.length < this.minRows) {
+		numHiddenRows = 0;
+		for (var i = 0; i < rows.length; ++i) {
+			if (rows[i].style.display == "none")
+				numHiddenRows++;
+		}
+	    while (rows.length - numHiddenRows < this.minRows) {
 	      this.addEmptyRow();
 	      rows = body.rows;
 	    }
+
+		// The overriden function resets the alternate row classes but it doesn't take filtered
+		// entries into account. The result is a false display.
+		// Because of this the rows have to be reevaluated while properly taking the row.style.display
+		// element into account.
+
+		// Reapply alternate row classes
+		if (this.alternateRows) {
+			var displayIndex = 0;
+			// Iterate over all the rows and check if they are displayed or not
+			for(var i = 0; i < rows.length; i++){
+				var row = rows[i];
+				// If the current row is displayed, apply the proper display class and increase the displayIndex
+				if (row.style.display == "") {
+					dojo.html[((displayIndex % 2 == 1)?"addClass":"removeClass")](row, this.rowAlternateClass);
+					displayIndex++;
+				}
+			}
+		}
+
 
 		// Update the displayed values. This needs to be done so we can use the various
 		// functions from the underlying store (e.g. setData). Otherwise the displayed values
@@ -239,26 +271,80 @@ dojo.widget.defineWidget(
 				}
 			}
 		}
-/*
+	},
+
+
+	// Returns a filtermap entry with the specified field as target
+	getFilter: function(/* string */field) {
+		for(var i=0; i<this.filterFunctionMap.length; i++){
+			if(this.filterFunctionMap[i].target == field){
+				return this.filterFunctionMap[i];
+			}
+		}
+	},
+
+	setFilter: function(/* string */field, /* function */fn){
+		//	summary
+		//	set a filtering function on the passed field.
+		var filter = this.getFilter(field);
+		if (filter) {
+			dojo.debug("Filter for field '"+field+"' already defined. Overwriting filter.");
+			filter.filterFunction = fn;
+		} else {
+			this.filterFunctionMap.push({target: field, filterFunction: fn});
+		}
+		this.applyFilters();
+	},
+
+	applyFilters: function(){
+		//	summary
+		//	apply all filters to the table.
 		var rows = this.domNode.tBodies[0].rows;
-		for(var i=0; i<rows.length; i++){
-			for (var j=0; j<this.columns.length; j++) {
-				if (this.columns[j].editor) {
-					var currentEditor = this.columns[j].editor;
-					var rowData = this.getDataByRow(rows[i]);
-					if (rowData) {
-						var fieldContent = rowData[this.columns[j].getField()];
-						currentEditor.setValue(fieldContent);
-						if (currentEditor.getDisplayValue) {
-					       	var displayValue = currentEditor.getDisplayValue();
-      						this.fillCell(rows[i].cells[j], this.columns[j], displayValue);
-					    }
+		// Iterate over all the rows in the table
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			row.style.display = "";
+			var rowData = this.getDataByRow(row);
+			// If we have a valid row continue. rowData can be null since we also display empty rows
+			if (rowData) {
+				// Apply all filter functions
+				for (var j = 0; j < this.filterFunctionMap.length; j++) {
+					var filter = this.filterFunctionMap[j];
+					// Search for the field associated with the current filter
+					var value = this.store.getField(rowData, filter.target);
+					if (value) {
+						// If the corresponding value was found, apply the filter
+						if (!filter.filterFunction(value)) {
+							row.style.display = "none";
+						}
+					} else {
+						dojo.debug("Error in ingrid:FilteringTable.applyFilters(). A matching value for the field "+filter.target+" could not be found.");
 					}
 				}
 			}
 		}
-*/
+
+		this.onFilter();
 	},
+
+	clearFilter: function(/* string */field) {
+		var newFilterMap = [];
+		for (var i = 0; i < this.filterFunctionMap.length; i++) {
+			if (this.filterFunctionMap[i].target != field) {
+				newFilterMap.push(this.filterFunctionMap[i]);
+			}
+		}
+		this.filterFunctionMap = newFilterMap;
+		this.applyFilters();
+		this.render();
+	},
+
+	clearFilters: function() {
+		this.filterFunctionMap = [];
+		this.applyFilters();	
+		this.render();
+	},
+
 
   addEmptyRow: function() {
     var body = this.domNode.tBodies[0];
