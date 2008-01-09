@@ -77,13 +77,35 @@ saveLink = function() {
 	var store = dojo.widget.byId("linkListObject").store;
 	var data = dojo.widget.byId("linkListObject").getSelectedData();
 
-	store.update(data, "title", curSelectedObject.title);
-	// TODO relation Type is teh wrong value here
-	data["relationType"] = dojo.widget.byId("linksFromFieldName").getValue();
-	data["objectClass"] = curSelectedObject.objectClass;
-	data["relationDescription"] = dojo.widget.byId("linksToDescription").getValue();
-	data["uuid"] = curSelectedObject.uuid;
-	data["id"] = curSelectedObject.id;
+	if (data) {
+		// If a node was selected we have to update the information
+		// The dojo FilteringTable does not like updates on values that are not displayed
+		// It simply throws a cryptic error on update. The connected 'onUpdateField' function in
+		// FilteringTable.init tries to get a row idx which is 'undefined'
+//		store.update(data, "id", curSelectedObject.id);
+//		store.update(data, "uuid", curSelectedObject.uuid);
+//		store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
+//		store.update(data, "objectClass", curSelectedObject.objectClass);
+
+		data["id"] = curSelectedObject.id;
+		data["uuid"] = curSelectedObject.uuid;
+		data["relationDescription"] = dojo.widget.byId("linksToDescription").getValue();
+		data["objectClass"] = curSelectedObject.objectClass;
+		// TODO relation Type is the wrong value here
+		store.update(data, "relationType", dojo.widget.byId("linksFromFieldName").getValue());
+		store.update(data, "title", curSelectedObject.title);
+	} else {
+		// Otherwise a new link has to be created
+		// Take the current selected object and add the values that were entered in the ui fields
+		curSelectedObject.relationType = dojo.widget.byId("linksFromFieldName").getValue();
+		curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
+
+		if (store.getByKey(curSelectedObject.id)) {
+			return;
+		} else {
+			store.addData(curSelectedObject, curSelectedObject.id);
+		}
+	}
 }
 
 // 'New Link' Button onClick function.
@@ -235,7 +257,7 @@ acceptLinkList = function() {
       <div class="inputContainer full noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
         	<span style="float:right;"><button dojoType="Button" onClick="closeDialog">Abbrechen</button></span>
-        	<span style="float:right; padding-right:15px;"><button dojoType="Button" onClick="Abbrechen">Aenderungen uebernehmen</button></span>
+        	<span style="float:right; padding-right:15px;"><button dojoType="Button" onClick="acceptLinkList">&Auml;nderungen &uuml;bernehmen</button></span>
          	<span style="float:right; padding-right:15px;"><button id="saveButton" dojoType="Button" onClick="saveLink">Hinzuf&uuml;gen</button></span>
 		</span>
   	  </div>

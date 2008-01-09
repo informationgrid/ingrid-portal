@@ -192,6 +192,10 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_VDATUM, data.getSpatialRefAltVDate());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_SPATIAL_DOMAIN, data.getSpatialRefExplanation());
 
+		// Links
+		udkObj.put(MdekKeys.OBJ_ENTITIES, mapFromLinksToObjectTable(data.getLinksToObjectTable()));
+		udkObj.put(MdekKeys.RELATION_TYPE, data.getRelationType());
+		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
 
 		return udkObj;
 	}
@@ -218,7 +222,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	
+	private static ArrayList<IngridDocument> mapFromLinksToObjectTable(ArrayList<MdekDataBean> objList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (objList == null)
+			return resultList;
+
+		SimpleMdekMapper m = new SimpleMdekMapper();
+
+		for (MdekDataBean obj : objList) {
+			IngridDocument mappedEntry = (IngridDocument) m.convertFromMdekRepresentation(obj);
+			resultList.add(mappedEntry);
+		}
+
+		return resultList;
+	}
+		
 	
 	
 	/****************************************************************************
@@ -289,7 +307,6 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
-	
 	
 	/***********************************************************
 	 * Several Methods for testing Input and Output Conformity *

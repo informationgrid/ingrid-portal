@@ -553,9 +553,11 @@ udkDataProxy._getObjectData = function(nodeData)
   dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '1', freeTerms:'Freier Term eins'});
   dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '2', freeTerms:'Freier Term zwei'});
   dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '3', freeTerms:'Freier Term drei'});
+*/
 
   // -- Links --
-*/
+  nodeData.linksToObjectTable = udkDataProxy._getTableData("linksTo");
+
 
   dojo.debug("------ NODE DATA ------");
   dojo.debugShallow(nodeData);
