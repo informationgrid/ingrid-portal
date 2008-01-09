@@ -78,19 +78,12 @@ saveLink = function() {
 	var data = dojo.widget.byId("linkListObject").getSelectedData();
 
 	store.update(data, "title", curSelectedObject.title);
-//	var objectClass = "Class"+curSelectedObject.objectClass;	
-//	var objClassValue = _container_.objectClassDP.getValueForDisplayValue(objectClass);
-	// An exception is thrown if the values are updated via the store update method. Why?
-	// We directly set the value instead
-//	store.update(data, "objectClass", objClassValue[5]);
-//	store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
+	// TODO relation Type is teh wrong value here
 	data["relationType"] = dojo.widget.byId("linksFromFieldName").getValue();
-//	data["objectClass"] = objClassValue[5];
 	data["objectClass"] = curSelectedObject.objectClass;
 	data["relationDescription"] = dojo.widget.byId("linksToDescription").getValue();
 	data["uuid"] = curSelectedObject.uuid;
-	// Add id value?
-	data["id"] = "";
+	data["id"] = curSelectedObject.id;
 }
 
 // 'New Link' Button onClick function.

@@ -152,7 +152,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		HashMap<String, Object> mdekObj = new HashMap<String, Object>();
 
-		mdekObj.put(MDEK_OBJECT_UUID, obj.get(MdekKeys.UUID));
+		// The object UUID is used to identify widgets in the gui. Both the id and
+		// uuid should not be used for this.
+		// TODO attach the values to the object but don't use them to identify widgets
+		mdekObj.put(MDEK_OBJECT_UNIQUE_ID, obj.get(MdekKeys.ID));
+		mdekObj.put(MDEK_OBJECT_ID, obj.get(MdekKeys.UUID));
 		mdekObj.put(MDEK_OBJECT_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
