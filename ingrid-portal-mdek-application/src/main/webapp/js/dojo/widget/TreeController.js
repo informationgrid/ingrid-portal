@@ -110,15 +110,15 @@ dojo.widget.defineWidget(
 		);			
 	},
 	doPaste: function(node) {
-    // do a copy
-    if (this.nodeToCopy != null) {
-      this.clone(this.nodeToCopy, node, node.children.length, this.doCopyDeep/*, true*/);
-    }
-    // do a move
-    else if (this.nodeToCut != null) {
-      this.nodeToCut.labelNode.style.color = this.nodeToCutOldColor;
-      this.move(this.nodeToCut, node, node.children.length/*, true*/);
-      this.nodeToCut = null; // don't paste cut object twice
-    }
-	},
+    	// do a copy
+    	if (this.nodeToCopy != null) {
+     		this.clone(this.nodeToCopy, node, node.children.length, this.doCopyDeep/*, true*/);
+    	}
+    	// do a move
+    	else if (this.nodeToCut != null) {
+     		this.nodeToCut.labelNode.style.color = this.nodeToCutOldColor;
+     		this.move(this.nodeToCut, node, node.children.length/*, true*/);
+     		this.nodeToCut = null; // don't paste cut object twice
+    	}
+	}
 });

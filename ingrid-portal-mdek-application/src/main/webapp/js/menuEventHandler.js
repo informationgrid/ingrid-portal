@@ -1,4 +1,3 @@
-<script type="text/javascript" src="js/udkDataProxy.js"></script>
 
 /*
  * Menu Event Handler. Static Methods
