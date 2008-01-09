@@ -35,7 +35,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	// --
 
 
-	private MdekDataBean getDetailedMdekRepresentation(
+	private static MdekDataBean getDetailedMdekRepresentation(
 			HashMap<String, Object> obj) {
 
 		// by default, assertions are disabled at runtime.
@@ -66,8 +66,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
 
-		mdekObj.setCreationTime(MdekUtils.timestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_CREATION)));
-		mdekObj.setModificationTime(MdekUtils.timestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+		String date = (String) obj.get(MdekKeys.DATE_OF_CREATION);
+		if (date != null) {
+			mdekObj.setCreationTime(MdekUtils.timestampToDisplayDate(date));
+		}
+		date = (String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION);
+		if (date != null) {
+			mdekObj.setModificationTime(MdekUtils.timestampToDisplayDate(date));
+		}
 
 		// Spatial
 //		mdekObj.setSpatialRefAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -115,10 +121,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 //		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) mapToThesaurusEnvTopicsList((List<String>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) mapToThesaurusEnvCatsList((List<String>) obj.get(MdekKeys.MISSING)));
 //
+		// Links
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-		
-
+		mdekObj.setLinksToObjectTable(mapToLinksToObjectTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_ENTITIES)));
+		mdekObj.setRelationType((Integer) obj.get(MdekKeys.RELATION_TYPE));
+		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
 
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
@@ -215,6 +223,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 	private static ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
 		ArrayList<MdekAddressBean> resultTable = new ArrayList<MdekAddressBean>(); 
+		if (adrTable == null)
+			return resultTable;
 
 		for (HashMap<String, Object> tableRow : adrTable) {
 			MdekAddressBean address = new MdekAddressBean();
@@ -265,7 +275,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultTable;
 	}
 
-	
+	private static ArrayList<MdekDataBean> mapToLinksToObjectTable(List<HashMap<String, Object>> objList) {
+		ArrayList<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
+		if (objList == null)
+			return resultList;
+
+		for (HashMap<String, Object> obj : objList) {
+			resultList.add(getDetailedMdekRepresentation(obj));
+		}
+		return resultList;
+	}
 	
 	
 	/***********************************************************

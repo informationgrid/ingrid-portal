@@ -6,11 +6,148 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <script type="text/javascript" src="js/erfassung_forms.js"></script>
+
+<script type="text/javascript">
+var curSelectedObject;
+
+
+_container_.addOnLoad(function() {
+	init();
+});
+
+init = function() {
+	// Init static data
+	var objectName = dojo.widget.byId("objectName").getValue();
+	dojo.widget.byId("linksFromObjectName").setValue(objectName);
+
+	// Data provider for the object class values
+	_container_.objectClassDP = new dojo.widget.basicComboBoxDataProvider({
+		dataUrl: "js/data/objectclasses.js"
+	});
+	// Attach the neccessary functions to get Display Values for a given value
+	_container_.objectClassDP.getDisplayValueForValue = function(value) {
+		for (var i=0; i<this._data.length; i++) {
+			if (this._data[i][1] == value) {
+				return this._data[i][0];
+			}
+		}
+	}
+	_container_.objectClassDP.getValueForDisplayValue = function(dispValue) {
+		for (var i=0; i<this._data.length; i++) {
+			if (this._data[i][0] == dispValue) {
+				return this._data[i][1];
+			}
+		}
+	}
+
+
+	// Connect both tables so only one value is selected at once. If the user selects an object the
+	// current url is deselected, if an ulr is selected the object is deselected 
+	var objectList = dojo.widget.byId("linkListObject");
+	var urlList = dojo.widget.byId("linkListURL");
+	dojo.event.connectOnce(objectList, "onSelect", function() {
+		urlList.resetSelections();
+		urlList.renderSelections();
+	});
+	dojo.event.connectOnce(urlList, "onSelect", function() {
+		objectList.resetSelections();
+		objectList.renderSelections();
+	});
+
+	// The selected value has to be displayed on select
+	dojo.event.connectOnce("after", objectList, "onSelect", function() {
+		// Update the displayed data
+		curSelectedObject = objectList.getSelectedData();
+		dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationType);
+		dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
+		dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
+		dojo.widget.byId("linksToDescription").setValue(curSelectedObject.relationDescription);
+	
+		// Update the 'save' button text
+		dojo.widget.byId("saveButton").setCaption("Speichern");
+	});
+
+	// Populate the object links list
+	var srcStore = dojo.widget.byId("linksTo").store;
+	var destStore = objectList.store;
+	destStore.setData(srcStore.getData());
+};
+
+saveLink = function() {
+	var store = dojo.widget.byId("linkListObject").store;
+	var data = dojo.widget.byId("linkListObject").getSelectedData();
+
+	store.update(data, "title", curSelectedObject.title);
+//	var objectClass = "Class"+curSelectedObject.objectClass;	
+//	var objClassValue = _container_.objectClassDP.getValueForDisplayValue(objectClass);
+	// An exception is thrown if the values are updated via the store update method. Why?
+	// We directly set the value instead
+//	store.update(data, "objectClass", objClassValue[5]);
+//	store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
+	data["relationType"] = dojo.widget.byId("linksFromFieldName").getValue();
+//	data["objectClass"] = objClassValue[5];
+	data["objectClass"] = curSelectedObject.objectClass;
+	data["relationDescription"] = dojo.widget.byId("linksToDescription").getValue();
+	data["uuid"] = curSelectedObject.uuid;
+	// Add id value?
+	data["id"] = "";
+}
+
+// 'New Link' Button onClick function.
+//
+// Resets the list selection and currently selected objects/urls
+newLink = function() {
+	// Reset object and url selections
+	var objectList = dojo.widget.byId("linkListObject");
+	var urlList = dojo.widget.byId("linkListURL");
+	objectList.resetSelections();
+	objectList.renderSelections();
+	urlList.resetSelections();
+	urlList.renderSelections();
+
+	// Reset field values
+	dojo.widget.byId("linksFromFieldName").setValue("");
+	dojo.widget.byId("linksToObjectName").setValue("");
+	dojo.widget.byId("linksToObjectClass").setValue("");
+	dojo.widget.byId("linksToDescription").setValue("");	
+
+	// Change 'save' Button text
+	dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
+}
+
+showAssignObjectDialog = function() {
+	var deferred = new dojo.Deferred();
+	var setSelectedObject = function(obj) {
+		curSelectedObject = obj;
+		dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
+		dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
+	}
+
+	deferred.addCallback(setSelectedObject);
+	dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true, {resultHandler: deferred});
+}
+
+// Cancel Button onClick function.
+//
+closeDialog = function() {
+	_container_.closeWindow();
+}
+
+// Accept Button onClick function.
+//
+// This function copies the object links list to the main mdek linksTo list
+acceptLinkList = function() {
+	var srcStore = dojo.widget.byId("linkListObject").store;
+	var destStore = dojo.widget.byId("linksTo").store;
+	destStore.setData(srcStore.getData());
+
+	closeDialog();
+}
+
+</script> 
 </head>
 
 <body>
-
-<form method="get" id="contentForm" action="">
 
 <div dojoType="ContentPane">
 
@@ -30,7 +167,13 @@
           <span class="label required"><label for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
           <span class="input"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:590px;" widgetId="linksFromFieldName"></div></span>
         </div>
+<!--
         <span class="button transparent"><a href="#" class="buttonBlue" title="Neu">Neu</a></span>
+-->
+        <span class="button transparent w644" style="height:20px !important;">
+        	<span style="float:right; padding-right:16px;"><button dojoType="Button" onClick="newLink">Neu</button></span>
+		</span>
+
 
         <span class="label required"><label class="inActive" for="linksLinkType">Verweistyp*</label></span>
         <div class="checkboxContainer">
@@ -44,14 +187,17 @@
         <!-- VERWEIS AUF OBJEKT -->
         <div id="linkToObject" class="outlined w616">
           <span class="label required"><label for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname*</label></span>
-          <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Objekt ausw&auml;hlen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);" title="Objekt ausw&auml;hlen [Popup]">Objekt ausw&auml;hlen</a></span>
+          <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:showAssignObjectDialog();" title="Objekt ausw&auml;hlen [Popup]">Objekt ausw&auml;hlen</a></span>
           <span class="input spaceBelow"><input type="text" id="linksToObjectName" name="linksToObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
           <span class="label required"><label class="inActive" for="linksToObjectClass">Objektklasse*</label></span>
           <span class="input spaceBelow"><input type="text" id="linksToObjectClass" name="linksToObjectClass" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
-          <span class="input"><textarea id="linksToDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
-        </div>
 
+          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+ 		  <span class="input"><input type="text" mode="textarea" id="linksToDescription" name="linksToDescription" class="w608 h038" dojoType="ingrid:ValidationTextbox" /></span>
+<!-- 	  
+		  <span class="input"><textarea id="linksToDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
+-->          
+        </div>
         <!-- VERWEIS AUF URL -->
         <div id="linkToURL" class="outlined w616">
           <span class="label required"><label for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bezeichnung des Verweises')">Bezeichnung des Verweises*</label></span>
@@ -94,7 +240,11 @@
   	  </div>
 
       <div class="inputContainer full noSpaceBelow">
-        <span class="button w644"><a href="#" class="buttonBlue" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
+        <span class="button w644" style="height:20px !important;">
+        	<span style="float:right;"><button dojoType="Button" onClick="closeDialog">Abbrechen</button></span>
+        	<span style="float:right; padding-right:15px;"><button dojoType="Button" onClick="Abbrechen">Aenderungen uebernehmen</button></span>
+         	<span style="float:right; padding-right:15px;"><button id="saveButton" dojoType="Button" onClick="saveLink">Hinzuf&uuml;gen</button></span>
+		</span>
   	  </div>
       <!-- LEFT HAND SIDE CONTENT END -->
 
@@ -104,20 +254,14 @@
 
         <div dojoType="ContentPane" class="scrollable">
           <span class="label"><label for="linkListObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objekte')">Objekte</label></span>
-    	    <table id="linkListObject" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
+    	    <table id="linkListObject" dojoType="ingrid:FilteringTable" valueField="id" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
     	      <thead>
     		      <tr>
-          			<th field="type" dataType="String" width="30">&nbsp;</th>
-          			<th field="name" dataType="String" width="225" sort="desc">&nbsp;</th>
+          			<th field="relationType" dataType="String" width="30">&nbsp;</th>
+          			<th field="title" dataType="String" width="225" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
     	      <tbody>
-    		      <tr value="1">
-                <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
-                <td>Bibliographie zum Naturschutzgebiet L&uuml;neburger Heide</td></tr>
-    		      <tr value="2">
-                <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
-                <td>Bibliographie zum Naturschutzgebiet Schorfheide</td></tr>
     	      </tbody>
     	    </table>
         </div>
@@ -126,7 +270,7 @@
 
         <div dojoType="ContentPane" class="scrollable">
           <span class="label"><label for="linkListURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL')">URL</label></span>
-    	    <table id="linkListURL" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
+    	    <table id="linkListURL" dojoType="ingrid:FilteringTable" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
     	      <thead>
     		      <tr>
           			<th field="type" dataType="String" width="30">&nbsp;</th>
@@ -151,6 +295,5 @@
   </div>
 </div>
 
-</form>
 </body>
 </html>

@@ -375,8 +375,9 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '2', freeTerms:'Freier Term zwei'});
   dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '3', freeTerms:'Freier Term drei'});
 
-  // -- Links --
 */
+  // -- Links --
+  dojo.widget.byId("linksTo").store.setData(nodeData.linksToObjectTable);
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)

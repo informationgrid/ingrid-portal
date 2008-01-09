@@ -81,9 +81,12 @@ public class MdekDataBean {
 	public ArrayList<String> thesaurusEnvCatsList;
 
 	// Links
+	public ArrayList<MdekDataBean> linksToObjectTable;
 	public ArrayList<HashMap<String, String>> linksToTable;
 	public ArrayList<HashMap<String, String>> linksFromTable;
-
+	public Integer relationType;
+	public String relationDescription;
+	
 /*
 	// TODO Subclass this?
 	// Object class 1 (Geoinformation/Karte)
@@ -138,6 +141,16 @@ public class MdekDataBean {
 	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 	 */
+
+	public Integer getRelationType() {
+		return relationType;
+	}
+
+
+	public void setRelationType(Integer relationType) {
+		this.relationType = relationType;
+	}
+
 
 	public MdekDataBean(){
 		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
@@ -762,5 +775,25 @@ public class MdekDataBean {
 
 	public void setParentUuid(String parentUuid) {
 		this.parentUuid = parentUuid;
+	}
+
+
+	public ArrayList<MdekDataBean> getLinksToObjectTable() {
+		return linksToObjectTable;
+	}
+
+
+	public void setLinksToObjectTable(ArrayList<MdekDataBean> linksToObjectTable) {
+		this.linksToObjectTable = linksToObjectTable;
+	}
+
+
+	public String getRelationDescription() {
+		return relationDescription;
+	}
+
+
+	public void setRelationDescription(String relationDescription) {
+		this.relationDescription = relationDescription;
 	};
 }

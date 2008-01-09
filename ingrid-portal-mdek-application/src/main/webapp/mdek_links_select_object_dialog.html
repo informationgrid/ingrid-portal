@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Objekt zuordnen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	init();
+});
+_container_.addOnUnload(function() {
+	// If the dialog was cancelled via the dialogs close button
+	// we need to signal an error (cancel action)
+	if (_container_.customParams.resultHandler.fired == -1) {
+		_container_.customParams.resultHandler.errback();
+	}
+});
+
+init = function() {
+	// Load initial first level of the tree from the server
+	EntryService.getSubTree(null, null, 1, 
+		function (str) {
+			for (var i = 0; i < str.length; i++) {
+				str[i].id = "AssignObj_"+str[i].id;
+			}
+
+			var tree = dojo.widget.byId('treeAssignObj');
+			tree.setChildren(str);
+		});
+
+	// Load children of the node from server
+	// Overwritten to work with dwr.
+	var treeController = dojo.widget.byId("treeControllerAssignObj");
+	treeController.loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		EntryService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:5000,
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+
+		deferred.addCallback(function(res) {
+			for (var i = 0; i < res.length; i++) {
+				res[i].id = "AssignObj_"+res[i].id;
+			}
+			return _this.loadProcessResponse(node,res);
+		});
+		
+		deferred.addErrback(function(res) { alert("Error while loading data from the server. Please check your connection and try again!"); return res;});
+		return deferred;
+	};
+};
+
+assignObject = function() {
+	var node = dojo.widget.byId("treeAssignObj").selectedNode;
+	if (node) {
+		var retVal = {};
+		retVal.uuid = node.id.substring(10, node.id.length);
+//		retVal.id = node.xxxxx?;
+		retVal.title = node.title;
+		retVal.objectClass = node.nodeDocType[5];
+
+		_container_.customParams.resultHandler.callback(retVal);
+	}
+
+	_container_.closeWindow(); 
+}
+
+</script>
+</head>
+
+<body>
+
+<div dojoType="ContentPane">
+
+  <div id="catalogueObject" class="contentBlockWhite top w478">
+    <div id="winNavi">
+      <a href="#" title="Hilfe">[?]</a>
+	  </div>
+	  <div id="objectContent" class="content">
+
+      <!-- CONTENT START -->
+      <div class="inputContainer w478">
+      	<div dojoType="ContentPane" id="treeContainerAssignObj">
+          <!-- tree components -->
+          <div dojoType="ingrid:TreeController" widgetId="treeControllerAssignObj" RpcUrl="server/treelistener.php"></div>
+          <div dojoType="ingrid:TreeListener" widgetId="treeListenerAssignObj"></div>	
+          <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAssignObj"></div>	
+          <div dojoType="ingrid:TreeDecorator" listener="treeListenerAssignObj"></div>
+          
+          <!-- tree -->
+          <div dojoType="ingrid:Tree" listeners="treeControllerAssignObj;treeListenerAssignObj;treeDocIconsAssignObj" widgetId="treeAssignObj">
+		  </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <div class="inputContainer w478">
+        <span class="button w442 transparent">
+		  <span style="float:right;"><button dojoType="Button" onClick="assignObject">Zuweisen</button></span>
+        </span>
+  	  </div>
+      <!-- CONTENT END -->
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

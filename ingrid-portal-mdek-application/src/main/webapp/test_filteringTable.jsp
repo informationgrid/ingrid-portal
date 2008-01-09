@@ -32,7 +32,8 @@ function setValue() {
 	var store = dojo.widget.byId("testTable").store;
 	store.setData([{Id: 0, identifier: "ident 1", name: "Test Entry 1", hiddenValue: "show"},
 				   {Id: 1, identifier: "ident 2", name: "Test Entry 2", hiddenValue: "show"},
-				   {Id: 2, identifier: "ident 3", name: "Test Entry 3", hiddenValue: "hide"}]);
+				   {Id: 2, identifier: "ident 3", name: "Test Entry 3", hiddenValue: "hide"},
+				   {Id: 3, identifier: "ident 4", name: "Test Entry 4"}]);
 
 	table.applyFilters();	
 	table.render();
