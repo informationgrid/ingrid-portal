@@ -8,8 +8,15 @@
  *     nodeUuid - The Uuid of the node
  *     appType  - 'A' for Address, 'O' for Object
  *
+ *   topic = '/createObjectRequest' - argument: {id: parentUuid, resultHandler: deferred}
+ *     nodeUuid - The Uuid of the node
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
  *   topic = '/saveRequest' - argument:
- *   ...
+ *
+ *   topic = '/deleteRequest' - argument: {id: nodeUuid, resultHandler: deferred}
+ *     nodeUuid - The Uuid of the node which should be deleted
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
  */
 
 
@@ -30,6 +37,8 @@ dojo.addOnLoad(function()
 {
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, "handleLoadRequest");
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
+    dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
+    dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
 
 	var treeListener = dojo.widget.byId("treeListener");
 
@@ -221,6 +230,12 @@ udkDataProxy.checkForUnsavedChanges = function()
 
 udkDataProxy.handleLoadRequest = function(node)
 {
+	// Don't process newNode load requests. We have this request because we
+	// select new nodes in the tree after creating them
+	if (node.id == "newNode") {
+		return;
+	}
+
 	// TODO Check if we are in a state where it's safe to load data.
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
 	var deferred = udkDataProxy.checkForUnsavedChanges();
@@ -240,6 +255,23 @@ udkDataProxy.handleLoadRequest = function(node)
 	deferred.addCallbacks(loadCallback, loadErrback);
 }
 
+udkDataProxy.handleCreateObjectRequest = function(msg)
+{
+	// TODO Check if we are in a state where it's safe to create a node?
+	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
+	var deferred = udkDataProxy.checkForUnsavedChanges();
+	var loadErrback = function() {msg.resultHandler.errback();}
+	var loadCallback = function() {
+		EntryService.createNewNode(msg.id,
+			{
+				callback: function(res){msg.resultHandler.callback(res); udkDataProxy._setData(res); udkDataProxy._updateTree(res); setDirtyFlag();},
+				timeout:5000,
+				errorHandler:function(message) {msg.resultHandler.errback(); alert("Error in js/udkDataProxy.js: Error while creating a new node: " + message); }
+			}
+		);	
+	}
+	deferred.addCallbacks(loadCallback, loadErrback);
+}
 
 udkDataProxy.handleSaveRequest = function()
 {
@@ -260,6 +292,11 @@ udkDataProxy.handleSaveRequest = function()
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
 		}
 	);
+}
+
+udkDataProxy.handleDeleteRequest = function(msg) {
+	dojo.debug("udkDataProxy.handleDeleteRequest()");
+	dojo.debugShallow(msg);
 }
 
 // event.connect point. Called when data has been saved 

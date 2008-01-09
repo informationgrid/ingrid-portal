@@ -145,7 +145,7 @@ function initTree() {
 
   // attach node selection handler
   var treeListener = dojo.widget.byId('treeListener');
-  dojo.event.topic.subscribe(treeListener.eventNames.select, 'nodeSelected');
+  dojo.event.topic.subscribe(treeListener.eventNames.select, "nodeSelected");
 
   // Load children of the node from server
   // Overwritten to work with dwr.
@@ -230,27 +230,33 @@ function initToolbar() {
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
+/*
   leftToolbar.addChild("img/ic_submit_qs.gif", "after", {
                             onClick:menuEventHandler.handleForwardToQS,
                             caption:"An QS überweisen"
                           });
+*/
   leftToolbar.addChild("img/ic_submit_inact.gif", "after", {
                             onClick:menuEventHandler.handleFinalSave,
-                            disabled:true,
+//                          disabled:true,
                             caption:"Abschließendes Speichern"
                           });
   leftToolbar.addChild("img/ic_delete.gif", "after", {
                             onClick:menuEventHandler.handleMarkDeleted,
                             caption:"Als gelöscht markieren"
                           });
+/*
   leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
                             onClick:menuEventHandler.handleUnmarkDeleted,
                             caption:"Löschen aufheben"
                           });
+*/
+/*
   leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"
                           });
+*/
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   leftToolbar.addChild("img/ic_comment.gif", "after", {
                             onClick:menuEventHandler.handleShowComment,

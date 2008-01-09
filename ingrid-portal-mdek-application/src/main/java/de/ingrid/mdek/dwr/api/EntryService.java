@@ -184,4 +184,5 @@ public interface EntryService {
 	 */
 	public String deleteNode(String nodeUuid, Boolean markOnly);
 
+	public MdekDataBean createNewNode(String parentUuid);
 }

@@ -9,9 +9,7 @@ var menuEventHandler = {};
 // Singleton
 // menuEventHandler = new function MenuEventHandler() {}
 
-menuEventHandler.selectedNode = {};
-
-
+/*
 menuEventHandler.handleNewEntity = function(mes) {
 // TODO Dialog fuer neue Objekte / Adressen anzeigen. Reicht der Objektbezeichner im Baum?
 //      Muss eine Nachricht an das Backend gesendet werden?
@@ -47,20 +45,52 @@ menuEventHandler.handleNewEntity = function(mes) {
 
 	deferred.addCallbacks(createNodeCallback, createNodeErrback);
 }
+*/
 
+menuEventHandler.handleNewEntity = function(mes) {
+	var deferred = new dojo.Deferred();
 
-attachNewNode = function() {
-    var tree = dojo.widget.byId('tree');
+	var selectedNode = getSelectedNode(mes);
+	if (!selectedNode) {
+	  		dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
+	} else {
+		if (!selectedNode.isFolder) {
+			selectedNode.setFolder();
+			// TODO? Don't load children from the db. The new node is the only children.
+			selectedNode.expand();
+		} else if (!selectedNode.isExpanded) {
+			var tree = selectedNode.tree;
+			var treeController = dojo.widget.byId("treeController");
+			var def = treeController.expand(selectedNode);
+			// Wait till the treeController is done with node.expand and attach the new node if
+			// it was successful
+			def.addCallback(function(){
+				deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
+   				dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
+   				dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
+			});
+			return;
+		}
+
+		// publish a createObject request and attach the newly created node if it was successful
+		deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
+		dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
+  		dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
+	}
+}
+
+attachNewNode = function(selectedNode, res) {
+    dojo.debug("attachNewNode("+selectedNode.id+")");
+	dojo.debugShallow(res);
+    
+    
+    var tree = dojo.widget.byId("tree");
     var treeListener = dojo.widget.byId('treeListener');
-    var selectedNode = menuEventHandler.selectedNode;
 
-	dojo.event.topic.unsubscribe(tree.eventNames.afterExpand, 'attachNewNode');
-//	dojo.event.disconnect('after', selectedNode, 'setChildren', menuEventHandler, 'attachNewNode');
-
-	var newNode = tree.createNode(_createNewNode());
+	var newNode = tree.createNode(_createNewNode(res));
 	selectedNode.addChild(newNode);
 
-	var treeController = dojo.widget.byId('treeController');
+	var treeController = dojo.widget.byId("treeController");
 /*
 	tree.selectNode(newNode);
     dojo.event.topic.publish(treeListener.eventNames.deselect, {node: selectedNode});    
@@ -68,9 +98,10 @@ attachNewNode = function() {
 */
 	tree.selectNode(newNode);
 	tree.selectedNode = newNode;
+    dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
 	// TODO Add New Node event
-   	dojo.debug('Publishing event: /loadRequest('+newNode.id+', '+newNode.nodeAppType+')');
-   	dojo.event.topic.publish("/loadRequest", {id: newNode.id, appType: newNode.nodeAppType});
+//   	dojo.debug('Publishing event: /loadRequest('+newNode.id+', '+newNode.nodeAppType+')');
+//   	dojo.event.topic.publish("/loadRequest", {id: newNode.id, appType: newNode.nodeAppType});
 }
 
 
@@ -148,7 +179,13 @@ menuEventHandler.handleDiscard = function() {alertNotImplementedYet();}
 
 menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
 menuEventHandler.handleFinalSave = function() {alertNotImplementedYet();}
-menuEventHandler.handleMarkDeleted = function() {alertNotImplementedYet();}
+menuEventHandler.handleMarkDeleted = function() {
+	// If QS ...
+	
+	alertNotImplementedYet();
+}
+
+
 menuEventHandler.handleUnmarkDeleted = function() {alertNotImplementedYet();}
 menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
 //                            		var win = window.open("qs_vergleich.html", 'preview', 'width=720, height=690, resizable=yes, scrollbars=yes, status=yes');
@@ -181,13 +218,13 @@ function getSelectedNode(message) {
   }
 }
 
-function _createNewNode()
+function _createNewNode(obj)
 {
 	return {contextMenu: 'contextMenu1',
 			isFolder: false,
-			nodeDocType: 'Class1',	// Initial display type of a new node
-			title: message.get('tree.newNodeName'),
+			nodeDocType: obj.nodeDocType,	// Initial display type of a new node
+			title: obj.objectName,
 			dojoType: 'ingrid:TreeNode',
-			nodeAppType: 'O',
-			id: 'newNode'};
+			nodeAppType: obj.nodeAppType,
+			id: obj.uuid};	// "newNode"
 }

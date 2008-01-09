@@ -142,6 +142,14 @@ public class MdekDataBean {
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 	 */
 
+	public MdekDataBean(){
+		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
+		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
+	}
+	
+	
+
+	
 	public Integer getRelationType() {
 		return relationType;
 	}
@@ -152,11 +160,6 @@ public class MdekDataBean {
 	}
 
 
-	public MdekDataBean(){
-		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
-	}
-	
-	
 	public ArrayList<HashMap<String, String>> getLinksToTable() {
 		return linksToTable;
 	}

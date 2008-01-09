@@ -91,7 +91,8 @@ public class EntryServiceImpl implements EntryService {
 			log.debug("--- New node ---");		
 			data = new MdekDataBean();
 			data.setNodeAppType(OBJECT_APPTYPE);
-			data.setNodeDocType("Class1");
+			data.setNodeDocType("Class0");
+			data.setObjectClass(0);
 			data.setUuid(nodeUuid); // "newNode"
 		} else {
 			try {
@@ -104,6 +105,19 @@ public class EntryServiceImpl implements EntryService {
 			}
 		}
 
+		return data;
+	}
+
+	
+	public MdekDataBean createNewNode(String parentUuid) {
+		log.debug("--- New node ---");		
+		MdekDataBean data = new MdekDataBean(); 
+		data.setTitle("Neues Datenobjekt");
+		data.setObjectName("Neues Datenobjekt");
+		data.setNodeAppType(OBJECT_APPTYPE);
+		data.setNodeDocType("Class0");
+		data.setObjectClass(0);
+		data.setUuid("newNode");
 		return data;
 	}
 
