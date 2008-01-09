@@ -67,7 +67,6 @@ assignObject = function() {
 	if (node) {
 		var retVal = {};
 		retVal.uuid = node.id.substring(10, node.id.length);
-		retVal.id = node.uniqueId;
 		retVal.title = node.title;
 		retVal.objectClass = node.nodeDocType[5];
 

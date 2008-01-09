@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/erfassung_forms.js"></script>
 
 <script type="text/javascript">
-var curSelectedObject;
+var curSelectedObject = {};
 
 
 _container_.addOnLoad(function() {
@@ -58,7 +58,7 @@ init = function() {
 	dojo.event.connectOnce("after", objectList, "onSelect", function() {
 		// Update the displayed data
 		curSelectedObject = objectList.getSelectedData();
-		dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationType);
+		dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
 		dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
 		dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
 		dojo.widget.byId("linksToDescription").setValue(curSelectedObject.relationDescription);
@@ -82,31 +82,43 @@ saveLink = function() {
 		// The dojo FilteringTable does not like updates on values that are not displayed
 		// It simply throws a cryptic error on update. The connected 'onUpdateField' function in
 		// FilteringTable.init tries to get a row idx which is 'undefined'
-//		store.update(data, "id", curSelectedObject.id);
 //		store.update(data, "uuid", curSelectedObject.uuid);
 //		store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
 //		store.update(data, "objectClass", curSelectedObject.objectClass);
 
-		data["id"] = curSelectedObject.id;
 		data["uuid"] = curSelectedObject.uuid;
 		data["relationDescription"] = dojo.widget.byId("linksToDescription").getValue();
 		data["objectClass"] = curSelectedObject.objectClass;
 		// TODO relation Type is the wrong value here
-		store.update(data, "relationType", dojo.widget.byId("linksFromFieldName").getValue());
+		store.update(data, "relationTypeName", dojo.widget.byId("linksFromFieldName").getValue());
 		store.update(data, "title", curSelectedObject.title);
-	} else {
+	} else if (curSelectedObject.uuid) {	// Check if the selected object != {}
 		// Otherwise a new link has to be created
 		// Take the current selected object and add the values that were entered in the ui fields
-		curSelectedObject.relationType = dojo.widget.byId("linksFromFieldName").getValue();
+		curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
 		curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
 
-		if (store.getByKey(curSelectedObject.id)) {
-			return;
-		} else {
-			store.addData(curSelectedObject, curSelectedObject.id);
-		}
+		// No checks if the store already contains the current element.
+		curSelectedObject.Id = _getNewKey(store);
+		store.addData(curSelectedObject);
+	} else {
+//		dialog.show(message.get("general.hint"), message.get("links.selectNodeHint"), dialog.WARNING);
+		alert(message.get("links.selectNodeHint"));
 	}
 }
+
+// iterates over all entries in the store and returns a key that is not in use yet
+_getNewKey = function(store) {
+	var key = 0;
+	var data = store.get();
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+	return key;
+}
+
 
 // 'New Link' Button onClick function.
 //
@@ -121,6 +133,7 @@ newLink = function() {
 	urlList.renderSelections();
 
 	// Reset field values
+	curSelectedObject = {};
 	dojo.widget.byId("linksFromFieldName").setValue("");
 	dojo.widget.byId("linksToObjectName").setValue("");
 	dojo.widget.byId("linksToObjectClass").setValue("");
@@ -133,9 +146,12 @@ newLink = function() {
 showAssignObjectDialog = function() {
 	var deferred = new dojo.Deferred();
 	var setSelectedObject = function(obj) {
-		curSelectedObject = obj;
-		dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
-		dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
+		dojo.debug(obj.uuid);
+		if (obj.uuid != "objectRoot") {
+			curSelectedObject = obj;
+			dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
+			dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
+		}
 	}
 
 	deferred.addCallback(setSelectedObject);
@@ -178,9 +194,12 @@ acceptLinkList = function() {
         <span class="label">Verweis von</span>
         <div class="outlined w616">
           <span class="label"><label class="inActive" for="linksFromObjectName">Objektname</label></span>
-          <span class="input spaceBelow"><input type="text" id="linksFromObjectName" name="linksFromObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" value="WABIS - Altablagerungen" /></span>
+          <span class="input spaceBelow"><input type="text" id="linksFromObjectName" name="linksFromObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
           <span class="label required"><label for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
+          <span class="input"><input type="text" id="linksFromFieldName" name="linksFromFieldName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+<!-- 
           <span class="input"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:590px;" widgetId="linksFromFieldName"></div></span>
+ -->
         </div>
 <!--
         <span class="button transparent"><a href="#" class="buttonBlue" title="Neu">Neu</a></span>
@@ -269,16 +288,30 @@ acceptLinkList = function() {
 
         <div dojoType="ContentPane" class="scrollable">
           <span class="label"><label for="linkListObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objekte')">Objekte</label></span>
-    	    <table id="linkListObject" dojoType="ingrid:FilteringTable" valueField="id" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
+
+    <div class="tableContainer rows8">
+	<table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="7" headClass="fixedHeader hidden" tbodyClass="scrollContent rows7" cellspacing="0" class="filteringTable interactive third relativePos">
+	    <thead>
+	    	<tr>
+	        	<th field="relationTypeName" dataType="String" width="30">&nbsp;</th>
+	            <th field="title" dataType="String" width="290">&nbsp;</th>
+	    	</tr>
+	    </thead>
+	    <tbody>
+		</tbody>
+	</table>
+<!-- 
+    	    <table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
     	      <thead>
     		      <tr>
-          			<th field="relationType" dataType="String" width="30">&nbsp;</th>
+          			<th field="relationTypeName" dataType="String" width="30">&nbsp;</th>
           			<th field="title" dataType="String" width="225" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
     	      <tbody>
     	      </tbody>
     	    </table>
+ -->
         </div>
 
         <div class="spacer"></div>

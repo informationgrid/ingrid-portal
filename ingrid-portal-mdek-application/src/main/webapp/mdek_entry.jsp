@@ -290,7 +290,7 @@ function hideSplash(){
 	                    <div class="cellEditors" id="generalAddressEditors">
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/addressReferenceTypes.js" style="width:120px;" widgetId="generalAddressCombobox"></div>
 	                    </div>
-	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" valueField="id" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox" width="120"></th>
@@ -1669,10 +1669,10 @@ function hideSplash(){
 	                  <span class="label">Verweise zu</span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                  <div class="tableContainer rows4">
-	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" valueField="id" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="relationType" dataType="String" width="30"></th>
+	                    			<th field="relationTypeName" dataType="String" width="30"></th>
 	                    			<th field="title" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>

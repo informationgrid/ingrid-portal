@@ -10,7 +10,6 @@ import java.util.HashMap;
  */
 public class MdekDataBean {
 
-	public Long id;
 	public String uuid;
 	public String parentUuid;	// Only set when storing new objects
 	public Boolean hasChildren;
@@ -84,7 +83,7 @@ public class MdekDataBean {
 	public ArrayList<MdekDataBean> linksToObjectTable;
 	public ArrayList<HashMap<String, String>> linksToTable;
 	public ArrayList<HashMap<String, String>> linksFromTable;
-	public Integer relationType;
+	public String relationTypeName;
 	public String relationDescription;
 	
 /*
@@ -150,13 +149,13 @@ public class MdekDataBean {
 	
 
 	
-	public Integer getRelationType() {
-		return relationType;
+	public String getRelationTypeName() {
+		return relationTypeName;
 	}
 
 
-	public void setRelationType(Integer relationType) {
-		this.relationType = relationType;
+	public void setRelationTypeName(String relationTypeName) {
+		this.relationTypeName = relationTypeName;
 	}
 
 
@@ -253,15 +252,6 @@ public class MdekDataBean {
 
 	public void setThesaurusEnvCatsList(ArrayList<String> thesaurusEnvCatsList) {
 		this.thesaurusEnvCatsList = thesaurusEnvCatsList;
-	}
-
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public ArrayList<MdekAddressBean> getGeneralAddressTable() {

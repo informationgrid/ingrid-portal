@@ -23,7 +23,10 @@
     "tree.noAssistant":"No Assistant",
     "tree.selectNodeHint":"Please select a parent node.",
     "tree.selectNodeCutHint":"Please select a node to cut.",
+    "tree.selectNodeDeleteHint":"Please select a node to delete.",
     "tree.newNodeName":"New Object",
+
+	"links.selectNodeHint":"Please select a target node.",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

@@ -262,8 +262,10 @@ function showGlassPane(/* widget with closWindo event */widget)
     // focus the pane
     glassPane.focus();
   }
-  dojo.event.connect(widget, "closeWindow", "hideGlassPane");
-  dialog.GLASSPANE.style.display = "block";
+  if (dialog.GLASSPANE.style.display != "block") {
+  	dojo.event.connect(widget, "closeWindow", "hideGlassPane");
+  	dialog.GLASSPANE.style.display = "block";
+  }
 }
 
 function hideGlassPane()

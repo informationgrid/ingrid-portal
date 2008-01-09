@@ -142,6 +142,17 @@ public class EntryServiceMockupImpl implements EntryService {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#createNewNode()
+	 *
+	 */
+	public MdekDataBean createNewNode(String parentUuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private List getChildren(String id, String type, int depth, int level) {
 		int internalLevel = level + 1;
 		List srcList = null;

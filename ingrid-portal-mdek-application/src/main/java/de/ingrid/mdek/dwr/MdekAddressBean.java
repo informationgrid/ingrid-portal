@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class MdekAddressBean {
 	
-	public Long id;
 	public String uuid;
 	public String information;
 
@@ -23,6 +22,7 @@ public class MdekAddressBean {
 	public String function;
 	public String addressDescription;
 	public Integer typeOfRelation;
+	public String nameOfRelation;
 	public ArrayList<HashMap<String, String>> communication;
 
 	
@@ -128,10 +128,10 @@ public class MdekAddressBean {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public Long getId() {
-		return id;
+	public String getNameOfRelation() {
+		return nameOfRelation;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setNameOfRelation(String nameOfRelation) {
+		this.nameOfRelation = nameOfRelation;
 	}
 }

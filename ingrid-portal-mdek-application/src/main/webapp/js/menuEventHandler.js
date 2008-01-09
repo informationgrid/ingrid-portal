@@ -9,44 +9,6 @@ var menuEventHandler = {};
 // Singleton
 // menuEventHandler = new function MenuEventHandler() {}
 
-/*
-menuEventHandler.handleNewEntity = function(mes) {
-// TODO Dialog fuer neue Objekte / Adressen anzeigen. Reicht der Objektbezeichner im Baum?
-//      Muss eine Nachricht an das Backend gesendet werden?
-	var deferred = udkDataProxy.checkForUnsavedChanges();
-
-	var createNodeErrback = function(){dojo.debug("New node operation cancelled.");};
-	var createNodeCallback = function() {
-		dojo.debug("Deferred callback");
-		var selectedNode = getSelectedNode(mes);
-		if (!selectedNode) {
-    		dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-		} else {
-			if (!selectedNode.isFolder) {
-				selectedNode.setFolder();
-				// TODO? Don't load children from the db. The new node is the only children.
-				selectedNode.expand();
-				menuEventHandler.selectedNode = selectedNode;
-				attachNewNode();
-			} else if (!selectedNode.isExpanded) {
-    			var tree = selectedNode.tree;
-    			var treeController = dojo.widget.byId('treeController');
-				menuEventHandler.selectedNode = selectedNode;
-
-				dojo.event.topic.subscribe(tree.eventNames.afterExpand, 'attachNewNode');
-				treeController.expand(selectedNode);
-  			}
-  			else {
-				menuEventHandler.selectedNode = selectedNode;
-				attachNewNode();
-  			}
-  		}
-	};
-
-	deferred.addCallbacks(createNodeCallback, createNodeErrback);
-}
-*/
-
 menuEventHandler.handleNewEntity = function(mes) {
 	var deferred = new dojo.Deferred();
 
@@ -56,7 +18,7 @@ menuEventHandler.handleNewEntity = function(mes) {
 	} else {
 		if (!selectedNode.isFolder) {
 			selectedNode.setFolder();
-			// TODO? Don't load children from the db. The new node is the only children.
+			// Don't load children from the db. The new node is the only children.
 			selectedNode.expand();
 		} else if (!selectedNode.isExpanded) {
 			var tree = selectedNode.tree;
@@ -80,10 +42,6 @@ menuEventHandler.handleNewEntity = function(mes) {
 }
 
 attachNewNode = function(selectedNode, res) {
-    dojo.debug("attachNewNode("+selectedNode.id+")");
-	dojo.debugShallow(res);
-    
-    
     var tree = dojo.widget.byId("tree");
     var treeListener = dojo.widget.byId('treeListener');
 
@@ -91,17 +49,10 @@ attachNewNode = function(selectedNode, res) {
 	selectedNode.addChild(newNode);
 
 	var treeController = dojo.widget.byId("treeController");
-/*
-	tree.selectNode(newNode);
-    dojo.event.topic.publish(treeListener.eventNames.deselect, {node: selectedNode});    
-    dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
-*/
+
 	tree.selectNode(newNode);
 	tree.selectedNode = newNode;
     dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
-	// TODO Add New Node event
-//   	dojo.debug('Publishing event: /loadRequest('+newNode.id+', '+newNode.nodeAppType+')');
-//   	dojo.event.topic.publish("/loadRequest", {id: newNode.id, appType: newNode.nodeAppType});
 }
 
 
@@ -137,15 +88,15 @@ menuEventHandler.handlePreview = function(message) {
 
 menuEventHandler.handleCut = function(mes) {
 	var selectedNode = getSelectedNode(mes);
-	if (!selectedNode || selectedNode.id == 'objectRoot') {
-    	dialog.show(message.get('general.hint'), message.get('tree.selectNodeCutHint'), dialog.WARNING);
+	if (!selectedNode || selectedNode.id == "objectRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
 	}
 	else {
 		if (!selectedNode.isFolder) {
-			var treeController = dojo.widget.byId('treeController');
+			var treeController = dojo.widget.byId("treeController");
 			treeController.cut(selectedNode);
 		} else {
-    		dialog.show(message.get('general.hint'), message.get('tree.selectNodeCutHint'), dialog.WARNING);
+    		dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
 		}
 	}
 }
@@ -165,11 +116,11 @@ menuEventHandler.handleSave = function() {
 menuEventHandler.handleUndo = function(mes) {
 	var selectedNode = getSelectedNode(mes);
 
-	if (!selectedNode || selectedNode.id == 'objectRoot') {
-    	dialog.show(message.get('general.hint'), message.get('tree.selectNodeCutHint'), dialog.WARNING);
+	if (!selectedNode || selectedNode.id == "objectRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
 	}
 	else {
-    	dojo.debug('Publishing event: /loadRequest('+selectedNode.id+', '+selectedNode.nodeAppType+')');
+    	dojo.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
     	dojo.event.topic.publish("/loadRequest", {id: selectedNode.id, appType: selectedNode.nodeAppType});
 	}
 }
@@ -179,10 +130,20 @@ menuEventHandler.handleDiscard = function() {alertNotImplementedYet();}
 
 menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
 menuEventHandler.handleFinalSave = function() {alertNotImplementedYet();}
-menuEventHandler.handleMarkDeleted = function() {
-	// If QS ...
-	
-	alertNotImplementedYet();
+menuEventHandler.handleMarkDeleted = function(msg) {
+	var selectedNode = getSelectedNode(msg);
+	if (!selectedNode || selectedNode.id == "objectRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
+	} else {
+		// If QS ...
+    	var deferred = new dojo.Deferred();
+    	deferred.addCallback(function() {
+    		selectedNode.destroy();
+    	});
+
+    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
+    	dojo.event.topic.publish("/deleteRequest", {id: selectedNode.id, resultHandler: deferred});	
+	}
 }
 
 
@@ -192,8 +153,8 @@ menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
 //                            		win.focus();
 
 menuEventHandler.handleShowComment = function() {
-    dojo.debug("Publishing event: /loadRequest(38664792-B449-11D2-9A86-080000507261, O)");
-    dojo.event.topic.publish("/loadRequest", {id: "38664792-B449-11D2-9A86-080000507261", appType: "O"});
+    dojo.debug("Publishing event: /loadRequest(5CE671D3-5475-11D3-A172-08002B9A1D1D, O)");
+    dojo.event.topic.publish("/loadRequest", {id: "5CE671D3-5475-11D3-A172-08002B9A1D1D", appType: "O"});
 //	alertNotImplementedYet();
 }
 //                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
@@ -214,7 +175,7 @@ function getSelectedNode(message) {
   }
   else
   {
-    return dojo.widget.byId('tree').selectedNode;
+    return dojo.widget.byId("tree").selectedNode;
   }
 }
 

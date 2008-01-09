@@ -297,6 +297,7 @@ udkDataProxy.handleSaveRequest = function()
 udkDataProxy.handleDeleteRequest = function(msg) {
 	dojo.debug("udkDataProxy.handleDeleteRequest()");
 	dojo.debugShallow(msg);
+	msg.resultHandler.callback();
 }
 
 // event.connect point. Called when data has been saved 
@@ -365,7 +366,7 @@ udkDataProxy._setObjectData = function(nodeData)
   // --- General ---
   dojo.widget.byId("generalShortDesc").setValue(nodeData.generalShortDescription);
   dojo.widget.byId("generalDesc").setValue(nodeData.generalDescription);
-  dojo.widget.byId("generalAddress").store.setData(nodeData.generalAddressTable);
+  dojo.widget.byId("generalAddress").store.setData(udkDataProxy._addTableIndices(nodeData.generalAddressTable));
 
   // -- Spatial --
 //  dojo.widget.byId("spatialRefAdminUnit").store.setData(nodeData.spatialRefAdminUnitTable);
@@ -425,7 +426,7 @@ udkDataProxy._setObjectData = function(nodeData)
 
 */
   // -- Links --
-  dojo.widget.byId("linksTo").store.setData(nodeData.linksToObjectTable);
+  dojo.widget.byId("linksTo").store.setData(udkDataProxy._addTableIndices(nodeData.linksToObjectTable));
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)
@@ -537,7 +538,6 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // ------------- General Static Data -------------
   nodeData.uuid = currentUdk.uuid;
-  nodeData.id = currentUdk.id;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
   nodeData.parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
 
@@ -698,4 +698,12 @@ udkDataProxy._updateTree = function(nodeData) {
 udkDataProxy._getTableData = function(tableName)
 {
   return dojo.widget.byId(tableName).store.getData();
+}
+
+// Add Indices (Id values) to a passed list
+udkDataProxy._addTableIndices = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].Id = i;
+	}
+	return list;
 }

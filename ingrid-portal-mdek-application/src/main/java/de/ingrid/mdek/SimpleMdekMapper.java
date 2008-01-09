@@ -55,7 +55,6 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// General
 		mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
 		mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
-		mdekObj.setId((Long) obj.get(MdekKeys.ID));
 		mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
 		mdekObj.setTitle((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setObjectClass((Integer) obj.get(MdekKeys.CLASS));
@@ -120,7 +119,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		mdekObj.setLinksToObjectTable(mapToLinksToObjectTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_ENTITIES)));
-		mdekObj.setRelationType((Integer) obj.get(MdekKeys.RELATION_TYPE));
+		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
 
 		
@@ -147,10 +146,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		HashMap<String, Object> mdekObj = new HashMap<String, Object>();
 
-		// The object UUID is used to identify widgets in the gui. Both the id and
-		// uuid should not be used for this.
+		// The object UUID is used to identify widgets in the gui.
 		// TODO attach the values to the object but don't use them to identify widgets
-		mdekObj.put(MDEK_OBJECT_UNIQUE_ID, obj.get(MdekKeys.ID));
 		mdekObj.put(MDEK_OBJECT_ID, obj.get(MdekKeys.UUID));
 		mdekObj.put(MDEK_OBJECT_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
@@ -173,7 +170,6 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// General
 		udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
 		udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
-		udkObj.put(MdekKeys.ID, data.getId());
 		udkObj.put(MdekKeys.UUID, data.getUuid());
 		udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());
 		udkObj.put(MdekKeys.TITLE, data.getObjectName());
@@ -203,7 +199,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// Links
 		udkObj.put(MdekKeys.OBJ_ENTITIES, mapFromLinksToObjectTable(data.getLinksToObjectTable()));
-		udkObj.put(MdekKeys.RELATION_TYPE, data.getRelationType());
+		udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
 
 		return udkObj;
@@ -223,9 +219,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (MdekAddressBean address : adrTable) {
 			IngridDocument mappedEntry = new IngridDocument();
-			mappedEntry.put(MdekKeys.ID, address.getId());
 			mappedEntry.put(MdekKeys.UUID, address.getUuid());
-			mappedEntry.put(MdekKeys.RELATION_TYPE, address.getTypeOfRelation());
+			mappedEntry.put(MdekKeys.RELATION_TYPE_ID, address.getTypeOfRelation());
+			mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, address.getNameOfRelation());
 			resultList.add(mappedEntry);
 		}
 		return resultList;
@@ -260,7 +256,6 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		for (HashMap<String, Object> tableRow : adrTable) {
 			MdekAddressBean address = new MdekAddressBean();
 
-			address.setId((Long) tableRow.get(MdekKeys.ID));
 			address.setUuid((String) tableRow.get(MdekKeys.UUID));
 			address.setInformation((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
 			address.setIcon(((Integer) tableRow.get(MdekKeys.CLASS)).toString());
@@ -275,7 +270,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));
 			address.setNameForm((String) tableRow.get(MdekKeys.NAME_FORM));
 			address.setTitleOrFunction((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
-			address.setTypeOfRelation((Integer) tableRow.get(MdekKeys.RELATION_TYPE));
+			address.setTypeOfRelation((Integer) tableRow.get(MdekKeys.RELATION_TYPE_ID));
+			address.setNameOfRelation((String) tableRow.get(MdekKeys.RELATION_TYPE_NAME));
 
 			// Build name
 			if (tableRow.get(MdekKeys.NAME) != null) {
