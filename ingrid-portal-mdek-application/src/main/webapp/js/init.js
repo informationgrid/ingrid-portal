@@ -129,7 +129,8 @@ function initTree() {
   contextMenu1.addItem(message.get('tree.nodeCopy'), 'copy', menuEventHandler.handleCopyTree);
   contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
   contextMenu1.addSeparator();
-  contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
+//  contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
+  contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleMarkDeleted);
 
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
@@ -243,7 +244,8 @@ function initToolbar() {
                           });
   leftToolbar.addChild("img/ic_delete.gif", "after", {
                             onClick:menuEventHandler.handleMarkDeleted,
-                            caption:"Als gelöscht markieren"
+                            caption:"Ausgewähltes Objekt bzw. Teilbaum löschen"
+//                            caption:"Als gelöscht markieren"
                           });
 /*
   leftToolbar.addChild("img/ic_delete_undo.gif", "after", {

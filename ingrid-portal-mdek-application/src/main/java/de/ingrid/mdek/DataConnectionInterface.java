@@ -76,5 +76,7 @@ public interface DataConnectionInterface {
 
 	public MdekDataBean saveNode(MdekDataBean data);
 	
+	public void deleteObject(String uuid);
+
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }

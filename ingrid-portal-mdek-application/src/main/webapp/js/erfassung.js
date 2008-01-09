@@ -253,7 +253,7 @@ function selectContentClass(className, formClass)
 function nodeSelected(message)
 {
   // TODO Add: if ... addressRoot ...
-  if (message.node.id == 'objectRoot') {
+  if (message.node.id == "objectRoot") {
     dojo.byId("contentAddress").style.display="none";
     dojo.byId("contentObject").style.display="none";
     dojo.byId("contentNone").style.display="block";

@@ -71,9 +71,9 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#deleteNode(java.lang.String,
 	 *      java.lang.Boolean)
 	 */
-	public String deleteNode(String nodeUuid, Boolean markOnly) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteNode(String uuid, Boolean markOnly) {
+		dataConnection.deleteObject(uuid);
+		return "success";
 	}
 
 	/*

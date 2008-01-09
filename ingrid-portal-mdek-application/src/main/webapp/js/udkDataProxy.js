@@ -206,7 +206,7 @@ udkDataProxy.checkForUnsavedChanges = function()
 	var deferred = new dojo.Deferred();
 	if (dirtyFlag == true) {
 		dialog.showPage("Save changes", "mdek_save_changes.html", 342, 220, true, {resultHandler: deferred});
-		
+
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.
 		if (currentUdk.uuid == "newNode") {
@@ -295,9 +295,17 @@ udkDataProxy.handleSaveRequest = function()
 }
 
 udkDataProxy.handleDeleteRequest = function(msg) {
-	dojo.debug("udkDataProxy.handleDeleteRequest()");
-	dojo.debugShallow(msg);
-	msg.resultHandler.callback();
+	dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+")");
+	EntryService.deleteNode(msg.id, "false",
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:5000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while deleting node: " + message);
+				msg.resultHandler.errback();
+			}
+		}
+	);
 }
 
 // event.connect point. Called when data has been saved 

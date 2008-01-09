@@ -100,6 +100,10 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 
+	public void deleteObject(String uuid) {
+		mdekCaller.deleteObject(uuid);
+	}
+	
 	// ------------------------ Helper Methods ---------------------------------------	
 
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response)

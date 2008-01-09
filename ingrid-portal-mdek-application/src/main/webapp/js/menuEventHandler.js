@@ -130,19 +130,47 @@ menuEventHandler.handleDiscard = function() {alertNotImplementedYet();}
 
 menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
 menuEventHandler.handleFinalSave = function() {alertNotImplementedYet();}
+
+
 menuEventHandler.handleMarkDeleted = function(msg) {
+	// Get teh selected node from the message
 	var selectedNode = getSelectedNode(msg);
 	if (!selectedNode || selectedNode.id == "objectRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
-		// If QS ...
-    	var deferred = new dojo.Deferred();
-    	deferred.addCallback(function() {
-    		selectedNode.destroy();
-    	});
+		// If a selected node was found do the following:
+		// 1. Query the user if he really wants to delete the selected object
+		//    This is accomplished by creating a deferred obj 'deferred' and passing it to the
+		//    delete_object dialog. If the user clicks yes, the attached callback function is executed.
+		// 2. The attached callback function publishes a delete request which is picked up by the
+		//    udkDataProxy and sent to the backend. We need another deferred obj 'deleteObjDef' for this
+		//    so we can see if the delete operation was successful.
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
+	    	var deleteObjDef = new dojo.Deferred();
+	    	deleteObjDef.addCallback(function() {
+	    		// This function is called when the user has selected yes and the node was successfully
+				// deleted from the database
+	    		selectedNode.destroy();
+				var tree = dojo.widget.byId("tree");
+				var newSelectNode = dojo.widget.byId("objectRoot");
+				tree.selectNode(newSelectNode);
+				tree.selectedNode = newSelectNode;
+				dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+	    	});
+			// Tell the backend to delete the selected node.
+	    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
+	    	dojo.event.topic.publish("/deleteRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				
+		});
 
-    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
-    	dojo.event.topic.publish("/deleteRequest", {id: selectedNode.id, resultHandler: deferred});	
+		// params for the first (really delete object query) dialog.
+		var params = {
+			nodeTitle: selectedNode.title,
+			nodeHasChildren: selectedNode.isFolder,
+			resultHandler: deferred
+		};
+
+		dialog.showPage("Delete node", "mdek_delete_object_dialog.html", 342, 220, true, params);
 	}
 }
 
