@@ -64,7 +64,6 @@ if (refTypeList) {
   dojo.event.connect(refTypeList, "onValueChanged", function(value) {applyRule3(value);});
 }
 function applyRule3(value) {
-dojo.debug(value);
   var datePickerNode = dojo.byId("timeRefDate2Editor");
   if (datePickerNode) {
     if (value.indexOf("von") == 0)

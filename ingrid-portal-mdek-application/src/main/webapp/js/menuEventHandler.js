@@ -154,7 +154,11 @@ menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
 //                            		var win = window.open("qs_vergleich.html", 'preview', 'width=720, height=690, resizable=yes, scrollbars=yes, status=yes');
 //                            		win.focus();
 
-menuEventHandler.handleShowComment = function() {alertNotImplementedYet();}
+menuEventHandler.handleShowComment = function() {
+    dojo.debug("Publishing event: /loadRequest(38664792-B449-11D2-9A86-080000507261, O)");
+    dojo.event.topic.publish("/loadRequest", {id: "38664792-B449-11D2-9A86-080000507261", appType: "O"});
+//	alertNotImplementedYet();
+}
 //                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
 
 

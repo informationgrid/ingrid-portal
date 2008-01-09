@@ -1283,14 +1283,14 @@ function hideSplash(){
 	                  <div id="timeRefRef">
 	                    <span class="entry first">
 	                      <span class="label hidden"><label for="timeRefType">Typ</label></span>
-	                      <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/time_ref_type.js" style="width:61px;" id="timeRefType" name="timeRefType" mode="remote" /></span>
+                		  <span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:61px;" id="timeRefType" name="timeRefType" dataUrl="js/data/time_ref_type.js" mode="remote" /></span>
 	                    </span>
 	                    <span class="entry">
-	                      <span class="label hidden"><label for="timeRefDate1">Datum 1 [TT.MM.JJJJ]</label></span>
+	                      <span class="label hidden"><label for="timeRefDate1">Datum 1 [TT.MM.JJ]</label></span>
 	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefDate1"  name="timeRefDate1"></div><br />TT.MM.JJJJ</span>
 	                    </span>
 	                    <span class="entry last" id="timeRefDate2Editor">
-	                      <span class="label hidden"><label for="timeRefDate2">Datum 2 [TT.MM.JJJJ]</label></span>
+	                      <span class="label hidden"><label for="timeRefDate2">Datum 2 [TT.MM.JJ]</label></span>
 	                      <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="timeRefDate2" name="timeRefDate2"></div><br />TT.MM.JJJJ</span>
 	                    </span>
 	                  </div>

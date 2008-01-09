@@ -1,6 +1,8 @@
 package de.ingrid.mdek;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,15 +67,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
 		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
-
-		String date = (String) obj.get(MdekKeys.DATE_OF_CREATION);
-		if (date != null) {
-			mdekObj.setCreationTime(MdekUtils.timestampToDisplayDate(date));
-		}
-		date = (String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION);
-		if (date != null) {
-			mdekObj.setModificationTime(MdekUtils.timestampToDisplayDate(date));
-		}
+		mdekObj.setCreationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_CREATION)));
+		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 
 		// Spatial
 //		mdekObj.setSpatialRefAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -87,15 +82,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setSpatialRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_SPATIAL_DOMAIN));
 
 		// Time
-//		mdekObj.setTimeRefType((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setTimeRefDate1((Date) obj.get(MdekKeys.MISSING));
-//		mdekObj.setTimeRefDate2((Date) obj.get(MdekKeys.MISSING));
-//		mdekObj.setTimeRefStatus((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setTimeRefPeriodicity((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.MISSING));
+		mdekObj.setTimeRefType((String) obj.get(MdekKeys.TIME_TYPE));
+		mdekObj.setTimeRefDate1(convertTimestampToDate((String) obj.get(MdekKeys.BEGINNING_DATE)));
+		mdekObj.setTimeRefDate2(convertTimestampToDate((String) obj.get(MdekKeys.ENDING_DATE)));
+		mdekObj.setTimeRefStatus((Integer) obj.get(MdekKeys.TIME_STATUS));
+		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
+		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_STEP));
+		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
 //		mdekObj.setTimeRefTable((ArrayList<HashMap<String, String>>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.MISSING));
+		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 		
 		// ExtraInfo
 //		mdekObj.setExtraInfoLangMetaData((String) obj.get(MdekKeys.MISSING));
@@ -175,6 +170,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	public Object convertFromMdekRepresentation(MdekDataBean data){
 		IngridDocument udkObj = new IngridDocument();
 
+		// General
 		udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
 		udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
 		udkObj.put(MdekKeys.ID, data.getId());
@@ -186,11 +182,24 @@ public class SimpleMdekMapper implements DataMapperInterface {
 //		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());
 		udkObj.put(MdekKeys.ADR_ENTITIES, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 
+		// Spatial
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_MINIMUM, data.getSpatialRefAltMin());
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_MAXIMUM, data.getSpatialRefAltMax());
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_UNIT, data.getSpatialRefAltMeasure());
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_VDATUM, data.getSpatialRefAltVDate());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_SPATIAL_DOMAIN, data.getSpatialRefExplanation());
+
+		// Time
+		udkObj.put(MdekKeys.TIME_TYPE, data.getTimeRefType());
+		udkObj.put(MdekKeys.BEGINNING_DATE, convertDateToTimestamp(data.getTimeRefDate1()));
+		udkObj.put(MdekKeys.ENDING_DATE, convertDateToTimestamp(data.getTimeRefDate2()));
+		udkObj.put(MdekKeys.TIME_STATUS, data.getTimeRefStatus());
+		udkObj.put(MdekKeys.TIME_PERIOD, data.getTimeRefPeriodicity());
+		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalNum());
+		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalUnit());
+		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
+//		mdekObj.setTimeRefTable((ArrayList<HashMap<String, String>>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+
 
 		// Links
 		udkObj.put(MdekKeys.OBJ_ENTITIES, mapFromLinksToObjectTable(data.getLinksToObjectTable()));
@@ -374,6 +383,39 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	/********************************
 	 * Miscellaneous Helper Methods *
 	 ********************************/
+	private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+
+	private static Date convertTimestampToDate(String timeStamp) {
+		if (timeStamp != null && timeStamp.length() != 0) {
+			try {
+				Date date = timestampFormatter.parse(timeStamp);
+				return date;
+			} catch (Exception ex){
+				log.error("Problems parsing timestamp from database: " + timeStamp, ex);
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	private static String convertDateToTimestamp(Date date) {
+		if (date != null) {
+			return MdekUtils.dateToTimestamp(date);
+		} else {
+			return null;
+		}
+	}
+
+		
+	private static String convertTimestampToDisplayDate(String timeStamp) {
+		if (timeStamp != null) {
+			return MdekUtils.timestampToDisplayDate(timeStamp);
+		} else {
+			return null;
+		}
+	}
+
 	
 	private static void printHashMap(HashMap<String, Object> map) {
 		Set<Map.Entry<String, Object>> entrySet = map.entrySet();

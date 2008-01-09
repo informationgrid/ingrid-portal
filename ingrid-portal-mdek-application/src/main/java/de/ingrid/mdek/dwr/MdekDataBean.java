@@ -48,8 +48,8 @@ public class MdekDataBean {
 	public String timeRefType;
 	public Date timeRefDate1;
 	public Date timeRefDate2;
-	public String timeRefStatus;
-	public String timeRefPeriodicity;
+	public Integer timeRefStatus;
+	public Integer timeRefPeriodicity;
 	public String timeRefIntervalNum;
 	public String timeRefIntervalUnit;
 	public ArrayList<HashMap<String, String>> timeRefTable;
@@ -499,25 +499,25 @@ public class MdekDataBean {
 
 
 
-	public String getTimeRefStatus() {
+	public Integer getTimeRefStatus() {
 		return timeRefStatus;
 	}
 
 
 
-	public void setTimeRefStatus(String timeRefStatus) {
+	public void setTimeRefStatus(Integer timeRefStatus) {
 		this.timeRefStatus = timeRefStatus;
 	}
 
 
 
-	public String getTimeRefPeriodicity() {
+	public Integer getTimeRefPeriodicity() {
 		return timeRefPeriodicity;
 	}
 
 
 
-	public void setTimeRefPeriodicity(String timeRefPeriodicity) {
+	public void setTimeRefPeriodicity(Integer timeRefPeriodicity) {
 		this.timeRefPeriodicity = timeRefPeriodicity;
 	}
 

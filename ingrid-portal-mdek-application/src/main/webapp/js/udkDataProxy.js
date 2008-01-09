@@ -28,8 +28,8 @@ var currentUdk = {};
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
 {
-    dojo.event.topic.subscribe("/loadRequest", udkDataProxy, 'handleLoadRequest');
-    dojo.event.topic.subscribe("/saveRequest", udkDataProxy, 'handleSaveRequest');
+    dojo.event.topic.subscribe("/loadRequest", udkDataProxy, "handleLoadRequest");
+    dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
 
 	var treeListener = dojo.widget.byId("treeListener");
 
@@ -53,113 +53,113 @@ dojo.addOnLoad(function()
 
 
 	// Connect the widgets onChange methods to the setDirtyFlag Method
-    dojo.event.connect(dojo.widget.byId('objectName'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('objectClass'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('objectOwner'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId("objectName"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("objectClass"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("objectOwner"), "onValueChanged", "setDirtyFlag");
 
-    dojo.event.connect(dojo.widget.byId('generalShortDesc'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('generalDesc'), 'onkeyup', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('generalAddress').store);
+    dojo.event.connect(dojo.widget.byId("generalShortDesc"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("generalDesc"), "onkeyup", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("generalAddress").store);
 
-    dojo.event.connect(dojo.widget.byId('ref1DataSet'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref1Coverage'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref1Representation'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref1VFormatTopology'), 'onValueChanged', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1VFormatDetails').store);
-    dojo.event.connect(dojo.widget.byId('ref1SpatialSystem'), 'onValueChanged', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1Scale').store);
-    dojo.event.connect(dojo.widget.byId('ref1AltAccuracy'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref1PosAccuracy'), 'onkeyup', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1SymbolsText').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1KeysText').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1ServiceLink').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1BasisLink').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1DataBasisLink').store);
-    dojo.event.connect(dojo.widget.byId('ref1Data'), 'onkeyup', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref1ProcessLink').store);
+    dojo.event.connect(dojo.widget.byId("ref1DataSet"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref1Coverage"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref1Representation"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref1VFormatTopology"), "onValueChanged", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1VFormatDetails").store);
+    dojo.event.connect(dojo.widget.byId("ref1SpatialSystem"), "onValueChanged", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1Scale").store);
+    dojo.event.connect(dojo.widget.byId("ref1AltAccuracy"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref1PosAccuracy"), "onkeyup", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1SymbolsText").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1KeysText").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1ServiceLink").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1BasisLink").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1DataBasisLink").store);
+    dojo.event.connect(dojo.widget.byId("ref1Data"), "onkeyup", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1ProcessLink").store);
 
-    dojo.event.connect(dojo.widget.byId('ref2Author'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2Publisher'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishedIn'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishLocation'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishedInIssue'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishedInPages'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishedInYear'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishedISBN'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2PublishedPublisher'), 'onkeyup', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref2LocationLink').store);
-    dojo.event.connect(dojo.widget.byId('ref2DocumentType'), 'onValueChanged', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref2BaseDataLink').store);
-    dojo.event.connect(dojo.widget.byId('ref2BibDataIn'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref2Explanation'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId("ref2Author"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2Publisher"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishedIn"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishLocation"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishedInIssue"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishedInPages"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishedInYear"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishedISBN"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2PublishedPublisher"), "onkeyup", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref2LocationLink").store);
+    dojo.event.connect(dojo.widget.byId("ref2DocumentType"), "onValueChanged", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref2BaseDataLink").store);
+    dojo.event.connect(dojo.widget.byId("ref2BibDataIn"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2Explanation"), "onkeyup", "setDirtyFlag");
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3ServiceType').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3ServiceVersion').store);
-    dojo.event.connect(dojo.widget.byId('ref3SystemEnv'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('ref3History'), 'onkeyup', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3BaseDataLink').store);
-    dojo.event.connect(dojo.widget.byId('ref3Explanation'), 'onkeyup', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref3Operation').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3ServiceType").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3ServiceVersion").store);
+    dojo.event.connect(dojo.widget.byId("ref3SystemEnv"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref3History"), "onkeyup", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3BaseDataLink").store);
+    dojo.event.connect(dojo.widget.byId("ref3Explanation"), "onkeyup", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3Operation").store);
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref4ParticipantsLink').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref4PMLink').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref4ParticipantsLink").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref4PMLink").store);
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref5Scale').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('ref5MethodLink').store);
-    dojo.event.connect(dojo.widget.byId('ref5Explanation'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5Scale").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5MethodLink").store);
+    dojo.event.connect(dojo.widget.byId("ref5Explanation"), "onkeyup", "setDirtyFlag");
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefAdminUnit').store);
-//	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefCoordsAdminUnit').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefLocation').store);
-//	_connectStoreWithDirtyFlag(dojo.widget.byId('spatialRefCoordsLocation').store);
-    dojo.event.connect(dojo.widget.byId('spatialRefAltMin'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('spatialRefAltMax'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('spatialRefAltMeasure'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('spatialRefAltVDate'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('spatialRefExplanation'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefAdminUnit").store);
+//	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefCoordsAdminUnit").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefLocation").store);
+//	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefCoordsLocation").store);
+    dojo.event.connect(dojo.widget.byId("spatialRefAltMin"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("spatialRefAltMax"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("spatialRefAltMeasure"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("spatialRefAltVDate"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("spatialRefExplanation"), "onkeyup", "setDirtyFlag");
 
-    dojo.event.connect(dojo.widget.byId('timeRefType'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('timeRefDate1'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('timeRefDate2'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('timeRefStatus'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('timeRefPeriodicity'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('timeRefIntervalNum'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('timeRefIntervalUnit'), 'onValueChanged', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('timeRefTable').store);
-    dojo.event.connect(dojo.widget.byId('timeRefExplanation'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId("timeRefType"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("timeRefDate1"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("timeRefDate2"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("timeRefStatus"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("timeRefPeriodicity"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("timeRefIntervalNum"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("timeRefIntervalUnit"), "onValueChanged", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("timeRefTable").store);
+    dojo.event.connect(dojo.widget.byId("timeRefExplanation"), "onkeyup", "setDirtyFlag");
 
-    dojo.event.connect(dojo.widget.byId('extraInfoLangMetaData'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('extraInfoLangData'), 'onValueChanged', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('extraInfoPublishArea'), 'onValueChanged', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('extraInfoXMLExport').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('extraInfoLegalBasics').store);
-    dojo.event.connect(dojo.widget.byId('extraInfoPurpose'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('extraInfoUse'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId("extraInfoLangMetaData"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("extraInfoLangData"), "onValueChanged", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("extraInfoPublishArea"), "onValueChanged", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoXMLExport").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoLegalBasics").store);
+    dojo.event.connect(dojo.widget.byId("extraInfoPurpose"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("extraInfoUse"), "onkeyup", "setDirtyFlag");
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('availabilityDataFormat').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('availabilityMediaOptions').store);
-    dojo.event.connect(dojo.widget.byId('availabilityOrderInfo'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('availabilityNoteUse'), 'onkeyup', 'setDirtyFlag');
-    dojo.event.connect(dojo.widget.byId('availabilityCosts'), 'onkeyup', 'setDirtyFlag');
+	_connectStoreWithDirtyFlag(dojo.widget.byId("availabilityDataFormat").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("availabilityMediaOptions").store);
+    dojo.event.connect(dojo.widget.byId("availabilityOrderInfo"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("availabilityNoteUse"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("availabilityCosts"), "onkeyup", "setDirtyFlag");
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusTerms').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusTopics').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusFreeTermsList').store);
-    dojo.event.connect(dojo.widget.byId('thesaurusEnvExtRes'), 'onValueChanged', 'setDirtyFlag');
-	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusEnvTopics').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('thesaurusEnvCats').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusTerms").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusTopics").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusFreeTermsList").store);
+    dojo.event.connect(dojo.widget.byId("thesaurusEnvExtRes"), "onValueChanged", "setDirtyFlag");
+	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusEnvTopics").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusEnvCats").store);
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId('linksTo').store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId('linksFrom').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("linksTo").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("linksFrom").store);
 
-	dojo.event.connect(udkDataProxy, '_setData', 'resetDirtyFlag');
+	dojo.event.connect(udkDataProxy, "_setData", "resetDirtyFlag");
 /*
 	// Table
-	_connectStoreWithDirtyFlag(dojo.widget.byId('TABLENAME').store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("TABLENAME").store);
 	// SelectBox
-    dojo.event.connect(dojo.widget.byId('SELECTBOXNAME'), 'onValueChanged', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId("SELECTBOXNAME"), "onValueChanged", "setDirtyFlag");
 	// ValidationTextbox
-    dojo.event.connect(dojo.widget.byId('TEXTBOXNAME'), 'onkeyup', 'setDirtyFlag');
+    dojo.event.connect(dojo.widget.byId("TEXTBOXNAME"), "onkeyup", "setDirtyFlag");
 */
   }
 );
@@ -176,12 +176,12 @@ resetDirtyFlag = function()
 
 _connectStoreWithDirtyFlag = function(store)
 {
-	dojo.event.connect(store, 'onSetData', 'setDirtyFlag');
-	dojo.event.connect(store, 'onAddData', 'setDirtyFlag');
-	dojo.event.connect(store, 'onAddDataRange', 'setDirtyFlag');
-	dojo.event.connect(store, 'onRemoveData', 'setDirtyFlag');
-	dojo.event.connect(store, 'onUpdateField', 'setDirtyFlag');
-	dojo.event.connect(store, 'onSetData', 'setDirtyFlag');
+	dojo.event.connect(store, "onSetData", "setDirtyFlag");
+	dojo.event.connect(store, "onAddData", "setDirtyFlag");
+	dojo.event.connect(store, "onAddDataRange", "setDirtyFlag");
+	dojo.event.connect(store, "onRemoveData", "setDirtyFlag");
+	dojo.event.connect(store, "onUpdateField", "setDirtyFlag");
+	dojo.event.connect(store, "onSetData", "setDirtyFlag");
 }
 
 // This function has to be called before any UI functions that are about to change the
@@ -196,7 +196,7 @@ udkDataProxy.checkForUnsavedChanges = function()
 
 	var deferred = new dojo.Deferred();
 	if (dirtyFlag == true) {
-		dialog.showPage('Save changes', 'mdek_save_changes.html', 342, 220, true, {resultHandler: deferred});
+		dialog.showPage("Save changes", "mdek_save_changes.html", 342, 220, true, {resultHandler: deferred});
 		
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.
@@ -226,9 +226,9 @@ udkDataProxy.handleLoadRequest = function(node)
 	var deferred = udkDataProxy.checkForUnsavedChanges();
 	var loadErrback = function() {return;}
 	var loadCallback = function() {
-		dojo.debug('udkDataProxy calling EntryService.getNodeData('+node.id+', '+node.appType+')');
+		dojo.debug("udkDataProxy calling EntryService.getNodeData("+node.id+", "+node.appType+")");
 		// ---- DWR call to load the data ----
-		EntryService.getNodeData(node.id, node.appType, 'false',
+		EntryService.getNodeData(node.id, node.appType, "false",
 			{
 				callback:udkDataProxy._setData,
 				timeout:5000,
@@ -253,7 +253,7 @@ udkDataProxy.handleSaveRequest = function()
 	
 	// ---- DWR call to store the data ----
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+")");
-	EntryService.saveNodeData(nodeData, 'false',
+	EntryService.saveNodeData(nodeData, "false",
 		{
 			callback: function(res){resetDirtyFlag(); udkDataProxy._setData(res); udkDataProxy._updateTree(res); udkDataProxy.onAfterSave();},
 			timeout:5000,
@@ -285,7 +285,7 @@ udkDataProxy._setData = function(nodeData)
       udkDataProxy._setObjectData(nodeData);
       break;
     default:
-      dojo.debug('Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!');
+      dojo.debug("Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!");
       break;
   }  
 }
@@ -306,74 +306,85 @@ udkDataProxy._setObjectData = function(nodeData)
    */
 
   // ------------------ Header ------------------
-  var formWidget = dojo.widget.byId('headerFormObject');
+  var formWidget = dojo.widget.byId("headerFormObject");
 
 //  dojo.debug("HeaderObjectForm before setting values: " + dojo.json.serialize(formWidget.getValues()));
 
-  dojo.widget.byId('objectName').setValue(nodeData.objectName);
-  dojo.widget.byId('objectClass').setValue("Class"+nodeData.objectClass);
-  dojo.byId('workState').innerHTML = nodeData.workState;
-  dojo.byId('creationTime').innerHTML = nodeData.creationTime;
-  dojo.byId('modificationTime').innerHTML = nodeData.modificationTime;
+  dojo.widget.byId("objectName").setValue(nodeData.objectName);
+  dojo.widget.byId("objectClass").setValue("Class"+nodeData.objectClass);
+  dojo.byId("workState").innerHTML = nodeData.workState;
+  dojo.byId("creationTime").innerHTML = nodeData.creationTime;
+  dojo.byId("modificationTime").innerHTML = nodeData.modificationTime;
 
-//  dojo.widget.byId('last_editor').setValue('test last editor');
+//  dojo.widget.byId("last_editor").setValue("test last editor");
 
 //  dojo.debug("HeaderObjectForm after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
 
   // ------------------ Object Content ------------------
-  formWidget = dojo.widget.byId('contentFormObject');
+  formWidget = dojo.widget.byId("contentFormObject");
 //  dojo.debug("ContentFormObject before setting values: " + dojo.json.serialize(formWidget.getValues()));
 
   // --- General ---
-  dojo.widget.byId('generalShortDesc').setValue(nodeData.generalShortDescription);
-  dojo.widget.byId('generalDesc').setValue(nodeData.generalDescription);
-  dojo.widget.byId('generalAddress').store.setData(nodeData.generalAddressTable);
+  dojo.widget.byId("generalShortDesc").setValue(nodeData.generalShortDescription);
+  dojo.widget.byId("generalDesc").setValue(nodeData.generalDescription);
+  dojo.widget.byId("generalAddress").store.setData(nodeData.generalAddressTable);
 
   // -- Spatial --
-//  dojo.widget.byId('spatialRefAdminUnit').store.setData(nodeData.spatialRefAdminUnitTable);
-//  dojo.widget.byId('spatialRefCoordsAdminUnit').store.setData(nodeData.spatialRefCoordsAdminUnitTable);
-//  dojo.widget.byId('spatialRefLocation').store.setData(nodeData.spatialRefLocationTable);
-//  dojo.widget.byId('spatialRefCoordsLocation').store.setData(nodeData.spatialRefCoordsLocationTable);
+//  dojo.widget.byId("spatialRefAdminUnit").store.setData(nodeData.spatialRefAdminUnitTable);
+//  dojo.widget.byId("spatialRefCoordsAdminUnit").store.setData(nodeData.spatialRefCoordsAdminUnitTable);
+//  dojo.widget.byId("spatialRefLocation").store.setData(nodeData.spatialRefLocationTable);
+//  dojo.widget.byId("spatialRefCoordsLocation").store.setData(nodeData.spatialRefCoordsLocationTable);
 
-  dojo.widget.byId('spatialRefAltMin').setValue(nodeData.spatialRefAltMin);
-  dojo.widget.byId('spatialRefAltMax').setValue(nodeData.spatialRefAltMax);
-  dojo.widget.byId('spatialRefAltMeasure').setValue(nodeData.spatialRefAltMeasure);
-  dojo.widget.byId('spatialRefAltVDate').setValue(nodeData.spatialRefAltVDate);
-  dojo.widget.byId('spatialRefExplanation').setValue(nodeData.spatialRefExplanation);
-
-/*
-  //  var tableId = dojo.widget.byId('spatialRefAdminUnit').valueField;
-  dojo.widget.byId('spatialRefAdminUnit').store.clearData();
-  dojo.widget.byId('spatialRefAdminUnit').store.addData({Id: '1', information:'info one', latitude1:'3.14', longitude1:'0.1123', latitude2:'1.234', longitude2:'2.345'});
-  dojo.widget.byId('spatialRefAdminUnit').store.addData({Id: '2', information:'info two', latitude1:'1.14', longitude1:'2.1123', latitude2:'4.434', longitude2:'1.2'});
+  dojo.widget.byId("spatialRefAltMin").setValue(nodeData.spatialRefAltMin);
+  dojo.widget.byId("spatialRefAltMax").setValue(nodeData.spatialRefAltMax);
+  dojo.widget.byId("spatialRefAltMeasure").setValue(nodeData.spatialRefAltMeasure);
+  dojo.widget.byId("spatialRefAltVDate").setValue(nodeData.spatialRefAltVDate);
+  dojo.widget.byId("spatialRefExplanation").setValue(nodeData.spatialRefExplanation);
 
   // -- Time --
+  dojo.widget.byId("timeRefType").setValue(nodeData.timeRefType);
+//  if (nodeData.timeRefType) { dojo.widget.byId("timeRefType").setValue(nodeData.timeRefType); }
+//  else { dojo.widget.byId("timeRefType").setValue(""); }
+  if (nodeData.timeRefDate1) { dojo.widget.byId("timeRefDate1").setValue(nodeData.timeRefDate1) }
+  if (nodeData.timeRefDate2) { dojo.widget.byId("timeRefDate2").setValue(nodeData.timeRefDate2) };
+  dojo.widget.byId("timeRefStatus").setValue(nodeData.timeRefStatus);
+  dojo.widget.byId("timeRefPeriodicity").setValue(nodeData.timeRefPeriodicity);
+  dojo.widget.byId("timeRefIntervalNum").setValue(nodeData.timeRefIntervalNum);
+  dojo.widget.byId("timeRefIntervalUnit").setValue(nodeData.timeRefIntervalUnit);
+  dojo.widget.byId("timeRefExplanation").setValue(nodeData.timeRefExplanation);
+
+/*
+  //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
+  dojo.widget.byId("spatialRefAdminUnit").store.clearData();
+  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "1", information:"info one", latitude1:"3.14", longitude1:"0.1123", latitude2:"1.234", longitude2:"2.345"});
+  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "2", information:"info two", latitude1:"1.14", longitude1:"2.1123", latitude2:"4.434", longitude2:"1.2"});
+
   
   // -- Extra Info --
-  dojo.widget.byId('extraInfoLangMetaData').setValue('Englisch');
-  dojo.widget.byId('extraInfoLangData').setValue('Englisch');
+  dojo.widget.byId("extraInfoLangMetaData").setValue("Englisch");
+  dojo.widget.byId("extraInfoLangData").setValue("Englisch");
 
   // -- Availability --
 
   // -- Thesaurus --
-  //  var tableId = dojo.widget.byId('thesaurusTerms').valueField;
-  dojo.widget.byId('thesaurusTerms').store.clearData();
-  dojo.widget.byId('thesaurusTerms').store.addData({Id: '1', term:'Topographie'});
-  dojo.widget.byId('thesaurusTerms').store.addData({Id: '2', term:'Kartographie'});
-  dojo.widget.byId('thesaurusTerms').store.addData({Id: '3', term:'Wasser'});
+  //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;
+  dojo.widget.byId("thesaurusTerms").store.clearData();
+  dojo.widget.byId("thesaurusTerms").store.addData({Id: "1", term:"Topographie"});
+  dojo.widget.byId("thesaurusTerms").store.addData({Id: "2", term:"Kartographie"});
+  dojo.widget.byId("thesaurusTerms").store.addData({Id: "3", term:"Wasser"});
 
-  //  var tableId = dojo.widget.byId('thesaurusTopics').valueField;
-  dojo.widget.byId('thesaurusTopics').store.clearData();
-  dojo.widget.byId('thesaurusTopics').store.addData({Id: '1', topics:'Kategorie eins'});
-  dojo.widget.byId('thesaurusTopics').store.addData({Id: '2', topics:'Kategorie zwei'});
-  dojo.widget.byId('thesaurusTopics').store.addData({Id: '3', topics:'Kategorie drei'});
+  //  var tableId = dojo.widget.byId("thesaurusTopics").valueField;
+  dojo.widget.byId("thesaurusTopics").store.clearData();
+  dojo.widget.byId("thesaurusTopics").store.addData({Id: "1", topics:"Kategorie eins"});
+  dojo.widget.byId("thesaurusTopics").store.addData({Id: "2", topics:"Kategorie zwei"});
+  dojo.widget.byId("thesaurusTopics").store.addData({Id: "3", topics:"Kategorie drei"});
 
-  //  var tableId = dojo.widget.byId('thesaurusFreeTermsList').valueField;
-  dojo.widget.byId('thesaurusFreeTermsList').store.clearData();
-  dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '1', freeTerms:'Freier Term eins'});
-  dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '2', freeTerms:'Freier Term zwei'});
-  dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '3', freeTerms:'Freier Term drei'});
+  //  var tableId = dojo.widget.byId("thesaurusFreeTermsList").valueField;
+  dojo.widget.byId("thesaurusFreeTermsList").store.clearData();
+  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "1", freeTerms:"Freier Term eins"});
+  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "2", freeTerms:"Freier Term zwei"});
+  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "3", freeTerms:"Freier Term drei"});
 
 */
   // -- Links --
@@ -401,7 +412,7 @@ udkDataProxy._setObjectData = function(nodeData)
       udkDataProxy._setObjectDataClass5(nodeData);
       break;
     default:
-      dojo.debug('Error in udkDataProxy._setObjectData - Object Class must be 0...5!');
+      dojo.debug("Error in udkDataProxy._setObjectData - Object Class must be 0...5!");
       break;
   }
 
@@ -409,9 +420,9 @@ udkDataProxy._setObjectData = function(nodeData)
 
 // The values are set with the corresponding setter methods
 // We could also set the values through the form
-//  dojo.widget.byId('contentFormObject').setValues(myObj);
-//  dojo.widget.byId('headerFormAddress').setValues(myObj);
-//  dojo.widget.byId('contentFormAddress').setValues(myObj);
+//  dojo.widget.byId("contentFormObject").setValues(myObj);
+//  dojo.widget.byId("headerFormAddress").setValues(myObj);
+//  dojo.widget.byId("contentFormAddress").setValues(myObj);
 }
 
 udkDataProxy._setObjectDataClass0 = function(nodeData)
@@ -420,11 +431,11 @@ udkDataProxy._setObjectDataClass0 = function(nodeData)
 
 udkDataProxy._setObjectDataClass1 = function(nodeData)
 {
-  dojo.widget.byId('ref1DataSet').setValue('2');
+  dojo.widget.byId("ref1DataSet").setValue("2");
 
-  dojo.widget.byId('ref1Representation').store.clearData();
-  dojo.widget.byId('ref1Representation').store.addData({Id: '1', representation:'Rasterdaten'});
-  dojo.widget.byId('ref1Representation').store.addData({Id: '2', representation:'Another Representation'});
+  dojo.widget.byId("ref1Representation").store.clearData();
+  dojo.widget.byId("ref1Representation").store.addData({Id: "1", representation:"Rasterdaten"});
+  dojo.widget.byId("ref1Representation").store.addData({Id: "2", representation:"Another Representation"});
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData)
@@ -466,7 +477,7 @@ udkDataProxy._getData = function()
       udkDataProxy._getObjectData(nodeData);
       break;
     default:
-      dojo.debug('Error in udkDataProxy._getData - Node Type must be \'A\' or \'O\'!');
+      dojo.debug("Error in udkDataProxy._getData - Node Type must be \'A\' or \'O\'!");
       break;
   }
 
@@ -495,64 +506,80 @@ udkDataProxy._getObjectData = function(nodeData)
 
 
   // ------------------ Header ------------------
-  var formWidget = dojo.widget.byId('headerFormObject');
+  var formWidget = dojo.widget.byId("headerFormObject");
 
 //  dojo.debug("HeaderObjectForm values: " + dojo.json.serialize(formWidget.getValues()));
 
-  nodeData.objectName = dojo.widget.byId('objectName').getValue();
-//  nodeData.last_editor = dojo.widget.byId('last_editor').getValue();
+  nodeData.objectName = dojo.widget.byId("objectName").getValue();
+//  nodeData.last_editor = dojo.widget.byId("last_editor").getValue();
 
   // ------------------ Object Content ------------------
-  formWidget = dojo.widget.byId('contentFormObject');
+  formWidget = dojo.widget.byId("contentFormObject");
 //  dojo.debug("ContentFormObject values: " + dojo.json.serialize(formWidget.getValues()));
 
   // --- General ---
-  nodeData.generalShortDescription = dojo.widget.byId('generalShortDesc').getValue();
-  nodeData.generalDescription = dojo.widget.byId('generalDesc').getValue();
-  nodeData.objectClass = dojo.widget.byId("objectClass").getValue()[5]; // Value is a string: 'Classx' where x is the class
+  nodeData.generalShortDescription = dojo.widget.byId("generalShortDesc").getValue();
+  nodeData.generalDescription = dojo.widget.byId("generalDesc").getValue();
+  nodeData.objectClass = dojo.widget.byId("objectClass").getValue()[5]; // Value is a string: "Classx" where x is the class
 
-  nodeData.generalAddressTable = udkDataProxy._getTableData('generalAddress');
+  nodeData.generalAddressTable = udkDataProxy._getTableData("generalAddress");
 
   // -- Spatial --
-  nodeData.spatialRefAltMin = dojo.widget.byId('spatialRefAltMin').getValue();
-  nodeData.spatialRefAltMax = dojo.widget.byId('spatialRefAltMax').getValue();
-  nodeData.spatialRefAltMeasure = dojo.widget.byId('spatialRefAltMeasure').getValue();
-  nodeData.spatialRefAltVDate = dojo.widget.byId('spatialRefAltVDate').getValue();
-  nodeData.spatialRefExplanation = dojo.widget.byId('spatialRefExplanation').getValue();
+  nodeData.spatialRefAltMin = dojo.widget.byId("spatialRefAltMin").getValue();
+  nodeData.spatialRefAltMax = dojo.widget.byId("spatialRefAltMax").getValue();
+  nodeData.spatialRefAltMeasure = dojo.widget.byId("spatialRefAltMeasure").getValue();
+  nodeData.spatialRefAltVDate = dojo.widget.byId("spatialRefAltVDate").getValue();
+  nodeData.spatialRefExplanation = dojo.widget.byId("spatialRefExplanation").getValue();
 
+  // -- Time --
+  nodeData.timeRefType = dojo.widget.byId("timeRefType").getValue();
+  dojo.debug("Value: "+dojo.widget.byId("timeRefDate1").getValue());
+  dojo.debug("Date: "+dojo.widget.byId("timeRefDate1").getDate());
+  
+  if (dojo.widget.byId("timeRefDate1").getValue() != "") {
+  	nodeData.timeRefDate1 = dojo.widget.byId("timeRefDate1").getDate();
+  }
+  if (dojo.widget.byId("timeRefDate2").getValue() != "") {
+    nodeData.timeRefDate2 = dojo.widget.byId("timeRefDate2").getDate();
+  }
+  nodeData.timeRefStatus = dojo.widget.byId("timeRefStatus").getValue();
+  nodeData.timeRefPeriodicity = dojo.widget.byId("timeRefPeriodicity").getValue();
+  nodeData.timeRefIntervalNum = dojo.widget.byId("timeRefIntervalNum").getValue();
+  nodeData.timeRefIntervalUnit = dojo.widget.byId("timeRefIntervalUnit").getValue();
+  nodeData.timeRefExplanation = dojo.widget.byId("timeRefExplanation").getValue();
 
 /*
-  //  var tableId = dojo.widget.byId('spatialRefAdminUnit').valueField;
-  dojo.widget.byId('spatialRefAdminUnit').store.clearData();
-  dojo.widget.byId('spatialRefAdminUnit').store.addData({Id: '1', information:'info one', latitude1:'3.14', longitude1:'0.1123', latitude2:'1.234', longitude2:'2.345'});
-  dojo.widget.byId('spatialRefAdminUnit').store.addData({Id: '2', information:'info two', latitude1:'1.14', longitude1:'2.1123', latitude2:'4.434', longitude2:'1.2'});
+  //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
+  dojo.widget.byId("spatialRefAdminUnit").store.clearData();
+  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "1", information:"info one", latitude1:"3.14", longitude1:"0.1123", latitude2:"1.234", longitude2:"2.345"});
+  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "2", information:"info two", latitude1:"1.14", longitude1:"2.1123", latitude2:"4.434", longitude2:"1.2"});
 
   // -- Time --
   
   // -- Extra Info --
-  dojo.widget.byId('extraInfoLangMetaData').setValue('Englisch');
-  dojo.widget.byId('extraInfoLangData').setValue('Englisch');
+  dojo.widget.byId("extraInfoLangMetaData").setValue("Englisch");
+  dojo.widget.byId("extraInfoLangData").setValue("Englisch");
 
   // -- Availability --
 
   // -- Thesaurus --
-  //  var tableId = dojo.widget.byId('thesaurusTerms').valueField;
-  dojo.widget.byId('thesaurusTerms').store.clearData();
-  dojo.widget.byId('thesaurusTerms').store.addData({Id: '1', term:'Topographie'});
-  dojo.widget.byId('thesaurusTerms').store.addData({Id: '2', term:'Kartographie'});
-  dojo.widget.byId('thesaurusTerms').store.addData({Id: '3', term:'Wasser'});
+  //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;
+  dojo.widget.byId("thesaurusTerms").store.clearData();
+  dojo.widget.byId("thesaurusTerms").store.addData({Id: "1", term:"Topographie"});
+  dojo.widget.byId("thesaurusTerms").store.addData({Id: "2", term:"Kartographie"});
+  dojo.widget.byId("thesaurusTerms").store.addData({Id: "3", term:"Wasser"});
 
-  //  var tableId = dojo.widget.byId('thesaurusTopics').valueField;
-  dojo.widget.byId('thesaurusTopics').store.clearData();
-  dojo.widget.byId('thesaurusTopics').store.addData({Id: '1', topics:'Kategorie eins'});
-  dojo.widget.byId('thesaurusTopics').store.addData({Id: '2', topics:'Kategorie zwei'});
-  dojo.widget.byId('thesaurusTopics').store.addData({Id: '3', topics:'Kategorie drei'});
+  //  var tableId = dojo.widget.byId("thesaurusTopics").valueField;
+  dojo.widget.byId("thesaurusTopics").store.clearData();
+  dojo.widget.byId("thesaurusTopics").store.addData({Id: "1", topics:"Kategorie eins"});
+  dojo.widget.byId("thesaurusTopics").store.addData({Id: "2", topics:"Kategorie zwei"});
+  dojo.widget.byId("thesaurusTopics").store.addData({Id: "3", topics:"Kategorie drei"});
 
-  //  var tableId = dojo.widget.byId('thesaurusFreeTermsList').valueField;
-  dojo.widget.byId('thesaurusFreeTermsList').store.clearData();
-  dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '1', freeTerms:'Freier Term eins'});
-  dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '2', freeTerms:'Freier Term zwei'});
-  dojo.widget.byId('thesaurusFreeTermsList').store.addData({Id: '3', freeTerms:'Freier Term drei'});
+  //  var tableId = dojo.widget.byId("thesaurusFreeTermsList").valueField;
+  dojo.widget.byId("thesaurusFreeTermsList").store.clearData();
+  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "1", freeTerms:"Freier Term eins"});
+  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "2", freeTerms:"Freier Term zwei"});
+  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "3", freeTerms:"Freier Term drei"});
 */
 
   // -- Links --
@@ -585,7 +612,7 @@ udkDataProxy._getObjectData = function(nodeData)
       udkDataProxy._getObjectDataClass5(nodeData);
       break;
     default:
-      dojo.debug('Error in udkDataProxy._getObjectData - Object Class must be 0...5!');
+      dojo.debug("Error in udkDataProxy._getObjectData - Object Class must be 0...5!");
       break;
   }  
 
@@ -595,9 +622,9 @@ udkDataProxy._getObjectData = function(nodeData)
    */
 
 
-//  dojo.widget.byId('contentFormObject').getValues(myObj);
-//  dojo.widget.byId('headerFormAddress').getValues(myObj);
-//  dojo.widget.byId('contentFormAddress').getValues(myObj);
+//  dojo.widget.byId("contentFormObject").getValues(myObj);
+//  dojo.widget.byId("headerFormAddress").getValues(myObj);
+//  dojo.widget.byId("contentFormAddress").getValues(myObj);
 }
 
 udkDataProxy._getObjectDataClass0 = function(nodeData) {};
