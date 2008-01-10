@@ -48,10 +48,16 @@ dojo.addOnLoad(function()
 	// We connect to the processNode function instead.
 	var aroundTreeClick = function(invocation) {
     	if (dojo.html.hasClass(invocation.args[1].target, "TreeLabel")) {	
-			var deferred = udkDataProxy.checkForUnsavedChanges();
-			var stdCallback = function() {return invocation.proceed();};
-			var errorCallback = function() {dojo.debug("Select cancelled.");};
-
+			if (invocation.args[0].id == "newNode") {
+				// Don't display the dialog if a node with id newNode was clicked.
+				// This is to prevent the node from being deleted when the user clicks
+				// a newly created node
+				return invocation.proceed();
+			} else {
+				var deferred = udkDataProxy.checkForUnsavedChanges(invocation.args[0].id);
+				var stdCallback = function() {return invocation.proceed();};
+				var errorCallback = function() {dojo.debug("Select cancelled.");};
+			}
 			deferred.addCallbacks(stdCallback, errorCallback);
 			return deferred;
 		} else {
@@ -199,7 +205,8 @@ _connectStoreWithDirtyFlag = function(store)
 // The function returns a deferred object users can attach callbacks to.
 // The deferred object signals an error if the user canceled the operation. No state changes
 // should be done in this case.
-udkDataProxy.checkForUnsavedChanges = function()
+// @arg nodeId - optional parameter that specifies the node that is about to be loaded
+udkDataProxy.checkForUnsavedChanges = function(nodeId)
 {
 	dojo.debug("Check for unsaved changes called.");
 
@@ -209,7 +216,7 @@ udkDataProxy.checkForUnsavedChanges = function()
 
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.
-		if (currentUdk.uuid == "newNode") {
+		if (currentUdk.uuid == "newNode" && nodeId != "newNode") {
 			var discardNewNode = function(arg) {
 				if (arg == "DISCARD") {
 					dojo.debug("Discarding the newly created node.");
@@ -218,7 +225,6 @@ udkDataProxy.checkForUnsavedChanges = function()
 				}
 			};
 			deferred.addCallback(discardNewNode);
-		
 		}
 	} else {
 		deferred.callback();
@@ -230,6 +236,8 @@ udkDataProxy.checkForUnsavedChanges = function()
 
 udkDataProxy.handleLoadRequest = function(node)
 {
+	dojo.debug("About to be loaded: "+node.id);
+
 	// Don't process newNode load requests. We have this request because we
 	// select new nodes in the tree after creating them
 	if (node.id == "newNode") {
