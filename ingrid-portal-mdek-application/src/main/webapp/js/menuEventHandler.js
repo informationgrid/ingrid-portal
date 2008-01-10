@@ -150,12 +150,21 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 	    	deleteObjDef.addCallback(function() {
 	    		// This function is called when the user has selected yes and the node was successfully
 				// deleted from the database
-	    		selectedNode.destroy();
 				var tree = dojo.widget.byId("tree");
-				var newSelectNode = dojo.widget.byId("objectRoot");
-				tree.selectNode(newSelectNode);
-				tree.selectedNode = newSelectNode;
-				dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+				if (tree.selectedNode == selectedNode || _isChildOf(tree.selectedNode, selectedNode)) {
+					// If the currently selected Node is a child of the deleted node, we select it's parent after deletion
+					var newSelectNode = selectedNode.parent;
+					var treeListener = dojo.widget.byId("treeListener");
+		    		selectedNode.destroy();
+					tree.selectNode(newSelectNode);
+					tree.selectedNode = newSelectNode;
+					// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
+					resetDirtyFlag();
+					dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+				} else {
+					// Otherwise we just delete the node
+					selectedNode.destroy();
+				}
 	    	});
 			// Tell the backend to delete the selected node.
 	    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
@@ -216,3 +225,15 @@ function _createNewNode(obj)
 			nodeAppType: obj.nodeAppType,
 			id: obj.uuid};	// "newNode"
 }
+
+function _isChildOf(childNode, targetNode) {
+	if (childNode.parent.id == targetNode.id) {
+		return true;
+	} else if (childNode.parent.id == "objectRoot") {
+		return false;
+	} else {
+		return _isChildOf(childNode.parent, targetNode);
+	}
+}
+
+
