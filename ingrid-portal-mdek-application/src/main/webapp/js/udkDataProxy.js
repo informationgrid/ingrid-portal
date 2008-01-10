@@ -22,10 +22,22 @@
  *     nodeUuid - The Uuid of the node which should be marked for a cut operation
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
- *   topic = '/canCutObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, resultHandler: deferred}
+ *   topic = '/canCopyObjectRequest' - argument: {id: nodeUuid, copyTree: boolean resultHandler: deferred}
+ *     nodeUuid - The Uuid of the node which should be marked for a copied operation
+ *     copyTree - specifies whether the complete tree should be copied or only the selected node
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
+ *   topic = '/cutObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, resultHandler: deferred}
  *     srcId - The Uuid of the node which should be cut
  *     dstId - The Uuid of the target node where the srcNode should be attached
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
+ *   topic = '/copyObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, copyTree: boolean, resultHandler: deferred}
+ *     srcId - The Uuid of the node which should be copied
+ *     dstId - The Uuid of the target node where the srcNode should be attached
+ *     copyTree - specifies whether the complete tree should be copied or only the selected node
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
  */
 
 
@@ -49,7 +61,9 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
     dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
     dojo.event.topic.subscribe("/canCutObjectRequest", udkDataProxy, "handleCanCutObjectRequest");
+	dojo.event.topic.subscribe("/canCopyObjectRequest", udkDataProxy, "handleCanCopyObjectRequest");
     dojo.event.topic.subscribe("/cutObjectRequest", udkDataProxy, "handleCutObjectRequest");
+    dojo.event.topic.subscribe("/copyObjectRequest", udkDataProxy, "handleCopyObjectRequest");
 
 
 	var treeListener = dojo.widget.byId("treeListener");
@@ -348,6 +362,21 @@ udkDataProxy.handleCanCutObjectRequest = function(msg) {
 	);
 }
 
+udkDataProxy.handleCanCopyObjectRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.canCopyNode("+msg.id+", "+msg.copyTree+")");	
+
+	EntryService.canCopyObject(msg.id,
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:5000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + message);
+				msg.resultHandler.errback();
+			}
+		}
+	);
+}
+
 udkDataProxy.handleCutObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.cutNode("+msg.srcId+", "+msg.dstId+")");	
 
@@ -357,6 +386,21 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 			timeout:5000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while moving nodes: " + message);
+				msg.resultHandler.errback();
+			}
+		}
+	);
+}
+
+udkDataProxy.handleCopyObjectRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.copyNode("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
+
+	EntryService.copyNode(msg.srcId, msg.dstId, msg.copyTree,
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:5000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while copying nodes: " + message);
 				msg.resultHandler.errback();
 			}
 		}

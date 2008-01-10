@@ -99,8 +99,41 @@ menuEventHandler.handleCut = function(mes) {
 }
 
 
-menuEventHandler.handleCopyEntity = function() {alertNotImplementedYet();}
-menuEventHandler.handleCopyTree = function() {alertNotImplementedYet();}
+menuEventHandler.handleCopyEntity = function(msg) {
+	var selectedNode = getSelectedNode(msg);
+	if (!selectedNode || selectedNode.id == "objectRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
+	} else {
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
+			var treeController = dojo.widget.byId("treeController");
+			treeController.prepareCopy(selectedNode, false);
+		});
+		deferred.addErrback(function() {
+    		dialog.show(message.get("general.hint"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
+		});
+
+  		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: false, resultHandler: deferred});
+	}
+}
+
+menuEventHandler.handleCopyTree = function(msg) {
+	var selectedNode = getSelectedNode(msg);
+	if (!selectedNode || selectedNode.id == "objectRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
+	} else {
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
+			var treeController = dojo.widget.byId("treeController");
+			treeController.prepareCopy(selectedNode, true);
+		});
+		deferred.addErrback(function() {
+    		dialog.show(message.get("general.hint"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
+		});
+
+  		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: true, resultHandler: deferred});
+	}
+}
 
 menuEventHandler.handlePaste = function(msg) {
 	var targetNode = getSelectedNode(msg);
@@ -121,14 +154,25 @@ menuEventHandler.handlePaste = function(msg) {
 				});
 				dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
 			}
-		} else if (treeController.nodeToPaste != null) {
+		} else if (treeController.nodeToCopy != null) {
 				// A node can be inserted everywhere. Start the paste request.
 				var deferred = new dojo.Deferred();
-				deferred.addCallback(function() {
-					// Copy was successful. Update the tree
-					// treeController.paste(treeController.nodeToCopy, targetNode, 0);
+				deferred.addCallback(function(res) {
+					// Copy was successful. Update the tree.
+					// TODO: write paste logic
+					//   We either create a new node from the result or clone the copied node 
+					treeController.clone(
+						treeController.nodeToCopy,
+						targetNode,
+						0,
+						treeController.copySubTree);
 				});
-				//dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+				dojo.event.topic.publish("/copyObjectRequest", {
+					srcId: treeController.nodeToCopy.id,
+					dstId: targetNode.id,
+					copyTree: treeController.copySubTree,
+					resultHandler: deferred
+				});
 		} else {
 	    	dialog.show(message.get("general.hint"), message.get("tree.nodePasteNoCutCopyHint"), dialog.WARNING);
 		}

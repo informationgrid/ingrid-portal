@@ -24,9 +24,11 @@
     "tree.selectNodeHint":"Please select a parent node.",
     "tree.selectNodeCutHint":"Please select a node to cut.",
     "tree.nodeCanCutError":"Error while preparing the node for a cut operation.",
+    "tree.nodeCanCopyError":"Error while preparing the node for a copy operation.",
     "tree.selectNodeDeleteHint":"Please select a node to delete.",
+    "tree.selectNodeCopyHint":"Please select a valid node to copy.",
     "tree.selectNodePasteHint":"Please select a target node to paste.",
-    "tree.nodePasteNoCutCopyHint":"Please select a to copy or cut before pasting.",
+    "tree.nodePasteNoCutCopyHint":"Please select a node to copy or cut before pasting.",
     "tree.nodePasteInvalidHint":"Please select a valid target to paste.",
     "tree.newNodeName":"New Object",
 

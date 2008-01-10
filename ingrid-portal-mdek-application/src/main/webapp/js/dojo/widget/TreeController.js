@@ -13,7 +13,7 @@ dojo.widget.defineWidget(
    * store clicked node for later paste operation
    */
   nodeToCopy: null,
-  doCopyDeep: false,
+  copySubTree: false,
   nodeToCut: null,
   nodeToCutOldColor: "",
 
@@ -62,17 +62,17 @@ dojo.widget.defineWidget(
 			this.canCopy, this.prepareCopy, this.doCopy, this.finalizeCopy, this.exposeCopy, arguments
 		);			
 	},
-	doCopy: function(node, /*boolean*/doDeep) {
-    this.nodeToCopy = node;
-    this.doCopyDeep = doDeep;
+	prepareCopy: function(node, /*boolean*/copySubTree) {
+	    dojo.debug("Prepare copy called with: "+node.id+", "+copySubTree);
+	    this.nodeToCopy = node;
+	    this.copySubTree = copySubTree;
 
-    // reset old cut node
-    if (this.nodeToCut != null) {
-      this.nodeToCut.labelNode.style.color = this.nodeToCutOldColor;
-      this.nodeToCut = null;
-    }
+	    // reset old cut node
+	    if (this.nodeToCut != null) {
+	      this.nodeToCut.labelNode.style.color = this.nodeToCutOldColor;
+	      this.nodeToCut = null;
+	    }
 	},
-
   /*
    * cut method
    */
@@ -112,7 +112,7 @@ dojo.widget.defineWidget(
 	doPaste: function(node) {
     	// do a copy
     	if (this.nodeToCopy != null) {
-     		this.clone(this.nodeToCopy, node, node.children.length, this.doCopyDeep/*, true*/);
+     		this.clone(this.nodeToCopy, node, node.children.length, this.copySubTree/*, true*/);
     	}
     	// do a move
     	else if (this.nodeToCut != null) {
@@ -128,6 +128,17 @@ dojo.widget.defineWidget(
 		// Overriden so the TreeRPCController doMove method is skipped
 		child.tree.move(child, newParent, index);
 		return true;
+	},
+  /*
+   * clone method
+   */
+	doClone: function(child, newParent, index, deep) {
+		// Overriden so the TreeRPCController doMove method is skipped
+		// TODO: implement when the corresponding method in the backend is implemented
+		var cloned = child.clone(deep);
+		newParent.addChild(cloned, index);
+
+		return cloned;
 	},
   /*
    * create child method
