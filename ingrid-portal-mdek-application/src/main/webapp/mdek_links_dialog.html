@@ -155,7 +155,11 @@ showAssignObjectDialog = function() {
 	}
 
 	deferred.addCallback(setSelectedObject);
-	dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true, {resultHandler: deferred});
+	dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true,{
+		// custom parameters
+		resultHandler: deferred,
+		jumpToNode: curSelectedObject.uuid
+	});
 }
 
 // Cancel Button onClick function.
@@ -170,7 +174,9 @@ closeDialog = function() {
 acceptLinkList = function() {
 	var srcStore = dojo.widget.byId("linkListObject").store;
 	var destStore = dojo.widget.byId("linksTo").store;
-	destStore.setData(srcStore.getData());
+	var newData = udkDataProxy._addObjectLinkLabels(srcStore.getData());
+
+	destStore.setData(newData);
 
 	closeDialog();
 }

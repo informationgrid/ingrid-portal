@@ -263,13 +263,70 @@ menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
 //                            		win.focus();
 
 menuEventHandler.handleShowComment = function() {
+/*
     dojo.debug("Publishing event: /loadRequest(5CE671D3-5475-11D3-A172-08002B9A1D1D, O)");
     dojo.event.topic.publish("/loadRequest", {id: "5CE671D3-5475-11D3-A172-08002B9A1D1D", appType: "O"});
+*/
+menuEventHandler.handleSelectNodeInTree("5CE671D3-5475-11D3-A172-08002B9A1D1D");
 //	alertNotImplementedYet();
-}
 //                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
+}
 
 
+// Expands the tree according to the nodeIds in pathList.
+// pathList should be a list containing node IDs from the top element to the target node.
+// index is the index where the expand process is started
+// resultHandler is an optional deferred obj which is called when all nodes have been expanded
+_expandPathRec = function(pathList, index, resultHandler) {
+	if (index >= pathList.length) {
+		resultHandler.callback();
+		return;
+	} else {
+		if (!dojo.widget.byId("objectRoot").isExpanded) {
+			// Expand the root object if it isn't already expanded
+			var treeController = dojo.widget.byId("treeController");
+			var deferred = treeController.expand(dojo.widget.byId("objectRoot"));
+			deferred.addCallback(function() {
+				_expandPathRec(pathList, 0, resultHandler);
+			});
+		} else {
+			var treeController = dojo.widget.byId("treeController");
+			var deferred = treeController.expand(dojo.widget.byId(pathList[index]));
+			deferred.addCallback(function() {
+				_expandPathRec(pathList, index+1, resultHandler);
+			});
+		}
+	}
+}
+
+// Expands the tree according to the nodeIds in pathList.
+// pathList should be a list containing node IDs from the top element to the target node.
+// The return value is a deferred object which is invoked after all nodes have been expanded
+_expandPath = function(pathList) {
+	var deferred = new dojo.Deferred();
+	_expandPathRec(pathList, 0, deferred);
+	return deferred;
+}
+
+menuEventHandler.handleSelectNodeInTree = function(nodeId) {
+	if (nodeId != "newNode" && nodeId != "objectRoot") {
+		var deferred = new dojo.Deferred();
+		var treeController = dojo.widget.byId("treeController");
+
+		deferred.addCallback(function(pathList) {
+			var def = _expandPath(pathList);
+			def.addCallback(function(){
+				var tree = dojo.widget.byId("tree");
+				var treeListener = dojo.widget.byId("treeListener");
+				var targetNode = dojo.widget.byId(pathList[pathList.length-1]);
+				tree.selectNode(targetNode);
+				tree.selectedNode = targetNode;
+				dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
+			});
+		});
+    	dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: deferred});		
+	}
+}
 
 // ------------------------- Helper functions -------------------------
 

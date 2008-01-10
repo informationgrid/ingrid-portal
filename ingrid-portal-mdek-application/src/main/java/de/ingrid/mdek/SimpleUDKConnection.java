@@ -112,6 +112,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		mdekCaller.checkObjectSubTree(uuid);
 	}
 
+	public List<String> getPathToObject(String uuid) {
+		IngridDocument response = mdekCaller.getObjectPath(uuid);		
+		return extractPathFromResponse(response);
+	}
+
+	
 	public MdekDataBean copyObjectSubTree(String fromUuid, String toUuid) {
 		IngridDocument response = mdekCaller.copyObjectSubTree(fromUuid, toUuid, true);
 		// TODO return correct value when the method is implemented in MdekCaller
@@ -194,6 +200,18 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			return null;
 		}
 	}
+
+	private List<String> extractPathFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+		if (result != null) {
+			List<String> uuidList = (List<String>) result.get(MdekKeys.PATH);
+			return uuidList;
+		} else {
+			log.error("ERROR: " + mdekCaller.getErrorMsgFromResponse(response));			
+			return null;
+		}
+	}
+
 	
 	private IngridDocument wrapObject(IngridDocument obj) {
 		ArrayList<IngridDocument> list = new ArrayList();

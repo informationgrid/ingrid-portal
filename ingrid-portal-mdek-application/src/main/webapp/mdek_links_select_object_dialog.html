@@ -18,7 +18,77 @@ _container_.addOnUnload(function() {
 	}
 });
 
+
+
+// Expands the tree according to the nodeIds in pathList.
+// pathList should be a list containing node IDs from the top element to the target node.
+// index is the index where the expand process is started
+// resultHandler is an optional deferred obj which is called when all nodes have been expanded
+_expandPathAssignObjRec = function(pathList, index, resultHandler) {
+	if (index >= pathList.length) {
+		resultHandler.callback();
+		return;
+	} else {
+		if (!dojo.widget.byId("AssignObj_objectRoot").isExpanded) {
+			// Expand the root object if it isn't already expanded
+			var treeController = dojo.widget.byId("treeControllerAssignObj");
+			var deferred = treeController.expand(dojo.widget.byId("AssignObj_objectRoot"));
+			deferred.addCallback(function() {
+				_expandPathAssignObjRec(pathList, 0, resultHandler);
+			});
+		} else {
+			var treeController = dojo.widget.byId("treeControllerAssignObj");
+			var deferred = treeController.expand(dojo.widget.byId(pathList[index]));
+			deferred.addCallback(function() {
+				_expandPathAssignObjRec(pathList, index+1, resultHandler);
+			});
+		}
+	}
+}
+
+// Expands the tree according to the nodeIds in pathList.
+// pathList should be a list containing node IDs from the top element to the target node.
+// The return value is a deferred object which is invoked after all nodes have been expanded
+_expandPathAssignObj = function(pathList) {
+	for (var i = 0; i < pathList.length; i++)
+		pathList[i] = "AssignObj_"+pathList[i];
+
+	var deferred = new dojo.Deferred();
+	_expandPathAssignObjRec(pathList, 0, deferred);
+	return deferred;
+}
+
+
+
 init = function() {
+	// Deferred object which is called when the Tree has been initialized.
+	// After the tree has been initialized, the tree is expanded to the targetNode
+	// specified in the customParameter 'jumpToNode' 
+	var treeInitDef = new dojo.Deferred();
+	if (_container_.customParams.jumpToNode) {
+		treeInitDef.addCallback(function() {
+			var deferred = new dojo.Deferred();
+			var treeController = dojo.widget.byId("treeControllerAssignObj");
+
+			deferred.addCallback(function(pathList) {
+				var def = _expandPathAssignObj(pathList);
+				def.addCallback(function(){
+					var tree = dojo.widget.byId("treeAssignObj");
+					var treeListener = dojo.widget.byId("treeListenerAssignObj");
+					var targetNode = dojo.widget.byId(pathList[pathList.length-1]);
+					tree.selectNode(targetNode);
+					tree.selectedNode = targetNode;
+					dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
+				});
+			});
+			dojo.event.topic.publish("/getObjectPathRequest", {
+				id: _container_.customParams.jumpToNode,
+				resultHandler: deferred,
+				ignoreDirtyFlag: true
+			});
+		});
+	}
+	
 	// Load initial first level of the tree from the server
 	EntryService.getSubTree(null, null, 1, 
 		function (str) {
@@ -28,6 +98,7 @@ init = function() {
 
 			var tree = dojo.widget.byId('treeAssignObj');
 			tree.setChildren(str);
+			treeInitDef.callback();
 		});
 
 	// Load children of the node from server

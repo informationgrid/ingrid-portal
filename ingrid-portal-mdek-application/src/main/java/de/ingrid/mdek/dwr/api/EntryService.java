@@ -186,6 +186,9 @@ public interface EntryService {
 
 	public MdekDataBean createNewNode(String parentUuid);
 	
+	// Returns a list containing all the node ids from the root object to the node with id 'targetUuid'
+	public List<String> getPathToObject(String targetUuid);
+
 	// TODO add return type when the method is implemented in MdekCaller
 	public boolean canCutObject(String parentUuid);
 	// TODO add return type when the method is implemented in MdekCaller

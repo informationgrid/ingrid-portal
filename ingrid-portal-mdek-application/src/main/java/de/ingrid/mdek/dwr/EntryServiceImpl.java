@@ -87,6 +87,16 @@ public class EntryServiceImpl implements EntryService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#getPathToObject(java.lang.String)
+	 */
+	public List<String> getPathToObject(String uuid) {
+		return dataConnection.getPathToObject(uuid);
+	}
+
+	
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.ingrid.mdek.dwr.api.EntryService#getNodeData(java.lang.String,
 	 *      java.lang.String, java.lang.Boolean)
 	 */

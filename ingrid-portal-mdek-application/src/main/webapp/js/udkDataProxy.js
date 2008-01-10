@@ -38,6 +38,11 @@
  *     copyTree - specifies whether the complete tree should be copied or only the selected node
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *   topic = '/getObjectPathRequest' - argument: {id: nodeUuid, resultHandler: deferred, ignoreDirtyFlag: bool}
+ *     nodeUuid - The Uuid of the target Node
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *     ignoreDirtyFlag - boolean value indicating if the dirty flag should be ignored
+ *
  */
 
 
@@ -64,6 +69,7 @@ dojo.addOnLoad(function()
 	dojo.event.topic.subscribe("/canCopyObjectRequest", udkDataProxy, "handleCanCopyObjectRequest");
     dojo.event.topic.subscribe("/cutObjectRequest", udkDataProxy, "handleCutObjectRequest");
     dojo.event.topic.subscribe("/copyObjectRequest", udkDataProxy, "handleCopyObjectRequest");
+    dojo.event.topic.subscribe("/getObjectPathRequest", udkDataProxy, "handleGetObjectPathRequest");
 
 
 	var treeListener = dojo.widget.byId("treeListener");
@@ -407,6 +413,31 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 	);
 }
 
+udkDataProxy.handleGetObjectPathRequest = function(msg) {
+	var loadErrback = function() {msg.resultHandler.errback();}
+	var loadCallback = function() {
+		dojo.debug("udkDataProxy calling EntryService.getPathToObject("+msg.id+")");	
+		EntryService.getPathToObject(msg.id, {
+				callback: function(res){msg.resultHandler.callback(res);},
+				timeout:5000,
+				errorHandler:function(message) {
+					alert("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
+					msg.resultHandler.errback();
+				}
+			}
+		);	
+	}
+
+	if (msg.ignoreDirtyFlag) {
+		// If the dirty flag is ignored, the request can be started
+		loadCallback(); 
+	} else {
+		// Otherwise check for unsaved changes and start the request afterwards
+		var deferred = udkDataProxy.checkForUnsavedChanges();
+		deferred.addCallbacks(loadCallback, loadErrback);
+	}
+}
+
 
 // event.connect point. Called when data has been saved 
 udkDataProxy.onAfterSave = function() { dojo.debug("onAfterSave()"); }
@@ -534,7 +565,15 @@ udkDataProxy._setObjectData = function(nodeData)
 
 */
   // -- Links --
-  dojo.widget.byId("linksTo").store.setData(udkDataProxy._addTableIndices(nodeData.linksToObjectTable));
+  var linkTable = nodeData.linksToObjectTable;
+  udkDataProxy._addTableIndices(linkTable);
+  udkDataProxy._addObjectLinkLabels(linkTable);
+  dojo.widget.byId("linksTo").store.setData(linkTable);
+
+  linkTable = nodeData.linksFromObjectTable;
+  udkDataProxy._addTableIndices(linkTable);
+  udkDataProxy._addObjectLinkLabels(linkTable);  
+  dojo.widget.byId("linksFrom").store.setData(linkTable);
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)
@@ -729,6 +768,7 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Links --
   nodeData.linksToObjectTable = udkDataProxy._getTableData("linksTo");
+  nodeData.linksFromObjectTable = udkDataProxy._getTableData("linksFrom");
 
 
   dojo.debug("------ NODE DATA ------");
@@ -812,6 +852,17 @@ udkDataProxy._getTableData = function(tableName)
 udkDataProxy._addTableIndices = function(list) {
 	for (var i = 0; i < list.length; ++i) {
 		list[i].Id = i;
+	}
+	return list;
+}
+
+// Add object link labels to a passed list.
+// This function iterates over all entries in the list and adds a value: 'linkLabel' to each node
+// which is a href to the menuEventHandler 'selectNodeInTree' function
+udkDataProxy._addObjectLinkLabels = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\");'"+
+		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 	}
 	return list;
 }

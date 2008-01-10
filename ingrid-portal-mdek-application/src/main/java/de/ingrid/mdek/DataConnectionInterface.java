@@ -2,6 +2,7 @@ package de.ingrid.mdek;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
@@ -80,8 +81,10 @@ public interface DataConnectionInterface {
 	public void deleteObject(String uuid);
 	public void canCutObject(String uuid);
 	public void canCopyObject(String uuid);
+	public List<String> getPathToObject(String uuid);
 	public MdekDataBean copyObjectSubTree(String fromUuid, String toUuid);
 	public MdekDataBean cutObjectSubTree(String fromUuid, String toUuid);
 
+	
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }

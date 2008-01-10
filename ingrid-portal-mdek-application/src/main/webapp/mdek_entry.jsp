@@ -1673,7 +1673,7 @@ function hideSplash(){
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="relationTypeName" dataType="String" width="30"></th>
-	                    			<th field="title" dataType="String" width="290">Objekte</th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1688,8 +1688,8 @@ function hideSplash(){
 	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="type" dataType="String" width="30"></th>
-	                    			<th field="name" dataType="String" width="290">Objekte</th>
+	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>

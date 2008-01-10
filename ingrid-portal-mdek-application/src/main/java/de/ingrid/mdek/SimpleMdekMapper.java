@@ -65,7 +65,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
-		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_ENTITIES)));
+		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_REFERENCES_TO)));
 		mdekObj.setCreationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_CREATION)));
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 
@@ -118,7 +118,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// Links
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-		mdekObj.setLinksToObjectTable(mapToLinksToObjectTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_ENTITIES)));
+		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
+		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
 
@@ -176,7 +177,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// extrahieren des int Wertes für die Objekt-Klasse
 		udkObj.put(MdekKeys.CLASS, data.getObjectClass());
 //		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());
-		udkObj.put(MdekKeys.ADR_ENTITIES, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
+		udkObj.put(MdekKeys.ADR_REFERENCES_TO, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 
 		// Spatial
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_MINIMUM, data.getSpatialRefAltMin());
@@ -198,7 +199,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 
 		// Links
-		udkObj.put(MdekKeys.OBJ_ENTITIES, mapFromLinksToObjectTable(data.getLinksToObjectTable()));
+		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
+		udkObj.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
 		udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
 
@@ -227,7 +229,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private static ArrayList<IngridDocument> mapFromLinksToObjectTable(ArrayList<MdekDataBean> objList) {
+	private static ArrayList<IngridDocument> mapFromObjectLinksTable(ArrayList<MdekDataBean> objList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (objList == null)
 			return resultList;
@@ -302,7 +304,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultTable;
 	}
 
-	private static ArrayList<MdekDataBean> mapToLinksToObjectTable(List<HashMap<String, Object>> objList) {
+	private static ArrayList<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
 		ArrayList<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
 		if (objList == null)
 			return resultList;

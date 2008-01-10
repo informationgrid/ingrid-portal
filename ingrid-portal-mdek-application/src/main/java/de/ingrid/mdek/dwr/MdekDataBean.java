@@ -81,6 +81,7 @@ public class MdekDataBean {
 
 	// Links
 	public ArrayList<MdekDataBean> linksToObjectTable;
+	public ArrayList<MdekDataBean> linksFromObjectTable;
 	public ArrayList<HashMap<String, String>> linksToTable;
 	public ArrayList<HashMap<String, String>> linksFromTable;
 	public String relationTypeName;
@@ -144,6 +145,7 @@ public class MdekDataBean {
 	public MdekDataBean(){
 		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
 		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
 	}
 	
 	
@@ -788,5 +790,19 @@ public class MdekDataBean {
 
 	public void setRelationDescription(String relationDescription) {
 		this.relationDescription = relationDescription;
+	}
+
+
+
+
+	public ArrayList<MdekDataBean> getLinksFromObjectTable() {
+		return linksFromObjectTable;
+	}
+
+
+
+
+	public void setLinksFromObjectTable(ArrayList<MdekDataBean> linksFromObjectTable) {
+		this.linksFromObjectTable = linksFromObjectTable;
 	};
 }
