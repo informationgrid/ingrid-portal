@@ -1508,28 +1508,21 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bestellinformation')">Bestellinformation</label></span>
                		<span class="input"><input type="text" mode="textarea" id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!--
-	                  <span class="input"><textarea id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" /></textarea></span>
--->
+
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nutzungsanmerkung')">Nutzungsanmerkung</label></span>
-               		<span class="input"><input type="text" mode="textarea" id="availabilityNoteUse" name="availabilityNoteUse" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!-- 
-	                  <span class="input"><textarea id="availabilityNoteUse" name="availabilityNoteUse" class="w320 h038" /></textarea></span>
--->
+	                  <span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kosten')">Kosten</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="availabilityCosts" name="availabilityCosts" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+
  	                </div>
 	                <div class="fill"></div>
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired">
-	                <div class="half left">
-	                  <span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kosten')">Kosten</label></span>
-               		<span class="input"><input type="text" mode="textarea" id="availabilityCosts" name="availabilityCosts" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!--
-	                  <span class="input"><textarea id="availabilityCosts" name="availabilityCosts" class="w320 h038" /></textarea></span>
--->
+	                <div class="full">
+	                  <span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nutzungsanmerkung')">Nutzungsanmerkung</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="availabilityNoteUse" name="availabilityNoteUse" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span> 
 	                </div>
 	                <div class="fill"></div>
 	              </div>

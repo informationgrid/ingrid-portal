@@ -538,6 +538,10 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
   dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
 
+  // -- Availability --
+  dojo.widget.byId("availabilityOrderInfo").setValue(nodeData.availabilityOrderInfo);
+  dojo.widget.byId("availabilityNoteUse").setValue(nodeData.availabilityNoteUse);
+  dojo.widget.byId("availabilityCosts").setValue(nodeData.availabilityCosts);
 
 /*
   //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
@@ -546,7 +550,6 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "2", information:"info two", latitude1:"1.14", longitude1:"2.1123", latitude2:"4.434", longitude2:"1.2"});
 
   
-  // -- Availability --
 
   // -- Thesaurus --
   //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;
@@ -743,6 +746,12 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
 
+  // -- Availability --
+  nodeData.availabilityOrderInfo = dojo.widget.byId("availabilityOrderInfo").getValue();
+  nodeData.availabilityNoteUse = dojo.widget.byId("availabilityNoteUse").getValue();
+  nodeData.availabilityCosts = dojo.widget.byId("availabilityCosts").getValue();
+
+
 /*
   //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
   dojo.widget.byId("spatialRefAdminUnit").store.clearData();
@@ -754,8 +763,6 @@ udkDataProxy._getObjectData = function(nodeData)
   // -- Extra Info --
   dojo.widget.byId("extraInfoLangMetaData").setValue("Englisch");
   dojo.widget.byId("extraInfoLangData").setValue("Englisch");
-
-  // -- Availability --
 
   // -- Thesaurus --
   //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;

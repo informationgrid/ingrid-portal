@@ -267,7 +267,8 @@ menuEventHandler.handleShowComment = function() {
     dojo.debug("Publishing event: /loadRequest(5CE671D3-5475-11D3-A172-08002B9A1D1D, O)");
     dojo.event.topic.publish("/loadRequest", {id: "5CE671D3-5475-11D3-A172-08002B9A1D1D", appType: "O"});
 */
-menuEventHandler.handleSelectNodeInTree("5CE671D3-5475-11D3-A172-08002B9A1D1D");
+	var nodeId = prompt("Jump to node with uuid", "5CE671D3-5475-11D3-A172-08002B9A1D1D");
+ 	menuEventHandler.handleSelectNodeInTree(nodeId);
 //	alertNotImplementedYet();
 //                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
 }

@@ -103,9 +103,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// Availability
 //		mdekObj.setAvailabilityDataFormatTable((ArrayList<HashMap<String, String>>) mapToAvailabilityDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setAvailabilityMediaOptionsTable((ArrayList<HashMap<String, String>>) mapToAvailabilityMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setAvailabilityCosts((String) obj.get(MdekKeys.MISSING));
+		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
+		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.USE_CONSTRAINTS));
+		mdekObj.setAvailabilityCosts((String) obj.get(MdekKeys.FEES));
 		
 		// Thesaurus
 //		mdekObj.setThesaurusTermsTable((ArrayList<HashMap<String, String>>) mapToThesaurusTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -203,9 +203,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
-
 //		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) mapToExtraInfoXMLExportTable((List<String>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) mapToExtraInfoLegalBasicsTable((List<String>) obj.get(MdekKeys.MISSING)));
+
+		// Availability
+//		mdekObj.setAvailabilityDataFormatTable((ArrayList<HashMap<String, String>>) mapToAvailabilityDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setAvailabilityMediaOptionsTable((ArrayList<HashMap<String, String>>) mapToAvailabilityMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+		udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
+		udkObj.put(MdekKeys.USE_CONSTRAINTS, data.getAvailabilityNoteUse());
+		udkObj.put(MdekKeys.FEES, data.getAvailabilityCosts());
 
 		// Links
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
