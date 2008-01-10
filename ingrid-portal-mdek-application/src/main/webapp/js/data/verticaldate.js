@@ -3,6 +3,7 @@
  */
 
 [
+	["", ""],
 	["Mean Sea Level", "62"],
 	["Ordnance Datum Newlyn", "63"],
 	["National Geodetic Vertical Datum 1929", "64"],

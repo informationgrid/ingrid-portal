@@ -2,6 +2,7 @@
  * Status des Zeitbezuges
  */
 [
+	["", ""],
 	["abgeschlossen", "1"],
 	["archiviert", "2"],
 	["obsolet", "3"],

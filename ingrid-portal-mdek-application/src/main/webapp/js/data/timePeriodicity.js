@@ -2,6 +2,7 @@
  * Periodizitaet des Raumbezugs
  */
 [
+	["", ""],
 	["kontinuierlich", "1"],
 	["t\u00e4glich", "2"],
 	["w\u00f6chentlich", "3"],
