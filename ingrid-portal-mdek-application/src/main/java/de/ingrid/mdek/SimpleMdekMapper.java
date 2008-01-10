@@ -92,11 +92,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 		
 		// ExtraInfo
-//		mdekObj.setExtraInfoLangMetaData((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setExtraInfoLangData((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setExtraInfoPublishArea((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.MISSING));
-//		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.MISSING));
+		mdekObj.setExtraInfoLangMetaData((String) obj.get(MdekKeys.METADATA_LANGUAGE));
+		mdekObj.setExtraInfoLangData((String) obj.get(MdekKeys.DATA_LANGUAGE));
+		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
+		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
+		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
 //		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) mapToExtraInfoXMLExportTable((List<String>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) mapToExtraInfoLegalBasicsTable((List<String>) obj.get(MdekKeys.MISSING)));
 
@@ -197,6 +197,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
 //		mdekObj.setTimeRefTable((ArrayList<HashMap<String, String>>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 
+		// ExtraInfo
+		udkObj.put(MdekKeys.METADATA_LANGUAGE, data.getExtraInfoLangMetaData());
+		udkObj.put(MdekKeys.DATA_LANGUAGE, data.getExtraInfoLangData());
+		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
+		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
+		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
+
+//		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) mapToExtraInfoXMLExportTable((List<String>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) mapToExtraInfoLegalBasicsTable((List<String>) obj.get(MdekKeys.MISSING)));
 
 		// Links
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));

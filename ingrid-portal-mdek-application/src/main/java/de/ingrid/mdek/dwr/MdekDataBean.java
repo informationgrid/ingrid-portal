@@ -57,7 +57,7 @@ public class MdekDataBean {
 	// ExtraInfo
 	public String extraInfoLangMetaData;
 	public String extraInfoLangData;
-	public String extraInfoPublishArea;
+	public Integer extraInfoPublishArea;
 	public ArrayList<String> extraInfoXMLExportTable;
 	public ArrayList<String> extraInfoLegalBasicsTable;
 	public String extraInfoPurpose;
@@ -590,13 +590,13 @@ public class MdekDataBean {
 
 
 
-	public String getExtraInfoPublishArea() {
+	public Integer getExtraInfoPublishArea() {
 		return extraInfoPublishArea;
 	}
 
 
 
-	public void setExtraInfoPublishArea(String extraInfoPublishArea) {
+	public void setExtraInfoPublishArea(Integer extraInfoPublishArea) {
 		this.extraInfoPublishArea = extraInfoPublishArea;
 	}
 

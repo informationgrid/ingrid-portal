@@ -1370,20 +1370,12 @@ function hideSplash(){
 	              <div class="inputContainer">
 	                <div class="half left">
 	                  <span class="label required"><label for="extraInfoLangMetaData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Metadatensatzes')">Sprache des Metadatensatzes*</label></span>
-	                  <select dojoType="ingrid:Select" style="width:302px;" id="extraInfoLangMetaData" name="extraInfoLangMetaData">
-	                    <!-- TODO: fill in jsp -->
-	                    <option value="Deutsch">Deutsch</option>
-	                    <option value="Englisch">Englisch</option>
-	                  </select>
+	                  <span class="input"><input dojoType="ingrid:Select" style="width:302px;" dataUrl="js/data/languageCode.js" id="extraInfoLangMetaData" name="extraInfoLangMetaData" /></span>
 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label required"><label for="extraInfoLangData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Datensatzes')">Sprache des Datensatzes*</label></span>
-	                  <select dojoType="ingrid:Select" style="width:302px;" id="extraInfoLangData" name="extraInfoLangData">
-	                    <!-- TODO: fill in jsp -->
-	                    <option value="Deutsch">Deutsch</option>
-	                    <option value="Englisch">Englisch</option>
-	                  </select>
+	                  <span class="input"><input dojoType="ingrid:Select" style="width:302px;" dataUrl="js/data/languageCode.js" id="extraInfoLangData" name="extraInfoLangData" /></span>
 	                </div>
 	                <div class="fill"></div>
 	              </div>

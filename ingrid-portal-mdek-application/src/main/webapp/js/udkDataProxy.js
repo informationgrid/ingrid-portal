@@ -531,6 +531,14 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("timeRefIntervalUnit").setValue(nodeData.timeRefIntervalUnit);
   dojo.widget.byId("timeRefExplanation").setValue(nodeData.timeRefExplanation);
 
+  // -- Extra Info --
+  dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaData);
+  dojo.widget.byId("extraInfoLangData").setValue(nodeData.extraInfoLangData);
+  dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
+  dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
+  dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
+
+
 /*
   //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
   dojo.widget.byId("spatialRefAdminUnit").store.clearData();
@@ -538,10 +546,6 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "2", information:"info two", latitude1:"1.14", longitude1:"2.1123", latitude2:"4.434", longitude2:"1.2"});
 
   
-  // -- Extra Info --
-  dojo.widget.byId("extraInfoLangMetaData").setValue("Englisch");
-  dojo.widget.byId("extraInfoLangData").setValue("Englisch");
-
   // -- Availability --
 
   // -- Thesaurus --
@@ -717,8 +721,8 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Time --
   nodeData.timeRefType = dojo.widget.byId("timeRefType").getValue();
-  dojo.debug("Value: "+dojo.widget.byId("timeRefDate1").getValue());
-  dojo.debug("Date: "+dojo.widget.byId("timeRefDate1").getDate());
+//  dojo.debug("Value: "+dojo.widget.byId("timeRefDate1").getValue());
+//  dojo.debug("Date: "+dojo.widget.byId("timeRefDate1").getDate());
   
   if (dojo.widget.byId("timeRefDate1").getValue() != "") {
   	nodeData.timeRefDate1 = dojo.widget.byId("timeRefDate1").getDate();
@@ -731,6 +735,13 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.timeRefIntervalNum = dojo.widget.byId("timeRefIntervalNum").getValue();
   nodeData.timeRefIntervalUnit = dojo.widget.byId("timeRefIntervalUnit").getValue();
   nodeData.timeRefExplanation = dojo.widget.byId("timeRefExplanation").getValue();
+
+  // -- Extra Info --
+  nodeData.extraInfoLangMetaData = dojo.widget.byId("extraInfoLangMetaData").getValue();
+  nodeData.extraInfoLangData = dojo.widget.byId("extraInfoLangData").getValue();
+  nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
+  nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
+  nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
 
 /*
   //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
@@ -774,26 +785,26 @@ udkDataProxy._getObjectData = function(nodeData)
   dojo.debug("------ NODE DATA ------");
   dojo.debugShallow(nodeData);
   dojo.debug("------ NODE DATA END ------");
-
+ 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)
   {
-    case 0:
+    case '0':
       udkDataProxy._getObjectDataClass0(nodeData);
       break;
-    case 1:
+    case '1':
       udkDataProxy._getObjectDataClass1(nodeData);
       break;
-    case 2:
+    case '2':
       udkDataProxy._getObjectDataClass2(nodeData);
       break;
-    case 3:
+    case '3':
       udkDataProxy._getObjectDataClass3(nodeData);
       break;
-    case 4:
+    case '4':
       udkDataProxy._getObjectDataClass4(nodeData);
       break;
-    case 5:
+    case '5':
       udkDataProxy._getObjectDataClass5(nodeData);
       break;
     default:
