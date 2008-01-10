@@ -61,8 +61,16 @@ public class EntryServiceImpl implements EntryService {
 	 */
 	public String copyNode(String nodeUuid, String dstNodeUuid,
 			Boolean includeChildren) {
-		// TODO Auto-generated method stub
-		return null;
+		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+
+		try {
+			dataConnection.copyObjectSubTree(nodeUuid, dstNodeUuid);
+			return "success";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 	/*
@@ -172,14 +180,22 @@ public class EntryServiceImpl implements EntryService {
 	 *      java.lang.String)
 	 */
 	public String moveNode(String nodeUuid, String dstNodeUuid) {
-		// TODO Auto-generated method stub
-		return null;
+		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+
+		try {
+			dataConnection.cutObjectSubTree(nodeUuid, dstNodeUuid);
+			return "success";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(java.util.HashMap,
+	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(MdekDataBean,
 	 *      java.lang.Boolean)
 	 */
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
@@ -194,6 +210,39 @@ public class EntryServiceImpl implements EntryService {
 	}
 
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#canCutObject(java.lang.String)
+	 */
+	public boolean canCutObject(String uuid) {
+		log.debug("Query if node can be cut: "+uuid);
+
+		try {
+			  dataConnection.canCutObject(uuid);
+			  return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#canCutObject(java.lang.String)
+	 */
+	public boolean canCopyObject(String uuid) {
+		log.debug("Query if node can be copied: "+uuid);
+
+		try {
+			  dataConnection.canCopyObject(uuid);
+			  return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	
 	

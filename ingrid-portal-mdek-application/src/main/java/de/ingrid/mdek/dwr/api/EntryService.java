@@ -185,4 +185,9 @@ public interface EntryService {
 	public String deleteNode(String nodeUuid, Boolean markOnly);
 
 	public MdekDataBean createNewNode(String parentUuid);
+	
+	// TODO add return type when the method is implemented in MdekCaller
+	public boolean canCutObject(String parentUuid);
+	// TODO add return type when the method is implemented in MdekCaller
+	public boolean canCopyObject(String parentUuid);
 }

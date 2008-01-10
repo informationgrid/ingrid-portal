@@ -81,7 +81,7 @@ dojo.widget.defineWidget(
 			this.canCut, this.prepareCut, this.doCut, this.finalizeCut, this.exposeCut, arguments
 		);			
 	},
-	doCut: function(node) {
+	prepareCut: function(node) {
 
     // reset old cut node
     if (this.nodeToCut != null) {
@@ -120,5 +120,25 @@ dojo.widget.defineWidget(
      		this.move(this.nodeToCut, node, node.children.length/*, true*/);
      		this.nodeToCut = null; // don't paste cut object twice
     	}
+	},
+  /*
+   * move method
+   */
+	doMove: function(child, newParent, index, sync) {
+		// Overriden so the TreeRPCController doMove method is skipped
+		child.tree.move(child, newParent, index);
+		return true;
+	},
+  /*
+   * create child method
+   */
+	doCreateChild: function(parent, index, data) {
+		var newChild = parent.tree.createNode(data); 
+		if (index == "last") {
+			parent.addChild(newChild);
+		} else {
+			parent.addChild(newChild, index);
+		}
+		return newChild;
 	}
 });

@@ -15,28 +15,14 @@ menuEventHandler.handleNewEntity = function(mes) {
 	if (!selectedNode) {
 	  		dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
 	} else {
-		if (!selectedNode.isFolder) {
-			selectedNode.setFolder();
-			// Don't load children from the db. The new node is the only children.
-			selectedNode.expand();
-		} else if (!selectedNode.isExpanded) {
-			var tree = selectedNode.tree;
-			var treeController = dojo.widget.byId("treeController");
-			var def = treeController.expand(selectedNode);
-			// Wait till the treeController is done with node.expand and attach the new node if
-			// it was successful
-			def.addCallback(function(){
-				deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
-   				dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
-   				dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
-			});
-			return;
+		if (selectedNode.id == "newNode") {
+	  		dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
+		} else {
+			// publish a createObject request and attach the newly created node if it was successful
+			deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
+			dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
+	  		dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
 		}
-
-		// publish a createObject request and attach the newly created node if it was successful
-		deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
-		dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
-  		dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
 	}
 }
 
@@ -44,14 +30,23 @@ attachNewNode = function(selectedNode, res) {
     var tree = dojo.widget.byId("tree");
     var treeListener = dojo.widget.byId('treeListener');
 
-	var newNode = tree.createNode(_createNewNode(res));
-	selectedNode.addChild(newNode);
-
 	var treeController = dojo.widget.byId("treeController");
-
-	tree.selectNode(newNode);
-	tree.selectedNode = newNode;
-    dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+	var def = treeController.createChild(selectedNode, "last", _createNewNode(res));
+	def.addCallback(function(res){
+		tree.selectNode(res);
+		tree.selectedNode = res;
+		dojo.event.topic.publish(treeListener.eventNames.select, {node: res});
+	});
+	def.addErrback(function(){
+		// If we got an error while attaching the node we still check if the node exists and select it
+		var newNode = dojo.widget.byId("newNode");
+		if (newNode) {
+			newNode.parent.expand();
+			tree.selectNode(newNode);
+			tree.selectedNode = newNode;
+			dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+		}
+	});
 }
 
 
@@ -89,21 +84,56 @@ menuEventHandler.handleCut = function(mes) {
 	var selectedNode = getSelectedNode(mes);
 	if (!selectedNode || selectedNode.id == "objectRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
-	}
-	else {
-		if (!selectedNode.isFolder) {
+	} else {
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
 			var treeController = dojo.widget.byId("treeController");
-			treeController.cut(selectedNode);
-		} else {
-    		dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
-		}
+			treeController.prepareCut(selectedNode);
+		});
+		deferred.addErrback(function() {
+    		dialog.show(message.get("general.hint"), message.get("tree.nodeCanCutError"), dialog.WARNING);		
+		});
+
+  		dojo.event.topic.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
 	}
 }
 
 
 menuEventHandler.handleCopyEntity = function() {alertNotImplementedYet();}
 menuEventHandler.handleCopyTree = function() {alertNotImplementedYet();}
-menuEventHandler.handlePaste = function() {alertNotImplementedYet();}
+
+menuEventHandler.handlePaste = function(msg) {
+	var targetNode = getSelectedNode(msg);
+	if (!targetNode) {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
+	} else {
+		var treeController = dojo.widget.byId("treeController");		
+		if (treeController.nodeToCut != null) {
+			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
+				// If an invalid target is selected (same node or child of node to cut)
+				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
+			} else {
+				// Valid target was selected. Start the request
+				var deferred = new dojo.Deferred();
+				deferred.addCallback(function() {
+					// Move was successful. Update the tree
+					treeController.move(treeController.nodeToCut, targetNode, 0);
+				});
+				dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+			}
+		} else if (treeController.nodeToPaste != null) {
+				// A node can be inserted everywhere. Start the paste request.
+				var deferred = new dojo.Deferred();
+				deferred.addCallback(function() {
+					// Copy was successful. Update the tree
+					// treeController.paste(treeController.nodeToCopy, targetNode, 0);
+				});
+				//dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+		} else {
+	    	dialog.show(message.get("general.hint"), message.get("tree.nodePasteNoCutCopyHint"), dialog.WARNING);
+		}
+	}
+}
 
 menuEventHandler.handleSave = function() {
 //                                dialog.show("Zwischenspeichern", 'Der aktuelle Datensatz befindet sich in der Bearbeitung. Wollen Sie wirklich speichern?', dialog.WARNING, 
@@ -227,7 +257,9 @@ function _createNewNode(obj)
 }
 
 function _isChildOf(childNode, targetNode) {
-	if (childNode.parent.id == targetNode.id) {
+	if (!childNode.parent) {
+		return false; 
+	} else if (childNode.parent.id == targetNode.id) {
 		return true;
 	} else if (childNode.parent.id == "objectRoot") {
 		return false;

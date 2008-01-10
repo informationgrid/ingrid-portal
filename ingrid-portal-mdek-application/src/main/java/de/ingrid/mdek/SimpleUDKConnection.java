@@ -104,6 +104,25 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		mdekCaller.deleteObject(uuid);
 	}
 	
+	public void canCutObject(String uuid) {
+		mdekCaller.checkObjectSubTree(uuid);
+	}
+
+	public void canCopyObject(String uuid) {
+		mdekCaller.checkObjectSubTree(uuid);
+	}
+
+	public MdekDataBean copyObjectSubTree(String fromUuid, String toUuid) {
+		IngridDocument response = mdekCaller.copyObjectSubTree(fromUuid, toUuid, true);
+		// TODO return correct value when the method is implemented in MdekCaller
+		return null;
+	}
+	public MdekDataBean cutObjectSubTree(String fromUuid, String toUuid) {
+		IngridDocument response = mdekCaller.cutObjectSubTree(fromUuid, toUuid, true);
+		// TODO return correct value when the method is implemented in MdekCaller		
+		return null;
+	}
+
 	// ------------------------ Helper Methods ---------------------------------------	
 
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response)

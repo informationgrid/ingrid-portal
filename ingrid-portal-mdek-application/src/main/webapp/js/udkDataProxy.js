@@ -17,6 +17,15 @@
  *   topic = '/deleteRequest' - argument: {id: nodeUuid, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node which should be deleted
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
+ *   topic = '/canCutObjectRequest' - argument: {id: nodeUuid, resultHandler: deferred}
+ *     nodeUuid - The Uuid of the node which should be marked for a cut operation
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
+ *   topic = '/canCutObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, resultHandler: deferred}
+ *     srcId - The Uuid of the node which should be cut
+ *     dstId - The Uuid of the target node where the srcNode should be attached
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
  */
 
 
@@ -39,6 +48,9 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
     dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
     dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
+    dojo.event.topic.subscribe("/canCutObjectRequest", udkDataProxy, "handleCanCutObjectRequest");
+    dojo.event.topic.subscribe("/cutObjectRequest", udkDataProxy, "handleCutObjectRequest");
+
 
 	var treeListener = dojo.widget.byId("treeListener");
 
@@ -272,7 +284,12 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 	var loadCallback = function() {
 		EntryService.createNewNode(msg.id,
 			{
-				callback: function(res){msg.resultHandler.callback(res); udkDataProxy._setData(res); udkDataProxy._updateTree(res); setDirtyFlag();},
+				callback: function(res){
+						msg.resultHandler.callback(res);
+						udkDataProxy._setData(res);
+//						udkDataProxy._updateTree(res);
+						setDirtyFlag();
+					},
 				timeout:5000,
 				errorHandler:function(message) {msg.resultHandler.errback(); alert("Error in js/udkDataProxy.js: Error while creating a new node: " + message); }
 			}
@@ -315,6 +332,37 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 		}
 	);
 }
+
+udkDataProxy.handleCanCutObjectRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.canCutNode("+msg.id+")");	
+
+	EntryService.canCutObject(msg.id,
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:5000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while marking a node for a cut operation: " + message);
+				msg.resultHandler.errback();
+			}
+		}
+	);
+}
+
+udkDataProxy.handleCutObjectRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.cutNode("+msg.srcId+", "+msg.dstId+")");	
+
+	EntryService.moveNode(msg.srcId, msg.dstId,
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:5000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while moving nodes: " + message);
+				msg.resultHandler.errback();
+			}
+		}
+	);
+}
+
 
 // event.connect point. Called when data has been saved 
 udkDataProxy.onAfterSave = function() { dojo.debug("onAfterSave()"); }

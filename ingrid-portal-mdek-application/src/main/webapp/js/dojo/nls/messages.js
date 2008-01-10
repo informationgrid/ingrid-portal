@@ -23,7 +23,11 @@
     "tree.noAssistant":"No Assistant",
     "tree.selectNodeHint":"Please select a parent node.",
     "tree.selectNodeCutHint":"Please select a node to cut.",
+    "tree.nodeCanCutError":"Error while preparing the node for a cut operation.",
     "tree.selectNodeDeleteHint":"Please select a node to delete.",
+    "tree.selectNodePasteHint":"Please select a target node to paste.",
+    "tree.nodePasteNoCutCopyHint":"Please select a to copy or cut before pasting.",
+    "tree.nodePasteInvalidHint":"Please select a valid target to paste.",
     "tree.newNodeName":"New Object",
 
 	"links.selectNodeHint":"Please select a target node.",
