@@ -59,7 +59,7 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 	}
 
 
-	public Coordinate getCoordinates (
+	public CTSResponse getCoordinates (
 			SpatialReferenceSystem fromSRS,
 			SpatialReferenceSystem toSRS,
 			Coordinate coord) throws IOException {
@@ -95,9 +95,9 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 			ctsConnection.connect();
 	
 	//		log.debug("Content type: "+ctsConnection.getContentType());
-			CTSResponse res = (CTSResponse) xstream.fromXML(ctsConnection.getInputStream());
-			return res.getCoordinate();
-	/*
+			return (CTSResponse) xstream.fromXML(ctsConnection.getInputStream());
+
+/*
 			String testResponse = 
 		    	"<?xml version=\"1.0\"?>"+
 		    	"<CTS_Response version=\"1.0\">"+
@@ -105,8 +105,9 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 		    	"<COORDS values=\"3571769.7220 5540886.8658 3640462.9333 5653551.3119 \" />"+
 		    	"</CTS_Response>";		
 	
-		    CTSResponse res = (CTSResponse) xstream.fromXML(testResponse);
-			return res.getCoordinate();
+			CTSResponse res = (CTSResponse) xstream.fromXML(testResponse);
+			res.setSpatialReferenceSystem(toSRS);
+			return res;
 */
 		} catch (IOException e) {
 			log.error("Error while communicating with the transformation service", e);

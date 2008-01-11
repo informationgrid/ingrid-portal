@@ -43,10 +43,11 @@ function transform() {
 
 	CTService.getCoordinates(fromSRS, toSRS, coord, {
 			callback: function(res){
-				dojo.widget.byId("dstLongitude1").setValue(res.longitude1);
-				dojo.widget.byId("dstLatitude1").setValue(res.latitude1);
-				dojo.widget.byId("dstLongitude2").setValue(res.longitude2);
-				dojo.widget.byId("dstLatitude2").setValue(res.latitude2);
+				var coord = res.coordinate;
+				dojo.widget.byId("dstLongitude1").setValue(coord.longitude1);
+				dojo.widget.byId("dstLatitude1").setValue(coord.latitude1);
+				dojo.widget.byId("dstLongitude2").setValue(coord.longitude2);
+				dojo.widget.byId("dstLatitude2").setValue(coord.latitude2);
 			},
 			timeout:5000,
 			errorHandler:function(message) {alert(message); }

@@ -8,6 +8,7 @@
 
 <script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 
@@ -1129,10 +1130,10 @@ function hideSplash(){
 	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsAdminUnit');" title="Info aufklappen">Umgerechnete Koordinaten:
 	                    <img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 	                  <div id="spatialRefCoordsAdminUnitContent">
-	              	    <table dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
+	              	    <table id="spatialRefAdminUnitCoords" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="information" dataType="String" width="245">Geothesaurus-Raumbezug</th>
+	                    			<th field="srs" dataType="String" width="245">Geothesaurus-Raumbezug</th>
 	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
 	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
 	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
@@ -1140,18 +1141,18 @@ function hideSplash(){
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
+	              		      <tr value="0">
+	              		        <td>GK5</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td></tr>
 	              		      <tr value="1">
-	              		        <td>GK / Potsdam Datum</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td></tr>
-	              		      <tr value="2">
-	              		        <td>UTM / ETRS89</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td></tr>
+	              		        <td>UTM33w</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td></tr>
 	              	      </tbody>
 	              	    </table>
 	                  </div>
@@ -1172,7 +1173,7 @@ function hideSplash(){
 	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="information" dataType="String" width="315" editor="informationEditor">Freier Raumbezug</th>
+	                  			<th field="name" dataType="String" width="315" editor="informationEditor">Freier Raumbezug</th>
 	                  			<th field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
 	                  			<th field="longitude1" dataType="String" width="90" editor="longitude1Editor">L&auml;nge 1</th>
 	                  			<th field="latitude2" dataType="String" width="90" editor="latitude2Editor">Breite 2</th>
@@ -1180,18 +1181,6 @@ function hideSplash(){
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
-	            		      <tr value="1">
-	            		        <td>Bundesland Niedersachsen</td>
-	            		        <td>8,5502</td>
-	            		        <td>46,7589</td>
-	            		        <td>11,5500</td>
-	            		        <td>52,1256</td></tr>
-	            		      <tr value="2">
-	            		        <td>Bundesland Hessen</td>
-	            		        <td>8,5502</td>
-	            		        <td>46,7589</td>
-	            		        <td>11,5500</td>
-	            		        <td>52,1256</td></tr>
 	            	      </tbody>
 	            	    </table>
 	                </div>
@@ -1203,10 +1192,10 @@ function hideSplash(){
 	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="Info aufklappen">Umgerechnete Koordinaten:
 	                    <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 	                  <div id="spatialRefCoordsLocationContent">
-	              	    <table dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
+	              	    <table id="spatialRefLocationCoords" dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="information" dataType="String" width="245">Freier Raumbezug</th>
+	                    			<th field="srs" dataType="String" width="245">Freier Raumbezug</th>
 	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
 	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
 	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
@@ -1214,18 +1203,18 @@ function hideSplash(){
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
+	              		      <tr value="0">
+	              		        <td>GK5</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td></tr>
 	              		      <tr value="1">
-	              		        <td>GK / Potsdam Datum</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td></tr>
-	              		      <tr value="2">
-	              		        <td>UTM / ETRS89</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td>
-	              		        <td>6567556</td></tr>
+	              		        <td>UTM33w</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td>
+	              		        <td>------</td></tr>
 	              	      </tbody>
 	              	    </table>
 	              	  </div>

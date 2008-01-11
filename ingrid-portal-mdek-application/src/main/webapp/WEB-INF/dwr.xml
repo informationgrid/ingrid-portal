@@ -19,6 +19,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSLocationTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.cts.Coordinate"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.cts.CTSResponse"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.sns.Type"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.cts.SpatialReferenceSystem"/>
 	</allow>

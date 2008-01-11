@@ -29,6 +29,7 @@ dojo.addOnLoad(function()
   initToolbar();
   initTree();
   initForm();
+  initCTS();
   hideSplash();
 
 });
@@ -172,6 +173,81 @@ function initTree() {
 		deferred.addErrback(function(res) { alert("Error while loading data from the server. Please check your connection and try again!"); return res;});
 		return deferred;
 	};
+}
+
+// Initialize the Coordinate Transformation Service
+function initCTS() {
+	
+	/* Coordinate Update Handler.
+	 * This object connects two tables:
+	 * A source table containing coordinates (Coordinate objects).
+	 * A destination table containing Coordinate objects and a srs (Spatial Reference System) entry.
+	 * When the source table onSelect method is invoked the update handler does the following things:
+	 *  1. updateCoordinates() is called.
+	 *     This Method fetches the currently selected object from the source table and all
+	 *     srs identifiers from the target table. For each entry in the target table a coordinate transformation
+	 *     request is sent to the CT Service.
+	 *  2. The result of the CT Service request is redirected to the updateDestinationStore method.
+	 *     This method gets the correct entry from the target table and updates the stored Coordinate
+	 *
+	 * args is an object containing two values:  args = {srcTable: FilteringTable, dstTable: FilteringTable}
+	 *  srcTable - The table containing the coordinates which should be converted
+	 *  dstTable - The 'slave' table containing transformed coordinates
+	 *
+	 * Usage:
+	 *  simply create a new CoordinateUpdateHandler like this:
+	 *   new CoordinateUpdateHandler({srcTable: dojo.widget.byId("src"), dstTable: dojo.widget.byId("dst")});
+	 *
+	 */
+	function CoordinateUpdateHandler(args){
+		this.srcTable = args.srcTable;
+		this.dstTable = args.dstTable;
+		dojo.event.connectOnce(args.srcTable, "onSelect", this, "updateCoordinates");
+
+		this.updateDestinationStore = function(ctsResponse) {
+			var data = this.dstTable.store.getData();
+//			dojo.debug("Updating destination store srs: "+ctsResponse.spatialReferenceSystem);
+			for (var i = 0; i < data.length; i++) {
+				if (data[i].srs == ctsResponse.spatialReferenceSystem) {
+//					dojo.debug("Correct entry found. Updating...");
+					this.dstTable.store.update(data[i], "longitude1", ctsResponse.coordinate.longitude1);
+					this.dstTable.store.update(data[i], "latitude1", ctsResponse.coordinate.latitude1);
+					this.dstTable.store.update(data[i], "longitude2", ctsResponse.coordinate.longitude2);
+					this.dstTable.store.update(data[i], "latitude2", ctsResponse.coordinate.latitude2);
+				}
+			}
+		}
+
+		this.updateCoordinates = function() {
+			var fromSRS = "GEO84";
+			var coords = this.srcTable.getSelectedData()[0];
+			var dstStore = this.dstTable.getData();
+			if (coords) {
+				for (var i = 0; i < dstStore.length; i++) {
+					var toSRS = dstStore[i].srs;
+	//				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
+					CTService.getCoordinates(fromSRS, toSRS, coords, {
+							callback: dojo.lang.hitch(this, this.updateDestinationStore),
+							timeout:5000,
+							errorHandler:function(message) {alert(message); }
+						}
+					);
+				}
+			}
+		}
+	}	// StoreUpdateHandler
+
+	
+	// Connect all coordinate tables:
+	new CoordinateUpdateHandler({
+		srcTable: dojo.widget.byId("spatialRefAdminUnit"),
+		dstTable: dojo.widget.byId("spatialRefAdminUnitCoords")
+	});
+
+	new CoordinateUpdateHandler({
+		srcTable: dojo.widget.byId("spatialRefLocation"),
+		dstTable: dojo.widget.byId("spatialRefLocationCoords")
+	});
 }
 
 
