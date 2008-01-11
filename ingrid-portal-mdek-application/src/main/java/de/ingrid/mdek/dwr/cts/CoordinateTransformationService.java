@@ -1,5 +1,11 @@
 package de.ingrid.mdek.dwr.cts;
 
+import java.io.IOException;
+
 public interface CoordinateTransformationService {
-	public String getCoordinates(SpatialReferenceSystem fromSRS, SpatialReferenceSystem toSRS, String coords);
+	
+	public Coordinate getCoordinates (
+			SpatialReferenceSystem fromSRS,
+			SpatialReferenceSystem toSRS,
+			Coordinate coord) throws IOException;
 }

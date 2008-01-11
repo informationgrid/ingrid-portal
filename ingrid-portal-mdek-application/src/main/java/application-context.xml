@@ -31,7 +31,7 @@
 	</bean>
 
 	<bean id="MdekDataMapper" class="de.ingrid.mdek.SimpleMdekMapper" />
-
 	<bean id="snsService" class="de.ingrid.mdek.dwr.sns.SNSService" />
+	<bean id="ctService" class="de.ingrid.mdek.dwr.cts.CoordinateTransformationServiceImpl" />
 
 </beans>
