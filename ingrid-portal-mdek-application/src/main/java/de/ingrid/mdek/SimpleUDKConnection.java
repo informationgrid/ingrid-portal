@@ -104,6 +104,13 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		mdekCaller.deleteObject(uuid);
 	}
 	
+	public boolean deleteObjectWorkingCopy(String uuid) {
+		IngridDocument response = mdekCaller.deleteObjectWorkingCopy(uuid);
+
+		IngridDocument result = extractAdditionalInformationFromResponse(response);
+		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
+	}
+
 	public void canCutObject(String uuid) {
 		mdekCaller.checkObjectSubTree(uuid);
 	}
@@ -201,6 +208,18 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
+	private IngridDocument extractAdditionalInformationFromResponse(IngridDocument response)
+	{
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+		if (result != null) {
+			return result;
+		} else {
+			log.error("ERROR: " + mdekCaller.getErrorMsgFromResponse(response));			
+			return null;
+		}
+
+	}
+	
 	private List<String> extractPathFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 		if (result != null) {

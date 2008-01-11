@@ -79,6 +79,8 @@ public interface DataConnectionInterface {
 	public MdekDataBean saveNode(MdekDataBean data);
 	
 	public void deleteObject(String uuid);
+	public boolean deleteObjectWorkingCopy(String uuid);
+
 	public void canCutObject(String uuid);
 	public void canCopyObject(String uuid);
 	public List<String> getPathToObject(String uuid);

@@ -131,7 +131,7 @@ function initTree() {
   contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
   contextMenu1.addSeparator();
 //  contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
-  contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleMarkDeleted);
+  contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleDelete);
 
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
@@ -229,7 +229,10 @@ function initCTS() {
 					CTService.getCoordinates(fromSRS, toSRS, coords, {
 							callback: dojo.lang.hitch(this, this.updateDestinationStore),
 							timeout:5000,
-							errorHandler:function(message) {alert(message); }
+							errorHandler:function(message) {
+								// There was an error while accessing the CTS
+								// TODO do something...
+							}
 						}
 					);
 				}
@@ -319,7 +322,7 @@ function initToolbar() {
                             caption:"Abschließendes Speichern"
                           });
   leftToolbar.addChild("img/ic_delete.gif", "after", {
-                            onClick:menuEventHandler.handleMarkDeleted,
+                            onClick:menuEventHandler.handleDelete,
                             caption:"Ausgewähltes Objekt bzw. Teilbaum löschen"
 //                            caption:"Als gelöscht markieren"
                           });

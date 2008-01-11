@@ -87,6 +87,23 @@ public class EntryServiceImpl implements EntryService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see de.ingrid.mdek.dwr.api.EntryService#deleteObjectWorkingCopy(java.lang.String,
+	 *      java.lang.Boolean)
+	 */
+	public MdekDataBean deleteObjectWorkingCopy(String uuid, Boolean markOnly) {
+		try {
+			boolean wasFullyDeleted = dataConnection.deleteObjectWorkingCopy(uuid);
+			if (!wasFullyDeleted) {
+				return dataConnection.getNodeDetail(uuid);
+			}
+		} catch (Exception e) {e.printStackTrace();};
+		return null;
+	}
+
+	
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.ingrid.mdek.dwr.api.EntryService#getPathToObject(java.lang.String)
 	 */
 	public List<String> getPathToObject(String uuid) {

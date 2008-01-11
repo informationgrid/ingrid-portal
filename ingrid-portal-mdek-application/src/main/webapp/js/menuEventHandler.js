@@ -199,14 +199,71 @@ menuEventHandler.handleUndo = function(mes) {
 }
 
 
-menuEventHandler.handleDiscard = function() {alertNotImplementedYet();}
+menuEventHandler.handleDiscard = function(msg) {
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+	if (!selectedNode || selectedNode.id == "objectRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
+	} else {
+		// If a selected node was found do the following:
+		// 1. Query the user if he really wants to delete the working copy of the selected object
+		//    This is accomplished by creating a deferred obj 'deferred' and passing it to the
+		//    delete_working_copy dialog. If the user clicks yes, the attached callback function is executed.
+		// 2. The attached callback function publishes a delete working copy request which is picked up by the
+		//    udkDataProxy and sent to the backend. We need another deferred obj 'deleteObjDef' for this
+		//    so we can see if the delete operation was successful.
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
+	    	var deleteObjDef = new dojo.Deferred();
+	    	deleteObjDef.addCallback(function(res) {
+	    		// This function is called when the user has selected yes and the working copy was successfully
+				// deleted from the database
+				// The result 'res' is either:
+				// null - indicating that no other version of the object existed. In this case the object
+				//        has to be removed from the tree
+				// a valid MdekDataBean - indicating that the working copy has been deleted, but another
+				//        version of the object still exists. In this case the object has already been loaded
+				//        by the dataProxy. 
+				if (res == null) {
+					// The node has to be deleted from the tree
+					var tree = dojo.widget.byId("tree");
+					if (tree.selectedNode == selectedNode || _isChildOf(tree.selectedNode, selectedNode)) {
+						// If the currently selected Node is a child of the deleted node, we select it's parent after deletion
+						var newSelectNode = selectedNode.parent;
+						var treeListener = dojo.widget.byId("treeListener");
+			    		selectedNode.destroy();
+						tree.selectNode(newSelectNode);
+						tree.selectedNode = newSelectNode;
+						// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
+						resetDirtyFlag();
+						dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+					} else {
+						// The selection does not have to be altered. Delete the node.
+						selectedNode.destroy();
+					}
+				} else {
+					// Another version of the node still exists. Just update the dirty flag(?).
+				}
+	    	});
+			// Tell the backend to delete the selected node.
+	    	dojo.debug("Publishing event: /deleteWorkingCopyRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
+	    	dojo.event.topic.publish("/deleteWorkingCopyRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				
+		});
 
-menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
-menuEventHandler.handleFinalSave = function() {alertNotImplementedYet();}
+		// params for the first (really delete object query) dialog.
+		var params = {
+			nodeTitle: selectedNode.title,
+			nodeHasChildren: selectedNode.isFolder,
+			resultHandler: deferred
+		};
+
+		dialog.showPage("Delete node", "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
+	}
+}
 
 
-menuEventHandler.handleMarkDeleted = function(msg) {
-	// Get teh selected node from the message
+menuEventHandler.handleDelete = function(msg) {
+	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
 	if (!selectedNode || selectedNode.id == "objectRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
@@ -256,7 +313,9 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 	}
 }
 
-
+menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
+menuEventHandler.handleFinalSave = function() {alertNotImplementedYet();}
+menuEventHandler.handleMarkDeleted = function(msg) {alertNotImplementedYet();}
 menuEventHandler.handleUnmarkDeleted = function() {alertNotImplementedYet();}
 menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
 //                            		var win = window.open("qs_vergleich.html", 'preview', 'width=720, height=690, resizable=yes, scrollbars=yes, status=yes');

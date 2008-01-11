@@ -18,6 +18,10 @@
  *     nodeUuid - The Uuid of the node which should be deleted
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *   topic = '/deleteWorkingCopyRequest' - argument: {id: nodeUuid, resultHandler: deferred}
+ *     nodeUuid - The Uuid of the working copy node which should be deleted
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
  *   topic = '/canCutObjectRequest' - argument: {id: nodeUuid, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node which should be marked for a cut operation
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
@@ -65,6 +69,7 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
     dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
     dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
+    dojo.event.topic.subscribe("/deleteWorkingCopyRequest", udkDataProxy, "handleDeleteWorkingCopyRequest");
     dojo.event.topic.subscribe("/canCutObjectRequest", udkDataProxy, "handleCanCutObjectRequest");
 	dojo.event.topic.subscribe("/canCopyObjectRequest", udkDataProxy, "handleCanCopyObjectRequest");
     dojo.event.topic.subscribe("/cutObjectRequest", udkDataProxy, "handleCutObjectRequest");
@@ -340,6 +345,29 @@ udkDataProxy.handleSaveRequest = function()
 			},
 			timeout:5000,
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
+		}
+	);
+}
+
+
+udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.deleteObjectWorkingCopy("+msg.id+")");
+	EntryService.deleteObjectWorkingCopy(msg.id, "false",
+		{
+			callback: function(res){
+				if (res != null) {
+					resetDirtyFlag();
+					udkDataProxy._setData(res);
+					udkDataProxy._updateTree(res, msg.id);
+					udkDataProxy.onAfterSave();
+				}
+				msg.resultHandler.callback(res);
+			},
+			timeout:5000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while deleting working copy: " + message);
+				msg.resultHandler.errback();
+			}
 		}
 	);
 }

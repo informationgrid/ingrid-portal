@@ -183,6 +183,7 @@ public interface EntryService {
 	 * @return 'success' or error message.
 	 */
 	public String deleteNode(String nodeUuid, Boolean markOnly);
+	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean markOnly);
 
 	public MdekDataBean createNewNode(String parentUuid);
 	
