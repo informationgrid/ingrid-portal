@@ -6,22 +6,31 @@ _container_.addOnLoad(function() {
  		init();
 });
 
+function showStatus(msg) {
+	var status = dojo.byId("statusText");
+	if (status) {
+		status.innerHTML = msg;
+	}
+}
+
 // The treeController and root Tree are initialized here
 init = function() {
 	var treeController = dojo.widget.byId('thesTreeController');
 
 	treeController.loadRemote = function(node, sync) {
 
+		showStatus(message.get("sns.loadingHint"));
+
 		var _this = this;
 		var deferred = new dojo.Deferred();
 	
 		SNSService.getSubTopics(node.topicId, '2', 'down', {
-  			callback:function(res) { deferred.callback(res); },
+  			callback:function(res) { deferred.callback(res); showStatus("");},
 			timeout:0,
-			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
-			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+			errorHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));},
+			exceptionHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));}
   		});
-	
+
   		deferred.addCallback(function(res) {
   			for (i in res) {
   				res[i].isFolder = (res[i].children.length > 0);
@@ -41,10 +50,19 @@ init = function() {
 	var srcStore = dojo.widget.byId("thesaurusTerms").store;
 	var destStore = dojo.widget.byId("thesaurusDescList").store;
 	destStore.setData(srcStore.getData());
+
+	// Show initial loading message
+	showStatus(message.get("sns.loadingTopTermsHint"));
 }
 
 // initially load data (first hierachy level) from server 
-SNSService.getRootTopics(handleRootTopics);
+SNSService.getRootTopics({
+	callback:function(res) { showStatus(""); handleRootTopics(res); },
+	timeout:0,
+	errorHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));},
+	exceptionHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));}
+});
+
 
 // Callback Handler for the root topics.
 // This function gets called when the tree is initialized.
@@ -62,26 +80,23 @@ function handleRootTopics(topicList) {
 		tree.setChildren(topicList);
 }
 
-
-// Handler for SelectNode events (node title clicked)
-// Currently displays the information about the clicked node and path to/from a TopTerm
-function handleSelectNode(msg) {
-	dojo.debug(msg.node.topicId+' '+msg.node.title+' '+msg.node.type);	
-	SNSService.getSubTopics(msg.node.topicId, '0', 'up', showPath);
-}
-
-
 // Expands the tree to the topic with id 'topicID'
 // A valid topicID can be acquired by calling SNSService.findTopic()
 function expandToTopicWithId(topicID) {
-	SNSService.getSubTopicsWithRoot(topicID, '0', 'up', function(res) {
-		var tree = dojo.widget.byId('thesTree');
-		var topTerm = getTopTermNode(res[0]);
-		dojo.debug('Top Term: '+topTerm.topicId);
-		dojo.debug('Target Node: '+res[0].topicId);
-		expandPath(tree, topTerm, res[0]);	
+	SNSService.getSubTopicsWithRoot(topicID, '0', 'up', {
+		callback:function(res) {
+			showStatus("");
+			var tree = dojo.widget.byId('thesTree');
+			var topTerm = getTopTermNode(res[0]);
+			dojo.debug('Top Term: '+topTerm.topicId);
+			dojo.debug('Target Node: '+res[0].topicId);
+			expandPath(tree, topTerm, res[0]); },
+		timeout:0,
+		errorHandler:function(msg) {showStatus(message.get("sns.connectionError"));},
+		exceptionHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
 	});	
 }
+
 
 // Expands the tree
 // This is an internal function and should not be called. Call expandToTopicWithId(topicID) instead
@@ -164,14 +179,20 @@ function getTopTermNode(node) {
 // This function reads the value of the TextBox 'thesSearch' and expands the tree from the root
 // to the corresponding node
 findTopic = function() {
+	showStatus(message.get("sns.processingQueryHint"));
 
 	var textBox = dojo.widget.byId('thesSearch');
 
-	SNSService.findTopic(textBox.getValue(), function(result) {
-		if (result)
-			expandToTopicWithId(result.topicId);
-		else
-			alert('Not found.');
+	SNSService.findTopic(textBox.getValue(), {
+		callback:function(result) {
+			if (result) {
+				expandToTopicWithId(result.topicId);
+			} else {
+				showStatus(message.get("sns.noResultHint"));
+			}},
+		timeout:0,
+		errorHandler:function(msg) {showStatus(message.get("sns.connectionError"));},
+		exceptionHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
 	});
 };
 
@@ -271,6 +292,7 @@ acceptTopicList = function() {
          <span class="button w644" style="height:22px !important;">
          	<span style="float:right;"><button dojoType="Button" onClick="addSelectedTopic">Hinzuf&uuml;gen</button></span>
          	<span style="float:right; padding-right:10px;"><button dojoType="Button" onClick="closeDialog">Abbrechen</button></span>
+			<span id="statusText" style="float:left; padding-top:6px;"></span>
          </span>
   	  </div>
       <!-- LEFT HAND SIDE CONTENT END -->

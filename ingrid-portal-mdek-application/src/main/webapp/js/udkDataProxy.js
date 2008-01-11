@@ -764,13 +764,16 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.timeRefType = dojo.widget.byId("timeRefType").getValue();
 //  dojo.debug("Value: "+dojo.widget.byId("timeRefDate1").getValue());
 //  dojo.debug("Date: "+dojo.widget.byId("timeRefDate1").getDate());
-  
-  if (dojo.widget.byId("timeRefDate1").getValue() != "") {
-  	nodeData.timeRefDate1 = dojo.widget.byId("timeRefDate1").getDate();
+
+  if (dojo.widget.byId("timeRefType").getValue() != "") {
+	  if (dojo.widget.byId("timeRefDate1").getValue() != "") {
+		  nodeData.timeRefDate1 = dojo.widget.byId("timeRefDate1").getDate();
+	  }
+	  if (dojo.widget.byId("timeRefDate2").getValue() != "") {
+		  nodeData.timeRefDate2 = dojo.widget.byId("timeRefDate2").getDate();
+	  }
   }
-  if (dojo.widget.byId("timeRefDate2").getValue() != "") {
-    nodeData.timeRefDate2 = dojo.widget.byId("timeRefDate2").getDate();
-  }
+
   nodeData.timeRefStatus = dojo.widget.byId("timeRefStatus").getValue();
   nodeData.timeRefPeriodicity = dojo.widget.byId("timeRefPeriodicity").getValue();
   nodeData.timeRefIntervalNum = dojo.widget.byId("timeRefIntervalNum").getValue();

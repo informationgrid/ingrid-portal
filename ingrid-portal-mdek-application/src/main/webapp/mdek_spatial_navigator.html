@@ -21,6 +21,29 @@ init = function() {}
 var checkboxArray = new Array();
 
 
+
+function showNoResults() {
+	var resultDiv = dojo.byId("resultList");
+	if (resultDiv) {
+		resultDiv.innerHTML = message.get("spatial.noResultsHint");
+	}	
+}
+
+function showLoading() {
+	var resultDiv = dojo.byId("resultList");
+	if (resultDiv) {
+		resultDiv.innerHTML = message.get("spatial.loadingHint");
+	}	
+}
+
+function showError() {
+	var resultDiv = dojo.byId("resultList");
+	if (resultDiv) {
+		resultDiv.innerHTML = message.get("spatial.connectionError");
+	}	
+}
+
+
 deleteComboboxWidgets = function() {
 	while (checkboxArray.length > 0) {
 		var checkBox = checkboxArray.pop();
@@ -38,10 +61,8 @@ resetResultDiv = function() {
 
 setResultList = function(topicList)
 {
-	if (topicList != null) {
+	if (topicList != null && topicList.length > 0) {
 		resetResultDiv();
-		deleteComboboxWidgets();
-
 		for (var i in topicList) {
 			var checkboxDiv = dojo.byId("resultList");
 			if (checkboxDiv) {
@@ -60,7 +81,7 @@ setResultList = function(topicList)
 			}
 		}
 	} else {
-		// TODO Show error or clear results
+		showNoResults();
 	}
 }
 
@@ -68,10 +89,14 @@ setResultList = function(topicList)
 // This function queries the SNSService for location topics
 findLocationTopics = function() {
 	var queryTerm = dojo.widget.byId("locationTextBox").getValue();
-
+	resetResultDiv();
+	deleteComboboxWidgets();
+	showLoading();
+	
 	SNSService.getLocationTopics(queryTerm, {
 		callback:setResultList,
-		timeout:0
+		timeout:0,
+		errorHandler:showError
 	});
 }
 

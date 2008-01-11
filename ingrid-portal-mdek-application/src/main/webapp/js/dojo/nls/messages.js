@@ -32,6 +32,16 @@
     "tree.nodePasteInvalidHint":"Please select a valid target to paste.",
     "tree.newNodeName":"New Object",
 
+    "spatial.noResultsHint":"No results found.",
+    "spatial.loadingHint":"Please wait, loading...",
+    "spatial.connectionError":"An error occured while contacting the SNS Service.",
+
+    "sns.connectionError":"An error occured while contacting the SNS Service.",
+    "sns.loadingTopTermsHint":"Please wait, loading the SNS Top Terms...",
+    "sns.loadingHint":"Please wait, loading...",
+    "sns.processingQueryHint":"Please wait, processing query...",
+    "sns.noResultHint":"The specified Term was not found.",
+        
 	"links.selectNodeHint":"Please select a target node.",
 
     "table.selectAll":"Select all rows",
