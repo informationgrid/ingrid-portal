@@ -528,8 +528,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
-            userManager.setUserEnabled(userName, true);
-
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                     request.getLocale()));
 

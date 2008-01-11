@@ -147,7 +147,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 Preferences pref = user.getUserAttributes();
                 String userConfirmId = pref.get("user.custom.ingrid.user.confirmid", "invalid");
                 if (userConfirmId.equals(newUserGUID)) {
-                    userManager.setUserEnabled(userName, true);
+                    userManager.setPasswordEnabled(userName, true);
                     context.put("success", "true");
                     response.setTitle(messages.getString("account.confirmed.title"));
                     request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
@@ -250,7 +250,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
             // TODO set this to false in production env
-            userManager.setUserEnabled(userName, false);
+            userManager.setPasswordEnabled(userName, false);
 
             String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 
