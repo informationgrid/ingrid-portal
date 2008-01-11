@@ -96,7 +96,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following object:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCaller.storeObject(obj);
+		IngridDocument response = mdekCaller.storeObject(obj, true);
 		return extractSingleObjectFromResponse(response);
 	}
 

@@ -332,7 +332,12 @@ udkDataProxy.handleSaveRequest = function()
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+")");
 	EntryService.saveNodeData(nodeData, "false",
 		{
-			callback: function(res){resetDirtyFlag(); udkDataProxy._setData(res); udkDataProxy._updateTree(res); udkDataProxy.onAfterSave();},
+			callback: function(res){
+				resetDirtyFlag();
+				udkDataProxy._setData(res);
+				udkDataProxy._updateTree(res, nodeData.uuid);
+				udkDataProxy.onAfterSave();
+			},
 			timeout:5000,
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
 		}
@@ -849,15 +854,16 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 
 // Looks for the node widget with uuid = nodeData.uuid and updates the
 // tree data (label, type, etc.) according to the given nodeData
-udkDataProxy._updateTree = function(nodeData) {
-	dojo.debug("_updateTree() "+nodeData.uuid);
-	
-	var node = dojo.widget.byId(nodeData.uuid);
+udkDataProxy._updateTree = function(nodeData, oldUuid) {
+	dojo.debug("_updateTree("+nodeData.uuid+", "+oldUuid+")");
+
+	var node = dojo.widget.byId(oldUuid);
 	if (node) {
 		dojo.debug("nodeDocType: "+nodeData.nodeDocType);
 		node.nodeDocType = nodeData.nodeDocType;	
 		dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(node);
 		node.setTitle(nodeData.objectName);
+		node.id = nodeData.uuid;	
 	} else {
 		dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
 	}
