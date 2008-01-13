@@ -50,6 +50,7 @@ function transform() {
 				dojo.widget.byId("dstLatitude2").setValue(coord.latitude2);
 			},
 			timeout:5000,
+			exceptionHandler:function(message) {alert(message); },
 			errorHandler:function(message) {alert(message); }
 		}
 	);
@@ -67,11 +68,11 @@ function transform() {
 		<option>GK3</option>
 		<option>GK4</option>
 		<option>GK5</option>
-		<option>UTM32w</option>
-		<option>UTM33w</option>
-		<option>UTM32s</option>
-		<option>UTM33s</option>
-		<option>LAMGw</option>
+		<option>UTM32W</option>
+		<option>UTM33W</option>
+		<option>UTM32S</option>
+		<option>UTM33S</option>
+		<option>LAMGW</option>
 	</select>
 	<label for="toSRS">Target Spatial Reference System:</label>
 	<select dojoType="ComboBox" id="toSRS" style="width:200px;">
@@ -81,11 +82,11 @@ function transform() {
 		<option>GK3</option>
 		<option>GK4</option>
 		<option>GK5</option>
-		<option>UTM32w</option>
-		<option>UTM33w</option>
-		<option>UTM32s</option>
-		<option>UTM33s</option>
-		<option>LAMGw</option>
+		<option>UTM32W</option>
+		<option>UTM33W</option>
+		<option>UTM32S</option>
+		<option>UTM33S</option>
+		<option>LAMGW</option>
 	</select>
 </div>
 <label for="longitude1">Longitude of coordinate one:</label>

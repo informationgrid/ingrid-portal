@@ -313,8 +313,13 @@ menuEventHandler.handleDelete = function(msg) {
 	}
 }
 
+menuEventHandler.handleFinalSave = function() {
+	isObjectPublishable();
+}
+
+
+
 menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
-menuEventHandler.handleFinalSave = function() {alertNotImplementedYet();}
 menuEventHandler.handleMarkDeleted = function(msg) {alertNotImplementedYet();}
 menuEventHandler.handleUnmarkDeleted = function() {alertNotImplementedYet();}
 menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
@@ -382,6 +387,7 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 				tree.selectNode(targetNode);
 				tree.selectedNode = targetNode;
 				dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
+				dojo.html.scrollIntoView(targetNode.domNode);
 			});
 		});
     	dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: deferred});		

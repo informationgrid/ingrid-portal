@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -73,9 +74,9 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 					"?"+REQUEST_KEY+"="+GET_COORDINATES_REQUEST+
 					"&"+SRS_SRC_KEY+"="+fromSRS+
 					"&"+SRS_DST_KEY+"="+toSRS+
-					"&"+COORDINATES_KEY+"="+coord);
-		
+					"&"+COORDINATES_KEY+"="+URLEncoder.encode(coord.toString(), "UTF-8"));
 		} catch (MalformedURLException e) {
+			log.error(e);
 			throw new IOException("Error while creating the service URL");
 		}
 

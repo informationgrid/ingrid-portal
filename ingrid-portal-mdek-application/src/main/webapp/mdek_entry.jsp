@@ -23,6 +23,7 @@
 <script type="text/javascript" src="js/treeEventHandler.js"></script>
 <script type="text/javascript" src="js/menuEventHandler.js"></script>
 <script type="text/javascript" src="js/udkDataProxy.js"></script>
+<script type="text/javascript" src="js/rules_checker.js"></script>
 
 
 <script type="text/javascript">
@@ -1134,10 +1135,10 @@ function hideSplash(){
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="srs" dataType="String" width="245">Geothesaurus-Raumbezug</th>
-	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
 	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
-	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
+	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
 	                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1148,7 +1149,7 @@ function hideSplash(){
 	              		        <td>------</td>
 	              		        <td>------</td></tr>
 	              		      <tr value="1">
-	              		        <td>UTM33w</td>
+	              		        <td>UTM33W</td>
 	              		        <td>------</td>
 	              		        <td>------</td>
 	              		        <td>------</td>
@@ -1174,10 +1175,10 @@ function hideSplash(){
 	            	      <thead>
 	            		      <tr>
 	                  			<th field="name" dataType="String" width="315" editor="informationEditor">Freier Raumbezug</th>
-	                  			<th field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
 	                  			<th field="longitude1" dataType="String" width="90" editor="longitude1Editor">L&auml;nge 1</th>
-	                  			<th field="latitude2" dataType="String" width="90" editor="latitude2Editor">Breite 2</th>
+	                  			<th field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
 	                  			<th field="longitude2" dataType="String" width="90" editor="longitude2Editor">L&auml;nge 2</th>
+	                  			<th field="latitude2" dataType="String" width="90" editor="latitude2Editor">Breite 2</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -1196,10 +1197,10 @@ function hideSplash(){
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="srs" dataType="String" width="245">Freier Raumbezug</th>
-	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
 	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
-	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
+	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
 	                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1210,7 +1211,7 @@ function hideSplash(){
 	              		        <td>------</td>
 	              		        <td>------</td></tr>
 	              		      <tr value="1">
-	              		        <td>UTM33w</td>
+	              		        <td>UTM33W</td>
 	              		        <td>------</td>
 	              		        <td>------</td>
 	              		        <td>------</td>

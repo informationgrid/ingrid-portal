@@ -23,7 +23,7 @@ public class CTSResponseConverter implements Converter {
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
 			if ("SRS".equals(reader.getNodeName())) {
-				response.setSpatialReferenceSystem(SpatialReferenceSystem.valueOf(reader.getAttribute("name")));				
+				response.setSpatialReferenceSystem(SpatialReferenceSystem.valueOf(reader.getAttribute("name")));
 			} else if ("COORDS".equals(reader.getNodeName())) {
 				response.setCoordinate(new Coordinate(reader.getAttribute("values").split(" ")));				
 			}

@@ -16,9 +16,6 @@
 <script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
 
-<!-- <script type="text/javascript" src="js/objectload.js"></script>  -->
-
-
 <script>
 dojo.require("dojo.event.*");
 dojo.require("dojo.widget.*");

@@ -206,10 +206,11 @@ function initCTS() {
 
 		this.updateDestinationStore = function(ctsResponse) {
 			var data = this.dstTable.store.getData();
-//			dojo.debug("Updating destination store srs: "+ctsResponse.spatialReferenceSystem);
+			dojo.debug("Updating destination store srs: "+ctsResponse.spatialReferenceSystem);
 			for (var i = 0; i < data.length; i++) {
+				dojo.debug("data.srs: "+data[i].srs);
 				if (data[i].srs == ctsResponse.spatialReferenceSystem) {
-//					dojo.debug("Correct entry found. Updating...");
+					dojo.debug("Correct entry found. Updating...");
 					this.dstTable.store.update(data[i], "longitude1", ctsResponse.coordinate.longitude1);
 					this.dstTable.store.update(data[i], "latitude1", ctsResponse.coordinate.latitude1);
 					this.dstTable.store.update(data[i], "longitude2", ctsResponse.coordinate.longitude2);
@@ -218,18 +219,50 @@ function initCTS() {
 			}
 		}
 
+		this.clearDstStoreCoord = function(srs) {
+			var data = this.dstTable.store.getData();
+			var clearValue = "------";
+			dojo.debug("Clearing destination store srs: "+srs);
+			for (var i = 0; i < data.length; i++) {
+				if (data[i].srs == srs) {
+					this.dstTable.store.update(data[i], "longitude1", clearValue);
+					this.dstTable.store.update(data[i], "latitude1", clearValue);
+					this.dstTable.store.update(data[i], "longitude2", clearValue);
+					this.dstTable.store.update(data[i], "latitude2", clearValue);
+				}
+			}
+		}
+
+		this.clearDstStore = function() {
+			var data = this.dstTable.store.getData();
+			var clearValue = "------";
+			for (var i = 0; i < data.length; i++) {
+				this.dstTable.store.update(data[i], "longitude1", clearValue);
+				this.dstTable.store.update(data[i], "latitude1", clearValue);
+				this.dstTable.store.update(data[i], "longitude2", clearValue);
+				this.dstTable.store.update(data[i], "latitude2", clearValue);
+			}
+		}
+
+
 		this.updateCoordinates = function() {
 			var fromSRS = "GEO84";
-			var coords = this.srcTable.getSelectedData()[0];
+			var selectedData = this.srcTable.getSelectedData();
+			if (selectedData.length != 1) {
+				this.clearDstStore();
+				return;
+			}
+			var coords = selectedData[0];
 			var dstStore = this.dstTable.getData();
 			if (coords) {
 				for (var i = 0; i < dstStore.length; i++) {
 					var toSRS = dstStore[i].srs;
-	//				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
+					dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
 					CTService.getCoordinates(fromSRS, toSRS, coords, {
 							callback: dojo.lang.hitch(this, this.updateDestinationStore),
-							timeout:5000,
+							timeout:8000,
 							errorHandler:function(message) {
+								dojo.debug(message);
 								// There was an error while accessing the CTS
 								// TODO do something...
 							}
@@ -316,7 +349,7 @@ function initToolbar() {
                             caption:"An QS überweisen"
                           });
 */
-  leftToolbar.addChild("img/ic_submit_inact.gif", "after", {
+  leftToolbar.addChild("img/ic_submit.gif", "after", {
                             onClick:menuEventHandler.handleFinalSave,
 //                          disabled:true,
                             caption:"Abschließendes Speichern"
