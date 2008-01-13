@@ -24,6 +24,7 @@
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.newNodeName":"Neues Datenobjekt",
+    "tree.reload":"Neues Laden",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

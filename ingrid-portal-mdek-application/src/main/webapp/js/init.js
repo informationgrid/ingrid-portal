@@ -136,6 +136,7 @@ function initTree() {
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
   contextMenu2.addItem(message.get('tree.nodeNew'), 'addChild', menuEventHandler.handleNewEntity);
+  contextMenu2.addItem(message.get('tree.reload'), 'reload', menuEventHandler.reloadSubTree);
 
 
 

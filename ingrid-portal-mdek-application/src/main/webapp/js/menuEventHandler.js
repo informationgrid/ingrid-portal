@@ -313,6 +313,25 @@ menuEventHandler.handleDelete = function(msg) {
 	}
 }
 
+// Reloads the tree structure for the selected root node
+// TODO: adapt to reload only the selected root node
+//       at the moment the whole tree is reloaded
+menuEventHandler.reloadSubTree = function(msg) {
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+	dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedNode});
+	if (selectedNode && selectedNode.id == "objectRoot") {
+		selectedNode.destroy();
+		EntryService.getSubTree(null, null, 1, 
+			function (str) {
+				var tree = dojo.widget.byId('tree');
+				tree.setChildren(str);
+			}
+		);
+	}
+}
+
+
 menuEventHandler.handleFinalSave = function() {
 	isObjectPublishable();
 }

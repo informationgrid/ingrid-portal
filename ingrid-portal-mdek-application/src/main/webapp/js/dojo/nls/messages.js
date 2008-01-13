@@ -31,6 +31,7 @@
     "tree.nodePasteNoCutCopyHint":"Please select a node to copy or cut before pasting.",
     "tree.nodePasteInvalidHint":"Please select a valid target to paste.",
     "tree.newNodeName":"New Object",
+    "tree.reload":"Reload",
 
     "spatial.noResultsHint":"No results found.",
     "spatial.loadingHint":"Please wait, loading...",
