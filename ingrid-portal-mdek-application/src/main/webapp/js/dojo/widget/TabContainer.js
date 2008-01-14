@@ -23,6 +23,7 @@ dojo.widget.defineWidget(
 
   destroy: function() {
     dojo.event.topic.unsubscribe(this.widgetId+"-selectChild", this, "onSelectChild");
+    dojo.widget.TabContainer.prototype.destroy.apply(this, arguments);
   },
 
   onSelectChild: function(/*Widget*/ page) {
