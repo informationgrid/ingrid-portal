@@ -292,7 +292,8 @@ udkDataProxy.handleLoadRequest = function(node)
 			{
 				callback:udkDataProxy._setData,
 				timeout:5000,
-				errorHandler:function(message) {dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }
+				errorHandler:function(message) {dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); },
+				exceptionHandler:function(message) {dojo.debug("Exception in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }				
 			}
 		);
 	};

@@ -26,12 +26,10 @@ dojo.addOnLoad(function()
     console.style.visibility = "visible";
   }
   dwr.engine.setPreHook(function() {
-  	dojo.debug("Loading...");
     var console = dojo.byId("loadingZone");
     console.style.visibility = "visible";
   });
   dwr.engine.setPostHook(function() {
-  	dojo.debug("Loading...Finished");
     var console = dojo.byId("loadingZone");
     console.style.visibility = "hidden";
   });
@@ -363,43 +361,43 @@ function initToolbar() {
                           });
   
   var leftToolbar = dojo.widget.byId('leftToolbar');
-  leftToolbar.addChild("img/ic_new.gif", "after", {
+  var newEntityButton = leftToolbar.addChild("img/ic_new.gif", "after", {
                             onClick:menuEventHandler.handleNewEntity,
                             caption:"Neu anlegen"
                           });
-  leftToolbar.addChild("img/ic_preview.gif", "after", {
+  var previewButton = leftToolbar.addChild("img/ic_preview.gif", "after", {
                             onClick:menuEventHandler.handlePreview,
                             caption:"Vorschau und Druckansicht"
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
-  leftToolbar.addChild("img/ic_cut.gif", "after", {
+  var cutButton = leftToolbar.addChild("img/ic_cut.gif", "after", {
                             onClick:menuEventHandler.handleCut,
                             caption:"Objekt/Adresse/Teilbaum ausschneiden"
                           });
-  leftToolbar.addChild("img/ic_copy.gif", "after", {
+  var copyEntityButton = leftToolbar.addChild("img/ic_copy.gif", "after", {
                             onClick:menuEventHandler.handleCopyEntity,
                             caption:"Objekt/Adresse kopieren"
                           });
-  leftToolbar.addChild("img/ic_copy_tree.gif", "after", {
+  var copyTreeButton = leftToolbar.addChild("img/ic_copy_tree.gif", "after", {
                             onClick:menuEventHandler.handleCopyTree,
                             caption:"Teilbaum kopieren"
                           });
-  leftToolbar.addChild("img/ic_paste.gif", "after", {
+  var pasteButton = leftToolbar.addChild("img/ic_paste.gif", "after", {
                             onClick:menuEventHandler.handlePaste,
                             caption:"Einfügen"
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
-  leftToolbar.addChild("img/ic_save.gif", "after", {
+  var saveButton = leftToolbar.addChild("img/ic_save.gif", "after", {
                             onClick:menuEventHandler.handleSave,
                             caption:"Zwischenspeichern"
                           });
-  leftToolbar.addChild("img/ic_undo.gif", "after", {
+  var undoButton = leftToolbar.addChild("img/ic_undo.gif", "after", {
                             onClick:menuEventHandler.handleUndo,
                             caption:"Rückgängig"
                           });
-  leftToolbar.addChild("img/ic_discard.gif", "after", {
+  var discardButton = leftToolbar.addChild("img/ic_discard.gif", "after", {
                             onClick:menuEventHandler.handleDiscard,
                             caption:"Änderungen am aktuellen MD-S verwerfen"
                           });
@@ -411,12 +409,12 @@ function initToolbar() {
                             caption:"An QS überweisen"
                           });
 */
-  leftToolbar.addChild("img/ic_submit.gif", "after", {
+  var finalSaveButton = leftToolbar.addChild("img/ic_submit.gif", "after", {
                             onClick:menuEventHandler.handleFinalSave,
 //                          disabled:true,
                             caption:"Abschließendes Speichern"
                           });
-  leftToolbar.addChild("img/ic_delete.gif", "after", {
+  var deleteButton = leftToolbar.addChild("img/ic_delete.gif", "after", {
                             onClick:menuEventHandler.handleDelete,
                             caption:"Ausgewähltes Objekt bzw. Teilbaum löschen"
 //                            caption:"Als gelöscht markieren"
@@ -434,9 +432,32 @@ function initToolbar() {
                           });
 */
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
-  leftToolbar.addChild("img/ic_comment.gif", "after", {
+  var showCommentButton = leftToolbar.addChild("img/ic_comment.gif", "after", {
                             onClick:menuEventHandler.handleShowComment,
                             caption:"Kommentar ansehen/hinzufügen"
                           });
 
+
+	// Activate/Deactivate buttons depending on the selected node
+	var treeListener = dojo.widget.byId("treeListener");
+    dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
+		var disableList = [];
+		var enableList = [];
+		if (message.node.id == "objectRoot") {
+			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+			enableList = [newEntityButton, pasteButton];
+		} else if (message.node.isFolder) {
+			disableList = [];
+			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
+		} else {
+			disableList = [copyTreeButton];
+			enableList = [previewButton, cutButton, copyEntityButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
+		}
+		dojo.lang.forEach(disableList, function(item) {item.disable()});
+		dojo.lang.forEach(enableList, function(item) {item.enable()});
+    });
+
+	// Initially disable all icons
+	var disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];	
+	dojo.lang.forEach(disableList, function(item) {item.disable()});
 }
