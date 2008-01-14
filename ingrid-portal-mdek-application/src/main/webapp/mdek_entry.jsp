@@ -117,6 +117,7 @@ function hideSplash(){
 </div>
 </div>
 
+<div id="loadingZone" style="position: absolute; top: 0px; left: 0px; width: 5px;z-index: 100; height:5px;background-color:#FF0000;visibility:hidden"></div> 
 
 <div dojoType="LayoutContainer" id="layout" class="layout" layoutChildPriority="top-bottom">
 

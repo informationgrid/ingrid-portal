@@ -25,6 +25,16 @@ dojo.addOnLoad(function()
     var console = dojo.byId("dojoDebugConsole");
     console.style.visibility = "visible";
   }
+  dwr.engine.setPreHook(function() {
+  	dojo.debug("Loading...");
+    var console = dojo.byId("loadingZone");
+    console.style.visibility = "visible";
+  });
+  dwr.engine.setPostHook(function() {
+  	dojo.debug("Loading...Finished");
+    var console = dojo.byId("loadingZone");
+    console.style.visibility = "hidden";
+  });
 
   initToolbar();
   initTree();
