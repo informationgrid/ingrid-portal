@@ -32,9 +32,10 @@ public class SNSService {
 
 	private final static Logger log = Logger.getLogger(SNSService.class);	
 
-	private static String SNS_ROOT_TOPIC = "toplevel"; 
-    private static String THESAURUS_LANGUAGE_FILTER = "de";
-
+	private static final String SNS_ROOT_TOPIC = "toplevel"; 
+    private static final String THESAURUS_LANGUAGE_FILTER = "de";
+    private static final int MAX_NUM_RESULTS = 100;
+    
     // Settings and language specific values
     private ResourceBundle resourceBundle; 
     private SNSController snsController;
@@ -235,10 +236,36 @@ public class SNSService {
 	    return null;
     }
 
+    public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms) {
+    	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
+    }
+
+    public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
+    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	int[] totalSize = new int[] {0};
+	    Topic[] snsResults = new Topic[0];
+    	try {
+    		snsResults = snsController.getSimilarTermsFromTopic(queryTerms, numResults, "mdek", totalSize, THESAURUS_LANGUAGE_FILTER);
+    	} catch (Exception e) {
+	    	log.error(e);
+	    }
+
+	    totalSize[0] = snsResults.length;
+	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
+	    Topic[] topics = (Topic[]) res.getHits();
+
+	    for (Topic topic : topics) {
+	    	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
+	    		resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName()));
+	    	}
+	    }
+	    return resultList;
+    }
+
+    
     public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
     	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-    	int[] totalSize = new int[1];
-	    totalSize[0] = 0;
+    	int[] totalSize = new int[] {0};
 	    Topic[] snsResults = new Topic[0];
 	    try {
 		    // Get the locations for the given queryTerm

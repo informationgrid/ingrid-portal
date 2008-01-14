@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Verschlagwortungsassistent</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	init();
+});
+
+
+function showStatus(msg) {
+	var status = dojo.byId("statusText");
+	if (status) {
+		status.innerHTML = msg;
+	}
+}
+
+
+init = function() {
+	showStatus(message.get("sns.loadingHint"));	
+	// Build the lists from the main mdek app
+	var analyzedFields =
+		["generalDesc", "generalShortDesc", "spatialRefExplanation", "timeRefExplanation",
+		 "extraInfoPurpose", "extraInfoUse", "ref5Explanation", "ref3History", "ref3Explanation",
+		 "ref2Explanation", "ref1BasisText", "ref1DataBasisText", "ref4Explanation"];
+	var termList = [];
+
+	// Load all field contents
+	dojo.lang.forEach(analyzedFields, function(item) {
+			var val = dojo.widget.byId(item).getValue();
+			if (val) {
+				// Split the field content into seperate words
+				val = dojo.string.trim(val);
+				var words = val.split(" ");
+				dojo.lang.forEach(words, function(word) {if (word) this.push(word);}, this);
+			}
+		}, termList);	// Execute in context of termList
+
+	// Start a SNS query for similar terms
+	SNSService.getSimilarTerms(termList, {
+		callback:function(res) {
+			if (res && res.length > 0) {
+				var keywordTable = dojo.widget.byId("keywordsList");
+				udkDataProxy._addTableIndices(res);
+				keywordTable.store.setData(res);
+				showStatus("");
+				dojo.byId("numberOfTerms").innerHTML = message.get("sns.numberOfTerms")+" "+res.length;
+			} else {
+				// Show status that no results were found?
+				showStatus(message.get("sns.noSimilarTermsHint"));
+			}
+		},
+		timeout:10000,
+		errorHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
+	});
+}
+
+
+// 'Add selected topics' Button onClick function.
+//
+// This function moves the selected topics from the selection list (left) to the result list (right)
+addSelected = function() {
+	var keywordTable = dojo.widget.byId("keywordsList"); 
+	var resultTable = dojo.widget.byId("resultList");
+
+	var selectedTopics = keywordTable.getSelectedData();
+	if (selectedTopics) {
+		dojo.lang.forEach(selectedTopics, function(item) {
+			keywordTable.store.removeData(item);
+			resultTable.store.addData(item);
+		});
+	}
+}
+
+
+// 'Add all topics' Button onClick function.
+//
+// This function moves all topics from the selection list (left) to the result list (right)
+addAll = function() {
+	var keywordTable = dojo.widget.byId("keywordsList"); 
+	var resultTable = dojo.widget.byId("resultList");
+
+	var topics = keywordTable.store.getData();
+	if (topics) {
+		dojo.lang.forEach(topics, function(item) {
+			keywordTable.store.removeData(item);
+			resultTable.store.addData(item);
+		});
+	}
+}
+
+
+// 'Remove selected topics' Button onClick function.
+//
+// This function moves the selected topics from the result list (right) to the selection list (left)
+removeSelected = function() {
+	var keywordTable = dojo.widget.byId("keywordsList"); 
+	var resultTable = dojo.widget.byId("resultList");
+
+	var selectedTopics = resultTable.getSelectedData();
+	if (selectedTopics) {
+		dojo.lang.forEach(selectedTopics, function(item) {
+			resultTable.store.removeData(item);
+			keywordTable.store.addData(item);
+		});
+	}
+}
+
+
+// 'Remove all topics' Button onClick function.
+//
+// This function moves all topics from the result list (right) to the selection list (left)
+removeAll = function() {
+	var keywordTable = dojo.widget.byId("keywordsList"); 
+	var resultTable = dojo.widget.byId("resultList");
+
+	var topics = resultTable.store.getData();
+	if (topics) {
+		dojo.lang.forEach(topics, function(item) {
+			resultTable.store.removeData(item);
+			keywordTable.store.addData(item);
+		});
+	}
+}
+
+// Finish Button onClick function.
+//
+// This function copies the descriptor list to the main mdek topic list
+applyChanges = function() {
+	var resultTopics = dojo.widget.byId("resultList").getData();
+	var destStore = dojo.widget.byId("thesaurusTerms").store;
+
+
+	if (resultTopics) {
+		dojo.lang.forEach(resultTopics, function(topic) {
+			if (destStore.getByKey(topic.topicId)) {
+				return;
+			} else {
+				destStore.addData({Id: topic.topicId, title: topic.title}, topic.topicId);
+			}
+		});
+	}
+	_container_.closeWindow();
+}
+
+</script>
+
+</head>
+<body>
+
+<div dojoType="ContentPane">
+
+  <div id="keywords" class="contentBlockWhite top fullBlock">
+    <div id="winNavi">
+      <a href="#" title="Hilfe">[?]</a>
+	  </div>
+	  <div id="keywordsContent" class="content">
+
+      <!-- LEFT HAND SIDE CONTENT START -->
+      <div class="spacer"></div>
+      <div class="spacer"></div>
+      <div class="inputContainer field grey fullField noSpaceBelow">
+
+        <span class="entry first">
+          <span class="label">Vorschlagliste</span>
+    	    <table id="keywordsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable interactive w292 relativePos">
+    	      <thead>
+    		      <tr>
+          			<th field="title" dataType="String">Name</th>
+    		      </tr>
+    	      </thead>
+    	      <tbody>
+    	      </tbody>
+    	    </table>
+        </span>
+
+        <span class="entry">
+          <span class="buttonCol" style="margin:80px -4px 0px;">
+			<button dojoType="Button" onClick="addSelected">></button>
+			<button dojoType="Button" onClick="addAll">>></button>
+			<button dojoType="Button" onClick="removeAll"><<</button>
+			<button dojoType="Button" onClick="removeSelected"><</button>
+<!-- 
+
+          	<a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a>
+            <a href="#" class="buttonGrey" title="Alle Eintrag nach von links nach rechts">>></a>
+            <a href="#" class="buttonGrey" title="Alle Eintrag nach von rechts nach links"><<</a>
+            <a href="#" class="buttonGrey" title="Gewählten Eintrag von rechts nach links"><</a>
+ -->
+          </span>
+        </span>
+
+        <span class="entry">
+          <span class="label">&Uuml;bernehmen</span>
+    	    <table id="resultList" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable interactive w292 relativePos">
+    	      <thead>
+    		      <tr>
+          			<th field="title" dataType="String">Name</th>
+    		      </tr>
+    	      </thead>
+    	      <tbody>
+    	      </tbody>
+    	    </table>
+        </span>
+
+        <div class="fill spacer"></div>
+        <span id="numberOfTerms">Anzahl:</span>
+        <div class="spacerField"></div>
+      </div>
+      
+      <div class="inputContainer noSpaceBelow">
+        <span class="button w644" style="height:20px !important;">
+	        <span style="float:right;"><button dojoType="Button" onClick="applyChanges">&Uuml;bernehmen</button></span>
+			<span id="statusText" style="float:left; padding-top:6px;"></span>
+        </span>
+  	  </div>
+      <!-- LEFT HAND SIDE CONTENT END -->
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

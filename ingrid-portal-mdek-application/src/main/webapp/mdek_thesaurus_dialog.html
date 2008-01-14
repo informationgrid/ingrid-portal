@@ -208,7 +208,7 @@ addSelectedTopic = function() {
 	if (descStore.getByKey(selectedNode.topicId) || selectedNode.type != "DESCRIPTOR")
 		return;
 	else
-		descStore.addData({Id: selectedNode.topicId, name: selectedNode.title}, selectedNode.topicId);
+		descStore.addData({Id: selectedNode.topicId, title: selectedNode.title}, selectedNode.topicId);
 
 };
 
@@ -309,7 +309,7 @@ acceptTopicList = function() {
     	    <table id="thesaurusDescList" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive third relativePos">
     	      <thead>
     		      <tr>
-          			<th field="name" dataType="String" width="255" sort="desc">&nbsp;</th>
+          			<th field="title" dataType="String" width="255" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
     	    </table>

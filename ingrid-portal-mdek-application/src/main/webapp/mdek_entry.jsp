@@ -543,7 +543,13 @@ function hideSplash(){
 	                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	              	<div id="ref1BasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1BasisTab1">
 	              		<div id="ref1BasisTab1" dojoType="ContentPane" label="Text">
-	                    <span class="input"><textarea id="ref1BasisText" name="ref1BasisText" class="w668 h083" /></textarea></span>
+	                    <span class="input">
+	               			<input type="text" mode="textarea" id="ref1BasisText" name="ref1BasisText" class="w668 h083" dojoType="ingrid:ValidationTextbox" /></span> 
+
+<!-- 
+		                    <textarea id="ref1BasisText" name="ref1BasisText" class="w668 h083" /></textarea>
+ -->
+	                    </span>
 	              		</div>
 	              		<div id="ref1BasisTab2" dojoType="ContentPane" label="Verweise">
 	                    <div class="tableContainer rows4">
@@ -573,7 +579,9 @@ function hideSplash(){
 	                <span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_verweis.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	              	<div id="ref1DataBasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1DataBasisTab1">
 	              		<div id="ref1DataBasisTab1" dojoType="ContentPane" label="Text">
-	                    <span class="input"><textarea id="ref1DataBasisText" name="ref1DataBasisText" class="w668 h083" /></textarea></span>
+	                    <span class="input">
+	               			<input type="text" mode="textarea" id="ref1DataBasisText" name="ref1DataBasisText" class="w668 h083" dojoType="ingrid:ValidationTextbox" /></span> 
+	                    </span>
 	              		</div>
 	              		<div id="ref1DataBasisTab2" dojoType="ContentPane" label="Verweise">
 	                    <div class="tableContainer rows4">
@@ -1010,11 +1018,8 @@ function hideSplash(){
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired">
-	                <span class="label"><label for="ref4Explanations" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
-               		<span class="input"><input type="text" mode="textarea" id="ref4Explanations" name="ref4Explanations" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
-<!--
-  	                <span class="input"><textarea id="ref4Explanations" name="ref4Explanations" class="w668 h055" /></textarea></span>
-  -->
+	                <span class="label"><label for="ref4Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref4Explanation" name="ref4Explanation" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	          	  </div>
 
 	            </div>
@@ -1531,13 +1536,13 @@ function hideSplash(){
 	        	  
 	              <div class="inputContainer h088">
 	                <span class="label required important"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'erfassung_modal_verschlagwortungsassistent.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
-	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_modal_thesaurus.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
+	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 	                <div class="tableContainer rows4">
 	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="name" dataType="String">&nbsp;</th>
+	                  			<th field="title" dataType="String">&nbsp;</th>
 	            		      </tr>
 	            	      </thead>
 	            	    </table>
