@@ -57,27 +57,23 @@ menuEventHandler.handlePreview = function(message) {
   dojo.debug('Message parameter: '+message);
 
   var selectedNode;
+  var useDirtyData = false;
   
-  if (message instanceof dojo.widget.TreeMenuItemV3)
-  {
+  if (message instanceof dojo.widget.TreeMenuItemV3)  {
     selectedNode = message.getTreeNode();
-    dojo.debug('Tree Node: '+selectedNode);
-
-    var info = selectedNode.getInfo();
-    dojo.debug("Widget ID: "+info.widgetId);
-    dojo.debug("Object ID: "+info.objectId);
-    dojo.debug("Context Menu: "+info.contextMenu);
-    dojo.debug("App Type: "+info.nodeAppType);
-  }
-  else
-  {
-    var tree = dojo.widget.byId('tree');
+  }  else  {
+  	var tree = dojo.widget.byId('tree');
     selectedNode = tree.selectedNode;
+    useDirtyData = true;
   }
   
-  if (selectedNode)
-    dojo.debug('Selected node: '+selectedNode);
-//  alertNotImplementedYet();
+	// params for the first (really delete object query) dialog.
+	var params = {
+		useDirtyData: useDirtyData,
+		selectedNodeId: selectedNode.id
+	};
+	
+	dialog.showPage("Detail View", "mdek_detail_view_dialog.html", 755, 600, false, params);
 }
 
 menuEventHandler.handleCut = function(mes) {

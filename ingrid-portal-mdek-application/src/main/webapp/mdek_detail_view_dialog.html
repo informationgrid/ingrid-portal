@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	var tree = dojo.widget.byId("tree");
+	if (_container_.customParams.useDirtyData == true) {
+		// get dirty data from proxy
+		dojo.debug("render dirty node.");
+		renderNodeData(udkDataProxy._getData());
+	} else {
+		// Construct an MdekDataBean from the available data
+		var node = dojo.widget.byId(_container_.customParams.selectedNodeId);
+		dojo.debug("mdek_detail_view_dialog.html calling EntryService.getNodeData("+node.id+", "+node.appType+")");
+	
+		EntryService.getNodeData(node.id, node.appType, "false",
+			{
+				callback:function(res) { renderNodeData(res); },
+				timeout:5000,
+				errorHandler:function(message) {dojo.debug("Error in mdek_detail_view_dialog.html: Error while waiting for nodeData: " + message); }
+			}
+		);
+	}
+});
+
+function renderNodeData(nodeData) {
+//	dojo.debugShallow(nodeData);
+	renderTitel(nodeData.title);
+	renderText("UDK Klasse: " + nodeData.objectClass);
+	renderText(nodeData.generalShortDescription);
+	renderText(nodeData.generalDescription);
+	renderLinkedObjectListWithTitle(nodeData.linksFromObjectTable, "&Uuml;bergeordnete Objekte");
+	renderLinkedObjectListWithTitle(nodeData.linksToObjectTable, "Untergeordnete Objekte");
+	renderAddressList(nodeData.generalAddressTable);
+	
+}
+
+function renderTitel(val) {
+	dojo.byId("detailViewContent").innerHTML += "<strong>" + val + "</strong><br/><br/>";
+}
+
+function renderTextWithTitle(val, title) {
+	dojo.byId("detailViewContent").innerHTML += "<strong>" + title + "</strong><p>" + val + "</p>";
+}
+
+function renderLinkedObjectListWithTitle(list, title) {
+	if (list.length > 0) {
+		var t = "<strong>" + title + "</strong><br/><br/><p>";
+		for (var i = 0; i < list.length; ++i) {
+			t += "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\");'"+
+			                    "title='"+list[i].title+"'>"+list[i].title+"</a>" + "<br/>";
+		}
+		dojo.byId("detailViewContent").innerHTML += t+"</p><br/><br/>";
+	}
+}
+
+function renderAddressList(list) {
+	if (list.length > 0) {
+		var t = "";
+		for (var i = 0; i < list.length; ++i) {
+			t += "<strong>" + list[i].nameOfRelation+ "</strong><br/><br/>";
+			t += "<p>";
+			if (list[i].organisation) {
+				t += list[i].organisation + "</br>";
+			}
+			ptr = t.length;
+			if (list[i].nameForm) {
+				t += list[i].nameForm + " ";
+			}
+			if (list[i].titleOrFunction) {
+				t += list[i].titleOrFunction + " ";
+			}
+			if (list[i].givenName) {
+				t += list[i].givenName + " ";
+			}
+			if (list[i].name) {
+				t += list[i].name;
+			}
+			if (ptr < t.length) {
+				t += "<br/>"
+			}
+			if (list[i].street) {
+				t += list[i].street+"<br/>";
+			}
+			if (list[i].city) {
+				t += list[i].city+"<br/>";
+			}
+			if (list[i].pobox) {
+				t += "<br/>"+list[i].pobox+"<br/>";
+			}
+			if (list[i].poboxPostalCode) {
+				t += list[i].poboxPostalCode+"<br/>";
+			}
+			t += "</p><br/>";
+		}
+		dojo.byId("detailViewContent").innerHTML += t + "<br/><br/>";
+	}
+
+}
+
+function renderText(val) {
+	if (val && val.length>0) {
+		dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
+	}
+}
+
+
+</script>
+</head>
+
+<body>
+  <div dojoType="ContentPane">
+    <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
+      <div id="winNavi">
+        <a href="#" title="Hilfe">[?]</a>
+  	  </div>
+  	  <div id="dialogContent" class="content">
+        <!-- MAIN TAB CONTAINER START -->
+        <div class="spacer"></div>
+      	<div id="detailViewContainer" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="detailView">
+          <!-- MAIN TAB 1 START -->
+      		<div id="detailView" dojoType="ContentPane" class="blueTopBorder" label="Detail-Ansicht">
+              <div id="detailViewContent" class="inputContainer field grey"></div>
+      		</div>
+          <!-- MAIN TAB 1 END -->
+      	</div>
+        <!-- MAIN TAB CONTAINER END -->
+      </div>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+</body>
+</html>
