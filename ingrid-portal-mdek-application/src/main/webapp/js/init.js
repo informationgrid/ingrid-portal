@@ -321,18 +321,18 @@ function initFreeTermsButton() {
 		if (term) {
 			SNSService.findTopic(term, {
 				callback:function(topic) {
-					if (topic != null) {
+					if (topic != null && topic.type == "DESCRIPTOR") {
 						// Topic found. Add the result to the topic list
 						var topicStore = dojo.widget.byId("thesaurusTerms").store;
 						if (topicStore.getByKey(topic.topicId)) {
 							// Topic already exists in the topic List
 							return;
 						} else {
-							// Topic doesn't exist. Add it to the topic list
+							// Topic is new. Add it to the topic list
 							topicStore.addData({Id: topic.topicId, title: topic.title}, topic.topicId);
 						}
 					} else {
-						// Topic not found. Add the result to the free term list
+						// Topic not found in the sns. Add the result to the free term list
 						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){item.title != term})) {
 							// If every term in the store != the entered term add it to the list

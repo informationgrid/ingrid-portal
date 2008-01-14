@@ -95,15 +95,12 @@ public class SNSService {
             // TODO The returned root structure is invalid (?)
             if (topicID == SNS_ROOT_TOPIC) {
             	resultList = buildTopicRootStructure(successors);
-            }
-            else {
-            	if (includeRootNode)
-            	{
+            } else {
+            	if (includeRootNode) {
                 	ArrayList<Topic> topNode = new ArrayList<Topic>();
                 	topNode.add(hit);
                 	resultList = buildTopicStructure(topNode);            	            		
-            	}
-            	else {
+            	} else {
             		resultList = buildTopicStructure(successors);
             	}
             }
@@ -116,21 +113,23 @@ public class SNSService {
     	ArrayList<SNSTopic> result = new ArrayList<SNSTopic>(); 
 
     	for (Topic topic : topics) {
-    		SNSTopic resultTopic = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
-    		List<Topic> succ = topic.getSuccessors();
-
-    		if (succ != null && !succ.isEmpty())
-    		{
-        		ArrayList<SNSTopic> children = buildTopicStructure(succ); 
-    			resultTopic.setChildren(children);
-
-    			for (SNSTopic child : children) {
-        			ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
-        			parents.add(resultTopic);
-    				child.setParents(parents);
-    			}
+    		if (topic.getLanguage().equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {	// Only add 'german' terms
+	    		SNSTopic resultTopic = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
+	    		List<Topic> succ = topic.getSuccessors();
+	
+	    		if (succ != null && !succ.isEmpty())
+	    		{
+	        		ArrayList<SNSTopic> children = buildTopicStructure(succ); 
+	    			resultTopic.setChildren(children);
+	
+	    			for (SNSTopic child : children) {
+	        			ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
+	        			parents.add(resultTopic);
+	    				child.setParents(parents);
+	    			}
+	    		}
+	    		result.add(resultTopic);
     		}
-    		result.add(resultTopic);
     	}
     	return result;
     }
@@ -162,6 +161,18 @@ public class SNSService {
 			return Type.TOP_TERM;
     }
     
+    private static Type getTypeFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic t) {
+    	String nodeType = t.getInstanceOf(0).getTopicRef().getHref();
+
+		if (nodeType.indexOf("topTermType") != -1) 
+			return Type.TOP_TERM;
+		else if (nodeType.indexOf("nodeLabelType") != -1) 
+			return Type.NODE_LABEL;
+		else if (nodeType.indexOf("descriptorType") != -1) 
+			return Type.DESCRIPTOR;
+		else
+			return Type.TOP_TERM;
+    }
 /*    
     public ArrayList<SNSTopic> findTopics(String q) {
     	ArrayList<SNSTopic> results = new ArrayList<SNSTopic>();
@@ -230,7 +241,7 @@ public class SNSService {
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
 	        if ((null != topics) && (topics.length == 1)) {
-	            return new SNSTopic(Type.DESCRIPTOR, topics[0].getId(), topics[0].getBaseName(0).getBaseNameString().get_value());
+	            return new SNSTopic(getTypeFromTopic(topics[0]), topics[0].getId(), topics[0].getBaseName(0).getBaseNameString().get_value());
 	        }
 	    }
 	    return null;

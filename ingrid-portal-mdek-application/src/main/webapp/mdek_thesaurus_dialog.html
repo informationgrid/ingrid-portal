@@ -34,6 +34,7 @@ init = function() {
   		deferred.addCallback(function(res) {
   			for (i in res) {
   				res[i].isFolder = (res[i].children.length > 0);
+				res[i].nodeDocType = res[i].type;
   				res[i].children = [];
   			}
   			return _this.loadProcessResponse(node,res);
@@ -72,7 +73,9 @@ SNSService.getRootTopics({
 function handleRootTopics(topicList) {
 	for (i in topicList) {
 		topicList[i].isFolder = true;
+		topicList[i].nodeDocType = topicList[i].type;
 	}
+	
 
 	var tree = dojo.widget.byId('thesTree');
 	// Check if the tree exists. If the user closed the dialog it won't.
@@ -265,20 +268,18 @@ acceptTopicList = function() {
    	  </div>
 
       <div class="inputContainer grey full noSpaceBelow">
-      	<div dojoType="ContentPane" id="thesTreeContainer"  style="height: 200px; width: 100%; overflow: auto;">
+		<div dojoType="ContentPane" id="thesTreeContainer"  style="height: 200px; width: 100%; overflow: auto;">
           <!-- tree components -->
-          <div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
-          <div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
-           <div dojoType="ingrid:TreeDecorator" listener="thesTreeListener"></div>
-<!--		
-<div dojoType="ingrid:TreeDocIcons" widgetId="thesTreeDocIcons"></div>	
- -->          
+			<div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
+			<div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
+			<div dojoType="ingrid:TreeDecorator" listener="thesTreeListener"></div>
+			<div dojoType="ingrid:TreeDocIcons" widgetId="thesTreeDocIcons"></div>	
           
           <!-- tree -->
 <!-- 
 		<div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener;thesTreeDocIcons" widgetId="thesTree">
  -->          
-         <div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener" widgetId="thesTree">
+         <div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener;thesTreeDocIcons" widgetId="thesTree">
           </div>
       	</div>
 
