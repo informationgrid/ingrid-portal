@@ -122,7 +122,7 @@ function hideSplash(){
  -->
  <!-- The loading zone height and width can be set to 100% to block all inputs while loading. We may want to do this in the release version. -->
 <div id="loadingZone" style="position: absolute; top: 0px; left: 0px; z-index: 100; visibility:hidden">
-	<img id="imageZone" src="img/ladekreis.gif" style="position: absolute; top: 0px; left: 0px" />
+	<img id="imageZone" src="img/ladekreis.gif" style="background-color:#FFFFFF;position: absolute; top: 0px; left: 17px; padding-right:1px" />
 </div> 
 
 
