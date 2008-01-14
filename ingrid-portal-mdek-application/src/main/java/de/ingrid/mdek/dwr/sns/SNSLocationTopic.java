@@ -6,6 +6,8 @@ public class SNSLocationTopic {
 	public String type; 
 	public String name;
 	public String qualifier;
+	public String nativeKey;
+	
 	// The coordinates are stored as:
 	// 		lower left corner longitude, lower left corner latitude, 
 	// 		upper right corner longitude, upper right corner latitude 
@@ -58,6 +60,12 @@ public class SNSLocationTopic {
 		result += ", WGS84Box: "+this.boundingBox[0]+","+this.boundingBox[1]+" "+this.boundingBox[2]+","+this.boundingBox[3];
 		result += "]";
 		return result;
+	}
+	public String getNativeKey() {
+		return nativeKey;
+	}
+	public void setNativeKey(String nativeKey) {
+		this.nativeKey = nativeKey;
 	}
 
 }

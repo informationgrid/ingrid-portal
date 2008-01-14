@@ -341,10 +341,17 @@ public class SNSService {
         		if (ar.length == 4) {
         			result.setBoundingBox(new Float(ar[0]), new Float(ar[1]), new Float(ar[2]), new Float(ar[3]));
         		}
-    		}
-    		if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("qualifier")) {
+    		} else if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("qualifier")) {
 //    			log.debug("Qualifier: "+topic.getOccurrence(i).getResourceData().get_value());        	            			
         		result.setQualifier(topic.getOccurrence(i).getResourceData().get_value());
+    		} else if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("nativeKeyOcc")) {
+    			String nativeKeyOcc = topic.getOccurrence(i).getResourceData().get_value();
+    			String[] keys = nativeKeyOcc.split(" ");
+    			for (String nativeKey : keys) {
+    				if (nativeKey.startsWith("ags:")) {
+    					result.setNativeKey(nativeKey.substring(4));
+    				}
+    			}
     		}
     	}
     	if (result.getQualifier() == null)

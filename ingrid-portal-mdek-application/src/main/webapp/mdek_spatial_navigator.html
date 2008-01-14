@@ -92,7 +92,7 @@ findLocationTopics = function() {
 	resetResultDiv();
 	deleteComboboxWidgets();
 	showLoading();
-	
+
 	SNSService.getLocationTopics(queryTerm, {
 		callback:setResultList,
 		timeout:0,
@@ -118,7 +118,8 @@ addLocationTopics = function() {
 						longitude1: topic.boundingBox[0],
 						latitude1: topic.boundingBox[1],
 						longitude2: topic.boundingBox[2],
-						latitude2: topic.boundingBox[3]},
+						latitude2: topic.boundingBox[3],
+						nativeKey: topic.nativeKey},
 					checkboxArray[i].id);
 			}
 		}
