@@ -319,6 +319,7 @@ menuEventHandler.handleDelete = function(msg) {
 menuEventHandler.reloadSubTree = function(msg) {
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
+	var treeListener = dojo.widget.byId("treeListener");
 	dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedNode});
 	if (selectedNode && selectedNode.id == "objectRoot") {
 		selectedNode.destroy();
