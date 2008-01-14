@@ -1574,14 +1574,22 @@ function hideSplash(){
 	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="freeTerms" dataType="String">Freie Suchbegriffe</th>
+	                    			<th field="title" dataType="String">Freie Suchbegriffe</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
 	              	      </tbody>
 	              	    </table>
 	              	  </div>
-	                  <span class="input" style="position:relative; top:-8px"><input type="text" id="thesaurusFreeTerms" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a></span>
+	                  <span class="input" style="position:relative; top:-8px">
+	                  	<input type="text" id="thesaurusFreeTerms" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
+	        			<span style="float:right;">
+	        				<button id="thesaurusFreeTermsAddButton" dojoType="Button">Hinzuf&uuml;gen</button>
+	        			</span>
+<!-- 
+	                  	<a href="#" class="buttonGrey" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a>
+ -->
+	                  </span>
 	            	  </div>
 	                <div class="fill"></div>
 	              </div>

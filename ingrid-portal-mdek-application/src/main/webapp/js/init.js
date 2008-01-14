@@ -30,6 +30,7 @@ dojo.addOnLoad(function()
   initTree();
   initForm();
   initCTS();
+  initFreeTermsButton();
   hideSplash();
 
 });
@@ -287,6 +288,56 @@ function initCTS() {
 	});
 }
 
+
+function initFreeTermsButton() {
+	var button = dojo.widget.byId("thesaurusFreeTermsAddButton");
+	
+// Helper function that iterates over all entries in a store and returns a key that is not in use yet
+// We need this function to add terms to the free Terms list
+// TODO Move to a helper class if we need it more often
+	var getNewKey = function(store) {
+		var key = 0;
+		var data = store.get();
+		for(var i=0; i < data.length; i++){
+			if(data[i].key >= key){
+				key = data[i].key + 1;
+			}
+		}
+		return key;
+	}
+
+
+	button.onClick = function() {
+		var term = dojo.widget.byId("thesaurusFreeTerms").getValue();
+		term = dojo.string.trim(term);
+		if (term) {
+			SNSService.findTopic(term, {
+				callback:function(topic) {
+					if (topic != null) {
+						// Topic found. Add the result to the topic list
+						var topicStore = dojo.widget.byId("thesaurusTerms").store;
+						if (topicStore.getByKey(topic.topicId)) {
+							// Topic already exists in the topic List
+							return;
+						} else {
+							// Topic doesn't exist. Add it to the topic list
+							topicStore.addData({Id: topic.topicId, title: topic.title}, topic.topicId);
+						}
+					} else {
+						// Topic not found. Add the result to the free term list
+						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
+						if (dojo.lang.every(freeTermsStore.getData(), function(item){item.title != term})) {
+							// If every term in the store != the entered term add it to the list
+							var identifier = getNewKey(freeTermsStore);
+							freeTermsStore.addData({Id: identifier, title: term}, identifier);
+						}
+					}},
+				timeout:8000,
+				errorHandler:function(msg) {dojo.debug("Error while executing SNSService.findTopic");}
+			});
+		}
+	}
+}
 
 function initToolbar() {
   // create toolbar buttons with tooltips
