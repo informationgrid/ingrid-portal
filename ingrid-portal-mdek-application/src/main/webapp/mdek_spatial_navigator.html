@@ -111,7 +111,6 @@ addLocationTopics = function() {
 			var topic = checkboxArray[i].topic;
 			var storedTopic = store.getDataByKey(topic.id);
 			if (storedTopic) {
-				dojo.debugShallow(store.getDataByKey(topic.id));
 				// Element is already in the table. Update the topic.
 				// Update elements that are displayed in the table
 				store.update(storedTopic, "name", topic.name+", "+topic.type);
@@ -122,7 +121,6 @@ addLocationTopics = function() {
 				// Update elements that aren't displayed in the table
 				storedTopic.topicId = topic.id;
 				storedTopic.nativeKey = topic.nativeKey;
-				dojo.debugShallow(store.getDataByKey(topic.id));
 			} else {
 				store.addData({
 						topicId: topic.id,

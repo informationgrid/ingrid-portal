@@ -25,22 +25,80 @@ dojo.require("ingrid.widget.TableContextMenu");
 
 dojo.addOnLoad(function()
 {
+	var sourceStore = dojo.widget.byId("testTableMaster").store;
+	var destStore = dojo.widget.byId("testTableSlave").store;
+	dojo.event.connectOnce(sourceStore, "onAddData", destStore, "addData");
+	dojo.event.connectOnce(sourceStore, "onClearData", destStore, "clearData");
+	dojo.event.connectOnce(sourceStore, "onAddDataRange", destStore, "addDataRange");
+	dojo.event.connectOnce(sourceStore, "onUpdateField", destStore, "updateField");
+
+
+	dojo.event.kwConnect({
+		adviceType: "after",
+		srcObj: sourceStore,
+		srcFunc: "onSetData",
+		adviceObj: destStore,
+		adviceFunc: function() {
+			var data = dojo.widget.byId("testTableMaster").store.getData();
+			for (i in data) {
+				var item = this.getDataByKey(data[i].Id);
+				if (!item) {
+					this.addData(data[i]);
+				}
+			}
+		}, 
+		once: true,
+		delay: 1
+	});
+
+
+	dojo.event.kwConnect({
+		adviceType: "after",
+		srcObj: sourceStore,
+		srcFunc: "onRemoveData",
+		adviceObj: destStore,
+		adviceFunc: function(obj) {
+			var o = this.getDataByKey(obj.key);
+			if (o) {
+				dojo.debug("object exists in destStore. Removing...");
+				this.removeData(o);
+			}
+		}, 
+		once: true,
+		delay: 1
+	});
+
+	dojo.event.kwConnect({
+		adviceType: "after",
+		srcObj: destStore,
+		srcFunc: "onRemoveData",
+		adviceObj: sourceStore,
+		adviceFunc: function(obj) {
+			var o = this.getDataByKey(obj.key);
+			if (o) {
+				dojo.debug("object exists in sourceStore. Removing...");
+				this.removeData(o);
+			}
+		}, 
+		once: true,
+		delay: 1
+	});
 });
 
 function setValue() {
-	var table = dojo.widget.byId("testTable");
-	var store = dojo.widget.byId("testTable").store;
+	var table = dojo.widget.byId("testTableMaster");
+	var store = dojo.widget.byId("testTableMaster").store;
 	store.setData([{Id: 0, identifier: "ident 1", name: "Test Entry 1", hiddenValue: "show"},
 				   {Id: 1, identifier: "ident 2", name: "Test Entry 2", hiddenValue: "show"},
 				   {Id: 2, identifier: "ident 3", name: "Test Entry 3", hiddenValue: "hide"},
-				   {Id: 3, identifier: "ident 4", name: "Test Entry 4"}]);
+				   {Id: 3, identifier: "ident 4", name: "Test Entry 4", hiddenValue: "show"}]);
 
 	table.applyFilters();	
 	table.render();
 };
 
 function setFirstFilterFunc() {
-	var table = dojo.widget.byId("testTable");
+	var table = dojo.widget.byId("testTableMaster");
 	var filterFunc = function(value) {
 		if (value == "Test Entry 2")
 			return false;
@@ -53,7 +111,7 @@ function setFirstFilterFunc() {
 };
 
 function setSecondFilterFunc() {
-	var table = dojo.widget.byId("testTable");
+	var table = dojo.widget.byId("testTableMaster");
 	var filterFunc = function(value) {
 		if (value == "hide")
 			return false;
@@ -66,17 +124,17 @@ function setSecondFilterFunc() {
 };
 
 function clearFirstFilterFunc() {
-	var table = dojo.widget.byId("testTable");
+	var table = dojo.widget.byId("testTableMaster");
 	table.clearFilter("name");
 }
 
 function clearSecondFilterFunc() {
-	var table = dojo.widget.byId("testTable");
+	var table = dojo.widget.byId("testTableMaster");
 	table.clearFilter("hiddenValue");
 }
 
 function clearFiltersFunc() {
-	var table = dojo.widget.byId("testTable");
+	var table = dojo.widget.byId("testTableMaster");
 	table.clearFilters();
 };
 </script>
@@ -85,7 +143,17 @@ function clearFiltersFunc() {
 <body>
 <!-- Filtering Table Widget -->
 <div class="inputContainer">
-<table id="testTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive thirdInside2">
+<table id="testTableMaster" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive thirdInside2">
+	<thead>
+		<tr>
+			<th field="identifier" dataType="String" width="120">Identifier</th>
+ 			<th field="name" dataType="String" width="200">Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<table id="testTableSlave" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive thirdInside2">
 	<thead>
 		<tr>
 			<th field="identifier" dataType="String" width="120">Identifier</th>

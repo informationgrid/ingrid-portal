@@ -8,7 +8,7 @@ public class MdekAddressBean {
 	public String uuid;
 	public String information;
 
-	public String icon;
+	public Integer addressClass;
 	public String name;
 	public String organisation;
 	public String givenName;
@@ -31,12 +31,6 @@ public class MdekAddressBean {
 	}
 	public void setInformation(String information) {
 		this.information = information;
-	}
-	public String getIcon() {
-		return icon;
-	}
-	public void setIcon(String icon) {
-		this.icon = icon;
 	}
 	public String getName() {
 		return name;
@@ -133,5 +127,11 @@ public class MdekAddressBean {
 	}
 	public void setNameOfRelation(String nameOfRelation) {
 		this.nameOfRelation = nameOfRelation;
+	}
+	public Integer getAddressClass() {
+		return addressClass;
+	}
+	public void setAddressClass(Integer addressClass) {
+		this.addressClass = addressClass;
 	}
 }

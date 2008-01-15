@@ -261,28 +261,31 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 	private static ArrayList<IngridDocument> mapFromLocationTables(ArrayList<Location> locationSNS, ArrayList<Location> locationFree) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
-		
-		for (Location loc : locationFree) {
-			IngridDocument res = new IngridDocument();
-			res.put(MdekKeys.LOCATION_TYPE, "F");
-			res.put(MdekKeys.LOCATION_NAME, loc.getName());
-			res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
-			res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
-			res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
-			res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
-			resultList.add(res);
+		if (locationFree != null) {
+			for (Location loc : locationFree) {
+				IngridDocument res = new IngridDocument();
+				res.put(MdekKeys.LOCATION_TYPE, "F");
+				res.put(MdekKeys.LOCATION_NAME, loc.getName());
+				res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
+				res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
+				res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
+				res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
+				resultList.add(res);
+			}
 		}
-		for (Location loc : locationSNS) {
-			IngridDocument res = new IngridDocument();
-			res.put(MdekKeys.LOCATION_TYPE, "G");
-			res.put(MdekKeys.LOCATION_NAME, loc.getName());
-			res.put(MdekKeys.LOCATION_CODE, loc.getNativeKey());
-			res.put(MdekKeys.LOCATION_SNS_ID, loc.getTopicId());
-			res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
-			res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
-			res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
-			res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
-			resultList.add(res);
+		if (locationSNS != null) {
+			for (Location loc : locationSNS) {
+				IngridDocument res = new IngridDocument();
+				res.put(MdekKeys.LOCATION_TYPE, "G");
+				res.put(MdekKeys.LOCATION_NAME, loc.getName());
+				res.put(MdekKeys.LOCATION_CODE, loc.getNativeKey());
+				res.put(MdekKeys.LOCATION_SNS_ID, loc.getTopicId());
+				res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
+				res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
+				res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
+				res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
+				resultList.add(res);
+			}
 		}
 		return resultList;
 	}
@@ -302,7 +305,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 			address.setUuid((String) tableRow.get(MdekKeys.UUID));
 			address.setInformation((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
-			address.setIcon(((Integer) tableRow.get(MdekKeys.CLASS)).toString());
+			address.setAddressClass((Integer) tableRow.get(MdekKeys.CLASS));
 			address.setGivenName((String) tableRow.get(MdekKeys.GIVEN_NAME));
 			address.setStreet((String) tableRow.get(MdekKeys.STREET));
 			address.setCountryCode((String) tableRow.get(MdekKeys.POSTAL_CODE_OF_COUNTRY));

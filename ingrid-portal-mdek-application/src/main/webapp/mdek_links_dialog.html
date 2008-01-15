@@ -58,19 +58,38 @@ init = function() {
 	dojo.event.connectOnce("after", objectList, "onSelect", function() {
 		// Update the displayed data
 		curSelectedObject = objectList.getSelectedData();
-		dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
-		dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
-		dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
-		dojo.widget.byId("linksToDescription").setValue(curSelectedObject.relationDescription);
-	
-		// Update the 'save' button text
-		dojo.widget.byId("saveButton").setCaption("Speichern");
+		if (curSelectedObject) {
+			dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
+			dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
+			dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
+			dojo.widget.byId("linksToDescription").setValue(curSelectedObject.relationDescription);
+		
+			// Update the 'save' button text
+			dojo.widget.byId("saveButton").setCaption("Speichern");
+		}
 	});
 
 	// Populate the object links list
 	var srcStore = dojo.widget.byId("linksTo").store;
 	var destStore = objectList.store;
 	destStore.setData(srcStore.getData());
+
+	// Check if a filter was passes as an argument
+	if (_container_.customParams.filter) {	
+		// Filter the list according to the filter arg
+		objectList.setFilter("relationTypeName", function(relationType) {
+			return (relationType == _container_.customParams.filter);
+		});
+	
+		objectList.applyFilters();	
+		objectList.render();
+	
+		// Disable the type input and set it to the filter
+		var linkTypeInput = dojo.widget.byId("linksFromFieldName");
+		linkTypeInput.setValue(_container_.customParams.filter);
+		linkTypeInput.disable();
+
+	}
 };
 
 saveLink = function() {
@@ -134,7 +153,9 @@ newLink = function() {
 
 	// Reset field values
 	curSelectedObject = {};
-	dojo.widget.byId("linksFromFieldName").setValue("");
+	if (!dojo.widget.byId("linksFromFieldName").disabled) {
+		dojo.widget.byId("linksFromFieldName").setValue("");
+	}
 	dojo.widget.byId("linksToObjectName").setValue("");
 	dojo.widget.byId("linksToObjectClass").setValue("");
 	dojo.widget.byId("linksToDescription").setValue("");	
