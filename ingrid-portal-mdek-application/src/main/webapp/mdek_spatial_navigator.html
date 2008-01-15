@@ -108,12 +108,24 @@ addLocationTopics = function() {
 	// Iterate over all the checkboxes and add the checked values
 	for (var i = 0; i < checkboxArray.length; ++i) {
 		if (checkboxArray[i].checked) {
-		var topic = checkboxArray[i].topic;
-			if (store.getByKey(topic.id)) {
-				// Element is already in the table. Do nothing.
+			var topic = checkboxArray[i].topic;
+			var storedTopic = store.getDataByKey(topic.id);
+			if (storedTopic) {
+				dojo.debugShallow(store.getDataByKey(topic.id));
+				// Element is already in the table. Update the topic.
+				// Update elements that are displayed in the table
+				store.update(storedTopic, "name", topic.name+", "+topic.type);
+				store.update(storedTopic, "longitude1", topic.boundingBox[0]);
+				store.update(storedTopic, "latitude1", topic.boundingBox[1]);
+				store.update(storedTopic, "longitude2", topic.boundingBox[2]);
+				store.update(storedTopic, "latitude2", topic.boundingBox[3]);
+				// Update elements that aren't displayed in the table
+				storedTopic.topicId = topic.id;
+				storedTopic.nativeKey = topic.nativeKey;
+				dojo.debugShallow(store.getDataByKey(topic.id));
 			} else {
 				store.addData({
-						Id: topic.id,
+						topicId: topic.id,
 						name: topic.name+", "+topic.type,
 						longitude1: topic.boundingBox[0],
 						latitude1: topic.boundingBox[1],

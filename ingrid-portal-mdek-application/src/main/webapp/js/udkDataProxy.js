@@ -542,10 +542,10 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("generalAddress").store.setData(udkDataProxy._addTableIndices(nodeData.generalAddressTable));
 
   // -- Spatial --
-//  dojo.widget.byId("spatialRefAdminUnit").store.setData(nodeData.spatialRefAdminUnitTable);
-//  dojo.widget.byId("spatialRefCoordsAdminUnit").store.setData(nodeData.spatialRefCoordsAdminUnitTable);
-//  dojo.widget.byId("spatialRefLocation").store.setData(nodeData.spatialRefLocationTable);
-//  dojo.widget.byId("spatialRefCoordsLocation").store.setData(nodeData.spatialRefCoordsLocationTable);
+  // The table containing entries from the sns is indexed by their topicID
+  dojo.widget.byId("spatialRefAdminUnit").store.setData(nodeData.spatialRefAdminUnitTable);
+  // The table containing free entries needs generated indices
+  dojo.widget.byId("spatialRefLocation").store.setData(udkDataProxy._addTableIndices(nodeData.spatialRefLocationTable));
 
   dojo.widget.byId("spatialRefAltMin").setValue(nodeData.spatialRefAltMin);
   dojo.widget.byId("spatialRefAltMax").setValue(nodeData.spatialRefAltMax);
@@ -755,6 +755,9 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.generalAddressTable = udkDataProxy._getTableData("generalAddress");
 
   // -- Spatial --
+  nodeData.spatialRefAdminUnitTable = udkDataProxy._getTableData("spatialRefAdminUnit");
+  nodeData.spatialRefLocationTable = udkDataProxy._getTableData("spatialRefLocation");
+
   nodeData.spatialRefAltMin = dojo.widget.byId("spatialRefAltMin").getValue();
   nodeData.spatialRefAltMax = dojo.widget.byId("spatialRefAltMax").getValue();
   nodeData.spatialRefAltMeasure = dojo.widget.byId("spatialRefAltMeasure").getValue();

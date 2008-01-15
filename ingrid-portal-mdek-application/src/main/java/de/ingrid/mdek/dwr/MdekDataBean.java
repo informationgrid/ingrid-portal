@@ -33,10 +33,8 @@ public class MdekDataBean {
 	public ArrayList<MdekAddressBean> generalAddressTable;
 
 	// Spatial
-	public ArrayList<HashMap<String, String>> spatialRefAdminUnitTable;
-	public ArrayList<HashMap<String, String>> spatialRefCoordsAdminUnitTable;
-	public ArrayList<HashMap<String, String>> spatialRefLocationTable;
-	public ArrayList<HashMap<String, String>> spatialRefCoordsLocationTable;
+	public ArrayList<Location> spatialRefAdminUnitTable;
+	public ArrayList<Location> spatialRefLocationTable;
 	public Double spatialRefAltMin;
 	public Double spatialRefAltMax;
 	public Integer spatialRefAltMeasure;
@@ -346,54 +344,28 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<HashMap<String, String>> getSpatialRefAdminUnitTable() {
+	public ArrayList<Location> getSpatialRefAdminUnitTable() {
 		return spatialRefAdminUnitTable;
 	}
 
 
 
 	public void setSpatialRefAdminUnitTable(
-			ArrayList<HashMap<String, String>> spatialRefAdminUnitTable) {
+			ArrayList<Location> spatialRefAdminUnitTable) {
 		this.spatialRefAdminUnitTable = spatialRefAdminUnitTable;
 	}
 
 
 
-	public ArrayList<HashMap<String, String>> getSpatialRefCoordsAdminUnitTable() {
-		return spatialRefCoordsAdminUnitTable;
-	}
-
-
-
-	public void setSpatialRefCoordsAdminUnitTable(
-			ArrayList<HashMap<String, String>> spatialRefCoordsAdminUnitTable) {
-		this.spatialRefCoordsAdminUnitTable = spatialRefCoordsAdminUnitTable;
-	}
-
-
-
-	public ArrayList<HashMap<String, String>> getSpatialRefLocationTable() {
+	public ArrayList<Location> getSpatialRefLocationTable() {
 		return spatialRefLocationTable;
 	}
 
 
 
 	public void setSpatialRefLocationTable(
-			ArrayList<HashMap<String, String>> spatialRefLocationTable) {
+			ArrayList<Location> spatialRefLocationTable) {
 		this.spatialRefLocationTable = spatialRefLocationTable;
-	}
-
-
-
-	public ArrayList<HashMap<String, String>> getSpatialRefCoordsLocationTable() {
-		return spatialRefCoordsLocationTable;
-	}
-
-
-
-	public void setSpatialRefCoordsLocationTable(
-			ArrayList<HashMap<String, String>> spatialRefCoordsLocationTable) {
-		this.spatialRefCoordsLocationTable = spatialRefCoordsLocationTable;
 	}
 
 

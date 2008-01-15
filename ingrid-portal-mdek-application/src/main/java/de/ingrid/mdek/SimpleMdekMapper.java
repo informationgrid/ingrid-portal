@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.dwr.Location;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
@@ -70,10 +71,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 
 		// Spatial
-//		mdekObj.setSpatialRefAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setSpatialRefCoordsAdminUnitTable((ArrayList<HashMap<String, String>>) mapToSpatialRefCoordsAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setSpatialRefLocationTable((ArrayList<HashMap<String, String>>) mapToSpatialRefLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setSpatialRefCoordsLocationTable((ArrayList<HashMap<String, String>>) mapToSpatialRefCoordsLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+		mdekObj.setSpatialRefAdminUnitTable(mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));
+		mdekObj.setSpatialRefLocationTable(mapToSpatialRefLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));
 		mdekObj.setSpatialRefAltMin((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MINIMUM));
 		mdekObj.setSpatialRefAltMax((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MAXIMUM));
 		mdekObj.setSpatialRefAltMeasure((Integer) obj.get(MdekKeys.VERTICAL_EXTENT_UNIT));
@@ -180,6 +179,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.ADR_REFERENCES_TO, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 
 		// Spatial
+		udkObj.put(MdekKeys.LOCATIONS, mapFromLocationTables(data.getSpatialRefAdminUnitTable(), data.getSpatialRefLocationTable()));
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_MINIMUM, data.getSpatialRefAltMin());
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_MAXIMUM, data.getSpatialRefAltMax());
 		udkObj.put(MdekKeys.VERTICAL_EXTENT_UNIT, data.getSpatialRefAltMeasure());
@@ -258,7 +258,34 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		return resultList;
 	}
+
+	private static ArrayList<IngridDocument> mapFromLocationTables(ArrayList<Location> locationSNS, ArrayList<Location> locationFree) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		
+		for (Location loc : locationFree) {
+			IngridDocument res = new IngridDocument();
+			res.put(MdekKeys.LOCATION_TYPE, "F");
+			res.put(MdekKeys.LOCATION_NAME, loc.getName());
+			res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
+			res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
+			res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
+			res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
+			resultList.add(res);
+		}
+		for (Location loc : locationSNS) {
+			IngridDocument res = new IngridDocument();
+			res.put(MdekKeys.LOCATION_TYPE, "G");
+			res.put(MdekKeys.LOCATION_NAME, loc.getName());
+			res.put(MdekKeys.LOCATION_CODE, loc.getNativeKey());
+			res.put(MdekKeys.LOCATION_SNS_ID, loc.getTopicId());
+			res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
+			res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
+			res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
+			res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
+			resultList.add(res);
+		}
+		return resultList;
+	}
 	
 	
 	/****************************************************************************
@@ -330,6 +357,43 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
+	private static ArrayList<Location> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
+		ArrayList<Location> resultList = new ArrayList<Location>();
+		for (HashMap<String, Object> location : locList) {
+			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
+			if (locationType.equals("G")) {
+				Location loc = new Location(); 
+				loc.setType((String) location.get(MdekKeys.LOCATION_TYPE));
+				loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
+				loc.setNativeKey((String) location.get(MdekKeys.LOCATION_CODE));
+				loc.setTopicId((String) location.get(MdekKeys.LOCATION_SNS_ID));
+				loc.setLongitude1((Double) location.get(MdekKeys.WEST_BOUNDING_COORDINATE));
+				loc.setLatitude1((Double) location.get(MdekKeys.SOUTH_BOUNDING_COORDINATE));
+				loc.setLongitude2((Double) location.get(MdekKeys.EAST_BOUNDING_COORDINATE));
+				loc.setLatitude2((Double) location.get(MdekKeys.NORTH_BOUNDING_COORDINATE));
+				resultList.add(loc);
+			}
+		}
+		return resultList;
+	}
+	
+	private static ArrayList<Location> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
+		ArrayList<Location> resultList = new ArrayList<Location>();
+		for (HashMap<String, Object> location : locList) {
+			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
+			if (locationType.equals("F")) {
+				Location loc = new Location(); 
+				loc.setType((String) location.get(MdekKeys.LOCATION_TYPE));
+				loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
+				loc.setLongitude1((Double) location.get(MdekKeys.WEST_BOUNDING_COORDINATE));
+				loc.setLatitude1((Double) location.get(MdekKeys.SOUTH_BOUNDING_COORDINATE));
+				loc.setLongitude2((Double) location.get(MdekKeys.EAST_BOUNDING_COORDINATE));
+				loc.setLatitude2((Double) location.get(MdekKeys.NORTH_BOUNDING_COORDINATE));
+				resultList.add(loc);
+			}
+		}
+		return resultList;
+	}	
 	/***********************************************************
 	 * Several Methods for testing Input and Output Conformity *
 	 ***********************************************************/

@@ -1122,7 +1122,7 @@ function hideSplash(){
 	                <span class="label required">Geothesaurus-Raumbezug*</span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
 	                <div class="tableContainer rows5">
-	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="spatialRefAdminUnit" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="315">Geothesaurus-Raumbezug</th>

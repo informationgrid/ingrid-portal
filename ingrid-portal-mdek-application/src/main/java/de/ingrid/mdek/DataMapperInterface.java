@@ -116,9 +116,8 @@ public interface DataMapperInterface {
 
 	// Spatial
 	public final static String MDEK_SPATIAL_ADMIN = "spatialRefAdminUnit";
-	public final static String MDEK_SPATIAL_ADMIN_COORDS = "spatialRefCoordsAdminUnit";
 	public final static String MDEK_SPATIAL_LOC = "spatialRefLocation";
-	public final static String MDEK_SPATIAL_LOC_COORDS = "spatialRefCoordsLocation";
+	
 	public final static String MDEK_SPATIAL_ALT_MIN = "spatialRefAltMin";
 	public final static String MDEK_SPATIAL_ALT_MAX = "spatialRefAltMax";
 	public final static String MDEK_SPATIAL_ALT_MEASURE = "spatialRefAltMeasure";

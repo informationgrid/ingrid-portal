@@ -33,6 +33,7 @@ public class SNSService {
 	private final static Logger log = Logger.getLogger(SNSService.class);	
 
 	private static final String SNS_ROOT_TOPIC = "toplevel"; 
+	private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
     private static final String THESAURUS_LANGUAGE_FILTER = "de";
     private static final int MAX_NUM_RESULTS = 100;
     
@@ -50,7 +51,7 @@ public class SNSService {
     			resourceBundle.getString("sns.password"),
     			resourceBundle.getString("sns.language"),
         		new URL(resourceBundle.getString("sns.serviceURL")));
-        snsController = new SNSController(snsClient, "ags:");
+        snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
     }
 	
     public ArrayList<SNSTopic> getRootTopics() {
@@ -359,8 +360,8 @@ public class SNSService {
     			String nativeKeyOcc = topic.getOccurrence(i).getResourceData().get_value();
     			String[] keys = nativeKeyOcc.split(" ");
     			for (String nativeKey : keys) {
-    				if (nativeKey.startsWith("ags:")) {
-    					result.setNativeKey(nativeKey.substring(4));
+    				if (nativeKey.startsWith(SNS_NATIVE_KEY_PREFIX)) {
+    					result.setNativeKey(nativeKey.substring(SNS_NATIVE_KEY_PREFIX.length()));
     				}
     			}
     		}
