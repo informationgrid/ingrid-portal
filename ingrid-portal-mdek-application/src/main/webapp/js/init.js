@@ -39,6 +39,7 @@ dojo.addOnLoad(function()
   initForm();
   initCTS();
   initFreeTermsButton();
+  initSpatialFreeReferencesComboBox();
   initReferenceTables();
   hideSplash();
 
@@ -425,6 +426,14 @@ function initReferenceTables() {
 	onUpdateField:function(obj, field, val){ }
 */	
 }
+
+function initSpatialFreeReferencesComboBox() {
+	var comboBox = dojo.widget.byId("freeReferencesEditor");
+/*
+	TODO use code from test_comboBox.jsp here...
+*/
+}
+
 
 function initToolbar() {
   // create toolbar buttons with tooltips

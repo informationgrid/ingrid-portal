@@ -1170,7 +1170,7 @@ function hideSplash(){
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a></span>
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
-	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/spatialLocation.js" style="width:300px;" widgetId="informationEditor"></div>
+	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/spatialLocation.js" style="width:300px;" widgetId="freeReferencesEditor"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude1Editor"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude1Editor"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude2Editor"></div>
@@ -1179,7 +1179,7 @@ function hideSplash(){
 	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="name" dataType="String" width="315" editor="informationEditor">Freier Raumbezug</th>
+	                  			<th field="name" dataType="String" width="315" editor="freeReferencesEditor">Freier Raumbezug</th>
 	                  			<th field="longitude1" dataType="String" width="90" editor="longitude1Editor">L&auml;nge 1</th>
 	                  			<th field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
 	                  			<th field="longitude2" dataType="String" width="90" editor="longitude2Editor">L&auml;nge 2</th>

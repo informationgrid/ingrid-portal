@@ -6,6 +6,7 @@ package de.ingrid.mdek.dwr.api;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.ingrid.mdek.dwr.MdekDataBean;
 
@@ -194,4 +195,5 @@ public interface EntryService {
 	public boolean canCutObject(String parentUuid);
 	// TODO add return type when the method is implemented in MdekCaller
 	public boolean canCopyObject(String parentUuid);
+	public Map<String, List<String>> getUiListValues();
 }

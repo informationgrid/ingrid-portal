@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
@@ -136,6 +137,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return null;
 	}
 
+	public Map<String, List<String>> getUiListValues() {
+		IngridDocument response = mdekCaller.getUiListValues();
+		return extractUIListFromResponse(response);
+	}
+	
+	
 	// ------------------------ Helper Methods ---------------------------------------	
 
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response)
@@ -240,4 +247,15 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		doc.put(MdekKeys.OBJ_ENTITIES, list);
 		return doc;
 	}
+
+
+	public Map<String, List<String>> extractUIListFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+		Map resultMap = new HashMap<String, List<String>>();
+
+		// TODO Create own keys
+		resultMap.put(MdekKeys.UI_FREE_SPATIAL_REFERENCES, result.get(MdekKeys.UI_FREE_SPATIAL_REFERENCES));
+		return resultMap;
+	}
+
 }
