@@ -11,7 +11,7 @@ _container_.addOnLoad(function() {
 	} else {
 		// Construct an MdekDataBean from the available data
 		var node = dojo.widget.byId(_container_.customParams.selectedNodeId);
-		dojo.debug("mdek_detail_view_dialog.html calling EntryService.getNodeData("+node.id+", "+node.appType+")");
+		dojo.debug("mdek_detail_view_dialog.html calling EntryService.getNodeData("+node.id+", "+node.nodeAppType+")");
 	
 		EntryService.getNodeData(node.id, node.appType, "false",
 			{

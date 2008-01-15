@@ -425,6 +425,7 @@ function initToolbar() {
                             caption:"Löschen aufheben"
                           });
 */
+
 /*
   leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,

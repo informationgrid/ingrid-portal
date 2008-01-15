@@ -338,9 +338,25 @@ menuEventHandler.handleFinalSave = function() {
 menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
 menuEventHandler.handleMarkDeleted = function(msg) {alertNotImplementedYet();}
 menuEventHandler.handleUnmarkDeleted = function() {alertNotImplementedYet();}
-menuEventHandler.handleShowChanges = function() {alertNotImplementedYet();}
-//                            		var win = window.open("qs_vergleich.html", 'preview', 'width=720, height=690, resizable=yes, scrollbars=yes, status=yes');
-//                            		win.focus();
+
+menuEventHandler.handleShowChanges = function(msg) {
+	// Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
+	//   where the event originated
+  dojo.debug('Message parameter: '+msg);
+
+ 	var tree = dojo.widget.byId('tree');
+  var selectedNode = tree.selectedNode;
+  dojo.debug('selectedNode id: '+ selectedNode.id);
+  
+	// params for the first (really delete object query) dialog.
+	var params = {
+		selectedNodeId: selectedNode.id
+	};
+	
+  dojo.debug('done.');
+	dialog.showPage("Compare View", "mdek_compare_view_dialog.html", 755, 600, false, params);
+  dojo.debug('opened.');
+}
 
 menuEventHandler.handleShowComment = function() {
 /*

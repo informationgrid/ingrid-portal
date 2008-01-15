@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	var tree = dojo.widget.byId("tree");
+	var nodeDataNew = udkDataProxy._getData();
+	var nodeOld = dojo.widget.byId(_container_.customParams.selectedNodeId);
+	dojo.debug("mdek_compare_view_dialog.html calling EntryService.getNodeData("+nodeOld.id+", "+nodeOld.nodeAppType+")");
+
+	EntryService.getNodeData(nodeOld.id, nodeOld.nodeAppType, "false",
+		{
+			callback:function(res) { renderNodeData(res, nodeDataNew); },
+			timeout:5000,
+			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_dialog.html: Error while waiting for nodeData: " + message); }
+		}
+	);
+});
+
+function renderNodeData(nodeDataOld, nodeDataNew) {
+	renderTitel(nodeDataOld.objectName, nodeDataNew.objectName);
+	renderText("UDK Klasse: " + nodeDataOld.objectClass, "UDK Klasse: " + nodeDataNew.objectClass);
+	renderText(nodeDataOld.generalShortDescription, nodeDataNew.generalShortDescription);
+	renderText(nodeDataOld.generalDescription, nodeDataNew.generalDescription);
+	renderLinkedObjectListWithTitle(nodeDataOld.linksFromObjectTable, nodeDataNew.linksFromObjectTable, "&Uuml;bergeordnete Objekte");
+	renderLinkedObjectListWithTitle(nodeDataOld.linksToObjectTable, nodeDataNew.linksToObjectTable, "Untergeordnete Objekte");
+	renderAddressList(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable);
+}
+
+function renderTitel(oldVal, newVal) {
+	if (!oldVal) {
+		oldVal = "";
+	}
+	if (!newVal) {
+		newVal = "";
+	}
+	dojo.byId("diffContent").innerHTML += "<strong>" + diffString(oldVal, newVal)+"</strong><br/><br/>";
+	dojo.byId("oldContent").innerHTML += "<strong>" + oldVal + "</strong><br/><br/>";
+	dojo.byId("currentContent").innerHTML += "<strong>" + newVal + "</strong><br/><br/>";
+}
+
+function renderTextWithTitle(oldVal, newVal, title) {
+	if (!oldVal) {
+		oldVal = "";
+	}
+	if (!newVal) {
+		newVal = "";
+	}
+	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
+	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal + "</p>";
+	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal + "</p>";
+}
+
+function renderLinkedObjectListWithTitle(oldList, newList, title) {
+	if (oldList.length > 0) {
+		var t = "<strong>" + title + "</strong><br/><br/><p>";
+		for (var i = 0; i < oldList.length; ++i) {
+			t += "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+oldList[i].uuid+"\");'"+
+			                    "title='"+oldList[i].title+"'>"+oldList[i].title+"</a>" + "<br/>";
+		}
+		dojo.byId("oldContent").innerHTML += t+"</p><br/><br/>";
+	}
+	if (newList.length > 0) {
+		var t = "<strong>" + title + "</strong><br/><br/><p>";
+		for (var i = 0; i < newList.length; ++i) {
+			t += "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+newList[i].uuid+"\");'"+
+			                    "title='"+newList[i].title+"'>"+newList[i].title+"</a>" + "<br/>";
+		}
+		dojo.byId("currentContent").innerHTML += t+"</p><br/><br/>";
+	}
+	if (oldList.length > 0 || newList.length > 0) {
+		var t = "<strong>" + title + "</strong><br/><br/><p>";
+		var len = (newList.length > oldList.length)? newList.length : oldList.length;
+		for (var i = 0; i < len; ++i) {
+			if (i > (oldList.length-1)) {
+				t += diffString("", newList[i].title)+"<br/>";
+			} else if (i > (newList.length-1)) {
+				t += diffString(oldList[i].title, "")+"<br/>";
+			} else {
+				t += diffString(oldList[i].title, newList[i].title)+"<br/>";
+			}
+		}
+		dojo.byId("diffContent").innerHTML += t+"</p><br/><br/>";
+	}
+}
+
+function renderAddressList(oldList, newList) {
+	if (oldList.length > 0) {
+		var t = "";
+		for (var i = 0; i < oldList.length; ++i) {
+			t += "<strong>" + oldList[i].nameOfRelation+ "</strong><br/><br/>";
+			t += "<p>";
+			if (oldList[i].organisation) {
+				t += oldList[i].organisation + "</br>";
+			}
+			ptr = t.length;
+			if (oldList[i].nameForm) {
+				t += oldList[i].nameForm + " ";
+			}
+			if (oldList[i].titleOrFunction) {
+				t += oldList[i].titleOrFunction + " ";
+			}
+			if (oldList[i].givenName) {
+				t += oldList[i].givenName + " ";
+			}
+			if (oldList[i].name) {
+				t += oldList[i].name;
+			}
+			if (ptr < t.length) {
+				t += "<br/>"
+			}
+			if (oldList[i].street) {
+				t += oldList[i].street+"<br/>";
+			}
+			if (oldList[i].city) {
+				t += oldList[i].city+"<br/>";
+			}
+			if (oldList[i].pobox) {
+				t += "<br/>"+oldList[i].pobox+"<br/>";
+			}
+			if (oldList[i].poboxPostalCode) {
+				t += oldList[i].poboxPostalCode+"<br/>";
+			}
+			t += "</p><br/>";
+		}
+		dojo.byId("oldContent").innerHTML += t + "<br/><br/>";
+	}
+
+}
+
+function renderText(oldVal, newVal) {
+	if (!oldVal) {
+		oldVal = "";
+	}
+	if (!newVal) {
+		newVal = "";
+	}
+	dojo.byId("diffContent").innerHTML += "<p>" + diffString(oldVal, newVal) + "</p><br/>";
+	dojo.byId("oldContent").innerHTML += "<p>" + oldVal + "</p><br/>";
+	dojo.byId("currentContent").innerHTML += "<p>" + newVal + "</p><br/>";
+}
+
+function diffString(oldText, newText) {
+	return WDiffString(oldText, newText);
+}
+
+
+</script>
+</head>
+
+<body>
+  <div dojoType="ContentPane">
+    <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
+      <div id="winNavi">
+        <a href="#" title="Hilfe">[?]</a>
+  	  </div>
+  	  <div id="dialogContent" class="content">
+        <!-- MAIN TAB CONTAINER START -->
+        <div class="spacer"></div>
+      	<div id="compareViews" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="diffView">
+          <!-- MAIN TAB 1 START -->
+      		<div id="diffView" dojoType="ContentPane" class="blueTopBorder" label="Differenz-Ansicht">
+              <div id="diffContent" class="inputContainer field grey"></div>
+              <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - Eingefügter Text<br/>
+			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - Gelöschter Text</div>
+      		</div>
+          <!-- MAIN TAB 1 END -->
+      		
+          <!-- MAIN TAB 2 START -->
+      		<div id="oldView" dojoType="ContentPane" class="blueTopBorder" label="Ausgangsversion">
+              <div id="oldContent" class="inputContainer field grey"></div>
+      		</div>
+          <!-- MAIN TAB 2 END -->
+
+          <!-- MAIN TAB 3 START -->
+      		<div id="currentView" dojoType="ContentPane" class="blueTopBorder" label="Bearbeitungsversion">
+              <div id="currentContent" class="inputContainer field grey"></div>
+      		</div>
+          <!-- MAIN TAB 3 END -->
+
+      	</div>
+        <!-- MAIN TAB CONTAINER END -->
+  
+      </div>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+</body>
+</html>

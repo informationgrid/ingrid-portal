@@ -24,6 +24,7 @@
 <script type="text/javascript" src="js/menuEventHandler.js"></script>
 <script type="text/javascript" src="js/udkDataProxy.js"></script>
 <script type="text/javascript" src="js/rules_checker.js"></script>
+<script type="text/javascript" src="js/diff.js"></script>
 
 
 <script type="text/javascript">
