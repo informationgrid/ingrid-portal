@@ -354,15 +354,15 @@ function initReferenceTables() {
 
 // TODO Fix Me! Insert the correct filters here
 	var filterTableMap =
-		[{tableId: "ref1SymbolsLinks", 		filterId: "Symbolkatalog"},
+		[{tableId: "ref1SymbolsLinks", 		filterId: "Symbolkatalog"},	
 		 {tableId: "ref1KeysLinks", 		filterId: "Schlüsselkatalog"},
 		 {tableId: "ref1ServiceLink", 		filterId: "Verweis zu Dienst"},
-		 {tableId: "ref1BasisLink", 		filterId: "Fachliche Grundlage"},
-		 {tableId: "ref1DataBasisLink", 	filterId: "Datengrundlage"},
+		 {tableId: "ref1BasisLink", 		filterId: "Fachliche Grundlage"},	// 3520
+		 {tableId: "ref1DataBasisLink", 	filterId: "Datengrundlage"},		// 3570
 		 {tableId: "ref1ProcessLink", 		filterId: "Herstellungsprozess"},
-		 {tableId: "ref2LocationLink", 		filterId: "Basisdaten"},
+		 {tableId: "ref2LocationLink", 		filterId: "Basisdaten"},			//?3345
 		 {tableId: "ref2BaseDataLink", 		filterId: "Standort"},				// Single Address
-		 {tableId: "ref3BaseDataLink", 		filterId: "Basisdaten"},
+		 {tableId: "ref3BaseDataLink", 		filterId: "Basisdaten"},			// 3210
 		 {tableId: "ref4ParticipantsLink", 	filterId: "Beteiligte"},			// Single Address
 		 {tableId: "ref4PMLink", 			filterId: "Projektleiter"}];		// Single Address
 
