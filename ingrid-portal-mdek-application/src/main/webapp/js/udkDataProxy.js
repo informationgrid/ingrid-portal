@@ -889,15 +889,36 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	dojo.debug("_updateTree("+nodeData.uuid+", "+oldUuid+")");
 
-	var node = dojo.widget.byId(oldUuid);
-	if (node) {
-		dojo.debug("nodeDocType: "+nodeData.nodeDocType);
-		node.nodeDocType = nodeData.nodeDocType;	
-		dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(node);
-		node.setTitle(nodeData.objectName);
-		node.id = nodeData.uuid;	
+	// If we change the uuid (= widgetId) of a node the treeNode has to be created again
+	// because otherwise dojo doesn't 'register' the changed widgetId 
+	// Currently a changed uuid is only possible if a new Node is updated.
+	if (nodeData.uuid != oldUuid && oldUuid == "newNode") {
+		var oldWidget = dojo.widget.byId(oldUuid);
+		var parent = oldWidget.parent;
+
+		// A new node is a leaf node. It's safe to destroy it
+		oldWidget.destroy();
+		var treeController = dojo.widget.byId("treeController");
+		treeController.createChild(parent, "last", {
+			contextMenu: 'contextMenu1',
+			isFolder: false,
+			nodeDocType: nodeData.nodeDocType,
+			title: nodeData.objectName,
+			dojoType: 'ingrid:TreeNode',
+			nodeAppType: nodeData.nodeAppType,
+			id: nodeData.uuid
+		});
 	} else {
-		dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
+		var node = dojo.widget.byId(oldUuid);
+		if (node) {
+			dojo.debug("nodeDocType: "+nodeData.nodeDocType);
+			node.nodeDocType = nodeData.nodeDocType;	
+			dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(node);
+			node.setTitle(nodeData.objectName);
+			node.id = nodeData.uuid;	
+		} else {
+			dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
+		}
 	}
 }
 
