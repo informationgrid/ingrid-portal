@@ -39,6 +39,7 @@ dojo.addOnLoad(function()
   initForm();
   initCTS();
   initFreeTermsButton();
+  initReferenceTables();
   hideSplash();
 
 });
@@ -345,6 +346,84 @@ function initFreeTermsButton() {
 			});
 		}
 	}
+}
+
+
+function initReferenceTables() {
+	var mainStore = dojo.widget.byId("linksTo").store;
+
+// TODO Fix Me! Insert the correct filters here
+	var filterTableMap =
+		[{tableId: "ref1SymbolsLinks", 		filterId: "Symbolkatalog"},
+		 {tableId: "ref1KeysLinks", 		filterId: "Schlüsselkatalog"},
+		 {tableId: "ref1ServiceLink", 		filterId: "Verweis zu Dienst"},
+		 {tableId: "ref1BasisLink", 		filterId: "Fachliche Grundlage"},
+		 {tableId: "ref1DataBasisLink", 	filterId: "Datengrundlage"},
+		 {tableId: "ref1ProcessLink", 		filterId: "Herstellungsprozess"},
+		 {tableId: "ref2LocationLink", 		filterId: "Basisdaten"},
+		 {tableId: "ref2BaseDataLink", 		filterId: "Standort"},				// Single Address
+		 {tableId: "ref3BaseDataLink", 		filterId: "Basisdaten"},
+		 {tableId: "ref4ParticipantsLink", 	filterId: "Beteiligte"},			// Single Address
+		 {tableId: "ref4PMLink", 			filterId: "Projektleiter"}];		// Single Address
+
+	dojo.lang.forEach(filterTableMap, function(tableMapping) {
+		var filterStore = dojo.widget.byId(tableMapping.tableId).store;
+		filterStore.relationTypeNameFilter = tableMapping.filterId;
+		
+		// Connect all the setData calls on the filtered table to the main (unfiltered) table
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: filterStore,
+			srcFunc: "onSetData",
+			adviceObj: mainStore,
+			adviceFunc: function() {
+				var data = filterStore.getData();
+				for (i in data) {
+					var item = this.getDataByKey(data[i].Id);
+					if (!item) {
+						this.addData(data[i]);
+					}
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
+		// Connect all the setData calls on the main table to the filtered tables
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: mainStore,
+			srcFunc: "onSetData",
+			adviceObj: filterStore,
+			adviceFunc: function() {
+				dojo.debug("setData()");
+				var data = mainStore.getData();
+				dojo.debugShallow(data);
+				for (i in data) {
+					dojo.debug("checking for item update:");
+					dojo.debug(data[i].relationTypeName+" ?= "+this.relationTypeNameFilter);
+					if (data[i].relationTypeName == this.relationTypeNameFilter) {
+						dojo.debug("yes!");
+						var item = this.getDataByKey(data[i].Id);
+						if (!item) {
+							this.addData(data[i]);
+						}
+					}
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
+	});
+/*
+	onSetData:function(){ },
+	onClearData:function(){ },
+	onAddData:function(obj){ },
+	onAddDataRange:function(arr){ },
+	onRemoveData:function(obj){ },
+	onUpdateField:function(obj, field, val){ }
+*/	
 }
 
 function initToolbar() {
