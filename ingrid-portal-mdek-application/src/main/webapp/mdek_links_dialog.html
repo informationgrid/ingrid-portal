@@ -159,8 +159,9 @@ saveLink = function() {
 			objData.uuid = curSelectedObject.uuid;
 			objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
 			objData.objectClass = curSelectedObject.objectClass;
-			// TODO relation Type is the wrong value here
-			objStore.update(objData, "relationTypeName", dojo.widget.byId("linksFromFieldName").getValue());
+			objData.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+			udkDataProxy._addIcons([objData]);
+			objStore.update(objData, "icon", objData.icon);
 			objStore.update(objData, "title", curSelectedObject.title);
 		}
 	} else if (urlData) {
@@ -175,8 +176,8 @@ saveLink = function() {
 			urlData.iconUrl = newUrl.iconUrl;
 			urlData.iconText = newUrl.iconText;
 			urlData.description = newUrl.description;
-
-			urlStore.update(urlData, "relationTypeName", newUrl.relationTypeName);
+			urlData.relationTypeName = newUrl.relationTypeName;
+			udkDataProxy._addIcons([urlData]);
 			urlStore.update(urlData, "name", newUrl.name);
 		}
 	} else if (objSelected && curSelectedObject) {
@@ -189,6 +190,7 @@ saveLink = function() {
 			curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
 			// No checks if the store already contains the current element.
 			curSelectedObject.Id = _getNewKey();
+			udkDataProxy._addIcons([curSelectedObject]);
 			objStore.addData(curSelectedObject);
 			// Select the object in the list
 			dojo.widget.byId("linkListObject").resetSelections();
@@ -202,6 +204,7 @@ saveLink = function() {
 			alert(message.get("links.fillRequiredFieldsHint"));
 		} else {
 			newUrl.Id = _getNewKey();
+			udkDataProxy._addIcons([newUrl]);
 			urlStore.addData(newUrl);
 			dojo.widget.byId("linkListURL").resetSelections();
 			dojo.widget.byId("linkListURL").select(newUrl);
@@ -457,29 +460,17 @@ acceptLinkList = function() {
         <div dojoType="ContentPane" class="scrollable">
           <span class="label"><label for="linkListObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objekte')">Objekte</label></span>
 
-    <div class="tableContainer rows8">
-	<table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="7" headClass="fixedHeader hidden" tbodyClass="scrollContent rows7" cellspacing="0" class="filteringTable interactive third relativePos">
-	    <thead>
-	    	<tr>
-	        	<th field="relationTypeName" dataType="String" width="30">&nbsp;</th>
-	            <th field="title" dataType="String" width="290">&nbsp;</th>
-	    	</tr>
-	    </thead>
-	    <tbody>
-		</tbody>
-	</table>
-<!-- 
-    	    <table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
-    	      <thead>
-    		      <tr>
-          			<th field="relationTypeName" dataType="String" width="30">&nbsp;</th>
-          			<th field="title" dataType="String" width="225" sort="desc">&nbsp;</th>
-    		      </tr>
-    	      </thead>
-    	      <tbody>
-    	      </tbody>
-    	    </table>
- -->
+		    <div class="tableContainer rows8">
+			<table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="7" headClass="fixedHeader hidden" tbodyClass="scrollContent rows7" cellspacing="0" class="filteringTable interactive third relativePos">
+			    <thead>
+			    	<tr>
+			        	<th field="icon" dataType="String" width="30">&nbsp;</th>
+			            <th field="title" dataType="String" width="290">&nbsp;</th>
+			    	</tr>
+			    </thead>
+			    <tbody>
+				</tbody>
+			</table>
         </div>
 
         <div class="spacer"></div>
@@ -489,7 +480,7 @@ acceptLinkList = function() {
     	    <table id="linkListURL" dojoType="ingrid:FilteringTable" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
     	      <thead>
     		      <tr>
-          			<th field="relationTypeName" dataType="String" width="30">&nbsp;</th>
+          			<th field="icon" dataType="String" width="30">&nbsp;</th>
           			<th field="name" dataType="String" width="225" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>

@@ -548,7 +548,10 @@ udkDataProxy._setObjectData = function(nodeData)
   // --- General ---
   dojo.widget.byId("generalShortDesc").setValue(nodeData.generalShortDescription);
   dojo.widget.byId("generalDesc").setValue(nodeData.generalDescription);
-  dojo.widget.byId("generalAddress").store.setData(udkDataProxy._addTableIndices(nodeData.generalAddressTable));
+  var addressTable = nodeData.generalAddressTable;
+  udkDataProxy._addTableIndices(addressTable);
+  udkDataProxy._addIcons(addressTable);
+  dojo.widget.byId("generalAddress").store.setData(addressTable);
 
   // -- Spatial --
   // The table containing entries from the sns is indexed by their topicID
@@ -627,11 +630,13 @@ udkDataProxy._setObjectData = function(nodeData)
   udkDataProxy._addTableIndices(linkTable);
   udkDataProxy._addObjectLinkLabels(linkTable);
   udkDataProxy._addUrlLinkLabels(linkTable);
+  udkDataProxy._addIcons(linkTable);
   dojo.widget.byId("linksTo").store.setData(linkTable);
 
   linkTable = nodeData.linksFromObjectTable;
   udkDataProxy._addTableIndices(linkTable);
   udkDataProxy._addObjectLinkLabels(linkTable);  
+  udkDataProxy._addIcons(linkTable);
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
   // -- Check which object type was received and fill the appropriate fields --
@@ -983,6 +988,21 @@ udkDataProxy._addUrlLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
 		if (list[i].url) {
 			list[i].linkLabel = "<a href='"+list[i].url+"' title='"+list[i].name+"'>"+list[i].name+"</a>";
+		}
+	}
+	return list;
+}
+
+udkDataProxy._addIcons = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		if (typeof(list[i].objectClass) != "undefined") {
+			list[i].icon = "<img src='img/UDK/udk_class"+list[i].objectClass+".gif' width=\"16\" height=\"16\" alt=\"Object\" />";
+		} else if (typeof(list[i].addressClass) != "undefined") {
+			list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+		} else if (typeof(list[i].url) != "undefined") {
+			list[i].icon = "<img src='img/UDK/url.gif' width=\"16\" height=\"16\" alt=\"Url\" />";		
+		} else {
+			list[i].icon = "noIcon";
 		}
 	}
 	return list;

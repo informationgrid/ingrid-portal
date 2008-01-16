@@ -305,7 +305,7 @@ function hideSplash(){
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox" width="120"></th>
-	                  			<th nosort="true" field="addressClass" dataType="String" width="35"></th>
+	                  			<th nosort="true" field="icon" dataType="String" width="35"></th>
 	                  			<th nosort="true" field="name" dataType="String" width="520">Namen</th>
 	            		      </tr>
 	            	      </thead>
@@ -456,7 +456,7 @@ function hideSplash(){
 	                    <table id="ref1SymbolsLinks" width="676" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
@@ -495,7 +495,7 @@ function hideSplash(){
 	              	    <table id="ref1KeysLinks" width="676" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
@@ -513,7 +513,7 @@ function hideSplash(){
 	            	    <table id="ref1ServiceLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	            	      </thead>
@@ -541,7 +541,7 @@ function hideSplash(){
 	                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	                	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	                	      </thead>
@@ -567,7 +567,7 @@ function hideSplash(){
 	                	    <table id="ref1DataBasisLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	                	      <thead>
 		              		      <tr>
-		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="icon" dataType="String" width="30"></th>
 		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 		              		      </tr>
 	                	      </thead>
@@ -609,7 +609,7 @@ function hideSplash(){
 	                	    <table id="ref1ProcessLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	                	      <thead>
 		              		      <tr>
-		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="icon" dataType="String" width="30"></th>
 		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 		              		      </tr>
 	                	      </thead>
@@ -700,7 +700,7 @@ function hideSplash(){
 	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
 		              		      <tr>
-		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="icon" dataType="String" width="30"></th>
 		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 		              		      </tr>
 	                  	      </thead>
@@ -732,7 +732,7 @@ function hideSplash(){
 	                  	    <table id="ref2BaseDataLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
 		              		      <tr>
-		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="icon" dataType="String" width="30"></th>
 		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 		              		      </tr>
 	                  	      </thead>
@@ -837,7 +837,7 @@ function hideSplash(){
 	                  	    <table id="ref3BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
 		              		      <tr>
-		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="icon" dataType="String" width="30"></th>
 		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 		              		      </tr>
 	                  	      </thead>
@@ -901,7 +901,7 @@ function hideSplash(){
 	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="12" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
 		              		      <tr>
-		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="icon" dataType="String" width="30"></th>
 		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 		              		      </tr>
 	                  	      </thead>
@@ -925,7 +925,7 @@ function hideSplash(){
 	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	                  	      </thead>
@@ -1582,7 +1582,7 @@ function hideSplash(){
 	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
@@ -1598,29 +1598,11 @@ function hideSplash(){
 	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="icon" dataType="String" width="30"></th>
 	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
-	              		      <tr value="1">
-	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	              		      <tr value="2">
-	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	              		      <tr value="3">
-	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
-	              		      <tr value="4">
-	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	              		      <tr value="5">
-	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	              		      <tr value="6">
-	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	              	      </tbody>
 	              	    </table>
 	                  </div>
