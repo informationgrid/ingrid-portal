@@ -418,12 +418,21 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCutObjectRequest = function(msg) {
+	if(msg.dstId == "objectRoot") {
+		msg.dstId = null;
+	}
 	dojo.debug("udkDataProxy calling EntryService.cutNode("+msg.srcId+", "+msg.dstId+")");	
 
 	EntryService.moveNode(msg.srcId, msg.dstId,
 		{
-			callback: function(res){msg.resultHandler.callback();},
-			timeout:5000,
+			callback: function(success){
+				if (success) {
+					msg.resultHandler.callback();
+				} else {
+					msg.resultHandler.errback("Error in js/udkDataProxy.js: Move node operation failed.");
+				}
+			},
+			timeout:0,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while moving nodes: " + message);
 				msg.resultHandler.errback();
@@ -736,8 +745,10 @@ udkDataProxy._getObjectData = function(nodeData)
   // ------------- General Static Data -------------
   nodeData.uuid = currentUdk.uuid;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
-  nodeData.parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
-
+  var parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
+  if (parentUuid != "objectRoot") {
+  	nodeData.parentUuid = parentUuid;
+  }
 
   // ------------------ Header ------------------
   var formWidget = dojo.widget.byId("headerFormObject");

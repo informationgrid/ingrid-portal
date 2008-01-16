@@ -136,6 +136,8 @@ menuEventHandler.handlePaste = function(msg) {
 	if (!targetNode) {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
 	} else {
+		var tree = dojo.widget.byId("tree");
+		var treeListener = dojo.widget.byId("treeListener");
 		var treeController = dojo.widget.byId("treeController");		
 		if (treeController.nodeToCut != null) {
 			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
@@ -148,7 +150,12 @@ menuEventHandler.handlePaste = function(msg) {
 					// Move was successful. Update the tree
 					treeController.move(treeController.nodeToCut, targetNode, 0);
 				});
-				dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
+				// a widget collision would be possible (nodeToCut already exists in the target after expand)
+				var def = treeController.expand(targetNode);
+				def.addCallback(function() {
+					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+				});
 			}
 		} else if (treeController.nodeToCopy != null) {
 				// A node can be inserted everywhere. Start the paste request.

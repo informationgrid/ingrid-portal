@@ -142,7 +142,10 @@ public class MdekDataBean {
 	public MdekDataBean(){
 		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
 		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksToUrlTable(new ArrayList<UrlBean>());
 		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
+		this.setSpatialRefAdminUnitTable(new ArrayList<Location>());
+		this.setSpatialRefLocationTable(new ArrayList<Location>());
 	}
 	
 	

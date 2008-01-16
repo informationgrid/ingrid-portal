@@ -167,9 +167,9 @@ public interface EntryService {
 	 * @param dstNodeUuid
 	 *            The destination nodes uuid (this will become the parent of the
 	 *            copied node).
-	 * @return 'success' or error message.
+	 * @return true or false depending on the outcome of the move action.
 	 */
-	public String moveNode(String nodeUuid, String dstNodeUuid);
+	public boolean moveNode(String nodeUuid, String dstNodeUuid);
 
 	/**
 	 * Delete a node. Deletion is only successful, if the node has no children.

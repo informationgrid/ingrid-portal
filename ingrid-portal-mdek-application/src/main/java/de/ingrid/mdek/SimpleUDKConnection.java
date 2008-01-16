@@ -127,14 +127,13 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	
 	public MdekDataBean copyObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.copyObjectSubTree(fromUuid, toUuid, true);
+		IngridDocument response = mdekCaller.copyObjectSubTree(fromUuid, toUuid);
 		// TODO return correct value when the method is implemented in MdekCaller
 		return null;
 	}
-	public MdekDataBean cutObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.cutObjectSubTree(fromUuid, toUuid, true);
-		// TODO return correct value when the method is implemented in MdekCaller		
-		return null;
+	public boolean moveObjectSubTree(String fromUuid, String toUuid) {
+		IngridDocument response = mdekCaller.moveObjectSubTree(fromUuid, toUuid);
+		return (mdekCaller.getResultFromResponse(response) != null);
 	}
 
 	public Map<String, List<String>> getUiListValues() {

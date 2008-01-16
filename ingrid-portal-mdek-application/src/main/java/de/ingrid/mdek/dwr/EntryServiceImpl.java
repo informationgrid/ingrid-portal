@@ -207,16 +207,15 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#moveNode(java.lang.String,
 	 *      java.lang.String)
 	 */
-	public String moveNode(String nodeUuid, String dstNodeUuid) {
+	public boolean moveNode(String nodeUuid, String dstNodeUuid) {
 		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			dataConnection.cutObjectSubTree(nodeUuid, dstNodeUuid);
-			return "success";
+			return dataConnection.moveObjectSubTree(nodeUuid, dstNodeUuid);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			return false;
 		}
 	}
 
