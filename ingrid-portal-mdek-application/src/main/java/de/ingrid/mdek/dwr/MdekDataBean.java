@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class MdekDataBean {
 
 	public String uuid;
-	public String parentUuid;	// Only set when storing new objects
+	public String parentUuid;
 	public Boolean hasChildren;
 	public String workState;
 

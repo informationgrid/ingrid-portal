@@ -10,8 +10,11 @@ dojo.addOnLoad(function()
 	}
 });
 
-var notEmptyFields = ["objectName", "objectClass", "generalDesc"];
+var notEmptyFields = ["objectName", "objectClass", "generalDesc", "extraInfoLangData", "extraInfoLangMetaData"];
+var notEmptyFieldsClass1 = ["ref1DataSet"]; 
+var notEmptyFieldsClass3 = ["ref3ServiceType"];
 var notEmptyFunc = function(element) {return (this[element] && this[element] != "");}
+
 
 function isObjectPublishable(idcObject) {
 //	return dojo.lang.every(notEmptyFields, notEmptyFunc, idcObject);

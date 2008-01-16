@@ -390,6 +390,36 @@ function initReferenceTables() {
 			delay: 10
 		});
 
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: filterStore,
+			srcFunc: "onRemoveData",
+			adviceObj: mainStore,
+			adviceFunc: function(obj) {
+				var o = this.getDataByKey(obj.key);
+				if (o) {
+					this.removeData(o);
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: mainStore,
+			srcFunc: "onRemoveData",
+			adviceObj: filterStore,
+			adviceFunc: function(obj) {
+				var o = this.getDataByKey(obj.key);
+				if (o) {
+					this.removeData(o);
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
 		// Connect all the setData calls on the main table to the filtered tables
 		dojo.event.kwConnect({
 			adviceType: "after",
@@ -413,20 +443,40 @@ function initReferenceTables() {
 
 	});
 /*
-	onSetData:function(){ },
 	onClearData:function(){ },
 	onAddData:function(obj){ },
 	onAddDataRange:function(arr){ },
-	onRemoveData:function(obj){ },
 	onUpdateField:function(obj, field, val){ }
 */	
 }
 
 function initSpatialFreeReferencesComboBox() {
-	var comboBox = dojo.widget.byId("freeReferencesEditor");
-/*
-	TODO use code from test_comboBox.jsp here...
-*/
+	var dp = dojo.widget.byId("freeReferencesEditor").dataProvider;
+	var def = new dojo.Deferred();
+	var kw = {
+		adviceType: "after",
+		srcObj: dp,
+		srcFunc: "setData",
+		adviceObj: def,
+		adviceFunc: "callback",
+		once: true
+	}
+
+	def.addCallback(function() {
+		dojo.event.kwDisconnect(kw);
+		EntryService.getUiListValues({
+			callback: function(res) {
+				var values = [];
+				dojo.lang.forEach(res.ui_freeSpatialReferences, function(item) {
+					values.push([item]);
+				});
+				var editor = dojo.widget.byId("freeReferencesEditor");
+				editor.dataProvider.setData(values);
+			}
+		});
+	});
+
+	dojo.event.kwConnect(kw);
 }
 
 
