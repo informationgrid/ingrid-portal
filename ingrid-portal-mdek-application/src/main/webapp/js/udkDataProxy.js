@@ -611,9 +611,13 @@ udkDataProxy._setObjectData = function(nodeData)
 
 */
   // -- Links --
-  var linkTable = nodeData.linksToObjectTable;
+  var objLinkTable = nodeData.linksToObjectTable;
+  var urlLinkTable = nodeData.linksToUrlTable;
+  var linkTable = objLinkTable.concat(urlLinkTable);
+
   udkDataProxy._addTableIndices(linkTable);
   udkDataProxy._addObjectLinkLabels(linkTable);
+  udkDataProxy._addUrlLinkLabels(linkTable);
   dojo.widget.byId("linksTo").store.setData(linkTable);
 
   linkTable = nodeData.linksFromObjectTable;
@@ -830,7 +834,19 @@ udkDataProxy._getObjectData = function(nodeData)
 */
 
   // -- Links --
-  nodeData.linksToObjectTable = udkDataProxy._getTableData("linksTo");
+  var linksToTable = udkDataProxy._getTableData("linksTo");
+  var objLinks = [];
+  var urlLinks = [];
+  dojo.lang.forEach(linksToTable, function(link) {
+	if (link.url) {
+  		urlLinks.push(link);
+  	} else {
+  		objLinks.push(link);  	
+  	}
+  });
+
+  nodeData.linksToObjectTable = objLinks;
+  nodeData.linksToUrlTable = urlLinks;
   nodeData.linksFromObjectTable = udkDataProxy._getTableData("linksFrom");
 
 
@@ -948,6 +964,15 @@ udkDataProxy._addObjectLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
 		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
+	}
+	return list;
+}
+
+udkDataProxy._addUrlLinkLabels = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		if (list[i].url) {
+			list[i].linkLabel = "<a href='"+list[i].url+"' title='"+list[i].name+"'>"+list[i].name+"</a>";
+		}
 	}
 	return list;
 }

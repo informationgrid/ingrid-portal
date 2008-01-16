@@ -457,7 +457,7 @@ function hideSplash(){
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="relationTypeName" dataType="String" width="30"></th>
-	                    			<th field="linkLabel" dataType="String" width="645">Objekte</th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -495,20 +495,11 @@ function hideSplash(){
 	              	    <table id="ref1KeysLinks" width="676" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="type" dataType="String" width="30"></th>
-	                    			<th field="name" dataType="String" width="645">Namen</th>
+	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
-	              		      <tr value="1">
-	              		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	              		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	              		      <tr value="2">
-	              		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	              		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	              		      <tr value="3">
-	              		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	              		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	              	      </tbody>
 	              	    </table>
 	              		</div>
@@ -521,18 +512,12 @@ function hideSplash(){
 	                <div class="tableContainer rows4">
 	            	    <table id="ref1ServiceLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
-	            		      <tr>
-	                  			<th field="type" dataType="String" width="30"></th>
-	                  			<th field="name" dataType="String" width="645">Namen</th>
-	            		      </tr>
+	              		      <tr>
+	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+	              		      </tr>
 	            	      </thead>
 	            	      <tbody>
-	            		      <tr value="1">
-	            		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="UDK Klasse 2" /></td>
-	            		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	            		      <tr value="3">
-	            		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="UDK Klasse 2" /></td>
-	            		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	            	      </tbody>
 	            	    </table>
 	                </div>
@@ -555,18 +540,12 @@ function hideSplash(){
 	                    <div class="tableContainer rows4">
 	                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	                	      <thead>
-	                		      <tr>
-	                      			<th field="type" dataType="String" width="30"></th>
-	                      			<th field="name" dataType="String" width="645">Namen</th>
-	                		      </tr>
+	              		      <tr>
+	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+	              		      </tr>
 	                	      </thead>
 	                	      <tbody>
-	                		      <tr value="1">
-	                		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                		      <tr value="2">
-	                		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
 	                	      </tbody>
 	                	    </table>
 	                    </div>
@@ -587,18 +566,12 @@ function hideSplash(){
 	                    <div class="tableContainer rows4">
 	                	    <table id="ref1DataBasisLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	                	      <thead>
-	                		      <tr>
-	                      			<th field="type" dataType="String" width="30"></th>
-	                      			<th field="name" dataType="String" width="645">Namen</th>
-	                		      </tr>
+		              		      <tr>
+		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+		              		      </tr>
 	                	      </thead>
 	                	      <tbody>
-	                		      <tr value="1">
-	                		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                		      <tr value="2">
-	                		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
 	                	      </tbody>
 	                	    </table>
 	                    </div>
@@ -635,18 +608,12 @@ function hideSplash(){
 	                    <div class="tableContainer rows4">
 	                	    <table id="ref1ProcessLink" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	                	      <thead>
-	                		      <tr>
-	                      			<th field="type" dataType="String" width="30"></th>
-	                      			<th field="name" dataType="String" width="645">Namen</th>
-	                		      </tr>
+		              		      <tr>
+		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+		              		      </tr>
 	                	      </thead>
 	                	      <tbody>
-	                		      <tr value="1">
-	                		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                		      <tr value="2">
-	                		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
 	                	      </tbody>
 	                	    </table>
 	                    </div>
@@ -732,21 +699,12 @@ function hideSplash(){
 	                      <div class="tableContainer rows2">
 	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
-	                  		      <tr>
-	                        			<th field="type" dataType="String" width="30"></th>
-	                        			<th field="name" dataType="String" width="190">Namen</th>
-	                  		      </tr>
+		              		      <tr>
+		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+		              		      </tr>
 	                  	      </thead>
 	                  	      <tbody>
-	                  		      <tr value="1">
-	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                  		      <tr value="2">
-	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	                  		      <tr value="3">
-	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	                  	      </tbody>
 	                  	    </table>
 	                      </div>
@@ -773,21 +731,12 @@ function hideSplash(){
 	                      <div class="tableContainer rows2">
 	                  	    <table id="ref2BaseDataLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
-	                  		      <tr>
-	                        			<th field="type" dataType="String" width="30"></th>
-	                        			<th field="name" dataType="String" width="190">Namen</th>
-	                  		      </tr>
+		              		      <tr>
+		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+		              		      </tr>
 	                  	      </thead>
 	                  	      <tbody>
-	                  		      <tr value="1">
-	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                  		      <tr value="2">
-	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	                  		      <tr value="3">
-	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	                  	      </tbody>
 	                  	    </table>
 	                      </div>
@@ -887,21 +836,12 @@ function hideSplash(){
 	                      <div class="tableContainer rows2">
 	                  	    <table id="ref3BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
-	                  		      <tr>
-	                        			<th field="type" dataType="String" width="30"></th>
-	                        			<th field="name" dataType="String" width="190">Namen</th>
-	                  		      </tr>
+		              		      <tr>
+		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+		              		      </tr>
 	                  	      </thead>
 	                  	      <tbody>
-	                  		      <tr value="1">
-	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                  		      <tr value="2">
-	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	                  		      <tr value="3">
-	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	                  	      </tbody>
 	                  	    </table>
 	                      </div>
@@ -960,21 +900,12 @@ function hideSplash(){
 	                      <div class="tableContainer rows2">
 	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="12" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
-	                  		      <tr>
-	                        			<th field="type" dataType="String" width="30"></th>
-	                        			<th field="name" dataType="String" width="190">Namen</th>
-	                  		      </tr>
+		              		      <tr>
+		                    			<th field="relationTypeName" dataType="String" width="30"></th>
+		                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+		              		      </tr>
 	                  	      </thead>
 	                  	      <tbody>
-	                  		      <tr value="1">
-	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                  		      <tr value="2">
-	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="url" /></td>
-	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	                  		      <tr value="3">
-	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	                  	      </tbody>
 	                  	    </table>
 	                      </div>
@@ -993,21 +924,12 @@ function hideSplash(){
 	                      <div class="tableContainer rows2">
 	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
-	                  		      <tr>
-	                        			<th field="type" dataType="String" width="30"></th>
-	                        			<th field="name" dataType="String" width="190">Namen</th>
-	                  		      </tr>
+	              		      <tr>
+	                    			<th field="relationTypeName" dataType="String" width="30"></th>
+	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+	              		      </tr>
 	                  	      </thead>
 	                  	      <tbody>
-	                  		      <tr value="1">
-	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                  		      <tr value="2">
-	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	                  		      <tr value="3">
-	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	                  	      </tbody>
 	                  	    </table>
 	                      </div>

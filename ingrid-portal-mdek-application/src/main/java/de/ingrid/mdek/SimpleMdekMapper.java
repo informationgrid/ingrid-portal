@@ -15,6 +15,7 @@ import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.dwr.Location;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.UrlBean;
 import de.ingrid.utils.IngridDocument;
 
 public class SimpleMdekMapper implements DataMapperInterface {
@@ -119,6 +120,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
 		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
+		mdekObj.setLinksToUrlTable(mapToUrlLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LINKAGES)));
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
 
@@ -215,6 +217,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// Links
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
+		udkObj.put(MdekKeys.LINKAGES, mapFromUrlLinksTable(data.getLinksToUrlTable()));
 		udkObj.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
 		udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
@@ -259,6 +262,28 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	private static ArrayList<IngridDocument> mapFromUrlLinksTable(ArrayList<UrlBean> urlList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (urlList == null)
+			return resultList;
+
+		for (UrlBean url : urlList) {
+			IngridDocument mappedUrl = new IngridDocument();
+			mappedUrl.put(MdekKeys.LINKAGE_DATATYPE, url.getDatatype());
+			mappedUrl.put(MdekKeys.LINKAGE_DESCRIPTION, url.getDescription());
+			mappedUrl.put(MdekKeys.LINKAGE_ICON_TEXT, url.getIconText());
+			mappedUrl.put(MdekKeys.LINKAGE_ICON_URL, url.getIconUrl());
+			mappedUrl.put(MdekKeys.LINKAGE_NAME, url.getName());
+			mappedUrl.put(MdekKeys.LINKAGE_REFERENCE, url.getRelationTypeName());
+			mappedUrl.put(MdekKeys.LINKAGE_REFERENCE_ID, url.getRelationType());
+			mappedUrl.put(MdekKeys.LINKAGE_URL, url.getUrl());
+			mappedUrl.put(MdekKeys.LINKAGE_URL_TYPE, url.getUrlType());
+			mappedUrl.put(MdekKeys.LINKAGE_VOLUME, url.getVolume());
+			resultList.add(mappedUrl);
+		}
+		return resultList;
+	}
+	
 	private static ArrayList<IngridDocument> mapFromLocationTables(ArrayList<Location> locationSNS, ArrayList<Location> locationFree) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (locationFree != null) {
@@ -359,6 +384,29 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
+
+	private static ArrayList<UrlBean> mapToUrlLinksTable(List<HashMap<String, Object>> objList) {
+		ArrayList<UrlBean> resultList = new ArrayList<UrlBean>(); 
+		if (objList == null)
+			return resultList;
+		
+		for (HashMap<String, Object> obj : objList) {
+			UrlBean url = new UrlBean();
+			url.setDatatype((String) obj.get(MdekKeys.LINKAGE_DATATYPE));
+			url.setDescription((String) obj.get(MdekKeys.LINKAGE_DESCRIPTION));
+			url.setIconText((String) obj.get(MdekKeys.LINKAGE_ICON_TEXT));
+			url.setIconUrl((String) obj.get(MdekKeys.LINKAGE_ICON_URL));
+			url.setName((String) obj.get(MdekKeys.LINKAGE_NAME));
+			url.setRelationTypeName((String) obj.get(MdekKeys.LINKAGE_REFERENCE));
+			url.setRelationType((Integer) obj.get(MdekKeys.LINKAGE_REFERENCE_ID));
+			url.setUrl((String) obj.get(MdekKeys.LINKAGE_URL));
+			url.setUrlType((Integer) obj.get(MdekKeys.LINKAGE_URL_TYPE));
+			url.setVolume((String) obj.get(MdekKeys.LINKAGE_VOLUME));
+			resultList.add(url);
+		}
+		return resultList;
+	}
+	
 	
 	private static ArrayList<Location> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
 		ArrayList<Location> resultList = new ArrayList<Location>();

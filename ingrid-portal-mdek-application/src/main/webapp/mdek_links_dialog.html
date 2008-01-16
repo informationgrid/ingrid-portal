@@ -9,6 +9,7 @@
 
 <script type="text/javascript">
 var curSelectedObject = {};
+var curSelectedUrl = {};
 
 
 _container_.addOnLoad(function() {
@@ -16,6 +17,9 @@ _container_.addOnLoad(function() {
 });
 
 init = function() {
+	// reset the dialog
+	newLink();
+	
 	// Init static data
 	var objectName = dojo.widget.byId("objectName").getValue();
 	dojo.widget.byId("linksFromObjectName").setValue(objectName);
@@ -53,11 +57,17 @@ init = function() {
 		objectList.resetSelections();
 		objectList.renderSelections();
 	});
+	var objRadioButton = dojo.byId("linksLinkType1");
+	var urlRadioButton = dojo.byId("linksLinkType2");
+	dojo.event.connectOnce("after", objRadioButton, "onclick", this, newLink);
+	dojo.event.connectOnce("after", urlRadioButton, "onclick", this, newLink);
 
 	// The selected value has to be displayed on select
 	dojo.event.connectOnce("after", objectList, "onSelect", function() {
 		// Update the displayed data
+		selectLinkType("obj");
 		curSelectedObject = objectList.getSelectedData();
+		curSelectedUrl = {};
 		if (curSelectedObject) {
 			dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
 			dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
@@ -69,21 +79,57 @@ init = function() {
 		}
 	});
 
-	// Populate the object links list
+	// The selected value has to be displayed on select
+	dojo.event.connectOnce("after", urlList, "onSelect", function() {
+		// Update the displayed data
+		selectLinkType("url");
+		curSelectedUrl = urlList.getSelectedData();
+		curSelectedObject = {};
+		if (curSelectedUrl) {
+			dojo.widget.byId("linksFromFieldName").setValue(curSelectedUrl.relationTypeName);
+			dojo.widget.byId("linksToURL").setValue(curSelectedUrl.url);
+			dojo.widget.byId("linksToName").setValue(curSelectedUrl.name);
+			dojo.widget.byId("linksToDataType").setValue(curSelectedUrl.datatype);
+			dojo.widget.byId("linksToDataVolume").setValue(curSelectedUrl.volume);
+			dojo.widget.byId("linksToURLType").setValue(curSelectedUrl.urlType);
+			dojo.widget.byId("linksToIconURL").setValue(curSelectedUrl.iconUrl);
+			dojo.widget.byId("linksToIconText").setValue(curSelectedUrl.iconText);
+			dojo.widget.byId("linksToUrlDescription").setValue(curSelectedUrl.description);
+	
+			// Update the 'save' button text
+			dojo.widget.byId("saveButton").setCaption("Speichern");
+		}
+	});
+
+	// Populate the object and url links list
 	var srcStore = dojo.widget.byId("linksTo").store;
-	var destStore = objectList.store;
-	destStore.setData(srcStore.getData());
+	var objStore = objectList.store;
+	var urlStore = urlList.store;
+	var linkData = srcStore.getData();
+	var objLinks = [];
+	var urlLinks = [];
+	dojo.lang.forEach(linkData, function(link){
+		if (link.url) {
+			urlLinks.push(link);
+		} else {
+			objLinks.push(link);
+		}
+	});
+	objStore.setData(objLinks);
+	urlStore.setData(urlLinks);
 
 	// Check if a filter was passes as an argument
 	if (_container_.customParams && _container_.customParams.filter) {	
 		// Filter the list according to the filter arg
-		objectList.setFilter("relationTypeName", function(relationType) {
-			return (relationType == _container_.customParams.filter);
-		});
+		var filterFunc = function(relationType) {return (relationType == _container_.customParams.filter);};
+		objectList.setFilter("relationTypeName", filterFunc);
+		urlList.setFilter("relationTypeName", filterFunc);
 	
 		objectList.applyFilters();	
 		objectList.render();
-	
+		urlList.applyFilters();	
+		urlList.render();
+
 		// Disable the type input and set it to the filter
 		var linkTypeInput = dojo.widget.byId("linksFromFieldName");
 		linkTypeInput.setValue(_container_.customParams.filter);
@@ -92,10 +138,13 @@ init = function() {
 };
 
 saveLink = function() {
-	var store = dojo.widget.byId("linkListObject").store;
-	var data = dojo.widget.byId("linkListObject").getSelectedData();
+	var objStore = dojo.widget.byId("linkListObject").store;
+	var urlStore = dojo.widget.byId("linkListURL").store;
+	var objData = dojo.widget.byId("linkListObject").getSelectedData();
+	var urlData = dojo.widget.byId("linkListURL").getSelectedData();
+	var objSelected = dojo.byId("linksLinkType1").checked;
 
-	if (data) {
+	if (objData) {
 		// If a node was selected we have to update the information
 		// The dojo FilteringTable does not like updates on values that are not displayed
 		// It simply throws a cryptic error on update. The connected 'onUpdateField' function in
@@ -104,36 +153,101 @@ saveLink = function() {
 //		store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
 //		store.update(data, "objectClass", curSelectedObject.objectClass);
 
-		data["uuid"] = curSelectedObject.uuid;
-		data["relationDescription"] = dojo.widget.byId("linksToDescription").getValue();
-		data["objectClass"] = curSelectedObject.objectClass;
-		// TODO relation Type is the wrong value here
-		store.update(data, "relationTypeName", dojo.widget.byId("linksFromFieldName").getValue());
-		store.update(data, "title", curSelectedObject.title);
-	} else if (curSelectedObject.uuid) {	// Check if the selected object != {}
+		if (dojo.widget.byId("linksFromFieldName").getValue() == "") {
+			alert(message.get("links.fillRequiredFieldsHint"));
+		} else {
+			objData.uuid = curSelectedObject.uuid;
+			objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
+			objData.objectClass = curSelectedObject.objectClass;
+			// TODO relation Type is the wrong value here
+			objStore.update(objData, "relationTypeName", dojo.widget.byId("linksFromFieldName").getValue());
+			objStore.update(objData, "title", curSelectedObject.title);
+		}
+	} else if (urlData) {
+		var newUrl = _getUrl();
+		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
+			alert(message.get("links.fillRequiredFieldsHint"));
+		} else {
+			urlData.url = newUrl.url;
+			urlData.datatype = newUrl.datatype;
+			urlData.volume = newUrl.volume;
+			urlData.urlType = newUrl.urlType;
+			urlData.iconUrl = newUrl.iconUrl;
+			urlData.iconText = newUrl.iconText;
+			urlData.description = newUrl.description;
+
+			urlStore.update(urlData, "relationTypeName", newUrl.relationTypeName);
+			urlStore.update(urlData, "name", newUrl.name);
+		}
+	} else if (objSelected && curSelectedObject) {
 		// Otherwise a new link has to be created
 		// Take the current selected object and add the values that were entered in the ui fields
-		curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
-		curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
-
-		// No checks if the store already contains the current element.
-		curSelectedObject.Id = _getNewKey(store);
-		store.addData(curSelectedObject);
+		if (dojo.widget.byId("linksFromFieldName").getValue() == "" || curSelectedObject.uuid == "") {
+			alert(message.get("links.fillRequiredFieldsHint"));
+		} else {	
+			curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+			curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
+			// No checks if the store already contains the current element.
+			curSelectedObject.Id = _getNewKey();
+			objStore.addData(curSelectedObject);
+			// Select the object in the list
+			dojo.widget.byId("linkListObject").resetSelections();
+			dojo.widget.byId("linkListObject").select(curSelectedObject);
+			dojo.widget.byId("linkListObject").renderSelections();
+			dojo.widget.byId("saveButton").setCaption("Speichern");
+		}
+	} else if (!objSelected) {
+		var newUrl = _getUrl();
+		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
+			alert(message.get("links.fillRequiredFieldsHint"));
+		} else {
+			newUrl.Id = _getNewKey();
+			urlStore.addData(newUrl);
+			dojo.widget.byId("linkListURL").resetSelections();
+			dojo.widget.byId("linkListURL").select(newUrl);
+			dojo.widget.byId("linkListURL").renderSelections();
+			dojo.widget.byId("saveButton").setCaption("Speichern");
+		}
 	} else {
 //		dialog.show(message.get("general.hint"), message.get("links.selectNodeHint"), dialog.WARNING);
 		alert(message.get("links.selectNodeHint"));
 	}
 }
 
-// iterates over all entries in the store and returns a key that is not in use yet
-_getNewKey = function(store) {
+_getUrl = function() {
+	var newUrl = {};
+	newUrl.url = dojo.widget.byId("linksToURL").getValue();
+	newUrl.datatype = dojo.widget.byId("linksToDataType").getValue();
+	newUrl.volume = dojo.widget.byId("linksToDataVolume").getValue();
+	newUrl.urlType = dojo.widget.byId("linksToURLType").getValue();
+	newUrl.iconUrl = dojo.widget.byId("linksToIconURL").getValue();
+	newUrl.iconText = dojo.widget.byId("linksToIconText").getValue();
+	newUrl.description = dojo.widget.byId("linksToUrlDescription").getValue();
+	// TODO relation Type is the wrong value here
+	newUrl.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+	newUrl.name = dojo.widget.byId("linksToName").getValue();
+	return newUrl;
+}
+
+// iterates over all entries in the stores and returns a key that is not in use yet
+_getNewKey = function() {
+	var objStore = dojo.widget.byId("linkListObject").store;
+	var urlStore = dojo.widget.byId("linkListURL").store;
+
 	var key = 0;
-	var data = store.get();
+	var data = objStore.get();
 	for(var i=0; i < data.length; i++){
 		if(data[i].key >= key){
 			key = data[i].key + 1;
 		}
 	}
+	data = urlStore.get();
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+
 	return key;
 }
 
@@ -152,12 +266,21 @@ newLink = function() {
 
 	// Reset field values
 	curSelectedObject = {};
+	curSelectedUrl = {};
 	if (!dojo.widget.byId("linksFromFieldName").disabled) {
 		dojo.widget.byId("linksFromFieldName").setValue("");
 	}
 	dojo.widget.byId("linksToObjectName").setValue("");
 	dojo.widget.byId("linksToObjectClass").setValue("");
 	dojo.widget.byId("linksToDescription").setValue("");	
+	dojo.widget.byId("linksToURL").setValue("");
+	dojo.widget.byId("linksToName").setValue("");
+	dojo.widget.byId("linksToDataType").setValue("");
+	dojo.widget.byId("linksToDataVolume").setValue("");
+	dojo.widget.byId("linksToURLType").setValue("");
+	dojo.widget.byId("linksToIconURL").setValue("");
+	dojo.widget.byId("linksToIconText").setValue("");
+	dojo.widget.byId("linksToUrlDescription").setValue("");	
 
 	// Change 'save' Button text
 	dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
@@ -166,7 +289,6 @@ newLink = function() {
 showAssignObjectDialog = function() {
 	var deferred = new dojo.Deferred();
 	var setSelectedObject = function(obj) {
-		dojo.debug(obj.uuid);
 		if (obj.uuid != "objectRoot") {
 			curSelectedObject = obj;
 			dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
@@ -175,11 +297,19 @@ showAssignObjectDialog = function() {
 	}
 
 	deferred.addCallback(setSelectedObject);
-	dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true,{
-		// custom parameters
-		resultHandler: deferred,
-		jumpToNode: curSelectedObject.uuid
-	});
+
+	if (curSelectedObject) {
+		dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true,{
+			// custom parameters
+			resultHandler: deferred,
+			jumpToNode: curSelectedObject.uuid
+		});
+	} else {
+		dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true,{
+			// custom parameters
+			resultHandler: deferred
+		});
+	}
 }
 
 // Cancel Button onClick function.
@@ -192,11 +322,16 @@ closeDialog = function() {
 //
 // This function copies the object links list to the main mdek linksTo list
 acceptLinkList = function() {
-	var srcStore = dojo.widget.byId("linkListObject").store;
+	var objData = dojo.widget.byId("linkListObject").store.getData();
+	var urlData = dojo.widget.byId("linkListURL").store.getData();
 	var destStore = dojo.widget.byId("linksTo").store;
-	var newData = udkDataProxy._addObjectLinkLabels(srcStore.getData());
+	
+	var objData = udkDataProxy._addObjectLinkLabels(objData);
+	var urlData = udkDataProxy._addObjectLinkLabels(urlData);
+	udkDataProxy._addObjectLinkLabels(objData);
+	udkDataProxy._addUrlLinkLabels(urlData);
 
-	destStore.setData(newData);
+	destStore.setData(objData.concat(urlData));
 
 	closeDialog();
 }
@@ -278,7 +413,8 @@ acceptLinkList = function() {
             </span>
             <span class="entry">
               <span class="label"><label for="linksToURLType" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL-Typ')">URL-Typ</label></span>
-              <span class="input"><div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/urltypes.js" style="width:116px;" widgetId="linksToURLType"></div></span>
+              <span class="input"><div dojoType="ingrid:Select" autoComplete="false" toggle="plain" dataUrl="js/data/urlReferenceTypes.js" style="width:116px;" widgetId="linksToURLType"></div></span>
+
             </span>
             <div class="fill"></div>
           </div>
@@ -295,8 +431,12 @@ acceptLinkList = function() {
             <div class="fill"></div>
           </div>
 
-          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
-          <span class="input"><textarea id="linksToDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
+          <span class="label"><label for="linksToUrlDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+ 		  <span class="input"><input type="text" mode="textarea" id="linksToUrlDescription" name="linksToUrlDescription" class="w608 h038" dojoType="ingrid:ValidationTextbox" /></span>
+<!-- 
+          <span class="input"><textarea id="linksToUrlDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
+ -->
+
         </div>
         <div class="spacerField"></div>
   	  </div>
@@ -349,17 +489,11 @@ acceptLinkList = function() {
     	    <table id="linkListURL" dojoType="ingrid:FilteringTable" multiple="false" minRows="8" headClass="fixedHeader hidden" tbodyClass="scrollContent rows8" cellspacing="0" class="filteringTable interactive third relativePos">
     	      <thead>
     		      <tr>
-          			<th field="type" dataType="String" width="30">&nbsp;</th>
+          			<th field="relationTypeName" dataType="String" width="30">&nbsp;</th>
           			<th field="name" dataType="String" width="225" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
     	      <tbody>
-    		      <tr value="1">
-                <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-                <td>http://www.nature.com</td></tr>
-    		      <tr value="2">
-                <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-                <td>http://www.bund.net</td></tr>
     	      </tbody>
     	    </table>
         </div>

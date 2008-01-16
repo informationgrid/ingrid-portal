@@ -397,14 +397,9 @@ function initReferenceTables() {
 			srcFunc: "onSetData",
 			adviceObj: filterStore,
 			adviceFunc: function() {
-				dojo.debug("setData()");
 				var data = mainStore.getData();
-				dojo.debugShallow(data);
 				for (i in data) {
-					dojo.debug("checking for item update:");
-					dojo.debug(data[i].relationTypeName+" ?= "+this.relationTypeNameFilter);
 					if (data[i].relationTypeName == this.relationTypeNameFilter) {
-						dojo.debug("yes!");
 						var item = this.getDataByKey(data[i].Id);
 						if (!item) {
 							this.addData(data[i]);

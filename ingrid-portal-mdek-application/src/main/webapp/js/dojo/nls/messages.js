@@ -46,6 +46,7 @@
     "sns.numberOfTerms":"Number of Terms:",
         
 	"links.selectNodeHint":"Please select a target node.",
+	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

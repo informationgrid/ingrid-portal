@@ -80,8 +80,7 @@ public class MdekDataBean {
 	// Links
 	public ArrayList<MdekDataBean> linksToObjectTable;
 	public ArrayList<MdekDataBean> linksFromObjectTable;
-	public ArrayList<HashMap<String, String>> linksToTable;
-	public ArrayList<HashMap<String, String>> linksFromTable;
+	public ArrayList<UrlBean> linksToUrlTable;
 	public String relationTypeName;
 	public String relationDescription;
 	
@@ -157,30 +156,6 @@ public class MdekDataBean {
 	public void setRelationTypeName(String relationTypeName) {
 		this.relationTypeName = relationTypeName;
 	}
-
-
-	public ArrayList<HashMap<String, String>> getLinksToTable() {
-		return linksToTable;
-	}
-
-
-
-	public void setLinksToTable(ArrayList<HashMap<String, String>> linksToTable) {
-		this.linksToTable = linksToTable;
-	}
-
-
-
-	public ArrayList<HashMap<String, String>> getLinksFromTable() {
-		return linksFromTable;
-	}
-
-
-
-	public void setLinksFromTable(ArrayList<HashMap<String, String>> linksFromTable) {
-		this.linksFromTable = linksFromTable;
-	}
-
 
 
 	public ArrayList<HashMap<String, String>> getThesaurusTermsTable() {
@@ -776,5 +751,19 @@ public class MdekDataBean {
 
 	public void setLinksFromObjectTable(ArrayList<MdekDataBean> linksFromObjectTable) {
 		this.linksFromObjectTable = linksFromObjectTable;
+	}
+
+
+
+
+	public ArrayList<UrlBean> getLinksToUrlTable() {
+		return linksToUrlTable;
+	}
+
+
+
+
+	public void setLinksToUrlTable(ArrayList<UrlBean> linksToUrlTable) {
+		this.linksToUrlTable = linksToUrlTable;
 	};
 }
