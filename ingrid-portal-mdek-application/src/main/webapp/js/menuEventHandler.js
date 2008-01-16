@@ -150,10 +150,14 @@ menuEventHandler.handlePaste = function(msg) {
 					// Move was successful. Update the tree
 					treeController.move(treeController.nodeToCut, targetNode, 0);
 				});
+				deferred.addErrback(function(mes) {
+					// Move was unsuccessful. Notify user(?) and do nothing.
+					dojo.debug("Move operation failed: "+mes);
+				});
 				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
-				def.addCallback(function() {
+				def.addCallbacks(function() {
 					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
 				});
 			}
@@ -371,7 +375,9 @@ menuEventHandler.handleShowComment = function() {
     dojo.event.topic.publish("/loadRequest", {id: "5CE671D3-5475-11D3-A172-08002B9A1D1D", appType: "O"});
 */
 	var nodeId = prompt("Jump to node with uuid", "5CE671D3-5475-11D3-A172-08002B9A1D1D");
- 	menuEventHandler.handleSelectNodeInTree(nodeId);
+ 	if (nodeId) {
+ 		menuEventHandler.handleSelectNodeInTree(nodeId);
+ 	}
 //	alertNotImplementedYet();
 //                                dialog.showPage("Kommentar ansehen/hinzufügen", "erfassung_modal_kommentar.html", 1010, 470, false);},
 }
