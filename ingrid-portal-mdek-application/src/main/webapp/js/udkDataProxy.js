@@ -712,6 +712,9 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 
 udkDataProxy._setObjectDataClass4 = function(nodeData)
 {
+	dojo.widget.byId("ref4ParticipantsText").setValue(nodeData.ref4ParticipantsText);
+	dojo.widget.byId("ref4PMText").setValue(nodeData.ref4PMText);
+	dojo.widget.byId("ref4Explanation").setValue(nodeData.ref4Explanation);
 }
 
 udkDataProxy._setObjectDataClass5 = function(nodeData)
@@ -943,7 +946,13 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 
 	nodeData.ref3Operation = udkDataProxy._getTableData("ref3Operation");
 };
-udkDataProxy._getObjectDataClass4 = function(nodeData) {};
+
+udkDataProxy._getObjectDataClass4 = function(nodeData) {
+	nodeData.ref4ParticipantsText = dojo.widget.byId("ref4ParticipantsText").getValue();
+	nodeData.ref4PMText = dojo.widget.byId("ref4PMText").getValue();
+	nodeData.ref4Explanation = dojo.widget.byId("ref4Explanation").getValue();
+};
+
 udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 
 

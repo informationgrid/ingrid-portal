@@ -129,18 +129,60 @@ public class MdekDataBean {
 	public String ref3Explanation;
 	public ArrayList<OperationBean> ref3Operation;
 	
-	/*
-	
 	// Object class 4 (Vorhaben/Projekt/Programm)
-	public final static String MDEK_OBJ_CLASS4_MEMBER = "ref4ParticipantsLink";
-	public final static String MDEK_OBJ_CLASS4_LEADER = "ref4PMLink";
-	public final static String MDEK_OBJ_CLASS4_DESCRIPTION = "ref4Explanation";
+	public String ref4ParticipantsText;
+	public String ref4PMText;
+	public String ref4Explanation;
+
+	/*
 	
 	// Object class 5 (Vorhaben/Projekt/Programm)
 	public final static String MDEK_OBJ_CLASS5_CONTENT = "ref5Scale";
 	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 	 */
+
+	public String getRef4ParticipantsText() {
+		return ref4ParticipantsText;
+	}
+
+
+
+
+	public void setRef4ParticipantsText(String ref4ParticipantsText) {
+		this.ref4ParticipantsText = ref4ParticipantsText;
+	}
+
+
+
+
+	public String getRef4PMText() {
+		return ref4PMText;
+	}
+
+
+
+
+	public void setRef4PMText(String ref4PMText) {
+		this.ref4PMText = ref4PMText;
+	}
+
+
+
+
+	public String getRef4Explanation() {
+		return ref4Explanation;
+	}
+
+
+
+
+	public void setRef4Explanation(String ref4Explanation) {
+		this.ref4Explanation = ref4Explanation;
+	}
+
+
+
 
 	public Integer getRef3ServiceType() {
 		return ref3ServiceType;

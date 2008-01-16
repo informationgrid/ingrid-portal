@@ -182,6 +182,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 4:
+/*
+			mdekObj.setRef4ParticipantsText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef4PMText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef4Explanation((String) obj.get(MdekKeys.MISSING));
+*/
 			break;
 		case 5:
 			break;
@@ -346,6 +351,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 4:
+/*
+			udkObj.put(MdekKeys.MISSING, data.getRef4ParticipantsText());
+			udkObj.put(MdekKeys.MISSING, data.getRef4PMText());
+			udkObj.put(MdekKeys.MISSING, data.getRef4Explanation());
+*/
 			break;
 		case 5:
 			break;

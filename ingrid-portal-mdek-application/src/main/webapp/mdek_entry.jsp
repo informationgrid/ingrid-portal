@@ -892,7 +892,9 @@ function hideSplash(){
 	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true, {filter: 'Beteiligte'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4ParticipantsTab1">
 	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
-	                      <span class="input"><textarea id="ref4ParticipantsText" name="ref4ParticipantsText" class="w320 h038" /></textarea></span>
+	                      	<span class="input">
+	                      		<input type="text" mode="textarea" id="ref4ParticipantsText" name="ref4ParticipantsText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+	                      	</span>
 	                		</div>
 	                		<div id="ref4ParticipantsTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2">
@@ -916,7 +918,9 @@ function hideSplash(){
 	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true, {filter: 'Projektleiter'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4PMTab1">
 	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
-	                      <span class="input"><textarea id="ref4PMText" name="ref4PMText" class="w320 h038" /></textarea></span>
+	                      	<span class="input">
+	                      		<input type="text" mode="textarea" id="ref4PMText" name="ref4PMText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+	                      	</span>
 	                		</div>
 	                		<div id="ref4PMTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2">
