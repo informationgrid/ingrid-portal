@@ -139,7 +139,7 @@ applyChanges = function() {
 			if (destStore.getByKey(topic.topicId)) {
 				return;
 			} else {
-				destStore.addData({Id: topic.topicId, title: topic.title}, topic.topicId);
+				destStore.addData({topicId: topic.topicId, title: topic.title}, topic.topicId);
 			}
 		});
 	}
@@ -166,7 +166,7 @@ applyChanges = function() {
 
         <span class="entry first">
           <span class="label">Vorschlagliste</span>
-    	    <table id="keywordsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable interactive w292 relativePos">
+    	    <table id="keywordsList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable interactive w292 relativePos">
     	      <thead>
     		      <tr>
           			<th field="title" dataType="String">Name</th>
@@ -195,7 +195,7 @@ applyChanges = function() {
 
         <span class="entry">
           <span class="label">&Uuml;bernehmen</span>
-    	    <table id="resultList" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable interactive w292 relativePos">
+    	    <table id="resultList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable interactive w292 relativePos">
     	      <thead>
     		      <tr>
           			<th field="title" dataType="String">Name</th>

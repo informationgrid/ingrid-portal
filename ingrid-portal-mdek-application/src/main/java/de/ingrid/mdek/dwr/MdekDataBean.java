@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import de.ingrid.mdek.DataFormatBean;
+import de.ingrid.mdek.dwr.sns.SNSTopic;
+
 /**
  * @author mbenz
  * 
@@ -49,7 +52,7 @@ public class MdekDataBean {
 	public Integer timeRefPeriodicity;
 	public String timeRefIntervalNum;
 	public String timeRefIntervalUnit;
-	public ArrayList<HashMap<String, String>> timeRefTable;
+	public ArrayList<TimeReferenceBean> timeRefTable;
 	public String timeRefExplanation;
 
 	// ExtraInfo
@@ -63,16 +66,16 @@ public class MdekDataBean {
 	
 
 	// Availability
-	public ArrayList<HashMap<String, String>> availabilityDataFormatTable;
+	public ArrayList<DataFormatBean> availabilityDataFormatTable;
 	public ArrayList<HashMap<String, String>> availabilityMediaOptionsTable;
 	public String availabilityOrderInfo;
 	public String availabilityNoteUse;
 	public String availabilityCosts;
 	
 	// Thesaurus
-	public ArrayList<HashMap<String, String>> thesaurusTermsTable;
+	public ArrayList<SNSTopic> thesaurusTermsTable;
+	public ArrayList<String> thesaurusFreeTermsTable;
 	public ArrayList<String> thesaurusTopicsList;
-	public ArrayList<String> thesaurusFreeTermsList;
 	public Boolean thesaurusEnvExtRes;
 	public ArrayList<String> thesaurusEnvTopicsList;
 	public ArrayList<String> thesaurusEnvCatsList;
@@ -146,6 +149,9 @@ public class MdekDataBean {
 		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
 		this.setSpatialRefAdminUnitTable(new ArrayList<Location>());
 		this.setSpatialRefLocationTable(new ArrayList<Location>());
+		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
+		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
+		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
 	}
 	
 	
@@ -161,19 +167,6 @@ public class MdekDataBean {
 	}
 
 
-	public ArrayList<HashMap<String, String>> getThesaurusTermsTable() {
-		return thesaurusTermsTable;
-	}
-
-
-
-	public void setThesaurusTermsTable(
-			ArrayList<HashMap<String, String>> thesaurusTermsTable) {
-		this.thesaurusTermsTable = thesaurusTermsTable;
-	}
-
-
-
 	public ArrayList<String> getThesaurusTopicsList() {
 		return thesaurusTopicsList;
 	}
@@ -183,19 +176,6 @@ public class MdekDataBean {
 	public void setThesaurusTopicsList(ArrayList<String> thesaurusTopicsList) {
 		this.thesaurusTopicsList = thesaurusTopicsList;
 	}
-
-
-
-	public ArrayList<String> getThesaurusFreeTermsList() {
-		return thesaurusFreeTermsList;
-	}
-
-
-
-	public void setThesaurusFreeTermsList(ArrayList<String> thesaurusFreeTermsList) {
-		this.thesaurusFreeTermsList = thesaurusFreeTermsList;
-	}
-
 
 
 	public Boolean getThesaurusEnvExtRes() {
@@ -492,18 +472,6 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<HashMap<String, String>> getTimeRefTable() {
-		return timeRefTable;
-	}
-
-
-
-	public void setTimeRefTable(ArrayList<HashMap<String, String>> timeRefTable) {
-		this.timeRefTable = timeRefTable;
-	}
-
-
-
 	public String getTimeRefExplanation() {
 		return timeRefExplanation;
 	}
@@ -597,20 +565,6 @@ public class MdekDataBean {
 	public void setExtraInfoUse(String extraInfoUse) {
 		this.extraInfoUse = extraInfoUse;
 	}
-
-
-
-	public ArrayList<HashMap<String, String>> getAvailabilityDataFormatTable() {
-		return availabilityDataFormatTable;
-	}
-
-
-
-	public void setAvailabilityDataFormatTable(
-			ArrayList<HashMap<String, String>> availabilityDataFormatTable) {
-		this.availabilityDataFormatTable = availabilityDataFormatTable;
-	}
-
 
 
 	public ArrayList<HashMap<String, String>> getAvailabilityMediaOptionsTable() {
@@ -768,5 +722,62 @@ public class MdekDataBean {
 
 	public void setLinksToUrlTable(ArrayList<UrlBean> linksToUrlTable) {
 		this.linksToUrlTable = linksToUrlTable;
+	}
+
+
+
+
+	public ArrayList<TimeReferenceBean> getTimeRefTable() {
+		return timeRefTable;
+	}
+
+
+
+
+	public void setTimeRefTable(ArrayList<TimeReferenceBean> timeRefTable) {
+		this.timeRefTable = timeRefTable;
+	}
+
+
+
+
+	public ArrayList<DataFormatBean> getAvailabilityDataFormatTable() {
+		return availabilityDataFormatTable;
+	}
+
+
+
+
+	public void setAvailabilityDataFormatTable(
+			ArrayList<DataFormatBean> availabilityDataFormatTable) {
+		this.availabilityDataFormatTable = availabilityDataFormatTable;
+	}
+
+
+
+
+	public ArrayList<String> getThesaurusFreeTermsTable() {
+		return thesaurusFreeTermsTable;
+	}
+
+
+
+
+	public void setThesaurusFreeTermsTable(ArrayList<String> thesaurusFreeTermsTable) {
+		this.thesaurusFreeTermsTable = thesaurusFreeTermsTable;
+	}
+
+
+
+
+	public ArrayList<SNSTopic> getThesaurusTermsTable() {
+		return thesaurusTermsTable;
+	}
+
+
+
+
+	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
+		this.thesaurusTermsTable = thesaurusTermsTable;
 	};
 }

@@ -183,8 +183,8 @@ dojo.addOnLoad(function()
     dojo.event.connect(dojo.widget.byId("extraInfoLangMetaData"), "onValueChanged", "setDirtyFlag");
     dojo.event.connect(dojo.widget.byId("extraInfoLangData"), "onValueChanged", "setDirtyFlag");
     dojo.event.connect(dojo.widget.byId("extraInfoPublishArea"), "onValueChanged", "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoXMLExport").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoLegalBasics").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoXMLExportTable").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoLegalBasicsTable").store);
     dojo.event.connect(dojo.widget.byId("extraInfoPurpose"), "onkeyup", "setDirtyFlag");
     dojo.event.connect(dojo.widget.byId("extraInfoUse"), "onkeyup", "setDirtyFlag");
 
@@ -581,6 +581,7 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("timeRefIntervalNum").setValue(nodeData.timeRefIntervalNum);
   dojo.widget.byId("timeRefIntervalUnit").setValue(nodeData.timeRefIntervalUnit);
   dojo.widget.byId("timeRefExplanation").setValue(nodeData.timeRefExplanation);
+  dojo.widget.byId("timeRefTable").store.setData(udkDataProxy._addTableIndices(nodeData.timeRefTable));
 
   // -- Extra Info --
   dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaData);
@@ -588,19 +589,22 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
   dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
+  dojo.widget.byId("extraInfoXMLExportTable").store.setData(udkDataProxy._addTableIndices(nodeData.extraInfoXMLExportTable));
+  dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(udkDataProxy._addTableIndices(nodeData.extraInfoLegalBasicsTable));
 
   // -- Availability --
   dojo.widget.byId("availabilityOrderInfo").setValue(nodeData.availabilityOrderInfo);
   dojo.widget.byId("availabilityNoteUse").setValue(nodeData.availabilityNoteUse);
   dojo.widget.byId("availabilityCosts").setValue(nodeData.availabilityCosts);
+  dojo.widget.byId("availabilityDataFormat").store.setData(udkDataProxy._addTableIndices(nodeData.availabilityDataFormatTable));
+  dojo.widget.byId("availabilityMediaOptions").store.setData(udkDataProxy._addTableIndices(nodeData.availabilityMediaOptionsTable));
+
+
+  // -- Thesaurus --
+  dojo.widget.byId("thesaurusTerms").store.setData(nodeData.thesaurusTermsTable);
+
 
 /*
-  //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
-  dojo.widget.byId("spatialRefAdminUnit").store.clearData();
-  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "1", information:"info one", latitude1:"3.14", longitude1:"0.1123", latitude2:"1.234", longitude2:"2.345"});
-  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "2", information:"info two", latitude1:"1.14", longitude1:"2.1123", latitude2:"4.434", longitude2:"1.2"});
-
-  
 
   // -- Thesaurus --
   //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;
@@ -803,6 +807,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.timeRefIntervalNum = dojo.widget.byId("timeRefIntervalNum").getValue();
   nodeData.timeRefIntervalUnit = dojo.widget.byId("timeRefIntervalUnit").getValue();
   nodeData.timeRefExplanation = dojo.widget.byId("timeRefExplanation").getValue();
+  nodeData.timeRefTable = udkDataProxy._getTableData("timeRefTable");
 
   // -- Extra Info --
   nodeData.extraInfoLangMetaData = dojo.widget.byId("extraInfoLangMetaData").getValue();
@@ -810,12 +815,18 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
+  nodeData.extraInfoXMLExportTable = udkDataProxy._getTableData("extraInfoXMLExportTable");
+  nodeData.extraInfoLegalBasicsTable = udkDataProxy._getTableData("extraInfoLegalBasicsTable");
 
   // -- Availability --
   nodeData.availabilityOrderInfo = dojo.widget.byId("availabilityOrderInfo").getValue();
   nodeData.availabilityNoteUse = dojo.widget.byId("availabilityNoteUse").getValue();
   nodeData.availabilityCosts = dojo.widget.byId("availabilityCosts").getValue();
+  nodeData.availabilityDataFormatTable = udkDataProxy._getTableData("availabilityDataFormat");
+  nodeData.availabilityMediaOptionsTable = udkDataProxy._getTableData("availabilityMediaOptions");
 
+  // -- Thesaurus --
+  nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
 
 /*
   //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
@@ -967,10 +978,14 @@ udkDataProxy._getTableData = function(tableName)
 
 // Add Indices (Id values) to a passed list
 udkDataProxy._addTableIndices = function(list) {
-	for (var i = 0; i < list.length; ++i) {
-		list[i].Id = i;
+	if (list) {
+		for (var i = 0; i < list.length; ++i) {
+			list[i].Id = i;
+		}
+		return list;
+	} else {
+		return [];
 	}
-	return list;
 }
 
 // Add object link labels to a passed list.

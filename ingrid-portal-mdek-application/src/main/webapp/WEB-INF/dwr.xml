@@ -17,6 +17,9 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekAddressBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.UrlBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.DateFormatBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.TimeReferenceBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.MediaOptionBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.Location"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSLocationTopic"/>

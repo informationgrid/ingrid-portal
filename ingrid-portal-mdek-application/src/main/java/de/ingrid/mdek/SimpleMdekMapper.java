@@ -15,7 +15,9 @@ import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.dwr.Location;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.TimeReferenceBean;
 import de.ingrid.mdek.dwr.UrlBean;
+import de.ingrid.mdek.dwr.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
 
 public class SimpleMdekMapper implements DataMapperInterface {
@@ -88,7 +90,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
 		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_STEP));
 		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
-//		mdekObj.setTimeRefTable((ArrayList<HashMap<String, String>>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 		
 		// ExtraInfo
@@ -97,18 +99,19 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
-//		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) mapToExtraInfoXMLExportTable((List<String>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) mapToExtraInfoLegalBasicsTable((List<String>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) obj.get(MdekKeys.MISSING));
+//		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) obj.get(MdekKeys.MISSING));
 
 		// Availability
-//		mdekObj.setAvailabilityDataFormatTable((ArrayList<HashMap<String, String>>) mapToAvailabilityDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setAvailabilityMediaOptionsTable((ArrayList<HashMap<String, String>>) mapToAvailabilityMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
 		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.USE_CONSTRAINTS));
 		mdekObj.setAvailabilityCosts((String) obj.get(MdekKeys.FEES));
+//		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		
 		// Thesaurus
-//		mdekObj.setThesaurusTermsTable((ArrayList<HashMap<String, String>>) mapToThesaurusTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+
 //		mdekObj.setThesaurusTopicsList((ArrayList<String>) mapToThesaurusTopicsList((List<String>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setThesaurusFreeTermsList((ArrayList<String>) mapToThesaurusFreeTermsList((List<String>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setThesaurusEnvExtRes((Boolean) obj.get(MdekKeys.MISSING));
@@ -197,7 +200,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalNum());
 		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalUnit());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
-//		mdekObj.setTimeRefTable((ArrayList<HashMap<String, String>>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//		udkObj.put(MdekKeys.MISSING, mapFromTimeRefTable(data.getTimeRefTable()));
 
 		// ExtraInfo
 		udkObj.put(MdekKeys.METADATA_LANGUAGE, data.getExtraInfoLangMetaData());
@@ -205,16 +208,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
-//		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) mapToExtraInfoXMLExportTable((List<String>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) mapToExtraInfoLegalBasicsTable((List<String>) obj.get(MdekKeys.MISSING)));
+//		udkObj.put(MdekKeys.MISSING, data.getExtraInfoXMLExportTable());
+//		udkObj.put(MdekKeys.MISSING, data.getExtraInfoLegalBasicsTable());
+
 
 		// Availability
-//		mdekObj.setAvailabilityDataFormatTable((ArrayList<HashMap<String, String>>) mapToAvailabilityDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setAvailabilityMediaOptionsTable((ArrayList<HashMap<String, String>>) mapToAvailabilityMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//		udkObj.put(MdekKeys.MISSING, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
+//		udkObj.put(MdekKeys.MISSING, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
 		udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
 		udkObj.put(MdekKeys.USE_CONSTRAINTS, data.getAvailabilityNoteUse());
 		udkObj.put(MdekKeys.FEES, data.getAvailabilityCosts());
 
+		//Thesaurus
+//		udkObj.put(MdekKeys.MISSING, mapFromThesTermsTable(data.getThesaurusTermsTable()));
+		
+		
 		// Links
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
 		udkObj.put(MdekKeys.LINKAGES, mapFromUrlLinksTable(data.getLinksToUrlTable()));
@@ -314,8 +322,72 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
-	
-	
+
+/*
+	private static ArrayList<IngridDocument> mapFromTimeRefTable(ArrayList<TimeReferenceBean> refList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (refList == null)
+			return resultList;
+
+		for (TimeReferenceBean ref : refList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, convertDateToTimestamp(ref.getDate()));
+			result.put(MdekKeys.MISSING, ref.getType());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (refList == null)
+			return resultList;
+
+		for (DataFormatBean ref : refList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, ref.getCompression());
+			result.put(MdekKeys.MISSING, ref.getName());
+			result.put(MdekKeys.MISSING, ref.getPixelDepth());
+			result.put(MdekKeys.MISSING, ref.getVersion());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<IngridDocument> mapFromAvailMediaOptionsTable(ArrayList<MediaOptionBean> refList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (refList == null)
+			return resultList;
+
+		for (MediaOptionBean ref : refList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, ref.getName());
+			result.put(MdekKeys.MISSING, ref.getLocation());
+			result.put(MdekKeys.MISSING, ref.getTransferSize());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+
+/*
+	private static ArrayList<IngridDocument> mapFromThesTermsTable(ArrayList<SNSTopic> topicList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (topicList == null)
+			return resultList;
+
+		for (SNSTopic topic : topicList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, topic.getTitle());
+			result.put(MdekKeys.MISSING, topic.getTopicId());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+
 	/****************************************************************************
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
 	 ****************************************************************************/
@@ -444,7 +516,60 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			}
 		}
 		return resultList;
-	}	
+	}
+
+/*
+	private static ArrayList<TimeReferenceBean> mapToTimeRefTable(List<HashMap<String, Object>> refList) {
+		ArrayList<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
+		for (HashMap<String, Object> ref : refList) {
+			TimeReferenceBean tr = new TimeReferenceBean();
+			tr.setDate(convertTimestampToDate((String) ref.get(MdekKeys.MISSING)));
+			tr.setType(ref.get(MdekKeys.MISSING));
+			resultList.add(tr);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
+		ArrayList<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
+		for (HashMap<String, Object> ref : refList) {
+			DataFormatBean df = new DataFormatBean();
+			df.setName((String) ref.get(MdekKeys.MISSING));
+			df.setCompression((String) ref.get(MdekKeys.MISSING));
+			df.setPixelDepth((String) ref.get(MdekKeys.MISSING));
+			df.setVersion((String) ref.get(MdekKeys.MISSING));
+			resultList.add(df);
+		}
+		return resultList;
+	}
+*/
+/*	
+	private static ArrayList<MediaOptionBean> mapToAvailMediaOptionsTable(List<HashMap<String, Object>> refList) {
+		ArrayList<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
+		for (HashMap<String, Object> ref : refList) {
+			MediaOptionBean mo = new MediaOptionBean();
+			mo.setName((Integer) ref.get(MdekKeys.MISSING));
+			mo.setLocation((String) ref.get(MdekKeys.MISSING));
+			mo.setTransferSize((Double) ref.get(MdekKeys.MISSING));
+			resultList.add(mo);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
+		ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+		for (HashMap<String, Object> topic : topicList) {
+			SNSTopic t = new SNSTopic();
+			t.setTitle(topic.get(MdekKeys.MISSING));
+			t.setTopicId(topic.get(MdekKeys.MISSING));
+			resultList.add(t);
+		}
+		return resultList;
+	}
+*/
+	
 	/***********************************************************
 	 * Several Methods for testing Input and Output Conformity *
 	 ***********************************************************/

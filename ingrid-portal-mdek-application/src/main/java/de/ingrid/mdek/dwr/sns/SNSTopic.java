@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SNSTopic {
 
 	public Type type; 
-	public String id;
+	public String topicId;
 	public String title;
 	public ArrayList<SNSTopic> children;
 	public ArrayList<SNSTopic> parents;
@@ -13,7 +13,7 @@ public class SNSTopic {
 	
 	public SNSTopic() {
 		type = Type.TOP_TERM;
-		this.id = null;
+		this.topicId = null;
 		this.title = null;
 		this.children = null;
 		this.parents = null;
@@ -22,7 +22,7 @@ public class SNSTopic {
 	public SNSTopic(Type typ, String id, String title)
 	{
 		this.type = typ;
-		this.id = id;
+		this.topicId = id;
 		this.title = title;
 		this.children = new ArrayList<SNSTopic>();
 		this.parents = new ArrayList<SNSTopic>();
@@ -35,21 +35,13 @@ public class SNSTopic {
 	public Type getType() {
 		return type;
 	}
-/*
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-*/
 	public String getTopicId() {
-		return id;
+		return topicId;
 	}
 
 	public void setTopicId(String id) {
-		this.id = id;
+		this.topicId = id;
 	}
 
 	public String getTitle() {

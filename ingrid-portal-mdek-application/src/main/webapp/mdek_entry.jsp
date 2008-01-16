@@ -1254,9 +1254,6 @@ function hideSplash(){
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
-	              		      <tr value="1">
-	              		        <td>11.08.2006</td>
-	              		        <td>Publikation</td></tr>
 	              	      </tbody>
 	              	    </table>
 	                  </div>
@@ -1307,15 +1304,15 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired h110">
 	                <div class="third1 left">
-	                  <span class="label"><label for="extraInfoXMLExport" onclick="javascript:dialog.showContextHelp(arguments[0], 'XML-Export-Kriterium')">XML-Export-Kriterium</label></span>
+	                  <span class="label"><label for="extraInfoXMLExportTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'XML-Export-Kriterium')">XML-Export-Kriterium</label></span>
 	                  <div class="tableContainer rows5">
-	                    <div class="cellEditors" id="extraInfoXMLExportEditors">
-	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/extraInfoXML.js" style="width:161px;" widgetId="extraInfoXMLExportCriteriaCombobox"></div>
+	                    <div class="cellEditors" id="extraInfoXMLExportTableEditors">
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/extraInfoXML.js" style="width:161px;" widgetId="extraInfoXMLExportTableCriteriaCombobox"></div>
 	                    </div>
-	              	    <table id="extraInfoXMLExport" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third1">
+	              	    <table id="extraInfoXMLExportTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third1">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="XMLExportCriteria" dataType="String" editor="extraInfoXMLExportCriteriaCombobox">XML-Export-Kriterium</th>
+	                    			<th field="XMLExportCriteria" dataType="String" editor="extraInfoXMLExportTableCriteriaCombobox">XML-Export-Kriterium</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1325,15 +1322,15 @@ function hideSplash(){
 	            	  </div>
 	          
 	                <div class="third2">
-	                  <span class="label"><label for="extraInfoLegalBasics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rechtliche Grundlagen')">Rechtliche Grundlagen</label></span>
+	                  <span class="label"><label for="extraInfoLegalBasicsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rechtliche Grundlagen')">Rechtliche Grundlagen</label></span>
 	                  <div class="tableContainer rows5">
-	                    <div class="cellEditors" id="extraInfoLegalBasicsEditors">
-	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/extraInfoLegal.js" style="width:397px;" widgetId="extraInfoLegalBasicsCombobox"></div>
+	                    <div class="cellEditors" id="extraInfoLegalBasicsTableEditors">
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/extraInfoLegal.js" style="width:397px;" widgetId="extraInfoLegalBasicsTableCombobox"></div>
 	                    </div>
-	              	    <table id="extraInfoLegalBasics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third2">
+	              	    <table id="extraInfoLegalBasicsTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third2">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="legalBasics" dataType="String" editor="extraInfoLegalBasicsCombobox">Rechtliche Grundlagen</th>
+	                    			<th field="legalBasics" dataType="String" editor="extraInfoLegalBasicsTableCombobox">Rechtliche Grundlagen</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1410,8 +1407,8 @@ function hideSplash(){
 	            	    <table id="availabilityMediaOptions" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="medium" dataType="String" width="150" editor="availabilityMediaOptionsMediumCombobox">Medium</th>
-	                  			<th field="size" dataType="String" width="250" editor="availabilityMediaOptionsSize">Datenvolumen (MB)</th>
+	                  			<th field="name" dataType="String" width="150" editor="availabilityMediaOptionsMediumCombobox">Medium</th>
+	                  			<th field="transferSize" dataType="String" width="250" editor="availabilityMediaOptionsSize">Datenvolumen (MB)</th>
 	                  			<th field="location" dataType="String" width="275" editor="availabilityMediaOptionsLocation">Speicherort</th>
 	            		      </tr>
 	            	      </thead>
@@ -1461,7 +1458,7 @@ function hideSplash(){
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
 	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 	                <div class="tableContainer rows4">
-	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="thesaurusTerms" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
 	                  			<th field="title" dataType="String">&nbsp;</th>
