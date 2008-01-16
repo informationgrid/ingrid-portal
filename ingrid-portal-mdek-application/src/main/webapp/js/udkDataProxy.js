@@ -156,7 +156,7 @@ dojo.addOnLoad(function()
 	_connectStoreWithDirtyFlag(dojo.widget.byId("ref4ParticipantsLink").store);
 	_connectStoreWithDirtyFlag(dojo.widget.byId("ref4PMLink").store);
 
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5Scale").store);
+	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5dbContent").store);
 	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5MethodLink").store);
     dojo.event.connect(dojo.widget.byId("ref5Explanation"), "onkeyup", "setDirtyFlag");
 
@@ -710,15 +710,17 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 	dojo.widget.byId("ref3Operation").store.setData(udkDataProxy._addTableIndices(nodeData.ref3Operation));
 }
 
-udkDataProxy._setObjectDataClass4 = function(nodeData)
-{
+udkDataProxy._setObjectDataClass4 = function(nodeData) {
 	dojo.widget.byId("ref4ParticipantsText").setValue(nodeData.ref4ParticipantsText);
 	dojo.widget.byId("ref4PMText").setValue(nodeData.ref4PMText);
 	dojo.widget.byId("ref4Explanation").setValue(nodeData.ref4Explanation);
 }
 
-udkDataProxy._setObjectDataClass5 = function(nodeData)
-{
+udkDataProxy._setObjectDataClass5 = function(nodeData) {
+	dojo.widget.byId("ref5MethodText").setValue(nodeData.ref5MethodText);
+	dojo.widget.byId("ref5Explanation").setValue(nodeData.ref5Explanation);
+
+	dojo.widget.byId("ref5dbContent").store.setData(udkDataProxy._addTableIndices(nodeData.ref5dbContent));
 }
 
 
@@ -953,7 +955,12 @@ udkDataProxy._getObjectDataClass4 = function(nodeData) {
 	nodeData.ref4Explanation = dojo.widget.byId("ref4Explanation").getValue();
 };
 
-udkDataProxy._getObjectDataClass5 = function(nodeData) {};
+udkDataProxy._getObjectDataClass5 = function(nodeData) {
+	nodeData.ref5MethodText = dojo.widget.byId("ref5MethodText").getValue();
+	nodeData.ref5Explanation = dojo.widget.byId("ref5Explanation").getValue();
+
+	nodeData.ref5dbContent = udkDataProxy._getTableData("ref5dbContent");
+};
 
 
 /*******************************************

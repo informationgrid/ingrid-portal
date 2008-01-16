@@ -134,13 +134,54 @@ public class MdekDataBean {
 	public String ref4PMText;
 	public String ref4Explanation;
 
-	/*
-	
 	// Object class 5 (Vorhaben/Projekt/Programm)
-	public final static String MDEK_OBJ_CLASS5_CONTENT = "ref5Scale";
-	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
-	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
-	 */
+	public ArrayList<DBContentBean> ref5dbContent;
+	public String ref5MethodText;
+	public String ref5Explanation;
+
+	
+
+	public ArrayList<DBContentBean> getRef5dbContent() {
+		return ref5dbContent;
+	}
+
+
+
+
+	public void setRef5dbContent(ArrayList<DBContentBean> ref5dbContent) {
+		this.ref5dbContent = ref5dbContent;
+	}
+
+
+
+
+	public String getRef5MethodText() {
+		return ref5MethodText;
+	}
+
+
+
+
+	public void setRef5MethodText(String ref5MethodText) {
+		this.ref5MethodText = ref5MethodText;
+	}
+
+
+
+
+	public String getRef5Explanation() {
+		return ref5Explanation;
+	}
+
+
+
+
+	public void setRef5Explanation(String ref5Explanation) {
+		this.ref5Explanation = ref5Explanation;
+	}
+
+
+
 
 	public String getRef4ParticipantsText() {
 		return ref4ParticipantsText;

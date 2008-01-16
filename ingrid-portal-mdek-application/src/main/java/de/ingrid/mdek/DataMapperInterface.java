@@ -110,7 +110,7 @@ public interface DataMapperInterface {
 	public final static String MDEK_OBJ_CLASS4_DESCRIPTION = "ref4Explanation";
 	
 	// Object class 5 (Vorhaben/Projekt/Programm)
-	public final static String MDEK_OBJ_CLASS5_CONTENT = "ref5Scale";
+	public final static String MDEK_OBJ_CLASS5_CONTENT = "ref5dbContent";
 	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 

@@ -959,17 +959,17 @@ function hideSplash(){
 	        	  <div id="ref5Content" class="content">
 
 	              <div class="inputContainer notRequired h130">
-	                <span class="label"><label for="ref5Scale" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalte der Datensammlung/Datenbank')">Inhalte der Datensammlung/Datenbank</label></span>
+	                <span class="label"><label for="ref5dbContent" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalte der Datensammlung/Datenbank')">Inhalte der Datensammlung/Datenbank</label></span>
 	                <div class="tableContainer rows5">
-	                  <div class="cellEditors" id="ref5ScaleEditors">
-	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5ScaleParameter"></div>
-	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5ScaleAdditionalData"></div>
+	                  <div class="cellEditors" id="ref5dbContentEditors">
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5dbContentParameter"></div>
+	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5dbContentAdditionalData"></div>
 	                  </div>
-	            	    <table id="ref5Scale" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="ref5dbContent" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="parameter" dataType="String" width="335" editor="ref5ScaleParameter">Parameter</th>
-	                  			<th field="additionalData" dataType="String" width="340" editor="ref5ScaleAdditionalData">Erg&auml;nzende Angaben</th>
+	                  			<th field="parameter" dataType="String" width="335" editor="ref5dbContentParameter">Parameter</th>
+	                  			<th field="additionalData" dataType="String" width="340" editor="ref5dbContentAdditionalData">Erg&auml;nzende Angaben</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -984,7 +984,9 @@ function hideSplash(){
 	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 580, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref5MethodTab1">
 	                		<div id="ref5MethodTab1" dojoType="ContentPane" label="Text">
-	                      <span class="input"><textarea id="ref5MethodText" name="ref5MethodText" class="w320 h038" /></textarea></span>
+	                      	<span class="input">
+	                      		<input type="text" mode="textarea" id="ref5MethodText" name="ref5MethodText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+	                      	</span>
 	                		</div>
 	                		<div id="ref5MethodTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2">

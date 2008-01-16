@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.dwr.DBContentBean;
 import de.ingrid.mdek.dwr.LinkDataBean;
 import de.ingrid.mdek.dwr.Location;
 import de.ingrid.mdek.dwr.MdekAddressBean;
@@ -189,6 +190,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 5:
+/*
+			mdekObj.setRef5Explanation((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef5MethodText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef5dbContent(mapToDbContentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+*/
 			break;
 		}
 		
@@ -358,6 +364,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 5:
+/*
+			udkObj.put(MdekKeys.MISSING, data.getRef5Explanation());
+			udkObj.put(MdekKeys.MISSING, data.getRef5MethodText());
+			udkObj.put(MdekKeys.MISSING, mapFromDbContentTable(data.getRef5dbContent()));
+*/
 			break;
 		}
 
@@ -560,6 +571,22 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			result.put(MdekKeys.MISSING, convertDateToTimestamp(l.getDate()));
 			result.put(MdekKeys.MISSING, l.getTitle());
 			result.put(MdekKeys.MISSING, l.getVersion());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+
+/*
+	private static ArrayList<IngridDocument> mapFromDbContentTable(ArrayList<DBContentBean> dbList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (dbList == null)
+			return resultList;
+
+		for (DBContentBean db : dbList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, db.getParameter());
+			result.put(MdekKeys.MISSING, db.getAdditionalData());
 			resultList.add(result);
 		}
 		return resultList;
@@ -785,6 +812,19 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 */
+/*
+	private static ArrayList<DBContentBean> mapToDbContentTable(List<HashMap<String, Object>> dbList) {
+		ArrayList<DBContentBean> resultList = new ArrayList<DBContentBean>();
+		for (HashMap<String, Object> topic : dbList) {
+			DBContentBean db = new DBContentBean();
+			db.setParameter((String) topic.get(MdekKeys.MISSING));
+			db.setAdditionalData((String) topic.get(MdekKeys.MISSING));
+			resultList.add(db);
+		}
+		return resultList;
+	}
+*/
+
 	
 	 /***********************************************************
 	 * Several Methods for testing Input and Output Conformity *
