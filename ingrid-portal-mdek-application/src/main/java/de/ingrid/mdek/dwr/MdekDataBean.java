@@ -120,15 +120,16 @@ public class MdekDataBean {
 	public String ref2BibData;
 	public String ref2Explanation;
 
-	/*
 	// Object class 3 (Dienst/Anwendung/Informationssystem)
-	public final static String MDEK_OBJ_CLASS3_SERVICE_TYPE = "ref3ServiceType";
-	public final static String MDEK_OBJ_CLASS3_SERVICE_VERSION = "ref3ServiceVersion";
-	public final static String MDEK_OBJ_CLASS3_SYSTEM_ENV = "ref3SystemEnv";
-	public final static String MDEK_OBJ_CLASS3_HISTORY = "ref3History";
-	public final static String MDEK_OBJ_CLASS3_BASE_DATA = "ref3BaseDataLink";
-	public final static String MDEK_OBJ_CLASS3_DESCRIPTION = "ref3Explanation";
-	public final static String MDEK_OBJ_CLASS3_OPERATION = "ref3Operation";
+	public Integer ref3ServiceType;
+	public ArrayList<String> ref3ServiceVersion;
+	public String ref3SystemEnv;
+	public String ref3History;
+	public String ref3BaseDataText;
+	public String ref3Explanation;
+	public ArrayList<OperationBean> ref3Operation;
+	
+	/*
 	
 	// Object class 4 (Vorhaben/Projekt/Programm)
 	public final static String MDEK_OBJ_CLASS4_MEMBER = "ref4ParticipantsLink";
@@ -140,6 +141,89 @@ public class MdekDataBean {
 	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 	 */
+
+	public Integer getRef3ServiceType() {
+		return ref3ServiceType;
+	}
+
+
+
+
+	public void setRef3ServiceType(Integer ref3ServiceType) {
+		this.ref3ServiceType = ref3ServiceType;
+	}
+
+
+
+
+	public ArrayList<String> getRef3ServiceVersion() {
+		return ref3ServiceVersion;
+	}
+
+
+
+
+	public void setRef3ServiceVersion(ArrayList<String> ref3ServiceVersion) {
+		this.ref3ServiceVersion = ref3ServiceVersion;
+	}
+
+
+
+
+	public String getRef3SystemEnv() {
+		return ref3SystemEnv;
+	}
+
+
+
+
+	public void setRef3SystemEnv(String ref3SystemEnv) {
+		this.ref3SystemEnv = ref3SystemEnv;
+	}
+
+
+
+
+	public String getRef3History() {
+		return ref3History;
+	}
+
+
+
+
+	public void setRef3History(String ref3History) {
+		this.ref3History = ref3History;
+	}
+
+
+
+	public String getRef3Explanation() {
+		return ref3Explanation;
+	}
+
+
+
+
+	public void setRef3Explanation(String ref3Explanation) {
+		this.ref3Explanation = ref3Explanation;
+	}
+
+
+
+
+	public ArrayList<OperationBean> getRef3Operation() {
+		return ref3Operation;
+	}
+
+
+
+
+	public void setRef3Operation(ArrayList<OperationBean> ref3Operation) {
+		this.ref3Operation = ref3Operation;
+	}
+
+
+
 
 	public String getRef2Author() {
 		return ref2Author;
@@ -1171,5 +1255,19 @@ public class MdekDataBean {
 
 	public void setRef1Data(ArrayList<String> ref1Data) {
 		this.ref1Data = ref1Data;
+	}
+
+
+
+
+	public String getRef3BaseDataText() {
+		return ref3BaseDataText;
+	}
+
+
+
+
+	public void setRef3BaseDataText(String ref3BaseDataText) {
+		this.ref3BaseDataText = ref3BaseDataText;
 	};
 }

@@ -698,8 +698,16 @@ udkDataProxy._setObjectDataClass2 = function(nodeData) {
 	dojo.widget.byId("ref2Explanation").setValue(nodeData.ref2Explanation);
 }
 
-udkDataProxy._setObjectDataClass3 = function(nodeData)
-{
+udkDataProxy._setObjectDataClass3 = function(nodeData) {
+	dojo.widget.byId("ref3ServiceType").setValue(nodeData.ref3ServiceType);
+	dojo.widget.byId("ref3SystemEnv").setValue(nodeData.ref3SystemEnv);
+	dojo.widget.byId("ref3History").setValue(nodeData.ref3History);
+	dojo.widget.byId("ref3BaseDataText").setValue(nodeData.ref3BaseDataText);
+	dojo.widget.byId("ref3Explanation").setValue(nodeData.ref3Explanation);
+
+	dojo.widget.byId("ref3ServiceVersion").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
+
+	dojo.widget.byId("ref3Operation").store.setData(udkDataProxy._addTableIndices(nodeData.ref3Operation));
 }
 
 udkDataProxy._setObjectDataClass4 = function(nodeData)
@@ -924,7 +932,17 @@ udkDataProxy._getObjectDataClass2 = function(nodeData) {
 };
 
 
-udkDataProxy._getObjectDataClass3 = function(nodeData) {};
+udkDataProxy._getObjectDataClass3 = function(nodeData) {
+	nodeData.ref3ServiceType = dojo.widget.byId("ref3ServiceType").getValue();
+	nodeData.ref3SystemEnv = dojo.widget.byId("ref3SystemEnv").getValue();
+	nodeData.ref3History = dojo.widget.byId("ref3History").getValue();
+	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
+	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
+
+	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
+
+	nodeData.ref3Operation = udkDataProxy._getTableData("ref3Operation");
+};
 udkDataProxy._getObjectDataClass4 = function(nodeData) {};
 udkDataProxy._getObjectDataClass5 = function(nodeData) {};
 

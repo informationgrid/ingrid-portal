@@ -16,6 +16,7 @@ import de.ingrid.mdek.dwr.LinkDataBean;
 import de.ingrid.mdek.dwr.Location;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.OperationBean;
 import de.ingrid.mdek.dwr.ScaleBean;
 import de.ingrid.mdek.dwr.TimeReferenceBean;
 import de.ingrid.mdek.dwr.UrlBean;
@@ -170,6 +171,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 3:
+/*
+			mdekObj.setRef3ServiceType((Integer) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef3SystemEnv((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef3History((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef3BaseDataText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef3Explanation((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef3ServiceVersion((ArrayList<String>) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+*/
 			break;
 		case 4:
 			break;
@@ -325,6 +335,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 3:
+/*
+			udkObj.put(MdekKeys.MISSING, data.getRef3ServiceType());
+			udkObj.put(MdekKeys.MISSING, data.getRef3SystemEnv());
+			udkObj.put(MdekKeys.MISSING, data.getRef3History());
+			udkObj.put(MdekKeys.MISSING, data.getRef3BaseDataText());
+			udkObj.put(MdekKeys.MISSING, data.getRef3Explanation());
+			udkObj.put(MdekKeys.MISSING, data.getRef3ServiceVersion());
+			udkObj.put(MdekKeys.MISSING, mapFromOperationTable(data.getRef3Operation()));
+*/
 			break;
 		case 4:
 			break;

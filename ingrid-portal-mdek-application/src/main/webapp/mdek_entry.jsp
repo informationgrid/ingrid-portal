@@ -826,7 +826,9 @@ function hideSplash(){
 	                  <span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 580, true, {filter: 'Basisdaten'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref3BaseDataTab1">
 	                		<div id="ref3BaseDataTab1" dojoType="ContentPane" label="Text">
-	                      <span class="input"><textarea id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" /></textarea></span>
+	                      	<span class="input">
+	                      		<input type="text" mode="textarea" id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+	                      	</span>
 	                		</div>
 	                		<div id="ref3MethodTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2">
