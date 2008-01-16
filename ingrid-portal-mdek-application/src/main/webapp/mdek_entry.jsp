@@ -344,12 +344,10 @@ function hideSplash(){
 	               	    <table id="ref1Representation" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="representation" dataType="String" editor="ref1RepresentationCombobox">Digitale Repräsentation</th>
+	                    			<th field="title" dataType="String" editor="ref1RepresentationCombobox">Digitale Repräsentation</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
-	              		      <tr value="1">
-	              		        <td>Rasterdaten</td></tr>
 	              	      </tbody>
 	              	    </table>
 	                  </div>
@@ -588,7 +586,7 @@ function hideSplash(){
 	             	    <table id="ref1Data" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="data" dataType="String" editor="ref1DataEditor">Sachdaten</th>
+	                  			<th field="title" dataType="String" editor="ref1DataEditor">Sachdaten</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -1312,7 +1310,7 @@ function hideSplash(){
 	              	    <table id="extraInfoXMLExportTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third1">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="XMLExportCriteria" dataType="String" editor="extraInfoXMLExportTableCriteriaCombobox">XML-Export-Kriterium</th>
+	                    			<th field="title" dataType="String" editor="extraInfoXMLExportTableCriteriaCombobox">XML-Export-Kriterium</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1330,7 +1328,7 @@ function hideSplash(){
 	              	    <table id="extraInfoLegalBasicsTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third2">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="legalBasics" dataType="String" editor="extraInfoLegalBasicsTableCombobox">Rechtliche Grundlagen</th>
+	                    			<th field="title" dataType="String" editor="extraInfoLegalBasicsTableCombobox">Rechtliche Grundlagen</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1478,7 +1476,7 @@ function hideSplash(){
 	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="topics" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
+	                    			<th field="title" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1529,7 +1527,7 @@ function hideSplash(){
 	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive halfInside">
 	                	      <thead>
 	                		      <tr>
-	                      			<th field="topics" dataType="String" editor="thesaurusEnvTopicsCombobox">Umweltthemen</th>
+	                      			<th field="title" dataType="String" editor="thesaurusEnvTopicsCombobox">Umweltthemen</th>
 	                		      </tr>
 	                	      </thead>
 	                	      <tbody>
@@ -1547,7 +1545,7 @@ function hideSplash(){
 	                	    <table id="thesaurusEnvCats" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive halfInside">
 	                	      <thead>
 	                		      <tr>
-	                      			<th field="topics" dataType="String" editor="thesaurusEnvCatsCombobox">Umweltkategorien</th>
+	                      			<th field="title" dataType="String" editor="thesaurusEnvCatsCombobox">Umweltkategorien</th>
 	                		      </tr>
 	                	      </thead>
 	                	      <tbody>

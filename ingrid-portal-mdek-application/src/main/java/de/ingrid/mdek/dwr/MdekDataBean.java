@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 import de.ingrid.mdek.DataFormatBean;
-import de.ingrid.mdek.dwr.sns.SNSTopic;
 
 /**
  * @author mbenz
@@ -73,7 +72,7 @@ public class MdekDataBean {
 	public String availabilityCosts;
 	
 	// Thesaurus
-	public ArrayList<SNSTopic> thesaurusTermsTable;
+	public ArrayList<VectorFormatDetailsBean> thesaurusTermsTable;
 	public ArrayList<String> thesaurusFreeTermsTable;
 	public ArrayList<String> thesaurusTopicsList;
 	public Boolean thesaurusEnvExtRes;
@@ -87,25 +86,24 @@ public class MdekDataBean {
 	public String relationTypeName;
 	public String relationDescription;
 	
-/*
 	// TODO Subclass this?
 	// Object class 1 (Geoinformation/Karte)
-	public String ref1DataSet;
-	public String ref1Coverage;
-	public String ref1Representation;	
-	public String ref1VFormatTopology;
-	public String ref1VFormatDetails;
-	public String ref1SpatialSystem;
-	public String ref1Scale;
-	public String ref1AltAccuracy;
-	public String ref1PosAccuracy;
-	public String ref1SymbolsText;
-	public String ref1KeysText;
-	public String ref1ServiceLink;
-	public String ref1BasisLink;
-	public String ref1DataBasisLink;
-	public String ref1Data;
-	public String ref1ProcessLink;
+	public Integer ref1DataSet;
+	public Double ref1Coverage;
+	public ArrayList<Integer> ref1Representation;	
+	public Integer ref1VFormatTopology;
+	public ArrayList<VectorFormatDetailsBean> ref1VFormatDetails;
+	public Integer ref1SpatialSystem;
+	public ArrayList<ScaleBean> ref1Scale;
+	public Double ref1AltAccuracy;
+	public Double ref1PosAccuracy;
+	public ArrayList<LinkDataBean> ref1SymbolsText;
+	public ArrayList<LinkDataBean> ref1KeysText;
+	public String ref1BasisText;
+	public String ref1DataBasisText;
+	public ArrayList<String> ref1Data;
+
+	/*
 	
 	// Object class 2 (Dokument/Bericht/Literatur)
 	public final static String MDEK_OBJ_CLASS2_AUTHOR = "ref2Author";
@@ -151,7 +149,7 @@ public class MdekDataBean {
 		this.setSpatialRefLocationTable(new ArrayList<Location>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
-		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
+		this.setThesaurusTermsTable(new ArrayList<VectorFormatDetailsBean>());
 	}
 	
 	
@@ -770,14 +768,211 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<SNSTopic> getThesaurusTermsTable() {
+	public ArrayList<VectorFormatDetailsBean> getThesaurusTermsTable() {
 		return thesaurusTermsTable;
 	}
 
 
 
 
-	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
+	public void setThesaurusTermsTable(ArrayList<VectorFormatDetailsBean> thesaurusTermsTable) {
 		this.thesaurusTermsTable = thesaurusTermsTable;
+	}
+
+
+
+
+	public Integer getRef1DataSet() {
+		return ref1DataSet;
+	}
+
+
+
+
+	public void setRef1DataSet(Integer ref1DataSet) {
+		this.ref1DataSet = ref1DataSet;
+	}
+
+
+
+
+	public Double getRef1Coverage() {
+		return ref1Coverage;
+	}
+
+
+
+
+	public void setRef1Coverage(Double ref1Coverage) {
+		this.ref1Coverage = ref1Coverage;
+	}
+
+
+
+
+	public ArrayList<Integer> getRef1Representation() {
+		return ref1Representation;
+	}
+
+
+
+
+	public void setRef1Representation(ArrayList<Integer> ref1Representation) {
+		this.ref1Representation = ref1Representation;
+	}
+
+
+
+
+	public Integer getRef1VFormatTopology() {
+		return ref1VFormatTopology;
+	}
+
+
+
+
+	public void setRef1VFormatTopology(Integer ref1VFormatTopology) {
+		this.ref1VFormatTopology = ref1VFormatTopology;
+	}
+
+
+
+
+	public ArrayList<VectorFormatDetailsBean> getRef1VFormatDetails() {
+		return ref1VFormatDetails;
+	}
+
+
+
+
+	public void setRef1VFormatDetails(
+			ArrayList<VectorFormatDetailsBean> ref1VFormatDetails) {
+		this.ref1VFormatDetails = ref1VFormatDetails;
+	}
+
+
+
+
+	public Integer getRef1SpatialSystem() {
+		return ref1SpatialSystem;
+	}
+
+
+
+
+	public void setRef1SpatialSystem(Integer ref1SpatialSystem) {
+		this.ref1SpatialSystem = ref1SpatialSystem;
+	}
+
+
+
+
+	public ArrayList<ScaleBean> getRef1Scale() {
+		return ref1Scale;
+	}
+
+
+
+
+	public void setRef1Scale(ArrayList<ScaleBean> ref1Scale) {
+		this.ref1Scale = ref1Scale;
+	}
+
+
+
+
+	public Double getRef1AltAccuracy() {
+		return ref1AltAccuracy;
+	}
+
+
+
+
+	public void setRef1AltAccuracy(Double ref1AltAccuracy) {
+		this.ref1AltAccuracy = ref1AltAccuracy;
+	}
+
+
+
+
+	public Double getRef1PosAccuracy() {
+		return ref1PosAccuracy;
+	}
+
+
+
+
+	public void setRef1PosAccuracy(Double ref1PosAccuracy) {
+		this.ref1PosAccuracy = ref1PosAccuracy;
+	}
+
+
+
+
+	public ArrayList<LinkDataBean> getRef1SymbolsText() {
+		return ref1SymbolsText;
+	}
+
+
+
+
+	public void setRef1SymbolsText(ArrayList<LinkDataBean> ref1SymbolsText) {
+		this.ref1SymbolsText = ref1SymbolsText;
+	}
+
+
+
+
+	public ArrayList<LinkDataBean> getRef1KeysText() {
+		return ref1KeysText;
+	}
+
+
+
+
+	public void setRef1KeysText(ArrayList<LinkDataBean> ref1KeysText) {
+		this.ref1KeysText = ref1KeysText;
+	}
+
+
+
+
+	public String getRef1BasisText() {
+		return ref1BasisText;
+	}
+
+
+
+
+	public void setRef1BasisText(String ref1BasisText) {
+		this.ref1BasisText = ref1BasisText;
+	}
+
+
+
+
+	public String getRef1DataBasisText() {
+		return ref1DataBasisText;
+	}
+
+
+
+
+	public void setRef1DataBasisText(String ref1DataBasisText) {
+		this.ref1DataBasisText = ref1DataBasisText;
+	}
+
+
+
+
+	public ArrayList<String> getRef1Data() {
+		return ref1Data;
+	}
+
+
+
+
+	public void setRef1Data(ArrayList<String> ref1Data) {
+		this.ref1Data = ref1Data;
 	};
 }

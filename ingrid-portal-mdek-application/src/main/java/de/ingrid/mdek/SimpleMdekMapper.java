@@ -12,11 +12,14 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.dwr.LinkDataBean;
 import de.ingrid.mdek.dwr.Location;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.ScaleBean;
 import de.ingrid.mdek.dwr.TimeReferenceBean;
 import de.ingrid.mdek.dwr.UrlBean;
+import de.ingrid.mdek.dwr.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
 
@@ -111,13 +114,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		
 		// Thesaurus
 //		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-
-//		mdekObj.setThesaurusTopicsList((ArrayList<String>) mapToThesaurusTopicsList((List<String>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setThesaurusFreeTermsList((ArrayList<String>) mapToThesaurusFreeTermsList((List<String>) obj.get(MdekKeys.MISSING)));
+//		mdekObj.setThesaurusFreeTermsTable((ArrayList<String>) obj.get(MdekKeys.MISSING));
+//		mdekObj.setThesaurusTopicsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
 //		mdekObj.setThesaurusEnvExtRes((Boolean) obj.get(MdekKeys.MISSING));
-//		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) mapToThesaurusEnvTopicsList((List<String>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) mapToThesaurusEnvCatsList((List<String>) obj.get(MdekKeys.MISSING)));
-//
+//		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
+//		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
+
 		// Links
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -127,6 +129,38 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
 
+		switch(mdekObj.getObjectClass()) {
+		case 0:	// Object of type 0 doesn't have any special values
+			break;
+		case 1:
+/*
+			mdekObj.setRef1DataSet((Integer) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1VFormatTopology((Integer) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1SpatialSystem((Integer) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1Coverage((Double) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1AltAccuracy((Double) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1PosAccuracy((Double) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1Coverage((Double) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1BasisText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1DataBasisText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1Data((ArrayList<String>) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1Representation((ArrayList<Integer>) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+			mdekObj.setRef1SymbolsText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+			mdekObj.setRef1KeysText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+*/
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		}
+		
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekObj.setNodeAppType("O");
@@ -221,7 +255,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		//Thesaurus
 //		udkObj.put(MdekKeys.MISSING, mapFromThesTermsTable(data.getThesaurusTermsTable()));
-		
+//		udkObj.put(MdekKeys.MISSING, data.getThesaurusFreeTermsTable());
+//		udkObj.put(MdekKeys.MISSING, data.getThesaurusTopicsList());
+//		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvTopicsList());
+//		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvCatsList());
+//		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvExtRes());
 		
 		// Links
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
@@ -229,6 +267,38 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
 		udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
+
+		switch(data.getObjectClass()) {
+		case 0:	// Object of type 0 doesn't have any special values
+			break;
+		case 1:
+/*
+			udkObj.put(MdekKeys.MISSING, data.getRef1DataSet());
+			udkObj.put(MdekKeys.MISSING, data.getRef1VFormatTopology());
+			udkObj.put(MdekKeys.MISSING, data.getRef1SpatialSystem());
+			udkObj.put(MdekKeys.MISSING, data.getRef1Coverage());
+			udkObj.put(MdekKeys.MISSING, data.getRef1AltAccuracy());
+			udkObj.put(MdekKeys.MISSING, data.getRef1PosAccuracy());
+			udkObj.put(MdekKeys.MISSING, data.getRef1Coverage());
+			udkObj.put(MdekKeys.MISSING, data.getRef1BasisText());
+			udkObj.put(MdekKeys.MISSING, data.getRef1DataBasisText());
+			udkObj.put(MdekKeys.MISSING, data.getRef1Data());
+			udkObj.put(MdekKeys.MISSING, data.getRef1Representation());
+			udkObj.put(MdekKeys.MISSING, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
+			udkObj.put(MdekKeys.MISSING, mapFromScaleTable(data.getRef1Scale()));
+			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1SymbolsText()));
+			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1KeysText()));
+*/
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		}
 
 		return udkObj;
 	}
@@ -387,7 +457,54 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 */
+/*
+	private static ArrayList<IngridDocument> mapFromVFormatDetailsTable(ArrayList<VectorFormatDetailsBean> vFormatList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (vFormatList == null)
+			return resultList;
 
+		for (VectorFormatDetailsBean v : vFormatList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, v.getGeometryType());
+			result.put(MdekKeys.MISSING, v.getNumElements());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+/*	
+	private static ArrayList<IngridDocument> mapFromScaleTable(ArrayList<ScaleBean> scaleList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (scaleList == null)
+			return resultList;
+
+		for (ScaleBean s : scaleList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, s.getGroundResolution());
+			result.put(MdekKeys.MISSING, s.getScale());
+			result.put(MdekKeys.MISSING, s.getScanResolution());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<IngridDocument> mapFromLinkDataTable(ArrayList<LinkDataBean> linkList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (linkList == null)
+			return resultList;
+
+		for (LinkDataBean l : linkList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, convertDateToTimestamp(l.getDate()));
+			result.put(MdekKeys.MISSING, l.getTitle());
+			result.put(MdekKeys.MISSING, l.getVersion());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+	
 	/****************************************************************************
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
 	 ****************************************************************************/
@@ -562,15 +679,53 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
 		for (HashMap<String, Object> topic : topicList) {
 			SNSTopic t = new SNSTopic();
-			t.setTitle(topic.get(MdekKeys.MISSING));
-			t.setTopicId(topic.get(MdekKeys.MISSING));
+			t.setTitle((String) topic.get(MdekKeys.MISSING));
+			t.setTopicId((String) topic.get(MdekKeys.MISSING));
 			resultList.add(t);
 		}
 		return resultList;
 	}
 */
+/*
+	private static ArrayList<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
+		ArrayList<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
+		for (HashMap<String, Object> topic : vFormatList) {
+			VectorFormatDetailsBean v = new VectorFormatDetailsBean();
+			v.setGeometryType((Integer) topic.get(MdekKeys.MISSING);
+			v.setNumElements((Integer) topic.get(MdekKeys.MISSING));
+			resultList.add(v);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
+		ArrayList<ScaleBean> resultList = new ArrayList<ScaleBean>();
+		for (HashMap<String, Object> topic : scaleList) {
+			ScaleBean s = new ScaleBean();
+			s.setGroundResolution((Double) topic.get(MdekKeys.MISSING);
+			s.setScale((Double) topic.get(MdekKeys.MISSING));
+			s.setScanResolution((Double) topic.get(MdekKeys.MISSING));
+			resultList.add(s);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<LinkDataBean> mapToLinkDataTable(List<HashMap<String, Object>> linkList) {
+		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+		for (HashMap<String, Object> topic : scaleList) {
+			LinkDataBean l = new LinkDataBean();
+			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.MISSING)));
+			l.setTitle((Integer) topic.get(MdekKeys.MISSING));
+			l.setVersion((String) topic.get(MdekKeys.MISSING));
+			resultList.add(l);
+		}
+		return resultList;
+	}
+*/
 	
-	/***********************************************************
+	 /***********************************************************
 	 * Several Methods for testing Input and Output Conformity *
 	 ***********************************************************/
 

@@ -589,8 +589,8 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
   dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
-  dojo.widget.byId("extraInfoXMLExportTable").store.setData(udkDataProxy._addTableIndices(nodeData.extraInfoXMLExportTable));
-  dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(udkDataProxy._addTableIndices(nodeData.extraInfoLegalBasicsTable));
+  dojo.widget.byId("extraInfoXMLExportTable").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.extraInfoXMLExportTable)));
+  dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.extraInfoLegalBasicsTable)));
 
   // -- Availability --
   dojo.widget.byId("availabilityOrderInfo").setValue(nodeData.availabilityOrderInfo);
@@ -602,30 +602,12 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Thesaurus --
   dojo.widget.byId("thesaurusTerms").store.setData(nodeData.thesaurusTermsTable);
+  dojo.widget.byId("thesaurusFreeTermsList").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusFreeTermsTable)));
+  dojo.widget.byId("thesaurusTopics").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusTopicsList)));
+  dojo.widget.byId("thesaurusEnvTopics").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusEnvTopicsList)));
+  dojo.widget.byId("thesaurusEnvCats").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusEnvCatsList)));
+  dojo.widget.byId("thesaurusEnvExtRes").setValue(nodeData.thesaurusEnvExtRes);
 
-
-/*
-
-  // -- Thesaurus --
-  //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;
-  dojo.widget.byId("thesaurusTerms").store.clearData();
-  dojo.widget.byId("thesaurusTerms").store.addData({Id: "1", term:"Topographie"});
-  dojo.widget.byId("thesaurusTerms").store.addData({Id: "2", term:"Kartographie"});
-  dojo.widget.byId("thesaurusTerms").store.addData({Id: "3", term:"Wasser"});
-
-  //  var tableId = dojo.widget.byId("thesaurusTopics").valueField;
-  dojo.widget.byId("thesaurusTopics").store.clearData();
-  dojo.widget.byId("thesaurusTopics").store.addData({Id: "1", topics:"Kategorie eins"});
-  dojo.widget.byId("thesaurusTopics").store.addData({Id: "2", topics:"Kategorie zwei"});
-  dojo.widget.byId("thesaurusTopics").store.addData({Id: "3", topics:"Kategorie drei"});
-
-  //  var tableId = dojo.widget.byId("thesaurusFreeTermsList").valueField;
-  dojo.widget.byId("thesaurusFreeTermsList").store.clearData();
-  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "1", freeTerms:"Freier Term eins"});
-  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "2", freeTerms:"Freier Term zwei"});
-  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "3", freeTerms:"Freier Term drei"});
-
-*/
   // -- Links --
   var objLinkTable = nodeData.linksToObjectTable;
   var urlLinkTable = nodeData.linksToUrlTable;
@@ -678,17 +660,28 @@ udkDataProxy._setObjectData = function(nodeData)
 //  dojo.widget.byId("contentFormAddress").setValues(myObj);
 }
 
-udkDataProxy._setObjectDataClass0 = function(nodeData)
-{
-}
+udkDataProxy._setObjectDataClass0 = function(nodeData) {}
 
 udkDataProxy._setObjectDataClass1 = function(nodeData)
 {
-  dojo.widget.byId("ref1DataSet").setValue("2");
+	dojo.widget.byId("thesaurusTerms").store.setData(nodeData.thesaurusTermsTable);
 
-  dojo.widget.byId("ref1Representation").store.clearData();
-  dojo.widget.byId("ref1Representation").store.addData({Id: "1", representation:"Rasterdaten"});
-  dojo.widget.byId("ref1Representation").store.addData({Id: "2", representation:"Another Representation"});
+	dojo.widget.byId("ref1DataSet").store.setData(nodeData.ref1DataSet);
+	dojo.widget.byId("ref1Coverage").store.setData(nodeData.ref1Coverage);
+	dojo.widget.byId("ref1VFormatTopology").store.setData(nodeData.ref1VFormatTopology);
+	dojo.widget.byId("ref1SpatialSystem").store.setData(nodeData.ref1SpatialSystem);
+	dojo.widget.byId("ref1AltAccuracy").store.setData(nodeData.ref1AltAccuracy);
+	dojo.widget.byId("ref1PosAccuracy").store.setData(nodeData.ref1PosAccuracy);
+	dojo.widget.byId("ref1BasisText").store.setData(nodeData.ref1BasisText);
+	dojo.widget.byId("ref1DataBasisText").store.setData(nodeData.ref1DataBasisText);
+	
+	dojo.widget.byId("ref1Representation").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Representation)));
+	dojo.widget.byId("ref1Data").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Data)));
+
+	dojo.widget.byId("ref1VFormatDetails").store.setData(udkDataProxy._addTableIndices(nodeData.ref1VFormatDetails));
+	dojo.widget.byId("ref1Scale").store.setData(udkDataProxy._addTableIndices(nodeData.ref1Scale));
+	dojo.widget.byId("ref1SymbolsText").store.setData(udkDataProxy._addTableIndices(nodeData.ref1SymbolsText));
+	dojo.widget.byId("ref1KeysText").store.setData(udkDataProxy._addTableIndices(nodeData.ref1KeysText));
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData)
@@ -815,8 +808,8 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
-  nodeData.extraInfoXMLExportTable = udkDataProxy._getTableData("extraInfoXMLExportTable");
-  nodeData.extraInfoLegalBasicsTable = udkDataProxy._getTableData("extraInfoLegalBasicsTable");
+  nodeData.extraInfoXMLExportTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("extraInfoXMLExportTable"));
+  nodeData.extraInfoLegalBasicsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("extraInfoLegalBasicsTable"));
 
   // -- Availability --
   nodeData.availabilityOrderInfo = dojo.widget.byId("availabilityOrderInfo").getValue();
@@ -827,38 +820,12 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Thesaurus --
   nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
+  nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
+  nodeData.thesaurusTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
+  nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
+  nodeData.thesaurusEnvCatsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
+  nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").getValue();
 
-/*
-  //  var tableId = dojo.widget.byId("spatialRefAdminUnit").valueField;
-  dojo.widget.byId("spatialRefAdminUnit").store.clearData();
-  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "1", information:"info one", latitude1:"3.14", longitude1:"0.1123", latitude2:"1.234", longitude2:"2.345"});
-  dojo.widget.byId("spatialRefAdminUnit").store.addData({Id: "2", information:"info two", latitude1:"1.14", longitude1:"2.1123", latitude2:"4.434", longitude2:"1.2"});
-
-  // -- Time --
-  
-  // -- Extra Info --
-  dojo.widget.byId("extraInfoLangMetaData").setValue("Englisch");
-  dojo.widget.byId("extraInfoLangData").setValue("Englisch");
-
-  // -- Thesaurus --
-  //  var tableId = dojo.widget.byId("thesaurusTerms").valueField;
-  dojo.widget.byId("thesaurusTerms").store.clearData();
-  dojo.widget.byId("thesaurusTerms").store.addData({Id: "1", term:"Topographie"});
-  dojo.widget.byId("thesaurusTerms").store.addData({Id: "2", term:"Kartographie"});
-  dojo.widget.byId("thesaurusTerms").store.addData({Id: "3", term:"Wasser"});
-
-  //  var tableId = dojo.widget.byId("thesaurusTopics").valueField;
-  dojo.widget.byId("thesaurusTopics").store.clearData();
-  dojo.widget.byId("thesaurusTopics").store.addData({Id: "1", topics:"Kategorie eins"});
-  dojo.widget.byId("thesaurusTopics").store.addData({Id: "2", topics:"Kategorie zwei"});
-  dojo.widget.byId("thesaurusTopics").store.addData({Id: "3", topics:"Kategorie drei"});
-
-  //  var tableId = dojo.widget.byId("thesaurusFreeTermsList").valueField;
-  dojo.widget.byId("thesaurusFreeTermsList").store.clearData();
-  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "1", freeTerms:"Freier Term eins"});
-  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "2", freeTerms:"Freier Term zwei"});
-  dojo.widget.byId("thesaurusFreeTermsList").store.addData({Id: "3", freeTerms:"Freier Term drei"});
-*/
 
   // -- Links --
   var linksToTable = udkDataProxy._getTableData("linksTo");
@@ -905,21 +872,30 @@ udkDataProxy._getObjectData = function(nodeData)
     default:
       dojo.debug("Error in udkDataProxy._getObjectData - Object Class must be 0...5!");
       break;
-  }  
-
-  /* 
-   * Select box values can't be set through the form(?).   
-   * We set all values in the Widgets directly.
-   */
-
-
-//  dojo.widget.byId("contentFormObject").getValues(myObj);
-//  dojo.widget.byId("headerFormAddress").getValues(myObj);
-//  dojo.widget.byId("contentFormAddress").getValues(myObj);
+  }
 }
 
 udkDataProxy._getObjectDataClass0 = function(nodeData) {};
-udkDataProxy._getObjectDataClass1 = function(nodeData) {};
+
+udkDataProxy._getObjectDataClass1 = function(nodeData) {
+	nodeData.ref1DataSet = dojo.widget.byId("ref1DataSet").getValue();
+	nodeData.ref1Coverage = dojo.widget.byId("ref1Coverage").getValue();
+	nodeData.ref1VFormatTopology = dojo.widget.byId("ref1VFormatTopology").getValue();
+	nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
+	nodeData.ref1AltAccuracy = dojo.widget.byId("ref1AltAccuracy").getValue();
+	nodeData.ref1PosAccuracy = dojo.widget.byId("ref1PosAccuracy").getValue();
+	nodeData.ref1BasisText = dojo.widget.byId("ref1BasisText").getValue();
+	nodeData.ref1DataBasisText = dojo.widget.byId("ref1DataBasisText").getValue();
+
+	nodeData.ref1Representation = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Representation"));
+	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
+
+	nodeData.ref1VFormatDetails = udkDataProxy._getTableData("ref1VFormatDetails");
+	nodeData.ref1Scale = udkDataProxy._getTableData("ref1Scale");
+	nodeData.ref1SymbolsText = udkDataProxy._getTableData("ref1SymbolsText");
+	nodeData.ref1KeysText = udkDataProxy._getTableData("ref1KeysText");
+};
+
 udkDataProxy._getObjectDataClass2 = function(nodeData) {};
 udkDataProxy._getObjectDataClass3 = function(nodeData) {};
 udkDataProxy._getObjectDataClass4 = function(nodeData) {};
@@ -974,6 +950,35 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 udkDataProxy._getTableData = function(tableName)
 {
   return dojo.widget.byId(tableName).store.getData();
+}
+
+// Creates table data from a list of values.
+// ["a", "b", "c"] -> [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}]
+udkDataProxy._listToTableData = function(list, identifier) {
+	var resultList = [];
+	if (typeof(identifier) == "undefined")
+		identifier = "title";
+
+	dojo.lang.forEach(list, function(item){
+		var x = {};
+		x[identifier] = item;
+		resultList.push(x);
+	});
+	return resultList;
+}
+
+
+//Creates a list from table data
+// [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}] -> ["a", "b", "c"] 
+udkDataProxy._tableDataToList = function(tableData, identifier) {
+	var resultList = [];
+	if (typeof(identifier) == "undefined")
+		identifier = "title";
+
+	dojo.lang.forEach(tableData, function(item){
+		resultList.push(item.identifier);
+	});
+	return resultList;
 }
 
 // Add Indices (Id values) to a passed list
