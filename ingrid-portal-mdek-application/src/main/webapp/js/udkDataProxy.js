@@ -142,7 +142,7 @@ dojo.addOnLoad(function()
 	_connectStoreWithDirtyFlag(dojo.widget.byId("ref2LocationLink").store);
     dojo.event.connect(dojo.widget.byId("ref2DocumentType"), "onValueChanged", "setDirtyFlag");
 	_connectStoreWithDirtyFlag(dojo.widget.byId("ref2BaseDataLink").store);
-    dojo.event.connect(dojo.widget.byId("ref2BibDataIn"), "onkeyup", "setDirtyFlag");
+    dojo.event.connect(dojo.widget.byId("ref2BibData"), "onkeyup", "setDirtyFlag");
     dojo.event.connect(dojo.widget.byId("ref2Explanation"), "onkeyup", "setDirtyFlag");
 
 	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3ServiceType").store);
@@ -662,19 +662,16 @@ udkDataProxy._setObjectData = function(nodeData)
 
 udkDataProxy._setObjectDataClass0 = function(nodeData) {}
 
-udkDataProxy._setObjectDataClass1 = function(nodeData)
-{
-	dojo.widget.byId("thesaurusTerms").store.setData(nodeData.thesaurusTermsTable);
+udkDataProxy._setObjectDataClass1 = function(nodeData) {
+	dojo.widget.byId("ref1DataSet").setValue(nodeData.ref1DataSet);
+	dojo.widget.byId("ref1Coverage").setValue(nodeData.ref1Coverage);
+	dojo.widget.byId("ref1VFormatTopology").setValue(nodeData.ref1VFormatTopology);
+	dojo.widget.byId("ref1SpatialSystem").setValue(nodeData.ref1SpatialSystem);
+	dojo.widget.byId("ref1AltAccuracy").setValue(nodeData.ref1AltAccuracy);
+	dojo.widget.byId("ref1PosAccuracy").setValue(nodeData.ref1PosAccuracy);
+	dojo.widget.byId("ref1BasisText").setValue(nodeData.ref1BasisText);
+	dojo.widget.byId("ref1DataBasisText").setValue(nodeData.ref1DataBasisText);
 
-	dojo.widget.byId("ref1DataSet").store.setData(nodeData.ref1DataSet);
-	dojo.widget.byId("ref1Coverage").store.setData(nodeData.ref1Coverage);
-	dojo.widget.byId("ref1VFormatTopology").store.setData(nodeData.ref1VFormatTopology);
-	dojo.widget.byId("ref1SpatialSystem").store.setData(nodeData.ref1SpatialSystem);
-	dojo.widget.byId("ref1AltAccuracy").store.setData(nodeData.ref1AltAccuracy);
-	dojo.widget.byId("ref1PosAccuracy").store.setData(nodeData.ref1PosAccuracy);
-	dojo.widget.byId("ref1BasisText").store.setData(nodeData.ref1BasisText);
-	dojo.widget.byId("ref1DataBasisText").store.setData(nodeData.ref1DataBasisText);
-	
 	dojo.widget.byId("ref1Representation").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Representation)));
 	dojo.widget.byId("ref1Data").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Data)));
 
@@ -684,8 +681,21 @@ udkDataProxy._setObjectDataClass1 = function(nodeData)
 	dojo.widget.byId("ref1KeysText").store.setData(udkDataProxy._addTableIndices(nodeData.ref1KeysText));
 }
 
-udkDataProxy._setObjectDataClass2 = function(nodeData)
-{
+udkDataProxy._setObjectDataClass2 = function(nodeData) {
+	dojo.widget.byId("ref2Author").setValue(nodeData.ref2Author);
+	dojo.widget.byId("ref2Publisher").setValue(nodeData.ref2Publisher);
+	dojo.widget.byId("ref2PublishedIn").setValue(nodeData.ref2PublishedIn);
+	dojo.widget.byId("ref2PublishLocation").setValue(nodeData.ref2PublishLocation);
+	dojo.widget.byId("ref2PublishedInIssue").setValue(nodeData.ref2PublishedInIssue);
+	dojo.widget.byId("ref2PublishedInPages").setValue(nodeData.ref2PublishedInPages);
+	dojo.widget.byId("ref2PublishedInYear").setValue(nodeData.ref2PublishedInYear);
+	dojo.widget.byId("ref2PublishedISBN").setValue(nodeData.ref2PublishedISBN);
+	dojo.widget.byId("ref2PublishedPublisher").setValue(nodeData.ref2PublishedPublisher);
+	dojo.widget.byId("ref2LocationText").setValue(nodeData.ref2LocationText);
+	dojo.widget.byId("ref2DocumentType").setValue(nodeData.ref2DocumentType);
+	dojo.widget.byId("ref2BaseDataText").setValue(nodeData.ref2BaseDataText);
+	dojo.widget.byId("ref2BibData").setValue(nodeData.ref2BibData);
+	dojo.widget.byId("ref2Explanation").setValue(nodeData.ref2Explanation);
 }
 
 udkDataProxy._setObjectDataClass3 = function(nodeData)
@@ -896,7 +906,24 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1KeysText = udkDataProxy._getTableData("ref1KeysText");
 };
 
-udkDataProxy._getObjectDataClass2 = function(nodeData) {};
+udkDataProxy._getObjectDataClass2 = function(nodeData) {
+	nodeData.ref2Author = dojo.widget.byId("ref2Author").getValue();
+	nodeData.ref2Publisher = dojo.widget.byId("ref2Publisher").getValue();
+	nodeData.ref2PublishedIn = dojo.widget.byId("ref2PublishedIn").getValue();
+	nodeData.ref2PublishLocation = dojo.widget.byId("ref2PublishLocation").getValue();
+	nodeData.ref2PublishedInIssue = dojo.widget.byId("ref2PublishedInIssue").getValue();
+	nodeData.ref2PublishedInPages = dojo.widget.byId("ref2PublishedInPages").getValue();
+	nodeData.ref2PublishedInYear = dojo.widget.byId("ref2PublishedInYear").getValue();
+	nodeData.ref2PublishedISBN = dojo.widget.byId("ref2PublishedISBN").getValue();
+	nodeData.ref2PublishedPublisher = dojo.widget.byId("ref2PublishedPublisher").getValue();
+	nodeData.ref2LocationText = dojo.widget.byId("ref2LocationText").getValue();
+	nodeData.ref2DocumentType = dojo.widget.byId("ref2DocumentType").getValue();
+	nodeData.ref2BaseDataText = dojo.widget.byId("ref2BaseDataText").getValue();
+	nodeData.ref2BibData = dojo.widget.byId("ref2BibData").getValue();
+	nodeData.ref2Explanation = dojo.widget.byId("ref2Explanation").getValue();
+};
+
+
 udkDataProxy._getObjectDataClass3 = function(nodeData) {};
 udkDataProxy._getObjectDataClass4 = function(nodeData) {};
 udkDataProxy._getObjectDataClass5 = function(nodeData) {};

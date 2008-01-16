@@ -691,7 +691,9 @@ function hideSplash(){
 	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true, {filter: 'Basisdaten'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2LocationTab1">
 	                		<div id="ref2LocationTab1" dojoType="ContentPane" label="Text">
-								<span class="input"><textarea id="ref2LocationText" name="ref2LocationText" class="w320 h038" /></textarea></span>
+								<span class="input">
+									<input type="text" mode="textarea" id="ref2LocationText" name="ref2LocationText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+								</span>
 	                		</div>
 	                		<div id="ref2LocationTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2">
@@ -723,7 +725,9 @@ function hideSplash(){
 	                  <span id="ref2BaseDataTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 580, true, {filter: 'Standort'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref2BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2BaseDataTab1">
 	                		<div id="ref2BaseDataTab1" dojoType="ContentPane" label="Text">
-	                      <span class="input"><textarea id="ref2BaseDataText" name="ref2BaseDataText" class="w320 h038" /></textarea></span>
+	                      <span class="input">
+	                      	<input type="text" mode="textarea" id="ref2BaseDataText" name="ref2BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+	                      </span>
 	                		</div>
 	                		<div id="ref2BaseDataTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2">
@@ -745,19 +749,13 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref2BibDataIn" onclick="javascript:dialog.showContextHelp(arguments[0], 'Weitere bibliographische Angaben')">Weitere bibliographische Angaben</label></span>
-               		<span class="input"><input type="text" mode="textarea" id="ref2BibDataIn" name="ref2BibDataIn" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!-- 
-	                  <span class="input"><textarea id="ref2BibDataIn" name="ref2BibDataIn" class="w320 h038" /></textarea></span>
- -->
+	                  <span class="label"><label for="ref2BibData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Weitere bibliographische Angaben')">Weitere bibliographische Angaben</label></span>
+               		<span class="input"><input type="text" mode="textarea" id="ref2BibData" name="ref2BibData" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
  	                </div>
 
 	                <div class="half">
 	                  <span class="label"><label for="ref2Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref2Explanation" name="ref2Explanation" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!-- 
-	                  <span class="input"><textarea id="ref2Explanation" name="ref2Explanation" class="w320 h038" /></textarea></span>
- -->
 	                </div>
 	                <div class="fill"></div>
 	              </div>

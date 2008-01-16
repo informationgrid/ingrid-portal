@@ -152,6 +152,22 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 2:
+/*
+			mdekObj.setRef2Author((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2Publisher((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishedIn((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishLocation((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishedInIssue((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishedInPages((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishedInYear((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishedISBN((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2PublishedPublisher((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2LocationText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2DocumentType((Integer) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2BaseDataText((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2BibData((String) obj.get(MdekKeys.MISSING));
+			mdekObj.setRef2Explanation((String) obj.get(MdekKeys.MISSING));
+*/
 			break;
 		case 3:
 			break;
@@ -291,6 +307,22 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 2:
+/*
+			udkObj.put(MdekKeys.MISSING, data.getRef2Author());
+			udkObj.put(MdekKeys.MISSING, data.getRef2Publisher());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedIn());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishLocation());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedInIssue());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedInPages());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedInYear());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedISBN());
+			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedPublisher());
+			udkObj.put(MdekKeys.MISSING, data.getRef2LocationText());
+			udkObj.put(MdekKeys.MISSING, data.getRef2DocumentType());
+			udkObj.put(MdekKeys.MISSING, data.getRef2BaseDataText());
+			udkObj.put(MdekKeys.MISSING, data.getRef2BibData());
+			udkObj.put(MdekKeys.MISSING, data.getRef2Explanation());
+*/
 			break;
 		case 3:
 			break;

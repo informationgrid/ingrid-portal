@@ -103,23 +103,24 @@ public class MdekDataBean {
 	public String ref1DataBasisText;
 	public ArrayList<String> ref1Data;
 
-	/*
-	
+
 	// Object class 2 (Dokument/Bericht/Literatur)
-	public final static String MDEK_OBJ_CLASS2_AUTHOR = "ref2Author";
-	public final static String MDEK_OBJ_CLASS2_EDITOR = "ref2Publisher";
-	public final static String MDEK_OBJ_CLASS2_PUBLISH_IN = "ref2PublishedIn";
-	public final static String MDEK_OBJ_CLASS2_PUBLISH_LOC = "ref2PublishLocation";
-	public final static String MDEK_OBJ_CLASS2_PUBLISH_ISSUE = "ref2PublishedInIssue";
-	public final static String MDEK_OBJ_CLASS2_PUBLISH_PAGES = "ref2PublishedInPages";
-	public final static String MDEK_OBJ_CLASS2_PUBLISH_YEAR = "ref2PublishedInYear";
-	public final static String MDEK_OBJ_CLASS2_PUBLISH_ISBN = "ref2PublishedISBN";
-	public final static String MDEK_OBJ_CLASS2_PUBLISHER = "ref2PublishedPublisher";
-	public final static String MDEK_OBJ_CLASS2_LOCATION = "ref2LocationLink";
-	public final static String MDEK_OBJ_CLASS2_TYPE = "ref2DocumentType";
-	public final static String MDEK_OBJ_CLASS2_BASE = "ref2BaseDataLink";
-	public final static String MDEK_OBJ_CLASS2_INFO = "ref2BibDataIn";
-	
+	public String ref2Author;
+	public String ref2Publisher;
+	public String ref2PublishedIn;
+	public String ref2PublishLocation;
+	public String ref2PublishedInIssue;
+	public String ref2PublishedInPages;
+	public String ref2PublishedInYear;
+	public String ref2PublishedISBN;
+	public String ref2PublishedPublisher;
+	public String ref2LocationText;
+	public Integer ref2DocumentType;
+	public String ref2BaseDataText;
+	public String ref2BibData;
+	public String ref2Explanation;
+
+	/*
 	// Object class 3 (Dienst/Anwendung/Informationssystem)
 	public final static String MDEK_OBJ_CLASS3_SERVICE_TYPE = "ref3ServiceType";
 	public final static String MDEK_OBJ_CLASS3_SERVICE_VERSION = "ref3ServiceVersion";
@@ -139,6 +140,202 @@ public class MdekDataBean {
 	public final static String MDEK_OBJ_CLASS5_DATA = "ref5MethodLink";
 	public final static String MDEK_OBJ_CLASS5_DESCRIPTION = "ref5Explanation";
 	 */
+
+	public String getRef2Author() {
+		return ref2Author;
+	}
+
+
+
+
+	public void setRef2Author(String ref2Author) {
+		this.ref2Author = ref2Author;
+	}
+
+
+
+
+	public String getRef2Publisher() {
+		return ref2Publisher;
+	}
+
+
+
+
+	public void setRef2Publisher(String ref2Publisher) {
+		this.ref2Publisher = ref2Publisher;
+	}
+
+
+
+
+	public String getRef2PublishedIn() {
+		return ref2PublishedIn;
+	}
+
+
+
+
+	public void setRef2PublishedIn(String ref2PublishedIn) {
+		this.ref2PublishedIn = ref2PublishedIn;
+	}
+
+
+
+
+	public String getRef2PublishLocation() {
+		return ref2PublishLocation;
+	}
+
+
+
+
+	public void setRef2PublishLocation(String ref2PublishLocation) {
+		this.ref2PublishLocation = ref2PublishLocation;
+	}
+
+
+
+
+	public String getRef2PublishedInIssue() {
+		return ref2PublishedInIssue;
+	}
+
+
+
+
+	public void setRef2PublishedInIssue(String ref2PublishedInIssue) {
+		this.ref2PublishedInIssue = ref2PublishedInIssue;
+	}
+
+
+
+
+	public String getRef2PublishedInPages() {
+		return ref2PublishedInPages;
+	}
+
+
+
+
+	public void setRef2PublishedInPages(String ref2PublishedInPages) {
+		this.ref2PublishedInPages = ref2PublishedInPages;
+	}
+
+
+
+
+	public String getRef2PublishedInYear() {
+		return ref2PublishedInYear;
+	}
+
+
+
+
+	public void setRef2PublishedInYear(String ref2PublishedInYear) {
+		this.ref2PublishedInYear = ref2PublishedInYear;
+	}
+
+
+
+
+	public String getRef2PublishedISBN() {
+		return ref2PublishedISBN;
+	}
+
+
+
+
+	public void setRef2PublishedISBN(String ref2PublishedISBN) {
+		this.ref2PublishedISBN = ref2PublishedISBN;
+	}
+
+
+
+
+	public String getRef2PublishedPublisher() {
+		return ref2PublishedPublisher;
+	}
+
+
+
+
+	public void setRef2PublishedPublisher(String ref2PublishedPublisher) {
+		this.ref2PublishedPublisher = ref2PublishedPublisher;
+	}
+
+
+
+
+	public String getRef2LocationText() {
+		return ref2LocationText;
+	}
+
+
+
+
+	public void setRef2LocationText(String ref2LocationText) {
+		this.ref2LocationText = ref2LocationText;
+	}
+
+
+
+
+	public Integer getRef2DocumentType() {
+		return ref2DocumentType;
+	}
+
+
+
+
+	public void setRef2DocumentType(Integer ref2DocumentType) {
+		this.ref2DocumentType = ref2DocumentType;
+	}
+
+
+
+
+	public String getRef2BaseDataText() {
+		return ref2BaseDataText;
+	}
+
+
+
+
+	public void setRef2BaseDataText(String ref2BaseDataText) {
+		this.ref2BaseDataText = ref2BaseDataText;
+	}
+
+
+
+
+	public String getRef2BibData() {
+		return ref2BibData;
+	}
+
+
+
+
+	public void setRef2BibData(String ref2BibData) {
+		this.ref2BibData = ref2BibData;
+	}
+
+
+
+
+	public String getRef2Explanation() {
+		return ref2Explanation;
+	}
+
+
+
+
+	public void setRef2Explanation(String ref2Explanation) {
+		this.ref2Explanation = ref2Explanation;
+	}
+
+
+
 
 	public MdekDataBean(){
 		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());

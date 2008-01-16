@@ -93,7 +93,7 @@ public interface DataMapperInterface {
 	public final static String MDEK_OBJ_CLASS2_LOCATION = "ref2LocationLink";
 	public final static String MDEK_OBJ_CLASS2_TYPE = "ref2DocumentType";
 	public final static String MDEK_OBJ_CLASS2_BASE = "ref2BaseDataLink";
-	public final static String MDEK_OBJ_CLASS2_INFO = "ref2BibDataIn";
+	public final static String MDEK_OBJ_CLASS2_INFO = "ref2BibData";
 	
 	// Object class 3 (Dienst/Anwendung/Informationssystem)
 	public final static String MDEK_OBJ_CLASS3_SERVICE_TYPE = "ref3ServiceType";
