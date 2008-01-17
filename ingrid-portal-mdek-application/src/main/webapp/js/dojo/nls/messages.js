@@ -7,6 +7,8 @@
     "general.help":"Help - General",
     "general.showAddress":"Show Address",
     "general.delete":"Delete",
+
+    "init.loadError":"Error while loading initial values from the server. Please check your connection and try again.",
    
     "tree.nodeNew":"New",
     "tree.nodePreview":"Preview",
@@ -23,6 +25,7 @@
     "tree.noAssistant":"No Assistant",
     "tree.selectNodeHint":"Please select a parent node.",
     "tree.selectNodeCutHint":"Please select a node to cut.",
+    "tree.loadError":"Error while loading data from the server. Please check your connection and try again.",
     "tree.nodeCanCutError":"Error while preparing the node for a cut operation.",
     "tree.nodeCanCopyError":"Error while preparing the node for a copy operation.",
     "tree.nodeCopyError":"Error while copying the selected node. Node copy operation failed in the backend.",

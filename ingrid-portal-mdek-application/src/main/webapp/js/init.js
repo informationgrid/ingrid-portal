@@ -182,7 +182,7 @@ function initTree() {
   		});
 		
 		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
-		deferred.addErrback(function(res) { alert("Error while loading data from the server. Please check your connection and try again!"); return res;});
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 		return deferred;
 	};
 }
@@ -472,6 +472,10 @@ function initSpatialFreeReferencesComboBox() {
 				});
 				var editor = dojo.widget.byId("freeReferencesEditor");
 				editor.dataProvider.setData(values);
+			},
+			errback:function(mes){
+				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+				dojo.debug(mes);
 			}
 		});
 	});

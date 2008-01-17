@@ -327,12 +327,14 @@ acceptTopicList = function() {
         </div>
 
         <div dojoType="ContentPane">
-    	    <table id="thesaurusDescList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive third relativePos">
+    	    <table id="thesaurusDescList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable readOnly third relativePos">
     	      <thead>
     		      <tr>
           			<th field="title" dataType="String" width="255" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
+    	    <tbody>
+    	    </tbody>
     	    </table>
         </div>
 
