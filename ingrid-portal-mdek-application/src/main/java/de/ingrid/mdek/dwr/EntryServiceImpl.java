@@ -60,17 +60,16 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#copyNode(java.lang.String,
 	 *      java.lang.String, java.lang.Boolean)
 	 */
-	public String copyNode(String nodeUuid, String dstNodeUuid,
+	public Map<String, Object> copyNode(String nodeUuid, String dstNodeUuid,
 			Boolean includeChildren) {
-		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+		log.debug("Copying node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			dataConnection.copyObjectSubTree(nodeUuid, dstNodeUuid);
-			return "success";
+			return addTreeNodeInfo(dataConnection.copyObject(nodeUuid, dstNodeUuid, includeChildren));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			return null;
 		}
 	}
 
@@ -298,7 +297,7 @@ public class EntryServiceImpl implements EntryService {
 	}
 
 
-	private static HashMap<String, Object> addTreeNodeInfo(HashMap<String, Object> node)
+	private static Map<String, Object> addTreeNodeInfo(Map<String, Object> node)
 	{
 		// TODO Do this recursive for all children!
 		node.put("contextMenu", NODE_MENU_ID);

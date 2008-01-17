@@ -139,6 +139,7 @@ menuEventHandler.handlePaste = function(msg) {
 		var tree = dojo.widget.byId("tree");
 		var treeListener = dojo.widget.byId("treeListener");
 		var treeController = dojo.widget.byId("treeController");		
+		
 		if (treeController.nodeToCut != null) {
 			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
 				// If an invalid target is selected (same node or child of node to cut)
@@ -166,19 +167,19 @@ menuEventHandler.handlePaste = function(msg) {
 				var deferred = new dojo.Deferred();
 				deferred.addCallback(function(res) {
 					// Copy was successful. Update the tree.
-					// TODO: write paste logic
-					//   We either create a new node from the result or clone the copied node 
-					treeController.clone(
-						treeController.nodeToCopy,
-						targetNode,
-						0,
-						treeController.copySubTree);
+					res.isFolder = treeController.nodeToCopy.isFolder && treeController.copySubTree;
+					treeController.createChild(targetNode, "last", res);
 				});
-				dojo.event.topic.publish("/copyObjectRequest", {
-					srcId: treeController.nodeToCopy.id,
-					dstId: targetNode.id,
-					copyTree: treeController.copySubTree,
-					resultHandler: deferred
+
+				// Open the target node before copying a node. 
+				var def = treeController.expand(targetNode);
+				def.addCallback(function() {
+					dojo.event.topic.publish("/copyObjectRequest", {
+						srcId: treeController.nodeToCopy.id,
+						dstId: targetNode.id,
+						copyTree: treeController.copySubTree,
+						resultHandler: deferred
+					});				
 				});
 		} else {
 	    	dialog.show(message.get("general.hint"), message.get("tree.nodePasteNoCutCopyHint"), dialog.WARNING);
@@ -460,7 +461,7 @@ function getSelectedNode(message) {
 function _createNewNode(obj)
 {
 	return {contextMenu: 'contextMenu1',
-			isFolder: false,
+			isFolder: obj.isFolder,
 			nodeDocType: obj.nodeDocType,	// Initial display type of a new node
 			title: obj.objectName,
 			dojoType: 'ingrid:TreeNode',

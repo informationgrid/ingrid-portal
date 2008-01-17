@@ -153,9 +153,9 @@ public interface EntryService {
 	 * @param includeChildren
 	 *            true to copy all children of the specified node, false to copy
 	 *            only the node.
-	 * @return 'success' or error message.
+	 * @return Basic information about the copy is returned or null on error
 	 */
-	public String copyNode(String nodeUuid, String dstNodeUuid,
+	public Map<String, Object> copyNode(String nodeUuid, String dstNodeUuid,
 			Boolean includeChildren);
 
 	/**

@@ -85,7 +85,7 @@ public interface DataConnectionInterface {
 	public void canCutObject(String uuid);
 	public void canCopyObject(String uuid);
 	public List<String> getPathToObject(String uuid);
-	public MdekDataBean copyObjectSubTree(String fromUuid, String toUuid);
+	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree);
 	public boolean moveObjectSubTree(String fromUuid, String toUuid);
 	public Map<String, List<String>> getUiListValues();
 	

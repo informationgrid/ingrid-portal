@@ -446,8 +446,14 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 
 	EntryService.copyNode(msg.srcId, msg.dstId, msg.copyTree,
 		{
-			callback: function(res){msg.resultHandler.callback();},
-			timeout:5000,
+			callback: function(res){
+				if (res != null) {
+					msg.resultHandler.callback(res);
+				} else {
+					msg.resultHandler.errback("Node Copy operation failed.");
+				}
+			},
+			timeout:30000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while copying nodes: " + message);
 				msg.resultHandler.errback();
@@ -847,7 +853,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.thesaurusTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
   nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
   nodeData.thesaurusEnvCatsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
-  nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").getValue();
+  nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").checked;
 
 
   // -- Links --

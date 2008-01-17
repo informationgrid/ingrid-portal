@@ -126,13 +126,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	
-	public MdekDataBean copyObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.copyObjectSubTree(fromUuid, toUuid);
-		// TODO return correct value when the method is implemented in MdekCaller
-		return null;
+	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
+		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree);
+		return extractSingleSimpleObjectFromResponse(response);
 	}
 	public boolean moveObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.moveObjectSubTree(fromUuid, toUuid);
+		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid);
 		return (mdekCaller.getResultFromResponse(response) != null);
 	}
 
@@ -180,7 +179,21 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return nodeList;
 	}	
 
-/*
+	private HashMap<String, Object> extractSingleSimpleObjectFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		ArrayList<HashMap<String, Object>> nodeList = null;
+
+		if (result != null) {
+			return dataMapper.getSimpleMdekRepresentation(result);
+		} else {
+			log.error(mdekCaller.getErrorMsgFromResponse(response));			
+			return null;
+		}
+	}
+
+	
+	/*
 	private MdekDataBean extractSingleObjectFromResponse(IngridDocument response)
 	{
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
