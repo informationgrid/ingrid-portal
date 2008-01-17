@@ -105,43 +105,47 @@ findLocationTopics = function() {
 addLocationTopics = function() {
 	var store = dojo.widget.byId("spatialRefAdminUnit").store;
 
-	DWREngine.beginBatch();
+	// Batch request can be activated/deactivated here by removing 'beginBatch' and 'endBatch'
+	// When batching is deactivated all the requests are started at once.
+//	DWREngine.beginBatch();
 	dojo.lang.forEach(checkboxArray, function(item) {
 		if (item.checked) {
 			var topicId = item.topic.topicId;
 
 			SNSService.getDetailedLocationTopicInfo(topicId, {
 				callback:function(res) {
-					var storedTopic = store.getDataByKey(res.topicId);
-					if (storedTopic) {
-						// Element is already in the table. Update the topic.
-						// Update elements that are displayed in the table
-						store.update(storedTopic, "name", res.name+", "+res.type);
-						store.update(storedTopic, "longitude1", res.boundingBox[0]);
-						store.update(storedTopic, "latitude1", res.boundingBox[1]);
-						store.update(storedTopic, "longitude2", res.boundingBox[2]);
-						store.update(storedTopic, "latitude2", res.boundingBox[3]);
-						// Update elements that aren't displayed in the table
-						storedTopic.topicId = res.topicId;
-						storedTopic.nativeKey = res.nativeKey;
-					} else {
-						store.addData({
-								topicId: res.topicId,
-								name: res.name+", "+res.type,
-								longitude1: res.boundingBox[0],
-								latitude1: res.boundingBox[1],
-								longitude2: res.boundingBox[2],
-								latitude2: res.boundingBox[3],
-								nativeKey: res.nativeKey},
-							res.topicId
-						);
+					if (res) {
+						var storedTopic = store.getDataByKey(res.topicId);
+						if (storedTopic) {
+							// Element is already in the table. Update the topic.
+							// Update elements that are displayed in the table
+							store.update(storedTopic, "name", res.name+", "+res.type);
+							store.update(storedTopic, "longitude1", res.boundingBox[0]);
+							store.update(storedTopic, "latitude1", res.boundingBox[1]);
+							store.update(storedTopic, "longitude2", res.boundingBox[2]);
+							store.update(storedTopic, "latitude2", res.boundingBox[3]);
+							// Update elements that aren't displayed in the table
+							storedTopic.topicId = res.topicId;
+							storedTopic.nativeKey = res.nativeKey;
+						} else {
+							store.addData({
+									topicId: res.topicId,
+									name: res.name+", "+res.type,
+									longitude1: res.boundingBox[0],
+									latitude1: res.boundingBox[1],
+									longitude2: res.boundingBox[2],
+									latitude2: res.boundingBox[3],
+									nativeKey: res.nativeKey},
+								res.topicId
+							);
+						}
 					}
 				},
 				timeout:0
 			});
 		}
 	});
-	DWREngine.endBatch();
+//	DWREngine.endBatch();
 
 	_container_.closeWindow();
 

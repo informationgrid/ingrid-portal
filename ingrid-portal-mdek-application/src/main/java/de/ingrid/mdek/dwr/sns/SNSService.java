@@ -323,7 +323,7 @@ public class SNSService {
 
     
     public SNSLocationTopic getDetailedLocationTopicInfo(String topicID) {
-        TopicMapFragment mapFragment = null;
+    	TopicMapFragment mapFragment = null;
     	try {
     		// Query for additional info
     		mapFragment = snsClient.getPSI(topicID, 0, "/location");
