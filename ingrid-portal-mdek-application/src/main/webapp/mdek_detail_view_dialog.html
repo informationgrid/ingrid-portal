@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
+<script type="text/javascript" src="js/detail_helper.js"></script>
 <script type="text/javascript">
 _container_.addOnLoad(function() {
 	var tree = dojo.widget.byId("tree");
@@ -24,7 +25,7 @@ _container_.addOnLoad(function() {
 });
 
 function renderNodeData(nodeData) {
-//	dojo.debugShallow(nodeData);
+	dojo.debugShallow(nodeData);
 	renderTitel(nodeData.title);
 	renderText("UDK Klasse: " + nodeData.objectClass);
 	renderText(nodeData.generalShortDescription);
@@ -32,6 +33,8 @@ function renderNodeData(nodeData) {
 	renderLinkedObjectListWithTitle(nodeData.linksFromObjectTable, "&Uuml;bergeordnete Objekte");
 	renderLinkedObjectListWithTitle(nodeData.linksToObjectTable, "Untergeordnete Objekte");
 	renderAddressList(nodeData.generalAddressTable);
+	dojo.debugShallow(nodeData.spatialRefAdminUnitTable[0]);
+	renderTable(nodeData.spatialRefAdminUnitTable, ["name", "nativeKey", "latitude1", "latitude2", "longitude1", "longitude2"], ["Name", "AGS", "x1", "x2", "y1", "y2"], "Raumbezug");
 	
 }
 
@@ -46,7 +49,7 @@ function renderTextWithTitle(val, title) {
 function renderLinkedObjectListWithTitle(list, title) {
 	if (list.length > 0) {
 		var t = "<strong>" + title + "</strong><br/><br/><p>";
-		for (var i = 0; i < list.length; ++i) {
+		for (var i = 0; i < list.length; i++) {
 			t += "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\");'"+
 			                    "title='"+list[i].title+"'>"+list[i].title+"</a>" + "<br/>";
 		}
@@ -57,40 +60,10 @@ function renderLinkedObjectListWithTitle(list, title) {
 function renderAddressList(list) {
 	if (list.length > 0) {
 		var t = "";
-		for (var i = 0; i < list.length; ++i) {
+		for (var i = 0; i < list.length; i++) {
 			t += "<strong>" + list[i].nameOfRelation+ "</strong><br/><br/>";
 			t += "<p>";
-			if (list[i].organisation) {
-				t += list[i].organisation + "</br>";
-			}
-			ptr = t.length;
-			if (list[i].nameForm) {
-				t += list[i].nameForm + " ";
-			}
-			if (list[i].titleOrFunction) {
-				t += list[i].titleOrFunction + " ";
-			}
-			if (list[i].givenName) {
-				t += list[i].givenName + " ";
-			}
-			if (list[i].name) {
-				t += list[i].name;
-			}
-			if (ptr < t.length) {
-				t += "<br/>"
-			}
-			if (list[i].street) {
-				t += list[i].street+"<br/>";
-			}
-			if (list[i].city) {
-				t += list[i].city+"<br/>";
-			}
-			if (list[i].pobox) {
-				t += "<br/>"+list[i].pobox+"<br/>";
-			}
-			if (list[i].poboxPostalCode) {
-				t += list[i].poboxPostalCode+"<br/>";
-			}
+			t += detailHelper.renderAddressEntry(list[i]).replace(/\n/g, '<br />');
 			t += "</p><br/>";
 		}
 		dojo.byId("detailViewContent").innerHTML += t + "<br/><br/>";
@@ -101,6 +74,38 @@ function renderAddressList(list) {
 function renderText(val) {
 	if (val && val.length>0) {
 		dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
+	}
+}
+
+function renderTable(list, rowProperties, listHeader, title) {
+	if (list && list.length > 0) {
+		var t = "";
+		if (detailHelper.isValid(title)) {
+			t += "<strong>" + title + "</strong><br/><br/>";
+		}
+		t += "<p><table class=\"filteringTable\" cellspacing=\"0\">";
+		if (listHeader && listHeader.length > 0) {
+			t += "<thead class=\"fixedHeader\"><tr>";
+			for (i=0; i<listHeader.length; i++) {
+				t += "<th>"+listHeader[i]+"</th>";
+			}
+			t += "</tr></thead>";
+		}
+		t += "<tbody>";
+		for (i=0; i<list.length; i++) {
+			if (i % 2) {
+				t += "<tr class=\"alt\">";
+			} else {
+				t += "<tr>";
+			}
+			for (j=0; j<rowProperties.length; j++) {
+				t += "<td>"+list[i][rowProperties[j]]+"</td>";
+			}
+			t += "</tr>";
+			
+		}
+		t += "</tbody></table></p>";
+		dojo.byId("detailViewContent").innerHTML += t + "<br/><br/>";
 	}
 }
 
