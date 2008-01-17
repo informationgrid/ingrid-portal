@@ -290,7 +290,20 @@ public class SNSService {
 	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
 	    IngridHit[] hits = res.getHits();
 
-
+	    if (hits != null) {
+            for (IngridHit ingridHit : hits) {
+            	DetailedTopic dt = (DetailedTopic) ingridHit;
+                SNSLocationTopic topic = new SNSLocationTopic();
+                String[] type = dt.getSummary().split("#");
+                topic.setName(dt.getTitle());
+                topic.setTopicId(dt.getTopicID());
+                topic.setType(resourceBundle.getString("sns.topic.ref."+type[type.length-1]));
+                resultList.add(topic);
+            }
+        	Collections.sort(resultList, new SNSLocationTopicComparator());
+	    }
+	    return resultList;
+/*
 	    // Iterate over the result array and query for additional data (wgs84 coordinates)
 	    // TODO We don't really need to get the detailed information for all the topics here
 	    //		Construct incomplete SNSLocationTopics (without wgs84box and qualifier) here?
@@ -303,11 +316,12 @@ public class SNSService {
                     resultList.add(topic);
                 }
             }
-        	Collections.sort(resultList, new SNSLocationTopicComparator());
         }
 	    return resultList;
+*/
     }
 
+    
     public SNSLocationTopic getDetailedLocationTopicInfo(String topicID) {
         TopicMapFragment mapFragment = null;
     	try {
@@ -337,7 +351,7 @@ public class SNSService {
     		return null;
 
     	SNSLocationTopic result = new SNSLocationTopic();
-    	result.setId(topic.getId());
+    	result.setTopicId(topic.getId());
     	result.setName(topic.getBaseName(0).getBaseNameString().get_value());
     	String type = topic.getInstanceOf(0).getTopicRef().getHref();
     	type = type.substring(type.lastIndexOf("#")+1);

@@ -2,7 +2,7 @@ package de.ingrid.mdek.dwr.sns;
 
 public class SNSLocationTopic {
 
-	public String id;
+	public String topicId;
 	public String type; 
 	public String name;
 	public String qualifier;
@@ -13,11 +13,11 @@ public class SNSLocationTopic {
 	// 		upper right corner longitude, upper right corner latitude 
 	public float[] boundingBox = new float[4];
 
-	public String getId() {
-		return id;
+	public String getTopicId() {
+		return topicId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setTopicId(String id) {
+		this.topicId = id;
 	}
 	public String getType() {
 		return type;
@@ -53,7 +53,7 @@ public class SNSLocationTopic {
 
 	public String toString() {
 		String result = "[";
-		result += "ID: "+this.id;
+		result += "ID: "+this.topicId;
 		result += ", Name: "+this.name;
 		result += ", Type: "+this.type;
 		result += ", Qualifier: "+this.qualifier;

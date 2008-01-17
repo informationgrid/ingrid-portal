@@ -68,7 +68,7 @@ setResultList = function(topicList)
 			if (checkboxDiv) {
 				var label = topicList[i].name+", "+topicList[i].type;
 				var checkBox = dojo.widget.createWidget("checkbox", {
-						id: topicList[i].id,
+						id: topicList[i].topicId,
 						name: label,
 						topic: topicList[i]
 					});
@@ -104,6 +104,50 @@ findLocationTopics = function() {
 // This function adds the location topics to the main geothesaurus table
 addLocationTopics = function() {
 	var store = dojo.widget.byId("spatialRefAdminUnit").store;
+
+	DWREngine.beginBatch();
+	dojo.lang.forEach(checkboxArray, function(item) {
+		if (item.checked) {
+			var topicId = item.topic.topicId;
+
+			SNSService.getDetailedLocationTopicInfo(topicId, {
+				callback:function(res) {
+					var storedTopic = store.getDataByKey(res.topicId);
+					if (storedTopic) {
+						// Element is already in the table. Update the topic.
+						// Update elements that are displayed in the table
+						store.update(storedTopic, "name", res.name+", "+res.type);
+						store.update(storedTopic, "longitude1", res.boundingBox[0]);
+						store.update(storedTopic, "latitude1", res.boundingBox[1]);
+						store.update(storedTopic, "longitude2", res.boundingBox[2]);
+						store.update(storedTopic, "latitude2", res.boundingBox[3]);
+						// Update elements that aren't displayed in the table
+						storedTopic.topicId = res.topicId;
+						storedTopic.nativeKey = res.nativeKey;
+					} else {
+						store.addData({
+								topicId: res.topicId,
+								name: res.name+", "+res.type,
+								longitude1: res.boundingBox[0],
+								latitude1: res.boundingBox[1],
+								longitude2: res.boundingBox[2],
+								latitude2: res.boundingBox[3],
+								nativeKey: res.nativeKey},
+							res.topicId
+						);
+					}
+				},
+				timeout:0
+			});
+		}
+	});
+	DWREngine.endBatch();
+
+	_container_.closeWindow();
+
+/*
+
+	var store = dojo.widget.byId("spatialRefAdminUnit").store;
 	
 	// Iterate over all the checkboxes and add the checked values
 	for (var i = 0; i < checkboxArray.length; ++i) {
@@ -135,6 +179,7 @@ addLocationTopics = function() {
 		}
 	}
 	_container_.closeWindow();
+*/
 }
 
 </script>
