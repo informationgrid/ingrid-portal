@@ -65,7 +65,12 @@ public class EntryServiceImpl implements EntryService {
 		log.debug("Copying node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			return addTreeNodeInfo(dataConnection.copyObject(nodeUuid, dstNodeUuid, includeChildren));
+			Map<String, Object> copyResult = dataConnection.copyObject(nodeUuid, dstNodeUuid, includeChildren);
+			if (copyResult != null) {
+				return addTreeNodeInfo(copyResult);
+			} else {
+				return null;
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

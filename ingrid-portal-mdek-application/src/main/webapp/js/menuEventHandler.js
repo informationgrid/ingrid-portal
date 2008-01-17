@@ -178,6 +178,15 @@ menuEventHandler.handlePaste = function(msg) {
 				// Copy was successful. Update the tree.
 				res.isFolder = treeController.nodeToCopy.isFolder && treeController.copySubTree;
 				treeController.createChild(targetNode, "last", res);
+				treeController.expand(targetNode);
+				// TODO Which node to select?
+				// Selection is lost (somehow) on 'createChild'. Reselect the currently selected node
+				tree.selectedNode.viewUnselect();
+				tree.selectedNode.viewSelect();
+			});
+			deferred.addErrback(function(mes) {
+				// Copy was unsuccessful. Notify user(?) and do nothing.
+				dojo.debug("Copy operation failed: "+mes);
 			});
 
 			// Open the target node before copying a node. 
