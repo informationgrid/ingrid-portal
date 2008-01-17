@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.dwr.DBContentBean;
 import de.ingrid.mdek.dwr.LinkDataBean;
-import de.ingrid.mdek.dwr.Location;
+import de.ingrid.mdek.dwr.LocationBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.mdek.dwr.OperationBean;
@@ -434,10 +434,10 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private static ArrayList<IngridDocument> mapFromLocationTables(ArrayList<Location> locationSNS, ArrayList<Location> locationFree) {
+	private static ArrayList<IngridDocument> mapFromLocationTables(ArrayList<LocationBean> locationSNS, ArrayList<LocationBean> locationFree) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (locationFree != null) {
-			for (Location loc : locationFree) {
+			for (LocationBean loc : locationFree) {
 				IngridDocument res = new IngridDocument();
 				res.put(MdekKeys.LOCATION_TYPE, "F");
 				res.put(MdekKeys.LOCATION_NAME, loc.getName());
@@ -449,7 +449,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			}
 		}
 		if (locationSNS != null) {
-			for (Location loc : locationSNS) {
+			for (LocationBean loc : locationSNS) {
 				IngridDocument res = new IngridDocument();
 				res.put(MdekKeys.LOCATION_TYPE, "G");
 				res.put(MdekKeys.LOCATION_NAME, loc.getName());
@@ -685,12 +685,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 	
 	
-	private static ArrayList<Location> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
-		ArrayList<Location> resultList = new ArrayList<Location>();
+	private static ArrayList<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
+		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
 		for (HashMap<String, Object> location : locList) {
 			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
 			if (locationType.equals("G")) {
-				Location loc = new Location(); 
+				LocationBean loc = new LocationBean(); 
 				loc.setType((String) location.get(MdekKeys.LOCATION_TYPE));
 				loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
 				loc.setNativeKey((String) location.get(MdekKeys.LOCATION_CODE));
@@ -705,12 +705,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private static ArrayList<Location> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
-		ArrayList<Location> resultList = new ArrayList<Location>();
+	private static ArrayList<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
+		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
 		for (HashMap<String, Object> location : locList) {
 			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
 			if (locationType.equals("F")) {
-				Location loc = new Location(); 
+				LocationBean loc = new LocationBean(); 
 				loc.setType((String) location.get(MdekKeys.LOCATION_TYPE));
 				loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
 				loc.setLongitude1((Double) location.get(MdekKeys.WEST_BOUNDING_COORDINATE));

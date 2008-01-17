@@ -176,7 +176,6 @@ menuEventHandler.handlePaste = function(msg) {
 			var deferred = new dojo.Deferred();
 			deferred.addCallback(function(res) {
 				// Copy was successful. Update the tree.
-				res.isFolder = treeController.nodeToCopy.isFolder && treeController.copySubTree;
 				treeController.createChild(targetNode, "last", res);
 				treeController.expand(targetNode);
 				// TODO Which node to select?

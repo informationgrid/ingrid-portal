@@ -1,4 +1,4 @@
-package de.ingrid.mdek;
+package de.ingrid.mdek.dwr;
 
 public class MediaOptionBean {
 	public Integer name;

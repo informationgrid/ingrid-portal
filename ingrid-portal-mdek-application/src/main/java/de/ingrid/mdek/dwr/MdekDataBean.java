@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import de.ingrid.mdek.DataFormatBean;
 
 /**
  * @author mbenz
@@ -35,8 +34,8 @@ public class MdekDataBean {
 	public ArrayList<MdekAddressBean> generalAddressTable;
 
 	// Spatial
-	public ArrayList<Location> spatialRefAdminUnitTable;
-	public ArrayList<Location> spatialRefLocationTable;
+	public ArrayList<LocationBean> spatialRefAdminUnitTable;
+	public ArrayList<LocationBean> spatialRefLocationTable;
 	public Double spatialRefAltMin;
 	public Double spatialRefAltMax;
 	public Integer spatialRefAltMeasure;
@@ -509,8 +508,8 @@ public class MdekDataBean {
 		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksToUrlTable(new ArrayList<UrlBean>());
 		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
-		this.setSpatialRefAdminUnitTable(new ArrayList<Location>());
-		this.setSpatialRefLocationTable(new ArrayList<Location>());
+		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
+		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
 		this.setThesaurusTermsTable(new ArrayList<VectorFormatDetailsBean>());
@@ -664,27 +663,27 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<Location> getSpatialRefAdminUnitTable() {
+	public ArrayList<LocationBean> getSpatialRefAdminUnitTable() {
 		return spatialRefAdminUnitTable;
 	}
 
 
 
 	public void setSpatialRefAdminUnitTable(
-			ArrayList<Location> spatialRefAdminUnitTable) {
+			ArrayList<LocationBean> spatialRefAdminUnitTable) {
 		this.spatialRefAdminUnitTable = spatialRefAdminUnitTable;
 	}
 
 
 
-	public ArrayList<Location> getSpatialRefLocationTable() {
+	public ArrayList<LocationBean> getSpatialRefLocationTable() {
 		return spatialRefLocationTable;
 	}
 
 
 
 	public void setSpatialRefLocationTable(
-			ArrayList<Location> spatialRefLocationTable) {
+			ArrayList<LocationBean> spatialRefLocationTable) {
 		this.spatialRefLocationTable = spatialRefLocationTable;
 	}
 

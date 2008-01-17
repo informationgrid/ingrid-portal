@@ -14,13 +14,18 @@
 		</create>
 
 		<convert converter="exception" match="java.lang.Exception" />
-		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekDataBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.DataFormatBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.DBContentBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.LinkDataBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.LocationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekAddressBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.UrlBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.DateFormatBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.TimeReferenceBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MediaOptionBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.Location"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.OperationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.ScaleBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.TimeReferenceBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.UrlBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.VectorFormatDetailsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSLocationTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.cts.Coordinate"/>

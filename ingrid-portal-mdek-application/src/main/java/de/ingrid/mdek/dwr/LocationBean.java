@@ -1,6 +1,6 @@
 package de.ingrid.mdek.dwr;
 
-public class Location {
+public class LocationBean {
 	public String name;
 	public String type;
 	public String nativeKey;
