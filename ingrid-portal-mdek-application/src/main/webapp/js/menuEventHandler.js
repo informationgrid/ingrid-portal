@@ -20,6 +20,9 @@ menuEventHandler.handleNewEntity = function(mes) {
 		} else {
 			// publish a createObject request and attach the newly created node if it was successful
 			deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
+			deferred.addErrback(function(err){
+				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+			});
 			dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
 	  		dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
 		}
@@ -31,20 +34,25 @@ attachNewNode = function(selectedNode, res) {
     var treeListener = dojo.widget.byId('treeListener');
 
 	var treeController = dojo.widget.byId("treeController");
+
 	var def = treeController.createChild(selectedNode, "last", _createNewNode(res));
 	def.addCallback(function(res){
 		tree.selectNode(res);
 		tree.selectedNode = res;
 		dojo.event.topic.publish(treeListener.eventNames.select, {node: res});
 	});
-	def.addErrback(function(){
+	def.addErrback(function(mes){
 		// If we got an error while attaching the node we still check if the node exists and select it
+		// TODO do we still need this?
 		var newNode = dojo.widget.byId("newNode");
 		if (newNode) {
 			newNode.parent.expand();
 			tree.selectNode(newNode);
 			tree.selectedNode = newNode;
 			dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+		} else {
+			dialog.show(message.get("general.error"), message.get("tree.nodeCreateLocalError"), dialog.WARNING);
+			dojo.debug(mes);
 		}
 	});
 }
@@ -87,7 +95,7 @@ menuEventHandler.handleCut = function(mes) {
 			treeController.prepareCut(selectedNode);
 		});
 		deferred.addErrback(function() {
-    		dialog.show(message.get("general.hint"), message.get("tree.nodeCanCutError"), dialog.WARNING);		
+    		dialog.show(message.get("general.error"), message.get("tree.nodeCanCutError"), dialog.WARNING);		
 		});
 
   		dojo.event.topic.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
@@ -106,7 +114,7 @@ menuEventHandler.handleCopyEntity = function(msg) {
 			treeController.prepareCopy(selectedNode, false);
 		});
 		deferred.addErrback(function() {
-    		dialog.show(message.get("general.hint"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
+    		dialog.show(message.get("general.error"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
 		});
 
   		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: false, resultHandler: deferred});
@@ -124,7 +132,7 @@ menuEventHandler.handleCopyTree = function(msg) {
 			treeController.prepareCopy(selectedNode, true);
 		});
 		deferred.addErrback(function() {
-    		dialog.show(message.get("general.hint"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
+    		dialog.show(message.get("general.error"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
 		});
 
   		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: true, resultHandler: deferred});
@@ -139,7 +147,7 @@ menuEventHandler.handlePaste = function(msg) {
 		var tree = dojo.widget.byId("tree");
 		var treeListener = dojo.widget.byId("treeListener");
 		var treeController = dojo.widget.byId("treeController");		
-		
+
 		if (treeController.nodeToCut != null) {
 			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
 				// If an invalid target is selected (same node or child of node to cut)
@@ -154,12 +162,13 @@ menuEventHandler.handlePaste = function(msg) {
 				});
 				deferred.addErrback(function(mes) {
 					// Move was unsuccessful. Notify user(?) and do nothing.
+					dialog.show(message.get("general.error"), message.get("tree.nodeMoveError"), dialog.WARNING);
 					dojo.debug("Move operation failed: "+mes);
 				});
 				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
-				def.addCallbacks(function() {
+				def.addCallback(function() {
 					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
 				});
 			}
@@ -185,6 +194,7 @@ menuEventHandler.handlePaste = function(msg) {
 			});
 			deferred.addErrback(function(mes) {
 				// Copy was unsuccessful. Notify user(?) and do nothing.
+				dialog.show(message.get("general.error"), message.get("tree.nodeCopyError"), dialog.WARNING);
 				dojo.debug("Copy operation failed: "+mes);
 			});
 
@@ -270,6 +280,11 @@ menuEventHandler.handleDiscard = function(msg) {
 					// Another version of the node still exists. Just update the dirty flag(?).
 				}
 	    	});
+			deleteObjDef.addErrback(function(mes) {
+				dialog.show(message.get("general.error"), message.get("tree.nodeDiscardError"), dialog.WARNING);
+				dojo.debug(mes);
+			});
+
 			// Tell the backend to delete the selected node.
 	    	dojo.debug("Publishing event: /deleteWorkingCopyRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
 	    	dojo.event.topic.publish("/deleteWorkingCopyRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				
@@ -322,6 +337,11 @@ menuEventHandler.handleDelete = function(msg) {
 					selectedNode.destroy();
 				}
 	    	});
+			deleteObjDef.addErrback(function(mes) {
+				dialog.show(message.get("general.error"), message.get("tree.nodeDeleteError"), dialog.WARNING);
+				dojo.debug(mes);
+			});
+
 			// Tell the backend to delete the selected node.
 	    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
 	    	dojo.event.topic.publish("/deleteRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				

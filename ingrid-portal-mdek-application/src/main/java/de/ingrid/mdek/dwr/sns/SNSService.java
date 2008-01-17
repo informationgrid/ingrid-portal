@@ -298,6 +298,7 @@ public class SNSService {
                 topic.setName(dt.getTitle());
                 topic.setTopicId(dt.getTopicID());
                 topic.setType(resourceBundle.getString("sns.topic.ref."+type[type.length-1]));
+                topic.setNativeKey(dt.getTopicNativeKey());
                 resultList.add(topic);
             }
         	Collections.sort(resultList, new SNSLocationTopicComparator());

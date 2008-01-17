@@ -11,7 +11,7 @@ public class SNSLocationTopic {
 	// The coordinates are stored as:
 	// 		lower left corner longitude, lower left corner latitude, 
 	// 		upper right corner longitude, upper right corner latitude 
-	public float[] boundingBox = new float[4];
+	public float[] boundingBox;
 
 	public String getTopicId() {
 		return topicId;
@@ -44,6 +44,7 @@ public class SNSLocationTopic {
 		this.boundingBox = boundingBox;
 	}
 	public void setBoundingBox(float bottomLeftLong, float bottomLeftLat, float upperRightLong, float upperRightLat) {
+		this.boundingBox = new float[4];
 		this.boundingBox[0] = bottomLeftLong;
 		this.boundingBox[1] = bottomLeftLat;
 		this.boundingBox[2] = upperRightLong;

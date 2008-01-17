@@ -317,7 +317,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 						setDirtyFlag();
 					},
 				timeout:5000,
-				errorHandler:function(message) {msg.resultHandler.errback(); alert("Error in js/udkDataProxy.js: Error while creating a new node: " + message); }
+				errorHandler:function(message) {msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new node."); }
 			}
 		);	
 	}

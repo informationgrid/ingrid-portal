@@ -121,24 +121,32 @@ addLocationTopics = function() {
 //	DWREngine.beginBatch();
 	dojo.lang.forEach(checkboxArray, function(item) {
 		if (item.checked) {
+			var topic = item.topic;
 			var topicId = item.topic.topicId;
 
 			SNSService.getDetailedLocationTopicInfo(topicId, {
 				callback:function(res) {
-					if (res) {
-						var storedTopic = store.getDataByKey(res.topicId);
-						if (storedTopic) {
-							// Element is already in the table. Update the topic.
-							// Update elements that are displayed in the table
-							store.update(storedTopic, "name", res.name+", "+res.type);
+					if (res == null) {
+						// No detailed information about the object was found.
+						// Create a stub to put in the table (without bounding box coords)
+						res = topic;
+					}
+					var storedTopic = store.getDataByKey(res.topicId);
+					if (storedTopic) {
+						// Element is already in the table. Update the topic.
+						// Update elements that are displayed in the table
+						store.update(storedTopic, "name", res.name+", "+res.type);
+						if (res.boundingBox) {
 							store.update(storedTopic, "longitude1", res.boundingBox[0]);
 							store.update(storedTopic, "latitude1", res.boundingBox[1]);
 							store.update(storedTopic, "longitude2", res.boundingBox[2]);
 							store.update(storedTopic, "latitude2", res.boundingBox[3]);
-							// Update elements that aren't displayed in the table
-							storedTopic.topicId = res.topicId;
-							storedTopic.nativeKey = res.nativeKey;
-						} else {
+						}
+						// Update elements that aren't displayed in the table
+						storedTopic.topicId = res.topicId;
+						storedTopic.nativeKey = res.nativeKey;
+					} else {
+						if (res.boundingBox) {
 							store.addData({
 									topicId: res.topicId,
 									name: res.name+", "+res.type,
@@ -146,6 +154,13 @@ addLocationTopics = function() {
 									latitude1: res.boundingBox[1],
 									longitude2: res.boundingBox[2],
 									latitude2: res.boundingBox[3],
+									nativeKey: res.nativeKey},
+								res.topicId
+							);
+						} else {
+							store.addData({
+									topicId: res.topicId,
+									name: res.name+", "+res.type,
 									nativeKey: res.nativeKey},
 								res.topicId
 							);
