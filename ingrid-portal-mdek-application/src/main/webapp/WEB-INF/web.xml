@@ -28,10 +28,13 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/classes/application-context.xml
-		</param-value>
+		<param-value>/WEB-INF/application-context.xml</param-value>
 	</context-param>
+	<listener>
+		<listener-class>
+			org.springframework.web.util.WebAppRootListener
+		</listener-class>
+	</listener>
 	<listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener

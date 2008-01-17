@@ -16,6 +16,15 @@
 	limitations under the License.
 -->
 <beans default-init-method="init">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configuration">
+		<property name="locations">
+            <list>
+                <value>classpath:mdek.properties</value>
+            </list>
+		</property>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+	</bean>
+
 	<bean id="entryService"
 		class="de.ingrid.mdek.dwr.EntryServiceImpl">
 		<property name="dataConnection">
@@ -25,6 +34,7 @@
 
 	<bean id="MdekDataConnection"
 		class="de.ingrid.mdek.SimpleUDKConnection">
+		<constructor-arg value="${communication.properties}"/>
 		<property name="dataMapper">
 			<ref local="MdekDataMapper" />
 		</property>
