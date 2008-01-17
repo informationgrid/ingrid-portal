@@ -18,8 +18,17 @@ _container_.addOnUnload(function() {
 });
 init = function() {}
 
-var checkboxArray = new Array();
+function disableUiElements() {
+	dojo.widget.byId("addLocationTopicsButton").disable();
+	dojo.widget.byId("findLocationTopicsButton").disable();
+}
+function enableUiElements() {
+	dojo.widget.byId("addLocationTopicsButton").enable();
+	dojo.widget.byId("findLocationTopicsButton").enable();
+}
 
+
+var checkboxArray = new Array();
 
 
 function showNoResults() {
@@ -94,6 +103,8 @@ findLocationTopics = function() {
 	showLoading();
 
 	SNSService.getLocationTopics(queryTerm, {
+		preHook:disableUiElements,
+		postHook:enableUiElements,
 		callback:setResultList,
 		timeout:0,
 		errorHandler:showError
@@ -210,7 +221,7 @@ addLocationTopics = function() {
 					</span>
 
        				<span class="buttonGrey floatLeft" style="margin-left:22px;">
-       					<button dojoType="Button" title="In Geo-Thesaurus suchen" onClick="findLocationTopics">In Geo-Thesaurus suchen</button>
+       					<button dojoType="Button" title="In Geo-Thesaurus suchen" id="findLocationTopicsButton" onClick="findLocationTopics">In Geo-Thesaurus suchen</button>
        				</span>
         		</div>
 
@@ -221,7 +232,7 @@ addLocationTopics = function() {
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
           		<span class="button w085 transparent" style="margin-top: 58px; margin-left: 373px;">
-					<button dojoType="Button" title="Auswählen" onClick="addLocationTopics">Ausw&auml;hlen</button>          		
+					<button dojoType="Button" title="Auswählen" id="addLocationTopicsButton" onClick="addLocationTopics">Ausw&auml;hlen</button>          		
           		</span>
 			</div>
       		<!-- CONTENT END -->

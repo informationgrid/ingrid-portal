@@ -10,6 +10,22 @@ _container_.addOnLoad(function() {
 	init();
 });
 
+function disableUiElements() {
+	dojo.widget.byId("addSelectedButton").disable();
+	dojo.widget.byId("addAllButton").disable();
+	dojo.widget.byId("removeAllButton").disable();
+	dojo.widget.byId("removeSelectedButton").disable();
+	dojo.widget.byId("applyChangesButton").disable();
+}
+
+function enableUiElements() {
+	dojo.widget.byId("addSelectedButton").enable();
+	dojo.widget.byId("addAllButton").enable();
+	dojo.widget.byId("removeAllButton").enable();
+	dojo.widget.byId("removeSelectedButton").enable();
+	dojo.widget.byId("applyChangesButton").enable();
+}
+
 
 function showStatus(msg) {
 	var status = dojo.byId("statusText");
@@ -41,6 +57,8 @@ init = function() {
 
 	// Start a SNS query for similar terms
 	SNSService.getSimilarTerms(termList, {
+		preHook:disableUiElements,
+		postHook:enableUiElements,
 		callback:function(res) {
 			if (res && res.length > 0) {
 				var keywordTable = dojo.widget.byId("keywordsList");
@@ -53,7 +71,7 @@ init = function() {
 				showStatus(message.get("sns.noSimilarTermsHint"));
 			}
 		},
-		timeout:10000,
+		timeout:0,
 		errorHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
 	});
 }
@@ -179,10 +197,10 @@ applyChanges = function() {
 
         <span class="entry">
           <span class="buttonCol" style="margin:80px -4px 0px;">
-			<button dojoType="Button" onClick="addSelected">></button>
-			<button dojoType="Button" onClick="addAll">>></button>
-			<button dojoType="Button" onClick="removeAll"><<</button>
-			<button dojoType="Button" onClick="removeSelected"><</button>
+			<button dojoType="Button" id="addSelectedButton" onClick="addSelected">></button>
+			<button dojoType="Button" id="addAllButton" onClick="addAll">>></button>
+			<button dojoType="Button" id="removeAllButton" onClick="removeAll"><<</button>
+			<button dojoType="Button" id="removeSelectedButton" onClick="removeSelected"><</button>
 <!-- 
 
           	<a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a>
@@ -213,7 +231,7 @@ applyChanges = function() {
       
       <div class="inputContainer noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
-	        <span style="float:right;"><button dojoType="Button" onClick="applyChanges">&Uuml;bernehmen</button></span>
+	        <span style="float:right;"><button dojoType="Button" id="applyChangesButton" onClick="applyChanges">&Uuml;bernehmen</button></span>
 			<span id="statusText" style="float:left; padding-top:6px;"></span>
         </span>
   	  </div>
