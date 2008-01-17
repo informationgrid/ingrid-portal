@@ -1504,15 +1504,14 @@ function hideSplash(){
 	              	      </tbody>
 	              	    </table>
 	              	  </div>
-	                  <span class="input" style="position:relative; top:-8px">
-	                  	<input type="text" id="thesaurusFreeTerms" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
-	        			<span style="float:right;">
-	        				<button id="thesaurusFreeTermsAddButton" dojoType="Button">Hinzuf&uuml;gen</button>
-	        			</span>
-<!-- 
-	                  	<a href="#" class="buttonGrey" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a>
- -->
-	                  </span>
+
+
+	                  <span class="input" style="position:relative; top:-8px; float:left; width:238px;">
+                  		<input type="text" id="thesaurusFreeTerms" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
+					  </span>
+	                  <span style="position:relative; top:-8px; float:right;">
+						<button id="thesaurusFreeTermsAddButton" dojoType="ingrid:Button">Hinzuf&uuml;gen</button>
+					  </span>
 	            	  </div>
 	                <div class="fill"></div>
 	              </div>

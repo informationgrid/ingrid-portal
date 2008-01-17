@@ -284,7 +284,7 @@ acceptTopicList = function() {
 <!--
         <span class="button w644"><a href="#" class="buttonBlue" title="In Thesaurus suchen">In Thesaurus suchen</a></span>
 -->
-        <span class="button w644"><button dojoType="Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic">In Thesaurus suchen</button></span>
+        <span class="button w644" style="height:20px !important;"><button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic">In Thesaurus suchen</button></span>
    	  </div>
 
       <div class="inputContainer grey full noSpaceBelow">
@@ -310,9 +310,9 @@ acceptTopicList = function() {
 <!-- 
         <span class="button w644"><a href="#" class="buttonBlue" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
  -->
-         <span class="button w644" style="height:22px !important;">
-         	<span style="float:right;"><button dojoType="Button" onClick="closeDialog">Abbrechen</button></span>
-         	<span style="float:right; padding-right:10px;"><button dojoType="Button" id="addSelectedTopicButton" onClick="addSelectedTopic">Hinzuf&uuml;gen</button></span>
+         <span class="button w644" style="height:20px !important;">
+         	<span style="float:right;"><button dojoType="ingrid:Button" onClick="closeDialog">Abbrechen</button></span>
+         	<span style="float:right; padding-right:10px;"><button dojoType="ingrid:Button" id="addSelectedTopicButton" onClick="addSelectedTopic">Hinzuf&uuml;gen</button></span>
 			<span id="statusText" style="float:left; padding-top:6px;"></span>
          </span>
   	  </div>
@@ -337,7 +337,7 @@ acceptTopicList = function() {
         </div>
 
         <div class="inputContainer w264 noSpaceBelow">
-          <span class="buttonNoBg w264"><button dojoType="Button" id="acceptTopicListButton" class="buttonGrey" onClick="acceptTopicList">&Uuml;bernehmen</button></span>
+          <span class="buttonNoBg w264"><button dojoType="ingrid:Button" id="acceptTopicListButton" class="buttonGrey" onClick="acceptTopicList">&Uuml;bernehmen</button></span>
     	  </div>
     	</div>
       <!-- RIGHT HAND SIDE CONTENT END -->

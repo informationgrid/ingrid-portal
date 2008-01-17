@@ -197,17 +197,10 @@ applyChanges = function() {
 
         <span class="entry">
           <span class="buttonCol" style="margin:80px -4px 0px;">
-			<button dojoType="Button" id="addSelectedButton" onClick="addSelected">></button>
-			<button dojoType="Button" id="addAllButton" onClick="addAll">>></button>
-			<button dojoType="Button" id="removeAllButton" onClick="removeAll"><<</button>
-			<button dojoType="Button" id="removeSelectedButton" onClick="removeSelected"><</button>
-<!-- 
-
-          	<a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a>
-            <a href="#" class="buttonGrey" title="Alle Eintrag nach von links nach rechts">>></a>
-            <a href="#" class="buttonGrey" title="Alle Eintrag nach von rechts nach links"><<</a>
-            <a href="#" class="buttonGrey" title="Gewählten Eintrag von rechts nach links"><</a>
- -->
+			<button dojoType="ingrid:Button" id="addSelectedButton" onClick="addSelected">></button>
+			<button dojoType="ingrid:Button" id="addAllButton" onClick="addAll">>></button>
+			<button dojoType="ingrid:Button" id="removeAllButton" onClick="removeAll"><<</button>
+			<button dojoType="ingrid:Button" id="removeSelectedButton" onClick="removeSelected"><</button>
           </span>
         </span>
 
@@ -231,7 +224,7 @@ applyChanges = function() {
       
       <div class="inputContainer noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
-	        <span style="float:right;"><button dojoType="Button" id="applyChangesButton" onClick="applyChanges">&Uuml;bernehmen</button></span>
+	        <span style="float:right;"><button dojoType="ingrid:Button" id="applyChangesButton" onClick="applyChanges">&Uuml;bernehmen</button></span>
 			<span id="statusText" style="float:left; padding-top:6px;"></span>
         </span>
   	  </div>

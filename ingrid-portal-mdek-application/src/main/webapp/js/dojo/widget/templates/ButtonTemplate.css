@@ -1,7 +1,7 @@
 /* ---- button --- */
 .dojoButton {
 	cursor: pointer;
-  float: left !important;
+/*  float: left !important;	*/
 }
 
 .dojoButton .dojoButtonContents {
