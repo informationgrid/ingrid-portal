@@ -133,7 +133,7 @@ menuEventHandler.handleCopyTree = function(msg) {
 
 menuEventHandler.handlePaste = function(msg) {
 	var targetNode = getSelectedNode(msg);
-	if (!targetNode) {
+	if (!targetNode || targetNode.id == "newNode") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
 	} else {
 		var tree = dojo.widget.byId("tree");
@@ -144,6 +144,7 @@ menuEventHandler.handlePaste = function(msg) {
 			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
 				// If an invalid target is selected (same node or child of node to cut)
 				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
+				return;
 			} else {
 				// Valid target was selected. Start the request
 				var deferred = new dojo.Deferred();
@@ -163,24 +164,32 @@ menuEventHandler.handlePaste = function(msg) {
 				});
 			}
 		} else if (treeController.nodeToCopy != null) {
-				// A node can be inserted everywhere. Start the paste request.
-				var deferred = new dojo.Deferred();
-				deferred.addCallback(function(res) {
-					// Copy was successful. Update the tree.
-					res.isFolder = treeController.nodeToCopy.isFolder && treeController.copySubTree;
-					treeController.createChild(targetNode, "last", res);
-				});
+			// If a newNode currently exists and is included in the copy operation abort the copy operation with
+			// an error message
+			var newNode = dojo.widget.byId("newNode");
+			if (newNode && treeController.copySubTree && _isChildOf(newNode, treeController.nodeToCopy)) {
+				dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
+				return;
+			} 
 
-				// Open the target node before copying a node. 
-				var def = treeController.expand(targetNode);
-				def.addCallback(function() {
-					dojo.event.topic.publish("/copyObjectRequest", {
-						srcId: treeController.nodeToCopy.id,
-						dstId: targetNode.id,
-						copyTree: treeController.copySubTree,
-						resultHandler: deferred
-					});				
-				});
+			// A node can be inserted everywhere. Start the paste request.
+			var deferred = new dojo.Deferred();
+			deferred.addCallback(function(res) {
+				// Copy was successful. Update the tree.
+				res.isFolder = treeController.nodeToCopy.isFolder && treeController.copySubTree;
+				treeController.createChild(targetNode, "last", res);
+			});
+
+			// Open the target node before copying a node. 
+			var def = treeController.expand(targetNode);
+			def.addCallback(function() {
+				dojo.event.topic.publish("/copyObjectRequest", {
+					srcId: treeController.nodeToCopy.id,
+					dstId: targetNode.id,
+					copyTree: treeController.copySubTree,
+					resultHandler: deferred
+				});				
+			});
 		} else {
 	    	dialog.show(message.get("general.hint"), message.get("tree.nodePasteNoCutCopyHint"), dialog.WARNING);
 		}

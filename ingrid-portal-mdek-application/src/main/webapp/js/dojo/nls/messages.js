@@ -30,6 +30,7 @@
     "tree.selectNodePasteHint":"Please select a target node to paste.",
     "tree.nodePasteNoCutCopyHint":"Please select a node to copy or cut before pasting.",
     "tree.nodePasteInvalidHint":"Please select a valid target to paste.",
+    "tree.saveNewNodeHint":"Please save the currently edited node before pasting.",
     "tree.newNodeName":"New Object",
     "tree.reload":"Reload",
 

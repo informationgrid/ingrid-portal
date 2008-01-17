@@ -432,7 +432,7 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 					msg.resultHandler.errback("Error in js/udkDataProxy.js: Move node operation failed.");
 				}
 			},
-			timeout:0,
+			timeout:30000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while moving nodes: " + message);
 				msg.resultHandler.errback();
