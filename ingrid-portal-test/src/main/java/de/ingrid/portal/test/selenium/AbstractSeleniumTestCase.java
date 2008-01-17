@@ -1,16 +1,15 @@
 package de.ingrid.portal.test.selenium;
 
-import org.openqa.selenium.server.SeleniumServer;
-
-import com.thoughtworks.selenium.DefaultSelenium;
-import com.thoughtworks.selenium.Selenium;
-
 import junit.framework.TestCase;
 
-public class SeleniumTestCase extends TestCase {
+import org.openqa.selenium.server.SeleniumServer;
+
+import com.thoughtworks.selenium.Selenium;
+
+public abstract class AbstractSeleniumTestCase extends TestCase {
 
 	protected SeleniumServer seleniumServer;
-	protected Selenium selenium;
+	protected Selenium selenium = null;
 
 	public void setUp() {
 		try {
@@ -20,15 +19,13 @@ public class SeleniumTestCase extends TestCase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		selenium = new DefaultSelenium("localhost", 4444, "*iexplore", "http://www.portalu.de");
-		selenium.start();
 	}
+
+	public abstract void init();
 
 	public void tearDown() {
 		selenium.stop();
 		seleniumServer.stop();
 	}
-	
-	
+
 }

@@ -1,6 +1,6 @@
 package de.ingrid.portal.test.selenium;
 
-public class PortaluLoginTest extends SeleniumTestCase {
+public class PortaluLoginTest extends PortalUSeleniumTestCase {
 
 	public void testQuery() throws Exception {
 		selenium.open("/");
