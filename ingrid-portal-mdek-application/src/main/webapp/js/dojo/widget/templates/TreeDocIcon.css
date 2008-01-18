@@ -88,9 +88,25 @@
 .TreeIconMDAutor {background-image: url('../../../../img/UDK/user_md_autor.gif');}
 
 /* sns tree */
-.TreeIconTOP_TERM   {background-image: url('../../../../img/UDK/catalog.gif');}
-.TreeIconNODE_LABEL {background-image: url('../../../../img/UDK/udk_class2.gif');}
-.TreeIconDESCRIPTOR {background-image: url('../../../../img/UDK/udk_class0.gif');}
+.TreeIconTOP_TERM {
+	background-image: url('../../../../img/UDK/catalog.gif');
+}
+.TreeIconNODE_LABEL {
+/*	background-image: url('../../../../img/UDK/udk_class2.gif');	*/
+    width: 0px !important;
+    height: 16px;
+    float: left;
+    display: inline;
+    background-repeat : no-repeat;
+}
+.TreeIconDESCRIPTOR {
+/*	background-image: url('../../../../img/UDK/udk_class0.gif');	*/
+    width: 0px !important;
+    height: 16px;
+    float: left;
+    display: inline;
+    background-repeat : no-repeat;
+}
 
 /* defaults */
 .TreeIconFolder {
@@ -107,8 +123,9 @@
     float: left;
     display: inline;
     background-repeat : no-repeat;
+	margin-right: 3px;	/* distance to the label */
 }
 
 div.TreeContent {
-    margin-left: 36px;
+/*	margin-left: 20px;	*/
 }

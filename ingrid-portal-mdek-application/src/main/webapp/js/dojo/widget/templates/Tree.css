@@ -86,6 +86,13 @@ so I have to remove TreeExpand and process this one specifically
     margin-left:0;
 }
  
+/* the node is not selectable */
+.TreeNodeNotSelectable {
+    border: none;
+    color: #666666;
+    margin-left:0;
+}
+
 .TreeContent .RichTextEditable, .TreeContent .RichTextEditable iframe {
     background-color: #ffc;
     color: black;
