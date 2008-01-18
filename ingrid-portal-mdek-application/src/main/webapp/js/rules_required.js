@@ -107,15 +107,15 @@ function applyRule1() {
 }
 
 function applyRule2() {
-  var required = false;
-  if (dojo.widget.byId("thesaurusEnvTopics").hasData() || dojo.widget.byId("thesaurusEnvCats").hasData())
-    required = true;
-
-  var labelNode1 = dojo.byId("thesaurusEnvTopicsLabel");
-  var labelNode2 = dojo.byId("thesaurusEnvCatsLabel");
-  var containerNode = labelNode1.parentNode.parentNode.parentNode;
-  setRequiredState(labelNode1, containerNode, required);
-  setRequiredState(labelNode2, containerNode, required);
+	var required = false;
+	if (dojo.widget.byId("thesaurusEnvTopics").hasData() || dojo.widget.byId("thesaurusEnvCats").hasData())
+	  required = true;
+	
+	var labelNode1 = dojo.byId("thesaurusEnvTopicsLabel");
+	var labelNode2 = dojo.byId("thesaurusEnvCatsLabel");
+	var containerNode = labelNode1.parentNode.parentNode.parentNode;
+	setRequiredState(labelNode1, containerNode, required);
+	setRequiredState(labelNode2, containerNode, required);
 }
 	
 function applyRule3(value) {
@@ -129,22 +129,31 @@ function applyRule3(value) {
 }
 
 function applyRule5() {
-	var required = true;
+	var snsHasBB = false;
+	var freeHasBB = false;
 	var snsData = dojo.widget.byId("spatialRefAdminUnit").store.getData();
 	var freeData = dojo.widget.byId("spatialRefLocation").store.getData();
 
 	for (var i = 0; i < snsData.length; ++i) {
 		if (snsData[i].longitude1 && snsData[i].longitude2 && snsData[i].latitude1 && snsData[i].latitude2)
-			required = false;
+			snsHasBB = true;
 	}
 	for (var i = 0; i < freeData.length; ++i) {
 		if (freeData[i].longitude1 && freeData[i].longitude2 && freeData[i].latitude1 && freeData[i].latitude2)
-			required = false;
+			freeHasBB = true;
 	}
 
 	var labelNode1 = dojo.byId("spatialRefAdminUnitLabel");
 	var labelNode2 = dojo.byId("spatialRefLocationLabel");
-	setRequiredState(labelNode1, null, required);
-	setRequiredState(labelNode2, null, required);
+
+	if (!snsHasBB && !freeHasBB) {
+		setRequiredState(labelNode1, null, true);
+		setRequiredState(labelNode2, null, true);
+	} else if (snsHasBB) {
+		setRequiredState(labelNode1, null, true);
+		setRequiredState(labelNode2, null, false);
+	} else if (freeHasBB) {
+		setRequiredState(labelNode1, null, false);
+		setRequiredState(labelNode2, null, true);
+	}
 }
-	
