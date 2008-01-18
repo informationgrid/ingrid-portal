@@ -152,8 +152,8 @@ public class EntryServiceImpl implements EntryService {
 	public MdekDataBean createNewNode(String parentUuid) {
 		log.debug("--- New node ---");		
 		MdekDataBean data = new MdekDataBean(); 
-		data.setTitle("Neues Datenobjekt");
-		data.setObjectName("Neues Datenobjekt");
+		data.setTitle("Neues Objekt");
+		data.setObjectName("Neues Objekt");
 		data.setNodeAppType(OBJECT_APPTYPE);
 		data.setNodeDocType("Class0");
 		data.setObjectClass(0);

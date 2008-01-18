@@ -4,9 +4,10 @@
  * asking the user if unsaved changes should really be discarded)
  *
  * The proxy is called indirectly via the following topics (dojo.event.topic.publish(topic, message)):
- *   topic = '/loadRequest' - argument: {id: nodeUuid, appType: appType}
+ *   topic = '/loadRequest' - argument: {id: nodeUuid, appType: appType, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node
  *     appType  - 'A' for Address, 'O' for Object
+ *     resultHandler - (optional) A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/createObjectRequest' - argument: {id: parentUuid, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node
@@ -276,26 +277,40 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 }
 
 
-udkDataProxy.handleLoadRequest = function(node)
+udkDataProxy.handleLoadRequest = function(msg)
 {
-	dojo.debug("About to be loaded: "+node.id);
+	dojo.debug("About to be loaded: "+msg.id);
 
 	// Don't process newNode load requests. We have this request because we
 	// select new nodes in the tree after creating them
-	if (node.id == "newNode") {
+	if (msg.id == "newNode") {
 		return;
 	}
 
+	var nodeId = msg.id;
+	var nodeAppType = msg.appType;
+	var resultHandler = msg.resultHandler;
 	// TODO Check if we are in a state where it's safe to load data.
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
 	var deferred = udkDataProxy.checkForUnsavedChanges();
 	var loadErrback = function() {return;}
 	var loadCallback = function() {
-		dojo.debug("udkDataProxy calling EntryService.getNodeData("+node.id+", "+node.appType+")");
+		dojo.debug("udkDataProxy calling EntryService.getNodeData("+nodeId+", "+nodeAppType+")");
 		// ---- DWR call to load the data ----
-		EntryService.getNodeData(node.id, node.appType, "false",
+		EntryService.getNodeData(nodeId, nodeAppType, "false",
 			{
-				callback:udkDataProxy._setData,
+				callback:function(res){
+						if (res != null) {
+							udkDataProxy._setData(res);
+							udkDataProxy._updateTree(res);
+							if (resultHandler) resultHandler.callback();
+						} else {
+							dojo.debug(resultHandler);
+							if (typeof(resultHandler) != "undefined") {
+								resultHandler.errback("Error loading object. The object with the specified id doesn't exist!");
+							}
+						}
+					},
 				timeout:5000,
 				errorHandler:function(message) {dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); },
 				exceptionHandler:function(message) {dojo.debug("Exception in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }				
@@ -522,27 +537,27 @@ udkDataProxy.onAfterPublish = function() { dojo.debug("onAfterPublish()"); }
 
 udkDataProxy._setData = function(nodeData)
 {
-  currentUdk = nodeData;
+	currentUdk = nodeData;
 /*
-  dojo.debug("NodeData Properties: ");
-  for (property in nodeData)
-  {
-    dojo.debug(property+": "+ nodeData[property]);
-  }
+	dojo.debug("NodeData Properties: ");
+	for (property in nodeData)
+	{
+	  dojo.debug(property+": "+ nodeData[property]);
+	}
 */
-  // -- We check if we received an Address or Object and call the corresponding function --
-  switch (nodeData.nodeAppType.toUpperCase())
-  {
-    case 'A':
-      udkDataProxy._setAddressData(nodeData);
-      break;
-    case 'O':
-      udkDataProxy._setObjectData(nodeData);
-      break;
-    default:
-      dojo.debug("Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!");
-      break;
-  }  
+	// -- We check if we received an Address or Object and call the corresponding function --
+	switch (nodeData.nodeAppType.toUpperCase())
+	{
+	case 'A':
+		udkDataProxy._setAddressData(nodeData);
+		break;
+	case 'O':
+		udkDataProxy._setObjectData(nodeData);
+		break;
+	default:
+		dojo.debug("Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!");
+		break;
+	}  
 }
 
 udkDataProxy._setAddressData = function(nodeData)
@@ -1006,6 +1021,9 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 // tree data (label, type, etc.) according to the given nodeData
 udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	dojo.debug("_updateTree("+nodeData.uuid+", "+oldUuid+")");
+	if (typeof(oldUuid) == "undefined") {
+		oldUuid = nodeData.uuid;
+	}
 
 	// If we change the uuid (= widgetId) of a node the treeNode has to be created again
 	// because otherwise dojo doesn't 'register' the changed widgetId 

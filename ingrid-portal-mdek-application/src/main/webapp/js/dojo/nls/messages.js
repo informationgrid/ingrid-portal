@@ -34,6 +34,7 @@
     "tree.nodeCreateLocalError":"Error while creating a new node. The node was created but could not be attached to the tree.",
     "tree.nodeDeleteError":"Error while deleting the selected node. Node delete operation failed in the backend.",
     "tree.nodeDiscardError":"Error while discarding the selected node. Node state could not be reset to its published version.",
+    "tree.nodeLoadError":"Error while loading the node from the server. The node was not found!",
     "tree.nodeMoveError":"Error while moving the cut node. Node move operation failed in the backend.",
     "tree.nodePublishError":"Error while publishing the current object. Node publish operation failed in the backend.",
     "tree.selectNodeDeleteHint":"Please select a node to delete.",

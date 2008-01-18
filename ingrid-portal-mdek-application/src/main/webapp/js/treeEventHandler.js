@@ -8,10 +8,17 @@ var treeEventHandler = {};
 // ----- Add the listener -> TODO move to mdek_entry.jsp -----
 function nodeSelectListener(message)
 {
-  if (message.node.id != 'objectRoot') {
-    dojo.debug('Publishing event: /loadRequest('+message.node.id+', '+message.node.nodeAppType+')');
-    dojo.event.topic.publish("/loadRequest", {id: message.node.id, appType: message.node.nodeAppType});
-  }
+	var nodeId = message.node.id;
+	var nodeAppType = message.node.nodeAppType;
+	if (nodeId != 'objectRoot') {
+		var deferred = new dojo.Deferred();
+		dojo.debug("Publishing event: /loadRequest("+nodeId+", "+nodeAppType+")");
+		dojo.event.topic.publish("/loadRequest", {id: nodeId, appType: nodeAppType, resultHandler: deferred});
+		deferred.addErrback(function(mes) {
+			dojo.debug(mes);
+			dialog.show(message.get("general.error"), message.get("tree.nodeLoadError"), dialog.WARNING);
+		});
+ 	}
 }
 
 dojo.addOnLoad(function()
