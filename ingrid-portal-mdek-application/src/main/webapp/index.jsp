@@ -24,8 +24,8 @@ function loadit() {
         <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
         <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
           <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px"> Metadaten Erfassungskomponenten</p>
-          <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>
-          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">loading...</p>
+<!--        <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>   -->
+          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Applikation wird geladen...</p>
         </div>
    </div>
 </div>

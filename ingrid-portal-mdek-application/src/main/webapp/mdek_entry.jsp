@@ -50,6 +50,12 @@ var currentMenu = null;
 var currentSubMenu = new Array();
 
 function clickMenu(menuName, submenuName) {
+	// Activate the menu by removing the following lines
+	// --- DEACTIVATE BEGIN ---
+	dojo.debug("Main menu is deactivated. Activate it by uncommenting the corresponding lines in mdek_entry.jsp - function clickMenu()");
+	return;
+	// --- DEACTIVATE END ---
+
 	for(var i=0; i<menus.length; i++) {
 		var menu = menus[i].menu;
 		var submenus = menus[i].submenus;
@@ -111,8 +117,8 @@ function hideSplash(){
         <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
         <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
           <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px"> Metadaten Erfassungskomponenten</p>
-          <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>
-          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">loading...</p>
+<!--           <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>  -->
+          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Applikation wird geladen...</p>
         </div>
    </div>
 </div>
@@ -1940,7 +1946,7 @@ function hideSplash(){
 		</div>
 	  </div>
 	  <!-- END CONTENT ADDRESS -->
-      <div id="contentNone">No Object/Adress selected</div>
+      <div id="contentNone">Kein Objekt oder Adresse ausgewählt</div>
     </div>
 
   </div>
