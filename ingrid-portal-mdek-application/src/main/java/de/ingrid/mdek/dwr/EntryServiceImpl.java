@@ -230,14 +230,17 @@ public class EntryServiceImpl implements EntryService {
 	 *      java.lang.Boolean)
 	 */
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
-		log.debug("Saving node with ID: "+data.getUuid());
+		if (useWorkingCopy) {
+			log.debug("Saving node with ID: "+data.getUuid());
 
-		try {
-		  return dataConnection.saveNode(data);
+			try { return dataConnection.saveNode(data); }
+			catch (Exception e) {e.printStackTrace(); return null;}
+		} else {
+			log.debug("Publishing node with ID: "+data.getUuid());
+
+			try { return dataConnection.publishNode(data); }
+			catch (Exception e) {e.printStackTrace(); return null;}
 		}
-		catch (Exception e) {e.printStackTrace();};
-
-		return null;
 	}
 
 

@@ -473,7 +473,7 @@ function initSpatialFreeReferencesComboBox() {
 				var editor = dojo.widget.byId("freeReferencesEditor");
 				editor.dataProvider.setData(values);
 			},
-			errback:function(mes){
+			errorHandler:function(mes){
 				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 				dojo.debug(mes);
 			}

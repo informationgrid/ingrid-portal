@@ -78,6 +78,7 @@ public interface DataConnectionInterface {
 	public MdekDataBean getNodeDetail(String uuid);
 
 	public MdekDataBean saveNode(MdekDataBean data);
+	public MdekDataBean publishNode(MdekDataBean data);
 	
 	public void deleteObject(String uuid);
 	public boolean deleteObjectWorkingCopy(String uuid);

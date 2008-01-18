@@ -17,15 +17,11 @@ var notEmptyFunc = function(element) {return (this[element] && this[element] != 
 
 
 function isObjectPublishable(idcObject) {
-//	return dojo.lang.every(notEmptyFields, notEmptyFunc, idcObject);
-
-	var myObj = {objectName: "", objectClass: "", generalDesc: ""};
-
-	dojo.debug("Should be false: "+dojo.lang.every(notEmptyFields, notEmptyFunc, myObj));
-
-	myObj.objectName = "name";
-	myObj.objectClass = "class";
-	myObj.generalDesc = "general Description";
-	
-	dojo.debug("Should be true: "+dojo.lang.every(notEmptyFields, notEmptyFunc, myObj));
+	if (dojo.lang.every(notEmptyFields, notEmptyFunc, idcObject)) {
+		// All the fields that need to be filled contain data
+		// Continue checking
+		return true;
+	} else {
+		return false;
+	}
 }

@@ -12,7 +12,11 @@
  *     nodeUuid - The Uuid of the node
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *	// TODO: Use a result Handler for save requests(?)
  *   topic = '/saveRequest' - argument:
+ *
+ *   topic = '/publishObjectRequest' - argument: {resultHandler: deferred}
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/deleteRequest' - argument: {id: nodeUuid, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node which should be deleted
@@ -67,6 +71,7 @@ dojo.addOnLoad(function()
 {
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, "handleLoadRequest");
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
+    dojo.event.topic.subscribe("/publishObjectRequest", udkDataProxy, "handlePublishObjectRequest");
     dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
     dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
     dojo.event.topic.subscribe("/deleteWorkingCopyRequest", udkDataProxy, "handleDeleteWorkingCopyRequest");
@@ -335,8 +340,8 @@ udkDataProxy.handleSaveRequest = function()
 	var nodeData = udkDataProxy._getData();
 	
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+")");
-	EntryService.saveNodeData(nodeData, "false",
+	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true)");
+	EntryService.saveNodeData(nodeData, "true",
 		{
 			callback: function(res){
 				resetDirtyFlag();
@@ -350,6 +355,29 @@ udkDataProxy.handleSaveRequest = function()
 	);
 }
 
+udkDataProxy.handlePublishObjectRequest = function(msg) {
+	// Construct an MdekDataBean from the available data
+	var nodeData = udkDataProxy._getData();
+	
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false)");
+	EntryService.saveNodeData(nodeData, "false",
+		{
+			callback: function(res){
+				resetDirtyFlag();
+				udkDataProxy._setData(res);
+				udkDataProxy._updateTree(res, nodeData.uuid);
+				udkDataProxy.onAfterPublish();
+				msg.resultHandler.callback(res);
+			},
+			timeout:5000,
+			errorHandler:function(message) {
+				msg.resultHandler.errback(message);
+				dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData: " + message);
+			}
+		}
+	);
+}
 
 udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.deleteObjectWorkingCopy("+msg.id+")");
@@ -490,6 +518,7 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 
 // event.connect point. Called when data has been saved 
 udkDataProxy.onAfterSave = function() { dojo.debug("onAfterSave()"); }
+udkDataProxy.onAfterPublish = function() { dojo.debug("onAfterPublish()"); }
 
 udkDataProxy._setData = function(nodeData)
 {

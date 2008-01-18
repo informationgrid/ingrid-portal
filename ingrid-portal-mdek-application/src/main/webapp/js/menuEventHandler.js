@@ -379,7 +379,19 @@ menuEventHandler.reloadSubTree = function(msg) {
 
 
 menuEventHandler.handleFinalSave = function() {
-	isObjectPublishable();
+	var nodeData = udkDataProxy._getData();
+	if (isObjectPublishable(nodeData)) {
+		var deferred = new dojo.Deferred();
+		deferred.addErrback(function(mes) {
+			dialog.show(message.get("general.error"), message.get("tree.nodePublishError"), dialog.WARNING);
+			dojo.debug(mes);
+		});
+	
+		dojo.debug("Publishing event: /publishObjectRequest");
+		dojo.event.topic.publish("/publishObjectRequest", {resultHandler: deferred});		
+	} else {
+  		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+	}
 }
 
 

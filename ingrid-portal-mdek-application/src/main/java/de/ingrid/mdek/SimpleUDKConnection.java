@@ -81,13 +81,29 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			obj.remove(MdekKeys.ID);
 		}
 
-		log.debug("Sending the following object:");
+		log.debug("Sending the following object for storage:");
 		log.debug(obj);
 
 		IngridDocument response = mdekCaller.storeObject(obj, true);
 		return extractSingleObjectFromResponse(response);
 	}
 
+	public MdekDataBean publishNode(MdekDataBean data) {
+	IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
+
+	if (data.getUuid().equalsIgnoreCase("newNode")) {
+		obj.remove(MdekKeys.UUID);
+		obj.remove(MdekKeys.ID);
+	}
+
+	log.debug("Sending the following object for publishing:");
+	log.debug(obj);
+
+	IngridDocument response = mdekCaller.publishObject(obj, true);
+	return extractSingleObjectFromResponse(response);
+}
+
+	
 	public void deleteObject(String uuid) {
 		mdekCaller.deleteObject(uuid);
 	}
