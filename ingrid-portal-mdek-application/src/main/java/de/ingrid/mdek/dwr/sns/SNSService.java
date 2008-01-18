@@ -55,26 +55,32 @@ public class SNSService {
     }
 	
     public ArrayList<SNSTopic> getRootTopics() {
+    	log.debug("getRootTopics()");
     	return getSubTopics(SNS_ROOT_TOPIC, 1, "down");
     }
     
     public ArrayList<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
+    	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+")");
     	return getSubTopics(topicID, depth, direction, false, false);
     }
 
 
     public ArrayList<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
+    	log.debug("getRootTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
     	return getSubTopics(topicID, depth, direction, true, true);
     }
     
-    public ArrayList<SNSTopic> getSubTopics(String topicID, long depth, String direction, boolean includeSiblings, boolean includeRootNode) {
+    private ArrayList<SNSTopic> getSubTopics(String topicID, long depth, String direction, boolean includeSiblings, boolean includeRootNode) {
     	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+", "+includeSiblings+", "+includeRootNode+")");
     	
+    	log.debug(" Creating query...");
     	// Create the Query
     	IngridQuery query = null;
     	try {
     		query = QueryStringParser.parse(topicID);
     	} catch (ParseException e) {log.error(e);}
+    	log.debug("  Adding fields to query...");
 
     	query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
         query.addField(new FieldQuery(true, false, "lang", "de"));
@@ -83,9 +89,12 @@ public class SNSService {
         query.put("depth", depth);
         query.put("direction", direction);
         query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_HIERACHY);
-        
-        IngridHit[] hitsArray = getHierarchy(topicID, depth, direction, includeSiblings);
 
+    	log.debug(" calling getHierarchy(...)");        
+        IngridHit[] hitsArray = getHierarchy(topicID, depth, direction, includeSiblings);
+    	log.debug(" getHierarchy() call returned.");        
+
+    	log.debug(" creating return values...");        
         // TODO Build correct tree structure
         // TODO Check Language
         for (int i = 0; i < hitsArray.length; i++) {
@@ -106,6 +115,7 @@ public class SNSService {
             	}
             }
         }
+    	log.debug("  done creating return values. getSubTopics() returning values.");        
         return resultList;
     }
 
@@ -216,11 +226,15 @@ public class SNSService {
     }
 
     private IngridHit[] getHierarchy(String topicID, long depth, String direction, boolean includeSiblings) {
-	    int[] totalSize = new int[1];
+    	log.debug("getHierarchy("+topicID+", "+depth+", "+direction+", "+includeSiblings+")");
+    	
+    	int[] totalSize = new int[1];
 	    totalSize[0] = 0;
 	    Topic[] snsResults = new Topic[0];
 	    try {
+	    	log.debug(" calling snsController.getTopicHierarchy("+totalSize+", \"narrowerTermAssoc\", "+depth+", "+direction+", "+includeSiblings+", \"de\", "+topicID+", false, \"mdek\")");
 	    	snsResults = snsController.getTopicHierachy(totalSize, "narrowerTermAssoc", depth, direction, includeSiblings, "de", topicID, false, "mdek");
+	    	log.debug(" call snsController.getTopicHierarchy() returned successfully");
 	    }
 	    catch (Exception e) {log.error(e);}
 	

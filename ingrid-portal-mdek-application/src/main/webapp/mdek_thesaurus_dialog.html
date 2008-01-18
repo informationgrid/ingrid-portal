@@ -45,14 +45,14 @@ init = function() {
 
 		var _this = this;
 		var deferred = new dojo.Deferred();
-	
+
+		dojo.debug("Calling getSubTopics("+node.topicId+", 2, down)");
 		SNSService.getSubTopics(node.topicId, '2', 'down', {
   			preHook:disableUiElements,
   			postHook:enableUiElements,
   			callback:function(res) { deferred.callback(res); showStatus("");},
 			timeout:0,
-			errorHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));},
-			exceptionHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));}
+			errorHandler:function(msg) { dojo.debug(msg); showStatus(message.get("sns.connectionError")); deferred.errback(new dojo.RpcError(msg, this));},
   		});
 
   		deferred.addCallback(function(res) {
