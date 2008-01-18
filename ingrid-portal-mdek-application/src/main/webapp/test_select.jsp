@@ -12,13 +12,19 @@
 </script>
 <script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="js/message.js"></script>
+<script type="text/javascript" src="js/includes.js"></script>
 
 <script>
 dojo.require("dojo.event.*");
 dojo.require("dojo.widget.*");
 dojo.require("dojo.widget.Button");
+dojo.require("dojo.widget.ComboBox");
 dojo.require("dojo.widget.Select");
+dojo.require("dojo.widget.FilteringTable");
 dojo.require("ingrid.widget.Select");
+dojo.require("ingrid.widget.FilteringTable");
+dojo.require("ingrid.widget.TableContextMenu");
 
 dojo.addOnLoad(function()
 {
@@ -35,11 +41,12 @@ function buttonFunc()
 <body>
 <!-- Select Widget -->
 <div class="inputContainer">
-  <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="select" name="select" dataUrl="js/data/objectclasses.js">
-  </select>
+  <select dojoType="ingrid:Select" autoComplete="false" style="width:300px;" id="select" name="select" dataUrl="js/data/thesCategories.js" />
 </div>
 
 <button dojoType="Button" widgetID="myButton" onclick="buttonFunc">Set Value</button>
+
+<select dojoType="ComboBox" autoComplete="false" style="overflow:scroll; width:100px;" id="overflowSelect" dataUrl="js/data/thesCategories.js" />
 
 </body>
 </html>
