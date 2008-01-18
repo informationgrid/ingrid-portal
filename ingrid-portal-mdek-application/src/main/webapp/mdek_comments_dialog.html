@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Kommentarbereich</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {});
+_container_.addOnUnload(function() {});
+
+// get a new key for a store. Iterates over all entries and returns max(keys)+1
+_getNewKey = function(store) {
+	var key = 0;
+	var data = store.get();
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+	return key;
+}
+
+
+addComment = function() {
+	var commentStore = dojo.widget.byId("commentCommentsTable").store;
+	var newComment = dojo.widget.byId("commentNewComment").getValue();
+	newComment = dojo.string.trim(newComment);
+
+	if (newComment != "") {
+		var key = _getNewKey(commentStore);
+		var date = new Date();
+		commentStore.addData({Id: key, comment: newComment, date: date.toLocaleString(), user: "-"});
+	}
+}
+
+
+</script>
+</head>
+
+<body>
+
+<div dojoType="ContentPane">
+
+  <div id="comment" class="contentBlockWhite top wideBlock">
+    <div id="winNavi">
+      <a href="#" title="Hilfe">[?]</a>
+	  </div>
+	  <div id="commentContent" class="content">
+
+      <!-- CONTENT START -->
+      <div class="inputContainer wide">
+        <span class="label"><label for="commentCommentsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kommentare zu diesem Objekt')">Kommentare zu diesem Objekt</label></span>
+  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader" tbodyClass="scrollContent h180" cellspacing="0" class="filteringTable interactive wide relativePos">
+  	      <thead>
+  		      <tr>
+        			<th field="date" dataType="String" width="100">Datum</th>
+        			<th field="user" dataType="String" width="185">Nutzer</th>
+        			<th field="comment" dataType="String" width="687">Kommentar</th>
+  		      </tr>
+  	      </thead>
+  	      <tbody>
+  	      </tbody>
+  	    </table>
+  	  </div>
+
+      <div class="inputContainer wide noSpaceBelow">
+        <span class="label"><label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 'Neuen Kommentar verfassen')">Neuen Kommentar verfassen</label></span>
+        <span class="input field grey">
+			<input type="text" mode="textarea" id="commentNewComment" class="w915 h085" dojoType="ingrid:ValidationTextbox" />
+        </span>
+        <span class="button w915" style="float:right;">
+			<button dojoType="ingrid:Button" title="Kommentar speichern" id="addCommentButton" onClick="addComment">Kommentar speichern</button>
+        </span>
+  	  </div>
+      <!-- CONTENT END -->
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

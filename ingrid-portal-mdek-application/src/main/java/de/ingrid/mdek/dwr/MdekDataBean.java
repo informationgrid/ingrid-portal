@@ -32,7 +32,8 @@ public class MdekDataBean {
 	public String generalShortDescription;
 	public String generalDescription;
 	public ArrayList<MdekAddressBean> generalAddressTable;
-
+	public ArrayList<CommentBean> commentTable;
+	
 	// Spatial
 	public ArrayList<LocationBean> spatialRefAdminUnitTable;
 	public ArrayList<LocationBean> spatialRefLocationTable;
@@ -1351,5 +1352,19 @@ public class MdekDataBean {
 
 	public void setRef3BaseDataText(String ref3BaseDataText) {
 		this.ref3BaseDataText = ref3BaseDataText;
+	}
+
+
+
+
+	public ArrayList<CommentBean> getCommentTable() {
+		return commentTable;
+	}
+
+
+
+
+	public void setCommentTable(ArrayList<CommentBean> commentTable) {
+		this.commentTable = commentTable;
 	};
 }
