@@ -15,6 +15,7 @@ public abstract class AbstractSeleniumTestCase extends TestCase {
 		try {
 			seleniumServer = new SeleniumServer(4444);
 			seleniumServer.start();
+			init();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
