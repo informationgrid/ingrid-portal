@@ -893,6 +893,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
+	
   nodeData.extraInfoXMLExportTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("extraInfoXMLExportTable"));
   nodeData.extraInfoLegalBasicsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("extraInfoLegalBasicsTable"));
 
@@ -905,10 +906,10 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Thesaurus --
   nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
-  nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
-  nodeData.thesaurusTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
-  nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
-  nodeData.thesaurusEnvCatsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
+//  nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
+//  nodeData.thesaurusTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
+//  nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
+//  nodeData.thesaurusEnvCatsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
   nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").checked;
 
 
@@ -972,8 +973,8 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1BasisText = dojo.widget.byId("ref1BasisText").getValue();
 	nodeData.ref1DataBasisText = dojo.widget.byId("ref1DataBasisText").getValue();
 
-	nodeData.ref1Representation = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Representation"));
-	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
+//	nodeData.ref1Representation = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Representation"));
+//	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
 
 	nodeData.ref1VFormatDetails = udkDataProxy._getTableData("ref1VFormatDetails");
 	nodeData.ref1Scale = udkDataProxy._getTableData("ref1Scale");
@@ -1006,7 +1007,7 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
 	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
 
-	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
+//	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
 
 	nodeData.ref3Operation = udkDataProxy._getTableData("ref3Operation");
 };
@@ -1098,12 +1099,14 @@ udkDataProxy._listToTableData = function(list, identifier) {
 // [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}] -> ["a", "b", "c"] 
 udkDataProxy._tableDataToList = function(tableData, identifier) {
 	var resultList = [];
-	if (typeof(identifier) == "undefined")
+	if (typeof(identifier) == "undefined") {
 		identifier = "title";
+	}
 
-	dojo.lang.forEach(tableData, function(item){
-		resultList.push(item.identifier);
-	});
+	for (var i = 0; i < tableData.length; ++i) {
+		resultList.push(tableData[i][identifier]);
+	}
+
 	return resultList;
 }
 

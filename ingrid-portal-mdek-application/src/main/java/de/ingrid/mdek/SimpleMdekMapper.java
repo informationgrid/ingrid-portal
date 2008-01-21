@@ -108,8 +108,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
-//		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) obj.get(MdekKeys.MISSING));
-//		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) obj.get(MdekKeys.MISSING));
+		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) obj.get(MdekKeys.EXPORTS));
+		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) obj.get(MdekKeys.LEGISLATIONS));
 
 		// Availability
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
@@ -286,8 +286,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
-//		udkObj.put(MdekKeys.MISSING, data.getExtraInfoXMLExportTable());
-//		udkObj.put(MdekKeys.MISSING, data.getExtraInfoLegalBasicsTable());
+		udkObj.put(MdekKeys.EXPORTS, data.getExtraInfoXMLExportTable());
+		udkObj.put(MdekKeys.LEGISLATIONS, data.getExtraInfoLegalBasicsTable());
 
 
 		// Availability
