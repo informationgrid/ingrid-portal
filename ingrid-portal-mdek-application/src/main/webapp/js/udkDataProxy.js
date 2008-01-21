@@ -15,6 +15,7 @@
  *
  *	// TODO: Use a result Handler for save requests(?)
  *   topic = '/saveRequest' - argument:
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/publishObjectRequest' - argument: {resultHandler: deferred}
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
@@ -349,7 +350,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 	deferred.addCallbacks(loadCallback, loadErrback);
 }
 
-udkDataProxy.handleSaveRequest = function()
+udkDataProxy.handleSaveRequest = function(msg)
 {
 	/* TODO Check if we are in a state where it's safe to save data (always?)
 	 *      If we are, read all the fields and send the collected data to
@@ -358,7 +359,7 @@ udkDataProxy.handleSaveRequest = function()
 
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
-	
+
 	// ---- DWR call to store the data ----
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true)");
 	EntryService.saveNodeData(nodeData, "true",
@@ -368,6 +369,9 @@ udkDataProxy.handleSaveRequest = function()
 				udkDataProxy._setData(res);
 				udkDataProxy._updateTree(res, nodeData.uuid);
 				udkDataProxy.onAfterSave();
+				if (msg && msg.resultHandler) {
+					msg.resultHandler.callback(res);
+				}
 			},
 			timeout:5000,
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }

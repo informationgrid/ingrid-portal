@@ -218,8 +218,16 @@ menuEventHandler.handlePaste = function(msg) {
 menuEventHandler.handleSave = function() {
 //                                dialog.show("Zwischenspeichern", 'Der aktuelle Datensatz befindet sich in der Bearbeitung. Wollen Sie wirklich speichern?', dialog.WARNING, 
 //                                      [{caption:"OK",action:function(){alert("OK")}},{caption:"Cancel",action:dialog.CLOSE_ACTION}]);},
-  dojo.debug('Publishing event: /saveRequest');
-  dojo.event.topic.publish("/saveRequest");
+	var deferred = new dojo.Deferred();
+	deferred.addCallback(function(res) {
+		var tree = dojo.widget.byId("tree");
+
+		tree.selectedNode = dojo.widget.byId(res.uuid);
+		tree.selectedNode.viewUnselect();
+		tree.selectedNode.viewSelect();
+	});
+	dojo.debug('Publishing event: /saveRequest');
+	dojo.event.topic.publish("/saveRequest", {resultHandler: deferred});
 }
 
 menuEventHandler.handleUndo = function(mes) {
