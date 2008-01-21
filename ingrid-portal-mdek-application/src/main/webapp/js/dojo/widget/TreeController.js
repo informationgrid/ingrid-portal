@@ -127,6 +127,10 @@ dojo.widget.defineWidget(
 	doMove: function(child, newParent, index, sync) {
 		// Overriden so the TreeRPCController doMove method is skipped
 		child.tree.move(child, newParent, index);
+
+		this.nodeToCut.labelNode.style.color = this.nodeToCutOldColor;
+		this.nodeToCut = null; // don't paste cut object twice
+
 		return true;
 	},
   /*

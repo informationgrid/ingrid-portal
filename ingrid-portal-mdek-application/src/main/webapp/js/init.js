@@ -583,17 +583,31 @@ function initToolbar() {
 		var enableList = [];
 		if (message.node.id == "objectRoot") {
 			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
-			enableList = [newEntityButton, pasteButton];
+			enableList = [newEntityButton];
 		} else if (message.node.isFolder) {
 			disableList = [];
-			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
+			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 		} else {
 			disableList = [copyTreeButton];
-			enableList = [previewButton, cutButton, copyEntityButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
+			enableList = [previewButton, cutButton, copyEntityButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 		}
+		
 		dojo.lang.forEach(disableList, function(item) {item.disable()});
 		dojo.lang.forEach(enableList, function(item) {item.enable()});
     });
+
+	var treeController = dojo.widget.byId("treeController");
+	var showOrHidePasteButton = function() {
+		// The paste button depends on the current selection in treeController
+		if (treeController.nodeToCopy != null || treeController.nodeToCut != null) {
+			pasteButton.enable();
+		} else {
+			pasteButton.disable();
+		}		
+	};
+    dojo.event.connectOnce("after", treeController, "move", showOrHidePasteButton);
+    dojo.event.connectOnce("after", treeController, "prepareCopy", showOrHidePasteButton);
+    dojo.event.connectOnce("after", treeController, "prepareCut", showOrHidePasteButton);
 
 	// Initially disable all icons
 	var disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];	

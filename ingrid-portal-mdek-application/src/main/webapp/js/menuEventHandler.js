@@ -159,6 +159,7 @@ menuEventHandler.handlePaste = function(msg) {
 				deferred.addCallback(function() {
 					// Move was successful. Update the tree
 					treeController.move(treeController.nodeToCut, targetNode, 0);
+
 				});
 				deferred.addErrback(function(mes) {
 					// Move was unsuccessful. Notify user(?) and do nothing.

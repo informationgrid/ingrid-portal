@@ -42,7 +42,8 @@ so I have to remove TreeExpand and process this one specifically
     float: left;
     display: inline;
     background-repeat : no-repeat;
-    background-image: url('../templates/images/Tree/expand_loading.gif');
+/*    background-image: url('../templates/images/Tree/expand_loading.gif');	*/
+    background-image: url('../templates/images/Tree/expand_plus.gif');
 }
  
 .TreeContent {
