@@ -109,7 +109,6 @@ function renderTable(list, rowProperties, listHeader, title) {
 	}
 }
 
-
 </script>
 </head>
 
@@ -117,15 +116,15 @@ function renderTable(list, rowProperties, listHeader, title) {
   <div dojoType="ContentPane">
     <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
       <div id="winNavi">
-        <a href="#" title="Hilfe">[?]</a>
+        <a href="javascript:printDivContent('detailViewContent')" title="Drucken">[Drucken]</a>
   	  </div>
   	  <div id="dialogContent" class="content">
         <!-- MAIN TAB CONTAINER START -->
         <div class="spacer"></div>
-      	<div id="detailViewContainer" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="detailView">
+      	<div id="detailViewContainer" dojoType="ingrid:TabContainer" doLayout="false" class="full yNoScroll" selectedChild="detailView">
           <!-- MAIN TAB 1 START -->
-      		<div id="detailView" dojoType="ContentPane" class="blueTopBorder" label="Detail-Ansicht">
-              <div id="detailViewContent" class="inputContainer field grey"></div>
+      		<div id="detailView" dojoType="ContentPane" class="blueTopBorder h500 yScroll xNoScroll" label="Detail-Ansicht">
+              <div id="detailViewContent" class="detailViewContentContainer w652 grey"></div>
       		</div>
           <!-- MAIN TAB 1 END -->
       	</div>

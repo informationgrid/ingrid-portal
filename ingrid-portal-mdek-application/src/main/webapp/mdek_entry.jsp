@@ -111,6 +111,9 @@ function hideSplash(){
 
 <body>
 
+<!-- use this for print div content, see commons.js -> printDivContent() -->
+<iframe id="printFrame" name="printFrame" style="position:absolute; left:-1000px"></iframe>
+
 <div id="splash" style="position: absolute; top: 0px; width: 100%;z-index: 100; height:2000px;background-color:#FFFFFF">
 <div style="position: relative; width: 100%;z-index: 100;top:200px">
    <div align="center" style="line-height:16px">

@@ -88,3 +88,14 @@ function setEnabled(controlId, isEnabled)
       control.disable();
   }
 }
+
+function printDivContent(divId, frame) {
+	if (!frame) {
+	  frame = parent.printFrame;
+	}
+	frame.document.body.innerHTML = document.getElementById(divId).innerHTML;
+	frame.focus();
+	frame.print();
+}
+
+

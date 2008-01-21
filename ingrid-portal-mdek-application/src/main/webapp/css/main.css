@@ -72,6 +72,7 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .treeContainer { padding:13px 0 0 8px; }
 /*** right hand content ***/
 .contentContainer { position:relative; top:0; left:0; padding-left:4px; background:#fff; }
+.detailViewContentContainer {padding:16px 16px 16px 16px;display:block;clear:both;}
 
 .sectionTop { width:708px; background:#156496; margin-bottom:4px; }
 .sectionTop table { margin:8px 0 0 12px; padding:0; }
@@ -118,8 +119,10 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .spacer { display:block; height:10.5px; }
 .spacerField { display:block; height:16px; }
 .scrollable { overflow:auto; }
+.xNoScroll { overflow-x:hidden; }
 .xScroll { overflow-x:auto; }
 .yNoScroll { overflow-y:hidden; }
+.yScroll { overflow-y:auto; }
 .insetCheckbox { padding-left:13px; }
 
 /*** tables ***/
@@ -282,6 +285,7 @@ textarea { line-height:17px; }
 .h630 { height:635px !important; }
 .h600 { height:600px !important; }
 .h565 { height:565px !important; }
+.h500 { height:500px !important; }
 .h452 { height:452px !important; }
 .h430 { height:430px !important; }
 .h413 { height:413px !important; }
