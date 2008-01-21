@@ -303,10 +303,16 @@ menuEventHandler.handleDiscard = function(msg) {
 		var params = {
 			nodeTitle: selectedNode.title,
 			nodeHasChildren: selectedNode.isFolder,
+			isPublished: selectedNode.isPublished,
 			resultHandler: deferred
 		};
 
-		dialog.showPage("Delete node", "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
+		if (selectedNode.isPublished) {
+			dialog.showPage(message.get("dialog.discardPubExistTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
+		} else {
+			dialog.showPage(message.get("dialog.discardPubNotExistTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
+		}
+		
 	}
 }
 

@@ -26,6 +26,7 @@ public interface DataMapperInterface {
 	// Miscellaneous
 	public final static String MDEK_OBJECT_ID = "id";
 	public final static String MDEK_OBJECT_HAS_CHILDREN = "isFolder";
+	public final static String MDEK_OBJECT_IS_PUBLISHED = "isPublished";
 	// TODO: Some values are duplicates. Merge them!
 	public final static String MDEK_OBJECT_TITLE = "title";
 	public final static String MDEK_OBJECT_DOCTYPE = "nodeDocType";

@@ -231,6 +231,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_OBJECT_ID, obj.get(MdekKeys.UUID));
 		mdekObj.put(MDEK_OBJECT_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
+		mdekObj.put(MDEK_OBJECT_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
 		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
 		String workState = (String) obj.get(MdekKeys.WORK_STATE); 

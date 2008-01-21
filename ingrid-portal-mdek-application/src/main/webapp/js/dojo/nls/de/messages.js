@@ -28,6 +28,8 @@
     "tree.reload":"Neues Laden",
 
 	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
+	"dialog.discardPubExistTitle":"Alle &Auml;nderungen verwerfen",
+	"dialog.discardPubNotExistTitle":"Neuen MD-S verwerfen",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

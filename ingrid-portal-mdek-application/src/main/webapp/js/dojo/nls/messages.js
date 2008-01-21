@@ -62,6 +62,8 @@
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 
 	"dialog.saveChangesTitle":"Save changes",
+	"dialog.discardPubExistTitle":"Discard all changes",
+	"dialog.discardPubNotExistTitle":"Discard new MD-S",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",
