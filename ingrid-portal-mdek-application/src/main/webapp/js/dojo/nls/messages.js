@@ -61,6 +61,8 @@
 	"links.selectNodeHint":"Please select a target node.",
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 
+	"dialog.saveChangesTitle":"Save changes",
+
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",
     "table.confirmDeleteSelected":"Do you really want to delete all selected rows?",

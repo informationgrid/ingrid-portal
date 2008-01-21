@@ -40,17 +40,14 @@ noButtonFunc = function() {
 <body>
 <div dojoType="ContentPane">
 	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
-		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
-		</div>
 		<div id="dialogContent" class="content">
 			<div id="messageDiv" class="field grey">
 				M&ouml;chten Sie das ausgew&auml;hlte Objekt wirklich l&ouml;schen?		
 			</div>
 
-			<div class="inputContainer noSpaceBelow h108 half">
+			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
 		        <span style="float:right;"><button dojoType="ingrid:Button" title="Nein" onClick="noButtonFunc">Nein</button></span>
-		        <span style="float:right; padding-right:5px;"><button dojoType="ingrid:Button" title="Ja" onClick="yesButtonFunc">Ja</button></span>
+		        <span style="float:right;"><button dojoType="ingrid:Button" title="Ja" onClick="yesButtonFunc">Ja</button></span>
 			</div>
 	  	</div>
 	</div>

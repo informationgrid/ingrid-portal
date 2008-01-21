@@ -261,7 +261,7 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 
 	var deferred = new dojo.Deferred();
 	if (dirtyFlag == true) {
-		dialog.showPage("Save changes", "mdek_save_changes.html", 342, 220, true, {resultHandler: deferred});
+		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 342, 130, true, {resultHandler: deferred});
 
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.

@@ -1117,11 +1117,11 @@ function hideSplash(){
 	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th field="name" dataType="String" width="315" editor="freeReferencesEditor">Freier Raumbezug</th>
-	                  			<th field="longitude1" dataType="String" width="90" editor="longitude1Editor">L&auml;nge 1</th>
-	                  			<th field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
-	                  			<th field="longitude2" dataType="String" width="90" editor="longitude2Editor">L&auml;nge 2</th>
-	                  			<th field="latitude2" dataType="String" width="90" editor="latitude2Editor">Breite 2</th>
+	                  			<th nosort="true" field="name" dataType="String" width="315" editor="freeReferencesEditor">Freier Raumbezug</th>
+	                  			<th nosort="true" field="longitude1" dataType="String" width="90" editor="longitude1Editor">L&auml;nge 1</th>
+	                  			<th nosort="true" field="latitude1" dataType="String" width="90" editor="latitude1Editor">Breite 1</th>
+	                  			<th nosort="true" field="longitude2" dataType="String" width="90" editor="longitude2Editor">L&auml;nge 2</th>
+	                  			<th nosort="true" field="latitude2" dataType="String" width="90" editor="latitude2Editor">Breite 2</th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>

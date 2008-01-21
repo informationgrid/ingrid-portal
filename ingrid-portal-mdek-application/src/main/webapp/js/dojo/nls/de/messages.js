@@ -27,6 +27,8 @@
     "tree.newNodeName":"Neues Objekt",
     "tree.reload":"Neues Laden",
 
+	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
+
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",
     "table.confirmDeleteSelected":"Wollen Sie wirklich alle ausgewählten Zeilen löschen?",
