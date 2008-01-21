@@ -99,7 +99,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
 		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_STEP));
 		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
-//		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 		
 		// ExtraInfo
@@ -278,7 +278,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalNum());
 		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalUnit());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
-//		udkObj.put(MdekKeys.MISSING, mapFromTimeRefTable(data.getTimeRefTable()));
+		udkObj.put(MdekKeys.DATASET_REFERENCES, mapFromTimeRefTable(data.getTimeRefTable()));
 
 		// ExtraInfo
 		udkObj.put(MdekKeys.METADATA_LANGUAGE, data.getExtraInfoLangMetaData());
@@ -472,7 +472,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<IngridDocument> mapFromTimeRefTable(ArrayList<TimeReferenceBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
@@ -480,13 +480,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (TimeReferenceBean ref : refList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, convertDateToTimestamp(ref.getDate()));
-			result.put(MdekKeys.MISSING, ref.getType());
+			result.put(MdekKeys.DATASET_REFERENCE_DATE, convertDateToTimestamp(ref.getDate()));
+			result.put(MdekKeys.DATASET_REFERENCE_TYPE, ref.getType());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
+
 /*
 	private static ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
@@ -747,18 +747,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<TimeReferenceBean> mapToTimeRefTable(List<HashMap<String, Object>> refList) {
 		ArrayList<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
 		for (HashMap<String, Object> ref : refList) {
 			TimeReferenceBean tr = new TimeReferenceBean();
-			tr.setDate(convertTimestampToDate((String) ref.get(MdekKeys.MISSING)));
-			tr.setType(ref.get(MdekKeys.MISSING));
+			tr.setDate(convertTimestampToDate((String) ref.get(MdekKeys.DATASET_REFERENCE_DATE)));
+			tr.setType((Integer) ref.get(MdekKeys.DATASET_REFERENCE_TYPE));
 			resultList.add(tr);
 		}
 		return resultList;
 	}
-*/
+
 /*
 	private static ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
 		ArrayList<DataFormatBean> resultList = new ArrayList<DataFormatBean>();

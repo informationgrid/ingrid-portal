@@ -244,6 +244,10 @@ dojo.widget.defineWidget(
 		}
 
 
+		// If the user is currently editing don't update the Display Values
+		if (this.isEditing) {
+			return;
+		}
 		// Update the displayed values. This needs to be done so we can use the various
 		// functions from the underlying store (e.g. setData). Otherwise the displayed values
 		// will not be resolved properly (key is displayed instead of the 'displayValue()').
@@ -422,6 +426,7 @@ dojo.widget.defineWidget(
   curEditor: null,
   curTD: null,
   isEditing: false,
+  curFP: {},
 
   beginEdit: function(e) {
     // return if an already edited cell is double clicked
@@ -453,7 +458,8 @@ dojo.widget.defineWidget(
 
     // prepare the editor
     this.curEditor = dojo.widget.byId(this.columns[this.curColumn].editor);
-    dojo.event.browser.addListener(this.curEditor.domNode, "onKey", dojo.lang.hitch(this, this.onKey));
+    this.curFP = dojo.lang.hitch(this, this.onKey);
+    dojo.event.browser.addListener(this.curEditor.domNode, "onKey", this.curFP);
 
     // show the editor
     this.curEditor.setValue(this.origValue);
@@ -526,6 +532,7 @@ dojo.widget.defineWidget(
 
       // set the value in the connected store and notify listeners
       var newValue = this.curEditor.getValue();
+
       var field = this.columns[this.curColumn].getField();
       if (this.editData != null) {
         // update
@@ -534,9 +541,9 @@ dojo.widget.defineWidget(
       }
       else {
         // add
-        var newData = {};
-    		for(var i=0; i<this.columns.length; i++)
-          newData[this.columns[i].getField()] = '';
+		var newData = {};
+    	for(var i=0; i<this.columns.length; i++)
+			newData[this.columns[i].getField()] = '';
         newData[field] = newValue;
         newData[this.valueField] = new Date().getTime();
 
@@ -547,10 +554,11 @@ dojo.widget.defineWidget(
       }
 
       // if the editor implements the method getDisplayValue, use its value
-      var displayValue = newValue;
-      if (this.curEditor.getDisplayValue)
-        displayValue = this.curEditor.getDisplayValue();
-
+    var displayValue = newValue;
+	if (this.curEditor.getDisplayValue) {
+    	displayValue = this.curEditor.getDisplayValue();
+	}
+		
       // close the editor
       this.endEdit(displayValue);
     }
@@ -563,6 +571,8 @@ dojo.widget.defineWidget(
     if (this.curEditor) {
       this.hideEditor();
       this.fillCell(this.getRow(this.editData).cells[this.curColumn], this.columns[this.curColumn], result);
+
+	  dojo.event.browser.removeListener(this.curEditor.domNode, "onKey", this.curFP);
     }
 
     // reset state
@@ -573,6 +583,7 @@ dojo.widget.defineWidget(
     this.curEditor = null;
     this.curTD = null;
     this.isEditing = false;
+    this.curFP = null;
 
     this.resetSelections();
     this.renderSelections();

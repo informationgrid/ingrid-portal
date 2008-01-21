@@ -15,6 +15,7 @@ dojo.widget.defineWidget(
    * Overriden to also accept localized date strings (necessary, when used as celleditor)
    */ 
   setValue: function(/*Date|String*/rfcDate) {
+    if (rfcDate == "") {rfcDate = new Date();}
     try {
       dojo.widget.DropdownDatePicker.prototype.setValue.apply(this, arguments);
     }
@@ -36,11 +37,24 @@ dojo.widget.defineWidget(
     var value = dojo.widget.DropdownDatePicker.prototype.getValue.apply(this, arguments);
     if (value) {
       var date = dojo.date.parse(value, {formatLength:this.formatLength, datePattern:'yyyy-mm-dd', selector:'dateOnly'});
-      return dojo.date.format(date, {formatLength:this.formatLength, datePattern:this.displayFormat, selector:'dateOnly', locale:this.lang});
+	  return date;
+//      return dojo.date.format(date, {formatLength:this.formatLength, datePattern:this.displayFormat, selector:'dateOnly', locale:this.lang});
     }
     else
       return "";
   },
+
+	getDisplayValue: function() {
+		// get the value and format it
+		var value = dojo.widget.DropdownDatePicker.prototype.getValue.apply(this, arguments);
+		if (value) {
+			var date = dojo.date.parse(value, {formatLength:this.formatLength, datePattern:'yyyy-mm-dd', selector:'dateOnly'});
+			return dojo.date.format(date, {formatLength:this.formatLength, datePattern:this.displayFormat, selector:'dateOnly', locale:this.lang});
+		} else {
+		  return "";
+		}		
+	},
+
 
 	onValueChanged: function(/*Date*/dateObj){
     try {
