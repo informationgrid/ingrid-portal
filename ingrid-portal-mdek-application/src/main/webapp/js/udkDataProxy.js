@@ -66,6 +66,9 @@ var dirtyFlag = false;
 // displayed in the gui (e.g. nodeUUID).
 var currentUdk = {}; 
 
+// This store holds the comments which are added/modified via the 'add comment' dialog.
+var commentStore = {};
+
 
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
@@ -82,13 +85,15 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/copyObjectRequest", udkDataProxy, "handleCopyObjectRequest");
     dojo.event.topic.subscribe("/getObjectPathRequest", udkDataProxy, "handleGetObjectPathRequest");
 
-
-	var treeListener = dojo.widget.byId("treeListener");
+	// Set initial values
+	dirtyFlag = false;
+	commentStore = new dojo.collections.Store();	
 
 
 	// Before a node is selected we ask the user if he wants to save unsaved changes.
 	// Connection to the onClick function does not work for some odd reasons (?)
 	// We connect to the processNode function instead.
+	var treeListener = dojo.widget.byId("treeListener");
 	var aroundTreeClick = function(invocation) {
     	if (dojo.html.hasClass(invocation.args[1].target, "TreeLabel")) {	
 			if (invocation.args[0].id == "newNode") {
@@ -602,6 +607,8 @@ udkDataProxy._setObjectData = function(nodeData)
   udkDataProxy._addTableIndices(addressTable);
   udkDataProxy._addIcons(addressTable);
   dojo.widget.byId("generalAddress").store.setData(addressTable);
+  // Comments
+  commentStore.setData(udkDataProxy._addTableIndices(nodeData.commentTable));
 
   // -- Spatial --
   // The table containing entries from the sns is indexed by their topicID
@@ -841,8 +848,9 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.generalShortDescription = dojo.widget.byId("generalShortDesc").getValue();
   nodeData.generalDescription = dojo.widget.byId("generalDesc").getValue();
   nodeData.objectClass = dojo.widget.byId("objectClass").getValue()[5]; // Value is a string: "Classx" where x is the class
-
   nodeData.generalAddressTable = udkDataProxy._getTableData("generalAddress");
+  // Comments
+  nodeData.commentStore = commentStore.getData();
 
   // -- Spatial --
   nodeData.spatialRefAdminUnitTable = udkDataProxy._getTableData("spatialRefAdminUnit");

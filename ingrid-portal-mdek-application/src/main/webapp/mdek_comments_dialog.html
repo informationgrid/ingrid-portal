@@ -7,8 +7,20 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-_container_.addOnLoad(function() {});
-_container_.addOnUnload(function() {});
+_container_.addOnLoad(function() {
+	var srcStore = commentStore;
+	var dstStore = dojo.widget.byId("commentCommentsTable").store;
+
+	dstStore.setData(srcStore.getData());
+});
+
+_container_.addOnUnload(function() {
+	var srcStore = dojo.widget.byId("commentCommentsTable").store;
+	var dstStore = commentStore;
+
+	dstStore.setData(srcStore.getData());
+});
+
 
 // get a new key for a store. Iterates over all entries and returns max(keys)+1
 _getNewKey = function(store) {

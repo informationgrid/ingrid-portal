@@ -127,10 +127,6 @@ function hideSplash(){
 <!-- 
 <div id="loadingZone" style="position: absolute; top: 0px; left: 0px; width: 5px;z-index: 100; height:5px;background-color:#FF0000;visibility:hidden"></div> 
  -->
- <!-- The loading zone height and width can be set to 100% to block all inputs while loading. We may want to do this in the release version. -->
-<div id="loadingZone" style="position: absolute; top: 0px; left: 0px; z-index: 100; visibility:hidden">
-	<img id="imageZone" src="img/ladekreis.gif" style="background-color:#FFFFFF;position: absolute; top: 0px; left: 17px; padding-right:1px" />
-</div> 
 
 
 <div dojoType="LayoutContainer" id="layout" class="layout" layoutChildPriority="top-bottom">
@@ -200,6 +196,13 @@ function hideSplash(){
           <div dojoType="ingrid:Toolbar" widgetId="rightToolbar" id="rightToolbar"><!-- add items in addOnLoad //--></div>
         </div>
       </div>
+
+	 <!-- The loading zone height and width can be set to 100% to block all inputs while loading. We may want to do this in the release version. -->
+	<div id="loadingZone" style="float:right; margin-top:3px; z-index: 100; visibility:hidden">
+		<img id="imageZone" src="img/ladekreis.gif" style="background-color:#EEEEEE;" />
+	</div> 
+
+
     </div>
   <!-- SPLIT CONTAINER START -->
   <div dojoType="SplitContainer" id="contentSection" class="contentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
