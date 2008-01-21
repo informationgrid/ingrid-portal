@@ -134,7 +134,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public boolean moveObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid);
+		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true);
 		return (mdekCaller.getResultFromResponse(response) != null);
 	}
 
