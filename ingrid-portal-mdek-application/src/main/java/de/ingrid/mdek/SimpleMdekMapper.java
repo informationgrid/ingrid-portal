@@ -123,7 +123,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// Thesaurus
 		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 		mdekObj.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
-//		mdekObj.setThesaurusTopicsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
+		mdekObj.setThesaurusTopicsList((ArrayList<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES));
 //		mdekObj.setThesaurusEnvExtRes((Boolean) obj.get(MdekKeys.MISSING));
 		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) obj.get(MdekKeys.ENV_TOPICS));
 		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) obj.get(MdekKeys.ENV_CATEGORIES));
@@ -301,7 +301,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		//Thesaurus
 		udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable(), data.getThesaurusFreeTermsTable()));
-//		udkObj.put(MdekKeys.MISSING, data.getThesaurusTopicsList());
+		udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
 		udkObj.put(MdekKeys.ENV_TOPICS, data.getThesaurusEnvTopicsList());
 		udkObj.put(MdekKeys.ENV_CATEGORIES, data.getThesaurusEnvCatsList());
 //		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvExtRes());

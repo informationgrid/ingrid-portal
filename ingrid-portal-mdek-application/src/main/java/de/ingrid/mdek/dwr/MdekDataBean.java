@@ -76,7 +76,7 @@ public class MdekDataBean {
 	// Thesaurus
 	public ArrayList<SNSTopic> thesaurusTermsTable;
 	public ArrayList<String> thesaurusFreeTermsTable;
-	public ArrayList<String> thesaurusTopicsList;
+	public ArrayList<Integer> thesaurusTopicsList;
 	public Boolean thesaurusEnvExtRes;
 	public ArrayList<String> thesaurusEnvTopicsList;
 	public ArrayList<String> thesaurusEnvCatsList;
@@ -519,7 +519,7 @@ public class MdekDataBean {
 		this.setThesaurusEnvCatsList(new ArrayList<String>());
 		this.setThesaurusEnvTopicsList(new ArrayList<String>());
 		this.setThesaurusFreeTermsTable(new ArrayList<String>());
-		this.setThesaurusTopicsList(new ArrayList<String>());
+		this.setThesaurusTopicsList(new ArrayList<Integer>());
 	}
 	
 	
@@ -532,17 +532,6 @@ public class MdekDataBean {
 
 	public void setRelationTypeName(String relationTypeName) {
 		this.relationTypeName = relationTypeName;
-	}
-
-
-	public ArrayList<String> getThesaurusTopicsList() {
-		return thesaurusTopicsList;
-	}
-
-
-
-	public void setThesaurusTopicsList(ArrayList<String> thesaurusTopicsList) {
-		this.thesaurusTopicsList = thesaurusTopicsList;
 	}
 
 
@@ -1373,5 +1362,19 @@ public class MdekDataBean {
 
 	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
 		this.thesaurusTermsTable = thesaurusTermsTable;
+	}
+
+
+
+
+	public ArrayList<Integer> getThesaurusTopicsList() {
+		return thesaurusTopicsList;
+	}
+
+
+
+
+	public void setThesaurusTopicsList(ArrayList<Integer> thesaurusTopicsList) {
+		this.thesaurusTopicsList = thesaurusTopicsList;
 	};
 }
