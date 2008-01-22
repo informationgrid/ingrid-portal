@@ -712,7 +712,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	
 	private static ArrayList<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
 		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
+		if (locList == null)
+			return resultList;
+
 		for (HashMap<String, Object> location : locList) {
+
 			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
 			if (locationType.equals("G")) {
 				LocationBean loc = new LocationBean(); 
@@ -732,6 +736,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	
 	private static ArrayList<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
 		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
+		if (locList == null)
+			return resultList;
+
 		for (HashMap<String, Object> location : locList) {
 			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
 			if (locationType.equals("F")) {
@@ -751,6 +758,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 	private static ArrayList<TimeReferenceBean> mapToTimeRefTable(List<HashMap<String, Object>> refList) {
 		ArrayList<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
+		if (refList == null)
+			return resultList;
+
 		for (HashMap<String, Object> ref : refList) {
 			TimeReferenceBean tr = new TimeReferenceBean();
 			tr.setDate(convertTimestampToDate((String) ref.get(MdekKeys.DATASET_REFERENCE_DATE)));
@@ -762,6 +772,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 /*
 	private static ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
+		if (locList == null)
+			return resultList;
 		ArrayList<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
 		for (HashMap<String, Object> ref : refList) {
 			DataFormatBean df = new DataFormatBean();
@@ -776,6 +788,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 /*	
 	private static ArrayList<MediaOptionBean> mapToAvailMediaOptionsTable(List<HashMap<String, Object>> refList) {
+		if (locList == null)
+			return resultList;
 		ArrayList<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
 		for (HashMap<String, Object> ref : refList) {
 			MediaOptionBean mo = new MediaOptionBean();
@@ -789,6 +803,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 /*
 	private static ArrayList<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
+		if (locList == null)
+			return resultList;
 		ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
 		for (HashMap<String, Object> topic : topicList) {
 			SNSTopic t = new SNSTopic();
@@ -802,6 +818,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 /*
 	private static ArrayList<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
 		ArrayList<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
+		if (locList == null)
+			return resultList;
 		for (HashMap<String, Object> topic : vFormatList) {
 			VectorFormatDetailsBean v = new VectorFormatDetailsBean();
 			v.setGeometryType((Integer) topic.get(MdekKeys.MISSING);
@@ -814,6 +832,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 /*
 	private static ArrayList<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
 		ArrayList<ScaleBean> resultList = new ArrayList<ScaleBean>();
+		if (locList == null)
+			return resultList;
 		for (HashMap<String, Object> topic : scaleList) {
 			ScaleBean s = new ScaleBean();
 			s.setGroundResolution((Double) topic.get(MdekKeys.MISSING);
@@ -827,6 +847,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 /*
 	private static ArrayList<LinkDataBean> mapToLinkDataTable(List<HashMap<String, Object>> linkList) {
 		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+		if (locList == null)
+			return resultList;
 		for (HashMap<String, Object> topic : scaleList) {
 			LinkDataBean l = new LinkDataBean();
 			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.MISSING)));
@@ -840,6 +862,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 /*
 	private static ArrayList<DBContentBean> mapToDbContentTable(List<HashMap<String, Object>> dbList) {
 		ArrayList<DBContentBean> resultList = new ArrayList<DBContentBean>();
+		if (locList == null)
+			return resultList;
 		for (HashMap<String, Object> topic : dbList) {
 			DBContentBean db = new DBContentBean();
 			db.setParameter((String) topic.get(MdekKeys.MISSING));
@@ -852,6 +876,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 /*
 	private static ArrayList<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
 		ArrayList<CommentBean> resultList = new ArrayList<CommentBean>();
+		if (locList == null)
+			return resultList;
 		for (HashMap<String, Object> comment : commentList) {
 			CommentBean c = new CommentBean();
 			c.setComment((String) comment.get(MdekKeys.MISSING));

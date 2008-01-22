@@ -122,7 +122,20 @@ dojo.widget.defineWidget(
     }
     
     if (dojo.html.hasClass(this.domNode, 'nosort')) {
-		this.createSorter = function(x) {return null;};
+		this.createSorter = function(info) {
+			var self=this;
+			return function(rowA, rowB) {
+				if(dojo.html.hasAttribute(rowA,"emptyRow")){ return 1; }
+				if(dojo.html.hasAttribute(rowB,"emptyRow")){ return -1; }
+				// TODO use store.valueField?
+				var a = self.store.getField(self.getDataByRow(rowA), self.displayField);
+				var b = self.store.getField(self.getDataByRow(rowB), self.displayField);
+				var ret = 0;
+				if(a > b) ret = 1;
+				if(a < b) ret = -1;
+				return ret;
+			}
+		}
     }
     
     dojo.widget.FilteringTable.prototype.postCreate.apply(this, arguments);
