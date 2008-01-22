@@ -908,7 +908,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
   nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
 //  nodeData.thesaurusTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
-//  nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
+  nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
   nodeData.thesaurusEnvCatsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
   nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").checked;
 
