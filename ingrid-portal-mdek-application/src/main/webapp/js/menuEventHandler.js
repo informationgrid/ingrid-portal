@@ -237,8 +237,18 @@ menuEventHandler.handleUndo = function(mes) {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
 	}
 	else {
-    	dojo.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
-    	dojo.event.topic.publish("/loadRequest", {id: selectedNode.id, appType: selectedNode.nodeAppType});
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
+			var def = new dojo.Deferred();
+			def.addErrback(function(msg){
+				dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+				dojo.debug(msg);
+			});
+			udkDataProxy.resetDirtyFlag();
+    		dojo.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
+	    	dojo.event.topic.publish("/loadRequest", {id: selectedNode.id, appType: selectedNode.nodeAppType, resultHandler:def});
+		});
+		dialog.showPage(message.get("dialog.undoChangesTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, {resultHandler:deferred, action:"UNDO"});
 	}
 }
 
@@ -279,7 +289,7 @@ menuEventHandler.handleDiscard = function(msg) {
 						tree.selectNode(newSelectNode);
 						tree.selectedNode = newSelectNode;
 						// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
-						resetDirtyFlag();
+						udkDataProxy.resetDirtyFlag();
 						dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
 					} else {
 						// The selection does not have to be altered. Delete the node.
@@ -345,7 +355,7 @@ menuEventHandler.handleDelete = function(msg) {
 					tree.selectNode(newSelectNode);
 					tree.selectedNode = newSelectNode;
 					// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
-					resetDirtyFlag();
+					udkDataProxy.resetDirtyFlag();
 					dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
 				} else {
 					// Otherwise we just delete the node

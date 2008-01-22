@@ -29,7 +29,11 @@
 
 	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
 	"dialog.discardPubExistTitle":"Alle &Auml;nderungen verwerfen",
+	"dialog.discardPubExistMessage":"Wollen Sie alle &Auml;nderungen am Metadatensatz '%{0}' verwerfen und zur urspr&uuml;nglichen Version zur&uuml;ckkehren?",
 	"dialog.discardPubNotExistTitle":"Neuen MD-S verwerfen",
+	"dialog.discardPubNotExistMessage":"Wollen Sie wirklich den neu angelegten Metadatensatz '%{0}' und alle unter ihm angeordneten Metadatens&auml;tze verwerfen?",
+	"dialog.undoChangesTitle":"aktuelle &Auml;nderungen verwerfen",
+	"dialog.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Metadatensatz vorgenommenen &Auml;nderungen verwerfen?",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

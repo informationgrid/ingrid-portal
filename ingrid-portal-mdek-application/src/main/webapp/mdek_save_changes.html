@@ -32,7 +32,7 @@ saveChanges = function() {
 // 'No Button' onClick function
 // This function resets the dirty flag and publishes another load request 
 discardChanges = function() {
-	resetDirtyFlag();
+	udkDataProxy.resetDirtyFlag();
 	_container_.customParams.resultHandler.callback("DISCARD");
 	_container_.closeWindow();
 }

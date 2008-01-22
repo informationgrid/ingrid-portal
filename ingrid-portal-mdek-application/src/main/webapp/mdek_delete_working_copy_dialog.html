@@ -4,7 +4,13 @@
 <script type="text/javascript">
 _container_.addOnLoad(function() {
 	var msgDiv = dojo.byId("messageDiv");
-	msgDiv.innerHTML = "M&ouml;chten Sie wirklich alle &Auml;nderungen an dem Objekt \'"+_container_.customParams.nodeTitle+"\', die seit der letzten Ver&ouml;ffentlichung gemacht wurden, verwerfen?";
+	if (_container_.customParams.action == "UNDO") {
+		msgDiv.innerHTML = message.get("dialog.undoChangesMessage");
+	} else if (_container_.customParams.isPublished) {
+		msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.discardPubExistMessage"), _container_.customParams.nodeTitle);
+	} else {
+		msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.discardPubNotExistMessage"), _container_.customParams.nodeTitle);	
+	}
 });
 
 _container_.addOnUnload(function() {
@@ -40,7 +46,7 @@ noButtonFunc = function() {
 			<div id="messageDiv" class="field grey"> </div>
 
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right;"><button dojoType="ingrid:Button" title="Nein" onClick="noButtonFunc">Nein</button></span>
+		        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
 		        <span style="float:right;"><button dojoType="ingrid:Button" title="Ja" onClick="yesButtonFunc">Ja</button></span>
 			</div>
 	  	</div>

@@ -576,25 +576,37 @@ function initToolbar() {
                           });
 
 
+
 	// Activate/Deactivate buttons depending on the selected node
 	var treeListener = dojo.widget.byId("treeListener");
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 		var disableList = [];
 		var enableList = [];
 		if (message.node.id == "objectRoot") {
-			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 			enableList = [newEntityButton];
 		} else if (message.node.isFolder) {
 			disableList = [];
-			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
+			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 		} else {
 			disableList = [copyTreeButton];
-			enableList = [previewButton, cutButton, copyEntityButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
+			enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 		}
-		
+
+
 		dojo.lang.forEach(disableList, function(item) {item.disable()});
 		dojo.lang.forEach(enableList, function(item) {item.enable()});
     });
+
+	// The undo button depends on the dirty flag
+	dojo.event.connect("after", udkDataProxy, "setDirtyFlag", function() {
+		undoButton.enable();
+	});
+	dojo.event.connect("after", udkDataProxy, "resetDirtyFlag", function() {
+		undoButton.disable();
+	});
+
+
 
 	var treeController = dojo.widget.byId("treeController");
 	var showOrHidePasteButton = function() {

@@ -63,7 +63,11 @@
 
 	"dialog.saveChangesTitle":"Save changes",
 	"dialog.discardPubExistTitle":"Discard all changes",
+	"dialog.discardPubExistMessage":"Do you really want to discard all changes made to '%{0}' and reset to the last published version?",
 	"dialog.discardPubNotExistTitle":"Discard new MD-S",
+	"dialog.discardPubNotExistMessage":"Do you really want to delete '%{0}' and all it's subobjects?",
+	"dialog.undoChangesTitle":"Discard current changes",
+	"dialog.undoChangesMessage":"Do you want to discard all changes since the last save?",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",
