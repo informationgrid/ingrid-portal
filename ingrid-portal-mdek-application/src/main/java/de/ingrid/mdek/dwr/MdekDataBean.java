@@ -103,6 +103,7 @@ public class MdekDataBean {
 	public ArrayList<LinkDataBean> ref1KeysText;
 	public String ref1BasisText;
 	public String ref1DataBasisText;
+	public String ref1ProcessText;
 	public ArrayList<String> ref1Data;
 
 
@@ -1376,5 +1377,19 @@ public class MdekDataBean {
 
 	public void setThesaurusTopicsList(ArrayList<Integer> thesaurusTopicsList) {
 		this.thesaurusTopicsList = thesaurusTopicsList;
+	}
+
+
+
+
+	public String getRef1ProcessText() {
+		return ref1ProcessText;
+	}
+
+
+
+
+	public void setRef1ProcessText(String ref1ProcessText) {
+		this.ref1ProcessText = ref1ProcessText;
 	};
 }

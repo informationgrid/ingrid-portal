@@ -612,7 +612,9 @@ function hideSplash(){
 	                <span id="ref1ProcessTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 'Herstellungsprozess'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	              	<div id="ref1ProcessTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1ProcessTab1">
 	              		<div id="ref1ProcessTab1" dojoType="ContentPane" label="Text">
-	                    <span class="input"><textarea id="ref1DataBasisText" name="ref1DataBasisText" class="w668 h083" /></textarea></span>
+	                    <span class="input">
+	               			<input type="text" mode="textarea" id="ref1ProcessText" name="ref1ProcessText" class="w668 h083" dojoType="ingrid:ValidationTextbox" /></span> 
+	                    </span>
 	              		</div>
 	              		<div id="ref1ProcessTab2" dojoType="ContentPane" label="Verweise">
 	                    <div class="tableContainer rows4">

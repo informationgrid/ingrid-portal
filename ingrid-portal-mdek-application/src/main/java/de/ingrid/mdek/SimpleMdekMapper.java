@@ -140,23 +140,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-/*
-			mdekObj.setRef1DataSet((Integer) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1VFormatTopology((Integer) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1SpatialSystem((Integer) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1Coverage((Double) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1AltAccuracy((Double) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1PosAccuracy((Double) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1Coverage((Double) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1BasisText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1DataBasisText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1Data((ArrayList<String>) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1Representation((ArrayList<Integer>) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-			mdekObj.setRef1SymbolsText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-			mdekObj.setRef1KeysText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-*/
+			mdekObj.setRef1DataSet((Integer) obj.get(MdekKeys.HIERARCHY_LEVEL));
+			mdekObj.setRef1VFormatTopology((Integer) obj.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
+			mdekObj.setRef1SpatialSystem((Integer) obj.get(MdekKeys.COORDINATE_SYSTEM));
+			mdekObj.setRef1Coverage((Double) obj.get(MdekKeys.DEGREE_OF_RECORD));
+			mdekObj.setRef1AltAccuracy((Double) obj.get(MdekKeys.POS_ACCURACY_VERTICAL));
+			mdekObj.setRef1PosAccuracy((Double) obj.get(MdekKeys.RESOLUTION));
+			mdekObj.setRef1BasisText((String) obj.get(MdekKeys.TECHNICAL_BASE));
+			mdekObj.setRef1DataBasisText((String) obj.get(MdekKeys.DATA));
+//			mdekObj.setRef1Data((ArrayList<String>) obj.get(MdekKeys.MISSING));
+//			mdekObj.setRef1Representation((ArrayList<Integer>) obj.get(MdekKeys.MISSING));
+//			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//			mdekObj.setRef1SymbolsText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//			mdekObj.setRef1KeysText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+			mdekObj.setRef1ProcessText((String) obj.get(MdekKeys.METHOD_OF_PRODUCTION));
 			break;
 		case 2:
 /*
@@ -317,23 +315,31 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-/*
-			udkObj.put(MdekKeys.MISSING, data.getRef1DataSet());
-			udkObj.put(MdekKeys.MISSING, data.getRef1VFormatTopology());
-			udkObj.put(MdekKeys.MISSING, data.getRef1SpatialSystem());
-			udkObj.put(MdekKeys.MISSING, data.getRef1Coverage());
-			udkObj.put(MdekKeys.MISSING, data.getRef1AltAccuracy());
-			udkObj.put(MdekKeys.MISSING, data.getRef1PosAccuracy());
-			udkObj.put(MdekKeys.MISSING, data.getRef1Coverage());
-			udkObj.put(MdekKeys.MISSING, data.getRef1BasisText());
-			udkObj.put(MdekKeys.MISSING, data.getRef1DataBasisText());
-			udkObj.put(MdekKeys.MISSING, data.getRef1Data());
-			udkObj.put(MdekKeys.MISSING, data.getRef1Representation());
-			udkObj.put(MdekKeys.MISSING, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
-			udkObj.put(MdekKeys.MISSING, mapFromScaleTable(data.getRef1Scale()));
-			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1SymbolsText()));
-			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1KeysText()));
-*/
+			udkObj.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
+			udkObj.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
+			udkObj.put(MdekKeys.COORDINATE_SYSTEM, data.getRef1SpatialSystem());
+			udkObj.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
+			udkObj.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
+			udkObj.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
+			udkObj.put(MdekKeys.TECHNICAL_BASE, data.getRef1BasisText());
+			udkObj.put(MdekKeys.DATA, data.getRef1DataBasisText());
+			udkObj.put(MdekKeys.METHOD_OF_PRODUCTION, data.getRef1ProcessText());
+//			udkObj.put(MdekKeys.MISSING, data.getRef1Data());
+//			udkObj.put(MdekKeys.MISSING, data.getRef1Representation());
+//			udkObj.put(MdekKeys.MISSING, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
+//			udkObj.put(MdekKeys.MISSING, mapFromScaleTable(data.getRef1Scale()));
+//			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1SymbolsText()));
+//			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1KeysText()));
+
+
+//			mdekObj.setRef1Data((ArrayList<String>) obj.get(MdekKeys.MISSING));
+//			mdekObj.setRef1Representation((ArrayList<Integer>) obj.get(MdekKeys.MISSING));
+//			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//			mdekObj.setRef1SymbolsText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+//			mdekObj.setRef1KeysText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+
+			
 			break;
 		case 2:
 /*

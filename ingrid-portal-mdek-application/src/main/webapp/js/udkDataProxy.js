@@ -732,6 +732,7 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 	dojo.widget.byId("ref1PosAccuracy").setValue(nodeData.ref1PosAccuracy);
 	dojo.widget.byId("ref1BasisText").setValue(nodeData.ref1BasisText);
 	dojo.widget.byId("ref1DataBasisText").setValue(nodeData.ref1DataBasisText);
+	dojo.widget.byId("ref1ProcessText").setValue(nodeData.ref1processText);
 
 	dojo.widget.byId("ref1Representation").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Representation)));
 	dojo.widget.byId("ref1Data").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Data)));
@@ -972,6 +973,8 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1PosAccuracy = dojo.widget.byId("ref1PosAccuracy").getValue();
 	nodeData.ref1BasisText = dojo.widget.byId("ref1BasisText").getValue();
 	nodeData.ref1DataBasisText = dojo.widget.byId("ref1DataBasisText").getValue();
+	nodeData.ref1processText = dojo.widget.byId("ref1ProcessText").getValue();
+
 
 //	nodeData.ref1Representation = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Representation"));
 //	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
