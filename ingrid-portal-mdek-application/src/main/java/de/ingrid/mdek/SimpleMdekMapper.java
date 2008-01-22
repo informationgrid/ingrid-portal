@@ -121,13 +121,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
 		
 		// Thesaurus
-//		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setThesaurusFreeTermsTable((ArrayList<String>) obj.get(MdekKeys.MISSING));
+		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
+		mdekObj.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 //		mdekObj.setThesaurusTopicsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
 //		mdekObj.setThesaurusEnvExtRes((Boolean) obj.get(MdekKeys.MISSING));
 //		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
-//		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) obj.get(MdekKeys.MISSING));
-
+		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) obj.get(MdekKeys.ENV_CATEGORIES));
 		// Links
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -301,11 +300,10 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.FEES, data.getAvailabilityCosts());
 
 		//Thesaurus
-//		udkObj.put(MdekKeys.MISSING, mapFromThesTermsTable(data.getThesaurusTermsTable()));
-//		udkObj.put(MdekKeys.MISSING, data.getThesaurusFreeTermsTable());
+		udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable(), data.getThesaurusFreeTermsTable()));
 //		udkObj.put(MdekKeys.MISSING, data.getThesaurusTopicsList());
 //		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvTopicsList());
-//		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvCatsList());
+		udkObj.put(MdekKeys.ENV_CATEGORIES, data.getThesaurusEnvCatsList());
 //		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvExtRes());
 		
 		// Links
@@ -524,21 +522,28 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 
 
-/*
-	private static ArrayList<IngridDocument> mapFromThesTermsTable(ArrayList<SNSTopic> topicList) {
+	private static ArrayList<IngridDocument> mapFromThesTermTables(ArrayList<SNSTopic> snsList, ArrayList<String> freeList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
-		if (topicList == null)
-			return resultList;
-
-		for (SNSTopic topic : topicList) {
-			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, topic.getTitle());
-			result.put(MdekKeys.MISSING, topic.getTopicId());
-			resultList.add(result);
+		if (snsList != null) {
+			for (SNSTopic t : snsList) {
+				IngridDocument res = new IngridDocument();
+				res.put(MdekKeys.TERM_TYPE, "T");
+				res.put(MdekKeys.TERM_NAME, t.getTitle());
+				res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
+				resultList.add(res);
+			}
+		}
+		if (freeList != null) {
+			for (String s : freeList) {
+				IngridDocument res = new IngridDocument();
+				res.put(MdekKeys.TERM_TYPE, "F");
+				res.put(MdekKeys.TERM_NAME, s);
+				resultList.add(res);
+			}
 		}
 		return resultList;
 	}
-*/
+
 /*
 	private static ArrayList<IngridDocument> mapFromVFormatDetailsTable(ArrayList<VectorFormatDetailsBean> vFormatList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
@@ -802,20 +807,36 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
-		if (locList == null)
-			return resultList;
 		ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+		if (topicList == null)
+			return resultList;
 		for (HashMap<String, Object> topic : topicList) {
 			SNSTopic t = new SNSTopic();
-			t.setTitle((String) topic.get(MdekKeys.MISSING));
-			t.setTopicId((String) topic.get(MdekKeys.MISSING));
-			resultList.add(t);
+			String type = (String) topic.get(MdekKeys.TERM_TYPE);
+			if (type.equalsIgnoreCase("T")) {
+				t.setTitle((String) topic.get(MdekKeys.TERM_NAME));
+				t.setTopicId((String) topic.get(MdekKeys.TERM_SNS_ID));
+				resultList.add(t);
+			}
 		}
 		return resultList;
 	}
-*/
+
+	private static ArrayList<String> mapToThesFreeTermsTable(List<HashMap<String, Object>> topicList) {
+		ArrayList<String> resultList = new ArrayList<String>();
+		if (topicList == null)
+			return resultList;
+		for (HashMap<String, Object> topic : topicList) {
+			String type = (String) topic.get(MdekKeys.TERM_TYPE);
+			if (type.equalsIgnoreCase("F")) {
+				resultList.add((String) topic.get(MdekKeys.TERM_NAME));
+			}
+		}
+		return resultList;
+	}
+
 /*
 	private static ArrayList<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
 		ArrayList<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();

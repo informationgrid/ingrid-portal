@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import de.ingrid.mdek.dwr.sns.SNSTopic;
+
 
 /**
  * @author mbenz
@@ -72,7 +74,7 @@ public class MdekDataBean {
 	public String availabilityCosts;
 	
 	// Thesaurus
-	public ArrayList<VectorFormatDetailsBean> thesaurusTermsTable;
+	public ArrayList<SNSTopic> thesaurusTermsTable;
 	public ArrayList<String> thesaurusFreeTermsTable;
 	public ArrayList<String> thesaurusTopicsList;
 	public Boolean thesaurusEnvExtRes;
@@ -513,7 +515,11 @@ public class MdekDataBean {
 		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
-		this.setThesaurusTermsTable(new ArrayList<VectorFormatDetailsBean>());
+		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
+		this.setThesaurusEnvCatsList(new ArrayList<String>());
+		this.setThesaurusEnvTopicsList(new ArrayList<String>());
+		this.setThesaurusFreeTermsTable(new ArrayList<String>());
+		this.setThesaurusTopicsList(new ArrayList<String>());
 	}
 	
 	
@@ -1118,21 +1124,6 @@ public class MdekDataBean {
 
 
 
-
-	public ArrayList<VectorFormatDetailsBean> getThesaurusTermsTable() {
-		return thesaurusTermsTable;
-	}
-
-
-
-
-	public void setThesaurusTermsTable(ArrayList<VectorFormatDetailsBean> thesaurusTermsTable) {
-		this.thesaurusTermsTable = thesaurusTermsTable;
-	}
-
-
-
-
 	public Integer getRef1DataSet() {
 		return ref1DataSet;
 	}
@@ -1368,5 +1359,19 @@ public class MdekDataBean {
 	public void setAvailabilityMediaOptionsTable(
 			ArrayList<MediaOptionBean> availabilityMediaOptionsTable) {
 		this.availabilityMediaOptionsTable = availabilityMediaOptionsTable;
+	}
+
+
+
+
+	public ArrayList<SNSTopic> getThesaurusTermsTable() {
+		return thesaurusTermsTable;
+	}
+
+
+
+
+	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
+		this.thesaurusTermsTable = thesaurusTermsTable;
 	};
 }

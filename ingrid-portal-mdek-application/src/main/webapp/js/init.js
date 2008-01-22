@@ -336,9 +336,9 @@ function initFreeTermsButton() {
 					} else {
 						// Topic not found in the sns. Add the result to the free term list
 						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
-						if (dojo.lang.every(freeTermsStore.getData(), function(item){item.title != term})) {
+						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
 							// If every term in the store != the entered term add it to the list
-							var identifier = getNewKey(freeTermsStore);
+							var identifier = getNewKey(freeTermsStore);							
 							freeTermsStore.addData({Id: identifier, title: term}, identifier);
 						}
 					}},
