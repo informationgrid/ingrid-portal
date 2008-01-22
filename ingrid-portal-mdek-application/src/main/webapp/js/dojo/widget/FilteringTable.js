@@ -609,6 +609,15 @@ dojo.widget.defineWidget(
     //this.debugData();
   },
 
+  enable: function() {
+  	dojo.html.addClass(this.domNode, "interactive");
+  },
+
+  disable: function() {
+  	dojo.html.removeClass(this.domNode, "interactive");
+  },
+
+
   debugData: function() {
     dojo.debug('--------------------------------------------------');
     var str = '';

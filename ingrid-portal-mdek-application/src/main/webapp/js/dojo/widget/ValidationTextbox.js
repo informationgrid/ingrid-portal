@@ -42,6 +42,11 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 
 	var ee = this[this.mode.toLowerCase()];
 	if(this.mode.toLowerCase()=="textarea"){
+	    if (this.disabled == true) {
+	      this.textarea.setAttribute('disabled', 'disabled');
+	      dojo.html.addClass(this.textarea, 'noEdit');
+	    }
+
 		this.textarea.style.display = "block";
 		this.textbox.style.display = "none";
 	} else {
@@ -73,13 +78,15 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 
   enable: function() {
     dojo.widget.ValidationTextbox.superclass.enable.apply(this, arguments);
-    this.textbox.setAttribute('disabled', '');
-    dojo.html.removeClass(this.textbox, 'noEdit');
+	var ee = this[this.mode.toLowerCase()];				
+    ee.removeAttribute("disabled");
+    dojo.html.removeClass(ee, 'noEdit');
   },
 
   disable: function() {
     dojo.widget.ValidationTextbox.superclass.disable.apply(this, arguments);
-    this.textbox.setAttribute('disabled', 'disabled');
-    dojo.html.addClass(this.textbox, 'noEdit');
+	var ee = this[this.mode.toLowerCase()];				
+    ee.setAttribute("disabled", "disabled");
+    dojo.html.addClass(ee, 'noEdit');
   }
 });
