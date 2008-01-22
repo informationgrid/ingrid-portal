@@ -1591,11 +1591,11 @@ function hideSplash(){
 	                  <span class="label">Verweise zu</span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                  <div class="tableContainer rows4">
-	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable nosort interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="icon" dataType="String" width="30"></th>
-	                    			<th field="linkLabel" dataType="String" width="290">Objekte</th>
+	                    			<th nosort="true" field="icon" dataType="String" width="30"></th>
+	                    			<th nosort="true" field="linkLabel" dataType="String" width="290">Objekte</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1607,7 +1607,7 @@ function hideSplash(){
 	                <div class="half">
 	                  <span class="label">Verweise von</span>
 	                  <div class="tableContainer rows4">
-	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable nosort interactive half">
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="icon" dataType="String" width="30"></th>

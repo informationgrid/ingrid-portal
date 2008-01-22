@@ -120,6 +120,11 @@ dojo.widget.defineWidget(
         this.setContextMenu(contextMenu.widgetId);
       }
     }
+    
+    if (dojo.html.hasClass(this.domNode, 'nosort')) {
+		this.createSorter = function(x) {return null;};
+    }
+    
     dojo.widget.FilteringTable.prototype.postCreate.apply(this, arguments);
   },
 

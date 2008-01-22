@@ -509,11 +509,11 @@ closeDialog = function() {
 
 			<div class="tableContainer rows9">
 
-				<table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable interactive third relativePos">
+				<table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
 					<thead>
 						<tr>
-							<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
-							<th nosort="true" field="title" dataType="String" width="290">&nbsp;</th>
+							<th field="icon" width="30">&nbsp;</th>
+							<th field="title" width="290">&nbsp;</th>
 						</tr>
 					</thead>
 					  <colgroup>
@@ -530,7 +530,7 @@ closeDialog = function() {
 			
 			<div dojoType="ContentPane" class="scrollable">
 				<span class="label"><label for="linkListURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL')">URL</label></span>
-				<table id="linkListURL" dojoType="ingrid:FilteringTable" multiple="false" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable interactive third relativePos">
+				<table id="linkListURL" dojoType="ingrid:FilteringTable" multiple="false" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
 			  		<thead>
 			  			<tr>
 			  				<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
