@@ -107,7 +107,7 @@ dojo.widget.defineWidget(
 
     if(dojo.html.hasClass(this.domNode, 'interactive') && !dojo.html.hasClass(this.domNode, 'readonly')) {
       // connect the couble click event for editing
-      dojo.event.connect(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
+      dojo.event.connectOnce(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
 
       if (!this.customContextMenu) {
         // set default context menu on interactive/writable tables
@@ -611,10 +611,13 @@ dojo.widget.defineWidget(
 
   enable: function() {
   	dojo.html.addClass(this.domNode, "interactive");
+    if(!dojo.html.hasClass(this.domNode, 'readonly'))
+	    dojo.event.connectOnce(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
   },
 
   disable: function() {
   	dojo.html.removeClass(this.domNode, "interactive");
+	dojo.event.disconnect(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
   },
 
 
