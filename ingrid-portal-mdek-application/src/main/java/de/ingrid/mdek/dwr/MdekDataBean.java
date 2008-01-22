@@ -66,7 +66,7 @@ public class MdekDataBean {
 
 	// Availability
 	public ArrayList<DataFormatBean> availabilityDataFormatTable;
-	public ArrayList<HashMap<String, String>> availabilityMediaOptionsTable;
+	public ArrayList<MediaOptionBean> availabilityMediaOptionsTable;
 	public String availabilityOrderInfo;
 	public String availabilityNoteUse;
 	public String availabilityCosts;
@@ -929,19 +929,6 @@ public class MdekDataBean {
 	}
 
 
-	public ArrayList<HashMap<String, String>> getAvailabilityMediaOptionsTable() {
-		return availabilityMediaOptionsTable;
-	}
-
-
-
-	public void setAvailabilityMediaOptionsTable(
-			ArrayList<HashMap<String, String>> availabilityMediaOptionsTable) {
-		this.availabilityMediaOptionsTable = availabilityMediaOptionsTable;
-	}
-
-
-
 	public String getAvailabilityOrderInfo() {
 		return availabilityOrderInfo;
 	}
@@ -1366,5 +1353,20 @@ public class MdekDataBean {
 
 	public void setCommentTable(ArrayList<CommentBean> commentTable) {
 		this.commentTable = commentTable;
+	}
+
+
+
+
+	public ArrayList<MediaOptionBean> getAvailabilityMediaOptionsTable() {
+		return availabilityMediaOptionsTable;
+	}
+
+
+
+
+	public void setAvailabilityMediaOptionsTable(
+			ArrayList<MediaOptionBean> availabilityMediaOptionsTable) {
+		this.availabilityMediaOptionsTable = availabilityMediaOptionsTable;
 	};
 }

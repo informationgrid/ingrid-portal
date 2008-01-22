@@ -14,10 +14,12 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.dwr.CommentBean;
 import de.ingrid.mdek.dwr.DBContentBean;
+import de.ingrid.mdek.dwr.DataFormatBean;
 import de.ingrid.mdek.dwr.LinkDataBean;
 import de.ingrid.mdek.dwr.LocationBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.MediaOptionBean;
 import de.ingrid.mdek.dwr.OperationBean;
 import de.ingrid.mdek.dwr.ScaleBean;
 import de.ingrid.mdek.dwr.TimeReferenceBean;
@@ -115,8 +117,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
 		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.USE_CONSTRAINTS));
 		mdekObj.setAvailabilityCosts((String) obj.get(MdekKeys.FEES));
-//		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATA_FORMATS)));
+		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
 		
 		// Thesaurus
 //		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -292,8 +294,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 
 		// Availability
-//		udkObj.put(MdekKeys.MISSING, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
-//		udkObj.put(MdekKeys.MISSING, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
+		udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
+		udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
 		udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
 		udkObj.put(MdekKeys.USE_CONSTRAINTS, data.getAvailabilityNoteUse());
 		udkObj.put(MdekKeys.FEES, data.getAvailabilityCosts());
@@ -488,7 +490,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
@@ -496,16 +498,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (DataFormatBean ref : refList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, ref.getCompression());
-			result.put(MdekKeys.MISSING, ref.getName());
-			result.put(MdekKeys.MISSING, ref.getPixelDepth());
-			result.put(MdekKeys.MISSING, ref.getVersion());
+			result.put(MdekKeys.FORMAT_FILE_DECOMPRESSION_TECHNIQUE, ref.getCompression());
+			result.put(MdekKeys.FORMAT_NAME, ref.getName());
+			result.put(MdekKeys.FORMAT_SPECIFICATION, ref.getPixelDepth());
+			result.put(MdekKeys.FORMAT_VERSION, ref.getVersion());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
-/*
+
+
 	private static ArrayList<IngridDocument> mapFromAvailMediaOptionsTable(ArrayList<MediaOptionBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
@@ -513,14 +515,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (MediaOptionBean ref : refList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, ref.getName());
-			result.put(MdekKeys.MISSING, ref.getLocation());
-			result.put(MdekKeys.MISSING, ref.getTransferSize());
+			result.put(MdekKeys.MEDIUM_NAME, ref.getName());
+			result.put(MdekKeys.MEDIUM_NOTE, ref.getLocation());
+			result.put(MdekKeys.MEDIUM_TRANSFER_SIZE, ref.getTransferSize());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
+
 
 /*
 	private static ArrayList<IngridDocument> mapFromThesTermsTable(ArrayList<SNSTopic> topicList) {
@@ -770,37 +772,36 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
-		if (locList == null)
-			return resultList;
 		ArrayList<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
+		if (refList == null)
+			return resultList;
 		for (HashMap<String, Object> ref : refList) {
 			DataFormatBean df = new DataFormatBean();
-			df.setName((String) ref.get(MdekKeys.MISSING));
-			df.setCompression((String) ref.get(MdekKeys.MISSING));
-			df.setPixelDepth((String) ref.get(MdekKeys.MISSING));
-			df.setVersion((String) ref.get(MdekKeys.MISSING));
+			df.setName((String) ref.get(MdekKeys.FORMAT_NAME));
+			df.setCompression((String) ref.get(MdekKeys.FORMAT_FILE_DECOMPRESSION_TECHNIQUE));
+			df.setPixelDepth((String) ref.get(MdekKeys.FORMAT_SPECIFICATION));
+			df.setVersion((String) ref.get(MdekKeys.FORMAT_VERSION));
 			resultList.add(df);
 		}
 		return resultList;
 	}
-*/
-/*	
+
 	private static ArrayList<MediaOptionBean> mapToAvailMediaOptionsTable(List<HashMap<String, Object>> refList) {
-		if (locList == null)
-			return resultList;
 		ArrayList<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
+		if (refList == null)
+			return resultList;
 		for (HashMap<String, Object> ref : refList) {
 			MediaOptionBean mo = new MediaOptionBean();
-			mo.setName((Integer) ref.get(MdekKeys.MISSING));
-			mo.setLocation((String) ref.get(MdekKeys.MISSING));
-			mo.setTransferSize((Double) ref.get(MdekKeys.MISSING));
+			mo.setName((Integer) ref.get(MdekKeys.MEDIUM_NAME));
+			mo.setLocation((String) ref.get(MdekKeys.MEDIUM_NOTE));
+			mo.setTransferSize((Double) ref.get(MdekKeys.MEDIUM_TRANSFER_SIZE));
 			resultList.add(mo);
 		}
 		return resultList;
 	}
-*/
+
 /*
 	private static ArrayList<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
 		if (locList == null)

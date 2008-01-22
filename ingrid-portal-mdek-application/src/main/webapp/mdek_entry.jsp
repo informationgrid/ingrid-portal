@@ -1416,7 +1416,7 @@ function hideSplash(){
 	                <span class="label"><label for="availabilityMediaOptions" onclick="javascript:dialog.showContextHelp(arguments[0], 'Medienoption')">Medienoption</label></span>
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="availabilityMediaOptionsEditors">
-	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/availMedium.js" style="width:117px;" widgetId="availabilityMediaOptionsMediumCombobox"></div>
+	                    <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/availMedium.js" style="width:117px;" widgetId="availabilityMediaOptionsMediumCombobox"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsSize"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsLocation"></div>
 	                  </div>
