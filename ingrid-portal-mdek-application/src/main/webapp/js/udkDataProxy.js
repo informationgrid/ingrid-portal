@@ -1135,7 +1135,7 @@ udkDataProxy._addObjectLinkLabels = function(list) {
 udkDataProxy._addUrlLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
 		if (list[i].url) {
-			list[i].linkLabel = "<a href='"+list[i].url+"' title='"+list[i].name+"'>"+list[i].name+"</a>";
+			list[i].linkLabel = "<a href='"+list[i].url+"' target=\"_blank\" title='"+list[i].name+"'>"+list[i].name+"</a>";
 		}
 	}
 	return list;
