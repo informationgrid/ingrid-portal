@@ -444,7 +444,7 @@ dojo.widget.defineWidget(
   curEditor: null,
   curTD: null,
   isEditing: false,
-  curFP: {},
+  curFP: null,
 
   beginEdit: function(e) {
     // return if an already edited cell is double clicked

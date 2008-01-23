@@ -618,7 +618,7 @@ udkDataProxy._setObjectData = function(nodeData)
   udkDataProxy._addIcons(addressTable);
   dojo.widget.byId("generalAddress").store.setData(addressTable);
   // Comments
-  commentStore.setData(udkDataProxy._addTableIndices(nodeData.commentTable));
+  commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
 
   // -- Spatial --
   // The table containing entries from the sns is indexed by their topicID
@@ -1148,6 +1148,17 @@ udkDataProxy._addTableIndices = function(list) {
 	if (list) {
 		for (var i = 0; i < list.length; ++i) {
 			list[i].Id = i;
+		}
+		return list;
+	} else {
+		return [];
+	}
+}
+
+udkDataProxy._addDisplayDates = function(list) {
+	if (list) {
+		for (var i = 0; i < list.length; ++i) {
+			list[i].displayDate = list[i].date.toLocaleString();
 		}
 		return list;
 	} else {

@@ -43,7 +43,7 @@ addComment = function() {
 	if (newComment != "") {
 		var key = _getNewKey(commentStore);
 		var date = new Date();
-		commentStore.addData({Id: key, comment: newComment, date: date.toLocaleString(), user: "-"});
+		commentStore.addData({Id: key, comment: newComment, date: date, displayDate: date.toLocaleString(), user: ""});
 	}
 }
 
@@ -67,7 +67,7 @@ addComment = function() {
   	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader" tbodyClass="scrollContent h180" cellspacing="0" class="filteringTable interactive wide relativePos">
   	      <thead>
   		      <tr>
-        			<th field="date" dataType="String" width="100">Datum</th>
+        			<th field="displayDate" dataType="String" width="100">Datum</th>
         			<th field="user" dataType="String" width="185">Nutzer</th>
         			<th field="comment" dataType="String" width="687">Kommentar</th>
   		      </tr>
