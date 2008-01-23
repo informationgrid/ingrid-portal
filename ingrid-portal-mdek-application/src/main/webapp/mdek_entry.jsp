@@ -790,8 +790,14 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Servicetyp')">Servicetyp*</label></span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
-	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref3ServiceType" name="ref3ServiceType" /></span>
-	            	  </div>
+	                  <span class="input spaceBelow">
+
+						<input type="text" mode="textarea" id="ref3ServiceType" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+<!-- 	                  	
+	                  	<input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref3ServiceType" name="ref3ServiceType" />
+ -->
+					  </span>
+	            	</div>
 
 	                <div class="half">
 	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 'Version des Services')">Version des Services</label></span>
