@@ -5,7 +5,7 @@
 dojo.addOnLoad(function() {});
 
 var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
-			  "ref1DataSetLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "thesaurusTermsLabel",
+			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "thesaurusTermsLabel",
 			  "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "thesaurusEnvTopicsLabel",
 			  "thesaurusEnvCatsLabel"];
 
@@ -23,23 +23,26 @@ var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
 var notEmptyTableFunc = function(element) {return (this[element].length > 0);}
 
-
-function isObjectPublishable(idcObject) {
-	var publishable = true;
-
+function resetRequiredFields() {
 	for (i in labels) {
 		dojo.html.removeClass(dojo.byId(labels[i]), "important");	
 	}
+}
 
 
-	for (i in notEmptyFields) {
+function isObjectPublishable(idcObject) {
+	var publishable = true;
+	
+	resetRequiredFields();
+
+	for (var i in notEmptyFields) {
 		if (!idcObject[notEmptyFields[i][0]] || idcObject[notEmptyFields[i][0]] == "") {
 			dojo.html.addClass(dojo.byId(notEmptyFields[i][1]), "important");
 			publishable = false;
 		}
 	}
 
-	for (i in notEmptyTables) {
+	for (var i in notEmptyTables) {
 		if (idcObject[notEmptyTables[i][0]].length == 0) {
 			dojo.html.addClass(dojo.byId(notEmptyTables[i][1]), "important");
 			publishable = false;
@@ -100,19 +103,31 @@ function isObjectPublishable(idcObject) {
 			// No additional required fields for object class 0
 			break;
 		case '1':
-			for (i in notEmptyFieldsClass1) {
+			for (var i in notEmptyFieldsClass1) {
 				if (!idcObject[notEmptyFieldsClass1[i][0]] || idcObject[notEmptyFieldsClass1[i][0]] == "") {
 					dojo.html.addClass(dojo.byId(notEmptyFieldsClass1[i][1]), "important");
 					publishable = false;
 					dojo.debug("Object class one required field empty.");				
 				}
 			}
+			for (var i in idcObject.ref1Representation) {
+				if (idcObject.ref1Representation[i] == "1") {
+					if (idcObject.ref1VFormatTopology == ""
+					  ||idcObject.ref1VFormatDetails.length == 0) {
+						dojo.html.addClass(dojo.byId("ref1VFormatLabel"), "important");
+						publishable = false;
+						dojo.debug("Vector format needs to be filled.");
+						continue;
+					}
+				}
+			}
+
 			break;
 		case '2':
 			// No additional required fields for object class 2
 			break;
 		case '3':
-			for (i in notEmptyFieldsClass3) {
+			for (var i in notEmptyFieldsClass3) {
 				if (!idcObject[notEmptyFieldsClass3[i][0]] || idcObject[notEmptyFieldsClass3[i][0]] == "") {
 					dojo.html.addClass(dojo.byId(notEmptyFieldsClass3[i][1]), "important");
 					publishable = false;

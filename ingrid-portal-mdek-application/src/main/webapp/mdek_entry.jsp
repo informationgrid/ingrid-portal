@@ -806,8 +806,6 @@ function hideSplash(){
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
-	              		      <tr value="1">
-	              		        <td>Gerdes, G&uuml;nther</td></tr>
 	              	      </tbody>
 	              	    </table>
 	                  </div>
@@ -1012,15 +1010,6 @@ function hideSplash(){
 	                  		      </tr>
 	                  	      </thead>
 	                  	      <tbody>
-	                  		      <tr value="1">
-	                  		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="UDK Klasse 5" /></td>
-	                  		        <td><a href="#" title="Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV">Geobasisdaten der Vermessungs- und Katasterverwaltung (VKV)</a></td></tr>
-	                  		      <tr value="2">
-	                  		        <td><img src="img/UDK/url.gif" width="16" height="16" alt="URL" /></td>
-	                  		        <td><a href="#" title="www.test.de">www.test.de</a></td></tr>
-	                  		      <tr value="3">
-	                  		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="UDK Klasse 4" /></td>
-	                  		        <td><a href="#" title="Gerdes, M&uuml;ller">Gerdes, M&uuml;ller</a></td></tr>
 	                  	      </tbody>
 	                  	    </table>
 	                      </div>

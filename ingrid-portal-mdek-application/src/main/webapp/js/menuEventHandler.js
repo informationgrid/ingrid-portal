@@ -225,6 +225,7 @@ menuEventHandler.handleSave = function() {
 		tree.selectedNode = dojo.widget.byId(res.uuid);
 		tree.selectedNode.viewUnselect();
 		tree.selectedNode.viewSelect();
+		resetRequiredFields();
 	});
 	dojo.debug('Publishing event: /saveRequest');
 	dojo.event.topic.publish("/saveRequest", {resultHandler: deferred});

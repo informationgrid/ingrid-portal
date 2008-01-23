@@ -310,6 +310,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 							udkDataProxy._setData(res);
 							udkDataProxy._updateTree(res);
 							if (resultHandler) resultHandler.callback();
+							resetRequiredFields();
 						} else {
 							dojo.debug(resultHandler);
 							if (typeof(resultHandler) != "undefined") {
