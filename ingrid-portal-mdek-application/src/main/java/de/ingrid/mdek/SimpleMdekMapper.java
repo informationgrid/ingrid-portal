@@ -69,9 +69,20 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
 		mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
 		mdekObj.setTitle((String) obj.get(MdekKeys.TITLE));
-		mdekObj.setObjectClass((Integer) obj.get(MdekKeys.CLASS));
+		Integer objClass = (Integer) obj.get(MdekKeys.CLASS);
+		if (objClass == null) {
+			mdekObj.setObjectClass(0);
+		} else {
+			mdekObj.setObjectClass(objClass);
+		}
 
-		WorkState workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, (String) obj.get(MdekKeys.WORK_STATE));
+		String workStateStr = (String) obj.get(MdekKeys.WORK_STATE); 
+		WorkState workState = null;
+		if (workStateStr != null) {
+			workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workStateStr);
+		} else {
+			workState = WorkState.IN_BEARBEITUNG;
+		}
 		mdekObj.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
 
@@ -103,16 +114,23 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
 		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
-		
+
 		// ExtraInfo
 		mdekObj.setExtraInfoLangMetaData((String) obj.get(MdekKeys.METADATA_LANGUAGE));
 		mdekObj.setExtraInfoLangData((String) obj.get(MdekKeys.DATA_LANGUAGE));
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
-		mdekObj.setExtraInfoXMLExportTable((ArrayList<String>) obj.get(MdekKeys.EXPORTS));
-		mdekObj.setExtraInfoLegalBasicsTable((ArrayList<String>) obj.get(MdekKeys.LEGISLATIONS));
+		
+		ArrayList<String> strList = (ArrayList<String>) obj.get(MdekKeys.EXPORTS);
+		if (strList != null)
+			mdekObj.setExtraInfoXMLExportTable(strList);
+		
+		strList = (ArrayList<String>) obj.get(MdekKeys.LEGISLATIONS);
+		if (strList != null)
+			mdekObj.setExtraInfoLegalBasicsTable(strList);
 
+		
 		// Availability
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
 		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.USE_CONSTRAINTS));
@@ -123,8 +141,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// Thesaurus
 		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 		mdekObj.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
-		mdekObj.setThesaurusTopicsList((ArrayList<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES));
-		
+
+		ArrayList<Integer> intList = (ArrayList<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES);
+		if (intList != null)
+			mdekObj.setThesaurusTopicsList(intList);
+
 		String isCatalogStr = (String) obj.get(MdekKeys.IS_CATALOG_DATA);
 		if (isCatalogStr != null && isCatalogStr.equalsIgnoreCase("Y")) {
 			mdekObj.setThesaurusEnvExtRes(true);
@@ -132,8 +153,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setThesaurusEnvExtRes(false);
 		}
 
-		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) obj.get(MdekKeys.ENV_TOPICS));
-		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) obj.get(MdekKeys.ENV_CATEGORIES));
+		strList = (ArrayList<String>) obj.get(MdekKeys.ENV_TOPICS);
+		if (strList != null)
+			mdekObj.setThesaurusEnvTopicsList(strList);
+		
+		strList = (ArrayList<String>) obj.get(MdekKeys.ENV_CATEGORIES);
+		if (strList != null)
+			mdekObj.setThesaurusEnvCatsList(strList);
+		
 		// Links
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -157,8 +184,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
 			mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
 			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
-			mdekObj.setRef1Data((ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST));
-			mdekObj.setRef1Representation((ArrayList<Integer>) td1Map.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST));
+			
+			strList = (ArrayList<String>) obj.get(MdekKeys.FEATURE_TYPE_LIST);
+			if (strList != null)
+				mdekObj.setRef1Data(strList);
+			
+			intList = (ArrayList<Integer>) obj.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST);
+			if (intList != null)
+				mdekObj.setRef1Representation(intList);
+			
 			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.GEO_VECTOR_LIST)));
 			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
@@ -211,7 +245,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekObj.setNodeAppType("O");
-		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
+		String nodeDocType = "Class" + mdekObj.getObjectClass();
 		// If workState... nodeDocType += "_"+workState ?		
 		if (workState.getDbValue().equalsIgnoreCase("B")) {
 			nodeDocType += "_B";

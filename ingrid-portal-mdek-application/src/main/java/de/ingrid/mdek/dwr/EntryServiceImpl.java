@@ -127,36 +127,28 @@ public class EntryServiceImpl implements EntryService {
 		
 		MdekDataBean data = null; 
 
-		if (nodeUuid.equalsIgnoreCase("newNode")) {
-			log.debug("--- New node ---");		
-			data = new MdekDataBean();
-			data.setNodeAppType(OBJECT_APPTYPE);
-			data.setNodeDocType("Class0");
-			data.setObjectClass(0);
-			data.setUuid(nodeUuid); // "newNode"
-		} else {
-			try {
-				data = dataConnection.getNodeDetail(nodeUuid);
-			} catch (Exception e) {e.printStackTrace();}
-	
-			// TODO check for errors and throw an exception?
-			// Return a newly created node
-			if (data == null) {
-			}
-		}
+		try {
+			data = dataConnection.getNodeDetail(nodeUuid);
+		} catch (Exception e) {log.error("Error while getting node data.", e);}
+
+		// TODO check for errors and throw an exception?
+		// Return a newly created node
+		if (data == null) {;}
 
 		return data;
 	}
 
 	
 	public MdekDataBean createNewNode(String parentUuid) {
-		log.debug("--- New node ---");		
-		MdekDataBean data = new MdekDataBean(); 
+		log.debug("creating new node with parent id = "+parentUuid);		
+		MdekDataBean data = null;
+		try {
+			data = dataConnection.getInitialObject(parentUuid);
+		} catch (Exception e) {log.error("Error while getting node data.", e);}
+
 		data.setTitle("Neues Objekt");
 		data.setObjectName("Neues Objekt");
 		data.setNodeAppType(OBJECT_APPTYPE);
-		data.setNodeDocType("Class0");
-		data.setObjectClass(0);
 		data.setUuid("newNode");
 		return data;
 	}

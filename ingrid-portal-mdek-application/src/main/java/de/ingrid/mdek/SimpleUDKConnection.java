@@ -71,6 +71,14 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return null;
 	}
 
+	public MdekDataBean getInitialObject(String parentUuid) {
+		IngridDocument obj = new IngridDocument();
+		obj.put(MdekKeys.PARENT_UUID, parentUuid);
+
+		IngridDocument response = mdekCaller.getInitialObject(obj);
+		return extractSingleObjectFromResponse(response);
+	}
+	
 	public MdekDataBean saveNode(MdekDataBean data) {
 		IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
 
