@@ -52,10 +52,10 @@ resetInputElements = function() {
 displayOperation = function(op) {
 	dojo.widget.byId("operationsName").setValue(op.name);
 	dojo.widget.byId("operationsDescription").setValue(op.description);
-	dojo.widget.byId("operationsPlatform").store.setData(op.platformData);
-	dojo.widget.byId("operationsCall").setValue(op.call);
-	dojo.widget.byId("operationsParameter").store.setData(op.param);
-	dojo.widget.byId("operationsAddress").store.setData(op.address);
+	dojo.widget.byId("operationsPlatform").store.setData(op.platform);
+	dojo.widget.byId("operationsCall").setValue(op.methodCall);
+	dojo.widget.byId("operationsParameter").store.setData(op.paramList);
+	dojo.widget.byId("operationsAddress").store.setData(op.addressList);
 	dojo.widget.byId("operationsDependencies").store.setData(op.dependencies);
 }
 
@@ -97,10 +97,10 @@ getOperation = function() {
 	var operation = {};
 	operation.name = dojo.widget.byId("operationsName").getValue();
 	operation.description = dojo.widget.byId("operationsDescription").getValue();
-	operation.platformData = dojo.widget.byId("operationsPlatform").store.getData();
-	operation.call = dojo.widget.byId("operationsCall").getValue();
-	operation.param = dojo.widget.byId("operationsParameter").store.getData();
-	operation.address = dojo.widget.byId("operationsAddress").store.getData();
+	operation.platform = dojo.widget.byId("operationsPlatform").store.getData();
+	operation.methodCall = dojo.widget.byId("operationsCall").getValue();
+	operation.paramList = dojo.widget.byId("operationsParameter").store.getData();
+	operation.addressList = dojo.widget.byId("operationsAddress").store.getData();
 	operation.dependencies = dojo.widget.byId("operationsDependencies").store.getData();
 	operation.Id = currentOperationId;
 	return operation;
@@ -262,7 +262,7 @@ closeDialog = function() {
          	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" multiple="false" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
         	      <thead>
         		      <tr>
-              			<th field="name" dataType="String" editor="operationsPlatformText">Name</th>
+              			<th field="title" dataType="String" editor="operationsPlatformText">Name</th>
         		      </tr>
         	      </thead>
         	      <tbody>
@@ -313,7 +313,7 @@ closeDialog = function() {
          	    <table id="operationsAddress" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
         	      <thead>
         		      <tr>
-              			<th field="address" dataType="String" editor="operationsAddressText">Adresse</th>
+              			<th field="title" dataType="String" editor="operationsAddressText">Adresse</th>
         		      </tr>
         	      </thead>
         	      <tbody>
@@ -330,7 +330,7 @@ closeDialog = function() {
          	    <table id="operationsDependencies" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
         	      <thead>
         		      <tr>
-              			<th field="dependency" dataType="String" editor="operationsDependenciesText">Abh&auml;ngigkeit</th>
+              			<th field="title" dataType="String" editor="operationsDependenciesText">Abh&auml;ngigkeit</th>
         		      </tr>
         	      </thead>
         	      <tbody>

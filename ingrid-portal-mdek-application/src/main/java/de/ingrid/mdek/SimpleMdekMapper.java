@@ -21,6 +21,7 @@ import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.mdek.dwr.MediaOptionBean;
 import de.ingrid.mdek.dwr.OperationBean;
+import de.ingrid.mdek.dwr.OperationParameterBean;
 import de.ingrid.mdek.dwr.ScaleBean;
 import de.ingrid.mdek.dwr.TimeReferenceBean;
 import de.ingrid.mdek.dwr.UrlBean;
@@ -665,8 +666,45 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-
 /*
+	private static ArrayList<IngridDocument> mapFromOperationTable(ArrayList<OperationBean> opList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (opList == null)
+			return resultList;
+
+		for (OperationBean op : opList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, op.getName());
+			result.put(MdekKeys.MISSING, op.getDescription());
+			result.put(MdekKeys.MISSING, op.getPlatform());
+			result.put(MdekKeys.MISSING, op.getMethodCall());
+			result.put(MdekKeys.MISSING, mapFromOperationParamTable(op.getParamList()));
+			result.put(MdekKeys.MISSING, op.getAddressList());
+			result.put(MdekKeys.MISSING, op.getDependencies());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+	/*
+	private static ArrayList<IngridDocument> mapFromOperationParamTable(ArrayList<OperationParameterBean> opList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (opList == null)
+			return resultList;
+
+		for (OperationParameterBean op : opList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.MISSING, op.getName());
+			result.put(MdekKeys.MISSING, op.getDirection());
+			result.put(MdekKeys.MISSING, op.getDescription());
+			result.put(MdekKeys.MISSING, op.getOptional());
+			result.put(MdekKeys.MISSING, op.getMultiple());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+*/
+	/*
 	private static ArrayList<IngridDocument> mapFromCommentTable(ArrayList<CommentBean> commentList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (commentList == null)
@@ -966,6 +1004,43 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+/*
+	private static ArrayList<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList) {
+		ArrayList<OperationBean> resultList = new ArrayList<OperationBean>();
+		if (opList == null)
+			return resultList;
+		for (HashMap<String, Object> operation : opList) {
+			OperationBean op = new OperationBean();
+			op.setName((String) operation.get(MdekKeys.MISSING));
+			op.setDescription((String) operation.get(MdekKeys.MISSING));
+			op.setPlatform((ArrayList<String>) operation.get(MdekKeys.MISSING));
+			op.setMethodCall((String) operation.get(MdekKeys.MISSING));
+			op.setParamList(mapToOperationParamTable(operation.get(MdekKeys.MISSING)));
+			op.setAddressList((ArrayList<String>) operation.get(MdekKeys.MISSING));
+			op.setDependencies((ArrayList<String>) operation.get(MdekKeys.MISSING));
+			resultList.add(op);
+		}
+		return resultList;
+	}
+*/
+/*
+	private static ArrayList<OperationParameterBean> mapToOperationParamTable(List<HashMap<String, Object>> opList) {
+		ArrayList<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();
+		if (opList == null)
+			return resultList;
+		for (HashMap<String, Object> operation : opList) {
+			OperationParameterBean op = new OperationParameterBean();
+			op.setName((String) operation.get(MdekKeys.MISSING));
+			op.setDirection((String) operation.get(MdekKeys.MISSING));
+			op.setDescription((String) operation.get(MdekKeys.MISSING));
+			op.setOptional((String) operation.get(MdekKeys.MISSING));
+			op.setMultiple((String) operation.get(MdekKeys.MISSING));
+			resultList.add(op);
+		}
+		return resultList;
+	}
+*/
+	
 /*
 	private static ArrayList<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
 		ArrayList<CommentBean> resultList = new ArrayList<CommentBean>();
