@@ -119,7 +119,7 @@ public class MdekDataBean {
 	public String ref2PublishedISBN;
 	public String ref2PublishedPublisher;
 	public String ref2LocationText;
-	public Integer ref2DocumentType;
+	public String ref2DocumentType;
 	public String ref2BaseDataText;
 	public String ref2BibData;
 	public String ref2Explanation;
@@ -448,21 +448,6 @@ public class MdekDataBean {
 	public void setRef2LocationText(String ref2LocationText) {
 		this.ref2LocationText = ref2LocationText;
 	}
-
-
-
-
-	public Integer getRef2DocumentType() {
-		return ref2DocumentType;
-	}
-
-
-
-
-	public void setRef2DocumentType(Integer ref2DocumentType) {
-		this.ref2DocumentType = ref2DocumentType;
-	}
-
 
 
 
@@ -1420,5 +1405,19 @@ public class MdekDataBean {
 
 	public void setRef1SpatialSystemId(Integer ref1SpatialSystemId) {
 		this.ref1SpatialSystemId = ref1SpatialSystemId;
+	}
+
+
+
+
+	public String getRef2DocumentType() {
+		return ref2DocumentType;
+	}
+
+
+
+
+	public void setRef2DocumentType(String ref2DocumentType) {
+		this.ref2DocumentType = ref2DocumentType;
 	};
 }

@@ -200,22 +200,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef1ProcessText((String) td1Map.get(MdekKeys.METHOD_OF_PRODUCTION));
 			break;
 		case 2:
-/*
-			mdekObj.setRef2Author((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2Publisher((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishedIn((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishLocation((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishedInIssue((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishedInPages((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishedInYear((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishedISBN((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2PublishedPublisher((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2LocationText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2DocumentType((Integer) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2BaseDataText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2BibData((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef2Explanation((String) obj.get(MdekKeys.MISSING));
-*/
+			Map<String, Object> td2Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT);
+			mdekObj.setRef2Author((String) td2Map.get(MdekKeys.AUTHOR));
+			mdekObj.setRef2Publisher((String) td2Map.get(MdekKeys.EDITOR));
+			mdekObj.setRef2PublishedIn((String) td2Map.get(MdekKeys.PUBLISHED_IN));
+			mdekObj.setRef2PublishLocation((String) td2Map.get(MdekKeys.PUBLISHING_PLACE));
+			mdekObj.setRef2PublishedInIssue((String) td2Map.get(MdekKeys.VOLUME));
+			mdekObj.setRef2PublishedInPages((String) td2Map.get(MdekKeys.PAGES));
+			mdekObj.setRef2PublishedInYear((String) td2Map.get(MdekKeys.YEAR));
+			mdekObj.setRef2PublishedISBN((String) td2Map.get(MdekKeys.ISBN));
+			mdekObj.setRef2PublishedPublisher((String) td2Map.get(MdekKeys.PUBLISHER));
+			mdekObj.setRef2LocationText((String) td2Map.get(MdekKeys.LOCATION));
+			mdekObj.setRef2DocumentType((String) td2Map.get(MdekKeys.TYPE_OF_DOCUMENT));
+			mdekObj.setRef2BaseDataText((String) td2Map.get(MdekKeys.SOURCE));
+			mdekObj.setRef2BibData((String) td2Map.get(MdekKeys.ADDITIONAL_BIBLIOGRAPHIC_INFO));
+			mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			break;
 		case 3:
 /*
@@ -382,22 +381,22 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);			
 			break;
 		case 2:
-/*
-			udkObj.put(MdekKeys.MISSING, data.getRef2Author());
-			udkObj.put(MdekKeys.MISSING, data.getRef2Publisher());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedIn());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishLocation());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedInIssue());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedInPages());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedInYear());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedISBN());
-			udkObj.put(MdekKeys.MISSING, data.getRef2PublishedPublisher());
-			udkObj.put(MdekKeys.MISSING, data.getRef2LocationText());
-			udkObj.put(MdekKeys.MISSING, data.getRef2DocumentType());
-			udkObj.put(MdekKeys.MISSING, data.getRef2BaseDataText());
-			udkObj.put(MdekKeys.MISSING, data.getRef2BibData());
-			udkObj.put(MdekKeys.MISSING, data.getRef2Explanation());
-*/
+			IngridDocument td2Map = new IngridDocument();			
+			td2Map.put(MdekKeys.AUTHOR, data.getRef2Author());
+			td2Map.put(MdekKeys.EDITOR, data.getRef2Publisher());
+			td2Map.put(MdekKeys.PUBLISHED_IN, data.getRef2PublishedIn());
+			td2Map.put(MdekKeys.PUBLISHING_PLACE, data.getRef2PublishLocation());
+			td2Map.put(MdekKeys.VOLUME, data.getRef2PublishedInIssue());
+			td2Map.put(MdekKeys.PAGES, data.getRef2PublishedInPages());
+			td2Map.put(MdekKeys.YEAR, data.getRef2PublishedInYear());
+			td2Map.put(MdekKeys.ISBN, data.getRef2PublishedISBN());
+			td2Map.put(MdekKeys.PUBLISHER, data.getRef2PublishedPublisher());
+			td2Map.put(MdekKeys.LOCATION, data.getRef2LocationText());
+			td2Map.put(MdekKeys.TYPE_OF_DOCUMENT, data.getRef2DocumentType());
+			td2Map.put(MdekKeys.SOURCE, data.getRef2BaseDataText());
+			td2Map.put(MdekKeys.ADDITIONAL_BIBLIOGRAPHIC_INFO, data.getRef2BibData());
+			td2Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef2Explanation());
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT, td2Map);
 			break;
 		case 3:
 /*
