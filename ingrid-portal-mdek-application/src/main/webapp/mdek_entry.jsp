@@ -446,7 +446,7 @@ function hideSplash(){
 	                    <div class="tableContainer rows4">
 	                      <div class="cellEditors" id="ref1SymbolsTextEditors">
 	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:77px;" widgetId="ref1SymbolsTitleCombobox"></div>
-	                        <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="ref1SymbolsDateDatePicker"></div>
+	                        <div dojoType="ingrid:DropdownDatePicker" toggle="plain" widgetId="ref1SymbolsDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1SymbolsVersion"></div>
 	                      </div>
 	                	    <table id="ref1SymbolsText" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
@@ -485,7 +485,7 @@ function hideSplash(){
 	                    <div class="tableContainer rows4">
 	                      <div class="cellEditors" id="ref1KeysTextEditors">
 	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:77px;" widgetId="ref1KeysTitleCombobox"></div>
-	                        <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="ref1KeysDateDatePicker"></div>
+	                        <div dojoType="ingrid:DropdownDatePicker" toggle="plain" widgetId="ref1KeysDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1KeysVersion"></div>
 	                      </div>
 	                	    <table id="ref1KeysText" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
@@ -1250,7 +1250,7 @@ function hideSplash(){
 	                  <span class="label"><label for="timeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
 	                  <div class="tableContainer rows5">
 	                    <div class="cellEditors" id="timeRefTableEditors">
-	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" dataUrl="js/data/dummy.js" widgetId="timeRefDateDatePicker"></div>
+	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" widgetId="timeRefDateDatePicker"></div>
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/timeRefType.js" style="width:155px;" widgetId="timeRefTypeCombobox"></div>
 	                    </div>
 	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
@@ -1503,6 +1503,9 @@ function hideSplash(){
 	                    			<th field="title" dataType="String">Freie Suchbegriffe</th>
 	              		      </tr>
 	              	      </thead>
+						  <colgroup>
+						    <col width="30">
+						  </colgroup>
 	              	      <tbody>
 	              	      </tbody>
 	              	    </table>

@@ -318,7 +318,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 							}
 						}
 					},
-				timeout:5000,
+				timeout:10000,
 				errorHandler:function(message) {dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); },
 				exceptionHandler:function(message) {dojo.debug("Exception in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }				
 			}
@@ -348,7 +348,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 //						udkDataProxy._updateTree(res);
 						udkDataProxy.setDirtyFlag();
 					},
-				timeout:5000,
+				timeout:10000,
 				errorHandler:function(message) {msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new node."); }
 			}
 		);	
@@ -379,7 +379,7 @@ udkDataProxy.handleSaveRequest = function(msg)
 					msg.resultHandler.callback(res);
 				}
 			},
-			timeout:5000,
+			timeout:10000,
 			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
 		}
 	);
@@ -400,7 +400,7 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 				udkDataProxy.onAfterPublish();
 				msg.resultHandler.callback(res);
 			},
-			timeout:5000,
+			timeout:10000,
 			errorHandler:function(message) {
 				msg.resultHandler.errback(message);
 				dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData: " + message);
@@ -422,7 +422,7 @@ udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
 				}
 				msg.resultHandler.callback(res);
 			},
-			timeout:5000,
+			timeout:10000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while deleting working copy: " + message);
 				msg.resultHandler.errback();
@@ -436,7 +436,7 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 	EntryService.deleteNode(msg.id, "false",
 		{
 			callback: function(res){msg.resultHandler.callback();},
-			timeout:5000,
+			timeout:10000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while deleting node: " + message);
 				msg.resultHandler.errback();
@@ -451,7 +451,7 @@ udkDataProxy.handleCanCutObjectRequest = function(msg) {
 	EntryService.canCutObject(msg.id,
 		{
 			callback: function(res){msg.resultHandler.callback();},
-			timeout:5000,
+			timeout:10000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while marking a node for a cut operation: " + message);
 				msg.resultHandler.errback();
@@ -466,7 +466,7 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 	EntryService.canCopyObject(msg.id,
 		{
 			callback: function(res){msg.resultHandler.callback();},
-			timeout:5000,
+			timeout:10000,
 			errorHandler:function(message) {
 				alert("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + message);
 				msg.resultHandler.errback();
@@ -526,7 +526,7 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 		dojo.debug("udkDataProxy calling EntryService.getPathToObject("+msg.id+")");	
 		EntryService.getPathToObject(msg.id, {
 				callback: function(res){msg.resultHandler.callback(res);},
-				timeout:5000,
+				timeout:10000,
 				errorHandler:function(message) {
 					alert("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
 					msg.resultHandler.errback();

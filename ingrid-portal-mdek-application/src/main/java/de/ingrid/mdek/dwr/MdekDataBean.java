@@ -125,7 +125,7 @@ public class MdekDataBean {
 	public String ref2Explanation;
 
 	// Object class 3 (Dienst/Anwendung/Informationssystem)
-	public Integer ref3ServiceType;
+	public String ref3ServiceType;
 	public ArrayList<String> ref3ServiceVersion;
 	public String ref3SystemEnv;
 	public String ref3History;
@@ -225,21 +225,6 @@ public class MdekDataBean {
 	public void setRef4Explanation(String ref4Explanation) {
 		this.ref4Explanation = ref4Explanation;
 	}
-
-
-
-
-	public Integer getRef3ServiceType() {
-		return ref3ServiceType;
-	}
-
-
-
-
-	public void setRef3ServiceType(Integer ref3ServiceType) {
-		this.ref3ServiceType = ref3ServiceType;
-	}
-
 
 
 
@@ -1419,5 +1404,19 @@ public class MdekDataBean {
 
 	public void setRef2DocumentType(String ref2DocumentType) {
 		this.ref2DocumentType = ref2DocumentType;
+	}
+
+
+
+
+	public String getRef3ServiceType() {
+		return ref3ServiceType;
+	}
+
+
+
+
+	public void setRef3ServiceType(String ref3ServiceType) {
+		this.ref3ServiceType = ref3ServiceType;
 	};
 }

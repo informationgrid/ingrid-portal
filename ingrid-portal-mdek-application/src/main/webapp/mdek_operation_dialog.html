@@ -110,18 +110,18 @@ isValidOperation = function(op) {
 	if (dojo.string.trim(op.name) == "")
 		return false;
 
-	if (op.platformData.length == 0)
+	if (op.platform.length == 0)
 		return false;
 
 	// If we have an entry where a required field equals "", return false
-	if (!dojo.lang.every(op.param, function(item) {
+	if (!dojo.lang.every(op.paramList, function(item) {
 		return (dojo.string.trim(item.name) != ""
 			 && dojo.string.trim(item.optional) != ""
 			 && dojo.string.trim(item.multiple) != "");
 		}))
 		return false;
 
-	if (op.address.length == 0)
+	if (op.addressList.length == 0)
 		return false;
 
 	return true;
@@ -241,9 +241,6 @@ closeDialog = function() {
       <div class="inputContainer field grey fullField noSpaceBelow">
         <span class="label required"><label for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
 		<span class="input"><input type="text" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
-<!-- 
-        <span class="input"><div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/dummy.js" style="width:622px;" widgetId="operationsName"></div></span>
- -->
         <div class="spacer"></div>
         
         <div class="inputContainer spaceBelow">

@@ -218,15 +218,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			break;
 		case 3:
-/*
-			mdekObj.setRef3ServiceType((Integer) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef3SystemEnv((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef3History((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef3BaseDataText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef3Explanation((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef3ServiceVersion((ArrayList<String>) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-*/
+			Map<String, Object> td3Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
+			mdekObj.setRef3ServiceType((String) td3Map.get(MdekKeys.SERVICE_TYPE));
+			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
+			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
+			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
+//			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.MISSING));
+//			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.MISSING));
+//			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.MISSING)));
+
 			break;
 		case 4:
 			Map<String, Object> td4Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_PROJECT);
@@ -400,15 +400,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT, td2Map);
 			break;
 		case 3:
-/*
-			udkObj.put(MdekKeys.MISSING, data.getRef3ServiceType());
-			udkObj.put(MdekKeys.MISSING, data.getRef3SystemEnv());
-			udkObj.put(MdekKeys.MISSING, data.getRef3History());
-			udkObj.put(MdekKeys.MISSING, data.getRef3BaseDataText());
-			udkObj.put(MdekKeys.MISSING, data.getRef3Explanation());
-			udkObj.put(MdekKeys.MISSING, data.getRef3ServiceVersion());
-			udkObj.put(MdekKeys.MISSING, mapFromOperationTable(data.getRef3Operation()));
-*/
+			IngridDocument td3Map = new IngridDocument();			
+
+			td3Map.put(MdekKeys.SERVICE_TYPE, data.getRef3ServiceType());
+			td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
+			td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
+			td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
+//			td3Map.put(MdekKeys.MISSING, data.getRef3Explanation());
+//			td3Map.put(MdekKeys.MISSING, data.getRef3ServiceVersion());
+//			td3Map.put(MdekKeys.MISSING, mapFromOperationTable(data.getRef3Operation()));
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;
 		case 4:
 			IngridDocument td4Map = new IngridDocument();			
