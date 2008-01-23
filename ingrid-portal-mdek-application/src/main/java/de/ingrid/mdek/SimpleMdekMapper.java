@@ -223,8 +223,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
+			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
 //			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.MISSING));
-//			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.MISSING));
 //			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.MISSING)));
 
 			break;
@@ -406,8 +406,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
 			td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
 			td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
+			td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
 //			td3Map.put(MdekKeys.MISSING, data.getRef3Explanation());
-//			td3Map.put(MdekKeys.MISSING, data.getRef3ServiceVersion());
 //			td3Map.put(MdekKeys.MISSING, mapFromOperationTable(data.getRef3Operation()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;

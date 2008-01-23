@@ -622,7 +622,7 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Spatial --
   // The table containing entries from the sns is indexed by their topicID
-  dojo.widget.byId("spatialRefAdminUnit").store.setData(nodeData.spatialRefAdminUnitTable);
+  dojo.widget.byId("spatialRefAdminUnit").store.setData(udkDataProxy._addTableIndices(nodeData.spatialRefAdminUnitTable));
   // The table containing free entries needs generated indices
   dojo.widget.byId("spatialRefLocation").store.setData(udkDataProxy._addTableIndices(nodeData.spatialRefLocationTable));
 
@@ -1041,7 +1041,7 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
 	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
 
-//	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
+	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
 
 	nodeData.ref3Operation = udkDataProxy._getTableData("ref3Operation");
 };

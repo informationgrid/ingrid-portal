@@ -1049,7 +1049,7 @@ function hideSplash(){
 	                <span id="spatialRefAdminUnitLabel" class="label required"><label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
 	                <div class="tableContainer rows5">
-	            	    <table id="spatialRefAdminUnit" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="315">Geothesaurus-Raumbezug</th>
@@ -1111,7 +1111,7 @@ function hideSplash(){
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude2Editor"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude2Editor"></div>
 	                  </div>
-	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="315" editor="freeReferencesEditor">Freier Raumbezug</th>

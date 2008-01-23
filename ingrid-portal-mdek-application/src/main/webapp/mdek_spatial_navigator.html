@@ -52,6 +52,20 @@ function showError() {
 	}	
 }
 
+// iterates over all entries in the stores and returns a key that is not in use yet
+function getNewKey() {
+	var data = dojo.widget.byId("spatialRefAdminUnit").store.get();
+
+	var key = 0;
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+
+	return key;
+}
+
 
 deleteComboboxWidgets = function() {
 	while (checkboxArray.length > 0) {
@@ -131,7 +145,17 @@ addLocationTopics = function() {
 						// Create a stub to put in the table (without bounding box coords)
 						res = topic;
 					}
-					var storedTopic = store.getDataByKey(res.topicId);
+					// Check if the store already contains the topic with id topicId
+					var storedTopic = null;
+					var storeData = store.getData();
+					for (var i = 0; i < storeData.length; ++i) {
+						if (storeData[i].topicId == res.topicId) {
+							storedTopic = storeData[i];
+							continue;
+						}
+					}
+
+//					var storedTopic = store.getDataByKey(res.topicId);
 					if (storedTopic) {
 						// Element is already in the table. Update the topic.
 						// Update elements that are displayed in the table
@@ -143,27 +167,29 @@ addLocationTopics = function() {
 							store.update(storedTopic, "latitude2", res.boundingBox[3]);
 						}
 						// Update elements that aren't displayed in the table
-						storedTopic.topicId = res.topicId;
 						storedTopic.nativeKey = res.nativeKey;
 					} else {
+						// The topic was not found in teh result list. Create a new key and
+						// add the topic to the list
+						var key = getNewKey();
 						if (res.boundingBox) {
 							store.addData({
+									Id: key,
 									topicId: res.topicId,
 									name: res.name+", "+res.type,
 									longitude1: res.boundingBox[0],
 									latitude1: res.boundingBox[1],
 									longitude2: res.boundingBox[2],
 									latitude2: res.boundingBox[3],
-									nativeKey: res.nativeKey},
-								res.topicId
-							);
+									nativeKey: res.nativeKey
+							});
 						} else {
 							store.addData({
+									Id: key,
 									topicId: res.topicId,
 									name: res.name+", "+res.type,
-									nativeKey: res.nativeKey},
-								res.topicId
-							);
+									nativeKey: res.nativeKey
+							});
 						}
 					}
 				},
@@ -175,41 +201,6 @@ addLocationTopics = function() {
 
 	_container_.closeWindow();
 
-/*
-
-	var store = dojo.widget.byId("spatialRefAdminUnit").store;
-	
-	// Iterate over all the checkboxes and add the checked values
-	for (var i = 0; i < checkboxArray.length; ++i) {
-		if (checkboxArray[i].checked) {
-			var topic = checkboxArray[i].topic;
-			var storedTopic = store.getDataByKey(topic.id);
-			if (storedTopic) {
-				// Element is already in the table. Update the topic.
-				// Update elements that are displayed in the table
-				store.update(storedTopic, "name", topic.name+", "+topic.type);
-				store.update(storedTopic, "longitude1", topic.boundingBox[0]);
-				store.update(storedTopic, "latitude1", topic.boundingBox[1]);
-				store.update(storedTopic, "longitude2", topic.boundingBox[2]);
-				store.update(storedTopic, "latitude2", topic.boundingBox[3]);
-				// Update elements that aren't displayed in the table
-				storedTopic.topicId = topic.id;
-				storedTopic.nativeKey = topic.nativeKey;
-			} else {
-				store.addData({
-						topicId: topic.id,
-						name: topic.name+", "+topic.type,
-						longitude1: topic.boundingBox[0],
-						latitude1: topic.boundingBox[1],
-						longitude2: topic.boundingBox[2],
-						latitude2: topic.boundingBox[3],
-						nativeKey: topic.nativeKey},
-					checkboxArray[i].id);
-			}
-		}
-	}
-	_container_.closeWindow();
-*/
 }
 
 </script>
