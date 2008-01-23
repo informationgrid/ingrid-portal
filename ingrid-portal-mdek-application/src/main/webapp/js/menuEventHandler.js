@@ -347,7 +347,7 @@ menuEventHandler.handleDelete = function(msg) {
 	    		// This function is called when the user has selected yes and the node was successfully
 				// deleted from the database
 				var tree = dojo.widget.byId("tree");
-				if (tree.selectedNode == selectedNode || _isChildOf(tree.selectedNode, selectedNode)) {
+				if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
 					// If the currently selected Node is a child of the deleted node, we select it's parent after deletion
 					var newSelectNode = selectedNode.parent;
 					var treeListener = dojo.widget.byId("treeListener");

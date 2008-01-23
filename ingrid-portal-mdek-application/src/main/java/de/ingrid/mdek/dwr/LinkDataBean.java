@@ -4,14 +4,15 @@ import java.util.Date;
 
 
 public class LinkDataBean {
-	public Integer title;
+	public String title;
 	public Date date;
 	public String version;
 
-	public Integer getTitle() {
+
+	public String getTitle() {
 		return title;
 	}
-	public void setTitle(Integer title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 	public Date getDate() {

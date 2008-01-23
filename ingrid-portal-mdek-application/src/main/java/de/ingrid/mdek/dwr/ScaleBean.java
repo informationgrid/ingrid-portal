@@ -1,16 +1,11 @@
 package de.ingrid.mdek.dwr;
 
 public class ScaleBean {
-	public Double scale;
+	public Integer scale;
 	public Double groundResolution;
 	public Double scanResolution;
 
-	public Double getScale() {
-		return scale;
-	}
-	public void setScale(Double scale) {
-		this.scale = scale;
-	}
+
 	public Double getGroundResolution() {
 		return groundResolution;
 	}
@@ -22,5 +17,11 @@ public class ScaleBean {
 	}
 	public void setScanResolution(Double scanResolution) {
 		this.scanResolution = scanResolution;
+	}
+	public Integer getScale() {
+		return scale;
+	}
+	public void setScale(Integer scale) {
+		this.scale = scale;
 	}
 }

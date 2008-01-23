@@ -400,7 +400,7 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <span class="label"><label for="ref1SpatialSystem" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezugssystem')">Raumbezugssystem</label></span>
-	                <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/ref1SpatialSystemType.js" style="width:649px;" id="ref1SpatialSystem" name="ref1SpatialSystem" /></span>
+	                <span class="input"><input dojoType="ingrid:Combobox" autoComplete="false" dataUrl="js/data/ref1SpatialSystemType.js" style="width:649px;" id="ref1SpatialSystem" name="ref1SpatialSystem" /></span>
 	          	  </div>
 
 	              <div class="inputContainer notRequired h130">

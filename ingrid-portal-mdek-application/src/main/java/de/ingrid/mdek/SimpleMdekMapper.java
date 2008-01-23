@@ -124,7 +124,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 		mdekObj.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 		mdekObj.setThesaurusTopicsList((ArrayList<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES));
-//		mdekObj.setThesaurusEnvExtRes((Boolean) obj.get(MdekKeys.MISSING));
+		
+		String isCatalogStr = (String) obj.get(MdekKeys.IS_CATALOG_DATA);
+		if (isCatalogStr != null && isCatalogStr.equalsIgnoreCase("Y")) {
+			mdekObj.setThesaurusEnvExtRes(true);
+		} else {
+			mdekObj.setThesaurusEnvExtRes(false);
+		}
+
 		mdekObj.setThesaurusEnvTopicsList((ArrayList<String>) obj.get(MdekKeys.ENV_TOPICS));
 		mdekObj.setThesaurusEnvCatsList((ArrayList<String>) obj.get(MdekKeys.ENV_CATEGORIES));
 		// Links
@@ -140,21 +147,23 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-			mdekObj.setRef1DataSet((Integer) obj.get(MdekKeys.HIERARCHY_LEVEL));
-			mdekObj.setRef1VFormatTopology((Integer) obj.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
-			mdekObj.setRef1SpatialSystem((Integer) obj.get(MdekKeys.COORDINATE_SYSTEM));
-			mdekObj.setRef1Coverage((Double) obj.get(MdekKeys.DEGREE_OF_RECORD));
-			mdekObj.setRef1AltAccuracy((Double) obj.get(MdekKeys.POS_ACCURACY_VERTICAL));
-			mdekObj.setRef1PosAccuracy((Double) obj.get(MdekKeys.RESOLUTION));
-			mdekObj.setRef1BasisText((String) obj.get(MdekKeys.TECHNICAL_BASE));
-			mdekObj.setRef1DataBasisText((String) obj.get(MdekKeys.DATA));
-//			mdekObj.setRef1Data((ArrayList<String>) obj.get(MdekKeys.MISSING));
-//			mdekObj.setRef1Representation((ArrayList<Integer>) obj.get(MdekKeys.MISSING));
-//			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//			mdekObj.setRef1SymbolsText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//			mdekObj.setRef1KeysText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-			mdekObj.setRef1ProcessText((String) obj.get(MdekKeys.METHOD_OF_PRODUCTION));
+			Map<String, Object> td1Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
+			mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
+			mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
+			mdekObj.setRef1SpatialSystem((String) td1Map.get(MdekKeys.COORDINATE_SYSTEM));
+			mdekObj.setRef1SpatialSystemId((Integer) td1Map.get(MdekKeys.REFERENCESYSTEM_ID));
+			mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
+			mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
+			mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
+			mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
+			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
+			mdekObj.setRef1Data((ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST));
+//			mdekObj.setRef1Representation((ArrayList<Integer>) td1Map.get(MdekKeys.MISSING));
+//			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.MISSING)));
+			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
+			mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
+			mdekObj.setRef1KeysText(mapToKeyLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.KEY_CATALOG_LIST)));
+			mdekObj.setRef1ProcessText((String) td1Map.get(MdekKeys.METHOD_OF_PRODUCTION));
 			break;
 		case 2:
 /*
@@ -186,18 +195,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 4:
-/*
-			mdekObj.setRef4ParticipantsText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef4PMText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef4Explanation((String) obj.get(MdekKeys.MISSING));
-*/
+			Map<String, Object> td4Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_PROJECT);
+			mdekObj.setRef4ParticipantsText((String) td4Map.get(MdekKeys.MEMBER_DESCRIPTION));
+			mdekObj.setRef4PMText((String) td4Map.get(MdekKeys.LEADER_DESCRIPTION));
+			mdekObj.setRef4Explanation((String) td4Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			break;
 		case 5:
-/*
-			mdekObj.setRef5Explanation((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef5MethodText((String) obj.get(MdekKeys.MISSING));
-			mdekObj.setRef5dbContent(mapToDbContentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-*/
+			Map<String, Object> td5Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_DATASET);
+			mdekObj.setRef5Explanation((String) td5Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
+			mdekObj.setRef5MethodText((String) td5Map.get(MdekKeys.METHOD));
+			mdekObj.setRef5dbContent(mapToDbContentTable((List<HashMap<String, Object>>) td5Map.get(MdekKeys.PARAMETERS)));
 			break;
 		}
 		
@@ -302,8 +309,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
 		udkObj.put(MdekKeys.ENV_TOPICS, data.getThesaurusEnvTopicsList());
 		udkObj.put(MdekKeys.ENV_CATEGORIES, data.getThesaurusEnvCatsList());
-//		udkObj.put(MdekKeys.MISSING, data.getThesaurusEnvExtRes());
-		
+		if (data.getThesaurusEnvExtRes() != null) {
+			if (data.getThesaurusEnvExtRes().booleanValue()) {
+				udkObj.put(MdekKeys.IS_CATALOG_DATA, "Y");
+			} else {
+				udkObj.put(MdekKeys.IS_CATALOG_DATA, "N");
+			}
+		}
+
 		// Links
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
 		udkObj.put(MdekKeys.LINKAGES, mapFromUrlLinksTable(data.getLinksToUrlTable()));
@@ -315,31 +328,24 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-			udkObj.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
-			udkObj.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
-			udkObj.put(MdekKeys.COORDINATE_SYSTEM, data.getRef1SpatialSystem());
-			udkObj.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
-			udkObj.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
-			udkObj.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
-			udkObj.put(MdekKeys.TECHNICAL_BASE, data.getRef1BasisText());
-			udkObj.put(MdekKeys.DATA, data.getRef1DataBasisText());
-			udkObj.put(MdekKeys.METHOD_OF_PRODUCTION, data.getRef1ProcessText());
-//			udkObj.put(MdekKeys.MISSING, data.getRef1Data());
-//			udkObj.put(MdekKeys.MISSING, data.getRef1Representation());
-//			udkObj.put(MdekKeys.MISSING, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
-//			udkObj.put(MdekKeys.MISSING, mapFromScaleTable(data.getRef1Scale()));
-//			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1SymbolsText()));
-//			udkObj.put(MdekKeys.MISSING, mapFromLinkDataTable(data.getRef1KeysText()));
-
-
-//			mdekObj.setRef1Data((ArrayList<String>) obj.get(MdekKeys.MISSING));
-//			mdekObj.setRef1Representation((ArrayList<Integer>) obj.get(MdekKeys.MISSING));
-//			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//			mdekObj.setRef1SymbolsText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//			mdekObj.setRef1KeysText(mapToLinkDataTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-
-			
+			IngridDocument td1Map = new IngridDocument();			
+			td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
+			td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
+			td1Map.put(MdekKeys.COORDINATE_SYSTEM, data.getRef1SpatialSystem());
+			td1Map.put(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystemId());
+			td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
+			td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
+			td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
+			td1Map.put(MdekKeys.TECHNICAL_BASE, data.getRef1BasisText());
+			td1Map.put(MdekKeys.DATA, data.getRef1DataBasisText());
+			td1Map.put(MdekKeys.METHOD_OF_PRODUCTION, data.getRef1ProcessText());
+			td1Map.put(MdekKeys.FEATURE_TYPE_LIST, data.getRef1Data());
+			td1Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef1Scale()));
+			td1Map.put(MdekKeys.SYMBOL_CATALOG_LIST, mapFromSymLinkDataTable(data.getRef1SymbolsText()));
+			td1Map.put(MdekKeys.KEY_CATALOG_LIST, mapFromKeyLinkDataTable(data.getRef1KeysText()));
+//			td1Map.put(MdekKeys.MISSING, data.getRef1Representation());
+//			td1Map.put(MdekKeys.MISSING, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);			
 			break;
 		case 2:
 /*
@@ -371,18 +377,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 */
 			break;
 		case 4:
-/*
-			udkObj.put(MdekKeys.MISSING, data.getRef4ParticipantsText());
-			udkObj.put(MdekKeys.MISSING, data.getRef4PMText());
-			udkObj.put(MdekKeys.MISSING, data.getRef4Explanation());
-*/
+			IngridDocument td4Map = new IngridDocument();			
+			td4Map.put(MdekKeys.MEMBER_DESCRIPTION, data.getRef4ParticipantsText());
+			td4Map.put(MdekKeys.LEADER_DESCRIPTION, data.getRef4PMText());
+			td4Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef4Explanation());
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_PROJECT, td4Map);
 			break;
 		case 5:
-/*
-			udkObj.put(MdekKeys.MISSING, data.getRef5Explanation());
-			udkObj.put(MdekKeys.MISSING, data.getRef5MethodText());
-			udkObj.put(MdekKeys.MISSING, mapFromDbContentTable(data.getRef5dbContent()));
-*/
+			IngridDocument td5Map = new IngridDocument();			
+			td5Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef5Explanation());
+			td5Map.put(MdekKeys.METHOD, data.getRef5MethodText());
+			td5Map.put(MdekKeys.PARAMETERS, mapFromDbContentTable(data.getRef5dbContent()));
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td5Map);
 			break;
 		}
 
@@ -565,7 +571,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 */
-/*	
+
 	private static ArrayList<IngridDocument> mapFromScaleTable(ArrayList<ScaleBean> scaleList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (scaleList == null)
@@ -573,32 +579,45 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (ScaleBean s : scaleList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, s.getGroundResolution());
-			result.put(MdekKeys.MISSING, s.getScale());
-			result.put(MdekKeys.MISSING, s.getScanResolution());
+			result.put(MdekKeys.RESOLUTION_GROUND, s.getGroundResolution());
+			result.put(MdekKeys.SCALE, s.getScale());
+			result.put(MdekKeys.RESOLUTION_SCAN, s.getScanResolution());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
-/*
-	private static ArrayList<IngridDocument> mapFromLinkDataTable(ArrayList<LinkDataBean> linkList) {
+
+
+	private static ArrayList<IngridDocument> mapFromSymLinkDataTable(ArrayList<LinkDataBean> linkList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (linkList == null)
 			return resultList;
 
 		for (LinkDataBean l : linkList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, convertDateToTimestamp(l.getDate()));
-			result.put(MdekKeys.MISSING, l.getTitle());
-			result.put(MdekKeys.MISSING, l.getVersion());
+			result.put(MdekKeys.SYMBOL_DATE, convertDateToTimestamp(l.getDate()));
+			result.put(MdekKeys.SYMBOL_CAT, l.getTitle());
+			result.put(MdekKeys.SYMBOL_EDITION, l.getVersion());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
 
-/*
+	private static ArrayList<IngridDocument> mapFromKeyLinkDataTable(ArrayList<LinkDataBean> linkList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (linkList == null)
+			return resultList;
+
+		for (LinkDataBean l : linkList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.KEY_DATE, convertDateToTimestamp(l.getDate()));
+			result.put(MdekKeys.SUBJECT_CAT, l.getTitle());
+			result.put(MdekKeys.EDITION, l.getVersion());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+
 	private static ArrayList<IngridDocument> mapFromDbContentTable(ArrayList<DBContentBean> dbList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (dbList == null)
@@ -606,13 +625,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (DBContentBean db : dbList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, db.getParameter());
-			result.put(MdekKeys.MISSING, db.getAdditionalData());
+			result.put(MdekKeys.PARAMETER, db.getParameter());
+			result.put(MdekKeys.SUPPLEMENTARY_INFORMATION, db.getAdditionalData());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
+
 
 /*
 	private static ArrayList<IngridDocument> mapFromCommentTable(ArrayList<CommentBean> commentList) {
@@ -857,50 +876,63 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 */
-/*
+
 	private static ArrayList<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
 		ArrayList<ScaleBean> resultList = new ArrayList<ScaleBean>();
-		if (locList == null)
+		if (scaleList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : scaleList) {
 			ScaleBean s = new ScaleBean();
-			s.setGroundResolution((Double) topic.get(MdekKeys.MISSING);
-			s.setScale((Double) topic.get(MdekKeys.MISSING));
-			s.setScanResolution((Double) topic.get(MdekKeys.MISSING));
+			s.setGroundResolution((Double) topic.get(MdekKeys.RESOLUTION_GROUND));
+			s.setScale((Integer) topic.get(MdekKeys.SCALE));
+			s.setScanResolution((Double) topic.get(MdekKeys.RESOLUTION_SCAN));
 			resultList.add(s);
 		}
 		return resultList;
 	}
-*/
-/*
-	private static ArrayList<LinkDataBean> mapToLinkDataTable(List<HashMap<String, Object>> linkList) {
+
+
+	private static ArrayList<LinkDataBean> mapToSymLinkDataTable(List<HashMap<String, Object>> linkList) {
 		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
-		if (locList == null)
+		if (linkList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : scaleList) {
+		for (HashMap<String, Object> topic : linkList) {
 			LinkDataBean l = new LinkDataBean();
-			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.MISSING)));
-			l.setTitle((Integer) topic.get(MdekKeys.MISSING));
-			l.setVersion((String) topic.get(MdekKeys.MISSING));
+			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.SYMBOL_DATE)));
+			l.setTitle((String) topic.get(MdekKeys.SYMBOL_CAT));
+			l.setVersion((String) topic.get(MdekKeys.SYMBOL_EDITION));
 			resultList.add(l);
 		}
 		return resultList;
 	}
-*/
-/*
+
+	private static ArrayList<LinkDataBean> mapToKeyLinkDataTable(List<HashMap<String, Object>> linkList) {
+		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+		if (linkList == null)
+			return resultList;
+		for (HashMap<String, Object> topic : linkList) {
+			LinkDataBean l = new LinkDataBean();
+			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.KEY_DATE)));
+			l.setTitle((String) topic.get(MdekKeys.SUBJECT_CAT));
+			l.setVersion((String) topic.get(MdekKeys.EDITION));
+			resultList.add(l);
+		}
+		return resultList;
+	}
+
 	private static ArrayList<DBContentBean> mapToDbContentTable(List<HashMap<String, Object>> dbList) {
 		ArrayList<DBContentBean> resultList = new ArrayList<DBContentBean>();
-		if (locList == null)
+		if (dbList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : dbList) {
+		for (HashMap<String, Object> content : dbList) {
 			DBContentBean db = new DBContentBean();
-			db.setParameter((String) topic.get(MdekKeys.MISSING));
-			db.setAdditionalData((String) topic.get(MdekKeys.MISSING));
+			db.setParameter((String) content.get(MdekKeys.PARAMETER));
+			db.setAdditionalData((String) content.get(MdekKeys.SUPPLEMENTARY_INFORMATION));
 			resultList.add(db);
 		}
 		return resultList;
 	}
-*/
+
 /*
 	private static ArrayList<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
 		ArrayList<CommentBean> resultList = new ArrayList<CommentBean>();

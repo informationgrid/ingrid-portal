@@ -15,6 +15,8 @@ mdek.entry.isTypeObject = function()
   return (mdek.entry.type == "o");
 }
 
+var ref1SpatialSystemDP = null;
+
 
 dojo.addOnLoad(function()
 {
@@ -40,6 +42,7 @@ dojo.addOnLoad(function()
   initCTS();
   initFreeTermsButton();
   initSpatialFreeReferencesComboBox();
+  initRef1SpatialSystemDataProvider();
   initReferenceTables();
   hideSplash();
 
@@ -624,4 +627,28 @@ function initToolbar() {
 	// Initially disable all icons
 	var disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];	
 	dojo.lang.forEach(disableList, function(item) {item.disable()});
+}
+
+function initRef1SpatialSystemDataProvider() {
+	// Data provider for the combobox
+	ref1SpatialSystemDP = new dojo.widget.basicComboBoxDataProvider({
+		dataUrl: "js/data/ref1SpatialSystemType.js"
+	});
+	// Attach the neccessary functions to get Display Values for a given value
+	ref1SpatialSystemDP.getDisplayValueForValue = function(value) {
+		for (var i=0; i<this._data.length; i++) {
+			if (this._data[i][1] == value) {
+				return this._data[i][0];
+			}
+		}
+		return null;
+	}
+	ref1SpatialSystemDP.getValueForDisplayValue = function(dispValue) {
+		for (var i=0; i<this._data.length; i++) {
+			if (this._data[i][0] == dispValue) {
+				return this._data[i][1];
+			}
+		}
+		return null;
+	}
 }

@@ -95,7 +95,8 @@ public class MdekDataBean {
 	public ArrayList<Integer> ref1Representation;	
 	public Integer ref1VFormatTopology;
 	public ArrayList<VectorFormatDetailsBean> ref1VFormatDetails;
-	public Integer ref1SpatialSystem;
+	public String ref1SpatialSystem;
+	public Integer ref1SpatialSystemId;
 	public ArrayList<ScaleBean> ref1Scale;
 	public Double ref1AltAccuracy;
 	public Double ref1PosAccuracy;
@@ -509,18 +510,31 @@ public class MdekDataBean {
 
 	public MdekDataBean(){
 		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
-		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksToUrlTable(new ArrayList<UrlBean>());
-		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
+		this.setCommentTable(new ArrayList<CommentBean>());
 		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
 		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
+		this.setExtraInfoXMLExportTable(new ArrayList<String>());
+		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
+		this.setAvailabilityMediaOptionsTable(new ArrayList<MediaOptionBean>());
 		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
-		this.setThesaurusEnvCatsList(new ArrayList<String>());
-		this.setThesaurusEnvTopicsList(new ArrayList<String>());
 		this.setThesaurusFreeTermsTable(new ArrayList<String>());
 		this.setThesaurusTopicsList(new ArrayList<Integer>());
+		this.setThesaurusEnvTopicsList(new ArrayList<String>());
+		this.setThesaurusEnvCatsList(new ArrayList<String>());
+		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksToUrlTable(new ArrayList<UrlBean>());
+		this.setRef1Representation(new ArrayList<Integer>());
+		this.setRef1VFormatDetails(new ArrayList<VectorFormatDetailsBean>());
+		this.setRef1Scale(new ArrayList<ScaleBean>());
+		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
+		this.setRef1KeysText(new ArrayList<LinkDataBean>());
+		this.setRef1Data(new ArrayList<String>());
+		this.setRef3ServiceVersion(new ArrayList<String>());
+		this.setRef3Operation(new ArrayList<OperationBean>());
+		this.setRef5dbContent(new ArrayList<DBContentBean>());
 	}
 	
 	
@@ -1185,19 +1199,6 @@ public class MdekDataBean {
 
 
 
-	public Integer getRef1SpatialSystem() {
-		return ref1SpatialSystem;
-	}
-
-
-
-
-	public void setRef1SpatialSystem(Integer ref1SpatialSystem) {
-		this.ref1SpatialSystem = ref1SpatialSystem;
-	}
-
-
-
 
 	public ArrayList<ScaleBean> getRef1Scale() {
 		return ref1Scale;
@@ -1391,5 +1392,33 @@ public class MdekDataBean {
 
 	public void setRef1ProcessText(String ref1ProcessText) {
 		this.ref1ProcessText = ref1ProcessText;
+	}
+
+
+
+
+	public String getRef1SpatialSystem() {
+		return ref1SpatialSystem;
+	}
+
+
+
+
+	public void setRef1SpatialSystem(String ref1SpatialSystem) {
+		this.ref1SpatialSystem = ref1SpatialSystem;
+	}
+
+
+
+
+	public Integer getRef1SpatialSystemId() {
+		return ref1SpatialSystemId;
+	}
+
+
+
+
+	public void setRef1SpatialSystemId(Integer ref1SpatialSystemId) {
+		this.ref1SpatialSystemId = ref1SpatialSystemId;
 	};
 }

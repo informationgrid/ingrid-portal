@@ -54,8 +54,15 @@ function setDP() {
 			});
 			var editor = dojo.widget.byId("testEditor");
 			editor.dataProvider.setData(values);
-			dojo.debugShallow(values);
+//			dojo.debugShallow(values);
 		}
+	});
+}
+
+function getValue() {
+	var tableData = dojo.widget.byId("testTable").store.getData();
+	dojo.lang.forEach(tableData, function(item) {
+		dojo.debug("Value: "+item.name);
 	});
 }
 </script>
@@ -79,6 +86,7 @@ function setDP() {
 </div>
 
 <button dojoType="Button" widgetID="setDPButton" onclick="setDP">Set DP Data</button>
+<button dojoType="Button" onclick="getValue">Get Value</button>
 
 </body>
 </html>
