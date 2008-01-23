@@ -159,7 +159,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
 			mdekObj.setRef1Data((ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST));
 //			mdekObj.setRef1Representation((ArrayList<Integer>) td1Map.get(MdekKeys.MISSING));
-//			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.MISSING)));
+			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.GEO_VECTOR_LIST)));
 			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
 			mdekObj.setRef1KeysText(mapToKeyLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.KEY_CATALOG_LIST)));
@@ -344,7 +344,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			td1Map.put(MdekKeys.SYMBOL_CATALOG_LIST, mapFromSymLinkDataTable(data.getRef1SymbolsText()));
 			td1Map.put(MdekKeys.KEY_CATALOG_LIST, mapFromKeyLinkDataTable(data.getRef1KeysText()));
 //			td1Map.put(MdekKeys.MISSING, data.getRef1Representation());
-//			td1Map.put(MdekKeys.MISSING, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
+			td1Map.put(MdekKeys.GEO_VECTOR_LIST, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);			
 			break;
 		case 2:
@@ -556,7 +556,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<IngridDocument> mapFromVFormatDetailsTable(ArrayList<VectorFormatDetailsBean> vFormatList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (vFormatList == null)
@@ -564,13 +564,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (VectorFormatDetailsBean v : vFormatList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, v.getGeometryType());
-			result.put(MdekKeys.MISSING, v.getNumElements());
+			result.put(MdekKeys.GEOMETRIC_OBJECT_TYPE, v.getGeometryType());
+			result.put(MdekKeys.GEOMETRIC_OBJECT_COUNT, v.getNumElements());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
+
 
 	private static ArrayList<IngridDocument> mapFromScaleTable(ArrayList<ScaleBean> scaleList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
@@ -862,20 +862,20 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
 		ArrayList<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
-		if (locList == null)
+		if (vFormatList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : vFormatList) {
+		for (HashMap<String, Object> vFormat : vFormatList) {
 			VectorFormatDetailsBean v = new VectorFormatDetailsBean();
-			v.setGeometryType((Integer) topic.get(MdekKeys.MISSING);
-			v.setNumElements((Integer) topic.get(MdekKeys.MISSING));
+			v.setGeometryType((Integer) vFormat.get(MdekKeys.GEOMETRIC_OBJECT_TYPE));
+			v.setNumElements((Integer) vFormat.get(MdekKeys.GEOMETRIC_OBJECT_COUNT));
 			resultList.add(v);
 		}
 		return resultList;
 	}
-*/
+
 
 	private static ArrayList<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
 		ArrayList<ScaleBean> resultList = new ArrayList<ScaleBean>();

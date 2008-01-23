@@ -236,10 +236,10 @@ function hideSplash(){
 	        <table cellspacing="0">
 	          <tbody>
 	            <tr>
-	              <td class="label"><label for="objectName">Objektname</label></td>
+	              <td id="objectNameLabel" class="label"><label for="objectName">Objektname</label></td>
 	              <td colspan="2"><input type="text" id="objectName" name="objectName" class="w550" dojoType="ingrid:ValidationTextBox" /></td></tr>
 	            <tr>
-	              <td class="label col1"><label for="objectClass">Objektklasse</label></td>
+	              <td id="objectClassLabel" class="label col1"><label for="objectClass">Objektklasse</label></td>
 	              <td class="col2">
 	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
 	                <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectClass" name="objectClass" dataUrl="js/data/objectclasses.js" mode="remote" />
@@ -280,7 +280,7 @@ function hideSplash(){
 	          	  </div>
 
 	              <div class="inputContainer">
-	                <span class="label required"><label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
+	                <span id="generalDescLabel" class="label required"><label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung*</label></span>
                		<span class="input"><input type="text" mode="textarea" id="generalDesc" name="generalDesc" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	          	  </div>
 <!-- 
@@ -292,7 +292,7 @@ function hideSplash(){
 
 
 	              <div class="inputContainer noSpaceBelow h108">
-	                <span class="label required"><label for="generalAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
+	                <span id="generalAddressTableLabel" class="label required"><label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'erfassung_modal_adresse.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                <div id="generalAddressTable" class="tableContainer rows4">
 <!-- 
@@ -341,7 +341,7 @@ function hideSplash(){
 
 	              <div class="inputContainer required">
 	                <div class="half left">
-	                  <span class="label required"><label for="ref1DataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datensatz/Datenserie')">Datensatz/Datenserie*</label></span>
+	                  <span id="ref1DataSetLabel" class="label required"><label for="ref1DataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datensatz/Datenserie')">Datensatz/Datenserie*</label></span>
 	                  <span class="input spaceBelow"><input dojoType="ingrid:Select" dataUrl="js/data/ref1Type.js" style="width:302px;" id="ref1DataSet" name="ref1DataSet" /></span>
 	                  <span class="label"><label for="ref1Coverage" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erfassungsgrad')">Erfassungsgrad</label></span>
 	                  <span class="input"><input type="text" id="ref1Coverage" name="ref1Coverage" class="w038" dojoType="ingrid:ValidationTextBox" /> %</span>
@@ -788,7 +788,7 @@ function hideSplash(){
 
 	              <div class="inputContainer required">
 	                <div class="half left">
-	                  <span class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Servicetyp')">Servicetyp*</label></span>
+	                  <span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Servicetyp')">Servicetyp*</label></span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
 	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref3ServiceType" name="ref3ServiceType" /></span>
 	            	  </div>
@@ -1301,12 +1301,12 @@ function hideSplash(){
 	        	  
 	              <div class="inputContainer">
 	                <div class="half left">
-	                  <span class="label required"><label for="extraInfoLangMetaData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Metadatensatzes')">Sprache des Metadatensatzes*</label></span>
+	                  <span id="extraInfoLangMetaDataLabel" class="label required"><label for="extraInfoLangMetaData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Metadatensatzes')">Sprache des Metadatensatzes*</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" style="width:302px;" dataUrl="js/data/languageCode.js" id="extraInfoLangMetaData" name="extraInfoLangMetaData" /></span>
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label required"><label for="extraInfoLangData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Datensatzes')">Sprache des Datensatzes*</label></span>
+	                  <span id="extraInfoLangDataLabel" class="label required"><label for="extraInfoLangData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Datensatzes')">Sprache des Datensatzes*</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" style="width:302px;" dataUrl="js/data/languageCode.js" id="extraInfoLangData" name="extraInfoLangData" /></span>
 	                </div>
 	                <div class="fill"></div>
@@ -1472,7 +1472,7 @@ function hideSplash(){
 	        	  <div id="thesaurusContent" class="content">
 	        	  
 	              <div class="inputContainer h088">
-	                <span class="label required important"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
+	                <span id="thesaurusTermsLabel" class="label required important"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
 	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 	                <div class="tableContainer rows4">
@@ -1488,7 +1488,7 @@ function hideSplash(){
 
 	              <div class="inputContainer h110">
 	                <div class="half left">
-	                  <span class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorie')">Themenkategorie*</label></span>
+	                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorie')">Themenkategorie*</label></span>
 	                  <div class="tableContainer rows4">
 	                    <div class="cellEditors" id="thesaurusTopicsEditors">
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/thesTopicCategories.js" style="width:279px;" widgetId="thesaurusTopicsCombobox"></div>
