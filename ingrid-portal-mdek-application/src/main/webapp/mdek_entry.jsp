@@ -372,7 +372,7 @@ function hideSplash(){
 	                <div id="ref1VFormat" class="outlined h110">
 	                  <div class="thirdInside left">
 	                    <span class="label"><label for="ref1VFormatTopology" onclick="javascript:dialog.showContextHelp(arguments[0], 'Topologieinformation')">Topologieinformation</label></span>
-	                    <span class="input"><input dojoType="ingrid:ComboBox" dataUrl="js/data/ref1TopologyType.js" style="width:129px;" id="ref1VFormatTopology" name="ref1VFormatTopology" /></span>
+	                    <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/ref1TopologyType.js" style="width:129px;" id="ref1VFormatTopology" name="ref1VFormatTopology" /></span>
 	                  </div>
 
 	                  <div class="thirdInside2">
@@ -386,7 +386,7 @@ function hideSplash(){
 	                	      <thead>
 	                		      <tr>
 	                      			<th field="geometryType" dataType="String" width="120" editor="geometryTypeEditor">Geometrietyp</th>
-	                      			<th field="elementNumber" dataType="String" width="200" editor="elementNumberEditor">Elementanzahl</th>
+	                      			<th field="numElements" dataType="String" width="200" editor="elementNumberEditor">Elementanzahl</th>
 	                		      </tr>
 	                	      </thead>
 	                	      <tbody>

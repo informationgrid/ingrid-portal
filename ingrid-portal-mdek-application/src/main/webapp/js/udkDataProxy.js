@@ -688,23 +688,24 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
   // -- Check which object type was received and fill the appropriate fields --
+  // Fall through to clear all object classes
   switch (nodeData.objectClass)
   {
     case 0:
       udkDataProxy._setObjectDataClass0(nodeData);
-      break;
+//      break;
     case 1:
       udkDataProxy._setObjectDataClass1(nodeData);
-      break;
+//      break;
     case 2:
       udkDataProxy._setObjectDataClass2(nodeData);
-      break;
+//      break;
     case 3:
       udkDataProxy._setObjectDataClass3(nodeData);
-      break;
+//      break;
     case 4:
       udkDataProxy._setObjectDataClass4(nodeData);
-      break;
+//      break;
     case 5:
       udkDataProxy._setObjectDataClass5(nodeData);
       break;
@@ -1002,7 +1003,7 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 
 
 	nodeData.ref1Representation = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Representation"));
-//	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
+	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
 
 	nodeData.ref1VFormatDetails = udkDataProxy._getTableData("ref1VFormatDetails");
 	nodeData.ref1Scale = udkDataProxy._getTableData("ref1Scale");

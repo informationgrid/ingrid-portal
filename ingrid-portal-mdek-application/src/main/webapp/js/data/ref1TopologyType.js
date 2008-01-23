@@ -3,6 +3,7 @@
  * Auswahl: Vektorformat - Topologieinformation
  */
 [
+	["", ""],
 	["geometrisch", "1"],
 	["Topologie (1D)", "2"],
 	["Planar (1D)", "3"],

@@ -15,6 +15,7 @@ dojo.addOnLoad(function() {
 	if (representationTable) {
 	  dojo.event.connect(representationTable, "onValueChanged", function(obj, field) {applyRule1();});
 	  dojo.event.connect(representationTable, "onValueAdded", function(obj) {applyRule1();});
+	  dojo.event.connect(representationTable, "onValueDeleted", function(obj) {applyRule1();});
 	  dojo.event.connect(representationTable.store, "onSetData", function() {applyRule1();});
 	}
 
@@ -100,9 +101,9 @@ function applyRule1() {
 	var containerNode = labelNode.parentNode;
 
 	if (dojo.lang.some(tableData, function(item){dojo.debug(item); return (item.title == "1");})) {
-		setRequiredState(labelNode, containerNode, true);
+		setRequiredState(labelNode, null, true);
 	} else {
-	    setRequiredState(labelNode, containerNode, false);
+	    setRequiredState(labelNode, null, false);
 	}
 }
 

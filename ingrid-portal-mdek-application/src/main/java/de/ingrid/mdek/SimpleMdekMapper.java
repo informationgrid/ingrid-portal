@@ -158,7 +158,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
 			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
 			mdekObj.setRef1Data((ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST));
-//			mdekObj.setRef1Representation((ArrayList<Integer>) td1Map.get(MdekKeys.MISSING));
+			mdekObj.setRef1Representation((ArrayList<Integer>) td1Map.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST));
 			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.GEO_VECTOR_LIST)));
 			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
@@ -343,7 +343,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			td1Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef1Scale()));
 			td1Map.put(MdekKeys.SYMBOL_CATALOG_LIST, mapFromSymLinkDataTable(data.getRef1SymbolsText()));
 			td1Map.put(MdekKeys.KEY_CATALOG_LIST, mapFromKeyLinkDataTable(data.getRef1KeysText()));
-//			td1Map.put(MdekKeys.MISSING, data.getRef1Representation());
+			td1Map.put(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST, data.getRef1Representation());
 			td1Map.put(MdekKeys.GEO_VECTOR_LIST, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);			
 			break;
