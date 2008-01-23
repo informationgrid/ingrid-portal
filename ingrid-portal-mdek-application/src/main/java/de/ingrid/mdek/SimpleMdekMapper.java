@@ -94,7 +94,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 
 		// Comments
-//		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
+		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
 		
 		// Spatial
 		mdekObj.setSpatialRefAdminUnitTable(mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));
@@ -300,7 +300,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.ADR_REFERENCES_TO, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 
 		// Comments
-//		udkObj.put(MdekKeys.MISSING, mapFromCommentTable(data.getCommentTable()));
+		udkObj.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
 		
 		// Spatial
 		udkObj.put(MdekKeys.LOCATIONS, mapFromLocationTables(data.getSpatialRefAdminUnitTable(), data.getSpatialRefLocationTable()));
@@ -426,6 +426,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td5Map);
 			break;
 		}
+
+		log.debug("Sending the following object to MdekCaller:");
+		printHashMap(udkObj);
 
 		return udkObj;
 	}
@@ -705,7 +708,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 */
-	/*
+
 	private static ArrayList<IngridDocument> mapFromCommentTable(ArrayList<CommentBean> commentList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (commentList == null)
@@ -713,14 +716,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (CommentBean c : commentList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, c.getComment());
-			result.put(MdekKeys.MISSING, c.getUser());
-			result.put(MdekKeys.MISSING, convertDateToTimestamp(c.getDate()));
+			result.put(MdekKeys.COMMENT, c.getComment());
+			result.put(MdekKeys.CREATE_UUID, c.getUser());
+			result.put(MdekKeys.CREATE_TIME, convertDateToTimestamp(c.getDate()));
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
+
 	
 	/****************************************************************************
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
@@ -1042,21 +1045,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 */
 	
-/*
+
 	private static ArrayList<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
 		ArrayList<CommentBean> resultList = new ArrayList<CommentBean>();
-		if (locList == null)
+		if (commentList == null)
 			return resultList;
 		for (HashMap<String, Object> comment : commentList) {
 			CommentBean c = new CommentBean();
-			c.setComment((String) comment.get(MdekKeys.MISSING));
-			c.setUser((String) comment.get(MdekKeys.MISSING));
-			c.setDate(convertTimestampToDate((String) comment.get(MdekKeys.MISSING)));
+			c.setComment((String) comment.get(MdekKeys.COMMENT));
+			c.setUser((String) comment.get(MdekKeys.CREATE_UUID));
+			c.setDate(convertTimestampToDate((String) comment.get(MdekKeys.CREATE_TIME)));
 			resultList.add(c);
 		}
 		return resultList;
 	}
-*/
+
 	
 	 /***********************************************************
 	 * Several Methods for testing Input and Output Conformity *

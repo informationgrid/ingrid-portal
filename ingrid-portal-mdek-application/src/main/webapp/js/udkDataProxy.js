@@ -875,7 +875,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.objectClass = dojo.widget.byId("objectClass").getValue()[5]; // Value is a string: "Classx" where x is the class
   nodeData.generalAddressTable = udkDataProxy._getTableData("generalAddress");
   // Comments
-  nodeData.commentStore = commentStore.getData();
+  nodeData.commentTable = commentStore.getData();
 
   // -- Spatial --
   nodeData.spatialRefAdminUnitTable = udkDataProxy._getTableData("spatialRefAdminUnit");
