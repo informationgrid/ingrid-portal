@@ -4,8 +4,8 @@ public class OperationParameterBean {
 	String name;
 	String direction;
 	String description;
-	String optional;
-	String multiple;
+	Integer optional;
+	Integer multiple;
 
 	
 	public String getName() {
@@ -26,16 +26,16 @@ public class OperationParameterBean {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getOptional() {
+	public Integer getOptional() {
 		return optional;
 	}
-	public void setOptional(String optional) {
+	public void setOptional(Integer optional) {
 		this.optional = optional;
 	}
-	public String getMultiple() {
+	public Integer getMultiple() {
 		return multiple;
 	}
-	public void setMultiple(String multiple) {
+	public void setMultiple(Integer multiple) {
 		this.multiple = multiple;
 	}
 }

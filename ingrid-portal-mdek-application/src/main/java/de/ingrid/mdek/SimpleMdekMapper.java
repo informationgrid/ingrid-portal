@@ -224,8 +224,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
 			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
-//			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.MISSING));
-//			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.MISSING)));
+			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
+			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST)));
 
 			break;
 		case 4:
@@ -407,8 +407,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
 			td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
 			td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
-//			td3Map.put(MdekKeys.MISSING, data.getRef3Explanation());
-//			td3Map.put(MdekKeys.MISSING, mapFromOperationTable(data.getRef3Operation()));
+			td3Map.put(MdekKeys.SERVICE_OPERATION_DESCRIPTION, data.getRef3Explanation());
+			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;
 		case 4:
@@ -670,7 +670,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<IngridDocument> mapFromOperationTable(ArrayList<OperationBean> opList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (opList == null)
@@ -678,19 +678,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (OperationBean op : opList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, op.getName());
-			result.put(MdekKeys.MISSING, op.getDescription());
-			result.put(MdekKeys.MISSING, op.getPlatform());
-			result.put(MdekKeys.MISSING, op.getMethodCall());
-			result.put(MdekKeys.MISSING, mapFromOperationParamTable(op.getParamList()));
-			result.put(MdekKeys.MISSING, op.getAddressList());
-			result.put(MdekKeys.MISSING, op.getDependencies());
+			result.put(MdekKeys.SERVICE_OPERATION_NAME, op.getName());
+			result.put(MdekKeys.SERVICE_OPERATION_DESCRIPTION, op.getDescription());
+			result.put(MdekKeys.PLATFORM_LIST, op.getPlatform());
+			result.put(MdekKeys.INVOCATION_NAME, op.getMethodCall());
+			result.put(MdekKeys.PARAMETER_LIST, mapFromOperationParamTable(op.getParamList()));
+			result.put(MdekKeys.CONNECT_POINT_LIST, op.getAddressList());
+			result.put(MdekKeys.DEPENDS_ON_LIST, op.getDependencies());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
-	/*
+
 	private static ArrayList<IngridDocument> mapFromOperationParamTable(ArrayList<OperationParameterBean> opList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (opList == null)
@@ -698,16 +697,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		for (OperationParameterBean op : opList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.MISSING, op.getName());
-			result.put(MdekKeys.MISSING, op.getDirection());
-			result.put(MdekKeys.MISSING, op.getDescription());
-			result.put(MdekKeys.MISSING, op.getOptional());
-			result.put(MdekKeys.MISSING, op.getMultiple());
+			result.put(MdekKeys.PARAMETER_NAME, op.getName());
+			result.put(MdekKeys.DIRECTION, op.getDirection());
+			result.put(MdekKeys.DESCRIPTION, op.getDescription());
+			result.put(MdekKeys.OPTIONALITY, op.getOptional());
+			result.put(MdekKeys.REPEATABILITY, op.getMultiple());
 			resultList.add(result);
 		}
 		return resultList;
 	}
-*/
+
 
 	private static ArrayList<IngridDocument> mapFromCommentTable(ArrayList<CommentBean> commentList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
@@ -1008,42 +1007,42 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-/*
+
 	private static ArrayList<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList) {
 		ArrayList<OperationBean> resultList = new ArrayList<OperationBean>();
 		if (opList == null)
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
 			OperationBean op = new OperationBean();
-			op.setName((String) operation.get(MdekKeys.MISSING));
-			op.setDescription((String) operation.get(MdekKeys.MISSING));
-			op.setPlatform((ArrayList<String>) operation.get(MdekKeys.MISSING));
-			op.setMethodCall((String) operation.get(MdekKeys.MISSING));
-			op.setParamList(mapToOperationParamTable(operation.get(MdekKeys.MISSING)));
-			op.setAddressList((ArrayList<String>) operation.get(MdekKeys.MISSING));
-			op.setDependencies((ArrayList<String>) operation.get(MdekKeys.MISSING));
+			op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
+			op.setDescription((String) operation.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
+			op.setPlatform((ArrayList<String>) operation.get(MdekKeys.PLATFORM_LIST));
+			op.setMethodCall((String) operation.get(MdekKeys.INVOCATION_NAME));
+			op.setParamList(mapToOperationParamTable((List<HashMap<String, Object>>) operation.get(MdekKeys.PARAMETER_LIST)));
+			op.setAddressList((ArrayList<String>) operation.get(MdekKeys.CONNECT_POINT_LIST));
+			op.setDependencies((ArrayList<String>) operation.get(MdekKeys.DEPENDS_ON_LIST));
 			resultList.add(op);
 		}
 		return resultList;
 	}
-*/
-/*
+
+
 	private static ArrayList<OperationParameterBean> mapToOperationParamTable(List<HashMap<String, Object>> opList) {
 		ArrayList<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();
 		if (opList == null)
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
 			OperationParameterBean op = new OperationParameterBean();
-			op.setName((String) operation.get(MdekKeys.MISSING));
-			op.setDirection((String) operation.get(MdekKeys.MISSING));
-			op.setDescription((String) operation.get(MdekKeys.MISSING));
-			op.setOptional((String) operation.get(MdekKeys.MISSING));
-			op.setMultiple((String) operation.get(MdekKeys.MISSING));
+			op.setName((String) operation.get(MdekKeys.PARAMETER_NAME));
+			op.setDirection((String) operation.get(MdekKeys.DIRECTION));
+			op.setDescription((String) operation.get(MdekKeys.DESCRIPTION));
+			op.setOptional((Integer) operation.get(MdekKeys.OPTIONALITY));
+			op.setMultiple((Integer) operation.get(MdekKeys.REPEATABILITY));
 			resultList.add(op);
 		}
 		return resultList;
 	}
-*/
+
 	
 
 	private static ArrayList<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
