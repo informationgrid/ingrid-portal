@@ -20,10 +20,17 @@ dojo.widget.defineWidget(
   	// Use alternate row CSS classes to show zebra striping.
   	this.alternateRows="true";
   	// Filter function map contains objects with two values:
-  	//  target - string identifying the target field fo the filter func
+  	//  target - string identifying the target field for the filter func
   	//  filterFunction - function with one argument (value) which returns true if the row should be displayed
   	//                   and false otherwise
   	this.filterFunctionMap=[];
+	
+	// Validate function map contains objects with two values:
+  	//  target - string identifying the target field for the filter func
+  	//  validateFunction - function with one argument (value) which returns true if the entry is valid and
+	//					   false otherwise
+	this.validateFunctionMap=[];
+	this.fieldInvalidClass="tableFieldInvalid";
   },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/FilteringTable.css"),
@@ -321,7 +328,6 @@ dojo.widget.defineWidget(
 			}
 		}
 
-
 		// If the user is currently editing don't update the Display Values
 		if (this.isEditing) {
 			return;
@@ -427,7 +433,92 @@ dojo.widget.defineWidget(
 		this.render();
 	},
 
+	isValid: function() {
+		var rows = this.domNode.tBodies[0].rows;
+		// Iterate over all the rows in the table
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			var rowData = this.getDataByRow(row);
+			// If we have a valid row continue. rowData can be null since we also display empty rows
+			if (rowData) {
+				// Apply all validate functions
+				for (var j = 0; j < this.validateFunctionMap.length; j++) {
+					var validate = this.validateFunctionMap[j];
+					// Search for the field associated with the current validationFunc
+					var value = this.store.getField(rowData, validate.target);
+					var columnIndex = this.getColumnIndex(validate.target);
+					if (columnIndex != -1) {
+						// If the corresponding value was found, and is invalid return false
+						if (!validate.validateFunction(value)) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	},
 
+
+	applyValidation: function() {
+		var rows = this.domNode.tBodies[0].rows;
+		// Iterate over all the rows in the table
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			var rowData = this.getDataByRow(row);
+			// If we have a valid row continue. rowData can be null since we also display empty rows
+			if (rowData) {
+				// Apply all validate functions
+				for (var j = 0; j < this.validateFunctionMap.length; j++) {
+					var validate = this.validateFunctionMap[j];
+					// Search for the field associated with the current validationFunc
+					var value = this.store.getField(rowData, validate.target);
+					var columnIndex = this.getColumnIndex(validate.target);
+					if (columnIndex != -1) {
+						// If the corresponding value was found, apply the filter
+						if (!validate.validateFunction(value)) {
+							dojo.html.addClass(row.cells[columnIndex], this.fieldInvalidClass);
+						} else {
+							dojo.html.removeClass(row.cells[columnIndex], this.fieldInvalidClass);
+						}
+					} else {
+						dojo.debug("Error in ingrid:FilteringTable.validate(). A matching value for the field "+validate.target+" could not be found.");
+					}
+				}
+			}
+		}
+	},
+
+	// Returns a validation map entry with the specified field as target
+	getValidation: function(/* string */field) {
+		for(var i=0; i<this.validateFunctionMap.length; i++){
+			if(this.validateFunctionMap[i].target == field){
+				return this.validateFunctionMap[i];
+			}
+		}
+	},
+
+
+	setValidationFunction: function(/* string */field, /* function */fn){
+		//	summary
+		//	set validation function on the passed field.
+		var validation = this.getValidation(field);
+		if (validation) {
+			dojo.debug("Validation Function for field '"+field+"' already defined. Overwriting function.");
+			validation.validationFunction = fn;
+		} else {
+			this.validateFunctionMap.push({target: field, validationFunction: fn});
+		}
+		this.applyValidation();
+	},
+
+	setValidationFunctions: function(/* function map */fnMap){
+		//	summary
+		//	setter for the validationFunction Map
+		this.validateFunctionMap = fnMap;
+	},
+	
+	
   addEmptyRow: function() {
     var body = this.domNode.tBodies[0];
     var row = document.createElement("tr");
@@ -662,6 +753,8 @@ dojo.widget.defineWidget(
     this.curTD = null;
     this.isEditing = false;
     this.curFP = null;
+
+	this.applyValidation();
 
     this.resetSelections();
     this.renderSelections();

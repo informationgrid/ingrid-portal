@@ -287,11 +287,22 @@ menuEventHandler.handleDiscard = function(msg) {
 						var newSelectNode = selectedNode.parent;
 						var treeListener = dojo.widget.byId("treeListener");
 			    		selectedNode.destroy();
-						tree.selectNode(newSelectNode);
-						tree.selectedNode = newSelectNode;
+
+						var d = new dojo.Deferred();
+						d.addCallback(function(){				
+							tree.selectNode(newSelectNode);
+							tree.selectedNode = newSelectNode;
+							dojo.html.scrollIntoView(newSelectNode.domNode);
+						});
+						d.addErrback(function(msg){
+							dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+							dojo.debug(msg);
+						});
+
 						// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
 						udkDataProxy.resetDirtyFlag();
-						dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+			    		dojo.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.nodeAppType+")");
+				    	dojo.event.topic.publish("/loadRequest", {id: newSelectNode.id, appType: newSelectNode.nodeAppType, resultHandler:d});
 					} else {
 						// The selection does not have to be altered. Delete the node.
 						selectedNode.destroy();
@@ -353,11 +364,22 @@ menuEventHandler.handleDelete = function(msg) {
 					var newSelectNode = selectedNode.parent;
 					var treeListener = dojo.widget.byId("treeListener");
 		    		selectedNode.destroy();
-					tree.selectNode(newSelectNode);
-					tree.selectedNode = newSelectNode;
+
+					var d = new dojo.Deferred();
+					d.addCallback(function(){				
+						tree.selectNode(newSelectNode);
+						tree.selectedNode = newSelectNode;
+						dojo.html.scrollIntoView(newSelectNode.domNode);
+					});
+					d.addErrback(function(msg){
+						dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+						dojo.debug(msg);
+					});
+
 					// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
 					udkDataProxy.resetDirtyFlag();
-					dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+		    		dojo.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.nodeAppType+")");
+			    	dojo.event.topic.publish("/loadRequest", {id: newSelectNode.id, appType: newSelectNode.nodeAppType, resultHandler:d});
 				} else {
 					// Otherwise we just delete the node
 					selectedNode.destroy();
@@ -502,10 +524,20 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 				var tree = dojo.widget.byId("tree");
 				var treeListener = dojo.widget.byId("treeListener");
 				var targetNode = dojo.widget.byId(pathList[pathList.length-1]);
-				tree.selectNode(targetNode);
-				tree.selectedNode = targetNode;
-				dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
-				dojo.html.scrollIntoView(targetNode.domNode);
+
+				var d = new dojo.Deferred();
+				d.addCallback(function(){				
+					tree.selectNode(targetNode);
+					tree.selectedNode = targetNode;
+					dojo.html.scrollIntoView(targetNode.domNode);
+				});
+				d.addErrback(function(msg){
+					dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+					dojo.debug(msg);
+				});
+
+	    		dojo.debug("Publishing event: /loadRequest("+targetNode.id+", "+targetNode.nodeAppType+")");
+		    	dojo.event.topic.publish("/loadRequest", {id: targetNode.id, appType: targetNode.nodeAppType, resultHandler:d});
 			});
 		});
     	dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: deferred});		
@@ -552,5 +584,3 @@ function _isChildOf(childNode, targetNode) {
 		return _isChildOf(childNode.parent, targetNode);
 	}
 }
-
-

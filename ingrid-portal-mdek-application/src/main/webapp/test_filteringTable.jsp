@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
+
 </head>
 
 <script type="text/javascript">
@@ -83,6 +84,12 @@ dojo.addOnLoad(function()
 		once: true,
 		delay: 1
 	});
+
+	var table = dojo.widget.byId("testTableMaster");
+	table.validateFunctionMap = [{
+		target: "identifier",
+		validateFunction: function(item) {return (item != "ident 1")}
+	}];
 });
 
 function setValue() {

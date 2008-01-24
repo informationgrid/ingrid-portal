@@ -39,6 +39,7 @@ dojo.addOnLoad(function()
   initToolbar();
   initTree();
   initForm();
+  initTableValidators();
   initCTS();
   initFreeTermsButton();
   initSpatialFreeReferencesComboBox();
@@ -263,13 +264,17 @@ function initCTS() {
 		this.updateCoordinates = function() {
 			var fromSRS = "GEO84";
 			var selectedData = this.srcTable.getSelectedData();
+			this.clearDstStore();
 			if (selectedData.length != 1) {
 				this.clearDstStore();
 				return;
 			}
 			var coords = selectedData[0];
 			var dstStore = this.dstTable.getData();
-			if (coords) {
+			if (coords && dojo.validate.isRealNumber(coords.longitude1)
+					   && dojo.validate.isRealNumber(coords.longitude2)
+					   && dojo.validate.isRealNumber(coords.latitude1)
+					   && dojo.validate.isRealNumber(coords.latitude2)) {
 				for (var i = 0; i < dstStore.length; i++) {
 					var toSRS = dstStore[i].srs;
 					dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
@@ -651,4 +656,23 @@ function initRef1SpatialSystemDataProvider() {
 		}
 		return null;
 	}
+}
+
+function initTableValidators() {
+	
+	// The coordinates in the spatial reference table must be empty or real numbers
+	var table = dojo.widget.byId("spatialRefLocation");
+	table.setValidationFunctions([
+		{target: "longitude1", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+		{target: "longitude2", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+		{target: "latitude1", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+		{target: "latitude2", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}}
+	]);
+
+	// The vector format table must contain an integer as 'numElements'
+	var table = dojo.widget.byId("ref1VFormatDetails");
+	table.setValidationFunctions([
+		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isInteger(item));}}
+	]);
+
 }

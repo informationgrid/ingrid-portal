@@ -20,13 +20,13 @@ saveChanges = function() {
 
 	var def = new dojo.Deferred();
 	def.addCallback(function(){
-		dojo.event.disconnect('after', udkDataProxy, 'onAfterSave', def, 'callback');
+//		dojo.event.disconnect('after', udkDataProxy, 'onAfterSave', def, 'callback');
 		_container_.customParams.resultHandler.callback("SAVE");
 		_container_.closeWindow();
 		}); 
 
-	dojo.event.connectOnce('after', udkDataProxy, 'onAfterSave', def, 'callback');
-	dojo.event.topic.publish("/saveRequest");
+//	dojo.event.connectOnce('after', udkDataProxy, 'onAfterSave', def, 'callback');
+	dojo.event.topic.publish("/saveRequest", {resultHandler:def});
 }
 
 // 'No Button' onClick function

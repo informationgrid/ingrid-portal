@@ -147,6 +147,8 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .rows13 { height:286px; }
 .rows20 { height:440px; }
 
+.tableFieldInvalid { background:#fcc !important; color:#000000 !important;}
+
 
 /*** layout width ***/
 .full { width:675px; }

@@ -266,14 +266,13 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.
 		if (currentUdk.uuid == "newNode" && nodeId != "newNode") {
-			var discardNewNode = function(arg) {
+			deferred.addCallback(function(arg) {
 				if (arg == "DISCARD") {
 					dojo.debug("Discarding the newly created node.");
 					var newNode = dojo.widget.byId("newNode");
 					newNode.destroy();
-				}
-			};
-			deferred.addCallback(discardNewNode);
+				}			
+			});
 		}
 	} else {
 		deferred.callback();
@@ -299,7 +298,11 @@ udkDataProxy.handleLoadRequest = function(msg)
 	// TODO Check if we are in a state where it's safe to load data.
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
 	var deferred = udkDataProxy.checkForUnsavedChanges();
-	var loadErrback = function() {return;}
+	var loadErrback = function() {
+		if (typeof(resultHandler) != "undefined") {
+			resultHandler.errback("Load operation cancelled by the user.")		
+		}
+	}
 	var loadCallback = function() {
 		dojo.debug("udkDataProxy calling EntryService.getNodeData("+nodeId+", "+nodeAppType+")");
 		// ---- DWR call to load the data ----
@@ -309,7 +312,8 @@ udkDataProxy.handleLoadRequest = function(msg)
 						if (res != null) {
 							udkDataProxy._setData(res);
 							udkDataProxy._updateTree(res);
-							if (resultHandler) resultHandler.callback();
+							if (resultHandler)
+								resultHandler.callback();
 							resetRequiredFields();
 						} else {
 							dojo.debug(resultHandler);
@@ -380,7 +384,12 @@ udkDataProxy.handleSaveRequest = function(msg)
 				}
 			},
 			timeout:10000,
-			errorHandler:function(message) {alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message); }
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message);
+				if (msg && msg.resultHandler) {
+					msg.resultHandler.errback(message);
+				}				
+			}
 		}
 	);
 }
