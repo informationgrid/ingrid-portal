@@ -125,6 +125,13 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .yScroll { overflow-y:auto; }
 .insetCheckbox { padding-left:13px; }
 
+/*** table container ***/
+.tcRows3 { height:68px; }
+.tcRows4 { height:90px; }
+.tcHalf { width:336px; }
+.tcFull { width:683px; }
+
+
 /*** tables ***/
 .rows1 { height:22px; }
 .rows2 { height:44px; }
@@ -139,6 +146,7 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .rows12 { height:264px; }
 .rows13 { height:286px; }
 .rows20 { height:440px; }
+
 
 /*** layout width ***/
 .full { width:675px; }
@@ -234,6 +242,7 @@ textarea { line-height:17px; }
 .w675 { width:675px !important; } /* .full */
 .w670 { width:670px !important; } /* erfassung */
 .w668 { width:668px !important; } /* erfassung */
+.w667 { width:667px !important; }
 .w659 { width:659px !important; }
 .w652 { width:652px !important; }
 .w648 { width:648px !important; }

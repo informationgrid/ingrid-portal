@@ -1470,8 +1470,8 @@ function hideSplash(){
 	                <span id="thesaurusTermsLabel" class="label required important"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
 	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
-	                <div class="tableContainer rows4">
-	            	    <table id="thesaurusTerms" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	                <div class="tableContainer scrollable tcFull tcRows3">
+	            	    <table id="thesaurusTerms" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable w667 interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th field="title" dataType="String">&nbsp;</th>
@@ -1484,11 +1484,11 @@ function hideSplash(){
 	              <div class="inputContainer h110">
 	                <div class="half left">
 	                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorie')">Themenkategorie*</label></span>
-	                  <div class="tableContainer rows4">
+	                  <div class="tableContainer tcRows4 tcHalf scrollable">
 	                    <div class="cellEditors" id="thesaurusTopicsEditors">
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/thesTopicCategories.js" style="width:279px;" widgetId="thesaurusTopicsCombobox"></div>
 	                    </div>
-	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable interactive w320">
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="title" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
@@ -1502,21 +1502,17 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
-	                  <div class="tableContainer rows3 spaceBelow" style="left:364px">
-	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive half">
+	                  <div class="tableContainer spaceBelow scrollable tcRows3 tcHalf" style="left:364px">
+	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable w320 interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="title" dataType="String">Freie Suchbegriffe</th>
 	              		      </tr>
 	              	      </thead>
-						  <colgroup>
-						    <col width="30">
-						  </colgroup>
 	              	      <tbody>
 	              	      </tbody>
 	              	    </table>
 	              	  </div>
-
 
 	                  <span class="input" style="position:relative; top:-8px; float:left; width:238px;">
                   		<input type="text" id="thesaurusFreeTerms" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
@@ -1537,11 +1533,11 @@ function hideSplash(){
 	                  
 	                  <div class="halfInside left">
 	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Umweltthemen')">Umweltthemen</label></span>
-	                    <div class="tableContainer rows5">
+	                    <div class="tableContainer tcRows4 tcHalf scrollable">
 	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
 	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/env_topics.js" style="width:263px;" widgetId="thesaurusEnvTopicsCombobox"></div>
 	                      </div>
-	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive halfInside">
+	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable interactive w320">
 	                	      <thead>
 	                		      <tr>
 	                      			<th field="title" dataType="String" editor="thesaurusEnvTopicsCombobox">Umweltthemen</th>

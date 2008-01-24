@@ -97,7 +97,67 @@ dojo.widget.defineWidget(
    */
   onValueDeleted: function(obj){
   },
-
+  
+	//	override default behaviour for selections
+	onSelect: function(/* HTMLEvent */e){
+		//	summary
+		//	Handles the onclick event of any element.
+		var row = dojo.html.getParentByType(e.target,"tr");
+		if(dojo.html.hasAttribute(row,"emptyRow")){
+			return;
+		}
+		var body = dojo.html.getParentByType(row,"tbody");
+		if(this.multiple){
+			if(e.shiftKey){
+				var startRow;
+				var rows=body.rows;
+				for(var i=0;i<rows.length;i++){
+					if(rows[i]==row){
+						break;
+					}
+					if(this.isRowSelected(rows[i])){
+						startRow=rows[i];
+					}
+				}
+				if(!startRow){
+					startRow = row;
+					for(; i<rows.length; i++){
+						if(this.isRowSelected(rows[i])){
+							row = rows[i];
+							break;
+						}
+					}
+				}
+				this.resetSelections();
+				if(startRow == row){
+					this.toggleSelectionByRow(row);
+				} else {
+					var doSelect = false;
+					for(var i=0; i<rows.length; i++){
+						if(rows[i] == startRow){
+							doSelect=true;
+						}
+						if(doSelect){
+							this.selectByRow(rows[i]);
+						}
+						if(rows[i] == row){
+							doSelect = false;
+						}
+					}
+				}
+			} else if (e.ctrlKey) {
+				this.toggleSelectionByRow(row);
+			} else {
+				this.resetSelections();
+				this.toggleSelectionByRow(row);
+			}
+		} else {
+			this.resetSelections();
+			this.toggleSelectionByRow(row);
+		}
+		this.renderSelections();
+	},
+	
   /*
    * Overidden to connect double click event (opens cell editor) and add 
    */
