@@ -176,6 +176,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		case 1:
 			Map<String, Object> td1Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
+			if (td1Map == null)
+				break;
 			mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
 			mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
 			mdekObj.setRef1SpatialSystem((String) td1Map.get(MdekKeys.COORDINATE_SYSTEM));
@@ -202,6 +204,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		case 2:
 			Map<String, Object> td2Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT);
+			if (td2Map == null)
+				break;
 			mdekObj.setRef2Author((String) td2Map.get(MdekKeys.AUTHOR));
 			mdekObj.setRef2Publisher((String) td2Map.get(MdekKeys.EDITOR));
 			mdekObj.setRef2PublishedIn((String) td2Map.get(MdekKeys.PUBLISHED_IN));
@@ -219,6 +223,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		case 3:
 			Map<String, Object> td3Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
+			if (td3Map == null)
+				break;
 			mdekObj.setRef3ServiceType((String) td3Map.get(MdekKeys.SERVICE_TYPE));
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
@@ -230,12 +236,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		case 4:
 			Map<String, Object> td4Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_PROJECT);
+			if (td4Map == null)
+				break;
 			mdekObj.setRef4ParticipantsText((String) td4Map.get(MdekKeys.MEMBER_DESCRIPTION));
 			mdekObj.setRef4PMText((String) td4Map.get(MdekKeys.LEADER_DESCRIPTION));
 			mdekObj.setRef4Explanation((String) td4Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			break;
 		case 5:
 			Map<String, Object> td5Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_DATASET);
+			if (td5Map == null)
+				break;
 			mdekObj.setRef5Explanation((String) td5Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef5MethodText((String) td5Map.get(MdekKeys.METHOD));
 			mdekObj.setRef5dbContent(mapToDbContentTable((List<HashMap<String, Object>>) td5Map.get(MdekKeys.PARAMETERS)));
