@@ -789,6 +789,17 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 
 	dojo.widget.byId("ref3ServiceVersion").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
 
+	// Prepare the operation table for display.
+	// Add table indices to the main obj and paramList
+	// Add table indices and convert to tableData: platform, addressList and dependencies
+	if (nodeData.ref3Operation) {
+		for (var i = 0; i < nodeData.ref3Operation.length; ++i) {
+			udkDataProxy._addTableIndices(nodeData.ref3Operation[i].paramList);
+			nodeData.ref3Operation[i].platform = udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3Operation[i].platform));
+			nodeData.ref3Operation[i].addressList = udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3Operation[i].addressList));
+			nodeData.ref3Operation[i].dependencies = udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3Operation[i].dependencies));		
+		}
+	}	
 	dojo.widget.byId("ref3Operation").store.setData(udkDataProxy._addTableIndices(nodeData.ref3Operation));
 }
 
@@ -1043,7 +1054,19 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 
 	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
 
-	nodeData.ref3Operation = udkDataProxy._getTableData("ref3Operation");
+	// Convert the containing operation tables to lists
+	// Add table indices and convert to tableData: platform, addressList and dependencies
+	var op = udkDataProxy._getTableData("ref3Operation");
+	if (op) {
+		for (var i = 0; i < op.length; ++i) {
+//			op[i].paramList = udkDataProxy._tableDataToList(op[i].paramList);
+			op[i].platform = udkDataProxy._tableDataToList(op[i].platform);
+			op[i].addressList = udkDataProxy._tableDataToList(op[i].addressList);
+			op[i].dependencies = udkDataProxy._tableDataToList(op[i].dependencies);
+		}
+	}	
+
+	nodeData.ref3Operation = op;
 };
 
 udkDataProxy._getObjectDataClass4 = function(nodeData) {

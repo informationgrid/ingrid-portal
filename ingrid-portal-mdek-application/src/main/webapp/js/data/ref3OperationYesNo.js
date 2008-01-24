@@ -3,7 +3,7 @@
  * Operation: Optional / Multiple
  */
 [
-	["Nein", "Nein"],
-	["Ja", "Ja"]
+	["Nein", "0"],
+	["Ja", "1"]
 ]
  
