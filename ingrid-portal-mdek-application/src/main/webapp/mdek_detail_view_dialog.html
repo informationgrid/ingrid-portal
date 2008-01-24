@@ -7,13 +7,10 @@ _container_.addOnLoad(function() {
 	var tree = dojo.widget.byId("tree");
 	if (_container_.customParams.useDirtyData == true) {
 		// get dirty data from proxy
-		dojo.debug("render dirty node.");
 		renderNodeData(udkDataProxy._getData());
 	} else {
 		// Construct an MdekDataBean from the available data
 		var node = dojo.widget.byId(_container_.customParams.selectedNodeId);
-		dojo.debug("mdek_detail_view_dialog.html calling EntryService.getNodeData("+node.id+", "+node.nodeAppType+")");
-	
 		EntryService.getNodeData(node.id, node.appType, "false",
 			{
 				callback:function(res) { renderNodeData(res); },
@@ -26,24 +23,92 @@ _container_.addOnLoad(function() {
 
 function renderNodeData(nodeData) {
 	dojo.debugShallow(nodeData);
-	renderTitel(nodeData.title);
-	renderText("UDK Klasse: " + nodeData.objectClass);
+	renderObjectTitel(nodeData.objectName);
 	renderText(nodeData.generalShortDescription);
-	renderText(nodeData.generalDescription);
+	renderTextWithTitle(dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeData.objectClass), "Objektklasse");
+	renderTextWithTitle(nodeData.generalDescription, "Beschreibung");
+	// addresses
+	renderAddressList(nodeData.generalAddressTable);
+	// technical domains
+	
+	
+	// spatial reference
+	renderSectionTitel("Raumbezug");
+	renderTable(nodeData.spatialRefAdminUnitTable, ["name", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "AGS", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Administrative Einheiten");
+	renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Freier Bezug");
+	var altitudeData = [nodeData];
+	// create cell render functions
+	function lookupSpatialRefAltMeasure(val) {
+		return dojo.widget.byId("spatialRefAltMeasure")._getDisplayValueForValue(val);
+	}
+	function lookupSpatialRefAltVDate(val) {
+		return dojo.widget.byId("spatialRefAltVDate")._getDisplayValueForValue(val);
+	}
+	renderTable(altitudeData, ["spatialRefAltMin", "spatialRefAltMax", "spatialRefAltMeasure", "spatialRefAltVDate"], ["Min", "Max", "Ma&szlig;einheit", "Vertikaldatum"], "H&ouml;he", [null, null, lookupSpatialRefAltMeasure, lookupSpatialRefAltVDate]);
+	renderTextWithTitle(nodeData.spatialRefExplanation, "Erl&auml;uterungen");
+
+	// temporal reference
+	renderSectionTitel("Zeitbezug");
+	var timeRefTxt;
+	if (nodeData.timeRefType == "von") {
+		timeRefTxt = "von "+dojo.date.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'})+" bis "+dojo.date.format(nodeData.timeRefDate2, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+	} else {
+		timeRefTxt = nodeData.timeRefType+" "+dojo.date.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+	}
+	renderTextWithTitle(timeRefTxt, "Zeitbezug des Dateninhaltes");
+	renderTextWithTitle(dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeData.timeRefStatus), "Status");
+	renderTextWithTitle(dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeData.timeRefPeriodicity), "Periodizit&auml;t");
+	renderTextWithTitle("alle "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeData.timeRefIntervalUnit), "Im Intervall");
+	// create cell render functions
+	function lookupTimeRefType(val) {
+		return dojo.widget.byId("timeRefTypeCombobox")._getDisplayValueForValue(val);
+	}
+	function formatTimeRefDate(val) {
+		return dojo.date.format(val, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+	}
+	renderTable(nodeData.timeRefTable, ["date", "type"], ["Datum", "Typ"], "Zeitbezug des Datensatzes", [formatTimeRefDate, lookupTimeRefType]);
+	renderTextWithTitle(nodeData.timeRefExplanation, "Erl&auml;uterungen");
+	
+	// additional information
+	renderSectionTitel("Zusatzinformationen");
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeData.extraInfoLangMetaData), "Sprache des Metadatensatzes");
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeData.extraInfoLangData), "Sprache des Datensatzes");
+	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeData.extraInfoPublishArea), "Ver&ouml;ffentlichung");
+	renderList(nodeData.extraInfoXMLExportTable, "XML-Export-Kriterium");
+	renderList(nodeData.extraInfoLegalBasicsTable, "Rechtliche Grundlagen");
+	renderTextWithTitle(nodeData.extraInfoPurpose, "Herstellungszweck");
+	renderTextWithTitle(nodeData.extraInfoUse, "Eignung/Nutzung");
+	
+	// indexing
+	renderSectionTitel("Verschlagwortung");
+	renderList(nodeData.thesaurusTermsTable, "Thesaurus-Suchbegriffe", "title");
+	renderList(nodeData.thesaurusTopicsList, "Themenkategorie", null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
+	renderList(nodeData.thesaurusFreeTermsTable, "Freie Suchbegriffe");
+	renderTextWithTitle(nodeData.thesaurusEnvExtRes ? "Ja": "Nein", "Als Katalogseite anzeigen");
+	renderList(nodeData.thesaurusEnvTopicsList , "Umweltthemen");
+	renderList(nodeData.thesaurusEnvCatsList , "Umweltthemen");
+
+
+
+	// references
+	renderSectionTitel("Verweise");
+	dojo.debugShallow(nodeData.linksToObjectTable);
+	
 	renderLinkedObjectListWithTitle(nodeData.linksFromObjectTable, "&Uuml;bergeordnete Objekte");
 	renderLinkedObjectListWithTitle(nodeData.linksToObjectTable, "Untergeordnete Objekte");
-	renderAddressList(nodeData.generalAddressTable);
-	dojo.debugShallow(nodeData.spatialRefAdminUnitTable[0]);
-	renderTable(nodeData.spatialRefAdminUnitTable, ["name", "nativeKey", "latitude1", "latitude2", "longitude1", "longitude2"], ["Name", "AGS", "x1", "x2", "y1", "y2"], "Raumbezug");
 	
 }
 
-function renderTitel(val) {
-	dojo.byId("detailViewContent").innerHTML += "<strong>" + val + "</strong><br/><br/>";
+function renderObjectTitel(val) {
+	dojo.byId("detailViewContent").innerHTML += "<h1>" + val + "</h1><br/><br/>";
+}
+
+function renderSectionTitel(val) {
+	dojo.byId("detailViewContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
 }
 
 function renderTextWithTitle(val, title) {
-	dojo.byId("detailViewContent").innerHTML += "<strong>" + title + "</strong><p>" + val + "</p>";
+	dojo.byId("detailViewContent").innerHTML += "<p><strong>" + title + "</strong><br/>" + val + "</p><br/>";
 }
 
 function renderLinkedObjectListWithTitle(list, title) {
@@ -68,7 +133,6 @@ function renderAddressList(list) {
 		}
 		dojo.byId("detailViewContent").innerHTML += t + "<br/><br/>";
 	}
-
 }
 
 function renderText(val) {
@@ -77,7 +141,29 @@ function renderText(val) {
 	}
 }
 
-function renderTable(list, rowProperties, listHeader, title) {
+function renderList(list, title, rowProperty, renderFunction) {
+	if (list && list.length > 0) {
+		var t = "<p>";
+		if (detailHelper.isValid(title)) {
+			t += "<strong>" + title + "</strong><br/>";
+		}
+		var val;
+		for (i=0; i<list.length; i++) {
+			if (rowProperty) {
+				val = list[i][rowProperty];
+			} else {
+				val = list[i];
+			}
+			if (renderFunction) {
+				val = renderFunction.call(this, val);
+			}
+			t += val + "<br/>";
+		}
+		dojo.byId("detailViewContent").innerHTML += t + "</p><br/>";
+	}	
+}
+
+function renderTable(list, rowProperties, listHeader, title, cellRenderFunction) {
 	if (list && list.length > 0) {
 		var t = "";
 		if (detailHelper.isValid(title)) {
@@ -87,7 +173,7 @@ function renderTable(list, rowProperties, listHeader, title) {
 		if (listHeader && listHeader.length > 0) {
 			t += "<thead class=\"fixedHeader\"><tr>";
 			for (i=0; i<listHeader.length; i++) {
-				t += "<th>"+listHeader[i]+"</th>";
+				t += "<th style=\"padding-right:4px\">"+listHeader[i]+"</th>";
 			}
 			t += "</tr></thead>";
 		}
@@ -99,7 +185,11 @@ function renderTable(list, rowProperties, listHeader, title) {
 				t += "<tr>";
 			}
 			for (j=0; j<rowProperties.length; j++) {
-				t += "<td>"+list[i][rowProperties[j]]+"</td>";
+				if (cellRenderFunction && cellRenderFunction[j]) {
+					t += "<td style=\"padding-right:4px\">"+cellRenderFunction[j].call(this, list[i][rowProperties[j]])+"</td>";
+				} else {
+					t += "<td style=\"padding-right:4px\">"+list[i][rowProperties[j]]+"</td>";
+				}
 			}
 			t += "</tr>";
 			
