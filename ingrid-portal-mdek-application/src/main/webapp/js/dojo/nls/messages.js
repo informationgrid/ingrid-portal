@@ -50,12 +50,18 @@
     "spatial.loadingHint":"Please wait, loading...",
     "spatial.connectionError":"An error occured while contacting the SNS Service.",
 
+	"extraInfo.publicationCondition.internet":"Internet",
+	"extraInfo.publicationCondition.intranet":"Intranet",
+	"extraInfo.publicationCondition.internal":"Internal",
+	"extraInfo.publicationCondition.notShared":"Not Shared",
+
     "sns.connectionError":"An error occured while contacting the SNS Service.",
     "sns.loadingTopTermsHint":"Please wait, loading the SNS Top Terms...",
     "sns.loadingHint":"Please wait, loading...",
     "sns.processingQueryHint":"Please wait, processing query...",
     "sns.noResultHint":"The specified Term was not found.",
-    "sns.noSimilarTermsHint":"The SNS query returned no results.",
+    "sns.noDescriptorHint":"The specified Descriptor was not found.",
+	"sns.noSimilarTermsHint":"The SNS query returned no results.",
     "sns.numberOfTerms":"Number of Terms:",
         
 	"links.selectNodeHint":"Please select a target node.",

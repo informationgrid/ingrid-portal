@@ -17,7 +17,8 @@ public class MdekDataBean {
 	public String parentUuid;
 	public Boolean hasChildren;
 	public String workState;
-
+	public Integer parentPublicationCondition;
+	
 	public String title;
 	public String nodeDocType;
 	public String nodeAppType;
@@ -1450,5 +1451,19 @@ public class MdekDataBean {
 
 	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
+	}
+
+
+
+
+	public Integer getParentPublicationCondition() {
+		return parentPublicationCondition;
+	}
+
+
+
+
+	public void setParentPublicationCondition(Integer parentPublicationCondition) {
+		this.parentPublicationCondition = parentPublicationCondition;
 	};
 }

@@ -215,7 +215,10 @@ findTopic = function() {
 		  	postHook:enableUiElements,
 			callback:function(result) {
 				if (result) {
-					expandToTopicWithId(result.topicId);
+					if (result.type == "NON_DESCRIPTOR")
+						showStatus(message.get("sns.noDescriptorHint"));
+					else
+						expandToTopicWithId(result.topicId);
 				} else {
 					showStatus(message.get("sns.noResultHint"));
 				}},

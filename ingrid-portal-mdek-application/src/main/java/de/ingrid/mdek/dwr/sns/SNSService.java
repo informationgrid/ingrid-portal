@@ -168,6 +168,8 @@ public class SNSService {
 			return Type.NODE_LABEL;
 		else if (nodeType.indexOf("descriptorType") != -1) 
 			return Type.DESCRIPTOR;
+		else if (nodeType.indexOf("nonDescriptorType") != -1) 
+			return Type.NON_DESCRIPTOR;
 		else
 			return Type.TOP_TERM;
     }
@@ -181,6 +183,8 @@ public class SNSService {
 			return Type.NODE_LABEL;
 		else if (nodeType.indexOf("descriptorType") != -1) 
 			return Type.DESCRIPTOR;
+		else if (nodeType.indexOf("nonDescriptorType") != -1) 
+			return Type.NON_DESCRIPTOR;
 		else
 			return Type.TOP_TERM;
     }
@@ -247,15 +251,20 @@ public class SNSService {
     public SNSTopic findTopic(String queryTerm) {
     	TopicMapFragment mapFragment = null;
     	try {
-	    	mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
+    		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
+    	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER);
+
+/*
+    		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
 	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER);
-	    } catch (Exception e) {
+*/
+    	} catch (Exception e) {
 	    	log.error(e);
 	    }
 	    
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics) && (topics.length == 1)) {
+	        if ((null != topics) && (topics.length != 0)) {
 	            return new SNSTopic(getTypeFromTopic(topics[0]), topics[0].getId(), topics[0].getBaseName(0).getBaseNameString().get_value());
 	        }
 	    }

@@ -103,6 +103,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setCatalogName((String) catDetails.get(MdekKeys.CATALOG_NAME));
 		}
 
+		// Information about the parent object
+		Map<String, Object> parentDetails = (Map<String, Object>) obj.get(MdekKeys.PARENT_INFO);
+		if (parentDetails != null) {
+			mdekObj.setParentPublicationCondition((Integer) parentDetails.get(MdekKeys.PUBLICATION_CONDITION));
+		}		
+		
 		// Spatial
 		mdekObj.setSpatialRefAdminUnitTable(mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));
 		mdekObj.setSpatialRefLocationTable(mapToSpatialRefLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));

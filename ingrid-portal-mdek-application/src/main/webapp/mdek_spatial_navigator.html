@@ -132,9 +132,14 @@ addLocationTopics = function() {
 
 	// Batch request can be activated/deactivated here by removing 'beginBatch' and 'endBatch'
 	// When batching is deactivated all the requests are started at once.
-//	DWREngine.beginBatch();
+	var deferredArray = [];
+
+	DWREngine.beginBatch();
 	dojo.lang.forEach(checkboxArray, function(item) {
 		if (item.checked) {
+			var deferred = new dojo.Deferred();
+			deferredArray.push(deferred);
+			
 			var topic = item.topic;
 			var topicId = item.topic.topicId;
 
@@ -159,7 +164,8 @@ addLocationTopics = function() {
 					if (storedTopic) {
 						// Element is already in the table. Update the topic.
 						// Update elements that are displayed in the table
-						store.update(storedTopic, "name", res.name+", "+res.type);
+//						store.update(storedTopic, "name", res.name+", "+res.type);
+						store.update(storedTopic, "name", res.name);
 						if (res.boundingBox) {
 							store.update(storedTopic, "longitude1", res.boundingBox[0]);
 							store.update(storedTopic, "latitude1", res.boundingBox[1]);
@@ -169,14 +175,15 @@ addLocationTopics = function() {
 						// Update elements that aren't displayed in the table
 						storedTopic.nativeKey = res.nativeKey;
 					} else {
-						// The topic was not found in teh result list. Create a new key and
+						// The topic was not found in the result list. Create a new key and
 						// add the topic to the list
 						var key = getNewKey();
 						if (res.boundingBox) {
 							store.addData({
 									Id: key,
 									topicId: res.topicId,
-									name: res.name+", "+res.type,
+//									name: res.name+", "+res.type,
+									name: res.name,
 									longitude1: res.boundingBox[0],
 									latitude1: res.boundingBox[1],
 									longitude2: res.boundingBox[2],
@@ -187,20 +194,28 @@ addLocationTopics = function() {
 							store.addData({
 									Id: key,
 									topicId: res.topicId,
-									name: res.name+", "+res.type,
+//									name: res.name+", "+res.type,
+									name: res.name,
 									nativeKey: res.nativeKey
 							});
 						}
 					}
+					deferred.callback();
 				},
-				timeout:0
+				errorHandler:function(message) {
+					dojo.debug(message);
+					deferred.errback(message);
+				},
+				timeout:10000	// 10 seconds per request
 			});
 		}
 	});
-//	DWREngine.endBatch();
+	DWREngine.endBatch();
 
-	_container_.closeWindow();
-
+	var deferredList = new dojo.DeferredList(deferredArray, false, false, true);
+	deferredList.addBoth(function() {
+		_container_.closeWindow();
+	});
 }
 
 </script>
@@ -237,7 +252,7 @@ addLocationTopics = function() {
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
           		<span class="button w085 transparent" style="margin-top: 58px; margin-left: 373px;">
-					<button dojoType="ingrid:Button" title="Auswählen" id="addLocationTopicsButton" onClick="addLocationTopics">Ausw&auml;hlen</button>          		
+					<button dojoType="ingrid:Button" title="Übernehmen" id="addLocationTopicsButton" onClick="addLocationTopics">&Uuml;bernehmen</button>          		
           		</span>
 			</div>
       		<!-- CONTENT END -->

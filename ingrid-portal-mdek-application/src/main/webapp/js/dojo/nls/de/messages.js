@@ -36,7 +36,15 @@
 	"dialog.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Metadatensatz vorgenommenen &Auml;nderungen verwerfen?",
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 
+    "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
+    "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
+
 	"links.fillRequiredFieldsHint":"Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
+
+	"extraInfo.publicationCondition.internet":"Internet",
+	"extraInfo.publicationCondition.intranet":"Intranet",
+	"extraInfo.publicationCondition.internal":"amtsintern",
+	"extraInfo.publicationCondition.notShared":"nicht freigegeben",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

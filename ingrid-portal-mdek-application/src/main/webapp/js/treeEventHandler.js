@@ -52,8 +52,12 @@ aroundSelectNode = function(invocation) {
 		var targetNode =  invocation.args[0];
 		var targetNodeId = invocation.args[0].id;
 		var targetNodeAppType = invocation.args[0].nodeAppType;
-		
-		if (targetNodeId == null || targetNodeId == "objectRoot" || targetNodeId == "newNode" || targetNodeId == curSelectedNodeId) {
+
+		if (targetNodeId == curSelectedNodeId) {
+			return;
+		}
+
+		if (targetNodeId == null || targetNodeId == "objectRoot" || targetNodeId == "newNode") {
 			return invocation.proceed();
 		} else {
 			var deferred = new dojo.Deferred();
