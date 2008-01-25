@@ -6,6 +6,7 @@ var treeEventHandler = {};
 
 
 // ----- Add the listener -> TODO move to mdek_entry.jsp -----
+/*
 function nodeSelectListener(message)
 {
 	var nodeId = message.node.id;
@@ -21,6 +22,7 @@ function nodeSelectListener(message)
 		});
  	}
 }
+*/
 
 aroundSelectNode = function(invocation) {
 	// Continue with invocation without loading if:
@@ -39,14 +41,15 @@ aroundSelectNode = function(invocation) {
 	var curSelectedNode = dojo.widget.byId("tree").selectedNode;
 	var curSelectedNodeId = null;
 	if (curSelectedNode) {
-		dojo.debug("curSelectedNode: "+curSelectedNode);
+//		dojo.debug("curSelectedNode: "+curSelectedNode);
 		curSelectedNodeId = curSelectedNode.id;
-		dojo.debug("curSelectedNodeId: "+curSelectedNodeId);
+//		dojo.debug("curSelectedNodeId: "+curSelectedNodeId);
 	}
 
-	dojo.debug("invocation.args: "+invocation.args);
-	dojo.debug("invocation.args[0]: "+invocation.args[0]);
+//	dojo.debug("invocation.args: "+invocation.args);
+//	dojo.debug("invocation.args[0]: "+invocation.args[0]);
 	if (typeof(invocation.args[0]) != "undefined") {
+		var targetNode =  invocation.args[0];
 		var targetNodeId = invocation.args[0].id;
 		var targetNodeAppType = invocation.args[0].nodeAppType;
 		
@@ -58,11 +61,12 @@ aroundSelectNode = function(invocation) {
 			dojo.event.topic.publish("/loadRequest", {id: targetNodeId, appType: targetNodeAppType, resultHandler: deferred});
 
 			deferred.addCallback(function(msg) {
-				dojo.debug("Obj loaded. Proceeding...");
-				return invocation.proceed();
+//				dojo.debug("Obj loaded. Proceeding...");
+				var retVal = invocation.proceed();
+				return retVal;
 			});
 			deferred.addErrback(function(msg) {
-				dojo.debug("Obj load failed. Aborting...");
+//				dojo.debug("Obj load failed. Aborting...");
 				dojo.debug(msg);
 				dialog.show(message.get("general.error"), message.get("tree.nodeLoadError"), dialog.WARNING);
 			});			

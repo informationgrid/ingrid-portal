@@ -100,7 +100,7 @@ function applyRule1() {
 	var labelNode = dojo.byId("ref1VFormatLabel");
 	var containerNode = labelNode.parentNode;
 
-	if (dojo.lang.some(tableData, function(item){dojo.debug(item); return (item.title == "1");})) {
+	if (dojo.lang.some(tableData, function(item){return (item.title == "1");})) {
 		setRequiredState(labelNode, null, true);
 	} else {
 	    setRequiredState(labelNode, null, false);

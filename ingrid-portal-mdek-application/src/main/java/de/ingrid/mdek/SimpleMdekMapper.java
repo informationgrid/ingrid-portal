@@ -188,11 +188,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
 			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
 			
-			strList = (ArrayList<String>) obj.get(MdekKeys.FEATURE_TYPE_LIST);
+			strList = (ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST);
 			if (strList != null)
 				mdekObj.setRef1Data(strList);
 			
-			intList = (ArrayList<Integer>) obj.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST);
+			intList = (ArrayList<Integer>) td1Map.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST);
 			if (intList != null)
 				mdekObj.setRef1Representation(intList);
 			

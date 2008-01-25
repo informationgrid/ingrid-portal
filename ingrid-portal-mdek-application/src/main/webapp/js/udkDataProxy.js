@@ -316,7 +316,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 								resultHandler.callback();
 							resetRequiredFields();
 						} else {
-							dojo.debug(resultHandler);
+//							dojo.debug(resultHandler);
 							if (typeof(resultHandler) != "undefined") {
 								resultHandler.errback("Error loading object. The object with the specified id doesn't exist!");
 							}

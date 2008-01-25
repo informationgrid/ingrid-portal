@@ -12,7 +12,9 @@ mdek.entry = {};
 mdek.entry.type="o";
 mdek.entry.isTypeObject = function()
 {
-  return (mdek.entry.type == "o");
+//  Only display objects
+//  return (mdek.entry.type == "o");
+	return true;
 }
 
 var ref1SpatialSystemDP = null;
