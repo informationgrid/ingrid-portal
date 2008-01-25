@@ -25,6 +25,12 @@ saveChanges = function() {
 		_container_.closeWindow();
 		}); 
 
+	def.addErrback(function(){
+		// On error fire the errorHandler. The caller has to handle the error
+		_container_.customParams.resultHandler.errback();
+		_container_.closeWindow();
+	});
+
 //	dojo.event.connectOnce('after', udkDataProxy, 'onAfterSave', def, 'callback');
 	dojo.event.topic.publish("/saveRequest", {resultHandler:def});
 }

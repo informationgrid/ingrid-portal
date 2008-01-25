@@ -35,7 +35,11 @@ public class MdekDataBean {
 	public String generalDescription;
 	public ArrayList<MdekAddressBean> generalAddressTable;
 	public ArrayList<CommentBean> commentTable;
-	
+
+	// Catalogue
+	public String catalogUuid;
+	public String catalogName;
+
 	// Spatial
 	public ArrayList<LocationBean> spatialRefAdminUnitTable;
 	public ArrayList<LocationBean> spatialRefLocationTable;
@@ -1418,5 +1422,33 @@ public class MdekDataBean {
 
 	public void setRef3ServiceType(String ref3ServiceType) {
 		this.ref3ServiceType = ref3ServiceType;
+	}
+
+
+
+
+	public String getCatalogUuid() {
+		return catalogUuid;
+	}
+
+
+
+
+	public void setCatalogUuid(String catalogUuid) {
+		this.catalogUuid = catalogUuid;
+	}
+
+
+
+
+	public String getCatalogName() {
+		return catalogName;
+	}
+
+
+
+
+	public void setCatalogName(String catalogName) {
+		this.catalogName = catalogName;
 	};
 }
