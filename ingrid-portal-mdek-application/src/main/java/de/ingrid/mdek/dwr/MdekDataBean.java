@@ -38,8 +38,8 @@ public class MdekDataBean {
 	public ArrayList<CommentBean> commentTable;
 
 	// Catalogue
-	public String catalogUuid;
-	public String catalogName;
+//	public String catalogUuid;
+//	public String catalogName;
 
 	// Spatial
 	public ArrayList<LocationBean> spatialRefAdminUnitTable;
@@ -1427,7 +1427,7 @@ public class MdekDataBean {
 
 
 
-
+/*
 	public String getCatalogUuid() {
 		return catalogUuid;
 	}
@@ -1452,7 +1452,7 @@ public class MdekDataBean {
 	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
 	}
-
+*/
 
 
 

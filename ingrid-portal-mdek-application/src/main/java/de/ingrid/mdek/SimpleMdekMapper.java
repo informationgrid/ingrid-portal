@@ -97,11 +97,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
 
 		// Catalogue
-		Map<String, Object> catDetails = (Map<String, Object>) obj.get(MdekKeys.CATALOG);
-		if (catDetails != null) {
-			mdekObj.setCatalogUuid((String) catDetails.get(MdekKeys.UUID));			
-			mdekObj.setCatalogName((String) catDetails.get(MdekKeys.CATALOG_NAME));
-		}
+//		Map<String, Object> catDetails = (Map<String, Object>) obj.get(MdekKeys.CATALOG);
+//		if (catDetails != null) {
+//			mdekObj.setCatalogUuid((String) catDetails.get(MdekKeys.UUID));			
+//			mdekObj.setCatalogName((String) catDetails.get(MdekKeys.CATALOG_NAME));
+//		}
 
 		// Information about the parent object
 		Map<String, Object> parentDetails = (Map<String, Object>) obj.get(MdekKeys.PARENT_INFO);

@@ -900,10 +900,6 @@ udkDataProxy._getObjectData = function(nodeData)
   	nodeData.parentUuid = parentUuid;
   }
 
-  // ------------- Catalog Data -------------
-  nodeData.catalogUuid = currentUdk.catalogUuid;
-  nodeData.catalogName = currentUdk.catalogName;
-
 
   // ------------------ Header ------------------
   var formWidget = dojo.widget.byId("headerFormObject");
