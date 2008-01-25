@@ -21,7 +21,7 @@
     "tree.assistant1":"getCapabilities-Assistent",
     "tree.assistant2":"Allgemeiner Erfassungsassistent",
     "tree.noAssistant":"Kein Assistent",
-    "tree.nodeCanPublishHint":"Vor dem abschlie&szlig;enden Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!.",
+    "tree.nodeCanPublishHint":"Vor dem abschlie&szlig;enden Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.newNodeName":"Neues Objekt",
@@ -35,6 +35,8 @@
 	"dialog.undoChangesTitle":"aktuelle &Auml;nderungen verwerfen",
 	"dialog.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Metadatensatz vorgenommenen &Auml;nderungen verwerfen?",
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
+
+	"links.fillRequiredFieldsHint":"Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

@@ -19,6 +19,52 @@ _container_.addOnUnload(function() {
 });
 
 
+var generalUiInputElements = [["linksFromFieldName", "linksFromFieldNameLabel"]];
+var objUiInputElements = [["linksToObjectName", "linksToObjectNameLabel"],
+						  ["linksToObjectClass", "linksToObjectClassLabel"]];
+
+var urlUiInputElements = [["linksToName", "linksToNameLabel"],
+						  ["linksToURL", "linksToURLLabel"],
+						  ["linksToDataType", "linksToDataTypeLabel"]];
+
+
+resetRequiredInputElements = function() {
+	var resetRequiredState = function(widgetLabelList) {
+		for (var i in widgetLabelList) {
+			dojo.html.removeClass(dojo.byId(widgetLabelList[i][1]), "important");
+		}
+	}
+
+	resetRequiredState(generalUiInputElements);
+	resetRequiredState(objUiInputElements);
+	resetRequiredState(urlUiInputElements);
+}
+
+validateInputElements = function() {
+	var valid = true;
+	var objSelected = dojo.byId("linksLinkType1").checked;
+	var validate = function(widgetLabelList) {
+		for (var i in widgetLabelList) {
+			var val = dojo.widget.byId(widgetLabelList[i][0]).getValue();
+	
+			if (!val || val == "") {
+				dojo.html.addClass(dojo.byId(widgetLabelList[i][1]), "important");
+				valid = false;
+			}
+		}		
+	}
+
+	validate(generalUiInputElements);
+
+	if (objSelected) {
+		validate(objUiInputElements);
+	} else {
+		validate(urlUiInputElements);
+	}
+	return valid;
+}
+
+
 hideInputElements = function() {
 	dojo.byId("inputFields").style.display = "none";
 	dojo.byId("inputButtons").style.display = "none";
@@ -34,6 +80,7 @@ init = function() {
 	// reset the dialog
 //	newLink();
 	hideInputElements();
+	resetRequiredInputElements();
 
 	// Init static data
 	var objectName = dojo.widget.byId("objectName").getValue();
@@ -172,6 +219,8 @@ saveLink = function() {
 	var urlData = dojo.widget.byId("linkListURL").getSelectedData();
 	var objSelected = dojo.byId("linksLinkType1").checked;
 
+	resetRequiredInputElements();
+
 	if (objData) {
 		// If a node was selected we have to update the information
 		// The dojo FilteringTable does not like updates on values that are not displayed
@@ -181,9 +230,11 @@ saveLink = function() {
 //		store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
 //		store.update(data, "objectClass", curSelectedObject.objectClass);
 
-		if ( dojo.widget.byId("linksFromFieldName").getValue() == ""
-		  || dojo.widget.byId("linksToObjectName").getValue() == "") {
-			alert(message.get("links.fillRequiredFieldsHint"));
+//		if ( dojo.widget.byId("linksFromFieldName").getValue() == ""
+//		  || dojo.widget.byId("linksToObjectName").getValue() == "") {
+//			alert(message.get("links.fillRequiredFieldsHint"));
+		if (!validateInputElements()) {
+	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
 		} else {
 			objData.uuid = curSelectedObject.uuid;
 			objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
@@ -195,8 +246,10 @@ saveLink = function() {
 		}
 	} else if (urlData) {
 		var newUrl = _getUrl();
-		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
-			alert(message.get("links.fillRequiredFieldsHint"));
+//		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
+//			alert(message.get("links.fillRequiredFieldsHint"));
+		if (!validateInputElements()) {
+	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
 		} else {
 			urlData.url = newUrl.url;
 			urlData.datatype = newUrl.datatype;
@@ -212,9 +265,11 @@ saveLink = function() {
 	} else if (objSelected && curSelectedObject) {
 		// Otherwise a new link has to be created
 		// Take the current selected object and add the values that were entered in the ui fields
-		if (dojo.widget.byId("linksFromFieldName").getValue() == "" || curSelectedObject.uuid == ""
-		 || dojo.widget.byId("linksToObjectName").getValue() == "") {
-			alert(message.get("links.fillRequiredFieldsHint"));
+//		if (dojo.widget.byId("linksFromFieldName").getValue() == "" || curSelectedObject.uuid == ""
+//		 || dojo.widget.byId("linksToObjectName").getValue() == "") {
+//			alert(message.get("links.fillRequiredFieldsHint"));
+		if (!validateInputElements()) {
+	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
 		} else {	
 			curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
 			curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
@@ -230,8 +285,10 @@ saveLink = function() {
 		}
 	} else if (!objSelected) {
 		var newUrl = _getUrl();
-		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
-			alert(message.get("links.fillRequiredFieldsHint"));
+//		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
+//			alert(message.get("links.fillRequiredFieldsHint"));
+		if (!validateInputElements()) {
+	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
 		} else {
 			newUrl.Id = _getNewKey();
 			udkDataProxy._addIcons([newUrl]);
@@ -242,8 +299,8 @@ saveLink = function() {
 			dojo.widget.byId("saveButton").setCaption("Speichern");
 		}
 	} else {
-//		dialog.show(message.get("general.hint"), message.get("links.selectNodeHint"), dialog.WARNING);
-		alert(message.get("links.selectNodeHint"));
+  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
+//		alert(message.get("links.selectNodeHint"));
 	}
 }
 
@@ -354,6 +411,8 @@ showAssignObjectDialog = function() {
 resetInput = function() {
 	newLink();
 	hideInputElements();
+	resetRequiredInputElements();
+
 	if (!_container_.customParams || !_container_.customParams.filter) {
 		dojo.widget.byId("linksFromFieldName").setValue("");
 	}
@@ -401,7 +460,7 @@ closeDialog = function() {
         <div class="outlined w616">
           <span class="label"><label class="inActive" for="linksFromObjectName">Objektname</label></span>
           <span class="input spaceBelow"><input type="text" id="linksFromObjectName" name="linksFromObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-          <span class="label required"><label for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
+          <span class="label required"><label id="linksFromFieldNameLabel" for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
 <!-- 
           <span class="input">
           	<input type="text" id="linksFromFieldName" name="linksFromFieldName" class="w608" dojoType="ingrid:ValidationTextBox" />
@@ -428,10 +487,10 @@ closeDialog = function() {
 	
 	        <!-- VERWEIS AUF OBJEKT -->
 	        <div id="linkToObject" class="outlined w616">
-	          <span class="label required"><label for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname*</label></span>
+	          <span class="label required"><label id="linksToObjectNameLabel" for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname*</label></span>
 	          <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:showAssignObjectDialog();" title="Objekt ausw&auml;hlen [Popup]">Objekt ausw&auml;hlen</a></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToObjectName" name="linksToObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-	          <span class="label required"><label class="inActive" for="linksToObjectClass">Objektklasse*</label></span>
+	          <span class="label required"><label id="linksToObjectClassLabel" class="inActive" for="linksToObjectClass">Objektklasse*</label></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToObjectClass" name="linksToObjectClass" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 	
 	          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
@@ -442,14 +501,14 @@ closeDialog = function() {
 	        </div>
 	        <!-- VERWEIS AUF URL -->
 	        <div id="linkToURL" class="outlined w616">
-	          <span class="label required"><label for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bezeichnung des Verweises')">Bezeichnung des Verweises*</label></span>
+	          <span class="label required"><label id="linksToNameLabel" for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bezeichnung des Verweises')">Bezeichnung des Verweises*</label></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToName" name="linksToName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
-	          <span class="label required"><label for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'WWW-Adresse (URL)')">WWW-Adresse (URL)*</label></span>
+	          <span class="label required"><label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'WWW-Adresse (URL)')">WWW-Adresse (URL)*</label></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToURL" name="linksToURL" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 	
 	          <div class="inputContainer">
 	            <span class="entry first">
-	              <span class="label required"><label for="linksToDataType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datentyp')">Datentyp*</label></span>
+	              <span class="label required"><label id="linksToDataTypeLabel" for="linksToDataType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datentyp')">Datentyp*</label></span>
 	              <span class="input"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/datatypes.js" style="width:274px;" widgetId="linksToDataType"></div></span>
 	            </span>
 	            <span class="entry">
