@@ -39,7 +39,7 @@ function renderNodeData(nodeData) {
 		renderSectionTitel("Fachbezug");
 		// Objekt, Karte
 		renderTextWithTitle(dojo.widget.byId("ref1DataSet")._getDisplayValueForValue(nodeData.ref1DataSet), "Datensatz/Datenserie");
-		renderList(nodeData.ref1Representation, "Digitale Repräsentation", null, function(val) { return dojo.widget.byId("ref1RepresentationCombobox")._getDisplayValueForValue(val); });
+		renderList(nodeData.ref1Representation, "Digitale Repr&auml;sentation", null, function(val) { return dojo.widget.byId("ref1RepresentationCombobox")._getDisplayValueForValue(val); });
 		renderTextWithTitle(nodeData.ref1Coverage, "Erfassungsgrad [%]");
 		renderTextWithTitle(dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeData.ref1VFormatTopology), "Topologieinformation");
 		renderTable(nodeData.ref1VFormatDetails, ["geometryType", "numElements"], ["Geometrietyp", "Elementanzahl"], "Vektor Format", [function(val) {return dojo.widget.byId("geometryTypeEditor")._getDisplayValueForValue(val);}, null]);
@@ -161,6 +161,11 @@ function renderNodeData(nodeData) {
 	renderList(nodeData.linksFromObjectTable, "&Uuml;bergeordnete Objektreferenzen", "title")
 	renderList(nodeData.linksToObjectTable, "Untergeordnete Objektreferenzen", "title")
 	renderUrlLinkList(nodeData.linksToUrlTable);
+	
+	// administrative data
+	renderSectionTitel("Administrative Angaben");
+	renderTextWithTitle(nodeData.uuid, "Objekt-ID");
+	renderTextWithTitle(nodeData.catalogname, "Katalog");
 	
 }
 
