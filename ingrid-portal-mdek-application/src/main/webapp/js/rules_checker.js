@@ -46,7 +46,8 @@ var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]];
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 var notEmptyFunc = function(element) {return (this[element] && this[element] != "");}
 
-var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
+/* The generalAddress table is made 'not required' for testing purpose */ 
+var notEmptyTables = [/*["generalAddressTable", "generalAddressTableLabel"],*/
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
 var notEmptyTableFunc = function(element) {return (this[element].length > 0);}
 
