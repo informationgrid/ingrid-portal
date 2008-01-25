@@ -300,7 +300,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 	var deferred = udkDataProxy.checkForUnsavedChanges();
 	var loadErrback = function() {
 		if (typeof(resultHandler) != "undefined") {
-			resultHandler.errback("Load operation cancelled by the user.")		
+			resultHandler.errback(new Error("LOAD_CANCEL_ERROR"));		
 		}
 	}
 	var loadCallback = function() {
@@ -362,10 +362,16 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 
 udkDataProxy.handleSaveRequest = function(msg)
 {
-	/* TODO Check if we are in a state where it's safe to save data (always?)
+	/* TODO Check if we are in a state where it's safe to save data
 	 *      If we are, read all the fields and send the collected data to
 	 *      the EntryService. If not delay the call and bounce back the message (e.g. query user).
 	 */
+	if (!checkValidityOfInputElements()){
+		if (msg && msg.resultHandler) {
+			msg.resultHandler.errback(new Error("INPUT_INVALID_ERROR"));
+		}
+		return;
+	}
 
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();

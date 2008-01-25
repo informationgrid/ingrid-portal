@@ -677,4 +677,11 @@ function initTableValidators() {
 		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isInteger(item));}}
 	]);
 
+	// object class 1 - The 'Erstellungsmassstab' table must contain an integer and two doubles
+	var table = dojo.widget.byId("ref1Scale");
+	table.setValidationFunctions([
+		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isInteger(item));}},
+		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
+	]);
 }

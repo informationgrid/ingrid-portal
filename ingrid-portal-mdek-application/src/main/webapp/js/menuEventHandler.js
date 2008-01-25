@@ -227,6 +227,14 @@ menuEventHandler.handleSave = function() {
 		tree.selectedNode.viewSelect();
 		resetRequiredFields();
 	});
+	
+	deferred.addErrback(function(res) {
+		dojo.debug("Object could not be saved.");
+		if (res instanceof Error && res.message == "INPUT_INVALID_ERROR") {
+	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		}
+	});
+	
 	dojo.debug('Publishing event: /saveRequest');
 	dojo.event.topic.publish("/saveRequest", {resultHandler: deferred});
 }
@@ -427,6 +435,11 @@ menuEventHandler.reloadSubTree = function(msg) {
 
 
 menuEventHandler.handleFinalSave = function() {
+	if (!checkValidityOfInputElements()){
+		dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		return;
+	}
+
 	var nodeData = udkDataProxy._getData();
 	if (isObjectPublishable(nodeData)) {
 		var deferred = new dojo.Deferred();

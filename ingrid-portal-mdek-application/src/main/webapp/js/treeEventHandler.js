@@ -67,8 +67,12 @@ aroundSelectNode = function(invocation) {
 			});
 			deferred.addErrback(function(msg) {
 //				dojo.debug("Obj load failed. Aborting...");
-				dojo.debug(msg);
-				dialog.show(message.get("general.error"), message.get("tree.nodeLoadError"), dialog.WARNING);
+				if (msg instanceof Error && msg.message == "LOAD_CANCEL_ERROR") {
+					dojo.debug(msg);
+				} else {
+					dojo.debug(msg);
+					dialog.show(message.get("general.error"), message.get("tree.nodeLoadError"), dialog.WARNING);
+				}
 			});			
 		}
 	} else {

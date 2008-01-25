@@ -68,6 +68,7 @@
 	"dialog.discardPubNotExistMessage":"Do you really want to delete '%{0}' and all it's subobjects?",
 	"dialog.undoChangesTitle":"Discard current changes",
 	"dialog.undoChangesMessage":"Do you want to discard all changes since the last save?",
+	"dialog.inputInvalidError":"There was an error validating input fields. Please check all entered data and try again.",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

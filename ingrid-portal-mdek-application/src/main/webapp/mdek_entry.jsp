@@ -386,8 +386,8 @@ function hideSplash(){
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="ref1ScaleEditors">
 	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScale"></div>
-	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleGroundResolution"></div>
-	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScanResolution"></div>
+	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleGroundResolution"></div>
+	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScanResolution"></div>
 	                  </div>
 	            	    <table id="ref1Scale" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
@@ -406,12 +406,12 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref1AltAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 'H&ouml;hengenauigkeit (m)')">H&ouml;hengenauigkeit (m)</label></span>
-	                  <span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+	                  <span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="w320" dojoType="RealNumberTextbox" /></span>
 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label"><label for="ref1PosAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 'Lagegenauigkeit (m)')">Lagegenauigkeit (m)</label></span>
-	                  <span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+	                  <span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="w320" dojoType="RealNumberTextbox" /></span>
 	                </div>
 	                <div class="fill"></div>
 	          	  </div>
@@ -518,10 +518,6 @@ function hideSplash(){
 	              		<div id="ref1BasisTab1" dojoType="ContentPane" label="Text">
 	                    <span class="input">
 	               			<input type="text" mode="textarea" id="ref1BasisText" name="ref1BasisText" class="w668 h083" dojoType="ingrid:ValidationTextbox" /></span> 
-
-<!-- 
-		                    <textarea id="ref1BasisText" name="ref1BasisText" class="w668 h083" /></textarea>
- -->
 	                    </span>
 	              		</div>
 	              		<div id="ref1BasisTab2" dojoType="ContentPane" label="Verweise">
@@ -626,9 +622,6 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <span class="label"><label for="ref2Author" onclick="javascript:dialog.showContextHelp(arguments[0], 'Autor/Verfasser')">Autor/Verfasser</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref2Author" name="ref2Author" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!-- 
-	                <span class="input"><textarea id="ref2Author" name="ref2Author" class="w668 h038" /></textarea></span>
- -->
 	              </div>
 
 	              <div class="inputContainer notRequired">
@@ -771,9 +764,6 @@ function hideSplash(){
 	                  <span class="input spaceBelow">
 
 						<input type="text" mode="textarea" id="ref3ServiceType" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
-<!-- 	                  	
-	                  	<input dojoType="ingrid:ComboBox" dataUrl="js/data/dummy.js" style="width:302px;" id="ref3ServiceType" name="ref3ServiceType" />
- -->
 					  </span>
 	            	</div>
 
@@ -846,9 +836,6 @@ function hideSplash(){
 	                <div class="half">
 	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3Explanation" name="ref3Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
-<!--
-	                  <span class="input"><textarea id="ref3Explanation" name="ref3Explanation" class="w320 h055" /></textarea></span>
--->
 	                </div>
 	                <div class="fill"></div>
 	          	  </div>
@@ -1336,17 +1323,11 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span class="label"><label for="extraInfoPurpose" onclick="javascript:dialog.showContextHelp(arguments[0], 'Herstellungszweck')">Herstellungszweck</label></span>
                		<span class="input"><input type="text" mode="textarea" id="extraInfoPurpose" name="extraInfoPurpose" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!--
-	                  <span class="input"><textarea id="extraInfoPurpose" name="extraInfoPurpose" class="w320 h038" /></textarea></span>
--->
 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label"><label for="extraInfoUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Eignung/Nutzung')">Eignung/Nutzung</label></span>
                		<span class="input"><input type="text" mode="textarea" id="extraInfoUse" name="extraInfoUse" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-<!--
-	                  <span class="input"><textarea id="extraInfoUse" name="extraInfoUse" class="w320 h038" /></textarea></span>
--->
 	                </div>
 	                <div class="fill"></div>
 	              </div>

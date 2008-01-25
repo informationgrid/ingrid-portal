@@ -34,6 +34,7 @@
 	"dialog.discardPubNotExistMessage":"Wollen Sie wirklich den neu angelegten Metadatensatz '%{0}' und alle unter ihm angeordneten Metadatens&auml;tze verwerfen?",
 	"dialog.undoChangesTitle":"aktuelle &Auml;nderungen verwerfen",
 	"dialog.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Metadatensatz vorgenommenen &Auml;nderungen verwerfen?",
+	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

@@ -4,16 +4,43 @@
 
 dojo.addOnLoad(function() {});
 
+/* IDs of UI Elements for checking etc. */
+var headerUiInputElements = ["objectName", "objectClass", "objectOwner"];
+var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
+var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "spatialRefAltMin", "spatialRefAltMax",
+	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
+var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
+	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
+var availUiInputElements = ["availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo",
+	"availabilityCosts", "availabilityNoteUse"];
+var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusFreeTermsList", "thesaurusEnvExtRes",
+	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
+var class0UiInputElements = [];
+var class1UiInputElements = ["ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
+	"ref1SpatialSystem", "ref1ScaleEditors", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLinks",
+	"ref1KeysText", "ref1KeysLinks", "ref1BasisText", "ref1BasisLink", "ref1DataBasisText", "ref1DataBasisLink", "ref1Data",
+	"ref1ProcessText", "ref1ProcessLink"];
+var class2UiInputElements = ["ref2Author", "ref2Publisher", "ref2PublishedIn", "ref2PublishLocation", "ref2PublishedInIssue",
+	"ref2PublishedInPages", "ref2PublishedInYear", "ref2PublishedISBN", "ref2PublishedPublisher", "ref2LocationText", 
+	"ref2LocationLink", "ref2DocumentType", "ref2BaseDataText", "ref2BaseDataLink", "ref2BibData", "ref2Explanation"];
+var class3UiInputElements = ["ref3ServiceType", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
+	"ref3BaseDataLink", "ref3Explanation", "ref3Operation"];
+var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
+var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
+
+
 var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "thesaurusTermsLabel",
 			  "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "thesaurusEnvTopicsLabel",
 			  "thesaurusEnvCatsLabel"];
+
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["objectClass", "objectClassLabel"],
 					  ["generalDescription", "generalDescLabel"],
 					  ["extraInfoLangData", "extraInfoLangDataLabel"],
 					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"]];
+
 
 var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
@@ -48,27 +75,8 @@ function isObjectPublishable(idcObject) {
 			publishable = false;
 		}
 	}
-/*
-	var span = dojo.byId("thesaurusTermsLabel");
-	if (dojo.html.hasClass(span, "important")) {
-		dojo.html.removeClass(span, "important");
-	} else {
-		dojo.html.addClass(span, "important");	
-	}
-*/
-/*
-	// Check if all the required fields and tables contain data
-	if (!dojo.lang.every(notEmptyFields, notEmptyFunc, idcObject)) {
-		dojo.debug("A required field is empty.");
-		return false;
-	}
-*/
-/*
-	if (!dojo.lang.every(notEmptyTables, notEmptyTableFunc, idcObject)) {
-		dojo.debug("A required table is empty.");
-		return false;
-	}
-*/
+
+
 	// Check if one of the 'Raumbezug' tables has an entry with a bounding box
 	var snsData = idcObject.spatialRefAdminUnitTable;
 	var freeData = idcObject.spatialRefLocationTable;
@@ -146,4 +154,33 @@ function isObjectPublishable(idcObject) {
 	}
 
 	return publishable;
+}
+
+function checkValidityOfInputElements() {
+	var isValid = function(widgetId) {
+//		dojo.debug(widgetId);
+		var widget = dojo.widget.byId(widgetId);
+		if (widget.isValid) {	// check if the widget has an isValid method
+			return widget.isValid();
+		} else {
+//			dojo.debug(widgetId+" has no isValid method.");
+			return true;
+		}
+	}
+
+	var objectClassStr = dojo.widget.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class
+	var objectClass = objectClassStr[5];
+
+	if (dojo.lang.every(headerUiInputElements, isValid) && dojo.lang.every(generalUiInputElements, isValid)
+	 && dojo.lang.every(spatialUiInputElements, isValid) && dojo.lang.every(extraUiInputElements, isValid)
+	 && dojo.lang.every(thesUiInputElements, isValid) && dojo.lang.every(this[objectClassStr+"UiInputElements"], isValid)) {
+		// Object class 0 doesn't have availability information. For all other classes check availability and return
+		if (objectClass != "0") {
+			return dojo.lang.every(availUiInputElements, isValid);
+		}
+	} else {
+		return false;
+	}
+	
+	return true;
 }
