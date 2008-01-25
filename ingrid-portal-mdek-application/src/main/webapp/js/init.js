@@ -219,78 +219,54 @@ function initCTS() {
 	 */
 	function CoordinateUpdateHandler(args){
 		this.srcTable = args.srcTable;
+		this.srcSelect = args.srcSelect;
 		this.dstTable = args.dstTable;
-		dojo.event.connectOnce(args.srcTable, "onSelect", this, "updateCoordinates");
+		dojo.event.connectOnce(this.srcTable, "onSelect", this, "updateCoordinates");
+		dojo.event.connectOnce(this.srcSelect, "onValueChanged", this, "updateCoordinates");
 
 		this.updateDestinationStore = function(ctsResponse) {
-			var data = this.dstTable.store.getData();
-			dojo.debug("Updating destination store srs: "+ctsResponse.spatialReferenceSystem);
-			for (var i = 0; i < data.length; i++) {
-				dojo.debug("data.srs: "+data[i].srs);
-				if (data[i].srs == ctsResponse.spatialReferenceSystem) {
-					dojo.debug("Correct entry found. Updating...");
-					this.dstTable.store.update(data[i], "longitude1", ctsResponse.coordinate.longitude1);
-					this.dstTable.store.update(data[i], "latitude1", ctsResponse.coordinate.latitude1);
-					this.dstTable.store.update(data[i], "longitude2", ctsResponse.coordinate.longitude2);
-					this.dstTable.store.update(data[i], "latitude2", ctsResponse.coordinate.latitude2);
-				}
-			}
-		}
-
-		this.clearDstStoreCoord = function(srs) {
-			var data = this.dstTable.store.getData();
-			var clearValue = "------";
-			dojo.debug("Clearing destination store srs: "+srs);
-			for (var i = 0; i < data.length; i++) {
-				if (data[i].srs == srs) {
-					this.dstTable.store.update(data[i], "longitude1", clearValue);
-					this.dstTable.store.update(data[i], "latitude1", clearValue);
-					this.dstTable.store.update(data[i], "longitude2", clearValue);
-					this.dstTable.store.update(data[i], "latitude2", clearValue);
-				}
-			}
+			var data = this.dstTable.store.getData()[0];
+			this.dstTable.store.update(data, "longitude1", ctsResponse.coordinate.longitude1);
+			this.dstTable.store.update(data, "latitude1", ctsResponse.coordinate.latitude1);
+			this.dstTable.store.update(data, "longitude2", ctsResponse.coordinate.longitude2);
+			this.dstTable.store.update(data, "latitude2", ctsResponse.coordinate.latitude2);
 		}
 
 		this.clearDstStore = function() {
-			var data = this.dstTable.store.getData();
+			var data = this.dstTable.store.getData()[0];
 			var clearValue = "------";
-			for (var i = 0; i < data.length; i++) {
-				this.dstTable.store.update(data[i], "longitude1", clearValue);
-				this.dstTable.store.update(data[i], "latitude1", clearValue);
-				this.dstTable.store.update(data[i], "longitude2", clearValue);
-				this.dstTable.store.update(data[i], "latitude2", clearValue);
-			}
+			this.dstTable.store.update(data, "longitude1", clearValue);
+			this.dstTable.store.update(data, "latitude1", clearValue);
+			this.dstTable.store.update(data, "longitude2", clearValue);
+			this.dstTable.store.update(data, "latitude2", clearValue);
 		}
-
 
 		this.updateCoordinates = function() {
 			var fromSRS = "GEO84";
 			var selectedData = this.srcTable.getSelectedData();
 			this.clearDstStore();
 			if (selectedData.length != 1) {
-				this.clearDstStore();
 				return;
 			}
 			var coords = selectedData[0];
 			var dstStore = this.dstTable.getData();
-			if (coords && dojo.validate.isRealNumber(coords.longitude1)
-					   && dojo.validate.isRealNumber(coords.longitude2)
-					   && dojo.validate.isRealNumber(coords.latitude1)
-					   && dojo.validate.isRealNumber(coords.latitude2)) {
-				for (var i = 0; i < dstStore.length; i++) {
-					var toSRS = dstStore[i].srs;
-					dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
-					CTService.getCoordinates(fromSRS, toSRS, coords, {
-							callback: dojo.lang.hitch(this, this.updateDestinationStore),
-							timeout:8000,
-							errorHandler:function(message) {
-								dojo.debug(message);
-								// There was an error while accessing the CTS
-								// TODO do something...
-							}
+			var toSRS = this.srcSelect.getValue();
+			if (coords && toSRS
+					&& dojo.validate.isRealNumber(coords.longitude1)
+					&& dojo.validate.isRealNumber(coords.longitude2)
+					&& dojo.validate.isRealNumber(coords.latitude1)
+					&& dojo.validate.isRealNumber(coords.latitude2)) {
+				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
+				CTService.getCoordinates(fromSRS, toSRS, coords, {
+						callback: dojo.lang.hitch(this, this.updateDestinationStore),
+						timeout:8000,
+						errorHandler:function(message) {
+							dojo.debug(message);
+							// There was an error while accessing the CTS
+							// TODO do something...
 						}
-					);
-				}
+					}
+				);
 			}
 		}
 	}	// StoreUpdateHandler
@@ -299,13 +275,16 @@ function initCTS() {
 	// Connect all coordinate tables:
 	new CoordinateUpdateHandler({
 		srcTable: dojo.widget.byId("spatialRefAdminUnit"),
+		srcSelect: dojo.widget.byId("spatialRefAdminUnitSelect"),
 		dstTable: dojo.widget.byId("spatialRefAdminUnitCoords")
 	});
 
 	new CoordinateUpdateHandler({
 		srcTable: dojo.widget.byId("spatialRefLocation"),
+		srcSelect: dojo.widget.byId("spatialRefLocationSelect"),
 		dstTable: dojo.widget.byId("spatialRefLocationCoords")
 	});
+
 }
 
 

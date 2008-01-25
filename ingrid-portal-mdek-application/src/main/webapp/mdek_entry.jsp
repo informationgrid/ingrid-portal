@@ -1037,33 +1037,32 @@ function hideSplash(){
 	                <div id="spatialRefCoordsAdminUnit" class="infobox">
 	                  <span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
 	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsAdminUnit');" title="Info aufklappen">Umgerechnete Koordinaten:
-	                    <img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-	                  <div id="spatialRefCoordsAdminUnitContent">
-	              	    <table id="spatialRefAdminUnitCoords" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
-	              	      <thead>
-	              		      <tr>
-	                    			<th field="srs" dataType="String" width="245">Geothesaurus-Raumbezug</th>
-	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
-	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
-	                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
-	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
-	              		      </tr>
-	              	      </thead>
-	              	      <tbody>
+	                    <img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
+	                  </span>
+	                  <div id="spatialRefCoordsAdminUnitContent" style="display:block;">
+	                    <div class="w234 left" style="float:left; margin-top:10px;">
+	                    	<div id="spatialRefAdminUnitSelect" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:250px;"></div>
+	                    </div>
+
+						<div class="w308">
+		                <table id="spatialRefAdminUnitCoords" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable w364 relativePos">
+		              	    <thead>
+		              	      <tr>
+								<th field="longitude1" dataType="String">L&auml;nge 1</th>
+								<th field="latitude1" dataType="String">Breite 1</th>
+								<th field="longitude2" dataType="String">L&auml;nge 2</th>
+								<th field="latitude2" dataType="String">Breite 2</th>
+		              		  </tr>
+		              	    </thead>
+		              	    <tbody>
 	              		      <tr value="0">
-	              		        <td>GK5</td>
 	              		        <td>------</td>
 	              		        <td>------</td>
 	              		        <td>------</td>
 	              		        <td>------</td></tr>
-	              		      <tr value="1">
-	              		        <td>UTM33W</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td></tr>
-	              	      </tbody>
-	              	    </table>
+		              	      </tbody>
+		              	    </table>
+						</div>
 	                  </div>
 	                </div>
 	              </div>
@@ -1100,32 +1099,30 @@ function hideSplash(){
 	                  <span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
 	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="Info aufklappen">Umgerechnete Koordinaten:
 	                    <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-	                  <div id="spatialRefCoordsLocationContent">
-	              	    <table id="spatialRefLocationCoords" dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable relativePos">
-	              	      <thead>
-	              		      <tr>
-	                    			<th field="srs" dataType="String" width="245">Freier Raumbezug</th>
-	                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
-	                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
-	                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
-	                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
-	              		      </tr>
-	              	      </thead>
-	              	      <tbody>
-	              		      <tr value="0">
-	              		        <td>GK5</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td></tr>
-	              		      <tr value="1">
-	              		        <td>UTM33W</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td></tr>
-	              	      </tbody>
-	              	    </table>
+	                  <div id="spatialRefCoordsLocationContent" style="display:block;">
+	                    <div class="w234 left" style="float:left; margin-top:10px;">
+	                    	<div id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:250px;"></div>
+	                    </div>
+
+						<div class="w308">
+		              	    <table id="spatialRefLocationCoords" dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable w364 relativePos">
+		              	      <thead>
+		              		      <tr>
+		                    			<th field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
+		                    			<th field="latitude1" dataType="String" width="90">Breite 1</th>
+		                    			<th field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+		                    			<th field="latitude2" dataType="String" width="90">Breite 2</th>
+		              		      </tr>
+		              	      </thead>
+		              	      <tbody>
+		              		      <tr value="0">
+		              		        <td>------</td>
+		              		        <td>------</td>
+		              		        <td>------</td>
+		              		        <td>------</td></tr>
+		              	      </tbody>
+		              	    </table>
+	              	    </div>
 	              	  </div>
 	                </div>
 	              </div>
@@ -1549,7 +1546,7 @@ function hideSplash(){
 	                  <span class="label">Verweise zu</span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                  <div class="tableContainer rows4">
-	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable nosort interactive half">
+	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable nosort half">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String" width="30"></th>
@@ -1565,7 +1562,7 @@ function hideSplash(){
 	                <div class="half">
 	                  <span class="label">Verweise von</span>
 	                  <div class="tableContainer rows4">
-	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable nosort interactive half">
+	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="5" headClass="fixedHeader" tbodyClass="scrollContent rows5" cellspacing="0" class="filteringTable nosort half">
 	              	      <thead>
 	              		      <tr>
 	                    			<th field="icon" dataType="String" width="30"></th>
