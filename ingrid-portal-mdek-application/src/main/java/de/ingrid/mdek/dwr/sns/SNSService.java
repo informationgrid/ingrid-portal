@@ -275,7 +275,7 @@ public class SNSService {
     	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
     }
 
-    public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
+    private ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
     	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	int[] totalSize = new int[] {0};
 	    Topic[] snsResults = new Topic[0];
