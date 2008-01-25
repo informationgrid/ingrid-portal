@@ -779,7 +779,7 @@ function hideSplash(){
 	               	    <table id="ref3ServiceVersion" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="serviceType" dataType="String" editor="ref3ServiceVersionServiceType">Version des Services</th>
+	                    			<th field="title" dataType="String" editor="ref3ServiceVersionServiceType">Version des Services</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -967,7 +967,7 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Methode/Datengrundlage')">Methode/Datengrundlage</label></span>
-	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 'Methode / Datengrundlage'});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref5MethodTab1">
 	                		<div id="ref5MethodTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
@@ -979,8 +979,8 @@ function hideSplash(){
 	                  	    <table id="ref5MethodLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable interactive half">
 	                  	      <thead>
 	                  		      <tr>
-	                        			<th field="type" dataType="String" width="30"></th>
-	                        			<th field="name" dataType="String" width="190">Namen</th>
+	                        			<th field="icon" dataType="String" width="30"></th>
+	                        			<th field="linkLabel" dataType="String" width="190">Namen</th>
 	                  		      </tr>
 	                  	      </thead>
 	                  	      <tbody>

@@ -461,11 +461,6 @@ closeDialog = function() {
           <span class="label"><label class="inActive" for="linksFromObjectName">Objektname</label></span>
           <span class="input spaceBelow"><input type="text" id="linksFromObjectName" name="linksFromObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
           <span class="label required"><label id="linksFromFieldNameLabel" for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
-<!-- 
-          <span class="input">
-          	<input type="text" id="linksFromFieldName" name="linksFromFieldName" class="w608" dojoType="ingrid:ValidationTextBox" />
-          </span>
-  -->
           <span class="input">
             <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/referenceTypes.js" style="width:590px;" id="linksFromFieldName"></div>
 		  </span>

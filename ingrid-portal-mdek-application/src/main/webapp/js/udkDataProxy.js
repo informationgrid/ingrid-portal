@@ -802,6 +802,7 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 	dojo.widget.byId("ref3BaseDataText").setValue(nodeData.ref3BaseDataText);
 	dojo.widget.byId("ref3Explanation").setValue(nodeData.ref3Explanation);
 
+	dojo.debug("Setting service version to: "+udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
 	dojo.widget.byId("ref3ServiceVersion").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
 
 	// Prepare the operation table for display.
@@ -1067,6 +1068,7 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
 	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
 
+	dojo.debug(udkDataProxy._getTableData("ref3ServiceVersion"));
 	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
 
 	// Convert the containing operation tables to lists
