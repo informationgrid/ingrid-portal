@@ -58,6 +58,19 @@
 .TreeIconInstitutionPerson_B {background-image: url('../../../../img/UDK/addr_person_b.gif');}
 .TreeIconPersonAddress_B {background-image: url('../../../../img/UDK/addr_free_b.gif');}
 
+/* status bv */
+.TreeIconClass0_BV {background-image: url('../../../../img/UDK/udk_class0_bv.gif');}
+.TreeIconClass1_BV {background-image: url('../../../../img/UDK/udk_class1_bv.gif');}
+.TreeIconClass2_BV {background-image: url('../../../../img/UDK/udk_class2_bv.gif');}
+.TreeIconClass3_BV {background-image: url('../../../../img/UDK/udk_class3_bv.gif');}
+.TreeIconClass4_BV {background-image: url('../../../../img/UDK/udk_class4_bv.gif');}
+.TreeIconClass5_BV {background-image: url('../../../../img/UDK/udk_class5_bv.gif');}
+.TreeIconInstitution_BV {background-image: url('../../../../img/UDK/addr_institution_bv.gif');}
+.TreeIconInstitutionUnit_BV {background-image: url('../../../../img/UDK/addr_unit_bv.gif');}
+.TreeIconInstitutionPerson_BV {background-image: url('../../../../img/UDK/addr_person_bv.gif');}
+.TreeIconPersonAddress_BV {background-image: url('../../../../img/UDK/addr_free_bv.gif');}
+
+
 /* status q */
 .TreeIconClass0_Q {background-image: url('../../../../img/UDK/udk_class0_q.gif');}
 .TreeIconClass1_Q {background-image: url('../../../../img/UDK/udk_class1_q.gif');}
@@ -70,6 +83,18 @@
 .TreeIconInstitutionPerson_Q {background-image: url('../../../../img/UDK/addr_person_q.gif');}
 .TreeIconPersonAddress_Q {background-image: url('../../../../img/UDK/addr_free_q.gif');}
 
+/* status qv */
+.TreeIconClass0_QV {background-image: url('../../../../img/UDK/udk_class0_qv.gif');}
+.TreeIconClass1_QV {background-image: url('../../../../img/UDK/udk_class1_qv.gif');}
+.TreeIconClass2_QV {background-image: url('../../../../img/UDK/udk_class2_qv.gif');}
+.TreeIconClass3_QV {background-image: url('../../../../img/UDK/udk_class3_qv.gif');}
+.TreeIconClass4_QV {background-image: url('../../../../img/UDK/udk_class4_qv.gif');}
+.TreeIconClass5_QV {background-image: url('../../../../img/UDK/udk_class5_qv.gif');}
+.TreeIconInstitution_QV {background-image: url('../../../../img/UDK/addr_institution_qv.gif');}
+.TreeIconInstitutionUnit_QV {background-image: url('../../../../img/UDK/addr_unit_qv.gif');}
+.TreeIconInstitutionPerson_QV {background-image: url('../../../../img/UDK/addr_person_qv.gif');}
+.TreeIconPersonAddress_QV {background-image: url('../../../../img/UDK/addr_free_qv.gif');}
+
 /* status r */
 .TreeIconClass0_R {background-image: url('../../../../img/UDK/udk_class0_r.gif');}
 .TreeIconClass1_R {background-image: url('../../../../img/UDK/udk_class1_r.gif');}
@@ -81,6 +106,18 @@
 .TreeIconInstitutionUnit_R {background-image: url('../../../../img/UDK/addr_unit_r.gif');}
 .TreeIconInstitutionPerson_R {background-image: url('../../../../img/UDK/addr_person_r.gif');}
 .TreeIconPersonAddress_R {background-image: url('../../../../img/UDK/addr_free_r.gif');}
+
+/* status rv */
+.TreeIconClass0_RV {background-image: url('../../../../img/UDK/udk_class0_rv.gif');}
+.TreeIconClass1_RV {background-image: url('../../../../img/UDK/udk_class1_rv.gif');}
+.TreeIconClass2_RV {background-image: url('../../../../img/UDK/udk_class2_rv.gif');}
+.TreeIconClass3_RV {background-image: url('../../../../img/UDK/udk_class3_rv.gif');}
+.TreeIconClass4_RV {background-image: url('../../../../img/UDK/udk_class4_rv.gif');}
+.TreeIconClass5_RV {background-image: url('../../../../img/UDK/udk_class5_rv.gif');}
+.TreeIconInstitution_RV {background-image: url('../../../../img/UDK/addr_institution_rv.gif');}
+.TreeIconInstitutionUnit_RV {background-image: url('../../../../img/UDK/addr_unit_rv.gif');}
+.TreeIconInstitutionPerson_RV {background-image: url('../../../../img/UDK/addr_person_rv.gif');}
+.TreeIconPersonAddress_RV {background-image: url('../../../../img/UDK/addr_free_rv.gif');}
 
 /* user */
 .TreeIconKatalogAdmin {background-image: url('../../../../img/UDK/user_katalog_admin.gif');}

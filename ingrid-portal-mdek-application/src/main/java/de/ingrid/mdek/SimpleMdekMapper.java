@@ -268,15 +268,25 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekObj.setNodeAppType("O");
-		String nodeDocType = "Class" + mdekObj.getObjectClass();
-		// If workState... nodeDocType += "_"+workState ?		
-		if (workState.getDbValue().equalsIgnoreCase("B")) {
-			nodeDocType += "_B";
-		}
+		
+		String nodeDocType = getNodeDocType(obj);
 		mdekObj.setNodeDocType(nodeDocType);
 
-
 		return mdekObj;
+	}
+	
+	private static String getNodeDocType(Map<String, Object> obj) {
+		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
+		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
+		// If workState... nodeDocType += "_"+workState ?		
+		if (workState.equalsIgnoreCase("B")) {
+			if (obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean)obj.get(MdekKeys.IS_PUBLISHED)) {
+				nodeDocType += "_BV";
+			} else {
+				nodeDocType += "_B";
+			}
+		}
+		return nodeDocType;
 	}
 
 	private HashMap<String, Object> getSimpleMdekRepresentation(
@@ -296,13 +306,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.put(MDEK_OBJECT_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
-		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
-		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
-		// If workState... nodeDocType += "_"+workState ?		
-		if (workState.equalsIgnoreCase("B")) {
-			nodeDocType += "_B";
-		}
-
+		String nodeDocType = getNodeDocType(obj);
 		mdekObj.put(MDEK_OBJECT_DOCTYPE, nodeDocType);
 
 		return mdekObj;
