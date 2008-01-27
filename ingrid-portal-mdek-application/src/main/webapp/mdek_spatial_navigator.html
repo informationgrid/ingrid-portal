@@ -36,6 +36,7 @@ function showNoResults() {
 	if (resultDiv) {
 		resultDiv.innerHTML = message.get("spatial.noResultsHint");
 	}	
+	dojo.byId("resultLabel").style.visibility = "hidden";
 }
 
 function showLoading() {
@@ -80,6 +81,7 @@ resetResultDiv = function() {
 		while (resultDiv.lastChild)
 			resultDiv.removeChild(resultDiv.lastChild);
 	}
+	dojo.byId("resultLabel").style.visibility = "hidden";
 }
 
 setResultList = function(topicList)
@@ -96,16 +98,38 @@ setResultList = function(topicList)
 						topic: topicList[i]
 					});
 				checkboxArray.push(checkBox);
-				var labelNode = document.createTextNode(label);
 				var divElement = document.createElement("div");
+
+				var linkElement = document.createElement("a"); 
+				linkElement.setAttribute("href", "javascript:void(0);");
+				linkElement.setAttribute("onclick", "findAssociatedLocations('"+topicList[i].topicId+"');");
+				linkElement.innerHTML = label;
+
 				checkboxDiv.appendChild(divElement);
 				divElement.appendChild(checkBox.domNode);
-				divElement.appendChild(labelNode);
+				divElement.appendChild(linkElement);
 			}
 		}
+		dojo.byId("resultLabel").style.visibility = "visible";
 	} else {
 		showNoResults();
 	}
+}
+
+// This function queries the SNSService for similar location topics
+// TODO Implement!
+findAssociatedLocations = function(topicId) {
+	resetResultDiv();
+	deleteComboboxWidgets();
+	showLoading();
+
+	SNSService.getLocationTopics(topicId, {
+		preHook:disableUiElements,
+		postHook:enableUiElements,
+		callback:setResultList,
+		timeout:0,
+		errorHandler:showError
+	});	
 }
 
 // 'Search Button' onClick function
@@ -247,7 +271,7 @@ addLocationTopics = function() {
 
         		<div>&nbsp</div>
         
-        		<span class="label">Auswahl</span>
+        		<span id="resultLabel" class="label" style="visibility:hidden;">Auswahl</span>
         		<span class="floatLeft">
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
@@ -260,6 +284,5 @@ addLocationTopics = function() {
 	</div>
 </div>
 
-</form>
 </body>
 </html>
