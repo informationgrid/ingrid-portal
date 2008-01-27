@@ -156,6 +156,7 @@ function setRequiredState(/*html node to (un-)set the required class*/labelNode,
     }
     else {
       dojo.html.removeClass(labelNode, "required");
+      dojo.html.removeClass(labelNode, "important");	// Remove the important tag too incase it is highlited
       if (textNode.innerHTML.charAt(textNode.innerHTML.length-1) == "*")
         textNode.innerHTML = textNode.innerHTML.substring(0, textNode.innerHTML.length-1);
     }

@@ -1019,7 +1019,7 @@ function hideSplash(){
 	          	</div>
 	        	  <div id="spatialRefContent" class="content">
 
-	              <div class="inputContainer noSpaceBelow h130">
+	              <div id="spatialRefAdminUnitContainer" class="inputContainer noSpaceBelow h130">
 	                <span id="spatialRefAdminUnitLabel" class="label required"><label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
 	                <div class="tableContainer rows5">
@@ -1073,7 +1073,7 @@ function hideSplash(){
 	                </div>
 	              </div>
 
-	              <div class="inputContainer noSpaceBelow notRequired h130">
+	              <div id="spatialRefLocationContainer" class="inputContainer noSpaceBelow notRequired h130">
 	                <span id="spatialRefLocationLabel" class="label required"><label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freier Raumbezug')">Freier Raumbezug*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a></span>
 	                <div class="tableContainer rows5">
