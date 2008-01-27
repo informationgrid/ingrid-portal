@@ -8,7 +8,16 @@
 
 
 <script type="text/javascript">
+var currentOperationId = null;
+var dirtyFlag = null;
+
+var inputElements = 
+	["operationsName", "operationsDescription", "operationsPlatform", "operationsCall",
+	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton", "cancelButton"];
+
+
 _container_.addOnLoad(function() {
+	dirtyFlag = udkDataProxy.dirtyFlag;
 	init();
 });
 
@@ -16,13 +25,24 @@ _container_.addOnUnload(function() {
 	var srcStore = dojo.widget.byId("operationsList").store;
 	var dstStore = dojo.widget.byId("ref3Operation").store;
 	dstStore.setData(srcStore.getData());
+
+	dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
 });
 
-var currentOperationId = null;
 
-var inputElements = 
-	["operationsName", "operationsDescription", "operationsPlatform", "operationsCall",
-	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton", "cancelButton"];
+setDirtyFlag = function() {
+	dirtyFlag = true;
+}
+
+connectStoreWithDirtyFlag = function(store)
+{
+//	dojo.event.connect(store, "onSetData", this, "setDirtyFlag");
+//	dojo.event.connect(store, "onClearData", this, "setDirtyFlag");
+//	dojo.event.connect(store, "onAddDataRange", this, "setDirtyFlag");
+	dojo.event.connect(store, "onAddData", this, "setDirtyFlag");
+	dojo.event.connect(store, "onRemoveData", this, "setDirtyFlag");
+	dojo.event.connect(store, "onUpdateField", this, "setDirtyFlag");
+}
 
 disableInputElements = function() {
 	dojo.lang.forEach(inputElements, function(item) {
@@ -91,6 +111,8 @@ init = function() {
 	var srcStore = dojo.widget.byId("ref3Operation").store;
 	var dstStore = dojo.widget.byId("operationsList").store;
 	dstStore.setData(srcStore.getData());
+
+	connectStoreWithDirtyFlag(dstStore);
 }
 
 getOperation = function() {

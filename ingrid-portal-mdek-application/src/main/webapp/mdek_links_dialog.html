@@ -35,7 +35,7 @@ setDirtyFlag = function() {
 	dirtyFlag = true;
 }
 
-_connectStoreWithDirtyFlag = function(store)
+connectStoreWithDirtyFlag = function(store)
 {
 //	dojo.event.connect(store, "onSetData", this, "setDirtyFlag");
 //	dojo.event.connect(store, "onClearData", this, "setDirtyFlag");
@@ -241,8 +241,8 @@ init = function() {
 	}
 
 	// Connect the object and url store with the internal dirty flag
-	_connectStoreWithDirtyFlag(objStore);
-	_connectStoreWithDirtyFlag(urlStore);
+	connectStoreWithDirtyFlag(objStore);
+	connectStoreWithDirtyFlag(urlStore);
 };
 
 saveLink = function() {
@@ -313,9 +313,6 @@ saveLink = function() {
   		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
 		return;
 	}
-	
-	// If we get here, data has been changed
-	setDirtyFlag();
 }
 
 _getUrl = function() {
