@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Raumbezug festlegen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	dojo.widget.byId("spatialAssistCS").setLabel("");
+});
+_container_.addOnUnload(function() {
+
+});
+
+
+validateInput = function() {
+	if (dojo.widget.byId("spatialAssistCS").getValue() == ""
+	 || dojo.widget.byId("spatialAssistRef").getValue() == ""
+	 || !dojo.widget.byId("spatialAssistLon1").isValid()
+	 || !dojo.widget.byId("spatialAssistLat1").isValid()
+	 || !dojo.widget.byId("spatialAssistLon2").isValid()
+	 || !dojo.widget.byId("spatialAssistLat2").isValid())
+		return false;
+
+	return true;
+}
+
+addLocation = function() {
+	if (!validateInput()) {
+	  	dialog.show(message.get("general.hint"), message.get("dialog.fillAllFieldsHint"), dialog.WARNING);
+		return;
+	}
+
+	var location = dojo.widget.byId("spatialAssistRef").getValue();
+	var fromSRS = dojo.widget.byId("spatialAssistCS").getValue();
+	var toSRS = "GEO84";
+	var coords = {longitude1: dojo.widget.byId("spatialAssistLon1").getValue(), 
+				  latitude1: dojo.widget.byId("spatialAssistLat1").getValue(),
+				  longitude2: dojo.widget.byId("spatialAssistLon2").getValue(),
+				  latitude2: dojo.widget.byId("spatialAssistLat2").getValue()
+				 };
+
+	CTService.getCoordinates(fromSRS, toSRS, coords, {
+			callback: function(res) {
+				var dstStore = dojo.widget.byId("spatialRefLocation").store;
+				if (res.coordinate) {
+					dstStore.addData({
+						Id: getNewKey(dstStore),
+						name: location,
+						longitude1: res.coordinate.longitude1,
+						latitude1: res.coordinate.latitude1,
+						longitude2: res.coordinate.longitude2,
+						latitude2: res.coordinate.latitude2					
+					});
+				} else {
+					dstStore.addData({
+						Id: getNewKey(dstStore),
+						name: location
+					});
+				}
+				_container_.closeWindow();
+			},
+			timeout:8000,
+			errorHandler:function(message) {
+				dojo.debug("Error: "+message);
+				var dstStore = dojo.widget.byId("spatialRefLocation").store;
+				dstStore.addData({
+					Id: getNewKey(dstStore),
+					name: location
+				});
+				_container_.closeWindow();
+			}
+		}
+	);
+}
+
+function getNewKey() {
+	var data = dojo.widget.byId("spatialRefLocation").store.get();
+
+	var key = 0;
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+
+	return key;
+}
+
+
+</script>
+</head>
+
+<body>
+
+<div dojoType="ContentPane">
+
+	<div class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="spatialAssistContent" class="content">
+
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<!-- CONTENT START -->
+			<div class="inputContainer w478 noSpaceBelow">
+			<table cellspacing="0">
+				<tbody>
+					<tr>
+						<td class="label"><label for="spatialAssistRef">Raumbezug: </label></td>
+						<td colspan="2"><input type="text" dojoType="ingrid:ValidationTextbox" id="spatialAssistRef" class="w308"/></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="spatialAssistLon1">L&auml;ngengrad 1: </label></td>
+						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLon1" class="w308"/></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="spatialAssistLat1">Breitengrad 1: </label></td>
+						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLat1" class="w308"/></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="spatialAssistLon2">L&auml;ngengrad 2: </label></td>
+						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLon2" class="w308"/></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="spatialAssistLat2">Breitengrad 2: </label></td>
+						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLat2" class="w308"/></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="spatialAssistCS">Koordinatensystem: </label></td>
+						<td colspan="2">
+							<div id="spatialAssistCS" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:230px;" />
+						</td>
+					</tr>
+				</tbody>
+		  	</table>
+			<span style="float:right;">
+				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="addLocation">Hinzuf&uuml;gen</button>
+			</span>
+			</div>
+	  		<!-- CONTENT END -->
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

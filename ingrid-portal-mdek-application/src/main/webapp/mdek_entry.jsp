@@ -1081,7 +1081,10 @@ function hideSplash(){
 
 	              <div id="spatialRefLocationContainer" class="inputContainer noSpaceBelow notRequired h130">
 	                <span id="spatialRefLocationLabel" class="label required"><label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freier Raumbezug')">Freier Raumbezug*</label></span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a></span>
+	                <span class="functionalLink">
+	                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Raumbezug hinzuf&uuml;gen', 'mdek_spatial_assist_dialog.html', 505, 220, true);" title="Raumbezug Assistent [Popup]">Raumbezug hinzuf&uuml;gen</a>
+	                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a>
+	                </span>
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
 	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/spatialLocation.js" style="width:300px;" widgetId="freeReferencesEditor"></div>

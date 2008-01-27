@@ -36,6 +36,7 @@
 	"dialog.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Metadatensatz vorgenommenen &Auml;nderungen verwerfen?",
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 	"dialog.commentTitle":"Kommentare zu '%{0}'",
+	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
 
     "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
