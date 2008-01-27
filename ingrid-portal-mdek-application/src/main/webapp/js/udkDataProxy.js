@@ -1148,7 +1148,8 @@ udkDataProxy._addTableIndices = function(list) {
 udkDataProxy._addDisplayDates = function(list) {
 	if (list) {
 		for (var i = 0; i < list.length; ++i) {
-			list[i].displayDate = list[i].date.toLocaleString();
+//			list[i].displayDate = list[i].date.toLocaleString();
+			list[i].displayDate = dojo.date.format(list[i].date, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"H:m"});
 		}
 		return list;
 	} else {

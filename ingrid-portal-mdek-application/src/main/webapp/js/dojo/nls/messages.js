@@ -75,6 +75,7 @@
 	"dialog.undoChangesTitle":"Discard current changes",
 	"dialog.undoChangesMessage":"Do you want to discard all changes since the last save?",
 	"dialog.inputInvalidError":"There was an error validating input fields. Please check all entered data and try again.",
+	"dialog.commentTitle":"Comments for '%{0}'",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",
