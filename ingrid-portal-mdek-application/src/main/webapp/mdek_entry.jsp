@@ -1060,12 +1060,18 @@ function hideSplash(){
 								<th field="latitude2" dataType="String">Breite 2</th>
 		              		  </tr>
 		              	    </thead>
+							  <colgroup>
+							    <col width="120">
+							    <col width="120">
+							    <col width="120">
+							    <col width="120">
+							  </colgroup>
 		              	    <tbody>
 	              		      <tr value="0">
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td>
-	              		        <td>------</td></tr>
+	              		        <td>&nbsp;</td>
+	              		        <td>&nbsp;</td>
+	              		        <td>&nbsp;</td>
+	              		        <td>&nbsp;</td></tr>
 		              	      </tbody>
 		              	    </table>
 						</div>
@@ -1122,10 +1128,10 @@ function hideSplash(){
 		              	      </thead>
 		              	      <tbody>
 		              		      <tr value="0">
-		              		        <td>------</td>
-		              		        <td>------</td>
-		              		        <td>------</td>
-		              		        <td>------</td></tr>
+		              		        <td>&nbsp;</td>
+		              		        <td>&nbsp;</td>
+		              		        <td>&nbsp;</td>
+		              		        <td>&nbsp;</td></tr>
 		              	      </tbody>
 		              	    </table>
 	              	    </div>

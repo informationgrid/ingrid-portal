@@ -234,7 +234,16 @@ function initCTS() {
 
 		this.clearDstStore = function() {
 			var data = this.dstTable.store.getData()[0];
-			var clearValue = "------";
+			var clearValue = "";
+			this.dstTable.store.update(data, "longitude1", clearValue);
+			this.dstTable.store.update(data, "latitude1", clearValue);
+			this.dstTable.store.update(data, "longitude2", clearValue);
+			this.dstTable.store.update(data, "latitude2", clearValue);
+		}
+
+		this.showError = function() {
+			var data = this.dstTable.store.getData()[0];
+			var clearValue = "D.n.e.";
 			this.dstTable.store.update(data, "longitude1", clearValue);
 			this.dstTable.store.update(data, "latitude1", clearValue);
 			this.dstTable.store.update(data, "longitude2", clearValue);
@@ -262,8 +271,7 @@ function initCTS() {
 						timeout:8000,
 						errorHandler:function(message) {
 							dojo.debug(message);
-							// There was an error while accessing the CTS
-							// TODO do something...
+							this.showError();
 						}
 					}
 				);
