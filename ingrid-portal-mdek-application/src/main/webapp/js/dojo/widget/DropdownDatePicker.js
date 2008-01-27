@@ -44,6 +44,15 @@ dojo.widget.defineWidget(
       return "";
   },
 
+  /*
+   * Clears the input field and stored date
+   */
+  clearValue: function() {
+	this.valueNode.value = "";
+	this.datePicker.value = "";
+	this._updateText();
+  },
+
 	getDisplayValue: function() {
 		// get the value and format it
 		var value = dojo.widget.DropdownDatePicker.prototype.getValue.apply(this, arguments);

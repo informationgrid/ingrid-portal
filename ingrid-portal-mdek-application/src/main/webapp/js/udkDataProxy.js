@@ -598,15 +598,13 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Time --
   dojo.widget.byId("timeRefType").setValue(nodeData.timeRefType);
-//  if (nodeData.timeRefType) { dojo.widget.byId("timeRefType").setValue(nodeData.timeRefType); }
-//  else { dojo.widget.byId("timeRefType").setValue(""); }
   // If we don't receive a date set the date to 'today'. The dojo DatePicker doesn't support clearing
   // the displayed date.
   // TODO create an ingrid:DropdownDatePicker and add a 'clearDate' method
   if (nodeData.timeRefDate1) { dojo.widget.byId("timeRefDate1").setValue(nodeData.timeRefDate1); }
-  else { dojo.widget.byId("timeRefDate1").setDate(new Date()); }
+  else { dojo.widget.byId("timeRefDate1").clearValue(); }
   if (nodeData.timeRefDate2) { dojo.widget.byId("timeRefDate2").setValue(nodeData.timeRefDate2); }
-  else { dojo.widget.byId("timeRefDate2").setDate(new Date()); }
+  else { dojo.widget.byId("timeRefDate2").clearValue(); }
   dojo.widget.byId("timeRefStatus").setValue(nodeData.timeRefStatus);
   dojo.widget.byId("timeRefPeriodicity").setValue(nodeData.timeRefPeriodicity);
   dojo.widget.byId("timeRefIntervalNum").setValue(nodeData.timeRefIntervalNum);
@@ -866,8 +864,6 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Time --
   nodeData.timeRefType = dojo.widget.byId("timeRefType").getValue();
-//  dojo.debug("Value: "+dojo.widget.byId("timeRefDate1").getValue());
-//  dojo.debug("Date: "+dojo.widget.byId("timeRefDate1").getDate());
 
   if (dojo.widget.byId("timeRefType").getValue() != "") {
 	  if (dojo.widget.byId("timeRefDate1").getValue() != "") {

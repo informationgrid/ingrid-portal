@@ -20,8 +20,8 @@ function applyMinMaxRule(minimumField, maximumField) {
   if (minVal.length > 0 && maxVal.length > 0 && parseFloat(minVal) > parseFloat(maxVal)) {
     minimumField.updateClass("Invalid");
     maximumField.updateClass("Invalid");
-    dialog.show(message.get('general.error'), dojo.string.substituteParams(message.get('validation.minmax'), 'Minimum', 'Maximum'), dialog.WARNING, 
-          [{caption:message.get('general.ok'), action:function() {
+    dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("validation.minmax"), "Minimum", "Maximum"), dialog.WARNING, 
+          [{caption:message.get("general.ok"), action:function() {
               minimumField.updateClass("Invalid");
               maximumField.updateClass("Invalid");
             }
