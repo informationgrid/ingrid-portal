@@ -149,11 +149,13 @@ init = function() {
 	// The selected value has to be displayed on select
 	dojo.event.connectOnce("after", objectList, "onSelect", function() {
 		// Update the displayed data
-		selectLinkType("obj");
 		var selectedObjects = objectList.getSelectedData();
-		curSelectedObject = {};
-		curSelectedUrl = {};
-		if (selectedObjects.length == 1) {
+		if (selectedObjects.length == 0) {
+			curSelectedObject = {};
+			return;
+		} else if (selectedObjects.length == 1) {
+			selectLinkType("obj");
+			curSelectedUrl = {};
 			curSelectedObject = selectedObjects[0];
 			// Reset the URL List
 			urlList.resetSelections();
@@ -167,6 +169,8 @@ init = function() {
 			dojo.widget.byId("saveButton").setCaption("Speichern");
 			showInputElements();
 		} else {
+			curSelectedObject = {};
+			curSelectedUrl = {};
 			hideInputElements(); 
 			resetInputFields();
 		}
@@ -175,11 +179,13 @@ init = function() {
 	// The selected value has to be displayed on select
 	dojo.event.connectOnce("after", urlList, "onSelect", function() {
 		// Update the displayed data
-		selectLinkType("url");
 		var selectedUrls = urlList.getSelectedData();
-		curSelectedUrl = {};
-		curSelectedObject = {};
-		if (selectedUrls.length == 1) {
+		if (selectedUrls.length == 0) {
+			curSelectedUrl = {};
+			return;
+		} else if (selectedUrls.length == 1) {
+			selectLinkType("url");
+			curSelectedObject = {};
 			curSelectedUrl = selectedUrls[0];
 			// Reset the obj List
 			objectList.resetSelections();
@@ -198,6 +204,8 @@ init = function() {
 			dojo.widget.byId("saveButton").setCaption("Speichern");
 			showInputElements();
 		} else {
+			curSelectedObject = {};
+			curSelectedUrl = {};
 			hideInputElements(); 
 			resetInputFields();
 		}
@@ -408,7 +416,7 @@ resetInputFields = function() {
 	dojo.widget.byId("linksToObjectName").setValue("");
 	dojo.widget.byId("linksToObjectClass").setValue("");
 	dojo.widget.byId("linksToDescription").setValue("");	
-	dojo.widget.byId("linksToURL").setValue("");
+	dojo.widget.byId("linksToURL").setValue("http://");
 	dojo.widget.byId("linksToName").setValue("");
 	dojo.widget.byId("linksToDataType").setValue("");
 	dojo.widget.byId("linksToDataVolume").setValue("");
@@ -513,7 +521,7 @@ closeDialog = function() {
 	        <div id="linkToURL" class="outlined w616">
 	          <span class="label required"><label id="linksToNameLabel" for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bezeichnung des Verweises')">Bezeichnung des Verweises*</label></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToName" name="linksToName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
-	          <span class="label required"><label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'WWW-Adresse (URL)')">WWW-Adresse (URL)*</label></span>
+	          <span class="label required"><label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Internet-Adresse (URL)')">Internet-Adresse (URL)*</label></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToURL" name="linksToURL" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 	
 	          <div class="inputContainer">

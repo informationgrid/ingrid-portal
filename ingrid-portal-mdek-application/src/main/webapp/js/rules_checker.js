@@ -159,7 +159,7 @@ function isObjectPublishable(idcObject) {
 
 function checkValidityOfInputElements() {
 	var isValid = function(widgetId) {
-		dojo.debug(widgetId);
+//		dojo.debug(widgetId);
 		var widget = dojo.widget.byId(widgetId);
 		if (widget.isValid) {	// check if the widget has an isValid method
 			if (widget.isEmpty) { // check if the widget has an isMissing method
@@ -168,7 +168,7 @@ function checkValidityOfInputElements() {
 				return widget.isValid();
 			}
 		} else {
-			dojo.debug(widgetId+" has no isValid method.");
+//			dojo.debug(widgetId+" has no isValid method.");
 			return true;
 		}
 	}

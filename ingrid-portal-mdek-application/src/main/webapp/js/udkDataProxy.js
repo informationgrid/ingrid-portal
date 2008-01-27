@@ -1164,7 +1164,10 @@ udkDataProxy._addObjectLinkLabels = function(list) {
 udkDataProxy._addUrlLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
 		if (list[i].url) {
-			list[i].linkLabel = "<a href='"+list[i].url+"' target=\"_blank\" title='"+list[i].name+"'>"+list[i].name+"</a>";
+			if (dojo.string.startsWith(list[i].url, "http://"))
+				list[i].linkLabel = "<a href='"+list[i].url+"' target=\"_blank\" title='"+list[i].name+"'>"+list[i].name+"</a>";
+			else
+				list[i].linkLabel = list[i].name;
 		}
 	}
 	return list;

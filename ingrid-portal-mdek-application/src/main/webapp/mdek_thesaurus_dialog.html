@@ -286,7 +286,7 @@ acceptTopicList = function() {
       <div class="spacer"></div>
       <div class="inputContainer field grey noSpaceBelow fullField">
 
-        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suche nach')">Suche nach</label></span>
+        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suche nach')">Suche nach Deskriptoren und Ordnungsbegriffen</label></span>
         <span class="input"><input type="text" id="thesSearch" name="thesSearch" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
         <div class="spacerField"></div>
   	  </div>
@@ -337,10 +337,10 @@ acceptTopicList = function() {
         </div>
 
         <div dojoType="ContentPane">
-    	    <table id="thesaurusDescList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive third relativePos">
+    	    <table id="thesaurusDescList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort interactive third relativePos">
     	      <thead>
     		      <tr>
-          			<th field="title" dataType="String" width="255" sort="desc">&nbsp;</th>
+          			<th nosort="true" field="title" dataType="String" width="255" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
     	    <tbody>
