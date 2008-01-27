@@ -295,14 +295,19 @@ function hideSplash(){
 	                    <div class="cellEditors" id="generalAddressEditors">
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/addressReferenceTypes.js" style="width:120px;" widgetId="generalAddressCombobox"></div>
 	                    </div>
-	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive full">
+	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox" width="120"></th>
-	                  			<th nosort="true" field="icon" dataType="String" width="35"></th>
-	                  			<th nosort="true" field="name" dataType="String" width="520">Namen</th>
+	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox"></th>
+	                  			<th nosort="true" field="icon" dataType="String"></th>
+	                  			<th nosort="true" field="name" dataType="String">Namen</th>
 	            		      </tr>
 	            	      </thead>
+						  <colgroup>
+						    <col width="120">
+						    <col width="23">
+						    <col width="520">
+						  </colgroup>
 	            	      <tbody>
 	            	      </tbody>
 	            	    </table>
