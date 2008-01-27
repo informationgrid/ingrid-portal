@@ -17,8 +17,8 @@ var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusFreeTe
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
 var class1UiInputElements = ["ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
-	"ref1SpatialSystem", "ref1Scale", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLinks",
-	"ref1KeysText", "ref1KeysLinks", "ref1BasisText", "ref1BasisLink", "ref1DataBasisText", "ref1DataBasisLink", "ref1Data",
+	"ref1SpatialSystem", "ref1Scale", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLink",
+	"ref1KeysText", "ref1KeysLink", "ref1BasisText", "ref1BasisLink", "ref1DataBasisText", "ref1DataBasisLink", "ref1Data",
 	"ref1ProcessText", "ref1ProcessLink"];
 var class2UiInputElements = ["ref2Author", "ref2Publisher", "ref2PublishedIn", "ref2PublishLocation", "ref2PublishedInIssue",
 	"ref2PublishedInPages", "ref2PublishedInYear", "ref2PublishedISBN", "ref2PublishedPublisher", "ref2LocationText", 

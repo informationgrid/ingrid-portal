@@ -87,7 +87,7 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/getObjectPathRequest", udkDataProxy, "handleGetObjectPathRequest");
 
 	// Set initial values
-	dirtyFlag = false;
+	udkDataProxy.dirtyFlag = false;
 	commentStore = new dojo.collections.Store();	
 
 
@@ -115,137 +115,69 @@ dojo.addOnLoad(function()
 	}
 	dojo.event.connect("around", treeListener, "processNode", aroundTreeClick);
 
-
 	// Connect the widgets onChange methods to the setDirtyFlag Method
-    dojo.event.connect(dojo.widget.byId("objectName"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("objectClass"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("objectOwner"), "onValueChanged", udkDataProxy, "setDirtyFlag");
+	dojo.lang.forEach(headerUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(generalUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(spatialUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(extraUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(availUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(thesUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class0UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class1UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class2UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class3UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class4UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class5UiInputElements, _connectWidgetWithDirtyFlag);
 
-    dojo.event.connect(dojo.widget.byId("generalShortDesc"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("generalDesc"), "onkeyup", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("generalAddress").store);
-
-    dojo.event.connect(dojo.widget.byId("ref1DataSet"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref1Coverage"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref1Representation"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref1VFormatTopology"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1VFormatDetails").store);
-    dojo.event.connect(dojo.widget.byId("ref1SpatialSystem"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1Scale").store);
-    dojo.event.connect(dojo.widget.byId("ref1AltAccuracy"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref1PosAccuracy"), "onkeyup", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1SymbolsText").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1KeysText").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1ServiceLink").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1BasisLink").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1DataBasisLink").store);
-    dojo.event.connect(dojo.widget.byId("ref1Data"), "onkeyup", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref1ProcessLink").store);
-
-    dojo.event.connect(dojo.widget.byId("ref2Author"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2Publisher"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishedIn"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishLocation"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishedInIssue"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishedInPages"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishedInYear"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishedISBN"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2PublishedPublisher"), "onkeyup", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref2LocationLink").store);
-    dojo.event.connect(dojo.widget.byId("ref2DocumentType"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref2BaseDataLink").store);
-    dojo.event.connect(dojo.widget.byId("ref2BibData"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref2Explanation"), "onkeyup", udkDataProxy, "setDirtyFlag");
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3ServiceType").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3ServiceVersion").store);
-    dojo.event.connect(dojo.widget.byId("ref3SystemEnv"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("ref3History"), "onkeyup", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3BaseDataLink").store);
-    dojo.event.connect(dojo.widget.byId("ref3Explanation"), "onkeyup", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref3Operation").store);
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref4ParticipantsLink").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref4PMLink").store);
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5dbContent").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("ref5MethodLink").store);
-    dojo.event.connect(dojo.widget.byId("ref5Explanation"), "onkeyup", udkDataProxy, "setDirtyFlag");
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefAdminUnit").store);
-//	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefCoordsAdminUnit").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefLocation").store);
-//	_connectStoreWithDirtyFlag(dojo.widget.byId("spatialRefCoordsLocation").store);
-    dojo.event.connect(dojo.widget.byId("spatialRefAltMin"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("spatialRefAltMax"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("spatialRefAltMeasure"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("spatialRefAltVDate"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("spatialRefExplanation"), "onkeyup", udkDataProxy, "setDirtyFlag");
-
-    dojo.event.connect(dojo.widget.byId("timeRefType"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("timeRefDate1"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("timeRefDate2"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("timeRefStatus"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("timeRefPeriodicity"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("timeRefIntervalNum"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("timeRefIntervalUnit"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("timeRefTable").store);
-    dojo.event.connect(dojo.widget.byId("timeRefExplanation"), "onkeyup", udkDataProxy, "setDirtyFlag");
-
-    dojo.event.connect(dojo.widget.byId("extraInfoLangMetaData"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("extraInfoLangData"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("extraInfoPublishArea"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoXMLExportTable").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("extraInfoLegalBasicsTable").store);
-    dojo.event.connect(dojo.widget.byId("extraInfoPurpose"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("extraInfoUse"), "onkeyup", udkDataProxy, "setDirtyFlag");
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("availabilityDataFormat").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("availabilityMediaOptions").store);
-    dojo.event.connect(dojo.widget.byId("availabilityOrderInfo"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("availabilityNoteUse"), "onkeyup", udkDataProxy, "setDirtyFlag");
-    dojo.event.connect(dojo.widget.byId("availabilityCosts"), "onkeyup", udkDataProxy, "setDirtyFlag");
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusTerms").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusTopics").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusFreeTermsList").store);
-    dojo.event.connect(dojo.widget.byId("thesaurusEnvExtRes"), "onValueChanged", udkDataProxy, "setDirtyFlag");
-	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusEnvTopics").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("thesaurusEnvCats").store);
-
-	_connectStoreWithDirtyFlag(dojo.widget.byId("linksTo").store);
-	_connectStoreWithDirtyFlag(dojo.widget.byId("linksFrom").store);
 
 	dojo.event.connect(udkDataProxy, "_setData", udkDataProxy, "resetDirtyFlag");
-/*
-	// Table
-	_connectStoreWithDirtyFlag(dojo.widget.byId("TABLENAME").store);
-	// SelectBox
-    dojo.event.connect(dojo.widget.byId("SELECTBOXNAME"), "onValueChanged", "setDirtyFlag");
-	// ValidationTextbox
-    dojo.event.connect(dojo.widget.byId("TEXTBOXNAME"), "onkeyup", "setDirtyFlag");
-*/
   }
 );
 
 udkDataProxy.setDirtyFlag = function()
 {
-	dirtyFlag = true;
+	this.dirtyFlag = true;
 }
 
 udkDataProxy.resetDirtyFlag = function()
 {
-	dirtyFlag = false;
+	this.dirtyFlag = false;
+}
+
+
+_connectWidgetWithDirtyFlag = function(widgetId) {
+	// We don't need to connect the 'Link' tables. If those tables are changed, the 'master' table (linksTo)
+	// will be changed and set the dirty flag 
+	if (dojo.string.endsWith(widgetId, "Link")) {
+		return;
+	}
+
+	var widget = dojo.widget.byId(widgetId);
+	if (widget instanceof dojo.widget.RealNumberTextbox) {
+    	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
+	} else if (widget instanceof dojo.widget.Checkbox) {
+    	dojo.event.connect(widget, "onClick", udkDataProxy, "setDirtyFlag");
+	} else if (widget instanceof ingrid.widget.ValidationTextbox) {
+    	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
+	} else if (widget instanceof ingrid.widget.Select) {
+	    dojo.event.connect(widget, "onValueChanged", udkDataProxy, "setDirtyFlag");
+	} else if (widget instanceof ingrid.widget.ComboBox) {
+	    dojo.event.connect(widget, "onValueChanged", udkDataProxy, "setDirtyFlag");
+	} else if (widget instanceof ingrid.widget.FilteringTable) {
+		_connectStoreWithDirtyFlag = widget.store;	
+	} else {
+		dojo.debug("Can't connect widget "+widgetId+" with dirty flag. Method not implemented for "+widget);
+	}
 }
 
 _connectStoreWithDirtyFlag = function(store)
 {
 	dojo.event.connect(store, "onSetData", udkDataProxy, "setDirtyFlag");
+	dojo.event.connect(store, "onClearData", udkDataProxy, "setDirtyFlag");
 	dojo.event.connect(store, "onAddData", udkDataProxy, "setDirtyFlag");
 	dojo.event.connect(store, "onAddDataRange", udkDataProxy, "setDirtyFlag");
 	dojo.event.connect(store, "onRemoveData", udkDataProxy, "setDirtyFlag");
 	dojo.event.connect(store, "onUpdateField", udkDataProxy, "setDirtyFlag");
-	dojo.event.connect(store, "onSetData", udkDataProxy, "setDirtyFlag");
 }
 
 // This function has to be called before any UI functions that are about to change the
@@ -260,7 +192,7 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 	dojo.debug("Check for unsaved changes called.");
 
 	var deferred = new dojo.Deferred();
-	if (dirtyFlag == true) {
+	if (this.dirtyFlag == true) {
 		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 342, 130, true, {resultHandler: deferred});
 
 		// If the user was editing a newly created node and he wants to discard the changes
@@ -312,9 +244,10 @@ udkDataProxy.handleLoadRequest = function(msg)
 						if (res != null) {
 							udkDataProxy._setData(res);
 							udkDataProxy._updateTree(res);
+							resetRequiredFields();
 							if (resultHandler)
 								resultHandler.callback();
-							resetRequiredFields();
+							udkDataProxy.resetDirtyFlag();
 						} else {
 //							dojo.debug(resultHandler);
 							if (typeof(resultHandler) != "undefined") {
@@ -818,7 +751,7 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 	dojo.widget.byId("ref3BaseDataText").setValue(nodeData.ref3BaseDataText);
 	dojo.widget.byId("ref3Explanation").setValue(nodeData.ref3Explanation);
 
-	dojo.debug("Setting service version to: "+udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
+//	dojo.debug("Setting service version to: "+udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
 	dojo.widget.byId("ref3ServiceVersion").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
 
 	// Prepare the operation table for display.

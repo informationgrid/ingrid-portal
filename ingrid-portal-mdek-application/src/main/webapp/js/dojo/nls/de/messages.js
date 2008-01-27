@@ -3,7 +3,7 @@
     "general.ok":"Ok",
     "general.cancel":"Abbrechen",
     "general.error":"Fehler",
-    "general.hint":"Hint",
+    "general.hint":"Hinweis",
     "general.help":"Hilfe - Allgemeines",
     "general.showAddress":"Zeige Adresse",
     "general.delete":"Löschen",

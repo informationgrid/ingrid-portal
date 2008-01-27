@@ -279,7 +279,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
 		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
 		// If workState... nodeDocType += "_"+workState ?		
-		if (workState.equalsIgnoreCase("B")) {
+		if (workState != null && workState.equalsIgnoreCase("B")) {
 			if (obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean)obj.get(MdekKeys.IS_PUBLISHED)) {
 				nodeDocType += "_BV";
 			} else {

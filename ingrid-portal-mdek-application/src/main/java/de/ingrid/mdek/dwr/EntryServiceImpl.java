@@ -40,6 +40,7 @@ public class EntryServiceImpl implements EntryService {
 
 	// TODO Move the following to EntryService.java?
 	private final static String OBJECT_ROOT_DOCTYPE = "Objects";
+	private final static String OBJECT_INITIAL_DOCTYPE = "Class0_B";
 	private final static String ROOT_MENU_ID = "contextMenu2";
 	private final static String NODE_MENU_ID = "contextMenu1";
 	private final static String NODE_DOJO_TYPE = "ingrid:TreeNode";
@@ -149,6 +150,7 @@ public class EntryServiceImpl implements EntryService {
 		data.setTitle("Neues Objekt");
 		data.setObjectName("Neues Objekt");
 		data.setNodeAppType(OBJECT_APPTYPE);
+		data.setNodeDocType(OBJECT_INITIAL_DOCTYPE);
 		data.setUuid("newNode");
 		return data;
 	}

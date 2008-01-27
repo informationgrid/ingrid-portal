@@ -10,12 +10,15 @@
 <script type="text/javascript">
 var curSelectedObject = {};
 var curSelectedUrl = {};
+var dirtyFlag = null;
 
 _container_.addOnLoad(function() {
+	dirtyFlag = udkDataProxy.dirtyFlag;
 	init();
 });
 _container_.addOnUnload(function() {
 	acceptLinkList();
+	dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
 });
 
 
@@ -26,6 +29,21 @@ var objUiInputElements = [["linksToObjectName", "linksToObjectNameLabel"],
 var urlUiInputElements = [["linksToName", "linksToNameLabel"],
 						  ["linksToURL", "linksToURLLabel"],
 						  ["linksToDataType", "linksToDataTypeLabel"]];
+
+
+setDirtyFlag = function() {
+	dirtyFlag = true;
+}
+
+_connectStoreWithDirtyFlag = function(store)
+{
+//	dojo.event.connect(store, "onSetData", this, "setDirtyFlag");
+//	dojo.event.connect(store, "onClearData", this, "setDirtyFlag");
+//	dojo.event.connect(store, "onAddDataRange", this, "setDirtyFlag");
+	dojo.event.connect(store, "onAddData", this, "setDirtyFlag");
+	dojo.event.connect(store, "onRemoveData", this, "setDirtyFlag");
+	dojo.event.connect(store, "onUpdateField", this, "setDirtyFlag");
+}
 
 
 resetRequiredInputElements = function() {
@@ -111,22 +129,15 @@ init = function() {
 	// current url is deselected, if an url is selected the object is deselected 
 	var objectList = dojo.widget.byId("linkListObject");
 	var urlList = dojo.widget.byId("linkListURL");
-	dojo.event.connectOnce(objectList, "onSelect", function() {
-		urlList.resetSelections();
-		urlList.renderSelections();
-		showInputElements();
-	});
-	dojo.event.connectOnce(urlList, "onSelect", function() {
-		objectList.resetSelections();
-		objectList.renderSelections();
-		showInputElements();
-	});
 
-	// If a selected object was removed from the list, reset the input fields
+	// If a selected object was removed from the lists, reset the input fields
 	dojo.event.connectOnce("after", objectList.store, "onRemoveData", function(obj) {	
-		if (objectList.getSelectedData() == obj.src || urlList.getSelectedData() == obj.src) {
+		if (dojo.lang.some(objectList.getSelectedData(), function(item){ return (item == obj.src); }))
 			resetInput();
-		}
+	});
+	dojo.event.connectOnce("after", urlList.store, "onRemoveData", function(url) {	
+		if (dojo.lang.some(urlList.getSelectedData(), function(item){ return (item == url.src); }))
+			resetInput();
 	});
 
 	var objRadioButton = dojo.byId("linksLinkType1");
@@ -139,9 +150,14 @@ init = function() {
 	dojo.event.connectOnce("after", objectList, "onSelect", function() {
 		// Update the displayed data
 		selectLinkType("obj");
-		curSelectedObject = objectList.getSelectedData();
+		var selectedObjects = objectList.getSelectedData();
+		curSelectedObject = {};
 		curSelectedUrl = {};
-		if (curSelectedObject) {
+		if (selectedObjects.length == 1) {
+			curSelectedObject = selectedObjects[0];
+			// Reset the URL List
+			urlList.resetSelections();
+			urlList.renderSelections();
 			dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
 			dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
 			dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
@@ -149,6 +165,10 @@ init = function() {
 		
 			// Update the 'save' button text
 			dojo.widget.byId("saveButton").setCaption("Speichern");
+			showInputElements();
+		} else {
+			hideInputElements(); 
+			resetInputFields();
 		}
 	});
 
@@ -156,9 +176,14 @@ init = function() {
 	dojo.event.connectOnce("after", urlList, "onSelect", function() {
 		// Update the displayed data
 		selectLinkType("url");
-		curSelectedUrl = urlList.getSelectedData();
+		var selectedUrls = urlList.getSelectedData();
+		curSelectedUrl = {};
 		curSelectedObject = {};
-		if (curSelectedUrl) {
+		if (selectedUrls.length == 1) {
+			curSelectedUrl = selectedUrls[0];
+			// Reset the obj List
+			objectList.resetSelections();
+			objectList.renderSelections();
 			dojo.widget.byId("linksFromFieldName").setValue(curSelectedUrl.relationTypeName);
 			dojo.widget.byId("linksToURL").setValue(curSelectedUrl.url);
 			dojo.widget.byId("linksToName").setValue(curSelectedUrl.name);
@@ -168,9 +193,13 @@ init = function() {
 			dojo.widget.byId("linksToIconURL").setValue(curSelectedUrl.iconUrl);
 			dojo.widget.byId("linksToIconText").setValue(curSelectedUrl.iconText);
 			dojo.widget.byId("linksToUrlDescription").setValue(curSelectedUrl.description);
-	
+
 			// Update the 'save' button text
 			dojo.widget.byId("saveButton").setCaption("Speichern");
+			showInputElements();
+		} else {
+			hideInputElements(); 
+			resetInputFields();
 		}
 	});
 
@@ -210,16 +239,25 @@ init = function() {
 	} else {
 		dojo.widget.byId("linksFromFieldName").setValue("");
 	}
+
+	// Connect the object and url store with the internal dirty flag
+	_connectStoreWithDirtyFlag(objStore);
+	_connectStoreWithDirtyFlag(urlStore);
 };
 
 saveLink = function() {
 	var objStore = dojo.widget.byId("linkListObject").store;
 	var urlStore = dojo.widget.byId("linkListURL").store;
-	var objData = dojo.widget.byId("linkListObject").getSelectedData();
-	var urlData = dojo.widget.byId("linkListURL").getSelectedData();
+	var objData = dojo.widget.byId("linkListObject").getSelectedData()[0];
+	var urlData = dojo.widget.byId("linkListURL").getSelectedData()[0];
 	var objSelected = dojo.byId("linksLinkType1").checked;
 
 	resetRequiredInputElements();
+
+	if (!validateInputElements()) {
+  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
+		return;
+	}
 
 	if (objData) {
 		// If a node was selected we have to update the information
@@ -229,79 +267,55 @@ saveLink = function() {
 //		store.update(data, "uuid", curSelectedObject.uuid);
 //		store.update(data, "relationDescription", dojo.widget.byId("linksToDescription").getValue());
 //		store.update(data, "objectClass", curSelectedObject.objectClass);
-
-//		if ( dojo.widget.byId("linksFromFieldName").getValue() == ""
-//		  || dojo.widget.byId("linksToObjectName").getValue() == "") {
-//			alert(message.get("links.fillRequiredFieldsHint"));
-		if (!validateInputElements()) {
-	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
-		} else {
-			objData.uuid = curSelectedObject.uuid;
-			objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
-			objData.objectClass = curSelectedObject.objectClass;
-			objData.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
-			udkDataProxy._addIcons([objData]);
-			objStore.update(objData, "icon", objData.icon);
-			objStore.update(objData, "title", curSelectedObject.title);
-		}
+		objData.uuid = curSelectedObject.uuid;
+		objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
+		objData.objectClass = curSelectedObject.objectClass;
+		objData.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+		udkDataProxy._addIcons([objData]);
+		objStore.update(objData, "icon", objData.icon);
+		objStore.update(objData, "title", curSelectedObject.title);
 	} else if (urlData) {
 		var newUrl = _getUrl();
-//		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
-//			alert(message.get("links.fillRequiredFieldsHint"));
-		if (!validateInputElements()) {
-	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
-		} else {
-			urlData.url = newUrl.url;
-			urlData.datatype = newUrl.datatype;
-			urlData.volume = newUrl.volume;
-			urlData.urlType = newUrl.urlType;
-			urlData.iconUrl = newUrl.iconUrl;
-			urlData.iconText = newUrl.iconText;
-			urlData.description = newUrl.description;
-			urlData.relationTypeName = newUrl.relationTypeName;
-			udkDataProxy._addIcons([urlData]);
-			urlStore.update(urlData, "name", newUrl.name);
-		}
+		urlData.url = newUrl.url;
+		urlData.datatype = newUrl.datatype;
+		urlData.volume = newUrl.volume;
+		urlData.urlType = newUrl.urlType;
+		urlData.iconUrl = newUrl.iconUrl;
+		urlData.iconText = newUrl.iconText;
+		urlData.description = newUrl.description;
+		urlData.relationTypeName = newUrl.relationTypeName;
+		udkDataProxy._addIcons([urlData]);
+		urlStore.update(urlData, "name", newUrl.name);
 	} else if (objSelected && curSelectedObject) {
 		// Otherwise a new link has to be created
 		// Take the current selected object and add the values that were entered in the ui fields
-//		if (dojo.widget.byId("linksFromFieldName").getValue() == "" || curSelectedObject.uuid == ""
-//		 || dojo.widget.byId("linksToObjectName").getValue() == "") {
-//			alert(message.get("links.fillRequiredFieldsHint"));
-		if (!validateInputElements()) {
-	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
-		} else {	
-			curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
-			curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
-			// No checks if the store already contains the current element.
-			curSelectedObject.Id = _getNewKey();
-			udkDataProxy._addIcons([curSelectedObject]);
-			objStore.addData(curSelectedObject);
-			// Select the object in the list
-			dojo.widget.byId("linkListObject").resetSelections();
-			dojo.widget.byId("linkListObject").select(curSelectedObject);
-			dojo.widget.byId("linkListObject").renderSelections();
-			dojo.widget.byId("saveButton").setCaption("Speichern");
-		}
+		curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+		curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
+		// No checks if the store already contains the current element.
+		curSelectedObject.Id = _getNewKey();
+		udkDataProxy._addIcons([curSelectedObject]);
+		objStore.addData(curSelectedObject);
+		// Select the object in the list
+		dojo.widget.byId("linkListObject").resetSelections();
+		dojo.widget.byId("linkListObject").select(curSelectedObject);
+		dojo.widget.byId("linkListObject").renderSelections();
+		dojo.widget.byId("saveButton").setCaption("Speichern");
 	} else if (!objSelected) {
 		var newUrl = _getUrl();
-//		if (newUrl.relationTypeName == "" || newUrl.name == "" || newUrl.url == "" || newUrl.datatype == "") {
-//			alert(message.get("links.fillRequiredFieldsHint"));
-		if (!validateInputElements()) {
-	  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
-		} else {
-			newUrl.Id = _getNewKey();
-			udkDataProxy._addIcons([newUrl]);
-			urlStore.addData(newUrl);
-			dojo.widget.byId("linkListURL").resetSelections();
-			dojo.widget.byId("linkListURL").select(newUrl);
-			dojo.widget.byId("linkListURL").renderSelections();
-			dojo.widget.byId("saveButton").setCaption("Speichern");
-		}
+		newUrl.Id = _getNewKey();
+		udkDataProxy._addIcons([newUrl]);
+		urlStore.addData(newUrl);
+		dojo.widget.byId("linkListURL").resetSelections();
+		dojo.widget.byId("linkListURL").select(newUrl);
+		dojo.widget.byId("linkListURL").renderSelections();
+		dojo.widget.byId("saveButton").setCaption("Speichern");
 	} else {
   		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
-//		alert(message.get("links.selectNodeHint"));
+		return;
 	}
+	
+	// If we get here, data has been changed
+	setDirtyFlag();
 }
 
 _getUrl = function() {
@@ -355,29 +369,7 @@ newLink = function() {
 	urlList.resetSelections();
 	urlList.renderSelections();
 
-	// Reset field values
-	curSelectedObject = {};
-	curSelectedUrl = {};
-	
-	if (!_container_.customParams || !_container_.customParams.filter) {
-		dojo.widget.byId("linksFromFieldName").enable();
-//		dojo.widget.byId("linksFromFieldName").setValue("");
-	}
-
-	dojo.widget.byId("linksToObjectName").setValue("");
-	dojo.widget.byId("linksToObjectClass").setValue("");
-	dojo.widget.byId("linksToDescription").setValue("");	
-	dojo.widget.byId("linksToURL").setValue("");
-	dojo.widget.byId("linksToName").setValue("");
-	dojo.widget.byId("linksToDataType").setValue("");
-	dojo.widget.byId("linksToDataVolume").setValue("");
-	dojo.widget.byId("linksToURLType").setValue("");
-	dojo.widget.byId("linksToIconURL").setValue("");
-	dojo.widget.byId("linksToIconText").setValue("");
-	dojo.widget.byId("linksToUrlDescription").setValue("");	
-
-	// Change 'save' Button text
-	dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
+	resetInputFields();
 }
 
 showAssignObjectDialog = function() {
@@ -404,6 +396,32 @@ showAssignObjectDialog = function() {
 			resultHandler: deferred
 		});
 	}
+}
+
+resetInputFields = function() {
+	// Reset field values
+	curSelectedObject = {};
+	curSelectedUrl = {};
+	
+	if (!_container_.customParams || !_container_.customParams.filter) {
+		dojo.widget.byId("linksFromFieldName").enable();
+//		dojo.widget.byId("linksFromFieldName").setValue("");
+	}
+
+	dojo.widget.byId("linksToObjectName").setValue("");
+	dojo.widget.byId("linksToObjectClass").setValue("");
+	dojo.widget.byId("linksToDescription").setValue("");	
+	dojo.widget.byId("linksToURL").setValue("");
+	dojo.widget.byId("linksToName").setValue("");
+	dojo.widget.byId("linksToDataType").setValue("");
+	dojo.widget.byId("linksToDataVolume").setValue("");
+	dojo.widget.byId("linksToURLType").setValue("");
+	dojo.widget.byId("linksToIconURL").setValue("");
+	dojo.widget.byId("linksToIconText").setValue("");
+	dojo.widget.byId("linksToUrlDescription").setValue("");	
+
+	// Change 'save' Button text
+	dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
 }
 
 // Cancel Button onClick function
@@ -563,7 +581,7 @@ closeDialog = function() {
 
 			<div class="tableContainer rows9">
 
-				<table id="linkListObject" dojoType="ingrid:FilteringTable" multiple="false" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
+				<table id="linkListObject" dojoType="ingrid:FilteringTable" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
 					<thead>
 						<tr>
 							<th field="icon" width="30">&nbsp;</th>
@@ -584,7 +602,7 @@ closeDialog = function() {
 			
 			<div dojoType="ContentPane" class="scrollable">
 				<span class="label"><label for="linkListURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL')">URL</label></span>
-				<table id="linkListURL" dojoType="ingrid:FilteringTable" multiple="false" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
+				<table id="linkListURL" dojoType="ingrid:FilteringTable" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
 			  		<thead>
 			  			<tr>
 			  				<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
