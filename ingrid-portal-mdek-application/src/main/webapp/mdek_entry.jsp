@@ -1236,14 +1236,14 @@ function hideSplash(){
 	                  <span class="label"><label for="timeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes</label></span>
 	                  <div class="tableContainer rows5">
 	                    <div class="cellEditors" id="timeRefTableEditors">
-	                      <div dojoType="ingrid:DropdownDatePicker" toggle="plain" widgetId="timeRefDateDatePicker"></div>
+	                      <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="timeRefDateDatePicker"></div>
 	                      <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/timeRefType.js" style="width:155px;" widgetId="timeRefTypeCombobox"></div>
 	                    </div>
-	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive half">
+	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive nosort half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="date" dataType="String" width="120" editor="timeRefDateDatePicker">Datum</th>
-	                    			<th field="type" dataType="String" width="200" editor="timeRefTypeCombobox">Typ</th>
+	                    			<th nosort="true" field="date" dataType="String" width="120" editor="timeRefDateDatePicker">Datum</th>
+	                    			<th nosort="true" field="type" dataType="String" width="200" editor="timeRefTypeCombobox">Typ</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>

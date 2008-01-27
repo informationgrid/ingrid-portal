@@ -688,6 +688,11 @@ dojo.widget.defineWidget(
   cancelEdit: function() {
     // close the editor
     var displayValue = this.origValue;
+
+	if (this.curEditor.getDisplayValue) {
+    	displayValue = this.curEditor.getDisplayValue();
+	}
+
     this.endEdit(displayValue);
   },
 
