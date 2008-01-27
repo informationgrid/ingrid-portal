@@ -275,17 +275,10 @@ function nodeSelected(message)
 
 function showAddress(menuItem)
 {
-  dojo.debug("getTabFromContext menuItem: " + menuItem);
+//  dojo.debug("getTabFromContext menuItem: " + menuItem);
 
   var menu = menuItem.parent;
   var rowData = menu.getRowData();
 
-//  dojo.debugShallow(rowData);
-
-  addressData = rowData;
-  var params = rowData;
-  dialog.showPage('Adresse', 'ansicht_adresse.html', 500, 240, false, params);
-  dojo.debug('After showPage()');
+  dialog.showPage('Adresse', 'mdek_address_preview_dialog.html', 500, 240, false, { data:rowData });
 }
-// TODO pass data directly to the dialog!
-var addressData = {};
