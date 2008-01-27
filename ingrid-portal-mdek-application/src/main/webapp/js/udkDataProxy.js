@@ -578,7 +578,7 @@ udkDataProxy._setObjectData = function(nodeData)
 	case 1: valueList.push([message.get("extraInfo.publicationCondition.internet"), "1"]);
 	case 2: valueList.push([message.get("extraInfo.publicationCondition.intranet"), "2"]);
 	case 3: valueList.push([message.get("extraInfo.publicationCondition.internal"), "3"]);
-	case 4: valueList.push([message.get("extraInfo.publicationCondition.notShared"), "4"]);
+//	case 4: valueList.push([message.get("extraInfo.publicationCondition.notShared"), "4"]);
 	default: valueList.unshift(["", ""]);
   }
   widgetDP.setData(valueList);
@@ -598,9 +598,6 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Time --
   dojo.widget.byId("timeRefType").setValue(nodeData.timeRefType);
-  // If we don't receive a date set the date to 'today'. The dojo DatePicker doesn't support clearing
-  // the displayed date.
-  // TODO create an ingrid:DropdownDatePicker and add a 'clearDate' method
   if (nodeData.timeRefDate1) { dojo.widget.byId("timeRefDate1").setValue(nodeData.timeRefDate1); }
   else { dojo.widget.byId("timeRefDate1").clearValue(); }
   if (nodeData.timeRefDate2) { dojo.widget.byId("timeRefDate2").setValue(nodeData.timeRefDate2); }

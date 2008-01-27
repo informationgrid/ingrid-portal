@@ -36,12 +36,11 @@ dojo.widget.defineWidget(
     // get the value and format it
     var value = dojo.widget.DropdownDatePicker.prototype.getValue.apply(this, arguments);
     if (value) {
-      var date = dojo.date.parse(value, {formatLength:this.formatLength, datePattern:'yyyy-mm-dd', selector:'dateOnly'});
+      var date = dojo.date.parse(value, {formatLength:this.formatLength, datePattern:'yyyy-MM-dd', selector:'dateOnly'});
 	  return date;
-//      return dojo.date.format(date, {formatLength:this.formatLength, datePattern:this.displayFormat, selector:'dateOnly', locale:this.lang});
-    }
-    else
+    } else {
       return "";
+    }
   },
 
   /*
@@ -55,15 +54,6 @@ dojo.widget.defineWidget(
 
 	getDisplayValue: function() {
 		// get the value and format it
-/*
-		var value = dojo.widget.DropdownDatePicker.prototype.getValue.apply(this, arguments);
-		if (value) {
-			var date = dojo.date.parse(value, {formatLength:this.formatLength, datePattern:'yyyy-mm-dd', selector:'dateOnly'});
-			return dojo.date.format(date, {formatLength:this.formatLength, datePattern:this.displayFormat, selector:'dateOnly', locale:this.lang});
-		} else {
-		  return "";
-		}		
-*/
 		var date = dojo.widget.DropdownDatePicker.prototype.getDate.apply(this, arguments);
 		if (date) {
 			return dojo.date.format(date, {formatLength:this.formatLength, datePattern:this.displayFormat, selector:'dateOnly'});

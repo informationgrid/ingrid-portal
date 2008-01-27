@@ -335,7 +335,7 @@ dojo.widget.defineWidget(
 		// Update the displayed values. This needs to be done so we can use the various
 		// functions from the underlying store (e.g. setData). Otherwise the displayed values
 		// will not be resolved properly (key is displayed instead of the 'displayValue()').
-		
+
 		// Iterate over all columns and check if the column is associated with an editor
 		for (var j=0; j<this.columns.length; j++) {
 			if (this.columns[j].editor) {
@@ -727,12 +727,13 @@ dojo.widget.defineWidget(
         this.editData = newData;
       }
 
+
       // if the editor implements the method getDisplayValue, use its value
     var displayValue = newValue;
 	if (this.curEditor.getDisplayValue) {
     	displayValue = this.curEditor.getDisplayValue();
 	}
-		
+
       // close the editor
       this.endEdit(displayValue);
     }
