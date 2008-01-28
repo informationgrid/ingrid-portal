@@ -15,6 +15,10 @@ var inputElements =
 	["operationsName", "operationsDescription", "operationsPlatform", "operationsCall",
 	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton", "cancelButton"];
 
+var requiredElements = [["operationsName", "operationsNameLabel"],
+					    ["operationsPlatform", "operationsPlatformLabel"],
+					    ["operationsAddress", "operationsAddressLabel"]];
+
 
 _container_.addOnLoad(function() {
 	dirtyFlag = udkDataProxy.dirtyFlag;
@@ -29,6 +33,11 @@ _container_.addOnUnload(function() {
 	dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
 });
 
+resetRequiredElements = function() {
+	dojo.lang.forEach(requiredElements, function(element) {
+		dojo.html.removeClass(dojo.byId(element[1]), "important");		
+	});
+}
 
 setDirtyFlag = function() {
 	dirtyFlag = true;
@@ -57,6 +66,8 @@ enableInputElements = function() {
 }
 
 resetInputElements = function() {
+	resetRequiredElements();
+	
 	currentOperationId = null;
 	dojo.lang.forEach(inputElements, function(item) {
 		var widget = dojo.widget.byId(item);
@@ -118,6 +129,20 @@ init = function() {
 	dstStore.setData(srcStore.getData());
 
 	connectStoreWithDirtyFlag(dstStore);
+
+	// Init table validators
+	dojo.widget.byId("operationsParameter").setValidationFunctions([
+		{target: "name", validateFunction: function(item) { return (item != null && dojo.string.trim(item) != ""); }},
+		{target: "optional", validateFunction: function(item) { return (item != null && item != ""); }},
+		{target: "multiple", validateFunction: function(item) { return (item != null && item != ""); }}
+	]);
+	dojo.widget.byId("operationsPlatform").setValidationFunctions([
+		{target: "title", validateFunction: function(item) { return (item != null && dojo.string.trim(item) != ""); }}
+	]);
+	dojo.widget.byId("operationsAddress").setValidationFunctions([
+		{target: "title", validateFunction: function(item) { return (item != null && dojo.string.trim(item) != ""); }}
+	]);
+	dojo.widget.byId("operationsName").isValid = function() { return !this.isEmpty(); };
 }
 
 getOperation = function() {
@@ -134,11 +159,35 @@ getOperation = function() {
 }
 
 isValidOperation = function(op) {
+	resetRequiredElements();
+
+	var valid = true;
+
+	dojo.lang.forEach(requiredElements, function(element) {
+		if (!dojo.widget.byId(element[0]).isValid()) {
+			dojo.html.addClass(dojo.byId(element[1]), "important");		
+			valid = false;
+		}
+	});
+
+	if (op.paramList.length != 0) {
+		if (!dojo.widget.byId("operationsParameter").isValid())
+			valid = false;
+	}
+
+	if (op.platform.length == 0) {
+		dojo.html.addClass(dojo.byId("operationsPlatformLabel"), "important");		
+		valid = false;
+	}
+	
+	if (op.addressList.length == 0) {
+		dojo.html.addClass(dojo.byId("operationsAddressLabel"), "important");		
+		valid = false;
+	}
+/*
 	if (dojo.string.trim(op.name) == "")
 		return false;
 
-	if (op.platform.length == 0)
-		return false;
 
 	// If we have an entry where a required field equals "", return false
 	if (!dojo.lang.every(op.paramList, function(item) {
@@ -150,8 +199,8 @@ isValidOperation = function(op) {
 
 	if (op.addressList.length == 0)
 		return false;
-
-	return true;
+*/
+	return valid;
 }
 
 // iterates over all entries in the stores and returns a key that is not in use yet
@@ -266,7 +315,7 @@ closeDialog = function() {
   	  </div>
 
       <div class="inputContainer field grey fullField noSpaceBelow">
-        <span class="label required"><label for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
+        <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
 		<span class="input"><input type="text" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
         <div class="spacer"></div>
         
@@ -278,7 +327,7 @@ closeDialog = function() {
             </span>
           </span>
           <span class="entry">
-            <span class="label required"><label for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
+            <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
             <div class="tableContainer">
               <div class="cellEditors" id="operationsPlatformEditors">
                 <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsPlatformText"></div>
@@ -301,7 +350,7 @@ closeDialog = function() {
         <span class="input spaceBelow"><input type="text" id="operationsCall" name="operationsCall" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 
         <div class="inputContainer h130">
-          <span class="label"><label for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 'Parameter')">Parameter</label></span>
+          <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 'Parameter')">Parameter</label></span>
           <div class="tableContainer">
             <div class="cellEditors" id="operationsParameterEditors">
               <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsParameterName"></div>
@@ -310,14 +359,14 @@ closeDialog = function() {
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationYesNo.js" style="width:32px;" widgetId="operationsParameterOpt"></div>
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationYesNo.js" style="width:70px;" widgetId="operationsParameterMulti"></div>
             </div>
-      	    <table id="operationsParameter" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive w648">
+      	    <table id="operationsParameter" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive w648">
       	      <thead>
       		      <tr>
-            			<th field="name" dataType="String" width="105" editor="operationsParameterName">Name*</th>
-            			<th field="direction" dataType="String" width="100" editor="operationsParameterDir">Richtung</th>
-            			<th field="description" dataType="String" width="210" editor="operationsParameterDesc">Beschreibung</th>
-            			<th field="optional" dataType="String" width="65" editor="operationsParameterOpt">Optional*</th>
-            			<th field="multiple" dataType="String" width="110" editor="operationsParameterMulti">Mehrfacheingabe*</th>
+            			<th nosort="true" field="name" dataType="String" width="105" editor="operationsParameterName">Name*</th>
+            			<th nosort="true" field="direction" dataType="String" width="100" editor="operationsParameterDir">Richtung</th>
+            			<th nosort="true" field="description" dataType="String" width="210" editor="operationsParameterDesc">Beschreibung</th>
+            			<th nosort="true" field="optional" dataType="String" width="65" editor="operationsParameterOpt">Optional*</th>
+            			<th nosort="true" field="multiple" dataType="String" width="110" editor="operationsParameterMulti">Mehrfacheingabe*</th>
       		      </tr>
       	      </thead>
       	      <tbody>
@@ -329,7 +378,7 @@ closeDialog = function() {
 
         <div class="inputContainer noSpaceBelow h067">
           <span class="half left">
-            <span class="label required"><label for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugriffsadresse')">Zugriffsadresse*</label></span>
+            <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugriffsadresse')">Zugriffsadresse*</label></span>
             <div class="tableContainer">
               <div class="cellEditors" id="operationsAddressEditors">
                 <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsAddressText"></div>
