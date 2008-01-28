@@ -829,17 +829,10 @@ udkDataProxy._getObjectData = function(nodeData)
 
 
   // ------------------ Header ------------------
-  var formWidget = dojo.widget.byId("headerFormObject");
-
-//  dojo.debug("HeaderObjectForm values: " + dojo.json.serialize(formWidget.getValues()));
-
   nodeData.objectName = dojo.widget.byId("objectName").getValue();
 //  nodeData.last_editor = dojo.widget.byId("last_editor").getValue();
 
   // ------------------ Object Content ------------------
-  formWidget = dojo.widget.byId("contentFormObject");
-//  dojo.debug("ContentFormObject values: " + dojo.json.serialize(formWidget.getValues()));
-
   // --- General ---
   nodeData.generalShortDescription = dojo.widget.byId("generalShortDesc").getValue();
   nodeData.generalDescription = dojo.widget.byId("generalDesc").getValue();
@@ -1010,22 +1003,24 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
 	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
 
-	dojo.debug(udkDataProxy._getTableData("ref3ServiceVersion"));
 	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
 
 	// Convert the containing operation tables to lists
 	// Add table indices and convert to tableData: platform, addressList and dependencies
+	nodeData.ref3Operation = [];
 	var op = udkDataProxy._getTableData("ref3Operation");
 	if (op) {
 		for (var i = 0; i < op.length; ++i) {
-//			op[i].paramList = udkDataProxy._tableDataToList(op[i].paramList);
-			op[i].platform = udkDataProxy._tableDataToList(op[i].platform);
-			op[i].addressList = udkDataProxy._tableDataToList(op[i].addressList);
-			op[i].dependencies = udkDataProxy._tableDataToList(op[i].dependencies);
+			var operationData = {};
+
+		//  operationData.paramList = udkDataProxy._tableDataToList(op[i].paramList);
+			operationData.platform = udkDataProxy._tableDataToList(op[i].platform);
+			operationData.addressList = udkDataProxy._tableDataToList(op[i].addressList);
+			operationData.dependencies = udkDataProxy._tableDataToList(op[i].dependencies);
+
+			nodeData.ref3Operation.push(operationData);
 		}
 	}	
-
-	nodeData.ref3Operation = op;
 };
 
 udkDataProxy._getObjectDataClass4 = function(nodeData) {
