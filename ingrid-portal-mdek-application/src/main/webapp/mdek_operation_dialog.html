@@ -92,17 +92,22 @@ init = function() {
 
 	dojo.event.connectOnce("after", opList, "onSelect", function(e) {
 		var op = opList.getSelectedData();
-		if (op) {
+		if (op.length == 1) {
 			enableInputElements();
-			displayOperation(op);
-			currentOperationId = op.Id;
+			displayOperation(op[0]);
+			currentOperationId = op[0].Id;
 			dojo.widget.byId("saveButton").setCaption("Speichern");
+		} else {
+			disableInputElements();
+			resetInputElements();
+			currentOperationId = null;
+			dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
 		}
 	});
 
 	// If a selected object was removed from the list, reset the input fields
 	dojo.event.connectOnce("after", opList.store, "onRemoveData", function(obj) {	
-		if (opList.getSelectedData() == obj.src) {
+		if (dojo.lang.some(opList.getSelectedData(), function(item){ return item == obj.src; })) {
 			resetDialog();
 		}
 	});
@@ -193,7 +198,7 @@ saveOperation = function() {
 			opList.select(operation);
 			opList.renderSelections();
 		} else {
-			var oldOp = opList.getSelectedData();
+			var oldOp = opList.getSelectedData()[0];
 			oldOp.name = operation.name;
 			for (i in operation) {
 				oldOp[i] = operation[i];
@@ -240,7 +245,7 @@ closeDialog = function() {
       <div class="spacer"></div>
       <div class="inputContainer field grey noSpaceBelow fullField">
         <div class="tableContainer">
-    	    <table id="operationsList" dojoType="ingrid:FilteringTable" multiple="false" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive w648">
+    	    <table id="operationsList" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive w648">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="name" dataType="String" width="160">Name</th>
@@ -278,7 +283,7 @@ closeDialog = function() {
               <div class="cellEditors" id="operationsPlatformEditors">
                 <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsPlatformText"></div>
               </div>
-         	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" multiple="false" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
+         	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
         	      <thead>
         		      <tr>
               			<th field="title" dataType="String" editor="operationsPlatformText">Name</th>
