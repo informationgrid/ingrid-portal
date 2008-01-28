@@ -4,7 +4,6 @@
 <script type="text/javascript" src="js/detail_helper.js"></script>
 <script type="text/javascript">
 _container_.addOnLoad(function() {
-	var tree = dojo.widget.byId("tree");
 	if (_container_.customParams.useDirtyData == true) {
 		// get dirty data from proxy
 		renderNodeData(udkDataProxy._getData());
@@ -22,8 +21,9 @@ _container_.addOnLoad(function() {
 });
 
 function renderNodeData(nodeData) {
-	dojo.debugShallow(nodeData);
+//	dojo.debugShallow(nodeData);
 	renderObjectTitel(nodeData.objectName);
+
 	renderText(nodeData.generalShortDescription);
 	renderTextWithTitle(dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeData.objectClass), "Objektklasse");
 	renderTextWithTitle(nodeData.generalDescription, "Beschreibung");
@@ -34,6 +34,7 @@ function renderNodeData(nodeData) {
 	function formatDate(val) {
 		return dojo.date.format(val, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
 	}
+
 	// technical domains
 	if (nodeData.objectClass == 1) {
 		renderSectionTitel("Fachbezug");
@@ -112,16 +113,20 @@ function renderNodeData(nodeData) {
 	// temporal reference
 	renderSectionTitel("Zeitbezug");
 	var timeRefTxt;
-	if (nodeData.timeRefType && nodeData.timeRefType == "von") {
-		timeRefTxt = "von "+dojo.date.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'})+" bis "+dojo.date.format(nodeData.timeRefDate2, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
-	} else if (nodeData.timeRefType) {
-		timeRefTxt = nodeData.timeRefType+" "+dojo.date.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+	if (nodeData.timeRefDate1) {
+		if (nodeData.timeRefType && nodeData.timeRefType == "von") {
+			timeRefTxt = "von "+dojo.date.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'})+" bis "+dojo.date.format(nodeData.timeRefDate2, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+		} else if (nodeData.timeRefType) {
+			timeRefTxt = nodeData.timeRefType+" "+dojo.date.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+		}
 	}
 	
 	renderTextWithTitle(timeRefTxt, "Zeitbezug des Dateninhaltes");
 	renderTextWithTitle(dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeData.timeRefStatus), "Status");
 	renderTextWithTitle(dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeData.timeRefPeriodicity), "Periodizit&auml;t");
-	renderTextWithTitle("alle "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeData.timeRefIntervalUnit), "Im Intervall");
+	if (nodeData.timeRefIntervalNum && nodeData.timeRefIntervalUnit) {
+		renderTextWithTitle("alle "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeData.timeRefIntervalUnit), "Im Intervall");
+	}
 	// create cell render functions
 	function lookupTimeRefType(val) {
 		return dojo.widget.byId("timeRefTypeCombobox")._getDisplayValueForValue(val);
@@ -166,7 +171,7 @@ function renderNodeData(nodeData) {
 	renderSectionTitel("Administrative Angaben");
 	renderTextWithTitle(nodeData.uuid, "Objekt-ID");
 	renderTextWithTitle(nodeData.catalogname, "Katalog");
-	
+
 }
 
 function renderYesNo(val) {
@@ -178,10 +183,8 @@ function renderYesNo(val) {
 }
 
 function renderOperations(list) {
-	dojo.debugShallow(list["1"]);
 	renderTable(list, ["name", "description"], ["Name", "Beschreibung"], "Operationen &Uuml;bersicht");
 	for(var i=0; i<list.length; i++) {
-		dojo.debug("list.length: " + i);
 		var op = list[i];
 		renderTextWithTitle(op.description, "Operation " + op.name);
 		renderList(op.platform, "unterst&uuml;tzte Plattformen");
@@ -189,7 +192,6 @@ function renderOperations(list) {
 		renderTable(op.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
 		renderList(op.addressList, "Zugriffsadressen");
 		renderList(op.dependencies, "Abh&auml;ngigkeiten");
-		dojo.debug("list.length: " + i);
 	}
 }
 
@@ -247,8 +249,9 @@ function renderList(list, title, rowProperty, renderFunction) {
 		if (detailHelper.isValid(title)) {
 			t += "<strong>" + title + "</strong><br/>";
 		}
-		var val;
-		for (i=0; i<list.length; i++) {
+		var valList = "";
+		for (var i=0; i<list.length; i++) {
+			var val = "";
 			if (rowProperty) {
 				val = list[i][rowProperty];
 			} else {
@@ -257,9 +260,13 @@ function renderList(list, title, rowProperty, renderFunction) {
 			if (renderFunction) {
 				val = renderFunction.call(this, val);
 			}
-			t += val + "<br/>";
+			if (val && val != "") {
+				valList += val + "<br/>";
+			}
 		}
-		dojo.byId("detailViewContent").innerHTML += t + "</p><br/>";
+		if (valList != "") {
+			dojo.byId("detailViewContent").innerHTML += t + valList + "</p><br/>";
+		}
 	}	
 }
 
@@ -278,13 +285,13 @@ function renderTable(list, rowProperties, listHeader, title, cellRenderFunction)
 			t += "</tr></thead>";
 		}
 		t += "<tbody>";
-		for (i=0; i<list.length; i++) {
+		for (var i=0; i<list.length; i++) {
 			if (i % 2) {
 				t += "<tr class=\"alt\">";
 			} else {
 				t += "<tr>";
 			}
-			for (j=0; j<rowProperties.length; j++) {
+			for (var j=0; j<rowProperties.length; j++) {
 				if (cellRenderFunction && cellRenderFunction[j]) {
 					t += "<td style=\"padding-right:4px\">"+cellRenderFunction[j].call(this, list[i][rowProperties[j]])+"</td>";
 				} else {
