@@ -267,6 +267,12 @@ saveLink = function() {
 		return;
 	}
 
+	// Disallow links to self
+	if (objSelected && curSelectedObject.uuid == currentUdk.uuid) {
+  		dialog.show(message.get("general.hint"), message.get("links.noLinkToSelfHint"), dialog.WARNING);
+		return;		
+	}
+
 	if (objData) {
 		// If a node was selected we have to update the information
 		// The dojo FilteringTable does not like updates on values that are not displayed

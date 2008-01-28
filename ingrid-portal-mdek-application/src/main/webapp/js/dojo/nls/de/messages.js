@@ -42,6 +42,7 @@
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
 
 	"links.fillRequiredFieldsHint":"Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
+	"links.noLinkToSelfHint":"Ein Objekt kann nicht mit sich selbst verkn&uuml;pft werden!",
 
 	"extraInfo.publicationCondition.internet":"Internet",
 	"extraInfo.publicationCondition.intranet":"Intranet",

@@ -66,6 +66,7 @@
         
 	"links.selectNodeHint":"Please select a target node.",
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
+	"links.noLinkToSelfHint":"It is not possible to create a link to the same object.",
 
 	"dialog.saveChangesTitle":"Save changes",
 	"dialog.discardPubExistTitle":"Discard all changes",
