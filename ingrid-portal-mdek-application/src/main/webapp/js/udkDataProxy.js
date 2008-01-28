@@ -128,7 +128,7 @@ dojo.addOnLoad(function()
 	dojo.lang.forEach(class3UiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(class4UiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(class5UiInputElements, _connectWidgetWithDirtyFlag);
-
+	_connectStoreWithDirtyFlag(commentStore);
 
 	dojo.event.connect(udkDataProxy, "_setData", udkDataProxy, "resetDirtyFlag");
   }
@@ -145,7 +145,7 @@ udkDataProxy.resetDirtyFlag = function()
 }
 
 
-_connectWidgetWithDirtyFlag = function(widgetId) {
+function _connectWidgetWithDirtyFlag(widgetId) {
 	// We don't need to connect the 'Link' tables. If those tables are changed, the 'master' table (linksTo)
 	// will be changed and set the dirty flag 
 	if (dojo.string.endsWith(widgetId, "Link")) {
@@ -164,14 +164,13 @@ _connectWidgetWithDirtyFlag = function(widgetId) {
 	} else if (widget instanceof ingrid.widget.ComboBox) {
 	    dojo.event.connect(widget, "onValueChanged", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof ingrid.widget.FilteringTable) {
-		_connectStoreWithDirtyFlag = widget.store;	
+		_connectStoreWithDirtyFlag(widget.store);	
 	} else {
 		dojo.debug("Can't connect widget "+widgetId+" with dirty flag. Method not implemented for "+widget);
 	}
 }
 
-_connectStoreWithDirtyFlag = function(store)
-{
+function _connectStoreWithDirtyFlag(store) {
 	dojo.event.connect(store, "onSetData", udkDataProxy, "setDirtyFlag");
 	dojo.event.connect(store, "onClearData", udkDataProxy, "setDirtyFlag");
 	dojo.event.connect(store, "onAddData", udkDataProxy, "setDirtyFlag");
