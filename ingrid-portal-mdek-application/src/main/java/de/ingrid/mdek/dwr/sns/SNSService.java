@@ -190,12 +190,12 @@ public class SNSService {
     }
 
 
-    public void testIncludeSiblings() {
+    public void testIncludeSiblings(boolean includeSiblings) {
         // getHierarchy?root=uba_thes_27118&user=ingrid_test&password=ingrid_test&depth=2&direction=up&includeSiblings=true
     	// false liefert drei Knoten
     	// true liefert 10 Knoten
     
-        IngridHit[] hitsArray = getHierarchy("uba_thes_27118", 2, "up", true);
+        IngridHit[] hitsArray = getHierarchy("uba_thes_27118", 2, "up", includeSiblings);
 
         for (IngridHit hit : hitsArray) {
         	printTopic((Topic) hit);

@@ -320,10 +320,26 @@ function initFreeTermsButton() {
 		if (term) {
 			SNSService.findTopics(term, {
 				callback:function(topics) {
-					if (topics != null) {
+					// Remove all non-descriptors from the list
+					var descriptors = [];
+					dojo.lang.forEach(topics, function(item){
+						if (item.type == "DESCRIPTOR")
+							descriptors.push(item);
+					});
+
+					if (descriptors.length != 0) {
 						// Topics found. Add the results to the topic list
 						var topicStore = dojo.widget.byId("thesaurusTerms").store;
-						dojo.lang.forEach(topics, function(topic) {
+						// If the term we searched for was a descriptor and is contained in the result list, only add it
+						// to the list and ignore the rest
+						for (var i = 0; i < descriptors.length; ++i) {
+							if (term == descriptors[i].title) {
+								descriptors = [descriptors[i]];
+								break;
+							}
+						}
+
+						dojo.lang.forEach(descriptors, function(topic) {
 							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 								// Topic is new. Add it to the topic list
 								topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
@@ -338,7 +354,7 @@ function initFreeTermsButton() {
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
 							// If every term in the store != the entered term add it to the list
 							var identifier = getNewKey(freeTermsStore);							
-							freeTermsStore.addData({Id: identifier, title: term}, identifier);
+							freeTermsStore.addData( {Id: identifier, title: term} );
 						}
 					}},
 				timeout:8000,
