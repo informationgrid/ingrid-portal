@@ -144,6 +144,17 @@ removeAll = function() {
 	}
 }
 
+getNewKey = function(store) {
+	var key = 0;
+	var data = store.get();
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+	return key;
+}
+
 // Finish Button onClick function.
 //
 // This function copies the descriptor list to the main mdek topic list
@@ -154,10 +165,10 @@ applyChanges = function() {
 
 	if (resultTopics) {
 		dojo.lang.forEach(resultTopics, function(topic) {
-			if (destStore.getByKey(topic.topicId)) {
-				return;
+			if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
+				destStore.addData( {Id: getNewKey(destStore), topicId: topic.topicId, title: topic.title} );
 			} else {
-				destStore.addData({topicId: topic.topicId, title: topic.title}, topic.topicId);
+				return;
 			}
 		});
 	}

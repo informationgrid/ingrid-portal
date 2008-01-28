@@ -188,33 +188,7 @@ public class SNSService {
 		else
 			return Type.TOP_TERM;
     }
-/*    
-    public ArrayList<SNSTopic> findTopics(String q) {
-    	ArrayList<SNSTopic> results = new ArrayList<SNSTopic>();
 
-    	IngridQuery query = null;
-    	try {
-    		query = QueryStringParser.parse(q);
-    	} catch (ParseException e) {log.error(e);}
-
-    	query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
-//        query.addField(new FieldQuery(true, false, "lang", "de"));
-        query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TERM);
-//        IngridHits hits = plug.search(query, 0, 600);
-        IngridHits hits = null;
-        IngridHit[] hitsArray = hits.getHits();
-
-        if (hitsArray != null)
-        {
-        	for (int i = 0; i < hitsArray.length; ++i) {
-        		Topic t = (Topic) hitsArray[i];
-        		System.out.println("Found: "+t.getTopicID()+", "+t.getTopicName());
-        		results.add(new SNSTopic(getTypeFromTopic(t), t.getTopicID(), t.getTopicName()));
-        	}
-        }
-        return results;
-    }
-*/
 
     public void testIncludeSiblings() {
         // getHierarchy?root=uba_thes_27118&user=ingrid_test&password=ingrid_test&depth=2&direction=up&includeSiblings=true
@@ -253,11 +227,6 @@ public class SNSService {
     	try {
     		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
     	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER);
-
-/*
-    		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
-	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER);
-*/
     	} catch (Exception e) {
 	    	log.error(e);
 	    }
@@ -269,6 +238,28 @@ public class SNSService {
 	        }
 	    }
 	    return null;
+    }
+
+    public ArrayList<SNSTopic> findTopics(String queryTerm) {
+    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	TopicMapFragment mapFragment = null;
+    	try {
+    		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
+    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER);
+    	} catch (Exception e) {
+	    	log.error(e);
+	    }
+	    
+	    if (null != mapFragment) {
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	        if ((null != topics)) {
+	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+	            	resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getId(), topic.getBaseName(0).getBaseNameString().get_value()));
+	            	log.debug("Adding: ["+getTypeFromTopic(topic)+", "+topic.getId()+", "+topic.getBaseName(0).getBaseNameString().get_value()+"]");
+				}
+	        }
+	    }
+	    return resultList;
     }
 
     public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms) {
@@ -297,59 +288,34 @@ public class SNSService {
 	    return resultList;
     }
 
-    
-    public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
+	public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
     	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-    	int[] totalSize = new int[] {0};
-	    Topic[] snsResults = new Topic[0];
-	    try {
-		    // Get the locations for the given queryTerm
-	    	snsResults = snsController.getTopicsForText(queryTerm, Integer.valueOf(resourceBundle.getString("sns.maxWordAnalyzing")),
-	                "/location", "mdek", "de", totalSize, false);
-	    }
-	    catch (Exception e) {log.error(e);}
-
-	    totalSize[0] = snsResults.length;
-	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
-	    IngridHit[] hits = res.getHits();
-
-	    if (hits != null) {
-            for (IngridHit ingridHit : hits) {
-            	DetailedTopic dt = (DetailedTopic) ingridHit;
-                SNSLocationTopic topic = new SNSLocationTopic();
-                String[] type = dt.getSummary().split("#");
-                topic.setName(dt.getTitle());
-                topic.setTopicId(dt.getTopicID());
-                topic.setType(resourceBundle.getString("sns.topic.ref."+type[type.length-1]));
-                topic.setNativeKey(dt.getTopicNativeKey());
-                resultList.add(topic);
-            }
-        	Collections.sort(resultList, new SNSLocationTopicComparator());
-	    }
-	    return resultList;
-/*
-	    // Iterate over the result array and query for additional data (wgs84 coordinates)
-	    // TODO We don't really need to get the detailed information for all the topics here
-	    //		Construct incomplete SNSLocationTopics (without wgs84box and qualifier) here?
-	    if (hits != null) {
-            for (IngridHit ingridHit : hits) {
-                DetailedTopic dt = (DetailedTopic) ingridHit;
-                SNSLocationTopic topic = getDetailedLocationTopicInfo(dt.getTopicID());
-                if (topic != null) {
-//					log.debug(topic);
-                    resultList.add(topic);
-                }
-            }
-        }
-	    return resultList;
-*/
-    }
-
-    
-    public SNSLocationTopic getDetailedLocationTopicInfo(String topicID) {
     	TopicMapFragment mapFragment = null;
     	try {
-    		// Query for additional info
+    		mapFragment = snsClient.findTopics(queryTerm, "/location", SearchType.exact,
+    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER);
+    	} catch (Exception e) {
+	    	log.error(e);
+	    }
+	    
+	    if (null != mapFragment) {
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	        if ((null != topics)) {
+	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+	            	SNSLocationTopic t = createLocationTopic(topic);
+	            	if (t != null) {
+	            		resultList.add(t);
+	            	}
+				}
+	        }
+	    }
+	    return resultList;
+    }
+
+    public ArrayList<SNSLocationTopic> getLocationTopicsById(String topicID) {
+    	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	TopicMapFragment mapFragment = null;
+    	try {
     		mapFragment = snsClient.getPSI(topicID, 0, "/location");
 	    } catch (Exception e) {
 	    	log.error(e);
@@ -358,28 +324,31 @@ public class SNSService {
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
 	    	for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            if (topic.getId().equals(topicID)) {
-	            	// A match was found. Add the type from the href parameter
-	            	//   and check if there are wgs84 coordinates.
-//	            	log.debug("Topic Found: "+topicID);
-//	            	log.debug("Type: "+topic.getInstanceOf(0).getTopicRef().getHref());
-	            	return createLocationTopic(topic);
-	            }
+            	SNSLocationTopic t = createLocationTopic(topic);
+            	if (t != null) {
+            		resultList.add(t);
+            	} else {
+            		log.debug("Couldn't create location topic for result: "+topic.getId());
+            	}
 	        }
 	    }
-    	return null;
+    	return resultList;
     }
 
+    
     private SNSLocationTopic createLocationTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	if (topic.getOccurrence() == null)
-    		return null;
-
     	SNSLocationTopic result = new SNSLocationTopic();
     	result.setTopicId(topic.getId());
     	result.setName(topic.getBaseName(0).getBaseNameString().get_value());
     	String type = topic.getInstanceOf(0).getTopicRef().getHref();
     	type = type.substring(type.lastIndexOf("#")+1);
     	result.setType(resourceBundle.getString("sns.topic.ref."+type));
+
+    	// If the topic doesn't contain any more information return the basic info
+    	if (topic.getOccurrence() == null) {
+    		return result;
+    	}
+
 
     	// Iterate over all occurrences and extract the relevant information (bounding box wgs84 coords and the qualifier)
     	for(int i = 0; i < topic.getOccurrence().length; ++i) {

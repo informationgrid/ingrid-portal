@@ -627,7 +627,7 @@ udkDataProxy._setObjectData = function(nodeData)
 
 
   // -- Thesaurus --
-  dojo.widget.byId("thesaurusTerms").store.setData(nodeData.thesaurusTermsTable);
+  dojo.widget.byId("thesaurusTerms").store.setData(udkDataProxy._addTableIndices(nodeData.thesaurusTermsTable));
   dojo.widget.byId("thesaurusFreeTermsList").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusFreeTermsTable)));
   dojo.widget.byId("thesaurusTopics").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusTopicsList)));
   dojo.widget.byId("thesaurusEnvTopics").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusEnvTopicsList)));

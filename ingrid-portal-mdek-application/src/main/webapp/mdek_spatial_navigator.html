@@ -123,7 +123,7 @@ findAssociatedLocations = function(topicId) {
 	deleteComboboxWidgets();
 	showLoading();
 
-	SNSService.getLocationTopics(topicId, {
+	SNSService.getLocationTopicsById(topicId, {
 		preHook:disableUiElements,
 		postHook:enableUiElements,
 		callback:setResultList,
@@ -154,92 +154,61 @@ findLocationTopics = function() {
 addLocationTopics = function() {
 	var store = dojo.widget.byId("spatialRefAdminUnit").store;
 
-	// Batch request can be activated/deactivated here by removing 'beginBatch' and 'endBatch'
-	// When batching is deactivated all the requests are started at once.
-	var deferredArray = [];
-
-	DWREngine.beginBatch();
 	dojo.lang.forEach(checkboxArray, function(item) {
-		if (item.checked) {
-			var deferred = new dojo.Deferred();
-			deferredArray.push(deferred);
-			
-			var topic = item.topic;
-			var topicId = item.topic.topicId;
+		if (!item.checked) {
+			return;
+		}
 
-			SNSService.getDetailedLocationTopicInfo(topicId, {
-				callback:function(res) {
-					if (res == null) {
-						// No detailed information about the object was found.
-						// Create a stub to put in the table (without bounding box coords)
-						res = topic;
-					}
-					// Check if the store already contains the topic with id topicId
-					var storedTopic = null;
-					var storeData = store.getData();
-					for (var i = 0; i < storeData.length; ++i) {
-						if (storeData[i].topicId == res.topicId) {
-							storedTopic = storeData[i];
-							continue;
-						}
-					}
+		var topic = item.topic;
+		var topicId = item.topic.topicId;
 
-//					var storedTopic = store.getDataByKey(res.topicId);
-					if (storedTopic) {
-						// Element is already in the table. Update the topic.
-						// Update elements that are displayed in the table
-//						store.update(storedTopic, "name", res.name+", "+res.type);
-						store.update(storedTopic, "name", res.name);
-						if (res.boundingBox) {
-							store.update(storedTopic, "longitude1", res.boundingBox[0]);
-							store.update(storedTopic, "latitude1", res.boundingBox[1]);
-							store.update(storedTopic, "longitude2", res.boundingBox[2]);
-							store.update(storedTopic, "latitude2", res.boundingBox[3]);
-						}
-						// Update elements that aren't displayed in the table
-						storedTopic.nativeKey = res.nativeKey;
-					} else {
-						// The topic was not found in the result list. Create a new key and
-						// add the topic to the list
-						var key = getNewKey();
-						if (res.boundingBox) {
-							store.addData({
-									Id: key,
-									topicId: res.topicId,
-//									name: res.name+", "+res.type,
-									name: res.name,
-									longitude1: res.boundingBox[0],
-									latitude1: res.boundingBox[1],
-									longitude2: res.boundingBox[2],
-									latitude2: res.boundingBox[3],
-									nativeKey: res.nativeKey
-							});
-						} else {
-							store.addData({
-									Id: key,
-									topicId: res.topicId,
-//									name: res.name+", "+res.type,
-									name: res.name,
-									nativeKey: res.nativeKey
-							});
-						}
-					}
-					deferred.callback();
-				},
-				errorHandler:function(message) {
-					dojo.debug(message);
-					deferred.errback(message);
-				},
-				timeout:10000	// 10 seconds per request
-			});
+		var storedTopic = null;
+		var storeData = store.getData();
+		for (var i = 0; i < storeData.length; ++i) {
+			if (storeData[i].topicId == topicId) {
+				storedTopic = storeData[i];
+				continue;
+			}
+		}
+
+		if (storedTopic) {
+			// Element is already in the table. Update the topic.
+			// Update elements that are displayed in the table
+			store.update(storedTopic, "name", topic.name);
+			if (topic.boundingBox) {
+				store.update(storedTopic, "longitude1", topic.boundingBox[0]);
+				store.update(storedTopic, "latitude1", topic.boundingBox[1]);
+				store.update(storedTopic, "longitude2", topic.boundingBox[2]);
+				store.update(storedTopic, "latitude2", topic.boundingBox[3]);
+			}
+			// Update elements that aren't displayed in the table
+			storedTopic.nativeKey = topic.nativeKey;
+		} else {
+			// The topic was not found in the result list. Create a new key and
+			// add the topic to the list
+			var key = getNewKey();
+			if (topic.boundingBox) {
+				store.addData({
+						Id: key,
+						topicId: topic.topicId,
+						name: topic.name,
+						longitude1: topic.boundingBox[0],
+						latitude1: topic.boundingBox[1],
+						longitude2: topic.boundingBox[2],
+						latitude2: topic.boundingBox[3],
+						nativeKey: topic.nativeKey
+				});
+			} else {
+				store.addData({
+						Id: key,
+						topicId: topic.topicId,
+						name: topic.name,
+						nativeKey: topic.nativeKey
+				});
+			}
 		}
 	});
-	DWREngine.endBatch();
-
-	var deferredList = new dojo.DeferredList(deferredArray, false, false, true);
-	deferredList.addBoth(function() {
-		_container_.closeWindow();
-	});
+	_container_.closeWindow();
 }
 
 </script>

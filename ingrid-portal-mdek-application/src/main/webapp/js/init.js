@@ -318,18 +318,20 @@ function initFreeTermsButton() {
 		var term = dojo.widget.byId("thesaurusFreeTerms").getValue();
 		term = dojo.string.trim(term);
 		if (term) {
-			SNSService.findTopic(term, {
-				callback:function(topic) {
-					if (topic != null && topic.type == "DESCRIPTOR") {
-						// Topic found. Add the result to the topic list
+			SNSService.findTopics(term, {
+				callback:function(topics) {
+					if (topics != null) {
+						// Topics found. Add the results to the topic list
 						var topicStore = dojo.widget.byId("thesaurusTerms").store;
-						if (topicStore.getByKey(topic.topicId)) {
-							// Topic already exists in the topic List
-							return;
-						} else {
-							// Topic is new. Add it to the topic list
-							topicStore.addData({Id: topic.topicId, title: topic.title}, topic.topicId);
-						}
+						dojo.lang.forEach(topics, function(topic) {
+							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
+								// Topic is new. Add it to the topic list
+								topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
+							} else {
+								// Topic already exists in the topic List
+								return;
+							}
+						});
 					} else {
 						// Topic not found in the sns. Add the result to the free term list
 						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
@@ -340,7 +342,7 @@ function initFreeTermsButton() {
 						}
 					}},
 				timeout:8000,
-				errorHandler:function(msg) {dojo.debug("Error while executing SNSService.findTopic");}
+				errorHandler:function(msg) {dojo.debug("Error while executing SNSService.findTopics");}
 			});
 		}
 	}

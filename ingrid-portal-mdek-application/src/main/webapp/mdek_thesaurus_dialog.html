@@ -38,7 +38,7 @@ init = function() {
 	});
 
 
-	var treeController = dojo.widget.byId('thesTreeController');
+	var treeController = dojo.widget.byId("thesTreeController");
 	treeController.loadRemote = function(node, sync) {
 
 		showStatus(message.get("sns.loadingHint"));
@@ -79,10 +79,12 @@ init = function() {
 	var treeListener = dojo.widget.byId('thesTreeListener');
 	dojo.event.topic.subscribe(treeListener.eventNames.select, "handleSelectNode");
 
+/*
 	// Populate the descriptor list
 	var srcStore = dojo.widget.byId("thesaurusTerms").store;
 	var destStore = dojo.widget.byId("thesaurusDescList").store;
 	destStore.setData(srcStore.getData());
+*/
 
 	// Show initial loading message
 	showStatus(message.get("sns.loadingTopTermsHint"));
@@ -143,14 +145,6 @@ function expandPath(tree, currentNode, targetNode) {
 				dojo.widget.byId('thesTree').selectNode(tree.children[i]);
 				// Scroll the contentPane to tree.children[i]
 				dojo.html.scrollIntoView(tree.children[i].domNode);
-/*
-				var dest = tree.children[i].domNode.offsetTop - dojo.byId('thesTreeContainer').offsetTop;
-				dest -= 100;
-				if (dest > 0)
-					dojo.byId('thesTreeContainer').scrollTop = dest;
-				else
-					dojo.byId('thesTreeContainer').scrollTop = 0;
-*/
 				return;
 			}
 		}
@@ -231,6 +225,16 @@ findTopic = function() {
 	}
 };
 
+getNewKey = function(store) {
+	var key = 0;
+	var data = store.get();
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+	return key;
+}
 
 // AddTopic Button onClick function.
 //
@@ -243,7 +247,7 @@ addSelectedTopic = function() {
 	if (!selectedNode || descStore.getByKey(selectedNode.topicId) || selectedNode.type != "DESCRIPTOR")
 		return;
 	else
-		descStore.addData({topicId: selectedNode.topicId, title: selectedNode.title}, selectedNode.topicId);
+		descStore.addData( {Id: getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
 
 };
 
@@ -262,7 +266,16 @@ acceptTopicList = function() {
 	var srcStore = dojo.widget.byId("thesaurusDescList").store;
 	var destStore = dojo.widget.byId("thesaurusTerms").store;
 
-	destStore.setData(srcStore.getData());
+	dojo.lang.forEach(srcStore.getData(), function(topic){
+		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
+			// Topic is new. Add it to the topic list
+			destStore.addData({Id: getNewKey(destStore), topicId: topic.topicId, title: topic.title});
+		} else {
+			// Topic already exists in the destination List
+			return;
+		}
+	});
+
 	closeDialog();
 }
 
@@ -337,7 +350,7 @@ acceptTopicList = function() {
         </div>
 
         <div dojoType="ContentPane">
-    	    <table id="thesaurusDescList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort interactive third relativePos">
+    	    <table id="thesaurusDescList" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort interactive third relativePos">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="title" dataType="String" width="255" sort="desc">&nbsp;</th>
