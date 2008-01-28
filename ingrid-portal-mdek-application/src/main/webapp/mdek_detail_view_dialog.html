@@ -96,7 +96,7 @@ function renderNodeData(nodeData) {
 	
 	// spatial reference
 	renderSectionTitel("Raumbezug");
-	renderTable(nodeData.spatialRefAdminUnitTable, ["name", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "fachlicher Schlüssel", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Administrative Einheiten");
+	renderTable(nodeData.spatialRefAdminUnitTable, ["name", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "fachlicher Schl&uuml;ssel", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Administrative Einheiten");
 	renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Freier Bezug");
 	var altitudeData = [nodeData];
 	// create cell render functions
@@ -169,8 +169,28 @@ function renderNodeData(nodeData) {
 	
 }
 
+function renderYesNo(val) {
+	if (val == 1) {
+		return "Ja";
+	} else {
+		return "Nein";
+	}
+}
+
 function renderOperations(list) {
+	dojo.debugShallow(list["1"]);
 	renderTable(list, ["name", "description"], ["Name", "Beschreibung"], "Operationen &Uuml;bersicht");
+	for(var i=0; i<list.length; i++) {
+		dojo.debug("list.length: " + i);
+		var op = list[i];
+		renderTextWithTitle(op.description, "Operation " + op.name);
+		renderList(op.platform, "unterst&uuml;tzte Plattformen");
+		renderTextWithTitle(op.methodCall, "Aufruf");
+		renderTable(op.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
+		renderList(op.addressList, "Zugriffsadressen");
+		renderList(op.dependencies, "Abh&auml;ngigkeiten");
+		dojo.debug("list.length: " + i);
+	}
 }
 
 function renderUrlLinkList(list) {
@@ -193,7 +213,13 @@ function renderSectionTitel(val) {
 }
 
 function renderTextWithTitle(val, title) {
-	dojo.byId("detailViewContent").innerHTML += "<p><strong>" + title + "</strong><br/>" + val + "</p><br/>";
+	if (detailHelper.isValid(val)) {
+		if (detailHelper.isValid(title)) {
+			dojo.byId("detailViewContent").innerHTML += "<p><strong>" + title + "</strong><br/>" + val + "</p><br/>";
+		} else {
+			dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
+		}
+	}
 }
 
 function renderAddressList(list) {
