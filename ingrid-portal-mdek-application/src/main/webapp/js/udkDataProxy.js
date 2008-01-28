@@ -1012,8 +1012,10 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	if (op) {
 		for (var i = 0; i < op.length; ++i) {
 			var operationData = {};
-
-		//  operationData.paramList = udkDataProxy._tableDataToList(op[i].paramList);
+			operationData.name = op[i].name;
+			operationData.description = op[i].description;
+			operationData.operationsCall = op[i].operationsCall;
+			operationData.paramList = op[i].paramList;
 			operationData.platform = udkDataProxy._tableDataToList(op[i].platform);
 			operationData.addressList = udkDataProxy._tableDataToList(op[i].addressList);
 			operationData.dependencies = udkDataProxy._tableDataToList(op[i].dependencies);
