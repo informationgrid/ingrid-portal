@@ -1,7 +1,9 @@
 package de.ingrid.mdek;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.IMdekCaller.Quantity;
+import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -151,6 +154,11 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractUIListFromResponse(response);
 	}
 
+	public CatalogBean getCatalogData() {
+		IngridDocument response = mdekCaller.fetchCatalog();
+		return extractCatalogFromResponse(response);
+	}
+
 	// ------------------------ Helper Methods
 	// ---------------------------------------
 
@@ -266,4 +274,36 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return resultMap;
 	}
 
+	public CatalogBean extractCatalogFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+		CatalogBean resultCat = new CatalogBean();
+
+		resultCat.setUuid(result.getString(MdekKeys.UUID));
+		resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
+		resultCat.setCountry(result.getString(MdekKeys.COUNTRY));
+		resultCat.setWorkflowControl(result.getString(MdekKeys.WORKFLOW_CONTROL));
+		resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
+		resultCat.setDateOfCreation(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
+		resultCat.setDateOfLastModification(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+		resultCat.setModUuid(result.getString(MdekKeys.MOD_UUID));
+
+		return resultCat;
+	}
+
+
+	private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+
+	private static Date convertTimestampToDate(String timeStamp) {
+		if (timeStamp != null && timeStamp.length() != 0) {
+			try {
+				Date date = timestampFormatter.parse(timeStamp);
+				return date;
+			} catch (Exception ex){
+				log.error("Problems parsing timestamp from database: " + timeStamp, ex);
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
 }

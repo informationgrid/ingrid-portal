@@ -277,7 +277,10 @@ public class EntryServiceImpl implements EntryService {
 		return dataConnection.getUiListValues();
 	}
 
-	
+	public CatalogBean getCatalogData() {
+		return dataConnection.getCatalogData();	
+	}
+
 	
 // ------------------------ Helper Methods ---------------------------------------	
 	

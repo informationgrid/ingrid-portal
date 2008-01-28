@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -90,6 +91,7 @@ public interface DataConnectionInterface {
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree);
 	public boolean moveObjectSubTree(String fromUuid, String toUuid);
 	public Map<String, List<String>> getUiListValues();
+	public CatalogBean getCatalogData();
 	
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }
