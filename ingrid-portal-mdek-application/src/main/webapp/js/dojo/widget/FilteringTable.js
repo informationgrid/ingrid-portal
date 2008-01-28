@@ -689,7 +689,7 @@ dojo.widget.defineWidget(
     // close the editor
     var displayValue = this.origValue;
 
-	if (this.curEditor.getDisplayValue) {
+	if (this.curEditor.getDisplayValue && this.origValue != "") {
     	displayValue = this.curEditor.getDisplayValue();
 	}
 
