@@ -47,6 +47,7 @@ dojo.addOnLoad(function()
   initSpatialFreeReferencesComboBox();
   initRef1SpatialSystemDataProvider();
   initReferenceTables();
+  initCatalogData();
   hideSplash();
 
 });
@@ -691,4 +692,18 @@ function initTableValidators() {
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
 		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
 	]);
+}
+
+function initCatalogData() {
+/*
+		EntryService.getCatalogData({
+			callback: function(res) {
+				dojo.debugShallow(res);
+			},
+			errorHandler:function(mes){
+				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+				dojo.debug(mes);
+			}
+		});
+*/
 }
