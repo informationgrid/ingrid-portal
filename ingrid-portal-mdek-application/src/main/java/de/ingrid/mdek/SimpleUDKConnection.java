@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.IMdekCaller.Quantity;
+import de.ingrid.mdek.MdekErrors.MdekError;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;

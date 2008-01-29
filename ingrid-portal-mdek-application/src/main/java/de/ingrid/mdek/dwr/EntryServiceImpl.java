@@ -74,7 +74,7 @@ public class EntryServiceImpl implements EntryService {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error copying node.", e);
 			return null;
 		}
 	}
@@ -102,7 +102,9 @@ public class EntryServiceImpl implements EntryService {
 			if (!wasFullyDeleted) {
 				return dataConnection.getNodeDetail(uuid);
 			}
-		} catch (Exception e) {e.printStackTrace();};
+		} catch (Exception e) {
+			log.error("Error deleting working Copy.", e);
+		};
 		return null;
 	}
 
@@ -130,7 +132,9 @@ public class EntryServiceImpl implements EntryService {
 
 		try {
 			data = dataConnection.getNodeDetail(nodeUuid);
-		} catch (Exception e) {log.error("Error while getting node data.", e);}
+		} catch (Exception e) {
+			log.error("Error while getting node data.", e);
+		}
 
 		// TODO check for errors and throw an exception?
 		// Return a newly created node
@@ -145,7 +149,9 @@ public class EntryServiceImpl implements EntryService {
 		MdekDataBean data = null;
 		try {
 			data = dataConnection.getInitialObject(parentUuid);
-		} catch (Exception e) {log.error("Error while getting node data.", e);}
+		} catch (Exception e) {
+			log.error("Error while getting node data.", e);
+		}
 
 		data.setTitle("Neues Objekt");
 		data.setObjectName("Neues Objekt");
@@ -212,7 +218,7 @@ public class EntryServiceImpl implements EntryService {
 			return dataConnection.moveObjectSubTree(nodeUuid, dstNodeUuid);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error moving node.", e);
 			return false;
 		}
 	}
@@ -251,7 +257,7 @@ public class EntryServiceImpl implements EntryService {
 			  dataConnection.canCutObject(uuid);
 			  return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error checking if node can be cut.", e);
 			return false;
 		}
 	}
@@ -268,7 +274,7 @@ public class EntryServiceImpl implements EntryService {
 			  dataConnection.canCopyObject(uuid);
 			  return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error checking if node can be copied.", e);
 			return false;
 		}
 	}
