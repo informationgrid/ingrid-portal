@@ -99,18 +99,26 @@ dojo.widget.defineWidget(
       }
     }
 
-    // the following code only works if the list is displayed
-    /*
-    var tgt = dojo.html.firstElement(this.optionsListNode);
-    while(displayValue.length == 0 && tgt) {
-      if(value == tgt.getAttribute("resultValue")) {
-        displayValue = tgt.getAttribute("resultName");
-        break;
-      } else {
-        tgt = dojo.html.nextElement(tgt);
-      }
-    }
-    */
     return displayValue;
-  }
+  },
+
+
+	getDisplayValueForValue: function(value) {
+		for (var i=0; i<this.dataProvider._data.length; i++) {
+			if (this.dataProvider._data[i][1] == value) {
+				return this.dataProvider._data[i][0];
+			}
+		}
+		return null;
+	},
+	
+	getValueForDisplayValue: function(dispValue) {
+		for (var i=0; i<this.dataProvider._data.length; i++) {
+			if (this.dataProvider._data[i][0] == dispValue) {
+				return this.dataProvider._data[i][1];
+			}
+		}
+		return null;
+	}
+
 });

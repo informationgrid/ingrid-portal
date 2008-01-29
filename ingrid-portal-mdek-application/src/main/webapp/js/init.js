@@ -370,18 +370,18 @@ function initReferenceTables() {
 
 // TODO Fix Me! Insert the correct filters here
 	var filterTableMap =
-		[{tableId: "ref1SymbolsLink", 		filterId: "Symbolkatalog"},	
-		 {tableId: "ref1KeysLink", 			filterId: "Schlüsselkatalog"},
-		 {tableId: "ref1ServiceLink", 		filterId: "Verweis zu Dienst"},
-		 {tableId: "ref1BasisLink", 		filterId: "Fachliche Grundlage"},			// 3520
-		 {tableId: "ref1DataBasisLink", 	filterId: "Datengrundlage"},				// 3570
-		 {tableId: "ref1ProcessLink", 		filterId: "Herstellungsprozess"},
-		 {tableId: "ref2LocationLink", 		filterId: "Basisdaten"},					//?3345
-		 {tableId: "ref2BaseDataLink", 		filterId: "Standort"},						// ???? - Single Address
-		 {tableId: "ref3BaseDataLink", 		filterId: "Basisdaten"},					// 3210
-		 {tableId: "ref4ParticipantsLink", 	filterId: "Beteiligte"},					// ???? - Single Address
-		 {tableId: "ref4PMLink", 			filterId: "Projektleiter"},					// ???? - Single Address
-		 {tableId: "ref5MethodLink", 		filterId: "Methode / Datengrundlage"}];		// 3100 - Single Address
+		[{tableId: "ref1SymbolsLink", 		filterId: "3555"},		// 3555
+		 {tableId: "ref1KeysLink", 			filterId: "3535"},		// 3535
+		 {tableId: "ref1ServiceLink", 		filterId: "5066"},		// 5066
+		 {tableId: "ref1BasisLink", 		filterId: "3520"},		// 3520
+		 {tableId: "ref1DataBasisLink", 	filterId: "3570"},		// 3570
+		 {tableId: "ref1ProcessLink", 		filterId: "3515"},		// 3515
+		 {tableId: "ref2LocationLink", 		filterId: "3345"},		// 3345
+//		 {tableId: "ref2BaseDataLink", 		filterId: "3360"},		// 3360 - Single Address
+		 {tableId: "ref3BaseDataLink", 		filterId: "3210"},		// 3210
+//		 {tableId: "ref4ParticipantsLink", 	filterId: "3410"},		// 3410 - Single Address
+//		 {tableId: "ref4PMLink", 			filterId: "3400"},		// 3400 - Single Address
+		 {tableId: "ref5MethodLink", 		filterId: "3100"}];		// 3100
 
 
 	dojo.lang.forEach(filterTableMap, function(tableMapping) {

@@ -32,14 +32,15 @@ var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink"
 var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "thesaurusTermsLabel",
 			  "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "thesaurusEnvTopicsLabel",
-			  "thesaurusEnvCatsLabel"];
+			  "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["objectClass", "objectClassLabel"],
 					  ["generalDescription", "generalDescLabel"],
 					  ["extraInfoLangData", "extraInfoLangDataLabel"],
-					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"]];
+					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"],
+					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"]];
 
 
 var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]]; 

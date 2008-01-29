@@ -406,7 +406,8 @@ dojo.widget.defineWidget(
 							row.style.display = "none";
 						}
 					} else {
-						dojo.debug("Error in ingrid:FilteringTable.applyFilters(). A matching value for the field "+filter.target+" could not be found.");
+						// Don't display an error if we get here. It is possible to filter tables even if the target value is not displayed!
+						// dojo.debug("Error in ingrid:FilteringTable.applyFilters(). A matching value for the field "+filter.target+" could not be found.");
 					}
 				}
 			}

@@ -92,6 +92,58 @@ hideInputElements = function() {
 showInputElements = function() {
 	dojo.byId("inputFields").style.display = "";
 	dojo.byId("inputButtons").style.display = "";
+
+	if (!_container_.customParams || !_container_.customParams.filter) {
+		dojo.widget.byId("linksFromFieldName").enable();
+	}
+}
+
+function getRelationTypeForDisplayValue(dispVal) {
+	var relationType = dojo.widget.byId("linksFromFieldName").getValueForDisplayValue(dispVal);
+	if (relationType != null) {
+		return relationType;
+	} else {
+		return -1;
+	}
+}
+
+
+// Initialises the 'linksFromFieldName' select box depending on the current obj class and the filter id
+function initReferenceWidget(filter) {
+	// All the possible values for the select box
+	var referenceMap = [["Basisdaten", "3210"],
+						["Basisdaten", "3345"],
+						["Datengrundlage", "3570"],
+						["Fachliche Grundlage", "3520"],
+						["Herstellungsprozess", "3515"],
+						["Methode / Datengrundlage", "3100"],
+						["Schl\u00fcsselkatalog", "3535"],
+						["Symbolkatalog", "3555"],
+						["Verweis zu Dienst", "5066"]];
+
+	var initialValues = [];
+	if (filter) {
+		dojo.lang.forEach(referenceMap, function(item) {
+			if (item[1] == filter)
+				initialValues.push(item);
+		});
+	} else {
+		var objectClass = dojo.widget.byId("objectClass").getValue()[5];
+		var idList = [];
+		switch (objectClass) {
+			case "0": break; // Empty select box
+			case "1": idList = ["3570", "3520", "3515", "3535", "3555", "5066"]; break;
+			case "2": idList = ["3345"]; break;
+			case "3": idList = ["3210"]; break;
+			case "4": break; // Empty select box
+			case "5": idList = ["3100"]; break;
+			default: dojo.debug("Error: could not determine object class."); break;
+		}
+		initialValues = dojo.lang.filter(referenceMap, function(item) {
+			return dojo.lang.some( idList, function(id) { return id == item[1]; } );
+		});
+	}
+	dojo.widget.byId("linksFromFieldName").dataProvider.setData(initialValues);
 }
 
 init = function() {
@@ -104,7 +156,7 @@ init = function() {
 	var objectName = dojo.widget.byId("objectName").getValue();
 	dojo.widget.byId("linksFromObjectName").setValue(objectName);
 
-	// Data provider for the object class values
+	// Data provider for resolving the object class values
 	_container_.objectClassDP = new dojo.widget.basicComboBoxDataProvider({
 		dataUrl: "js/data/objectclasses.js"
 	});
@@ -231,9 +283,9 @@ init = function() {
 	// Check if a filter was passes as an argument
 	if (_container_.customParams && _container_.customParams.filter) {	
 		// Filter the list according to the filter arg
-		var filterFunc = function(relationType) {return (relationType == _container_.customParams.filter);};
-		objectList.setFilter("relationTypeName", filterFunc);
-		urlList.setFilter("relationTypeName", filterFunc);
+		var filterFunc = function(relationType) { return relationType == _container_.customParams.filter; };
+		objectList.setFilter("relationType", filterFunc);
+		urlList.setFilter("relationType", filterFunc);
 	
 		objectList.applyFilters();	
 		objectList.render();
@@ -241,10 +293,15 @@ init = function() {
 		urlList.render();
 
 		// Disable the type input and set it to the filter
-		var linkTypeInput = dojo.widget.byId("linksFromFieldName");
-		linkTypeInput.setValue(_container_.customParams.filter);
-		linkTypeInput.disable();
+		var referenceWidget = dojo.widget.byId("linksFromFieldName");
+		referenceWidget.disable();
+
+		var filterStr = _container_.customParams.filter+'';
+		initReferenceWidget(filterStr);
+		referenceWidget.setValue(referenceWidget.getDisplayValueForValue(filterStr));
 	} else {
+		// Load the initial values from the backend
+		initReferenceWidget();
 		dojo.widget.byId("linksFromFieldName").setValue("");
 	}
 
@@ -285,6 +342,7 @@ saveLink = function() {
 		objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
 		objData.objectClass = curSelectedObject.objectClass;
 		objData.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+		objData.relationType = getRelationTypeForDisplayValue(objData.relationTypeName);
 		udkDataProxy._addIcons([objData]);
 		objStore.update(objData, "icon", objData.icon);
 		objStore.update(objData, "title", curSelectedObject.title);
@@ -298,6 +356,7 @@ saveLink = function() {
 		urlData.iconText = newUrl.iconText;
 		urlData.description = newUrl.description;
 		urlData.relationTypeName = newUrl.relationTypeName;
+		urlData.relationType = newUrl.relationType;
 		udkDataProxy._addIcons([urlData]);
 		urlStore.update(urlData, "name", newUrl.name);
 	} else if (objSelected && curSelectedObject) {
@@ -305,6 +364,7 @@ saveLink = function() {
 		// Take the current selected object and add the values that were entered in the ui fields
 		curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
 		curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
+		curSelectedObject.relationType = getRelationTypeForDisplayValue(curSelectedObject.relationTypeName);
 		// No checks if the store already contains the current element.
 		curSelectedObject.Id = _getNewKey();
 		udkDataProxy._addIcons([curSelectedObject]);
@@ -338,8 +398,8 @@ _getUrl = function() {
 	newUrl.iconUrl = dojo.widget.byId("linksToIconURL").getValue();
 	newUrl.iconText = dojo.widget.byId("linksToIconText").getValue();
 	newUrl.description = dojo.widget.byId("linksToUrlDescription").getValue();
-	// TODO relation Type is the wrong value here
 	newUrl.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
+	newUrl.relationType = getRelationTypeForDisplayValue(newUrl.relationTypeName);
 	newUrl.name = dojo.widget.byId("linksToName").getValue();
 	return newUrl;
 }
@@ -491,7 +551,7 @@ closeDialog = function() {
           <span class="input spaceBelow"><input type="text" id="linksFromObjectName" name="linksFromObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
           <span class="label required"><label id="linksFromFieldNameLabel" for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname/Bezeichnung der Verweisbeziehung')">Feldname/Bezeichnung der Verweisbeziehung*</label></span>
           <span class="input">
-            <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/referenceTypes.js" style="width:590px;" id="linksFromFieldName"></div>
+            <div dojoType="ingrid:ComboBox" autoComplete="false" toggle="plain" style="width:590px;" id="linksFromFieldName"></div>
 		  </span>
 
          </div>
