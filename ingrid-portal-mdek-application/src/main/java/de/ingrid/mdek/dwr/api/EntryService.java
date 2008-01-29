@@ -196,6 +196,6 @@ public interface EntryService {
 	public boolean canCutObject(String parentUuid);
 	// TODO add return type when the method is implemented in MdekCaller
 	public boolean canCopyObject(String parentUuid);
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds);
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
 }

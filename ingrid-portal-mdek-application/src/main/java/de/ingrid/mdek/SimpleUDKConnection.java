@@ -151,8 +151,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return (mdekCaller.getResultFromResponse(response) != null);
 	}
 
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds) {
-		IngridDocument response = mdekCaller.getSysLists(listIds);
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
+		IngridDocument response = mdekCaller.getSysLists(listIds, languageCode);
 		return extractSysListFromResponse(response);
 	}
 

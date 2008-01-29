@@ -181,6 +181,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
 		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
 		mdekObj.setLinksToUrlTable(mapToUrlLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LINKAGES)));
+		mdekObj.setRelationType((Integer) obj.get(MdekKeys.RELATION_TYPE_REF));
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
 
@@ -382,6 +383,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
 		udkObj.put(MdekKeys.LINKAGES, mapFromUrlLinksTable(data.getLinksToUrlTable()));
 		udkObj.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
+		udkObj.put(MdekKeys.RELATION_TYPE_REF, data.getRelationType());
 		udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
 

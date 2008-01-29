@@ -37,10 +37,6 @@ public class MdekDataBean {
 	public ArrayList<MdekAddressBean> generalAddressTable;
 	public ArrayList<CommentBean> commentTable;
 
-	// Catalogue
-//	public String catalogUuid;
-//	public String catalogName;
-
 	// Spatial
 	public ArrayList<LocationBean> spatialRefAdminUnitTable;
 	public ArrayList<LocationBean> spatialRefLocationTable;
@@ -90,6 +86,7 @@ public class MdekDataBean {
 	public ArrayList<MdekDataBean> linksToObjectTable;
 	public ArrayList<MdekDataBean> linksFromObjectTable;
 	public ArrayList<UrlBean> linksToUrlTable;
+	public Integer relationType;
 	public String relationTypeName;
 	public String relationDescription;
 	
@@ -1465,5 +1462,20 @@ public class MdekDataBean {
 
 	public void setParentPublicationCondition(Integer parentPublicationCondition) {
 		this.parentPublicationCondition = parentPublicationCondition;
-	};
+	}
+
+
+
+
+	public Integer getRelationType() {
+		return relationType;
+	}
+
+
+
+
+	public void setRelationType(Integer relationType) {
+		this.relationType = relationType;
+	}
+
 }

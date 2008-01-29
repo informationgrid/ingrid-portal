@@ -688,12 +688,19 @@ function initSysLists() {
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType"]; 
 
-	var lstIds = [];
+
+	// TODO load the initial language code map from the backend
+	var languageCode = 94;
+	if (dojo.hostenv.normalizeLocale(locale) == "de") {
+		languageCode = 121;
+	}
+
+	var lstIds = [100];		// list id 100 is for the static DP re1SpatialSystemDP
 	dojo.lang.forEach(selectWidgetIDs, function(item){
 		lstIds.push(dojo.widget.byId(item).listId);
 	});
 
-	EntryService.getSysLists(lstIds, {
+	EntryService.getSysLists(lstIds, languageCode, {
 		callback: function(res) {
 			dojo.lang.forEach(selectWidgetIDs, function(widgetId) {
 				var selectWidget = dojo.widget.byId(widgetId);
