@@ -261,7 +261,8 @@ function hideSplash(){
 
 	      <!-- FORM -->
 	      <div dojoType="ContentPane" widgetId="contentFrameObject" id="contentFrameObject" class="sectionBottom" style="overflow:auto;">
-	        <a name="sectionBottomContent"/>
+	        <a name="sectionBottomContent"></a>
+
 	        <form dojoType="ingrid:FormErfassungObjektContent" widgetId="contentFormObject" selectedClass="Class0" method="get" id="contentFormObject" action="">
 
 	        <div dojoType="ContentPane" id="contentFrameBodyObject" class="sectionBottomContent">
