@@ -690,9 +690,16 @@ function initSysLists() {
 
 
 	// TODO load the initial language code map from the backend
+	var locale = dojo.hostenv.normalizeLocale(dojo.locale);
+	var language = locale.split("-")[0];
 	var languageCode = 94;
-	if (dojo.hostenv.normalizeLocale(locale) == "de") {
+
+	if (language == "de") {
 		languageCode = 121;
+	} else if (language == "en") {
+		languageCode = 94;
+	} else {
+		dojo.debug("Unsupported Language. Setting language to english.");
 	}
 
 	var lstIds = [100];		// list id 100 is for the static DP re1SpatialSystemDP
