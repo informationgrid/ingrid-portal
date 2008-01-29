@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -149,9 +150,9 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return (mdekCaller.getResultFromResponse(response) != null);
 	}
 
-	public Map<String, List<String>> getUiListValues() {
-		IngridDocument response = mdekCaller.getUiListValues();
-		return extractUIListFromResponse(response);
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds) {
+		IngridDocument response = mdekCaller.getSysLists(listIds);
+		return extractSysListFromResponse(response);
 	}
 
 	public CatalogBean getCatalogData() {
@@ -265,13 +266,29 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return doc;
 	}
 
-	public Map<String, List<String>> extractUIListFromResponse(IngridDocument response) {
+	public Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
-		Map resultMap = new HashMap<String, List<String>>();
+		if (result != null) {
+			Map<Integer, List<String[]>> resultMap = new HashMap<Integer, List<String[]>>();
+			Set<String> listKeys = (Set<String>) result.keySet();
+			System.out.println("SUCCESS: " + listKeys.size() + " sys-lists");
+			for (String listKey : listKeys) {
+				IngridDocument listDocument = (IngridDocument) result.get(listKey);
+				ArrayList<String[]> resultList = new ArrayList<String[]>();
+				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
 
-		// TODO Create own keys
-		resultMap.put(MdekKeys.UI_FREE_SPATIAL_REFERENCES, result.get(MdekKeys.UI_FREE_SPATIAL_REFERENCES));
-		return resultMap;
+				List<IngridDocument> entries = (List<IngridDocument>) listDocument.get(MdekKeys.LST_ENTRY_LIST);
+				for (IngridDocument entry : entries) {
+					resultList.add( new String[] {entry.getString(MdekKeys.ENTRY_NAME), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString()} );
+				}
+				resultMap.put(listId, resultList);
+			}
+			return resultMap;
+
+		} else {
+			log.error("ERROR: " + mdekCaller.getErrorMsgFromResponse(response));
+			return null;
+		}
 	}
 
 	public CatalogBean extractCatalogFromResponse(IngridDocument response) {

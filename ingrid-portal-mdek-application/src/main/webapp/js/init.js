@@ -44,12 +44,11 @@ dojo.addOnLoad(function()
   initTableValidators();
   initCTS();
   initFreeTermsButton();
-  initSpatialFreeReferencesComboBox();
   initRef1SpatialSystemDataProvider();
   initReferenceTables();
   initCatalogData();
+  initSysLists();
   hideSplash();
-
 });
 
 
@@ -468,40 +467,6 @@ function initReferenceTables() {
 */	
 }
 
-function initSpatialFreeReferencesComboBox() {
-	var dp = dojo.widget.byId("freeReferencesEditor").dataProvider;
-	var def = new dojo.Deferred();
-	var kw = {
-		adviceType: "after",
-		srcObj: dp,
-		srcFunc: "setData",
-		adviceObj: def,
-		adviceFunc: "callback",
-		once: true
-	}
-
-	def.addCallback(function() {
-		dojo.event.kwDisconnect(kw);
-		EntryService.getUiListValues({
-			callback: function(res) {
-				var values = [];
-				dojo.lang.forEach(res.ui_freeSpatialReferences, function(item) {
-					values.push([item]);
-				});
-				var editor = dojo.widget.byId("freeReferencesEditor");
-				editor.dataProvider.setData(values);
-			},
-			errorHandler:function(mes){
-				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-				dojo.debug(mes);
-			}
-		});
-	});
-
-	dojo.event.kwConnect(kw);
-}
-
-
 function initToolbar() {
   // create toolbar buttons with tooltips
   var rightToolbar = dojo.widget.byId('rightToolbar');
@@ -695,15 +660,36 @@ function initTableValidators() {
 }
 
 function initCatalogData() {
-/*
-		EntryService.getCatalogData({
-			callback: function(res) {
-				dojo.debugShallow(res);
-			},
-			errorHandler:function(mes){
-				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-				dojo.debug(mes);
-			}
-		});
-*/
+	EntryService.getCatalogData({
+		callback: function(res) {
+			// Update catalog Data in udkDataProxy
+			catalogData = res;
+		},
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug(mes);
+		}
+	});
+}
+
+
+function initSysLists() {
+	var lstIds = [1100, 1350, 1370, 3555, 3535];
+	var lstMap = [[1100, "freeReferencesEditor"],
+				  [1350, "extraInfoLegalBasicsTableEditor"],
+				  [1370, "extraInfoXMLExportTableCriteriaEditor"],
+				  [3555, "ref1SymbolsTitleCombobox"],
+				  [3535, "ref1KeysTitleCombobox"]];
+
+	EntryService.getSysLists(lstIds, {
+		callback: function(res) {
+			dojo.lang.forEach(lstMap, function(entry) {
+				dojo.widget.byId(entry[1]).dataProvider.setData(res[entry[0]]);
+			});
+		},
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+		}
+	});
 }

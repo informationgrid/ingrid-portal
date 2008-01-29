@@ -432,7 +432,7 @@ function hideSplash(){
 	               		<div id="ref1SymbolsTab1" dojoType="ContentPane" label="Text">
 	                    <div class="tableContainer rows4">
 	                      <div class="cellEditors" id="ref1SymbolsTextEditors">
-	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:77px;" widgetId="ref1SymbolsTitleCombobox"></div>
+	                        <div dojoType="ingrid:ComboBox" toggle="plain" style="width:77px;" widgetId="ref1SymbolsTitleCombobox"></div>
 	                        <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="ref1SymbolsDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1SymbolsVersion"></div>
 	                      </div>
@@ -475,7 +475,7 @@ function hideSplash(){
 	              		<div id="ref1KeysTab1" dojoType="ContentPane" label="Text">
 	                    <div class="tableContainer rows4">
 	                      <div class="cellEditors" id="ref1KeysTextEditors">
-	                        <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:77px;" widgetId="ref1KeysTitleCombobox"></div>
+	                        <div dojoType="ingrid:ComboBox" toggle="plain" style="width:77px;" widgetId="ref1KeysTitleCombobox"></div>
 	                        <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="ref1KeysDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1KeysVersion"></div>
 	                      </div>
@@ -1135,7 +1135,10 @@ function hideSplash(){
 	                </span>
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
+	                    <div dojoType="ingrid:ComboBox" toggle="plain" style="width:300px;" widgetId="freeReferencesEditor"></div>
+<!-- 
 	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/spatialLocation.js" style="width:300px;" widgetId="freeReferencesEditor"></div>
+ -->
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude1Editor"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude1Editor"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude2Editor"></div>
@@ -1348,12 +1351,12 @@ function hideSplash(){
 	                  <span class="label"><label for="extraInfoXMLExportTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'XML-Export-Kriterium')">XML-Export-Kriterium</label></span>
 	                  <div class="tableContainer rows5">
 	                    <div class="cellEditors" id="extraInfoXMLExportTableEditors">
-	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/extraInfoXML.js" style="width:161px;" widgetId="extraInfoXMLExportTableCriteriaCombobox"></div>
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" style="width:161px;" widgetId="extraInfoXMLExportTableCriteriaEditor"></div>
 	                    </div>
 	              	    <table id="extraInfoXMLExportTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third1">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="title" dataType="String" editor="extraInfoXMLExportTableCriteriaCombobox">XML-Export-Kriterium</th>
+	                    			<th field="title" dataType="String" editor="extraInfoXMLExportTableCriteriaEditor">XML-Export-Kriterium</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1366,12 +1369,12 @@ function hideSplash(){
 	                  <span class="label"><label for="extraInfoLegalBasicsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rechtliche Grundlagen')">Rechtliche Grundlagen</label></span>
 	                  <div class="tableContainer rows5">
 	                    <div class="cellEditors" id="extraInfoLegalBasicsTableEditors">
-	                      <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/extraInfoLegal.js" style="width:397px;" widgetId="extraInfoLegalBasicsTableCombobox"></div>
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" style="width:397px;" id="extraInfoLegalBasicsTableEditor"></div>
 	                    </div>
 	              	    <table id="extraInfoLegalBasicsTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive third2">
 	              	      <thead>
 	              		      <tr>
-	                    			<th field="title" dataType="String" editor="extraInfoLegalBasicsTableCombobox">Rechtliche Grundlagen</th>
+	                    			<th field="title" dataType="String" editor="extraInfoLegalBasicsTableEditor">Rechtliche Grundlagen</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>

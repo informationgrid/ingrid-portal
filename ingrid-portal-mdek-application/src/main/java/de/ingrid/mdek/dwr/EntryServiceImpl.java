@@ -273,8 +273,8 @@ public class EntryServiceImpl implements EntryService {
 		}
 	}
 
-	public Map<String, List<String>> getUiListValues() {
-		return dataConnection.getUiListValues();
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds) {
+		return dataConnection.getSysLists(listIds);
 	}
 
 	public CatalogBean getCatalogData() {

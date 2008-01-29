@@ -90,7 +90,7 @@ public interface DataConnectionInterface {
 	public List<String> getPathToObject(String uuid);
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree);
 	public boolean moveObjectSubTree(String fromUuid, String toUuid);
-	public Map<String, List<String>> getUiListValues();
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds);
 	public CatalogBean getCatalogData();
 	
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);

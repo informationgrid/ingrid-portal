@@ -70,6 +70,9 @@ var currentUdk = {};
 // This store holds the comments which are added/modified via the 'add comment' dialog.
 var commentStore = {};
 
+// This object holds general information about the catalog (see CatalogBean for content).
+var catalogData = {};
+
 
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
