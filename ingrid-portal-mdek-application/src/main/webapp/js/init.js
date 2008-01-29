@@ -612,8 +612,10 @@ function initToolbar() {
 function initRef1SpatialSystemDataProvider() {
 	// Data provider for the combobox
 	ref1SpatialSystemDP = new dojo.widget.basicComboBoxDataProvider({
-		dataUrl: "js/data/ref1SpatialSystemType.js"
+	// Values are now initialised in initSysLists()
+//		dataUrl: "js/data/ref1SpatialSystemType.js"
 	});
+
 	// Attach the neccessary functions to get Display Values for a given value
 	ref1SpatialSystemDP.getDisplayValueForValue = function(value) {
 		for (var i=0; i<this._data.length; i++) {
@@ -674,18 +676,32 @@ function initCatalogData() {
 
 
 function initSysLists() {
-	var lstIds = [1100, 1350, 1370, 3555, 3535];
-	var lstMap = [[1100, "freeReferencesEditor"],
-				  [1350, "extraInfoLegalBasicsTableEditor"],
-				  [1370, "extraInfoXMLExportTableCriteriaEditor"],
-				  [3555, "ref1SymbolsTitleCombobox"],
-				  [3535, "ref1KeysTitleCombobox"]];
+	var selectWidgetIDs = ["ref1SpatialSystem", "spatialRefAltVDate", "spatialRefAltMeasure", "timeRefTypeCombobox",
+		"generalAddressCombobox", "geometryTypeEditor", "timeRefPeriodicity", "availabilityMediaOptionsMediumCombobox",
+		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
+		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableCriteriaEditor",
+		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
+		"extraInfoLangData", "extraInfoLangMetaData",
+		// This select box also gets initialised on object load
+		"extraInfoPublishArea",
+		// Addresses
+		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
+		"addressComType"]; 
+
+	var lstIds = [];
+	dojo.lang.forEach(selectWidgetIDs, function(item){
+		lstIds.push(dojo.widget.byId(item).listId);
+	});
 
 	EntryService.getSysLists(lstIds, {
 		callback: function(res) {
-			dojo.lang.forEach(lstMap, function(entry) {
-				dojo.widget.byId(entry[1]).dataProvider.setData(res[entry[0]]);
+			dojo.lang.forEach(selectWidgetIDs, function(widgetId) {
+				var selectWidget = dojo.widget.byId(widgetId);
+				selectWidget.dataProvider.setData(res[selectWidget.listId]);	
 			});
+
+			// Init the standalone DPs
+			ref1SpatialSystemDP.setData(res[100]);
 		},
 		errorHandler:function(mes){
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);

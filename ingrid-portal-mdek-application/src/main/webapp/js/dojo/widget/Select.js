@@ -8,6 +8,10 @@ dojo.require("dojo.widget.Select");
 dojo.widget.defineWidget(
 	"ingrid.widget.Select",
 	dojo.widget.Select,
+    function() {
+      // The listId used for populating this select box with values from sys_list
+      this.listId = "";
+    },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/ComboBox.css"),
   buttonSrc: dojo.uri.moduleUri("ingrid", "widget/templates/images/combo_box_arrow.png"),
