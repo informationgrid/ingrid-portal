@@ -653,32 +653,13 @@ udkDataProxy._setObjectData = function(nodeData)
   udkDataProxy._addIcons(linkTable);
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
-  // -- Check which object type was received and fill the appropriate fields --
-  // Fall through to clear all object classes
-  switch (nodeData.objectClass)
-  {
-    case 0:
-      udkDataProxy._setObjectDataClass0(nodeData);
-//      break;
-    case 1:
-      udkDataProxy._setObjectDataClass1(nodeData);
-//      break;
-    case 2:
-      udkDataProxy._setObjectDataClass2(nodeData);
-//      break;
-    case 3:
-      udkDataProxy._setObjectDataClass3(nodeData);
-//      break;
-    case 4:
-      udkDataProxy._setObjectDataClass4(nodeData);
-//      break;
-    case 5:
-      udkDataProxy._setObjectDataClass5(nodeData);
-      break;
-    default:
-      dojo.debug("Error in udkDataProxy._setObjectData - Object Class must be 0...5!");
-      break;
-  }
+  // Clear all object classes
+	udkDataProxy._setObjectDataClass0(nodeData);
+	udkDataProxy._setObjectDataClass1(nodeData);
+	udkDataProxy._setObjectDataClass2(nodeData);
+	udkDataProxy._setObjectDataClass3(nodeData);
+	udkDataProxy._setObjectDataClass4(nodeData);
+	udkDataProxy._setObjectDataClass5(nodeData);
 
 //  dojo.debug("ContentFormObject after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
