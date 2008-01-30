@@ -20,38 +20,48 @@
 <script>
 dojo.require("dojo.event.*");
 dojo.require("dojo.widget.*");
+dojo.require("dojo.widget.Form");
 dojo.require("dojo.widget.Button");
 dojo.require("dojo.widget.Textbox");
 
-dojo.addOnLoad(function()
-{});
+
+var obj = null;
 
 function testDojoWidgetById() {
-	for (var i = 0; i < 1000; ++i) {
+	for (var i = 0; i < 100; ++i) {
 		var widget = dojo.widget.byId("widget"+i);
 	}
 }
 
 function testSetValue() {
-	for (var i = 0; i < 1000; ++i) {
-		var widget = dojo.widget.byId("widget"+i);
-		widget.setValue(i);
+	if (this.obj != null) {
+		dojo.widget.byId("textBoxes").setValues(this.obj);
+	} else {		
+		for (var i = 0; i < 100; ++i) {
+			var widget = dojo.widget.byId("widget"+i);
+			widget.setDate(new Date(i));
+		}
 	}
 }
 
 function testGetValue() {
-	for (var i = 0; i < 1000; ++i) {
+/*
+	for (var i = 0; i < 100; ++i) {
 		var widget = dojo.widget.byId("widget"+i);
 		var value = widget.getValue();
 	}
+*/
+
+	this.obj = dojo.widget.byId("textBoxes").getValues();
+	dojo.debugShallow(this.obj);
 }
 
 
 function createWidgets() {
 	var textBoxDiv = dojo.byId("textBoxes");
 
-	for (var i = 0; i < 1000; ++i) {
-		var newWidget = dojo.widget.createWidget("validationtextbox", {id:"widget"+i});
+	for (var i = 0; i < 100; ++i) {
+		var newWidget = dojo.widget.createWidget("dropdowndatepicker", {id:"widget"+i, name:"widget"+i});
 		textBoxDiv.appendChild(newWidget.domNode);
 	}
 }
@@ -66,8 +76,8 @@ function createWidgets() {
 <button dojoType="Button" onclick="testGetValue">Test Get Value</button>
 <button dojoType="Button" onclick="testSetValue">Test Set Value</button>
 
-<div id="textBoxes">
-</div>
+<form dojoType="Form" id="textBoxes">
+</form>
 
 </body>
 </html>

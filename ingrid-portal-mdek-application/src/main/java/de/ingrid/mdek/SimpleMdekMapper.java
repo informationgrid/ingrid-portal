@@ -1,12 +1,16 @@
 package de.ingrid.mdek;
 
+import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
@@ -26,6 +30,7 @@ import de.ingrid.mdek.dwr.ScaleBean;
 import de.ingrid.mdek.dwr.TimeReferenceBean;
 import de.ingrid.mdek.dwr.UrlBean;
 import de.ingrid.mdek.dwr.VectorFormatDetailsBean;
+import de.ingrid.mdek.dwr.sns.SNSLocationTopic;
 import de.ingrid.mdek.dwr.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
 
@@ -60,7 +65,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// TODO Check if we have to convert an address or object
 
-		log.debug("Received the following object from MdekCaller:");
+		log.debug("Converting the following object:");
 		printHashMap(obj);
 
 		MdekDataBean mdekObj = new MdekDataBean();
@@ -456,7 +461,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		}
 
-		log.debug("Sending the following object to MdekCaller:");
+		log.debug("Converted the following object to an IngridDocument:");
 		printHashMap(udkObj);
 
 		return udkObj;
@@ -1191,10 +1196,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	
 	private static void printHashMap(HashMap<String, Object> map) {
 		Set<Map.Entry<String, Object>> entrySet = map.entrySet();
-		for (Map.Entry<String, Object> entry : entrySet) {
+		TreeSet<Map.Entry<String, Object>> treeSet = new TreeSet<Map.Entry<String, Object>>(new MapEntryComparator());
+		treeSet.addAll(entrySet);
+
+		for (Map.Entry<String, Object> entry : treeSet) {
 			log.debug("Key: "+entry.getKey()+" Value: "+entry.getValue());
 		}
 	}
 
-	
+    static public class MapEntryComparator implements Comparator<Map.Entry<String, Object>> {
+    	public final int compare(Map.Entry<String, Object> entryA, Map.Entry<String, Object> entryB) {
+            try {
+            	return entryA.getKey().compareTo(entryB.getKey());
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }	
 }

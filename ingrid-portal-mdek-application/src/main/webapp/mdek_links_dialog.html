@@ -302,7 +302,7 @@ init = function() {
 	// Check if a filter was passes as an argument
 	if (_container_.customParams && _container_.customParams.filter) {	
 		// Filter the list according to the filter arg
-		var filterFunc = function(relationType) { return relationType == _container_.customParams.filter; };
+		var filterFunc = function(relationType) { return (relationType == _container_.customParams.filter); };
 		objectList.setFilter("relationType", filterFunc);
 		urlList.setFilter("relationType", filterFunc);
 	

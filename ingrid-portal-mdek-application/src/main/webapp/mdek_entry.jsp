@@ -1439,7 +1439,7 @@ function hideSplash(){
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="availabilityMediaOptionsEditors">
 	                    <div dojoType="ingrid:Select" toggle="plain" style="width:117px;" listId="520" id="availabilityMediaOptionsMediumCombobox"></div>
-	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsSize"></div>
+	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsSize"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsLocation"></div>
 	                  </div>
 	            	    <table id="availabilityMediaOptions" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">

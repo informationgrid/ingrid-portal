@@ -652,6 +652,12 @@ function initTableValidators() {
 		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isInteger(item));}}
 	]);
 
+	// Availability media option 'Datenvolumen' is of type double 
+	var table = dojo.widget.byId("availabilityMediaOptions");
+	table.setValidationFunctions([
+		{target: "transferSize", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+	]);
+
 	// object class 1 - The 'Erstellungsmassstab' table must contain an integer and two doubles
 	var table = dojo.widget.byId("ref1Scale");
 	table.setValidationFunctions([
