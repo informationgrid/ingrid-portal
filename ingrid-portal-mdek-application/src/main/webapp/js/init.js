@@ -266,12 +266,13 @@ function initCTS() {
 					&& dojo.validate.isRealNumber(coords.latitude1)
 					&& dojo.validate.isRealNumber(coords.latitude2)) {
 				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
+				var _this = this;
 				CTService.getCoordinates(fromSRS, toSRS, coords, {
 						callback: dojo.lang.hitch(this, this.updateDestinationStore),
 						timeout:8000,
 						errorHandler:function(message) {
 							dojo.debug(message);
-							this.showError();
+							_this.showError();
 						}
 					}
 				);
