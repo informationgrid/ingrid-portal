@@ -35,8 +35,14 @@
 	"dialog.undoChangesTitle":"aktuelle &Auml;nderungen verwerfen",
 	"dialog.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Metadatensatz vorgenommenen &Auml;nderungen verwerfen?",
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
+	"dialog.generalError":"Beim Ausf&uuml;hren der Aktion ist folgender Fehler aufgetreten: '%{0}'",
+	"dialog.undefinedError":"Beim Ausf&uuml;hren der Aktion ist ein Fehler aufgetreten.",
 	"dialog.commentTitle":"Kommentare zu '%{0}'",
 	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
+
+	"operation.error.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
+	"operation.error.targetIsSubnodeOfSourceError":"Das Ziel einer Verschiebeoperation darf nicht Kind des Ausgangsknotens sein.",
+	"operation.error.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Objekte befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 
     "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",

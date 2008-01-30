@@ -149,30 +149,27 @@ menuEventHandler.handlePaste = function(msg) {
 		var treeController = dojo.widget.byId("treeController");		
 
 		if (treeController.nodeToCut != null) {
-			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
+//			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
 				// If an invalid target is selected (same node or child of node to cut)
-				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
-				return;
-			} else {
+//				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
+//				return;
+//			} else {
 				// Valid target was selected. Start the request
 				var deferred = new dojo.Deferred();
 				deferred.addCallback(function() {
 					// Move was successful. Update the tree
 					treeController.move(treeController.nodeToCut, targetNode, 0);
+				});
+				// Error Handler. Move was unsuccessful. Notify user and do nothing.
+				deferred.addErrback(displayErrorMessage);
 
-				});
-				deferred.addErrback(function(mes) {
-					// Move was unsuccessful. Notify user(?) and do nothing.
-					dialog.show(message.get("general.error"), message.get("tree.nodeMoveError"), dialog.WARNING);
-					dojo.debug("Move operation failed: "+mes);
-				});
 				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
 				def.addCallback(function() {
 					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
 				});
-			}
+//			}
 		} else if (treeController.nodeToCopy != null) {
 			// If a newNode currently exists and is included in the copy operation abort the copy operation with
 			// an error message
@@ -443,11 +440,8 @@ menuEventHandler.handleFinalSave = function() {
 	var nodeData = udkDataProxy._getData();
 	if (isObjectPublishable(nodeData)) {
 		var deferred = new dojo.Deferred();
-		deferred.addErrback(function(mes) {
-			dialog.show(message.get("general.error"), message.get("tree.nodePublishError"), dialog.WARNING);
-			dojo.debug(mes);
-		});
-	
+		deferred.addErrback(displayErrorMessage);
+
 		dojo.debug("Publishing event: /publishObjectRequest");
 		dojo.event.topic.publish("/publishObjectRequest", {resultHandler: deferred});		
 	} else {
@@ -558,6 +552,25 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 }
 
 // ------------------------- Helper functions -------------------------
+
+function displayErrorMessage(err) {
+	// Show errors depending on outcome
+	if (err && err.message) {
+		if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
+			dialog.show(message.get("general.error"), message.get("operation.error.parentNotPublishedError"), dialog.WARNING);
+		} else if(err.message.indexOf("TARGET_IS_SUBNODE_OF_SOURCE") != -1) {
+			dialog.show(message.get("general.error"), message.get("operation.error.targetIsSubnodeOfSourceError"), dialog.WARNING);
+		} else if(err.message.indexOf("SUBTREE_HAS_WORKING_COPIES") != -1) {
+			dialog.show(message.get("general.error"), message.get("operation.error.subTreeHasWorkingCopiesError"), dialog.WARNING);
+		} else {
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING);				
+		}
+	} else {
+		// Show error message if we can't determine what went wrong
+		dialog.show(message.get("general.error"), message.get("dialog.undefinedError"), dialog.WARNING);
+	}
+}
+
 
 function alertNotImplementedYet()
 {

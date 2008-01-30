@@ -256,10 +256,15 @@ udkDataProxy.handleLoadRequest = function(msg)
 								resultHandler.errback("Error loading object. The object with the specified id doesn't exist!");
 							}
 						}
+						return res;
 					},
-				timeout:10000,
-				errorHandler:function(message) {dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message); },
-				exceptionHandler:function(message) {dojo.debug("Exception in js/udkDataProxy.js: Error while waiting for nodeData: " + message); }				
+				timeout:20000,
+				errorHandler:function(message) {
+					dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message);
+				},
+				exceptionHandler:function(message) {
+					dojo.debug("Exception in js/udkDataProxy.js: Exception while waiting for nodeData: " + message);
+				}
 			}
 		);
 	};
@@ -433,17 +438,11 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 
 	EntryService.moveNode(msg.srcId, msg.dstId,
 		{
-			callback: function(success){
-				if (success) {
-					msg.resultHandler.callback();
-				} else {
-					msg.resultHandler.errback("Error in js/udkDataProxy.js: Move node operation failed.");
-				}
-			},
+			callback: msg.resultHandler.callback,
 			timeout:30000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while moving nodes: " + message);
-				msg.resultHandler.errback();
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while moving nodes: " + err);
+				msg.resultHandler.errback(err);
 			}
 		}
 	);

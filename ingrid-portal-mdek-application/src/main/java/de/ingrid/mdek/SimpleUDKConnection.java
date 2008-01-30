@@ -147,9 +147,11 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
-	public boolean moveObjectSubTree(String fromUuid, String toUuid) {
+	public void moveObjectSubTree(String fromUuid, String toUuid) {
 		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true);
-		return (mdekCaller.getResultFromResponse(response) != null);
+		if (mdekCaller.getResultFromResponse(response) == null) {
+			handleError(response);
+		}
 	}
 
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
@@ -177,7 +179,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 				nodeList.add(dataMapper.getSimpleMdekRepresentation(objEntity));
 			}
 		} else {
-			log.error(mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 		}
 		return nodeList;
 	}
@@ -194,7 +196,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 				nodeList.add(dataMapper.getSimpleMdekRepresentation(adrEntity));
 			}
 		} else {
-			log.error(mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 		}
 		return nodeList;
 	}
@@ -207,7 +209,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		if (result != null) {
 			return dataMapper.getSimpleMdekRepresentation(result);
 		} else {
-			log.error(mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 			return null;
 		}
 	}
@@ -218,7 +220,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		if (result != null) {
 			return dataMapper.getDetailedMdekRepresentation(result);
 		} else {
-			log.error(mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 			return null;
 		}
 	}
@@ -228,7 +230,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		if (result != null) {
 			return result;
 		} else {
-			log.error("ERROR: " + mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 			return null;
 		}
 
@@ -240,7 +242,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			List<String> uuidList = (List<String>) result.get(MdekKeys.PATH);
 			return uuidList;
 		} else {
-			log.error("ERROR: " + mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 			return null;
 		}
 	}
@@ -275,27 +277,41 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			return resultMap;
 
 		} else {
-			log.error("ERROR: " + mdekCaller.getErrorMsgFromResponse(response));
+			handleError(response);
 			return null;
 		}
 	}
 
 	public CatalogBean extractCatalogFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
-		CatalogBean resultCat = new CatalogBean();
-
-		resultCat.setUuid(result.getString(MdekKeys.UUID));
-		resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
-		resultCat.setCountry(result.getString(MdekKeys.COUNTRY));
-		resultCat.setWorkflowControl(result.getString(MdekKeys.WORKFLOW_CONTROL));
-		resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
-		resultCat.setDateOfCreation(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
-		resultCat.setDateOfLastModification(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-		resultCat.setModUuid(result.getString(MdekKeys.MOD_UUID));
-
-		return resultCat;
+		
+		if (result != null) {
+			CatalogBean resultCat = new CatalogBean();
+	
+			resultCat.setUuid(result.getString(MdekKeys.UUID));
+			resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
+			resultCat.setCountry(result.getString(MdekKeys.COUNTRY));
+			resultCat.setWorkflowControl(result.getString(MdekKeys.WORKFLOW_CONTROL));
+			resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
+			resultCat.setDateOfCreation(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
+			resultCat.setDateOfLastModification(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+			resultCat.setModUuid(result.getString(MdekKeys.MOD_UUID));
+			return resultCat;
+		} else {
+			handleError(response);
+			return null;
+		}
 	}
 
+	private void handleError(IngridDocument response) throws RuntimeException {
+		String errorMessage = mdekCaller.getErrorMsgFromResponse(response);
+		log.error(errorMessage);
+		List<MdekError> err = mdekCaller.getErrorsFromResponse(response);
+		if (err != null)
+			throw new MdekException(err);
+		else
+			throw new RuntimeException(errorMessage);
+	}
 
 	private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 

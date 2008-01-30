@@ -76,7 +76,13 @@
 	"dialog.undoChangesTitle":"Discard current changes",
 	"dialog.undoChangesMessage":"Do you want to discard all changes since the last save?",
 	"dialog.inputInvalidError":"There was an error validating input fields. Please check all entered data and try again.",
+	"dialog.generalError":"An error occured: '%{0}'",
+	"dialog.undefinedError":"An Error occured.",
 	"dialog.commentTitle":"Comments for '%{0}'",
+
+	"operation.error.parentNotPublishedError":"You have to publish the parent nodes before publishing the selected node!",
+	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",
+	"operation.error.subTreeHasWorkingCopiesError":"One or more subnodes have to be saved before the operation can be carried out.",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

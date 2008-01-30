@@ -3,24 +3,17 @@
  */
 package de.ingrid.mdek.dwr;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.dwr.api.EntryService;
-
 import de.ingrid.mdek.DataConnectionInterface;
-import de.ingrid.mdek.DataMapperInterface;
-import de.ingrid.mdek.IMdekCaller;
-import de.ingrid.mdek.MdekCaller;
-import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.SimpleMdekMapper;
-import de.ingrid.utils.IngridDocument;
+import de.ingrid.mdek.MdekException;
+import de.ingrid.mdek.MdekErrors.MdekError;
+import de.ingrid.mdek.dwr.api.EntryService;
 
 
 /**
@@ -72,6 +65,11 @@ public class EntryServiceImpl implements EntryService {
 			} else {
 				return null;
 			}
+		}
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while copying node.", e);
+			throw new RuntimeException(e);
 		}
 		catch (Exception e) {
 			log.error("Error copying node.", e);
@@ -211,15 +209,19 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#moveNode(java.lang.String,
 	 *      java.lang.String)
 	 */
-	public boolean moveNode(String nodeUuid, String dstNodeUuid) {
+	public void moveNode(String nodeUuid, String dstNodeUuid) {
 		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			return dataConnection.moveObjectSubTree(nodeUuid, dstNodeUuid);
+			dataConnection.moveObjectSubTree(nodeUuid, dstNodeUuid);
+		}
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while moving node.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
 		}
 		catch (Exception e) {
 			log.error("Error moving node.", e);
-			return false;
 		}
 	}
 
@@ -240,7 +242,14 @@ public class EntryServiceImpl implements EntryService {
 			log.debug("Publishing node with ID: "+data.getUuid());
 
 			try { return dataConnection.publishNode(data); }
-			catch (Exception e) {log.error("Error while publishing node", e); return null;}
+			catch (MdekException e) {
+				// Wrap the MdekException in a RuntimeException so dwr can convert it
+				log.debug("MdekException while publishing node.", e);
+				throw new RuntimeException(convertToRuntimeException(e));
+			}
+			catch (Exception e) {
+				log.error("Error while publishing node", e); return null;
+			}
 		}
 	}
 
@@ -290,7 +299,16 @@ public class EntryServiceImpl implements EntryService {
 	
 // ------------------------ Helper Methods ---------------------------------------	
 	
-	
+	private static RuntimeException convertToRuntimeException(MdekException e) {
+		String errorStr = "";
+		List<MdekError> errorList = e.getMdekErrors();
+		for (MdekError mdekError : errorList) {
+			errorStr += mdekError.toString()+" ";
+		}
+		return new RuntimeException(errorStr.trim());
+	}
+
+
 	private static ArrayList<HashMap<String, Object>> createTree()
 	{
 		ArrayList<HashMap<String, Object>> treeRoot = new ArrayList<HashMap<String, Object>>(); 

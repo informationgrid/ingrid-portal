@@ -89,7 +89,7 @@ public interface DataConnectionInterface {
 	public void canCopyObject(String uuid);
 	public List<String> getPathToObject(String uuid);
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree);
-	public boolean moveObjectSubTree(String fromUuid, String toUuid);
+	public void moveObjectSubTree(String fromUuid, String toUuid);
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
 	
