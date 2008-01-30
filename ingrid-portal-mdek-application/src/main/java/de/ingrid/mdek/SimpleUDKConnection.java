@@ -130,11 +130,25 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public void canCutObject(String uuid) {
-		mdekCaller.checkObjectSubTree(uuid);
+		IngridDocument response = mdekCaller.checkObjectSubTree(uuid);
+		if (mdekCaller.getResultFromResponse(response) == null) {
+			handleError(response);
+		} else {
+			IngridDocument result = mdekCaller.getResultFromResponse(response);
+			boolean hasWorkingCopy = result.getBoolean(MdekKeys.RESULTINFO_HAS_WORKING_COPY);
+			if (hasWorkingCopy) {
+				// Throw an error. A node that is about to be moved must not have working copies as children
+				throw new MdekException(MdekError.SUBTREE_HAS_WORKING_COPIES);
+			}
+		}
 	}
 
 	public void canCopyObject(String uuid) {
-		mdekCaller.checkObjectSubTree(uuid);
+		IngridDocument response = mdekCaller.checkObjectSubTree(uuid);
+		// Copy is always allowed. Placeholder for future changes
+		if (mdekCaller.getResultFromResponse(response) == null) {
+			handleError(response);
+		}
 	}
 
 	public List<String> getPathToObject(String uuid) {

@@ -330,10 +330,10 @@ udkDataProxy.handleSaveRequest = function(msg)
 				}
 			},
 			timeout:10000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + message);
+			errorHandler:function(err) {
+				alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + err);
 				if (msg && msg.resultHandler) {
-					msg.resultHandler.errback(message);
+					msg.resultHandler.errback(err);
 				}				
 			}
 		}
@@ -356,9 +356,9 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 				msg.resultHandler.callback(res);
 			},
 			timeout:10000,
-			errorHandler:function(message) {
-				msg.resultHandler.errback(message);
-				dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData: " + message);
+			errorHandler:function(err) {
+				msg.resultHandler.errback(err);
+				dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData: " + err);
 			}
 		}
 	);
@@ -407,9 +407,9 @@ udkDataProxy.handleCanCutObjectRequest = function(msg) {
 		{
 			callback: function(res){msg.resultHandler.callback();},
 			timeout:10000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while marking a node for a cut operation: " + message);
-				msg.resultHandler.errback();
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while marking a node for a cut operation: " + err);
+				msg.resultHandler.errback(err);
 			}
 		}
 	);
@@ -422,9 +422,9 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 		{
 			callback: function(res){msg.resultHandler.callback();},
 			timeout:10000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + message);
-				msg.resultHandler.errback();
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + err);
+				msg.resultHandler.errback(err);
 			}
 		}
 	);

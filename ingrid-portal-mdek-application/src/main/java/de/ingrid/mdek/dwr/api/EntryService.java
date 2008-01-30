@@ -192,9 +192,9 @@ public interface EntryService {
 	public List<String> getPathToObject(String targetUuid);
 
 	// TODO add return type when the method is implemented in MdekCaller
-	public boolean canCutObject(String parentUuid);
+	public void canCutObject(String parentUuid);
 	// TODO add return type when the method is implemented in MdekCaller
-	public boolean canCopyObject(String parentUuid);
+	public void canCopyObject(String parentUuid);
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
 }

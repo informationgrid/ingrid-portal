@@ -259,15 +259,17 @@ public class EntryServiceImpl implements EntryService {
 	 * 
 	 * @see de.ingrid.mdek.dwr.api.EntryService#canCutObject(java.lang.String)
 	 */
-	public boolean canCutObject(String uuid) {
+	public void canCutObject(String uuid) {
 		log.debug("Query if node can be cut: "+uuid);
 
 		try {
 			  dataConnection.canCutObject(uuid);
-			  return true;
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while checking if node can be cut.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if node can be cut.", e);
-			return false;
 		}
 	}
 
@@ -276,15 +278,17 @@ public class EntryServiceImpl implements EntryService {
 	 * 
 	 * @see de.ingrid.mdek.dwr.api.EntryService#canCutObject(java.lang.String)
 	 */
-	public boolean canCopyObject(String uuid) {
+	public void canCopyObject(String uuid) {
 		log.debug("Query if node can be copied: "+uuid);
 
 		try {
 			  dataConnection.canCopyObject(uuid);
-			  return true;
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while checking if node can be cut.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if node can be copied.", e);
-			return false;
 		}
 	}
 

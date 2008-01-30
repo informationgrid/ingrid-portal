@@ -94,9 +94,7 @@ menuEventHandler.handleCut = function(mes) {
 			var treeController = dojo.widget.byId("treeController");
 			treeController.prepareCut(selectedNode);
 		});
-		deferred.addErrback(function() {
-    		dialog.show(message.get("general.error"), message.get("tree.nodeCanCutError"), dialog.WARNING);		
-		});
+		deferred.addErrback(displayErrorMessage);
 
   		dojo.event.topic.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
 	}
@@ -113,9 +111,7 @@ menuEventHandler.handleCopyEntity = function(msg) {
 			var treeController = dojo.widget.byId("treeController");
 			treeController.prepareCopy(selectedNode, false);
 		});
-		deferred.addErrback(function() {
-    		dialog.show(message.get("general.error"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
-		});
+		deferred.addErrback(displayErrorMessage);
 
   		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: false, resultHandler: deferred});
 	}
