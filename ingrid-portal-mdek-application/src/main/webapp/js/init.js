@@ -370,25 +370,26 @@ function initReferenceTables() {
 
 // TODO Fix Me! Insert the correct filters here
 	var filterTableMap =
-		[{tableId: "ref1SymbolsLink", 		filterId: "3555"},		// 3555
-		 {tableId: "ref1KeysLink", 			filterId: "3535"},		// 3535
-		 {tableId: "ref1ServiceLink", 		filterId: "5066"},		// 5066
-		 {tableId: "ref1BasisLink", 		filterId: "3520"},		// 3520
-		 {tableId: "ref1DataBasisLink", 	filterId: "3570"},		// 3570
-		 {tableId: "ref1ProcessLink", 		filterId: "3515"},		// 3515
-		 {tableId: "ref2LocationLink", 		filterId: "3345"},		// 3345
-//		 {tableId: "ref2BaseDataLink", 		filterId: "3360"},		// 3360 - Single Address
-		 {tableId: "ref3BaseDataLink", 		filterId: "3210"},		// 3210
-//		 {tableId: "ref4ParticipantsLink", 	filterId: "3410"},		// 3410 - Single Address
-//		 {tableId: "ref4PMLink", 			filterId: "3400"},		// 3400 - Single Address
-		 {tableId: "ref5MethodLink", 		filterId: "3100"}];		// 3100
+		[{tableId: "ref1SymbolsLink", 		filterId: 3555},		// 3555
+		 {tableId: "ref1KeysLink", 			filterId: 3535},		// 3535
+		 {tableId: "ref1ServiceLink", 		filterId: 5066},		// 5066
+		 {tableId: "ref1BasisLink", 		filterId: 3520},		// 3520
+		 {tableId: "ref1DataBasisLink", 	filterId: 3570},		// 3570
+		 {tableId: "ref1ProcessLink", 		filterId: 3515},		// 3515
+		 {tableId: "ref2LocationLink", 		filterId: 3345},		// 3345
+//		 {tableId: "ref2BaseDataLink", 		filterId: 3360},		// 3360 - Single Address
+		 {tableId: "ref3BaseDataLink", 		filterId: 3210},		// 3210
+//		 {tableId: "ref4ParticipantsLink", 	filterId: 3410},		// 3410 - Single Address
+//		 {tableId: "ref4PMLink", 			filterId: 3400},		// 3400 - Single Address
+		 {tableId: "ref5MethodLink", 		filterId: 3100}];		// 3100
 
 
 	dojo.lang.forEach(filterTableMap, function(tableMapping) {
 		var filterStore = dojo.widget.byId(tableMapping.tableId).store;
-		filterStore.relationTypeNameFilter = tableMapping.filterId;
+		filterStore.relationTypeFilter = tableMapping.filterId;
 		
 		// Connect all the setData calls on the filtered table to the main (unfiltered) table
+/*
 		dojo.event.kwConnect({
 			adviceType: "after",
 			srcObj: filterStore,
@@ -421,6 +422,7 @@ function initReferenceTables() {
 			once: true,
 			delay: 10
 		});
+*/
 
 		dojo.event.kwConnect({
 			adviceType: "after",
@@ -445,8 +447,9 @@ function initReferenceTables() {
 			adviceObj: filterStore,
 			adviceFunc: function() {
 				var data = mainStore.getData();
+				this.clearData();
 				for (i in data) {
-					if (data[i].relationTypeName == this.relationTypeNameFilter) {
+					if (data[i].relationType == this.relationTypeFilter) {
 						var item = this.getDataByKey(data[i].Id);
 						if (!item) {
 							this.addData(data[i]);

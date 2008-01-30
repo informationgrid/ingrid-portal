@@ -212,20 +212,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
-	/*
-	 * private MdekDataBean extractSingleObjectFromResponse(IngridDocument
-	 * response) { IngridDocument result =
-	 * mdekCaller.getResultFromResponse(response);
-	 * 
-	 * if (result != null) { List<IngridDocument> objs = (List<IngridDocument>)
-	 * result.get(MdekKeys.OBJ_ENTITIES); if (objs == null) { log.error("Error
-	 * in SimpleUDKConnection.extractSingleObjectFromResponse. No object
-	 * entities returned."); } else if (objs.size() != 1) { log.error("Error in
-	 * SimpleUDKConnection.extractSingleObjectFromResponse. Number of returned
-	 * objects != 1."); } else { return
-	 * dataMapper.getDetailedMdekRepresentation(objs.get(0)); } } else {
-	 * log.error(mdekCaller.getErrorMsgFromResponse(response)); } return null; }
-	 */
 	private MdekDataBean extractSingleObjectFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
