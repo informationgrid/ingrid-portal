@@ -107,6 +107,10 @@ function getRelationTypeForDisplayValue(dispVal) {
 	}
 }
 
+function getDisplayValueForRelationType(relType) {
+	return dojo.widget.byId("linksFromFieldName").getDisplayValueForValue(relType);
+}
+
 
 // Initialises the 'linksFromFieldName' select box depending on the current obj class and the filter id
 function initReferenceWidget(filter) {
@@ -212,7 +216,16 @@ init = function() {
 			// Reset the URL List
 			urlList.resetSelections();
 			urlList.renderSelections();
-			dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
+//			dojo.debug("Relation type is "+curSelectedObject.relationType);
+			if (curSelectedObject.relationType == -1) {
+				dojo.widget.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
+//				dojo.debug("setting value to "+curSelectedObject.relationTypeName);
+			} else {
+				dojo.widget.byId("linksFromFieldName").setValue(getDisplayValueForRelationType(curSelectedObject.relationType));
+//				dojo.debug("setting value to "+getDisplayValueForRelationType(curSelectedObject.relationType));
+			}
+//			dojo.debug("value is: "+dojo.widget.byId("linksFromFieldName").getValue());
+
 			dojo.widget.byId("linksToObjectName").setValue(curSelectedObject.title);
 			dojo.widget.byId("linksToObjectClass").setValue(_container_.objectClassDP.getDisplayValueForValue("Class"+curSelectedObject.objectClass));
 			dojo.widget.byId("linksToDescription").setValue(curSelectedObject.relationDescription);
@@ -243,6 +256,12 @@ init = function() {
 			objectList.resetSelections();
 			objectList.renderSelections();
 			dojo.widget.byId("linksFromFieldName").setValue(curSelectedUrl.relationTypeName);
+			if (curSelectedUrl.relationType == -1) {
+				dojo.widget.byId("linksFromFieldName").setValue(curSelectedUrl.relationTypeName);
+			} else {
+				dojo.widget.byId("linksFromFieldName").setValue(getDisplayValueForRelationType(curSelectedUrl.relationType));
+			}
+
 			dojo.widget.byId("linksToURL").setValue(curSelectedUrl.url);
 			dojo.widget.byId("linksToName").setValue(curSelectedUrl.name);
 			dojo.widget.byId("linksToDataType").setValue(curSelectedUrl.datatype);
@@ -341,8 +360,11 @@ saveLink = function() {
 		objData.uuid = curSelectedObject.uuid;
 		objData.relationDescription = dojo.widget.byId("linksToDescription").getValue();
 		objData.objectClass = curSelectedObject.objectClass;
-		objData.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
-		objData.relationType = getRelationTypeForDisplayValue(objData.relationTypeName);
+		var typeName = dojo.widget.byId("linksFromFieldName").getValue();
+		objData.relationType = getRelationTypeForDisplayValue(typeName);
+		if (objData.relationType == -1) {
+			objData.relationTypeName = typeName;
+		}
 		udkDataProxy._addIcons([objData]);
 		objStore.update(objData, "icon", objData.icon);
 		objStore.update(objData, "title", curSelectedObject.title);
@@ -355,16 +377,23 @@ saveLink = function() {
 		urlData.iconUrl = newUrl.iconUrl;
 		urlData.iconText = newUrl.iconText;
 		urlData.description = newUrl.description;
-		urlData.relationTypeName = newUrl.relationTypeName;
 		urlData.relationType = newUrl.relationType;
+		if (newUrl.relationType == -1) {
+			urlData.relationTypeName = newUrl.relationTypeName;
+		}
 		udkDataProxy._addIcons([urlData]);
 		urlStore.update(urlData, "name", newUrl.name);
 	} else if (objSelected && curSelectedObject) {
 		// Otherwise a new link has to be created
 		// Take the current selected object and add the values that were entered in the ui fields
-		curSelectedObject.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
 		curSelectedObject.relationDescription = dojo.widget.byId("linksToDescription").getValue();
-		curSelectedObject.relationType = getRelationTypeForDisplayValue(curSelectedObject.relationTypeName);
+
+		var typeName = dojo.widget.byId("linksFromFieldName").getValue();
+		curSelectedObject.relationType = getRelationTypeForDisplayValue(typeName);
+		if (curSelectedObject.relationType == -1) {
+			curSelectedObject.relationTypeName = typeName;
+		}
+
 		// No checks if the store already contains the current element.
 		curSelectedObject.Id = _getNewKey();
 		udkDataProxy._addIcons([curSelectedObject]);
@@ -398,8 +427,13 @@ _getUrl = function() {
 	newUrl.iconUrl = dojo.widget.byId("linksToIconURL").getValue();
 	newUrl.iconText = dojo.widget.byId("linksToIconText").getValue();
 	newUrl.description = dojo.widget.byId("linksToUrlDescription").getValue();
-	newUrl.relationTypeName = dojo.widget.byId("linksFromFieldName").getValue();
-	newUrl.relationType = getRelationTypeForDisplayValue(newUrl.relationTypeName);
+
+	var typeName = dojo.widget.byId("linksFromFieldName").getValue();
+	newUrl.relationType = getRelationTypeForDisplayValue(typeName);
+	if (newUrl.relationType == -1) {
+		newUrl.relationTypeName = typeName;
+	}
+
 	newUrl.name = dojo.widget.byId("linksToName").getValue();
 	return newUrl;
 }
