@@ -9,8 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
+import org.directwebremoting.ScriptBuffer;
+import org.directwebremoting.ScriptSession;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.IMdekCaller.Quantity;
 import de.ingrid.mdek.MdekErrors.MdekError;
@@ -51,6 +57,10 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public MdekDataBean getNodeDetail(String uuid) {
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+		log.debug("Current session: "+session.getId());
+
 		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY);
 		return extractSingleObjectFromResponse(response);
 	}

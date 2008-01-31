@@ -1,0 +1,51 @@
+<html>
+<head>
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {});
+
+_container_.addOnUnload(function() {
+	// If the dialog was cancelled via the dialogs close button
+	// we need to signal an error (cancel action)
+	if (_container_.customParams.resultHandler.fired == -1) {
+		_container_.customParams.resultHandler.errback();
+	}
+});
+
+
+// 'Yes Button' onClick function
+yesButtonFunc = function() {
+	_container_.customParams.resultHandler.callback();
+	_container_.closeWindow();
+}
+
+// 'No Button' onClick function
+noButtonFunc = function() {
+	_container_.customParams.resultHandler.errback();
+	_container_.closeWindow();
+}
+
+</script>
+</head>
+
+
+
+<body>
+<div dojoType="ContentPane">
+	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
+		<div id="dialogContent" class="content">
+			<div id="messageDiv" class="field grey">
+				Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite
+				vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Speichern dieses Objektes wird eine entsprechende
+				Anpassung vorgenommen. Soll das Objekt wirklich gespeichert werden?
+			</div>
+
+			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
+		        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
+		        <span style="float:right;"><button dojoType="ingrid:Button" title="Speichern" onClick="yesButtonFunc">Speichern</button></span>
+			</div>
+	  	</div>
+	</div>
+</div>
+</body>
+</html>

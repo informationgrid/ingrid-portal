@@ -222,8 +222,9 @@ menuEventHandler.handleSave = function() {
 	});
 	
 	deferred.addErrback(function(err) {
-		// TODO ask user if he wants to force the publication cond on the proper error
-		displayErrorMessage(err);
+		if (err.message != "undefined") {
+			displayErrorMessage(err);
+		}
 	});
 	
 	dojo.debug('Publishing event: /saveRequest');

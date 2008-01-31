@@ -323,24 +323,39 @@ udkDataProxy.handleSaveRequest = function(msg)
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
 
+	// Function that is called when the node has been saved successfully.
+	var onSuccessfulSave = function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);
+	}
+
 	// ---- DWR call to store the data ----
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
 	EntryService.saveNodeData(nodeData, "true", forcePubCond,
 		{
-			callback: function(res){
-				udkDataProxy.resetDirtyFlag();
-				udkDataProxy._setData(res);
-				udkDataProxy._updateTree(res, nodeData.uuid);
-				udkDataProxy.onAfterSave();
-				if (msg && msg.resultHandler) {
-					msg.resultHandler.callback(res);
-				}
-			},
+			callback: onSuccessfulSave,
 			timeout:10000,
 			errorHandler:function(err) {
-				dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData: " + err);
-				if (msg && msg.resultHandler) {
-					dojo.debug("calling errback...");
+				// Check for the publication condition error
+				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
+					var deferred = new dojo.Deferred();
+					
+					// If the user wants to save the object anyway, set force save and start another request
+					deferred.addCallback(function() {
+						msg.forcePublicationCondition = true;
+						dojo.event.topic.publish("/saveRequest", msg);
+					});
+					// If the user cancelled the operation notify the result handler
+					deferred.addErrback(function() {
+						msg.resultHandler.errback();
+					});
+					// Display the 'publication condition' dialog with the attached resultHandler
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:deferred});
+				} else {
+					dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData:");
 					msg.resultHandler.errback(err);
 				}
 			}
