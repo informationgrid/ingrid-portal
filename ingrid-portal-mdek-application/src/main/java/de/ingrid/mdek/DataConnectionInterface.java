@@ -79,7 +79,7 @@ public interface DataConnectionInterface {
 	public MdekDataBean getNodeDetail(String uuid);
 	public MdekDataBean getInitialObject(String parentUuid);
 	
-	public MdekDataBean saveNode(MdekDataBean data);
+	public MdekDataBean saveNode(MdekDataBean data, boolean forcePublicationCondition);
 	public MdekDataBean publishNode(MdekDataBean data);
 	
 	public void deleteObject(String uuid);

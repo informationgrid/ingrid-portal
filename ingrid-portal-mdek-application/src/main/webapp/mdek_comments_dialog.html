@@ -46,9 +46,7 @@ addComment = function() {
 
 	if (newComment != "") {
 		var key = _getNewKey(commentStore);
-		var date = new Date();
-		var displayDate = dojo.date.format(date, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"H:m"});
-		commentStore.addData({Id: key, comment: newComment, date: date, displayDate: displayDate, user: ""});
+		commentStore.addData({Id: key, comment: newComment, date: new Date(), user: ""});
 	}
 }
 
@@ -69,10 +67,10 @@ addComment = function() {
       <!-- CONTENT START -->
       <div class="inputContainer wide">
         <span id="commentTableLabel" class="label">Kommentare zu diesem Objekt</span>
-  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" minRows="8" headClass="fixedHeader" tbodyClass="scrollContent h180" cellspacing="0" class="filteringTable interactive wide relativePos">
+  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%M" minRows="8" headClass="fixedHeader" tbodyClass="scrollContent h180" cellspacing="0" class="filteringTable interactive wide relativePos">
   	      <thead>
   		      <tr>
-        			<th field="displayDate" dataType="String" width="110">Datum</th>
+        			<th field="date" dataType="Date" width="110">Datum</th>
         			<th field="user" dataType="String" width="185">Nutzer</th>
         			<th field="comment" dataType="String" width="687">Kommentar</th>
   		      </tr>

@@ -222,6 +222,7 @@ public class EntryServiceImpl implements EntryService {
 		}
 		catch (Exception e) {
 			log.error("Error moving node.", e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -231,13 +232,21 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#saveNodeData(MdekDataBean,
 	 *      java.lang.Boolean)
 	 */
-	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy) {
+	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition) {
 		log.debug("saveNodeData()");
 		if (useWorkingCopy) {
 			log.debug("Saving node with ID: "+data.getUuid());
 
-			try { return dataConnection.saveNode(data); }
-			catch (Exception e) {log.error("Error while saving node", e); return null;}
+			try { return dataConnection.saveNode(data, forcePublicationCondition); }
+			catch (MdekException e) {
+				// Wrap the MdekException in a RuntimeException so dwr can convert it
+				log.debug("MdekException while publishing node.", e);
+				throw new RuntimeException(convertToRuntimeException(e));
+			}
+			catch (Exception e) {
+				log.error("Error while saving node", e);
+				throw new RuntimeException("Error while saving node.");
+			}
 		} else {
 			log.debug("Publishing node with ID: "+data.getUuid());
 

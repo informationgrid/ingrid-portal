@@ -221,11 +221,10 @@ menuEventHandler.handleSave = function() {
 		resetRequiredFields();
 	});
 	
-	deferred.addErrback(function(res) {
-		dojo.debug("Object could not be saved.");
-		if (res instanceof Error && res.message == "INPUT_INVALID_ERROR") {
-	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
-		}
+	deferred.addErrback(function(err) {
+		// TODO ask user if he wants to force the publication cond on the proper error
+		dojo.debug("Displaying error message...");
+		displayErrorMessage(err);
 	});
 	
 	dojo.debug('Publishing event: /saveRequest');
@@ -551,15 +550,21 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 
 function displayErrorMessage(err) {
 	// Show errors depending on outcome
+	dojo.debug("err: "+err);
+	dojo.debug("msg: "+err.message);
+	
 	if (err && err.message) {
-		if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
+		if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		} else if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.parentNotPublishedError"), dialog.WARNING);
-		} else if(err.message.indexOf("TARGET_IS_SUBNODE_OF_SOURCE") != -1) {
+		} else if (err.message.indexOf("TARGET_IS_SUBNODE_OF_SOURCE") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.targetIsSubnodeOfSourceError"), dialog.WARNING);
-		} else if(err.message.indexOf("SUBTREE_HAS_WORKING_COPIES") != -1) {
+		} else if (err.message.indexOf("SUBTREE_HAS_WORKING_COPIES") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.subTreeHasWorkingCopiesError"), dialog.WARNING);
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING);				
+			dojo.debug(dojo.string.substituteParams(message.get("dialog.generalError"), err.message));
 		}
 	} else {
 		// Show error message if we can't determine what went wrong

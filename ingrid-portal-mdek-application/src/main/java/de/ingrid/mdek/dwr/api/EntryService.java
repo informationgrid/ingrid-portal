@@ -139,7 +139,7 @@ public interface EntryService {
 	 *            over the original data and remove the working copy.
 	 * @return The stored node is returned with updated values (id, work state, etc.)
 	 */
-	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy);
+	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition);
 
 	/**
 	 * Copy a node. The parameter includeChildren specifies if the children of

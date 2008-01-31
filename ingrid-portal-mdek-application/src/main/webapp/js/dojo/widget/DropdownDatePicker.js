@@ -51,7 +51,7 @@ dojo.widget.defineWidget(
 	this.datePicker.value = "";
 	this._updateText();
   },
-
+/*
 	getDisplayValue: function() {
 		// get the value and format it
 		var date = dojo.widget.DropdownDatePicker.prototype.getDate.apply(this, arguments);
@@ -61,7 +61,7 @@ dojo.widget.defineWidget(
 			return "";
 		}
 	},
-
+*/
 
 	onValueChanged: function(/*Date*/dateObj){
     try {

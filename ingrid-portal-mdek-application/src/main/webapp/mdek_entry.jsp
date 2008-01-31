@@ -437,11 +437,11 @@ function hideSplash(){
 	                        <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="ref1SymbolsDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1SymbolsVersion"></div>
 	                      </div>
-	                	    <table id="ref1SymbolsText" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive nosort full">
+	                	    <table id="ref1SymbolsText" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive nosort full">
 	                	      <thead>
 	                		      <tr>
 	                      			<th field="title" dataType="String" width="110" editor="ref1SymbolsTitleCombobox">Titel</th>
-	                      			<th field="date" dataType="String" width="120" editor="ref1SymbolsDateDatePicker">Datum</th>
+	                      			<th field="date" dataType="Date" width="120" editor="ref1SymbolsDateDatePicker">Datum</th>
 	                      			<th field="version" dataType="String" width="445" editor="ref1SymbolsVersion">Version</th>
 	                		      </tr>
 	                	      </thead>
@@ -480,11 +480,11 @@ function hideSplash(){
 	                        <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="ref1KeysDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1KeysVersion"></div>
 	                      </div>
-	                	    <table id="ref1KeysText" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive nosort full">
+	                	    <table id="ref1KeysText" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive nosort full">
 	                	      <thead>
 	                		      <tr>
 	                      			<th field="title" dataType="String" width="110" editor="ref1KeysTitleCombobox">Titel</th>
-	                      			<th field="date" dataType="String" width="120" editor="ref1KeysDateDatePicker">Datum</th>
+	                      			<th field="date" dataType="Date" width="120" editor="ref1KeysDateDatePicker">Datum</th>
 	                      			<th field="version" dataType="String" width="445" editor="ref1KeysVersion">Version</th>
 	                		      </tr>
 	                	      </thead>
@@ -1290,10 +1290,10 @@ function hideSplash(){
 	                      <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="timeRefDateDatePicker"></div>
 	                      <div dojoType="ingrid:Select" toggle="plain" style="width:155px;" listId="502" id="timeRefTypeCombobox"></div>
 	                    </div>
-	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive nosort half">
+	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive nosort half">
 	              	      <thead>
 	              		      <tr>
-	                    			<th nosort="true" field="date" dataType="String" width="120" editor="timeRefDateDatePicker">Datum</th>
+	                    			<th nosort="true" field="date" dataType="Date" width="120" editor="timeRefDateDatePicker">Datum</th>
 	                    			<th nosort="true" field="type" dataType="String" width="200" editor="timeRefTypeCombobox">Typ</th>
 	              		      </tr>
 	              	      </thead>

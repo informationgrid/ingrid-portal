@@ -13,9 +13,10 @@
  *     nodeUuid - The Uuid of the node
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
- *	// TODO: Use a result Handler for save requests(?)
+ *
  *   topic = '/saveRequest' - argument:
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *	   forcePublicationCondition - Tell the backend to adjust the publication condition of subnodes
  *
  *   topic = '/publishObjectRequest' - argument: {resultHandler: deferred}
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
@@ -313,12 +314,18 @@ udkDataProxy.handleSaveRequest = function(msg)
 		return;
 	}
 
+	// Determine if the publication condition should be adjusted (forced) for subnodes
+	var forcePubCond = false;
+	if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
+		forcePubCond = msg.forcePublicationCondition;
+	}
+
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
 
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true)");
-	EntryService.saveNodeData(nodeData, "true",
+	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
+	EntryService.saveNodeData(nodeData, "true", forcePubCond,
 		{
 			callback: function(res){
 				udkDataProxy.resetDirtyFlag();
@@ -331,10 +338,11 @@ udkDataProxy.handleSaveRequest = function(msg)
 			},
 			timeout:10000,
 			errorHandler:function(err) {
-				alert("Error in js/udkDataProxy.js: Error while saving nodeData: " + err);
+				dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData: " + err);
 				if (msg && msg.resultHandler) {
+					dojo.debug("calling errback...");
 					msg.resultHandler.errback(err);
-				}				
+				}
 			}
 		}
 	);
@@ -345,8 +353,8 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 	var nodeData = udkDataProxy._getData();
 	
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false)");
-	EntryService.saveNodeData(nodeData, "false",
+	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, false)");
+	EntryService.saveNodeData(nodeData, "false", "false",
 		{
 			callback: function(res){
 				udkDataProxy.resetDirtyFlag();

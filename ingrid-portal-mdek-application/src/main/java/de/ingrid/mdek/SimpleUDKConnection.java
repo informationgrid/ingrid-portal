@@ -85,7 +85,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 	
-	public MdekDataBean saveNode(MdekDataBean data) {
+	public MdekDataBean saveNode(MdekDataBean data, boolean forcePublicationCondition) {
 		IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
 
 		// Handle store of a new node. Should this be handled by the
@@ -98,7 +98,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following object for storage:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCaller.storeObject(obj, true);
+		IngridDocument response = mdekCaller.storeObject(obj, true, forcePublicationCondition);
 		return extractSingleObjectFromResponse(response);
 	}
 
