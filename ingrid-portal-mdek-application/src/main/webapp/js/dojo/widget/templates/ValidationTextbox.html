@@ -2,9 +2,9 @@
 	<input dojoAttachPoint='textbox' type='${this.type}' dojoAttachEvent='onblur;onfocus;onkeyup'
 		id='${this.widgetId}' name='${this.name}' size='${this.size}' maxlength='${this.maxlength}'
 		class='${this.className}' style=''>
-		<span dojoAttachPoint='invalidSpan' class='${this.invalidClass}'></span>
-		<span dojoAttachPoint='missingSpan' class='${this.missingClass}'></span>
-		<span dojoAttachPoint='rangeSpan' class='${this.rangeClass}'></span>
+		<span dojoAttachPoint='invalidSpan' class='${this.invalidClass}'>${this.messages.invalidMessage}</span>
+		<span dojoAttachPoint='missingSpan' class='${this.missingClass}'>${this.messages.missingMessage}</span>
+		<span dojoAttachPoint='rangeSpan' class='${this.rangeClass}'>${this.messages.rangeMessage}</span>
 	</input>
 	<textarea dojoAttachPoint='textarea' dojoAttachEvent='onblur;onfocus;onkeyup' class='${this.className}' style="display: none;"></textarea>
 </span>

@@ -69,11 +69,11 @@ public class EntryServiceImpl implements EntryService {
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while copying node.", e);
-			throw new RuntimeException(e);
+			throw new RuntimeException(convertToRuntimeException(e));
 		}
 		catch (Exception e) {
 			log.error("Error copying node.", e);
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 

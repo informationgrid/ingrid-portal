@@ -483,9 +483,16 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 					msg.resultHandler.errback("Node Copy operation failed.");
 				}
 			},
-			timeout:30000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while copying nodes: " + message);
+			timeout:3000,	// Don't wait for the call to finish but display the 'please wait' dialog 
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while copying nodes: " + err);
+				if (err == "Timeout") {
+					var deferred = new dojo.Deferred();
+					deferred.addCallback(function() {msg.resultHandler.callback()});
+					deferred.addErrback(function() {msg.resultHandler.errback()});
+					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 342, 220, true, {resultHandler:deferred});
+				}
+
 				msg.resultHandler.errback();
 			}
 		}

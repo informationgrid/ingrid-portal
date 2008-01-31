@@ -57,10 +57,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public MdekDataBean getNodeDetail(String uuid) {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-		log.debug("Current session: "+session.getId());
-
 		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY);
 		return extractSingleObjectFromResponse(response);
 	}
@@ -167,7 +163,10 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
-		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree);
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+
+		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree, session.getId());
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
