@@ -223,7 +223,6 @@ menuEventHandler.handleSave = function() {
 	
 	deferred.addErrback(function(err) {
 		// TODO ask user if he wants to force the publication cond on the proper error
-		dojo.debug("Displaying error message...");
 		displayErrorMessage(err);
 	});
 	
@@ -550,9 +549,6 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 
 function displayErrorMessage(err) {
 	// Show errors depending on outcome
-	dojo.debug("err: "+err);
-	dojo.debug("msg: "+err.message);
-	
 	if (err && err.message) {
 		if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
@@ -564,7 +560,6 @@ function displayErrorMessage(err) {
 			dialog.show(message.get("general.error"), message.get("operation.error.subTreeHasWorkingCopiesError"), dialog.WARNING);
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING);				
-			dojo.debug(dojo.string.substituteParams(message.get("dialog.generalError"), err.message));
 		}
 	} else {
 		// Show error message if we can't determine what went wrong

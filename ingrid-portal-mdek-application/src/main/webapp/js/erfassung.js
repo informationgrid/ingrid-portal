@@ -72,14 +72,14 @@ function toggleFields(section)
               if (mode == "")
               {
                 if (inputContainer[k].style.display == "" || inputContainer[k].style.display == "block")
-                  inputContainer[k].style.display = "none";
+					dojo.html.setDisplay(inputContainer[k], "none");
                 else
-                  inputContainer[k].style.display = "block";
+					dojo.html.setDisplay(inputContainer[k], "block");
               }
               else if (mode == 'required')
-                inputContainer[k].style.display = "none";
+					dojo.html.setDisplay(inputContainer[k], "none");
               else if (mode == 'all')
-                inputContainer[k].style.display = "block";
+					dojo.html.setDisplay(inputContainer[k], "block");
             }
           }
         }
@@ -93,26 +93,37 @@ function toggleFields(section)
       }
     }
   }
-/*
-  if (dojo.byId("generalAddressTable"))
-  {
-    // the address table on erfassung object mask's general area needs to be
-    // positioned separately
-    var toggle = dojo.byId("generalRequiredToggle");
-    var table = dojo.byId("generalAddressTable");
-    if (toggle.src.indexOf("required") != -1)
-      table.style.top = 195 + "px";
-    else
-      table.style.top = 142 + "px";
-  }
-  if (dojo.byId("spatialRefLocation"))
-  {
-    // the staat/region/natur table on erfassung object mask's raumbezug area needs to be
-    // positioned separately
-    var table = dojo.byId("spatialRefLocation");
-    table.style.top = 0 + "px";
-  }
-*/
+
+
+	// Update all the tabContainers so they are displayed properly
+	// First we check if the tabContainer currently is displayed. If it is, call the 'onResized' method to properly
+	// size and display the container
+	var tabContainerIds = ["ref1SymbolsTabContainer", "ref1KeysTabContainer", "ref1BasisTabContainer", "ref1DataBasisTabContainer",
+  						 "ref1ProcessTabContainer", "ref2LocationTabContainer", "ref2BaseDataTabContainer", "ref3BaseDataTabContainer",
+  						 "ref4ParticipantsTabContainer", "ref4PMTabContainer", "ref5MethodTabContainer"];
+
+	// Helper function that determines if a node is displayed or not. All the dojo.html functions that should
+	// give this information (dojo.html.isDisplayed, ...) don't work. Also the widgets 'onShow' Method is never fired
+	// so we can't connect to that either
+	var isDisplayed = function(domNode) {
+		if (domNode.style.display != "") {
+			return domNode.style.display != "none";
+		} else {
+			return isDisplayed(domNode.parentNode);
+		}
+	}
+
+	dojo.lang.forEach(tabContainerIds, function(item) {
+		var tabContainer = dojo.widget.byId(item);
+
+		if (isDisplayed(tabContainer.domNode)) {
+//			dojo.debug(item+" is displayed, resize...");
+			tabContainer.onResized();
+		}
+//		else {
+//			dojo.debug(item+" is not displayed.");
+//		}
+	});
 }
 
 function toggleButton(btnImage, labelElement, color, mode)
