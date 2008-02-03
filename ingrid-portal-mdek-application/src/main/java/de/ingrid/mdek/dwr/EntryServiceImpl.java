@@ -309,6 +309,10 @@ public class EntryServiceImpl implements EntryService {
 		return dataConnection.getCatalogData();	
 	}
 
+	public JobInfoBean getRunningJobInfo() {
+		return dataConnection.getRunningJobInfo();
+	}
+	
 	
 // ------------------------ Helper Methods ---------------------------------------	
 	

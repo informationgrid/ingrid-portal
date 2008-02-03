@@ -26,6 +26,9 @@ dojo.require("ingrid.widget.ValidationTextbox");
 
 dojo.addOnLoad(function()
 {
+	dojo.widget.byId("generalDescBox").isValid = function(){
+		return (this.getValue() != "test");
+	}
 });
 
 function buttonFunc()

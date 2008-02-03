@@ -64,7 +64,7 @@ init = function() {
   			var resp = _this.loadProcessResponse(node,res);
   			// Make NODE_LABELs unselectable
   			dojo.lang.forEach(node.children, function(widget){
-				if (widget.nodeDocType == "NODE_LABEL") {
+				if (widget.nodeDocType == "NODE_LABEL" || widget.nodeDocType == "NON_DESCRIPTOR") {
 					dojo.html.addClass(widget.labelNode, "TreeNodeNotSelectable");
   					widget.viewMouseOver = function() {};
   				}

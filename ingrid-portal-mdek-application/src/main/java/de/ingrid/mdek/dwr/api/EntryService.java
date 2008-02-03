@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.dwr.CatalogBean;
+import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 
 /**
@@ -197,4 +198,5 @@ public interface EntryService {
 	public void canCopyObject(String parentUuid);
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
+	public JobInfoBean getRunningJobInfo();
 }

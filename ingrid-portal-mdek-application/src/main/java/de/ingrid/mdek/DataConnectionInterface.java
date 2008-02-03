@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.dwr.CatalogBean;
+import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -92,6 +93,7 @@ public interface DataConnectionInterface {
 	public void moveObjectSubTree(String fromUuid, String toUuid);
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
+	public JobInfoBean getRunningJobInfo();
 	
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }

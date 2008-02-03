@@ -21,6 +21,7 @@ import org.directwebremoting.WebContextFactory;
 import de.ingrid.mdek.IMdekCaller.Quantity;
 import de.ingrid.mdek.MdekErrors.MdekError;
 import de.ingrid.mdek.dwr.CatalogBean;
+import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -187,8 +188,15 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractCatalogFromResponse(response);
 	}
 
-	// ------------------------ Helper Methods
-	// ---------------------------------------
+	public JobInfoBean getRunningJobInfo() {
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+
+		IngridDocument response = mdekCaller.getRunningJobInfo(session.getId());
+		return extractJobInfoFromResponse(response);
+	}
+
+	// ------------------------ Helper Methods ---------------------------------------
 
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
@@ -326,6 +334,21 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
+	public JobInfoBean extractJobInfoFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		if (result != null) {
+			JobInfoBean job = new JobInfoBean();
+			job.setDescription(result.getString(MdekKeys.RUNNINGJOB_DESCRIPTION));
+			job.setNumEntities((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_TOTAL_ENTITIES));
+			job.setNumProcessedEntities((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_PROCESSED_ENTITIES));
+			return job;
+		} else {
+			handleError(response);
+			return null;
+		}		
+	}
+	
 	private void handleError(IngridDocument response) throws RuntimeException {
 		String errorMessage = mdekCaller.getErrorMsgFromResponse(response);
 		log.error(errorMessage);

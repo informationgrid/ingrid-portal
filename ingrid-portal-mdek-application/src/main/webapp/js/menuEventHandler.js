@@ -145,11 +145,11 @@ menuEventHandler.handlePaste = function(msg) {
 		var treeController = dojo.widget.byId("treeController");		
 
 		if (treeController.nodeToCut != null) {
-//			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
+			if (targetNode == treeController.nodeToCut || _isChildOf(targetNode, treeController.nodeToCut)) {
 				// If an invalid target is selected (same node or child of node to cut)
-//				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
-//				return;
-//			} else {
+				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
+				return;
+			} else {
 				// Valid target was selected. Start the request
 				var deferred = new dojo.Deferred();
 				deferred.addCallback(function() {
@@ -165,7 +165,7 @@ menuEventHandler.handlePaste = function(msg) {
 				def.addCallback(function() {
 					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
 				});
-//			}
+			}
 		} else if (treeController.nodeToCopy != null) {
 			// If a newNode currently exists and is included in the copy operation abort the copy operation with
 			// an error message
@@ -179,18 +179,21 @@ menuEventHandler.handlePaste = function(msg) {
 			var deferred = new dojo.Deferred();
 			deferred.addCallback(function(res) {
 				// Copy was successful. Update the tree.
-				treeController.createChild(targetNode, "last", res);
-				treeController.expand(targetNode);
+				if (res != null) {
+					treeController.createChild(targetNode, "last", res);
+					treeController.expand(targetNode);
+				} else {
+					treeController.refreshChildren(targetNode);
+				}
 				// TODO Which node to select?
 				// Selection is lost (somehow) on 'createChild'. Reselect the currently selected node
-				tree.selectedNode.viewUnselect();
-				tree.selectedNode.viewSelect();
+				if (tree.selectedNode) {
+					tree.selectedNode.viewUnselect();
+					tree.selectedNode.viewSelect();
+				}
 			});
-			deferred.addErrback(function(mes) {
-				// Copy was unsuccessful. Notify user(?) and do nothing.
-				dialog.show(message.get("general.error"), message.get("tree.nodeCopyError"), dialog.WARNING);
-				dojo.debug("Copy operation failed: "+mes);
-			});
+			// If copy was unsuccessful notify user and do nothing.
+			deferred.addErrback(displayErrorMessage);
 
 			// Open the target node before copying a node. 
 			var def = treeController.expand(targetNode);
@@ -289,9 +292,10 @@ menuEventHandler.handleDiscard = function(msg) {
 			    		selectedNode.destroy();
 
 						var d = new dojo.Deferred();
-						d.addCallback(function(){				
+						d.addCallback(function(){
 							tree.selectNode(newSelectNode);
 							tree.selectedNode = newSelectNode;
+							dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
 							dojo.html.scrollIntoView(newSelectNode.domNode);
 						});
 						d.addErrback(function(msg){
@@ -369,6 +373,7 @@ menuEventHandler.handleDelete = function(msg) {
 					d.addCallback(function(){				
 						tree.selectNode(newSelectNode);
 						tree.selectedNode = newSelectNode;
+						dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
 						dojo.html.scrollIntoView(newSelectNode.domNode);
 					});
 					d.addErrback(function(msg){
@@ -412,16 +417,16 @@ menuEventHandler.handleDelete = function(msg) {
 menuEventHandler.reloadSubTree = function(msg) {
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
+	var tree = dojo.widget.byId("tree");
 	var treeListener = dojo.widget.byId("treeListener");
+	var treeController = dojo.widget.byId("treeController");
+
+	udkDataProxy.resetDirtyFlag();
+	tree.selectNode(selectedNode);
+	tree.selectedNode = selectedNode;
 	dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedNode});
 	if (selectedNode && selectedNode.id == "objectRoot") {
-		selectedNode.destroy();
-		EntryService.getSubTree(null, null, 1, 
-			function (str) {
-				var tree = dojo.widget.byId('tree');
-				tree.setChildren(str);
-			}
-		);
+		treeController.refreshChildren(selectedNode);
 	}
 }
 

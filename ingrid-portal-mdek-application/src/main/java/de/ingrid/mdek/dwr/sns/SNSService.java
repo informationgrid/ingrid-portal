@@ -66,7 +66,7 @@ public class SNSService {
 
 
     public ArrayList<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
-    	log.debug("getRootTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
+    	log.debug("getSubTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
     	return getSubTopics(topicID, depth, direction, true, true);
     }
     
@@ -97,25 +97,28 @@ public class SNSService {
     	log.debug(" creating return values...");        
         // TODO Build correct tree structure
         // TODO Check Language
-        for (int i = 0; i < hitsArray.length; i++) {
-            Topic hit = (Topic) hitsArray[i];
+        if (topicID.equals(SNS_ROOT_TOPIC)) {
+        	resultList = buildTopicRootStructure(((Topic) hitsArray[0]).getSuccessors());
+        } else {
+        	for (int i = 0; i < hitsArray.length; i++) {
+                Topic hit = (Topic) hitsArray[i];
+                if (hit.getTopicID().equals(topicID)) {
+	                final List successors = hit.getSuccessors();
 
-            final List successors = hit.getSuccessors();
-            
-            // TODO The returned root structure is invalid (?)
-            if (topicID == SNS_ROOT_TOPIC) {
-            	resultList = buildTopicRootStructure(successors);
-            } else {
-            	if (includeRootNode) {
-                	ArrayList<Topic> topNode = new ArrayList<Topic>();
-                	topNode.add(hit);
-                	resultList = buildTopicStructure(topNode);            	            		
-            	} else {
-            		resultList = buildTopicStructure(successors);
-            	}
+	                // TODO The returned root structure is invalid (?)
+	            	if (includeRootNode) {
+	                	ArrayList<Topic> topNode = new ArrayList<Topic>();
+	                	topNode.add(hit);
+	                	resultList = buildTopicStructure(topNode);            	            		
+	            	} else {
+	            		resultList = buildTopicStructure(successors);
+	            	}
+	            	log.debug("  done creating return values. getSubTopics() returning values.");
+	            	return resultList;
+                }
             }
         }
-    	log.debug("  done creating return values. getSubTopics() returning values.");        
+        	
         return resultList;
     }
 
@@ -226,15 +229,19 @@ public class SNSService {
     	TopicMapFragment mapFragment = null;
     	try {
     		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
-    	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER);
+    	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER, true);
     	} catch (Exception e) {
 	    	log.error(e);
 	    }
 	    
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics) && (topics.length != 0)) {
-	            return new SNSTopic(getTypeFromTopic(topics[0]), topics[0].getId(), topics[0].getBaseName(0).getBaseNameString().get_value());
+	        if ((null != topics)) {
+	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+					String topicName = topic.getBaseName(0).getBaseNameString().get_value();
+	            	if (topicName.equalsIgnoreCase(queryTerm))
+	            		return new SNSTopic(getTypeFromTopic(topic), topic.getId(), topicName);
+	            }
 	        }
 	    }
 	    return null;
@@ -245,7 +252,7 @@ public class SNSService {
     	TopicMapFragment mapFragment = null;
     	try {
     		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
-    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER);
+    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER, true);
     	} catch (Exception e) {
 	    	log.error(e);
 	    }
@@ -293,7 +300,7 @@ public class SNSService {
     	TopicMapFragment mapFragment = null;
     	try {
     		mapFragment = snsClient.findTopics(queryTerm, "/location", SearchType.exact,
-    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER);
+    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER, false);
     	} catch (Exception e) {
 	    	log.error(e);
 	    }

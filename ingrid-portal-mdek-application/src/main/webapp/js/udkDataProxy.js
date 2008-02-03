@@ -221,9 +221,9 @@ udkDataProxy.handleLoadRequest = function(msg)
 {
 	dojo.debug("About to be loaded: "+msg.id);
 
-	// Don't process newNode load requests. We have this request because we
-	// select new nodes in the tree after creating them
-	if (msg.id == "newNode") {
+	// Don't process newNode and objectRoot load requests.
+	if (msg.id == "newNode" || msg.id == "objectRoot") {
+		msg.resultHandler.callback();
 		return;
 	}
 
@@ -323,40 +323,44 @@ udkDataProxy.handleSaveRequest = function(msg)
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
 
-	// Function that is called when the node has been saved successfully.
-	var onSuccessfulSave = function(res) {
+	// Deferred obj for the main save operation. The passed resulthandler is called with the appropriate result
+	var onSaveDef = new dojo.Deferred();
+	onSaveDef.addCallback(function(res) {
 		udkDataProxy.resetDirtyFlag();
 		udkDataProxy._setData(res);
 		udkDataProxy._updateTree(res, nodeData.uuid);
 		udkDataProxy.onAfterSave();
-		msg.resultHandler.callback(res);
-	}
+		msg.resultHandler.callback(res);	
+	});
+	onSaveDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
 
 	// ---- DWR call to store the data ----
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
 	EntryService.saveNodeData(nodeData, "true", forcePubCond,
 		{
-			callback: onSuccessfulSave,
+			callback: onSaveDef.callback,
 			timeout:10000,
 			errorHandler:function(err) {
 				// Check for the publication condition error
 				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
-					var deferred = new dojo.Deferred();
+					var onForceSaveDef = new dojo.Deferred();
 					
 					// If the user wants to save the object anyway, set force save and start another request
-					deferred.addCallback(function() {
+					onForceSaveDef.addCallback(function() {
 						msg.forcePublicationCondition = true;
 						dojo.event.topic.publish("/saveRequest", msg);
 					});
 					// If the user cancelled the operation notify the result handler
-					deferred.addErrback(function() {
-						msg.resultHandler.errback();
-					});
+					onForceSaveDef.addErrback(onSaveDef.errback);
+
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:deferred});
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:onForceSaveDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData:");
-					msg.resultHandler.errback(err);
+					onSaveDef.errback(err);
 				}
 			}
 		}
@@ -413,11 +417,11 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+")");
 	EntryService.deleteNode(msg.id, "false",
 		{
-			callback: function(res){msg.resultHandler.callback();},
+			callback: function(res){msg.resultHandler.callback(res);},
 			timeout:10000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while deleting node: " + message);
-				msg.resultHandler.errback();
+			errorHandler:function(err) {
+				alert("Error in js/udkDataProxy.js: Error while deleting node: " + err);
+				msg.resultHandler.errback(err);
 			}
 		}
 	);
@@ -444,7 +448,7 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 	EntryService.canCopyObject(msg.id,
 		{
 			callback: function(res){msg.resultHandler.callback();},
-			timeout:10000,
+			timeout:30000,
 			errorHandler:function(err) {
 				dojo.debug("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + err);
 				msg.resultHandler.errback(err);
@@ -474,26 +478,37 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 udkDataProxy.handleCopyObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.copyNode("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
 
-	EntryService.copyNode(msg.srcId, msg.dstId, msg.copyTree,
-		{
-			callback: function(res){
-				if (res != null) {
-					msg.resultHandler.callback(res);
-				} else {
-					msg.resultHandler.errback("Node Copy operation failed.");
-				}
-			},
-			timeout:3000,	// Don't wait for the call to finish but display the 'please wait' dialog 
-			errorHandler:function(err) {
-				dojo.debug("Error in js/udkDataProxy.js: Error while copying nodes: " + err);
-				if (err == "Timeout") {
-					var deferred = new dojo.Deferred();
-					deferred.addCallback(function() {msg.resultHandler.callback()});
-					deferred.addErrback(function() {msg.resultHandler.errback()});
-					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 342, 220, true, {resultHandler:deferred});
-				}
+	var srcId = msg.srcId;
+	var dstId = msg.dstId;
 
-				msg.resultHandler.errback();
+	if (dstId == "objectRoot") {
+		dstId = null;
+	}
+
+	var onCopyDef = new dojo.Deferred();
+	onCopyDef.addCallback(function(res) {
+		// Copy operation was successful. Pass the copied node to the result handler
+		msg.resultHandler.callback(res);
+	});
+	onCopyDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+	EntryService.copyNode(srcId, dstId, msg.copyTree,
+		{
+			callback: function(res) { onCopyDef.callback(res); },
+			timeout:3000,	// Wait three seconds for the call to finish and display the 'please wait' dialog afterwards 
+			errorHandler:function(err) {
+				if (err == "Timeout") {
+					var onCopyOpFinishedDef = new dojo.Deferred();
+					// TODO we need to return some information about the copied node!
+					onCopyOpFinishedDef.addCallback(function (res) {onCopyDef.callback(res);});
+					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
+					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 342, 150, true, {resultHandler:onCopyOpFinishedDef});
+				} else {
+					dojo.debug("Error in js/udkDataProxy.js: Error while copying nodes: " + err);
+					onCopyDef.errback(err);
+				}
 			}
 		}
 	);
