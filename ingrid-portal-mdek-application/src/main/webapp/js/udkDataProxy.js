@@ -370,22 +370,47 @@ udkDataProxy.handleSaveRequest = function(msg)
 udkDataProxy.handlePublishObjectRequest = function(msg) {
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
-	
+
+
+	// Deferred obj for the main publish operation. The passed resulthandler is called with the appropriate result
+	var onPublishDef = new dojo.Deferred();
+	onPublishDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onPublishDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
 	// ---- DWR call to store the data ----
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, false)");
 	EntryService.saveNodeData(nodeData, "false", "false",
 		{
-			callback: function(res){
-				udkDataProxy.resetDirtyFlag();
-				udkDataProxy._setData(res);
-				udkDataProxy._updateTree(res, nodeData.uuid);
-				udkDataProxy.onAfterPublish();
-				msg.resultHandler.callback(res);
-			},
+			callback: onPublishDef.callback,
 			timeout:10000,
 			errorHandler:function(err) {
-				msg.resultHandler.errback(err);
-				dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData: " + err);
+				// Check for the publication condition error
+				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
+					var onForcePublishDef = new dojo.Deferred();
+					
+					// If the user wants to publish the object anyway, set force publish and start another request
+					onForcePublishDef.addCallback(function() {
+						msg.forcePublicationCondition = true;
+						dojo.event.topic.publish("/publishObjectRequest", msg);
+					});
+					// If the user cancelled the operation notify the result handler
+					onForcePublishDef.addErrback(onPublishDef.errback);
+
+					// Display the 'publication condition' dialog with the attached resultHandler
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:onForcePublishDef});
+				} else {
+					dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData:");
+					onPublishDef.errback(err);
+				}
 			}
 		}
 	);

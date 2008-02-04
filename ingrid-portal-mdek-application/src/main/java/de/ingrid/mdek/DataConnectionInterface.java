@@ -80,8 +80,8 @@ public interface DataConnectionInterface {
 	public MdekDataBean getNodeDetail(String uuid);
 	public MdekDataBean getInitialObject(String parentUuid);
 	
-	public MdekDataBean saveNode(MdekDataBean data, boolean forcePublicationCondition);
-	public MdekDataBean publishNode(MdekDataBean data);
+	public MdekDataBean saveNode(MdekDataBean data);
+	public MdekDataBean publishNode(MdekDataBean data, boolean forcePublicationCondition);
 	
 	public void deleteObject(String uuid);
 	public boolean deleteObjectWorkingCopy(String uuid);

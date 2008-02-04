@@ -237,10 +237,10 @@ public class EntryServiceImpl implements EntryService {
 		if (useWorkingCopy) {
 			log.debug("Saving node with ID: "+data.getUuid());
 
-			try { return dataConnection.saveNode(data, forcePublicationCondition); }
+			try { return dataConnection.saveNode(data); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
-				log.debug("MdekException while publishing node.", e);
+				log.debug("MdekException while saving node.", e);
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
 			catch (Exception e) {
@@ -250,14 +250,15 @@ public class EntryServiceImpl implements EntryService {
 		} else {
 			log.debug("Publishing node with ID: "+data.getUuid());
 
-			try { return dataConnection.publishNode(data); }
+			try { return dataConnection.publishNode(data, forcePublicationCondition); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
 				log.debug("MdekException while publishing node.", e);
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
 			catch (Exception e) {
-				log.error("Error while publishing node", e); return null;
+				log.error("Error while publishing node", e);
+				throw new RuntimeException("Error while publishing node.");
 			}
 		}
 	}
