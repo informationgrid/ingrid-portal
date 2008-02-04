@@ -39,7 +39,7 @@ function requestJobInfo() {
 	EntryService.getRunningJobInfo({
 			callback: handleUpdatedJobInfo,
 			timeout:10000,
-			errorHandler: handleError
+			errorHandler: function(err) { dojo.debug(err); requestInProgress = false; }
 	});
 }
 

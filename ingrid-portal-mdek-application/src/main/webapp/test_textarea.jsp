@@ -7,6 +7,20 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 </head>
 
+<style>
+.dojoPopupContainer {
+	border: solid black 1px;
+	background: beige;
+	color: black;
+	position: absolute;
+	font-size: small;
+	padding: 2px 2px 2px 2px;
+	z-index: 10;
+	display: block;
+}
+</style>
+
+
 <script type="text/javascript">
 	var djConfig = {isDebug: true, debugAtAllCosts: false};
 </script>
@@ -36,8 +50,8 @@ function buttonFunc()
   var textareaWidget = dojo.widget.byId('generalDescArea');
 
   textareaWidget.setValue('Some text');
-
 }
+
 </script>
 
 
@@ -47,10 +61,11 @@ function buttonFunc()
 <div class="inputContainer">
 	<span class="input"><input type="text" id="generalDescBox" name="generalDescBox" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 </div>
+
 <div class="inputContainer">
 	<span class="input"><input type="text" mode="textarea" id="generalDescArea" name="generalDescArea" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 </div>
 
-<button dojoType="Button" widgetID="myButton" onclick="buttonFunc">Set Text</button>
+<button dojoType="Button" onclick="buttonFunc">Set Text</button>
 </body>
 </html>

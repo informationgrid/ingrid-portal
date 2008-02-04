@@ -5,36 +5,32 @@
 /*
  * Rules that validate a field's value depending on another field's value
  */
+dojo.addOnLoad(function() {
+	addMinMaxValidation("spatialRefAltMin", "spatialRefAltMax", "Minimum", "Maximum");
 
-// Applies to: erfassung object -> raumbezug -> höhe -> minimum/maximum = spatialRefAltMin, spatialRefAltMax
-// Rule: minimum <= maximum
-var minimumField = dojo.widget.byId("spatialRefAltMin");
-var maximumField = dojo.widget.byId("spatialRefAltMax");
-if (minimumField && maximumField) {
-  dojo.event.connect(minimumField, "onblur", function(evt) {applyMinMaxRule(minimumField, maximumField);});
-  dojo.event.connect(maximumField, "onblur", function(evt) {applyMinMaxRule(minimumField, maximumField);});
-}
-function applyMinMaxRule(minimumField, maximumField) {
-  var minVal = minimumField.getValue();
-  var maxVal = maximumField.getValue();
-  if (minVal.length > 0 && maxVal.length > 0 && parseFloat(minVal) > parseFloat(maxVal)) {
-    minimumField.updateClass("Invalid");
-    maximumField.updateClass("Invalid");
-	dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("validation.minmax"), "Minimum", "Maximum"), dialog.WARNING);
+//	addMinMaxValidation("longitude1Editor", "longitude2Editor", "L&auml;nge 2", "L&auml;nge 1");
+//	addMinMaxValidation("latitude1Editor", "latitude2Editor", "Breite 2", "Breite 1");
+});
 
-/*
-    dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("validation.minmax"), "Minimum", "Maximum"), dialog.WARNING, 
-          [{caption:message.get("general.ok"), action:function() {
-              minimumField.updateClass("Invalid");
-              maximumField.updateClass("Invalid");
-            }
-          }]);
-*/
-  }
-  else {
-    if (minimumField.isValid())
-      minimumField.updateClass("Valid");
-    if (maximumField.isValid())
-      maximumField.updateClass("Valid");
-  }
+
+function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
+	var minWidget = dojo.widget.byId(minWidgetId);
+	var maxWidget = dojo.widget.byId(maxWidgetId);
+
+	minWidget.invalidMessage = dojo.string.substituteParams(message.get("validation.minmax"), maxCaption, minCaption);
+	maxWidget.invalidMessage = dojo.string.substituteParams(message.get("validation.minmax"), maxCaption, minCaption);
+
+	minWidget.isValid = function() {
+		return (dojo.validate.isRealNumber(minWidget.textbox.value, minWidget.flags) &&
+				dojo.validate.isRealNumber(maxWidget.textbox.value, maxWidget.flags) &&
+				parseFloat(minWidget.textbox.value) < parseFloat(maxWidget.textbox.value));
+	}
+	maxWidget.isValid = function() {
+		return (dojo.validate.isRealNumber(minWidget.textbox.value, minWidget.flags) &&
+				dojo.validate.isRealNumber(maxWidget.textbox.value, maxWidget.flags) &&
+				parseFloat(minWidget.textbox.value) < parseFloat(maxWidget.textbox.value));
+	}
+
+	dojo.event.connect(minWidget, "onkeyup", maxWidget, "update");
+	dojo.event.connect(maxWidget, "onkeyup", minWidget, "update");
 }
