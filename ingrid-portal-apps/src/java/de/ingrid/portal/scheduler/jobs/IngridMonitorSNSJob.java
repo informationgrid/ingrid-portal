@@ -91,7 +91,7 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 			}
 			snsClient.setTimeout(timeout);
 			TopicMapFragment mapFragment = snsClient.findTopics(query, "/thesa/descriptor", SearchType.exact,
-					FieldsType.captors, 0, "de");
+					FieldsType.captors, 0, "de", false);
 			Topic[] topics = null;
 			if (null != mapFragment) {
 				topics = mapFragment.getTopicMap().getTopic();
