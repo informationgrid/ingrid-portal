@@ -30,7 +30,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	private final static Logger log = Logger.getLogger(SimpleUDKConnection.class);
 
 	private IMdekCaller mdekCaller;
-
 	private DataMapperInterface dataMapper;
 
 	public SimpleUDKConnection(File communicationProperties) {
@@ -58,7 +57,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public MdekDataBean getNodeDetail(String uuid) {
-		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY);
+		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 
@@ -69,12 +68,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
-		IngridDocument response = mdekCaller.fetchTopObjects();
+		IngridDocument response = mdekCaller.fetchTopObjects(getCurrentSessionId());
 		return extractObjectsFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth) {
-		IngridDocument response = mdekCaller.fetchSubObjects(uuid);
+		IngridDocument response = mdekCaller.fetchSubObjects(uuid, getCurrentSessionId());
 		return extractObjectsFromResponse(response);
 	}
 
@@ -88,7 +87,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		IngridDocument obj = new IngridDocument();
 		obj.put(MdekKeys.PARENT_UUID, parentUuid);
 
-		IngridDocument response = mdekCaller.getInitialObject(obj);
+		IngridDocument response = mdekCaller.getInitialObject(obj, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 	
@@ -105,7 +104,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following object for storage:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCaller.storeObject(obj, true);
+		IngridDocument response = mdekCaller.storeObject(obj, true, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 
@@ -120,24 +119,24 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	log.debug("Sending the following object for publishing:");
 	log.debug(obj);
 
-	IngridDocument response = mdekCaller.publishObject(obj, true, forcePublicationCondition);
+	IngridDocument response = mdekCaller.publishObject(obj, true, forcePublicationCondition, getCurrentSessionId());
 	return extractSingleObjectFromResponse(response);
 }
 
 	
 	public void deleteObject(String uuid) {
-		mdekCaller.deleteObject(uuid);
+		mdekCaller.deleteObject(uuid, getCurrentSessionId());
 	}
 
 	public boolean deleteObjectWorkingCopy(String uuid) {
-		IngridDocument response = mdekCaller.deleteObjectWorkingCopy(uuid);
+		IngridDocument response = mdekCaller.deleteObjectWorkingCopy(uuid, getCurrentSessionId());
 
 		IngridDocument result = extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
 	}
 
 	public void canCutObject(String uuid) {
-		IngridDocument response = mdekCaller.checkObjectSubTree(uuid);
+		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		} else {
@@ -151,7 +150,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public void canCopyObject(String uuid) {
-		IngridDocument response = mdekCaller.checkObjectSubTree(uuid);
+		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
 		// Copy is always allowed. Placeholder for future changes
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
@@ -159,32 +158,29 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public List<String> getPathToObject(String uuid) {
-		IngridDocument response = mdekCaller.getObjectPath(uuid);
+		IngridDocument response = mdekCaller.getObjectPath(uuid, getCurrentSessionId());
 		return extractPathFromResponse(response);
 	}
 
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-
-		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree, session.getId());
+		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree, getCurrentSessionId());
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
 	public void moveObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true);
+		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}
 	}
 
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
-		IngridDocument response = mdekCaller.getSysLists(listIds, languageCode);
+		IngridDocument response = mdekCaller.getSysLists(listIds, languageCode, getCurrentSessionId());
 		return extractSysListFromResponse(response);
 	}
 
 	public CatalogBean getCatalogData() {
-		IngridDocument response = mdekCaller.fetchCatalog();
+		IngridDocument response = mdekCaller.fetchCatalog(getCurrentSessionId());
 		return extractCatalogFromResponse(response);
 	}
 
@@ -374,4 +370,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			return null;
 		}
 	}
+
+	// Helper method to get the current sesison Id. Will be replaced by the user id somday
+	private String getCurrentSessionId() {
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+		return session.getId();
+	}
+
 }

@@ -21,14 +21,26 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 	maxWidget.invalidMessage = dojo.string.substituteParams(message.get("validation.minmax"), maxCaption, minCaption);
 
 	minWidget.isValid = function() {
-		return (dojo.validate.isRealNumber(minWidget.textbox.value, minWidget.flags) &&
-				dojo.validate.isRealNumber(maxWidget.textbox.value, maxWidget.flags) &&
-				parseFloat(minWidget.textbox.value) < parseFloat(maxWidget.textbox.value));
+		var minValue = dojo.string.trim(minWidget.textbox.value);
+		var maxValue = dojo.string.trim(maxWidget.textbox.value);
+		
+		if (minValue == "" || maxValue == "")
+			return true;
+		else
+			return (dojo.validate.isRealNumber(minValue, minWidget.flags) &&
+				dojo.validate.isRealNumber(maxValue, maxWidget.flags) &&
+				parseFloat(minWidget.textbox.value) <= parseFloat(maxWidget.textbox.value));
 	}
 	maxWidget.isValid = function() {
-		return (dojo.validate.isRealNumber(minWidget.textbox.value, minWidget.flags) &&
+		var minValue = dojo.string.trim(minWidget.textbox.value);
+		var maxValue = dojo.string.trim(maxWidget.textbox.value);
+		
+		if (minValue == "" || maxValue == "")
+			return true;
+		else
+			return (dojo.validate.isRealNumber(minWidget.textbox.value, minWidget.flags) &&
 				dojo.validate.isRealNumber(maxWidget.textbox.value, maxWidget.flags) &&
-				parseFloat(minWidget.textbox.value) < parseFloat(maxWidget.textbox.value));
+				parseFloat(minWidget.textbox.value) <= parseFloat(maxWidget.textbox.value));
 	}
 
 	dojo.event.connect(minWidget, "onkeyup", maxWidget, "update");
