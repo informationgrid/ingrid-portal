@@ -1,7 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
+
+<style>
+a.notSelectable { margin-left:5px; text-decoration:none; color:#666666 }
+a.resultText { margin-left:5px; text-decoration:none; color:#000 }
+a.resultText:hover { text-decoration:underline; }
+a.resultText.selected { color:#C21100 }
+</style>
+
+
 <script type="text/javascript">
+var selectedTextNode = null;
+var selectedButton = null;
+
+
 _container_.addOnLoad(function() {
  		init();
 });
@@ -46,7 +59,6 @@ init = function() {
 		var _this = this;
 		var deferred = new dojo.Deferred();
 
-		dojo.debug("Calling getSubTopics("+node.topicId+", 2, down)");
 		SNSService.getSubTopics(node.topicId, '2', 'down', {
   			preHook:disableUiElements,
   			postHook:enableUiElements,
@@ -91,6 +103,67 @@ init = function() {
 }
 
 
+resultTextClicked = function(topicId) {
+	if (selectedTextNode) {
+		dojo.html.removeClass(selectedTextNode, "selected");
+	}
+
+	selectedTextNode = dojo.byId("_resultText_"+topicId);
+	dojo.html.addClass(selectedTextNode, "selected");
+} 
+
+resultButtonClicked = function(topicId) {
+	if (selectedButton) {
+		selectedButton.checked = false;
+	}
+
+	selectedButton = dojo.byId("_resultButton_"+topicId);
+
+	expandToTopicWithId(topicId);
+}
+
+function displaySearchResults(resultList) {
+	var resultContainer = dojo.byId("thesResultContainer");
+	resultContainer.innerHTML = "";
+	selectedTextNode = null;
+	selectedButton = null;
+
+	if (resultList.length == 0) {
+		resultContainer.innerHTML = message.get("sns.noResultHint");
+	}
+
+	dojo.lang.forEach(resultList, function(term) {
+		if (term.type != "NON_DESCRIPTOR") {
+			var label = term.title;
+			var button = document.createElement("input");
+			button.setAttribute("id", "_resultButton_"+term.topicId);
+			button.setAttribute("type", "radio");
+			button.setAttribute("onclick", "resultButtonClicked('"+term.topicId+"');");
+
+			var divElement = document.createElement("div");
+
+			var linkElement = document.createElement("a"); 
+			linkElement.innerHTML = term.title;
+
+			if (term.type == "DESCRIPTOR") {
+				dojo.html.addClass(linkElement, "resultText");
+				linkElement.setAttribute("id", "_resultText_"+term.topicId);
+				linkElement.setAttribute("onclick", "resultTextClicked('"+term.topicId+"');");
+				linkElement.setAttribute("href", "javascript:void(0);");
+				linkElement.topicId = term.topicId;
+			} else {
+				dojo.html.addClass(linkElement, "notSelectable");
+			}
+			
+			resultContainer.appendChild(divElement);
+			divElement.appendChild(button);
+			divElement.appendChild(linkElement);
+		}
+	});
+}
+
+
+
 // Callback Handler for the root topics.
 // This function gets called when the tree is initialized.
 // @param topicList - List of Topics from the SNSService   
@@ -112,6 +185,9 @@ function handleRootTopics(topicList) {
 // Expands the tree to the topic with id 'topicID'
 // A valid topicID can be acquired by calling SNSService.findTopic()
 function expandToTopicWithId(topicID) {
+	var treePane = dojo.widget.byId("thesTreePane");
+	dojo.widget.byId("thesResultTabContainer").selectChild(treePane);
+
 	SNSService.getSubTopicsWithRoot(topicID, '0', 'up', {
 		preHook:disableUiElements,
 	  	postHook:enableUiElements,
@@ -200,6 +276,34 @@ function getTopTermNode(node) {
 // This function reads the value of the TextBox 'thesSearch' and expands the tree from the root
 // to the corresponding node
 findTopic = function() {
+	var queryTerm = dojo.widget.byId('thesSearch').getValue();
+	queryTerm = dojo.string.trim(queryTerm);
+
+	if (queryTerm == "") {
+		showStatus("");
+		return;
+	}
+
+//	clearResultContainer();
+	var resultPane = dojo.widget.byId("thesResultPane");
+	dojo.widget.byId("thesResultTabContainer").selectChild(resultPane);
+
+	SNSService.findTopics(queryTerm, {
+		preHook:disableUiElements,
+	  	postHook:enableUiElements,
+		callback:function(result) {
+			if (result) {
+				displaySearchResults(result);
+			} else {
+				showStatus(message.get("sns.noResultHint"));
+			}},
+		timeout:0,
+		errorHandler:function(msg) {showStatus(message.get("sns.connectionError"));},
+		exceptionHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
+	});
+
+
+/*
 	showStatus(message.get("sns.processingQueryHint"));
 
 	var queryTerm = dojo.widget.byId('thesSearch').getValue();
@@ -223,6 +327,7 @@ findTopic = function() {
 	} else {
 		showStatus("");
 	}
+*/
 };
 
 getNewKey = function(store) {
@@ -241,14 +346,20 @@ getNewKey = function(store) {
 // This function adds the currently selected node to the descriptorList if it isn't already in the store.
 // The function also checks if a descriptor is selected (TODO: Shouldn't be done here?)
 addSelectedTopic = function() {
-	var selectedNode = dojo.widget.byId('thesTree').selectedNode;
+	var selectedTab = dojo.widget.byId("thesResultTabContainer").selectedChild;
     var descStore = dojo.widget.byId('thesaurusDescList').store;
-
-	if (!selectedNode || descStore.getByKey(selectedNode.topicId) || selectedNode.type != "DESCRIPTOR")
-		return;
-	else
-		descStore.addData( {Id: getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
-
+	
+	if (selectedTab == "thesTreePane") {
+		var selectedNode = dojo.widget.byId('thesTree').selectedNode;
+		if (!selectedNode || descStore.getByKey(selectedNode.topicId) || selectedNode.type != "DESCRIPTOR")
+			return;
+		else
+			descStore.addData( {Id: getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
+	} else if (selectedTab == "thesResultPane" && selectedTextNode) {
+		if (!descStore.getByKey(selectedTextNode.topicId)) {
+			descStore.addData( {Id: getNewKey(descStore), topicId: selectedTextNode.topicId, title: selectedTextNode.innerHTML} );
+		}
+	}
 };
 
 // Cancel Button onClick function.
@@ -305,34 +416,33 @@ acceptTopicList = function() {
   	  </div>
 
       <div class="inputContainer full">
-<!--
-        <span class="button w644"><a href="#" class="buttonBlue" title="In Thesaurus suchen">In Thesaurus suchen</a></span>
--->
         <span class="button w644" style="height:20px !important;"><button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic">In Thesaurus suchen</button></span>
    	  </div>
 
       <div class="inputContainer grey full noSpaceBelow">
-		<div dojoType="ContentPane" id="thesTreeContainer"  style="height: 200px; width: 100%; overflow: auto;">
-          <!-- tree components -->
-			<div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
-			<div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
-			<div dojoType="ingrid:TreeDecorator" listener="thesTreeListener"></div>
-			<div dojoType="ingrid:TreeDocIcons" widgetId="thesTreeDocIcons"></div>	
-          <!-- tree -->
-<!--  
-         <div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener" widgetId="thesTree">
- -->
-         <div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener;thesTreeDocIcons" widgetId="thesTree">
-           </div>
-      	</div>
+		<div id="thesResultTabContainer" dojoType="ingrid:TabContainer" class="h199" selectedChild="thesTreePane">
 
-      	<div class="spacer"></div>
+			<div dojoType="ContentPane" id="thesTreePane" label="Hierarchiebaum" style="height: 200px; margin-left:5px; margin-top:10px; width: 100%; overflow: auto;">
+	          <!-- tree components -->
+				<div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
+				<div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
+				<div dojoType="ingrid:TreeDecorator" listener="thesTreeListener"></div>
+				<div dojoType="ingrid:TreeDocIcons" widgetId="thesTreeDocIcons"></div>	
+	          <!-- tree -->
+	         <div dojoType="ingrid:Tree" listeners="thesTreeController;thesTreeListener;thesTreeDocIcons" widgetId="thesTree">
+	           </div>
+	      	</div>
+
+			<div dojoType="ContentPane" id="thesResultPane" label="Ergebnisliste" style="height: 200px; margin-left:5px; margin-top:10px; width: 100%; overflow: auto;">
+				<span id="thesResultContainer"></span>
+	      	</div>
+
+		</div>
+
+      <div class="spacer"></div>
       </div>
 
       <div class="inputContainer full">
-<!-- 
-        <span class="button w644"><a href="#" class="buttonBlue" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
- -->
          <span class="button w644" style="height:20px !important;">
          	<span style="float:right;"><button dojoType="ingrid:Button" onClick="closeDialog">Abbrechen</button></span>
          	<span style="float:right; padding-right:10px;"><button dojoType="ingrid:Button" id="addSelectedTopicButton" onClick="addSelectedTopic">Hinzuf&uuml;gen</button></span>
@@ -345,7 +455,6 @@ acceptTopicList = function() {
       <div id="listThesaurus" class="inputContainer">
         <span class="label"><label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Liste der Deskriptoren')">Liste der Deskriptoren</label></span>
         <div class="listInfo third">
-<!--      <span class="searchResultsInfo">2 Deskriptor(en) hinzugef&uuml;gt</span>  --> 
       	  <div class="fill"></div>
         </div>
 
