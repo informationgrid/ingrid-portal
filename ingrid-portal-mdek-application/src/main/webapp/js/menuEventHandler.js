@@ -163,7 +163,7 @@ menuEventHandler.handlePaste = function(msg) {
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
 				def.addCallback(function() {
-					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: true, resultHandler: deferred});
 				});
 			}
 		} else if (treeController.nodeToCopy != null) {

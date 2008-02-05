@@ -209,11 +209,11 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#moveNode(java.lang.String,
 	 *      java.lang.String)
 	 */
-	public void moveNode(String nodeUuid, String dstNodeUuid) {
+	public void moveNode(String nodeUuid, String dstNodeUuid, boolean forcePublicationCondition) {
 		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			dataConnection.moveObjectSubTree(nodeUuid, dstNodeUuid);
+			dataConnection.moveObjectSubTree(nodeUuid, dstNodeUuid, forcePublicationCondition);
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

@@ -41,6 +41,7 @@
  *   topic = '/cutObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, resultHandler: deferred}
  *     srcId - The Uuid of the node which should be cut
  *     dstId - The Uuid of the target node where the srcNode should be attached
+ *	   forcePublicationCondition - Tell the backend to adjust the publication condition of subnodes
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/copyObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, copyTree: boolean, resultHandler: deferred}
@@ -390,7 +391,7 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, false)");
 	EntryService.saveNodeData(nodeData, "false", "false",
 		{
-			callback: onPublishDef.callback,
+			callback: function(res) { onPublishDef.callback(res); },
 			timeout:10000,
 			errorHandler:function(err) {
 				// Check for the publication condition error
@@ -488,13 +489,30 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 	}
 	dojo.debug("udkDataProxy calling EntryService.cutNode("+msg.srcId+", "+msg.dstId+")");	
 
-	EntryService.moveNode(msg.srcId, msg.dstId,
+
+	EntryService.moveNode(msg.srcId, msg.dstId, msg.forcePublicationCondition,
 		{
-			callback: msg.resultHandler.callback,
+			callback: function(res) { msg.resultHandler.callback(res); },
 			timeout:30000,
 			errorHandler:function(err) {
-				dojo.debug("Error in js/udkDataProxy.js: Error while moving nodes: " + err);
-				msg.resultHandler.errback(err);
+				// Check for the publication condition error
+				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
+					var onForceMoveDef = new dojo.Deferred();
+
+					// If the user wants to publish the object anyway, set force publish and start another request
+					onForceMoveDef.addCallback(function() {
+						msg.forcePublicationCondition = true;
+						dojo.event.topic.publish("/cutObjectRequest", msg);
+					});
+					// If the user cancelled the operation notify the result handler
+					onForceMoveDef.addErrback(msg.resultHandler.errback);
+
+					// Display the 'publication condition' dialog with the attached resultHandler
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:onForceMoveDef});
+				} else {
+					dojo.debug("Error in js/udkDataProxy.js: Error while moving nodeData:");
+					msg.resultHandler.errback(err);
+				}
 			}
 		}
 	);

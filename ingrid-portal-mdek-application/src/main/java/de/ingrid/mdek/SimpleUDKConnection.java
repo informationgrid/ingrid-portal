@@ -167,8 +167,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
-	public void moveObjectSubTree(String fromUuid, String toUuid) {
-		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true, getCurrentSessionId());
+	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition) {
+		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true, forcePublicationCondition, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}

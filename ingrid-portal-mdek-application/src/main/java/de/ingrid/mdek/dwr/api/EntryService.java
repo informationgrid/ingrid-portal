@@ -169,8 +169,11 @@ public interface EntryService {
 	 * @param dstNodeUuid
 	 *            The destination nodes uuid (this will become the parent of the
 	 *            copied node).
+	 * @param forcePublicationCondition
+	 *            Tells the backend to force a move operation and modify child nodes
+     *
 	 */
-	public void moveNode(String nodeUuid, String dstNodeUuid);
+	public void moveNode(String nodeUuid, String dstNodeUuid, boolean forcePublicationCondition);
 
 	/**
 	 * Delete a node. Deletion is only successful, if the node has no children.

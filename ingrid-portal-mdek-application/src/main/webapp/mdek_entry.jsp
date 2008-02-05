@@ -355,7 +355,7 @@ function hideSplash(){
 	            	  <div class="fill"></div>
 	              </div>
 
-	              <div class="inputContainer notRequired h154">
+	              <div id="ref1VFormat" class="inputContainer notRequired h154">
 	                <span id="ref1VFormatLabel" class="label"><label class="inActive">Vektorformat</label></span>
 	                <div id="ref1VFormat" class="outlined h110">
 	                  <div class="thirdInside left">
@@ -370,11 +370,11 @@ function hideSplash(){
 	                        <div dojoType="ingrid:Select" toggle="plain" style="width:120px;" listId="515" id="geometryTypeEditor"></div>
 	                        <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="elementNumberEditor"></div>
 	                      </div>
-	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive thirdInside2">
+	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive thirdInside2">
 	                	      <thead>
 	                		      <tr>
-	                      			<th field="geometryType" dataType="String" width="120" editor="geometryTypeEditor">Geometrietyp</th>
-	                      			<th field="numElements" dataType="String" width="200" editor="elementNumberEditor">Elementanzahl</th>
+	                      			<th nosort="true" field="geometryType" dataType="String" width="120" editor="geometryTypeEditor">Geometrietyp</th>
+	                      			<th nosort="true" field="numElements" dataType="String" width="200" editor="elementNumberEditor">Elementanzahl</th>
 	                		      </tr>
 	                	      </thead>
 	                	      <tbody>
