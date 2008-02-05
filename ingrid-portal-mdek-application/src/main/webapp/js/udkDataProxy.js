@@ -358,7 +358,7 @@ udkDataProxy.handleSaveRequest = function(msg)
 					onForceSaveDef.addErrback(onSaveDef.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:onForceSaveDef});
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {operation:"SAVE", resultHandler:onForceSaveDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData:");
 					onSaveDef.errback(err);
@@ -372,6 +372,10 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
 
+	var forcePubCond = false;
+	if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
+		forcePubCond = msg.forcePublicationCondition;
+	}
 
 	// Deferred obj for the main publish operation. The passed resulthandler is called with the appropriate result
 	var onPublishDef = new dojo.Deferred();
@@ -388,8 +392,8 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 
 
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, false)");
-	EntryService.saveNodeData(nodeData, "false", "false",
+	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, "+forcePubCond+")");
+	EntryService.saveNodeData(nodeData, "false", forcePubCond,
 		{
 			callback: function(res) { onPublishDef.callback(res); },
 			timeout:10000,
@@ -407,7 +411,7 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 					onForcePublishDef.addErrback(onPublishDef.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:onForcePublishDef});
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData:");
 					onPublishDef.errback(err);
@@ -487,10 +491,14 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 	if(msg.dstId == "objectRoot") {
 		msg.dstId = null;
 	}
-	dojo.debug("udkDataProxy calling EntryService.cutNode("+msg.srcId+", "+msg.dstId+")");	
 
+	var forcePubCond = false;
+	if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
+		forcePubCond = msg.forcePublicationCondition;
+	}
 
-	EntryService.moveNode(msg.srcId, msg.dstId, msg.forcePublicationCondition,
+	dojo.debug("udkDataProxy calling EntryService.moveNode("+msg.srcId+", "+msg.dstId+", "+forcePubCond+")");	
+	EntryService.moveNode(msg.srcId, msg.dstId, forcePubCond,
 		{
 			callback: function(res) { msg.resultHandler.callback(res); },
 			timeout:30000,
@@ -508,7 +516,7 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 					onForceMoveDef.addErrback(msg.resultHandler.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {resultHandler:onForceMoveDef});
+					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {operation:"MOVE", resultHandler:onForceMoveDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while moving nodeData:");
 					msg.resultHandler.errback(err);

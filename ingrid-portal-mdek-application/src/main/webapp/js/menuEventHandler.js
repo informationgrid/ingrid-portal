@@ -163,7 +163,7 @@ menuEventHandler.handlePaste = function(msg) {
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
 				def.addCallback(function() {
-					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: true, resultHandler: deferred});
+					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred});
 				});
 			}
 		} else if (treeController.nodeToCopy != null) {
@@ -564,6 +564,8 @@ function displayErrorMessage(err) {
 			dialog.show(message.get("general.error"), message.get("operation.error.targetIsSubnodeOfSourceError"), dialog.WARNING);
 		} else if (err.message.indexOf("SUBTREE_HAS_WORKING_COPIES") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.subTreeHasWorkingCopiesError"), dialog.WARNING);
+		} else if (err.message.indexOf("PARENT_HAS_SMALLER_PUBLICATION_CONDITION") != -1) {
+			dialog.show(message.get("general.error"), message.get("operation.error.parentHasSmallerPublicationConditionError"), dialog.WARNING);
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING);				
 		}

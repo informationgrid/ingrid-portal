@@ -83,6 +83,9 @@
 	"operation.error.parentNotPublishedError":"You have to publish the parent nodes before publishing the selected node!",
 	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",
 	"operation.error.subTreeHasWorkingCopiesError":"One or more subnodes have to be saved before the operation can be carried out.",
+	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its parent has a lower publication condition.",
+	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",
+	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

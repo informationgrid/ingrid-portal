@@ -2,7 +2,14 @@
 <head>
 
 <script type="text/javascript">
-_container_.addOnLoad(function() {});
+_container_.addOnLoad(function() {
+	if (_container_.customParams.operation == "SAVE") {
+		dojo.byId("messageDiv").innerHTML = message.get("operation.hint.publicationConditionSaveHint");
+	} else if (_container_.customParams.operation == "MOVE") {
+		dojo.byId("messageDiv").innerHTML = message.get("operation.hint.publicationConditionMoveHint");
+		dojo.widget.byId("saveButton").setCaption("Verschieben");
+	}
+});
 
 _container_.addOnUnload(function() {
 	// If the dialog was cancelled via the dialogs close button
@@ -35,14 +42,10 @@ noButtonFunc = function() {
 	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
 		<div id="dialogContent" class="content">
 			<div id="messageDiv" class="field grey">
-				Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite
-				vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Speichern dieses Objektes wird eine entsprechende
-				Anpassung vorgenommen. Soll das Objekt wirklich gespeichert werden?
 			</div>
-
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
 		        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
-		        <span style="float:right;"><button dojoType="ingrid:Button" title="Speichern" onClick="yesButtonFunc">Speichern</button></span>
+		        <span style="float:right;"><button dojoType="ingrid:Button" id="saveButton" title="Speichern" onClick="yesButtonFunc">Speichern</button></span>
 			</div>
 	  	</div>
 	</div>

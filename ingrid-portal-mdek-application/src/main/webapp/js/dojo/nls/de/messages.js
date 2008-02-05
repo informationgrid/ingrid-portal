@@ -43,6 +43,9 @@
 	"operation.error.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.targetIsSubnodeOfSourceError":"Das Ziel einer Verschiebeoperation darf nicht Kind des Ausgangsknotens sein.",
 	"operation.error.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Objekte befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
+	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
+	"operation.hint.publicationConditionSaveHint":"Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Speichern dieses Objektes wird eine entsprechende Anpassung vorgenommen. Soll das Objekt wirklich gespeichert werden?",
+	"operation.hint.publicationConditionMoveHint":"Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Verschieben dieses Objektes bzw. Teilbaumes wird eine entsprechende Anpassung vorgenommen. Soll das Objekt / der Teilbaum wirklich verschoben werden?",
 
     "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
