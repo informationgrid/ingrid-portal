@@ -12,13 +12,14 @@ var currentOperationId = null;
 var dirtyFlag = null;
 
 var inputElements = 
-	["operationsName", "operationsDescription", "operationsPlatform", "operationsCall",
+	["operationsName", "operationsNameSelect", "operationsDescription", "operationsPlatform", "operationsCall",
 	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton", "cancelButton"];
 
-var requiredElements = [["operationsName", "operationsNameLabel"],
+var requiredElements = [/*["operationsName", "operationsNameLabel"],*/	// This element is added when the operation input is initialized
 					    ["operationsPlatform", "operationsPlatformLabel"],
 					    ["operationsAddress", "operationsAddressLabel"]];
 
+var _opNameIsTextInput = null;
 
 _container_.addOnLoad(function() {
 	dirtyFlag = udkDataProxy.dirtyFlag;
@@ -32,6 +33,30 @@ _container_.addOnUnload(function() {
 
 	dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
 });
+
+
+initOperationNameInput = function() {
+	var serviceTypeWidget = dojo.widget.byId("ref3ServiceType");
+	var serviceType = serviceTypeWidget.getValueForDisplayValue(serviceTypeWidget.getValue());
+
+	if (serviceType) {
+		dojo.html.hide(dojo.widget.byId("operationsName").domNode);	
+		requiredElements.push(["operationsNameSelect", "operationsNameLabel"]);
+		var selectWidget = dojo.widget.byId("operationsNameSelect");
+		selectWidget.isValid = function() { return this.getValue() != ""; }
+
+		EntryService.getSysLists([selectWidget.listId], 121, {
+			callback: function(res) {
+				selectWidget.dataProvider.setData(res[selectWidget.listId]);
+		}});
+		_opNameIsTextInput = false;
+	} else {
+		dojo.html.hide(dojo.widget.byId("operationsNameSelect").domNode);	
+		requiredElements.push(["operationsName", "operationsNameLabel"]);
+		_opNameIsTextInput = true;
+	}
+}
+
 
 resetRequiredElements = function() {
 	dojo.lang.forEach(requiredElements, function(element) {
@@ -81,7 +106,13 @@ resetInputElements = function() {
 }
 
 displayOperation = function(op) {
-	dojo.widget.byId("operationsName").setValue(op.name);
+	if (_opNameIsTextInput)
+		dojo.widget.byId("operationsName").setValue(op.name);
+	else {
+		var selectWidget = dojo.widget.byId("operationsNameSelect");
+		selectWidget.setValue(selectWidget.getValueForDisplayValue(op.name));
+	}
+	
 	dojo.widget.byId("operationsDescription").setValue(op.description);
 	dojo.widget.byId("operationsPlatform").store.setData(op.platform);
 	dojo.widget.byId("operationsCall").setValue(op.methodCall);
@@ -92,6 +123,7 @@ displayOperation = function(op) {
 
 init = function() {
 	disableInputElements();
+	initOperationNameInput();
 
 	var opList = dojo.widget.byId("operationsList");
 	dojo.event.connectOnce("after", opList, "onDataSelect", function(op) {
@@ -147,7 +179,12 @@ init = function() {
 
 getOperation = function() {
 	var operation = {};
-	operation.name = dojo.widget.byId("operationsName").getValue();
+	if (_opNameIsTextInput)
+		operation.name = dojo.widget.byId("operationsName").getValue();
+	else {
+		var selectWidget = dojo.widget.byId("operationsNameSelect");
+		operation.name = selectWidget.getDisplayValueForValue(selectWidget.getValue());
+	}
 	operation.description = dojo.widget.byId("operationsDescription").getValue();
 	operation.platform = dojo.widget.byId("operationsPlatform").store.getData();
 	operation.methodCall = dojo.widget.byId("operationsCall").getValue();
@@ -316,7 +353,10 @@ closeDialog = function() {
 
       <div class="inputContainer field grey fullField noSpaceBelow">
         <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
-		<span class="input"><input type="text" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+		<span class="input">
+			<select dojoType="ingrid:Select" autoComplete="false" class="w616" id="operationsNameSelect" listId="5150" />
+			<input type="text" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" />
+		</span>
         <div class="spacer"></div>
         
         <div class="inputContainer spaceBelow">

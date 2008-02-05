@@ -46,8 +46,8 @@ dojo.addOnLoad(function()
   initFreeTermsButton();
   initRef1SpatialSystemDataProvider();
   initReferenceTables();
-  initCatalogData();
-  initSysLists();
+  var deferred = initCatalogData();
+  deferred.addCallback(initSysLists);
   hideSplash();
 });
 
@@ -672,16 +672,22 @@ function initTableValidators() {
 }
 
 function initCatalogData() {
+	var deferred = new dojo.Deferred();
+
 	EntryService.getCatalogData({
 		callback: function(res) {
 			// Update catalog Data in udkDataProxy
 			catalogData = res;
+			deferred.callback();
 		},
 		errorHandler:function(mes){
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 			dojo.debug(mes);
+			deferred.errback();
 		}
 	});
+
+	return deferred;
 }
 
 
@@ -691,7 +697,7 @@ function initSysLists() {
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableCriteriaEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
-		"extraInfoLangData", "extraInfoLangMetaData",
+		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData",
 		// This select box also gets initialised on object load
 		"extraInfoPublishArea",
 		// Addresses
