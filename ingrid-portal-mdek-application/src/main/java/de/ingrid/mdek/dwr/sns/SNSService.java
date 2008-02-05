@@ -151,7 +151,7 @@ public class SNSService {
     private static ArrayList<SNSTopic> buildTopicRootStructure(List<Topic> topicList) {
     	ArrayList<SNSTopic> result = new ArrayList<SNSTopic>(); 
 
-    	TreeSet<Topic> topics = new TreeSet<Topic>(new SNSTopicComparator());
+    	TreeSet<Topic> topics = new TreeSet<Topic>(new TopicComparator());
     	topics.addAll(topicList);
 
     	for (Topic topic : topics) {
@@ -266,6 +266,8 @@ public class SNSService {
 				}
 	        }
 	    }
+
+	    Collections.sort(resultList, new SNSTopicComparator());
 	    return resultList;
     }
 
@@ -397,12 +399,23 @@ public class SNSService {
 		}
     }
 
-    static public class SNSTopicComparator implements Comparator<Topic> {
+    static public class TopicComparator implements Comparator<Topic> {
     	public final int compare(Topic topicA, Topic topicB) {
             try {
             	// Get the collator for the German Locale 
             	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
             	return gerCollator.compare(topicA.getTopicName(), topicB.getTopicName());
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }
+    static public class SNSTopicComparator implements Comparator<SNSTopic> {
+    	public final int compare(SNSTopic topicA, SNSTopic topicB) {
+            try {
+            	// Get the collator for the German Locale 
+            	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
+            	return gerCollator.compare(topicA.getTitle(), topicB.getTitle());
             } catch (Exception e) {
                 return 0;
             }
