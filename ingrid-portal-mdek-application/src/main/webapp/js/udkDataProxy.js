@@ -341,7 +341,7 @@ udkDataProxy.handleSaveRequest = function(msg)
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
 	EntryService.saveNodeData(nodeData, "true", forcePubCond,
 		{
-			callback: onSaveDef.callback,
+			callback: function(res) { onSaveDef.callback(res); },
 			timeout:10000,
 			errorHandler:function(err) {
 				// Check for the publication condition error

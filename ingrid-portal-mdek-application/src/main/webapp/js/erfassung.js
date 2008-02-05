@@ -20,38 +20,35 @@ function selectNode() {
 }
 
 
-function toggleFields(section)
-{
-  // mode 'required' or 'all', needed for main toggle button on toolbar
-  // if called from section's toggle button, then just invert display mode (determined by actual state)
-  var mode = "";
-  // get section or all sections respectively
-  var rootNodes = [];
-  if (section != undefined)
-    rootNodes.push(document.getElementById(section));
-  else
-  {
-    var sectionDivId = "contentFrameBodyObject";
-  	if (!mdek.entry.isTypeObject()) {
-  		sectionDivId = "contentFrameBodyAddress";
-  	}
-    
-    dojo.debug("toggle fields in container '" + sectionDivId + "'");
-	
-  	// button on toolbar clicked, toggle all fields on page
-    // only if form is loaded
-    if (document.getElementById(sectionDivId))
-    {
-      rootNodes = document.getElementById(sectionDivId).childNodes;
-      var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
-      var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
-      toggleButton(btnImage, toggleBtn.domNode, 'grey');
-      if (btnImage.src.indexOf("expand_required") != -1)
-        mode = "all";
-      else
-        mode = "required";
-    }
-  }
+function toggleFields(section) {
+	// mode 'required' or 'all', needed for main toggle button on toolbar
+	// if called from section's toggle button, then just invert display mode (determined by actual state)
+	var mode = "";
+	// get section or all sections respectively
+	var rootNodes = [];
+	if (section != undefined)
+		rootNodes.push(document.getElementById(section));
+	else {
+		var sectionDivId = "contentFrameBodyObject";
+		if (!mdek.entry.isTypeObject()) {
+			sectionDivId = "contentFrameBodyAddress";
+  		}
+
+		dojo.debug("toggle fields in container '" + sectionDivId + "'");
+		
+		// button on toolbar clicked, toggle all fields on page
+		// only if form is loaded
+		if (document.getElementById(sectionDivId)) {
+			rootNodes = document.getElementById(sectionDivId).childNodes;
+			var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
+			var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
+			toggleButton(btnImage, toggleBtn.domNode, 'grey');
+			if (btnImage.src.indexOf("expand_required") != -1)
+				mode = "all";
+			else
+				mode = "required";
+		}
+	}
 
   // loop over content blocks and hide or show indvidual input containers
   for (var i=0; i<rootNodes.length; i++)

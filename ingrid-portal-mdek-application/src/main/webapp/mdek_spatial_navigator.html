@@ -27,6 +27,14 @@ function enableUiElements() {
 	dojo.widget.byId("findLocationTopicsButton").enable();
 }
 
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("spatialLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("spatialLoadingZone"), "hidden");
+}
+
 
 var checkboxArray = new Array();
 
@@ -42,7 +50,8 @@ function showNoResults() {
 function showLoading() {
 	var resultDiv = dojo.byId("resultList");
 	if (resultDiv) {
-		resultDiv.innerHTML = message.get("spatial.loadingHint");
+//		resultDiv.innerHTML = message.get("spatial.loadingHint");
+		resultDiv.innerHTML = "";
 	}	
 }
 
@@ -117,15 +126,14 @@ setResultList = function(topicList)
 }
 
 // This function queries the SNSService for similar location topics
-// TODO Implement!
 findAssociatedLocations = function(topicId) {
 	resetResultDiv();
 	deleteComboboxWidgets();
 	showLoading();
 
 	SNSService.getLocationTopicsById(topicId, {
-		preHook:disableUiElements,
-		postHook:enableUiElements,
+		preHook: function() { showLoadingZone(); disableUiElements(); },
+		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,
 		timeout:0,
 		errorHandler:showError
@@ -141,8 +149,8 @@ findLocationTopics = function() {
 	showLoading();
 
 	SNSService.getLocationTopics(queryTerm, {
-		preHook:disableUiElements,
-		postHook:enableUiElements,
+		preHook: function() { showLoadingZone(); disableUiElements(); },
+		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,
 		timeout:0,
 		errorHandler:showError
@@ -233,7 +241,7 @@ addLocationTopics = function() {
        				<span style="position:relative; float:left; width:292px;">
        					<input type="text" id="locationTextBox" size="20" name="locationTextBox" class="w292" dojoType="ingrid:ValidationTextBox" />
 					</span>
-					<span style="position:relative; float:right;">
+					<span style="float:right;">
        					<button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" id="findLocationTopicsButton" onClick="findLocationTopics">In Geo-Thesaurus suchen</button>
        				</span>
         		</div>
@@ -241,6 +249,11 @@ addLocationTopics = function() {
         		<div>&nbsp</div>
         
         		<span id="resultLabel" class="label" style="visibility:hidden;">Auswahl</span>
+
+				<span id="spatialLoadingZone" style="float:right; z-index: 100; visibility:hidden;">
+					<img src="img/ladekreis.gif" />
+				</span>
+
         		<span class="floatLeft">
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>

@@ -30,6 +30,13 @@ function enableUiElements() {
 	dojo.widget.byId("findTopicButton").enable();
 }
 
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("thesLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("thesLoadingZone"), "hidden");
+}
 
 function showStatus(msg) {
 	var status = dojo.byId("statusText");
@@ -42,8 +49,8 @@ function showStatus(msg) {
 init = function() {
 	// initially load data (first hierachy level) from server 
 	SNSService.getRootTopics({
-		preHook:disableUiElements,
-	  	postHook:enableUiElements,
+		preHook: function() { showLoadingZone(); disableUiElements(); },
+	  	postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:function(res) { showStatus(""); handleRootTopics(res); },
 		timeout:0,
 		errorHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));},
@@ -54,14 +61,14 @@ init = function() {
 	var treeController = dojo.widget.byId("thesTreeController");
 	treeController.loadRemote = function(node, sync) {
 
-		showStatus(message.get("sns.loadingHint"));
+//		showStatus(message.get("sns.loadingHint"));
 
 		var _this = this;
 		var deferred = new dojo.Deferred();
 
 		SNSService.getSubTopics(node.topicId, '2', 'down', {
-  			preHook:disableUiElements,
-  			postHook:enableUiElements,
+			preHook: function() { showLoadingZone(); disableUiElements(); },
+		  	postHook: function() { hideLoadingZone(); enableUiElements(); },
   			callback:function(res) { deferred.callback(res); showStatus("");},
 			timeout:0,
 			errorHandler:function(msg) { dojo.debug(msg); showStatus(message.get("sns.connectionError")); deferred.errback(new dojo.RpcError(msg, this));},
@@ -99,7 +106,7 @@ init = function() {
 */
 
 	// Show initial loading message
-	showStatus(message.get("sns.loadingTopTermsHint"));
+//	showStatus(message.get("sns.loadingTopTermsHint"));
 }
 
 
@@ -189,8 +196,8 @@ function expandToTopicWithId(topicID) {
 	dojo.widget.byId("thesResultTabContainer").selectChild(treePane);
 
 	SNSService.getSubTopicsWithRoot(topicID, '0', 'up', {
-		preHook:disableUiElements,
-	  	postHook:enableUiElements,
+		preHook: function() { showLoadingZone(); disableUiElements(); },
+	  	postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:function(res) {
 			showStatus("");
 			var tree = dojo.widget.byId('thesTree');
@@ -289,45 +296,19 @@ findTopic = function() {
 	dojo.widget.byId("thesResultTabContainer").selectChild(resultPane);
 
 	SNSService.findTopics(queryTerm, {
-		preHook:disableUiElements,
-	  	postHook:enableUiElements,
+		preHook: function() { showLoadingZone(); disableUiElements(); },
+	  	postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:function(result) {
 			if (result) {
 				displaySearchResults(result);
 			} else {
-				showStatus(message.get("sns.noResultHint"));
+//				showStatus(message.get("sns.noResultHint"));
 			}},
 		timeout:0,
 		errorHandler:function(msg) {showStatus(message.get("sns.connectionError"));},
 		exceptionHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
 	});
 
-
-/*
-	showStatus(message.get("sns.processingQueryHint"));
-
-	var queryTerm = dojo.widget.byId('thesSearch').getValue();
-	if (queryTerm != "") {
-		SNSService.findTopic(queryTerm, {
-			preHook:disableUiElements,
-		  	postHook:enableUiElements,
-			callback:function(result) {
-				if (result) {
-					if (result.type == "NON_DESCRIPTOR")
-						showStatus(message.get("sns.noDescriptorHint"));
-					else
-						expandToTopicWithId(result.topicId);
-				} else {
-					showStatus(message.get("sns.noResultHint"));
-				}},
-			timeout:0,
-			errorHandler:function(msg) {showStatus(message.get("sns.connectionError"));},
-			exceptionHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
-		});
-	} else {
-		showStatus("");
-	}
-*/
 };
 
 getNewKey = function(store) {
@@ -446,6 +427,11 @@ acceptTopicList = function() {
          <span class="button w644" style="height:20px !important;">
          	<span style="float:right;"><button dojoType="ingrid:Button" onClick="closeDialog">Abbrechen</button></span>
          	<span style="float:right; padding-right:10px;"><button dojoType="ingrid:Button" id="addSelectedTopicButton" onClick="addSelectedTopic">Hinzuf&uuml;gen</button></span>
+			
+			<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+				<img id="thesImageZone" src="img/ladekreis.gif" />
+			</span>
+			
 			<span id="statusText" style="float:left; padding-top:6px;"></span>
          </span>
   	  </div>
