@@ -34,7 +34,7 @@ function toggleFields(section) {
 			sectionDivId = "contentFrameBodyAddress";
   		}
 
-		dojo.debug("toggle fields in container '" + sectionDivId + "'");
+//		dojo.debug("toggle fields in container '" + sectionDivId + "'");
 		
 		// button on toolbar clicked, toggle all fields on page
 		// only if form is loaded
@@ -51,45 +51,53 @@ function toggleFields(section) {
 	}
 
   // loop over content blocks and hide or show indvidual input containers
-  for (var i=0; i<rootNodes.length; i++)
-  {
-    var currentSection = rootNodes[i];
-    if (currentSection.nodeName == 'DIV')
-    {
-      var contentBlocks = rootNodes[i].childNodes;
-      for (var j=0; j<contentBlocks.length; j++)
-      {
-        if (contentBlocks[j].nodeName == 'DIV' && contentBlocks[j].className == 'content')
-        {
-          var inputContainer = contentBlocks[j].childNodes;
-          for (var k=0; k<inputContainer.length; k++)
-          {
-            if (inputContainer[k].className != undefined && inputContainer[k].className.indexOf('notRequired') != -1)
-            {
-              if (mode == "")
-              {
-                if (inputContainer[k].style.display == "" || inputContainer[k].style.display == "block")
-					dojo.html.setDisplay(inputContainer[k], "none");
-                else
-					dojo.html.setDisplay(inputContainer[k], "block");
-              }
-              else if (mode == 'required')
-					dojo.html.setDisplay(inputContainer[k], "none");
-              else if (mode == 'all')
-					dojo.html.setDisplay(inputContainer[k], "block");
-            }
-          }
-        }
-      }
-      // change toggle button images for sections
-      if (currentSection.getElementsByTagName('img')[0] && currentSection.getElementsByTagName('img')[0].src.indexOf("expand") != -1)
-      {
-        var btnImage = currentSection.getElementsByTagName('img')[0];
-        var link = currentSection.getElementsByTagName('a')[0];
-        toggleButton(btnImage, link, 'blue', mode);
-      }
-    }
-  }
+	for (var i=0; i<rootNodes.length; i++)
+	{
+		var currentSection = rootNodes[i];
+		if (currentSection.nodeName == 'DIV')
+		{
+			var contentBlocks = rootNodes[i].childNodes;
+			for (var j=0; j<contentBlocks.length; j++)
+			{
+				if (contentBlocks[j].nodeName == 'DIV' && contentBlocks[j].className == 'content')
+				{
+					if (mode == "") {
+						contentBlocks[j].isExpanded = !contentBlocks[j].isExpanded;
+					} else if (mode == "required") {
+						contentBlocks[j].isExpanded = false;
+					} else if (mode == "all") {
+						contentBlocks[j].isExpanded = true;
+					}
+
+					var inputContainer = contentBlocks[j].childNodes;
+					for (var k=0; k<inputContainer.length; k++)
+					{
+						if (inputContainer[k].className != undefined && inputContainer[k].className.indexOf('notRequired') != -1)
+						{
+							if (mode == "") {
+								if (inputContainer[k].style.display == "" || inputContainer[k].style.display == "block")
+									inputContainer[k].style.display = "none";
+								else
+									inputContainer[k].style.display = "block";
+							
+							} else if (mode == 'required') {
+								inputContainer[k].style.display = "none";
+							} else if (mode == 'all') {
+								inputContainer[k].style.display = "block";
+							}
+						}
+					}
+				}
+			}
+			// change toggle button images for sections
+			if (currentSection.getElementsByTagName('img')[0] && currentSection.getElementsByTagName('img')[0].src.indexOf("expand") != -1)
+			{
+				var btnImage = currentSection.getElementsByTagName('img')[0];
+				var link = currentSection.getElementsByTagName('a')[0];
+				toggleButton(btnImage, link, 'blue', mode);
+			}
+		}
+	}
 
 
 	// Update all the tabContainers so they are displayed properly
@@ -171,14 +179,20 @@ function setRequiredState(/*html node to (un-)set the required class*/labelNode,
   }
 
   // set the container to required
-  if (containerNode) {
-    if (isRequired) {
-      dojo.html.removeClass(containerNode, "notRequired");
-    }
-    else {
-      dojo.html.addClass(containerNode, "notRequired");
-    }
-  }
+	if (containerNode) {
+		if (isRequired) {
+			dojo.html.removeClass(containerNode, "notRequired");
+		} else {
+			dojo.html.addClass(containerNode, "notRequired");
+		}
+
+		var isExpanded = containerNode.parentNode.isExpanded;
+		if (isExpanded || isRequired) {
+			dojo.html.setDisplay(containerNode, "block");
+		} else {
+			dojo.html.setDisplay(containerNode, "none");
+		}
+	}
 }
 
 /*

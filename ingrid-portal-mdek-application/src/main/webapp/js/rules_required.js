@@ -146,25 +146,11 @@ function applyRule5() {
 
 	var labelNode1 = dojo.byId("spatialRefAdminUnitLabel");
 	var labelNode2 = dojo.byId("spatialRefLocationLabel");
-//	var container1 = dojo.byId("spatialRefAdminUnitContainer");
-//	var container2 = dojo.byId("spatialRefLocationContainer");
+	var container1 = dojo.byId("spatialRefAdminUnitContainer");
+	var container2 = dojo.byId("spatialRefLocationContainer");
 // TODO fix toggleContent() before modifying the container 'required' state. Otherwise we could
 // end up in a situation where 'unrequired' containers are shown when only required containers shoud be displayed.
 
-	if (!snsHasBB && !freeHasBB) {
-//		setRequiredState(labelNode1, container1, true);
-//		setRequiredState(labelNode2, container2, true);
-		setRequiredState(labelNode1, null, true);
-		setRequiredState(labelNode2, null, true);
-	} else if (snsHasBB) {
-//		setRequiredState(labelNode1, container1, true);
-//		setRequiredState(labelNode2, container2, false);
-		setRequiredState(labelNode1, null, true);
-		setRequiredState(labelNode2, null, false);
-	} else if (freeHasBB) {
-//		setRequiredState(labelNode1, container1, false);
-//		setRequiredState(labelNode2, container2, true);
-		setRequiredState(labelNode1, null, false);
-		setRequiredState(labelNode2, null, true);
-	}
+	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
+	setRequiredState(labelNode2, container2, !snsHasBB);
 }

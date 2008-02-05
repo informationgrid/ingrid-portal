@@ -1899,13 +1899,13 @@ function hideSplash(){
 			  </div>
 
 			  <!-- VERSCHLAGWORTUNG //-->
-			  <div id="thesaurus" class="contentBlock">
+			  <div id="adrThesaurus" class="contentBlock">
 			  	<div class="titleBar">
-			  	  <div class="titleIcon"><a href="javascript:toggleFields('thesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+			  	  <div class="titleIcon"><a href="javascript:toggleFields('adrThesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verschlagwortung')">Verschlagwortung</div>
 				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
-				  <div id="thesaurusContent" class="content">
+				  <div id="adrThesaurusContent" class="content">
 				  
 			      <div class="inputContainer notRequired h088">
 			        <span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>

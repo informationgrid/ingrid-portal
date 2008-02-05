@@ -103,6 +103,16 @@ function initForm() {
   if (contentForm) {
     contentForm.initForm();
   }
+
+  // Init the contentBlocks
+  var contentBlockIds = ["generalContent", "ref1Content", "ref2Content", "ref3Content", "ref4Content", "ref5Content",
+  			"spatialRefContent", "timeRefContent", "extraInfoContent", "availabilityContent", "thesaurusContent", "linksContent",
+  			"headerAddressType0Content", "headerAddressType1Content", "headerAddressType2Content", "headerAddressType3Content",
+  			"address", "adrThesaurusContent", "associatedObjContent"];
+
+	dojo.lang.forEach(contentBlockIds, function(divId) {
+		dojo.byId(divId).isExpanded = false;
+	});
 }
 
 
