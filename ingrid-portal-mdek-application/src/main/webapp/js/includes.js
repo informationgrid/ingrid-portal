@@ -26,6 +26,7 @@ dojo.require("ingrid.widget.FilteringTable");
 dojo.require("ingrid.widget.TableContextMenu");
 dojo.require("ingrid.widget.Toolbar");
 dojo.require("ingrid.widget.ValidationTextbox");
+dojo.require("ingrid.widget.RealNumberTextbox");
 dojo.require("ingrid.widget.TabContainer");
 dojo.require("ingrid.widget.Button");
 dojo.require("ingrid.widget.ContextMenu");
