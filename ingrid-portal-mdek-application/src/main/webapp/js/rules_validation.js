@@ -7,9 +7,7 @@
  */
 dojo.addOnLoad(function() {
 	addMinMaxValidation("spatialRefAltMin", "spatialRefAltMax", "Minimum", "Maximum");
-
-//	addMinMaxValidation("longitude1Editor", "longitude2Editor", "L&auml;nge 2", "L&auml;nge 1");
-//	addMinMaxValidation("latitude1Editor", "latitude2Editor", "Breite 2", "Breite 1");
+	addMinMaxDateValidation("timeRefType", "timeRefDate1", "timeRefDate2");
 });
 
 
@@ -48,4 +46,32 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 
 	dojo.event.connect(minWidget, "setValue", maxWidget, "update");
 	dojo.event.connect(maxWidget, "setValue", minWidget, "update");
+}
+
+function addMinMaxDateValidation(typeWidgetId, minWidgetId, maxWidgetId) {
+	var typeWidget = dojo.widget.byId(typeWidgetId);
+	var minWidget = dojo.widget.byId(minWidgetId);
+	var maxWidget = dojo.widget.byId(maxWidgetId);
+
+	var popup = dojo.widget.createWidget("PopupContainer");
+  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.minmax"), "bis", "von");
+
+	validate = function() {
+		var minVal = minWidget.valueNode.value;
+		var maxVal = maxWidget.valueNode.value;
+//		dojo.debug("minVal: "+minVal+" maxVal: "+maxVal);
+
+		if (typeWidget.getValue() == "von" && minVal >= maxVal) {
+			dojo.html.addClass(minWidget.inputNode, "fieldInvalid");
+			dojo.html.addClass(maxWidget.inputNode, "fieldInvalid");
+			popup.open(minWidget.inputNode, minWidget);
+		} else {
+			dojo.html.removeClass(minWidget.inputNode, "fieldInvalid");
+			dojo.html.removeClass(maxWidget.inputNode, "fieldInvalid");
+			popup.close();
+		}
+	}
+
+	dojo.event.connect("after", minWidget, "onValueChanged", validate);
+	dojo.event.connect("after", maxWidget, "onValueChanged", validate);
 }
