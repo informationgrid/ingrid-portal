@@ -242,7 +242,14 @@ function hideSplash(){
 	              <td id="objectClassLabel" class="label col1"><label for="objectClass">Objektklasse</label></td>
 	              <td class="col2">
 	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
-	                <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectClass" name="objectClass" dataUrl="js/data/objectclasses.js" mode="remote" />
+	                <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectClass" name="objectClass">
+	                	<option value="Class0">Organisationseinheit/Fachaufgabe</option>
+	                	<option value="Class1">Geo-Information/Karte</option>
+	                	<option value="Class2">Dokument/Bericht/Literatur</option>
+	                	<option value="Class3">Dienst/Anwendung/Informationssystem</option>
+	                	<option value="Class4">Vorhaben/Projekt/Programm</option>
+	                	<option value="Class5">Datensammlung/Datenbank</option>
+	                </select>
  	              </td>
 	              <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
 	            </tr>
@@ -740,7 +747,16 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref2DocumentType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Dokumententyp')">Dokumententyp</label></span>
-	                  <span class="input spaceBelow"><input dojoType="ingrid:ComboBox" dataUrl="js/data/ref2DocumentType.js" style="width:302px;" id="ref2DocumentType" name="ref2DocumentType" /></span>
+	                  <span class="input spaceBelow">
+	                  	<select dojoType="ingrid:ComboBox" style="width:302px;" id="ref2DocumentType" name="ref2DocumentType">
+	                  	  <option value="1">Aufsatz/Artikel/Tagungsbeitrag</option>
+	                  	  <option value="2">Brosch&uuml;re/Bericht</option>
+	                  	  <option value="3">Zeitschrift</option>
+	                  	  <option value="4">Buch/Monographie/Reihe</option>
+	                  	  <option value="5">Tagungsband/Sammelwerk</option>
+	                  	  <option value="6">Fachgutachten</option>
+	                  	</select>
+	                  </span>
 	                </div>
 	          
 	                <div class="half">
@@ -1099,7 +1115,19 @@ function hideSplash(){
 	                  </span>
 	                  <div id="spatialRefCoordsAdminUnitContent" style="display:block;">
 	                    <div class="w234 left" style="float:left; margin-top:10px;">
-	                    	<div id="spatialRefAdminUnitSelect" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:250px;"></div>
+	                    	<select id="spatialRefAdminUnitSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
+	                    		<option value="GEO84">Bezugssystem WGS84</option>
+	                    		<option value="GEO_BESSEL_POTSDAM">Bezugssystem Bessel/Potsdam</option>
+	                    		<option value="GK2">GK-Abbildung im 2. Meridianstreifen</option>
+	                    		<option value="GK3">GK-Abbildung im 3. Meridianstreifen</option>
+	                    		<option value="GK4">GK-Abbildung im 4. Meridianstreifen</option>
+	                    		<option value="GK5">GK-Abbildung im 5. Meridianstreifen</option>
+	                    		<option value="UTM32W">UTM-32 mit fuehrender Zonenangabe</option>
+	                    		<option value="UTM33W">UTM-33 mit fuehrender Zonenangabe</option>
+	                    		<option value="UTM32S">UTM-32 ohne fuehrender Zonenangabe</option>
+	                    		<option value="UTM33S">UTM-33 ohne fuehrender Zonenangabe</option>
+	                    		<option value="LAMGW">Lambert-Abbildung</option>
+	                    	</select>
 	                    </div>
 
 						<div class="w308">
@@ -1140,9 +1168,6 @@ function hideSplash(){
 	                <div class="tableContainer rows5">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
 	                    <div dojoType="ingrid:ComboBox" toggle="plain" style="width:300px;" listId="1100" id="freeReferencesEditor"></div>
-<!-- 
-	                    <div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/spatialLocation.js" style="width:300px;" widgetId="freeReferencesEditor"></div>
- -->
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude1Editor"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude1Editor"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude2Editor"></div>
@@ -1171,7 +1196,19 @@ function hideSplash(){
 	                    <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 	                  <div id="spatialRefCoordsLocationContent" style="display:block;">
 	                    <div class="w234 left" style="float:left; margin-top:10px;">
-	                    	<div id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:250px;"></div>
+	                    	<select id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
+	                    		<option value="GEO84">Bezugssystem WGS84</option>
+	                    		<option value="GEO_BESSEL_POTSDAM">Bezugssystem Bessel/Potsdam</option>
+	                    		<option value="GK2">GK-Abbildung im 2. Meridianstreifen</option>
+	                    		<option value="GK3">GK-Abbildung im 3. Meridianstreifen</option>
+	                    		<option value="GK4">GK-Abbildung im 4. Meridianstreifen</option>
+	                    		<option value="GK5">GK-Abbildung im 5. Meridianstreifen</option>
+	                    		<option value="UTM32W">UTM-32 mit fuehrender Zonenangabe</option>
+	                    		<option value="UTM33W">UTM-33 mit fuehrender Zonenangabe</option>
+	                    		<option value="UTM32S">UTM-32 ohne fuehrender Zonenangabe</option>
+	                    		<option value="UTM33S">UTM-33 ohne fuehrender Zonenangabe</option>
+	                    		<option value="LAMGW">Lambert-Abbildung</option>
+	                    	</select>
 	                    </div>
 
 						<div class="w308">
@@ -1248,7 +1285,13 @@ function hideSplash(){
 	                  <div id="timeRefRef">
 	                    <span class="entry first">
 	                      <span class="label hidden"><label for="timeRefType">Typ</label></span>
-                		  <span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:61px;" id="timeRefType" dataUrl="js/data/time_ref_type.js" mode="remote" /></span>
+                		  <span class="input">
+                		  	<select dojoType="ingrid:Select" autoComplete="false" style="width:61px;" id="timeRefType">
+                		  	<option value="1">Erstellung</option>
+                		  	<option value="2">Publikation</option>
+                		  	<option value="3">letzte &Auml;nderung</option>
+                		  	</select>
+                		  </span>
 	                    </span>
 	                    <span class="entry">
 	                      <span class="label hidden"><label for="timeRefDate1">Datum 1 [TT.MM.JJJJ]</label></span>
@@ -1824,7 +1867,12 @@ function hideSplash(){
 			          <div id="addressDetails1">
 			            <span class="entry first">
 			              <span class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
-			              <span class="input spaceBelow"><input dojoType="ingrid:Select" dataUrl="js/data/states.js" style="width:43px;" id="addressCountry" name="addressCountry" /></span>
+			              <span class="input spaceBelow">
+			              	<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
+			              		<option value="D">D</option>
+			              		<option value="A">A</option>
+			              	</select>
+			              </span>
 			            </span>
 			            <span class="entry">
 			              <span id="addressZipCodeLabel" class="label required"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 'PLZ')">PLZ*</label></span>
