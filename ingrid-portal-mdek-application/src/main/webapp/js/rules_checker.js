@@ -9,6 +9,8 @@ var headerUiInputElements = ["objectName", "objectClass", "objectOwner"];
 var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
 var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "spatialRefAltMin", "spatialRefAltMax",
 	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
+var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeRefStatus", "timeRefPeriodicity", "timeRefIntervalNum",
+	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
 var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
 var availUiInputElements = ["availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo",
@@ -179,7 +181,8 @@ function checkValidityOfInputElements() {
 
 	if (dojo.lang.every(headerUiInputElements, isValid) && dojo.lang.every(generalUiInputElements, isValid)
 	 && dojo.lang.every(spatialUiInputElements, isValid) && dojo.lang.every(extraUiInputElements, isValid)
-	 && dojo.lang.every(thesUiInputElements, isValid) && dojo.lang.every(this[objectClassStr+"UiInputElements"], isValid)) {
+	 && dojo.lang.every(thesUiInputElements, isValid) && dojo.lang.every(timeUiInputElements, isValid)
+	 && dojo.lang.every(this[objectClassStr+"UiInputElements"], isValid)) {
 		// Object class 0 doesn't have availability information. For all other classes check availability and return
 		if (objectClass != "0") {
 			return dojo.lang.every(availUiInputElements, isValid);

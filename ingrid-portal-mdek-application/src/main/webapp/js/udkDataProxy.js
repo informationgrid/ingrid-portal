@@ -124,6 +124,7 @@ dojo.addOnLoad(function()
 	dojo.lang.forEach(headerUiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(generalUiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(spatialUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(timeUiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(extraUiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(availUiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(thesUiInputElements, _connectWidgetWithDirtyFlag);
@@ -162,6 +163,8 @@ function _connectWidgetWithDirtyFlag(widgetId) {
     	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof dojo.widget.Checkbox) {
     	dojo.event.connect(widget, "onClick", udkDataProxy, "setDirtyFlag");
+	} else if (widget instanceof dojo.widget.DropdownDatePicker) {
+	    dojo.event.connect(widget, "onValueChanged", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof ingrid.widget.ValidationTextbox) {
     	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof ingrid.widget.Select) {
