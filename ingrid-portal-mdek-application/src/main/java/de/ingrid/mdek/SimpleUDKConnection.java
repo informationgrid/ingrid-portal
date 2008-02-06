@@ -150,11 +150,14 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public void canCopyObject(String uuid) {
-		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
 		// Copy is always allowed. Placeholder for future changes
+		return;
+/*
+		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}
+*/
 	}
 
 	public List<String> getPathToObject(String uuid) {
@@ -185,13 +188,16 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public JobInfoBean getRunningJobInfo() {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-
-		IngridDocument response = mdekCaller.getRunningJobInfo(session.getId());
+		IngridDocument response = mdekCaller.getRunningJobInfo(getCurrentSessionId());
 		return extractJobInfoFromResponse(response);
 	}
 
+	public JobInfoBean cancelRunningJob() {
+		IngridDocument response = mdekCaller.cancelRunningJob(getCurrentSessionId());
+		return extractJobInfoFromResponse(response);	
+	}
+
+	
 	// ------------------------ Helper Methods ---------------------------------------
 
 	private ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response) {
@@ -230,8 +236,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	private HashMap<String, Object> extractSingleSimpleObjectFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
-
-		ArrayList<HashMap<String, Object>> nodeList = null;
 
 		if (result != null) {
 			return dataMapper.getSimpleMdekRepresentation(result);

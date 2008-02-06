@@ -202,4 +202,5 @@ public interface EntryService {
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
 	public JobInfoBean getRunningJobInfo();
+	public JobInfoBean cancelRunningJob();
 }

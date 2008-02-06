@@ -4,17 +4,22 @@
 <script type="text/javascript">
 var timer;
 var requestInProgress;
+var cancelJob;
 
 _container_.addOnLoad(function() {
 	dojo.require("dojo.lang.timing.Timer");
 
 	requestInProgress = false;
+	cancelJob = false;
 	timer = new dojo.lang.timing.Timer(1000);	// Timer that generates 'onTick' every second
 
 	timer.onTick = function() {
 		if (requestInProgress)
 			return;
-		else {
+		else if (cancelJob) {
+			this.stop();
+			requestCancelJob();
+		} else {
 			requestInProgress = true;
 			requestJobInfo();
 		}
@@ -31,15 +36,31 @@ _container_.addOnUnload(function() {
 	// If the dialog was cancelled via the dialogs close button
 	// we need to signal an error (cancel action)
 	if (_container_.customParams.resultHandler.fired == -1) {
-		_container_.customParams.resultHandler.errback();
+		requestCancelJob();
 	}
 });
+
+function requestCancelJob() {
+	dojo.debug("cancelling job...");
+	EntryService.cancelRunningJob({
+			callback: function() {
+				dojo.debug("job cancelled.");
+				_container_.customParams.resultHandler.callback("JOB_CANCELLED");
+				_container_.closeWindow();
+			},
+			timeout:10000,
+			errorHandler: function(err) {
+				dojo.debug("error cancelling job.");
+				requestInProgress = false; handleError(err);
+			}
+	});
+}
 
 function requestJobInfo() {
 	EntryService.getRunningJobInfo({
 			callback: handleUpdatedJobInfo,
 			timeout:10000,
-			errorHandler: function(err) { dojo.debug(err); requestInProgress = false; }
+			errorHandler: function(err) { requestInProgress = false; handleError(err); }
 	});
 }
 
@@ -76,6 +97,10 @@ function handleError(err) {
 	_container_.closeWindow();
 }
 
+cancelButtonFunc = function() {
+	cancelJob = true;
+}
+
 </script>
 </head>
 
@@ -92,13 +117,9 @@ function handleError(err) {
 			</div>
 
 			<div dojoType="ProgressBar" id="progressBar" width="310" height="10" class="field grey" />
-<!-- 
-			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
-		        <span style="float:right;"><button dojoType="ingrid:Button" title="Speichern" onClick="yesButtonFunc">Speichern</button></span>
-			</div>
--->
+
 	  	</div>
+        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="cancelButtonFunc">Abbrechen</button></span>
 	</div>
 </div>
 </body>

@@ -45,9 +45,15 @@ initOperationNameInput = function() {
 		var selectWidget = dojo.widget.byId("operationsNameSelect");
 		selectWidget.isValid = function() { return this.getValue() != ""; }
 
-		EntryService.getSysLists([selectWidget.listId], 121, {
+		var listId = 5110;
+		if (serviceType == "1")			// WMS
+			listId = 5110;
+		else if (serviceType == "2")	// WFS
+			listId = 5120;
+
+		EntryService.getSysLists([listId], 121, {
 			callback: function(res) {
-				selectWidget.dataProvider.setData(res[selectWidget.listId]);
+				selectWidget.dataProvider.setData(res[listId]);
 		}});
 		_opNameIsTextInput = false;
 	} else {
@@ -354,7 +360,7 @@ closeDialog = function() {
       <div class="inputContainer field grey fullField noSpaceBelow">
         <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
 		<span class="input">
-			<select dojoType="ingrid:Select" autoComplete="false" class="w616" id="operationsNameSelect" listId="5150" />
+			<select dojoType="ingrid:Select" autoComplete="false" class="w616" id="operationsNameSelect" />
 			<input type="text" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" />
 		</span>
         <div class="spacer"></div>

@@ -94,6 +94,7 @@ public interface DataConnectionInterface {
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 	public CatalogBean getCatalogData();
 	public JobInfoBean getRunningJobInfo();
+	public JobInfoBean cancelRunningJob();
 	
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 }

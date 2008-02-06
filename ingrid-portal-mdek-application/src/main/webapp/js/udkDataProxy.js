@@ -556,9 +556,15 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 				if (err == "Timeout") {
 					var onCopyOpFinishedDef = new dojo.Deferred();
 					// TODO we need to return some information about the copied node!
-					onCopyOpFinishedDef.addCallback(function (res) {onCopyDef.callback(res);});
+					onCopyOpFinishedDef.addCallback(function (res) {
+						if (res == "JOB_CANCELLED") {
+							onCopyDef.callback(null);
+						} else {
+							onCopyDef.callback(res);
+						}
+					});
 					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
-					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 342, 150, true, {resultHandler:onCopyOpFinishedDef});
+					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while copying nodes: " + err);
 					onCopyDef.errback(err);

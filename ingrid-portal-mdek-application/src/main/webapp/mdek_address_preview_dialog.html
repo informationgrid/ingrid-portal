@@ -18,8 +18,10 @@ _container_.addOnLoad(function() {
 
 	displayText += address.name+"<br>";
 	displayText += address.street+"<br>";
+	if (address.pobox)
+		displayText += "Postfach: "+address.pobox+"<br>";
 	if (address.poboxPostalCode)
-		displayText += address.poboxPostalCode+' '+address.city+"<br>";
+		displayText += address.poboxPostalCode+" "+address.city+"<br>";
 	else
 		displayText += address.city+"<br>";
 

@@ -313,6 +313,10 @@ public class EntryServiceImpl implements EntryService {
 	public JobInfoBean getRunningJobInfo() {
 		return dataConnection.getRunningJobInfo();
 	}
+
+	public JobInfoBean cancelRunningJob() {
+		return dataConnection.cancelRunningJob();
+	}
 	
 	
 // ------------------------ Helper Methods ---------------------------------------	

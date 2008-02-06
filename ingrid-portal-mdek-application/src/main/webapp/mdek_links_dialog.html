@@ -30,6 +30,17 @@ var urlUiInputElements = [["linksToName", "linksToNameLabel"],
 						  ["linksToURL", "linksToURLLabel"],
 						  ["linksToDataType", "linksToDataTypeLabel"]];
 
+// All the possible values for the select box
+var referenceMap = [["Basisdaten", "3210"],
+					["Basisdaten", "3345"],
+					["Datengrundlage", "3570"],
+					["Fachliche Grundlage", "3520"],
+					["Herstellungsprozess", "3515"],
+					["Methode / Datengrundlage", "3100"],
+					["Schl\u00fcsselkatalog", "3535"],
+					["Symbolkatalog", "3555"],
+					["Verweis zu Dienst", "5066"]];
+
 
 setDirtyFlag = function() {
 	dirtyFlag = true;
@@ -108,23 +119,16 @@ function getRelationTypeForDisplayValue(dispVal) {
 }
 
 function getDisplayValueForRelationType(relType) {
-	return dojo.widget.byId("linksFromFieldName").getDisplayValueForValue(relType);
+	for (var i = 0; i < referenceMap.length; ++i) {
+		if (referenceMap[i][1] == relType)
+			return referenceMap[i][0];
+	}
+	return -1;
 }
 
 
 // Initialises the 'linksFromFieldName' select box depending on the current obj class and the filter id
 function initReferenceWidget(filter) {
-	// All the possible values for the select box
-	var referenceMap = [["Basisdaten", "3210"],
-						["Basisdaten", "3345"],
-						["Datengrundlage", "3570"],
-						["Fachliche Grundlage", "3520"],
-						["Herstellungsprozess", "3515"],
-						["Methode / Datengrundlage", "3100"],
-						["Schl\u00fcsselkatalog", "3535"],
-						["Symbolkatalog", "3555"],
-						["Verweis zu Dienst", "5066"]];
-
 	var initialValues = [];
 	if (filter) {
 		dojo.lang.forEach(referenceMap, function(item) {

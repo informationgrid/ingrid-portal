@@ -778,7 +778,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			address.setCountryCode((String) tableRow.get(MdekKeys.POSTAL_CODE_OF_COUNTRY));
 			address.setCity((String) tableRow.get(MdekKeys.CITY));
 			address.setPoboxPostalCode((String) tableRow.get(MdekKeys.POST_BOX_POSTAL_CODE));
-			address.setPoboxPostalCode((String) tableRow.get(MdekKeys.POST_BOX));
+			address.setPobox((String) tableRow.get(MdekKeys.POST_BOX));
 			address.setFunction((String) tableRow.get(MdekKeys.FUNCTION));
 			address.setAddressDescription((String) tableRow.get(MdekKeys.ADDRESS_DESCRIPTION));
 			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));

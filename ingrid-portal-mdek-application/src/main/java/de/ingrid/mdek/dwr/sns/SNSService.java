@@ -36,6 +36,7 @@ public class SNSService {
 	private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
     private static final String THESAURUS_LANGUAGE_FILTER = "de";
     private static final int MAX_NUM_RESULTS = 100;
+    private static final int MAX_ANALYZED_WORDS = 1000;
     
     // Settings and language specific values
     private ResourceBundle resourceBundle; 
@@ -294,10 +295,50 @@ public class SNSService {
 	    		resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName()));
 	    	}
 	    }
+	    
 	    return resultList;
     }
 
-	public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
+    public ArrayList<SNSTopic> getSimilarDescriptors(String queryTerm) {
+    	String[] words = queryTerm.split(" ");
+    	ArrayList<SNSTopic> result = new ArrayList<SNSTopic>();
+    	
+    	for (int i = 0; i < words.length; i+=MAX_ANALYZED_WORDS) {
+    		String queryStr = "";
+    		for (int j = i; j < words.length && j < i+MAX_ANALYZED_WORDS; j++)
+    			queryStr += words[j]+" ";
+
+    		result.addAll(getTopicsForText(queryStr));
+    	}
+
+    	return result;
+    }
+
+
+    private ArrayList<SNSTopic> getTopicsForText(String queryTerm) {
+    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	int[] totalSize = new int[] {0};
+	    DetailedTopic[] snsResults = new DetailedTopic[0];
+    	try {
+    		snsResults = snsController.getTopicsForText(queryTerm, MAX_ANALYZED_WORDS, "/thesa", "mdek", THESAURUS_LANGUAGE_FILTER, totalSize, false);
+    	} catch (Exception e) {
+	    	log.error(e);
+	    }
+
+	    totalSize[0] = snsResults.length;
+	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
+	    Topic[] topics = (Topic[]) res.getHits();
+
+	    for (Topic topic : topics) {
+	    	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
+	    		resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName()));
+	    	}
+	    }
+	    return resultList;
+    }
+
+    
+    public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
     	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	TopicMapFragment mapFragment = null;
     	try {
@@ -388,7 +429,7 @@ public class SNSService {
     }
     
     private static void printTopic(Topic t) {
-    	System.out.println("ID: "+t.getTopicID());
+    	System.out.println("Title: "+t.getTitle()+" ID: "+t.getTopicID());
     	
 		List<Topic> succList = t.getSuccessors();
 		if (succList != null && !succList.isEmpty()) {
