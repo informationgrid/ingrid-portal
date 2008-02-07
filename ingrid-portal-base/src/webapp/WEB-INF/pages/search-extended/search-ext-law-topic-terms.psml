@@ -1,0 +1,40 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Search Extended Law</title>
+  <metadata name="title" xml:lang="de">Erweiterte Suche Rechtsvorschriften</metadata>
+
+  <fragment id="search-ext-law-topic-terms-page" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <property layout="TwoColumns" name="row" value="0"/>
+      <property layout="TwoColumns" name="column" value="0"/>
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.extended</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>ext-search-subject-1</value>
+      </preference>
+    </fragment>
+    <fragment id="search-ext-law-topic-terms" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchExtLawTopicTerms">
+      <property layout="TwoColumns" name="row" value="1" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+    <fragment id="search-ext-law-topic-terms-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/search_extended/search_ext_law_topic_terms_info.vm</value>
+      </preference>
+      <preference name="titleKey" readOnly="false">
+        <value>searchExtEnvTopicTerms.info.title</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>
