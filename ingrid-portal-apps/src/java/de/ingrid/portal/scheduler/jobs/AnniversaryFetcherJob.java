@@ -38,8 +38,14 @@ public class AnniversaryFetcherJob implements Job {
      */
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
 
-        insertIntoDB("de");
+        if (log.isDebugEnabled()) {
+        	log.debug("start job: AnniversaryFetcherJob.");
+        }
+    	insertIntoDB("de");
         insertIntoDB("en");
+        if (log.isDebugEnabled()) {
+        	log.debug("finish job: AnniversaryFetcherJob.");
+        }
 
     }
 
@@ -71,13 +77,14 @@ public class AnniversaryFetcherJob implements Job {
                 for (int i = 0; i < details.length; i++) {
                     if ((details[i] instanceof DetailedTopic) && details[i].size() > 0) {
                         DetailedTopic detail = (DetailedTopic) details[i];
-                        log.debug("Anniversary gefunden! (topic:'" + detail.getTopicID() + "', lang:" + lang + ")");
+                        if (log.isDebugEnabled()) {
+                        	log.debug("Anniversary gefunden! (topic:'" + detail.getTopicID() + "', lang:" + lang + ")");
+                        }
                         // check if theis item already exists
                         tx = session.beginTransaction();
                         List anniversaryList = session.createCriteria(IngridAnniversary.class).add(
                                 Restrictions.eq("topicId", detail.getTopicID())).add(
-                                Restrictions.eq("language", lang)).add(
-                                Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
+                                Restrictions.eq("language", lang))
                                 .list();
                         tx.commit();
                         if (anniversaryList.isEmpty()) {
@@ -126,7 +133,7 @@ public class AnniversaryFetcherJob implements Job {
             }
             // remove old entries
             cal.setTime(new Date());
-            cal.add(Calendar.DATE, -1);
+            cal.add(Calendar.DATE, -7);
             tx = session.beginTransaction();
             List deleteEntries = session.createCriteria(IngridAnniversary.class).add(
                     Restrictions.lt("fetchedFor", cal.getTime())).list();

@@ -74,7 +74,6 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
             List anniversaryList = session.createCriteria(IngridAnniversary.class)
                     .add(Restrictions.eq("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH))))
                     .add(Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1)))
-                    .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
                     .add(Restrictions.eq("language", lang))
                     .list();
             tx.commit();
@@ -88,7 +87,6 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
                 anniversaryList = session.createCriteria(IngridAnniversary.class)
                         .add(Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
                         .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4"))
-                        .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
                         .add(Restrictions.eq("language", lang))
                         .list();
                 tx.commit();
@@ -99,7 +97,6 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
 
                     tx = session.beginTransaction();
                     anniversaryList = session.createCriteria(IngridAnniversary.class)
-                            .add(Restrictions.between("fetchedFor", queryDateFrom.getTime(), queryDateTo.getTime()))
                             .add(Restrictions.eq("language", lang))
                             .list();
                     tx.commit();
