@@ -1,0 +1,48 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_law_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_law_topic_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_law_topic_thesaurus.vm')
+		<br />
+        <div class="line"><hr /></div>
+   	    <a name="thesaurus"></a>
+        <div>
+#parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
+              <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.results.title')</h3>
+              <span class="clearer"></span>
+			  <input type="hidden" name="addFromDisplayTree" value="1"/>
+          	  <div>
+            	  <table class="fullwidth">
+#foreach($similarNode in $ps.similarRoot.getChildren())
+	#set ($action = $renderResponse.createActionURL())
+	$action.setParameter('nodeId',$similarNode.id)
+	#if($similarNode.isOpen())
+		$action.setParameter('action','doCloseNode')
+			  <tr>
+				<td class="iconwidth"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	  </tr>
+		#foreach($tokenNode in $similarNode.getChildren())
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter('action','doBrowseFromTree')
+			$action.setParameter('topicID',$tokenNode.get("topicID"))
+          	  <tr>
+          	    <td></td>
+          	    <td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/>&nbsp;&nbsp;<a href="$action">$tokenNode.name</a></td>
+          	  </tr>
+		#end
+	#else
+		$action.setParameter('action','doOpenNode')
+          	  <tr>
+          	    <td class="iconwidth"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a></td>
+          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
+          	  </tr>
+	#end
+#end			  
+            	  </table>
+          	  </div>
+          </div>
+        </div>  
+    </div>
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+  </form>
+</div>    

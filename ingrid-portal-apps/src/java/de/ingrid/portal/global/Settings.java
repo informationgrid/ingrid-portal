@@ -109,10 +109,12 @@ public class Settings {
     public final static String QVALUE_DATATYPE_AREA_ENVINFO = "default";
     public final static String QVALUE_DATATYPE_AREA_ADDRESS = "address";
     public final static String QVALUE_DATATYPE_AREA_RESEARCH = "research";
+	public static final String QVALUE_DATATYPE_AREA_LAW = "law";
     public final static String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
     	QVALUE_DATATYPE_AREA_ENVINFO,
     	QVALUE_DATATYPE_AREA_ADDRESS,
-    	QVALUE_DATATYPE_AREA_RESEARCH
+    	QVALUE_DATATYPE_AREA_RESEARCH,
+    	QVALUE_DATATYPE_AREA_LAW
     };
 
     // datatype: source types
@@ -320,6 +322,7 @@ public class Settings {
     public final static String PARAMV_DATASOURCE_ENVINFO = "1";
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
+	public final static String PARAMV_DATASOURCE_LAW = "4";
 
     // GROUPING VALUES
     public final static String PARAMV_GROUPING_OFF = "none";
@@ -370,9 +373,6 @@ public class Settings {
     // ------------- Session keys for direct HTTP session manipulation -------------------------
     
     public static final String SESSION_LOGIN_STARTED = "session_started";
-
-
-
 
 
 

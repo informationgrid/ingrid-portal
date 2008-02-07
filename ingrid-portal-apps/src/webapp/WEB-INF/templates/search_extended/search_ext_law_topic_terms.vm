@@ -1,0 +1,5 @@
+  <div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_law_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_law_topic_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_law_topic_terms.vm')
+  </div>    

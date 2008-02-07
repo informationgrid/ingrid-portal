@@ -729,6 +729,9 @@ public class UtilsSearch {
 
             } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
             	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_RESEARCH;
+            
+            } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW)) {
+            	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_LAW;
             }        	
         }
 
@@ -741,7 +744,7 @@ public class UtilsSearch {
     /**
      * Compares current datasource in GUI (selected search area above query input) with the entered
      * datatypes. Returns the final PORTAL datasource according to input and selection. 
-     * @param currentPortalDS selection in GUI ("envinfo", "address", "research")
+     * @param currentPortalDS selection in GUI ("envinfo", "address", "research", "law")
      * @param q the entered IngridQuery
      * @return the final datasource
      */

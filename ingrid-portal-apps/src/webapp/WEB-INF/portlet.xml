@@ -1730,4 +1730,70 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
+    <portlet id="SearchExtLawTopicTerms">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_law_topic_terms.vm</value>
+        </init-param>
+        <portlet-name>SearchExtLawTopicTerms</portlet-name>
+        <display-name>ErweiterteSucheRechtThemaSuchbegriffe</display-name>
+        <description>This portlet handles the input of the terms in the extended search for law.</description>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtLawTopicTermsPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>RechtThemaSuchbegriffe</title>
+            <short-title>LawTopicTerms</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
+    <portlet id="SearchExtLawTopicThesaurus">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_law_topic_thesaurus.vm</value>
+        </init-param>
+        <portlet-name>SearchExtLawTopicThesaurus</portlet-name>
+        <display-name>ErweiterteSucheRechtThemaFachwoerterbuch</display-name>
+        <description>This portlet handles the input of the thesaurus terms in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtLawTopicThesaurusPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>ThemaFachwoerterbuch</title>
+            <short-title>TopicThesaurus</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle>
+    </portlet>
+    
+    <portlet id="SearchLawEnvAreaPartner">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_extended/search_ext_law_area_partner.vm</value>
+        </init-param>
+        <portlet-name>SearchExtLawAreaPartner</portlet-name>
+        <display-name>ErweiterteSucheRechtSuchbereichBundLaender</display-name>
+        <description>This portlet handles the input of the "law"/"searcharea"/"partner" fragment in the extended search.</description>
+        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtLawAreaPartnerPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>RechtSuchbereichBundLaender</title>
+            <short-title>LawAreaPartner</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
+
 </portlet-app>

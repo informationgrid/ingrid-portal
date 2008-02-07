@@ -1,0 +1,72 @@
+<div class="section">    
+#parse ('/WEB-INF/templates/search_extended/include_law_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_law_topic_tabs.vm')
+#parse ('/WEB-INF/templates/search_extended/include_law_topic_thesaurus.vm')
+<input type="hidden" name="list_size" value="$list_size"/>
+<input type="hidden" name="addFromAssociatedTopics" value="1"/>
+            <br />
+            <div class="line"><hr /></div>
+            <div>
+#parse ('/WEB-INF/templates/search_extended/include_snsLogo.vm')
+              <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.keyword')</h3>
+			#set($cnt = 0)
+              <p><input type="checkbox" name="chk_$cnt" value="$current_topic.topicName" />&nbsp;$current_topic.topicName</p>
+			#set($cnt = $cnt + 1)
+              <span class="clearer"></span>
+            </div>
+#set ($action = $renderResponse.createActionURL())
+#if($synonymAssoc.size() > 0)
+$action.setParameter('action','doSynonym')
+            <h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.synonyms')</h3>
+	        <p>
+			#foreach($topic in $synonymAssoc)
+				$action.setParameter('topicID',$topic.get("topicID"))
+				$action.setParameter('plugID',$topic.getPlugId())
+				$action.setParameter('docID',"$topic.getDocumentId()")
+                <input type="checkbox" name="chk_$cnt" value="$topic.topicName" />&nbsp;<a href="$action">$topic.topicName</a><br />
+				#set($cnt = $cnt + 1)
+			#end
+            </p>
+#end
+$action.setParameter('action','doBrowse')
+#if($widerTermAssoc.size() > 0)
+			<h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.super')</h3>
+            <p>
+			#foreach($topic in $widerTermAssoc)
+				$action.setParameter('topicID',$topic.get("topicID"))
+				$action.setParameter('plugID',$topic.getPlugId())
+				$action.setParameter('docID',"$topic.getDocumentId()")
+                <input type="checkbox" name="chk_$cnt" value="$topic.topicName" />&nbsp;<a href="$action">$topic.topicName</a><br />
+				#set($cnt = $cnt + 1)
+			#end
+            </p>
+#end
+#if($narrowerTermAssoc.size() > 0)
+			<h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.sub')</h3>
+            <p>
+			#foreach($topic in $narrowerTermAssoc)
+				$action.setParameter('topicID',$topic.get("topicID"))
+				$action.setParameter('plugID',$topic.getPlugId())
+				$action.setParameter('docID',"$topic.getDocumentId()")
+                <input type="checkbox" name="chk_$cnt" value="$topic.topicName" />&nbsp;<a href="$action">$topic.topicName</a><br />
+				#set($cnt = $cnt + 1)
+			#end
+            </p>
+#end
+#if($relatedTermsAssoc.size() > 0)
+			<h3>$MESSAGES.getString('searchExtEnvTopicThesaurus.browse.related')</h3>
+            <p>
+			#foreach($topic in $relatedTermsAssoc)
+				$action.setParameter('topicID',$topic.get("topicID"))
+				$action.setParameter('plugID',$topic.getPlugId())
+				$action.setParameter('docID',"$topic.getDocumentId()")
+                <input type="checkbox" name="chk_$cnt" value="$topic.topicName" />&nbsp;<a href="$action">$topic.topicName</a><br />
+				#set($cnt = $cnt + 1)
+			#end
+            </p>
+#end
+          </div>
+      </div>
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+  </form>
+</div>    

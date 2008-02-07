@@ -179,6 +179,7 @@
                     <li>Umweltinformationen: behördliche Informationen zur Umwelt</li>
                     <li>Adressen: Zuständigkeiten</li>
                     <li>Forschungsprojekte: Projekte zur Umweltforschung</li>
+                    <li>Rechtsvorschriften: Informationen zu rechtsrelevanten Themen</li>
                 </ul>
             </content>
         </section>
@@ -200,6 +201,11 @@
                         <a
                             href="help.psml?hkey=ext-search-research-1">Erweiterte
                             Suche nach Forschungsprojekten</a>
+                    </li>
+                    <li>
+                        <a
+                            href="help.psml?hkey=ext-search-law-1">Erweiterte
+                            Suche nach Rechtsvorschriften</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-history-1">Suchhistorie</a>
@@ -1169,6 +1175,62 @@
                     beschränkt, die eine Suche in dem jeweiligen Attribut
                     unterstützen. Sie schränken den Suchraum dadurch ggf.
                     erheblich ein.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Erweiterte Suche nach Rechtsvorschriften</header>
+        <section help-key="ext-search-law-1">
+            <header>Suchbegriffe</header>
+            <content>
+                <p>In diesem Bereich können Sie gezielt einen oder mehrere
+                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, in dem Sie
+                    sie mit einer der folgenden Optionen verknüpfen:</p>
+                <p>
+                    <b>all diese Begriffe (UND)</b> eine Information wird
+                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
+                <p>
+                    <b>einen dieser Begriffe (ODER)</b> eine Information wird
+                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
+                    Begriffe enthält.</p>
+                <p>
+                    <b>genau diese Wortgruppe:</b> eine Information wird
+                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
+                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
+                <p>
+                    <b>keinen dieser Begriffe:</b> eine Information wird nur
+                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
+                    Begriffe enthält.</p>
+            </content>
+        </section>
+        <section help-key="ext-search-law-2">
+            <header>Fachwörterbuch</header>
+            <content>
+                <p>Über das Fachwörterbuch können Sie Ihrem Suchausdruck
+                    Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
+                    Begriff in das Eingabefeld ein und senden eine Anfrage an
+                    den <a href="help.psml?hkey=ext-search-subject-3#ext-search-subject-3">Thesaurus</a> ab.</p>
+                <p>Sie erhalten dann eine Reihe <a
+                        href="help.psml?hkey=ext-search-subject-5#ext-search-subject-5">ähnlicher Begriffe</a>, die
+                    Sie dem Suchausdruck hinzufügen können oder über deren
+                    Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
+            </content>
+        </section>
+        <section help-key="ext-search-law-3">
+            <header>Suchbereich - Bund/Länder</header>
+            <content>
+                <p>Die Datenangebote in PortalU stammen von Behörden und
+                    behördennahen Organisationen aus Bund und Ländern der
+                    Bundesrepublik Deutschland. Sie können für Ihre Suche das
+                    Angebot auf den Bund oder einzelne Länder einschränken. Eine
+                    Mehrfachauswahl ist dabei möglich.</p>
+                <p>Der Bund und auch die meisten Länder haben mehrere
+                    Datenanbieter. Diese werden angezeigt wenn Sie auf das
+                    Pluszeichen <img border="0" width="9" height="9"
+                        src="../decorations/layout/ingrid-help/images/image018.jpg"
+                    alt="*"/> klicken. Anstatt des Bundes oder eines Landes
+                    können auch einzelne Anbieter ausgewählt werden. Auch in
+                    diesem Fall ist eine Mehrfachauswahl möglich.</p>
             </content>
         </section>
     </chapter>

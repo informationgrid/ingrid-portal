@@ -1,0 +1,31 @@
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" name="partner" id="extsearch">
+      <div class="formbody">
+          <p>$MESSAGES.getString('searchExtEnvAreaPartner.explanation')</p>
+          <div class="innerform">
+#foreach($partnerNode in $partnerRoot.getChildren())
+	#if($partnerNode.getChildren().size() > 0)
+    	$action.setParameter('id',"$partnerNode.id")		
+    	#if($partnerNode.isOpen())
+    		$action.setParameter('action','doClosePartner')
+    		<p>
+    			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox" onclick="javascript:adaptProviderNodes('chk_$partnerNode.id', 'partner')" /><label for="$partnerNode.id">$partnerNode.name</label>
+            </p>
+    		#foreach($providerNode in $partnerNode.getChildren())
+    			$action.setParameter('id',"$providerNode.id")		
+                <p style="margin-left:4.5em">
+                  <input id="$providerNode.id" name="chk_$providerNode.id" type="checkbox" onclick="javascript:adaptPartnerNode('chk_$providerNode.id', 'partner')" /><label for="$providerNode.id">$providerNode.name</label>
+                </p>
+    		#end
+    	#else
+    		$action.setParameter('action','doOpenPartner')		
+            <p>
+            	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<input id="$partnerNode.id" name="chk_$partnerNode.id" type="checkbox" /><label for="$partnerNode.id">$partnerNode.name</label>
+            </p>
+		#end
+	#end
+#end
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+    </form>

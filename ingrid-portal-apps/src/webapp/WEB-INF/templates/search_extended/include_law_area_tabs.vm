@@ -1,0 +1,17 @@
+      <div class="tabmenu">
+        <ul>
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeTab')
+## only display tab if no partner restriction was defined
+#if(!$displayProviders)
+#if($enablePartner)
+#if($subtab=='7')
+          <li><a class="selected">$MESSAGES.getString('searchExtEnvAreaPartner.title')</a></li>
+#else
+$action.setParameter('tab','7')
+          <li><a href="$action">$MESSAGES.getString('searchExtEnvAreaPartner.title')</a></li>
+#end
+#end
+#end
+        </ul>
+      </div>

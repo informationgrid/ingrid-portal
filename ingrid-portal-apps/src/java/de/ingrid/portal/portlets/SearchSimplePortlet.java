@@ -115,6 +115,12 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      */
     private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-attributes.psml";
 
+    /**
+     * main extended search page for datasource "law" -> law:
+     * topic/attributes
+     */
+    private final static String PAGE_SEARCH_EXT_LAW = "/ingrid-portal/portal/search-extended/search-ext-law-topic-terms.psml";
+    
     /*
      * (non-Javadoc)
      * 
@@ -307,7 +313,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 PortalConfig.PORTAL_ENABLE_DATASOURCE_RESEARCH, Boolean.TRUE));
         context.put("enableDatasourceAddresses", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_DATASOURCE_ADDRESSES, Boolean.TRUE));
-
+        context.put("enableDatasourceLaws", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_DATASOURCE_LAWS, Boolean.TRUE));
+        
         super.doView(request, response);
     }
 
@@ -390,6 +398,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                     actionResponse.sendRedirect(PAGE_SEARCH_EXT_ADR);
                 } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
                     actionResponse.sendRedirect(PAGE_SEARCH_EXT_RES);
+                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
+                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_LAW);
                 }
             }
 
@@ -410,6 +420,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 actionResponse.sendRedirect(PAGE_SEARCH_EXT_ADR);
             } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
                 actionResponse.sendRedirect(PAGE_SEARCH_EXT_RES);
+            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
+                actionResponse.sendRedirect(PAGE_SEARCH_EXT_LAW);
             }
         }
     }

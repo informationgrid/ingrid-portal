@@ -5,7 +5,7 @@ $action.setParameter('action','doSearch')
     <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
     	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
-		<p class="datasource_selection">
+		<p class="datasource_selection" style="font-size: 65%;">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doChangeDS')
 #if($ds=="1")
@@ -15,7 +15,7 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
 #if($enableDatasourceAddresses)
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
 #if($ds=="2")
 	<strong>$MESSAGES.getString('searchSimple.area.addresses')</strong>
 #else
@@ -24,12 +24,21 @@ $action.setParameter('action','doChangeDS')
 #end
 #end
 #if($enableDatasourceResearch)
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
 #if($ds=="3")
 	<strong>$MESSAGES.getString('searchSimple.area.research')</strong>
 #else
     $action.setParameter('ds','3')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.research')</a>	
+#end
+#end
+#if($enableDatasourceLaws)
+&nbsp;
+#if($ds=="4")
+	<strong>$MESSAGES.getString('searchSimple.area.laws')</strong>
+#else
+    $action.setParameter('ds','4')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.laws')</a>	
 #end
 #end
     	</p>
