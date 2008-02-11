@@ -27,25 +27,25 @@ public class UtilsSecurity {
 
     private final static Log log = LogFactory.getLog(UtilsSecurity.class);
 
-    public final static IngridPortalPermission ADMIN_INGRID_PORTAL_PERMISSION = new IngridPortalPermission("admin");
+    public final static IngridPortalPermission ADMIN_INGRID_PORTAL_PERMISSION = new IngridPortalPermission("admin", "*");
 
     public final static IngridPortalPermission ADMIN_PORTAL_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
-            "admin.portal");
+            "admin.portal", "*");
 
     public final static IngridPortalPermission ADMIN_PORTAL_STAR_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
-            "admin.portal.*");
+            "admin.portal.*", "*");
 
     public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
-            "admin.portal.partner");
+            "admin.portal.partner", "*");
 
     public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_STAR_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
-            "admin.portal.partner.*");
+            "admin.portal.partner.*", "*");
 
     public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
-            "admin.portal.partner.provider.index");
+            "admin.portal.partner.provider.index", "*");
 
     public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
-            "admin.portal.partner.provider.catalog");
+            "admin.portal.partner.provider.catalog", "*");
 
     /**
      * Extracts partner ids from the given permissions. Return all partners for
