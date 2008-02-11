@@ -3,8 +3,6 @@
  */
 package de.ingrid.mdek.dwr.api;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -195,12 +193,21 @@ public interface EntryService {
 	// Returns a list containing all the node ids from the root object to the node with id 'targetUuid'
 	public List<String> getPathToObject(String targetUuid);
 
-	// TODO add return type when the method is implemented in MdekCaller
-	public void canCutObject(String parentUuid);
-	// TODO add return type when the method is implemented in MdekCaller
-	public void canCopyObject(String parentUuid);
+	// Queries if a node can be cut
+	public boolean canCutObject(String parentUuid);
+
+	// Queries if a node can be copied
+	public boolean canCopyObject(String parentUuid);
+
+	// Fetch sys lists from the backend
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
+
+	// Fetch Catalog Data
 	public CatalogBean getCatalogData();
+
+	// Fetch info about a running job
 	public JobInfoBean getRunningJobInfo();
+
+	// Cancel a running job
 	public JobInfoBean cancelRunningJob();
 }

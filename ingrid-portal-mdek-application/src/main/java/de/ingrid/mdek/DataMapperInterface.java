@@ -16,13 +16,18 @@ import de.ingrid.mdek.dwr.MdekDataBean;
 public interface DataMapperInterface {
 
 	// TODO Change return type to MdekDataBean?
-	public HashMap<String, Object> getSimpleMdekRepresentation(Object obj);
-	public MdekDataBean getDetailedMdekRepresentation(Object obj);
+	public HashMap<String, Object> getSimpleObjectRepresentation(Object obj);
+	public MdekDataBean getDetailedObjectRepresentation(Object obj);
 
 	// We return an Object since we don't know all the possible target types in advance 
-	public Object convertFromMdekRepresentation(MdekDataBean data);
+	public Object convertFromObjectRepresentation(MdekDataBean data);
 
-	
+	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj);
+/*
+	public MdekAddressBean getDetailedAddressRepresentation(Object obj);
+	public Object convertFromAddressRepresentation(MdekAddressBean data);
+*/
+
 	// Miscellaneous
 	public final static String MDEK_OBJECT_ID = "id";
 	public final static String MDEK_OBJECT_HAS_CHILDREN = "isFolder";

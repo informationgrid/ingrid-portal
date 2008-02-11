@@ -37,6 +37,7 @@ public class SNSService {
     private static final String THESAURUS_LANGUAGE_FILTER = "de";
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
+    private static final int SNS_TIMEOUT = 30000;
     
     // Settings and language specific values
     private ResourceBundle resourceBundle; 
@@ -52,7 +53,8 @@ public class SNSService {
     			resourceBundle.getString("sns.password"),
     			resourceBundle.getString("sns.language"),
         		new URL(resourceBundle.getString("sns.serviceURL")));
-        snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
+    	snsClient.setTimeout(SNS_TIMEOUT);
+    	snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
     }
 	
     public ArrayList<SNSTopic> getRootTopics() {
@@ -308,6 +310,7 @@ public class SNSService {
     		for (int j = i; j < words.length && j < i+MAX_ANALYZED_WORDS; j++)
     			queryStr += words[j]+" ";
 
+        	log.debug("sns query for words starting at: "+i);
     		result.addAll(getTopicsForText(queryStr));
     	}
 
@@ -322,7 +325,7 @@ public class SNSService {
     	try {
     		snsResults = snsController.getTopicsForText(queryTerm, MAX_ANALYZED_WORDS, "/thesa", "mdek", THESAURUS_LANGUAGE_FILTER, totalSize, false);
     	} catch (Exception e) {
-	    	log.error(e);
+	    	log.error("Error calling snsController.getTopicsForText", e);
 	    }
 
 	    totalSize[0] = snsResults.length;

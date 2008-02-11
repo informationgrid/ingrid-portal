@@ -1,13 +1,11 @@
 package de.ingrid.mdek;
 
-import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,7 +28,6 @@ import de.ingrid.mdek.dwr.ScaleBean;
 import de.ingrid.mdek.dwr.TimeReferenceBean;
 import de.ingrid.mdek.dwr.UrlBean;
 import de.ingrid.mdek.dwr.VectorFormatDetailsBean;
-import de.ingrid.mdek.dwr.sns.SNSLocationTopic;
 import de.ingrid.mdek.dwr.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
 
@@ -40,22 +37,29 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 	
 	// -- Dispatch to the local private methods --
-	public MdekDataBean getDetailedMdekRepresentation(Object obj) {
+	public MdekDataBean getDetailedObjectRepresentation(Object obj) {
 		if (obj instanceof HashMap)
-			return getDetailedMdekRepresentation((HashMap<String, Object>) obj);
+			return getDetailedObjectRepresentation((HashMap<String, Object>) obj);
 		else
 			return null;		
 	}
-	public HashMap<String, Object> getSimpleMdekRepresentation(Object obj) {
+	public HashMap<String, Object> getSimpleObjectRepresentation(Object obj) {
 		if (obj instanceof HashMap)
-			return getSimpleMdekRepresentation((HashMap<String, Object>) obj);
+			return getSimpleObjectRepresentation((HashMap<String, Object>) obj);
+		else
+			return null;
+	}
+
+	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj) {
+		if (obj instanceof HashMap)
+			return getSimpleAddressRepresentation((HashMap<String, Object>) obj);
 		else
 			return null;
 	}
 	// --
 
 
-	private static MdekDataBean getDetailedMdekRepresentation(
+	private static MdekDataBean getDetailedObjectRepresentation(
 			HashMap<String, Object> obj) {
 
 		// by default, assertions are disabled at runtime.
@@ -275,13 +279,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekObj.setNodeAppType("O");
 		
-		String nodeDocType = getNodeDocType(obj);
+		String nodeDocType = getObjectDocType(obj);
 		mdekObj.setNodeDocType(nodeDocType);
 
 		return mdekObj;
 	}
 	
-	private static String getNodeDocType(Map<String, Object> obj) {
+	private static String getObjectDocType(Map<String, Object> obj) {
 		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
 		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
 		// If workState... nodeDocType += "_"+workState ?		
@@ -295,7 +299,39 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return nodeDocType;
 	}
 
-	private HashMap<String, Object> getSimpleMdekRepresentation(
+	private static String getAddressDocType(Map<String, Object> adr) {
+		String nodeDocType = null;
+		switch ((Integer) adr.get(MdekKeys.CLASS)) {
+		case 0:
+			nodeDocType = "Institution";
+			break;
+		case 1:
+			nodeDocType = "InstitutionUnit";
+			break;
+		case 2:
+			nodeDocType = "InstitutionPerson";
+			break;
+		case 3:
+			nodeDocType = "PersonAddress";
+			break;
+		default:
+			nodeDocType = "Institution";
+			break;
+		}
+
+		String workState = (String) adr.get(MdekKeys.WORK_STATE); 
+		// If workState... nodeDocType += "_"+workState ?		
+		if (workState != null && workState.equalsIgnoreCase("B")) {
+			if (adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED)) {
+				nodeDocType += "_BV";
+			} else {
+				nodeDocType += "_B";
+			}
+		}
+		return nodeDocType;
+	}
+
+	private HashMap<String, Object> getSimpleObjectRepresentation(
 			HashMap<String, Object> obj) {
 		
 		// by default, assertions are disabled at runtime.
@@ -312,13 +348,48 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.put(MDEK_OBJECT_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
-		String nodeDocType = getNodeDocType(obj);
+		String nodeDocType = getObjectDocType(obj);
 		mdekObj.put(MDEK_OBJECT_DOCTYPE, nodeDocType);
 
 		return mdekObj;
 	}
 
-	public Object convertFromMdekRepresentation(MdekDataBean data){
+	private HashMap<String, Object> getSimpleAddressRepresentation(
+			HashMap<String, Object> adr) {
+		
+		// by default, assertions are disabled at runtime.
+		// Start the server with -ea to enable this method call
+//		try { assert testSimpleInputConformity(adr); }
+//		catch (AssertionError e) { e.printStackTrace(); }
+
+		HashMap<String, Object> mdekAdr = new HashMap<String, Object>();
+
+		mdekAdr.put(MDEK_OBJECT_ID, adr.get(MdekKeys.UUID));
+		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
+		mdekAdr.put(MDEK_OBJECT_CLASS, adrClass);
+		if (adrClass == 0 || adrClass == 1)
+			mdekAdr.put(MDEK_OBJECT_TITLE, adr.get(MdekKeys.ORGANISATION));
+		else {
+			String title = "";
+			title += adr.get(MdekKeys.NAME);
+			if (adr.get(MdekKeys.GIVEN_NAME) != null)
+				title += ", "+adr.get(MdekKeys.GIVEN_NAME);
+			if (adr.get(MdekKeys.ORGANISATION) != null)
+				title += " ("+adr.get(MdekKeys.ORGANISATION)+")";
+			mdekAdr.put(MDEK_OBJECT_TITLE, title);
+		}
+
+		mdekAdr.put(MDEK_OBJECT_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
+		mdekAdr.put(MDEK_OBJECT_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
+		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
+		String adrDocType = getAddressDocType(adr);
+		mdekAdr.put(MDEK_OBJECT_DOCTYPE, adrDocType);
+
+		return mdekAdr;
+	}
+
+	
+	public Object convertFromObjectRepresentation(MdekDataBean data){
 		IngridDocument udkObj = new IngridDocument();
 
 		// General
@@ -497,7 +568,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		SimpleMdekMapper m = new SimpleMdekMapper();
 
 		for (MdekDataBean obj : objList) {
-			IngridDocument mappedEntry = (IngridDocument) m.convertFromMdekRepresentation(obj);
+			IngridDocument mappedEntry = (IngridDocument) m.convertFromObjectRepresentation(obj);
 			resultList.add(mappedEntry);
 		}
 
@@ -822,7 +893,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			return resultList;
 
 		for (HashMap<String, Object> obj : objList) {
-			resultList.add(getDetailedMdekRepresentation(obj));
+			resultList.add(getDetailedObjectRepresentation(obj));
 		}
 		return resultList;
 	}

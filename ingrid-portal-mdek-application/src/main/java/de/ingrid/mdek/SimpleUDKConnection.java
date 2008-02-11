@@ -11,15 +11,12 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
-import org.directwebremoting.ScriptBuffer;
-import org.directwebremoting.ScriptSession;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
-import de.ingrid.mdek.IMdekCaller.Quantity;
-import de.ingrid.mdek.MdekErrors.MdekError;
+import de.ingrid.mdek.IMdekCallerCommon.Quantity;
+import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
@@ -56,15 +53,14 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		this.dataMapper = dataMapper;
 	}
 
-	public MdekDataBean getNodeDetail(String uuid) {
+	public MdekDataBean getObjectDetail(String uuid) {
 		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootAddresses() {
-		// IngridDocument response = mdekCaller.fetchTopAddresses();
-		// return extractAddressesFromResponse(response);
-		return null;
+		IngridDocument response = mdekCaller.fetchTopAddresses(getCurrentSessionId(), false);
+		return extractAddressesFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
@@ -78,9 +74,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth) {
-		// IngridDocument response = mdekCaller.fetchSubAddresses(uuid);
-		// return extractObjectsFromResponse(response);
-		return null;
+		IngridDocument response = mdekCaller.fetchSubAddresses(uuid, getCurrentSessionId());
+		return extractAddressesFromResponse(response);
 	}
 
 	public MdekDataBean getInitialObject(String parentUuid) {
@@ -91,8 +86,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 	
-	public MdekDataBean saveNode(MdekDataBean data) {
-		IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
+	public MdekDataBean saveObject(MdekDataBean data) {
+		IngridDocument obj = (IngridDocument) dataMapper.convertFromObjectRepresentation(data);
 
 		// Handle store of a new node. Should this be handled by the
 		// EntryService?
@@ -108,8 +103,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 
-	public MdekDataBean publishNode(MdekDataBean data, boolean forcePublicationCondition) {
-	IngridDocument obj = (IngridDocument) dataMapper.convertFromMdekRepresentation(data);
+	public MdekDataBean publishObject(MdekDataBean data, boolean forcePublicationCondition) {
+	IngridDocument obj = (IngridDocument) dataMapper.convertFromObjectRepresentation(data);
 
 	if (data.getUuid().equalsIgnoreCase("newNode")) {
 		obj.remove(MdekKeys.UUID);
@@ -135,7 +130,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
 	}
 
-	public void canCutObject(String uuid) {
+	public boolean canCutObject(String uuid) {
 		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
@@ -147,11 +142,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 				throw new MdekException(MdekError.SUBTREE_HAS_WORKING_COPIES);
 			}
 		}
+		return true;
 	}
 
-	public void canCopyObject(String uuid) {
+	public boolean canCopyObject(String uuid) {
 		// Copy is always allowed. Placeholder for future changes
-		return;
+		return true;
 /*
 		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
@@ -209,7 +205,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			nodeList = new ArrayList<HashMap<String, Object>>();
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			for (IngridDocument objEntity : objs) {
-				nodeList.add(dataMapper.getSimpleMdekRepresentation(objEntity));
+				nodeList.add(dataMapper.getSimpleObjectRepresentation(objEntity));
 			}
 		} else {
 			handleError(response);
@@ -226,7 +222,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			nodeList = new ArrayList<HashMap<String, Object>>();
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
 			for (IngridDocument adrEntity : adrs) {
-				nodeList.add(dataMapper.getSimpleMdekRepresentation(adrEntity));
+				nodeList.add(dataMapper.getSimpleAddressRepresentation(adrEntity));
 			}
 		} else {
 			handleError(response);
@@ -238,7 +234,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
 		if (result != null) {
-			return dataMapper.getSimpleMdekRepresentation(result);
+			return dataMapper.getSimpleObjectRepresentation(result);
 		} else {
 			handleError(response);
 			return null;
@@ -249,7 +245,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
 		if (result != null) {
-			return dataMapper.getDetailedMdekRepresentation(result);
+			return dataMapper.getDetailedObjectRepresentation(result);
 		} else {
 			handleError(response);
 			return null;

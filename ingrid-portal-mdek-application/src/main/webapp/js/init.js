@@ -49,6 +49,7 @@ dojo.addOnLoad(function()
   var deferred = initCatalogData();
   deferred.addCallback(initSysLists);
   hideSplash();
+  udkDataProxy.resetDirtyFlag();
 });
 
 

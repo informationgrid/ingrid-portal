@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.DataConnectionInterface;
 import de.ingrid.mdek.MdekException;
-import de.ingrid.mdek.MdekErrors.MdekError;
+import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.api.EntryService;
 
 
@@ -40,6 +40,13 @@ public class EntryServiceImpl implements EntryService {
 	private final static String OBJECT_APPTYPE = "O";
 
 
+	private final static String ADDRESS_ROOT = "addressRoot"; 
+	private final static String ADDRESS_ROOT_NAME = "Adressen";
+	private final static String ADDRESS_ROOT_DOCTYPE = "Addresses";
+	private final static String ADDRESS_INITIAL_DOCTYPE = "Institution_B";
+	private final static String ADDRESS_APPTYPE = "A";
+
+	
 	public DataConnectionInterface getDataConnection() {
 		return dataConnection;
 	}
@@ -61,7 +68,7 @@ public class EntryServiceImpl implements EntryService {
 		try {
 			Map<String, Object> copyResult = dataConnection.copyObject(nodeUuid, dstNodeUuid, includeChildren);
 			if (copyResult != null) {
-				return addTreeNodeInfo(copyResult);
+				return addTreeNodeObjectInfo(copyResult);
 			} else {
 				return null;
 			}
@@ -98,7 +105,7 @@ public class EntryServiceImpl implements EntryService {
 		try {
 			boolean wasFullyDeleted = dataConnection.deleteObjectWorkingCopy(uuid);
 			if (!wasFullyDeleted) {
-				return dataConnection.getNodeDetail(uuid);
+				return dataConnection.getObjectDetail(uuid);
 			}
 		} catch (Exception e) {
 			log.error("Error deleting working Copy.", e);
@@ -129,7 +136,7 @@ public class EntryServiceImpl implements EntryService {
 		MdekDataBean data = null; 
 
 		try {
-			data = dataConnection.getNodeDetail(nodeUuid);
+			data = dataConnection.getObjectDetail(nodeUuid);
 		} catch (Exception e) {
 			log.error("Error while getting node data.", e);
 		}
@@ -189,18 +196,35 @@ public class EntryServiceImpl implements EntryService {
 			return createTree();
 		}
 
-		ArrayList<HashMap<String, Object>> subObjects = null; 
-		
-		if (nodeUuid.equalsIgnoreCase(OBJECT_ROOT))
-			subObjects = dataConnection.getRootObjects();
-		else
-			subObjects = dataConnection.getSubObjects(nodeUuid, depth);
 
-		for (HashMap<String, Object> node : subObjects) {
-			addTreeNodeInfo(node);
+		if (nodeType.equals(OBJECT_APPTYPE)) {
+			ArrayList<HashMap<String, Object>> subObjects = null; 
+			
+			if (nodeUuid.equalsIgnoreCase(OBJECT_ROOT))
+				subObjects = dataConnection.getRootObjects();
+			else
+				subObjects = dataConnection.getSubObjects(nodeUuid, depth);
+	
+			for (HashMap<String, Object> node : subObjects) {
+				addTreeNodeObjectInfo(node);
+			}
+			return subObjects;
+
+		} else if (nodeType.equals(ADDRESS_APPTYPE)) {
+			ArrayList<HashMap<String, Object>> subAddresses = null; 
+			if (nodeUuid.equalsIgnoreCase(ADDRESS_ROOT))
+				subAddresses = dataConnection.getRootAddresses();
+			else
+				subAddresses = dataConnection.getSubAddresses(nodeUuid, depth);
+	
+			for (HashMap<String, Object> node : subAddresses) {
+				addTreeNodeAddressInfo(node);
+			}
+			return subAddresses;
+
+		} else {
+			throw new IllegalArgumentException("Unknown node type: "+nodeType); 
 		}
-
-		return subObjects;
 	}
 
 	/*
@@ -237,7 +261,7 @@ public class EntryServiceImpl implements EntryService {
 		if (useWorkingCopy) {
 			log.debug("Saving node with ID: "+data.getUuid());
 
-			try { return dataConnection.saveNode(data); }
+			try { return dataConnection.saveObject(data); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
 				log.debug("MdekException while saving node.", e);
@@ -250,7 +274,7 @@ public class EntryServiceImpl implements EntryService {
 		} else {
 			log.debug("Publishing node with ID: "+data.getUuid());
 
-			try { return dataConnection.publishNode(data, forcePublicationCondition); }
+			try { return dataConnection.publishObject(data, forcePublicationCondition); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
 				log.debug("MdekException while publishing node.", e);
@@ -269,7 +293,7 @@ public class EntryServiceImpl implements EntryService {
 	 * 
 	 * @see de.ingrid.mdek.dwr.api.EntryService#canCutObject(java.lang.String)
 	 */
-	public void canCutObject(String uuid) {
+	public boolean canCutObject(String uuid) {
 		log.debug("Query if node can be cut: "+uuid);
 
 		try {
@@ -281,6 +305,7 @@ public class EntryServiceImpl implements EntryService {
 		} catch (Exception e) {
 			log.error("Error checking if node can be cut.", e);
 		}
+		return true;
 	}
 
 	/*
@@ -288,7 +313,7 @@ public class EntryServiceImpl implements EntryService {
 	 * 
 	 * @see de.ingrid.mdek.dwr.api.EntryService#canCutObject(java.lang.String)
 	 */
-	public void canCopyObject(String uuid) {
+	public boolean canCopyObject(String uuid) {
 		log.debug("Query if node can be copied: "+uuid);
 
 		try {
@@ -300,6 +325,7 @@ public class EntryServiceImpl implements EntryService {
 		} catch (Exception e) {
 			log.error("Error checking if node can be copied.", e);
 		}
+		return true;
 	}
 
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
@@ -344,12 +370,22 @@ public class EntryServiceImpl implements EntryService {
 		objectRoot.put("nodeAppType", OBJECT_APPTYPE);
 		objectRoot.put("id", OBJECT_ROOT);
 
+		HashMap<String, Object> addressRoot = new HashMap<String, Object>();
+		addressRoot.put("contextMenu", ROOT_MENU_ID);
+		addressRoot.put("isFolder", true);
+		addressRoot.put("nodeDocType", ADDRESS_ROOT_DOCTYPE);
+		addressRoot.put("title", ADDRESS_ROOT_NAME);
+		addressRoot.put("dojoType", NODE_DOJO_TYPE);
+		addressRoot.put("nodeAppType", ADDRESS_APPTYPE);
+		addressRoot.put("id", ADDRESS_ROOT);
+
 		treeRoot.add(objectRoot);
+		treeRoot.add(addressRoot);
 		return treeRoot;
 	}
 
 
-	private static Map<String, Object> addTreeNodeInfo(Map<String, Object> node)
+	private static Map<String, Object> addTreeNodeObjectInfo(Map<String, Object> node)
 	{
 		// TODO Do this recursive for all children!
 		node.put("contextMenu", NODE_MENU_ID);
@@ -364,4 +400,11 @@ public class EntryServiceImpl implements EntryService {
 		return node;
 	}
 
+	private static Map<String, Object> addTreeNodeAddressInfo(Map<String, Object> node)
+	{
+		node.put("contextMenu", NODE_MENU_ID);
+		node.put("dojoType", NODE_DOJO_TYPE);
+		node.put("nodeAppType", ADDRESS_APPTYPE);		
+		return node;
+	}
 }
