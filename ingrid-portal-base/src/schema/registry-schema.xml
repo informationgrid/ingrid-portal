@@ -118,13 +118,14 @@ limitations under the License.
        Create Parameter Table
        NOTE : This table supports both Servlet and Portlet parameters
        Class Name is required to decide if this is a portlet or servlet parameter
+       PARAMETER_VALUE is not required to fix an error with ORACLE (empty strings are treated as NULL), complaining to insert NULL values during PA registering
     -->
     <table name="PARAMETER">
         <column name="PARAMETER_ID" primaryKey="true" required="true" type="INTEGER"/>
         <column name="PARENT_ID" required="true" type="INTEGER"/>
         <column name="CLASS_NAME" required="true" size="255" type="VARCHAR"/>
         <column name="NAME" required="true" size="80" type="VARCHAR"/>
-        <column name="PARAMETER_VALUE" required="true" type="LONGVARCHAR"/>
+        <column name="PARAMETER_VALUE" required="false" type="LONGVARCHAR"/>
     </table>
 
     <!--

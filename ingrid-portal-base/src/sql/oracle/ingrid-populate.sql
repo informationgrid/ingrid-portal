@@ -833,3 +833,6 @@ create index idx_qrtz_ft_job_name on qrtz_fired_triggers(JOB_NAME);
 create index idx_qrtz_ft_job_group on qrtz_fired_triggers(JOB_GROUP);
 create index idx_qrtz_ft_job_stateful on qrtz_fired_triggers(IS_STATEFUL);
 create index idx_qrtz_ft_job_req_recovery on qrtz_fired_triggers(REQUESTS_RECOVERY);
+
+-- create hibernate sequence
+create sequence hibernate_sequence;
