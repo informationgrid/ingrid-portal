@@ -13,9 +13,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.hibernate.HibernateUtil;
@@ -29,7 +29,7 @@ import de.ingrid.utils.udk.UtilsDate;
  * 
  * @author joachim@wemove.com
  */
-public class AnniversaryFetcherJob implements Job {
+public class AnniversaryFetcherJob implements StatefulJob {
 
     protected final static Log log = LogFactory.getLog(AnniversaryFetcherJob.class);
 

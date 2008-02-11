@@ -15,9 +15,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
 
 import com.sun.syndication.feed.synd.SyndCategoryImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -42,7 +42,7 @@ import de.ingrid.portal.om.IngridRSSStore;
  * 
  * @author joachim@wemove.com
  */
-public class RSSFetcherJob implements Job {
+public class RSSFetcherJob implements StatefulJob {
 
     protected final static Log log = LogFactory.getLog(RSSFetcherJob.class);
 
