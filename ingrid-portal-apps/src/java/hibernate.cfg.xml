@@ -16,8 +16,8 @@
         <property name="cache.use_query_cache">true</property>
 
         <!-- SQL dialect -->
-<!--        <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>-->
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+<!-- <property name="dialect">org.hibernate.dialect.MySQLDialect</property>-->
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
