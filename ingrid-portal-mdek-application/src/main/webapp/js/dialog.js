@@ -250,7 +250,7 @@ function showGlassPane(/* widget with closWindo event */widget)
     var glassPane = document.createElement("div");
     glassPane.style.position = "absolute";
     document.body.appendChild(glassPane);
-    glassPane.style.backgroundColor = '#156496';
+    glassPane.style.backgroundColor = '#add9f9';
     glassPane.style.width = "3000px";
     glassPane.style.height = "2000px";
     glassPane.style.left = 0;
