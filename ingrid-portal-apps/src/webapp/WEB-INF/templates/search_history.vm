@@ -11,7 +11,7 @@
 #if($queries && !$queries.isEmpty())
 		<ul class="internlinklist2">
 #foreach($query in $queries)
-		<li><a href="$query.url">$query.query</a> #if($query.ds == "2")<span class="smaller">$MESSAGES.getString('search.type.address')</span>#elseif($query.ds == "3")<span class="smaller">$MESSAGES.getString('search.type.research')</span>#end</li>
+		<li><a href="$query.url">$query.query</a> #if($query.ds == "2")<span class="smaller">$MESSAGES.getString('search.type.address')</span>#elseif($query.ds == "3")<span class="smaller">$MESSAGES.getString('search.type.research')</span>#elseif($query.ds == "4")<span class="smaller">$MESSAGES.getString('search.type.law')</span>#end</li>
 #end	
 		</ul>
 #else
@@ -26,7 +26,7 @@ $MESSAGES.setMsgParam("$max_entries")
           <ul class="internlinklist">
             #foreach($entry in $searchSaveEntries)
 				#set($idx = $velocityCount - 1)
-				<li><input id="chk_$idx" name="chk_$idx" type="checkbox"> <a href="$entry.url">$entry.title</a> #if($entry.ds == "2")<span class="smaller">$MESSAGES.getString('search.type.address')</span>#elseif($entry.ds == "3")<span class="smaller">$MESSAGES.getString('search.type.research')</span>#end</li>
+				<li><input id="chk_$idx" name="chk_$idx" type="checkbox"> <a href="$entry.url">$entry.title</a> #if($entry.ds == "2")<span class="smaller">$MESSAGES.getString('search.type.address')</span>#elseif($entry.ds == "3")<span class="smaller">$MESSAGES.getString('search.type.research')</span>#elseif($entry.ds == "4")<span class="smaller">$MESSAGES.getString('search.type.law')</span>#end</li>
 			#end
           </ul>
           <br>
