@@ -16,7 +16,16 @@ _container_.addOnLoad(function() {
 _container_.addOnUnload(function() {
  		deleteComboboxWidgets();
 });
-init = function() {}
+init = function() {
+	// Enter key on the ValdiationTextbox has to start a search:
+	var inputField = dojo.widget.byId("locationTextBox");
+    dojo.event.connect(inputField.domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                findLocationTopics();
+            }
+        });
+}
 
 function disableUiElements() {
 	dojo.widget.byId("addLocationTopicsButton").disable();
@@ -144,6 +153,12 @@ findAssociatedLocations = function(topicId) {
 // This function queries the SNSService for location topics
 findLocationTopics = function() {
 	var queryTerm = dojo.widget.byId("locationTextBox").getValue();
+	
+	// If input is blank, do nothing
+	queryTerm = dojo.string.trim(queryTerm);
+	if (queryTerm.length == 0)
+		return;
+
 	resetResultDiv();
 	deleteComboboxWidgets();
 	showLoading();

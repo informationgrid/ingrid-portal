@@ -310,7 +310,15 @@ function initCTS() {
 
 function initFreeTermsButton() {
 	var button = dojo.widget.byId("thesaurusFreeTermsAddButton");
-	
+
+	var inputField = dojo.widget.byId("thesaurusFreeTerms");
+    dojo.event.connect(inputField.domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                button.onClick();
+            }
+        });
+
 // Helper function that iterates over all entries in a store and returns a key that is not in use yet
 // We need this function to add terms to the free Terms list
 // TODO Move to a helper class if we need it more often
@@ -355,6 +363,10 @@ function initFreeTermsButton() {
 							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 								// Topic is new. Add it to the topic list
 								topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
+								
+								// Scroll to the added descriptor
+								var rows = dojo.widget.byId("thesaurusTerms").domNode.tBodies[0].rows;
+								dojo.html.scrollIntoView(rows[rows.length-1]);
 							} else {
 								// Topic already exists in the topic List
 								return;
@@ -367,6 +379,10 @@ function initFreeTermsButton() {
 							// If every term in the store != the entered term add it to the list
 							var identifier = getNewKey(freeTermsStore);							
 							freeTermsStore.addData( {Id: identifier, title: term} );
+
+							// Scroll to the added descriptor
+							var rows = dojo.widget.byId("thesaurusFreeTermsList").domNode.tBodies[0].rows;
+							dojo.html.scrollIntoView(rows[rows.length-1]);
 						}
 					}},
 				timeout:8000,
@@ -388,8 +404,8 @@ function initReferenceTables() {
 		 {tableId: "ref1BasisLink", 		filterId: 3520},		// 3520
 		 {tableId: "ref1DataBasisLink", 	filterId: 3570},		// 3570
 		 {tableId: "ref1ProcessLink", 		filterId: 3515},		// 3515
-		 {tableId: "ref2LocationLink", 		filterId: 3345},		// 3345
-//		 {tableId: "ref2BaseDataLink", 		filterId: 3360},		// 3360 - Single Address
+//		 {tableId: "ref2LocationLink", 		filterId: 3360},		// 3360 - Single Address
+		 {tableId: "ref2BaseDataLink", 		filterId: 3345},		// 3345
 		 {tableId: "ref3BaseDataLink", 		filterId: 3210},		// 3210
 //		 {tableId: "ref4ParticipantsLink", 	filterId: 3410},		// 3410 - Single Address
 //		 {tableId: "ref4PMLink", 			filterId: 3400},		// 3400 - Single Address

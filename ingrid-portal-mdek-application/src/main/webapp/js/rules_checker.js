@@ -32,9 +32,9 @@ var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink"
 
 
 var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
-			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "thesaurusTermsLabel",
-			  "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "thesaurusEnvTopicsLabel",
-			  "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel"];
+			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
+			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel",
+			  "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
@@ -47,12 +47,12 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 
 var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
-var notEmptyFunc = function(element) {return (this[element] && this[element] != "");}
 
 /* The generalAddress table is made 'not required' for testing purpose */ 
 var notEmptyTables = [/*["generalAddressTable", "generalAddressTableLabel"],*/
+					  ["timeRefTable", "timeRefTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
-var notEmptyTableFunc = function(element) {return (this[element].length > 0);}
+
 
 function resetRequiredFields() {
 	for (i in labels) {

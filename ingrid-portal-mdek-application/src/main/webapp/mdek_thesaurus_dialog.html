@@ -98,6 +98,16 @@ init = function() {
 	var treeListener = dojo.widget.byId('thesTreeListener');
 	dojo.event.topic.subscribe(treeListener.eventNames.select, "handleSelectNode");
 
+
+	// Enter key on the ValdiationTextbox has to start a search:
+	var inputField = dojo.widget.byId("thesSearch");
+    dojo.event.connect(inputField.domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                findTopic();
+            }
+        });
+
 /*
 	// Populate the descriptor list
 	var srcStore = dojo.widget.byId("thesaurusTerms").store;

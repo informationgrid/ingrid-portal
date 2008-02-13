@@ -45,7 +45,15 @@ dojo.widget.defineWidget(
    */
   setValue: function(value) {
     if (this.dataProvider) {
-  	  this.dataProvider.startSearch(this._getDisplayValueForValue(value), dojo.lang.hitch(this, "_setValueOrFirst"));
+//  	  this.dataProvider.startSearch(this._getDisplayValueForValue(value), dojo.lang.hitch(this, "_setValueOrFirst"));
+    	var dispVal = this.getDisplayValueForValue(value);
+    	if (dispVal != null) {
+    		dojo.widget.Select.prototype.setLabel.apply(this, [dispVal]);
+	    	dojo.widget.Select.prototype.setValue.apply(this, [value]);
+	    } else {
+    		dojo.widget.Select.prototype.setLabel.apply(this, [""]);
+	    	dojo.widget.Select.prototype.setValue.apply(this, [""]);	    
+	    }
     } else {
       dojo.debug("ingrid.widget.Select.setValue: initialization not finished.");
 	}

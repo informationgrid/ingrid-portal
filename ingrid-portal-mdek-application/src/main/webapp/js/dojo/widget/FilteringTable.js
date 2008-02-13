@@ -635,6 +635,53 @@ dojo.widget.defineWidget(
     this.showEditor(this.curTD);
 
     this.isEditing = true;
+
+	if (this.curEditor instanceof dojo.widget.DropdownDatePicker) {
+		dojo.event.connectOnce("after", this.curEditor, "onValueChanged", this, "onEditorFocusLost");
+		dojo.event.connectOnce("after", this.curEditor.inputNode, "onblur", this, "onEditorFocusLost");
+	
+	} else if (this.curEditor instanceof ingrid.widget.Select) {
+//		dojo.event.connectOnce("after", this.curEditor, "setValue", this, "onEditorFocusLost");
+/*
+		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", function() {
+			dojo.debug("textInputNode onblur called.");
+		});
+		dojo.event.connectOnce("after", this.curEditor, "setLabel", function() {
+			dojo.debug("setLabel called.");
+		});
+		dojo.event.connectOnce("after", this.curEditor, "setValue", function() {
+			dojo.debug("setValue called.");
+		});
+*/
+	}
+  },
+
+  onEditorFocusLost: function(e) {
+	
+	// A click on the date picker icon should not close the editor
+	if (this.curEditor instanceof dojo.widget.DropdownDatePicker && e.explicitOriginalTarget) {
+		var target = e.explicitOriginalTarget;
+		var ddp = this.curEditor.domNode;
+		if (ddp.isSameNode(target.parentNode) && target instanceof HTMLImageElement) {
+			return;
+		}
+	}
+
+
+	this._disconnectEditorEvents();
+	this.save();
+  },
+
+  _disconnectEditorEvents: function() {
+	if (this.curEditor) {
+		if (this.curEditor instanceof dojo.widget.DropdownDatePicker) {
+			dojo.event.disconnect("after", this.curEditor, "onValueChanged", this, "onEditorFocusLost");
+			dojo.event.disconnect("after", this.curEditor.inputNode, "onblur", this, "onEditorFocusLost");
+		
+		} else if (this.curEditor instanceof ingrid.widget.Select) {
+			dojo.event.disconnect("after", this.curEditor, "setValue", this, "onEditorFocusLost");
+		}
+	}
   },
 
   showEditor: function(/* HTMLElement */node) {
@@ -748,6 +795,8 @@ dojo.widget.defineWidget(
       this.fillCell(this.getRow(this.editData).cells[this.curColumn], this.columns[this.curColumn], result);
 
 	  dojo.event.browser.removeListener(this.curEditor.domNode, "onKey", this.curFP);
+    
+      this._disconnectEditorEvents();
     }
 
     // reset state

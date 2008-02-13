@@ -28,11 +28,13 @@ dojo.addOnLoad(function() {
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueChanged", function(obj, field) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueAdded", function(obj) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueDeleted", function(obj) {applyRule2();});
+	  dojo.event.connect(thesaurusEnvTopicsTable, "onSetData", function() {applyRule2();});
 	}
 	if (thesaurusEnvCatsTable) {
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueChanged", function(obj, field) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueAdded", function(obj) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueDeleted", function(obj) {applyRule2();});
+	  dojo.event.connect(thesaurusEnvCatsTable, "onSetData", function() {applyRule2();});
 	}
 	
 	// RULE 3
@@ -101,11 +103,11 @@ function applyRule1() {
 	var containerNode = labelNode.parentNode;
 
 	if (dojo.lang.some(tableData, function(item){ return (item.title == "1"); })) {
-		setRequiredState(labelNode, containerNode, true);
+//		setRequiredState(labelNode, containerNode, true);
 		dojo.widget.byId("ref1VFormatTopology").enable();
 		dojo.widget.byId("ref1VFormatDetails").enable();
 	} else {
-	    setRequiredState(labelNode, containerNode, false);
+//	    setRequiredState(labelNode, containerNode, false);
 		dojo.widget.byId("ref1VFormatTopology").disable();
 		dojo.widget.byId("ref1VFormatDetails").disable();
 	}

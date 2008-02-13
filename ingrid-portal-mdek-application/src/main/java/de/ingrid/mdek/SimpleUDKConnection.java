@@ -294,7 +294,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
 
 				List<IngridDocument> entries = (List<IngridDocument>) listDocument.get(MdekKeys.LST_ENTRY_LIST);
-				resultList.add( new String[] {"", ""} );
+//				resultList.add( new String[] {"", ""} );
 				for (IngridDocument entry : entries) {
 //					resultList.add( new String[] {StringEscapeUtils.escapeJavaScript(entry.getString(MdekKeys.ENTRY_NAME)), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString()} );
 					resultList.add( new String[] {entry.getString(MdekKeys.ENTRY_NAME), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString()} );

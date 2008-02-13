@@ -277,8 +277,7 @@ newOperation = function() {
 saveOperation = function() {
 	var operation = getOperation();
 	if (!isValidOperation(operation)) {
-		// TODO Display error
-		alert("Please fill all required fields.");
+  		dialog.show(message.get("general.hint"), message.get("links.fillRequiredFieldsHint"), dialog.WARNING);
 		return;
 	} else {
 		var opList = dojo.widget.byId("operationsList");

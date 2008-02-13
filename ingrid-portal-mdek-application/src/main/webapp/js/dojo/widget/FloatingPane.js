@@ -12,6 +12,8 @@ dojo.widget.defineWidget(
   cacheContent: false,
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/FloatingPane.css"),
 
+  loadingMessage: "Lade Maske...",
+
   /*
    * Custom parameters
    */

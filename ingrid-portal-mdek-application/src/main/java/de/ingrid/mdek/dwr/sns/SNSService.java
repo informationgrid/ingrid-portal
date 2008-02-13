@@ -2,9 +2,11 @@ package de.ingrid.mdek.dwr.sns;
 
 import java.net.URL;
 import java.text.Collator;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -38,6 +40,8 @@ public class SNSService {
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
     private static final int SNS_TIMEOUT = 30000;
+
+    private static final SimpleDateFormat expiredDateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
     
     // Settings and language specific values
     private ResourceBundle resourceBundle; 
@@ -381,7 +385,7 @@ public class SNSService {
             	if (t != null) {
             		resultList.add(t);
             	} else {
-            		log.debug("Couldn't create location topic for result: "+topic.getId());
+            		// log.debug("Couldn't create location topic for result: "+topic.getId());
             	}
 	        }
 	    }
@@ -424,6 +428,15 @@ public class SNSService {
     					result.setNativeKey(nativeKey.substring(SNS_NATIVE_KEY_PREFIX.length()));
     				}
     			}
+    		} else if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("expiredOcc")) {
+                try {
+                    Date expiredDate = expiredDateParser.parse(topic.getOccurrence(i).getResourceData().get_value());
+                    if ((null != expiredDate) && expiredDate.before(new Date())) {
+                        return null;
+                    }
+                } catch (java.text.ParseException e) {
+                    log.error("Not expected date format in sns expiredOcc.", e);
+                }
     		}
     	}
     	if (result.getQualifier() == null)

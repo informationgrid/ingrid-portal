@@ -10,6 +10,14 @@ _container_.addOnLoad(function() {
 	init();
 });
 
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("thesLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("thesLoadingZone"), "hidden");
+}
+
 function disableUiElements() {
 	dojo.widget.byId("addSelectedButton").disable();
 	dojo.widget.byId("addAllButton").disable();
@@ -36,7 +44,9 @@ function showStatus(msg) {
 
 
 init = function() {
-	showStatus(message.get("sns.loadingHint"));	
+//	showStatus(message.get("sns.loadingHint"));	
+	showLoadingZone();
+
 	// Build the lists from the main mdek app
 	var analyzedFields =
 		["objectName", "generalDesc", "generalShortDesc", "spatialRefExplanation", "timeRefExplanation",
@@ -94,15 +104,19 @@ init = function() {
 				var keywordTable = dojo.widget.byId("keywordsList");
 				udkDataProxy._addTableIndices(res);
 				keywordTable.store.setData(res);
-				showStatus("");
+				// showStatus("");
 				dojo.byId("numberOfTerms").innerHTML = message.get("sns.numberOfTerms")+" "+res.length;
 			} else {
 				// Show status that no results were found?
-				showStatus(message.get("sns.noSimilarTermsHint"));
+				// showStatus(message.get("sns.noSimilarTermsHint"));
 			}
+			hideLoadingZone();
 		},
 		timeout:0,
-		errorHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
+		errorHandler:function(msg) {
+			// showStatus(message.get("sns.connectionError"));
+			hideLoadingZone();
+		}
 	});
 }
 
@@ -266,6 +280,11 @@ applyChanges = function() {
       <div class="inputContainer noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
 	        <span style="float:right;"><button dojoType="ingrid:Button" id="applyChangesButton" onClick="applyChanges">&Uuml;bernehmen</button></span>
+
+			<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+				<img id="thesImageZone" src="img/ladekreis.gif" />
+			</span>
+
 			<span id="statusText" style="float:left; padding-top:6px;"></span>
         </span>
   	  </div>
