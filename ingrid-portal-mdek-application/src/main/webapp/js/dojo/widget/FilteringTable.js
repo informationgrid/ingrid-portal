@@ -604,7 +604,7 @@ dojo.widget.defineWidget(
 
     // close current editor
     if (this.curEditor)
-      this.cancelEdit();
+      this.save();
 
     // determine selection
     this.curColumn = e.target.cellIndex;
@@ -639,25 +639,17 @@ dojo.widget.defineWidget(
 	if (this.curEditor instanceof dojo.widget.DropdownDatePicker) {
 		dojo.event.connectOnce("after", this.curEditor, "onValueChanged", this, "onEditorFocusLost");
 		dojo.event.connectOnce("after", this.curEditor.inputNode, "onblur", this, "onEditorFocusLost");
-	
 	} else if (this.curEditor instanceof ingrid.widget.Select) {
-//		dojo.event.connectOnce("after", this.curEditor, "setValue", this, "onEditorFocusLost");
-/*
-		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", function() {
-			dojo.debug("textInputNode onblur called.");
-		});
-		dojo.event.connectOnce("after", this.curEditor, "setLabel", function() {
-			dojo.debug("setLabel called.");
-		});
-		dojo.event.connectOnce("after", this.curEditor, "setValue", function() {
-			dojo.debug("setValue called.");
-		});
-*/
+		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
+	} else if (this.curEditor instanceof ingrid.widget.ComboBox) {
+		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
+	} else if (this.curEditor instanceof dojo.widget.Textbox) {
+		dojo.event.connectOnce("after", this.curEditor.textbox, "onblur", this, "onEditorFocusLost");
 	}
   },
 
+  // usually called by the onBlur event of the cell editor ( see beginEdit() )
   onEditorFocusLost: function(e) {
-	
 	// A click on the date picker icon should not close the editor
 	if (this.curEditor instanceof dojo.widget.DropdownDatePicker && e.explicitOriginalTarget) {
 		var target = e.explicitOriginalTarget;
@@ -665,8 +657,13 @@ dojo.widget.defineWidget(
 		if (ddp.isSameNode(target.parentNode) && target instanceof HTMLImageElement) {
 			return;
 		}
+	// if the select box is open during onBlur, this is no EditorLostFocus event
+	// the onBlur event was probabely generated while opening the select box
+	} else if (this.curEditor instanceof ingrid.widget.Select || this.curEditor instanceof ingrid.widget.ComboBox) {
+		if (this.curEditor.popupWidget.isShowingNow) {
+			return;
+		}
 	}
-
 
 	this._disconnectEditorEvents();
 	this.save();
@@ -680,6 +677,11 @@ dojo.widget.defineWidget(
 		
 		} else if (this.curEditor instanceof ingrid.widget.Select) {
 			dojo.event.disconnect("after", this.curEditor, "setValue", this, "onEditorFocusLost");
+			dojo.event.disconnect("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
+		} else if (this.curEditor instanceof ingrid.widget.ComboBox) {
+			dojo.event.disconnect("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
+		} else if (this.curEditor instanceof dojo.widget.Textbox) {
+			dojo.event.disconnect("after", this.curEditor.textbox, "onblur", this, "onEditorFocusLost");
 		}
 	}
   },
