@@ -1600,7 +1600,7 @@ function hideSplash(){
 	                  </div>
 	                  
 	                  <div class="halfInside left">
-	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Umweltthemen')">Umweltthemen</label></span>
+	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themen')">Themen</label></span>
 	                    <div class="tableContainer tcRows4 tcHalf scrollable">
 	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
 	                        <div dojoType="ingrid:Select" toggle="plain" style="width:263px;" listId="1410" id="thesaurusEnvTopicsCombobox"></div>
@@ -1618,7 +1618,7 @@ function hideSplash(){
 	                  </div>
 
 	                  <div class="halfInside">
-	                    <span id="thesaurusEnvCatsLabel" class="label"><label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 'Umweltkategorien')">Umweltkategorien</label></span>
+	                    <span id="thesaurusEnvCatsLabel" class="label"><label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kategorien')">Kategorien</label></span>
 	                    <div class="tableContainer rows5">
 	                      <div class="cellEditors" id="thesaurusEnvCatsEditors">
 	                        <div dojoType="ingrid:Select" toggle="plain" style="width:263px;" listId="1400" id="thesaurusEnvCatsCombobox"></div>

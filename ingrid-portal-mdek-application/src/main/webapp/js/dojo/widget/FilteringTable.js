@@ -573,7 +573,15 @@ dojo.widget.defineWidget(
   },
 
   hasData: function() {
-    return this.store.getData().length > 0;
+    var str='';
+	this.store.forEach(function(element) {
+      for(var prop in element.src) {
+        if (element.src[prop] &&  element.src[prop].length > 0) {
+	      str += element.src[prop];
+	    }
+      }
+	});
+    return str.length > 0;
   },
 
   getData: function() {
@@ -766,7 +774,7 @@ dojo.widget.defineWidget(
         // add
 		var newData = {};
     	for(var i=0; i<this.columns.length; i++)
-			newData[this.columns[i].getField()] = '';
+				newData[this.columns[i].getField()] = '';
         newData[field] = newValue;
         newData[this.valueField] = new Date().getTime();
 
