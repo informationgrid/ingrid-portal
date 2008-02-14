@@ -829,6 +829,43 @@ dojo.widget.defineWidget(
   	dojo.html.removeClass(this.domNode, "interactive");
 	dojo.event.disconnect(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
   },
+	
+	/* overwritten because of the display of "Invalid Date" for empty date cells */
+	fillCell: function(/* HTMLTableCell */cell, /* object */meta, /* object */val){
+		//	summary
+		//	Fill the passed cell with value, based on the passed meta object.
+		if(meta.sortType=="__markup__"){
+			cell.innerHTML=val;
+		} else {
+			if(meta.getType()==Date) {
+				val=new Date(val);
+				if(!isNaN(val)){
+					var format = this.defaultDateFormat;
+					if(meta.format){
+						format = meta.format;
+					}
+					cell.innerHTML = dojo.date.strftime(val, format);
+				} else {
+					// write empty string if we do not have a valid date
+					// was cell.innerHTML = val;
+					cell.innerHTML = "";
+				}
+			} else if ("Number number int Integer float Float".indexOf(meta.getType())>-1){
+				//	TODO: number formatting
+				if(val.length == 0){
+					val="0";
+				}
+				var n = parseFloat(val, 10) + "";
+				//	TODO: numeric formatting + rounding :)
+				if(n.indexOf(".")>-1){
+					n = dojo.math.round(parseFloat(val,10),2);
+				}
+				cell.innerHTML = n;
+			}else{
+				cell.innerHTML = val;
+			}
+		}
+	},
 
 
   debugData: function() {
