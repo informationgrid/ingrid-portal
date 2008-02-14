@@ -24,6 +24,7 @@ dojo.addOnLoad(function() {
 	// Rule: If value != leer then Umweltthemen, Umweltkategorien is required
 	var thesaurusEnvTopicsTable = dojo.widget.byId("thesaurusEnvTopics");
 	var thesaurusEnvCatsTable = dojo.widget.byId("thesaurusEnvCats");
+	var thesaurusEnvExtResCheckBox = dojo.widget.byId("thesaurusEnvExtRes");
 	if (thesaurusEnvTopicsTable) {
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueChanged", function(obj, field) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueAdded", function(obj) {applyRule2();});
@@ -35,6 +36,9 @@ dojo.addOnLoad(function() {
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueAdded", function(obj) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueDeleted", function(obj) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvCatsTable, "onSetData", function() {applyRule2();});
+	}
+	if (thesaurusEnvExtResCheckBox) {
+	  dojo.event.connect(thesaurusEnvExtResCheckBox, "onClick", function(obj, field) {applyRule2();});
 	}
 	
 	// RULE 3
@@ -115,7 +119,7 @@ function applyRule1() {
 
 function applyRule2() {
 	var required = false;
-	if (dojo.widget.byId("thesaurusEnvTopics").hasData() || dojo.widget.byId("thesaurusEnvCats").hasData())
+	if (dojo.widget.byId("thesaurusEnvExtRes").checked || dojo.widget.byId("thesaurusEnvTopics").hasData() || dojo.widget.byId("thesaurusEnvCats").hasData())
 	  required = true;
 	
 	var labelNode1 = dojo.byId("thesaurusEnvTopicsLabel");

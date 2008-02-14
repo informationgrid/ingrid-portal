@@ -100,8 +100,10 @@ function isObjectPublishable(idcObject) {
 	}
 
 	// If one of the 'Umweltthemen' contains an entry, both of them need to contain at least one entry
+	dojo.debug("idcObject.thesaurusEnvExtRes: " + idcObject.thesaurusEnvExtRes);
 	if ((idcObject.thesaurusEnvTopicsList.length > 0 && idcObject.thesaurusEnvCatsList.length == 0)
-	  ||(idcObject.thesaurusEnvTopicsList.length == 0 && idcObject.thesaurusEnvCatsList.length > 0)) {
+	  ||(idcObject.thesaurusEnvTopicsList.length == 0 && idcObject.thesaurusEnvCatsList.length > 0) 
+	  ||(idcObject.thesaurusEnvExtRes == true && (idcObject.thesaurusEnvTopicsList.length == 0 || idcObject.thesaurusEnvCatsList.length == 0))) {
 		dojo.html.addClass(dojo.byId("thesaurusEnvTopicsLabel"), "important");		
 		dojo.html.addClass(dojo.byId("thesaurusEnvCatsLabel"), "important");		
 		dojo.debug("If one of the 'Umweltthemen' contains an entry, both of them need to contain at least one entry.");
