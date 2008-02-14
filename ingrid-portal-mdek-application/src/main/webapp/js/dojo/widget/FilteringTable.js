@@ -572,6 +572,16 @@ dojo.widget.defineWidget(
     this.onValueDeleted(obj);
   },
 
+  /*
+   * Data management
+   */
+	clear: function() {
+		var data=this.store.get();
+		for(var i=0; i<data.length; i++){
+			this.deleteRow(data[i].src);
+		}
+	},
+
   hasData: function() {
     var str='';
 	this.store.forEach(function(element) {

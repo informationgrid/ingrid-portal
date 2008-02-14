@@ -112,7 +112,9 @@ function applyRule1() {
 		dojo.widget.byId("ref1VFormatDetails").enable();
 	} else {
 //	    setRequiredState(labelNode, containerNode, false);
+		dojo.widget.byId("ref1VFormatTopology").setValue(null);
 		dojo.widget.byId("ref1VFormatTopology").disable();
+		dojo.widget.byId("ref1VFormatDetails").clear();
 		dojo.widget.byId("ref1VFormatDetails").disable();
 	}
 }
