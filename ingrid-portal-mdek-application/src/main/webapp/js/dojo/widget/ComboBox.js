@@ -33,5 +33,19 @@ dojo.widget.defineWidget(
 			}
 		}
 		return null;
-	}
+	},
+
+  enable: function() {
+    dojo.widget.ComboBox.superclass.enable.apply(this, arguments);
+    dojo.debug("combobox enable");
+    dojo.html.removeClass(this.textInputNode, 'noEdit');
+  },
+
+  disable: function() {
+    dojo.widget.ComboBox.superclass.disable.apply(this, arguments);
+    dojo.debug("combobox disable");
+    dojo.html.addClass(this.textInputNode, 'noEdit');
+  }
+	
+	
 });
