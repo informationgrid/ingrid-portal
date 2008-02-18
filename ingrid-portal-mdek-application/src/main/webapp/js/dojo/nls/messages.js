@@ -68,6 +68,8 @@
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 	"links.noLinkToSelfHint":"It is not possible to create a link to the same object.",
 
+	"dialog.addDescriptorsTitle":"Add Descriptors",
+	"dialog.addDescriptorsMessage":"Add the following descriptors as search terms?",
 	"dialog.saveChangesTitle":"Save changes",
 	"dialog.discardPubExistTitle":"Discard all changes",
 	"dialog.discardPubExistMessage":"Do you really want to discard all changes made to '%{0}' and reset to the last published version?",

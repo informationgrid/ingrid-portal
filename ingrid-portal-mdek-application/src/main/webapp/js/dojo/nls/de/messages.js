@@ -27,6 +27,8 @@
     "tree.newNodeName":"Neues Objekt",
     "tree.reload":"Neues Laden",
 
+	"dialog.addDescriptorsTitle":"Deskriptoren hinzuf&uuml;gen",
+	"dialog.addDescriptorsMessage":"Sollen folgende Deskriptoren als Suchbegriffe &uuml;bernommen werden?",
 	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
 	"dialog.discardPubExistTitle":"Alle &Auml;nderungen verwerfen",
 	"dialog.discardPubExistMessage":"Wollen Sie alle &Auml;nderungen am Metadatensatz '%{0}' verwerfen und zur urspr&uuml;nglichen Version zur&uuml;ckkehren?",

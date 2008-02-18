@@ -354,24 +354,53 @@ function initFreeTermsButton() {
 						// to the list and ignore the rest
 						for (var i = 0; i < descriptors.length; ++i) {
 							if (term == descriptors[i].title) {
-								descriptors = [descriptors[i]];
-								break;
+								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != descriptors[i].topicId; })) {
+									// Topic is new. Add it to the topic list
+									topicStore.addData( {Id: getNewKey(topicStore), topicId: descriptors[i].topicId, title: descriptors[i].title} );
+
+									// Scroll to the added descriptor
+									var rows = dojo.widget.byId("thesaurusTerms").domNode.tBodies[0].rows;
+									dojo.html.scrollIntoView(rows[rows.length-1]);
+								}
+								return;
 							}
 						}
 
-						dojo.lang.forEach(descriptors, function(topic) {
-							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
-								// Topic is new. Add it to the topic list
-								topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
-								
-								// Scroll to the added descriptor
-								var rows = dojo.widget.byId("thesaurusTerms").domNode.tBodies[0].rows;
-								dojo.html.scrollIntoView(rows[rows.length-1]);
-							} else {
-								// Topic already exists in the topic List
-								return;
-							}
+						// Always add the synonym to the free terms list (if it doesn't exist already) 
+						// Afterwards a window is opened to query if more descriptors should be added
+						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
+						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
+							// If every term in the store != the entered term add it to the list
+							var identifier = getNewKey(freeTermsStore);							
+							freeTermsStore.addData( {Id: identifier, title: term} );
+
+							// Scroll to the added descriptor
+							var rows = dojo.widget.byId("thesaurusFreeTermsList").domNode.tBodies[0].rows;
+							dojo.html.scrollIntoView(rows[rows.length-1]);
+						}
+
+
+						// Open a new window to query the user if he wants to add all the descriptors to the list
+						var deferred = new dojo.Deferred();
+
+						deferred.addCallback(function() {
+							dojo.lang.forEach(descriptors, function(topic) {
+								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
+									// Topic is new. Add it to the topic list
+									topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
+									
+									// Scroll to the added descriptor
+									var rows = dojo.widget.byId("thesaurusTerms").domNode.tBodies[0].rows;
+									dojo.html.scrollIntoView(rows[rows.length-1]);
+								} else {
+									// Topic already exists in the topic List
+									return;
+								}
+							});
 						});
+						// Do nothing on error...
+
+						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 342, 220, true, {descriptors:descriptors, resultHandler:deferred});
 					} else {
 						// Topic not found in the sns. Add the result to the free term list
 						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;

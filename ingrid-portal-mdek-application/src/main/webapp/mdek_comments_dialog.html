@@ -7,7 +7,11 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
+var dirtyFlag = null;
+
 _container_.addOnLoad(function() {
+	dirtyFlag = udkDataProxy.dirtyFlag;
+
 	var srcStore = commentStore;
 	var dstStore = dojo.widget.byId("commentCommentsTable").store;
 	
@@ -16,6 +20,11 @@ _container_.addOnLoad(function() {
 	dojo.byId("commentTableLabel").innerHTML = dojo.string.substituteParams(message.get("dialog.commentTitle"), nodeTitle);
 
 	dstStore.setData(srcStore.getData());
+
+	var setDirtyFlag = function(){ dirtyFlag = true; }
+	dojo.event.connectOnce(dstStore, "onAddData", setDirtyFlag);
+	dojo.event.connectOnce(dstStore, "onRemoveData", setDirtyFlag);
+	dojo.event.connectOnce(dstStore, "onUpdateField", setDirtyFlag);
 });
 
 _container_.addOnUnload(function() {
@@ -23,6 +32,8 @@ _container_.addOnUnload(function() {
 	var dstStore = commentStore;
 
 	dstStore.setData(srcStore.getData());
+
+	dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
 });
 
 

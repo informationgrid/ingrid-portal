@@ -1,0 +1,70 @@
+<html>
+<head>
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	var msgDiv = dojo.byId("messageDiv");
+	msgDiv.innerHTML = message.get("dialog.addDescriptorsMessage");
+
+
+	for (var i = 0; i < _container_.customParams.descriptors.length; ++i) {
+		_container_.customParams.descriptors[i].Id = i;
+	}
+	var table = dojo.widget.byId("descriptorList");
+	table.store.setData(_container_.customParams.descriptors);
+});
+
+_container_.addOnUnload(function() {
+	// If the dialog was cancelled via the dialogs close button
+	// we need to signal an error (cancel action)
+	if (_container_.customParams.resultHandler.fired == -1) {
+		_container_.customParams.resultHandler.errback();
+	}
+});
+
+
+// 'Yes Button' onClick function
+yesButtonFunc = function() {
+	_container_.customParams.resultHandler.callback();
+	_container_.closeWindow();
+}
+
+// 'No Button' onClick function
+noButtonFunc = function() {
+	_container_.customParams.resultHandler.errback();
+	_container_.closeWindow();
+}
+
+</script>
+</head>
+
+
+
+<body>
+<div dojoType="ContentPane">
+	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
+		<div id="dialogContent" class="content">
+			<div id="messageDiv" class="field grey">
+			</div>
+
+			<div class="grey">
+      	    <table id="descriptorList" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort readonly half">
+				<thead>
+					<tr>
+						<th nosort="true" field="title" dataType="String">Deskriptoren</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			</div>
+
+			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="yesButtonFunc">&Uuml;bernehmen</button></span>
+			</div>
+	  	</div>
+	</div>
+</div>
+</body>
+</html>
