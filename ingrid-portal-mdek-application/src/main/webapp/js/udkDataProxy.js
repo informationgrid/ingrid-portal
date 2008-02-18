@@ -226,7 +226,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 	dojo.debug("About to be loaded: "+msg.id);
 
 	// Don't process newNode and objectRoot load requests.
-	if (msg.id == "newNode" || msg.id == "objectRoot") {
+	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot") {
 		msg.resultHandler.callback();
 		return;
 	}
@@ -245,33 +245,60 @@ udkDataProxy.handleLoadRequest = function(msg)
 	var loadCallback = function() {
 		dojo.debug("udkDataProxy calling EntryService.getNodeData("+nodeId+", "+nodeAppType+")");
 		// ---- DWR call to load the data ----
-		EntryService.getNodeData(nodeId, nodeAppType, "false",
-			{
-				callback:function(res){
-						if (res != null) {
-							udkDataProxy._setData(res);
-							udkDataProxy._updateTree(res);
-							resetRequiredFields();
-							if (resultHandler)
-								resultHandler.callback();
-							udkDataProxy.resetDirtyFlag();
-						} else {
-//							dojo.debug(resultHandler);
-							if (typeof(resultHandler) != "undefined") {
-								resultHandler.errback("Error loading object. The object with the specified id doesn't exist!");
+		if (nodeAppType == "O") {
+			EntryService.getNodeData(nodeId, nodeAppType, "false",
+				{
+					callback:function(res){
+							if (res != null) {
+								udkDataProxy._setData(res);
+								udkDataProxy._updateTree(res);
+								resetRequiredFields();
+								if (resultHandler)
+									resultHandler.callback();
+								udkDataProxy.resetDirtyFlag();
+							} else {
+	//							dojo.debug(resultHandler);
+								if (typeof(resultHandler) != "undefined") {
+									resultHandler.errback("Error loading object. The object with the specified id doesn't exist!");
+								}
 							}
-						}
-						return res;
+							return res;
+						},
+					timeout:20000,
+					errorHandler:function(message) {
+						dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message);
 					},
-				timeout:20000,
-				errorHandler:function(message) {
-					dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message);
-				},
-				exceptionHandler:function(message) {
-					dojo.debug("Exception in js/udkDataProxy.js: Exception while waiting for nodeData: " + message);
-				}
-			}
-		);
+					exceptionHandler:function(message) {
+						dojo.debug("Exception in js/udkDataProxy.js: Exception while waiting for nodeData: " + message);
+					}
+				});
+		} else if (nodeAppType == "A") {
+			EntryService.getAddressData(nodeId, "false",
+				{
+					callback:function(res){
+							if (res != null) {
+								udkDataProxy._setData(res);
+//								udkDataProxy._updateTree(res);
+								resetRequiredFields();
+								if (resultHandler)
+									resultHandler.callback();
+								udkDataProxy.resetDirtyFlag();
+							} else {
+								if (typeof(resultHandler) != "undefined") {
+									resultHandler.errback("Error loading Address. The Address with the specified id doesn't exist!");
+								}
+							}
+							return res;
+						},
+					timeout:20000,
+					errorHandler:function(message) {
+						dojo.debug("Error in js/udkDataProxy.js: Error while waiting for addressData: " + message);
+					},
+					exceptionHandler:function(message) {
+						dojo.debug("Exception in js/udkDataProxy.js: Exception while waiting for addressData: " + message);
+					}
+				});
+		}
 	};
 
 	deferred.addCallbacks(loadCallback, loadErrback);

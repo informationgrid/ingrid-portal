@@ -15,7 +15,7 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-<beans default-init-method="init">
+<beans default-init-method="init" default-destroy-method="destroy">
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configuration">
 		<property name="locations">
             <list>

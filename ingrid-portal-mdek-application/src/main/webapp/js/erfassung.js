@@ -239,44 +239,26 @@ function createObjectClicked(node, useAssistant)
  */
 function selectUDKClass()
 {
-  var val = dojo.widget.byId("objectClass").getValue();
-  if (val)
-    this.selectContentClass(val, "FormErfassungObjektContent");
+	var val = dojo.widget.byId("objectClass").getValue();
+	if (val) {
+		var contentForm = dojo.widget.byId("contentFormObject");
+	    contentForm.setSelectedClass(val);
+	}
 }
 
 function selectUDKAddressType()
 {
-  var val = dojo.widget.byId("addressType").getValue();
-  if (val)
-    this.selectContentClass(val, "FormErfassungAdresseContent");
+	var val = dojo.widget.byId("addressType").getValue();
+	if (val) {
+		var contentForm = dojo.widget.byId("contentFormAddress");
+		contentForm.setSelectedClass(val);
+	}
 }
 
-function selectContentClass(className, formClass)
-{
-  // get form widget
-  var contentFormDivName = "contentFormObject";
-  if (!mdek.entry.isTypeObject()) {
-    contentFormDivName = "contentFormAddress";
-  }
-  
-  var contentForm = dojo.widget.byId(contentFormDivName);
-  if (contentForm) {
-    // if already loaded use class method to select class
-    contentForm.setSelectedClass(className);
-  }
-/*  else {
-    // if not loaded create the form widget
-    var contentFrame = dojo.widget.byId('contentFrame');
-    dojo.require("ingrid.widget."+formClass);
-    var form = dojo.widget.createWidget("ingrid:"+formClass, {widgetId:'contentForm',selectedClass:className});
-    dojo.dom.replaceChildren(contentFrame.domNode, form.domNode);
-  } */
-}
 
 function nodeSelected(message)
 {
-  // TODO Add: if ... addressRoot ...
-  if (message.node.id == "objectRoot") {
+  if (message.node.id == "objectRoot" || message.node.id == "addressRoot") {
     dojo.byId("contentAddress").style.display="none";
     dojo.byId("contentObject").style.display="none";
     dojo.byId("contentNone").style.display="block";

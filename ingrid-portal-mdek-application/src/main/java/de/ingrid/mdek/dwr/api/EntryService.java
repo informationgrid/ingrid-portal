@@ -8,6 +8,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
+import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 
 /**
@@ -127,6 +128,25 @@ public interface EntryService {
 	 */
 	public MdekDataBean getNodeData(String nodeUuid, String nodeType,
 			Boolean useWorkingCopy);
+
+	/**
+	 * Retrieves all relevant data of an address. Data is encapsulated in a MdekAddressBean.
+	 * 
+	 * If useWorkingCopy is true, tries to get the working copy of the data. In
+	 * case no working copy exists a new working copy will be created.
+	 * 
+	 * If useWorkingCopy is false, an existing workingCopy will be synchronized
+	 * with the original data. In case no working copy exists, a new working
+	 * copy will be created.
+	 * 
+	 * @param nodeUuid
+	 *            The uuid of the node.
+	 * @param useWorkingCopy
+	 *            True to get the data based on the working copy, false to
+	 *            synchronize the working copy with the original data.
+	 * @return
+	 */
+	public MdekAddressBean getAddressData(String nodeUuid, Boolean useWorkingCopy);
 
 	/**
 	 * Saves or updates the Object.

@@ -148,6 +148,22 @@ public class EntryServiceImpl implements EntryService {
 		return data;
 	}
 
+	public MdekAddressBean getAddressData(String nodeUuid, Boolean useWorkingCopy) {
+		MdekAddressBean address = null; 
+
+		try {
+			address = dataConnection.getAddressDetail(nodeUuid);
+		} catch (Exception e) {
+			log.error("Error while getting address data.", e);
+		}
+
+		// TODO check for errors and throw an exception?
+		// Return a newly created node
+		if (address == null) {;}
+
+		return address;
+	}
+
 	
 	public MdekDataBean createNewNode(String parentUuid) {
 		log.debug("creating new node with parent id = "+parentUuid);		

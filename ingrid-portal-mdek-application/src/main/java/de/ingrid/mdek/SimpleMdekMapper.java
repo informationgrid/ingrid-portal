@@ -56,6 +56,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		else
 			return null;
 	}
+	public MdekAddressBean getDetailedAddressRepresentation(Object obj) {
+		if (obj instanceof HashMap)
+			return getDetailedAddressRepresentation((HashMap<String, Object>) obj);
+		else
+			return null;		
+	}
 	// --
 
 
@@ -285,6 +291,42 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return mdekObj;
 	}
 	
+	private static MdekAddressBean getDetailedAddressRepresentation(
+			HashMap<String, Object> adr) {
+		
+		log.debug("Converting the following address:");
+		printHashMap(adr);
+
+		MdekAddressBean mdekAddress = new MdekAddressBean();
+
+		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
+//		mdekObj.setTitle((String) adr.get(MdekKeys.TITLE));
+		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
+		if (adrClass == null) {
+			mdekAddress.setAddressClass(0);
+		} else {
+			mdekAddress.setAddressClass(adrClass);
+		}
+
+		String workStateStr = (String) adr.get(MdekKeys.WORK_STATE); 
+		WorkState workState = null;
+		if (workStateStr != null) {
+			workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workStateStr);
+		} else {
+			workState = WorkState.IN_BEARBEITUNG;
+		}
+		mdekAddress.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
+
+
+		// TODO Should we move the gui specific settings to another object / to the entry service?
+		mdekAddress.setNodeAppType("A");
+
+		String nodeDocType = getAddressDocType(adr);
+		mdekAddress.setNodeDocType(nodeDocType);
+		
+		return mdekAddress;
+	}
+		
 	private static String getObjectDocType(Map<String, Object> obj) {
 		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
 		String workState = (String) obj.get(MdekKeys.WORK_STATE); 

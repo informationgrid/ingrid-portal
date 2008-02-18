@@ -19,6 +19,7 @@ import de.ingrid.mdek.IMdekCallerCommon.Quantity;
 import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
+import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -58,6 +59,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 
+	public MdekAddressBean getAddressDetail(String uuid) {
+		IngridDocument response = mdekCaller.fetchAddress(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
+		return extractSingleAddressFromResponse(response);	
+	}
+	
+	
 	public ArrayList<HashMap<String, Object>> getRootAddresses() {
 		IngridDocument response = mdekCaller.fetchTopAddresses(getCurrentSessionId(), false);
 		return extractAddressesFromResponse(response);
@@ -246,6 +253,17 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 		if (result != null) {
 			return dataMapper.getDetailedObjectRepresentation(result);
+		} else {
+			handleError(response);
+			return null;
+		}
+	}
+
+	private MdekAddressBean extractSingleAddressFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		if (result != null) {
+			return dataMapper.getDetailedAddressRepresentation(result);
 		} else {
 			handleError(response);
 			return null;

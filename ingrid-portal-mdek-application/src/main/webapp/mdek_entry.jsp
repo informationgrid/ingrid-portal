@@ -1715,7 +1715,7 @@ function hideSplash(){
 		  		<tr>
 		  		  <td class="label col1"><label for="addressType">Adresstyp</label></td>
 		  		  <td class="col2">
-		          <select dojoType="ingrid:Select" style="width:386px;" id="addressType" name="addressType">
+		          <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="addressType" name="addressType">
 		            <!-- TODO: fill in jsp -->
 		            <option value="AddressType0">Institution</option>
 		            <option value="AddressType1">Einheit</option>
@@ -1726,10 +1726,12 @@ function hideSplash(){
 		  		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
 		  		<tr>
 		  		  <td class="label"><label for="addressOwner">Verantwortlicher</label></td>
-		  		  <td><input dojoType="ingrid:Select" style="width:386px;" id="addressOwner"mode="remote" /></td>
-		  		  <td class="note"><strong>Status:</strong> in Bearbeitung</td></tr>
+		  		  <td><input dojoType="ingrid:Select" style="width:386px;" id="addressOwner" disabled="true" /></td>
+	              <td class="note"><strong>Status:</strong> <span id="addressWorkState"></span></td>
+
 		  		<tr>
-		  		  <td class="note" colspan="3"><strong>Erstellt am:</strong> 26.06.1998 | <strong>Ge&auml;ndert am:</strong> 27.09.2000 | <strong>Von:</strong> <span id="last_editor">Dezernat 501 Abfallwirtschaft, Abfallrecht</span></td></tr>
+	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="addressCreationTime">----------</span> | <strong>Ge&auml;ndert am:</strong> <span id="addressModificationTime">----------</span> | <strong>Von:</strong> <span id="addressLastEditor">---</span></td>
+				</tr>
 		  	</tbody>
 			</table>
 			</form>
@@ -1747,7 +1749,7 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow">
 			        <span class="label required"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
-			        <span class="input"><textarea id="headerAddressType0Institution" name="headerAddressType0Institution" class="w668 h038" />Alfred Toepfer Akademie f&uuml;r Naturschutz NNA</textarea></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Institution" class="w668 h038" /></span>
 			  	  </div>
 
 			    </div>
@@ -1759,12 +1761,12 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
-			        <span class="input"><textarea id="headerAddressType1Institution" name="headerAddressType1Institution" class="w668 h038 noEdit" disabled="disabled">Alfred Toepfer, Akademie f&uuml;r Naturschutz NNA</textarea></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Institution" class="w668 h038" disabled=true" /></span>
 			  	  </div>
 			  	  
 			      <div class="inputContainer noSpaceBelow">
 			        <span class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
-			        <span class="input"><textarea id="headerAddressType1Unit" name="headerAddressType1Unit" class="w668 h038" />Fachbereich Forschung</textarea></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Unit" class="w668 h038" /></span>
 			  	  </div>
 
 			    </div>
@@ -1776,7 +1778,7 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <span class="label"><label for="headerAddressType2Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
-			        <span class="input"><textarea id="headerAddressType2Institution" name="headerAddressType2Institution" class="w668 h038 noEdit" disabled="disabled">Alfred Toepfer, Akademie f&uuml;r Naturschutz NNA</textarea></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType2Institution" class="w668 h038" disabled="true" /></span>
 			  	  </div>
 			  	  
 			      <div class="inputContainer">
@@ -1894,7 +1896,7 @@ function hideSplash(){
 			  
 			        <div class="half">
 			          <span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 'Notizen')">Notizen</label></span>
-			          <span class="input"><textarea id="addressNotes" name="addressNotes" class="w320 h120" /></textarea></span>
+			          <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="addressNotes" class="w320 h120" /></span>
 			        </div>
 			        <div class="fill"></div>
 			      </div>
@@ -1915,18 +1917,6 @@ function hideSplash(){
 			      		      </tr>
 			      	      </thead>
 			      	      <tbody>
-			      		      <tr value="1">
-			      		        <td>Telefon</td>
-			      		        <td>05199 989-0</td></tr>
-			      		      <tr value="2">
-			      		        <td>Fax</td>
-			      		        <td>05199 989-46</td></tr>
-			      		      <tr value="3">
-			      		        <td>E-Mail</td>
-			      		        <td>nna@nna.de</td></tr>
-			      		      <tr value="4">
-			      		        <td>URL</td>
-			      		        <td>http://www.nna.de</td></tr>
 			      	      </tbody>
 			      	    </table>
 			      	  </div>
@@ -1934,7 +1924,7 @@ function hideSplash(){
 
 			        <div class="half">
 			          <span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aufgaben')">Aufgaben</label></span>
-			          <span class="input"><textarea id="addressTasks" name="addressTasks" class="w320 h105" /></textarea></span>
+			          <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="addressTasks" class="w320 h105" /></span>
 			        </div>
 			        <div class="fill"></div>
 			      </div>
@@ -1970,7 +1960,13 @@ function hideSplash(){
 			      <div class="inputContainer noSpaceBelow notRequired h116">
 			        <div class="full">
 			          <span class="label"><label for="thesaurusFreeTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
-			          <span class="input"><input type="text" id="thesaurusFreeTermsAddress" name="thesaurusFreeTerms" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey" title="Hinzuf&uuml;gen">Hinzuf&uuml;gen</a></span>
+			          <span class="input"><input type="text" id="thesaurusFreeTermsAddress" name="thesaurusFreeTerms" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
+			          </span>
+	                  <span style="position:relative; top:-24px; float:right;">
+						<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button">Hinzuf&uuml;gen</button>
+					  </span>
+			          
+			          
 			          <div class="fill"></div>
 			          <div class="tableContainer">
 			      	    <table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
@@ -2010,12 +2006,6 @@ function hideSplash(){
 			    		      </tr>
 			    	      </thead>
 			    	      <tbody>
-			    		      <tr value="1">
-			    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-			    		        <td><a href="#" title="Objekt &ouml;ffnen: Alfred Toepfer Akademie f&uuml;r Naturschutz">Alfred Toepfer Akademie f&uuml;r Naturschutz</a></td></tr>
-			    		      <tr value="2">
-			    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-			    		        <td><a href="#" title="Objekt &ouml;ffnen: Dokumentation zum Naturschutzgebiet L&uuml;neburger Heide">Dokumentation zum Naturschutzgebiet L&uuml;neburger Heide</a></td></tr>
 			    	      </tbody>
 			    	    </table>
 			        </div>

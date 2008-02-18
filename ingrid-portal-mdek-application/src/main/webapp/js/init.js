@@ -625,7 +625,7 @@ function initToolbar() {
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 		var disableList = [];
 		var enableList = [];
-		if (message.node.id == "objectRoot") {
+		if (message.node.id == "objectRoot" || message.node.id == "addressRoot") {
 			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 			enableList = [newEntityButton];
 		} else if (message.node.isFolder) {

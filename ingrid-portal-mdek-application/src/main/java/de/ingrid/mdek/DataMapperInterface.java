@@ -2,6 +2,7 @@ package de.ingrid.mdek;
 
 import java.util.HashMap;
 
+import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 
 /**
@@ -23,8 +24,9 @@ public interface DataMapperInterface {
 	public Object convertFromObjectRepresentation(MdekDataBean data);
 
 	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj);
-/*
+
 	public MdekAddressBean getDetailedAddressRepresentation(Object obj);
+/*
 	public Object convertFromAddressRepresentation(MdekAddressBean data);
 */
 

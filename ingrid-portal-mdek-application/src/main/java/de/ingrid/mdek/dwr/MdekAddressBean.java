@@ -7,6 +7,9 @@ public class MdekAddressBean {
 	
 	public String uuid;
 	public String information;
+	public String nodeAppType;
+	public String nodeDocType;
+	public String workState;
 
 	public Integer addressClass;
 	public String name;
@@ -133,5 +136,23 @@ public class MdekAddressBean {
 	}
 	public void setAddressClass(Integer addressClass) {
 		this.addressClass = addressClass;
+	}
+	public String getNodeAppType() {
+		return nodeAppType;
+	}
+	public void setNodeAppType(String nodeAppType) {
+		this.nodeAppType = nodeAppType;
+	}
+	public String getNodeDocType() {
+		return nodeDocType;
+	}
+	public void setNodeDocType(String nodeDocType) {
+		this.nodeDocType = nodeDocType;
+	}
+	public String getWorkState() {
+		return workState;
+	}
+	public void setWorkState(String workState) {
+		this.workState = workState;
 	}
 }

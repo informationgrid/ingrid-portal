@@ -7,6 +7,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
+import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -75,6 +76,17 @@ public interface DataConnectionInterface {
 	 * @return A MdekDataBean representing the node identified by uuid.
 	 */	
 	public MdekDataBean getObjectDetail(String uuid);
+
+	/**
+	 * Returns a Map representing the address with uuid.
+	 * 
+	 * <ul>
+	 * <li><b>(String) id</b> - uuid of the node</li>
+	 * </ul>
+	 * 
+	 * @return A MdekAddressBean representing the node identified by uuid.
+	 */	
+	public MdekAddressBean getAddressDetail(String uuid);
 
 	/**
 	 * Returns an object with initial data.

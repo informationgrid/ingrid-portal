@@ -315,7 +315,8 @@ public class SNSService {
     			queryStr += words[j]+" ";
 
         	log.debug("sns query for words starting at: "+i);
-    		result.addAll(getTopicsForText(queryStr));
+    		log.debug("Query String: "+queryStr);
+        	result.addAll(getTopicsForText(queryStr));
     	}
 
     	return result;
@@ -341,6 +342,7 @@ public class SNSService {
 	    		resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName()));
 	    	}
 	    }
+//	    log.debug("Number of descriptors in the result: "+resultList.size());
 	    return resultList;
     }
 
