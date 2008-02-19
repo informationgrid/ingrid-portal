@@ -26,24 +26,24 @@ public interface DataMapperInterface {
 	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj);
 
 	public MdekAddressBean getDetailedAddressRepresentation(Object obj);
-/*
-	public Object convertFromAddressRepresentation(MdekAddressBean data);
-*/
 
+	public Object convertFromAddressRepresentation(MdekAddressBean data);
+
+	
 	// Miscellaneous
-	public final static String MDEK_OBJECT_ID = "id";
-	public final static String MDEK_OBJECT_HAS_CHILDREN = "isFolder";
-	public final static String MDEK_OBJECT_IS_PUBLISHED = "isPublished";
+	public final static String MDEK_ID = "id";
+	public final static String MDEK_HAS_CHILDREN = "isFolder";
+	public final static String MDEK_IS_PUBLISHED = "isPublished";
 	// TODO: Some values are duplicates. Merge them!
-	public final static String MDEK_OBJECT_TITLE = "title";
-	public final static String MDEK_OBJECT_DOCTYPE = "nodeDocType";
+	public final static String MDEK_TITLE = "title";
+	public final static String MDEK_DOCTYPE = "nodeDocType";
 
 
 	// Identification 
-	public final static String MDEK_OBJECT_NAME = "objectName";
-	public final static String MDEK_OBJECT_CLASS = "objectClass";
-	public final static String MDEK_OBJECT_OWNER = "objectOwner";
-	public final static String MDEK_OBJECT_LAST_EDITOR = "last_editor";
+	public final static String MDEK_NAME = "objectName";
+	public final static String MDEK_CLASS = "objectClass";
+	public final static String MDEK_OWNER = "objectOwner";
+	public final static String MDEK_LAST_EDITOR = "last_editor";
 
 	// General
 	public final static String MDEK_GENERAL_SHORT_DESC = "generalShortDesc";

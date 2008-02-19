@@ -100,6 +100,17 @@ public interface DataConnectionInterface {
 	public MdekDataBean getInitialObject(String parentUuid);
 
 	/**
+	 * Returns an address with initial data.
+	 * 
+	 * <ul>
+	 * <li><b>(String) parentUuid</b> - uuid of the parent node where the new node will be attached</li>
+	 * </ul>
+	 * 
+	 * @return A MdekAddressBean representing the initial address.
+	 */		
+	public MdekAddressBean getInitialAddress(String parentUuid);
+
+	/**
 	 * Sends an object for storage.
 	 * 
 	 * <ul>
@@ -111,6 +122,17 @@ public interface DataConnectionInterface {
 	public MdekDataBean saveObject(MdekDataBean data);
 
 	/**
+	 * Sends an address for storage.
+	 * 
+	 * <ul>
+	 * <li><b>(MdekAddressBean) data</b> - data representing the address that should be stored.</li>
+	 * </ul>
+	 * 
+	 * @return The stored address is returned.
+	 */		
+	public MdekAddressBean saveAddress(MdekAddressBean data);
+
+	/**
 	 * Sends an object for publishing.
 	 * 
 	 * <ul>
@@ -120,6 +142,18 @@ public interface DataConnectionInterface {
 	 * @return The published object is returned.
 	 */		
 	public MdekDataBean publishObject(MdekDataBean data, boolean forcePublicationCondition);
+	
+	/**
+	 * Sends an address for publishing.
+	 * 
+	 * <ul>
+	 * <li><b>(MdekAddressBean) data</b> - data representing the address that should be published.</li>
+	 * </ul>
+	 * 
+	 * @return The published address is returned.
+	 */		
+	public MdekAddressBean publishAddress(MdekAddressBean data);
+
 	
 	/**
 	 * Sends a request to delete an object.

@@ -44,6 +44,7 @@
     "tree.nodePasteInvalidHint":"Please select a valid target to paste.",
     "tree.saveNewNodeHint":"Please save the currently edited node before pasting.",
     "tree.newNodeName":"New Object",
+    "tree.newAddressName":"New Address",
     "tree.reload":"Reload",
 
     "spatial.noResultsHint":"No results found.",
@@ -88,6 +89,11 @@
 	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its parent has a lower publication condition.",
 	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
+
+	"address.type.institution":"Institution",
+	"address.type.unit":"Unit",
+	"address.type.person":"Person",
+	"address.type.custom":"Custom Address",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

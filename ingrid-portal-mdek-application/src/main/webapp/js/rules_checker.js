@@ -167,7 +167,7 @@ function checkValidityOfInputElements() {
 //		dojo.debug(widgetId);
 		var widget = dojo.widget.byId(widgetId);
 		if (widget.isValid) {	// check if the widget has an isValid method
-			if (widget.isEmpty) { // check if the widget has an isMissing method
+			if (widget.isEmpty) { // check if the widget has an isEmpty method
 				return (widget.isEmpty() || widget.isValid());
 			} else {
 				return widget.isValid();

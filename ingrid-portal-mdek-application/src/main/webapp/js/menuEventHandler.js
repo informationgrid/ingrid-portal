@@ -17,7 +17,8 @@ menuEventHandler.handleNewEntity = function(mes) {
 	} else {
 		if (selectedNode.id == "newNode") {
 	  		dialog.show(message.get('general.hint'), message.get('tree.selectNodeHint'), dialog.WARNING);
-		} else {
+		
+		} else if (selectedNode.nodeAppType == "O") {
 			// publish a createObject request and attach the newly created node if it was successful
 			deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
 			deferred.addErrback(function(err){
@@ -25,6 +26,20 @@ menuEventHandler.handleNewEntity = function(mes) {
 			});
 			dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
 	  		dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
+
+		} else if (selectedNode.nodeAppType == "A") {
+			if (selectedNode.objectClass == 2 || selectedNode.objectClass == 3) {
+				// TODO: Show error message
+				return;
+			}
+			
+			// publish a createNode request and attach the newly created node if it was successful
+			deferred.addCallback(function(res){ attachNewNode(selectedNode, res); });
+			deferred.addErrback(function(err){
+				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+			});
+			dojo.debug("Publishing event: /createAddressRequest("+selectedNode.id+")");
+	  		dojo.event.topic.publish("/createAddressRequest", {id: selectedNode.id, resultHandler: deferred});
 		}
 	}
 }
@@ -35,11 +50,12 @@ attachNewNode = function(selectedNode, res) {
 
 	var treeController = dojo.widget.byId("treeController");
 
-	var def = treeController.createChild(selectedNode, "last", _createNewNode(res));
+	var def = treeController.createChild(selectedNode, "last", _createNewNode(res, selectedNode.objectClass));
 	def.addCallback(function(res){
 		tree.selectNode(res);
 		tree.selectedNode = res;
 		dojo.event.topic.publish(treeListener.eventNames.select, {node: res});
+		dojo.html.scrollIntoView(res.domNode);
 	});
 	def.addErrback(function(mes){
 		// If we got an error while attaching the node we still check if the node exists and select it
@@ -50,6 +66,7 @@ attachNewNode = function(selectedNode, res) {
 			tree.selectNode(newNode);
 			tree.selectedNode = newNode;
 			dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+			dojo.html.scrollIntoView(res.domNode);
 		} else {
 			dialog.show(message.get("general.error"), message.get("tree.nodeCreateLocalError"), dialog.WARNING);
 			dojo.debug(mes);
@@ -592,12 +609,20 @@ function getSelectedNode(message) {
   }
 }
 
-function _createNewNode(obj)
+function _createNewNode(obj, parentClass)
 {
+	var title;
+	
+	if (obj.nodeAppType == "O") {
+		title = message.get("tree.newNodeName");
+	} else if (obj.nodeAppType == "A") {
+		title = message.get("tree.newAddressName");
+	}
+
 	return {contextMenu: 'contextMenu1',
 			isFolder: obj.isFolder,
 			nodeDocType: obj.nodeDocType,	// Initial display type of a new node
-			title: obj.objectName,
+			title: title,
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: obj.nodeAppType,
 			id: obj.uuid};	// "newNode"

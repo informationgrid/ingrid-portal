@@ -97,7 +97,9 @@ init = function() {
 			}
 
 			var tree = dojo.widget.byId('treeAssignObj');
-			tree.setChildren(str);
+
+			// Only use 'objects' and drop 'addresses'
+			tree.setChildren([str[0]]);
 			treeInitDef.callback();
 		});
 

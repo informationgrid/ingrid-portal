@@ -93,6 +93,15 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 	
+	public MdekAddressBean getInitialAddress(String parentUuid) {
+		IngridDocument adr = new IngridDocument();
+		adr.put(MdekKeys.PARENT_UUID, parentUuid);
+
+		IngridDocument response = mdekCaller.getInitialAddress(adr, getCurrentSessionId());
+		return extractSingleAddressFromResponse(response);
+	}
+
+	
 	public MdekDataBean saveObject(MdekDataBean data) {
 		IngridDocument obj = (IngridDocument) dataMapper.convertFromObjectRepresentation(data);
 
@@ -110,6 +119,27 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleObjectFromResponse(response);
 	}
 
+	public MdekAddressBean saveAddress(MdekAddressBean data) {
+		IngridDocument adr = (IngridDocument) dataMapper.convertFromAddressRepresentation(data);
+		log.debug("saveAddress() not implemented yet.");
+/*
+		// Handle store of a new node. Should this be handled by the
+		// EntryService?
+		if (data.getUuid().equalsIgnoreCase("newNode")) {
+			adr.remove(MdekKeys.UUID);
+			adr.remove(MdekKeys.ID);
+		}
+
+		log.debug("Sending the following address for storage:");
+		log.debug(adr);
+
+		IngridDocument response = mdekCaller.storeAddress(adr, true, getCurrentSessionId());
+		return extractSingleAddressFromResponse(response);
+*/
+		return data;
+	}
+
+	
 	public MdekDataBean publishObject(MdekDataBean data, boolean forcePublicationCondition) {
 	IngridDocument obj = (IngridDocument) dataMapper.convertFromObjectRepresentation(data);
 
@@ -124,6 +154,25 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	IngridDocument response = mdekCaller.publishObject(obj, true, forcePublicationCondition, getCurrentSessionId());
 	return extractSingleObjectFromResponse(response);
 }
+
+
+	public MdekAddressBean publishAddress(MdekAddressBean data) {
+		IngridDocument adr = (IngridDocument) dataMapper.convertFromAddressRepresentation(data);
+		log.debug("publishAddress() not implemented yet.");
+/*
+		if (data.getUuid().equalsIgnoreCase("newNode")) {
+			adr.remove(MdekKeys.UUID);
+			adr.remove(MdekKeys.ID);
+		}
+
+		log.debug("Sending the following address for publishing:");
+		log.debug(adr);
+
+		IngridDocument response = mdekCaller.publishAddress(adr, true, getCurrentSessionId());
+		return extractSingleAddressFromResponse(response);
+*/
+		return data;
+	}
 
 	
 	public void deleteObject(String uuid) {

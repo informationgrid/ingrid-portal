@@ -299,11 +299,22 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		MdekAddressBean mdekAddress = new MdekAddressBean();
 
+		// Information about the parent object
+		Map<String, Object> parentDetails = (Map<String, Object>) adr.get(MdekKeys.PARENT_INFO);
+		if (parentDetails != null) {
+//			mdekAddress.setParentPublicationCondition((Integer) parentDetails.get(MdekKeys.PUBLICATION_CONDITION));
+			mdekAddress.setParentClass((Integer) parentDetails.get(MdekKeys.CLASS));
+		}
+
+		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
-//		mdekObj.setTitle((String) adr.get(MdekKeys.TITLE));
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
 		if (adrClass == null) {
-			mdekAddress.setAddressClass(0);
+			// Set the initial class according to the parent Class
+			Integer parentClass = mdekAddress.getParentClass();
+			if (parentClass == null) mdekAddress.setAddressClass(0);	// Root Address is parent -> Institution
+			else if (parentClass == 0) mdekAddress.setAddressClass(0);	// Institution is parent -> Institution
+			else if (parentClass == 1) mdekAddress.setAddressClass(1);	// Unit is parent -> Unit
 		} else {
 			mdekAddress.setAddressClass(adrClass);
 		}
@@ -314,13 +325,35 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workStateStr);
 		} else {
 			workState = WorkState.IN_BEARBEITUNG;
+			adr.put(MdekKeys.WORK_STATE, "B");
 		}
 		mdekAddress.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
+		mdekAddress.setCreationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_CREATION)));
+		mdekAddress.setModificationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+		
+		// Class specific information
+		mdekAddress.setOrganisation((String) adr.get(MdekKeys.ORGANISATION));
+		mdekAddress.setName((String) adr.get(MdekKeys.NAME));
+		mdekAddress.setGivenName((String) adr.get(MdekKeys.GIVEN_NAME));
+		mdekAddress.setNameForm((String) adr.get(MdekKeys.NAME_FORM));
+		mdekAddress.setTitleOrFunction((String) adr.get(MdekKeys.TITLE_OR_FUNCTION));
 
-
+		// Common information
+		mdekAddress.setStreet((String) adr.get(MdekKeys.STREET));
+		mdekAddress.setCountryCode((String) adr.get(MdekKeys.POSTAL_CODE_OF_COUNTRY));
+		mdekAddress.setPostalCode((String) adr.get(MdekKeys.POSTAL_CODE));
+		mdekAddress.setCity((String) adr.get(MdekKeys.CITY));
+		mdekAddress.setPobox((String) adr.get(MdekKeys.POST_BOX));
+		mdekAddress.setPoboxPostalCode((String) adr.get(MdekKeys.POST_BOX_POSTAL_CODE));
+		mdekAddress.setAddressDescription((String) adr.get(MdekKeys.ADDRESS_DESCRIPTION));
+		mdekAddress.setTask((String) adr.get(MdekKeys.FUNCTION));
+//		mdekAddress.setCommunication((ArrayList<HashMap<String, String>>) mapToCommunicationTable(adr.get(MdekKeys.COMMUNICATION)));
+		
+		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekAddress.setNodeAppType("A");
 
+		adr.put(MdekKeys.CLASS, mdekAddress.getAddressClass());
 		String nodeDocType = getAddressDocType(adr);
 		mdekAddress.setNodeDocType(nodeDocType);
 		
@@ -338,12 +371,17 @@ public class SimpleMdekMapper implements DataMapperInterface {
 				nodeDocType += "_B";
 			}
 		}
+
 		return nodeDocType;
 	}
 
 	private static String getAddressDocType(Map<String, Object> adr) {
 		String nodeDocType = null;
-		switch ((Integer) adr.get(MdekKeys.CLASS)) {
+		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
+		if (adrClass == null)
+				return "Institution_B";
+
+		switch (adrClass) {
 		case 0:
 			nodeDocType = "Institution";
 			break;
@@ -385,13 +423,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// The object UUID is used to identify widgets in the gui.
 		// TODO attach the values to the object but don't use them to identify widgets
-		mdekObj.put(MDEK_OBJECT_ID, obj.get(MdekKeys.UUID));
-		mdekObj.put(MDEK_OBJECT_TITLE, obj.get(MdekKeys.TITLE));
-		mdekObj.put(MDEK_OBJECT_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
-		mdekObj.put(MDEK_OBJECT_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
+		mdekObj.put(MDEK_ID, obj.get(MdekKeys.UUID));
+		mdekObj.put(MDEK_TITLE, obj.get(MdekKeys.TITLE));
+		mdekObj.put(MDEK_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
+		mdekObj.put(MDEK_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
 		String nodeDocType = getObjectDocType(obj);
-		mdekObj.put(MDEK_OBJECT_DOCTYPE, nodeDocType);
+		mdekObj.put(MDEK_DOCTYPE, nodeDocType);
 
 		return mdekObj;
 	}
@@ -406,11 +444,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		HashMap<String, Object> mdekAdr = new HashMap<String, Object>();
 
-		mdekAdr.put(MDEK_OBJECT_ID, adr.get(MdekKeys.UUID));
+		mdekAdr.put(MDEK_ID, adr.get(MdekKeys.UUID));
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
-		mdekAdr.put(MDEK_OBJECT_CLASS, adrClass);
+		mdekAdr.put(MDEK_CLASS, adrClass);
 		if (adrClass == 0 || adrClass == 1)
-			mdekAdr.put(MDEK_OBJECT_TITLE, adr.get(MdekKeys.ORGANISATION));
+			mdekAdr.put(MDEK_TITLE, adr.get(MdekKeys.ORGANISATION));
 		else {
 			String title = "";
 			title += adr.get(MdekKeys.NAME);
@@ -418,18 +456,49 @@ public class SimpleMdekMapper implements DataMapperInterface {
 				title += ", "+adr.get(MdekKeys.GIVEN_NAME);
 			if (adr.get(MdekKeys.ORGANISATION) != null)
 				title += " ("+adr.get(MdekKeys.ORGANISATION)+")";
-			mdekAdr.put(MDEK_OBJECT_TITLE, title);
+			mdekAdr.put(MDEK_TITLE, title);
 		}
 
-		mdekAdr.put(MDEK_OBJECT_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
-		mdekAdr.put(MDEK_OBJECT_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
+		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
+		mdekAdr.put(MDEK_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
 		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
 		String adrDocType = getAddressDocType(adr);
-		mdekAdr.put(MDEK_OBJECT_DOCTYPE, adrDocType);
+		mdekAdr.put(MDEK_DOCTYPE, adrDocType);
 
 		return mdekAdr;
 	}
 
+	public Object convertFromAddressRepresentation(MdekAddressBean data){
+		IngridDocument udkAdr = new IngridDocument();
+
+		// General Information
+		udkAdr.put(MdekKeys.UUID, data.getUuid());
+		udkAdr.put(MdekKeys.CLASS, data.getAddressClass());
+
+		// Class specific information
+		udkAdr.put(MdekKeys.ORGANISATION, data.getOrganisation());
+		udkAdr.put(MdekKeys.NAME, data.getName());
+		udkAdr.put(MdekKeys.GIVEN_NAME, data.getGivenName());
+		udkAdr.put(MdekKeys.NAME_FORM, data.getNameForm());
+		udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, data.getTitleOrFunction());
+		
+		// Common information
+		udkAdr.put(MdekKeys.STREET, data.getStreet());
+		udkAdr.put(MdekKeys.POSTAL_CODE_OF_COUNTRY, data.getCountryCode());
+		udkAdr.put(MdekKeys.POSTAL_CODE, data.getPostalCode());
+		udkAdr.put(MdekKeys.CITY, data.getCity());
+		udkAdr.put(MdekKeys.POST_BOX, data.getPobox());
+		udkAdr.put(MdekKeys.POST_BOX_POSTAL_CODE, data.getPoboxPostalCode());
+		udkAdr.put(MdekKeys.ADDRESS_DESCRIPTION, data.getAddressDescription());
+		udkAdr.put(MdekKeys.FUNCTION, data.getTask());
+//		udkAdr.put(MdekKeys.COMMUNICATION, data.getCommunication());
+
+
+		log.debug("Converted the following address to an IngridDocument:");
+		printHashMap(udkAdr);
+
+		return udkAdr;
+	}
 	
 	public Object convertFromObjectRepresentation(MdekDataBean data){
 		IngridDocument udkObj = new IngridDocument();
@@ -892,7 +961,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			address.setCity((String) tableRow.get(MdekKeys.CITY));
 			address.setPoboxPostalCode((String) tableRow.get(MdekKeys.POST_BOX_POSTAL_CODE));
 			address.setPobox((String) tableRow.get(MdekKeys.POST_BOX));
-			address.setFunction((String) tableRow.get(MdekKeys.FUNCTION));
+			address.setTask((String) tableRow.get(MdekKeys.FUNCTION));
 			address.setAddressDescription((String) tableRow.get(MdekKeys.ADDRESS_DESCRIPTION));
 			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));
 			address.setNameForm((String) tableRow.get(MdekKeys.NAME_FORM));

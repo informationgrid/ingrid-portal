@@ -10,9 +10,12 @@
  *     resultHandler - (optional) A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/createObjectRequest' - argument: {id: parentUuid, resultHandler: deferred}
- *     nodeUuid - The Uuid of the node
+ *     parentUuid - The Uuid of the objects parent
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *   topic = '/createAddressRequest' - argument: {id: parentUuid, resultHandler: deferred}
+ *     parentUuid - The Uuid of the addresses parent
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/saveRequest' - argument:
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
@@ -79,8 +82,11 @@ var catalogData = {};
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
 {
+	// Common requests
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, "handleLoadRequest");
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
+
+	// Object requests
     dojo.event.topic.subscribe("/publishObjectRequest", udkDataProxy, "handlePublishObjectRequest");
     dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
     dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
@@ -90,6 +96,10 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/cutObjectRequest", udkDataProxy, "handleCutObjectRequest");
     dojo.event.topic.subscribe("/copyObjectRequest", udkDataProxy, "handleCopyObjectRequest");
     dojo.event.topic.subscribe("/getObjectPathRequest", udkDataProxy, "handleGetObjectPathRequest");
+
+	// Address requests
+    dojo.event.topic.subscribe("/createAddressRequest", udkDataProxy, "handleCreateAddressRequest");
+
 
 	// Set initial values
 	udkDataProxy.dirtyFlag = false;
@@ -321,7 +331,6 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 				callback: function(res){
 						msg.resultHandler.callback(res);
 						udkDataProxy._setData(res);
-//						udkDataProxy._updateTree(res);
 						udkDataProxy.setDirtyFlag();
 					},
 				timeout:10000,
@@ -332,12 +341,86 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 	deferred.addCallbacks(loadCallback, loadErrback);
 }
 
+udkDataProxy.handleCreateAddressRequest = function(msg)
+{
+	var nodeId = msg.id;
+	if (msg.id == "addressRoot") {
+		nodeId = null;
+	}
+
+	// TODO Check if we are in a state where it's safe to create a node?
+	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
+	var deferred = udkDataProxy.checkForUnsavedChanges();
+	var loadErrback = function() {msg.resultHandler.errback();}
+	var loadCallback = function() {
+		EntryService.createNewAddress(nodeId,
+			{
+				callback: function(res){
+						msg.resultHandler.callback(res);
+						udkDataProxy._setData(res);
+						udkDataProxy.setDirtyFlag();
+					},
+				timeout:10000,
+				errorHandler:function(message) {msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new address."); }
+			}
+		);	
+	}
+	deferred.addCallbacks(loadCallback, loadErrback);
+}
+
+
 udkDataProxy.handleSaveRequest = function(msg)
 {
-	/* TODO Check if we are in a state where it's safe to save data
-	 *      If we are, read all the fields and send the collected data to
-	 *      the EntryService. If not delay the call and bounce back the message (e.g. query user).
-	 */
+	if (currentUdk.nodeAppType == "O")
+		udkDataProxy._handleSaveObjectRequest(msg);
+	else if (currentUdk.nodeAppType == "A")
+		udkDataProxy._handleSaveAddressRequest(msg);
+}
+
+udkDataProxy._handleSaveAddressRequest = function(msg) {
+	// TODO Implement validity check for addresses
+	/*
+	if (!checkValidityOfInputElements()){
+		if (msg && msg.resultHandler) {
+			msg.resultHandler.errback(new Error("INPUT_INVALID_ERROR"));
+		}
+		return;
+	}
+	*/
+
+	// Construct an MdekAddressBean from the available data
+	var nodeData = udkDataProxy._getData();
+
+	// Deferred obj for the main save operation. The passed resulthandler is called with the appropriate result
+	var onSaveDef = new dojo.Deferred();
+	onSaveDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+//		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onSaveDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling EntryService.saveAddressData("+nodeData.uuid+", true)");
+	EntryService.saveAddressData(nodeData, "true",
+		{
+			callback: function(res) { onSaveDef.callback(res); },
+			timeout:10000,
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while saving addressData:");
+				onSaveDef.errback(err);
+			}
+		}
+	);
+}
+
+
+udkDataProxy._handleSaveObjectRequest = function(msg) {
 	if (!checkValidityOfInputElements()){
 		if (msg && msg.resultHandler) {
 			msg.resultHandler.errback(new Error("INPUT_INVALID_ERROR"));
@@ -397,6 +480,7 @@ udkDataProxy.handleSaveRequest = function(msg)
 		}
 	);
 }
+
 
 udkDataProxy.handlePublishObjectRequest = function(msg) {
 	// Construct an MdekDataBean from the available data
@@ -658,6 +742,94 @@ udkDataProxy._setData = function(nodeData)
 
 udkDataProxy._setAddressData = function(nodeData)
 {
+	// Set the address type list values depending on the parent class
+	var parentClass = nodeData.parentClass;
+	if (parentClass == null) parentClass = 4;
+	var addressTypeDP = dojo.widget.byId("addressType").dataProvider;
+
+	var valueList = [];
+	switch (parentClass) {
+		case 4: // Root Address
+			valueList.push([message.get("address.type.institution"), "AddressType0"]);
+			break;
+
+		case 0:	// Institution
+			valueList.push([message.get("address.type.institution"), "AddressType0"]);
+			valueList.push([message.get("address.type.unit"), "AddressType1"]);
+			valueList.push([message.get("address.type.person"), "AddressType2"]);
+			break;
+
+		case 1:	// Unit
+			valueList.push([message.get("address.type.unit"), "AddressType1"]);
+			valueList.push([message.get("address.type.person"), "AddressType2"]);
+			break;
+
+		case 2:	// Person (a person must not have any subAddresses)
+			dojo.debug("Error in udkDataProxy._setAddressData - A 'person' is not allowed to have any sub addresses!");
+			break;
+
+		case 3:	// Custom Address (a custom address must not have any subAddresses)
+			dojo.debug("Error in udkDataProxy._setAddressData - A 'custom address' is not allowed to have any sub addresses!");
+			break;
+
+//		case 5:	// Custom Address Root
+//			valueList.push([message.get("address.type.custom"), "AddressType3"]);
+//			break;
+
+		default:
+			dojo.debug("Error in udkDataProxy._setAddressData - Unknown parent address type: "+parentClass);
+			break;
+	}
+	addressTypeDP.setData(valueList);
+
+
+	// ------------------ Header ------------------
+	dojo.widget.byId("addressTitle").setValue(udkDataProxy._createAddressTitle(nodeData));
+	dojo.widget.byId("addressType").setValue("AddressType"+nodeData.addressClass);
+	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
+	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
+	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
+
+	// ------------------ Address and Function ------------------
+	dojo.widget.byId("addressStreet").setValue(nodeData.street);
+	dojo.widget.byId("addressCountry").setValue(nodeData.countryCode);
+	dojo.widget.byId("addressZipCode").setValue(nodeData.postalCode);
+	dojo.widget.byId("addressCity").setValue(nodeData.city);
+	dojo.widget.byId("addressPOBox").setValue(nodeData.pobox);
+	dojo.widget.byId("addressZipPOBox").setValue(nodeData.poboxPostalCode);
+	dojo.widget.byId("addressNotes").setValue(nodeData.addressDescription);
+//	dojo.widget.byId("addressCom").setValue(nodeData.communication);
+	dojo.widget.byId("addressTasks").setValue(nodeData.task);
+
+	
+
+	// ------------------ Class specific content ------------------
+	switch(nodeData.addressClass) {
+		case 0:
+			dojo.widget.byId("headerAddressType0Institution").setValue(nodeData.organisation);
+			break;
+		case 1:
+//			dojo.widget.byId("headerAddressType1Institution").setValue(nodeData.organisation);
+			dojo.widget.byId("headerAddressType1Unit").setValue(nodeData.organisation);
+			break;
+		case 2:
+//			dojo.widget.byId("headerAddressType2Institution").setValue(nodeData.organisation);
+			dojo.widget.byId("headerAddressType2Lastname").setValue(nodeData.name);
+			dojo.widget.byId("headerAddressType2Firstname").setValue(nodeData.givenName);
+			dojo.widget.byId("headerAddressType2Style").setValue(nodeData.nameForm);
+			dojo.widget.byId("headerAddressType2Title").setValue(nodeData.titleOrFunction);
+			break;
+		case 3:
+			dojo.widget.byId("headerAddressType3Lastname").setValue(nodeData.name);
+			dojo.widget.byId("headerAddressType3Firstname").setValue(nodeData.givenName);
+			dojo.widget.byId("headerAddressType3Style").setValue(nodeData.nameForm);
+			dojo.widget.byId("headerAddressType3Title").setValue(nodeData.titleOrFunction);
+			dojo.widget.byId("headerAddressType3Institution").setValue(nodeData.organisation);
+			break;
+		default:
+			dojo.debug("Error in udkDataProxy._setAddressData - Address Class must be 0, 1, 2 or 3!");
+			break;
+	}
 }
 
 udkDataProxy._setObjectData = function(nodeData)
@@ -920,6 +1092,58 @@ udkDataProxy._getData = function()
   return (nodeData);
 }
 
+udkDataProxy._getAddressData = function(nodeData) {
+
+	// ------------- General Static Data -------------
+	nodeData.uuid = currentUdk.uuid;
+
+	// ------------------ Header ------------------
+	nodeData.addressClass = dojo.widget.byId("addressType").getValue()[11];		// AddressTypex
+
+	// ------------------ Address and Function ------------------
+	nodeData.street = dojo.widget.byId("addressStreet").getValue();
+	nodeData.countryCode = dojo.widget.byId("addressCountry").getValue();
+	nodeData.postalCode = dojo.widget.byId("addressZipCode").getValue();
+	nodeData.city = dojo.widget.byId("addressCity").getValue();
+	nodeData.pobox = dojo.widget.byId("addressPOBox").getValue();
+	nodeData.poboxPostalCode = dojo.widget.byId("addressZipPOBox").getValue();
+	nodeData.addressDescription = dojo.widget.byId("addressNotes").getValue();
+//	nodeData.communication = dojo.widget.byId("addressCom").getValue();
+	nodeData.task = dojo.widget.byId("addressTasks").getValue();
+
+  // ------------------ Class specific content ------------------
+	switch(nodeData.addressClass) {
+		case '0':
+			nodeData.organisation = dojo.widget.byId("headerAddressType0Institution").getValue();
+			break;
+		case '1':
+//			dojo.widget.byId("headerAddressType1Institution").setValue(nodeData.organisation);
+			nodeData.organisation = dojo.widget.byId("headerAddressType1Unit").getValue();
+			break;
+		case '2':
+//			dojo.widget.byId("headerAddressType2Institution").setValue(nodeData.organisation);
+			nodeData.name = dojo.widget.byId("headerAddressType2Lastname").getValue();
+			nodeData.givenName = dojo.widget.byId("headerAddressType2Firstname").getValue();
+			nodeData.nameForm = dojo.widget.byId("headerAddressType2Style").getValue();
+			nodeData.titleOrFunction = dojo.widget.byId("headerAddressType2Title").getValue();
+			break;
+		case '3':
+			nodeData.name = dojo.widget.byId("headerAddressType3Lastname").getValue();
+			nodeData.givenName = dojo.widget.byId("headerAddressType3Firstname").getValue();
+			nodeData.nameForm = dojo.widget.byId("headerAddressType3Style").getValue();
+			nodeData.titleOrFunction = dojo.widget.byId("headerAddressType3Title").getValue();
+			nodeData.organisation = dojo.widget.byId("headerAddressType3Institution").getValue();
+			break;
+		default:
+			dojo.debug("Error in udkDataProxy._getAddressData - Address Class must be 0, 1, 2 or 3!");
+			break;
+	}
+
+  dojo.debug("------ ADDRESS DATA ------");
+  dojo.debugShallow(nodeData);
+  dojo.debug("------ ADDRESS DATA END ------");
+}
+
 udkDataProxy._getObjectData = function(nodeData)
 {
   /* 
@@ -1054,9 +1278,9 @@ udkDataProxy._getObjectData = function(nodeData)
       break;
   }
 
-  dojo.debug("------ NODE DATA ------");
+  dojo.debug("------ OBJECT DATA ------");
   dojo.debugShallow(nodeData);
-  dojo.debug("------ NODE DATA END ------");
+  dojo.debug("------ OBJECT DATA END ------");
 }
 
 udkDataProxy._getObjectDataClass0 = function(nodeData) {};
@@ -1297,4 +1521,25 @@ udkDataProxy._addIcons = function(list) {
 		}
 	}
 	return list;
+}
+
+udkDataProxy._createAddressTitle = function(adr) {
+	var title = "";
+	switch (adr.addressClass) {
+		case 0: // Institution
+			return adr.organisation;
+		case 1:	// Unit
+			return adr.organisation;
+		case 2: // Person
+			if (adr.name) title += adr.name;
+			if (adr.givenName) title += ", "+adr.givenName;
+			return title;
+		case 3: // Freie Adresse
+			if (adr.name) title += adr.name;
+			if (adr.givenName) title += ", "+adr.givenName;
+			if (adr.organisation) title += "("+adr.givenName+")";
+			return title;
+		default:
+			return title;
+	}
 }

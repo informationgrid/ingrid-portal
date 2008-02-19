@@ -161,6 +161,18 @@ public interface EntryService {
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition);
 
 	/**
+	 * Saves or updates the Address.
+	 * 
+	 * @param data
+	 *            the nodes data.
+	 * @param useWorkingCopy
+	 *            If true saves data only to the working copy, if false save it
+	 *            over the original data and remove the working copy.
+	 * @return The stored address is returned with updated values (id, work state, etc.)
+	 */
+	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy);
+
+	/**
 	 * Copy a node. The parameter includeChildren specifies if the children of
 	 * the specified node should be copied as well. The method copies the
 	 * original data and the working copy.
@@ -209,6 +221,7 @@ public interface EntryService {
 	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean markOnly);
 
 	public MdekDataBean createNewNode(String parentUuid);
+	public MdekAddressBean createNewAddress(String parentUuid);
 	
 	// Returns a list containing all the node ids from the root object to the node with id 'targetUuid'
 	public List<String> getPathToObject(String targetUuid);

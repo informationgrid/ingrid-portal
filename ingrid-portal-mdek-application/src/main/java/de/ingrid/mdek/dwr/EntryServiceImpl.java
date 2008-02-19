@@ -174,14 +174,29 @@ public class EntryServiceImpl implements EntryService {
 			log.error("Error while getting node data.", e);
 		}
 
-		data.setTitle("Neues Objekt");
-		data.setObjectName("Neues Objekt");
+//		data.setObjectName("Neues Objekt");
 		data.setNodeAppType(OBJECT_APPTYPE);
 		data.setNodeDocType(OBJECT_INITIAL_DOCTYPE);
 		data.setUuid("newNode");
 		return data;
 	}
 
+	public MdekAddressBean createNewAddress(String parentUuid) {
+		log.debug("creating new address with parent id = "+parentUuid);		
+		MdekAddressBean data = null;
+		try {
+			data = dataConnection.getInitialAddress(parentUuid);
+		} catch (Exception e) {
+			log.error("Error while getting address data.", e);
+		}
+
+		data.setNodeAppType(ADDRESS_APPTYPE);
+//		data.setNodeDocType(ADDRESS_INITIAL_DOCTYPE);
+		data.setUuid("newNode");
+		return data;
+	}
+
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -304,6 +319,39 @@ public class EntryServiceImpl implements EntryService {
 	}
 
 
+	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy) {
+		log.debug("saveAddressData()");
+
+		if (useWorkingCopy) {
+			log.debug("Saving address with ID: "+data.getUuid());
+
+			try { return dataConnection.saveAddress(data); }
+			catch (MdekException e) {
+				// Wrap the MdekException in a RuntimeException so dwr can convert it
+				log.debug("MdekException while saving address.", e);
+				throw new RuntimeException(convertToRuntimeException(e));
+			}
+			catch (Exception e) {
+				log.error("Error while saving node", e);
+				throw new RuntimeException("Error while saving address.");
+			}
+		} else {
+			log.debug("Publishing address with ID: "+data.getUuid());
+
+			try { return dataConnection.publishAddress(data); }
+			catch (MdekException e) {
+				// Wrap the MdekException in a RuntimeException so dwr can convert it
+				log.debug("MdekException while publishing address.", e);
+				throw new RuntimeException(convertToRuntimeException(e));
+			}
+			catch (Exception e) {
+				log.error("Error while publishing address", e);
+				throw new RuntimeException("Error while publishing address.");
+			}
+		}
+	}
+
+	
 	/*
 	 * (non-Javadoc)
 	 * 

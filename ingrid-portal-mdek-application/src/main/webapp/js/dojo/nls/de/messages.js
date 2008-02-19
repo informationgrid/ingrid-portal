@@ -25,6 +25,7 @@
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.newNodeName":"Neues Objekt",
+    "tree.newAddressName":"Neue Adresse",
     "tree.reload":"Neues Laden",
 
 	"dialog.addDescriptorsTitle":"Deskriptoren hinzuf&uuml;gen",
@@ -48,6 +49,11 @@
 	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
 	"operation.hint.publicationConditionSaveHint":"Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Speichern dieses Objektes wird eine entsprechende Anpassung vorgenommen. Soll das Objekt wirklich gespeichert werden?",
 	"operation.hint.publicationConditionMoveHint":"Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Verschieben dieses Objektes bzw. Teilbaumes wird eine entsprechende Anpassung vorgenommen. Soll das Objekt / der Teilbaum wirklich verschoben werden?",
+
+	"address.type.institution":"Institution",
+	"address.type.unit":"Einheit",
+	"address.type.person":"Person",
+	"address.type.custom":"Freie Adresse",
 
     "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
