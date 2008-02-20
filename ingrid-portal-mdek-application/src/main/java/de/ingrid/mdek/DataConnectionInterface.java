@@ -177,6 +177,18 @@ public interface DataConnectionInterface {
 	public boolean deleteObjectWorkingCopy(String uuid);
 
 	/**
+	 * Sends a request to delete a working copy.
+	 * 
+	 * <ul>
+	 * <li><b>(String) uuid</b> - uuid of the node whose working copy should be deleted.</li>
+	 * </ul>
+	 * 
+	 * @return boolean if the address was fully deleted (no published version exists) or not (published ver exists)
+	 */		
+	public boolean deleteAddressWorkingCopy(String uuid);
+
+	
+	/**
 	 * Query if an object can be cut.
 	 * 
 	 * <ul>

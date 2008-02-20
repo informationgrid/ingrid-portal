@@ -113,6 +113,18 @@ public class EntryServiceImpl implements EntryService {
 		return null;
 	}
 
+	public MdekAddressBean deleteAddressWorkingCopy(String uuid, Boolean markOnly) {
+		try {
+			boolean wasFullyDeleted = dataConnection.deleteAddressWorkingCopy(uuid);
+			if (!wasFullyDeleted) {
+				return dataConnection.getAddressDetail(uuid);
+			}
+		} catch (Exception e) {
+			log.error("Error deleting address working Copy.", e);
+		};
+		return null;
+	}
+
 	
 	/*
 	 * (non-Javadoc)

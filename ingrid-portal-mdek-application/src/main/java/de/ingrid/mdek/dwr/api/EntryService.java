@@ -219,6 +219,7 @@ public interface EntryService {
 	 */
 	public String deleteNode(String nodeUuid, Boolean markOnly);
 	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean markOnly);
+	public MdekAddressBean deleteAddressWorkingCopy(String nodeUuid, Boolean markOnly);
 
 	public MdekDataBean createNewNode(String parentUuid);
 	public MdekAddressBean createNewAddress(String parentUuid);

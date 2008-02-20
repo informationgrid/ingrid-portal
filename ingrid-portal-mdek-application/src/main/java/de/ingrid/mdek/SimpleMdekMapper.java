@@ -455,7 +455,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekAdr.put(MDEK_CLASS, adrClass);
 		if (adrClass == 0 || adrClass == 1)
 			mdekAdr.put(MDEK_TITLE, adr.get(MdekKeys.ORGANISATION));
-		else {
+		else if (adrClass == 2) {
+			String title = "";
+			title += adr.get(MdekKeys.NAME);
+			if (adr.get(MdekKeys.GIVEN_NAME) != null)
+				title += ", "+adr.get(MdekKeys.GIVEN_NAME);
+//			if (adr.get(MdekKeys.ORGANISATION) != null)
+//				title += " ("+adr.get(MdekKeys.ORGANISATION)+")";
+			mdekAdr.put(MDEK_TITLE, title);
+		} else if (adrClass == 3) {
 			String title = "";
 			title += adr.get(MdekKeys.NAME);
 			if (adr.get(MdekKeys.GIVEN_NAME) != null)

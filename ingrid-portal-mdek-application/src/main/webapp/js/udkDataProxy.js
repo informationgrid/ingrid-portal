@@ -288,7 +288,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 					callback:function(res){
 							if (res != null) {
 								udkDataProxy._setData(res);
-//								udkDataProxy._updateTree(res);
+								udkDataProxy._updateTree(res);
 								resetRequiredFields();
 								if (resultHandler)
 									resultHandler.callback();
@@ -396,7 +396,7 @@ udkDataProxy._handleSaveAddressRequest = function(msg) {
 	onSaveDef.addCallback(function(res) {
 		udkDataProxy.resetDirtyFlag();
 		udkDataProxy._setData(res);
-//		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy._updateTree(res, nodeData.uuid);
 		udkDataProxy.onAfterSave();
 		msg.resultHandler.callback(res);	
 	});
@@ -536,6 +536,36 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
+	var nodeAppType = dojo.widget.byId(msg.id).nodeAppType;
+	if (nodeAppType == "O")
+		udkDataProxy._handleDeleteObjectWorkingCopyRequest(msg);
+	else if (nodeAppType == "A")
+		udkDataProxy._handleDeleteAddressWorkingCopyRequest(msg);
+}
+
+udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.deleteAddressWorkingCopy("+msg.id+")");
+	EntryService.deleteAddressWorkingCopy(msg.id, "false",
+		{
+			callback: function(res){
+				if (res != null) {
+					udkDataProxy.resetDirtyFlag();
+					udkDataProxy._setData(res);
+					udkDataProxy._updateTree(res, msg.id);
+					udkDataProxy.onAfterSave();
+				}
+				msg.resultHandler.callback(res);
+			},
+			timeout:10000,
+			errorHandler:function(message) {
+				alert("Error in js/udkDataProxy.js: Error while deleting address working copy: " + message);
+				msg.resultHandler.errback();
+			}
+		}
+	);
+}
+
+udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.deleteObjectWorkingCopy("+msg.id+")");
 	EntryService.deleteObjectWorkingCopy(msg.id, "false",
 		{
@@ -556,6 +586,7 @@ udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
 		}
 	);
 }
+
 
 udkDataProxy.handleDeleteRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+")");
@@ -1413,6 +1444,13 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		oldUuid = nodeData.uuid;
 	}
 
+	var title = "";
+	if (nodeData.nodeAppType == "O") {
+		title = nodeData.objectName;
+	} else if (nodeData.nodeAppType == "A") {
+		title = udkDataProxy._createAddressTitle(nodeData);
+	}
+
 	// If we change the uuid (= widgetId) of a node the treeNode has to be created again
 	// because otherwise dojo doesn't 'register' the changed widgetId 
 	// Currently a changed uuid is only possible if a new Node is updated.
@@ -1427,7 +1465,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			contextMenu: 'contextMenu1',
 			isFolder: false,
 			nodeDocType: nodeData.nodeDocType,
-			title: nodeData.objectName,
+			title: title,
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: nodeData.nodeAppType,
 			id: nodeData.uuid
@@ -1437,7 +1475,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		if (node) {
 			node.nodeDocType = nodeData.nodeDocType;	
 			dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(node);
-			node.setTitle(nodeData.objectName);
+			node.setTitle(title);
 			node.id = nodeData.uuid;	
 		} else {
 			dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);

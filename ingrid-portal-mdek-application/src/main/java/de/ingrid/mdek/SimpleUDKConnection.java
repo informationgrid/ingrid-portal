@@ -121,9 +121,9 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	public MdekAddressBean saveAddress(MdekAddressBean data) {
 		IngridDocument adr = (IngridDocument) dataMapper.convertFromAddressRepresentation(data);
-		log.debug("saveAddress() not implemented yet.");
-/*
-		// Handle store of a new node. Should this be handled by the
+//		log.debug("saveAddress() not implemented yet.");
+
+		// Handle store of a new address. Should this be handled by the
 		// EntryService?
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
@@ -135,8 +135,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 		IngridDocument response = mdekCaller.storeAddress(adr, true, getCurrentSessionId());
 		return extractSingleAddressFromResponse(response);
-*/
-		return data;
 	}
 
 	
@@ -181,6 +179,13 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	public boolean deleteObjectWorkingCopy(String uuid) {
 		IngridDocument response = mdekCaller.deleteObjectWorkingCopy(uuid, getCurrentSessionId());
+
+		IngridDocument result = extractAdditionalInformationFromResponse(response);
+		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
+	}
+
+	public boolean deleteAddressWorkingCopy(String uuid) {
+		IngridDocument response = mdekCaller.deleteAddressWorkingCopy(uuid, getCurrentSessionId());
 
 		IngridDocument result = extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
