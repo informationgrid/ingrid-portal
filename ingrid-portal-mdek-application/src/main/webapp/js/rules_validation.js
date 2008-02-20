@@ -9,6 +9,10 @@ dojo.addOnLoad(function() {
 	addMinMaxValidation("spatialRefAltMin", "spatialRefAltMax", "Minimum", "Maximum");
 	addMinMaxDateValidation("timeRefType", "timeRefDate1", "timeRefDate2");
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
+
+	// Object Name must not be empty
+	var objNameWidget = dojo.widget.byId("objectName");
+	objNameWidget.isValid = function() { return !this.isMissing(); };
 });
 
 

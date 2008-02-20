@@ -236,10 +236,10 @@ function hideSplash(){
 	        <table cellspacing="0">
 	          <tbody>
 	            <tr>
-	              <td id="objectNameLabel" class="label"><label for="objectName">Objektname</label></td>
-	              <td colspan="2"><input type="text" id="objectName" name="objectName" class="w550" dojoType="ingrid:ValidationTextBox" /></td></tr>
+	              <td id="objectNameLabel" class="label required"><label for="objectName">Objektname*</label></td>
+	              <td colspan="2"><input type="text" id="objectName" required="true" name="objectName" class="w550" dojoType="ingrid:ValidationTextBox" /></td></tr>
 	            <tr>
-	              <td id="objectClassLabel" class="label col1"><label for="objectClass">Objektklasse</label></td>
+	              <td id="objectClassLabel" class="label required col1"><label for="objectClass">Objektklasse*</label></td>
 	              <td class="col2">
 	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
 	                <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectClass" name="objectClass">
@@ -1710,10 +1710,10 @@ function hideSplash(){
 			<table cellspacing="0">
 		  	<tbody>
 		  		<tr>
-		  		  <td class="label"><label for="addressTitle">Adresstitel</label></td>
+		  		  <td class="label required"><label for="addressTitle">Adresstitel*</label></td>
 		  		  <td colspan="2"><input type="text" id="addressTitle" name="addressTitle" class="w550" disabled="true" dojoType="ingrid:ValidationTextBox" /></td></tr>
 		  		<tr>
-		  		  <td class="label col1"><label for="addressType">Adresstyp</label></td>
+		  		  <td class="label required col1"><label for="addressType">Adresstyp*</label></td>
 		  		  <td class="col2">
 		          <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="addressType" name="addressType">
 		            <!-- TODO: fill in jsp -->
@@ -1747,9 +1747,14 @@ function hideSplash(){
 			  <div id="headerAddressType0" class="contentBlock firstBlock grey">
 				<div id="headerAddressType0Content" class="content">
 
+			      <div class="inputContainer">
+			        <span class="label"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Institution" class="w668 h038" disabled="true" /></span>
+			  	  </div>
+
 			      <div class="inputContainer noSpaceBelow">
-			        <span class="label required"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
-			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Institution" class="w668 h038" /></span>
+			        <span class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Unit" class="w668 h038" /></span>
 			  	  </div>
 
 			    </div>

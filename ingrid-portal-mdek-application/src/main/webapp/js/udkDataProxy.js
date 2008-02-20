@@ -816,7 +816,8 @@ udkDataProxy._setAddressData = function(nodeData)
 	// ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
 		case 0:
-			dojo.widget.byId("headerAddressType0Institution").setValue(nodeData.organisation);
+//			dojo.widget.byId("headerAddressType0Institution").setValue(nodeData.organisation);
+			dojo.widget.byId("headerAddressType0Unit").setValue(nodeData.organisation);
 			break;
 		case 1:
 //			dojo.widget.byId("headerAddressType1Institution").setValue(nodeData.organisation);
@@ -858,7 +859,11 @@ udkDataProxy._setObjectData = function(nodeData)
 
 //  dojo.debug("HeaderObjectForm before setting values: " + dojo.json.serialize(formWidget.getValues()));
 
-  dojo.widget.byId("objectName").setValue(nodeData.objectName);
+  if (nodeData.objectName == null)
+  	dojo.widget.byId("objectName").setValue(message.get("tree.newNodeName"));
+  else
+  	dojo.widget.byId("objectName").setValue(nodeData.objectName);
+
   dojo.widget.byId("objectClass").setValue("Class"+nodeData.objectClass);
   dojo.byId("workState").innerHTML = nodeData.workState;
   dojo.byId("creationTime").innerHTML = nodeData.creationTime;
@@ -1545,19 +1550,25 @@ udkDataProxy._createAddressTitle = function(adr) {
 	var title = "";
 	switch (adr.addressClass) {
 		case 0: // Institution
-			return adr.organisation;
+			title = adr.organisation;
+			break;
 		case 1:	// Unit
-			return adr.organisation;
+			title = adr.organisation;
+			break;
 		case 2: // Person
 			if (adr.name) title += adr.name;
 			if (adr.givenName) title += ", "+adr.givenName;
-			return title;
+			break;
 		case 3: // Freie Adresse
 			if (adr.name) title += adr.name;
 			if (adr.givenName) title += ", "+adr.givenName;
 			if (adr.organisation) title += "("+adr.givenName+")";
-			return title;
+			break;
 		default:
-			return title;
+			break;
 	}
+	if (title == null)
+		return message.get("tree.newAddressName");
+	else
+		return dojo.string.trim(title);
 }

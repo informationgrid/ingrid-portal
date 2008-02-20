@@ -100,9 +100,24 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 		}
 	},
 
+	highlight: function() {
+		// summary: by Called oninit, and onblur.
+
+		// highlight textbox background 
+		if (this.isEmpty() && !this.required) {
+			this.updateClass("Empty");
+		}else if (this.isValid() && this.isInRange() ){
+			this.updateClass("Valid");
+		}else { 
+			this.updateClass("Invalid");
+//		}else if(this.textbox.value != this.promptMessage){ 
+//			this.updateClass("Invalid");
+//		}else{
+//			this.updateClass("Empty");
+		}
+	},
 
   enable: function() {
-    dojo.debug("enable called on "+this);
     dojo.widget.ValidationTextbox.superclass.enable.apply(this, arguments);
 	var ee = this[this.mode.toLowerCase()];				
     ee.removeAttribute("disabled");
@@ -110,7 +125,6 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
   },
 
   disable: function() {
-    dojo.debug("disable called on "+this);
     dojo.widget.ValidationTextbox.superclass.disable.apply(this, arguments);
 	var ee = this[this.mode.toLowerCase()];				
     ee.setAttribute("disabled", "disabled");
