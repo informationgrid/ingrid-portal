@@ -222,6 +222,17 @@ public interface DataConnectionInterface {
 	public List<String> getPathToObject(String uuid);
 
 	/**
+	 * Get a path from the root node to the specified address with uuid.
+	 * 
+	 * <ul>
+	 * <li><b>(String) uuid</b> - uuid of the target node.</li>
+	 * </ul>
+	 * 
+	 * @return List of uuids representing a path to the target node.
+	 */		
+	public List<String> getPathToAddress(String uuid);
+
+	/**
 	 * Copy a single object or a whole tree.
 	 * 
 	 * <ul>

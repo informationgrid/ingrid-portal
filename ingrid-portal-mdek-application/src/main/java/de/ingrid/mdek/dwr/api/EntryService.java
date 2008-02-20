@@ -226,6 +226,7 @@ public interface EntryService {
 	
 	// Returns a list containing all the node ids from the root object to the node with id 'targetUuid'
 	public List<String> getPathToObject(String targetUuid);
+	public List<String> getPathToAddress(String targetUuid);
 
 	// Queries if a node can be cut
 	public boolean canCutObject(String parentUuid);

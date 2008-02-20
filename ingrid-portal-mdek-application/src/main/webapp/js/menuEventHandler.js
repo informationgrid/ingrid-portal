@@ -507,20 +507,30 @@ menuEventHandler.handleShowComment = function() {
 // index is the index where the expand process is started
 // resultHandler is an optional deferred obj which is called when all nodes have been expanded
 _expandPathRec = function(pathList, index, resultHandler) {
+
+	var objRoot = dojo.widget.byId("objectRoot");
+	var adrRoot = dojo.widget.byId("addressRoot");
+	var nextNode = dojo.widget.byId(pathList[index]);
+	var treeController = dojo.widget.byId("treeController");
+
 	if (index >= pathList.length) {
 		resultHandler.callback();
 		return;
 	} else {
-		if (!dojo.widget.byId("objectRoot").isExpanded) {
-			// Expand the root object if it isn't already expanded
-			var treeController = dojo.widget.byId("treeController");
-			var deferred = treeController.expand(dojo.widget.byId("objectRoot"));
+		if (!objRoot.isExpanded) {
+			// Expand the root objects if they aren't already expanded
+			var deferred = treeController.expand(objRoot);
+			deferred.addCallback(function() {
+				_expandPathRec(pathList, 0, resultHandler);
+			});
+		} else if (!adrRoot.isExpanded) {
+			// Expand the root objects if they aren't already expanded
+			var deferred = treeController.expand(adrRoot);
 			deferred.addCallback(function() {
 				_expandPathRec(pathList, 0, resultHandler);
 			});
 		} else {
-			var treeController = dojo.widget.byId("treeController");
-			var deferred = treeController.expand(dojo.widget.byId(pathList[index]));
+			var deferred = treeController.expand(nextNode);
 			deferred.addCallback(function() {
 				_expandPathRec(pathList, index+1, resultHandler);
 			});
@@ -537,8 +547,8 @@ _expandPath = function(pathList) {
 	return deferred;
 }
 
-menuEventHandler.handleSelectNodeInTree = function(nodeId) {
-	if (nodeId != "newNode" && nodeId != "objectRoot") {
+menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
+	if (nodeId != "newNode" && nodeId != "objectRoot" && nodeId != "addressRoot") {
 		var deferred = new dojo.Deferred();
 		var treeController = dojo.widget.byId("treeController");
 
@@ -565,7 +575,12 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 		    	dojo.event.topic.publish("/loadRequest", {id: targetNode.id, appType: targetNode.nodeAppType, resultHandler:d});
 			});
 		});
-    	dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: deferred});		
+    	
+    	if (nodeAppType == "O") {
+    		dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: deferred});		
+		} else if (nodeAppType == "A" ){
+    		dojo.event.topic.publish("/getAddressPathRequest", {id: nodeId, resultHandler: deferred});		
+		}
 	}
 }
 

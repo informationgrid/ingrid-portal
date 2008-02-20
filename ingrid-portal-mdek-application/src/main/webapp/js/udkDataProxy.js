@@ -58,6 +58,10 @@
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *     ignoreDirtyFlag - boolean value indicating if the dirty flag should be ignored
  *
+ *   topic = '/getAddressPathRequest' - argument: {id: nodeUuid, resultHandler: deferred, ignoreDirtyFlag: bool}
+ *     nodeUuid - The Uuid of the target Address
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *     ignoreDirtyFlag - boolean value indicating if the dirty flag should be ignored
  */
 
 
@@ -99,6 +103,7 @@ dojo.addOnLoad(function()
 
 	// Address requests
     dojo.event.topic.subscribe("/createAddressRequest", udkDataProxy, "handleCreateAddressRequest");
+    dojo.event.topic.subscribe("/getAddressPathRequest", udkDataProxy, "handleGetAddressPathRequest");
 
 
 	// Set initial values
@@ -741,6 +746,31 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 	}
 }
 
+udkDataProxy.handleGetAddressPathRequest = function(msg) {
+	var loadErrback = function() {msg.resultHandler.errback();}
+	var loadCallback = function() {
+		dojo.debug("udkDataProxy calling EntryService.getPathToAddress("+msg.id+")");	
+		EntryService.getPathToAddress(msg.id, {
+				callback: function(res){msg.resultHandler.callback(res);},
+				timeout:10000,
+				errorHandler:function(message) {
+					alert("Error in js/udkDataProxy.js: Error while getting path to address: " + message);
+					msg.resultHandler.errback();
+				}
+			}
+		);	
+	}
+
+	if (msg.ignoreDirtyFlag) {
+		// If the dirty flag is ignored, the request can be started
+		loadCallback(); 
+	} else {
+		// Otherwise check for unsaved changes and start the request afterwards
+		var deferred = udkDataProxy.checkForUnsavedChanges();
+		deferred.addCallbacks(loadCallback, loadErrback);
+	}
+}
+
 
 // event.connect point. Called when data has been saved 
 udkDataProxy.onAfterSave = function() { dojo.debug("onAfterSave()"); }
@@ -915,6 +945,8 @@ udkDataProxy._setObjectData = function(nodeData)
   var addressTable = nodeData.generalAddressTable;
   udkDataProxy._addTableIndices(addressTable);
   udkDataProxy._addIcons(addressTable);
+  udkDataProxy._addAddressTitles(addressTable);
+  udkDataProxy._addAddressLinkLabels(addressTable);
   dojo.widget.byId("generalAddress").store.setData(addressTable);
   // Comments
   commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
@@ -1551,11 +1583,27 @@ udkDataProxy._addDisplayDates = function(list) {
 // which is a href to the menuEventHandler 'selectNodeInTree' function
 udkDataProxy._addObjectLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
-		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\");'"+
+		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 	}
 	return list;
 }
+
+udkDataProxy._addAddressTitles = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].title = udkDataProxy._createAddressTitle(list[i]);
+	}
+	return list;
+}
+
+udkDataProxy._addAddressLinkLabels = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
+		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
+	}
+	return list;
+}
+
 
 udkDataProxy._addUrlLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
@@ -1574,7 +1622,23 @@ udkDataProxy._addIcons = function(list) {
 		if (typeof(list[i].objectClass) != "undefined") {
 			list[i].icon = "<img src='img/UDK/udk_class"+list[i].objectClass+".gif' width=\"16\" height=\"16\" alt=\"Object\" />";
 		} else if (typeof(list[i].addressClass) != "undefined") {
-			list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+			switch (list[i].addressClass) {
+				case 0:	// Institution
+					list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				case 1:	// Unit
+					list[i].icon = "<img src='img/UDK/addr_unit.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				case 2:	// Person
+					list[i].icon = "<img src='img/UDK/addr_person.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				case 3:	// Free
+					list[i].icon = "<img src='img/UDK/addr_free.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				default:
+					list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+			}
 		} else if (typeof(list[i].url) != "undefined") {
 			list[i].icon = "<img src='img/UDK/url.gif' width=\"16\" height=\"16\" alt=\"Url\" />";		
 		} else {

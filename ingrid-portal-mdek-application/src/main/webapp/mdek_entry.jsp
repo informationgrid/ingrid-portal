@@ -308,7 +308,7 @@ function hideSplash(){
 	            		      <tr>
 	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox"></th>
 	                  			<th nosort="true" field="icon" dataType="String"></th>
-	                  			<th nosort="true" field="name" dataType="String">Namen</th>
+	                  			<th nosort="true" field="linkLabel" dataType="String">Namen</th>
 	            		      </tr>
 	            	      </thead>
 						  <colgroup>

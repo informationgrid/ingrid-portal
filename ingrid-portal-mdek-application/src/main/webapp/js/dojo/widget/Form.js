@@ -32,7 +32,6 @@ dojo.widget.defineWidget(
     var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
     var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
     btnImage.src = "img/ic_expand_required_grey.gif";
-    toggleFields();
 
     // load special rules
     dojo.hostenv.loadPath(ingridJsPath+"rules_required.js");

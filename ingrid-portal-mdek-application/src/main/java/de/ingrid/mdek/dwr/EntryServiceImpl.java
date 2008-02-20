@@ -134,6 +134,9 @@ public class EntryServiceImpl implements EntryService {
 	public List<String> getPathToObject(String uuid) {
 		return dataConnection.getPathToObject(uuid);
 	}
+	public List<String> getPathToAddress(String uuid) {
+		return dataConnection.getPathToAddress(uuid);
+	}
 
 	
 	/*

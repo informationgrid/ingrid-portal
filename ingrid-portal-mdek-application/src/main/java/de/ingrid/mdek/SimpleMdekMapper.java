@@ -978,6 +978,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	 ****************************************************************************/
 
 	private static ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
+		ArrayList<MdekAddressBean> resultList = new ArrayList<MdekAddressBean>(); 
+		if (adrTable == null)
+			return resultList;
+
+		for (HashMap<String, Object> adr : adrTable) {
+			resultList.add(getDetailedAddressRepresentation(adr));
+		}
+		return resultList;
+	}
+
+	/*
+	private static ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
 		ArrayList<MdekAddressBean> resultTable = new ArrayList<MdekAddressBean>(); 
 		if (adrTable == null)
 			return resultTable;
@@ -1018,6 +1030,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		}
 		return resultTable;
 	}
+*/
 
 	private static ArrayList<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, String>> commMap){
 		ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 

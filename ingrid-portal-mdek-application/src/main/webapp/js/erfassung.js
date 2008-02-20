@@ -3,12 +3,12 @@ function sizeContent()
   // adjust height of right bottom content within split pane
   var splitPaneDiv = document.getElementById('contentSection');
   var sectionTopDivName = "sectionTopObject";
-  if (!mdek.entry.isTypeObject()) {
+  if (currentUdk && currentUdk.nodeAppType == "A") {
     sectionTopDivName = "sectionTopAddress";
   }
   var sectionTopDiv = document.getElementById(sectionTopDivName);
   var contentFrameDivName = "contentFrameObject";
-  if (!mdek.entry.isTypeObject()) {
+  if (currentUdk && currentUdk.nodeAppType == "A") {
     contentFrameDivName = "contentFrameAddress";
   }
   var contentFrame = dojo.widget.byId(contentFrameDivName);
@@ -26,19 +26,21 @@ function toggleFields(section) {
 	var mode = "";
 	// get section or all sections respectively
 	var rootNodes = [];
-	if (section != undefined)
+	if (section != undefined && section != "Object" && section != "Address") {
 		rootNodes.push(document.getElementById(section));
-	else {
+
+//		dojo.debug("toggle fields in '" +section+ "'");
+	} else {
 		var sectionDivId = "contentFrameBodyObject";
-		if (!mdek.entry.isTypeObject()) {
+		if (section == "Address" || currentUdk && currentUdk.nodeAppType == "A") {
 			sectionDivId = "contentFrameBodyAddress";
   		}
-
 //		dojo.debug("toggle fields in container '" + sectionDivId + "'");
-		
+
 		// button on toolbar clicked, toggle all fields on page
 		// only if form is loaded
 		if (document.getElementById(sectionDivId)) {
+//			dojo.debug("Toolbar button clicked.");
 			rootNodes = document.getElementById(sectionDivId).childNodes;
 			var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
 			var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
@@ -264,13 +266,11 @@ function nodeSelected(message)
     dojo.byId("contentNone").style.display="block";
   }
   else if (message.node.nodeAppType == "A") {
-    mdek.entry.type = "a";
     dojo.byId("contentAddress").style.display="block";
     dojo.byId("contentObject").style.display="none";
     dojo.byId("contentNone").style.display="none";
   }
   else if (message.node.nodeAppType == "O") {
-    mdek.entry.type = "o";
     dojo.byId("contentAddress").style.display="none";
     dojo.byId("contentObject").style.display="block";
     dojo.byId("contentNone").style.display="none";

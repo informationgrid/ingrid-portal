@@ -3,19 +3,7 @@
 if(dj_undef("mdek", this)){
 	var mdek = {};
 }
-
 var mdek = {};
-
-// holds all functions for the entry page
-mdek.entry = {};
-// holds the type of object to display on entry page  ('o' - object, 'a' - address)
-mdek.entry.type="o";
-mdek.entry.isTypeObject = function()
-{
-//  Only display objects
-//  return (mdek.entry.type == "o");
-	return true;
-}
 
 var ref1SpatialSystemDP = null;
 
@@ -94,15 +82,15 @@ function initForm() {
   dojo.event.connect(window, "onresize", window, "sizeContent");
   sizeContent();
 
-  mdek.entry.type = "o";
   var contentForm = dojo.widget.byId('contentFormObject');  
   if (contentForm) {
     contentForm.initForm();
+	toggleFields("Object");
   }
   var contentForm = dojo.widget.byId('contentFormAddress');  
-  mdek.entry.type = "a";
   if (contentForm) {
     contentForm.initForm();
+	toggleFields("Address");
   }
 
   // Init the contentBlocks

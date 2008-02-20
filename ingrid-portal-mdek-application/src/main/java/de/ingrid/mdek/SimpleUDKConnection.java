@@ -222,6 +222,11 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractPathFromResponse(response);
 	}
 
+	public List<String> getPathToAddress(String uuid) {
+		IngridDocument response = mdekCaller.getAddressPath(uuid, getCurrentSessionId());
+		return extractPathFromResponse(response);
+	}
+
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
 		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree, getCurrentSessionId());
 		return extractSingleSimpleObjectFromResponse(response);
