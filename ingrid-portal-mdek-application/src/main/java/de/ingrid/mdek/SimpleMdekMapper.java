@@ -355,6 +355,10 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// References
 		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
+		ArrayList<String> strList = (ArrayList<String>) adr.get(MdekKeys.PATH);
+		if (strList != null)
+			mdekAddress.setParentInstitutions(strList);
+
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekAddress.setNodeAppType("A");

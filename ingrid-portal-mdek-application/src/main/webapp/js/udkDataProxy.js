@@ -872,20 +872,25 @@ udkDataProxy._setAddressData = function(nodeData)
 	udkDataProxy._addObjectLinkLabels(linkTable);  
 	udkDataProxy._addIcons(linkTable);
 	dojo.widget.byId("associatedObjName").store.setData(linkTable);
-
+	
+	var institution = "";
+	dojo.lang.forEach(nodeData.parentInstitutions, function(item) {
+		institution += item+"\n";
+	});
+	institution = dojo.string.trim(institution);
 
 	// ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
 		case 0:
-//			dojo.widget.byId("headerAddressType0Institution").setValue(nodeData.organisation);
+			dojo.widget.byId("headerAddressType0Institution").setValue(institution);
 			dojo.widget.byId("headerAddressType0Unit").setValue(nodeData.organisation);
 			break;
 		case 1:
-//			dojo.widget.byId("headerAddressType1Institution").setValue(nodeData.organisation);
+			dojo.widget.byId("headerAddressType1Institution").setValue(institution);
 			dojo.widget.byId("headerAddressType1Unit").setValue(nodeData.organisation);
 			break;
 		case 2:
-//			dojo.widget.byId("headerAddressType2Institution").setValue(nodeData.organisation);
+			dojo.widget.byId("headerAddressType2Institution").setValue(institution);
 			dojo.widget.byId("headerAddressType2Lastname").setValue(nodeData.name);
 			dojo.widget.byId("headerAddressType2Firstname").setValue(nodeData.givenName);
 			dojo.widget.byId("headerAddressType2Style").setValue(nodeData.nameForm);

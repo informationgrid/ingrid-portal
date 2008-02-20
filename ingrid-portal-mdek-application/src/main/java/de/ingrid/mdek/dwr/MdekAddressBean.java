@@ -45,7 +45,7 @@ public class MdekAddressBean {
 
 	// References
 	public ArrayList<MdekDataBean> linksFromObjectTable;
-
+	public ArrayList<String> parentInstitutions;
 
 	
 	public MdekAddressBean() {
@@ -293,5 +293,13 @@ public class MdekAddressBean {
 
 	public void setLinksFromObjectTable(ArrayList<MdekDataBean> linksFromObjectTable) {
 		this.linksFromObjectTable = linksFromObjectTable;
+	}
+
+	public ArrayList<String> getParentInstitutions() {
+		return parentInstitutions;
+	}
+
+	public void setParentInstitutions(ArrayList<String> parentInstitutions) {
+		this.parentInstitutions = parentInstitutions;
 	}
 }
