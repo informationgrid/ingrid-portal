@@ -206,8 +206,8 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
             query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                     Settings.QVALUE_DATATYPE_AREA_ENVTOPICS));
 
-            // Language
-            UtilsSearch.processLanguage(query, request.getLocale());
+            // remove language from setting, all URLs from all languages will be displayed
+            //UtilsSearch.processLanguage(query, request.getLocale());
 
             // TOPIC
             String queryValue = null;
