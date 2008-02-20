@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -97,11 +98,11 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // get topics
-        List topics = UtilsDB.getEnvTopics();
+        List topics = UtilsDB.getEnvTopics(messages);
         context.put("topicList", topics);
 
         // get functional categories
-        List categories = UtilsDB.getEnvFunctCategories();
+        List categories = UtilsDB.getEnvFunctCategories(messages);
         context.put("categoryList", categories);
 
         // update ActionForm !

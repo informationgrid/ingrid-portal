@@ -5,10 +5,13 @@ package de.ingrid.portal.global;
 
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -286,18 +289,42 @@ public class UtilsDB {
     }
 
     /**
-     * Get all the environment topics.
+     * Get all the environment topics sorted alphabetically by the localized query value.
+     * The query value of the IngridEnvTopic instances are overwritten with the localized values.
+     * If resources is NULL, nor localization/sorting will occur.
      * 
+     * @param resources
      * @return
      */
-    public static List getEnvTopics() {
+    public static List getEnvTopics(IngridResourceBundle resources) {
         // NOTICE: assign list to our static variable, passed static variable
         // may be null,
         // so there's no call by reference !
         envTopics = getValuesFromDB(IngridEnvTopic.class, envTopics);
+        if (resources == null) {
+        	return envTopics;
+        }
+        for (int i=0; i<envTopics.size(); i++) {
+        	IngridEnvTopic topic = (IngridEnvTopic)envTopics.get(i);
+        	topic.setQueryValue(resources.getString(topic.getQueryValue()));
+        }
+        Collections.sort(envTopics, new IngridEnvTopicComparator());
         return envTopics;
     }
 
+    private static class IngridEnvTopicComparator implements Comparator {
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public final int compare(Object a, Object b) {
+            String sa = ((IngridEnvTopic)a).getQueryValue();
+            String sb = ((IngridEnvTopic)b).getQueryValue();
+ 
+            return sa.compareTo(sb);
+        }
+    }
+    
+    
     /**
      * Get the query value of a topic from the form value (key).
      * 
@@ -305,23 +332,48 @@ public class UtilsDB {
      * @return
      */
     public static String getTopicFromKey(String key) {
-        List envTopics = getEnvTopics();
+        List envTopics = getEnvTopics(null);
         return getQueryValueFromFormValue(envTopics, key);
     }
 
     /**
-     * Get all the environment functional categories.
+     * Get all the environment functional categories sorted alphabetically by the localized query value.
+     * The query value of the IngridEnvFunctCategory instances are overwritten with the localized values.
+     * If resources is NULL, nor localization/sorting will occur.
+     * 
+     * @param resources
      * 
      * @return
      */
-    public static List getEnvFunctCategories() {
+    public static List getEnvFunctCategories(IngridResourceBundle resources) {
         // NOTICE: assign list to our static variable, passed static variable
         // may be null,
         // so there's no call by reference !
         envFunctCategories = getValuesFromDB(IngridEnvFunctCategory.class, envFunctCategories);
+        if (resources == null) {
+        	return envFunctCategories;
+        }
+        for (int i=0; i<envFunctCategories.size(); i++) {
+        	IngridEnvFunctCategory category = (IngridEnvFunctCategory)envFunctCategories.get(i);
+        	category.setQueryValue(resources.getString(category.getQueryValue()));
+        }
+        Collections.sort(envFunctCategories, new IngridEnvFunctCategoryComparator());
         return envFunctCategories;
     }
 
+    private static class IngridEnvFunctCategoryComparator implements Comparator {
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public final int compare(Object a, Object b) {
+            String sa = ((IngridEnvFunctCategory)a).getQueryValue();
+            String sb = ((IngridEnvFunctCategory)b).getQueryValue();
+ 
+            return sa.compareTo(sb);
+        }
+    }
+    
+    
     /**
      * Get the query value of a functional category from the form value (key).
      * 
@@ -329,7 +381,7 @@ public class UtilsDB {
      * @return
      */
     public static String getFunctCategoryFromKey(String key) {
-        List envCategories = getEnvFunctCategories();
+        List envCategories = getEnvFunctCategories(null);
         return getQueryValueFromFormValue(envCategories, key);
     }
 

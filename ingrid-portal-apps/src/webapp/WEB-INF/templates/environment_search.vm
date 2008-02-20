@@ -18,7 +18,7 @@
 			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
 				<option value="all" #getSelected('category' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($category in $categoryList)
-<option value="$category.FormValue" #getSelected('category' "$category.FormValue")>$MESSAGES.getString("$category.QueryValue")</option>
+<option value="$category.FormValue" #getSelected('category' "$category.FormValue")>$category.QueryValue</option>
 #end
 			</select>
 		</div>  

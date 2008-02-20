@@ -36,7 +36,7 @@ public class EnvironmentTeaserPortlet extends GenericVelocityPortlet {
         response.setTitle(messages.getString(titleKey));
 
         // get topics
-        List topics = UtilsDB.getEnvTopics();
+        List topics = UtilsDB.getEnvTopics(messages);
         context.put("topicList", topics);
 
         super.doView(request, response);

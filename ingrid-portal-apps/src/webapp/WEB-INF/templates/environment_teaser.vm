@@ -8,6 +8,6 @@
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doTeaser')
 $action.setParameter('rubric',"$topic.FormValue")
-    <li><a href="$action">$MESSAGES.getString("$topic.QueryValue")</a>#if($velocityCount != $numTopics)<span class="separator">&nbsp;</span>#end</li>
+    <li><a href="$action">$topic.QueryValue</a>#if($velocityCount != $numTopics)<span class="separator">&nbsp;</span>#end</li>
 #end
 </ul>
