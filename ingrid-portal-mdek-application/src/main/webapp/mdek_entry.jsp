@@ -1713,7 +1713,7 @@ function hideSplash(){
 		  		  <td class="label required"><label for="addressTitle">Adresstitel*</label></td>
 		  		  <td colspan="2"><input type="text" id="addressTitle" name="addressTitle" class="w550" disabled="true" dojoType="ingrid:ValidationTextBox" /></td></tr>
 		  		<tr>
-		  		  <td class="label required col1"><label for="addressType">Adresstyp*</label></td>
+		  		  <td id="addressTypeLabel" class="label required col1"><label for="addressType">Adresstyp*</label></td>
 		  		  <td class="col2">
 		          <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="addressType" name="addressType">
 		            <!-- TODO: fill in jsp -->
@@ -1753,7 +1753,7 @@ function hideSplash(){
 			  	  </div>
 
 			      <div class="inputContainer noSpaceBelow">
-			        <span class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
+			        <span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Unit" class="w668 h038" /></span>
 			  	  </div>
 
@@ -1770,7 +1770,7 @@ function hideSplash(){
 			  	  </div>
 			  	  
 			      <div class="inputContainer noSpaceBelow">
-			        <span class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
+			        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Unit" class="w668 h038" /></span>
 			  	  </div>
 
@@ -1788,12 +1788,12 @@ function hideSplash(){
 			  	  
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+			          <span id="headerAddressType2LastnameLabel" class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
 			          <span class="input"><input type="text" id="headerAddressType2Lastname" name="headerAddressType2Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+			          <span id="headerAddressType2FirstnameLabel" class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
 			          <span class="input"><input type="text" id="headerAddressType2Firstname" name="headerAddressType2Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1801,12 +1801,12 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow">
 			        <div class="half left">
-			          <span class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
+			          <span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
 			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+			          <span id="headerAddressType2TitleLabel" class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
 			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1821,12 +1821,12 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+			          <span id="headerAddressType3LastnameLabel" class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
 			            <span class="input"><input type="text" id="headerAddressType3Lastname" name="headerAddressType3Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+			          <span id="headerAddressType3FirstnameLabel" class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
 			            <span class="input"><input type="text" id="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1834,7 +1834,7 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
+			          <span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
 			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
 			        </div>
 			  
@@ -1847,7 +1847,7 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow">
 			        <span class="label"><label for="headerAddressType3Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution</label></span>
-			        <span class="input"><textarea id="headerAddressType3Institution" name="headerAddressType3Institution" class="w668 h038" /></textarea></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType3Institution" class="w668 h038" /></span>
 			  	  </div>
 
 			    </div>
@@ -1869,7 +1869,7 @@ function hideSplash(){
 
 			          <div id="addressDetails1">
 			            <span class="entry first">
-			              <span class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
+			              <span id="addressCountryLabel" class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
 			              <span class="input spaceBelow">
 			              	<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
 			              		<option value="D">D</option>
@@ -1882,7 +1882,7 @@ function hideSplash(){
 			              <span class="input spaceBelow"><input type="text" id="addressZipCode" name="addressZipCode" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			            <span class="entry">
-			              <span class="label required"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ort')">Ort*</label></span>
+			              <span id="addressCityLabel" class="label required"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ort')">Ort*</label></span>
 			              <span class="input spaceBelow"><input type="text" id="addressCity" name="addressCity" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			          </div>

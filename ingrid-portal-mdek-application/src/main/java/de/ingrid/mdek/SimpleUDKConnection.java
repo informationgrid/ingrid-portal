@@ -65,8 +65,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 	
 	
-	public ArrayList<HashMap<String, Object>> getRootAddresses() {
-		IngridDocument response = mdekCaller.fetchTopAddresses(getCurrentSessionId(), false);
+	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly) {
+		IngridDocument response = mdekCaller.fetchTopAddresses(getCurrentSessionId(), freeAddressesOnly);
 		return extractAddressesFromResponse(response);
 	}
 

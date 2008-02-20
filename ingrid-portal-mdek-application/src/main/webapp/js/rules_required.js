@@ -56,29 +56,17 @@ dojo.addOnLoad(function() {
 	
 	// Applies to: erfassung adresse -> adresse und aufgaben -> postfach/plz (postfach) Ids = addressPOBox, addressZipPOBox
 	// Rule: If value != leer then other fields is required, strasse, plz are not required
-	var addressPOBoxField = dojo.byId("addressPOBox");
-	var addressZipPOBoxField = dojo.byId("addressZipPOBox");
+	var addressPOBoxField = dojo.widget.byId("addressPOBox");
+	var addressZipPOBoxField = dojo.widget.byId("addressZipPOBox");
 	if (addressPOBoxField) {
-	  dojo.event.connect(addressPOBoxField, "onkeyup", function(evt) {applyRule4();});
+	  dojo.event.connect(addressPOBoxField, "update", function() {applyRule4();});
 	}
 	if (addressZipPOBoxField) {
-	  dojo.event.connect(addressZipPOBoxField, "onkeyup", function(evt) {applyRule4();});
+	  dojo.event.connect(addressZipPOBoxField, "update", function() {applyRule4();});
 	}
-	function applyRule4() {
-	  var poBoxRequired = false;
-	  if (dojo.byId("addressPOBox").value.length > 0 || 
-	      dojo.byId("addressZipPOBox").value.length > 0)
-	    poBoxRequired = true;
-	
-	  // set strasse, plz required state
-	  setRequiredState(dojo.byId("addressStreetLabel"), null, !poBoxRequired);
-	  setRequiredState(dojo.byId("addressZipCodeLabel"), null, !poBoxRequired);
-	  // set postfach, plz (postfach) required state
-	  setRequiredState(dojo.byId("addressPOBoxLabel"), null, poBoxRequired);
-	  setRequiredState(dojo.byId("addressZipPOBoxLabel"), null, poBoxRequired);
-	}
-	
-	
+	applyRule4();
+
+
 	// Applies to: erfassung object -> Raumbezug -> Geothesaurus-Raumbezug & freier Raumbezug Ids = spatialRefAdminUnit, spatialRefLocation
 	// Rule: At least one entry with a bounding box is required
 	var spatialRefAdminUnit = dojo.widget.byId("spatialRefAdminUnit");
@@ -140,6 +128,20 @@ function applyRule3(value) {
       datePickerNode.style.display = "none";
   }
 }
+
+function applyRule4() {
+	var poBoxRequired = false;
+	if (dojo.byId("addressPOBox").value.length > 0 || dojo.byId("addressZipPOBox").value.length > 0)
+		poBoxRequired = true;
+	
+	// set strasse, plz required state
+	setRequiredState(dojo.byId("addressStreetLabel"), null, !poBoxRequired);
+	setRequiredState(dojo.byId("addressZipCodeLabel"), null, !poBoxRequired);
+	// set postfach, plz (postfach) required state
+	setRequiredState(dojo.byId("addressPOBoxLabel"), null, poBoxRequired);
+	setRequiredState(dojo.byId("addressZipPOBoxLabel"), null, poBoxRequired);
+}
+	
 
 function applyRule5() {
 	var snsHasBB = false;

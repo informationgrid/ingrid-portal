@@ -49,7 +49,7 @@ public interface DataConnectionInterface {
 	 * 
 	 * @return A List of HashMaps representing the root addresses.
 	 */	
-	public ArrayList<HashMap<String, Object>> getRootAddresses();
+	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly);
 
 	/**
 	 * Returns a tree Structure representing the sub objects of the object with uuid. Each node

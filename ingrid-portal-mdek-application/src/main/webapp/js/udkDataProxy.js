@@ -24,6 +24,9 @@
  *   topic = '/publishObjectRequest' - argument: {resultHandler: deferred}
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *   topic = '/publishAddressRequest' - argument: {resultHandler: deferred}
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
  *   topic = '/deleteRequest' - argument: {id: nodeUuid, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node which should be deleted
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
@@ -102,6 +105,7 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/getObjectPathRequest", udkDataProxy, "handleGetObjectPathRequest");
 
 	// Address requests
+    dojo.event.topic.subscribe("/publishAddressRequest", udkDataProxy, "handlePublishAddressRequest");
     dojo.event.topic.subscribe("/createAddressRequest", udkDataProxy, "handleCreateAddressRequest");
     dojo.event.topic.subscribe("/getAddressPathRequest", udkDataProxy, "handleGetAddressPathRequest");
 
@@ -149,6 +153,13 @@ dojo.addOnLoad(function()
 	dojo.lang.forEach(class3UiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(class4UiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(class5UiInputElements, _connectWidgetWithDirtyFlag);
+
+	dojo.lang.forEach(adrUiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(adrClass0UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(adrClass1UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(adrClass2UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(adrClass3UiInputElements, _connectWidgetWithDirtyFlag);
+
 	_connectStoreWithDirtyFlag(commentStore);
 
 	dojo.event.connect(udkDataProxy, "_setData", udkDataProxy, "resetDirtyFlag");
@@ -241,7 +252,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 	dojo.debug("About to be loaded: "+msg.id);
 
 	// Don't process newNode and objectRoot load requests.
-	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot") {
+	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
 		msg.resultHandler.callback();
 		return;
 	}
@@ -349,7 +360,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 udkDataProxy.handleCreateAddressRequest = function(msg)
 {
 	var nodeId = msg.id;
-	if (msg.id == "addressRoot") {
+	if (msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
 		nodeId = null;
 	}
 
@@ -383,15 +394,14 @@ udkDataProxy.handleSaveRequest = function(msg)
 }
 
 udkDataProxy._handleSaveAddressRequest = function(msg) {
-	// TODO Implement validity check for addresses
-	/*
-	if (!checkValidityOfInputElements()){
+
+	// Address validity check	
+	if (!checkValidityOfAddressInputElements()){
 		if (msg && msg.resultHandler) {
 			msg.resultHandler.errback(new Error("INPUT_INVALID_ERROR"));
 		}
 		return;
 	}
-	*/
 
 	// Construct an MdekAddressBean from the available data
 	var nodeData = udkDataProxy._getData();
@@ -535,6 +545,38 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 					dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData:");
 					onPublishDef.errback(err);
 				}
+			}
+		}
+	);
+}
+
+udkDataProxy.handlePublishAddressRequest = function(msg) {
+	// Construct an MdekDataBean from the available data
+	var nodeData = udkDataProxy._getData();
+
+	// Deferred obj for the main publish operation. The passed resulthandler is called with the appropriate result
+	var onPublishDef = new dojo.Deferred();
+	onPublishDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onPublishDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling EntryService.saveAddressData("+nodeData.uuid+", false)");
+	EntryService.saveAddressData(nodeData, "false",
+		{
+			callback: function(res) { onPublishDef.callback(res); },
+			timeout:10000,
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while publishing address:");
+				onPublishDef.errback(err);
 			}
 		}
 	);
@@ -879,6 +921,13 @@ udkDataProxy._setAddressData = function(nodeData)
 	});
 	institution = dojo.string.trim(institution);
 
+	var addressFields = ["headerAddressType0Institution", "headerAddressType0Unit", "headerAddressType1Institution", "headerAddressType1Unit",
+		"headerAddressType2Institution", "headerAddressType2Lastname", "headerAddressType2Firstname", "headerAddressType2Style",
+		"headerAddressType2Title", "headerAddressType3Lastname", "headerAddressType3Firstname", "headerAddressType3Style",
+		"headerAddressType3Title", "headerAddressType3Institution"];
+
+	dojo.lang.forEach(addressFields, function(field){ dojo.widget.byId(field).setValue(""); });
+
 	// ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
 		case 0:
@@ -1205,7 +1254,8 @@ udkDataProxy._getAddressData = function(nodeData) {
   // ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
 		case '0':
-			nodeData.organisation = dojo.widget.byId("headerAddressType0Institution").getValue();
+//			nodeData.organisation = dojo.widget.byId("headerAddressType0Institution").getValue();
+			nodeData.organisation = dojo.widget.byId("headerAddressType0Unit").getValue();
 			break;
 		case '1':
 //			dojo.widget.byId("headerAddressType1Institution").setValue(nodeData.organisation);

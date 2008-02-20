@@ -30,11 +30,24 @@ var class3UiInputElements = ["ref3ServiceType", "ref3ServiceVersion", "ref3Syste
 var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
 var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
 
+var adrUiInputElements = ["addressType", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
+	"addressZipPOBox", "addressNotes", "addressCom", "addressTasks", "thesaurusTermsAddress", "thesaurusFreeTermsListAddress"];
+var adrClass0UiInputElements = ["headerAddressType0Unit"];
+var adrClass1UiInputElements = ["headerAddressType1Unit"];
+var adrClass2UiInputElements = ["headerAddressType2Lastname", "headerAddressType2Firstname", "headerAddressType2Style",
+	"headerAddressType2Title"];
+var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType3Firstname", "headerAddressType3Style",
+	"headerAddressType3Title", "headerAddressType3Institution"];
+
 
 var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel",
-			  "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel"];
+			  "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
+			  "addressTypeLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
+			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
+			  "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
+			  "addressZipPOBoxLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
@@ -44,7 +57,6 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"],
 					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"]];
 
-
 var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
@@ -52,6 +64,18 @@ var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 var notEmptyTables = [/*["generalAddressTable", "generalAddressTableLabel"],*/
 					  ["timeRefTable", "timeRefTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
+
+
+var notEmptyAddressFields = [["addressClass", "addressTypeLabel"],
+						     ["countryCode", "addressCountryLabel"],
+						     ["city", "addressCityLabel"]];
+var notEmptyAddressFieldsClass0 = [["organisation", "headerAddressType0UnitLabel"]];
+var notEmptyAddressFieldsClass1 = [["organisation", "headerAddressType1UnitLabel"]];
+
+var notEmptyAddressFieldsClass2 = [["name", "headerAddressType2LastnameLabel"],
+								   ["givenName", "headerAddressType2StyleLabel"]];
+var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"],
+								   ["givenName", "headerAddressType3StyleLabel"]];
 
 
 function resetRequiredFields() {
@@ -162,6 +186,94 @@ function isObjectPublishable(idcObject) {
 	return publishable;
 }
 
+
+function isAddressPublishable(idcAddress) {
+	var publishable = true;
+
+	resetRequiredFields();
+
+	for (var i in notEmptyAddressFields) {
+		if (!idcAddress[notEmptyAddressFields[i][0]] || idcAddress[notEmptyAddressFields[i][0]] == "") {
+			dojo.html.addClass(dojo.byId(notEmptyAddressFields[i][1]), "important");
+			publishable = false;
+		}
+	}
+
+	// If pobox contains a value, poboxPostalCode has to contain a value as well.
+	// Otherwise street and postalCode have to contain values 
+	var pobox = dojo.string.trim(idcAddress.pobox);
+	var poboxPostalCode = dojo.string.trim(idcAddress.poboxPostalCode);
+	var street = dojo.string.trim(idcAddress.street);
+	var postalCode = dojo.string.trim(idcAddress.postalCode);
+
+	if (pobox.length != 0 && poboxPostalCode.length == 0) {
+		dojo.html.addClass(dojo.byId("addressZipPOBoxLabel"), "important");
+		dojo.debug("If pobox contains a value, poboxPostalCode has to contain a value as well.");
+		publishable = false;
+	} else if (pobox.length == 0 && poboxPostalCode.length != 0) {
+		dojo.html.addClass(dojo.byId("addressPOBoxLabel"), "important");
+		dojo.debug("If pobox contains a value, poboxPostalCode has to contain a value as well.");
+		publishable = false;	
+	} else if (pobox.length == 0 && poboxPostalCode.length == 0) {
+		if (postalCode.length == 0) {
+			dojo.html.addClass(dojo.byId("addressZipCodeLabel"), "important");
+			dojo.debug("Street and postalCode have to contain values.");
+			publishable = false;
+		}	
+		if (street.length == 0) {
+			dojo.html.addClass(dojo.byId("addressStreetLabel"), "important");
+			dojo.debug("Street and postalCode have to contain values.");
+			publishable = false;
+		}
+	}
+
+	// Check the required fields per address type:
+	switch (idcAddress.addressClass)
+	{
+		case '0':
+			for (var i in notEmptyAddressFieldsClass0) {
+				if (!idcAddress[notEmptyAddressFieldsClass0[i][0]] || idcAddress[notEmptyAddressFieldsClass0[i][0]] == "") {
+					dojo.html.addClass(dojo.byId(notEmptyAddressFieldsClass0[i][1]), "important");
+					publishable = false;
+					dojo.debug("Address class one required field empty.");				
+				}
+			}
+			break;
+		case '1':
+			for (var i in notEmptyAddressFieldsClass1) {
+				if (!idcAddress[notEmptyAddressFieldsClass1[i][0]] || idcAddress[notEmptyAddressFieldsClass1[i][0]] == "") {
+					dojo.html.addClass(dojo.byId(notEmptyAddressFieldsClass1[i][1]), "important");
+					publishable = false;
+					dojo.debug("Address class one required field empty.");				
+				}
+			}
+			break;
+		case '2':
+			for (var i in notEmptyAddressFieldsClass2) {
+				if (!idcAddress[notEmptyAddressFieldsClass2[i][0]] || idcAddress[notEmptyAddressFieldsClass2[i][0]] == "") {
+					dojo.html.addClass(dojo.byId(notEmptyAddressFieldsClass2[i][1]), "important");
+					publishable = false;
+					dojo.debug("Address class one required field empty.");				
+				}
+			}
+			break;
+		case '3':
+			for (var i in notEmptyAddressFieldsClass3) {
+				if (!idcAddress[notEmptyAddressFieldsClass3[i][0]] || idcAddress[notEmptyAddressFieldsClass3[i][0]] == "") {
+					dojo.html.addClass(dojo.byId(notEmptyAddressFieldsClass3[i][1]), "important");
+					publishable = false;
+					dojo.debug("Address class one required field empty.");				
+				}
+			}
+			break;
+		default:
+			dojo.debug("Error in isAddressPublishable(adr). Invalid address class: "+idcAddress.addressClass);
+			break;
+	}
+
+	return publishable;
+}
+
 function checkValidityOfInputElements() {
 	var isValid = function(widgetId) {
 //		dojo.debug(widgetId);
@@ -196,5 +308,34 @@ function checkValidityOfInputElements() {
 		return false;
 	}
 	
+	return true;
+}
+
+
+function checkValidityOfAddressInputElements() {
+	var isValid = function(widgetId) {
+//		dojo.debug(widgetId);
+		var widget = dojo.widget.byId(widgetId);
+		if (widget.isValid) {	// check if the widget has an isValid method
+			if (widget.isEmpty) { // check if the widget has an isEmpty method
+				if (widget.required && widget.isEmpty())
+					return false;
+				else
+					return (widget.isEmpty() || widget.isValid());
+			} else {
+				return widget.isValid();
+			}
+		} else {
+//			dojo.debug(widgetId+" has no isValid method.");
+			return true;
+		}
+	}
+
+	var addressClass = dojo.widget.byId("addressType").getValue()[11];		// AddressTypex
+
+	if (!dojo.lang.every(adrUiInputElements, isValid) || !dojo.lang.every(this["adrClass"+addressClass+"UiInputElements"], isValid)) {
+		return false;
+	}
+
 	return true;
 }

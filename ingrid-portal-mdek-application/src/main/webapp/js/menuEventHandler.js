@@ -448,7 +448,18 @@ menuEventHandler.reloadSubTree = function(msg) {
 }
 
 
-menuEventHandler.handleFinalSave = function() {
+menuEventHandler.handleFinalSave = function(msg) {
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+	
+	if (selectedNode.nodeAppType == "O") {
+		menuEventHandler._handleFinalSaveObject(msg);
+	} else if (selectedNode.nodeAppType == "A") {
+		menuEventHandler._handleFinalSaveAddress(msg);
+	}
+}	
+
+menuEventHandler._handleFinalSaveObject = function(msg) {
 	if (!checkValidityOfInputElements()){
 		dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
 		return;
@@ -461,6 +472,23 @@ menuEventHandler.handleFinalSave = function() {
 
 		dojo.debug("Publishing event: /publishObjectRequest");
 		dojo.event.topic.publish("/publishObjectRequest", {resultHandler: deferred});		
+	} else {
+  		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+	}
+}
+menuEventHandler._handleFinalSaveAddress = function(msg) {
+	if (!checkValidityOfAddressInputElements()){
+		dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		return;
+	}
+
+	var nodeData = udkDataProxy._getData();
+	if (isAddressPublishable(nodeData)) {
+		var deferred = new dojo.Deferred();
+		deferred.addErrback(displayErrorMessage);
+
+		dojo.debug("Publishing event: /publishAddressRequest");
+		dojo.event.topic.publish("/publishAddressRequest", {resultHandler: deferred});		
 	} else {
   		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
 	}
@@ -548,7 +576,7 @@ _expandPath = function(pathList) {
 }
 
 menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
-	if (nodeId != "newNode" && nodeId != "objectRoot" && nodeId != "addressRoot") {
+	if (nodeId != "newNode" && nodeId != "objectRoot" && nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
 		var deferred = new dojo.Deferred();
 		var treeController = dojo.widget.byId("treeController");
 

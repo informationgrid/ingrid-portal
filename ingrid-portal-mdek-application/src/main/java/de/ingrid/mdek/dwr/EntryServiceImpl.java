@@ -41,7 +41,9 @@ public class EntryServiceImpl implements EntryService {
 
 
 	private final static String ADDRESS_ROOT = "addressRoot"; 
+	private final static String ADDRESS_FREE_ROOT = "addressFreeRoot"; 
 	private final static String ADDRESS_ROOT_NAME = "Adressen";
+	private final static String ADDRESS_FREE_ROOT_NAME = "Freie Adressen";
 	private final static String ADDRESS_ROOT_DOCTYPE = "Addresses";
 	private final static String ADDRESS_INITIAL_DOCTYPE = "Institution_B";
 	private final static String ADDRESS_APPTYPE = "A";
@@ -189,7 +191,6 @@ public class EntryServiceImpl implements EntryService {
 			log.error("Error while getting node data.", e);
 		}
 
-//		data.setObjectName("Neues Objekt");
 		data.setNodeAppType(OBJECT_APPTYPE);
 		data.setNodeDocType(OBJECT_INITIAL_DOCTYPE);
 		data.setUuid("newNode");
@@ -258,14 +259,23 @@ public class EntryServiceImpl implements EntryService {
 
 		} else if (nodeType.equals(ADDRESS_APPTYPE)) {
 			ArrayList<HashMap<String, Object>> subAddresses = null; 
-			if (nodeUuid.equalsIgnoreCase(ADDRESS_ROOT))
-				subAddresses = dataConnection.getRootAddresses();
-			else
+			if (nodeUuid.equalsIgnoreCase(ADDRESS_ROOT)) {
+				subAddresses = dataConnection.getRootAddresses(false);
+
+				for (HashMap<String, Object> node : subAddresses) {
+					addTreeNodeAddressInfo(node);
+				}
+				subAddresses.add(0, createFreeAddressRoot());
+			} else if (nodeUuid.equalsIgnoreCase(ADDRESS_FREE_ROOT)) {
+				subAddresses = dataConnection.getRootAddresses(true);				
+			} else {
 				subAddresses = dataConnection.getSubAddresses(nodeUuid, depth);
-	
-			for (HashMap<String, Object> node : subAddresses) {
-				addTreeNodeAddressInfo(node);
+
+				for (HashMap<String, Object> node : subAddresses) {
+					addTreeNodeAddressInfo(node);
+				}
 			}
+
 			return subAddresses;
 
 		} else {
@@ -463,7 +473,22 @@ public class EntryServiceImpl implements EntryService {
 		return treeRoot;
 	}
 
+	private static HashMap<String, Object> createFreeAddressRoot()
+	{
+		HashMap<String, Object> freeAddressRoot = new HashMap<String, Object>(); 
 
+		freeAddressRoot.put("contextMenu", ROOT_MENU_ID);
+		freeAddressRoot.put("isFolder", true);
+		freeAddressRoot.put("nodeDocType", ADDRESS_ROOT_DOCTYPE);
+		freeAddressRoot.put("title", ADDRESS_FREE_ROOT_NAME);
+		freeAddressRoot.put("dojoType", NODE_DOJO_TYPE);
+		freeAddressRoot.put("nodeAppType", ADDRESS_APPTYPE);
+		freeAddressRoot.put("id", ADDRESS_FREE_ROOT);
+
+		return freeAddressRoot;
+	}
+
+	
 	private static Map<String, Object> addTreeNodeObjectInfo(Map<String, Object> node)
 	{
 		// TODO Do this recursive for all children!

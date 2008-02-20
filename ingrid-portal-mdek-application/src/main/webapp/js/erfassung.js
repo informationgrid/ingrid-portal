@@ -260,7 +260,7 @@ function selectUDKAddressType()
 
 function nodeSelected(message)
 {
-  if (message.node.id == "objectRoot" || message.node.id == "addressRoot") {
+  if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
     dojo.byId("contentAddress").style.display="none";
     dojo.byId("contentObject").style.display="none";
     dojo.byId("contentNone").style.display="block";
