@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,6 +56,9 @@ import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
@@ -65,6 +69,8 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridNewsletterData;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.portlets.security.SecurityUtil;
 import de.ingrid.portal.security.permission.IngridPartnerPermission;
@@ -604,6 +610,28 @@ public class AdminUserPortlet extends ContentPortlet {
             String to = (String) userInfo.get("user.business-info.online.email");
             String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
             if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
+                if (((String)userAttributes.get("user.custom.ingrid.user.subscribe.newsletter")).equals("1")) {
+                	Session session = HibernateUtil.currentSession();
+                    Transaction tx = null;
+                    tx = session.beginTransaction();
+                    List newsletterDataList = session.createCriteria(IngridNewsletterData.class)
+                    .add(Restrictions.eq("emailAddress", to))
+                    .list();
+                    tx.commit();
+                    
+                    if (newsletterDataList.isEmpty()) {
+                    
+                        IngridNewsletterData data = new IngridNewsletterData(); 
+                        data.setFirstName((String)userAttributes.get("user.name.given"));
+                        data.setLastName((String)userAttributes.get("user.name.family"));
+                        data.setEmailAddress(to);
+                        data.setDateCreated(new Date());
+                        
+                        tx = session.beginTransaction();
+                        session.save(data);
+                        tx.commit();
+                    }                       	
+                }
                 f.addMessage("account.created.title");
             } else {
                 f.setError("", "account.created.problems.email");
