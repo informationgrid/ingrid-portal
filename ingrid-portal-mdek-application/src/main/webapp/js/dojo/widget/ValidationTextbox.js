@@ -42,18 +42,13 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
     dojo.widget.ValidationTextbox.superclass.initialize.apply(this, arguments);
 
     if (this.disabled == true) {
-      this.textbox.setAttribute('disabled', 'disabled');
-      dojo.html.addClass(this.textbox, 'noEdit');
+	  var ee = this[this.mode.toLowerCase()];
+      ee.setAttribute("disabled", "disabled");
+      dojo.html.addClass(ee, "noEdit");
     }
 
-	var ee = this[this.mode.toLowerCase()];
-	if(this.mode.toLowerCase()=="textarea"){
-	    if (this.disabled == true) {
-	      this.textarea.setAttribute('disabled', 'disabled');
-	      dojo.html.addClass(this.textarea, 'noEdit');
-	    }
-
-		this.textarea.style.display = "block";
+	if(this.mode.toLowerCase() == "textarea"){
+		this.textarea.style.display = "";
 		this.textbox.style.display = "none";
 	} else {
 		this.textarea.style.display = "none";
@@ -107,16 +102,18 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 
 
   enable: function() {
+    dojo.debug("enable called on "+this);
     dojo.widget.ValidationTextbox.superclass.enable.apply(this, arguments);
 	var ee = this[this.mode.toLowerCase()];				
     ee.removeAttribute("disabled");
-    dojo.html.removeClass(ee, 'noEdit');
+    dojo.html.removeClass(ee, "noEdit");
   },
 
   disable: function() {
+    dojo.debug("disable called on "+this);
     dojo.widget.ValidationTextbox.superclass.disable.apply(this, arguments);
 	var ee = this[this.mode.toLowerCase()];				
     ee.setAttribute("disabled", "disabled");
-    dojo.html.addClass(ee, 'noEdit');
+    dojo.html.addClass(ee, "noEdit");
   }
 });

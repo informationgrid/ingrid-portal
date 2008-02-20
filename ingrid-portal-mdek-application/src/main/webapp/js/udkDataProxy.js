@@ -798,10 +798,20 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.widget.byId("addressPOBox").setValue(nodeData.pobox);
 	dojo.widget.byId("addressZipPOBox").setValue(nodeData.poboxPostalCode);
 	dojo.widget.byId("addressNotes").setValue(nodeData.addressDescription);
-//	dojo.widget.byId("addressCom").setValue(nodeData.communication);
 	dojo.widget.byId("addressTasks").setValue(nodeData.task);
+	dojo.widget.byId("addressCom").store.setData(udkDataProxy._addTableIndices(nodeData.communication));
 
-	
+	// -- Thesaurus --
+	dojo.widget.byId("thesaurusTermsAddress").store.setData(udkDataProxy._addTableIndices(nodeData.thesaurusTermsTable));
+	dojo.widget.byId("thesaurusFreeTermsListAddress").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusFreeTermsTable)));
+
+	// -- Links --
+	var linkTable = nodeData.linksFromObjectTable;
+	udkDataProxy._addTableIndices(linkTable);
+	udkDataProxy._addObjectLinkLabels(linkTable);  
+	udkDataProxy._addIcons(linkTable);
+	dojo.widget.byId("associatedObjName").store.setData(linkTable);
+
 
 	// ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
@@ -1108,8 +1118,16 @@ udkDataProxy._getAddressData = function(nodeData) {
 	nodeData.pobox = dojo.widget.byId("addressPOBox").getValue();
 	nodeData.poboxPostalCode = dojo.widget.byId("addressZipPOBox").getValue();
 	nodeData.addressDescription = dojo.widget.byId("addressNotes").getValue();
-//	nodeData.communication = dojo.widget.byId("addressCom").getValue();
 	nodeData.task = dojo.widget.byId("addressTasks").getValue();
+	nodeData.communication = udkDataProxy._getTableData("addressCom");
+
+	// -- Thesaurus --
+	nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTermsAddress");
+	nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsListAddress"));
+
+	// -- Links --
+	nodeData.linksFromObjectTable = udkDataProxy._getTableData("associatedObjName");
+
 
   // ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {

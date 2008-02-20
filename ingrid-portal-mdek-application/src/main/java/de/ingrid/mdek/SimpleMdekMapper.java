@@ -347,8 +347,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekAddress.setPoboxPostalCode((String) adr.get(MdekKeys.POST_BOX_POSTAL_CODE));
 		mdekAddress.setAddressDescription((String) adr.get(MdekKeys.ADDRESS_DESCRIPTION));
 		mdekAddress.setTask((String) adr.get(MdekKeys.FUNCTION));
-//		mdekAddress.setCommunication((ArrayList<HashMap<String, String>>) mapToCommunicationTable(adr.get(MdekKeys.COMMUNICATION)));
-		
+		mdekAddress.setCommunication(mapToCommunicationTable((List<HashMap<String, String>>) adr.get(MdekKeys.COMMUNICATION)));
+
+		// Thesaurus
+		mdekAddress.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) adr.get(MdekKeys.SUBJECT_TERMS)));
+		mdekAddress.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) adr.get(MdekKeys.SUBJECT_TERMS)));
+
+		// References
+		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekAddress.setNodeAppType("A");
@@ -481,7 +487,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.GIVEN_NAME, data.getGivenName());
 		udkAdr.put(MdekKeys.NAME_FORM, data.getNameForm());
 		udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, data.getTitleOrFunction());
-		
+
 		// Common information
 		udkAdr.put(MdekKeys.STREET, data.getStreet());
 		udkAdr.put(MdekKeys.POSTAL_CODE_OF_COUNTRY, data.getCountryCode());
@@ -491,8 +497,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.POST_BOX_POSTAL_CODE, data.getPoboxPostalCode());
 		udkAdr.put(MdekKeys.ADDRESS_DESCRIPTION, data.getAddressDescription());
 		udkAdr.put(MdekKeys.FUNCTION, data.getTask());
-//		udkAdr.put(MdekKeys.COMMUNICATION, data.getCommunication());
+		udkAdr.put(MdekKeys.COMMUNICATION, mapFromCommunicationTable(data.getCommunication()));
 
+		//Thesaurus
+		udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable(), data.getThesaurusFreeTermsTable()));
+		
+		// References
+		udkAdr.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
 
 		log.debug("Converted the following address to an IngridDocument:");
 		printHashMap(udkAdr);
@@ -671,6 +682,20 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	private static ArrayList<IngridDocument> mapFromCommunicationTable(List<HashMap<String, String>> commMap){
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>(); 
+
+		for (HashMap<String, String> comm : commMap) {
+			IngridDocument mappedEntry = new IngridDocument();
+			mappedEntry.put(MdekKeys.COMMUNICATION_DESCRIPTION, comm.get(MDEK_ADDRESS_COMM_DESCRIPTION));
+			mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM, comm.get(MDEK_ADDRESS_COMM_MEDIUM));
+			mappedEntry.put(MdekKeys.COMMUNICATION_VALUE, comm.get(MDEK_ADDRESS_COMM_VALUE));
+			resultList.add(mappedEntry);
+		}
+
+		return resultList;	
+	}
+	
 	private static ArrayList<IngridDocument> mapFromObjectLinksTable(ArrayList<MdekDataBean> objList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (objList == null)
@@ -978,26 +1003,30 @@ public class SimpleMdekMapper implements DataMapperInterface {
 				address.setName((String) tableRow.get(MdekKeys.ORGANISATION));
 			}
 
-			// Build communication map
-			List<HashMap<String, String>> commMap = (List<HashMap<String, String>>) tableRow.get(MdekKeys.COMMUNICATION);
-			ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
-			
-			if (commMap != null) {
-				for (HashMap<String, String> comm : commMap) {
-					HashMap<String, String> resultComm = new HashMap<String, String>();
-					resultComm.put(MDEK_GENERAL_ADDRESS_TABLE_COMM_DESCRIPTION, comm.get((String) MdekKeys.COMMUNICATION_DESCRIPTION));
-					resultComm.put(MDEK_GENERAL_ADDRESS_TABLE_COMM_MEDIUM, comm.get((String) MdekKeys.COMMUNICATION_MEDIUM));
-					resultComm.put(MDEK_GENERAL_ADDRESS_TABLE_COMM_VALUE, comm.get((String) MdekKeys.COMMUNICATION_VALUE));
-					resultCommMap.add(resultComm);
-				}
-			}
-			address.setCommunication(resultCommMap);
+			// Get communication map
+			address.setCommunication(mapToCommunicationTable((List<HashMap<String, String>>) tableRow.get(MdekKeys.COMMUNICATION)));
 
 			resultTable.add(address);
 		}
 		return resultTable;
 	}
 
+	private static ArrayList<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, String>> commMap){
+		ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
+		if (commMap == null)
+			return resultCommMap;
+
+		for (HashMap<String, String> comm : commMap) {
+			HashMap<String, String> resultComm = new HashMap<String, String>();
+			resultComm.put(MDEK_ADDRESS_COMM_DESCRIPTION, comm.get(MdekKeys.COMMUNICATION_DESCRIPTION));
+			resultComm.put(MDEK_ADDRESS_COMM_MEDIUM, comm.get(MdekKeys.COMMUNICATION_MEDIUM));
+			resultComm.put(MDEK_ADDRESS_COMM_VALUE, comm.get(MdekKeys.COMMUNICATION_VALUE));
+			resultCommMap.add(resultComm);
+		}
+
+		return resultCommMap;	
+	}
+	
 	private static ArrayList<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
 		ArrayList<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
 		if (objList == null)

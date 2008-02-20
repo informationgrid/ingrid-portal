@@ -3,6 +3,8 @@ package de.ingrid.mdek.dwr;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.ingrid.mdek.dwr.sns.SNSTopic;
+
 public class MdekAddressBean {
 	
 	public String objectOwner;
@@ -37,8 +39,20 @@ public class MdekAddressBean {
 
 	public ArrayList<HashMap<String, String>> communication;
 
+	// Thesaurus
+	public ArrayList<SNSTopic> thesaurusTermsTable;
+	public ArrayList<String> thesaurusFreeTermsTable;
+
+	// References
+	public ArrayList<MdekDataBean> linksFromObjectTable;
+
+
+	
 	public MdekAddressBean() {
 		this.communication = new ArrayList<HashMap<String, String>>();
+		this.thesaurusTermsTable = new ArrayList<SNSTopic>();
+		this.thesaurusFreeTermsTable = new ArrayList<String>();
+		this.linksFromObjectTable = new ArrayList<MdekDataBean>();
 	}
 	
 	public String getObjectOwner() {
@@ -255,5 +269,29 @@ public class MdekAddressBean {
 
 	public void setParentClass(Integer parentClass) {
 		this.parentClass = parentClass;
+	}
+
+	public ArrayList<SNSTopic> getThesaurusTermsTable() {
+		return thesaurusTermsTable;
+	}
+
+	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
+		this.thesaurusTermsTable = thesaurusTermsTable;
+	}
+
+	public ArrayList<String> getThesaurusFreeTermsTable() {
+		return thesaurusFreeTermsTable;
+	}
+
+	public void setThesaurusFreeTermsTable(ArrayList<String> thesaurusFreeTermsTable) {
+		this.thesaurusFreeTermsTable = thesaurusFreeTermsTable;
+	}
+
+	public ArrayList<MdekDataBean> getLinksFromObjectTable() {
+		return linksFromObjectTable;
+	}
+
+	public void setLinksFromObjectTable(ArrayList<MdekDataBean> linksFromObjectTable) {
+		this.linksFromObjectTable = linksFromObjectTable;
 	}
 }

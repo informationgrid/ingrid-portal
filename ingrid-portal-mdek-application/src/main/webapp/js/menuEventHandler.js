@@ -554,6 +554,7 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId) {
 					tree.selectNode(targetNode);
 					tree.selectedNode = targetNode;
 					dojo.html.scrollIntoView(targetNode.domNode);
+					dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
 				});
 				d.addErrback(function(msg){
 					dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);

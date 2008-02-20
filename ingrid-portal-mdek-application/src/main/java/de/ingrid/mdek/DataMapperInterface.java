@@ -64,10 +64,11 @@ public interface DataMapperInterface {
 	public final static String MDEK_GENERAL_ADDRESS_TABLE_POBOX = "pobox";
 	public final static String MDEK_GENERAL_ADDRESS_TABLE_FUNCTION = "function";
 	public final static String MDEK_GENERAL_ADDRESS_TABLE_DESCRIPTION = "addressDescription";
-	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM = "communication";
-	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM_MEDIUM = "communicationMedium";
-	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM_VALUE = "communicationValue";
-	public final static String MDEK_GENERAL_ADDRESS_TABLE_COMM_DESCRIPTION = "communicationDescription";
+
+	public final static String MDEK_ADDRESS_COMM = "communication";
+	public final static String MDEK_ADDRESS_COMM_MEDIUM = "communicationMedium";
+	public final static String MDEK_ADDRESS_COMM_VALUE = "communicationValue";
+	public final static String MDEK_ADDRESS_COMM_DESCRIPTION = "communicationDescription";
 
     
     // Object class 1 (Geoinformation/Karte)

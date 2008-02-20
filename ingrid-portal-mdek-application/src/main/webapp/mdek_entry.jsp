@@ -1906,14 +1906,14 @@ function hideSplash(){
 			          <span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kommunikation')">Kommunikation</label></span>
 			          <div class="tableContainer rows5">
 			            <div class="cellEditors" id="addressComEditors">
-			              <div dojoType="ingrid:Select" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
+			              <div dojoType="ingrid:ComboBox" autoComplete="false" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
 			              <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="addressComConnection"></div>
 			            </div>
 			      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive half editable">
 			      	      <thead>
 			      		      <tr>
-			            			<th nosort="true" field="type" dataType="String" width="65" editor="addressComType">Art</th>
-			            			<th nosort="true" field="connection" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
+			            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
+			            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
 			      		      </tr>
 			      	      </thead>
 			      	      <tbody>
@@ -1948,7 +1948,7 @@ function hideSplash(){
 			    	    <table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
 			    	      <thead>
 			    		      <tr>
-			          			<th nosort="true" field="term" dataType="String">Term</th>
+			          			<th nosort="true" field="title" dataType="String">Term</th>
 			    		      </tr>
 			    	      </thead>
 			    	      <tbody>
@@ -1972,7 +1972,7 @@ function hideSplash(){
 			      	    <table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
 			      	      <thead>
 			      		      <tr>
-			            			<th nosort="true" field="freeTerms" dataType="String">Freie Suchbegriffe</th>
+			            			<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
 			      		      </tr>
 			      	      </thead>
 			      	      <tbody>
@@ -1997,14 +1997,18 @@ function hideSplash(){
 			  
 			      <div class="inputContainer noSpaceBelow notRequired h098">
 			        <div class="spacer"></div>
-			        <div class="tableContainer rows4">
-			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
+			        <div class="tableContainer rows5">
+			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort full">
 			    	      <thead>
 			    		      <tr>
-			          			<th nosort="true" field="information" dataType="String" width="80"></th>
-			          			<th nosort="true" field="names" dataType="String" width="595">Name</th>
+			          			<th nosort="true" field="icon" dataType="String"></th>
+			          			<th nosort="true" field="linkLabel" dataType="String">Name</th>
 			    		      </tr>
 			    	      </thead>
+						  <colgroup>
+						    <col width="23">
+						    <col width="634">
+						  </colgroup>
 			    	      <tbody>
 			    	      </tbody>
 			    	    </table>
