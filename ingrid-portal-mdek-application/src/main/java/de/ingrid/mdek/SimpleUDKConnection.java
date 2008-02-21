@@ -177,6 +177,13 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		mdekCaller.deleteObject(uuid, getCurrentSessionId());
 	}
 
+	public void deleteAddress(String uuid) {
+		log.debug("deleteAddress(String) not implemented yet.");
+/*
+		mdekCaller.deleteAddress(uuid, getCurrentSessionId());
+*/
+	}
+
 	public boolean deleteObjectWorkingCopy(String uuid) {
 		IngridDocument response = mdekCaller.deleteObjectWorkingCopy(uuid, getCurrentSessionId());
 
@@ -206,17 +213,22 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return true;
 	}
 
+	public boolean canCutAddress(String uuid) {
+		// Cut is always allowed. Placeholder for future changes
+		return true;
+	}
+
 	public boolean canCopyObject(String uuid) {
 		// Copy is always allowed. Placeholder for future changes
 		return true;
-/*
-		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
-		if (mdekCaller.getResultFromResponse(response) == null) {
-			handleError(response);
-		}
-*/
 	}
 
+	public boolean canCopyAddress(String uuid) {
+		// Copy is always allowed. Placeholder for future changes
+		return true;
+	}
+
+	
 	public List<String> getPathToObject(String uuid) {
 		IngridDocument response = mdekCaller.getObjectPath(uuid, getCurrentSessionId());
 		return extractPathFromResponse(response);
@@ -232,6 +244,15 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
+	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree) {
+		log.debug("copyAddress(String, String, boolean) not implemented yet.");
+		return null;
+/*
+		IngridDocument response = mdekCaller.copyAddress(fromUuid, toUuid, copySubTree, getCurrentSessionId());
+		return extractSingleSimpleAddressFromResponse(response);
+*/
+	}
+
 	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition) {
 		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true, forcePublicationCondition, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
@@ -239,6 +260,16 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
+	public void moveAddressSubTree(String fromUuid, String toUuid) {
+		log.debug("moveAddressSubTree(String, String) not implemented yet.");
+/*
+		IngridDocument response = mdekCaller.moveAddress(fromUuid, toUuid, true, getCurrentSessionId());
+		if (mdekCaller.getResultFromResponse(response) == null) {
+			handleError(response);
+		}
+*/
+	}
+	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
 		IngridDocument response = mdekCaller.getSysLists(listIds, languageCode, getCurrentSessionId());
 		return extractSysListFromResponse(response);

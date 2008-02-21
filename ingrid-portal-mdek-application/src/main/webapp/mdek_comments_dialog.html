@@ -16,7 +16,12 @@ _container_.addOnLoad(function() {
 	var dstStore = dojo.widget.byId("commentCommentsTable").store;
 	
 	// Set the comment table title
-	var nodeTitle = dojo.widget.byId("objectName").getValue();
+	var nodeTitle = "";
+	if (currentUdk.nodeAppType == "O") {
+		nodeTitle = dojo.widget.byId("objectName").getValue();
+	} else if (currentUdk.nodeAppType == "A") {
+		nodeTitle = dojo.widget.byId("addressTitle").getValue();	
+	}
 	dojo.byId("commentTableLabel").innerHTML = dojo.string.substituteParams(message.get("dialog.commentTitle"), nodeTitle);
 
 	dstStore.setData(srcStore.getData());

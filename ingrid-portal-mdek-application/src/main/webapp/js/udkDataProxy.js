@@ -39,8 +39,17 @@
  *     nodeUuid - The Uuid of the node which should be marked for a cut operation
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *   topic = '/canCutAddressRequest' - argument: {id: nodeUuid, resultHandler: deferred}
+ *     nodeUuid - The Uuid of the address which should be marked for a cut operation
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
  *   topic = '/canCopyObjectRequest' - argument: {id: nodeUuid, copyTree: boolean resultHandler: deferred}
  *     nodeUuid - The Uuid of the node which should be marked for a copied operation
+ *     copyTree - specifies whether the complete tree should be copied or only the selected node
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
+ *   topic = '/canCopyAddressRequest' - argument: {id: nodeUuid, copyTree: boolean resultHandler: deferred}
+ *     nodeUuid - The Uuid of the address which should be marked for a copied operation
  *     copyTree - specifies whether the complete tree should be copied or only the selected node
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
@@ -50,9 +59,20 @@
  *	   forcePublicationCondition - Tell the backend to adjust the publication condition of subnodes
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
+ *   topic = '/cutAddressRequest' - argument: {srcId: srcUuid, dstId: dstUuid, resultHandler: deferred}
+ *     srcId - The Uuid of the address which should be cut
+ *     dstId - The Uuid of the target address where the srcNode should be attached
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
  *   topic = '/copyObjectRequest' - argument: {srcId: srcUuid, dstId: dstUuid, copyTree: boolean, resultHandler: deferred}
  *     srcId - The Uuid of the node which should be copied
  *     dstId - The Uuid of the target node where the srcNode should be attached
+ *     copyTree - specifies whether the complete tree should be copied or only the selected node
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
+ *
+ *   topic = '/copyAddressRequest' - argument: {srcId: srcUuid, dstId: dstUuid, copyTree: boolean, resultHandler: deferred}
+ *     srcId - The Uuid of the address which should be copied
+ *     dstId - The Uuid of the target address where the srcNode should be attached
  *     copyTree - specifies whether the complete tree should be copied or only the selected node
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
@@ -92,12 +112,12 @@ dojo.addOnLoad(function()
 	// Common requests
     dojo.event.topic.subscribe("/loadRequest", udkDataProxy, "handleLoadRequest");
     dojo.event.topic.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
+    dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
+    dojo.event.topic.subscribe("/deleteWorkingCopyRequest", udkDataProxy, "handleDeleteWorkingCopyRequest");
 
 	// Object requests
     dojo.event.topic.subscribe("/publishObjectRequest", udkDataProxy, "handlePublishObjectRequest");
     dojo.event.topic.subscribe("/createObjectRequest", udkDataProxy, "handleCreateObjectRequest");
-    dojo.event.topic.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
-    dojo.event.topic.subscribe("/deleteWorkingCopyRequest", udkDataProxy, "handleDeleteWorkingCopyRequest");
     dojo.event.topic.subscribe("/canCutObjectRequest", udkDataProxy, "handleCanCutObjectRequest");
 	dojo.event.topic.subscribe("/canCopyObjectRequest", udkDataProxy, "handleCanCopyObjectRequest");
     dojo.event.topic.subscribe("/cutObjectRequest", udkDataProxy, "handleCutObjectRequest");
@@ -107,6 +127,10 @@ dojo.addOnLoad(function()
 	// Address requests
     dojo.event.topic.subscribe("/publishAddressRequest", udkDataProxy, "handlePublishAddressRequest");
     dojo.event.topic.subscribe("/createAddressRequest", udkDataProxy, "handleCreateAddressRequest");
+    dojo.event.topic.subscribe("/canCutAddressRequest", udkDataProxy, "handleCanCutAddressRequest");
+	dojo.event.topic.subscribe("/canCopyAddressRequest", udkDataProxy, "handleCanCopyAddressRequest");
+    dojo.event.topic.subscribe("/cutAddressRequest", udkDataProxy, "handleCutAddressRequest");
+    dojo.event.topic.subscribe("/copyAddressRequest", udkDataProxy, "handleCopyAddressRequest");
     dojo.event.topic.subscribe("/getAddressPathRequest", udkDataProxy, "handleGetAddressPathRequest");
 
 
@@ -640,17 +664,32 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 
 
 udkDataProxy.handleDeleteRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+")");
-	EntryService.deleteNode(msg.id, "false",
-		{
-			callback: function(res){msg.resultHandler.callback(res);},
-			timeout:10000,
-			errorHandler:function(err) {
-				alert("Error in js/udkDataProxy.js: Error while deleting node: " + err);
-				msg.resultHandler.errback(err);
+	var nodeAppType = dojo.widget.byId(msg.id).nodeAppType;
+	if (nodeAppType == "O") {
+		dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+")");
+		EntryService.deleteNode(msg.id, "false",
+			{
+				callback: function(res){msg.resultHandler.callback(res);},
+				timeout:10000,
+				errorHandler:function(err) {
+					alert("Error in js/udkDataProxy.js: Error while deleting node: " + err);
+					msg.resultHandler.errback(err);
+				}
 			}
-		}
-	);
+		);
+	} else if (nodeAppType == "A") {
+		dojo.debug("udkDataProxy calling EntryService.deleteAddress("+msg.id+")");
+		EntryService.deleteAddress(msg.id, "false",
+			{
+				callback: function(res){msg.resultHandler.callback(res);},
+				timeout:10000,
+				errorHandler:function(err) {
+					alert("Error in js/udkDataProxy.js: Error while deleting address: " + err);
+					msg.resultHandler.errback(err);
+				}
+			}
+		);
+	}
 }
 
 udkDataProxy.handleCanCutObjectRequest = function(msg) {
@@ -668,6 +707,22 @@ udkDataProxy.handleCanCutObjectRequest = function(msg) {
 	);
 }
 
+udkDataProxy.handleCanCutAddressRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.canCutAddress("+msg.id+")");	
+
+	EntryService.canCutAddress(msg.id,
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:10000,
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while marking an address for a cut operation: " + err);
+				msg.resultHandler.errback(err);
+			}
+		}
+	);
+}
+
+
 udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.canCopyNode("+msg.id+", "+msg.copyTree+")");	
 
@@ -677,6 +732,21 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 			timeout:30000,
 			errorHandler:function(err) {
 				dojo.debug("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + err);
+				msg.resultHandler.errback(err);
+			}
+		}
+	);
+}
+
+udkDataProxy.handleCanCopyAddressRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.canCopyAddress("+msg.id+", "+msg.copyTree+")");	
+
+	EntryService.canCopyAddress(msg.id,
+		{
+			callback: function(res){msg.resultHandler.callback();},
+			timeout:30000,
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while marking an address for a copy operation: " + err);
 				msg.resultHandler.errback(err);
 			}
 		}
@@ -717,6 +787,23 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 					dojo.debug("Error in js/udkDataProxy.js: Error while moving nodeData:");
 					msg.resultHandler.errback(err);
 				}
+			}
+		}
+	);
+}
+
+udkDataProxy.handleCutAddressRequest = function(msg) {
+	if(msg.dstId == "addressRoot" || msg.dstId == "addressFreeRoot") {
+		msg.dstId = null;
+	}
+	dojo.debug("udkDataProxy calling EntryService.moveAddress("+msg.srcId+", "+msg.dstId+")");	
+	EntryService.moveNode(msg.srcId, msg.dstId,
+		{
+			callback: function(res) { msg.resultHandler.callback(res); },
+			timeout:30000,
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while moving address:");
+				msg.resultHandler.errback(err);
 			}
 		}
 	);
@@ -766,6 +853,52 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 		}
 	);
 }
+
+udkDataProxy.handleCopyAddressRequest = function(msg) {
+	dojo.debug("udkDataProxy calling EntryService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
+
+	var srcId = msg.srcId;
+	var dstId = msg.dstId;
+
+	if (dstId == "addressRoot" || dstId == "addressFreeRoot") {
+		dstId = null;
+	}
+
+	var onCopyDef = new dojo.Deferred();
+	onCopyDef.addCallback(function(res) {
+		// Copy operation was successful. Pass the copied node to the result handler
+		msg.resultHandler.callback(res);
+	});
+	onCopyDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+	EntryService.copyAddress(srcId, dstId, msg.copyTree,
+		{
+			callback: function(res) { onCopyDef.callback(res); },
+			timeout:3000,	// Wait three seconds for the call to finish and display the 'please wait' dialog afterwards 
+			errorHandler:function(err) {
+				if (err == "Timeout") {
+					var onCopyOpFinishedDef = new dojo.Deferred();
+					// TODO we need to return some information about the copied node!
+					onCopyOpFinishedDef.addCallback(function (res) {
+						if (res == "JOB_CANCELLED") {
+							onCopyDef.callback(null);
+						} else {
+							onCopyDef.callback(res);
+						}
+					});
+					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
+					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
+				} else {
+					dojo.debug("Error in js/udkDataProxy.js: Error while copying addresses: " + err);
+					onCopyDef.errback(err);
+				}
+			}
+		}
+	);
+}
+
 
 udkDataProxy.handleGetObjectPathRequest = function(msg) {
 	var loadErrback = function() {msg.resultHandler.errback();}
@@ -924,7 +1057,10 @@ udkDataProxy._setAddressData = function(nodeData)
 	udkDataProxy._addObjectLinkLabels(linkTable);  
 	udkDataProxy._addIcons(linkTable);
 	dojo.widget.byId("associatedObjName").store.setData(linkTable);
-	
+
+	// Comments
+	commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
+
 	var institution = "";
 	dojo.lang.forEach(nodeData.parentInstitutions, function(item) {
 		institution += item+"\n";
@@ -1263,6 +1399,9 @@ udkDataProxy._getAddressData = function(nodeData) {
 
 	// -- Links --
 	nodeData.linksFromObjectTable = udkDataProxy._getTableData("associatedObjName");
+
+	// Comments
+	nodeData.commentTable = commentStore.getData();
 
 
   // ------------------ Class specific content ------------------

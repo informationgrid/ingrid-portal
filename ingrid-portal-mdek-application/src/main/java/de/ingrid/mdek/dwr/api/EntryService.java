@@ -191,6 +191,25 @@ public interface EntryService {
 			Boolean includeChildren);
 
 	/**
+	 * Copy an address. The parameter includeChildren specifies if the children of
+	 * the specified node should be copied as well. The method copies the
+	 * original data and the working copy.
+	 * 
+	 * @param nodeUuid
+	 *            The uuid of the node to copy.
+	 * @param dstNodeUuid
+	 *            The destination nodes uuid (this will become the parent of the
+	 *            copied node).
+	 * @param includeChildren
+	 *            true to copy all children of the specified node, false to copy
+	 *            only the node.
+	 * @return Basic information about the copy is returned or null on error
+	 */
+	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid,
+			Boolean includeChildren);
+
+	
+	/**
 	 * Move a node. All children of the specified node are moved as well. This
 	 * method moves the original data and the working copy.
 	 * 
@@ -206,7 +225,21 @@ public interface EntryService {
 	public void moveNode(String nodeUuid, String dstNodeUuid, boolean forcePublicationCondition);
 
 	/**
-	 * Delete a node. Deletion is only successful, if the node has no children.
+	 * Move an address. All children of the specified node are moved as well. This
+	 * method moves the original data and the working copy.
+	 * 
+	 * @param nodeUuid
+	 *            The uuid of the node to move.
+	 * @param dstNodeUuid
+	 *            The destination nodes uuid (this will become the parent of the
+	 *            copied node).
+     *
+	 */
+	public void moveAddress(String nodeUuid, String dstNodeUuid);
+
+	
+	/**
+	 * Delete a node.
 	 * This method deletes the original data and the working copy. Marks the
 	 * working copy as deleted if markOnly is set true.
 	 * 
@@ -218,6 +251,22 @@ public interface EntryService {
 	 * @return 'success' or error message.
 	 */
 	public String deleteNode(String nodeUuid, Boolean markOnly);
+
+	/**
+	 * Delete a node.
+	 * This method deletes the original data and the working copy. Marks the
+	 * working copy as deleted if markOnly is set true.
+	 * 
+	 * @param nodeUuid
+	 *            The uuid of the node to delete.
+	 * @param markOnly
+	 *            If set true the working copy of the node will only be marked
+	 *            for deletion.
+	 * @return 'success' or error message.
+	 */
+	public String deleteAddress(String nodeUuid, Boolean markOnly);
+
+	
 	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean markOnly);
 	public MdekAddressBean deleteAddressWorkingCopy(String nodeUuid, Boolean markOnly);
 
@@ -230,9 +279,11 @@ public interface EntryService {
 
 	// Queries if a node can be cut
 	public boolean canCutObject(String parentUuid);
+	public boolean canCutAddress(String parentUuid);
 
 	// Queries if a node can be copied
 	public boolean canCopyObject(String parentUuid);
+	public boolean canCopyAddress(String parentUuid);
 
 	// Fetch sys lists from the backend
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);

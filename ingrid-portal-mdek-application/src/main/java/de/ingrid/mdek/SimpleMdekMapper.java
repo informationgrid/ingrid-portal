@@ -359,6 +359,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		if (strList != null)
 			mdekAddress.setParentInstitutions(strList);
 
+		// Comments
+		mdekAddress.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) adr.get(MdekKeys.COMMENT_LIST)));
 		
 		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekAddress.setNodeAppType("A");
@@ -537,6 +539,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		
 		// References
 		udkAdr.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
+
+		// Comments
+		udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
 
 		log.debug("Converted the following address to an IngridDocument:");
 		printHashMap(udkAdr);

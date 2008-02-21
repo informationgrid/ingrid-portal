@@ -86,6 +86,30 @@ public class EntryServiceImpl implements EntryService {
 		}
 	}
 
+	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid,
+			Boolean includeChildren) {
+		log.debug("Copying address with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+
+		try {
+			Map<String, Object> copyResult = dataConnection.copyAddress(nodeUuid, dstNodeUuid, includeChildren);
+			if (copyResult != null) {
+				return addTreeNodeAddressInfo(copyResult);
+			} else {
+				return null;
+			}
+		}
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while copying address.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		}
+		catch (Exception e) {
+			log.error("Error copying address.", e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -94,6 +118,11 @@ public class EntryServiceImpl implements EntryService {
 	 */
 	public String deleteNode(String uuid, Boolean markOnly) {
 		dataConnection.deleteObject(uuid);
+		return "success";
+	}
+
+	public String deleteAddress(String uuid, Boolean markOnly) {
+		dataConnection.deleteAddress(uuid);
 		return "success";
 	}
 
@@ -310,6 +339,23 @@ public class EntryServiceImpl implements EntryService {
 		}
 	}
 
+	public void moveAddress(String nodeUuid, String dstNodeUuid) {
+		log.debug("Moving address with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+
+		try {
+			dataConnection.moveAddressSubTree(nodeUuid, dstNodeUuid);
+		}
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while moving address.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		}
+		catch (Exception e) {
+			log.error("Error moving address.", e);
+			throw new RuntimeException(e);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -401,6 +447,22 @@ public class EntryServiceImpl implements EntryService {
 		return true;
 	}
 
+	public boolean canCutAddress(String uuid) {
+		log.debug("Query if address can be cut: "+uuid);
+
+		try {
+			  dataConnection.canCutAddress(uuid);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while checking if address can be cut.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error checking if address can be cut.", e);
+		}
+		return true;
+	}
+
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -417,6 +479,21 @@ public class EntryServiceImpl implements EntryService {
 			throw new RuntimeException(convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if node can be copied.", e);
+		}
+		return true;
+	}
+
+	public boolean canCopyAddress(String uuid) {
+		log.debug("Query if address can be copied: "+uuid);
+
+		try {
+			  dataConnection.canCopyAddress(uuid);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while checking if address can be cut.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error checking if address can be copied.", e);
 		}
 		return true;
 	}

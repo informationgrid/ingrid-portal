@@ -103,7 +103,7 @@ menuEventHandler.handlePreview = function(message) {
 
 menuEventHandler.handleCut = function(mes) {
 	var selectedNode = getSelectedNode(mes);
-	if (!selectedNode || selectedNode.id == "objectRoot") {
+	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode.id == "addressRoot" || selectedNode.id == "addressFreeRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
 	} else {
 		var deferred = new dojo.Deferred();
@@ -113,14 +113,18 @@ menuEventHandler.handleCut = function(mes) {
 		});
 		deferred.addErrback(displayErrorMessage);
 
-  		dojo.event.topic.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
+		if (selectedNode.nodeAppType == "O") {
+  			dojo.event.topic.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
+  		} else if (selectedNode.nodeAppType == "A") {
+  			dojo.event.topic.publish("/canCutAddressRequest", {id: selectedNode.id, resultHandler: deferred});
+  		}
 	}
 }
 
 
 menuEventHandler.handleCopyEntity = function(msg) {
 	var selectedNode = getSelectedNode(msg);
-	if (!selectedNode || selectedNode.id == "objectRoot") {
+	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode.id == "addressRoot" || selectedNode.id == "addressFreeRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
 	} else {
 		var deferred = new dojo.Deferred();
@@ -130,13 +134,17 @@ menuEventHandler.handleCopyEntity = function(msg) {
 		});
 		deferred.addErrback(displayErrorMessage);
 
-  		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: false, resultHandler: deferred});
+		if (selectedNode.nodeAppType == "O") {
+	  		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: false, resultHandler: deferred});
+  		} else if (selectedNode.nodeAppType == "A") {
+  			dojo.event.topic.publish("/canCopyAddressRequest", {id: selectedNode.id, copyTree: false, resultHandler: deferred});
+  		}
 	}
 }
 
 menuEventHandler.handleCopyTree = function(msg) {
 	var selectedNode = getSelectedNode(msg);
-	if (!selectedNode || selectedNode.id == "objectRoot") {
+	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode.id == "addressRoot" || selectedNode.id == "addressFreeRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
 	} else {
 		var deferred = new dojo.Deferred();
@@ -148,7 +156,11 @@ menuEventHandler.handleCopyTree = function(msg) {
     		dialog.show(message.get("general.error"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
 		});
 
-  		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: true, resultHandler: deferred});
+		if (selectedNode.nodeAppType == "O") {
+	  		dojo.event.topic.publish("/canCopyObjectRequest", {id: selectedNode.id, copyTree: true, resultHandler: deferred});
+  		} else if (selectedNode.nodeAppType == "A") {
+	  		dojo.event.topic.publish("/canCopyAddressRequest", {id: selectedNode.id, copyTree: true, resultHandler: deferred});
+  		}
 	}
 }
 
@@ -179,9 +191,16 @@ menuEventHandler.handlePaste = function(msg) {
 				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
-				def.addCallback(function() {
-					dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred});
-				});
+				var appType = treeController.nodeToCut.nodeAppType;
+				if (appType == "O") {
+					def.addCallback(function() {
+						dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred});
+					});
+				} else if (appType == "A") {
+					def.addCallback(function() {
+						dojo.event.topic.publish("/cutAddressRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+					});
+				}
 			}
 		} else if (treeController.nodeToCopy != null) {
 			// If a newNode currently exists and is included in the copy operation abort the copy operation with
@@ -214,14 +233,27 @@ menuEventHandler.handlePaste = function(msg) {
 
 			// Open the target node before copying a node. 
 			var def = treeController.expand(targetNode);
-			def.addCallback(function() {
-				dojo.event.topic.publish("/copyObjectRequest", {
-					srcId: treeController.nodeToCopy.id,
-					dstId: targetNode.id,
-					copyTree: treeController.copySubTree,
-					resultHandler: deferred
-				});				
-			});
+			var appType = treeController.nodeToCopy.nodeAppType;
+			if (appType == "O") {
+				def.addCallback(function() {
+					dojo.event.topic.publish("/copyObjectRequest", {
+						srcId: treeController.nodeToCopy.id,
+						dstId: targetNode.id,
+						copyTree: treeController.copySubTree,
+						resultHandler: deferred
+					});				
+				});
+				
+			} else if (appType == "A") {
+				def.addCallback(function() {
+					dojo.event.topic.publish("/copyAddressRequest", {
+						srcId: treeController.nodeToCopy.id,
+						dstId: targetNode.id,
+						copyTree: treeController.copySubTree,
+						resultHandler: deferred
+					});				
+				});
+			}
 		} else {
 	    	dialog.show(message.get("general.hint"), message.get("tree.nodePasteNoCutCopyHint"), dialog.WARNING);
 		}
@@ -363,7 +395,7 @@ menuEventHandler.handleDiscard = function(msg) {
 menuEventHandler.handleDelete = function(msg) {
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
-	if (!selectedNode || selectedNode.id == "objectRoot") {
+	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode == "addressRoot" || selectedNode == "addressFreeRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
 		// If a selected node was found do the following:
@@ -677,7 +709,7 @@ function _isChildOf(childNode, targetNode) {
 		return false; 
 	} else if (childNode.parent.id == targetNode.id) {
 		return true;
-	} else if (childNode.parent.id == "objectRoot") {
+	} else if (childNode.parent.id == "objectRoot" || childNode.parent.id == "addressRoot" || childNode.parent.id == "addressFreeRoot") {
 		return false;
 	} else {
 		return _isChildOf(childNode.parent, targetNode);

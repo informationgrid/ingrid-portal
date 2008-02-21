@@ -38,6 +38,9 @@ public class MdekAddressBean {
 	public Integer typeOfRelation;
 	public String nameOfRelation;
 
+	// Comments
+	public ArrayList<CommentBean> commentTable;
+	
 	public ArrayList<HashMap<String, String>> communication;
 
 	// Thesaurus
@@ -310,5 +313,13 @@ public class MdekAddressBean {
 
 	public void setParentUuid(String parentUuid) {
 		this.parentUuid = parentUuid;
+	}
+
+	public ArrayList<CommentBean> getCommentTable() {
+		return commentTable;
+	}
+
+	public void setCommentTable(ArrayList<CommentBean> commentTable) {
+		this.commentTable = commentTable;
 	}
 }

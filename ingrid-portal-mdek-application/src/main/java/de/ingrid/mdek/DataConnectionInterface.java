@@ -166,6 +166,17 @@ public interface DataConnectionInterface {
 	public void deleteObject(String uuid);
 
 	/**
+	 * Sends a request to delete an address.
+	 * 
+	 * <ul>
+	 * <li><b>(String) uuid</b> - uuid of the node that should be deleted.</li>
+	 * </ul>
+	 * 
+	 */		
+	public void deleteAddress(String uuid);
+
+	
+	/**
 	 * Sends a request to delete a working copy.
 	 * 
 	 * <ul>
@@ -200,6 +211,18 @@ public interface DataConnectionInterface {
 	public boolean canCutObject(String uuid);
 
 	/**
+	 * Query if an address can be cut.
+	 * 
+	 * <ul>
+	 * <li><b>(String) uuid</b> - uuid of the node to check.</li>
+	 * </ul>
+	 * 
+	 * @return boolean if the address can be cut
+	 */		
+	public boolean canCutAddress(String uuid);
+
+	
+	/**
 	 * Query if an object can be copied.
 	 * 
 	 * <ul>
@@ -210,6 +233,18 @@ public interface DataConnectionInterface {
 	 */		
 	public boolean canCopyObject(String uuid);
 
+	/**
+	 * Query if an address can be copied.
+	 * 
+	 * <ul>
+	 * <li><b>(String) uuid</b> - uuid of the node to check.</li>
+	 * </ul>
+	 * 
+	 * @return boolean if the address can be copied
+	 */		
+	public boolean canCopyAddress(String uuid);
+
+	
 	/**
 	 * Get a path from the root node to the specified node with uuid.
 	 * 
@@ -246,6 +281,19 @@ public interface DataConnectionInterface {
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree);
 
 	/**
+	 * Copy a single address or a whole tree.
+	 * 
+	 * <ul>
+	 * <li><b>(String) fromUuid</b> - uuid of the source node.</li>
+	 * <li><b>(String) toUuid</b> - uuid of the target node.</li>
+	 * <li><b>(boolean) copySubTree</b> - flag signaling if the whole subtree should be copied.</li>
+	 * </ul>
+	 * 
+	 * @return Map with information about the copied address (top node if a whole tree is copied)
+	 */	
+	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree);
+
+	/**
 	 * Move a single object or a whole tree.
 	 * 
 	 * <ul>
@@ -256,6 +304,17 @@ public interface DataConnectionInterface {
 	 * 
 	 */	
 	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition);
+
+	/**
+	 * Move a single address or a whole tree.
+	 * 
+	 * <ul>
+	 * <li><b>(String) fromUuid</b> - uuid of the source node.</li>
+	 * <li><b>(String) toUuid</b> - uuid of the target node.</li>
+	 * </ul>
+	 * 
+	 */	
+	public void moveAddressSubTree(String fromUuid, String toUuid);
 
 	/**
 	 * Fetch Sys Lists from the server.
