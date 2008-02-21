@@ -438,11 +438,11 @@ menuEventHandler.reloadSubTree = function(msg) {
 	var treeListener = dojo.widget.byId("treeListener");
 	var treeController = dojo.widget.byId("treeController");
 
-	udkDataProxy.resetDirtyFlag();
-	tree.selectNode(selectedNode);
-	tree.selectedNode = selectedNode;
-	dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedNode});
-	if (selectedNode && selectedNode.id == "objectRoot") {
+	if (selectedNode) {
+		udkDataProxy.resetDirtyFlag();
+		tree.selectNode(selectedNode);
+		tree.selectedNode = selectedNode;
+		dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedNode});
 		treeController.refreshChildren(selectedNode);
 	}
 }

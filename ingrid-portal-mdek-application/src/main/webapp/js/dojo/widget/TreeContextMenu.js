@@ -24,7 +24,7 @@ dojo.widget.defineWidget(
 
       // disable paste if not possible
       node.actionsDisabled = [];
-      if (dojo.lang.isObject(this.treeController) && !this.treeController.canPaste(null))
+      if (dojo.lang.isObject(this.treeController) && !this.treeController.canPaste(node))
         node.actionsDisabled = ["PASTE"];
 
       result = dojo.widget.TreeContextMenuV3.prototype.open.apply(this, arguments);

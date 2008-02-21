@@ -610,6 +610,8 @@ function initToolbar() {
 
 	// Activate/Deactivate buttons depending on the selected node
 	var treeListener = dojo.widget.byId("treeListener");
+	var treeController = dojo.widget.byId("treeController");
+
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 		var disableList = [];
 		var enableList = [];
@@ -624,6 +626,12 @@ function initToolbar() {
 			enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 		}
 
+		// The paste button depends on the current selection in treeController and the current selected node
+		if (treeController.canPaste(message.node)) {
+			enableList.push(pasteButton);			
+		} else {
+			disableList.push(pasteButton);
+		}
 
 		dojo.lang.forEach(disableList, function(item) {item.disable()});
 		dojo.lang.forEach(enableList, function(item) {item.enable()});
@@ -638,11 +646,9 @@ function initToolbar() {
 	});
 
 
-
-	var treeController = dojo.widget.byId("treeController");
-	var showOrHidePasteButton = function() {
-		// The paste button depends on the current selection in treeController
-		if (treeController.nodeToCopy != null || treeController.nodeToCut != null) {
+	var showOrHidePasteButton = function(node) {
+		// The paste button depends on the current selection in treeController and the current selected node
+		if (treeController.canPaste(node)) {
 			pasteButton.enable();
 		} else {
 			pasteButton.disable();

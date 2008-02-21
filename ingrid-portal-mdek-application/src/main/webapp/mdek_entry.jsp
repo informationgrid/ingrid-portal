@@ -1872,8 +1872,7 @@ function hideSplash(){
 			              <span id="addressCountryLabel" class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
 			              <span class="input spaceBelow">
 			              	<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
-			              		<option value="D">D</option>
-			              		<option value="A">A</option>
+			              		<option value="de">DE</option>
 			              	</select>
 			              </span>
 			            </span>
