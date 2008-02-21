@@ -11,8 +11,14 @@ dojo.addOnLoad(function() {
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
 
 	// Object Name must not be empty
-	var objNameWidget = dojo.widget.byId("objectName");
-	objNameWidget.isValid = function() { return !this.isMissing(); };
+	dojo.widget.byId("objectName").isValid = function() { return !this.isMissing(); };
+
+	// Address fields which must not be empty
+	dojo.widget.byId("headerAddressType0Unit").isValid = function() { return !this.isMissing(); };
+	dojo.widget.byId("headerAddressType1Unit").isValid = function() { return !this.isMissing(); };
+	dojo.widget.byId("headerAddressType2Lastname").isValid = function() { return !this.isMissing(); };
+	dojo.widget.byId("headerAddressType3Lastname").isValid = function() { return !this.isMissing(); };
+
 });
 
 

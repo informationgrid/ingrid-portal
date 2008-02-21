@@ -7,18 +7,19 @@ import de.ingrid.mdek.dwr.sns.SNSTopic;
 
 public class MdekAddressBean {
 	
+	public String uuid;
+	public Integer parentClass;
+	public String parentUuid;
+	public String information;
+	public String nodeAppType;
+	public String nodeDocType;
+	
 	public String objectOwner;
 	public String creationTime;
 	public String modificationTime;
 	public String lastEditor;
 	public String workState;
 
-	public String uuid;
-	public String information;
-	public String nodeAppType;
-	public String nodeDocType;
-	public Integer parentClass;
-	
 	public Integer addressClass;
 	public String organisation;
 	public String name;
@@ -301,5 +302,13 @@ public class MdekAddressBean {
 
 	public void setParentInstitutions(ArrayList<String> parentInstitutions) {
 		this.parentInstitutions = parentInstitutions;
+	}
+
+	public String getParentUuid() {
+		return parentUuid;
+	}
+
+	public void setParentUuid(String parentUuid) {
+		this.parentUuid = parentUuid;
 	}
 }

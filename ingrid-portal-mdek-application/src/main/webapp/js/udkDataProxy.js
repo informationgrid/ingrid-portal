@@ -372,6 +372,10 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 		EntryService.createNewAddress(nodeId,
 			{
 				callback: function(res){
+						if (msg.id == "addressFreeRoot") {
+							res.addressClass = 3;
+							res.nodeDocType = "PersonAddress_B";
+						}
 						msg.resultHandler.callback(res);
 						udkDataProxy._setData(res);
 						udkDataProxy.setDirtyFlag();
@@ -847,12 +851,22 @@ udkDataProxy._setAddressData = function(nodeData)
 {
 	// Set the address type list values depending on the parent class
 	var parentClass = nodeData.parentClass;
-	if (parentClass == null) parentClass = 4;
+	if (parentClass == null) {
+		if (nodeData.addressClass == 3)
+			parentClass = -2;
+		else 
+			parentClass = -1;
+	}
+
 	var addressTypeDP = dojo.widget.byId("addressType").dataProvider;
 
 	var valueList = [];
 	switch (parentClass) {
-		case 4: // Root Address
+		case -2:	// Free Address Root
+			valueList.push([message.get("address.type.custom"), "AddressType3"]);
+			break;
+
+		case -1: // Root Address
 			valueList.push([message.get("address.type.institution"), "AddressType0"]);
 			break;
 
@@ -874,10 +888,6 @@ udkDataProxy._setAddressData = function(nodeData)
 		case 3:	// Custom Address (a custom address must not have any subAddresses)
 			dojo.debug("Error in udkDataProxy._setAddressData - A 'custom address' is not allowed to have any sub addresses!");
 			break;
-
-//		case 5:	// Custom Address Root
-//			valueList.push([message.get("address.type.custom"), "AddressType3"]);
-//			break;
 
 		default:
 			dojo.debug("Error in udkDataProxy._setAddressData - Unknown parent address type: "+parentClass);
@@ -1228,6 +1238,10 @@ udkDataProxy._getAddressData = function(nodeData) {
 
 	// ------------- General Static Data -------------
 	nodeData.uuid = currentUdk.uuid;
+	var parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
+	if (parentUuid != "addressRoot" && parentUuid != "addressFreeRoot") {
+		nodeData.parentUuid = parentUuid;
+	}
 
 	// ------------------ Header ------------------
 	nodeData.addressClass = dojo.widget.byId("addressType").getValue()[11];		// AddressTypex
@@ -1719,7 +1733,7 @@ udkDataProxy._createAddressTitle = function(adr) {
 		case 3: // Freie Adresse
 			if (adr.name) title += adr.name;
 			if (adr.givenName) title += ", "+adr.givenName;
-			if (adr.organisation) title += "("+adr.givenName+")";
+			if (adr.organisation) title += " ("+adr.organisation+")";
 			break;
 		default:
 			break;

@@ -457,24 +457,44 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekAdr.put(MDEK_ID, adr.get(MdekKeys.UUID));
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
 		mdekAdr.put(MDEK_CLASS, adrClass);
+
 		if (adrClass == 0 || adrClass == 1)
 			mdekAdr.put(MDEK_TITLE, adr.get(MdekKeys.ORGANISATION));
+
 		else if (adrClass == 2) {
 			String title = "";
 			title += adr.get(MdekKeys.NAME);
 			if (adr.get(MdekKeys.GIVEN_NAME) != null)
 				title += ", "+adr.get(MdekKeys.GIVEN_NAME);
-//			if (adr.get(MdekKeys.ORGANISATION) != null)
-//				title += " ("+adr.get(MdekKeys.ORGANISATION)+")";
 			mdekAdr.put(MDEK_TITLE, title);
+
 		} else if (adrClass == 3) {
 			String title = "";
-			title += adr.get(MdekKeys.NAME);
-			if (adr.get(MdekKeys.GIVEN_NAME) != null)
-				title += ", "+adr.get(MdekKeys.GIVEN_NAME);
-			if (adr.get(MdekKeys.ORGANISATION) != null)
-				title += " ("+adr.get(MdekKeys.ORGANISATION)+")";
-			mdekAdr.put(MDEK_TITLE, title);
+			String name = (String) adr.get(MdekKeys.NAME);
+			String givenName = (String) adr.get(MdekKeys.GIVEN_NAME);
+			String organisation = (String) adr.get(MdekKeys.ORGANISATION);
+			if (name != null) {
+				name = name.trim();
+				if (name.length() != 0)
+					title += name;
+			}
+
+			if (givenName != null){
+				givenName = givenName.trim();
+				if (givenName.length() != 0) {
+					if (title.length() != 0)
+						title += ", ";
+					title += givenName;
+				}
+			}
+
+			if (organisation != null) {
+				organisation = organisation.trim();
+				if (organisation.length() != 0)
+					title += " ("+organisation+")";
+			}
+
+			mdekAdr.put(MDEK_TITLE, title.trim());
 		}
 
 		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
@@ -490,6 +510,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		IngridDocument udkAdr = new IngridDocument();
 
 		// General Information
+		udkAdr.put(MdekKeys.PARENT_UUID, data.getParentUuid());
 		udkAdr.put(MdekKeys.UUID, data.getUuid());
 		udkAdr.put(MdekKeys.CLASS, data.getAddressClass());
 

@@ -1754,7 +1754,7 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow">
 			        <span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
-			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Unit" class="w668 h038" /></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType0Unit" class="w668 h038" /></span>
 			  	  </div>
 
 			    </div>
@@ -1771,7 +1771,7 @@ function hideSplash(){
 			  	  
 			      <div class="inputContainer noSpaceBelow">
 			        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
-			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Unit" class="w668 h038" /></span>
+			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType1Unit" class="w668 h038" /></span>
 			  	  </div>
 
 			    </div>
@@ -1789,7 +1789,7 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 			          <span id="headerAddressType2LastnameLabel" class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
-			          <span class="input"><input type="text" id="headerAddressType2Lastname" name="headerAddressType2Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+			          <span class="input"><input type="text" id="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			  
 			        <div class="half">
@@ -1822,7 +1822,7 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 			          <span id="headerAddressType3LastnameLabel" class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
-			            <span class="input"><input type="text" id="headerAddressType3Lastname" name="headerAddressType3Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
+			            <span class="input"><input type="text" id="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			  
 			        <div class="half">

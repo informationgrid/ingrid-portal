@@ -261,13 +261,17 @@ public class EntryServiceImpl implements EntryService {
 			ArrayList<HashMap<String, Object>> subAddresses = null; 
 			if (nodeUuid.equalsIgnoreCase(ADDRESS_ROOT)) {
 				subAddresses = dataConnection.getRootAddresses(false);
-
 				for (HashMap<String, Object> node : subAddresses) {
 					addTreeNodeAddressInfo(node);
 				}
 				subAddresses.add(0, createFreeAddressRoot());
+
 			} else if (nodeUuid.equalsIgnoreCase(ADDRESS_FREE_ROOT)) {
 				subAddresses = dataConnection.getRootAddresses(true);				
+				for (HashMap<String, Object> node : subAddresses) {
+					addTreeNodeAddressInfo(node);
+				}
+
 			} else {
 				subAddresses = dataConnection.getSubAddresses(nodeUuid, depth);
 

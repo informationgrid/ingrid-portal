@@ -81,11 +81,12 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 
 	updateClass: function(className){
 		// summary: used to ensure that only 1 validation class is set at a time
+	    var ee = this[this.mode.toLowerCase()];
 		var pre = this.classPrefix;
-		dojo.html.removeClass(this.textbox,pre+"Empty");
-		dojo.html.removeClass(this.textbox,pre+"Valid");
-		dojo.html.removeClass(this.textbox,pre+"Invalid");
-		dojo.html.addClass(this.textbox,pre+className);
+		dojo.html.removeClass(ee,pre+"Empty");
+		dojo.html.removeClass(ee,pre+"Valid");
+		dojo.html.removeClass(ee,pre+"Invalid");
+		dojo.html.addClass(ee,pre+className);
 
 		if (this.popup) {
 			if (className == "Invalid" && this.invalidMessage){
