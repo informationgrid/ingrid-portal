@@ -31,7 +31,7 @@ dojo.addOnLoad(function()
   initForm();
   initTableValidators();
   initCTS();
-  initFreeTermsButton();
+  initFreeTermsButtons();
   initRef1SpatialSystemDataProvider();
   initReferenceTables();
   var deferred = initCatalogData();
@@ -296,17 +296,7 @@ function initCTS() {
 }
 
 
-function initFreeTermsButton() {
-	var button = dojo.widget.byId("thesaurusFreeTermsAddButton");
-
-	var inputField = dojo.widget.byId("thesaurusFreeTerms");
-    dojo.event.connect(inputField.domNode, "onkeypress",
-        function(event) {
-            if (event.keyCode == event.KEY_ENTER) {
-                button.onClick();
-            }
-        });
-
+function initFreeTermsButtons() {
 // Helper function that iterates over all entries in a store and returns a key that is not in use yet
 // We need this function to add terms to the free Terms list
 // TODO Move to a helper class if we need it more often
@@ -321,10 +311,11 @@ function initFreeTermsButton() {
 		return key;
 	}
 
-
-	button.onClick = function() {
-		var term = dojo.widget.byId("thesaurusFreeTerms").getValue();
+	// This function executes a search for topics and adds the results to the specified lists
+	var executeSearch = function() {
+		var term = this._inputFieldWidget.getValue();
 		term = dojo.string.trim(term);
+		_this = this;
 		if (term) {
 			SNSService.findTopics(term, {
 				callback:function(topics) {
@@ -337,7 +328,7 @@ function initFreeTermsButton() {
 
 					if (descriptors.length != 0) {
 						// Topics found. Add the results to the topic list
-						var topicStore = dojo.widget.byId("thesaurusTerms").store;
+						var topicStore = _this._termListWidget.store;
 						// If the term we searched for was a descriptor and is contained in the result list, only add it
 						// to the list and ignore the rest
 						for (var i = 0; i < descriptors.length; ++i) {
@@ -347,7 +338,7 @@ function initFreeTermsButton() {
 									topicStore.addData( {Id: getNewKey(topicStore), topicId: descriptors[i].topicId, title: descriptors[i].title} );
 
 									// Scroll to the added descriptor
-									var rows = dojo.widget.byId("thesaurusTerms").domNode.tBodies[0].rows;
+									var rows = _this._termListWidget.domNode.tBodies[0].rows;
 									dojo.html.scrollIntoView(rows[rows.length-1]);
 								}
 								return;
@@ -356,14 +347,14 @@ function initFreeTermsButton() {
 
 						// Always add the synonym to the free terms list (if it doesn't exist already) 
 						// Afterwards a window is opened to query if more descriptors should be added
-						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
+						var freeTermsStore = _this._freeTermListWidget.store;
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
 							// If every term in the store != the entered term add it to the list
 							var identifier = getNewKey(freeTermsStore);							
 							freeTermsStore.addData( {Id: identifier, title: term} );
 
 							// Scroll to the added descriptor
-							var rows = dojo.widget.byId("thesaurusFreeTermsList").domNode.tBodies[0].rows;
+							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
 							dojo.html.scrollIntoView(rows[rows.length-1]);
 						}
 
@@ -378,7 +369,7 @@ function initFreeTermsButton() {
 									topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
 									
 									// Scroll to the added descriptor
-									var rows = dojo.widget.byId("thesaurusTerms").domNode.tBodies[0].rows;
+									var rows = _this._termListWidget.domNode.tBodies[0].rows;
 									dojo.html.scrollIntoView(rows[rows.length-1]);
 								} else {
 									// Topic already exists in the topic List
@@ -391,22 +382,56 @@ function initFreeTermsButton() {
 						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 342, 220, true, {descriptors:descriptors, resultHandler:deferred});
 					} else {
 						// Topic not found in the sns. Add the result to the free term list
-						var freeTermsStore = dojo.widget.byId("thesaurusFreeTermsList").store;
+						var freeTermsStore = _this._freeTermListWidget.store;
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
 							// If every term in the store != the entered term add it to the list
 							var identifier = getNewKey(freeTermsStore);							
 							freeTermsStore.addData( {Id: identifier, title: term} );
 
 							// Scroll to the added descriptor
-							var rows = dojo.widget.byId("thesaurusFreeTermsList").domNode.tBodies[0].rows;
+							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
 							dojo.html.scrollIntoView(rows[rows.length-1]);
 						}
 					}},
 				timeout:8000,
 				errorHandler:function(msg) {dojo.debug("Error while executing SNSService.findTopics");}
 			});
-		}
+		}	
 	}
+
+	// Add the function(s) to the button in the object form
+	var button = dojo.widget.byId("thesaurusFreeTermsAddButton");
+
+	var inputField = dojo.widget.byId("thesaurusFreeTerms");
+    dojo.event.connect(inputField.domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                button.onClick();
+            }
+        });
+
+	button._inputFieldWidget = dojo.widget.byId("thesaurusFreeTerms");
+	button._termListWidget = dojo.widget.byId("thesaurusTerms");
+	button._freeTermListWidget = dojo.widget.byId("thesaurusFreeTermsList");
+	button.onClick = executeSearch;
+
+
+	// Add the function(s) to the button in the address form
+	button = dojo.widget.byId("thesaurusFreeTermsAddressAddButton");
+
+	inputField = dojo.widget.byId("thesaurusFreeTermInputAddress");
+    dojo.event.connect(inputField.domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                button.onClick();
+            }
+        });
+
+	button._inputFieldWidget = dojo.widget.byId("thesaurusFreeTermInputAddress");
+	button._termListWidget = dojo.widget.byId("thesaurusTermsAddress");
+	button._freeTermListWidget = dojo.widget.byId("thesaurusFreeTermsListAddress");
+	button.onClick = executeSearch;
+
 }
 
 

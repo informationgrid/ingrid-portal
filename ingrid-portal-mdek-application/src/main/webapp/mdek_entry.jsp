@@ -1537,7 +1537,7 @@ function hideSplash(){
 	              <div class="inputContainer h110">
 	                <span id="thesaurusTermsLabel" class="label required"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
-	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 	                <div class="tableContainer scrollable tcFull tcRows4">
 	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable w667 nosort interactive">
 	            	      <thead>
@@ -1947,7 +1947,8 @@ function hideSplash(){
 				  
 			      <div class="inputContainer notRequired h088">
 			        <span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>
-			        <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'erfassung_modal_thesaurus.html', 1010, 430, true);" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+			        <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+
 			        <div class="tableContainer rows4">
 			    	    <table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
 			    	      <thead>
@@ -1963,8 +1964,8 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow notRequired h116">
 			        <div class="full">
-			          <span class="label"><label for="thesaurusFreeTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
-			          <span class="input"><input type="text" id="thesaurusFreeTermsAddress" name="thesaurusFreeTerms" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
+			          <span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
+			          <span class="input"><input type="text" id="thesaurusFreeTermInputAddress" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
 			          </span>
 	                  <span style="position:relative; top:-24px; float:right;">
 						<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button">Hinzuf&uuml;gen</button>

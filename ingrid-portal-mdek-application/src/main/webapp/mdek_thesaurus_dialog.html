@@ -339,17 +339,22 @@ getNewKey = function(store) {
 addSelectedTopic = function() {
 	var selectedTab = dojo.widget.byId("thesResultTabContainer").selectedChild;
     var descStore = dojo.widget.byId('thesaurusDescList').store;
-	
+
 	if (selectedTab == "thesTreePane") {
 		var selectedNode = dojo.widget.byId('thesTree').selectedNode;
-		if (!selectedNode || descStore.getByKey(selectedNode.topicId) || selectedNode.type != "DESCRIPTOR")
+		if (dojo.lang.some(descStore.getData(), function(item){ return (selectedNode.topicId == item.topicId); }))
+			return;
+
+		if (!selectedNode || selectedNode.type != "DESCRIPTOR")
 			return;
 		else
 			descStore.addData( {Id: getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
+
 	} else if (selectedTab == "thesResultPane" && selectedTextNode) {
-		if (!descStore.getByKey(selectedTextNode.topicId)) {
+		if (dojo.lang.some(descStore.getData(), function(item){ return (selectedTextNode.topicId == item.topicId); }))
+			return;
+		else
 			descStore.addData( {Id: getNewKey(descStore), topicId: selectedTextNode.topicId, title: selectedTextNode.innerHTML} );
-		}
 	}
 };
 
@@ -366,7 +371,8 @@ closeDialog = function() {
 acceptTopicList = function() {
 	// TODO store.update()?
 	var srcStore = dojo.widget.byId("thesaurusDescList").store;
-	var destStore = dojo.widget.byId("thesaurusTerms").store;
+//	var destStore = dojo.widget.byId("thesaurusTerms").store;
+	var destStore = dojo.widget.byId(_container_.customParams.dstTable).store;
 
 	dojo.lang.forEach(srcStore.getData(), function(topic){
 		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
