@@ -36,7 +36,7 @@
 #macro (includeIdentityArea)
   #set($currentPage = $site.getPage().url)
   #set($langCode = '')
-  #if($preferedLocale.toString() == 'en')
+  #if($preferedLocale.toString().startsWith('en'))
 	#set($langCode = "en_")
   #end
   #if($currentPage == "/default-page.psml")
