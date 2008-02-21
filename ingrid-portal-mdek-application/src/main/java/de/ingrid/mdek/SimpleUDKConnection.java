@@ -245,12 +245,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree) {
-		log.debug("copyAddress(String, String, boolean) not implemented yet.");
-		return null;
-/*
 		IngridDocument response = mdekCaller.copyAddress(fromUuid, toUuid, copySubTree, getCurrentSessionId());
 		return extractSingleSimpleAddressFromResponse(response);
-*/
 	}
 
 	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition) {
@@ -338,6 +334,18 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
+	private HashMap<String, Object> extractSingleSimpleAddressFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		if (result != null) {
+			return dataMapper.getSimpleAddressRepresentation(result);
+		} else {
+			handleError(response);
+			return null;
+		}
+	}
+
+	
 	private MdekDataBean extractSingleObjectFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 

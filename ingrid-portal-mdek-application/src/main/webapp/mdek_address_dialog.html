@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>Adresse hinzuf&uuml;gen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript">
+
+_container_.addOnLoad(function() {
+	// Initialize the address tree	
+	// Load initial first level of the tree from the server
+	EntryService.getSubTree(null, null, 1, 
+		function (str) {
+			for (var i = 0; i < str.length; i++) {
+				str[i].id = "AssignAdr_"+str[i].id;
+			}
+
+			var tree = dojo.widget.byId("treeAdr");
+
+			// Only use 'addresses' and drop 'objects'
+			tree.setChildren([str[1]]);
+		});
+
+	// Load children of the node from server
+	// Overwritten to work with dwr.
+	var treeController = dojo.widget.byId("treeControllerAdr");
+	treeController.loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		EntryService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:20000,
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+
+		deferred.addCallback(function(res) {
+			for (var i = 0; i < res.length; i++) {
+				res[i].id = "AssignAdr_"+res[i].id;
+			}
+			return _this.loadProcessResponse(node,res);
+		});
+		
+		deferred.addErrback(function(res) { alert("Error while loading data from the server. Please check your connection and try again!"); return res;});
+		return deferred;
+	};
+});
+
+addSelectedAddressFromTree = function() {
+	var selectedNode = dojo.widget.byId("treeAdr").selectedNode;
+
+	if (selectedNode) {
+	    var dstStore = dojo.widget.byId("generalAddress").store;
+		var nodeId = selectedNode.id.substring(10);
+		if (nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
+			if (dojo.lang.every(dstStore.getData(), function(item){ dojo.debug(item.uuid); return (item.id != nodeId); })) {
+				// TODO: Load address (full load needed?) and add it to the table
+			}
+		}
+	}
+	_container_.closeWindow();
+}
+
+</script>
+
+</head>
+<body>
+
+<div dojoType="ContentPane">
+
+  <div id="address" class="contentBlockWhite top fullBlock">
+    <div id="winNavi">
+      <a href="#" title="Hilfe">[?]</a>
+	  </div>
+	  <div id="addressContent" class="content">
+
+      <!-- LEFT HAND SIDE CONTENT START -->
+      <div class="spacer"></div>
+    	<div id="addressContainer" dojoType="ingrid:TabContainer" class="full h600" selectedChild="addressSearch">
+    		<div id="addressSearch" dojoType="ContentPane" class="blueTopBorder" label="Direkte Suche">
+
+          <!-- TAB 1 START -->
+          <div class="inputContainer field grey noSpaceBelow">
+            <div>
+              <span class="label"><label for="addressSearchInstitution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution</label></span>
+              <span class="input spaceBelow"><input type="text" id="addressSearchInstitution" name="addressSearchInstitution" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+            </div>
+            <div>
+              <span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit</label></span>
+              <span class="input spaceBelow"><input type="text" id="addressSearchUnit" name="addressSearchUnit" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+            </div>
+            <div class="half left">
+              <span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
+              <span class="input"><input type="text" id="addressSearchLastname" name="addressSearchLastname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
+        	  </div>
+            <div class="half noSpaceBelow">
+              <span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+              <span class="input"><input type="text" id="addressSearchFirstname" name="addressSearchFirstname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
+        	  </div>
+        	  <div class="fill"></div>
+            <div class="spacerField"></div>
+      	  </div>
+
+          <div class="inputContainer w684">
+		        <span class="button" style="float:right; height:20px !important;">
+			        <span style="float:right;"><button dojoType="ingrid:Button" onClick="startSearch">Suchen</button></span>
+
+					<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img id="thesImageZone" src="img/ladekreis.gif" />
+					</span>
+		        </span>
+      	  </div>
+
+          <div id="results" style="display:none;" class="inputContainer noSpaceBelow">
+            <span class="label">Trefferliste</span>
+            <div class="listInfo full">
+              <span class="searchResultsInfo">1-10 von 240 Treffern</span>
+              <span class="searchResultsPaging">(Seite 1 von 24)
+                <em>1</em>
+                <a href="#" title="Seite 2">2</a>
+                <a href="#" title="Seite 3">3</a>
+                <a href="#" title="Seite 4">4</a>
+                <a href="#" title="weiter">></a>
+              </span>
+          	  <div class="fill"></div>
+            </div>
+
+      	    <table id="addressSearchResultsTable" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable full relativePos">
+      	      <thead>
+      		      <tr>
+            			<th field="type" dataType="String" width="74"></th>
+            			<th field="name" dataType="String" width="610">Name</th>
+      		      </tr>
+      	      </thead>
+      	      <tbody>
+      	      </tbody>
+      	    </table>
+
+            <div class="listInfo full noSpaceBelow">
+              <span class="searchResultsInfo">1-10 von 240 Treffern</span>
+              <span class="searchResultsPaging">(Seite 1 von 24)
+                <em>1</em>
+                <a href="#" title="Seite 2">2</a>
+                <a href="#" title="Seite 3">3</a>
+                <a href="#" title="Seite 4">4</a>
+                <a href="#" title="weiter">></a>
+              </span>
+          	  <div class="fill"></div>
+            </div>
+
+            <div class="inputContainer w684">
+
+		        <span class="button" style="height:20px !important; float:right;">
+			        <span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddress">&Uuml;bernehmen</button></span>
+		        </span>
+        	  </div>
+      	  </div>
+
+    		</div>
+        <!-- TAB 1 END -->
+    		
+    		<!-- TAB 2 START -->
+    		<div id="addressHierarchy" dojoType="ContentPane" class="blueTopBorder" label="Hierarchiebaum">
+
+          <div class="inputContainer grey full h360 scrollable">
+          	<div dojoType="ContentPane" id="addressTreeContainer">
+              <!-- tree components -->
+              <div dojoType="ingrid:TreeController" widgetId="treeControllerAdr" RpcUrl="server/treelistener.php"></div>
+              <div dojoType="ingrid:TreeListener" widgetId="treeListenerAdr"></div>	
+              <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAdr"></div>	
+              <div dojoType="ingrid:TreeDecorator" listener="treeListenerAdr"></div>
+              
+              <!-- tree -->
+              <div dojoType="ingrid:Tree" listeners="treeControllerAdr;treeListenerAdr;treeDocIconsAdr" widgetId="treeAdr">
+              </div>
+          	</div>
+
+          	<div class="spacer"></div>
+          </div>
+            <div class="inputContainer w684">
+		        <span class="button" style="height:20px !important; float:right;">
+			        <span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddressFromTree">&Uuml;bernehmen</button></span>
+		        </span>
+        	  </div>
+    		</div>
+        <!-- TAB 2 END -->
+
+    	</div>
+      <!-- LEFT HAND SIDE CONTENT END -->
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
