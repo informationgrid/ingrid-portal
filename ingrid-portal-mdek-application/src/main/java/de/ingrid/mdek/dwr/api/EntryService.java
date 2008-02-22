@@ -203,10 +203,13 @@ public interface EntryService {
 	 * @param includeChildren
 	 *            true to copy all children of the specified node, false to copy
 	 *            only the node.
+	 * @param includeChildren
+	 *            true if the target is a free address
+	 *
 	 * @return Basic information about the copy is returned or null on error
 	 */
 	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid,
-			Boolean includeChildren);
+			Boolean includeChildren, Boolean copyToFreeAddress);
 
 	
 	/**

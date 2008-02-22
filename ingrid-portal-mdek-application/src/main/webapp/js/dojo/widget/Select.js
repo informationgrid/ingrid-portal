@@ -132,11 +132,13 @@ dojo.widget.defineWidget(
   enable: function() {
     dojo.widget.Select.superclass.enable.apply(this, arguments);
     dojo.html.removeClass(this.textInputNode, 'noEdit');
+    this.textInputNode.removeAttribute("disabled");
   },
 
   disable: function() {
     dojo.widget.Select.superclass.disable.apply(this, arguments);
     dojo.html.addClass(this.textInputNode, 'noEdit');
+    this.textInputNode.setAttribute("disabled", "disabled");
   }
 
 });

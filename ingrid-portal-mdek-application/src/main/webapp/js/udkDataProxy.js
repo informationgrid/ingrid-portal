@@ -855,13 +855,15 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCopyAddressRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
-
 	var srcId = msg.srcId;
 	var dstId = msg.dstId;
+	var copyToFreeAddress = false;
 
-	if (dstId == "addressRoot" || dstId == "addressFreeRoot") {
+	if (dstId == "addressRoot") {
 		dstId = null;
+	} else if (dstId == "addressFreeRoot") {
+		dstId = null;
+		copyToFreeAddress = true;
 	}
 
 	var onCopyDef = new dojo.Deferred();
@@ -873,7 +875,8 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 		msg.resultHandler.errback(err);
 	});
 
-	EntryService.copyAddress(srcId, dstId, msg.copyTree,
+	dojo.debug("udkDataProxy calling EntryService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+", "+copyToFreeAddress+")");	
+	EntryService.copyAddress(srcId, dstId, msg.copyTree, copyToFreeAddress,
 		{
 			callback: function(res) { onCopyDef.callback(res); },
 			timeout:3000,	// Wait three seconds for the call to finish and display the 'please wait' dialog afterwards 

@@ -287,11 +287,12 @@ public interface DataConnectionInterface {
 	 * <li><b>(String) fromUuid</b> - uuid of the source node.</li>
 	 * <li><b>(String) toUuid</b> - uuid of the target node.</li>
 	 * <li><b>(boolean) copySubTree</b> - flag signaling if the whole subtree should be copied.</li>
+	 * <li><b>(boolean) copyToFreeAddress</b> - flag signaling if the address is copied to the free addresses.</li>
 	 * </ul>
 	 * 
 	 * @return Map with information about the copied address (top node if a whole tree is copied)
 	 */	
-	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree);
+	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress);
 
 	/**
 	 * Move a single object or a whole tree.

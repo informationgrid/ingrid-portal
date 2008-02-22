@@ -714,7 +714,8 @@ function hideSplash(){
 	          
 	                <div class="half">
 	                  <span class="label"><label for="ref2LocationTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Standort')">Standort</label></span>
-	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true, {filter: 3360});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+
 	                	<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2LocationTab1">
 	                		<div id="ref2LocationTab1" dojoType="ContentPane" label="Text">
 								<span class="input">
@@ -937,7 +938,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beteiligte')">Beteiligte</label></span>
-	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true, {filter: 3410});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4ParticipantsTab1">
 	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
@@ -967,7 +968,7 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Projektleiter')">Projektleiter</label></span>
-	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'erfassung_modal_adresse.html', 755, 500, true, {filter: 3400});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4PMTab1">
 	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">

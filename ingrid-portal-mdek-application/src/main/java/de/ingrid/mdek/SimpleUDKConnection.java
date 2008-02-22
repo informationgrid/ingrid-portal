@@ -244,8 +244,8 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
-	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree) {
-		IngridDocument response = mdekCaller.copyAddress(fromUuid, toUuid, copySubTree, getCurrentSessionId());
+	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress) {
+		IngridDocument response = mdekCaller.copyAddress(fromUuid, toUuid, copySubTree, copyToFreeAddress, getCurrentSessionId());
 		return extractSingleSimpleAddressFromResponse(response);
 	}
 

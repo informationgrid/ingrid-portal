@@ -87,11 +87,11 @@ public class EntryServiceImpl implements EntryService {
 	}
 
 	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid,
-			Boolean includeChildren) {
+			Boolean includeChildren, Boolean copyToFreeAddress) {
 		log.debug("Copying address with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			Map<String, Object> copyResult = dataConnection.copyAddress(nodeUuid, dstNodeUuid, includeChildren);
+			Map<String, Object> copyResult = dataConnection.copyAddress(nodeUuid, dstNodeUuid, includeChildren, copyToFreeAddress);
 			if (copyResult != null) {
 				return addTreeNodeAddressInfo(copyResult);
 			} else {
