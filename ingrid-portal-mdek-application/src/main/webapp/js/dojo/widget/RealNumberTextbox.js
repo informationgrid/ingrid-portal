@@ -86,7 +86,7 @@ dojo.widget.defineWidget(
 			} else
 				ee.value = value;
 			this.update();
-		},
+		}
 
 /*
 		isInRange: function(){

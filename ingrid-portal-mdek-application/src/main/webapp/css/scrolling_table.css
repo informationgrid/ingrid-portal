@@ -1,0 +1,45 @@
+/* CSS Document */
+/* datTable for styling only */
+
+.rows4 { height:88px; }
+.rows5 { height:110px; }
+
+/* This makes the scrolling table work */
+div.tableContainer {
+	height: 110px;	/* rows4 */	
+    overflow: auto;
+	width: 970px;
+	margin: 15px 0 0 0;
+	position: relative;
+}
+
+/* The different widths below are due to the way the scroll bar is implamented
+we are keeping these here instead of putting them in the IE css file b/c it 
+is easier to change the width if both numbers are in the same place. */
+/* All browsers accept this, but we are targeting IE with this rule */
+
+div.tableContainer table {
+	width: 952px;
+}
+
+/* Modern browsers accept this (not IE) and we are targetting firefox */
+
+html>/**/body div.tableContainer table {
+    width: 970px;
+}
+
+/* Modern browsers accept this (not IE) and we are targetting firefox */
+
+html>/**/body div.tableContainer table>tbody	{  
+    overflow: auto; 
+    height: 88px;
+    overflow-x: hidden;
+}
+
+div.tableContainer thead tr	{
+	position:relative;
+}
+
+/*prevent Mozilla scrollbar from hiding cell content*/
+
+div.tableContainer td:last-child {padding-right: 20px;}

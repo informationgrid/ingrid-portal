@@ -1,0 +1,11 @@
+/* non-standard IE Specific Rules*/
+
+div.tableContainer thead tr	{
+    /* Causes the pixel header row to stay fixed in IE*/
+	top: expression(offsetParent.scrollTop);
+	/* This fixes a strange bug in IE where the header row would "shift" 1px to
+	   the right after the table was scrolled down.  It would not shift back
+       after scrolling all the way, which made my first solution based on
+       offSetParent.scrollTop == 0 not an effective solution*/
+    left: expression(typeof(myvar) == 'undefined' ? 0+"px"+(myvar='true') : -1+"px");
+}
