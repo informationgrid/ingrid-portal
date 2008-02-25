@@ -793,11 +793,19 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCutAddressRequest = function(msg) {
-	if(msg.dstId == "addressRoot" || msg.dstId == "addressFreeRoot") {
-		msg.dstId = null;
+	var srcId = msg.srcId;
+	var dstId = msg.dstId;
+	var moveToFreeAddress = false;
+
+	if (dstId == "addressRoot") {
+		dstId = null;
+	} else if (dstId == "addressFreeRoot") {
+		dstId = null;
+		moveToFreeAddress = true;
 	}
-	dojo.debug("udkDataProxy calling EntryService.moveAddress("+msg.srcId+", "+msg.dstId+")");	
-	EntryService.moveNode(msg.srcId, msg.dstId,
+
+	dojo.debug("udkDataProxy calling EntryService.moveAddress("+srcId+", "+dstId+", "+moveToFreeAddress+")");	
+	EntryService.moveAddress(srcId, dstId, moveToFreeAddress,
 		{
 			callback: function(res) { msg.resultHandler.callback(res); },
 			timeout:30000,
@@ -864,6 +872,7 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 	} else if (dstId == "addressFreeRoot") {
 		dstId = null;
 		copyToFreeAddress = true;
+		msg.copyTree = false;
 	}
 
 	var onCopyDef = new dojo.Deferred();

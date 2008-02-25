@@ -312,10 +312,11 @@ public interface DataConnectionInterface {
 	 * <ul>
 	 * <li><b>(String) fromUuid</b> - uuid of the source node.</li>
 	 * <li><b>(String) toUuid</b> - uuid of the target node.</li>
+	 * <li><b>(boolean) moveToFreeAddress</b> - flag signaling if the address is moved to the free addresses.</li>
 	 * </ul>
 	 * 
 	 */	
-	public void moveAddressSubTree(String fromUuid, String toUuid);
+	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress);
 
 	/**
 	 * Fetch Sys Lists from the server.

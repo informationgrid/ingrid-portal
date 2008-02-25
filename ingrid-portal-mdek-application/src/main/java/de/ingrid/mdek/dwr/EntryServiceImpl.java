@@ -339,11 +339,11 @@ public class EntryServiceImpl implements EntryService {
 		}
 	}
 
-	public void moveAddress(String nodeUuid, String dstNodeUuid) {
+	public void moveAddress(String nodeUuid, String dstNodeUuid, boolean moveToFreeAddress) {
 		log.debug("Moving address with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			dataConnection.moveAddressSubTree(nodeUuid, dstNodeUuid);
+			dataConnection.moveAddressSubTree(nodeUuid, dstNodeUuid, moveToFreeAddress);
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

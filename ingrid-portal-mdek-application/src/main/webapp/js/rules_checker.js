@@ -60,8 +60,7 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
-/* The generalAddress table is made 'not required' for testing purpose */ 
-var notEmptyTables = [/*["generalAddressTable", "generalAddressTableLabel"],*/
+var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
 

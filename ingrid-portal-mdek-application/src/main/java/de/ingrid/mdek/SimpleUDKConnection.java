@@ -256,14 +256,12 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
-	public void moveAddressSubTree(String fromUuid, String toUuid) {
-		log.debug("moveAddressSubTree(String, String) not implemented yet.");
-/*
-		IngridDocument response = mdekCaller.moveAddress(fromUuid, toUuid, true, getCurrentSessionId());
+	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress) {
+//		log.debug("moveAddressSubTree(String, String) not implemented yet.");
+		IngridDocument response = mdekCaller.moveAddress(fromUuid, toUuid, true, moveToFreeAddress, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}
-*/
 	}
 	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {

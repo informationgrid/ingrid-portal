@@ -765,7 +765,6 @@ dojo.widget.defineWidget(
 
   save: function() {
     if (this.curEditor) {
-
       // first remove the editor dom node from the table to avoid lost
       // after table update
       var editorDiv = dojo.byId(this.widgetId+"Editors");
@@ -773,6 +772,9 @@ dojo.widget.defineWidget(
 
       // set the value in the connected store and notify listeners
       var newValue = this.curEditor.getValue();
+
+      if (typeof(this.columns[this.curColumn]) == "undefined")
+		return;
 
       var field = this.columns[this.curColumn].getField();
       if (this.editData != null) {

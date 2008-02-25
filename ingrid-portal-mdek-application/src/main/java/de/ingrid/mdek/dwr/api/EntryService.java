@@ -203,7 +203,7 @@ public interface EntryService {
 	 * @param includeChildren
 	 *            true to copy all children of the specified node, false to copy
 	 *            only the node.
-	 * @param includeChildren
+	 * @param copyToFreeAddress
 	 *            true if the target is a free address
 	 *
 	 * @return Basic information about the copy is returned or null on error
@@ -236,9 +236,11 @@ public interface EntryService {
 	 * @param dstNodeUuid
 	 *            The destination nodes uuid (this will become the parent of the
 	 *            copied node).
+	 * @param moveToFreeAddress
+	 *            true if the target is a free address
      *
 	 */
-	public void moveAddress(String nodeUuid, String dstNodeUuid);
+	public void moveAddress(String nodeUuid, String dstNodeUuid, boolean moveToFreeAddress);
 
 	
 	/**
