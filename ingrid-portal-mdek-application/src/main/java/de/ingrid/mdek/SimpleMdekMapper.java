@@ -358,9 +358,10 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		ArrayList<String> strList = (ArrayList<String>) adr.get(MdekKeys.PATH);
 		if (strList != null)
 			mdekAddress.setParentInstitutions(strList);
-		
+
 		mdekAddress.setTypeOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_ID));
 		mdekAddress.setNameOfRelation((String) adr.get(MdekKeys.RELATION_TYPE_NAME));
+		mdekAddress.setRefOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_REF));
 		
 		
 		// Comments
@@ -719,6 +720,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mappedEntry.put(MdekKeys.UUID, address.getUuid());
 			mappedEntry.put(MdekKeys.RELATION_TYPE_ID, address.getTypeOfRelation());
 			mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, address.getNameOfRelation());
+			mappedEntry.put(MdekKeys.RELATION_TYPE_REF, address.getRefOfRelation());
 			resultList.add(mappedEntry);
 		}
 		return resultList;

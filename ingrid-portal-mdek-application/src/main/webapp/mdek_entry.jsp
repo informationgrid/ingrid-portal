@@ -301,12 +301,12 @@ function hideSplash(){
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                <div id="generalAddressTable" class="tableContainer rows4">
 	                    <div class="cellEditors" id="generalAddressEditors">
-	                      <div dojoType="ingrid:Select" autoComplete="false" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
+	                      <div dojoType="ingrid:Combobox" autoComplete="false" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
 	                    </div>
 	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="typeOfRelation" dataType="String" editor="generalAddressCombobox"></th>
+	                  			<th nosort="true" field="nameOfRelation" dataType="String" editor="generalAddressCombobox"></th>
 	                  			<th nosort="true" field="icon" dataType="String"></th>
 	                  			<th nosort="true" field="linkLabel" dataType="String">Namen</th>
 	            		      </tr>
@@ -716,15 +716,15 @@ function hideSplash(){
 	                  <span class="label"><label for="ref2LocationTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Standort')">Standort</label></span>
 	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 
-	                	<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2LocationTab1">
+	                	<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref2LocationTab1">
 	                		<div id="ref2LocationTab1" dojoType="ContentPane" label="Text">
 								<span class="input">
 									<input type="text" mode="textarea" id="ref2LocationText" name="ref2LocationText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 								</span>
 	                		</div>
 	                		<div id="ref2LocationTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows2">
-	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer rows3">
+	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable nosort half">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -939,15 +939,15 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beteiligte')">Beteiligte</label></span>
 	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
-	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4ParticipantsTab1">
+	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4ParticipantsTab1">
 	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
 	                      		<input type="text" mode="textarea" id="ref4ParticipantsText" name="ref4ParticipantsText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
 	                		<div id="ref4ParticipantsTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows2">
-	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="12" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer rows3">
+	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable nosort half">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -969,15 +969,15 @@ function hideSplash(){
 	                <div class="half">
 	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Projektleiter')">Projektleiter</label></span>
 	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
-	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref4PMTab1">
+	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4PMTab1">
 	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
 	                      		<input type="text" mode="textarea" id="ref4PMText" name="ref4PMText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
 	                		<div id="ref4PMTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows2">
-	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer rows3">
+	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable nosort half">
 	                  	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>

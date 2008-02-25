@@ -7,6 +7,13 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
+
+// All the possible values for special ref links
+var referenceMap = [["Standort", "3360"],
+					["Projektleiter", "3400"],
+					["Beteiligte", "3410"]];
+
+
 _container_.addOnLoad(function() {
 	// Initialize the address tree	
 	// Load initial first level of the tree from the server
@@ -98,19 +105,20 @@ function getNewKey(store) {
 
 function addAddressToStore(adrId, store) {
 	var linkType = null;
-	var nameOfRelation = null;
-	var typeOfRelation = null;
+	var nameOfRelation = "";
+	var typeOfRelation = 0;
 	if (_container_.customParams && _container_.customParams.linkType) {
 		linkType = _container_.customParams.linkType;
 		dojo.debug("linkType: "+linkType);
 		// TODO get value for link Type, add it to the address
 		// getIdValueForLinkType(linkType);
 		// ...
-		typeOfRelation = linkType;
-		nameOfRelation = "";
-	} else {
-		typeOfRelation = 0;
-		nameOfRelation = "";		
+		for (var i = 0; i < referenceMap.length; ++i) {
+			if (referenceMap[i][1] == linkType) {
+				nameOfRelation = referenceMap[i][0];
+				break;
+			}
+		}
 	}
 
 	EntryService.getAddressData(adrId, "false", {
@@ -122,6 +130,7 @@ function addAddressToStore(adrId, store) {
 				res.Id = getNewKey(store);
 				res.typeOfRelation = typeOfRelation;
 				res.nameOfRelation = nameOfRelation;
+				res.refOfRelation = linkType;
 				store.addData(res);
 			}
 		},

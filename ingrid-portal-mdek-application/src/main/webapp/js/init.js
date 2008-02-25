@@ -436,9 +436,13 @@ function initFreeTermsButtons() {
 
 
 function initReferenceTables() {
+	initObjectReferenceTables();
+	initAddressReferenceTables();
+}
+
+function initObjectReferenceTables() {
 	var mainStore = dojo.widget.byId("linksTo").store;
 
-// TODO Fix Me! Insert the correct filters here
 	var filterTableMap =
 		[{tableId: "ref1SymbolsLink", 		filterId: 3555},		// 3555
 		 {tableId: "ref1KeysLink", 			filterId: 3535},		// 3535
@@ -460,24 +464,6 @@ function initReferenceTables() {
 		
 		// Connect all the setData calls on the filtered table to the main (unfiltered) table
 /*
-		dojo.event.kwConnect({
-			adviceType: "after",
-			srcObj: filterStore,
-			srcFunc: "onSetData",
-			adviceObj: mainStore,
-			adviceFunc: function() {
-				var data = filterStore.getData();
-				for (i in data) {
-					var item = this.getDataByKey(data[i].Id);
-					if (!item) {
-						this.addData(data[i]);
-					}
-				}
-			},
-			once: true,
-			delay: 10
-		});
-
 		dojo.event.kwConnect({
 			adviceType: "after",
 			srcObj: filterStore,
@@ -537,6 +523,156 @@ function initReferenceTables() {
 	onAddData:function(obj){ },
 	onAddDataRange:function(arr){ },
 	onUpdateField:function(obj, field, val){ }
+*/	
+}
+
+
+function initAddressReferenceTables() {
+	var mainStore = dojo.widget.byId("generalAddress").store;
+
+	var filterTableMap =
+		[{tableId: "ref2LocationLink", 		filterId: 3360},		// 3360 - Single Address
+		 {tableId: "ref4ParticipantsLink", 	filterId: 3410},		// 3410 - Single Address
+		 {tableId: "ref4PMLink", 			filterId: 3400}];		// 3400 - Single Address
+
+
+	dojo.lang.forEach(filterTableMap, function(tableMapping) {
+		var filterStore = dojo.widget.byId(tableMapping.tableId).store;
+		filterStore.relationTypeFilter = tableMapping.filterId;
+		
+		// Connect all the setData calls on the filtered table to the main (unfiltered) table
+/*
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: filterStore,
+			srcFunc: "onRemoveData",
+			adviceObj: mainStore,
+			adviceFunc: function(obj) {
+				var o = this.getDataByKey(obj.key);
+				if (o) {
+					this.removeData(o);
+				}
+			},
+			once: true,
+			delay: 10
+		});
+*/
+
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: mainStore,
+			srcFunc: "onRemoveData",
+			adviceObj: filterStore,
+			adviceFunc: function(obj) {
+				var o = this.getDataByKey(obj.key);
+				if (o) {
+					this.removeData(o);
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: mainStore,
+			srcFunc: "onAddData",
+			adviceObj: filterStore,
+			adviceFunc: function(obj) {
+				var data = mainStore.getData();
+				this.clearData();
+				for (i in data) {
+					if (data[i].refOfRelation == this.relationTypeFilter) {
+						var item = this.getDataByKey(data[i].Id);
+						if (!item) {
+							this.addData(data[i]);
+						}
+					}
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
+		// Connect all the setData calls on the main table to the filtered tables
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: mainStore,
+			srcFunc: "onSetData",
+			adviceObj: filterStore,
+			adviceFunc: function() {
+				var data = mainStore.getData();
+				this.clearData();
+				for (i in data) {
+					if (data[i].refOfRelation == this.relationTypeFilter) {
+						var item = this.getDataByKey(data[i].Id);
+						if (!item) {
+							this.addData(data[i]);
+						}
+					}
+				}
+			},
+			once: true,
+			delay: 10
+		});
+
+		// If the combobox value has been updated, update the target stores depending on the new link type.
+		// Get the relationName and compare it to the store values. If the value was found, add or remove it.
+		dojo.event.kwConnect({
+			adviceType: "after",
+			srcObj: mainStore,
+			srcFunc: "onUpdateField",
+			adviceObj: filterStore,
+			adviceFunc: function(obj, path, val) {
+				var item = this.getDataByKey(obj.Id);
+				if (item != null) {
+
+					var relName = obj.nameOfRelation;
+
+					switch (this.relationTypeFilter) {
+						case 3360: if (relName == "Standort") break;
+						case 3400: if (relName == "Projektleiter") break;
+						case 3410: if (relName == "Beteiligte") break;
+						default:
+							relRef = null;
+							this.removeData(item);								
+							break;
+					}
+				} else {
+					var relName = obj.nameOfRelation;
+
+					switch (this.relationTypeFilter) {
+						case 3360:
+							if (relName == "Standort") {
+								obj.refOfRelation = 3360;
+								this.addData(obj);
+							}
+							break;
+						case 3400:
+							if (relName == "Projektleiter") {
+								obj.refOfRelation = 3400;
+								this.addData(obj);
+							}
+							break;
+						case 3410:
+							if (relName == "Beteiligte") {
+								obj.refOfRelation = 3410;
+								this.addData(obj);
+							}
+							break;
+						default:
+							break;
+					}
+				}
+			},
+			once: true,
+			delay: 10
+		});
+	});
+/*
+	onClearData:function(){ },
+	onAddData:function(obj){ },
+	onAddDataRange:function(arr){ },
 */	
 }
 

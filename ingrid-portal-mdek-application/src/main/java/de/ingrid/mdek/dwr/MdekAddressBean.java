@@ -37,6 +37,7 @@ public class MdekAddressBean {
 
 	public Integer typeOfRelation;
 	public String nameOfRelation;
+	public Integer refOfRelation;
 
 	// Comments
 	public ArrayList<CommentBean> commentTable;
@@ -321,5 +322,13 @@ public class MdekAddressBean {
 
 	public void setCommentTable(ArrayList<CommentBean> commentTable) {
 		this.commentTable = commentTable;
+	}
+
+	public Integer getRefOfRelation() {
+		return refOfRelation;
+	}
+
+	public void setRefOfRelation(Integer refOfRelation) {
+		this.refOfRelation = refOfRelation;
 	}
 }
