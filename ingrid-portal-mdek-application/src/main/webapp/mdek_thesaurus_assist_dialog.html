@@ -96,7 +96,8 @@ init = function() {
 			}
 	});
 
-	SNSService.getSimilarDescriptors(queryTerm, {
+//	SNSService.getSimilarDescriptors(queryTerm, {
+	SNSService.getTopicsForText(queryTerm, {
 		preHook:disableUiElements,
 		postHook:enableUiElements,
 		callback:function(res) {
@@ -114,7 +115,9 @@ init = function() {
 		},
 		timeout:0,
 		errorHandler:function(msg) {
-			// showStatus(message.get("sns.connectionError"));
+			if (msg == "SNS_TIMEOUT") {
+				dialog.show(message.get("general.error"), message.get("sns.timeoutError"), dialog.WARNING);
+			}
 			hideLoadingZone();
 		}
 	});

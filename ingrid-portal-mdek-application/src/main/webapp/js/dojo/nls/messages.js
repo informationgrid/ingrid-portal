@@ -56,6 +56,7 @@
 	"extraInfo.publicationCondition.internal":"Internal",
 	"extraInfo.publicationCondition.notShared":"Not Shared",
 
+    "sns.timeoutError":"A timeout error occured while contacting the SNS Service. Please refine your search query.",
     "sns.connectionError":"An error occured while contacting the SNS Service.",
     "sns.loadingTopTermsHint":"Please wait, loading the SNS Top Terms...",
     "sns.loadingHint":"Please wait, loading...",

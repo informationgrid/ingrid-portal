@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
+import org.apache.axis.AxisFault;
 import org.apache.log4j.Logger;
 
 import com.slb.taxi.webservice.xtm.stubs.FieldsType;
@@ -40,6 +41,9 @@ public class SNSService {
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
     private static final int SNS_TIMEOUT = 30000;
+
+    // Error string for the frontend
+    private static String ERROR_SNS_TIMEOUT = "SNS_TIMEOUT";
 
     private static final SimpleDateFormat expiredDateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
     
@@ -323,15 +327,17 @@ public class SNSService {
     }
 
 
-    private ArrayList<SNSTopic> getTopicsForText(String queryTerm) {
+    public ArrayList<SNSTopic> getTopicsForText(String queryTerm) {
     	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	int[] totalSize = new int[] {0};
 	    DetailedTopic[] snsResults = new DetailedTopic[0];
     	try {
     		snsResults = snsController.getTopicsForText(queryTerm, MAX_ANALYZED_WORDS, "/thesa", "mdek", THESAURUS_LANGUAGE_FILTER, totalSize, false);
+    	} catch (AxisFault f) {
+    		throw new RuntimeException(ERROR_SNS_TIMEOUT);
     	} catch (Exception e) {
 	    	log.error("Error calling snsController.getTopicsForText", e);
-	    }
+    	}
 
 	    totalSize[0] = snsResults.length;
 	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
