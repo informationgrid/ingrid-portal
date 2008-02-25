@@ -152,10 +152,12 @@ function displaySearchResults(resultList) {
 	dojo.lang.forEach(resultList, function(term) {
 		if (term.type != "NON_DESCRIPTOR") {
 			var label = term.title;
-			var button = document.createElement("input");
-			button.setAttribute("id", "_resultButton_"+term.topicId);
-			button.setAttribute("type", "radio");
-			button.setAttribute("onclick", "resultButtonClicked('"+term.topicId+"');");
+
+			var buttonLink = document.createElement("a"); 
+			buttonLink.setAttribute("id", "_resultButton_"+term.topicId);
+			buttonLink.setAttribute("onclick", "resultButtonClicked('"+term.topicId+"');");
+			buttonLink.setAttribute("href", "javascript:void(0);");
+			buttonLink.innerHTML = "<img src=\"img/ic_jump_tree.gif\" align=\"bottom\"/>";
 
 			var divElement = document.createElement("div");
 
@@ -173,7 +175,7 @@ function displaySearchResults(resultList) {
 			}
 			
 			resultContainer.appendChild(divElement);
-			divElement.appendChild(button);
+			divElement.appendChild(buttonLink);
 			divElement.appendChild(linkElement);
 		}
 	});
