@@ -42,13 +42,13 @@ noButtonFunc = function() {
 
 <body>
 <div dojoType="ContentPane">
-	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
+	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
 		<div id="dialogContent" class="content">
 			<div id="messageDiv" class="field grey">
 			</div>
 
-			<div class="grey">
-      	    <table id="descriptorList" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort readonly half">
+			<div class="grey tableContainer headHiddenRows4 halfInside">
+      	    <table id="descriptorList" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort readonly">
 				<thead>
 					<tr>
 						<th nosort="true" field="title" dataType="String">Deskriptoren</th>

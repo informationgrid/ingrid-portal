@@ -107,6 +107,15 @@ function hideSplash(){
 <link rel="StyleSheet" href="css/recherche.css" type="text/css" />
 <link rel="StyleSheet" href="css/erfassung.css" type="text/css" />
 
+<style type="text/css">
+	@import url(css/scrolling_table.css);
+</style>
+<!--[if IE]>
+<style type="text/css">
+	@import url(css/scrolling_table.ie.css);
+</style>
+<![endif]-->
+
 </head>
 
 <body>
@@ -293,17 +302,17 @@ function hideSplash(){
                		<span class="input"><input type="text" mode="textarea" id="generalDesc" name="generalDesc" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	          	  </div>
 
-	              <div class="inputContainer noSpaceBelow h108">
+	              <div class="inputContainer noSpaceBelow">
 					
 					<!-- The Address table is made 'not required' for testing purpose -->
 	                <span id="generalAddressTableLabel" class="label required"><label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
 
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
-	                <div id="generalAddressTable" class="tableContainer rows4">
+	                <div id="generalAddressTable" class="tableContainer headHiddenRows4 full">
 	                    <div class="cellEditors" id="generalAddressEditors">
 	                      <div dojoType="ingrid:Combobox" autoComplete="false" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
 	                    </div>
-	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
+	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="nameOfRelation" dataType="String" editor="generalAddressCombobox"></th>
@@ -344,11 +353,11 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="ref1Representation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Digitale Repr&auml;sentation')">Digitale Repr&auml;sentation</label></span>
-	                  <div class="tableContainer rows4">
+	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="ref1RepresentationEditors">
-	                      <div dojoType="ingrid:Select" toggle="plain" style="width:279px;" listId="526" id="ref1RepresentationCombobox"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" style="width:260px;" listId="526" id="ref1RepresentationCombobox"></div>
 	                    </div>
-	               	    <table id="ref1Representation" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive half">
+	               	    <table id="ref1Representation" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="title" dataType="String" editor="ref1RepresentationCombobox">Digitale Repräsentation</th>
@@ -372,12 +381,12 @@ function hideSplash(){
 
 	                  <div class="thirdInside2">
 	                    <span class="label hidden"><label for="ref1VFormatDetails" onclick="javascript:dialog.showContextHelp(arguments[0], 'weitere Angaben')">weitere Angaben</label></span>
-	                    <div class="tableContainer rows5">
+	                    <div class="tableContainer rows4 thirdInside2">
 	                      <div class="cellEditors" id="ref1VFormatDetailsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:120px;" listId="515" id="geometryTypeEditor"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:100px;" listId="515" id="geometryTypeEditor"></div>
 	                        <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="elementNumberEditor"></div>
 	                      </div>
-	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive thirdInside2">
+	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
 	                		      <tr>
 	                      			<th nosort="true" field="geometryType" dataType="String" width="120" editor="geometryTypeEditor">Geometrietyp</th>
@@ -400,13 +409,13 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired h130">
 	                <span class="label">Erstellungsma&szlig;stab</span>
-	                <div class="tableContainer rows5">
+	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="ref1ScaleEditors">
 	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScale"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleGroundResolution"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScanResolution"></div>
 	                  </div>
-	            	    <table id="ref1Scale" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
+	            	    <table id="ref1Scale" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="scale" dataType="String" width="105" editor="ref1ScaleScale">Ma&szlig;stab 1:x</th>
@@ -438,13 +447,13 @@ function hideSplash(){
 	                <span id="ref1SymbolsTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3555});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	              	<div id="ref1SymbolsTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1SymbolsTab1">
 	               		<div id="ref1SymbolsTab1" dojoType="ContentPane" label="Text">
-	                    <div class="tableContainer rows4">
+	                    <div class="tableContainer rows3 full">
 	                      <div class="cellEditors" id="ref1SymbolsTextEditors">
 	                        <div dojoType="ingrid:ComboBox" toggle="plain" style="width:400px;" listId="3555" id="ref1SymbolsTitleCombobox"></div>
 	                        <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="ref1SymbolsDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1SymbolsVersion"></div>
 	                      </div>
-	                	    <table id="ref1SymbolsText" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive nosort full">
+	                	    <table id="ref1SymbolsText" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="3" cellspacing="0" class="filteringTable interactive nosort">
 	                	      <thead>
 	                		      <tr>
 	                      			<th nosort="true" field="title" dataType="String" width="435" editor="ref1SymbolsTitleCombobox">Titel</th>
@@ -458,7 +467,7 @@ function hideSplash(){
 	                	  </div>
 	                	</div>
 	              		<div id="ref1SymbolsTab2" dojoType="ContentPane" label="Verweise">
-	                    <table id="ref1SymbolsLink" width="676" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	                    <table id="ref1SymbolsLink" width="676" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -481,13 +490,13 @@ function hideSplash(){
 	                <span id="ref1KeysTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3535});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	              	<div id="ref1KeysTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1KeysTab1">
 	              		<div id="ref1KeysTab1" dojoType="ContentPane" label="Text">
-	                    <div class="tableContainer rows4">
+	                    <div class="tableContainer rows3 full">
 	                      <div class="cellEditors" id="ref1KeysTextEditors">
 	                        <div dojoType="ingrid:ComboBox" toggle="plain" style="width:400px;" listId="3535" id="ref1KeysTitleCombobox"></div>
 	                        <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="ref1KeysDateDatePicker"></div>
 	                        <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1KeysVersion"></div>
 	                      </div>
-	                	    <table id="ref1KeysText" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable interactive nosort full">
+	                	    <table id="ref1KeysText" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="3" cellspacing="0" class="filteringTable interactive nosort">
 	                	      <thead>
 	                		      <tr>
 	                      			<th nosort="true" field="title" dataType="String" width="435" editor="ref1KeysTitleCombobox">Titel</th>
@@ -501,7 +510,7 @@ function hideSplash(){
 	                	  </div>
 	              		</div>
 	              		<div id="ref1KeysTab2" dojoType="ContentPane" label="Verweise">
-	              	    <table id="ref1KeysLink" width="676" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	              	    <table id="ref1KeysLink" width="676" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -522,8 +531,8 @@ function hideSplash(){
 	              <div class="inputContainer notRequired h108">
 	                <span class="label">Verweis zu Dienst</span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 5066});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
-	                <div class="tableContainer rows4">
-	            	    <table id="ref1ServiceLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	                <div class="tableContainer headHiddenRows4 full">
+	            	    <table id="ref1ServiceLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	            	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -550,8 +559,8 @@ function hideSplash(){
 	               		</span> 
 	              		</div>
 	              		<div id="ref1BasisTab2" dojoType="ContentPane" label="Verweise">
-	                    <div class="tableContainer rows4">
-	                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	                    <div class="tableContainer headHiddenRows4 full">
+	                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -580,8 +589,8 @@ function hideSplash(){
 	                    </span>
 	              		</div>
 	              		<div id="ref1DataBasisTab2" dojoType="ContentPane" label="Verweise">
-	                    <div class="tableContainer rows4">
-	                	    <table id="ref1DataBasisLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	                    <div class="tableContainer headHiddenRows4 full">
+	                	    <table id="ref1DataBasisLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -602,11 +611,11 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired h088">
 	                <span class="label"><label for="ref1Data" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sachdaten/Attributinformation')">Sachdaten/Attributinformation</label></span>
-	                <div class="tableContainer rows3">
+	                <div class="tableContainer headHiddenRows3 full">
 	                  <div class="cellEditors" id="ref1DataEditors">
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" class="w659" widgetId="ref1DataEditor"></div>
 	                  </div>
-	             	    <table id="ref1Data" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
+	             	    <table id="ref1Data" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="title" dataType="String" editor="ref1DataEditor">Sachdaten</th>
@@ -628,8 +637,8 @@ function hideSplash(){
 	                    </span>
 	              		</div>
 	              		<div id="ref1ProcessTab2" dojoType="ContentPane" label="Verweise">
-	                    <div class="tableContainer rows4">
-	                	    <table id="ref1ProcessLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	                    <div class="tableContainer rows4 full">
+	                	    <table id="ref1ProcessLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -723,8 +732,8 @@ function hideSplash(){
 								</span>
 	                		</div>
 	                		<div id="ref2LocationTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows3">
-	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer headHiddenRows2 half">
+	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -763,15 +772,15 @@ function hideSplash(){
 	                <div class="half">
 	                  <span class="label"><label for="ref2BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Basisdaten')">Basisdaten</label></span>
 	                  <span id="ref2BaseDataTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3345});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
-	                	<div id="ref2BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref2BaseDataTab1">
+	                	<div id="ref2BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref2BaseDataTab1">
 	                		<div id="ref2BaseDataTab1" dojoType="ContentPane" label="Text">
 	                      <span class="input">
 	                      	<input type="text" mode="textarea" id="ref2BaseDataText" name="ref2BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      </span>
 	                		</div>
 	                		<div id="ref2BaseDataTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows2">
-	                  	    <table id="ref2BaseDataLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer headHiddenRows2 half">
+	                  	    <table id="ref2BaseDataLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -831,11 +840,11 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 'Version des Services')">Version des Services</label></span>
-	                  <div class="tableContainer rows5">
+	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="ref3ServiceVersionEditors">
 	                      <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref3ServiceVersionServiceType"></div>
 	                    </div>
-	               	    <table id="ref3ServiceVersion" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive half">
+	               	    <table id="ref3ServiceVersion" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="title" dataType="String" editor="ref3ServiceVersionServiceType">Version des Services</th>
@@ -872,15 +881,15 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Basisdaten')">Basisdaten</label></span>
 	                  <span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3210});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
-	                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref3BaseDataTab1">
+	                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref3BaseDataTab1">
 	                		<div id="ref3BaseDataTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
 	                      		<input type="text" mode="textarea" id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
 	                		<div id="ref3MethodTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows2">
-	                  	    <table id="ref3BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer headHiddenRows2 half">
+	                  	    <table id="ref3BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String" width="30"></th>
@@ -908,9 +917,9 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired h130">
 	                <span class="label">Operationen</span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Operation hinzuf&uuml;gen/bearbeiten', 'mdek_operation_dialog.html', 735, 725, true);" title="Operation hinzuf&uuml;gen/bearbeiten [Popup]">Operation hinzuf&uuml;gen/bearbeiten</a></span>
-	                <div class="tableContainer rows5">
-	            	    <table id="ref3Operation" dojoType="ingrid:FilteringTable" multiple="false" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort full">
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Operation hinzuf&uuml;gen/bearbeiten', 'mdek_operation_dialog.html', 735, 745, true);" title="Operation hinzuf&uuml;gen/bearbeiten [Popup]">Operation hinzuf&uuml;gen/bearbeiten</a></span>
+	                <div class="tableContainer rows4 full">
+	            	    <table id="ref3Operation" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="165">Name</th>
@@ -946,8 +955,8 @@ function hideSplash(){
 	                      	</span>
 	                		</div>
 	                		<div id="ref4ParticipantsTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows3">
-	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer headHiddenRows2 half">
+	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -976,8 +985,8 @@ function hideSplash(){
 	                      	</span>
 	                		</div>
 	                		<div id="ref4PMTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows3">
-	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer rows2 half">
+	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -1017,12 +1026,12 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired h130">
 	                <span class="label"><label for="ref5dbContent" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalte der Datensammlung/Datenbank')">Inhalte der Datensammlung/Datenbank</label></span>
-	                <div class="tableContainer rows5">
+	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="ref5dbContentEditors">
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5dbContentParameter"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref5dbContentAdditionalData"></div>
 	                  </div>
-	            	    <table id="ref5dbContent" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
+	            	    <table id="ref5dbContent" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="parameter" dataType="String" width="335" editor="ref5dbContentParameter">Parameter</th>
@@ -1039,15 +1048,15 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Methode/Datengrundlage')">Methode/Datengrundlage</label></span>
 	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3100});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
-	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h062" selectedChild="ref5MethodTab1">
+	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref5MethodTab1">
 	                		<div id="ref5MethodTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
 	                      		<input type="text" mode="textarea" id="ref5MethodText" name="ref5MethodText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
 	                		<div id="ref5MethodTab2" dojoType="ContentPane" label="Verweise">
-	                      <div class="tableContainer rows2">
-	                  	    <table id="ref5MethodLink" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort half">
+	                      <div class="tableContainer headHiddenRows2 half">
+	                  	    <table id="ref5MethodLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
 	                  		      <tr>
 	                        			<th nosort="true" field="icon" dataType="String"></th>
@@ -1088,8 +1097,8 @@ function hideSplash(){
 	              <div id="spatialRefAdminUnitContainer" class="inputContainer noSpaceBelow h130">
 	                <span id="spatialRefAdminUnitLabel" class="label required"><label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
-	                <div class="tableContainer rows5">
-	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
+	                <div class="tableContainer rows4 full">
+	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="315">Geothesaurus-Raumbezug</th>
@@ -1112,7 +1121,7 @@ function hideSplash(){
 	                    <img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 	                  </span>
 	                  <div id="spatialRefCoordsAdminUnitContent" style="display:block;">
-	                    <div class="w234 left" style="float:left; margin-top:10px;">
+	                    <div class="left" style="float:left; margin-top:10px;">
 	                    	<select id="spatialRefAdminUnitSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
 	                    		<option value="GEO84">Bezugssystem WGS84</option>
 	                    		<option value="GEO_BESSEL_POTSDAM">Bezugssystem Bessel/Potsdam</option>
@@ -1128,8 +1137,8 @@ function hideSplash(){
 	                    	</select>
 	                    </div>
 
-						<div class="w308">
-		                <table id="spatialRefAdminUnitCoords" dojoType="ingrid:FilteringTable" minRows="1" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort w364 relativePos">
+						<div class="headHiddenRows1 thirdInside3">
+	              	    <table id="spatialRefAdminUnitCoords" dojoType="ingrid:FilteringTable" headClass="hidden" cellspacing="0" class="filteringTable nosort relativePos">
 		              	    <thead>
 		              	      <tr>
 								<th nosort="true" field="longitude1" dataType="String">L&auml;nge 1</th>
@@ -1163,7 +1172,7 @@ function hideSplash(){
 	                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Raumbezug hinzuf&uuml;gen', 'mdek_spatial_assist_dialog.html', 505, 220, true);" title="Raumbezug Assistent [Popup]">Raumbezug hinzuf&uuml;gen</a>
 	                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a>
 	                </span>
-	                <div class="tableContainer rows5">
+	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
 	                    <div dojoType="ingrid:ComboBox" toggle="plain" style="width:300px;" listId="1100" id="freeReferencesEditor"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude1Editor"></div>
@@ -1171,7 +1180,7 @@ function hideSplash(){
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="latitude2Editor"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="longitude2Editor"></div>
 	                  </div>
-	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
+	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="315" editor="freeReferencesEditor">Freier Raumbezug</th>
@@ -1193,7 +1202,7 @@ function hideSplash(){
 	                  <span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="Info aufklappen">Umgerechnete Koordinaten:
 	                    <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 	                  <div id="spatialRefCoordsLocationContent" style="display:block;">
-	                    <div class="w234 left" style="float:left; margin-top:10px;">
+	                    <div class="left" style="float:left; margin-top:10px;">
 	                    	<select id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
 	                    		<option value="GEO84">Bezugssystem WGS84</option>
 	                    		<option value="GEO_BESSEL_POTSDAM">Bezugssystem Bessel/Potsdam</option>
@@ -1209,8 +1218,8 @@ function hideSplash(){
 	                    	</select>
 	                    </div>
 
-						<div class="w308">
-		              	    <table id="spatialRefLocationCoords" dojoType="ingrid:FilteringTable" headClass="fixedHeader hidden" tbodyClass="scrollContent rows1" cellspacing="0" class="filteringTable nosort w364 relativePos">
+						<div class="headHiddenRows1 thirdInside3">
+		              	    <table id="spatialRefLocationCoords" dojoType="ingrid:FilteringTable" headClass="hidden" cellspacing="0" class="filteringTable nosort relativePos">
 		              	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
@@ -1219,6 +1228,12 @@ function hideSplash(){
 		                    			<th nosort="true" field="latitude2" dataType="String" width="90">Breite 2</th>
 		              		      </tr>
 		              	      </thead>
+							  <colgroup>
+							    <col width="120">
+							    <col width="120">
+							    <col width="120">
+							    <col width="120">
+							  </colgroup>
 		              	      <tbody>
 		              		      <tr value="0">
 		              		        <td>&nbsp;</td>
@@ -1281,12 +1296,12 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow">
 	                <div class="half left">
 	                  <span id="timeRefTableLabel" class="label required"><label for="timeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes*</label></span>
-	                  <div class="tableContainer rows5">
+	                  <div class="tableContainer rows4 half">
 	                    <div class="cellEditors" id="timeRefTableEditors">
 	                      <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="timeRefDateDatePicker"></div>
 	                      <div dojoType="ingrid:Select" toggle="plain" style="width:155px;" listId="502" id="timeRefTypeCombobox"></div>
 	                    </div>
-	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive nosort half">
+	              	    <table id="timeRefTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="4" cellspacing="0" class="filteringTable interactive nosort">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="date" dataType="Date" width="120" editor="timeRefDateDatePicker">Datum</th>
@@ -1393,11 +1408,11 @@ function hideSplash(){
 	              <div class="inputContainer notRequired h110">
 	                <div class="third1 left">
 	                  <span class="label"><label for="extraInfoXMLExportTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'XML-Export-Kriterium')">XML-Export-Kriterium</label></span>
-	                  <div class="tableContainer rows5">
+	                  <div class="tableContainer headHiddenRows4 third1">
 	                    <div class="cellEditors" id="extraInfoXMLExportTableEditors">
 	                      <div dojoType="ingrid:ComboBox" toggle="plain" style="width:161px;" listId="1370" id="extraInfoXMLExportTableCriteriaEditor"></div>
 	                    </div>
-	              	    <table id="extraInfoXMLExportTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive third1">
+	              	    <table id="extraInfoXMLExportTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="title" dataType="String" editor="extraInfoXMLExportTableCriteriaEditor">XML-Export-Kriterium</th>
@@ -1411,11 +1426,11 @@ function hideSplash(){
 	          
 	                <div class="third2">
 	                  <span class="label"><label for="extraInfoLegalBasicsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rechtliche Grundlagen')">Rechtliche Grundlagen</label></span>
-	                  <div class="tableContainer rows5">
+	                  <div class="tableContainer headHiddenRows4 third2">
 	                    <div class="cellEditors" id="extraInfoLegalBasicsTableEditors">
 	                      <div dojoType="ingrid:ComboBox" toggle="plain" style="width:397px;" listId="1350" id="extraInfoLegalBasicsTableEditor"></div>
 	                    </div>
-	              	    <table id="extraInfoLegalBasicsTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive third2">
+	              	    <table id="extraInfoLegalBasicsTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="title" dataType="String" editor="extraInfoLegalBasicsTableEditor">Rechtliche Grundlagen</th>
@@ -1456,14 +1471,14 @@ function hideSplash(){
 	        	  
 	              <div class="inputContainer notRequired h130">
 	                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenformat')">Datenformat</label></span>
-	                <div class="tableContainer rows5">
+	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="availabilityDataFormatEditors">
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatName"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatVersion"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatCompression"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatPixelDepth"></div>
 	                  </div>
-	            	    <table id="availabilityDataFormat" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive nosort full">
+	            	    <table id="availabilityDataFormat" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable interactive nosort">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="170" editor="availabilityDataFormatName">Name</th>
@@ -1480,13 +1495,13 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired h130">
 	                <span class="label"><label for="availabilityMediaOptions" onclick="javascript:dialog.showContextHelp(arguments[0], 'Medienoption')">Medienoption</label></span>
-	                <div class="tableContainer rows5">
+	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="availabilityMediaOptionsEditors">
 	                    <div dojoType="ingrid:Select" toggle="plain" style="width:117px;" listId="520" id="availabilityMediaOptionsMediumCombobox"></div>
 	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsSize"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityMediaOptionsLocation"></div>
 	                  </div>
-	            	    <table id="availabilityMediaOptions" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive full">
+	            	    <table id="availabilityMediaOptions" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="name" dataType="String" width="150" editor="availabilityMediaOptionsMediumCombobox">Medium</th>
@@ -1537,10 +1552,10 @@ function hideSplash(){
 	        	  
 	              <div class="inputContainer h110">
 	                <span id="thesaurusTermsLabel" class="label required"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 410, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 430, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
 	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
-	                <div class="tableContainer scrollable tcFull tcRows4">
-	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable w667 nosort interactive">
+	                <div class="tableContainer headHiddenRows4 full">
+	            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="title" dataType="String">&nbsp;</th>
@@ -1550,14 +1565,14 @@ function hideSplash(){
 	                </div>
 	              </div>
 
-	              <div class="inputContainer h110">
+	              <div class="inputContainer h116">
 	                <div class="half left">
 	                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorie')">Themenkategorie*</label></span>
-	                  <div class="tableContainer tcRows4 tcHalf scrollable">
+	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="thesaurusTopicsEditors">
-	                      <div dojoType="ingrid:Select" toggle="plain" style="width:279px;" listId="527" id="thesaurusTopicsCombobox"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
 	                    </div>
-	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable nosort interactive w320">
+	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="title" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
@@ -1571,8 +1586,8 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
-	                  <div class="tableContainer spaceBelow scrollable tcRows3 tcHalf" style="left:364px">
-	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable nosort w320 interactive">
+	                  <div class="tableContainer spaceBelow headHiddenRows3 half">
+	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
@@ -1602,11 +1617,11 @@ function hideSplash(){
 	                  
 	                  <div class="halfInside left">
 	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themen')">Themen</label></span>
-	                    <div class="tableContainer tcRows4 tcHalf scrollable">
+	                    <div class="tableContainer headHiddenRows4 half">
 	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
 	                        <div dojoType="ingrid:Select" toggle="plain" style="width:263px;" listId="1410" id="thesaurusEnvTopicsCombobox"></div>
 	                      </div>
-	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent" cellspacing="0" class="filteringTable nosort interactive w320">
+	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
 	                		      <tr>
 	                      			<th nosort="true" field="title" dataType="String" editor="thesaurusEnvTopicsCombobox">Umweltthemen</th>
@@ -1620,11 +1635,11 @@ function hideSplash(){
 
 	                  <div class="halfInside">
 	                    <span id="thesaurusEnvCatsLabel" class="label"><label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kategorien')">Kategorien</label></span>
-	                    <div class="tableContainer rows5">
+	                    <div class="tableContainer headHiddenRows4 halfInside">
 	                      <div class="cellEditors" id="thesaurusEnvCatsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:263px;" listId="1400" id="thesaurusEnvCatsCombobox"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1400" id="thesaurusEnvCatsCombobox"></div>
 	                      </div>
-	                	    <table id="thesaurusEnvCats" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader hidden" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive halfInside">
+	                	    <table id="thesaurusEnvCats" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
 	                		      <tr>
 	                      			<th nosort="true" field="title" dataType="String" editor="thesaurusEnvCatsCombobox">Umweltkategorien</th>
@@ -1655,8 +1670,8 @@ function hideSplash(){
 	                <div class="half left">
 	                  <span class="label">Verweise zu</span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true);" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
-	                  <div class="tableContainer rows5">
-	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort half">
+	                  <div class="tableContainer headHiddenRows6 half">
+	              	    <table id="linksTo" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -1675,8 +1690,8 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label">Verweise von</span>
-	                  <div class="tableContainer rows5">
-	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort half">
+	                  <div class="tableContainer headHiddenRows6 half">
+	              	    <table id="linksFrom" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	              	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -1909,12 +1924,12 @@ function hideSplash(){
 			      <div class="inputContainer noSpaceBelow notRequired">
 			        <div class="half left">
 			          <span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kommunikation')">Kommunikation</label></span>
-			          <div class="tableContainer rows5">
+			          <div class="tableContainer rows4 half">
 			            <div class="cellEditors" id="addressComEditors">
 			              <div dojoType="ingrid:ComboBox" autoComplete="false" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
 			              <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="addressComConnection"></div>
 			            </div>
-			      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive half editable">
+			      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 			      	      <thead>
 			      		      <tr>
 			            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
@@ -1950,8 +1965,8 @@ function hideSplash(){
 			        <span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>
 			        <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 
-			        <div class="tableContainer rows4">
-			    	    <table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
+			        <div class="tableContainer headHiddenRows3 full">
+			    	    <table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 			    	      <thead>
 			    		      <tr>
 			          			<th nosort="true" field="title" dataType="String">Term</th>
@@ -1963,7 +1978,7 @@ function hideSplash(){
 			        </div>
 			      </div>
 
-			      <div class="inputContainer noSpaceBelow notRequired h116">
+			      <div class="inputContainer noSpaceBelow notRequired h120">
 			        <div class="full">
 			          <span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
 			          <span class="input"><input type="text" id="thesaurusFreeTermInputAddress" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
@@ -1974,8 +1989,8 @@ function hideSplash(){
 			          
 			          
 			          <div class="fill"></div>
-			          <div class="tableContainer">
-			      	    <table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader hidden" tbodyClass="scrollContent rows3" cellspacing="0" class="filteringTable nosort interactive full">
+			          <div class="tableContainer headHiddenRows3 full">
+			      	    <table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 			      	      <thead>
 			      		      <tr>
 			            			<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
@@ -2003,8 +2018,8 @@ function hideSplash(){
 			  
 			      <div class="inputContainer noSpaceBelow notRequired h098">
 			        <div class="spacer"></div>
-			        <div class="tableContainer rows5">
-			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable nosort full">
+			        <div class="tableContainer headHiddenRows6 full">
+			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 			    	      <thead>
 			    		      <tr>
 			          			<th nosort="true" field="icon" dataType="String"></th>

@@ -83,12 +83,13 @@ addComment = function() {
       <!-- CONTENT START -->
       <div class="inputContainer wide">
         <span id="commentTableLabel" class="label">Kommentare zu diesem Objekt</span>
-  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%M" minRows="8" headClass="fixedHeader" tbodyClass="scrollContent h180" cellspacing="0" class="filteringTable interactive wide relativePos">
+  	    <div class="tableContainer rows8 wide">
+  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%M" minRows="8" cellspacing="0" class="filteringTable interactive relativePos">
   	      <thead>
   		      <tr>
-        			<th field="date" dataType="Date" width="110">Datum</th>
+        			<th field="date" dataType="Date" width="120">Datum</th>
         			<th field="user" dataType="String" width="185">Nutzer</th>
-        			<th field="comment" dataType="String" width="687">Kommentar</th>
+        			<th field="comment" dataType="String" width="677">Kommentar</th>
   		      </tr>
   	      </thead>
   	      <tbody>

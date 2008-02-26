@@ -165,7 +165,7 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .infobox span.title { font-weight:normal; font-size:11px; }
 .infobox span.title a { color:#000; text-decoration:none; }
 .infobox span.title img { padding:0 0 1px 5px; }
-.infobox table.filteringTable { width:625px; margin:7px 0 3px 36px; padding:0; overflow:hidden; }
+.infobox table.filteringTable { width:320px; margin:7px 0 3px 36px; padding:0; overflow:hidden; }
 .infobox table.filteringTable thead { height:0; margin:0; padding:0; visibility:hidden; }
 .infobox table.filteringTable thead tr th { height:0; margin:0; padding:0; line-height:0; font-size:0; }
 .infobox table.filteringTable tr td { height:22px; padding:0 0 0 4px; line-height:20px; background:#fff; border-left:1px solid #156496; }

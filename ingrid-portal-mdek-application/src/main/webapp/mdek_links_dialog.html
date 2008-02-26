@@ -688,9 +688,8 @@ closeDialog = function() {
 			<span class="label"><label for="linkListObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objekte')">Objekte</label></span>
 			
 
-			<div class="tableContainer rows9">
-
-				<table id="linkListObject" dojoType="ingrid:FilteringTable" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
+			<div class="tableContainer headHiddenRows9 third">
+				<table id="linkListObject" dojoType="ingrid:FilteringTable" minRows="9" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
 					<thead>
 						<tr>
 							<th field="icon" width="30">&nbsp;</th>
@@ -711,7 +710,10 @@ closeDialog = function() {
 			
 			<div dojoType="ContentPane" class="scrollable">
 				<span class="label"><label for="linkListURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL')">URL</label></span>
-				<table id="linkListURL" dojoType="ingrid:FilteringTable" minRows="9" headClass="fixedHeader hidden" tbodyClass="scrollContent rows9" cellspacing="0" class="filteringTable nosort interactive third relativePos">
+
+				<div class="tableContainer headHiddenRows9 third">
+
+				<table id="linkListURL" dojoType="ingrid:FilteringTable" minRows="9" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
 			  		<thead>
 			  			<tr>
 			  				<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
@@ -725,6 +727,7 @@ closeDialog = function() {
 			  		<tbody>
 			  		</tbody>
 				</table>
+				</div>
 			</div>
 
 		</div>

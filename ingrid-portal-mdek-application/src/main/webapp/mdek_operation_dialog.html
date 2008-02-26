@@ -335,8 +335,8 @@ closeDialog = function() {
       <div class="spacer"></div>
       <div class="spacer"></div>
       <div class="inputContainer field grey noSpaceBelow fullField">
-        <div class="tableContainer">
-    	    <table id="operationsList" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive w648">
+        <div class="tableContainer rows4 fullInside">
+    	    <table id="operationsList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="name" dataType="String" width="160">Name</th>
@@ -373,11 +373,11 @@ closeDialog = function() {
           </span>
           <span class="entry">
             <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
-            <div class="tableContainer">
+            <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsPlatformEditors">
                 <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsPlatformText"></div>
               </div>
-         	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
+         	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>
         		      <tr>
               			<th field="title" dataType="String" editor="operationsPlatformText">Name</th>
@@ -396,7 +396,7 @@ closeDialog = function() {
 
         <div class="inputContainer h130">
           <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 'Parameter')">Parameter</label></span>
-          <div class="tableContainer">
+          <div class="tableContainer rows4 fullInside">
             <div class="cellEditors" id="operationsParameterEditors">
               <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsParameterName"></div>
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationDirection.js" style="width:90px;" widgetId="operationsParameterDir"></div>
@@ -404,7 +404,7 @@ closeDialog = function() {
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationYesNo.js" style="width:32px;" widgetId="operationsParameterOpt"></div>
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationYesNo.js" style="width:70px;" widgetId="operationsParameterMulti"></div>
             </div>
-      	    <table id="operationsParameter" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable nosort interactive w648">
+      	    <table id="operationsParameter" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
       	      <thead>
       		      <tr>
             			<th nosort="true" field="name" dataType="String" width="105" editor="operationsParameterName">Name*</th>
@@ -424,11 +424,11 @@ closeDialog = function() {
         <div class="inputContainer noSpaceBelow h067">
           <span class="half left">
             <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugriffsadresse')">Zugriffsadresse*</label></span>
-            <div class="tableContainer">
+            <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsAddressEditors">
                 <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsAddressText"></div>
               </div>
-         	    <table id="operationsAddress" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
+         	    <table id="operationsAddress" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>
         		      <tr>
               			<th field="title" dataType="String" editor="operationsAddressText">Adresse</th>
@@ -441,11 +441,11 @@ closeDialog = function() {
           </span>
           <span class="half">
             <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 'Abh&auml;ngigkeiten')">Abh&auml;ngigkeiten</label></span>
-            <div class="tableContainer">
+            <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsDependenciesEditors">
                 <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="operationsDependenciesText"></div>
               </div>
-         	    <table id="operationsDependencies" dojoType="ingrid:FilteringTable" minRows="2" headClass="fixedHeader hidden" tbodyClass="scrollContent rows2" cellspacing="0" class="filteringTable interactive w315">
+         	    <table id="operationsDependencies" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>
         		      <tr>
               			<th field="title" dataType="String" editor="operationsDependenciesText">Abh&auml;ngigkeit</th>

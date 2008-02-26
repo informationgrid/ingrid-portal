@@ -1,15 +1,64 @@
 /* CSS Document */
-/* datTable for styling only */
+.rows1 { height:44px; }
+.rows2 { height:66px; }
+.rows3 { height:88px; }
+.rows4 { height:110px; }
+.rows5 { height:132px; }
+.rows6 { height:154px; }
+.rows7 { height:176px; }
+.rows8 { height:198px; }
+.rows9 { height:220px; }
+.rows10 { height:242px; }
+.rows11 { height:264px; }
+.rows12 { height:286px; }
+.rows13 { height:308px; }
+.rows20 { height:462px; }
 
-.rows4 { height:88px; }
-.rows5 { height:110px; }
+.headHiddenRows1 { height:24px; }
+.headHiddenRows2 { height:46px; }
+.headHiddenRows3 { height:68px; }
+.headHiddenRows4 { height:90px; }
+.headHiddenRows5 { height:112px; }
+.headHiddenRows6 { height:134px; }
+.headHiddenRows7 { height:156px; }
+.headHiddenRows8 { height:178px; }
+.headHiddenRows9 { height:200px; }
+.headHiddenRows10 { height:244px; }
+.headHiddenRows11 { height:266px; }
+.headHiddenRows12 { height:288px; }
+.headHiddenRows13 { height:310px; }
+.headHiddenRows20 { height:464px; }
+
+html>/**/body div.headHiddenRows1 { height: 44px; }
+html>/**/body div.headHiddenRows2 { height: 66px; }
+html>/**/body div.headHiddenRows3 { height: 88px; }
+html>/**/body div.headHiddenRows4 { height: 110px; }
+html>/**/body div.headHiddenRows5 { height: 132px; }
+html>/**/body div.headHiddenRows6 { height: 154px; }
+html>/**/body div.headHiddenRows7 { height: 176px; }
+html>/**/body div.headHiddenRows8 { height: 198px; }
+html>/**/body div.headHiddenRows9 { height: 220px; }
+html>/**/body div.headHiddenRows10 { height: 242px; }
+html>/**/body div.headHiddenRows11 { height: 264px; }
+html>/**/body div.headHiddenRows12 { height: 286px; }
+html>/**/body div.headHiddenRows13 { height: 308px; }
+html>/**/body div.headHiddenRows20 { height: 462px; }
+
+div.thirdInside3 { width:308px; }
+div.thirdInside2 { width:430px; }
+div.third2 { width:446px; float:left; }
+div.third1 { width:210px; float:left; }
+div.third { width:264px; }
+div.halfInside { width:312px; float:left; }
+div.half { width:328px; float:left; }
+div.fullInside { width: 648px; }
+div.full { width: 675px; }
+div.wide { width: 955px; }
 
 /* This makes the scrolling table work */
 div.tableContainer {
-	height: 110px;	/* rows4 */	
     overflow: auto;
-	width: 970px;
-	margin: 15px 0 0 0;
+	margin: 0 0 0 0;
 	position: relative;
 }
 
@@ -18,23 +67,124 @@ we are keeping these here instead of putting them in the IE css file b/c it
 is easier to change the width if both numbers are in the same place. */
 /* All browsers accept this, but we are targeting IE with this rule */
 
-div.tableContainer table {
-	width: 952px;
+div.thirdInside3 table {
+	width: 320px;
+}
+
+div.thirdInside2 table {
+	width: 412px;
+}
+
+div.third2 table {
+	width: 428px;
+}
+
+div.third1 table {
+	width: 192px;
+}
+
+div.third table {
+	width: 246px;
+}
+
+div.halfInside table {
+	width: 294px;
+}
+
+div.half table {
+	width: 310px;
+}
+
+div.fullInside table {
+	width: 630px;
+}
+
+div.full table {
+	width: 657px;
+}
+
+div.wide table {
+	width: 937px;
 }
 
 /* Modern browsers accept this (not IE) and we are targetting firefox */
 
-html>/**/body div.tableContainer table {
-    width: 970px;
+html>/**/body div.thirdInside3 table {
+	width: 364px !important;
+}
+
+html>/**/body div.thirdInside2 table {
+    width: 430px;
+}
+
+html>/**/body div.third2 table {
+    width: 446px;
+}
+
+html>/**/body div.third1 table {
+    width: 210px;
+}
+
+html>/**/body div.third table {
+    width: 264px;
+}
+
+html>/**/body div.halfInside table {
+    width: 312px;
+}
+
+html>/**/body div.half table {
+    width: 328px;
+}
+
+html>/**/body div.fullInside table {
+    width: 648px;
+}
+
+html>/**/body div.full table {
+    width: 675px;
+}
+
+html>/**/body div.wide table {
+    width: 955px;
 }
 
 /* Modern browsers accept this (not IE) and we are targetting firefox */
 
 html>/**/body div.tableContainer table>tbody	{  
     overflow: auto; 
-    height: 88px;
     overflow-x: hidden;
 }
+
+html>/**/body div.rows1 table>tbody	{ height: 22px; }
+html>/**/body div.rows2 table>tbody	{ height: 44px; }
+html>/**/body div.rows3 table>tbody	{ height: 66px; }
+html>/**/body div.rows4 table>tbody	{ height: 88px; }
+html>/**/body div.rows5 table>tbody	{ height: 110px; }
+html>/**/body div.rows6 table>tbody	{ height: 132px; }
+html>/**/body div.rows7 table>tbody	{ height: 154px; }
+html>/**/body div.rows8 table>tbody	{ height: 176px; }
+html>/**/body div.rows9 table>tbody	{ height: 198px; }
+html>/**/body div.rows10 table>tbody { height: 220px; }
+html>/**/body div.rows11 table>tbody { height: 242px; }
+html>/**/body div.rows12 table>tbody { height: 264px; }
+html>/**/body div.rows13 table>tbody { height: 286px; }
+html>/**/body div.rows20 table>tbody { height: 440px; }
+
+html>/**/body div.headHiddenRows1 table>tbody	{ height: 22px; }
+html>/**/body div.headHiddenRows2 table>tbody	{ height: 44px; }
+html>/**/body div.headHiddenRows3 table>tbody	{ height: 66px; }
+html>/**/body div.headHiddenRows4 table>tbody	{ height: 88px; }
+html>/**/body div.headHiddenRows5 table>tbody	{ height: 110px; }
+html>/**/body div.headHiddenRows6 table>tbody	{ height: 132px; }
+html>/**/body div.headHiddenRows7 table>tbody	{ height: 154px; }
+html>/**/body div.headHiddenRows8 table>tbody	{ height: 176px; }
+html>/**/body div.headHiddenRows9 table>tbody	{ height: 198px; }
+html>/**/body div.headHiddenRows10 table>tbody	{ height: 220px; }
+html>/**/body div.headHiddenRows11 table>tbody	{ height: 242px; }
+html>/**/body div.headHiddenRows12 table>tbody	{ height: 264px; }
+html>/**/body div.headHiddenRows13 table>tbody	{ height: 286px; }
+html>/**/body div.headHiddenRows20 table>tbody	{ height: 440px; }
 
 div.tableContainer thead tr	{
 	position:relative;

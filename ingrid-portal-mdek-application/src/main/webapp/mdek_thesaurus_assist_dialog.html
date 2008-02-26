@@ -242,7 +242,8 @@ applyChanges = function() {
 
         <span class="entry first">
           <span class="label">Vorschlagliste</span>
-    	    <table id="keywordsList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable nosort interactive w292 relativePos">
+    	    <div class="tableContainer headHiddenRows10 third">
+    	    <table id="keywordsList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="title" dataType="String">Name</th>
@@ -251,6 +252,7 @@ applyChanges = function() {
     	      <tbody>
     	      </tbody>
     	    </table>
+        	</div>
         </span>
 
         <span class="entry">
@@ -264,7 +266,8 @@ applyChanges = function() {
 
         <span class="entry">
           <span class="label">&Uuml;bernehmen</span>
-    	    <table id="resultList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader hidden" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable nosort interactive w292 relativePos">
+    	    <div class="tableContainer headHiddenRows10 third">
+    	    <table id="resultList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="title" dataType="String">Name</th>
@@ -273,6 +276,7 @@ applyChanges = function() {
     	      <tbody>
     	      </tbody>
     	    </table>
+			</div>
         </span>
 
         <div class="fill spacer"></div>

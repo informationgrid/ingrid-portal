@@ -379,7 +379,7 @@ function initFreeTermsButtons() {
 						});
 						// Do nothing on error...
 
-						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 342, 220, true, {descriptors:descriptors, resultHandler:deferred});
+						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptors:descriptors, resultHandler:deferred});
 					} else {
 						// Topic not found in the sns. Add the result to the free term list
 						var freeTermsStore = _this._freeTermListWidget.store;
