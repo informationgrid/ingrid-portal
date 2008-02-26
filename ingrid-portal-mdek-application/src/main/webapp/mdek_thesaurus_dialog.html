@@ -157,7 +157,8 @@ function displaySearchResults(resultList) {
 			buttonLink.setAttribute("id", "_resultButton_"+term.topicId);
 			buttonLink.setAttribute("onclick", "resultButtonClicked('"+term.topicId+"');");
 			buttonLink.setAttribute("href", "javascript:void(0);");
-			buttonLink.innerHTML = "<img src=\"img/ic_jump_tree.gif\" align=\"bottom\"/>";
+			buttonLink.setAttribute("title", "In Baumstruktur finden");
+			buttonLink.innerHTML = "<img src=\"img/ic_jump_tree.gif\" style=\"position: relative; top: 3px;\"/>";
 
 			var divElement = document.createElement("div");
 
@@ -169,6 +170,7 @@ function displaySearchResults(resultList) {
 				linkElement.setAttribute("id", "_resultText_"+term.topicId);
 				linkElement.setAttribute("onclick", "resultTextClicked('"+term.topicId+"');");
 				linkElement.setAttribute("href", "javascript:void(0);");
+				linkElement.setAttribute("title", "Begriff auswaehlen");
 				linkElement.topicId = term.topicId;
 			} else {
 				dojo.html.addClass(linkElement, "notSelectable");
