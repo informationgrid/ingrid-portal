@@ -68,13 +68,14 @@ var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 var notEmptyAddressFields = [["addressClass", "addressTypeLabel"],
 						     ["countryCode", "addressCountryLabel"],
 						     ["city", "addressCityLabel"]];
+
 var notEmptyAddressFieldsClass0 = [["organisation", "headerAddressType0UnitLabel"]];
 var notEmptyAddressFieldsClass1 = [["organisation", "headerAddressType1UnitLabel"]];
 
 var notEmptyAddressFieldsClass2 = [["name", "headerAddressType2LastnameLabel"],
-								   ["givenName", "headerAddressType2StyleLabel"]];
+								   ["nameForm", "headerAddressType2StyleLabel"]];
 var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"],
-								   ["givenName", "headerAddressType3StyleLabel"]];
+								   ["nameForm", "headerAddressType3StyleLabel"]];
 
 
 function resetRequiredFields() {

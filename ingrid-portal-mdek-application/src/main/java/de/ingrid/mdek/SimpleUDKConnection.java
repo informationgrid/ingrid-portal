@@ -156,8 +156,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	public MdekAddressBean publishAddress(MdekAddressBean data) {
 		IngridDocument adr = (IngridDocument) dataMapper.convertFromAddressRepresentation(data);
-		log.debug("publishAddress() not implemented yet.");
-/*
+
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
 			adr.remove(MdekKeys.ID);
@@ -168,8 +167,6 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 		IngridDocument response = mdekCaller.publishAddress(adr, true, getCurrentSessionId());
 		return extractSingleAddressFromResponse(response);
-*/
-		return data;
 	}
 
 	
@@ -178,10 +175,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public void deleteAddress(String uuid) {
-		log.debug("deleteAddress(String) not implemented yet.");
-/*
 		mdekCaller.deleteAddress(uuid, getCurrentSessionId());
-*/
 	}
 
 	public boolean deleteObjectWorkingCopy(String uuid) {
@@ -214,7 +208,17 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public boolean canCutAddress(String uuid) {
-		// Cut is always allowed. Placeholder for future changes
+		IngridDocument response = mdekCaller.checkAddressSubTree(uuid, getCurrentSessionId());
+		if (mdekCaller.getResultFromResponse(response) == null) {
+			handleError(response);
+		} else {
+			IngridDocument result = mdekCaller.getResultFromResponse(response);
+			boolean hasWorkingCopy = result.getBoolean(MdekKeys.RESULTINFO_HAS_WORKING_COPY);
+			if (hasWorkingCopy) {
+				// Throw an error. An address that is about to be moved must not have working copies as children
+				throw new MdekException(MdekError.SUBTREE_HAS_WORKING_COPIES);
+			}
+		}
 		return true;
 	}
 

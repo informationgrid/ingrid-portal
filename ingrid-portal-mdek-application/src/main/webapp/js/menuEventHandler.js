@@ -179,11 +179,27 @@ menuEventHandler.handlePaste = function(msg) {
 				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
 				return;
 			} else {
+				var appType = treeController.nodeToCut.nodeAppType;
 				// Valid target was selected. Start the request
 				var deferred = new dojo.Deferred();
 				deferred.addCallback(function() {
 					// Move was successful. Update the tree
-					treeController.move(treeController.nodeToCut, targetNode, 0);
+					var nodeToCut = treeController.nodeToCut;
+					treeController.move(nodeToCut, targetNode, 0);
+					if (appType == "A") {
+						// If we moved an address from/to the freeAddress part of the tree, the icon has to be updated
+						if (targetNode.id == "addressFreeRoot") {
+							nodeToCut.nodeDocType = "PersonAddress";	
+							nodeToCut.objectClass = 3;
+							dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(nodeToCut);
+						} else {
+							if (dojo.string.startsWith(nodeToCut.nodeDocType, "PersonAddress")) {
+								nodeToCut.nodeDocType = "InstitutionPerson";	
+								nodeToCut.objectClass = 2;
+								dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(nodeToCut);							
+							}
+						}
+					}
 				});
 				// Error Handler. Move was unsuccessful. Notify user and do nothing.
 				deferred.addErrback(displayErrorMessage);
@@ -191,7 +207,6 @@ menuEventHandler.handlePaste = function(msg) {
 				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = treeController.expand(targetNode);
-				var appType = treeController.nodeToCut.nodeAppType;
 				if (appType == "O") {
 					def.addCallback(function() {
 						dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred});
