@@ -420,10 +420,10 @@ acceptTopicList = function() {
         <span class="button w644" style="height:20px !important;"><button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic">In Thesaurus suchen</button></span>
    	  </div>
 
-      <div class="inputContainer grey full noSpaceBelow">
-		<div id="thesResultTabContainer" dojoType="ingrid:TabContainer" class="h199" selectedChild="thesTreePane">
+      <div class="inputContainer full noSpaceBelow">
+		<div id="thesResultTabContainer" dojoType="ingrid:TabContainer" class="h205" selectedChild="thesTreePane" templateCssPath="js/dojo/widget/templates/TabContainerThesaurus.css">
 
-			<div dojoType="ContentPane" id="thesTreePane" label="Hierarchiebaum" style="height: 200px; margin-left:5px; margin-top:10px; width: 100%; overflow: auto;">
+			<div class="grey" dojoType="ContentPane" id="thesTreePane" label="Hierarchiebaum" style="height: 200px; padding-left:5px; padding-top:2px; width: 100%; overflow: auto;">
 	          <!-- tree components -->
 				<div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
 				<div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
@@ -434,13 +434,12 @@ acceptTopicList = function() {
 	           </div>
 	      	</div>
 
-			<div dojoType="ContentPane" id="thesResultPane" label="Ergebnisliste" style="height: 200px; margin-left:5px; margin-top:10px; width: 100%; overflow: auto;">
+			<div class="grey" dojoType="ContentPane" id="thesResultPane" label="Ergebnisliste" style="height: 200px; padding-left:5px; width: 100%; overflow: auto;">
 				<span id="thesResultContainer"></span>
 	      	</div>
 
 		</div>
 
-      <div class="spacer"></div>
       </div>
 
       <div class="inputContainer full">
