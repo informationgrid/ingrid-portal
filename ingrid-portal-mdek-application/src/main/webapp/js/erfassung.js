@@ -77,15 +77,19 @@ function toggleFields(section) {
 						if (inputContainer[k].className != undefined && inputContainer[k].className.indexOf('notRequired') != -1)
 						{
 							if (mode == "") {
+								dojo.html.toggleDisplay(inputContainer[k]);
+/*
 								if (inputContainer[k].style.display == "" || inputContainer[k].style.display == "block")
 									inputContainer[k].style.display = "none";
 								else
 									inputContainer[k].style.display = "block";
-							
+*/						
 							} else if (mode == 'required') {
-								inputContainer[k].style.display = "none";
+								dojo.html.hide(inputContainer[k]);
+//								inputContainer[k].style.display = "none";
 							} else if (mode == 'all') {
-								inputContainer[k].style.display = "block";
+								dojo.html.show(inputContainer[k]);
+//								inputContainer[k].style.display = "block";
 							}
 						}
 					}
