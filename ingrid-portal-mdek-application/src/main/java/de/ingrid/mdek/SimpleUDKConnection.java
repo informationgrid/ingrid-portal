@@ -17,6 +17,7 @@ import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.IMdekCallerCommon.Quantity;
 import de.ingrid.mdek.IMdekErrors.MdekError;
+import de.ingrid.mdek.dwr.AddressSearchResultBean;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
@@ -268,6 +269,19 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 	
+	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits) {
+		IngridDocument adrDoc = (IngridDocument) dataMapper.convertFromAddressRepresentation(adr);
+
+		log.debug("Sending the following address search:");
+		log.debug(adrDoc);
+
+		IngridDocument response = mdekCaller.searchAddresses(adrDoc, startHit, numHits, getCurrentSessionId());
+		
+		// TODO Convert the response
+		return extractAddressSearchResultsFromResponse(response);
+
+	}
+	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
 		IngridDocument response = mdekCaller.getSysLists(listIds, languageCode, getCurrentSessionId());
 		return extractSysListFromResponse(response);
@@ -401,6 +415,27 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return doc;
 	}
 
+	public AddressSearchResultBean extractAddressSearchResultsFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		AddressSearchResultBean searchResult = new AddressSearchResultBean();
+
+		if (result != null) {
+			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
+			ArrayList<MdekAddressBean> nodeList = new ArrayList<MdekAddressBean>();
+			for (IngridDocument adrEntity : adrs) {
+				nodeList.add(dataMapper.getDetailedAddressRepresentation(adrEntity));
+			}
+
+			searchResult.setNumHits((Integer) result.get(MdekKeys.SEARCH_NUM_HITS));
+			searchResult.setTotalNumHits((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS));
+			searchResult.setResultList(nodeList);
+		} else {
+			handleError(response);
+		}
+		return searchResult;
+	}
+	
 	public Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 		if (result != null) {

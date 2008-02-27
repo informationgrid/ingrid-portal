@@ -1818,7 +1818,7 @@ function hideSplash(){
 			      <div class="inputContainer noSpaceBelow">
 			        <div class="half left">
 			          <span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
-			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
+			          <span class="input"><input dojoType="ingrid:Combobox" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
 			        </div>
 			  
 			        <div class="half">
@@ -1851,7 +1851,7 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 			          <span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
-			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
+			          <span class="input"><input dojoType="ingrid:Combobox" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
 			        </div>
 			  
 			        <div class="half">

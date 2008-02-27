@@ -8,6 +8,15 @@
 
 <script type="text/javascript">
 
+var currentQuery = {
+	startHit: 0,
+	totalNumHits: 0,
+	pageSelectorStart: 1,
+	organisation: null,
+	name: null,
+	givenName: null
+};
+
 // All the possible values for special ref links
 var referenceMap = [["Standort", "3360"],
 					["Projektleiter", "3400"],
@@ -59,6 +68,9 @@ _container_.addOnLoad(function() {
 		deferred.addErrback(function(res) { alert("Error while loading data from the server. Please check your connection and try again!"); return res;});
 		return deferred;
 	};
+
+	// Hide the result table
+	dojo.html.hide(dojo.byId("addressLinkSearchResults"));
 });
 
 
@@ -156,26 +168,184 @@ addSelectedAddressFromTree = function() {
 	_container_.closeWindow();
 }
 
+addSelectedAddress = function() {
+	var selectedNode = dojo.widget.byId("addressSearchResultsTable").getSelectedData();
 
-startSearch = function() {
+	if (selectedNode) {
+	    var dstStore = dojo.widget.byId("generalAddress").store;
+		var nodeId = selectedNode.uuid;
+		if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
+			addAddressToStore(nodeId, dstStore);
+		}
+	}
+	_container_.closeWindow();
+}
 
-	var addressQuery = {
-		institution: dojo.string.trim(dojo.widget.byId("addressSearchInstitution")),
-		unit: dojo.string.trim(dojo.widget.byId("addressSearchUnit")),
-		lastName: dojo.string.trim(dojo.widget.byId("addressSearchLastname")),
-		firstName: dojo.string.trim(dojo.widget.byId("addressSearchFirstname"))
-	};
+function updateNavigation() {
+	var totalNumHits = currentQuery.totalNumHits;
+	var startHit = currentQuery.startHit;
+	var endHit = startHit+9;
 
+	if (totalNumHits < endHit)
+		endHit = totalNumHits - 1;
+
+	var currentPage = Math.floor(startHit/10) + 1;
+	var lastPage = Math.ceil(totalNumHits/10);
+
+	var pageSelectorStart = currentQuery.pageSelectorStart;
 
 /*
-	EntryService.searchAddress(addressQuery, {
+	dojo.debug("totalNumHits: "+totalNumHits);
+	dojo.debug("startHit: "+startHit);
+	dojo.debug("endHit: "+endHit);
+	dojo.debug("currentPage: "+currentPage);
+	dojo.debug("lastPage: "+lastPage);
+*/
+	// Create the dom elements
+	var infoSpan = dojo.byId("addressLinkSearchResultsInfo");
+	var pagingSpan = dojo.byId("addressLinkSearchResultsPaging");
+	
+	if (totalNumHits == 0) {
+		infoSpan.innerHTML = "0 Treffer";
+	} else if (totalNumHits == 1) {
+		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffer";
+	} else {
+		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffern";
+	}
+
+	// Clear the paging span
+	while (pagingSpan.hasChildNodes())
+		pagingSpan.removeChild(pagingSpan.firstChild);
+
+	// Add info text to the paging span
+	if (totalNumHits == 0) {
+		pagingSpan.appendChild(document.createTextNode("(Seite 1 von 1)"));
+	} else {
+		pagingSpan.appendChild(document.createTextNode("(Seite "+currentPage+" von "+lastPage+")"));
+	}
+
+	// Add navigation to the next set of page navigation links
+	if (pageSelectorStart > 1) {
+		pagingSpan.appendChild(document.createTextNode(" "));
+		var link = document.createElement("a");
+		link.setAttribute("onclick", "setPageNavigationStartIndex("+(pageSelectorStart-4)+");");
+		link.setAttribute("href", "javascript:void(0);");
+		link.setAttribute("title", "zurueck");
+		link.innerHTML = "<";
+
+		pagingSpan.appendChild(link);
+	}
+
+//	dojo.debug("pageSelectorStart: "+pageSelectorStart);
+
+	// Add the page selection links
+	for (var i = pageSelectorStart; i < pageSelectorStart+4; ++i) {
+//		dojo.debug("i: "+i);
+//		dojo.debug("pageSelectorStart+4: "+pageSelectorStart+4);
+
+		if (i > lastPage)
+			break;
+
+		pagingSpan.appendChild(document.createTextNode(" "));
+
+		if (i == currentPage) {
+			var textNode = document.createElement("em");
+			textNode.innerHTML = i;
+			pagingSpan.appendChild(textNode);
+		} else {		
+			var link = document.createElement("a");
+			link.setAttribute("onclick", "navigateToPage('"+i+"');");
+			link.setAttribute("href", "javascript:void(0);");
+			link.setAttribute("title", "Seite "+i);
+			link.innerHTML = i;
+	
+			pagingSpan.appendChild(link);
+		}
+	}
+
+	// Add navigation to the next set of page navigation links
+	if (pageSelectorStart+4 < lastPage) {
+		pagingSpan.appendChild(document.createTextNode(" "));
+		var link = document.createElement("a");
+		link.setAttribute("onclick", "setPageNavigationStartIndex("+(pageSelectorStart+4)+");");
+		link.setAttribute("href", "javascript:void(0);");
+		link.setAttribute("title", "weiter");
+		link.innerHTML = ">";
+
+		pagingSpan.appendChild(link);
+	}
+}
+
+navigateToPage = function(pageIndex) {
+	var startHit = (pageIndex-1)*10;
+	browseSearchResults(startHit);
+}
+
+setPageNavigationStartIndex = function(newStartIndex) {
+	currentQuery.pageSelectorStart = newStartIndex;
+	updateNavigation();
+}
+
+
+function updateResults(searchResult) {
+	dojo.html.show(dojo.byId("addressLinkSearchResults"));	
+
+	udkDataProxy._addIcons(searchResult.resultList);
+	udkDataProxy._addAddressTitles(searchResult.resultList);
+	udkDataProxy._addAddressTitles(searchResult.resultList);
+	udkDataProxy._addTableIndices(searchResult.resultList);
+
+	dojo.widget.byId("addressSearchResultsTable").store.setData(searchResult.resultList);
+
+	currentQuery.totalNumHits = searchResult.totalNumHits;
+	
+	updateNavigation();
+}
+
+function updateQueryFromInput() {
+	currentQuery.startHit = 0;
+	currentQuery.organisation = dojo.string.trim(dojo.widget.byId("addressSearchUnit").getValue());
+	currentQuery.name = dojo.string.trim(dojo.widget.byId("addressSearchLastname").getValue());
+	currentQuery.givenName = dojo.string.trim(dojo.widget.byId("addressSearchFirstname").getValue());
+
+	if (currentQuery.organisation.length == 0)
+		currentQuery.organisation = null;
+	
+	if (currentQuery.name.length == 0)
+		currentQuery.name = null;
+	
+	if (currentQuery.givenName.length == 0)
+		currentQuery.givenName = null;
+}
+
+function browseSearchResults(startHit) {
+	currentQuery.startHit = startHit;
+
+	EntryService.searchAddresses(currentQuery, currentQuery.startHit, 10, {
 		callback: function(res){
-			dojo.byId("results").style.display = "";
+			updateResults(res);
 		},
 		timeout:30000,
-		errorHandler:function(message) {msg.resultHandler.errback("Error in mdek_address_dialog.html: Error while searching for addresses."); }
+		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.html: Error while searching for addresses:"+message); }
 	});
-*/
+}
+
+startNewSearch = function() {
+	dojo.html.hide(dojo.byId("addressLinkSearchResults"));	
+
+	// build query
+	updateQueryFromInput();
+	
+	// reset the page navigation
+	currentQuery.pageSelectorStart = 1;
+
+	EntryService.searchAddresses(currentQuery, currentQuery.startHit, 10, {
+		callback: function(res){
+			updateResults(res);
+		},
+		timeout:30000,
+		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.html: Error while searching for addresses:"+message); }
+	});
 }
 
 </script>
@@ -185,128 +355,114 @@ startSearch = function() {
 
 <div dojoType="ContentPane">
 
-  <div id="address" class="contentBlockWhite top fullBlock">
-    <div id="winNavi">
-      <a href="#" title="Hilfe">[?]</a>
-	  </div>
-	  <div id="addressContent" class="content">
+	<div class="contentBlockWhite top fullBlock">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+	<div id="addressContent" class="content">
 
-      <!-- LEFT HAND SIDE CONTENT START -->
-      <div class="spacer"></div>
-    	<div id="addressContainer" dojoType="ingrid:TabContainer" class="full h600" selectedChild="addressSearch">
-    		<div id="addressSearch" dojoType="ContentPane" class="blueTopBorder" label="Direkte Suche">
+		<!-- LEFT HAND SIDE CONTENT START -->
+		<div class="spacer"></div>
+		<div id="addressContainer" dojoType="ingrid:TabContainer" class="full h600" selectedChild="addressSearch">
 
-          <!-- TAB 1 START -->
-          <div class="inputContainer field grey noSpaceBelow">
-            <div>
-              <span class="label"><label for="addressSearchInstitution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution</label></span>
-              <span class="input spaceBelow"><input type="text" id="addressSearchInstitution" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
-            </div>
-            <div>
-              <span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit</label></span>
-              <span class="input spaceBelow"><input type="text" id="addressSearchUnit" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
-            </div>
-            <div class="half left">
-              <span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
-              <span class="input"><input type="text" id="addressSearchLastname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
-        	  </div>
-            <div class="half noSpaceBelow">
-              <span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
-              <span class="input"><input type="text" id="addressSearchFirstname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
-        	  </div>
-        	  <div class="fill"></div>
-            <div class="spacerField"></div>
-      	  </div>
+			<!-- TAB 1 START -->
+			<div id="addressSearch" dojoType="ContentPane" class="blueTopBorder" label="Direkte Suche">
 
-          <div class="inputContainer w684">
-		        <span class="button" style="float:right; height:20px !important;">
-			        <span style="float:right;"><button dojoType="ingrid:Button" onClick="startSearch">Suchen</button></span>
+				<div class="inputContainer field grey noSpaceBelow">
+					<div>
+						<span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit/Institution')">Einheit/Institution</label></span>
+						<span class="input spaceBelow"><input type="text" id="addressSearchUnit" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+					</div>
+					<div class="half left">
+						<span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
+						<span class="input"><input type="text" id="addressSearchLastname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
+					</div>
+					<div class="half noSpaceBelow">
+						<span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+						<span class="input"><input type="text" id="addressSearchFirstname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
+					</div>
+					<div class="fill"></div>
+					<div class="spacerField"></div>
+				</div>
 
-					<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-						<img id="thesImageZone" src="img/ladekreis.gif" />
-					</span>
-		        </span>
-      	  </div>
+				<div class="inputContainer w684">
+					<span class="button" style="float:right; height:20px !important;">
+						<span style="float:right;"><button dojoType="ingrid:Button" onClick="startNewSearch">Suchen</button></span>
+						<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img id="thesImageZone" src="img/ladekreis.gif" />
+						</span>
+	        		</span>
+  	  			</div>
 
-          <div id="results" style="display:none;" class="inputContainer noSpaceBelow">
-            <span class="label">Trefferliste</span>
-            <div class="listInfo full">
-              <span class="searchResultsInfo">1-10 von 240 Treffern</span>
-              <span class="searchResultsPaging">(Seite 1 von 24)
-                <em>1</em>
-                <a href="#" title="Seite 2">2</a>
-                <a href="#" title="Seite 3">3</a>
-                <a href="#" title="Seite 4">4</a>
-                <a href="#" title="weiter">></a>
-              </span>
-          	  <div class="fill"></div>
-            </div>
+				<div id="addressLinkSearchResults" class="inputContainer">
+					<div class="noSpaceBelow">
+						<span class="label">Trefferliste</span>
+						<div class="listInfo full">
+							<span id="addressLinkSearchResultsInfo" class="searchResultsInfo">1-10 von 240 Treffern</span>
+							<span id="addressLinkSearchResultsPaging" class="searchResultsPaging">(Seite 1 von 24)
+			                	<em>1</em>
+								<a href="#" title="Seite 2">2</a>
+								<a href="#" title="Seite 3">3</a>
+								<a href="#" title="Seite 4">4</a>
+								<a href="#" title="weiter">></a>
+							</span>
+							<div class="fill"></div>
+						</div>
+					</div>				
 
-      	    <table id="addressSearchResultsTable" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable full relativePos">
-      	      <thead>
-      		      <tr>
-            			<th field="type" dataType="String" width="74"></th>
-            			<th field="name" dataType="String" width="610">Name</th>
-      		      </tr>
-      	      </thead>
-      	      <tbody>
-      	      </tbody>
-      	    </table>
+					<div class="tableContainer rows10 full">
+						<table id="addressSearchResultsTable" multiple="false" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable relativePos nosort interactive readonly">
+							<thead>
+								<tr>
+									<th nosort="true" field="icon" dataType="String" width="23"></th>
+									<th nosort="true" field="title" dataType="String" width="652">Name</th>
+								</tr>
+							</thead>
+							<colgroup>
+								<col width="23">
+								<col width="652">
+							</colgroup>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 
-            <div class="listInfo full noSpaceBelow">
-              <span class="searchResultsInfo">1-10 von 240 Treffern</span>
-              <span class="searchResultsPaging">(Seite 1 von 24)
-                <em>1</em>
-                <a href="#" title="Seite 2">2</a>
-                <a href="#" title="Seite 3">3</a>
-                <a href="#" title="Seite 4">4</a>
-                <a href="#" title="weiter">></a>
-              </span>
-          	  <div class="fill"></div>
-            </div>
-
-            <div class="inputContainer w684">
-
-		        <span class="button" style="height:20px !important; float:right;">
-			        <span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddress">&Uuml;bernehmen</button></span>
-		        </span>
-        	  </div>
-      	  </div>
-
-    		</div>
-        <!-- TAB 1 END -->
+					<div class="w684">
+						<span class="button" style="height:20px !important; float:right;">
+							<span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddress">&Uuml;bernehmen</button></span>
+						</span>
+					</div>
+				</div>	
+			</div>
+	        <!-- TAB 1 END -->
     		
     		<!-- TAB 2 START -->
-    		<div id="addressHierarchy" dojoType="ContentPane" class="blueTopBorder" label="Hierarchiebaum">
+			<div id="addressHierarchy" dojoType="ContentPane" class="blueTopBorder" label="Hierarchiebaum">
 
-          <div class="inputContainer grey full h360 scrollable">
-          	<div dojoType="ContentPane" id="addressTreeContainer">
-              <!-- tree components -->
-              <div dojoType="ingrid:TreeController" widgetId="treeControllerAdr" RpcUrl="server/treelistener.php"></div>
-              <div dojoType="ingrid:TreeListener" widgetId="treeListenerAdr"></div>	
-              <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAdr"></div>	
-              <div dojoType="ingrid:TreeDecorator" listener="treeListenerAdr"></div>
+				<div class="inputContainer grey full h360 scrollable">
+					<div dojoType="ContentPane" id="addressTreeContainer">
+					<!-- tree components -->
+						<div dojoType="ingrid:TreeController" widgetId="treeControllerAdr" RpcUrl="server/treelistener.php"></div>
+						<div dojoType="ingrid:TreeListener" widgetId="treeListenerAdr"></div>	
+						<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAdr"></div>	
+						<div dojoType="ingrid:TreeDecorator" listener="treeListenerAdr"></div>
               
-              <!-- tree -->
-              <div dojoType="ingrid:Tree" listeners="treeControllerAdr;treeListenerAdr;treeDocIconsAdr" widgetId="treeAdr">
-              </div>
-          	</div>
-
-          	<div class="spacer"></div>
-          </div>
-            <div class="inputContainer w684">
-		        <span class="button" style="height:20px !important; float:right;">
-			        <span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddressFromTree">&Uuml;bernehmen</button></span>
-		        </span>
-        	  </div>
-    		</div>
+						<!-- tree -->
+						<div dojoType="ingrid:Tree" listeners="treeControllerAdr;treeListenerAdr;treeDocIconsAdr" widgetId="treeAdr"></div>
+					</div>
+				<div class="spacer"></div>
+			</div>
+            
+			<div class="inputContainer w684">
+				<span class="button" style="height:20px !important; float:right;">
+					<span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddressFromTree">&Uuml;bernehmen</button></span>
+				</span>
+			</div>
+		</div>
         <!-- TAB 2 END -->
 
-    	</div>
-      <!-- LEFT HAND SIDE CONTENT END -->
-
-    </div>
-  </div>
+	</div>
+	<!-- LEFT HAND SIDE CONTENT END -->
 </div>
 
 </body>

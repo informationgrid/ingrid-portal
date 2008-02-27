@@ -6,6 +6,7 @@ package de.ingrid.mdek.dwr.api;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.dwr.AddressSearchResultBean;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
@@ -290,6 +291,8 @@ public interface EntryService {
 	public boolean canCopyObject(String parentUuid);
 	public boolean canCopyAddress(String parentUuid);
 
+	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits);
+	
 	// Fetch sys lists from the backend
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 

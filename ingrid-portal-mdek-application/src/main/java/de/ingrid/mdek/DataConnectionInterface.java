@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.dwr.AddressSearchResultBean;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
@@ -317,6 +318,19 @@ public interface DataConnectionInterface {
 	 * 
 	 */	
 	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress);
+
+	/**
+	 * Search for addresses
+	 * 
+	 * <ul>
+	 * <li><b>(MdekAddressBean) adr</b> - An address bean filled with the search parameters.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return AddressSearchResultBean containing the search results and additional info.
+	 */	
+	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits);
 
 	/**
 	 * Fetch Sys Lists from the server.
