@@ -28,8 +28,8 @@ dojo.require("ingrid.widget.ValidationTextbox");
 dojo.addOnLoad(function() {});
 
 function toggleTableContainer() {
-	dojo.html.toggleDisplay(dojo.byId("tableInputContainer"));
-	dojo.html.toggleDisplay(dojo.byId("tableInputContainer"));
+	dojo.html.toggleDisplay(dojo.byId("general"));
+	dojo.html.toggleDisplay(dojo.byId("general"));
 }
 
 function testToggle() {

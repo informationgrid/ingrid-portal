@@ -1,22 +1,50 @@
 function sizeContent()
 {
   // adjust height of right bottom content within split pane
-  var splitPaneDiv = document.getElementById('contentSection');
+  var splitPaneDiv = dojo.byId('contentSection');
   var sectionTopDivName = "sectionTopObject";
   if (currentUdk && currentUdk.nodeAppType == "A") {
     sectionTopDivName = "sectionTopAddress";
   }
-  var sectionTopDiv = document.getElementById(sectionTopDivName);
+  var sectionTopDiv = dojo.byId(sectionTopDivName);
   var contentFrameDivName = "contentFrameObject";
   if (currentUdk && currentUdk.nodeAppType == "A") {
     contentFrameDivName = "contentFrameAddress";
   }
   var contentFrame = dojo.widget.byId(contentFrameDivName);
   contentFrame.resizeTo(730, splitPaneDiv.offsetHeight - sectionTopDiv.offsetHeight - 4);
+
+	// IE hack so the input containers are drawn correctly
+	if (dojo.render.html.ie) {
+		setTimeout("refreshInputContainers()", 1);
+	}
 }
 
 function selectNode() {
 	alert("selectNode");
+}
+
+function refreshInputContainers(section) {
+	var sectionDivId = "contentFrameBodyObject";
+	var mainDivId = "contentFrameObject";
+	if (section == "Address" || currentUdk && currentUdk.nodeAppType == "A") {
+		sectionDivId = "contentFrameBodyAddress";
+		mainDivId = "contentFrameAddress";
+	}
+
+	// Get the divs
+	var contentDiv = dojo.byId(sectionDivId);
+	var parentDiv = dojo.byId(mainDivId);
+
+	// Backup scroll position
+	var scrollPos = parentDiv.scrollTop;
+
+	// Refresh the content divs (disable/enalbe)
+	dojo.html.toggleDisplay(contentDiv);
+	dojo.html.toggleDisplay(contentDiv);
+
+	// Reset the scroll position to the old value
+	parentDiv.scrollTop = scrollPos;
 }
 
 
@@ -27,7 +55,7 @@ function toggleFields(section) {
 	// get section or all sections respectively
 	var rootNodes = [];
 	if (section != undefined && section != "Object" && section != "Address") {
-		rootNodes.push(document.getElementById(section));
+		rootNodes.push(dojo.byId(section));
 
 //		dojo.debug("toggle fields in '" +section+ "'");
 	} else {
@@ -38,18 +66,15 @@ function toggleFields(section) {
 //		dojo.debug("toggle fields in container '" + sectionDivId + "'");
 
 		// button on toolbar clicked, toggle all fields on page
-		// only if form is loaded
-		if (document.getElementById(sectionDivId)) {
-//			dojo.debug("Toolbar button clicked.");
-			rootNodes = document.getElementById(sectionDivId).childNodes;
-			var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
-			var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
-			toggleButton(btnImage, toggleBtn.domNode, 'grey');
-			if (btnImage.src.indexOf("expand_required") != -1)
-				mode = "all";
-			else
-				mode = "required";
-		}
+//		dojo.debug("Toolbar button clicked.");
+		rootNodes = dojo.byId(sectionDivId).childNodes;
+		var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
+		var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
+		toggleButton(btnImage, toggleBtn.domNode, 'grey');
+		if (btnImage.src.indexOf("expand_required") != -1)
+			mode = "all";
+		else
+			mode = "required";
 	}
 
   // loop over content blocks and hide or show indvidual input containers
@@ -135,6 +160,11 @@ function toggleFields(section) {
 //			dojo.debug(item+" is not displayed.");
 //		}
 	});
+
+	// IE hack so the input containers are drawn correctly
+	if (dojo.render.html.ie) {
+		setTimeout("refreshInputContainers('"+section+"')", 1);
+	}
 }
 
 function toggleButton(btnImage, labelElement, color, mode)
