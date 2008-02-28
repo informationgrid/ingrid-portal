@@ -35,6 +35,17 @@ dojo.widget.defineWidget(
 		return null;
 	},
 
+  setValue: function(val) {
+/*
+	dojo.debug("setValue("+val+") on "+this.widgetId);
+	dojo.debug("val == this.textInputNode.value: "+(val == this.textInputNode.value));
+*/
+	if (val == null)
+		arguments[0] = "";
+
+	ingrid.widget.ComboBox.superclass.setValue.apply(this, arguments);
+  },
+
   enable: function() {
     dojo.widget.ComboBox.superclass.enable.apply(this, arguments);
     dojo.html.removeClass(this.textInputNode, 'noEdit');

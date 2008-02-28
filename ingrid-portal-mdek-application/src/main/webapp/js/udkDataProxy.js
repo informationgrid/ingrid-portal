@@ -1392,7 +1392,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 	}
 
 	// ------------------ Header ------------------
-	nodeData.addressClass = dojo.widget.byId("addressType").getValue()[11];		// AddressTypex
+	nodeData.addressClass = dojo.widget.byId("addressType").getValue().substr(11, 1);		// AddressTypex
 
 	// ------------------ Address and Function ------------------
 	nodeData.street = dojo.widget.byId("addressStreet").getValue();
@@ -1481,7 +1481,7 @@ udkDataProxy._getObjectData = function(nodeData)
   // --- General ---
   nodeData.generalShortDescription = dojo.widget.byId("generalShortDesc").getValue();
   nodeData.generalDescription = dojo.widget.byId("generalDesc").getValue();
-  nodeData.objectClass = dojo.widget.byId("objectClass").getValue()[5]; // Value is a string: "Classx" where x is the class
+  nodeData.objectClass = dojo.widget.byId("objectClass").getValue().substr(5, 1); // Value is a string: "Classx" where x is the class
   nodeData.generalAddressTable = udkDataProxy._getTableData("generalAddress");
   // Comments
   nodeData.commentTable = commentStore.getData();

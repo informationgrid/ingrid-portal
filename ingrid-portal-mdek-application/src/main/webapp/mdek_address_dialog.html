@@ -229,9 +229,14 @@ function updateNavigation() {
 		pagingSpan.appendChild(document.createTextNode(" "));
 		var link = document.createElement("a");
 		link.setAttribute("onclick", "setPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-		link.setAttribute("href", "javascript:void(0);");
+
+			if (dojo.render.html.ie)
+				link.setAttribute("href", "javascript:setPageNavigationStartIndex("+(pageSelectorStart-4)+");");
+			else
+				link.setAttribute("href", "javascript:void(0);");
+
 		link.setAttribute("title", "zurueck");
-		link.innerHTML = "<";
+		link.innerHTML = "&lt;";
 
 		pagingSpan.appendChild(link);
 	}
@@ -255,7 +260,12 @@ function updateNavigation() {
 		} else {		
 			var link = document.createElement("a");
 			link.setAttribute("onclick", "navigateToPage('"+i+"');");
-			link.setAttribute("href", "javascript:void(0);");
+
+			if (dojo.render.html.ie)
+				link.setAttribute("href", "javascript:navigateToPage('"+i+"');");
+			else
+				link.setAttribute("href", "javascript:void(0);");
+
 			link.setAttribute("title", "Seite "+i);
 			link.innerHTML = i;
 	
@@ -268,9 +278,14 @@ function updateNavigation() {
 		pagingSpan.appendChild(document.createTextNode(" "));
 		var link = document.createElement("a");
 		link.setAttribute("onclick", "setPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-		link.setAttribute("href", "javascript:void(0);");
+
+		if (dojo.render.html.ie)
+			link.setAttribute("href", "javascript:setPageNavigationStartIndex("+(pageSelectorStart+4)+");");
+		else
+			link.setAttribute("href", "javascript:void(0);");
+
 		link.setAttribute("title", "weiter");
-		link.innerHTML = ">";
+		link.innerHTML = "&gt;";
 
 		pagingSpan.appendChild(link);
 	}
@@ -398,14 +413,8 @@ startNewSearch = function() {
 					<div class="noSpaceBelow">
 						<span class="label">Trefferliste</span>
 						<div class="listInfo full">
-							<span id="addressLinkSearchResultsInfo" class="searchResultsInfo">1-10 von 240 Treffern</span>
-							<span id="addressLinkSearchResultsPaging" class="searchResultsPaging">(Seite 1 von 24)
-			                	<em>1</em>
-								<a href="#" title="Seite 2">2</a>
-								<a href="#" title="Seite 3">3</a>
-								<a href="#" title="Seite 4">4</a>
-								<a href="#" title="weiter">></a>
-							</span>
+							<span id="addressLinkSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="addressLinkSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
 							<div class="fill"></div>
 						</div>
 					</div>				

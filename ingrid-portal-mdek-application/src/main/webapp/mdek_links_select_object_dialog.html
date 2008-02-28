@@ -141,7 +141,7 @@ assignObject = function() {
 		var retVal = {};
 		retVal.uuid = node.id.substring(10, node.id.length);
 		retVal.title = node.title;
-		retVal.objectClass = node.nodeDocType[5];
+		retVal.objectClass = node.nodeDocType.substr(5, 1);
 
 		_container_.customParams.resultHandler.callback(retVal);
 	}

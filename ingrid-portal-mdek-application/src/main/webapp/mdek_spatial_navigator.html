@@ -7,6 +7,8 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <style type="text/css">
 .floatLeft {float:left;}
+.bottomRight { margin-top: -50px !important; margin-left: 373px; }
+html>/**/body .bottomRight { margin-top: 58px !important; margin-left: 373px; }
 </style>
 
 <script type="text/javascript">
@@ -120,7 +122,13 @@ setResultList = function(topicList)
 
 				var linkElement = document.createElement("a"); 
 				linkElement.setAttribute("href", "javascript:void(0);");
-				linkElement.setAttribute("onclick", "findAssociatedLocations('"+topicList[i].topicId+"');");
+				linkElement.setAttribute("onclick", "findAssociatedLocations('"+(topicList[i].topicId)+"');");
+
+				if (dojo.render.html.ie)
+					linkElement.setAttribute("href", "javascript:findAssociatedLocations('"+(topicList[i].topicId)+"');");
+				else
+					linkElement.setAttribute("href", "javascript:void(0);");
+
 				linkElement.innerHTML = label;
 
 				checkboxDiv.appendChild(divElement);
@@ -272,7 +280,7 @@ addLocationTopics = function() {
         		<span class="floatLeft">
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
-          		<span class="button w085 transparent" style="margin-top: 58px; margin-left: 373px;">
+          		<span class="button w085 transparent bottomRight">
 					<button dojoType="ingrid:Button" title="Übernehmen" id="addLocationTopicsButton" onClick="addLocationTopics">&Uuml;bernehmen</button>          		
           		</span>
 			</div>

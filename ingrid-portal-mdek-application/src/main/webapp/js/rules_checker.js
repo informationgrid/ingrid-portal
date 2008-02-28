@@ -294,7 +294,7 @@ function checkValidityOfInputElements() {
 	}
 
 	var objectClassStr = dojo.widget.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class
-	var objectClass = objectClassStr[5];
+	var objectClass = objectClassStr.substr(5, 1);
 
 	if (dojo.lang.every(headerUiInputElements, isValid) && dojo.lang.every(generalUiInputElements, isValid)
 	 && dojo.lang.every(spatialUiInputElements, isValid) && dojo.lang.every(extraUiInputElements, isValid)
@@ -331,7 +331,7 @@ function checkValidityOfAddressInputElements() {
 		}
 	}
 
-	var addressClass = dojo.widget.byId("addressType").getValue()[11];		// AddressTypex
+	var addressClass = dojo.widget.byId("addressType").getValue().substr(11, 1);		// AddressTypex
 
 	if (!dojo.lang.every(adrUiInputElements, isValid) || !dojo.lang.every(this["adrClass"+addressClass+"UiInputElements"], isValid)) {
 		return false;

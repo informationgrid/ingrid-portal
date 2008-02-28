@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-
 <style>
-a.notSelectable { margin-left:5px; text-decoration:none; color:#666666 }
-a.resultText { margin-left:5px; text-decoration:none; color:#000 }
+a.notSelectable { margin-left:5px; text-decoration:none; color:#666666; }
+a.resultText { margin-left:5px; text-decoration:none; color:#000; }
 a.resultText:hover { text-decoration:underline; }
-a.resultText.selected { color:#C21100 }
+a.resultText.selected { color:#C21100; }
 </style>
 
 
@@ -14,9 +13,8 @@ a.resultText.selected { color:#C21100 }
 var selectedTextNode = null;
 var selectedButton = null;
 
-
 _container_.addOnLoad(function() {
- 		init();
+	init();
 });
 
 function disableUiElements() {
@@ -46,7 +44,7 @@ function showStatus(msg) {
 }
 
 // The treeController and root Tree are initialized here
-init = function() {
+function init() {
 	// initially load data (first hierachy level) from server 
 	SNSService.getRootTopics({
 		preHook: function() { showLoadingZone(); disableUiElements(); },
@@ -57,11 +55,8 @@ init = function() {
 		exceptionHandler:function(msg) { deferred.errback(new dojo.RpcError(msg, this)); showStatus(message.get("sns.connectionError"));}
 	});
 
-
 	var treeController = dojo.widget.byId("thesTreeController");
 	treeController.loadRemote = function(node, sync) {
-
-//		showStatus(message.get("sns.loadingHint"));
 
 		var _this = this;
 		var deferred = new dojo.Deferred();
@@ -71,7 +66,7 @@ init = function() {
 		  	postHook: function() { hideLoadingZone(); enableUiElements(); },
   			callback:function(res) { deferred.callback(res); showStatus("");},
 			timeout:0,
-			errorHandler:function(msg) { dojo.debug(msg); showStatus(message.get("sns.connectionError")); deferred.errback(new dojo.RpcError(msg, this));},
+			errorHandler:function(msg) { dojo.debug(msg); showStatus(message.get("sns.connectionError")); deferred.errback(new dojo.RpcError(msg, this));}
   		});
 
   		deferred.addCallback(function(res) {
@@ -90,6 +85,7 @@ init = function() {
   			});
   			return resp;
   		});
+
 		deferred.addErrback(function(res) { alert(res.message); });
 		return deferred;
 	};
@@ -107,18 +103,7 @@ init = function() {
                 findTopic();
             }
         });
-
-/*
-	// Populate the descriptor list
-	var srcStore = dojo.widget.byId("thesaurusTerms").store;
-	var destStore = dojo.widget.byId("thesaurusDescList").store;
-	destStore.setData(srcStore.getData());
-*/
-
-	// Show initial loading message
-//	showStatus(message.get("sns.loadingTopTermsHint"));
 }
-
 
 resultTextClicked = function(topicId) {
 	if (selectedTextNode) {
@@ -156,7 +141,12 @@ function displaySearchResults(resultList) {
 			var buttonLink = document.createElement("a"); 
 			buttonLink.setAttribute("id", "_resultButton_"+term.topicId);
 			buttonLink.setAttribute("onclick", "resultButtonClicked('"+term.topicId+"');");
-			buttonLink.setAttribute("href", "javascript:void(0);");
+	
+			if (dojo.render.html.ie)
+				buttonLink.setAttribute("href", "javascript:resultButtonClicked('"+term.topicId+"');");
+			else
+				buttonLink.setAttribute("href", "javascript:void(0);");
+	
 			buttonLink.setAttribute("title", "In Baumstruktur finden");
 			buttonLink.innerHTML = "<img src=\"img/ic_jump_tree.gif\" style=\"position: relative; top: 3px;\"/>";
 
@@ -169,7 +159,12 @@ function displaySearchResults(resultList) {
 				dojo.html.addClass(linkElement, "resultText");
 				linkElement.setAttribute("id", "_resultText_"+term.topicId);
 				linkElement.setAttribute("onclick", "resultTextClicked('"+term.topicId+"');");
-				linkElement.setAttribute("href", "javascript:void(0);");
+
+				if (dojo.render.html.ie)
+					linkElement.setAttribute("href", "javascript:resultTextClicked('"+term.topicId+"');");
+				else
+					linkElement.setAttribute("href", "javascript:void(0);");
+
 				linkElement.setAttribute("title", "Begriff auswaehlen");
 				linkElement.topicId = term.topicId;
 			} else {
@@ -182,8 +177,6 @@ function displaySearchResults(resultList) {
 		}
 	});
 }
-
-
 
 // Callback Handler for the root topics.
 // This function gets called when the tree is initialized.
@@ -241,7 +234,9 @@ function expandPath(tree, currentNode, targetNode) {
 			if (tree.children[i].topicId == currentNode.topicId) {
 				dojo.widget.byId('thesTree').selectNode(tree.children[i]);
 				// Scroll the contentPane to tree.children[i]
-				dojo.html.scrollIntoView(tree.children[i].domNode);
+				if (!dojo.render.html.ie)				
+					dojo.html.scrollIntoView(tree.children[i].domNode);
+
 				return;
 			}
 		}
@@ -392,6 +387,7 @@ acceptTopicList = function() {
 }
 
 </script>
+
 </head>
 
 

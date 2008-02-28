@@ -47,6 +47,38 @@ function refreshInputContainers(section) {
 	parentDiv.scrollTop = scrollPos;
 }
 
+function refreshTabContainers() {
+	// Update all the tabContainers so they are displayed properly
+	// First we check if the tabContainer currently is displayed. If it is, call the 'onResized' method to properly
+	// size and display the container
+	var tabContainerIds = ["ref1SymbolsTabContainer", "ref1KeysTabContainer", "ref1BasisTabContainer", "ref1DataBasisTabContainer",
+  						 "ref1ProcessTabContainer", "ref2LocationTabContainer", "ref2BaseDataTabContainer", "ref3BaseDataTabContainer",
+  						 "ref4ParticipantsTabContainer", "ref4PMTabContainer", "ref5MethodTabContainer"];
+
+	// Helper function that determines if a node is displayed or not. All the dojo.html functions that should
+	// give this information (dojo.html.isDisplayed, ...) don't work. Also the widgets 'onShow' Method is never fired
+	// so we can't connect to that either
+	var isDisplayed = function(domNode) {
+		if (domNode.style.display != "") {
+			return domNode.style.display != "none";
+		} else {
+			return isDisplayed(domNode.parentNode);
+		}
+	}
+
+	dojo.lang.forEach(tabContainerIds, function(item) {
+		var tabContainer = dojo.widget.byId(item);
+
+		if (isDisplayed(tabContainer.domNode)) {
+//			dojo.debug(item+" is displayed, resize...");
+			tabContainer.onResized();
+		}
+//		else {
+//			dojo.debug(item+" is not displayed.");
+//		}
+	});
+}
+
 
 function toggleFields(section) {
 	// mode 'required' or 'all', needed for main toggle button on toolbar
@@ -131,35 +163,8 @@ function toggleFields(section) {
 	}
 
 
-	// Update all the tabContainers so they are displayed properly
-	// First we check if the tabContainer currently is displayed. If it is, call the 'onResized' method to properly
-	// size and display the container
-	var tabContainerIds = ["ref1SymbolsTabContainer", "ref1KeysTabContainer", "ref1BasisTabContainer", "ref1DataBasisTabContainer",
-  						 "ref1ProcessTabContainer", "ref2LocationTabContainer", "ref2BaseDataTabContainer", "ref3BaseDataTabContainer",
-  						 "ref4ParticipantsTabContainer", "ref4PMTabContainer", "ref5MethodTabContainer"];
-
-	// Helper function that determines if a node is displayed or not. All the dojo.html functions that should
-	// give this information (dojo.html.isDisplayed, ...) don't work. Also the widgets 'onShow' Method is never fired
-	// so we can't connect to that either
-	var isDisplayed = function(domNode) {
-		if (domNode.style.display != "") {
-			return domNode.style.display != "none";
-		} else {
-			return isDisplayed(domNode.parentNode);
-		}
-	}
-
-	dojo.lang.forEach(tabContainerIds, function(item) {
-		var tabContainer = dojo.widget.byId(item);
-
-		if (isDisplayed(tabContainer.domNode)) {
-//			dojo.debug(item+" is displayed, resize...");
-			tabContainer.onResized();
-		}
-//		else {
-//			dojo.debug(item+" is not displayed.");
-//		}
-	});
+	// Redraw the tab containers so they are displayed correctly
+	refreshTabContainers();
 
 	// IE hack so the input containers are drawn correctly
 	if (dojo.render.html.ie) {
@@ -279,6 +284,7 @@ function selectUDKClass()
 	if (val) {
 		var contentForm = dojo.widget.byId("contentFormObject");
 	    contentForm.setSelectedClass(val);
+		refreshTabContainers();
 	}
 }
 
@@ -288,6 +294,7 @@ function selectUDKAddressType()
 	if (val) {
 		var contentForm = dojo.widget.byId("contentFormAddress");
 		contentForm.setSelectedClass(val);
+		refreshTabContainers();
 	}
 }
 

@@ -307,7 +307,7 @@ function hideSplash(){
 					<!-- The Address table is made 'not required' for testing purpose -->
 	                <span id="generalAddressTableLabel" class="label required"><label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressen')">Adressen*</label></span>
 
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                <div id="generalAddressTable" class="tableContainer headHiddenRows4 full">
 	                    <div class="cellEditors" id="generalAddressEditors">
 	                      <div dojoType="ingrid:Combobox" autoComplete="false" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
@@ -833,7 +833,7 @@ function hideSplash(){
 <!-- 
 						<input type="text" mode="textarea" id="ref3ServiceType" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
  -->
-	                    <div dojoType="ingrid:ComboBox" toggle="plain" class="w308" listId="5100" id="ref3ServiceType"></div>
+	                    <div dojoType="ingrid:ComboBox" autoComplete="false" class="w308" listId="5100" id="ref3ServiceType"></div>
 
 					  </span>
 	            	</div>
@@ -1096,7 +1096,7 @@ function hideSplash(){
 
 	              <div id="spatialRefAdminUnitContainer" class="inputContainer noSpaceBelow h130">
 	                <span id="spatialRefAdminUnitLabel" class="label required"><label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug*</label></span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 520, 220, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 530, 230, true);" title="Geothesaurus-Navigator [Popup]">Geothesaurus-Navigator</a></span>
 	                <div class="tableContainer rows4 full">
 	            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
@@ -1952,60 +1952,64 @@ function hideSplash(){
 			    </div>
 			  </div>
 
-			  <!-- VERSCHLAGWORTUNG //-->
-			  <div id="adrThesaurus" class="contentBlock">
-			  	<div class="titleBar">
-			  	  <div class="titleIcon"><a href="javascript:toggleFields('adrThesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verschlagwortung')">Verschlagwortung</div>
-				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
-			  	</div>
-				  <div id="adrThesaurusContent" class="content">
+			  	<!-- VERSCHLAGWORTUNG //-->
+				<div id="adrThesaurus" class="contentBlock">
+					<div class="titleBar">
+						<div class="titleIcon"><a href="javascript:toggleFields('adrThesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verschlagwortung')">Verschlagwortung</div>
+						<div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+					</div>
+					<div id="adrThesaurusContent" class="content">
 				  
-			      <div class="inputContainer notRequired h088">
-			        <span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>
-			        <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+						<div class="inputContainer notRequired h088">
+							<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>
+							<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 
-			        <div class="tableContainer headHiddenRows3 full">
-			    	    <table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-			    	      <thead>
-			    		      <tr>
-			          			<th nosort="true" field="title" dataType="String">Term</th>
-			    		      </tr>
-			    	      </thead>
-			    	      <tbody>
-			    	      </tbody>
-			    	    </table>
-			        </div>
-			      </div>
+							<div class="tableContainer headHiddenRows3 full">
+								<table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+									<thead>
+										<tr>
+											<th nosort="true" field="title" dataType="String">Term</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+			      		</div>
 
-			      <div class="inputContainer noSpaceBelow notRequired h120">
-			        <div class="full">
-			          <span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
-			          <span class="input"><input type="text" id="thesaurusFreeTermInputAddress" class="w585 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
-			          </span>
-	                  <span style="position:relative; top:-24px; float:right;">
-						<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button">Hinzuf&uuml;gen</button>
-					  </span>
-			          
-			          
-			          <div class="fill"></div>
-			          <div class="tableContainer headHiddenRows3 full">
-			      	    <table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-			      	      <thead>
-			      		      <tr>
-			            			<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
-			      		      </tr>
-			      	      </thead>
-			      	      <tbody>
-			      	      </tbody>
-			      	    </table>
-			      	  </div>
-			        </div>
-			        <div class="fill"></div>
-			      </div>
+						<div class="inputContainer noSpaceBelow notRequired h120">
+							<div class="full">
+								<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
 
-			    </div>
-			  </div>
+								<div class="fill"></div>
+								<div class="tableContainer headHiddenRows3 full">
+			      	    			<table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+			      	      				<thead>
+			      		      				<tr>
+			            						<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
+			      		      				</tr>
+			      	      				</thead>
+			      	      				<tbody>
+			      	      				</tbody>
+			      	    			</table>
+			      	  			</div>
+						        <div class="fill"></div>
+							</div>
+							<div class="full">
+
+			          			<div class="input">
+									<input type="text" id="thesaurusFreeTermInputAddress" class="w585" dojoType="ingrid:ValidationTextBox" />
+		                  			<div style="position:relative; height:0px; top:-22px; float:right;">
+										<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button">Hinzuf&uuml;gen</button>
+						  			</div>
+			          			</div>
+				        		<div class="fill"></div>
+			        		</div>
+			      		</div>
+
+					</div>
+				</div>
 			  
 			  <!-- ZUGEORDNETE OBJEKTE //-->
 			  <div id="associatedObj" class="contentBlock">
@@ -2014,7 +2018,7 @@ function hideSplash(){
 				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugeordnete Objekte')">Zugeordnete Objekte</div>
 				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
-				  <div id="associatedObjContent" class="content">
+				  <div id="associatedObjContent" class="content" style="clear:both;">
 			  
 			      <div class="inputContainer noSpaceBelow notRequired h098">
 			        <div class="spacer"></div>

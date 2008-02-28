@@ -99,18 +99,27 @@
 }
 
 .dojoMenuSeparator2Top {
-	height: 50%;
+	border-bottom: 1px solid #236997;
+}
+
+.dojoMenuSeparator2Bottom {
+	border-top: 0;
+}
+
+html>/**/body .dojoMenuSeparator2Top {
+	height: 50%;	
 	border-bottom: 1px solid #236997;
 	margin: 9px 0 8px 0;
 	font-size: 1px;
 }
 
-.dojoMenuSeparator2Bottom {
+html>/**/body .dojoMenuSeparator2Bottom {
 	height: 50%;
 	border-top: 0;
-	margin: 0;
+	margin: 0;		
 	font-size: 1px;
 }
+
 
 .dojoMenuBar2 {
 	background:#85aeec url(images/soriaBarBg.gif) repeat-x top left;

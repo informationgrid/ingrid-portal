@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
-<script type="text/javascript" src="js/erfassung_forms.js"></script>
 
 <script type="text/javascript">
 var curSelectedObject = {};
@@ -136,7 +135,8 @@ function initReferenceWidget(filter) {
 				initialValues.push(item);
 		});
 	} else {
-		var objectClass = dojo.widget.byId("objectClass").getValue()[5];
+		var objectClass = dojo.widget.byId("objectClass").getValue().substr(5, 1);
+
 		var idList = [];
 		switch (objectClass) {
 			case "0": break; // Empty select box
@@ -200,11 +200,19 @@ init = function() {
 			resetInput();
 	});
 
-	var objRadioButton = dojo.byId("linksLinkType1");
-	var urlRadioButton = dojo.byId("linksLinkType2");
+	// Init the radio buttons onclick functions
+	dojo.byId("linksLinkType1").onclick = function() {
+	    selectLinkType("obj");
+		newLink();
+	}
+	dojo.byId("linksLinkType2").onclick = function() {
+	    selectLinkType("url");
+		newLink();
+	}
+	// Init the form
+	dojo.byId("linkToObject").style.display = "block";
+	dojo.byId("linkToURL").style.display = "none";
 
-	dojo.event.connectOnce("after", objRadioButton, "onclick", this, newLink);
-	dojo.event.connectOnce("after", urlRadioButton, "onclick", this, newLink);
 
 	// The selected value has to be displayed on select
 	dojo.event.connectOnce("after", objectList, "onSelect", function() {
@@ -217,6 +225,7 @@ init = function() {
 			selectLinkType("obj");
 			curSelectedUrl = {};
 			curSelectedObject = selectedObjects[0];
+
 			// Reset the URL List
 			urlList.resetSelections();
 			urlList.renderSelections();
@@ -507,6 +516,25 @@ showAssignObjectDialog = function() {
 	}
 }
 
+function selectLinkType(e)
+{
+  if (this.id == "linksLinkType2" || e == "url")
+  {
+    document.getElementById("linkToObject").style.display = "none";
+    document.getElementById("linkToURL").style.display = "block";
+    document.getElementById("linksLinkType1").checked = false;
+    document.getElementById("linksLinkType2").checked = true;
+  }
+  else
+  {
+    document.getElementById("linkToObject").style.display = "block";
+    document.getElementById("linkToURL").style.display = "none";
+    document.getElementById("linksLinkType1").checked = true;
+    document.getElementById("linksLinkType2").checked = false;
+  }
+}
+
+
 resetInputFields = function() {
 	// Reset field values
 	curSelectedObject = {};
@@ -600,8 +628,8 @@ closeDialog = function() {
 		<span id="inputFields" style="display:none;">
 	        <span class="label required"><label class="inActive" for="linksLinkType">Verweistyp*</label></span>
 	        <div class="checkboxContainer">
-	          <span><input type="radio" name="LinksLinktype" id="linksLinkType1" class="radio" checked /><label class="inActive" for="linksLinkType1">Objekt</label></span>
-	          <span><input type="radio" name="linksLinkType" id="linksLinkType2" class="radio" /><label class="inActive" for="linksLinkType2">URL</label></span>
+	          <span><input type="radio" id="linksLinkType1" class="radio" checked /><label class="inActive" for="linksLinkType1">Objekt</label></span>
+	          <span><input type="radio" id="linksLinkType2" class="radio" /><label class="inActive" for="linksLinkType2">URL</label></span>
 	        </div>
 	
 	        <div class="spacer"></div>

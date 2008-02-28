@@ -65,6 +65,10 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 	},
 
 	setValue: function(value) {
+		if (dojo.render.html.ie && value == null) {
+			value = "";
+		}
+
 		var ee = this[this.mode.toLowerCase()];				
 		ee.value = value;
 		this.update();
