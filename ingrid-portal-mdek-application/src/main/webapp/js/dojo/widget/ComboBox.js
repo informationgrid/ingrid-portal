@@ -35,15 +35,24 @@ dojo.widget.defineWidget(
 		return null;
 	},
 
-  setValue: function(val) {
-/*
-	dojo.debug("setValue("+val+") on "+this.widgetId);
-	dojo.debug("val == this.textInputNode.value: "+(val == this.textInputNode.value));
-*/
+  setValue: function(val, key) {
+	if (typeof(key) != "undefined" && key != -1) {
+		// If the key is set, get the display value for the given key
+		val = this.getDisplayValueForValue(key);
+	}
+
 	if (val == null)
 		arguments[0] = "";
 
 	ingrid.widget.ComboBox.superclass.setValue.apply(this, arguments);
+  },
+
+  getIdValue: function() {
+  	var val = this.getValueForDisplayValue(this.comboBoxValue.value);
+  	if (val == null)
+  		return -1;
+  	else
+  		return val;
   },
 
   enable: function() {

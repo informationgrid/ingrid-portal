@@ -1272,16 +1272,7 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 
 	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
 	// If the reference system ID == -1 then we receive a free entry, otherwise we have to resolve the id
-	if (nodeData.ref1SpatialSystemId == -1) {
-		dojo.widget.byId("ref1SpatialSystem").setValue(nodeData.ref1SpatialSystem);
-	} else {
-		var dispVal = ref1SpatialSystemDP.getDisplayValueForValue(nodeData.ref1SpatialSystemId);
-		if (dispVal != null) {
-			dojo.widget.byId("ref1SpatialSystem").setValue(dispVal);
-		} else {
-			dojo.widget.byId("ref1SpatialSystem").setValue("");
-		}	
-	}
+	dojo.widget.byId("ref1SpatialSystem").setValue(nodeData.ref1SpatialSystem, nodeData.ref1SpatialSystemId);
 
 	dojo.widget.byId("ref1AltAccuracy").setValue(nodeData.ref1AltAccuracy);
 	dojo.widget.byId("ref1PosAccuracy").setValue(nodeData.ref1PosAccuracy);
@@ -1598,14 +1589,9 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 
 	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
 	// If we have a free entry the reference system ID = -1
-	nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
-
-	var val = ref1SpatialSystemDP.getValueForDisplayValue(nodeData.ref1SpatialSystem);
-	if (val != null) {
-		nodeData.ref1SpatialSystemId = val;
-	} else {
-		nodeData.ref1SpatialSystemId = -1;
-	}	
+	nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
+	if (nodeData.ref1SpatialSystemId == -1)
+		nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
 
 	nodeData.ref1AltAccuracy = dojo.widget.byId("ref1AltAccuracy").getValue();
 	nodeData.ref1PosAccuracy = dojo.widget.byId("ref1PosAccuracy").getValue();

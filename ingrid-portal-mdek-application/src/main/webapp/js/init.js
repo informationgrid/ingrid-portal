@@ -5,9 +5,6 @@ if(dj_undef("mdek", this)){
 }
 var mdek = {};
 
-var ref1SpatialSystemDP = null;
-
-
 dojo.addOnLoad(function()
 {
   // initialite debug console if necessary
@@ -32,7 +29,6 @@ dojo.addOnLoad(function()
   initTableValidators();
   initCTS();
   initFreeTermsButtons();
-  initRef1SpatialSystemDataProvider();
   initReferenceTables();
   var deferred = initCatalogData();
   deferred.addCallback(initSysLists);
@@ -824,32 +820,6 @@ function initToolbar() {
 	dojo.lang.forEach(disableList, function(item) {item.disable()});
 }
 
-function initRef1SpatialSystemDataProvider() {
-	// Data provider for the combobox
-	ref1SpatialSystemDP = new dojo.widget.basicComboBoxDataProvider({
-	// Values are now initialised in initSysLists()
-//		dataUrl: "js/data/ref1SpatialSystemType.js"
-	});
-
-	// Attach the neccessary functions to get Display Values for a given value
-	ref1SpatialSystemDP.getDisplayValueForValue = function(value) {
-		for (var i=0; i<this._data.length; i++) {
-			if (this._data[i][1] == value) {
-				return this._data[i][0];
-			}
-		}
-		return null;
-	}
-	ref1SpatialSystemDP.getValueForDisplayValue = function(dispValue) {
-		for (var i=0; i<this._data.length; i++) {
-			if (this._data[i][0] == dispValue) {
-				return this._data[i][1];
-			}
-		}
-		return null;
-	}
-}
-
 function initTableValidators() {
 	
 	// The coordinates in the spatial reference table must be empty or real numbers
@@ -903,11 +873,11 @@ function initCatalogData() {
 
 
 function initSysLists() {
-	var selectWidgetIDs = ["ref1SpatialSystem", "spatialRefAltVDate", "spatialRefAltMeasure", "timeRefTypeCombobox",
+	var selectWidgetIDs = ["spatialRefAltVDate", "spatialRefAltMeasure", "timeRefTypeCombobox",
 		"generalAddressCombobox", "geometryTypeEditor", "timeRefPeriodicity", "availabilityMediaOptionsMediumCombobox",
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableCriteriaEditor",
-		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
+		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
 		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData",
 		// This select box also gets initialised on object load
 		"extraInfoPublishArea",
@@ -929,7 +899,7 @@ function initSysLists() {
 		dojo.debug("Unsupported Language. Setting language to english.");
 	}
 
-	var lstIds = [100];		// list id 100 is for the static DP re1SpatialSystemDP
+	var lstIds = [];
 	dojo.lang.forEach(selectWidgetIDs, function(item){
 		lstIds.push(dojo.widget.byId(item).listId);
 	});
@@ -940,9 +910,6 @@ function initSysLists() {
 				var selectWidget = dojo.widget.byId(widgetId);
 				selectWidget.dataProvider.setData(res[selectWidget.listId]);	
 			});
-
-			// Init the standalone DPs
-			ref1SpatialSystemDP.setData(res[100]);
 		},
 		errorHandler:function(mes){
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
