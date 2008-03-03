@@ -779,21 +779,51 @@ dojo.widget.defineWidget(
       var field = this.columns[this.curColumn].getField();
       if (this.editData != null) {
         // update
-        this.store.update(this.editData, field, newValue);
-        this.onValueChanged(this.editData, field);
+        // only if the entry is not empty
+        var rowEmpty = true;
+        
+		if (dojo.string.trim(newValue).length != 0) {
+			// If the new value is not an empty string, the row is not empty
+			rowEmpty = false;
+		} else {
+	        // Iterate over all properties of the current row
+	        for (var prop in this.editData) {
+	        	// If the property is the value field (Id) or the edited field (old value that is overwritten with newValue)
+	        	// && If the column is an editable field of the table (exclude additional data)
+	        	// && If the value is not an empty string
+	        	//   then the current row is not empty
+	        	if (prop != this.valueField && prop != field && 
+	        			this.getColumnIndex(prop) != -1 &&
+	        			this.editData[prop] != null && dojo.string.trim(this.editData[prop]).length != 0) {
+	        		rowEmpty = false;
+	        	}
+	        }
+		}
+
+        if (rowEmpty) {
+			// If the row is empty, remove it
+        	this.store.removeData(this.editData);
+        } else {
+        	// Otherwise update the new value
+        	this.store.update(this.editData, field, newValue);
+        	this.onValueChanged(this.editData, field);
+        }
       }
       else {
         // add
-		var newData = {};
-    	for(var i=0; i<this.columns.length; i++)
-				newData[this.columns[i].getField()] = '';
-        newData[field] = newValue;
-        newData[this.valueField] = new Date().getTime();
-
-        this.store.addData(newData);
-        this.onValueAdded(newData);
-        this.select(newData);
-        this.editData = newData;
+		// only if the added value is not an empty string
+		if (dojo.string.trim(newValue).length != 0) {
+			var newData = {};
+	    	for(var i=0; i<this.columns.length; i++)
+					newData[this.columns[i].getField()] = '';
+	        newData[field] = newValue;
+	        newData[this.valueField] = new Date().getTime();
+	
+	        this.store.addData(newData);
+	        this.onValueAdded(newData);
+	        this.select(newData);
+	        this.editData = newData;
+	    }
       }
 
 
@@ -814,7 +844,8 @@ dojo.widget.defineWidget(
   endEdit: function(result) {
     if (this.curEditor) {
       this.hideEditor();
-      this.fillCell(this.getRow(this.editData).cells[this.curColumn], this.columns[this.curColumn], result);
+      if (this.getRow(this.editData) != null)
+      	this.fillCell(this.getRow(this.editData).cells[this.curColumn], this.columns[this.curColumn], result);
 
 	  dojo.event.browser.removeListener(this.curEditor.domNode, "onKey", this.curFP);
     
@@ -832,7 +863,6 @@ dojo.widget.defineWidget(
     this.curFP = null;
 
 	this.applyValidation();
-
     this.resetSelections();
     this.renderSelections();
 
