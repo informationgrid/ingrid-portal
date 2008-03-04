@@ -14,13 +14,13 @@ $action.setParameter('action','doChangeDS')
     $action.setParameter('ds','1')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
-#if($enableDatasourceAddresses)
+#if($enableDatasourceLaws)
 &nbsp;
-#if($ds=="2")
-	<strong>$MESSAGES.getString('searchSimple.area.addresses')</strong>
+#if($ds=="4")
+	<strong>$MESSAGES.getString('searchSimple.area.laws')</strong>
 #else
-    $action.setParameter('ds','2')
-	<a href="$action">$MESSAGES.getString('searchSimple.area.addresses')</a>	
+    $action.setParameter('ds','4')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.laws')</a>	
 #end
 #end
 #if($enableDatasourceResearch)
@@ -32,13 +32,13 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.research')</a>	
 #end
 #end
-#if($enableDatasourceLaws)
+#if($enableDatasourceAddresses)
 &nbsp;
-#if($ds=="4")
-	<strong>$MESSAGES.getString('searchSimple.area.laws')</strong>
+#if($ds=="2")
+	<strong>$MESSAGES.getString('searchSimple.area.addresses')</strong>
 #else
-    $action.setParameter('ds','4')
-	<a href="$action">$MESSAGES.getString('searchSimple.area.laws')</a>	
+    $action.setParameter('ds','2')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.addresses')</a>	
 #end
 #end
     	</p>
