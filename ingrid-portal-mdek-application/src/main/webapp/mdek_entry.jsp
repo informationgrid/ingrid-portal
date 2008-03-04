@@ -26,6 +26,7 @@
 <script type="text/javascript" src="js/rules_checker.js"></script>
 <script type="text/javascript" src="js/diff.js"></script>
 
+<script type="text/javascript" src="js/utilities.js"></script>
 
 <script type="text/javascript">
 dojo.require("ingrid.widget.FormErfassungObjektContent");
@@ -2056,10 +2057,10 @@ function hideSplash(){
   </div>
 
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_search.html" preload="true"></div>
-<!-- 
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" refreshOnShow="true" executeScripts="true"></div>
- -->
+<!-- 
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" executeScripts="true"></div>
+ -->
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true"></div>
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
   <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="true"></div>

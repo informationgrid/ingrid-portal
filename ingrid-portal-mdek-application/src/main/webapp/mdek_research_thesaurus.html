@@ -12,22 +12,22 @@ a.resultText.selected { color:#C21100; }
 <script type="text/javascript">
 var scriptScope = this;
 
+// The currently selected textNode. Used for colorization
 var selectedTextNode = null;
-var numTableRows = 20;
+// Number of rows of the result table(s)
+var resultsPerPage = 2;
 
-var currentQuery = {
-	objResultsLoaded: false,
-	objStartHit: 0,
-	objTotalNumHits: 0,
-	objPageSelectorStart: 1,
+// Result caching so the results don't have to be reloaded when the user switches tabs
+var objResultsLoaded = false;
+var adrResultsLoaded = false;
 
-	adrResultsLoaded: false,
-	adrStartHit: 0,
-	adrTotalNumHits: 0,
-	adrPageSelectorStart: 1,
+// The current topicId that was searched for
+var currentQuery = null;
 
-	topicId: null
-};
+// Object and Address result navigation bars
+var objPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("searchThesaurusObjResultsInfo"), pagingSpan:dojo.byId("searchThesaurusObjResultsPaging") });
+var adrPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("searchThesaurusAdrResultsInfo"), pagingSpan:dojo.byId("searchThesaurusAdrResultsPaging") });
+
 
 _container_.addOnLoad(function() {
 	initTree();
@@ -41,6 +41,8 @@ _container_.addOnLoad(function() {
 	});
 
 	dojo.event.connect("after", dojo.widget.byId("searchThesaurusNavResultContainer"), "onSelectChild", startSearch);
+	dojo.event.connect("after", objPageNav, "onPageSelected", function() { objResultsLoaded = false; startSearch(); });
+	dojo.event.connect("after", adrPageNav, "onPageSelected", function() { adrResultsLoaded = false; startSearch(); });
 });
 
 _container_.addOnUnload(function() {
@@ -100,52 +102,48 @@ function initTree() {
 
 
 function startNewQuery(topicId) {
-//	dojo.debug("new query for: "+topicId);
-
 	// build query
-	currentQuery.topicId = topicId;
-	currentQuery.objStartHit = 0;
-	currentQuery.adrStartHit = 0;
-	currentQuery.objResultsLoaded = false;
-	currentQuery.adrResultsLoaded = false;
+	currentQuery = topicId;
+	objResultsLoaded = false;
+	adrResultsLoaded = false;
 
-	// reset the page navigation
-	currentQuery.objPageSelectorStart = 1;
-	currentQuery.adrPageSelectorStart = 1;
+	objPageNav.reset();
+	adrPageNav.reset();
 
 	startSearch();
 }
 
 function startSearch() {
-	if (currentQuery.topicId == null)
+//	dojo.debug("startSearch()");
+	if (currentQuery == null)
 		return;
 
 	var selectedTab = dojo.widget.byId("searchThesaurusNavResultContainer").selectedChild;
 
-	if (selectedTab == "searchThesaurusNavObjects" && !currentQuery.objResultsLoaded) {
-//		dojo.debug("Starting object query for "+currentQuery.topicId);
-//		dojo.debug("startHit: "+currentQuery.objStartHit);
-		EntryService.queryObjectsThesaurusTerm(currentQuery.topicId, currentQuery.objStartHit, numTableRows, {
+	if (selectedTab == "searchThesaurusNavObjects" && !objResultsLoaded) {
+//		dojo.debug("Starting object query for "+currentQuery);
+//		dojo.debug("startHit: "+objPageNav.getStartHit());
+		EntryService.queryObjectsThesaurusTerm(currentQuery, objPageNav.getStartHit(), resultsPerPage, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
 			callback: function(res){
-				currentQuery.objResultsLoaded = true;
+				objResultsLoaded = true;
 				updateObjectResults(res);
-				updateObjectNavigation();
+				updateObjectNavigation(res);
 			},
 			timeout:30000,
 			errorHandler:function(message) {dojo.debug("Error in mdek_research_thesaurus.html: Error while searching for objects:"+message); }
 		});
-	} else if (selectedTab == "searchThesaurusNavAddresses" && !currentQuery.adrResultsLoaded){
-//		dojo.debug("Starting address query for "+currentQuery.topicId);
-//		dojo.debug("startHit: "+currentQuery.adrStartHit);
-		EntryService.queryAddressesThesaurusTerm(currentQuery.topicId, currentQuery.adrStartHit, numTableRows, {
+	} else if (selectedTab == "searchThesaurusNavAddresses" && !adrResultsLoaded){
+//		dojo.debug("Starting address query for "+currentQuery);
+//		dojo.debug("startHit: "+adrPageNav.getStartHit());
+		EntryService.queryAddressesThesaurusTerm(currentQuery, adrPageNav.getStartHit(), resultsPerPage, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
 			callback: function(res){
-				currentQuery.adrResultsLoaded = true;
+				adrResultsLoaded = true;
 				updateAddressResults(res);
-				updateAddressNavigation();
+				updateAddressNavigation(res);
 			},
 			timeout:30000,
 			errorHandler:function(message) {dojo.debug("Error in mdek_research_thesaurus.html: Error while searching for addresses:"+message); }
@@ -159,8 +157,6 @@ function updateObjectResults(res) {
 	udkDataProxy._addIcons(res.resultList);
 
 	dojo.widget.byId("searchThesaurusNavObjectsList").store.setData(res.resultList);
-
-	currentQuery.objTotalNumHits = res.totalNumHits;
 }
 
 function updateAddressResults(res) {
@@ -170,254 +166,18 @@ function updateAddressResults(res) {
 	udkDataProxy._addTableIndices(res.resultList);
 
 	dojo.widget.byId("searchThesaurusNavAddressesList").store.setData(res.resultList);
-
-	currentQuery.adrTotalNumHits = res.totalNumHits;
 }
 
-function updateObjectNavigation() {
-	var totalNumHits = currentQuery.objTotalNumHits;
-	var startHit = currentQuery.objStartHit;
-	var endHit = startHit+numTableRows-1;
-
-	if (totalNumHits <= endHit)
-		endHit = totalNumHits - 1;
-
-	var currentPage = Math.floor(startHit/numTableRows) + 1;
-	var lastPage = Math.ceil(totalNumHits/numTableRows);
-
-/*
-	dojo.debug("totalNumHits: "+totalNumHits);
-	dojo.debug("startHit: "+startHit);
-	dojo.debug("endHit: "+endHit);
-	dojo.debug("currentPage: "+currentPage);
-	dojo.debug("lastPage: "+lastPage);
-*/
-
-	var pageSelectorStart = currentQuery.objPageSelectorStart;
-
-	// Create the dom elements
-	var infoSpan = dojo.byId("searchThesaurusObjResultsInfo");
-	var pagingSpan = dojo.byId("searchThesaurusObjResultsPaging");
-
-	if (totalNumHits == 0) {
-		infoSpan.innerHTML = "0 Treffer";
-	} else if (totalNumHits == 1) {
-		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffer";
-	} else {
-		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffern";
-	}
-
-	// Clear the paging span
-	while (pagingSpan.hasChildNodes())
-		pagingSpan.removeChild(pagingSpan.firstChild);
-
-	// Add info text to the paging span
-	if (totalNumHits == 0) {
-		pagingSpan.appendChild(document.createTextNode("(Seite 1 von 1)"));
-	} else {
-		pagingSpan.appendChild(document.createTextNode("(Seite "+currentPage+" von "+lastPage+")"));
-	}
-
-	// Add navigation to the next set of page navigation links
-	if (pageSelectorStart > 1) {
-		pagingSpan.appendChild(document.createTextNode(" "));
-		var link = document.createElement("a");
-		link.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setObjectPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-
-			if (dojo.render.html.ie)
-				link.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setObjectPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-			else
-				link.setAttribute("href", "javascript:void(0);");
-
-		link.setAttribute("title", "zurueck");
-		link.innerHTML = "&lt;";
-
-		pagingSpan.appendChild(link);
-	}
-
-//	dojo.debug("pageSelectorStart: "+pageSelectorStart);
-
-	// Add the page selection links
-	for (var i = pageSelectorStart; i < pageSelectorStart+4; ++i) {
-//		dojo.debug("i: "+i);
-//		dojo.debug("pageSelectorStart+4: "+pageSelectorStart+4);
-
-		if (i > lastPage)
-			break;
-
-		pagingSpan.appendChild(document.createTextNode(" "));
-
-		if (i == currentPage) {
-			var textNode = document.createElement("em");
-			textNode.innerHTML = i;
-			pagingSpan.appendChild(textNode);
-		} else {		
-			var link = document.createElement("a");
-			link.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.navigateToObjectPage('"+i+"');");
-
-			if (dojo.render.html.ie)
-				link.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.navigateToObjectPage('"+i+"');");
-			else
-				link.setAttribute("href", "javascript:void(0);");
-
-			link.setAttribute("title", "Seite "+i);
-			link.innerHTML = i;
-	
-			pagingSpan.appendChild(link);
-		}
-	}
-
-	// Add navigation to the next set of page navigation links
-	if (pageSelectorStart+4 < lastPage) {
-		pagingSpan.appendChild(document.createTextNode(" "));
-		var link = document.createElement("a");
-		link.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setObjectPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-
-		if (dojo.render.html.ie)
-			link.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setObjectPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-		else
-			link.setAttribute("href", "javascript:void(0);");
-
-		link.setAttribute("title", "weiter");
-		link.innerHTML = "&gt;";
-
-		pagingSpan.appendChild(link);
-	}
+function updateObjectNavigation(res) {
+	objPageNav.setTotalNumHits(res.totalNumHits);
+	objPageNav.updateDomNodes();
 }
 
-this.navigateToObjectPage = function(pageIndex) {
-	currentQuery.objStartHit = (pageIndex-1)*numTableRows;
-	currentQuery.objResultsLoaded = false;
-	startSearch();
+function updateAddressNavigation(res) {
+	adrPageNav.setTotalNumHits(res.totalNumHits);
+	adrPageNav.updateDomNodes();
 }
 
-this.setObjectPageNavigationStartIndex = function(newStartIndex) {
-	currentQuery.objPageSelectorStart = newStartIndex;
-	updateObjectNavigation();
-}
-
-
-function updateAddressNavigation() {
-	var totalNumHits = currentQuery.adrTotalNumHits;
-	var startHit = currentQuery.adrStartHit;
-	var endHit = startHit+numTableRows-1;
-
-	if (totalNumHits <= endHit)
-		endHit = totalNumHits - 1;
-
-	var currentPage = Math.floor(startHit/numTableRows) + 1;
-	var lastPage = Math.ceil(totalNumHits/numTableRows);
-
-/*
-	dojo.debug("totalNumHits: "+totalNumHits);
-	dojo.debug("startHit: "+startHit);
-	dojo.debug("endHit: "+endHit);
-	dojo.debug("currentPage: "+currentPage);
-	dojo.debug("lastPage: "+lastPage);
-*/
-
-	var pageSelectorStart = currentQuery.adrPageSelectorStart;
-
-	// Create the dom elements
-	var infoSpan = dojo.byId("searchThesaurusAdrResultsInfo");
-	var pagingSpan = dojo.byId("searchThesaurusAdrResultsPaging");
-
-	if (totalNumHits == 0) {
-		infoSpan.innerHTML = "0 Treffer";
-	} else if (totalNumHits == 1) {
-		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffer";
-	} else {
-		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffern";
-	}
-
-	// Clear the paging span
-	while (pagingSpan.hasChildNodes())
-		pagingSpan.removeChild(pagingSpan.firstChild);
-
-	// Add info text to the paging span
-	if (totalNumHits == 0) {
-		pagingSpan.appendChild(document.createTextNode("(Seite 1 von 1)"));
-	} else {
-		pagingSpan.appendChild(document.createTextNode("(Seite "+currentPage+" von "+lastPage+")"));
-	}
-
-	// Add navigation to the next set of page navigation links
-	if (pageSelectorStart > 1) {
-		pagingSpan.appendChild(document.createTextNode(" "));
-		var link = document.createElement("a");
-		link.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setAddressPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-
-			if (dojo.render.html.ie)
-				link.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setAddressPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-			else
-				link.setAttribute("href", "javascript:void(0);");
-
-		link.setAttribute("title", "zurueck");
-		link.innerHTML = "&lt;";
-
-		pagingSpan.appendChild(link);
-	}
-
-//	dojo.debug("pageSelectorStart: "+pageSelectorStart);
-
-	// Add the page selection links
-	for (var i = pageSelectorStart; i < pageSelectorStart+4; ++i) {
-//		dojo.debug("i: "+i);
-//		dojo.debug("pageSelectorStart+4: "+pageSelectorStart+4);
-
-		if (i > lastPage)
-			break;
-
-		pagingSpan.appendChild(document.createTextNode(" "));
-
-		if (i == currentPage) {
-			var textNode = document.createElement("em");
-			textNode.innerHTML = i;
-			pagingSpan.appendChild(textNode);
-		} else {		
-			var link = document.createElement("a");
-			link.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.navigateToAddressPage('"+i+"');");
-
-			if (dojo.render.html.ie)
-				link.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.navigateToAddressPage('"+i+"');");
-			else
-				link.setAttribute("href", "javascript:void(0);");
-
-			link.setAttribute("title", "Seite "+i);
-			link.innerHTML = i;
-	
-			pagingSpan.appendChild(link);
-		}
-	}
-
-	// Add navigation to the next set of page navigation links
-	if (pageSelectorStart+4 < lastPage) {
-		pagingSpan.appendChild(document.createTextNode(" "));
-		var link = document.createElement("a");
-		link.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setAddressPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-
-		if (dojo.render.html.ie)
-			link.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.setAddressPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-		else
-			link.setAttribute("href", "javascript:void(0);");
-
-		link.setAttribute("title", "weiter");
-		link.innerHTML = "&gt;";
-
-		pagingSpan.appendChild(link);
-	}
-}
-
-this.navigateToAddressPage = function(pageIndex) {
-	currentQuery.adrStartHit = (pageIndex-1)*numTableRows;
-	currentQuery.adrResultsLoaded = false;
-	startSearch();
-}
-
-this.setAddressPageNavigationStartIndex = function(newStartIndex) {
-	currentQuery.adrPageSelectorStart = newStartIndex;
-	updateAddressNavigation();
-}
 
 // Node click handler
 this.handleSelectNode = function(treeNode) {
@@ -683,7 +443,7 @@ function hideLoadingZone() {
 
 
         <div class="inputContainer w684">
-		<div id="researchThesaurusTabContainer" dojoType="ingrid:TabContainer" class="h500" selectedChild="thesaurusTreeContainer">
+		<div id="researchThesaurusTabContainer" dojoType="ingrid:TabContainer" class="h500 tabContainerWithBorderTop" selectedChild="thesaurusTreeContainer">
 		  <!-- first tab, tree view -->
 		  <div class="grey" dojoType="ContentPane" id="thesaurusTreeContainer" label="Hierarchiebaum" style="padding-left:5px; padding-top:2px; width: 100%; overflow:auto;">
               <!-- tree components -->

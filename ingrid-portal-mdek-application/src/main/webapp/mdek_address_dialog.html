@@ -7,15 +7,13 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
+var adrPageNav = new PageNavigation({ resultsPerPage: 10, infoSpan:dojo.byId("addressLinkSearchResultsInfo"), pagingSpan:dojo.byId("addressLinkSearchResultsPaging") });
 
 var currentQuery = {
-	startHit: 0,
-	totalNumHits: 0,
-	pageSelectorStart: 1,
 	organisation: null,
 	name: null,
 	givenName: null
-};
+}
 
 // All the possible values for special ref links
 var referenceMap = [["Standort", "3360"],
@@ -71,6 +69,8 @@ _container_.addOnLoad(function() {
 
 	// Hide the result table
 	dojo.html.hide(dojo.byId("addressLinkSearchResults"));
+
+	dojo.event.connect("after", adrPageNav, "onPageSelected", browseSearchResults);
 });
 
 
@@ -181,126 +181,6 @@ addSelectedAddress = function() {
 	_container_.closeWindow();
 }
 
-function updateNavigation() {
-	var totalNumHits = currentQuery.totalNumHits;
-	var startHit = currentQuery.startHit;
-	var endHit = startHit+9;
-
-	if (totalNumHits < endHit)
-		endHit = totalNumHits - 1;
-
-	var currentPage = Math.floor(startHit/10) + 1;
-	var lastPage = Math.ceil(totalNumHits/10);
-
-	var pageSelectorStart = currentQuery.pageSelectorStart;
-
-/*
-	dojo.debug("totalNumHits: "+totalNumHits);
-	dojo.debug("startHit: "+startHit);
-	dojo.debug("endHit: "+endHit);
-	dojo.debug("currentPage: "+currentPage);
-	dojo.debug("lastPage: "+lastPage);
-*/
-	// Create the dom elements
-	var infoSpan = dojo.byId("addressLinkSearchResultsInfo");
-	var pagingSpan = dojo.byId("addressLinkSearchResultsPaging");
-	
-	if (totalNumHits == 0) {
-		infoSpan.innerHTML = "0 Treffer";
-	} else if (totalNumHits == 1) {
-		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffer";
-	} else {
-		infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffern";
-	}
-
-	// Clear the paging span
-	while (pagingSpan.hasChildNodes())
-		pagingSpan.removeChild(pagingSpan.firstChild);
-
-	// Add info text to the paging span
-	if (totalNumHits == 0) {
-		pagingSpan.appendChild(document.createTextNode("(Seite 1 von 1)"));
-	} else {
-		pagingSpan.appendChild(document.createTextNode("(Seite "+currentPage+" von "+lastPage+")"));
-	}
-
-	// Add navigation to the next set of page navigation links
-	if (pageSelectorStart > 1) {
-		pagingSpan.appendChild(document.createTextNode(" "));
-		var link = document.createElement("a");
-		link.setAttribute("onclick", "setPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-
-			if (dojo.render.html.ie)
-				link.setAttribute("href", "javascript:setPageNavigationStartIndex("+(pageSelectorStart-4)+");");
-			else
-				link.setAttribute("href", "javascript:void(0);");
-
-		link.setAttribute("title", "zurueck");
-		link.innerHTML = "&lt;";
-
-		pagingSpan.appendChild(link);
-	}
-
-//	dojo.debug("pageSelectorStart: "+pageSelectorStart);
-
-	// Add the page selection links
-	for (var i = pageSelectorStart; i < pageSelectorStart+4; ++i) {
-//		dojo.debug("i: "+i);
-//		dojo.debug("pageSelectorStart+4: "+pageSelectorStart+4);
-
-		if (i > lastPage)
-			break;
-
-		pagingSpan.appendChild(document.createTextNode(" "));
-
-		if (i == currentPage) {
-			var textNode = document.createElement("em");
-			textNode.innerHTML = i;
-			pagingSpan.appendChild(textNode);
-		} else {		
-			var link = document.createElement("a");
-			link.setAttribute("onclick", "navigateToPage('"+i+"');");
-
-			if (dojo.render.html.ie)
-				link.setAttribute("href", "javascript:navigateToPage('"+i+"');");
-			else
-				link.setAttribute("href", "javascript:void(0);");
-
-			link.setAttribute("title", "Seite "+i);
-			link.innerHTML = i;
-	
-			pagingSpan.appendChild(link);
-		}
-	}
-
-	// Add navigation to the next set of page navigation links
-	if (pageSelectorStart+4 < lastPage) {
-		pagingSpan.appendChild(document.createTextNode(" "));
-		var link = document.createElement("a");
-		link.setAttribute("onclick", "setPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-
-		if (dojo.render.html.ie)
-			link.setAttribute("href", "javascript:setPageNavigationStartIndex("+(pageSelectorStart+4)+");");
-		else
-			link.setAttribute("href", "javascript:void(0);");
-
-		link.setAttribute("title", "weiter");
-		link.innerHTML = "&gt;";
-
-		pagingSpan.appendChild(link);
-	}
-}
-
-navigateToPage = function(pageIndex) {
-	var startHit = (pageIndex-1)*10;
-	browseSearchResults(startHit);
-}
-
-setPageNavigationStartIndex = function(newStartIndex) {
-	currentQuery.pageSelectorStart = newStartIndex;
-	updateNavigation();
-}
-
 
 function updateResults(searchResult) {
 	dojo.html.show(dojo.byId("addressLinkSearchResults"));	
@@ -311,13 +191,11 @@ function updateResults(searchResult) {
 
 	dojo.widget.byId("addressSearchResultsTable").store.setData(searchResult.resultList);
 
-	currentQuery.totalNumHits = searchResult.totalNumHits;
-	
-	updateNavigation();
+	adrPageNav.setTotalNumHits(searchResult.totalNumHits);
+	adrPageNav.updateDomNodes();
 }
 
 function updateQueryFromInput() {
-	currentQuery.startHit = 0;
 	currentQuery.organisation = dojo.string.trim(dojo.widget.byId("addressSearchUnit").getValue());
 	currentQuery.name = dojo.string.trim(dojo.widget.byId("addressSearchLastname").getValue());
 	currentQuery.givenName = dojo.string.trim(dojo.widget.byId("addressSearchFirstname").getValue());
@@ -332,10 +210,8 @@ function updateQueryFromInput() {
 		currentQuery.givenName = null;
 }
 
-function browseSearchResults(startHit) {
-	currentQuery.startHit = startHit;
-
-	EntryService.searchAddresses(currentQuery, currentQuery.startHit, 10, {
+function browseSearchResults() {
+	EntryService.searchAddresses(currentQuery, adrPageNav.getStartHit(), 10, {
 		callback: function(res){
 			updateResults(res);
 		},
@@ -351,9 +227,9 @@ startNewSearch = function() {
 	updateQueryFromInput();
 	
 	// reset the page navigation
-	currentQuery.pageSelectorStart = 1;
+	adrPageNav.reset();
 
-	EntryService.searchAddresses(currentQuery, currentQuery.startHit, 10, {
+	EntryService.searchAddresses(currentQuery, adrPageNav.getStartHit(), 10, {
 		callback: function(res){
 			updateResults(res);
 		},

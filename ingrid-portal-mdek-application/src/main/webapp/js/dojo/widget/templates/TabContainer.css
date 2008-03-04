@@ -2,6 +2,9 @@
 	position : relative;
 }
 
+/*** Tab container with a visible blue delimiter line between header and ContentPane ***/
+.tabContainerWithBorderTop .dojoTabPaneWrapper { border-top: 10px solid rgb(21, 100, 150); }
+
 .dojoTabPaneWrapper {
 	border : none;
 	_zoom: 1; /* force IE6 layout mode so top border doesnt disappear */
