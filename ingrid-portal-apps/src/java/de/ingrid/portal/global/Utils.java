@@ -444,7 +444,7 @@ public class Utils {
 
 			// Setting the Subject and Content Type
 			msg.setSubject(subject);
-			msg.setContent(text, "text/plain; charset=ISO-8859-1");
+			msg.setContent(text, "text/plain; charset=UTF-8");
 			Transport.send(msg);
 			emailSent = true;
 		} catch (AddressException e) {
