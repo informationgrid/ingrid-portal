@@ -15,13 +15,15 @@ import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
-import de.ingrid.mdek.IMdekCallerCommon.Quantity;
+import de.ingrid.mdek.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.AddressSearchResultBean;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.ObjectSearchResultBean;
+import de.ingrid.mdek.job.MdekException;
 import de.ingrid.utils.IngridDocument;
 
 public class SimpleUDKConnection implements DataConnectionInterface {
@@ -29,6 +31,10 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	private final static Logger log = Logger.getLogger(SimpleUDKConnection.class);
 
 	private IMdekCaller mdekCaller;
+	private IMdekCallerObject mdekCallerObject;
+	private IMdekCallerAddress mdekCallerAddress;
+	private IMdekCallerQuery mdekCallerQuery;
+	private IMdekCallerCatalog mdekCallerCatalog;
 	private DataMapperInterface dataMapper;
 
 	public SimpleUDKConnection(File communicationProperties) {
@@ -38,6 +44,16 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 		MdekCaller.initialize(communicationProperties);
 		mdekCaller = MdekCaller.getInstance();
+
+		MdekCallerObject.initialize(mdekCaller);
+		MdekCallerAddress.initialize(mdekCaller);
+		MdekCallerQuery.initialize(mdekCaller);
+		MdekCallerCatalog.initialize(mdekCaller);
+		
+		mdekCallerObject = MdekCallerObject.getInstance();
+		mdekCallerAddress = MdekCallerAddress.getInstance();
+		mdekCallerQuery = MdekCallerQuery.getInstance();
+		mdekCallerCatalog = MdekCallerCatalog.getInstance();
 	}
 
 	// Shutdown Method is called by the Spring Framework on shutdown
@@ -56,33 +72,33 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public MdekDataBean getObjectDetail(String uuid) {
-		IngridDocument response = mdekCaller.fetchObject(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchObject(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 
 	public MdekAddressBean getAddressDetail(String uuid) {
-		IngridDocument response = mdekCaller.fetchAddress(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchAddress(uuid, Quantity.DETAIL_ENTITY, getCurrentSessionId());
 		return extractSingleAddressFromResponse(response);	
 	}
 	
 	
 	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly) {
-		IngridDocument response = mdekCaller.fetchTopAddresses(getCurrentSessionId(), freeAddressesOnly);
+		IngridDocument response = mdekCallerAddress.fetchTopAddresses(getCurrentSessionId(), freeAddressesOnly);
 		return extractAddressesFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
-		IngridDocument response = mdekCaller.fetchTopObjects(getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchTopObjects(getCurrentSessionId());
 		return extractObjectsFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth) {
-		IngridDocument response = mdekCaller.fetchSubObjects(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchSubObjects(uuid, getCurrentSessionId());
 		return extractObjectsFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth) {
-		IngridDocument response = mdekCaller.fetchSubAddresses(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchSubAddresses(uuid, getCurrentSessionId());
 		return extractAddressesFromResponse(response);
 	}
 
@@ -90,7 +106,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		IngridDocument obj = new IngridDocument();
 		obj.put(MdekKeys.PARENT_UUID, parentUuid);
 
-		IngridDocument response = mdekCaller.getInitialObject(obj, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getInitialObject(obj, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 	
@@ -98,7 +114,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		IngridDocument adr = new IngridDocument();
 		adr.put(MdekKeys.PARENT_UUID, parentUuid);
 
-		IngridDocument response = mdekCaller.getInitialAddress(adr, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getInitialAddress(adr, getCurrentSessionId());
 		return extractSingleAddressFromResponse(response);
 	}
 
@@ -116,7 +132,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following object for storage:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCaller.storeObject(obj, true, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.storeObject(obj, true, getCurrentSessionId());
 		return extractSingleObjectFromResponse(response);
 	}
 
@@ -134,7 +150,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following address for storage:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCaller.storeAddress(adr, true, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.storeAddress(adr, true, getCurrentSessionId());
 		return extractSingleAddressFromResponse(response);
 	}
 
@@ -150,7 +166,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	log.debug("Sending the following object for publishing:");
 	log.debug(obj);
 
-	IngridDocument response = mdekCaller.publishObject(obj, true, forcePublicationCondition, getCurrentSessionId());
+	IngridDocument response = mdekCallerObject.publishObject(obj, true, forcePublicationCondition, getCurrentSessionId());
 	return extractSingleObjectFromResponse(response);
 }
 
@@ -166,35 +182,35 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following address for publishing:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCaller.publishAddress(adr, true, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.publishAddress(adr, true, getCurrentSessionId());
 		return extractSingleAddressFromResponse(response);
 	}
 
 	
 	public void deleteObject(String uuid) {
-		mdekCaller.deleteObject(uuid, getCurrentSessionId());
+		mdekCallerObject.deleteObject(uuid, getCurrentSessionId());
 	}
 
 	public void deleteAddress(String uuid) {
-		mdekCaller.deleteAddress(uuid, getCurrentSessionId());
+		mdekCallerAddress.deleteAddress(uuid, getCurrentSessionId());
 	}
 
 	public boolean deleteObjectWorkingCopy(String uuid) {
-		IngridDocument response = mdekCaller.deleteObjectWorkingCopy(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.deleteObjectWorkingCopy(uuid, getCurrentSessionId());
 
 		IngridDocument result = extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
 	}
 
 	public boolean deleteAddressWorkingCopy(String uuid) {
-		IngridDocument response = mdekCaller.deleteAddressWorkingCopy(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.deleteAddressWorkingCopy(uuid, getCurrentSessionId());
 
 		IngridDocument result = extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
 	}
 
 	public boolean canCutObject(String uuid) {
-		IngridDocument response = mdekCaller.checkObjectSubTree(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.checkObjectSubTree(uuid, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		} else {
@@ -209,7 +225,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	public boolean canCutAddress(String uuid) {
-		IngridDocument response = mdekCaller.checkAddressSubTree(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.checkAddressSubTree(uuid, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		} else {
@@ -235,27 +251,27 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	
 	public List<String> getPathToObject(String uuid) {
-		IngridDocument response = mdekCaller.getObjectPath(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getObjectPath(uuid, getCurrentSessionId());
 		return extractPathFromResponse(response);
 	}
 
 	public List<String> getPathToAddress(String uuid) {
-		IngridDocument response = mdekCaller.getAddressPath(uuid, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getAddressPath(uuid, getCurrentSessionId());
 		return extractPathFromResponse(response);
 	}
 
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
-		IngridDocument response = mdekCaller.copyObject(fromUuid, toUuid, copySubTree, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.copyObject(fromUuid, toUuid, copySubTree, getCurrentSessionId());
 		return extractSingleSimpleObjectFromResponse(response);
 	}
 
 	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress) {
-		IngridDocument response = mdekCaller.copyAddress(fromUuid, toUuid, copySubTree, copyToFreeAddress, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.copyAddress(fromUuid, toUuid, copySubTree, copyToFreeAddress, getCurrentSessionId());
 		return extractSingleSimpleAddressFromResponse(response);
 	}
 
 	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition) {
-		IngridDocument response = mdekCaller.moveObject(fromUuid, toUuid, true, forcePublicationCondition, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.moveObject(fromUuid, toUuid, true, forcePublicationCondition, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}
@@ -263,7 +279,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress) {
 //		log.debug("moveAddressSubTree(String, String) not implemented yet.");
-		IngridDocument response = mdekCaller.moveAddress(fromUuid, toUuid, true, moveToFreeAddress, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.moveAddress(fromUuid, toUuid, true, moveToFreeAddress, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}
@@ -275,20 +291,39 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		log.debug("Sending the following address search:");
 		log.debug(adrDoc);
 
-		IngridDocument response = mdekCaller.searchAddresses(adrDoc, startHit, numHits, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.searchAddresses(adrDoc, startHit, numHits, getCurrentSessionId());
 		
 		// TODO Convert the response
 		return extractAddressSearchResultsFromResponse(response);
+	}
 
+	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits) {
+		log.debug("Searching for addresses with topicId: "+topicId);
+
+		IngridDocument response = mdekCallerQuery.queryAddressesThesaurusTerm(topicId, startHit, numHits, getCurrentSessionId());
+		
+		// TODO Convert the response
+		return extractAddressSearchResultsFromResponse(response);
 	}
 	
+	
+	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits) {
+		log.debug("Searching for objects with topicId: "+topicId);
+
+		IngridDocument response = mdekCallerQuery.queryObjectsThesaurusTerm(topicId, startHit, numHits, getCurrentSessionId());
+		
+		// TODO Convert the response
+		return extractObjectSearchResultsFromResponse(response);
+	}
+
+	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
-		IngridDocument response = mdekCaller.getSysLists(listIds, languageCode, getCurrentSessionId());
+		IngridDocument response = mdekCallerCatalog.getSysLists(listIds, languageCode, getCurrentSessionId());
 		return extractSysListFromResponse(response);
 	}
 
 	public CatalogBean getCatalogData() {
-		IngridDocument response = mdekCaller.fetchCatalog(getCurrentSessionId());
+		IngridDocument response = mdekCallerCatalog.fetchCatalog(getCurrentSessionId());
 		return extractCatalogFromResponse(response);
 	}
 
@@ -415,7 +450,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return doc;
 	}
 
-	public AddressSearchResultBean extractAddressSearchResultsFromResponse(IngridDocument response) {
+	private AddressSearchResultBean extractAddressSearchResultsFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
 		AddressSearchResultBean searchResult = new AddressSearchResultBean();
@@ -436,7 +471,29 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return searchResult;
 	}
 	
-	public Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
+	private ObjectSearchResultBean extractObjectSearchResultsFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		ObjectSearchResultBean searchResult = new ObjectSearchResultBean();
+
+		if (result != null) {
+			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+			ArrayList<MdekDataBean> nodeList = new ArrayList<MdekDataBean>();
+			for (IngridDocument objEntity : objs) {
+				nodeList.add(dataMapper.getDetailedObjectRepresentation(objEntity));
+			}
+
+			searchResult.setNumHits((Integer) result.get(MdekKeys.SEARCH_NUM_HITS));
+			searchResult.setTotalNumHits((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS));
+			searchResult.setResultList(nodeList);
+		} else {
+			handleError(response);
+		}
+		return searchResult;
+	}
+
+	
+	private Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 		if (result != null) {
 			Map<Integer, List<String[]>> resultMap = new HashMap<Integer, List<String[]>>();
@@ -462,7 +519,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
-	public CatalogBean extractCatalogFromResponse(IngridDocument response) {
+	private CatalogBean extractCatalogFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 		
 		if (result != null) {
@@ -483,7 +540,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		}
 	}
 
-	public JobInfoBean extractJobInfoFromResponse(IngridDocument response) {
+	private JobInfoBean extractJobInfoFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
 		if (result != null) {

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -125,11 +126,12 @@ public class SNSService {
 	            		resultList = buildTopicStructure(successors);
 	            	}
 	            	log.debug("  done creating return values. getSubTopics() returning values.");
+	                Collections.sort(resultList, new SNSTopicComparator());
 	            	return resultList;
                 }
             }
         }
-        	
+
         return resultList;
     }
 

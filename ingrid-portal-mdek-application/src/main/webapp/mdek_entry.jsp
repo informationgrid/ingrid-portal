@@ -52,8 +52,8 @@ var currentSubMenu = new Array();
 function clickMenu(menuName, submenuName) {
 	// Activate the menu by removing the following lines
 	// --- DEACTIVATE BEGIN ---
-	dojo.debug("Main menu is deactivated. Activate it by uncommenting the corresponding lines in mdek_entry.jsp - function clickMenu()");
-	return;
+//	dojo.debug("Main menu is deactivated. Activate it by uncommenting the corresponding lines in mdek_entry.jsp - function clickMenu()");
+//	return;
 	// --- DEACTIVATE END ---
 
 	for(var i=0; i<menus.length; i++) {
@@ -2056,7 +2056,10 @@ function hideSplash(){
   </div>
 
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_search.html" preload="true"></div>
-  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true"></div>
+<!-- 
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" refreshOnShow="true" executeScripts="true"></div>
+ -->
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true"></div>
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
   <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="true"></div>

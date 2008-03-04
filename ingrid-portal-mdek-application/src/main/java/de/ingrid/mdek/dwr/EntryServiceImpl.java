@@ -11,9 +11,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.DataConnectionInterface;
-import de.ingrid.mdek.MdekException;
 import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.api.EntryService;
+import de.ingrid.mdek.job.MdekException;
 
 
 /**
@@ -511,6 +511,39 @@ public class EntryServiceImpl implements EntryService {
 			log.error("Error while searching for addresses.", e);
 		}
 		return new AddressSearchResultBean();
+	}
+
+	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits) {
+		log.debug("Starting address query.");
+
+		try {
+			  return dataConnection.queryAddressesThesaurusTerm(topicId, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for addresses.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for addresses.", e);
+		}
+		return new AddressSearchResultBean();
+	}
+
+
+	
+	
+	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits){
+		log.debug("Starting object query.");
+
+		try {
+			  return dataConnection.queryObjectsThesaurusTerm(topicId, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for objects.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for objects.", e);
+		}
+		return new ObjectSearchResultBean();		
 	}
 
 	

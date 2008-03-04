@@ -623,6 +623,8 @@ _expandPath = function(pathList) {
 }
 
 menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
+	clickMenu("page1");
+
 	if (nodeId != "newNode" && nodeId != "objectRoot" && nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
 		var deferred = new dojo.Deferred();
 		var treeController = dojo.widget.byId("treeController");

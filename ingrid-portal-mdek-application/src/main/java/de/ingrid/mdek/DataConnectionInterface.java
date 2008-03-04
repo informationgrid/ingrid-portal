@@ -10,6 +10,7 @@ import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.ObjectSearchResultBean;
 import de.ingrid.utils.IngridDocument;
 
 /**
@@ -332,6 +333,33 @@ public interface DataConnectionInterface {
 	 */	
 	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits);
 
+	/**
+	 * Search for addresses
+	 * 
+	 * <ul>
+	 * <li><b>(String) topicId</b> - A SNS topicId.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return AddressSearchResultBean containing the search results and additional info.
+	 */	
+	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
+
+	/**
+	 * Search for objects
+	 * 
+	 * <ul>
+	 * <li><b>(String) topicId</b> - A SNS topicId.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return ObjectSearchResultBean containing the search results and additional info.
+	 */	
+	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
+
+	
 	/**
 	 * Fetch Sys Lists from the server.
 	 * 

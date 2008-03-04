@@ -58,6 +58,7 @@
     "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
     "sns.timeoutError":"SNS hat eine Zeit&uuml;berschreitung bei der Auswertung Ihrer Anfrage mitgeteilt. Bitte probieren Sie es daher sp&auml;ter noch einmal oder stellen Sie eine einfachere Anfrage.",
+    "sns.connectionError":"Bei dem Versuch den SNS zu kontaktieren trat ein Fehler auf. Bitte probieren Sie es daher sp&auml;ter noch einmal.",
 
 	"links.fillRequiredFieldsHint":"Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
 	"links.noLinkToSelfHint":"Ein Objekt kann nicht mit sich selbst verkn&uuml;pft werden!",

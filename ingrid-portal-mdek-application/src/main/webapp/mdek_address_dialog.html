@@ -307,7 +307,6 @@ function updateResults(searchResult) {
 
 	udkDataProxy._addIcons(searchResult.resultList);
 	udkDataProxy._addAddressTitles(searchResult.resultList);
-	udkDataProxy._addAddressTitles(searchResult.resultList);
 	udkDataProxy._addTableIndices(searchResult.resultList);
 
 	dojo.widget.byId("addressSearchResultsTable").store.setData(searchResult.resultList);

@@ -11,6 +11,7 @@ import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.dwr.ObjectSearchResultBean;
 
 /**
  * @author joachim
@@ -292,6 +293,9 @@ public interface EntryService {
 	public boolean canCopyAddress(String parentUuid);
 
 	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits);
+
+	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
+	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
 	
 	// Fetch sys lists from the backend
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);

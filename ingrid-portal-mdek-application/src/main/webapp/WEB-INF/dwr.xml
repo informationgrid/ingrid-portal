@@ -25,6 +25,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekAddressBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MediaOptionBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.ObjectSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.OperationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.OperationParameterBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.ScaleBean"/>

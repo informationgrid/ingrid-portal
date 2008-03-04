@@ -54,6 +54,7 @@ div.half { width:328px; float:left; }
 div.fullInside { width: 648px; }
 div.full { width: 675px; }
 div.wide { width: 955px; }
+div.w364 { width: 364px; }
 
 /* This makes the scrolling table work */
 div.tableContainer {
@@ -107,6 +108,10 @@ div.wide table {
 	width: 937px;
 }
 
+div.w364 table {
+	width: 346px;
+}
+
 /* Modern browsers accept this (not IE) and we are targetting firefox */
 
 html>/**/body div.thirdInside3 table {
@@ -147,6 +152,10 @@ html>/**/body div.full table {
 
 html>/**/body div.wide table {
     width: 955px;
+}
+
+html>/**/body div.364 table {
+    width: 346px;
 }
 
 /* Modern browsers accept this (not IE) and we are targetting firefox */
