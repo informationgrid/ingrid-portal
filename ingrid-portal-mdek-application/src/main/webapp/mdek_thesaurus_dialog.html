@@ -10,6 +10,8 @@ a.resultText.selected { color:#C21100; }
 
 
 <script type="text/javascript">
+var scriptScope = this;
+
 var selectedTextNode = null;
 var selectedButton = null;
 
@@ -124,6 +126,7 @@ resultButtonClicked = function(topicId) {
 	expandToTopicWithId(topicId);
 }
 
+
 function displaySearchResults(resultList) {
 	var resultContainer = dojo.byId("thesResultContainer");
 	resultContainer.innerHTML = "";
@@ -140,13 +143,11 @@ function displaySearchResults(resultList) {
 
 			var buttonLink = document.createElement("a"); 
 			buttonLink.setAttribute("id", "_resultButton_"+term.topicId);
-			buttonLink.setAttribute("onclick", "resultButtonClicked('"+term.topicId+"');");
-	
-			if (dojo.render.html.ie)
-				buttonLink.setAttribute("href", "javascript:resultButtonClicked('"+term.topicId+"');");
-			else
-				buttonLink.setAttribute("href", "javascript:void(0);");
-	
+			buttonLink.onclick = function() {
+				resultButtonClicked(term.topicId);
+			}
+			buttonLink.setAttribute("href", "javascript:void(0);");
+
 			buttonLink.setAttribute("title", "In Baumstruktur finden");
 			buttonLink.innerHTML = "<img src=\"img/ic_jump_tree.gif\" style=\"position: relative; top: 3px;\"/>";
 
@@ -158,12 +159,10 @@ function displaySearchResults(resultList) {
 			if (term.type == "DESCRIPTOR") {
 				dojo.html.addClass(linkElement, "resultText");
 				linkElement.setAttribute("id", "_resultText_"+term.topicId);
-				linkElement.setAttribute("onclick", "resultTextClicked('"+term.topicId+"');");
-
-				if (dojo.render.html.ie)
-					linkElement.setAttribute("href", "javascript:resultTextClicked('"+term.topicId+"');");
-				else
-					linkElement.setAttribute("href", "javascript:void(0);");
+				linkElement.onclick = function() {
+					resultTextClicked(term.topicId);
+				}
+				linkElement.setAttribute("href", "javascript:void(0);");
 
 				linkElement.setAttribute("title", "Begriff auswaehlen");
 				linkElement.topicId = term.topicId;
@@ -177,6 +176,7 @@ function displaySearchResults(resultList) {
 		}
 	});
 }
+
 
 // Callback Handler for the root topics.
 // This function gets called when the tree is initialized.

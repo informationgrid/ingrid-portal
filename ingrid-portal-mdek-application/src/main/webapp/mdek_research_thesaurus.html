@@ -15,7 +15,7 @@ var scriptScope = this;
 // The currently selected textNode. Used for colorization
 var selectedTextNode = null;
 // Number of rows of the result table(s)
-var resultsPerPage = 2;
+var resultsPerPage = 20;
 
 // Result caching so the results don't have to be reloaded when the user switches tabs
 var objResultsLoaded = false;
@@ -220,13 +220,12 @@ function displayAssociatedTopics(resultList) {
 			var label = term.title;
 
 			var buttonLink = document.createElement("a"); 
-			buttonLink.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.topicButtonClicked('"+term.topicId+"');");
 
-			if (dojo.render.html.ie)
-				buttonLink.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.topicButtonClicked('"+term.topicId+"');");
-			else
-				buttonLink.setAttribute("href", "javascript:void(0);");
-	
+			buttonLink.onclick = function() {
+				scriptScope.topicButtonClicked(term.topicId);
+			}
+			buttonLink.setAttribute("href", "javascript:void(0);");
+
 			buttonLink.setAttribute("title", "In Baumstruktur finden");
 			buttonLink.innerHTML = "<img src=\"img/ic_jump_tree.gif\" style=\"position: relative; top: 3px;\"/>";
 
@@ -238,12 +237,10 @@ function displayAssociatedTopics(resultList) {
 			if (term.type == "DESCRIPTOR") {
 				dojo.html.addClass(linkElement, "resultText");
 				linkElement.setAttribute("id", "_researchThesLabel_"+term.topicId);
-				linkElement.setAttribute("onclick", "dojo.widget.byId('"+_container_.widgetId+"').scriptScope.topicLabelClicked('"+term.topicId+"');");
-
-				if (dojo.render.html.ie)
-					linkElement.setAttribute("href", "javascript:dojo.widget.byId('"+_container_.widgetId+"').scriptScope.topicLabelClicked('"+term.topicId+"');");
-				else
-					linkElement.setAttribute("href", "javascript:void(0);");
+				linkElement.onclick = function() {
+					scriptScope.topicLabelClicked(term.topicId);
+				}
+				linkElement.setAttribute("href", "javascript:void(0);");
 
 				linkElement.setAttribute("title", "Begriff auswaehlen");
 				linkElement.topicId = term.topicId;
