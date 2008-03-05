@@ -355,11 +355,13 @@ public class SNSService {
     }
 
     
-    public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm) {
+    public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm, String searchTypeStr) {
     	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	SearchType searchType = (searchTypeStr == null || searchTypeStr.equalsIgnoreCase("exact")) ? SearchType.exact : SearchType.contains;
+
     	TopicMapFragment mapFragment = null;
     	try {
-    		mapFragment = snsClient.findTopics(queryTerm, "/location", SearchType.exact,
+    		mapFragment = snsClient.findTopics(queryTerm, "/location", searchType,
     	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER, false);
     	} catch (Exception e) {
 	    	log.error(e);

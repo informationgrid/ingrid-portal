@@ -63,6 +63,11 @@ div.tableContainer {
 	position: relative;
 }
 
+/* Disable overflow in firefox */
+html>/**/body div.tableContainer {
+	overflow: hidden;
+}
+
 /* The different widths below are due to the way the scroll bar is implamented
 we are keeping these here instead of putting them in the IE css file b/c it 
 is easier to change the width if both numbers are in the same place. */

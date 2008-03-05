@@ -29,13 +29,13 @@ dojo.addOnLoad(function() {
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueChanged", function(obj, field) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueAdded", function(obj) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvTopicsTable, "onValueDeleted", function(obj) {applyRule2();});
-	  dojo.event.connect(thesaurusEnvTopicsTable, "onSetData", function() {applyRule2();});
+	  dojo.event.connect(thesaurusEnvTopicsTable.store, "onSetData", function() {applyRule2();});
 	}
 	if (thesaurusEnvCatsTable) {
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueChanged", function(obj, field) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueAdded", function(obj) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvCatsTable, "onValueDeleted", function(obj) {applyRule2();});
-	  dojo.event.connect(thesaurusEnvCatsTable, "onSetData", function() {applyRule2();});
+	  dojo.event.connect(thesaurusEnvCatsTable.store, "onSetData", function() {applyRule2();});
 	}
 	if (thesaurusEnvExtResCheckBox) {
 	  dojo.event.connect(thesaurusEnvExtResCheckBox, "onClick", function(obj, field) {applyRule2();});

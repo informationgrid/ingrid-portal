@@ -1621,9 +1621,9 @@ function hideSplash(){
 	                  
 	                  <div class="halfInside left">
 	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themen')">Themen</label></span>
-	                    <div class="tableContainer headHiddenRows4 half">
+	                    <div class="tableContainer headHiddenRows4 halfInside">
 	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:263px;" listId="1410" id="thesaurusEnvTopicsCombobox"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1410" id="thesaurusEnvTopicsCombobox"></div>
 	                      </div>
 	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
