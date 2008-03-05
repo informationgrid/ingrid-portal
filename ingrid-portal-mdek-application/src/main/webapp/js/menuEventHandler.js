@@ -79,16 +79,13 @@ attachNewNode = function(selectedNode, res) {
 menuEventHandler.handlePreview = function(message) {
 // Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
 //   where the event originated
-  dojo.debug('Message parameter: '+message);
 
-  var selectedNode;
+  var selectedNode = getSelectedNode(message);
   var useDirtyData = false;
   
-  if (message instanceof dojo.widget.TreeMenuItemV3)  {
-    selectedNode = message.getTreeNode();
-  }  else  {
-  	var tree = dojo.widget.byId('tree');
-    selectedNode = tree.selectedNode;
+  // check if the preview was called via the context menu or directly via the menu button
+  if (!(message instanceof dojo.widget.TreeMenuItemV3))  {
+    // use the data of the formular instead the data from the database
     useDirtyData = true;
   }
   
@@ -98,7 +95,13 @@ menuEventHandler.handlePreview = function(message) {
 		selectedNodeId: selectedNode.id
 	};
 	
-	dialog.showPage("Detail View", "mdek_detail_view_dialog.html", 755, 600, false, params);
+	if (selectedNode.nodeAppType == "O") {
+  	dojo.debug('Show object preview.');
+		dialog.showPage("Detail View", "mdek_detail_view_dialog.html", 755, 600, false, params);
+	} else if (selectedNode.nodeAppType == "A") {
+  	dojo.debug('Show address preview.');
+		dialog.showPage("Detail View", "mdek_detail_view_address_dialog.html", 755, 600, false, params);
+	}
 }
 
 menuEventHandler.handleCut = function(mes) {

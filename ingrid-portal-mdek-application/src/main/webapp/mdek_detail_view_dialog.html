@@ -10,7 +10,7 @@ _container_.addOnLoad(function() {
 	} else {
 		// Construct an MdekDataBean from the available data
 		var node = dojo.widget.byId(_container_.customParams.selectedNodeId);
-		EntryService.getNodeData(node.id, node.appType, "false",
+		EntryService.getNodeData(node.id, node.nodeAppType, "false",
 			{
 				callback:function(res) { renderNodeData(res); },
 				timeout:5000,

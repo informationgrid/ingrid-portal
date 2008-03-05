@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript" src="js/detail_helper.js"></script>
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	if (_container_.customParams.useDirtyData == true) {
+		// get dirty data from proxy
+		renderNodeData(udkDataProxy._getData());
+	} else {
+		// Construct an MdekDataBean from the available data
+		var node = dojo.widget.byId(_container_.customParams.selectedNodeId);
+		
+		EntryService.getAddressData(node.id, "false",
+			{
+				callback:function(res) { renderNodeData(res); },
+				timeout:5000,
+				errorHandler:function(message) {dojo.debug("Error in mdek_detail_view_adress_dialog.html: Error while waiting for nodeData: " + message); }
+			}
+		);
+	}
+});
+
+function renderNodeData(nodeData) {
+	renderSectionTitel("Adresse");
+	renderText(detailHelper.renderAddressEntry(nodeData).replace(/\n/g, '<br />'));
+	
+	// administrative data
+	renderSectionTitel("Administrative Angaben");
+	renderTextWithTitle(nodeData.uuid, "Adress-ID");
+	renderTextWithTitle(catalogData.catalogName, "Katalog");
+
+}
+
+function renderSectionTitel(val) {
+	dojo.byId("detailViewContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
+}
+
+function renderTextWithTitle(val, title) {
+	if (detailHelper.isValid(val)) {
+		if (detailHelper.isValid(title)) {
+			dojo.byId("detailViewContent").innerHTML += "<p><strong>" + title + "</strong><br/>" + val + "</p><br/>";
+		} else {
+			dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
+		}
+	}
+}
+
+function renderText(val) {
+	if (val && val.length>0) {
+		dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
+	}
+}
+
+
+</script>
+</head>
+
+<body>
+  <div dojoType="ContentPane">
+    <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
+      <div id="winNavi">
+        <a href="javascript:printDivContent('detailViewContent')" title="Drucken">[Drucken]</a>
+  	  </div>
+  	  <div id="dialogContent" class="content">
+        <!-- MAIN TAB CONTAINER START -->
+        <div class="spacer"></div>
+      	<div id="detailViewContainer" dojoType="ingrid:TabContainer" doLayout="false" class="full yNoScroll" selectedChild="detailView">
+          <!-- MAIN TAB 1 START -->
+      		<div id="detailView" dojoType="ContentPane" class="blueTopBorder h500 yScroll xNoScroll" label="Detail-Ansicht">
+              <div id="detailViewContent" class="detailViewContentContainer w652 grey"></div>
+      		</div>
+          <!-- MAIN TAB 1 END -->
+      	</div>
+        <!-- MAIN TAB CONTAINER END -->
+      </div>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+</body>
+</html>
