@@ -9,6 +9,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 
@@ -163,6 +164,8 @@ function hideSplash(){
   	      <li><a href="#" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum">Impressum</a></li>
   	      <li class="seperator">|</li>
   	      <li><a href="#" title="English">English</a></li>
+  	      <li class="seperator">|</li>
+  	      <li><a href="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 80, false);" title="Info">Info</a></li>
   	      <li class="seperator">|</li>
   	      <li><a href="#" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
   	    </ul>
@@ -2057,11 +2060,14 @@ function hideSplash(){
   </div>
 
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_search.html" preload="true"></div>
-  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" refreshOnShow="true" executeScripts="true"></div>
 <!-- 
-  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" executeScripts="true"></div>
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" refreshOnShow="true" executeScripts="true"></div>
  -->
-  <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true"></div>
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="true" executeScripts="true"></div>
+<!-- 
+  <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true" executeScripts="true"></div>
+ -->
+  <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true" refreshOnShow="true" executeScripts="true"></div>
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
   <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="true"></div>
   <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.html" preload="true"></div>

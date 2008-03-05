@@ -514,7 +514,7 @@ udkDataProxy._handleSaveObjectRequest = function(msg) {
 					onForceSaveDef.addErrback(onSaveDef.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {operation:"SAVE", resultHandler:onForceSaveDef});
+					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForceSaveDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData:");
 					onSaveDef.errback(err);
@@ -568,7 +568,7 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 					onForcePublishDef.addErrback(onPublishDef.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
+					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData:");
 					onPublishDef.errback(err);
@@ -782,7 +782,7 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 					onForceMoveDef.addErrback(msg.resultHandler.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.error"), "mdek_pubCond_dialog.html", 342, 220, true, {operation:"MOVE", resultHandler:onForceMoveDef});
+					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"MOVE", resultHandler:onForceMoveDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while moving nodeData:");
 					msg.resultHandler.errback(err);

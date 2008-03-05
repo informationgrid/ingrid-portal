@@ -7,9 +7,22 @@
   <name>ingrid-portal-mdek-application Maven Webapp</name>
   <version>1.0-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
+  	<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</developerConnection>
+	<url>https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</url>
+  </scm>    
 
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
+
+	<resources>
+	  <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+	</resources>
+
 	  <plugins>
 	    <plugin>
 		  <groupId>org.apache.maven.plugins</groupId>
@@ -28,6 +41,34 @@
         <configuration>
           <wtpversion>1.5</wtpversion>
           <downloadSources>1.5</downloadSources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Implementation-Build>${buildNumber}</Implementation-Build>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
@@ -185,5 +226,14 @@
 			<url>http://harrison.its-technidata.de/ingrid/maven</url>
 			<layout>legacy</layout>
 		</repository>
+
 	</repositories>
-</project>
+	
+	<pluginRepositories>
+	  <pluginRepository>
+	    <id>tlc</id>
+	    <name>TLC Repository</name>
+	    <url>http://commons.ucalgary.ca/pub/m2</url>
+	  </pluginRepository>
+	</pluginRepositories>
+ </project>

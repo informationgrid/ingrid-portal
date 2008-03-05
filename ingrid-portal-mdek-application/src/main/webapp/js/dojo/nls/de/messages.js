@@ -3,6 +3,7 @@
     "general.ok":"Ok",
     "general.cancel":"Abbrechen",
     "general.error":"Fehler",
+    "general.warning":"Warnung",
     "general.hint":"Hinweis",
     "general.help":"Hilfe - Allgemeines",
     "general.showAddress":"Zeige Adresse",
@@ -47,8 +48,8 @@
 	"operation.error.targetIsSubnodeOfSourceError":"Das Ziel einer Verschiebeoperation darf nicht Kind des Ausgangsknotens sein.",
 	"operation.error.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Objekte befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
-	"operation.hint.publicationConditionSaveHint":"Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Speichern dieses Objektes wird eine entsprechende Anpassung vorgenommen. Soll das Objekt wirklich gespeichert werden?",
-	"operation.hint.publicationConditionMoveHint":"Im untergeordneten Teilbaum liegen Objekte mit einer gr&ouml;&szlig;eren Ver&ouml;ffentlichungsbreite vor als die f&uuml;r dieses Objekte gew&auml;hlte. Mit dem Verschieben dieses Objektes bzw. Teilbaumes wird eine entsprechende Anpassung vorgenommen. Soll das Objekt / der Teilbaum wirklich verschoben werden?",
+	"operation.hint.publicationConditionSaveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im nachgeordneten Teilbaum ist gr&ouml;&szlig;er als die, die f&uuml;r das aktuelle Objekt ausgew&auml;hlt wurde.<br>Mit dem Speichern des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt wirklich gespeichert werden?",
+	"operation.hint.publicationConditionMoveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im Zielteilbaum ist kleiner als die, die f&uuml;r das zu verschiebende Objekt.<br>Mit dem Verschieben des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt / der Teilbaum wirklich verschoben werden?",
 
 	"address.type.institution":"Institution",
 	"address.type.unit":"Einheit",

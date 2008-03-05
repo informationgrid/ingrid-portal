@@ -3,6 +3,7 @@
     "general.ok":"Ok",
     "general.cancel":"Cancel",
     "general.error":"Error",
+    "general.warning":"Warning",
     "general.hint":"Hinweis",
     "general.help":"Help - General",
     "general.showAddress":"Show Address",
