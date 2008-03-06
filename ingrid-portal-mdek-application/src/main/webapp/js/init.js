@@ -23,6 +23,7 @@ dojo.addOnLoad(function()
     console.style.visibility = "hidden";
   });
 
+  initGeneralEventListener();
   initToolbar();
   initTree();
   initForm();
@@ -260,7 +261,7 @@ function initCTS() {
 					&& dojo.validate.isRealNumber(coords.longitude2)
 					&& dojo.validate.isRealNumber(coords.latitude1)
 					&& dojo.validate.isRealNumber(coords.latitude2)) {
-				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
+//				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
 				var _this = this;
 				CTService.getCoordinates(fromSRS, toSRS, coords, {
 						callback: dojo.lang.hitch(this, this.updateDestinationStore),
@@ -402,7 +403,7 @@ function initFreeTermsButtons() {
     dojo.event.connect(inputField.domNode, "onkeypress",
         function(event) {
             if (event.keyCode == event.KEY_ENTER) {
-                button.onClick();
+                dojo.widget.byId("thesaurusFreeTermsAddButton").onClick();
             }
         });
 
@@ -419,7 +420,7 @@ function initFreeTermsButtons() {
     dojo.event.connect(inputField.domNode, "onkeypress",
         function(event) {
             if (event.keyCode == event.KEY_ENTER) {
-                button.onClick();
+                dojo.widget.byId("thesaurusFreeTermsAddressAddButton").onClick();
             }
         });
 
@@ -878,9 +879,7 @@ function initSysLists() {
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableCriteriaEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
-		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData",
-		// This select box also gets initialised on object load
-		"extraInfoPublishArea",
+		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType"]; 
@@ -916,4 +915,45 @@ function initSysLists() {
 			dojo.debug("Error: "+mes);
 		}
 	});
+}
+
+
+function initGeneralEventListener() {
+	// Disable backspace default behaviour (browser back button)
+	if (dojo.render.html.ie) {
+		// Registering IE onkeydown with dojo doesn't work as it should
+		// Therefore we need to directly register with the documents onkeydown function
+		document.onkeydown = function(e) {
+			var evt = (e) ? e : window.event; 
+			dojo.event.browser.fixEvent(evt);
+			if (evt.keyCode == evt.KEY_BACKSPACE) {
+				var tagName = evt.target.tagName.toLowerCase();
+				if (!(tagName == 'input') && !(tagName == 'textarea')) {
+//					dojo.debug("Preventing backspace default behaviour on "+evt.target);
+					evt.preventDefault();
+				}
+			}
+		}
+	} else {
+		dojo.event.browser.addListener(document, "onkeydown", function(evt){
+			if (evt.keyCode == evt.KEY_BACKSPACE) {
+				if (!(evt.target instanceof HTMLInputElement) && !(evt.target instanceof HTMLTextAreaElement)) {
+//					dojo.debug("Preventing backspace default behaviour on "+evt.target);
+					evt.preventDefault();
+				}
+			}
+		});
+	}
+
+
+	// Catch the window close event
+	window.onbeforeunload = function(evt){
+		if (dojo.render.html.ie) {
+			if (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15) ) {
+		  		event.returnValue = message.get("general.closeWindow");
+			}
+		} else {
+			evt.returnValue = message.get("general.closeWindow");
+		}
+	}
 }

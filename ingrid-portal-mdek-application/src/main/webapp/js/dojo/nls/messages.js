@@ -8,6 +8,7 @@
     "general.help":"Help - General",
     "general.showAddress":"Show Address",
     "general.delete":"Delete",
+    "general.closeWindow":"All unsaved changes will be discarded.",
 
     "init.loadError":"Error while loading initial values from the server. Please check your connection and try again.",
    

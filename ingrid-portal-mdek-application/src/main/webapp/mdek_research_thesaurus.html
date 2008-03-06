@@ -71,7 +71,7 @@ function initTree() {
 			postHook: hideLoadingZone,
   			callback:function(res) { deferred.callback(res); },
 			timeout:0,
-			errorHandler:function(msg) { dojo.debug(msg); showStatus(message.get("sns.connectionError")); deferred.errback(new dojo.RpcError(msg, this));}
+			errorHandler:function(msg) { dojo.debug(msg); deferred.errback(new dojo.RpcError(msg, this));}
   		});
 
   		deferred.addCallback(function(res) {

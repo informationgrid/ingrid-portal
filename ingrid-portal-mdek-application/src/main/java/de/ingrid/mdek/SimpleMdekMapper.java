@@ -75,8 +75,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// TODO Check if we have to convert an address or object
 
-		log.debug("Converting the following object:");
-		printHashMap(obj);
+//		log.debug("Converting the following object:");
+//		printHashMap(obj);
 
 		MdekDataBean mdekObj = new MdekDataBean();
 
@@ -294,8 +294,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	private static MdekAddressBean getDetailedAddressRepresentation(
 			HashMap<String, Object> adr) {
 		
-		log.debug("Converting the following address:");
-		printHashMap(adr);
+//		log.debug("Converting the following address:");
+//		printHashMap(adr);
 
 		MdekAddressBean mdekAddress = new MdekAddressBean();
 
@@ -548,8 +548,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		// Comments
 		udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
 
-		log.debug("Converted the following address to an IngridDocument:");
-		printHashMap(udkAdr);
+//		log.debug("Converted the following address to an IngridDocument:");
+//		printHashMap(udkAdr);
 
 		return udkAdr;
 	}
@@ -697,8 +697,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		}
 
-		log.debug("Converted the following object to an IngridDocument:");
-		printHashMap(udkObj);
+//		log.debug("Converted the following object to an IngridDocument:");
+//		printHashMap(udkObj);
 
 		return udkObj;
 	}

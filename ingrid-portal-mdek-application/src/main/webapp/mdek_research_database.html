@@ -1,6 +1,87 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
+
+<script type="text/javascript">
+
+var scriptScope = this;
+
+var resultsPerPage = 10;
+var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("searchDatabaseResultsInfo"), pagingSpan:dojo.byId("searchDatabaseResultsPaging") });
+
+var currentQuery = null;
+
+_container_.addOnLoad(function() {
+/*
+    // Pressing 'enter' on the input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("databaseSearch").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startSearch();
+            }
+	});
+*/
+	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
+});
+
+
+function updateResultTable(res) {
+	dojo.debug("updateResultTable(res) not implemented yet.");
+
+	udkDataProxy._addTableIndices(res.resultList);
+	udkDataProxy._addObjectLinkLabels(res.resultList);  
+	udkDataProxy._addIcons(res.resultList);
+
+	dojo.widget.byId("datbaseSearchResults").store.setData(res);
+}
+
+
+// starts a database search with the given input
+function startSearch() {
+	dojo.debug("startSearch() not implemented yet.");
+
+	if (currentQuery == null)
+		return;
+
+	EntryService.queryDatabase(currentQuery, pageNav.getStartHit(), {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
+		errorHandler: function(msg) {
+			dojo.debug(msg);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), msg), dialog.WARNING);				
+		}		
+	});
+}
+
+// Button onClick function
+// Reads the input field, resets the navigation and starts a new query
+this.startNewSearch = function() {
+	currentQuery = dojo.string.trim(dojo.widget.byId("databaseSearch").getValue());
+	pageNav.reset();
+	startSearch();
+}
+
+function updatePageNavigation(res) {
+	pageNav.setTotalNumHits(res.totalNumHits);
+	pageNav.updateDomNodes();
+}
+
+
+// Save as CSV values link 'onclick' function
+this.saveAsCSV = function() {
+	dojo.debug("saveAsCSV() not implemented yet.");
+}
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("databaseSearchLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("databaseSearchLoadingZone"), "hidden");
+}
+
+</script>
 </head>
 
 <body>
@@ -18,60 +99,50 @@
         <!-- LEFT HAND SIDE CONTENT START -->
         <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenbank-Suche')">Datenbank-Suche</label></span>
         <div class="inputContainer field grey noSpaceBelow">
-          <span class="input"><textarea id="databaseSearch" name="databaseSearch" class="w640 h062" /></textarea></span>
+          <span class="input"><input type="text" mode="textarea" id="databaseSearch" class="w640 h062" dojoType="ingrid:ValidationTextbox" /></span> 
+
           <div class="spacerField"></div>
     	  </div>
 
         <div class="inputContainer">
-          <span class="button w644"><a href="javascript:showResults();" class="buttonBlue" title="Suchen">Suchen</a></span>
-    	  </div>
+          <span class="button w644" style="height:20px !important;">
+            <span style="float:right;">
+              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+    		</span>
+			<span id="databaseSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+				<img src="img/ladekreis.gif" />
+			</span>
+    	  </span>
+    	</div>
 
         <!-- SEARCH RESULT LIST START -->
         <div class="spacer"></div>
         <div id="results" class="inputContainer noSpaceBelow full">
           <span class="label">Trefferliste</span>
-          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.saveAsCSV();" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
           <div class="listInfo full">
-            <span class="searchResultsInfo">1-10 von 240 Treffern</span>
-            <span class="searchResultsPaging">(Seite 1 von 24)
-              <em>1</em>
-              <a href="#" title="Seite 2">2</a>
-              <a href="#" title="Seite 3">3</a>
-              <a href="#" title="Seite 4">4</a>
-              <a href="#" title="weiter">></a>
-            </span>
-        	  <div class="fill"></div>
+            <span id="searchDatabaseResultsInfo" class="searchResultsInfo">&nbsp;</span>
+            <span id="searchDatabaseResultsPaging" class="searchResultsPaging">&nbsp;</span>
+        	<div class="fill"></div>
           </div>
 
-    	    <table id="datbaseSearchResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable full relativePos">
-    	      <thead>
-    		      <tr>
-          			<th field="type" dataType="String" width="74" nosort="true"></th>
-          			<th field="name" dataType="String" width="610" nosort="true">Name</th>
-    		      </tr>
-    	      </thead>
-    	      <tbody>
-    		      <tr value="1">
-    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=O" title="Objekt &ouml;ffnen: Umweltdatenkatalog">Umweltdatenkatalog</a></td></tr>
-    		      <tr value="2">
-    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=O" title="Objekt &ouml;ffnen: Umweltdatenkatalog">Umweltdatenkatalog des Saarlands</a></td></tr>
-    	      </tbody>
-    	    </table>
-
-          <div class="listInfo full noSpaceBelow">
-            <span class="searchResultsInfo">1-10 von 240 Treffern</span>
-            <span class="searchResultsPaging">(Seite 1 von 24)
-              <em>1</em>
-              <a href="#" title="Seite 2">2</a>
-              <a href="#" title="Seite 3">3</a>
-              <a href="#" title="Seite 4">4</a>
-              <a href="#" title="weiter">></a>
-            </span>
-        	  <div class="fill"></div>
-          </div>
-    	  </div>
+			<div class="tableContainer rows10 full">
+	    	    <table id="datbaseSearchResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
+	    	      <thead>
+	    		      <tr>
+	          			<th nosort="true" field="icon" dataType="String" width="23" nosort="true"></th>
+	          			<th nosort="true" field="linkLabel" dataType="String" width="634" nosort="true">Name</th>
+	    		      </tr>
+	    	      </thead>
+			      <colgroup>
+				    <col width="23">
+				    <col width="634">
+			      </colgroup>
+	    	      <tbody>
+	    	      </tbody>
+	    	    </table>
+			</div>
+	   	  </div>
         <!-- SEARCH RESULT LIST END -->
 
         <!-- LEFT HAND SIDE CONTENT END -->

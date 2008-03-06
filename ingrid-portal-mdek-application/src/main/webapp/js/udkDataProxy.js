@@ -1163,21 +1163,28 @@ udkDataProxy._setObjectData = function(nodeData)
   // Comments
   commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
 
+/*
   // Init the publication select widget depending on the publication condition of the parent
   var widgetDP = dojo.widget.byId("extraInfoPublishArea").dataProvider;
   var valueList = [];
   if (nodeData.parentPublicationCondition == null)
   	nodeData.parentPublicationCondition = 1;
 
-  switch (nodeData.parentPublicationCondition) {
-	case 1: valueList.push([message.get("extraInfo.publicationCondition.internet"), "1"]);
-	case 2: valueList.push([message.get("extraInfo.publicationCondition.intranet"), "2"]);
-	case 3: valueList.push([message.get("extraInfo.publicationCondition.internal"), "3"]);
+//  switch (nodeData.parentPublicationCondition) {
+//	case 1: valueList.push([message.get("extraInfo.publicationCondition.internet"), "1"]);
+//	case 2: valueList.push([message.get("extraInfo.publicationCondition.intranet"), "2"]);
+//	case 3: valueList.push([message.get("extraInfo.publicationCondition.internal"), "3"]);
 //	case 4: valueList.push([message.get("extraInfo.publicationCondition.notShared"), "4"]);
-	default: valueList.unshift(["", ""]);
-  }
-  widgetDP.setData(valueList);
+//	default: valueList.unshift(["", ""]);
+//  }
 
+  valueList.push(["", ""]);
+  valueList.push([message.get("extraInfo.publicationCondition.internet"), "1"]);
+  valueList.push([message.get("extraInfo.publicationCondition.intranet"), "2"]);
+  valueList.push([message.get("extraInfo.publicationCondition.internal"), "3"]);
+	
+  widgetDP.setData(valueList);
+*/
 
   // -- Spatial --
   // The table containing entries from the sns is indexed by their topicID

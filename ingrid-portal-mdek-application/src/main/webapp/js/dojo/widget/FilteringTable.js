@@ -656,6 +656,8 @@ dojo.widget.defineWidget(
 
 	if (this.curEditor instanceof dojo.widget.DropdownDatePicker) {
 		dojo.event.connectOnce("after", this.curEditor, "onValueChanged", this, "onEditorFocusLost");
+		// Didn't get this to work on IE. We can't determine if the user clicked the ddp icon after the onblur event
+		// On mozilla we can check event.explicitOriginalTarget
 		dojo.event.connectOnce("after", this.curEditor.inputNode, "onblur", this, "onEditorFocusLost");
 	} else if (this.curEditor instanceof ingrid.widget.Select) {
 		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
@@ -669,11 +671,18 @@ dojo.widget.defineWidget(
   // usually called by the onBlur event of the cell editor ( see beginEdit() )
   onEditorFocusLost: function(e) {
 	// A click on the date picker icon should not close the editor
-	if (this.curEditor instanceof dojo.widget.DropdownDatePicker && e.explicitOriginalTarget) {
-		var target = e.explicitOriginalTarget;
-		var ddp = this.curEditor.domNode;
-		if (ddp.isSameNode(target.parentNode) && target instanceof HTMLImageElement) {
-			return;
+	if (this.curEditor instanceof dojo.widget.DropdownDatePicker) {
+		if (e.explicitOriginalTarget) {
+			// Mozilla specific
+			var target = e.explicitOriginalTarget;
+			var ddp = this.curEditor.domNode;
+			if (ddp.isSameNode(target.parentNode) && target instanceof HTMLImageElement) {
+				return;
+			}
+		} else if (dojo.render.html.ie){
+			// IE specific
+			if (document.activeElement == this.curEditor.domNode.parentNode)
+				return;
 		}
 	// if the select box is open during onBlur, this is no EditorLostFocus event
 	// the onBlur event was probabely generated while opening the select box
@@ -692,7 +701,6 @@ dojo.widget.defineWidget(
 		if (this.curEditor instanceof dojo.widget.DropdownDatePicker) {
 			dojo.event.disconnect("after", this.curEditor, "onValueChanged", this, "onEditorFocusLost");
 			dojo.event.disconnect("after", this.curEditor.inputNode, "onblur", this, "onEditorFocusLost");
-		
 		} else if (this.curEditor instanceof ingrid.widget.Select) {
 			dojo.event.disconnect("after", this.curEditor, "setValue", this, "onEditorFocusLost");
 			dojo.event.disconnect("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");

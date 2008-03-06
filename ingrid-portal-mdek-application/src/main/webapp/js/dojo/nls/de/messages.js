@@ -8,6 +8,7 @@
     "general.help":"Hilfe - Allgemeines",
     "general.showAddress":"Zeige Adresse",
     "general.delete":"Löschen",
+    "general.closeWindow":"Alle nicht gespeicherten \u00c4nderungen werden dabei verworfen.",
 
     "tree.nodeNew":"Neu anlegen",
     "tree.nodePreview":"Vorschau und Druckansicht",
