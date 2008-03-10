@@ -33,6 +33,11 @@ public class IPlugHelperDscEcs extends IPlugHelper {
 
     static private final Log log = LogFactory.getLog(IPlugHelperDscEcs.class);
 
+    static private final String KEY_RELATION_FILTER = "RELATION_FILTER";
+    static private final String KEY_RELATION_FILTER_FROM_OBJ_ID = "RELATION_FILTER_FROM_OBJ_ID";
+    static private final String KEY_RELATION_FILTER_TYPE = "RELATION_FILTER_TYPE";
+    static private final String KEY_RELATION_FILTER_TO_OBJ_ID = "RELATION_FILTER_TO_OBJ_ID";
+
     /**
      * Get top ECS Objects as a List of IngridHits (containing metadata ID and UDK_CLASS)
      *  
@@ -68,12 +73,13 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         HashMap filter = new HashMap();
         // gleiches Objekt raus filtern
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
+        // HACK !!!
+        // we also apply filter for child relations WHEN FETCHING HITS !!!
+        // SO WE ALWAYS GET REAL CHILDREN !!!
+        addRelationFilter(filter, objId, "0", null);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
         	" t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
         	requestedMetadata, filter, maxNumber);
-        // add on ! Additional check if hits are of requested relation ! backend can't resolve exactly due to flatened
-        // index (array in indexfield !)
-    	result = IPlugHelperDscEcs.filterRelationHits(objId, "0", null, result);
         return result;
     }
     
@@ -158,13 +164,6 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     static public ArrayList getSubDocs(String docParentId, String plugId, String plugType, Integer maxNumber) {
         ArrayList hits = new ArrayList();
         
-        // If only one Hit requested, set to 2, because backend also
-        // delivers Parent object itself as hit, which will be filtered.
-        // So we at least have the second hit. If no 2. hit, there are no subdocs !
-        if (maxNumber != null && maxNumber.intValue() == 1) {
-        	maxNumber = new Integer(2);
-        }
-
     	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
    			hits = IPlugHelperDscEcs.getSubordinatedObjects(docParentId, plugId, maxNumber);
 
@@ -219,13 +218,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         
         // request hits in chunks of 20 results per page, when all hits requested !
         int chunkSize = 20;
-        boolean getAllHits = true;
-        if (maxNumberOfHits != null) {
-            // restricted number of hits, requested all at once !
-            getAllHits = false;
-            chunkSize = maxNumberOfHits.intValue();
-        }
-
+        boolean fetchNextChunk = true;
         try {
             IngridQuery query = QueryStringParser.parse(queryStr.concat(" ranking:any datatype:any"));
             IngridHits hits;
@@ -238,30 +231,60 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                 IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query,
                         requestedMetaData);
                 for (int j = 0; j < details.length; j++) {
+                	IngridHit hit = hits.getHits()[j];
                     IngridHitDetail detail = (IngridHitDetail) details[j];
+
+                    // convert all requested detail fields into string ... -> needed for filters (relation type)
+                    for (int i = 0; i < requestedMetaData.length; i++) {
+                        detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
+                    }
                     boolean include = true;
                     if (filter != null && filter.size() > 0) {
                         Iterator it = filter.entrySet().iterator();
                         while (it.hasNext()) {
                             Map.Entry entry = (Map.Entry) it.next();
                             String recordKey = (String) entry.getKey();
-                            String value = (String) entry.getValue();
-                            if (value.equals(UtilsSearch.getDetailValue(detail, recordKey))) {
-                                include = false;
-                                break;
+                            if (KEY_RELATION_FILTER.equals(recordKey)) {
+                            	// HACK !!! we check whether hit satisfies given relation type !!!
+                                HashMap relFilter = (HashMap) entry.getValue();
+                                IngridHitDetail filteredHitDetail = 
+                                	filterRelationHit((String)relFilter.get(KEY_RELATION_FILTER_FROM_OBJ_ID),
+                               			(String)relFilter.get(KEY_RELATION_FILTER_TYPE),
+                               			(String)relFilter.get(KEY_RELATION_FILTER_TO_OBJ_ID),
+                               			detail);
+                                if (filteredHitDetail == null) {
+                                    include = false;
+                                    break;
+                                }                            	
+                            	
+                            } else {
+                            	// "normal" filter processing ! we just compare one value !
+                                String value = (String) entry.getValue();
+                                if (value.equals(UtilsSearch.getDetailValue(detail, recordKey))) {
+                                    include = false;
+                                    break;
+                                }                            	
                             }
                         }
                     }
                     if (include) {
-                        // flatten alle detail fields into a string ...
-                        for (int i = 0; i < requestedMetaData.length; i++) {
-                            detail.put(requestedMetaData[i], UtilsSearch.getDetailValue(detail, requestedMetaData[i]));
-                        }
-                        hits.getHits()[j].put(Settings.RESULT_KEY_DETAIL, detail);
-                        result.add(hits.getHits()[j]);
+                        hit.put(Settings.RESULT_KEY_DETAIL, detail);
+                        result.add(hit);
+                    }
+                    // reduced number of hits requested and already fetched ? -> no further hits
+                    if (maxNumberOfHits != null) {
+                    	if (result.size() >= maxNumberOfHits.intValue()) {
+                    		fetchNextChunk = false;
+                    		break;
+                    	}
                     }
                 }
-            } while (hits.getHits().length == chunkSize && getAllHits);
+                // less than chunk size hits fetched ? -> there are no further hits
+                if (hits.getHits().length != chunkSize) {
+            		fetchNextChunk = false;                    	
+                }
+                // reduced number of hits requested and already fetched -> no further hits
+            } while (fetchNextChunk);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.error("Problems getting hits from iBus!", e);
@@ -280,96 +303,111 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     }
 
     /**
-     * Returns only the Hits which satisfy a specific object relation.
-     * Pass the description of the relation (from, to, type) and the unfiltered hits after initial query.
+     * Add a filter describing an object relation to a filter map
+     * @param filterMap the map where the relation filter is added
+     * @param fromObjId source object of relation
+     * @param relationType type of relation
+     * @param toObjId target object of relation
+     * @return the filterMap containing the added relation filter
+     */
+    static public HashMap addRelationFilter(HashMap filterMap,
+    		String fromObjId, String relationType, String toObjId) {
+        HashMap relationFilter = new HashMap();
+        relationFilter.put(KEY_RELATION_FILTER_FROM_OBJ_ID, fromObjId);
+        relationFilter.put(KEY_RELATION_FILTER_TYPE, relationType);
+        relationFilter.put(KEY_RELATION_FILTER_TO_OBJ_ID, toObjId);
+        filterMap.put(KEY_RELATION_FILTER, relationFilter);
+        
+        return filterMap;
+    }
+
+    /**
+     * Filter A HIT ! Returns passed Hit only, if it satisfies a specific object relation.
+     * Pass the description of the relation (from, to, type) and the unfiltered hit detail.
      * This is necessary due to problems in backend to exactly resolve a relation query (index is flattended
      * and index fields contain multiple relation values). 
      * @param fromObjId udk ObjectID of the source, pass null if this is the one you search for
      * @param relationType udk type of the relation
      * @param toObjId udk ObjectID of the target, pass null if this is the one you search for
-     * @param unfilteredHits the unfiltered hits after the initial query
-     * @return
+     * @param detail the hit detail to check; passed from ibus query
+     * @return null if hit doesn't satisfy relation else the hit detail itself !
      */
-    static public ArrayList filterRelationHits(String fromObjId, String relationType, String toObjId, ArrayList unfilteredHits) {
-    	ArrayList filteredHits = new ArrayList();
-    	
-    	for (int i=0; i<unfilteredHits.size(); i++) {
-    		IngridHit hit = (IngridHit) unfilteredHits.get(i);
-    		IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
+    static public IngridHitDetail filterRelationHit(String fromObjId, String relationType, String toObjId, IngridHitDetail detail) {
+		if (detail == null) {
+			return null;
+		}
 
-    		if (detail != null) {
-            	// hit data
-            	String hitObjId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
-            	String hitFromObjIds = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_FROM);
-            	String hitTypes = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_TYP);
-            	String hitToObjIds = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_TO);
-            	
-            	if (hitObjId == null || hitFromObjIds == null || hitTypes == null || hitToObjIds == null) {
-            		log.warn("NO Relation Data in HIT !");
-            		continue;
-            	}
-
-            	// split values in string into array
-            	String[] hitObjIds = hitObjId.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
-            	String[] fromObjIds = hitFromObjIds.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
-            	String[] toObjIds = hitToObjIds.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
-            	String[] types = hitTypes.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
-            	
-            	if (hitObjIds.length > 1) {
-            		log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
-            		continue;
-            	}
-            	if (fromObjIds.length != types.length ||
-            		fromObjIds.length != toObjIds.length) {
-            		log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
-            		continue;
-            	}
-            	if (fromObjIds.length == 0) {
-            		log.warn("NO from Relation Data in HIT !");
-            		continue;            		
-            	}
-            	
-            	// ok, start filtering
-            	for (int j = 0; j < fromObjIds.length; j++) {
-            		if (fromObjId != null) {
-            			if (!fromObjIds[j].equals(fromObjId)) {
-            				continue;
-            			}
-            		}
-            		if (relationType != null) {
-            			if (!types[j].equals(relationType)) {
-            				continue;
-            			}
-            		}
-            		if (toObjId != null) {
-            			if (!toObjIds[j].equals(toObjId)) {
-            				continue;
-            			}
-            		}
-
-            		// valid relation ! also valid result id ?
-            		if (fromObjId == null) {
-            			// searching from
-            			if (!fromObjIds[j].equals(hitObjId)) {
-                    		log.warn("HIT object ID is different from found FROM object ID ! we skip hit ");
-                    		continue;
-            			}
-            		}
-            		if (toObjId == null) {
-            			// searching to
-            			if (!toObjIds[j].equals(hitObjId)) {
-                    		log.warn("HIT object ID is different from found TO object ID ! we skip hit ");
-                    		continue;
-            			}
-            		}
-            		
-            		// VALID HIT, add to list
-            		filteredHits.add(hit);
-            	}
-    		}
+		// hit data
+    	String hitObjId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
+    	String hitFromObjIds = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_FROM);
+    	String hitTypes = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_TYP);
+    	String hitToObjIds = (String) detail.get(Settings.HIT_KEY_OBJ_OBJ_TO);
+        	
+    	if (hitObjId == null || hitFromObjIds == null || hitTypes == null || hitToObjIds == null) {
+    		log.warn("NO Relation Data in HIT !");
+    		return null;
     	}
-    	
-    	return filteredHits;
+
+    	// split values in string into array
+    	String[] hitObjIds = hitObjId.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+    	String[] fromObjIds = hitFromObjIds.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+    	String[] toObjIds = hitToObjIds.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+    	String[] types = hitTypes.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+        	
+    	if (hitObjIds.length > 1) {
+    		log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
+    		return null;
+    	}
+    	if (fromObjIds.length != types.length ||
+        	fromObjIds.length != toObjIds.length) {
+    		log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
+    		return null;
+    	}
+    	if (fromObjIds.length == 0) {
+    		log.warn("NO from Relation Data in HIT !");
+    		return null;
+    	}
+        	
+    	// ok, start filtering
+    	IngridHitDetail retHitDetail = null;
+    	for (int j = 0; j < fromObjIds.length; j++) {
+    		if (fromObjId != null) {
+    			if (!fromObjIds[j].equals(fromObjId)) {
+    				continue;
+    			}
+    		}
+    		if (relationType != null) {
+    			if (!types[j].equals(relationType)) {
+    				continue;
+    			}
+    		}
+    		if (toObjId != null) {
+    			if (!toObjIds[j].equals(toObjId)) {
+    				continue;
+    			}
+    		}
+
+    		// valid relation ! also valid result id ?
+    		if (fromObjId == null) {
+    			// searching from
+    			if (!fromObjIds[j].equals(hitObjId)) {
+            		log.warn("HIT object ID is different from found FROM object ID ! we skip hit ");
+            		continue;
+    			}
+    		}
+    		if (toObjId == null) {
+    			// searching to
+    			if (!toObjIds[j].equals(hitObjId)) {
+            		log.warn("HIT object ID is different from found TO object ID ! we skip hit ");
+            		continue;
+    			}
+    		}
+    		
+    		// VALID HIT !
+    		retHitDetail = detail;
+    	}
+	
+    	return retHitDetail;
     }
 
     /**

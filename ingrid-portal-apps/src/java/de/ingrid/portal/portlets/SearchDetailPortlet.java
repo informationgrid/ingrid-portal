@@ -31,7 +31,6 @@ import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -619,11 +618,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         HashMap filter = new HashMap();
         // gleiches Objekt raus filtern
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
+        // HACK !!!
+        // we also apply filter for parent relations WHEN FETCHING HITS !!!
+        // SO WE ALWAYS GET REAL PARENTS !!!
+        IPlugHelperDscEcs.addRelationFilter(filter, null, "0", objId);
         ArrayList result = getHits("t012_obj_obj.object_to_id:".concat(objId).concat(
                 " t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
-        // add on ! Additional check if hits are of requested relation type ! backend can't resolve exactly due to flatened
-        // index (array in indexfield !)
-    	result = IPlugHelperDscEcs.filterRelationHits(null, "0", objId, result);
         return result;
     }
 
@@ -638,13 +638,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         requestedMetadata[2] = Settings.HIT_KEY_OBJ_OBJ_FROM;
         requestedMetadata[3] = Settings.HIT_KEY_OBJ_OBJ_TYP;
         requestedMetadata[4] = Settings.HIT_KEY_OBJ_OBJ_TO;
+        // gleiches Objekt raus filtern
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_OBJ_ID, objId);
+        // HACK !!!
+        // we also apply filter for "querverweise" relations WHEN FETCHING HITS !!!
+        // SO WE ALWAYS GET REAL "querverweise" !!!
+        IPlugHelperDscEcs.addRelationFilter(filter, objId, "1", null);
         ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
                 " t012_obj_obj.typ:1 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, filter);
-        // add on ! Additional check if hits are of requested relation type ! backend can't resolve exactly due to flatened
-        // index (array in indexfield !)
-    	result = IPlugHelperDscEcs.filterRelationHits(objId, "1", null, result);
     	return result;
     }
 
