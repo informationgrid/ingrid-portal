@@ -1,13 +1,19 @@
 package de.ingrid.mdek;
 
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.Logger;
+
+
 public class VersionInformation {
+
+	private final static Logger log = Logger.getLogger(VersionInformation.class);	
 
 	String name;
 	String version;
 	String buildNumber;
-	String timeStamp;
+	Date timeStamp;
 	
 	// Init Method is called by the Spring Framework on initialization
     public void init() throws Exception {
@@ -16,7 +22,11 @@ public class VersionInformation {
 		this.name = resourceBundle.getString("build.name");
 		this.version = resourceBundle.getString("build.version");
 		this.buildNumber = resourceBundle.getString("build.number");
-		this.timeStamp = resourceBundle.getString("build.timestamp");
+		try {
+			this.timeStamp = new Date(Long.valueOf(resourceBundle.getString("build.timestamp")));
+		} catch (NumberFormatException e) {
+			this.timeStamp = new Date();
+		}
     }
 
     // getter for dwr
@@ -36,7 +46,7 @@ public class VersionInformation {
 		return buildNumber;
 	}
 
-	public String getTimeStamp() {
+	public Date getTimeStamp() {
 		return timeStamp;
 	}
 }

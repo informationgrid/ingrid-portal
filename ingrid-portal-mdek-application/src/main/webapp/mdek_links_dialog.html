@@ -503,13 +503,13 @@ showAssignObjectDialog = function() {
 	deferred.addCallback(setSelectedObject);
 
 	if (curSelectedObject) {
-		dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true,{
+		dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 522, 520, true,{
 			// custom parameters
 			resultHandler: deferred,
 			jumpToNode: curSelectedObject.uuid
 		});
 	} else {
-		dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 502, 500, true,{
+		dialog.showPage('Objekt ausw&auml;hlen', 'mdek_links_select_object_dialog.html', 522, 520, true,{
 			// custom parameters
 			resultHandler: deferred
 		});

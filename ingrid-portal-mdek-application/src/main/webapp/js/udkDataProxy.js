@@ -1279,7 +1279,7 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 
 	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
 	// If the reference system ID == -1 then we receive a free entry, otherwise we have to resolve the id
-	dojo.widget.byId("ref1SpatialSystem").setValue(nodeData.ref1SpatialSystem, nodeData.ref1SpatialSystemId);
+	dojo.widget.byId("ref1SpatialSystem").setValue(nodeData.ref1SpatialSystem);
 
 	dojo.widget.byId("ref1AltAccuracy").setValue(nodeData.ref1AltAccuracy);
 	dojo.widget.byId("ref1PosAccuracy").setValue(nodeData.ref1PosAccuracy);
@@ -1596,9 +1596,10 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 
 	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
 	// If we have a free entry the reference system ID = -1
-	nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
-	if (nodeData.ref1SpatialSystemId == -1)
-		nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
+//	nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
+//	if (nodeData.ref1SpatialSystemId == -1)
+//		nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
+	nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
 
 	nodeData.ref1AltAccuracy = dojo.widget.byId("ref1AltAccuracy").getValue();
 	nodeData.ref1PosAccuracy = dojo.widget.byId("ref1PosAccuracy").getValue();
@@ -1767,6 +1768,7 @@ udkDataProxy._tableDataToList = function(tableData, identifier) {
 	return resultList;
 }
 
+
 // Add Indices (Id values) to a passed list
 udkDataProxy._addTableIndices = function(list) {
 	if (list) {
@@ -1783,7 +1785,7 @@ udkDataProxy._addDisplayDates = function(list) {
 	if (list) {
 		for (var i = 0; i < list.length; ++i) {
 //			list[i].displayDate = list[i].date.toLocaleString();
-			list[i].displayDate = dojo.date.format(list[i].date, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"H:m"});
+			list[i].displayDate = dojo.date.format(list[i].date, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"});
 		}
 		return list;
 	} else {

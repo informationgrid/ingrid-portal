@@ -67,7 +67,8 @@
     "sns.noDescriptorHint":"The specified Descriptor was not found.",
 	"sns.noSimilarTermsHint":"The SNS query returned no results.",
     "sns.numberOfTerms":"Number of Terms:",
-        
+    "sns.freeTermAddHint":"The specified term could not be found in the SNS. Therefore it was added to the list of loose search terms.",
+
 	"links.selectNodeHint":"Please select a target node.",
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 	"links.noLinkToSelfHint":"It is not possible to create a link to the same object.",

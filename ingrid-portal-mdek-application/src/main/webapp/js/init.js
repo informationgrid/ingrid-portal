@@ -318,18 +318,27 @@ function initFreeTermsButtons() {
 				callback:function(topics) {
 					// Remove all non-descriptors from the list
 					var descriptors = [];
+					var queryIsNodeLabel = false;
 					dojo.lang.forEach(topics, function(item){
-						if (item.type == "DESCRIPTOR")
+//						dojo.debug("topic: ["+item.title+", "+item.type+"]");
+						// Check if a term from the result is equal to our search query and a node label 
+						if (term.toLowerCase() == item.title.toLowerCase() && item.type == "NODE_LABEL") {
+							queryIsNodeLabel = true;
+						}
+
+						// Filter all the descriptors from the result
+						if (item.type == "DESCRIPTOR") {
 							descriptors.push(item);
+						}
 					});
 
-					if (descriptors.length != 0) {
+					if (descriptors.length != 0 && !queryIsNodeLabel) {
 						// Topics found. Add the results to the topic list
 						var topicStore = _this._termListWidget.store;
 						// If the term we searched for was a descriptor and is contained in the result list, only add it
 						// to the list and ignore the rest
 						for (var i = 0; i < descriptors.length; ++i) {
-							if (term == descriptors[i].title) {
+							if (term.toLowerCase() == descriptors[i].title.toLowerCase()) {
 								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != descriptors[i].topicId; })) {
 									// Topic is new. Add it to the topic list
 									topicStore.addData( {Id: getNewKey(topicStore), topicId: descriptors[i].topicId, title: descriptors[i].title} );
@@ -388,6 +397,7 @@ function initFreeTermsButtons() {
 							// Scroll to the added descriptor
 							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
 							dojo.html.scrollIntoView(rows[rows.length-1]);
+							dialog.show(message.get("general.hint"), message.get("sns.freeTermAddHint"), dialog.INFO);			
 						}
 					}},
 				timeout:8000,
@@ -579,7 +589,7 @@ function initAddressReferenceTables() {
 				var data = mainStore.getData();
 				this.clearData();
 				for (i in data) {
-					if (data[i].refOfRelation == this.relationTypeFilter) {
+					if (data[i].typeOfRelation == this.relationTypeFilter) {
 						var item = this.getDataByKey(data[i].Id);
 						if (!item) {
 							this.addData(data[i]);
@@ -601,7 +611,7 @@ function initAddressReferenceTables() {
 				var data = mainStore.getData();
 				this.clearData();
 				for (i in data) {
-					if (data[i].refOfRelation == this.relationTypeFilter) {
+					if (data[i].typeOfRelation == this.relationTypeFilter) {
 						var item = this.getDataByKey(data[i].Id);
 						if (!item) {
 							this.addData(data[i]);
@@ -631,7 +641,6 @@ function initAddressReferenceTables() {
 						case 3400: if (relName == "Projektleiter") break;
 						case 3410: if (relName == "Beteiligte") break;
 						default:
-							relRef = null;
 							this.removeData(item);								
 							break;
 					}
@@ -641,19 +650,22 @@ function initAddressReferenceTables() {
 					switch (this.relationTypeFilter) {
 						case 3360:
 							if (relName == "Standort") {
-								obj.refOfRelation = 3360;
+								obj.typeOfRelation = 3360;
+								obj.refOfRelation = 2010;
 								this.addData(obj);
 							}
 							break;
 						case 3400:
 							if (relName == "Projektleiter") {
-								obj.refOfRelation = 3400;
+								obj.typeOfRelation = 3400;
+								obj.refOfRelation = 2010;
 								this.addData(obj);
 							}
 							break;
 						case 3410:
 							if (relName == "Beteiligte") {
-								obj.refOfRelation = 3410;
+								obj.typeOfRelation = 3410;
+								obj.refOfRelation = 2010;
 								this.addData(obj);
 							}
 							break;
@@ -877,9 +889,9 @@ function initSysLists() {
 	var selectWidgetIDs = ["spatialRefAltVDate", "spatialRefAltMeasure", "timeRefTypeCombobox",
 		"generalAddressCombobox", "geometryTypeEditor", "timeRefPeriodicity", "availabilityMediaOptionsMediumCombobox",
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
-		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableCriteriaEditor",
+		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
-		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea",
+		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea", "availabilityDataFormatName",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType"]; 

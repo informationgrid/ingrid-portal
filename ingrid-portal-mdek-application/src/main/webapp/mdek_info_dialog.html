@@ -21,7 +21,7 @@ function setVersionInformation(ver) {
 	displayText += "Build name: "+ver.name+"<br>";
 	displayText += "Build version: "+ver.version+"<br>";
 	displayText += "Build number: "+ver.buildNumber+"<br>";
-	displayText += "Build timestamp: "+ver.timeStamp+"<br>";
+	displayText += "Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
 
 	infoDiv.innerHTML = displayText;
 }

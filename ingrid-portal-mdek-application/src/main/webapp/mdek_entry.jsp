@@ -1414,12 +1414,12 @@ function hideSplash(){
 	                  <span class="label"><label for="extraInfoXMLExportTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'XML-Export-Kriterium')">XML-Export-Kriterium</label></span>
 	                  <div class="tableContainer headHiddenRows4 third1">
 	                    <div class="cellEditors" id="extraInfoXMLExportTableEditors">
-	                      <div dojoType="ingrid:ComboBox" toggle="plain" style="width:161px;" listId="1370" id="extraInfoXMLExportTableCriteriaEditor"></div>
+	                      <div dojoType="ingrid:ComboBox" toggle="plain" style="width:161px;" listId="1370" id="extraInfoXMLExportTableEditor"></div>
 	                    </div>
 	              	    <table id="extraInfoXMLExportTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
-	                    			<th nosort="true" field="title" dataType="String" editor="extraInfoXMLExportTableCriteriaEditor">XML-Export-Kriterium</th>
+	                    			<th nosort="true" field="title" dataType="String" editor="extraInfoXMLExportTableEditor">XML-Export-Kriterium</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1477,7 +1477,10 @@ function hideSplash(){
 	                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenformat')">Datenformat</label></span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="availabilityDataFormatEditors">
+<!-- 
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatName"></div>
+ -->
+                        <div dojoType="ingrid:ComboBox" autoComplete="false" toggle="plain" style="width:150px;" listId="1320" widgetId="availabilityDataFormatName"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatVersion"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatCompression"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatPixelDepth"></div>
@@ -1623,7 +1626,7 @@ function hideSplash(){
 	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themen')">Themen</label></span>
 	                    <div class="tableContainer headHiddenRows4 halfInside">
 	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1410" id="thesaurusEnvTopicsCombobox"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1400" id="thesaurusEnvTopicsCombobox"></div>
 	                      </div>
 	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
@@ -1641,7 +1644,7 @@ function hideSplash(){
 	                    <span id="thesaurusEnvCatsLabel" class="label"><label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kategorien')">Kategorien</label></span>
 	                    <div class="tableContainer headHiddenRows4 halfInside">
 	                      <div class="cellEditors" id="thesaurusEnvCatsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1400" id="thesaurusEnvCatsCombobox"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1410" id="thesaurusEnvCatsCombobox"></div>
 	                      </div>
 	                	    <table id="thesaurusEnvCats" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
@@ -1822,12 +1825,12 @@ function hideSplash(){
 			      <div class="inputContainer noSpaceBelow">
 			        <div class="half left">
 			          <span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
-			          <span class="input"><input dojoType="ingrid:Combobox" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
+			          <span class="input"><input dojoType="ingrid:ComboBox" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
 			        </div>
 			  
 			        <div class="half">
 			          <span id="headerAddressType2TitleLabel" class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
-			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
+			          <span class="input"><input dojoType="ingrid:ComboBox" style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
 			        </div>
 			        <div class="fill"></div>
 			  	  </div>
@@ -1855,12 +1858,12 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 			          <span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
-			          <span class="input"><input dojoType="ingrid:Combobox" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
+			          <span class="input"><input dojoType="ingrid:ComboBox" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
 			        </div>
 			  
 			        <div class="half">
 			          <span class="label"><label for="headerAddressType3Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
-			          <span class="input"><input dojoType="ingrid:Select" style="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
+			          <span class="input"><input dojoType="ingrid:ComboBox" style="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
 			        </div>
 			        <div class="fill"></div>
 			  	  </div>

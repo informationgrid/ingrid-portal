@@ -79,8 +79,8 @@ public class MdekDataBean {
 	public ArrayList<String> thesaurusFreeTermsTable;
 	public ArrayList<Integer> thesaurusTopicsList;
 	public Boolean thesaurusEnvExtRes;
-	public ArrayList<String> thesaurusEnvTopicsList;
-	public ArrayList<String> thesaurusEnvCatsList;
+	public ArrayList<Integer> thesaurusEnvTopicsList;
+	public ArrayList<Integer> thesaurusEnvCatsList;
 
 	// Links
 	public ArrayList<MdekDataBean> linksToObjectTable;
@@ -98,7 +98,6 @@ public class MdekDataBean {
 	public Integer ref1VFormatTopology;
 	public ArrayList<VectorFormatDetailsBean> ref1VFormatDetails;
 	public String ref1SpatialSystem;
-	public Integer ref1SpatialSystemId;
 	public ArrayList<ScaleBean> ref1Scale;
 	public Double ref1AltAccuracy;
 	public Double ref1PosAccuracy;
@@ -493,8 +492,8 @@ public class MdekDataBean {
 		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
 		this.setThesaurusFreeTermsTable(new ArrayList<String>());
 		this.setThesaurusTopicsList(new ArrayList<Integer>());
-		this.setThesaurusEnvTopicsList(new ArrayList<String>());
-		this.setThesaurusEnvCatsList(new ArrayList<String>());
+		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
+		this.setThesaurusEnvCatsList(new ArrayList<Integer>());
 		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksToUrlTable(new ArrayList<UrlBean>());
@@ -534,25 +533,25 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<String> getThesaurusEnvTopicsList() {
+	public ArrayList<Integer> getThesaurusEnvTopicsList() {
 		return thesaurusEnvTopicsList;
 	}
 
 
 
-	public void setThesaurusEnvTopicsList(ArrayList<String> thesaurusEnvTopicsList) {
+	public void setThesaurusEnvTopicsList(ArrayList<Integer> thesaurusEnvTopicsList) {
 		this.thesaurusEnvTopicsList = thesaurusEnvTopicsList;
 	}
 
 
 
-	public ArrayList<String> getThesaurusEnvCatsList() {
+	public ArrayList<Integer> getThesaurusEnvCatsList() {
 		return thesaurusEnvCatsList;
 	}
 
 
 
-	public void setThesaurusEnvCatsList(ArrayList<String> thesaurusEnvCatsList) {
+	public void setThesaurusEnvCatsList(ArrayList<Integer> thesaurusEnvCatsList) {
 		this.thesaurusEnvCatsList = thesaurusEnvCatsList;
 	}
 
@@ -863,31 +862,6 @@ public class MdekDataBean {
 	}
 
 
-
-	public ArrayList<String> getExtraInfoXMLExportTable() {
-		return extraInfoXMLExportTable;
-	}
-
-
-
-	public void setExtraInfoXMLExport(ArrayList<String> extraInfoXMLExportTable) {
-		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
-	}
-
-
-
-	public ArrayList<String> getExtraInfoLegalBasicsTable() {
-		return extraInfoLegalBasicsTable;
-	}
-
-
-
-	public void setExtraInfoLegalBasicsTable(ArrayList<String> extraInfoLegalBasicsTable) {
-		this.extraInfoLegalBasicsTable = extraInfoLegalBasicsTable;
-	}
-
-
-
 	public String getExtraInfoPurpose() {
 		return extraInfoPurpose;
 	}
@@ -944,13 +918,6 @@ public class MdekDataBean {
 	public void setAvailabilityCosts(String availabilityCosts) {
 		this.availabilityCosts = availabilityCosts;
 	}
-
-
-
-	public void setExtraInfoXMLExportTable(ArrayList<String> extraInfoXMLExportTable) {
-		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
-	}
-
 
 
 	public String getUuid() {
@@ -1367,36 +1334,6 @@ public class MdekDataBean {
 	}
 
 
-
-
-	public String getRef1SpatialSystem() {
-		return ref1SpatialSystem;
-	}
-
-
-
-
-	public void setRef1SpatialSystem(String ref1SpatialSystem) {
-		this.ref1SpatialSystem = ref1SpatialSystem;
-	}
-
-
-
-
-	public Integer getRef1SpatialSystemId() {
-		return ref1SpatialSystemId;
-	}
-
-
-
-
-	public void setRef1SpatialSystemId(Integer ref1SpatialSystemId) {
-		this.ref1SpatialSystemId = ref1SpatialSystemId;
-	}
-
-
-
-
 	public String getRef2DocumentType() {
 		return ref2DocumentType;
 	}
@@ -1476,6 +1413,49 @@ public class MdekDataBean {
 
 	public void setRelationType(Integer relationType) {
 		this.relationType = relationType;
+	}
+
+
+
+
+	public String getRef1SpatialSystem() {
+		return ref1SpatialSystem;
+	}
+
+
+
+
+	public void setRef1SpatialSystem(String ref1SpatialSystem) {
+		this.ref1SpatialSystem = ref1SpatialSystem;
+	}
+
+
+
+
+	public ArrayList<String> getExtraInfoXMLExportTable() {
+		return extraInfoXMLExportTable;
+	}
+
+
+
+
+	public void setExtraInfoXMLExportTable(ArrayList<String> extraInfoXMLExportTable) {
+		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
+	}
+
+
+
+
+	public ArrayList<String> getExtraInfoLegalBasicsTable() {
+		return extraInfoLegalBasicsTable;
+	}
+
+
+
+
+	public void setExtraInfoLegalBasicsTable(
+			ArrayList<String> extraInfoLegalBasicsTable) {
+		this.extraInfoLegalBasicsTable = extraInfoLegalBasicsTable;
 	}
 
 }

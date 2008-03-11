@@ -10,11 +10,25 @@ detailHelper.renderAddressEntry = function(address) {
 	if (this.isValid(address.organisation)) {
 		entry += address.organisation + "\n";
 	}
-	if (this.isValid(address.nameForm)) {
-		block += address.nameForm + " ";
+
+	var nameForm = null;
+	if (address.nameForm.key != null && address.nameForm.key != -1) {
+		nameForm = dojo.widget.byId("headerAddressType2Style").getDisplayValueForValue(address.nameForm.key);
+	} else if (address.nameForm.value != null) {
+		nameForm = address.nameForm.value;
 	}
-	if (this.isValid(address.titleOrFunction)) {
-		block += address.titleOrFunction + " ";
+	var titleOrFunction = null;
+	if (address.titleOrFunction.key != null && address.titleOrFunction.key != -1) {
+		titleOrFunction = dojo.widget.byId("headerAddressType2Style").getDisplayValueForValue(address.titleOrFunction.key);
+	} else if (address.titleOrFunction.value != null) {
+		titleOrFunction = address.titleOrFunction.value;
+	}
+
+	if (this.isValid(nameForm)) {
+		block += nameForm + " ";
+	}
+	if (this.isValid(titleOrFunction)) {
+		block += titleOrFunction + " ";
 	}
 	if (this.isValid(address.givenName)) {
 		block += address.givenName + " ";

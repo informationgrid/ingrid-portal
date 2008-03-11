@@ -24,6 +24,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.DataFormatBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.DBContentBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.JobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.KeyValuePair"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.LinkDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.LocationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekAddressBean"/>

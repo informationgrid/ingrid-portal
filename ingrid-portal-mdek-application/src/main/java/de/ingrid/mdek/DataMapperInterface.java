@@ -22,13 +22,14 @@ public interface DataMapperInterface {
 
 	// We return an Object since we don't know all the possible target types in advance 
 	public Object convertFromObjectRepresentation(MdekDataBean data);
-
 	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj);
-
 	public MdekAddressBean getDetailedAddressRepresentation(Object obj);
-
 	public Object convertFromAddressRepresentation(MdekAddressBean data);
 
+	// List IDs for key/value lookup
+	public final static int MDEK_ADDRESS_REF_ID = 505;
+	public final static int MDEK_ADDRESS_REF_SPECIAL_ID = 2010;
+	
 	
 	// Miscellaneous
 	public final static String MDEK_ID = "id";

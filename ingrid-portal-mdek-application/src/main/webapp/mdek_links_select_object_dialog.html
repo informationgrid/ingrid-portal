@@ -79,6 +79,9 @@ init = function() {
 					tree.selectNode(targetNode);
 					tree.selectedNode = targetNode;
 					dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
+					if (!dojo.render.html.ie)				
+						dojo.html.scrollIntoView(targetNode.domNode);
+				
 				});
 			});
 			dojo.event.topic.publish("/getObjectPathRequest", {
@@ -163,7 +166,7 @@ assignObject = function() {
 	  <div id="objectContent" class="content">
 
       <!-- CONTENT START -->
-      <div class="inputContainer w478">
+      <div class="inputContainer w478 h413 scrollable">
       	<div dojoType="ContentPane" id="treeContainerAssignObj">
           <!-- tree components -->
           <div dojoType="ingrid:TreeController" widgetId="treeControllerAssignObj" RpcUrl="server/treelistener.php"></div>

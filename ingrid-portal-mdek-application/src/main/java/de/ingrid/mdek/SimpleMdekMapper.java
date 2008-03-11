@@ -17,6 +17,7 @@ import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.dwr.CommentBean;
 import de.ingrid.mdek.dwr.DBContentBean;
 import de.ingrid.mdek.dwr.DataFormatBean;
+import de.ingrid.mdek.dwr.KeyValuePair;
 import de.ingrid.mdek.dwr.LinkDataBean;
 import de.ingrid.mdek.dwr.LocationBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
@@ -34,7 +35,7 @@ import de.ingrid.utils.IngridDocument;
 public class SimpleMdekMapper implements DataMapperInterface {
 
 	private final static Logger log = Logger.getLogger(SimpleMdekMapper.class);
-
+	private SysListMapper sysListMapper;
 	
 	// -- Dispatch to the local private methods --
 	public MdekDataBean getDetailedObjectRepresentation(Object obj) {
@@ -63,9 +64,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			return null;		
 	}
 	// --
-
-
-	private static MdekDataBean getDetailedObjectRepresentation(
+	
+	private MdekDataBean getDetailedObjectRepresentation(
 			HashMap<String, Object> obj) {
 
 		// by default, assertions are disabled at runtime.
@@ -150,16 +150,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
-		
-		ArrayList<String> strList = (ArrayList<String>) obj.get(MdekKeys.EXPORTS);
-		if (strList != null)
-			mdekObj.setExtraInfoXMLExportTable(strList);
-		
-		strList = (ArrayList<String>) obj.get(MdekKeys.LEGISLATIONS);
-		if (strList != null)
-			mdekObj.setExtraInfoLegalBasicsTable(strList);
+		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<HashMap<String, Object>>) obj.get(MdekKeys.EXPORTS)));
+		mdekObj.setExtraInfoLegalBasicsTable(mapToExtraInfoLegalBasicsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LEGISLATIONS)));
 
-		
 		// Availability
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
 		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.USE_CONSTRAINTS));
@@ -182,13 +175,13 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setThesaurusEnvExtRes(false);
 		}
 
-		strList = (ArrayList<String>) obj.get(MdekKeys.ENV_TOPICS);
-		if (strList != null)
-			mdekObj.setThesaurusEnvTopicsList(strList);
+		intList = (ArrayList<Integer>) obj.get(MdekKeys.ENV_TOPICS);
+		if (intList != null)
+			mdekObj.setThesaurusEnvTopicsList(intList);
 		
-		strList = (ArrayList<String>) obj.get(MdekKeys.ENV_CATEGORIES);
-		if (strList != null)
-			mdekObj.setThesaurusEnvCatsList(strList);
+		intList = (ArrayList<Integer>) obj.get(MdekKeys.ENV_CATEGORIES);
+		if (intList != null)
+			mdekObj.setThesaurusEnvCatsList(intList);
 		
 		// Links
 //		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
@@ -209,15 +202,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 				break;
 			mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
 			mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
-			mdekObj.setRef1SpatialSystem((String) td1Map.get(MdekKeys.COORDINATE_SYSTEM));
-			mdekObj.setRef1SpatialSystemId((Integer) td1Map.get(MdekKeys.REFERENCESYSTEM_ID));
+			KeyValuePair kvp = mapToKeyValuePair(td1Map, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
+			mdekObj.setRef1SpatialSystem(kvp.getValue());
 			mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
 			mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
 			mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
 			mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
 			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
 			
-			strList = (ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST);
+			ArrayList<String> strList = (ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST);
 			if (strList != null)
 				mdekObj.setRef1Data(strList);
 			
@@ -245,7 +238,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			mdekObj.setRef2PublishedISBN((String) td2Map.get(MdekKeys.ISBN));
 			mdekObj.setRef2PublishedPublisher((String) td2Map.get(MdekKeys.PUBLISHER));
 			mdekObj.setRef2LocationText((String) td2Map.get(MdekKeys.LOCATION));
-			mdekObj.setRef2DocumentType((String) td2Map.get(MdekKeys.TYPE_OF_DOCUMENT));
+			kvp = mapToKeyValuePair(td2Map, MdekKeys.TYPE_OF_DOCUMENT_KEY, MdekKeys.TYPE_OF_DOCUMENT);
+			mdekObj.setRef2DocumentType(kvp.getValue());
 			mdekObj.setRef2BaseDataText((String) td2Map.get(MdekKeys.SOURCE));
 			mdekObj.setRef2BibData((String) td2Map.get(MdekKeys.ADDITIONAL_BIBLIOGRAPHIC_INFO));
 			mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
@@ -254,13 +248,14 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			Map<String, Object> td3Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
 			if (td3Map == null)
 				break;
-			mdekObj.setRef3ServiceType((String) td3Map.get(MdekKeys.SERVICE_TYPE));
+			kvp = mapToKeyValuePair(td3Map, MdekKeys.SERVICE_TYPE_KEY, MdekKeys.SERVICE_TYPE);
+			mdekObj.setRef3ServiceType(kvp.getValue());
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
 			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
-			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST)));
+			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), kvp.getKey()));
 
 			break;
 		case 4:
@@ -291,7 +286,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return mdekObj;
 	}
 	
-	private static MdekAddressBean getDetailedAddressRepresentation(
+	private MdekAddressBean getDetailedAddressRepresentation(
 			HashMap<String, Object> adr) {
 		
 //		log.debug("Converting the following address:");
@@ -335,8 +330,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekAddress.setOrganisation((String) adr.get(MdekKeys.ORGANISATION));
 		mdekAddress.setName((String) adr.get(MdekKeys.NAME));
 		mdekAddress.setGivenName((String) adr.get(MdekKeys.GIVEN_NAME));
-		mdekAddress.setNameForm((String) adr.get(MdekKeys.NAME_FORM));
-		mdekAddress.setTitleOrFunction((String) adr.get(MdekKeys.TITLE_OR_FUNCTION));
+/*		
+		mdekAddress.setNameForm(new KeyValuePair((Integer) adr.get(MdekKeys.NAME_FORM_KEY), (String) adr.get(MdekKeys.NAME_FORM)));
+		mdekAddress.setTitleOrFunction(new KeyValuePair((Integer) adr.get(MdekKeys.TITLE_OR_FUNCTION_KEY), (String) adr.get(MdekKeys.TITLE_OR_FUNCTION)));
+*/
+		mdekAddress.setNameForm(mapToKeyValuePair(adr, MdekKeys.NAME_FORM_KEY, MdekKeys.NAME_FORM).getValue());
+		mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
 
 		// Common information
 		mdekAddress.setStreet((String) adr.get(MdekKeys.STREET));
@@ -347,7 +346,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		mdekAddress.setPoboxPostalCode((String) adr.get(MdekKeys.POST_BOX_POSTAL_CODE));
 		mdekAddress.setAddressDescription((String) adr.get(MdekKeys.ADDRESS_DESCRIPTION));
 		mdekAddress.setTask((String) adr.get(MdekKeys.FUNCTION));
-		mdekAddress.setCommunication(mapToCommunicationTable((List<HashMap<String, String>>) adr.get(MdekKeys.COMMUNICATION)));
+		mdekAddress.setCommunication(mapToCommunicationTable((List<HashMap<String, Object>>) adr.get(MdekKeys.COMMUNICATION)));
 
 		// Thesaurus
 		mdekAddress.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) adr.get(MdekKeys.SUBJECT_TERMS)));
@@ -359,11 +358,27 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		if (strList != null)
 			mdekAddress.setParentInstitutions(strList);
 
+/*
 		mdekAddress.setTypeOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_ID));
 		mdekAddress.setNameOfRelation((String) adr.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekAddress.setRefOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_REF));
-		
-		
+*/
+		Integer relationRef = (Integer) adr.get(MdekKeys.RELATION_TYPE_REF);
+		Integer relationId  = (Integer) adr.get(MdekKeys.RELATION_TYPE_ID);
+
+		if (relationRef == null || relationRef == -1) {
+			// Free entry
+			mdekAddress.setNameOfRelation((String) adr.get(MdekKeys.RELATION_TYPE_NAME));
+			mdekAddress.setTypeOfRelation(-1);
+			mdekAddress.setRefOfRelation(-1);			
+		} else {
+			// Lookup the value from relationRef
+			mdekAddress.setNameOfRelation(sysListMapper.getValueFromListId(relationRef, relationId));
+			mdekAddress.setRefOfRelation(relationRef);
+			mdekAddress.setTypeOfRelation(relationId);
+		}
+
+
 		// Comments
 		mdekAddress.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) adr.get(MdekKeys.COMMENT_LIST)));
 		
@@ -525,8 +540,16 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.ORGANISATION, data.getOrganisation());
 		udkAdr.put(MdekKeys.NAME, data.getName());
 		udkAdr.put(MdekKeys.GIVEN_NAME, data.getGivenName());
-		udkAdr.put(MdekKeys.NAME_FORM, data.getNameForm());
-		udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, data.getTitleOrFunction());
+		KeyValuePair kvp = mapFromKeyValue(MdekKeys.NAME_FORM_KEY, data.getNameForm());
+		if (kvp.getValue() != null || kvp.getKey() != -1) {
+			udkAdr.put(MdekKeys.NAME_FORM, kvp.getValue());
+			udkAdr.put(MdekKeys.NAME_FORM_KEY, kvp.getKey());
+		}
+		kvp = mapFromKeyValue(MdekKeys.TITLE_OR_FUNCTION_KEY, data.getTitleOrFunction());
+		if (kvp.getValue() != null || kvp.getKey() != -1) {
+			udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, kvp.getValue());
+			udkAdr.put(MdekKeys.TITLE_OR_FUNCTION_KEY, kvp.getKey());
+		}
 
 		// Common information
 		udkAdr.put(MdekKeys.STREET, data.getStreet());
@@ -596,8 +619,8 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
-		udkObj.put(MdekKeys.EXPORTS, data.getExtraInfoXMLExportTable());
-		udkObj.put(MdekKeys.LEGISLATIONS, data.getExtraInfoLegalBasicsTable());
+		udkObj.put(MdekKeys.EXPORTS, mapFromExtraInfoXMLExportTable(data.getExtraInfoXMLExportTable()));
+		udkObj.put(MdekKeys.LEGISLATIONS, mapFromExtraInfoLegalBasicsTable(data.getExtraInfoLegalBasicsTable()));
 
 
 		// Availability
@@ -624,9 +647,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.OBJ_REFERENCES_TO, mapFromObjectLinksTable(data.getLinksToObjectTable()));
 		udkObj.put(MdekKeys.LINKAGES, mapFromUrlLinksTable(data.getLinksToUrlTable()));
 		udkObj.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
-		udkObj.put(MdekKeys.RELATION_TYPE_REF, data.getRelationType());
-		udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		udkObj.put(MdekKeys.RELATION_DESCRIPTION, data.getRelationDescription());
+
+		Integer key = data.getRelationType();
+		if (key != null && key != -1) {
+			udkObj.put(MdekKeys.RELATION_TYPE_REF, data.getRelationType());
+		} else {
+			udkObj.put(MdekKeys.RELATION_TYPE_REF, data.getRelationType());
+			udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
+		}
 
 		switch(data.getObjectClass()) {
 		case 0:	// Object of type 0 doesn't have any special values
@@ -635,8 +664,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			IngridDocument td1Map = new IngridDocument();			
 			td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
 			td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
-			td1Map.put(MdekKeys.COORDINATE_SYSTEM, data.getRef1SpatialSystem());
-			td1Map.put(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystemId());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				td1Map.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
+				td1Map.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
+			}
 			td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
 			td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
 			td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
@@ -663,7 +695,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			td2Map.put(MdekKeys.ISBN, data.getRef2PublishedISBN());
 			td2Map.put(MdekKeys.PUBLISHER, data.getRef2PublishedPublisher());
 			td2Map.put(MdekKeys.LOCATION, data.getRef2LocationText());
-			td2Map.put(MdekKeys.TYPE_OF_DOCUMENT, data.getRef2DocumentType());
+			kvp = mapFromKeyValue(MdekKeys.TYPE_OF_DOCUMENT_KEY, data.getRef2DocumentType());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				td2Map.put(MdekKeys.TYPE_OF_DOCUMENT, kvp.getValue());
+				td2Map.put(MdekKeys.TYPE_OF_DOCUMENT_KEY, kvp.getKey());
+			}
 			td2Map.put(MdekKeys.SOURCE, data.getRef2BaseDataText());
 			td2Map.put(MdekKeys.ADDITIONAL_BIBLIOGRAPHIC_INFO, data.getRef2BibData());
 			td2Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef2Explanation());
@@ -671,14 +707,17 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			break;
 		case 3:
 			IngridDocument td3Map = new IngridDocument();			
-
-			td3Map.put(MdekKeys.SERVICE_TYPE, data.getRef3ServiceType());
+			kvp = mapFromKeyValue(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				td3Map.put(MdekKeys.SERVICE_TYPE, kvp.getValue());
+				td3Map.put(MdekKeys.SERVICE_TYPE_KEY, kvp.getKey());
+			}
 			td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
 			td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
 			td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
 			td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
 			td3Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef3Explanation());
-			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation()));
+			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), kvp.getKey()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;
 		case 4:
@@ -712,27 +751,61 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	 * Mapping from the Mdek gui representation to the IngridDocument Structure *
 	 ****************************************************************************/
 	
-	private static ArrayList<IngridDocument> mapFromGeneralAddressTable(ArrayList<MdekAddressBean> adrTable) {
+	private KeyValuePair mapFromKeyValue(String key, String val) {
+		Integer k = sysListMapper.getKey(key, val);
+		
+		if (k == null) {
+			if (val != null && val.trim().length() == 0) {
+				val = null;
+			}
+			return new KeyValuePair(new Integer(-1), val);
+		} else {
+			return new KeyValuePair(k, null);
+		}
+	}
+
+	private ArrayList<IngridDocument> mapFromGeneralAddressTable(ArrayList<MdekAddressBean> adrTable) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 
 		for (MdekAddressBean address : adrTable) {
 			IngridDocument mappedEntry = new IngridDocument();
 			mappedEntry.put(MdekKeys.UUID, address.getUuid());
-			mappedEntry.put(MdekKeys.RELATION_TYPE_ID, address.getTypeOfRelation());
-			mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, address.getNameOfRelation());
-			mappedEntry.put(MdekKeys.RELATION_TYPE_REF, address.getRefOfRelation());
+
+			String val = address.getNameOfRelation();
+			Integer key = sysListMapper.getKeyFromListId(MDEK_ADDRESS_REF_SPECIAL_ID, val);
+			if (key != null) {
+				// Found special address ref
+				mappedEntry.put(MdekKeys.RELATION_TYPE_ID, key);
+				mappedEntry.put(MdekKeys.RELATION_TYPE_REF, new Integer(MDEK_ADDRESS_REF_SPECIAL_ID));				
+			} else {
+				key = sysListMapper.getKeyFromListId(MDEK_ADDRESS_REF_ID, val);
+				if (key != null) {
+					// Found normal address ref
+					mappedEntry.put(MdekKeys.RELATION_TYPE_ID, key);
+					mappedEntry.put(MdekKeys.RELATION_TYPE_REF, new Integer(MDEK_ADDRESS_REF_ID));					
+				} else {
+					// Could not resolve -> free entry
+					mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, val);
+					mappedEntry.put(MdekKeys.RELATION_TYPE_ID, new Integer(-1));					
+				}
+			}
+
 			resultList.add(mappedEntry);
 		}
 		return resultList;
 	}
 
-	private static ArrayList<IngridDocument> mapFromCommunicationTable(List<HashMap<String, String>> commMap){
+	private ArrayList<IngridDocument> mapFromCommunicationTable(List<HashMap<String, String>> commMap){
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>(); 
 
 		for (HashMap<String, String> comm : commMap) {
 			IngridDocument mappedEntry = new IngridDocument();
 			mappedEntry.put(MdekKeys.COMMUNICATION_DESCRIPTION, comm.get(MDEK_ADDRESS_COMM_DESCRIPTION));
-			mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM, comm.get(MDEK_ADDRESS_COMM_MEDIUM));
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.COMMUNICATION_MEDIUM_KEY, comm.get(MDEK_ADDRESS_COMM_MEDIUM));
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM, kvp.getValue());
+				mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM_KEY, kvp.getKey());
+			}
 			mappedEntry.put(MdekKeys.COMMUNICATION_VALUE, comm.get(MDEK_ADDRESS_COMM_VALUE));
 			resultList.add(mappedEntry);
 		}
@@ -755,14 +828,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private static ArrayList<IngridDocument> mapFromUrlLinksTable(ArrayList<UrlBean> urlList) {
+	private ArrayList<IngridDocument> mapFromUrlLinksTable(ArrayList<UrlBean> urlList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (urlList == null)
 			return resultList;
 
 		for (UrlBean url : urlList) {
 			IngridDocument mappedUrl = new IngridDocument();
-			mappedUrl.put(MdekKeys.LINKAGE_DATATYPE, url.getDatatype());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.LINKAGE_DATATYPE_KEY, url.getDatatype());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				mappedUrl.put(MdekKeys.LINKAGE_DATATYPE, kvp.getValue());
+				mappedUrl.put(MdekKeys.LINKAGE_DATATYPE_KEY, kvp.getKey());
+			}
 			mappedUrl.put(MdekKeys.LINKAGE_DESCRIPTION, url.getDescription());
 			mappedUrl.put(MdekKeys.LINKAGE_ICON_TEXT, url.getIconText());
 			mappedUrl.put(MdekKeys.LINKAGE_ICON_URL, url.getIconUrl());
@@ -777,13 +854,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private static ArrayList<IngridDocument> mapFromLocationTables(ArrayList<LocationBean> locationSNS, ArrayList<LocationBean> locationFree) {
+	private ArrayList<IngridDocument> mapFromLocationTables(ArrayList<LocationBean> locationSNS, ArrayList<LocationBean> locationFree) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (locationFree != null) {
 			for (LocationBean loc : locationFree) {
 				IngridDocument res = new IngridDocument();
 				res.put(MdekKeys.LOCATION_TYPE, "F");
-				res.put(MdekKeys.LOCATION_NAME, loc.getName());
+
+				KeyValuePair kvp = mapFromKeyValue(MdekKeys.LOCATION_NAME_KEY, loc.getName());
+				if (kvp.getValue() != null || kvp.getKey() != -1) {
+					res.put(MdekKeys.LOCATION_NAME, kvp.getValue());
+					res.put(MdekKeys.LOCATION_NAME_KEY, kvp.getKey());
+				}
 				res.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
 				res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
 				res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
@@ -823,8 +905,37 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	private ArrayList<IngridDocument> mapFromExtraInfoXMLExportTable(ArrayList<String> refList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (refList == null)
+			return resultList;
 
-	private static ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
+		for (String ref : refList) {
+			IngridDocument result = new IngridDocument();
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.EXPORT_KEY, ref);
+			result.put(MdekKeys.EXPORT_KEY, kvp.getKey());
+			result.put(MdekKeys.EXPORT_VALUE, kvp.getValue());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+	
+	private ArrayList<IngridDocument> mapFromExtraInfoLegalBasicsTable(ArrayList<String> refList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (refList == null)
+			return resultList;
+
+		for (String ref : refList) {
+			IngridDocument result = new IngridDocument();
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.LEGISLATION_KEY, ref);
+			result.put(MdekKeys.LEGISLATION_KEY, kvp.getKey());
+			result.put(MdekKeys.LEGISLATION_VALUE, kvp.getValue());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+
+	private ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
 			return resultList;
@@ -832,7 +943,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		for (DataFormatBean ref : refList) {
 			IngridDocument result = new IngridDocument();
 			result.put(MdekKeys.FORMAT_FILE_DECOMPRESSION_TECHNIQUE, ref.getCompression());
-			result.put(MdekKeys.FORMAT_NAME, ref.getName());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.FORMAT_NAME_KEY, ref.getName());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				result.put(MdekKeys.FORMAT_NAME, kvp.getValue());
+				result.put(MdekKeys.FORMAT_NAME_KEY, kvp.getKey());
+			}
 			result.put(MdekKeys.FORMAT_SPECIFICATION, ref.getPixelDepth());
 			result.put(MdekKeys.FORMAT_VERSION, ref.getVersion());
 			resultList.add(result);
@@ -911,7 +1026,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 
 
-	private static ArrayList<IngridDocument> mapFromSymLinkDataTable(ArrayList<LinkDataBean> linkList) {
+	private ArrayList<IngridDocument> mapFromSymLinkDataTable(ArrayList<LinkDataBean> linkList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (linkList == null)
 			return resultList;
@@ -919,14 +1034,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		for (LinkDataBean l : linkList) {
 			IngridDocument result = new IngridDocument();
 			result.put(MdekKeys.SYMBOL_DATE, convertDateToTimestamp(l.getDate()));
-			result.put(MdekKeys.SYMBOL_CAT, l.getTitle());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.SYMBOL_CAT_KEY, l.getTitle());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				result.put(MdekKeys.SYMBOL_CAT, kvp.getValue());
+				result.put(MdekKeys.SYMBOL_CAT_KEY, kvp.getKey());
+			}
 			result.put(MdekKeys.SYMBOL_EDITION, l.getVersion());
 			resultList.add(result);
 		}
 		return resultList;
 	}
 
-	private static ArrayList<IngridDocument> mapFromKeyLinkDataTable(ArrayList<LinkDataBean> linkList) {
+	private ArrayList<IngridDocument> mapFromKeyLinkDataTable(ArrayList<LinkDataBean> linkList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (linkList == null)
 			return resultList;
@@ -934,7 +1053,11 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		for (LinkDataBean l : linkList) {
 			IngridDocument result = new IngridDocument();
 			result.put(MdekKeys.KEY_DATE, convertDateToTimestamp(l.getDate()));
-			result.put(MdekKeys.SUBJECT_CAT, l.getTitle());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.SUBJECT_CAT_KEY, l.getTitle());
+			if (kvp.getValue() != null || kvp.getKey() != -1) {
+				result.put(MdekKeys.SUBJECT_CAT, kvp.getValue());
+				result.put(MdekKeys.SUBJECT_CAT_KEY, kvp.getKey());
+			}
 			result.put(MdekKeys.EDITION, l.getVersion());
 			resultList.add(result);
 		}
@@ -956,14 +1079,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 
 
-	private static ArrayList<IngridDocument> mapFromOperationTable(ArrayList<OperationBean> opList) {
+	private ArrayList<IngridDocument> mapFromOperationTable(ArrayList<OperationBean> opList, Integer serviceType) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (opList == null)
 			return resultList;
 
 		for (OperationBean op : opList) {
 			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.SERVICE_OPERATION_NAME, op.getName());
+			if (serviceType == -1) {
+				result.put(MdekKeys.SERVICE_OPERATION_NAME, op.getName());
+				result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, new Integer(-1));
+			} else {
+				KeyValuePair kvp = mapFromKeyValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, op.getName());
+//				result.put(MdekKeys.SERVICE_OPERATION_NAME, kvp.getValue());
+				result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, kvp.getKey());
+			}
 			result.put(MdekKeys.SERVICE_OPERATION_DESCRIPTION, op.getDescription());
 			result.put(MdekKeys.PLATFORM_LIST, op.getPlatform());
 			result.put(MdekKeys.INVOCATION_NAME, op.getMethodCall());
@@ -1013,7 +1143,21 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
 	 ****************************************************************************/
 
-	private static ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
+	private KeyValuePair mapToKeyValuePair(Map<String, Object> obj, String key, String value) {
+		Integer k = (Integer) obj.get(key);
+		String val = (String) obj.get(value);
+		if (k != null && k != -1) {
+			val = sysListMapper.getValue(key, k);
+		}
+
+		if (val != null && val.trim().length() == 0) {
+			val = null;
+		}
+
+		return new KeyValuePair(k, val);
+	}
+	
+	private ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
 		ArrayList<MdekAddressBean> resultList = new ArrayList<MdekAddressBean>(); 
 		if (adrTable == null)
 			return resultList;
@@ -1068,23 +1212,24 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 */
 
-	private static ArrayList<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, String>> commMap){
+	private ArrayList<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, Object>> commMap){
 		ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
 		if (commMap == null)
 			return resultCommMap;
 
-		for (HashMap<String, String> comm : commMap) {
+		for (HashMap<String, Object> comm : commMap) {
 			HashMap<String, String> resultComm = new HashMap<String, String>();
-			resultComm.put(MDEK_ADDRESS_COMM_DESCRIPTION, comm.get(MdekKeys.COMMUNICATION_DESCRIPTION));
-			resultComm.put(MDEK_ADDRESS_COMM_MEDIUM, comm.get(MdekKeys.COMMUNICATION_MEDIUM));
-			resultComm.put(MDEK_ADDRESS_COMM_VALUE, comm.get(MdekKeys.COMMUNICATION_VALUE));
+			resultComm.put(MDEK_ADDRESS_COMM_DESCRIPTION, (String) comm.get(MdekKeys.COMMUNICATION_DESCRIPTION));
+			KeyValuePair kvp = mapToKeyValuePair(comm, MdekKeys.COMMUNICATION_MEDIUM_KEY, MdekKeys.COMMUNICATION_MEDIUM);
+			resultComm.put(MDEK_ADDRESS_COMM_MEDIUM, kvp.getValue());
+			resultComm.put(MDEK_ADDRESS_COMM_VALUE, (String) comm.get(MdekKeys.COMMUNICATION_VALUE));
 			resultCommMap.add(resultComm);
 		}
 
 		return resultCommMap;	
 	}
 	
-	private static ArrayList<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
+	private ArrayList<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
 		ArrayList<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
 		if (objList == null)
 			return resultList;
@@ -1095,14 +1240,15 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private static ArrayList<UrlBean> mapToUrlLinksTable(List<HashMap<String, Object>> objList) {
+	private ArrayList<UrlBean> mapToUrlLinksTable(List<HashMap<String, Object>> objList) {
 		ArrayList<UrlBean> resultList = new ArrayList<UrlBean>(); 
 		if (objList == null)
 			return resultList;
 		
 		for (HashMap<String, Object> obj : objList) {
 			UrlBean url = new UrlBean();
-			url.setDatatype((String) obj.get(MdekKeys.LINKAGE_DATATYPE));
+			KeyValuePair kvp = mapToKeyValuePair(obj, MdekKeys.LINKAGE_DATATYPE_KEY, MdekKeys.LINKAGE_DATATYPE);
+			url.setDatatype(kvp.getValue());
 			url.setDescription((String) obj.get(MdekKeys.LINKAGE_DESCRIPTION));
 			url.setIconText((String) obj.get(MdekKeys.LINKAGE_ICON_TEXT));
 			url.setIconUrl((String) obj.get(MdekKeys.LINKAGE_ICON_URL));
@@ -1118,7 +1264,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 	
 	
-	private static ArrayList<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
+	private ArrayList<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
 		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)
 			return resultList;
@@ -1142,7 +1288,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private static ArrayList<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
+	private ArrayList<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
 		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)
 			return resultList;
@@ -1152,7 +1298,9 @@ public class SimpleMdekMapper implements DataMapperInterface {
 			if (locationType.equals("F")) {
 				LocationBean loc = new LocationBean(); 
 				loc.setType((String) location.get(MdekKeys.LOCATION_TYPE));
-				loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
+//				loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
+				KeyValuePair kvp = mapToKeyValuePair(location, MdekKeys.LOCATION_NAME_KEY, MdekKeys.LOCATION_NAME);
+				loc.setName(kvp.getValue());
 				loc.setLongitude1((Double) location.get(MdekKeys.WEST_BOUNDING_COORDINATE));
 				loc.setLatitude1((Double) location.get(MdekKeys.SOUTH_BOUNDING_COORDINATE));
 				loc.setLongitude2((Double) location.get(MdekKeys.EAST_BOUNDING_COORDINATE));
@@ -1178,14 +1326,40 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	
+	private ArrayList<String> mapToExtraInfoXMLExportTable(List<HashMap<String, Object>> refList) {
+		ArrayList<String> resultList = new ArrayList<String>();
+		if (refList == null)
+			return resultList;
+		
+		for (HashMap<String, Object> ref : refList) {
+			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.EXPORT_KEY, MdekKeys.EXPORT_VALUE);
+			resultList.add(kvp.getValue());
+		}
+		return resultList;
+	}
 
-	private static ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
+	private ArrayList<String> mapToExtraInfoLegalBasicsTable(List<HashMap<String, Object>> refList) {
+		ArrayList<String> resultList = new ArrayList<String>();
+		if (refList == null)
+			return resultList;
+		for (HashMap<String, Object> ref : refList) {
+			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.LEGISLATION_KEY, MdekKeys.LEGISLATION_VALUE);
+			resultList.add(kvp.getValue());
+		}
+		return resultList;
+	}
+
+
+	private ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
 		ArrayList<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
 		if (refList == null)
 			return resultList;
 		for (HashMap<String, Object> ref : refList) {
 			DataFormatBean df = new DataFormatBean();
-			df.setName((String) ref.get(MdekKeys.FORMAT_NAME));
+			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_NAME_KEY, MdekKeys.FORMAT_NAME);
+			df.setName(kvp.getValue());
+//			df.setNameKey(kvp.getKey());
 			df.setCompression((String) ref.get(MdekKeys.FORMAT_FILE_DECOMPRESSION_TECHNIQUE));
 			df.setPixelDepth((String) ref.get(MdekKeys.FORMAT_SPECIFICATION));
 			df.setVersion((String) ref.get(MdekKeys.FORMAT_VERSION));
@@ -1268,28 +1442,30 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 
 
-	private static ArrayList<LinkDataBean> mapToSymLinkDataTable(List<HashMap<String, Object>> linkList) {
+	private ArrayList<LinkDataBean> mapToSymLinkDataTable(List<HashMap<String, Object>> linkList) {
 		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
 		if (linkList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : linkList) {
 			LinkDataBean l = new LinkDataBean();
 			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.SYMBOL_DATE)));
-			l.setTitle((String) topic.get(MdekKeys.SYMBOL_CAT));
+			KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SYMBOL_CAT_KEY, MdekKeys.SYMBOL_CAT);
+			l.setTitle((String) kvp.getValue());
 			l.setVersion((String) topic.get(MdekKeys.SYMBOL_EDITION));
 			resultList.add(l);
 		}
 		return resultList;
 	}
 
-	private static ArrayList<LinkDataBean> mapToKeyLinkDataTable(List<HashMap<String, Object>> linkList) {
+	private  ArrayList<LinkDataBean> mapToKeyLinkDataTable(List<HashMap<String, Object>> linkList) {
 		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
 		if (linkList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : linkList) {
 			LinkDataBean l = new LinkDataBean();
 			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.KEY_DATE)));
-			l.setTitle((String) topic.get(MdekKeys.SUBJECT_CAT));
+			KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SUBJECT_CAT_KEY, MdekKeys.SUBJECT_CAT);
+			l.setTitle((String) kvp.getValue());
 			l.setVersion((String) topic.get(MdekKeys.EDITION));
 			resultList.add(l);
 		}
@@ -1310,13 +1486,18 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 
 
-	private static ArrayList<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList) {
+	private ArrayList<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList, Integer serviceType) {
 		ArrayList<OperationBean> resultList = new ArrayList<OperationBean>();
 		if (opList == null)
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
 			OperationBean op = new OperationBean();
-			op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
+			if (serviceType == -1) {
+				op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
+			} else {
+				String val = sysListMapper.getValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY));
+				op.setName(val);				
+			}
 			op.setDescription((String) operation.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
 			op.setPlatform((ArrayList<String>) operation.get(MdekKeys.PLATFORM_LIST));
 			op.setMethodCall((String) operation.get(MdekKeys.INVOCATION_NAME));
@@ -1480,5 +1661,12 @@ public class SimpleMdekMapper implements DataMapperInterface {
                 return 0;
             }
         }
-    }	
+    }
+
+	public SysListMapper getSysListMapper() {
+		return sysListMapper;
+	}
+	public void setSysListMapper(SysListMapper sysListMapper) {
+		this.sysListMapper = sysListMapper;
+	}	
 }

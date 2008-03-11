@@ -583,9 +583,13 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	// Helper method to get the current sesison Id. Will be replaced by the user id somday
 	private String getCurrentSessionId() {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-		return session.getId();
+		try {
+			WebContext wctx = WebContextFactory.get();
+			HttpSession session = wctx.getSession();
+			return session.getId();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 }

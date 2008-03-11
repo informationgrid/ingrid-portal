@@ -118,7 +118,7 @@ function toggleFields(section) {
 			var contentBlocks = rootNodes[i].childNodes;
 			for (var j=0; j<contentBlocks.length; j++)
 			{
-				if (contentBlocks[j].nodeName == 'DIV' && contentBlocks[j].className == 'content')
+				if (contentBlocks[j].nodeName == 'DIV' && contentBlocks[j].className.indexOf('content') != -1)
 				{
 					if (mode == "") {
 						contentBlocks[j].isExpanded = !contentBlocks[j].isExpanded;

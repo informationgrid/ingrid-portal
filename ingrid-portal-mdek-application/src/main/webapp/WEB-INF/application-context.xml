@@ -28,19 +28,32 @@
 	<bean id="entryService"
 		class="de.ingrid.mdek.dwr.EntryServiceImpl">
 		<property name="dataConnection">
-			<ref local="MdekDataConnection" />
+			<ref local="mdekDataConnection" />
 		</property>
 	</bean>
 
-	<bean id="MdekDataConnection"
+	<bean id="sysListMapper"
+		class="de.ingrid.mdek.SysListMapper">
+		<property name="dataConnection">
+			<ref local="mdekDataConnection" />
+		</property>
+	</bean>
+
+	<bean id="mdekDataMapper"
+		class="de.ingrid.mdek.SimpleMdekMapper">
+		<property name="sysListMapper">
+			<ref local="sysListMapper" />
+		</property>
+ 	</bean>
+
+	<bean id="mdekDataConnection"
 		class="de.ingrid.mdek.SimpleUDKConnection">
 		<constructor-arg value="${communication.properties}"/>
 		<property name="dataMapper">
-			<ref local="MdekDataMapper" />
+			<ref local="mdekDataMapper" />
 		</property>
 	</bean>
 
-	<bean id="MdekDataMapper" class="de.ingrid.mdek.SimpleMdekMapper" />
 	<bean id="snsService" class="de.ingrid.mdek.dwr.sns.SNSService" />
 	<bean id="ctService" class="de.ingrid.mdek.dwr.cts.CoordinateTransformationServiceImpl" />
 	<bean id="versionInformation" class="de.ingrid.mdek.VersionInformation" />
