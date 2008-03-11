@@ -110,8 +110,10 @@ dojo.widget.defineWidget(
 		else
 			return false;
 
-
 		if (node != null) {
+			if (node.id == "newNode")
+				return false;
+
 			if (node.nodeAppType == srcNode.nodeAppType) {
 				if (node.nodeAppType == "O") {
 					return true; // Objects can be pasted anywhere below objects
@@ -121,7 +123,7 @@ dojo.widget.defineWidget(
 					if (typeof(dstType) == "undefined") {
 						// Target is either addressRoot or addressFreeRoot
 						if (node.id == "addressFreeRoot") {
-							return (srcType == 2);	// Only Addresses can be converted to free addresses
+							return (srcType >= 2);	// Only Addresses can be converted to free addresses
 						} else if (node.id == "addressRoot") {
 							return (srcType == 0); // Only Institutions are allowed below the root node
 						}

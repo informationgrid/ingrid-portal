@@ -25,7 +25,19 @@ dojo.widget.defineWidget(
       // disable paste if not possible
       node.actionsDisabled = [];
       if (dojo.lang.isObject(this.treeController) && !this.treeController.canPaste(node))
-        node.actionsDisabled = ["PASTE"];
+        node.actionsDisabled.push("PASTE");
+
+      if (node.nodeAppType == "A" && (node.objectClass == 2 || node.objectClass == 3) ) {
+		  node.actionsDisabled.push("ADDCHILD");
+      }
+
+      if (node.id == "newNode") {
+		  node.actionsDisabled.push("MOVE");
+		  node.actionsDisabled.push("ADDCHILD");
+		  node.actionsDisabled.push("COPY");
+		  node.actionsDisabled.push("CUT");
+		  node.actionsDisabled.push("PASTE");
+      }
 
       result = dojo.widget.TreeContextMenuV3.prototype.open.apply(this, arguments);
     }

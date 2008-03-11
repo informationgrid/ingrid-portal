@@ -149,6 +149,8 @@ function initTree() {
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
   contextMenu2.addItem(message.get('tree.nodeNew'), 'addChild', menuEventHandler.handleNewEntity);
+  contextMenu2.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
+  contextMenu2.addSeparator();
   contextMenu2.addItem(message.get('tree.reload'), 'reload', menuEventHandler.reloadSubTree);
 
 
@@ -449,6 +451,8 @@ function initFreeTermsButtons() {
 	button._freeTermListWidget = dojo.widget.byId("thesaurusFreeTermsListAddress");
 	button.onClick = executeSearch;
 
+    dojo.event.connect(udkDataProxy, "onAfterLoad", function() { dojo.widget.byId("thesaurusFreeTerms").setValue(""); });
+    dojo.event.connect(udkDataProxy, "onAfterLoad", function() { dojo.widget.byId("thesaurusFreeTermInputAddress").setValue(""); });
 }
 
 
@@ -558,13 +562,22 @@ function initAddressReferenceTables() {
 		filterStore.relationTypeFilter = tableMapping.filterId;
 		
 		// Connect all the setData calls on the filtered table to the main (unfiltered) table
-/*
+
 		dojo.event.kwConnect({
 			adviceType: "after",
 			srcObj: filterStore,
 			srcFunc: "onRemoveData",
 			adviceObj: mainStore,
 			adviceFunc: function(obj) {
+				if (obj.src.removedFromFilterTable) {
+					// onUpdateField removes the entry from the filtered table if it existed.
+					// Since we connect the onRemove funtion to the main store, we have to check
+					// if the item was removed directly, or if it was removed because of an 'updateField'
+					// call.
+					obj.src.removedFromFilterTable = false;
+					return;
+				}
+
 				var o = this.getDataByKey(obj.key);
 				if (o) {
 					this.removeData(o);
@@ -573,7 +586,6 @@ function initAddressReferenceTables() {
 			once: true,
 			delay: 10
 		});
-*/
 
 		dojo.event.kwConnect({
 			adviceType: "after",
@@ -643,7 +655,6 @@ function initAddressReferenceTables() {
 			adviceFunc: function(obj, path, val) {
 				var item = this.getDataByKey(obj.Id);
 				if (item != null) {
-
 					var relName = obj.nameOfRelation;
 
 					switch (this.relationTypeFilter) {
@@ -651,6 +662,7 @@ function initAddressReferenceTables() {
 						case 3400: if (relName == "Projektleiter") break;
 						case 3410: if (relName == "Beteiligte") break;
 						default:
+							item.removedFromFilterTable = true;
 							this.removeData(item);								
 							break;
 					}
@@ -798,12 +810,30 @@ function initToolbar() {
 		if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
 			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 			enableList = [newEntityButton];
+
+		} else if (message.node.id == "newNode") {
+			disableList = [copyTreeButton, cutButton, copyEntityButton, newEntityButton];
+			enableList = [previewButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+
 		} else if (message.node.isFolder) {
 			disableList = [];
 			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
+
 		} else {
 			disableList = [copyTreeButton];
-			enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
+			enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+
+			if (message.node.nodeAppType == "O") {
+				enableList.unshift(newEntityButton);				
+
+			} else if (message.node.nodeAppType == "A") {
+				// For addresses, the new entity button depends on the class of the selected node
+				if (message.node.objectClass == 2 || message.node.objectClass == 3) {
+					disableList.unshift(newEntityButton);
+				} else {
+					enableList.unshift(newEntityButton);
+				}
+			}
 		}
 
 		// The paste button depends on the current selection in treeController and the current selected node

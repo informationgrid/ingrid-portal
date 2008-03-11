@@ -250,7 +250,7 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 
 	var deferred = new dojo.Deferred();
 	if (this.dirtyFlag == true) {
-		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 342, 130, true, {resultHandler: deferred});
+		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 350, 145, true, {resultHandler: deferred});
 
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.
@@ -306,6 +306,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 								if (resultHandler)
 									resultHandler.callback();
 								udkDataProxy.resetDirtyFlag();
+								udkDataProxy.onAfterLoad();
 							} else {
 	//							dojo.debug(resultHandler);
 								if (typeof(resultHandler) != "undefined") {
@@ -333,6 +334,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 								if (resultHandler)
 									resultHandler.callback();
 								udkDataProxy.resetDirtyFlag();
+								udkDataProxy.onAfterLoad();
 							} else {
 								if (typeof(resultHandler) != "undefined") {
 									resultHandler.errback("Error loading Address. The Address with the specified id doesn't exist!");
@@ -964,8 +966,9 @@ udkDataProxy.handleGetAddressPathRequest = function(msg) {
 
 
 // event.connect point. Called when data has been saved 
-udkDataProxy.onAfterSave = function() { dojo.debug("onAfterSave()"); }
-udkDataProxy.onAfterPublish = function() { dojo.debug("onAfterPublish()"); }
+udkDataProxy.onAfterSave = function() {  }
+udkDataProxy.onAfterPublish = function() {  }
+udkDataProxy.onAfterLoad = function() { }
 
 udkDataProxy._setData = function(nodeData)
 {
@@ -1691,10 +1694,13 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	}
 
 	var title = "";
+	var objClass; 
 	if (nodeData.nodeAppType == "O") {
 		title = nodeData.objectName;
+		objClass = nodeData.objectClass;
 	} else if (nodeData.nodeAppType == "A") {
 		title = udkDataProxy._createAddressTitle(nodeData);
+		objClass = nodeData.addressClass;
 	}
 
 	// If we change the uuid (= widgetId) of a node the treeNode has to be created again
@@ -1712,6 +1718,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			isFolder: false,
 			nodeDocType: nodeData.nodeDocType,
 			title: title,
+			objectClass: objClass,
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: nodeData.nodeAppType,
 			id: nodeData.uuid
@@ -1722,6 +1729,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			node.nodeDocType = nodeData.nodeDocType;	
 			dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(node);
 			node.setTitle(title);
+			node.objectClass = objClass,
 			node.id = nodeData.uuid;	
 		} else {
 			dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);

@@ -35,6 +35,7 @@
 	"dialog.addDescriptorsTitle":"Deskriptoren hinzuf&uuml;gen",
 	"dialog.addDescriptorsMessage":"'%{0}' ist ein Nichtdeskriptor! Sollen die zugeh&ouml;rigen Deskriptoren automatisch in die Liste der Thesaurus-Suchbegriffe &uuml;bernommen werden?",
 	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
+	"dialog.saveChangesHint":"Es wurden &Auml;nderungen am aktuellen Datensatz oder seinem Kommentar vorgenommen. M&ouml;chten Sie die &Auml;nderungen speichern?",
 	"dialog.discardPubExistTitle":"Alle &Auml;nderungen verwerfen",
 	"dialog.discardPubExistMessage":"Wollen Sie alle &Auml;nderungen am Metadatensatz '%{0}' verwerfen und zur urspr&uuml;nglichen Version zur&uuml;ckkehren?",
 	"dialog.discardPubNotExistTitle":"Neuen MD-S verwerfen",
@@ -47,9 +48,10 @@
 	"dialog.commentTitle":"Kommentare zu '%{0}'",
 	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
 
-	"operation.error.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
+
+	"operation.error.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Metadatens&auml;tze sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Metadatens&auml;tze ab!",
 	"operation.error.targetIsSubnodeOfSourceError":"Das Ziel einer Verschiebeoperation darf nicht Kind des Ausgangsknotens sein.",
-	"operation.error.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Objekte befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
+	"operation.error.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Metadatens&auml;tze befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Metadatens&auml;tze ab!",
 	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
 	"operation.hint.publicationConditionSaveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im nachgeordneten Teilbaum ist gr&ouml;&szlig;er als die, die f&uuml;r das aktuelle Objekt ausgew&auml;hlt wurde.<br>Mit dem Speichern des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt wirklich gespeichert werden?",
 	"operation.hint.publicationConditionMoveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im Zielteilbaum ist kleiner als die, die f&uuml;r das zu verschiebende Objekt.<br>Mit dem Verschieben des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt / der Teilbaum wirklich verschoben werden?",

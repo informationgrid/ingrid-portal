@@ -314,7 +314,7 @@ function hideSplash(){
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true);" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                <div id="generalAddressTable" class="tableContainer headHiddenRows4 full">
 	                    <div class="cellEditors" id="generalAddressEditors">
-	                      <div dojoType="ingrid:Combobox" autoComplete="false" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
+	                      <div dojoType="ingrid:Combobox" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
 	                    </div>
 	            	    <table id="generalAddress" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
@@ -737,7 +737,7 @@ function hideSplash(){
 	                		</div>
 	                		<div id="ref2LocationTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer headHiddenRows2 half">
-	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+	                  	    <table id="ref2LocationLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive nosort">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -960,7 +960,7 @@ function hideSplash(){
 	                		</div>
 	                		<div id="ref4ParticipantsTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer headHiddenRows2 half">
-	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive nosort">
 	                  	      <thead>
 		              		      <tr>
 		                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -990,7 +990,7 @@ function hideSplash(){
 	                		</div>
 	                		<div id="ref4PMTab2" dojoType="ContentPane" label="Verweise">
 	                      <div class="tableContainer rows2 half">
-	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive nosort">
 	                  	      <thead>
 	              		      <tr>
 	                    			<th nosort="true" field="icon" dataType="String"></th>
@@ -1480,7 +1480,7 @@ function hideSplash(){
 <!-- 
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatName"></div>
  -->
-                        <div dojoType="ingrid:ComboBox" autoComplete="false" toggle="plain" style="width:150px;" listId="1320" widgetId="availabilityDataFormatName"></div>
+                        <div dojoType="ingrid:ComboBox" toggle="plain" style="width:150px;" listId="1320" widgetId="availabilityDataFormatName"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatVersion"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatCompression"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="availabilityDataFormatPixelDepth"></div>
@@ -1933,7 +1933,7 @@ function hideSplash(){
 			          <span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kommunikation')">Kommunikation</label></span>
 			          <div class="tableContainer rows4 half">
 			            <div class="cellEditors" id="addressComEditors">
-			              <div dojoType="ingrid:ComboBox" autoComplete="false" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
+			              <div dojoType="ingrid:ComboBox" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
 			              <div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="addressComConnection"></div>
 			            </div>
 			      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">

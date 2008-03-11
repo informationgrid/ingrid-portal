@@ -85,6 +85,7 @@ so I have to remove TreeExpand and process this one specifically
     border: none;
     color: #C21100;
     margin-left:0;
+	font-weight: bold;
 }
  
 /* the node is not selectable */

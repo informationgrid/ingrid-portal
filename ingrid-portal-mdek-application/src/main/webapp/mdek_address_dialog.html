@@ -71,6 +71,18 @@ _container_.addOnLoad(function() {
 	dojo.html.hide(dojo.byId("addressLinkSearchResults"));
 
 	dojo.event.connect("after", adrPageNav, "onPageSelected", browseSearchResults);
+
+	// Connect the 'enter' button on the three input fields with startNewSearch
+	var startSearchOnEnter = function(event) {
+        if (event.keyCode == event.KEY_ENTER) {
+            startNewSearch();
+        }
+	}
+
+    dojo.event.connect(dojo.widget.byId("addressSearchUnit").domNode, "onkeypress", startSearchOnEnter);
+    dojo.event.connect(dojo.widget.byId("addressSearchLastname").domNode, "onkeypress", startSearchOnEnter);
+    dojo.event.connect(dojo.widget.byId("addressSearchFirstname").domNode, "onkeypress", startSearchOnEnter);
+
 });
 
 
@@ -121,7 +133,6 @@ function addAddressToStore(adrId, store) {
 	var typeOfRelation = 0;
 	if (_container_.customParams && _container_.customParams.linkType) {
 		linkType = _container_.customParams.linkType;
-		dojo.debug("linkType: "+linkType);
 		// TODO get value for link Type, add it to the address
 		// getIdValueForLinkType(linkType);
 		// ...
@@ -140,9 +151,9 @@ function addAddressToStore(adrId, store) {
 				addAddressTitle(res);
 				addAddressLinkLabel(res);			
 				res.Id = getNewKey(store);
-				res.typeOfRelation = typeOfRelation;
+				res.typeOfRelation = linkType;
 				res.nameOfRelation = nameOfRelation;
-				res.refOfRelation = linkType;
+				res.refOfRelation = 2010;
 				store.addData(res);
 			}
 		},

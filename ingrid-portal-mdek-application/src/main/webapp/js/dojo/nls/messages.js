@@ -78,6 +78,7 @@
 	"dialog.addDescriptorsTitle":"Add Descriptors",
 	"dialog.addDescriptorsMessage":"Add the following descriptors as search terms?",
 	"dialog.saveChangesTitle":"Save changes",
+	"dialog.saveChangesHint":"The current MD-S or its comments were changed. Do you want to save the changes?",
 	"dialog.discardPubExistTitle":"Discard all changes",
 	"dialog.discardPubExistMessage":"Do you really want to discard all changes made to '%{0}' and reset to the last published version?",
 	"dialog.discardPubNotExistTitle":"Discard new MD-S",

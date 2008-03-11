@@ -2,7 +2,10 @@
 <head>
 
 <script type="text/javascript">
-_container_.addOnLoad(function() {});
+_container_.addOnLoad(function() {
+	var msgDiv = dojo.byId("messageDiv");
+	msgDiv.innerHTML = message.get("dialog.saveChangesHint");
+});
 
 _container_.addOnUnload(function() {
 	// If the dialog was cancelled via the dialogs close button
@@ -59,8 +62,8 @@ closeDialog = function() {
 <div dojoType="ContentPane">
 	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
 		<div id="dialogContent" class="content">
-			<div class="field grey">
-				Es wurden &Auml;nderungen am aktuellen Datensatz vorgenommen. M&ouml;chten Sie die &Auml;nderungen speichern?		
+			<div id="messageDiv" class="field grey">
+				&nbsp;		
 			</div>
 
 			<div class="inputContainer grey noSpaceBelow half" style="height:28px !important;">

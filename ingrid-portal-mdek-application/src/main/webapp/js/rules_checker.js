@@ -105,6 +105,15 @@ function isObjectPublishable(idcObject) {
 	}
 
 
+	// Check if all entries in the address table have valid reference types
+	var addressData = idcObject.generalAddressTable;
+	if (dojo.lang.some(addressData, function(addressRef) { return (addressRef.nameOfRelation == null || dojo.string.trim(addressRef.nameOfRelation).length == 0); })) {
+		dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");		
+		dojo.debug("All entries in the address table must have valid references.");
+		publishable = false;
+	}
+
+
 	// Check if one of the 'Raumbezug' tables has an entry with a bounding box
 	var snsData = idcObject.spatialRefAdminUnitTable;
 	var freeData = idcObject.spatialRefLocationTable;
@@ -124,7 +133,6 @@ function isObjectPublishable(idcObject) {
 	}
 
 	// If one of the 'Umweltthemen' contains an entry, both of them need to contain at least one entry
-	dojo.debug("idcObject.thesaurusEnvExtRes: " + idcObject.thesaurusEnvExtRes);
 	if ((idcObject.thesaurusEnvTopicsList.length > 0 && idcObject.thesaurusEnvCatsList.length == 0)
 	  ||(idcObject.thesaurusEnvTopicsList.length == 0 && idcObject.thesaurusEnvCatsList.length > 0) 
 	  ||(idcObject.thesaurusEnvExtRes == true && (idcObject.thesaurusEnvTopicsList.length == 0 || idcObject.thesaurusEnvCatsList.length == 0))) {

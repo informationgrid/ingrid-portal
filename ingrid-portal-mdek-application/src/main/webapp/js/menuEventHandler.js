@@ -34,7 +34,13 @@ menuEventHandler.handleNewEntity = function(mes) {
 			}
 			
 			// publish a createNode request and attach the newly created node if it was successful
-			deferred.addCallback(function(res){ attachNewNode(selectedNode, res); });
+			deferred.addCallback(function(res){ 
+				if (selectedNode.objectClass == 2 || selectedNode.objectClass == 3) {
+					return;
+				} else {
+					attachNewNode(selectedNode, res);
+				}
+			});
 			deferred.addErrback(function(err){
 				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
 			});
@@ -303,6 +309,11 @@ menuEventHandler.handleSave = function() {
 
 menuEventHandler.handleUndo = function(mes) {
 	var selectedNode = getSelectedNode(mes);
+
+	if (selectedNode.id == "newNode") {
+		menuEventHandler.handleDiscard(mes);
+		return;
+	}
 
 	if (!selectedNode || selectedNode.id == "objectRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
@@ -708,7 +719,8 @@ function getSelectedNode(message) {
 function _createNewNode(obj, parentClass)
 {
 	var title;
-	
+	var objClass;
+
 	if (obj.nodeAppType == "O") {
 		title = message.get("tree.newNodeName");
 	} else if (obj.nodeAppType == "A") {
