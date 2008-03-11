@@ -4,7 +4,7 @@
 <script type="text/javascript">
 _container_.addOnLoad(function() {
 	var msgDiv = dojo.byId("messageDiv");
-	msgDiv.innerHTML = message.get("dialog.addDescriptorsMessage");
+	msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.addDescriptorsMessage"), _container_.customParams.descriptorTitle);
 
 
 	for (var i = 0; i < _container_.customParams.descriptors.length; ++i) {
@@ -44,7 +44,7 @@ noButtonFunc = function() {
 <div dojoType="ContentPane">
 	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
 		<div id="dialogContent" class="content">
-			<div id="messageDiv" class="field grey">
+			<div id="messageDiv" class="field grey w296">
 			</div>
 
 			<div class="grey tableContainer headHiddenRows4 halfInside">

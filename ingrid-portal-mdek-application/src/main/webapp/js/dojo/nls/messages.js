@@ -68,6 +68,8 @@
 	"sns.noSimilarTermsHint":"The SNS query returned no results.",
     "sns.numberOfTerms":"Number of Terms:",
     "sns.freeTermAddHint":"The specified term could not be found in the SNS. Therefore it was added to the list of loose search terms.",
+    "sns.freeTermAddTopTermHint":"'%{0}' is a Thesaurus-Topterm! It can't be added to the free terms list!",
+    "sns.freeTermAddNodeLabelHint":"'%{0}' is a node label! It can't be added to the free terms list!",
 
 	"links.selectNodeHint":"Please select a target node.",
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",

@@ -30,8 +30,10 @@
     "tree.newAddressName":"Neue Adresse",
     "tree.reload":"Neues Laden",
 
+	"dialog.addDescriptorTitle":"Deskriptor hinzuf&uuml;gen",
+	"dialog.addDescriptorMessage":"'%{0}' ist ein Deskriptor! Soll der Deskriptor automatisch in die Liste der Thesaurus-Suchbegriffe &uuml;bernommen werden?",
 	"dialog.addDescriptorsTitle":"Deskriptoren hinzuf&uuml;gen",
-	"dialog.addDescriptorsMessage":"Sollen folgende Deskriptoren als Suchbegriffe &uuml;bernommen werden?",
+	"dialog.addDescriptorsMessage":"'%{0}' ist ein Nichtdeskriptor! Sollen die zugeh&ouml;rigen Deskriptoren automatisch in die Liste der Thesaurus-Suchbegriffe &uuml;bernommen werden?",
 	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
 	"dialog.discardPubExistTitle":"Alle &Auml;nderungen verwerfen",
 	"dialog.discardPubExistMessage":"Wollen Sie alle &Auml;nderungen am Metadatensatz '%{0}' verwerfen und zur urspr&uuml;nglichen Version zur&uuml;ckkehren?",
@@ -62,6 +64,8 @@
     "sns.timeoutError":"SNS hat eine Zeit&uuml;berschreitung bei der Auswertung Ihrer Anfrage mitgeteilt. Bitte probieren Sie es daher sp&auml;ter noch einmal oder stellen Sie eine einfachere Anfrage.",
     "sns.connectionError":"Bei dem Versuch den SNS zu kontaktieren trat ein Fehler auf. Bitte probieren Sie es daher sp&auml;ter noch einmal.",
     "sns.freeTermAddHint":"Der Suchbegriff konnte im SNS Wortgut nicht gefunden werden. Er wurde daher in die Liste der freien Suchbegriffe &uuml;bernommen.",
+    "sns.freeTermAddTopTermHint":"'%{0}' ist ein Thesaurus-Topterm! Er kann nicht &uuml;bernommen werden!",
+    "sns.freeTermAddNodeLabelHint":"'%{0}' ist ein Ordnungsbegriff! Er kann nicht &uuml;bernommen werden!",
 
 	"links.fillRequiredFieldsHint":"Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
 	"links.noLinkToSelfHint":"Ein Objekt kann nicht mit sich selbst verkn&uuml;pft werden!",

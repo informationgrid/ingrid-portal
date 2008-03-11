@@ -313,17 +313,18 @@ function initFreeTermsButtons() {
 		var term = this._inputFieldWidget.getValue();
 		term = dojo.string.trim(term);
 		_this = this;
-		if (term) {
+		if (term.length != 0) {
 			SNSService.findTopics(term, {
 				callback:function(topics) {
 					// Remove all non-descriptors from the list
 					var descriptors = [];
-					var queryIsNodeLabel = false;
+					var queryTerm = null;
 					dojo.lang.forEach(topics, function(item){
 //						dojo.debug("topic: ["+item.title+", "+item.type+"]");
-						// Check if a term from the result is equal to our search query and a node label 
-						if (term.toLowerCase() == item.title.toLowerCase() && item.type == "NODE_LABEL") {
-							queryIsNodeLabel = true;
+						// Check if a term from the result is equal to our search query 
+						if (term.toLowerCase() == item.title.toLowerCase()) {
+							// The search term was found in the returned list. Save its type
+							queryTerm = item;
 						}
 
 						// Filter all the descriptors from the result
@@ -332,29 +333,11 @@ function initFreeTermsButtons() {
 						}
 					});
 
-					if (descriptors.length != 0 && !queryIsNodeLabel) {
-						// Topics found. Add the results to the topic list
-						var topicStore = _this._termListWidget.store;
-						// If the term we searched for was a descriptor and is contained in the result list, only add it
-						// to the list and ignore the rest
-						for (var i = 0; i < descriptors.length; ++i) {
-							if (term.toLowerCase() == descriptors[i].title.toLowerCase()) {
-								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != descriptors[i].topicId; })) {
-									// Topic is new. Add it to the topic list
-									topicStore.addData( {Id: getNewKey(topicStore), topicId: descriptors[i].topicId, title: descriptors[i].title} );
-
-									// Scroll to the added descriptor
-									var rows = _this._termListWidget.domNode.tBodies[0].rows;
-									dojo.html.scrollIntoView(rows[rows.length-1]);
-								}
-								return;
-							}
-						}
-
-						// Always add the synonym to the free terms list (if it doesn't exist already) 
-						// Afterwards a window is opened to query if more descriptors should be added
+					// Decide what to do based on the type of the query
+					if (queryTerm == null) {
+						// The searchTerm was not found. Simply add it to the list of free terms if it doesn't already exist
 						var freeTermsStore = _this._freeTermListWidget.store;
-						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
+						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != term; })) {
 							// If every term in the store != the entered term add it to the list
 							var identifier = getNewKey(freeTermsStore);							
 							freeTermsStore.addData( {Id: identifier, title: term} );
@@ -362,44 +345,71 @@ function initFreeTermsButtons() {
 							// Scroll to the added descriptor
 							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
 							dojo.html.scrollIntoView(rows[rows.length-1]);
+//							dialog.show(message.get("general.hint"), message.get("sns.freeTermAddHint"), dialog.INFO);			
 						}
-
-
-						// Open a new window to query the user if he wants to add all the descriptors to the list
+					
+					} else if (queryTerm.type == "TOP_TERM") {
+						// A top term can't be added to the free terms list. Show an info dialog and clear the input field
+						dialog.show(message.get("general.hint"), dojo.string.substituteParams(message.get("sns.freeTermAddTopTermHint"), term), dialog.INFO);			
+					
+					} else if (queryTerm.type == "NODE_LABEL") {
+						// A node label can't be added to the free terms list. Show an info dialog and clear the input field
+						dialog.show(message.get("general.hint"), dojo.string.substituteParams(message.get("sns.freeTermAddNodeLabelHint"), term), dialog.INFO);			
+					
+					} else if (queryTerm.type == "DESCRIPTOR") {
+						// The search term is a descriptor. Show a dialog to query the user if the topic should be added to the topic list
+						var topicStore = _this._termListWidget.store;
 						var deferred = new dojo.Deferred();
+						// If the user decides to add the topic:
+						deferred.addCallback(function() {
+							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != queryTerm.topicId; })) {
+								// Topic is new. Add it to the topic list
+								topicStore.addData( {Id: getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title} );
+								// Scroll to the added descriptor
+								var rows = _this._termListWidget.domNode.tBodies[0].rows;
+									dojo.html.scrollIntoView(rows[rows.length-1]);
+							}
+						});
 
+						// Show the dialog
+						dialog.showPage(message.get("dialog.addDescriptorTitle"), "mdek_add_descriptor_dialog.html", 342, 220, true, {descriptorTitle: term, resultHandler: deferred});
+
+					} else if (queryTerm.type == "NON_DESCRIPTOR") {
+						// Show the 'add descriptors' dialog. The user can decide if he wants to add all the found descriptors to the topic list.
+						var topicStore = _this._termListWidget.store;
+						var deferred = new dojo.Deferred();
 						deferred.addCallback(function() {
 							dojo.lang.forEach(descriptors, function(topic) {
 								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 									// Topic is new. Add it to the topic list
 									topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
-									
+
 									// Scroll to the added descriptor
 									var rows = _this._termListWidget.domNode.tBodies[0].rows;
 									dojo.html.scrollIntoView(rows[rows.length-1]);
-								} else {
-									// Topic already exists in the topic List
-									return;
 								}
 							});
 						});
-						// Do nothing on error...
 
-						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptors:descriptors, resultHandler:deferred});
-					} else {
-						// Topic not found in the sns. Add the result to the free term list
+						// Show the dialog
+						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptorTitle:queryTerm.title, descriptors:descriptors, resultHandler:deferred});
+
+						// Also add the queryTerm to the list of free terms
 						var freeTermsStore = _this._freeTermListWidget.store;
-						if (dojo.lang.every(freeTermsStore.getData(), function(item){return item.title != term;})) {
+						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != queryTerm.title; })) {
 							// If every term in the store != the entered term add it to the list
 							var identifier = getNewKey(freeTermsStore);							
-							freeTermsStore.addData( {Id: identifier, title: term} );
+							freeTermsStore.addData( {Id: identifier, title: queryTerm.title} );
 
 							// Scroll to the added descriptor
 							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
 							dojo.html.scrollIntoView(rows[rows.length-1]);
-							dialog.show(message.get("general.hint"), message.get("sns.freeTermAddHint"), dialog.INFO);			
 						}
-					}},
+					}
+					// Clear the input field
+					_this._inputFieldWidget.setValue("");
+
+				},
 				timeout:8000,
 				errorHandler:function(msg) {dojo.debug("Error while executing SNSService.findTopics");}
 			});

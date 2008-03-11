@@ -1,0 +1,52 @@
+<html>
+<head>
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	var msgDiv = dojo.byId("messageDiv");
+	msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.addDescriptorMessage"), _container_.customParams.descriptorTitle);
+});
+
+_container_.addOnUnload(function() {
+	// If the dialog was cancelled via the dialogs close button
+	// we need to signal an error (cancel action)
+	if (_container_.customParams.resultHandler.fired == -1) {
+		_container_.customParams.resultHandler.errback();
+	}
+});
+
+
+// 'Yes Button' onClick function
+yesButtonFunc = function() {
+	_container_.customParams.resultHandler.callback();
+	_container_.closeWindow();
+}
+
+// 'No Button' onClick function
+noButtonFunc = function() {
+	_container_.customParams.resultHandler.errback();
+	_container_.closeWindow();
+}
+
+</script>
+</head>
+
+
+
+<body>
+<div dojoType="ContentPane">
+	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
+		<div id="dialogContent" class="content">
+			<div id="messageDiv" class="field grey">
+				&nbsp;		
+			</div>
+
+			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
+		        <span style="float:right;"><button dojoType="ingrid:Button" title="Nein" onClick="noButtonFunc">Nein</button></span>
+		        <span style="float:right;"><button dojoType="ingrid:Button" title="Ja" onClick="yesButtonFunc">Ja</button></span>
+			</div>
+	  	</div>
+	</div>
+</div>
+</body>
+</html>
