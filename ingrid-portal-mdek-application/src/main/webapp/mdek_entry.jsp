@@ -1985,7 +1985,7 @@ function hideSplash(){
 							</div>
 			      		</div>
 
-						<div class="inputContainer noSpaceBelow notRequired h120">
+						<div class="inputContainer notRequired h088">
 							<div class="full">
 								<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
 
@@ -2003,8 +2003,10 @@ function hideSplash(){
 			      	  			</div>
 						        <div class="fill"></div>
 							</div>
-							<div class="full">
+			      		</div>
 
+						<div class="inputContainer notRequired">
+							<div class="full">
 			          			<div class="input">
 									<input type="text" id="thesaurusFreeTermInputAddress" class="w585" dojoType="ingrid:ValidationTextBox" />
 		                  			<div style="position:relative; height:0px; top:-22px; float:right;">

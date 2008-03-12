@@ -14,6 +14,7 @@ function sizeContent()
   var contentFrame = dojo.widget.byId(contentFrameDivName);
   contentFrame.resizeTo(730, splitPaneDiv.offsetHeight - sectionTopDiv.offsetHeight - 4);
 
+	refreshTabContainers();
 	// IE hack so the input containers are drawn correctly
 	if (dojo.render.html.ie) {
 		setTimeout("refreshInputContainers()", 1);

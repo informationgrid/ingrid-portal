@@ -552,14 +552,15 @@ function initAddressReferenceTables() {
 	var mainStore = dojo.widget.byId("generalAddress").store;
 
 	var filterTableMap =
-		[{tableId: "ref2LocationLink", 		filterId: 3360},		// 3360 - Single Address
-		 {tableId: "ref4ParticipantsLink", 	filterId: 3410},		// 3410 - Single Address
-		 {tableId: "ref4PMLink", 			filterId: 3400}];		// 3400 - Single Address
+		[{ tableId: "ref2LocationLink", 	filterId: 3360, relationName: "Standort" },
+		 { tableId: "ref4ParticipantsLink",	filterId: 3410, relationName: "Beteiligte" },
+		 { tableId: "ref4PMLink", 			filterId: 3400, relationName: "Projektleiter"}];
 
 
 	dojo.lang.forEach(filterTableMap, function(tableMapping) {
 		var filterStore = dojo.widget.byId(tableMapping.tableId).store;
 		filterStore.relationTypeFilter = tableMapping.filterId;
+		filterStore.relationName = tableMapping.relationName;
 		
 		// Connect all the setData calls on the filtered table to the main (unfiltered) table
 
@@ -569,12 +570,12 @@ function initAddressReferenceTables() {
 			srcFunc: "onRemoveData",
 			adviceObj: mainStore,
 			adviceFunc: function(obj) {
-				if (obj.src.removedFromFilterTable) {
+				if (obj.src.removedOnUpdateField) {
 					// onUpdateField removes the entry from the filtered table if it existed.
 					// Since we connect the onRemove funtion to the main store, we have to check
 					// if the item was removed directly, or if it was removed because of an 'updateField'
 					// call.
-					obj.src.removedFromFilterTable = false;
+					obj.src.removedOnUpdateField = false;
 					return;
 				}
 
@@ -593,6 +594,7 @@ function initAddressReferenceTables() {
 			srcFunc: "onRemoveData",
 			adviceObj: filterStore,
 			adviceFunc: function(obj) {
+				dojo.debug("onRemoveData() on "+this.relationTypeFilter);
 				var o = this.getDataByKey(obj.key);
 				if (o) {
 					this.removeData(o);
@@ -608,6 +610,7 @@ function initAddressReferenceTables() {
 			srcFunc: "onAddData",
 			adviceObj: filterStore,
 			adviceFunc: function(obj) {
+				dojo.debug("onAddData() on "+this.relationTypeFilter);
 				var data = mainStore.getData();
 				this.clearData();
 				for (i in data) {
@@ -655,44 +658,19 @@ function initAddressReferenceTables() {
 			adviceFunc: function(obj, path, val) {
 				var item = this.getDataByKey(obj.Id);
 				if (item != null) {
-					var relName = obj.nameOfRelation;
-
-					switch (this.relationTypeFilter) {
-						case 3360: if (relName == "Standort") break;
-						case 3400: if (relName == "Projektleiter") break;
-						case 3410: if (relName == "Beteiligte") break;
-						default:
-							item.removedFromFilterTable = true;
-							this.removeData(item);								
-							break;
+					// The item was found in the current table. Check if it should be displayed (its name equals relationName)
+					if (obj.nameOfRelation != this.relationName) {
+						// The relation does not belong in the current filter table. Remove it.
+						item.removedOnUpdateField = true;
+						this.removeData(item);
 					}
 				} else {
-					var relName = obj.nameOfRelation;
-
-					switch (this.relationTypeFilter) {
-						case 3360:
-							if (relName == "Standort") {
-								obj.typeOfRelation = 3360;
-								obj.refOfRelation = 2010;
-								this.addData(obj);
-							}
-							break;
-						case 3400:
-							if (relName == "Projektleiter") {
-								obj.typeOfRelation = 3400;
-								obj.refOfRelation = 2010;
-								this.addData(obj);
-							}
-							break;
-						case 3410:
-							if (relName == "Beteiligte") {
-								obj.typeOfRelation = 3410;
-								obj.refOfRelation = 2010;
-								this.addData(obj);
-							}
-							break;
-						default:
-							break;
+					// The item was not found in the current table. Check if it should be displayed (its name equals relationName)
+					if (obj.nameOfRelation == this.relationName) {
+						// The relation belongs in the current filter table. Add it.
+						obj.typeOfRelation = this.relationTypeFilter;
+						obj.refOfRelation = 2010;
+						this.addData(obj);
 					}
 				}
 			},
@@ -700,11 +678,7 @@ function initAddressReferenceTables() {
 			delay: 10
 		});
 	});
-/*
-	onClearData:function(){ },
-	onAddData:function(obj){ },
-	onAddDataRange:function(arr){ },
-*/	
+
 }
 
 function initToolbar() {
@@ -936,7 +910,7 @@ function initSysLists() {
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType"]; 
 
-
+/*
 	// TODO load the initial language code map from the backend
 	var locale = dojo.hostenv.normalizeLocale(dojo.locale);
 	var language = locale.split("-")[0];
@@ -949,6 +923,10 @@ function initSysLists() {
 	} else {
 		dojo.debug("Unsupported Language. Setting language to english.");
 	}
+*/
+	// Setting the language code to 121. Uncomment the previous block to enable language specific settings depending on the browser language
+	var languageCode = 121;
+
 
 	var lstIds = [];
 	dojo.lang.forEach(selectWidgetIDs, function(item){
