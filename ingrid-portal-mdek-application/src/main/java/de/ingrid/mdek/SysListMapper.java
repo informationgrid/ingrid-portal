@@ -43,7 +43,7 @@ public class SysListMapper {
 		} catch (Exception e) {
 			// Could not get the lists from the backend
 			// Possibly the connection was not established yet
-			log.debug("Could not get sysLists.", e);
+//			log.debug("Could not get sysLists.", e);
 			listCache = null;
 		}
 	}

@@ -356,9 +356,7 @@ public class SimpleMdekMapper implements DataMapperInterface {
 
 		// References
 		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
-		ArrayList<String> strList = (ArrayList<String>) adr.get(MdekKeys.PATH);
-		if (strList != null)
-			mdekAddress.setParentInstitutions(strList);
+		mdekAddress.setParentInstitutions(mapToGeneralAddressTable((List<HashMap<String, Object>>) adr.get(MdekKeys.PATH_ORGANISATIONS)));
 
 /*
 		mdekAddress.setTypeOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_ID));
@@ -1172,49 +1170,6 @@ public class SimpleMdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	/*
-	private static ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
-		ArrayList<MdekAddressBean> resultTable = new ArrayList<MdekAddressBean>(); 
-		if (adrTable == null)
-			return resultTable;
-
-		for (HashMap<String, Object> tableRow : adrTable) {
-			MdekAddressBean address = new MdekAddressBean();
-
-			address.setUuid((String) tableRow.get(MdekKeys.UUID));
-			address.setInformation((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
-			address.setAddressClass((Integer) tableRow.get(MdekKeys.CLASS));
-			address.setGivenName((String) tableRow.get(MdekKeys.GIVEN_NAME));
-			address.setStreet((String) tableRow.get(MdekKeys.STREET));
-			address.setCountryCode((String) tableRow.get(MdekKeys.POSTAL_CODE_OF_COUNTRY));
-			address.setCity((String) tableRow.get(MdekKeys.CITY));
-			address.setPoboxPostalCode((String) tableRow.get(MdekKeys.POST_BOX_POSTAL_CODE));
-			address.setPobox((String) tableRow.get(MdekKeys.POST_BOX));
-			address.setTask((String) tableRow.get(MdekKeys.FUNCTION));
-			address.setAddressDescription((String) tableRow.get(MdekKeys.ADDRESS_DESCRIPTION));
-			address.setOrganisation((String) tableRow.get(MdekKeys.ORGANISATION));
-			address.setNameForm((String) tableRow.get(MdekKeys.NAME_FORM));
-			address.setTitleOrFunction((String) tableRow.get(MdekKeys.TITLE_OR_FUNCTION));
-			address.setTypeOfRelation((Integer) tableRow.get(MdekKeys.RELATION_TYPE_ID));
-			address.setNameOfRelation((String) tableRow.get(MdekKeys.RELATION_TYPE_NAME));
-
-			// Build name
-			if (tableRow.get(MdekKeys.NAME) != null) {
-				String name = (String) tableRow.get(MdekKeys.NAME) + ", " + (String) tableRow.get(MdekKeys.GIVEN_NAME); 
-				address.setName(name);
-			}
-			else if (tableRow.get(MdekKeys.ORGANISATION) != null) {
-				address.setName((String) tableRow.get(MdekKeys.ORGANISATION));
-			}
-
-			// Get communication map
-			address.setCommunication(mapToCommunicationTable((List<HashMap<String, String>>) tableRow.get(MdekKeys.COMMUNICATION)));
-
-			resultTable.add(address);
-		}
-		return resultTable;
-	}
-*/
 
 	private ArrayList<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, Object>> commMap){
 		ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
@@ -1630,10 +1585,10 @@ public class SimpleMdekMapper implements DataMapperInterface {
 	}
 
 	private static String convertDateToTimestamp(Date date) {
-		if (date != null) {
-			return MdekUtils.dateToTimestamp(date);
-		} else {
+		if (date == null || (date.getTime() == 0L)) {
 			return null;
+		} else {
+			return MdekUtils.dateToTimestamp(date);
 		}
 	}
 

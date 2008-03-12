@@ -582,18 +582,6 @@ dojo.widget.defineWidget(
 		}
 	},
 
-  hasData: function() {
-    var str='';
-	this.store.forEach(function(element) {
-      for(var prop in element.src) {
-        if (element.src[prop] &&  element.src[prop].length > 0) {
-	      str += element.src[prop];
-	    }
-      }
-	});
-    return str.length > 0;
-  },
-
   getData: function() {
     return this.store.getData();
   },
@@ -896,13 +884,13 @@ dojo.widget.defineWidget(
 			cell.innerHTML=val;
 		} else {
 			if(meta.getType()==Date) {
-				val=new Date(val);
-				if(!isNaN(val)){
+				var displayDate = new Date(val);
+				if(val != null && !isNaN(displayDate)){
 					var format = this.defaultDateFormat;
 					if(meta.format){
 						format = meta.format;
 					}
-					cell.innerHTML = dojo.date.strftime(val, format);
+					cell.innerHTML = dojo.date.strftime(displayDate, format);
 				} else {
 					// write empty string if we do not have a valid date
 					// was cell.innerHTML = val;

@@ -107,7 +107,7 @@ function isObjectPublishable(idcObject) {
 
 	// Check if all entries in the address table have valid reference types
 	var addressData = idcObject.generalAddressTable;
-	if (dojo.lang.some(addressData, function(addressRef) { return (addressRef.nameOfRelation == null || dojo.string.trim(addressRef.nameOfRelation).length == 0); })) {
+	if (dojo.lang.some(addressData, function(addressRef) { return (typeof(addressRef.uuid) == "undefined" || addressRef.nameOfRelation == null || dojo.string.trim(addressRef.nameOfRelation).length == 0); })) {
 		dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");		
 		dojo.debug("All entries in the address table must have valid references.");
 		publishable = false;

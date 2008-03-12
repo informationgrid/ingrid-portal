@@ -4,7 +4,10 @@
 <script type="text/javascript">
 _container_.addOnLoad(function() {
 	var msgDiv = dojo.byId("messageDiv");
-	msgDiv.innerHTML = message.get("dialog.saveChangesHint");
+	if (currentUdk.nodeAppType == "O")
+		msgDiv.innerHTML = message.get("dialog.object.saveChangesHint");
+	else
+		msgDiv.innerHTML = message.get("dialog.address.saveChangesHint");
 });
 
 _container_.addOnUnload(function() {

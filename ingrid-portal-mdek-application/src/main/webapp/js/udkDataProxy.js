@@ -1076,9 +1076,14 @@ udkDataProxy._setAddressData = function(nodeData)
 	// Comments
 	commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
 
+
 	var institution = "";
 	dojo.lang.forEach(nodeData.parentInstitutions, function(item) {
-		institution += item+"\n";
+		if (item.addressClass == 0) {
+			institution += item.organisation+"\n";
+		} else if (item.addressClass == 1) {
+			institution += "\t"+item.organisation+"\n";
+		}
 	});
 	institution = dojo.string.trim(institution);
 

@@ -109,9 +109,9 @@ function applyRule1() {
 
 function applyRule2() {
 	var required = false;
-	if (dojo.widget.byId("thesaurusEnvExtRes").checked || dojo.widget.byId("thesaurusEnvTopics").hasData() || dojo.widget.byId("thesaurusEnvCats").hasData())
+	if (dojo.widget.byId("thesaurusEnvExtRes").checked || dojo.widget.byId("thesaurusEnvTopics").store.getData().length != 0 || dojo.widget.byId("thesaurusEnvCats").store.getData().length != 0)
 	  required = true;
-	
+
 	var labelNode1 = dojo.byId("thesaurusEnvTopicsLabel");
 	var labelNode2 = dojo.byId("thesaurusEnvCatsLabel");
 	var containerNode = labelNode1.parentNode.parentNode.parentNode;

@@ -120,7 +120,11 @@ menuEventHandler.handleCut = function(mes) {
 			var treeController = dojo.widget.byId("treeController");
 			treeController.prepareCut(selectedNode);
 		});
-		deferred.addErrback(displayErrorMessage);
+		deferred.addErrback(function (err) {
+			if (typeof(err) != "undefined")
+				err.nodeAppType = selectedNode.nodeAppType;
+			displayErrorMessage(err);
+		});
 
 		if (selectedNode.nodeAppType == "O") {
   			dojo.event.topic.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
@@ -285,8 +289,6 @@ menuEventHandler.handlePaste = function(msg) {
 }
 
 menuEventHandler.handleSave = function() {
-//                                dialog.show("Zwischenspeichern", 'Der aktuelle Datensatz befindet sich in der Bearbeitung. Wollen Sie wirklich speichern?', dialog.WARNING, 
-//                                      [{caption:"OK",action:function(){alert("OK")}},{caption:"Cancel",action:dialog.CLOSE_ACTION}]);},
 	var deferred = new dojo.Deferred();
 	deferred.addCallback(function(res) {
 		var tree = dojo.widget.byId("tree");
@@ -682,14 +684,25 @@ function displayErrorMessage(err) {
 	if (err && err.message) {
 		if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		
 		} else if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
-			dialog.show(message.get("general.error"), message.get("operation.error.parentNotPublishedError"), dialog.WARNING);
+			if (currentUdk.nodeAppType == "O")
+				dialog.show(message.get("general.error"), message.get("operation.error.object.parentNotPublishedError"), dialog.WARNING);
+			else
+				dialog.show(message.get("general.error"), message.get("operation.error.address.parentNotPublishedError"), dialog.WARNING);
+			
 		} else if (err.message.indexOf("TARGET_IS_SUBNODE_OF_SOURCE") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.targetIsSubnodeOfSourceError"), dialog.WARNING);
+		
 		} else if (err.message.indexOf("SUBTREE_HAS_WORKING_COPIES") != -1) {
-			dialog.show(message.get("general.error"), message.get("operation.error.subTreeHasWorkingCopiesError"), dialog.WARNING);
+			if (err.nodeAppType == "O")
+				dialog.show(message.get("general.error"), message.get("operation.error.object.subTreeHasWorkingCopiesError"), dialog.WARNING);
+			else
+				dialog.show(message.get("general.error"), message.get("operation.error.address.subTreeHasWorkingCopiesError"), dialog.WARNING);
+
 		} else if (err.message.indexOf("PARENT_HAS_SMALLER_PUBLICATION_CONDITION") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.parentHasSmallerPublicationConditionError"), dialog.WARNING);
+		
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING);				
 		}

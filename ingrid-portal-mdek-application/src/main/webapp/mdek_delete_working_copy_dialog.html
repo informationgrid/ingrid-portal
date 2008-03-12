@@ -5,11 +5,22 @@
 _container_.addOnLoad(function() {
 	var msgDiv = dojo.byId("messageDiv");
 	if (_container_.customParams.action == "UNDO") {
-		msgDiv.innerHTML = message.get("dialog.undoChangesMessage");
+		if (currentUdk.nodeAppType == "O")
+			msgDiv.innerHTML = message.get("dialog.object.undoChangesMessage");
+		else
+			msgDiv.innerHTML = message.get("dialog.address.undoChangesMessage");
+
 	} else if (_container_.customParams.isPublished) {
-		msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.discardPubExistMessage"), _container_.customParams.nodeTitle);
+		if (currentUdk.nodeAppType == "O")
+			msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.object.discardPubExistMessage"), _container_.customParams.nodeTitle);
+		else
+			msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.address.discardPubExistMessage"), _container_.customParams.nodeTitle);
+
 	} else {
-		msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.discardPubNotExistMessage"), _container_.customParams.nodeTitle);	
+		if (currentUdk.nodeAppType == "O")
+			msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.object.discardPubNotExistMessage"), _container_.customParams.nodeTitle);	
+		else
+			msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.address.discardPubNotExistMessage"), _container_.customParams.nodeTitle);
 	}
 });
 
