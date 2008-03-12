@@ -26,7 +26,7 @@ function renderNodeData(nodeData) {
 
 	renderText(nodeData.generalShortDescription);
 	renderTextWithTitle(dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeData.objectClass), "Objektklasse");
-	renderTextWithTitle(nodeData.generalDescription, "Beschreibung");
+	renderTextWithTitle(removeEvilTags(nodeData.generalDescription), "Beschreibung");
 	// addresses
 	renderAddressList(nodeData.generalAddressTable);
 	
@@ -222,6 +222,10 @@ function renderTextWithTitle(val, title) {
 			dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
 		}
 	}
+}
+
+function removeEvilTags(val) {
+	return val.replace(/<(?!b>|\/b>|i>|\/i>|u>|\/u>|strong>|\/strong>|ul>|\/ul>|ol>|\/ol>|li>|\/li>)[^>]*>/gi, '');
 }
 
 function renderAddressList(list) {
