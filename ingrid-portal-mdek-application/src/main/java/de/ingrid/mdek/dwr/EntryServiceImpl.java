@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.DataConnectionInterface;
+import de.ingrid.mdek.VersionInformation;
 import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.api.EntryService;
 import de.ingrid.mdek.job.MdekException;
@@ -546,6 +547,9 @@ public class EntryServiceImpl implements EntryService {
 		return new ObjectSearchResultBean();		
 	}
 
+	public VersionInformation getBackendVersion() {
+		return dataConnection.getVersion();
+	}
 	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
 		return dataConnection.getSysLists(listIds, languageCode);

@@ -316,6 +316,10 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return extractObjectSearchResultsFromResponse(response);
 	}
 
+	public VersionInformation getVersion() {
+		IngridDocument response = mdekCaller.getVersion();
+		return extractVersionInformationFromResponse(response);
+	}
 	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
 		IngridDocument response = mdekCallerCatalog.getSysLists(listIds, languageCode, getCurrentSessionId());
@@ -492,6 +496,24 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return searchResult;
 	}
 
+
+	private VersionInformation extractVersionInformationFromResponse(IngridDocument response) {
+		VersionInformation v = new VersionInformation();
+		if (response == null) {
+			return v;
+		}
+
+		v.setName(response.getString("build.name"));
+		v.setVersion(response.getString("build.version"));
+		v.setBuildNumber(response.getString("build.number"));
+		try {
+			v.setTimeStamp(new Date(Long.valueOf(response.getString("build.timestamp"))));
+		} catch (NumberFormatException e) {
+			v.setTimeStamp(new Date());
+		}
+
+		return v;		
+	}
 	
 	private Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);

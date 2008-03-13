@@ -49,4 +49,20 @@ public class VersionInformation {
 	public Date getTimeStamp() {
 		return timeStamp;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public void setBuildNumber(String buildNumber) {
+		this.buildNumber = buildNumber;
+	}
+
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 }

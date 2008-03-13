@@ -6,6 +6,7 @@ package de.ingrid.mdek.dwr.api;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.VersionInformation;
 import de.ingrid.mdek.dwr.AddressSearchResultBean;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
@@ -303,6 +304,9 @@ public interface EntryService {
 	// Fetch Catalog Data
 	public CatalogBean getCatalogData();
 
+	// Fetch version information from the backend
+	public VersionInformation getBackendVersion();
+	
 	// Fetch info about a running job
 	public JobInfoBean getRunningJobInfo();
 

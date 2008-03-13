@@ -12,10 +12,15 @@ _container_.addOnLoad(function() {
 		callback: function(res) { setVersionInformation(res); },
 		errorHandler: function(message) { dojo.debug("Error: " + message); }
 	});
+
+	EntryService.getBackendVersion({
+		callback: function(res) { setBackendVersionInformation(res); },
+		errorHandler: function(message) { dojo.debug("Error: " + message); }
+	});
 });
 
 function setVersionInformation(ver) {
-	var infoDiv = dojo.byId("infoDialog");
+	var infoDiv = dojo.byId("versionInfo");
 	var displayText = "";
 
 	displayText += "Build name: "+ver.name+"<br>";
@@ -26,10 +31,25 @@ function setVersionInformation(ver) {
 	infoDiv.innerHTML = displayText;
 }
 
+function setBackendVersionInformation(ver) {
+	var infoDiv = dojo.byId("serverVersionInfo");
+	var displayText = "";
+
+	displayText += "Server Build name: "+ver.name+"<br>";
+	displayText += "Server Build version: "+ver.version+"<br>";
+	displayText += "Server Build number: "+ver.buildNumber+"<br>";
+	displayText += "Server Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+
+	infoDiv.innerHTML = displayText;
+}
+
 </script>
 </head>
 
 <body>
-	<div id="infoDialog">
+	<div id="versionInfo">
+	</div>
+	<br>
+	<div id="serverVersionInfo">
 	</div>
 </body>

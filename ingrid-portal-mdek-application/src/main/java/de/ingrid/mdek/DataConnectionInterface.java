@@ -372,6 +372,16 @@ public interface DataConnectionInterface {
 	 */	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 
+
+	
+	/**
+	 * Fetch version information from this connection.
+	 * 
+	 * @return Version Information.
+	 */	
+	public VersionInformation getVersion();
+
+	
 	/**
 	 * Fetch information about the catalog.
 	 * 
