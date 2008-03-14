@@ -113,6 +113,13 @@ function isObjectPublishable(idcObject) {
 		publishable = false;
 	}
 
+	// Check if at least one entry exists with the correct relation type
+	if (dojo.lang.every(addressData, function(addressRef) { return ( dojo.string.trim(addressRef.nameOfRelation) != "Auskunft"); })) {
+		dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");
+		dojo.debug("At least one entry has to be of type 'Auskunft'.");
+		publishable = false;
+	}
+
 
 	// Check if one of the 'Raumbezug' tables has an entry with a bounding box
 	var snsData = idcObject.spatialRefAdminUnitTable;
