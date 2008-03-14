@@ -256,9 +256,10 @@ public interface EntryService {
 	 * @param markOnly
 	 *            If set true the working copy of the node will only be marked
 	 *            for deletion.
-	 * @return 'success' or error message.
+     * @param forceDeleteReferences
+     *            Signals the backend that the object should be deleted even if it is referenced by other objects
 	 */
-	public String deleteNode(String nodeUuid, Boolean markOnly);
+	public void deleteNode(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 
 	/**
 	 * Delete a node.
@@ -270,13 +271,14 @@ public interface EntryService {
 	 * @param markOnly
 	 *            If set true the working copy of the node will only be marked
 	 *            for deletion.
-	 * @return 'success' or error message.
+     * @param forceDeleteReferences
+     *            Signals the backend that the address should be deleted even if it is referenced by other objects
 	 */
-	public String deleteAddress(String nodeUuid, Boolean markOnly);
+	public void deleteAddress(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 
 	
-	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean markOnly);
-	public MdekAddressBean deleteAddressWorkingCopy(String nodeUuid, Boolean markOnly);
+	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
+	public MdekAddressBean deleteAddressWorkingCopy(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 
 	public MdekDataBean createNewNode(String parentUuid);
 	public MdekAddressBean createNewAddress(String parentUuid);

@@ -71,6 +71,7 @@ function updatePageNavigation(res) {
 // Save as CSV values link 'onclick' function
 this.saveAsCSV = function() {
 	dojo.debug("saveAsCSV() not implemented yet.");
+//	window.open("testDownload.csv", "downloadFrame");
 }
 
 function showLoadingZone() {
@@ -87,7 +88,6 @@ function hideLoadingZone() {
 <body>
 
   <!-- CONTENT START -->
-  <form method="get" id="contentForm" action="">
   <div dojoType="ContentPane" layoutAlign="client">
   
     <div id="researchDatabaseContentSection" class="contentBlockWhite top">
@@ -150,7 +150,6 @@ function hideLoadingZone() {
       </div>
     </div>
   </div>
-  </form>
   <!-- CONTENT END -->
 </body>
 </html>

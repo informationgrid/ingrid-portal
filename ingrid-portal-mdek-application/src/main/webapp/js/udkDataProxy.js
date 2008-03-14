@@ -27,12 +27,14 @@
  *   topic = '/publishAddressRequest' - argument: {resultHandler: deferred}
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
- *   topic = '/deleteRequest' - argument: {id: nodeUuid, resultHandler: deferred}
+ *   topic = '/deleteRequest' - argument: {id: nodeUuid, forceDelete: bool, resultHandler: deferred}
  *     nodeUuid - The Uuid of the node which should be deleted
+ *     forceDelete - The object is deleted even if it is referenced by other objects
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
- *   topic = '/deleteWorkingCopyRequest' - argument: {id: nodeUuid, resultHandler: deferred}
+ *   topic = '/deleteWorkingCopyRequest' - argument: {id: nodeUuid, forceDelete: bool, resultHandler: deferred}
  *     nodeUuid - The Uuid of the working copy node which should be deleted
+ *     forceDelete - The object is deleted even if it is referenced by other objects
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/canCutObjectRequest' - argument: {id: nodeUuid, resultHandler: deferred}
@@ -621,8 +623,15 @@ udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
 }
 
 udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.deleteAddressWorkingCopy("+msg.id+")");
-	EntryService.deleteAddressWorkingCopy(msg.id, "false",
+	var title = dojo.widget.byId(msg.id).title;
+
+	var forceDelete = false;
+	if (msg && typeof(msg.forceDelete) != "undefined") {
+		forceDelete = msg.forceDelete;
+	}
+
+	dojo.debug("udkDataProxy calling EntryService.deleteAddressWorkingCopy("+msg.id+", "+forceDelete+")");
+	EntryService.deleteAddressWorkingCopy(msg.id, forceDelete, "false",
 		{
 			callback: function(res){
 				if (res != null) {
@@ -634,9 +643,9 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 				msg.resultHandler.callback(res);
 			},
 			timeout:10000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while deleting address working copy: " + message);
-				msg.resultHandler.errback();
+			errorHandler:function(err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while deleting address working copy: "+err);
+				msg.resultHandler.errback(err);
 			}
 		}
 	);
@@ -644,7 +653,14 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 
 udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.deleteObjectWorkingCopy("+msg.id+")");
-	EntryService.deleteObjectWorkingCopy(msg.id, "false",
+	var title = dojo.widget.byId(msg.id).title;
+
+	var forceDelete = false;
+	if (msg && typeof(msg.forceDelete) != "undefined") {
+		forceDelete = msg.forceDelete;
+	}
+
+	EntryService.deleteObjectWorkingCopy(msg.id, forceDelete, "false",
 		{
 			callback: function(res){
 				if (res != null) {
@@ -656,9 +672,25 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 				msg.resultHandler.callback(res);
 			},
 			timeout:10000,
-			errorHandler:function(message) {
-				alert("Error in js/udkDataProxy.js: Error while deleting working copy: " + message);
-				msg.resultHandler.errback();
+			errorHandler:function(err) {
+				if (err.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
+					var onForceDeleteDef = new dojo.Deferred();
+
+					// If the user wants to delete the object anyway, set force delete and start another request
+					onForceDeleteDef.addCallback(function() {
+						msg.forceDelete = true;
+						udkDataProxy.handleDeleteRequest(msg);
+						//dojo.event.topic.publish("/cutObjectRequest", msg);
+					});
+					// If the user cancelled the operation notify the result handler
+					onForceDeleteDef.addErrback(msg.resultHandler.errback);
+
+					// Display the 'force delete' dialog with the attached resultHandler
+					dialog.showPage(message.get("general.warning"), "mdek_forceDelete_dialog.html", 382, 220, true, {nodeAppType:"O", nodeTitle:title, resultHandler:onForceDeleteDef});
+				} else {
+					dojo.debug("Error in js/udkDataProxy.js: Error while deleting object: "+err);
+					msg.resultHandler.errback(err);
+				}
 			}
 		}
 	);
@@ -667,26 +699,49 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 
 udkDataProxy.handleDeleteRequest = function(msg) {
 	var nodeAppType = dojo.widget.byId(msg.id).nodeAppType;
+	var title = dojo.widget.byId(msg.id).title;
+
+	var forceDelete = false;
+	if (msg && typeof(msg.forceDelete) != "undefined") {
+		forceDelete = msg.forceDelete;
+	}
+
 	if (nodeAppType == "O") {
-		dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+")");
-		EntryService.deleteNode(msg.id, "false",
-			{
+		dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+", "+forceDelete+")");
+		EntryService.deleteNode(msg.id, forceDelete, "false", {
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
 				errorHandler:function(err) {
-					alert("Error in js/udkDataProxy.js: Error while deleting node: " + err);
-					msg.resultHandler.errback(err);
+					if (err.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
+						var onForceDeleteDef = new dojo.Deferred();
+	
+						// If the user wants to delete the object anyway, set force delete and start another request
+						onForceDeleteDef.addCallback(function() {
+							msg.forceDelete = true;
+							udkDataProxy.handleDeleteRequest(msg);
+							//dojo.event.topic.publish("/cutObjectRequest", msg);
+						});
+						// If the user cancelled the operation notify the result handler
+						onForceDeleteDef.addErrback(function() { msg.resultHandler.errback("OPERATION_CANCELLED"); });
+
+						// Display the 'force delete' dialog with the attached resultHandler
+						dialog.showPage(message.get("general.warning"), "mdek_forceDelete_dialog.html", 382, 220, true, {nodeAppType:"O", nodeTitle:title, resultHandler:onForceDeleteDef});
+					} else {
+						dojo.debug("Error in js/udkDataProxy.js: Error while deleting object: "+err);
+						msg.resultHandler.errback(err);
+					}
 				}
 			}
 		);
+	
 	} else if (nodeAppType == "A") {
 		dojo.debug("udkDataProxy calling EntryService.deleteAddress("+msg.id+")");
-		EntryService.deleteAddress(msg.id, "false",
+		EntryService.deleteAddress(msg.id, forceDelete, "false",
 			{
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
 				errorHandler:function(err) {
-					alert("Error in js/udkDataProxy.js: Error while deleting address: " + err);
+					dojo.debug("Error in js/udkDataProxy.js: Error while deleting address: "+err);
 					msg.resultHandler.errback(err);
 				}
 			}

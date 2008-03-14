@@ -395,10 +395,7 @@ menuEventHandler.handleDiscard = function(msg) {
 					// Another version of the node still exists. Just update the dirty flag(?).
 				}
 	    	});
-			deleteObjDef.addErrback(function(mes) {
-				dialog.show(message.get("general.error"), message.get("tree.nodeDiscardError"), dialog.WARNING);
-				dojo.debug(mes);
-			});
+			deleteObjDef.addErrback(displayErrorMessage);
 
 			// Tell the backend to delete the selected node.
 	    	dojo.debug("Publishing event: /deleteWorkingCopyRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
@@ -470,10 +467,7 @@ menuEventHandler.handleDelete = function(msg) {
 					selectedNode.destroy();
 				}
 	    	});
-			deleteObjDef.addErrback(function(mes) {
-				dialog.show(message.get("general.error"), message.get("tree.nodeDeleteError"), dialog.WARNING);
-				dojo.debug(mes);
-			});
+			deleteObjDef.addErrback(displayErrorMessage);
 
 			// Tell the backend to delete the selected node.
 	    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
@@ -682,7 +676,13 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
 function displayErrorMessage(err) {
 	// Show errors depending on outcome
 	if (err && err.message) {
-		if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
+		if (err.message.indexOf("OPERATION_CANCELLED") != -1) {
+			return;
+
+		} else if (err.message.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("operation.hint.addressReferenceHint"), dialog.WARNING);
+
+		} else if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
 		
 		} else if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {

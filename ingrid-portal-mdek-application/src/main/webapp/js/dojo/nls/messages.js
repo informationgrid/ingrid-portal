@@ -102,6 +102,9 @@
 	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its parent has a lower publication condition.",
 	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
+	"operation.hint.forceDeleteObjectHint":"The object '%{0}' is referenced by other MD-S. Do you really want to delete this object?",
+	"operation.hint.forceDeleteAddressHint":"The address '%{0}' is referenced by other MD-S. Do you really want to delete this address?",
+	"operation.hint.addressReferenceHint":"The address '%{0}' can not be deleted because it is referenced by objects.",
 
 	"address.type.institution":"Institution",
 	"address.type.unit":"Unit",

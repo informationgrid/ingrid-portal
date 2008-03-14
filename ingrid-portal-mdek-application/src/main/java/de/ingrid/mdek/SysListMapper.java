@@ -21,7 +21,7 @@ public class SysListMapper {
 
 	private Integer languageCode;
 
-	public void init() {
+	public void loadInitialLists() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("sysList");
 		ArrayList<Integer> initialListIds = new ArrayList<Integer>();
 		keyCache = new HashMap<String, Integer>();
@@ -50,7 +50,7 @@ public class SysListMapper {
 
 	public String getValue(String key, Integer entryId) {
 		if (listCache == null) {
-			this.init();
+			this.loadInitialLists();
 		}
 
 		List<String[]> sysList = listCache.get(keyCache.get(key));
@@ -67,7 +67,7 @@ public class SysListMapper {
 
 	public String getValueFromListId(Integer listId, Integer entryId) {
 		if (listCache == null) {
-			this.init();
+			this.loadInitialLists();
 		}
 
 		List<String[]> sysList = listCache.get(listId);
@@ -88,7 +88,7 @@ public class SysListMapper {
 	
 	public Integer getKey(String key, String entryVal) {
 		if (listCache == null) {
-			this.init();
+			this.loadInitialLists();
 		}
 		if (entryVal == null) {
 			return null;
@@ -113,7 +113,7 @@ public class SysListMapper {
 	
 	public Integer getKeyFromListId(Integer listId, String entryVal) {
 		if (listCache == null) {
-			this.init();
+			this.loadInitialLists();
 		}
 
 		List<String[]> sysList = listCache.get(listId);

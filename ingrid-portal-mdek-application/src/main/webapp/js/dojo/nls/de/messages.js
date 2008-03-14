@@ -61,6 +61,9 @@
 	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
 	"operation.hint.publicationConditionSaveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im nachgeordneten Teilbaum ist gr&ouml;&szlig;er als die, die f&uuml;r das aktuelle Objekt ausgew&auml;hlt wurde.<br>Mit dem Speichern des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt wirklich gespeichert werden?",
 	"operation.hint.publicationConditionMoveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im Zielteilbaum ist kleiner als die, die f&uuml;r das zu verschiebende Objekt.<br>Mit dem Verschieben des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt / der Teilbaum wirklich verschoben werden?",
+	"operation.hint.forceDeleteObjectHint":"Auf das Objekt '%{0}' wird verwiesen. Wollen Sie es wirklich l&ouml;schen?",
+	"operation.hint.forceDeleteAddressHint":"Auf die Adresse '%{0}' wird verwiesen. Wollen Sie die Adresse wirklich l&ouml;schen?",
+	"operation.hint.addressReferenceHint":"Die Adresse '%{0}' kann nicht gel&ouml;scht werden, sie wird von mindestens einem Objekt referenziert.",
 
 	"address.type.institution":"Institution",
 	"address.type.unit":"Einheit",

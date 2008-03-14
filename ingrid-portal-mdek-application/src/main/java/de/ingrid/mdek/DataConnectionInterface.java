@@ -162,20 +162,22 @@ public interface DataConnectionInterface {
 	 * 
 	 * <ul>
 	 * <li><b>(String) uuid</b> - uuid of the node that should be deleted.</li>
+     * <li><b>(boolean) forceDeleteReferences</b> - signals the backend to delete the object even if it is referenced by other objects
 	 * </ul>
 	 * 
 	 */		
-	public void deleteObject(String uuid);
+	public void deleteObject(String uuid, boolean forceDeleteReferences);
 
 	/**
 	 * Sends a request to delete an address.
 	 * 
 	 * <ul>
 	 * <li><b>(String) uuid</b> - uuid of the node that should be deleted.</li>
+     * <li><b>(boolean) forceDeleteReferences</b> - signals the backend to delete the address even if it is referenced by other objects
 	 * </ul>
 	 * 
 	 */		
-	public void deleteAddress(String uuid);
+	public void deleteAddress(String uuid, boolean forceDeleteReferences);
 
 	
 	/**
@@ -183,22 +185,24 @@ public interface DataConnectionInterface {
 	 * 
 	 * <ul>
 	 * <li><b>(String) uuid</b> - uuid of the node whose working copy should be deleted.</li>
+     * <li><b>(boolean) forceDeleteReferences</b> - signals the backend to delete the object even if it is referenced by other objects
 	 * </ul>
 	 * 
 	 * @return boolean if the object was fully deleted (no published version exists) or not (published ver exists)
 	 */		
-	public boolean deleteObjectWorkingCopy(String uuid);
+	public boolean deleteObjectWorkingCopy(String uuid, boolean forceDeleteReferences);
 
 	/**
 	 * Sends a request to delete a working copy.
 	 * 
 	 * <ul>
 	 * <li><b>(String) uuid</b> - uuid of the node whose working copy should be deleted.</li>
+     * <li><b>(boolean) forceDeleteReferences</b> - signals the backend to delete the address even if it is referenced by other objects
 	 * </ul>
 	 * 
 	 * @return boolean if the address was fully deleted (no published version exists) or not (published ver exists)
 	 */		
-	public boolean deleteAddressWorkingCopy(String uuid);
+	public boolean deleteAddressWorkingCopy(String uuid, boolean forceDeleteReferences);
 
 	
 	/**

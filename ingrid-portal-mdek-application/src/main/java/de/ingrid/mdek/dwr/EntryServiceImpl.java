@@ -82,7 +82,7 @@ public class EntryServiceImpl implements EntryService {
 			throw new RuntimeException(convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.error("Error copying node.", e);
+			log.debug("Error copying node.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -105,7 +105,7 @@ public class EntryServiceImpl implements EntryService {
 			throw new RuntimeException(convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.error("Error copying address.", e);
+			log.debug("Error copying address.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -117,14 +117,34 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#deleteNode(java.lang.String,
 	 *      java.lang.Boolean)
 	 */
-	public String deleteNode(String uuid, Boolean markOnly) {
-		dataConnection.deleteObject(uuid);
-		return "success";
+	public void deleteNode(String uuid, Boolean forceDeleteReferences, Boolean markOnly) {
+		try {
+			dataConnection.deleteObject(uuid, forceDeleteReferences);
+		}
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("Error deleting object.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		}
+		catch (Exception e) {
+			log.debug("Error deleting object.", e);
+			throw new RuntimeException(e);
+		}
 	}
 
-	public String deleteAddress(String uuid, Boolean markOnly) {
-		dataConnection.deleteAddress(uuid);
-		return "success";
+	public void deleteAddress(String uuid, Boolean forceDeleteReferences, Boolean markOnly) {
+		try {
+			dataConnection.deleteAddress(uuid, forceDeleteReferences);
+		}
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("Error deleting address.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		}
+		catch (Exception e) {
+			log.debug("Error deleting address.", e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	/*
@@ -133,27 +153,40 @@ public class EntryServiceImpl implements EntryService {
 	 * @see de.ingrid.mdek.dwr.api.EntryService#deleteObjectWorkingCopy(java.lang.String,
 	 *      java.lang.Boolean)
 	 */
-	public MdekDataBean deleteObjectWorkingCopy(String uuid, Boolean markOnly) {
+	public MdekDataBean deleteObjectWorkingCopy(String uuid, Boolean forceDeleteReferences, Boolean markOnly) {
 		try {
-			boolean wasFullyDeleted = dataConnection.deleteObjectWorkingCopy(uuid);
+			boolean wasFullyDeleted = dataConnection.deleteObjectWorkingCopy(uuid, forceDeleteReferences);
 			if (!wasFullyDeleted) {
 				return dataConnection.getObjectDetail(uuid);
 			}
-		} catch (Exception e) {
-			log.error("Error deleting working Copy.", e);
-		};
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("Error deleting working Copy.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		}
+		catch (Exception e) {
+			log.debug("Error deleting working Copy.", e);
+			throw new RuntimeException(e);
+		}
+
 		return null;
 	}
 
-	public MdekAddressBean deleteAddressWorkingCopy(String uuid, Boolean markOnly) {
+	public MdekAddressBean deleteAddressWorkingCopy(String uuid, Boolean forceDeleteReferences, Boolean markOnly) {
 		try {
-			boolean wasFullyDeleted = dataConnection.deleteAddressWorkingCopy(uuid);
+			boolean wasFullyDeleted = dataConnection.deleteAddressWorkingCopy(uuid, forceDeleteReferences);
 			if (!wasFullyDeleted) {
 				return dataConnection.getAddressDetail(uuid);
 			}
-		} catch (Exception e) {
-			log.error("Error deleting address working Copy.", e);
-		};
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("Error deleting address working Copy.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		}
+		catch (Exception e) {
+			log.debug("Error deleting address working Copy.", e);
+			throw new RuntimeException(e);
+		}
 		return null;
 	}
 
@@ -185,7 +218,7 @@ public class EntryServiceImpl implements EntryService {
 		try {
 			data = dataConnection.getObjectDetail(nodeUuid);
 		} catch (Exception e) {
-			log.error("Error while getting node data.", e);
+			log.debug("Error while getting node data.", e);
 		}
 
 		// TODO check for errors and throw an exception?
@@ -201,7 +234,7 @@ public class EntryServiceImpl implements EntryService {
 		try {
 			address = dataConnection.getAddressDetail(nodeUuid);
 		} catch (Exception e) {
-			log.error("Error while getting address data.", e);
+			log.debug("Error while getting address data.", e);
 		}
 
 		// TODO check for errors and throw an exception?
@@ -335,7 +368,7 @@ public class EntryServiceImpl implements EntryService {
 			throw new RuntimeException(convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.error("Error moving node.", e);
+			log.debug("Error moving node.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -352,7 +385,7 @@ public class EntryServiceImpl implements EntryService {
 			throw new RuntimeException(convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.error("Error moving address.", e);
+			log.debug("Error moving address.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -375,7 +408,7 @@ public class EntryServiceImpl implements EntryService {
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
 			catch (Exception e) {
-				log.error("Error while saving node", e);
+				log.debug("Error while saving node", e);
 				throw new RuntimeException("Error while saving node.");
 			}
 		} else {
@@ -388,7 +421,7 @@ public class EntryServiceImpl implements EntryService {
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
 			catch (Exception e) {
-				log.error("Error while publishing node", e);
+				log.debug("Error while publishing node", e);
 				throw new RuntimeException("Error while publishing node.");
 			}
 		}
@@ -408,7 +441,7 @@ public class EntryServiceImpl implements EntryService {
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
 			catch (Exception e) {
-				log.error("Error while saving node", e);
+				log.debug("Error while saving node", e);
 				throw new RuntimeException("Error while saving address.");
 			}
 		} else {
@@ -421,7 +454,7 @@ public class EntryServiceImpl implements EntryService {
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
 			catch (Exception e) {
-				log.error("Error while publishing address", e);
+				log.debug("Error while publishing address", e);
 				throw new RuntimeException("Error while publishing address.");
 			}
 		}

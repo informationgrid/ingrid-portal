@@ -187,23 +187,25 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	}
 
 	
-	public void deleteObject(String uuid) {
-		mdekCallerObject.deleteObject(uuid, getCurrentSessionId());
+	public void deleteObject(String uuid, boolean forceDeleteReferences) {
+		IngridDocument response = mdekCallerObject.deleteObject(uuid, forceDeleteReferences, getCurrentSessionId());
+		IngridDocument result = extractAdditionalInformationFromResponse(response);
 	}
 
-	public void deleteAddress(String uuid) {
-		mdekCallerAddress.deleteAddress(uuid, getCurrentSessionId());
+	public void deleteAddress(String uuid, boolean forceDeleteReferences) {
+		IngridDocument response = mdekCallerAddress.deleteAddress(uuid, forceDeleteReferences, getCurrentSessionId());
+		IngridDocument result = extractAdditionalInformationFromResponse(response);
 	}
 
-	public boolean deleteObjectWorkingCopy(String uuid) {
-		IngridDocument response = mdekCallerObject.deleteObjectWorkingCopy(uuid, getCurrentSessionId());
+	public boolean deleteObjectWorkingCopy(String uuid, boolean forceDeleteReferences) {
+		IngridDocument response = mdekCallerObject.deleteObjectWorkingCopy(uuid, forceDeleteReferences, getCurrentSessionId());
 
 		IngridDocument result = extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
 	}
 
-	public boolean deleteAddressWorkingCopy(String uuid) {
-		IngridDocument response = mdekCallerAddress.deleteAddressWorkingCopy(uuid, getCurrentSessionId());
+	public boolean deleteAddressWorkingCopy(String uuid, boolean forceDeleteReferences) {
+		IngridDocument response = mdekCallerAddress.deleteAddressWorkingCopy(uuid, forceDeleteReferences, getCurrentSessionId());
 
 		IngridDocument result = extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
@@ -503,11 +505,11 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			return v;
 		}
 
-		v.setName(response.getString("build.name"));
-		v.setVersion(response.getString("build.version"));
-		v.setBuildNumber(response.getString("build.number"));
+		v.setName(response.getString(MdekKeys.BUILD_NAME));
+		v.setVersion(response.getString(MdekKeys.BUILD_VERSION));
+		v.setBuildNumber(response.getString(MdekKeys.BUILD_NUMBER));
 		try {
-			v.setTimeStamp(new Date(Long.valueOf(response.getString("build.timestamp"))));
+			v.setTimeStamp(new Date(Long.valueOf(response.getString(MdekKeys.BUILD_TIMESTAMP))));
 		} catch (NumberFormatException e) {
 			v.setTimeStamp(new Date());
 		}
