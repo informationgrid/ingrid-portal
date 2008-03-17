@@ -594,7 +594,7 @@ function initAddressReferenceTables() {
 			srcFunc: "onRemoveData",
 			adviceObj: filterStore,
 			adviceFunc: function(obj) {
-				dojo.debug("onRemoveData() on "+this.relationTypeFilter);
+//				dojo.debug("onRemoveData() on "+this.relationTypeFilter);
 				var o = this.getDataByKey(obj.key);
 				if (o) {
 					this.removeData(o);
@@ -610,7 +610,7 @@ function initAddressReferenceTables() {
 			srcFunc: "onAddData",
 			adviceObj: filterStore,
 			adviceFunc: function(obj) {
-				dojo.debug("onAddData() on "+this.relationTypeFilter);
+//				dojo.debug("onAddData() on "+this.relationTypeFilter);
 				var data = mainStore.getData();
 				this.clearData();
 				for (i in data) {
@@ -848,7 +848,8 @@ function initToolbar() {
 }
 
 function initTableValidators() {
-	
+	var unsignedIntFlags = { min:0, max:2147483647 }
+
 	// The coordinates in the spatial reference table must be empty or real numbers
 	var table = dojo.widget.byId("spatialRefLocation");
 	table.setValidationFunctions([
@@ -861,7 +862,7 @@ function initTableValidators() {
 	// The vector format table must contain an integer as 'numElements'
 	var table = dojo.widget.byId("ref1VFormatDetails");
 	table.setValidationFunctions([
-		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isInteger(item));}}
+		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item, unsignedIntFlags)));}}
 	]);
 
 	// Availability media option 'Datenvolumen' is of type double 
@@ -873,7 +874,7 @@ function initTableValidators() {
 	// object class 1 - The 'Erstellungsmassstab' table must contain an integer and two doubles
 	var table = dojo.widget.byId("ref1Scale");
 	table.setValidationFunctions([
-		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isInteger(item));}},
+		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item, unsignedIntFlags)));}},
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
 		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
 	]);

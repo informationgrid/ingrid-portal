@@ -143,7 +143,7 @@ function addAddressToStore(adrId, store) {
 			}
 		}
 	}
-
+	
 	EntryService.getAddressData(adrId, "false", {
 		callback:function(res){
 			if (res != null) {
@@ -154,6 +154,9 @@ function addAddressToStore(adrId, store) {
 				res.typeOfRelation = linkType;
 				res.nameOfRelation = nameOfRelation;
 				res.refOfRelation = 2010;
+				// Remove the object references since we don't need them in the address table
+				// This information is removed because it can be quite large if the address is referenced by many objects 
+				res.linksFromObjectTable = [];
 				store.addData(res);
 			}
 		},

@@ -59,18 +59,6 @@
           <doUpdate>false</doUpdate>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.0</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Build>${buildNumber}</Implementation-Build>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -86,6 +74,7 @@
       <version>2.4</version>
       <scope>provided</scope>
     </dependency>
+<!-- 
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>jsp-api</artifactId>
@@ -102,7 +91,8 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
     </dependency>
-    <dependency>
+ -->
+     <dependency>
       <groupId>org.directwebremoting</groupId>
       <artifactId>dwr</artifactId>
       <version>3.0.M1.RC2</version>
@@ -112,12 +102,14 @@
       <artifactId>log4j</artifactId>
       <version>1.2.8</version>
     </dependency>
+<!-- 
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.4</version>
     </dependency>
-    <dependency>
+ -->
+     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <version>2.0.5</version>
@@ -132,12 +124,7 @@
       <artifactId>commons-lang</artifactId>
       <version>2.2</version>
     </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.2</version>
-    </dependency>
-    <dependency>
+     <dependency>
 		<groupId>de.ingrid.mdek</groupId>
 		<artifactId>ingrid-mdek-api</artifactId>
 		<version>1.1.0-SNAPSHOT</version>
@@ -148,13 +135,13 @@
         <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
-
       <dependency>
         <groupId>axis</groupId>
         <artifactId>axis</artifactId>
 	    <version>1.4</version>
         <type>jar</type>
       </dependency>		
+<!-- 
       <dependency>
         <groupId>axis</groupId>
         <artifactId>axis-jaxrpc</artifactId>
@@ -185,12 +172,14 @@
         <version>1.0.b2</version>
         <type>jar</type>
       </dependency>		
-      <dependency>
+ -->
+       <dependency>
         <groupId>uba</groupId>
         <artifactId>xtmStubs</artifactId>
 		 <version>3.0.0.1</version>
         <type>jar</type>
       </dependency>		    
+<!-- 
       <dependency>
         <groupId>ingrid</groupId>
         <artifactId>ingrid-utils</artifactId>
@@ -215,9 +204,9 @@
             <version>1.1.2a</version>
             <type>jar</type>
         </dependency>
-
-
-  </dependencies>
+ -->
+	</dependencies>
+	
 	<repositories>
 		<repository>
 			<snapshots/>
@@ -226,14 +215,6 @@
 			<url>http://harrison.its-technidata.de/ingrid/maven</url>
 			<layout>legacy</layout>
 		</repository>
-
 	</repositories>
 	
-	<pluginRepositories>
-	  <pluginRepository>
-	    <id>tlc</id>
-	    <name>TLC Repository</name>
-	    <url>http://commons.ucalgary.ca/pub/m2</url>
-	  </pluginRepository>
-	</pluginRepositories>
  </project>

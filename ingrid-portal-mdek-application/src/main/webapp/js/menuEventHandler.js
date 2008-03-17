@@ -719,14 +719,14 @@ function displayErrorMessage(err) {
 
 function handleEntityReferencedException(err) {
 	var addressTitle = udkDataProxy._createAddressTitle(err.targetAddress);
-	var objectTitles = "<br>";
+	var objectTitles = "<br><br>";
 	
 	for (var i = 0; i < err.sourceObjects.length; ++i) {
-		objectTitles += err.sourceObjects[i].title +"<br>";
+		objectTitles += "- "+err.sourceObjects[i].title +"<br>";
 	}
 	objectTitles = dojo.string.trim(objectTitles);
 
-	dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("operation.hint.addressReferenceHint"), addressTitle, objectTitles), dialog.WARNING);
+	dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("operation.hint.addressReferenceHint"), addressTitle, objectTitles), dialog.WARNING, null, 320, 300);
 }
 
 function alertNotImplementedYet()

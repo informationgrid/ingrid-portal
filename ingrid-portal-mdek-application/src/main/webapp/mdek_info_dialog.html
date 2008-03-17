@@ -26,7 +26,7 @@ function setVersionInformation(ver) {
 	displayText += "Build name: "+ver.name+"<br>";
 	displayText += "Build version: "+ver.version+"<br>";
 	displayText += "Build number: "+ver.buildNumber+"<br>";
-	displayText += "Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+//	displayText += "Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
 
 	infoDiv.innerHTML = displayText;
 }
@@ -38,7 +38,7 @@ function setBackendVersionInformation(ver) {
 	displayText += "Server Build name: "+ver.name+"<br>";
 	displayText += "Server Build version: "+ver.version+"<br>";
 	displayText += "Server Build number: "+ver.buildNumber+"<br>";
-	displayText += "Server Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+//	displayText += "Server Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
 
 	infoDiv.innerHTML = displayText;
 }

@@ -23,7 +23,7 @@
     "tree.assistant1":"getCapabilities-Assistent",
     "tree.assistant2":"Allgemeiner Erfassungsassistent",
     "tree.noAssistant":"Kein Assistent",
-    "tree.nodeCanPublishHint":"Vor dem abschlie&szlig;enden Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
+    "tree.nodeCanPublishHint":"Vor dem abschlie&szlig;enden Speichern m&uuml;ssen alle Pflichtfelder korrekt gef&uuml;llt sein! Bitte &uuml;berpr&uuml;fen Sie die rot markierten Felder.",
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.newNodeName":"Neues Objekt",

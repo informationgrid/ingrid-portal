@@ -163,6 +163,9 @@ function isObjectPublishable(idcObject) {
 					dojo.debug("Object class one required field empty.");				
 				}
 			}
+
+			// The Vector format area is not required for publishing an object
+/*
 			for (var i in idcObject.ref1Representation) {
 				if (idcObject.ref1Representation[i] == "1") {
 					if (idcObject.ref1VFormatTopology == ""
@@ -174,7 +177,7 @@ function isObjectPublishable(idcObject) {
 					}
 				}
 			}
-
+*/
 			break;
 		case '2':
 			// No additional required fields for object class 2

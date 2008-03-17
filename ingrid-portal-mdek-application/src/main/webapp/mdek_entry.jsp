@@ -10,6 +10,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/DownloadTest.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 
@@ -388,7 +389,7 @@ function hideSplash(){
 	                    <div class="tableContainer rows4 thirdInside2">
 	                      <div class="cellEditors" id="ref1VFormatDetailsEditors">
 	                        <div dojoType="ingrid:Select" toggle="plain" style="width:100px;" listId="515" id="geometryTypeEditor"></div>
-	                        <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="elementNumberEditor"></div>
+	                        <div dojoType="IntegerTextbox" min="0" max="2147483647" widgetId="elementNumberEditor"></div>
 	                      </div>
 	                	    <table id="ref1VFormatDetails" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
@@ -415,9 +416,9 @@ function hideSplash(){
 	                <span class="label">Erstellungsma&szlig;stab</span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="ref1ScaleEditors">
-	                    <div dojoType="IntegerTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScale"></div>
-	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleGroundResolution"></div>
-	                    <div dojoType="RealNumberTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="ref1ScaleScanResolution"></div>
+	                    <div dojoType="IntegerTextbox" min="0" max="2147483647" widgetId="ref1ScaleScale"></div>
+	                    <div dojoType="RealNumberTextbox" widgetId="ref1ScaleGroundResolution"></div>
+	                    <div dojoType="RealNumberTextbox" widgetId="ref1ScaleScanResolution"></div>
 	                  </div>
 	            	    <table id="ref1Scale" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
@@ -727,7 +728,7 @@ function hideSplash(){
 	          
 	                <div class="half">
 	                  <span class="label"><label for="ref2LocationTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Standort')">Standort</label></span>
-	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                  <span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 
 	                	<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref2LocationTab1">
 	                		<div id="ref2LocationTab1" dojoType="ContentPane" label="Text">
@@ -951,7 +952,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beteiligte')">Beteiligte</label></span>
-	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4ParticipantsTab1">
 	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">
@@ -981,7 +982,7 @@ function hideSplash(){
 
 	                <div class="half">
 	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Projektleiter')">Projektleiter</label></span>
-	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 500, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4PMTab1">
 	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
 	                      	<span class="input">

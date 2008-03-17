@@ -121,10 +121,10 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
   div.style.position = "absolute";
   var content = '';
   if (type == dialog.WARNING)
-    content += '<div class="popupWarning" style="200px;">Warnhinweis!</div>';
+    content += '<div class="popupWarning">Warnhinweis!</div>';
   if (type == dialog.INFO)
     text = '<strong>' + text + '</strong>';
-  content += '<div class="popupContent">' + text + '<span class="buttons" id="'+dlgId+'_buttons"></span></div>';
+  content += '<div class="popupContent xNoScroll yScroll" style="height:'+(height-85)+'px;">' + text + '<span class="buttons" id="'+dlgId+'_buttons"></span></div>';
   div.innerHTML = content;
   document.body.appendChild(div);
   div.style['width'] = width + "px";
