@@ -168,6 +168,9 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
 
   // make the dialog modal by adding a glasspane
   showGlassPane(widget);
+
+  // Focus the last button that is displayed (key 'enter' triggers the default action)
+  button.domNode.focus();
 }
 
 /*

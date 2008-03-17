@@ -63,7 +63,7 @@
 	"operation.hint.publicationConditionMoveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im Zielteilbaum ist kleiner als die, die f&uuml;r das zu verschiebende Objekt.<br>Mit dem Verschieben des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt / der Teilbaum wirklich verschoben werden?",
 	"operation.hint.forceDeleteObjectHint":"Auf das Objekt '%{0}' wird verwiesen. Wollen Sie es wirklich l&ouml;schen?",
 	"operation.hint.forceDeleteAddressHint":"Auf die Adresse '%{0}' wird verwiesen. Wollen Sie die Adresse wirklich l&ouml;schen?",
-	"operation.hint.addressReferenceHint":"Die Adresse '%{0}' kann nicht gel&ouml;scht werden, sie wird von mindestens einem Objekt referenziert.",
+	"operation.hint.addressReferenceHint":"Die Adresse '%{0}' kann nicht gel&ouml;scht werden, sie wird von folgenden Objekten referenziert: %{1}",
 
 	"address.type.institution":"Institution",
 	"address.type.unit":"Einheit",

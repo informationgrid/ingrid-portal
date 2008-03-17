@@ -676,11 +676,16 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
 function displayErrorMessage(err) {
 	// Show errors depending on outcome
 	if (err && err.message) {
+
+		// In case an exception is wrappen inside another exception (dwr exception isn't of type Error)
+		if (typeof(err.message) == "object")
+			err = err.message;
+
 		if (err.message.indexOf("OPERATION_CANCELLED") != -1) {
 			return;
 
 		} else if (err.message.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
-	    	dialog.show(message.get("general.error"), message.get("operation.hint.addressReferenceHint"), dialog.WARNING);
+	    	handleEntityReferencedException(err);
 
 		} else if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
@@ -712,6 +717,17 @@ function displayErrorMessage(err) {
 	}
 }
 
+function handleEntityReferencedException(err) {
+	var addressTitle = udkDataProxy._createAddressTitle(err.targetAddress);
+	var objectTitles = "<br>";
+	
+	for (var i = 0; i < err.sourceObjects.length; ++i) {
+		objectTitles += err.sourceObjects[i].title +"<br>";
+	}
+	objectTitles = dojo.string.trim(objectTitles);
+
+	dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("operation.hint.addressReferenceHint"), addressTitle, objectTitles), dialog.WARNING);
+}
 
 function alertNotImplementedYet()
 {

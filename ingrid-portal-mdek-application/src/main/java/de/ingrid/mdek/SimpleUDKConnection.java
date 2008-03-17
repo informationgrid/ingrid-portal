@@ -16,13 +16,14 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.IMdekCallerAbstract.Quantity;
-import de.ingrid.mdek.IMdekErrors.MdekError;
+import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.dwr.AddressSearchResultBean;
 import de.ingrid.mdek.dwr.CatalogBean;
 import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.mdek.dwr.ObjectSearchResultBean;
+import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.utils.IngridDocument;
 
@@ -220,7 +221,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			boolean hasWorkingCopy = result.getBoolean(MdekKeys.RESULTINFO_HAS_WORKING_COPY);
 			if (hasWorkingCopy) {
 				// Throw an error. A node that is about to be moved must not have working copies as children
-				throw new MdekException(MdekError.SUBTREE_HAS_WORKING_COPIES);
+				throw new MdekException(new MdekError(MdekErrorType.SUBTREE_HAS_WORKING_COPIES));
 			}
 		}
 		return true;
@@ -235,7 +236,7 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 			boolean hasWorkingCopy = result.getBoolean(MdekKeys.RESULTINFO_HAS_WORKING_COPY);
 			if (hasWorkingCopy) {
 				// Throw an error. An address that is about to be moved must not have working copies as children
-				throw new MdekException(MdekError.SUBTREE_HAS_WORKING_COPIES);
+				throw new MdekException(new MdekError(MdekErrorType.SUBTREE_HAS_WORKING_COPIES));
 			}
 		}
 		return true;
@@ -498,7 +499,35 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		return searchResult;
 	}
 
+	private ArrayList<MdekDataBean> extractDetailedObjects(IngridDocument doc) {
+		ArrayList<MdekDataBean> results = new ArrayList<MdekDataBean>();
 
+		if (doc != null) {
+			List<IngridDocument> objs = (List<IngridDocument>) doc.get(MdekKeys.OBJ_ENTITIES);
+			if (objs != null) {
+				for (IngridDocument objEntity : objs) {
+					results.add(dataMapper.getDetailedObjectRepresentation(objEntity));
+				}
+			}
+		}
+		return results;
+	}
+
+	private ArrayList<MdekAddressBean> extractDetailedAddresses(IngridDocument doc) {
+		ArrayList<MdekAddressBean> results = new ArrayList<MdekAddressBean>();
+
+		if (doc != null) {
+			List<IngridDocument> adrs = (List<IngridDocument>) doc.get(MdekKeys.ADR_ENTITIES);
+			if (adrs != null) {
+				for (IngridDocument adrEntity : adrs) {
+					results.add(dataMapper.getDetailedAddressRepresentation(adrEntity));
+				}
+			}
+		}
+		return results;
+	}
+
+	
 	private VersionInformation extractVersionInformationFromResponse(IngridDocument response) {
 		VersionInformation v = new VersionInformation();
 		if (response == null) {
@@ -583,12 +612,54 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 		String errorMessage = mdekCaller.getErrorMsgFromResponse(response);
 		log.error(errorMessage);
 		List<MdekError> err = mdekCaller.getErrorsFromResponse(response);
-		if (err != null)
-			throw new MdekException(err);
-		else
+		if (err != null) {
+			if (containsErrorType(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
+				handleEntityReferencedByObjectError(err);
+			} else {
+				throw new MdekException(err);
+			}
+		} else {
 			throw new RuntimeException(errorMessage);
+		}
 	}
 
+	private void handleEntityReferencedByObjectError(List<MdekError> errorList) {
+		MdekAddressBean targetAddress = null;
+		MdekDataBean targetObject = null;
+		ArrayList<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
+		ArrayList<MdekDataBean> sourceObjects = new ArrayList<MdekDataBean>();
+
+		for (MdekError mdekError : errorList) {
+			if (mdekError.getErrorType().equals(MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
+				// In the case of this exception, we have to build an MdekAppException containing additional data
+				IngridDocument errorInfo = mdekError.getErrorInfo();
+				ArrayList<MdekDataBean> objs = extractDetailedObjects(errorInfo);
+				ArrayList<MdekAddressBean> adrs = extractDetailedAddresses(errorInfo);
+				sourceObjects.addAll(objs);
+				sourceAddresses.addAll(adrs);
+
+				targetAddress = dataMapper.getDetailedAddressRepresentation(errorInfo);
+			}
+		}
+
+		EntityReferencedException e = new EntityReferencedException(MdekErrorType.ENTITY_REFERENCED_BY_OBJ.toString());
+		e.setTargetAddress(targetAddress);
+		e.setTargetObject(targetObject);
+		e.setSourceAddresses(sourceAddresses);
+		e.setSourceObjects(sourceObjects);
+		throw e;
+	}
+	
+	
+	private static boolean containsErrorType(List<MdekError> errorList, MdekErrorType errorType) {
+		for (MdekError mdekError : errorList) {
+			if (mdekError != null && mdekError.getErrorType().equals(errorType))
+				return true;
+		}
+		return false;
+	}
+	
+	
 	private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	private static Date convertTimestampToDate(String timeStamp) {

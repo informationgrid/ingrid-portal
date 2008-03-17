@@ -643,9 +643,12 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 				msg.resultHandler.callback(res);
 			},
 			timeout:10000,
-			errorHandler:function(err) {
-				dojo.debug("Error in js/udkDataProxy.js: Error while deleting address working copy: "+err);
-				msg.resultHandler.errback(err);
+			errorHandler:function(errMsg, err) {
+				dojo.debug("Error in js/udkDataProxy.js: Error while deleting address working copy: "+errMsg);
+				// Wrap the dwr error in a javscript Error object
+				var e = new Error(errMsg);
+				e.message = err;
+				msg.resultHandler.errback(e);
 			}
 		}
 	);
@@ -740,9 +743,12 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 			{
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
-				errorHandler:function(err) {
-					dojo.debug("Error in js/udkDataProxy.js: Error while deleting address: "+err);
-					msg.resultHandler.errback(err);
+				errorHandler:function(errMsg, err) {
+//					dojo.debug("Error in js/udkDataProxy.js: Error while deleting address: "+err);
+					// Wrap the dwr error in a javscript Error object
+					var e = new Error(errMsg);
+					e.message = err;
+					msg.resultHandler.errback(e);
 				}
 			}
 		);

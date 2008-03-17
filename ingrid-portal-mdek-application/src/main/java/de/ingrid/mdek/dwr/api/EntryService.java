@@ -13,6 +13,7 @@ import de.ingrid.mdek.dwr.JobInfoBean;
 import de.ingrid.mdek.dwr.MdekAddressBean;
 import de.ingrid.mdek.dwr.MdekDataBean;
 import de.ingrid.mdek.dwr.ObjectSearchResultBean;
+import de.ingrid.mdek.exception.EntityReferencedException;
 
 /**
  * @author joachim

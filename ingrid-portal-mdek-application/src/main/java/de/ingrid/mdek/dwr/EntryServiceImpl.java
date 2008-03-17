@@ -11,9 +11,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.DataConnectionInterface;
+import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.VersionInformation;
-import de.ingrid.mdek.IMdekErrors.MdekError;
 import de.ingrid.mdek.dwr.api.EntryService;
+import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
 
 
@@ -140,10 +141,9 @@ public class EntryServiceImpl implements EntryService {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("Error deleting address.", e);
 			throw new RuntimeException(convertToRuntimeException(e));
-		}
-		catch (Exception e) {
-			log.debug("Error deleting address.", e);
-			throw new RuntimeException(e);
+		} catch (RuntimeException e) {
+			log.debug("Error deleting address", e);
+			throw e;
 		}
 	}
 
