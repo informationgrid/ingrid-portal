@@ -2,12 +2,12 @@ Sehr geehrte(r) $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.ge
 
 Willkommen bei PortalU! 
 
-Für Sie wurde ein Zugang angelegt:
+FÃ¼r Sie wurde ein Zugang angelegt:
 
 Benutzername: $!{map.get("login")}
 Passwort: $!{map.get("password")}
 
 
-Mit freundlichen Grüßen,
+Mit freundlichen GrÃ¼ÃŸen,
 
 Ihr PortalU Team
