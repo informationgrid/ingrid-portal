@@ -12,6 +12,7 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
 import de.ingrid.mdek.beans.MdekDataBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.exception.EntityReferencedException;
 
@@ -300,7 +301,9 @@ public interface EntryService {
 
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
-	
+
+	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);
+
 	// Fetch sys lists from the backend
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
 

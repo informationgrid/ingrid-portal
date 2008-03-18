@@ -55,7 +55,7 @@
 	"dialog.undefinedError":"Beim Ausf&uuml;hren der Aktion ist ein Fehler aufgetreten.",
 	"dialog.commentTitle":"Kommentare zu '%{0}'",
 	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
-
+	"dialog.hqlQueryInvalidError":"Der eingegebene HQL Suchstring ist ung&uuml;ltig. Bitte &uuml;berpr&uuml;fen sie die Eingabe.",
 
 	"operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",

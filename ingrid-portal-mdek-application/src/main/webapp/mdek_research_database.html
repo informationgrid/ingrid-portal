@@ -6,7 +6,7 @@
 
 var scriptScope = this;
 
-var resultsPerPage = 10;
+var resultsPerPage = 20;
 var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("searchDatabaseResultsInfo"), pagingSpan:dojo.byId("searchDatabaseResultsPaging") });
 
 var currentQuery = null;
@@ -26,30 +26,42 @@ _container_.addOnLoad(function() {
 
 
 function updateResultTable(res) {
-	dojo.debug("updateResultTable(res) not implemented yet.");
+//	dojo.debugShallow(res);
+	var resultList = [];
 
-	UtilList.addTableIndices(res.resultList);
-	UtilList.addObjectLinkLabels(res.resultList);  
-	UtilList.addIcons(res.resultList);
+	if (res.objectSearchResult != null) {
+		// Objects found
+//		dojo.debugShallow(res.objectSearchResult);
+		resultList = res.objectSearchResult.resultList;
+		UtilList.addObjectLinkLabels(resultList);  
 
-	dojo.widget.byId("datbaseSearchResults").store.setData(res);
+	} else if (res.addressSearchResult != null) {
+		// Addresses found
+//		dojo.debugShallow(res.addressSearchResult);
+		resultList = res.addressSearchResult.resultList;
+		UtilList.addAddressTitles(resultList);
+		UtilList.addAddressLinkLabels(resultList);  
+	}
+
+	UtilList.addTableIndices(resultList);
+	UtilList.addIcons(resultList);
+
+	dojo.widget.byId("datbaseSearchResults").store.setData(resultList);
 }
 
 
 // starts a database search with the given input
 function startSearch() {
-	dojo.debug("startSearch() not implemented yet.");
-
 	if (currentQuery == null)
 		return;
 
-	EntryService.queryDatabase(currentQuery, pageNav.getStartHit(), {
+	EntryService.queryHQL(currentQuery, pageNav.getStartHit(), resultsPerPage, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
-		errorHandler: function(msg) {
-			dojo.debug(msg);
-			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), msg), dialog.WARNING);				
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+//			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), errMsg), dialog.WARNING);				
 		}		
 	});
 }
@@ -63,7 +75,15 @@ this.startNewSearch = function() {
 }
 
 function updatePageNavigation(res) {
-	pageNav.setTotalNumHits(res.totalNumHits);
+	if (res.objectSearchResult != null) {
+		// Objects found
+		pageNav.setTotalNumHits(res.objectSearchResult.totalNumHits);
+
+	} else if (res.addressSearchResult != null) {
+		// Addresses found
+		pageNav.setTotalNumHits(res.addressSearchResult.totalNumHits);
+	}
+
 	pageNav.updateDomNodes();
 }
 
@@ -130,8 +150,8 @@ function hideLoadingZone() {
         	<div class="fill"></div>
           </div>
 
-			<div class="tableContainer rows10 full">
-	    	    <table id="datbaseSearchResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
+			<div class="tableContainer rows20 full">
+	    	    <table id="datbaseSearchResults" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort relativePos">
 	    	      <thead>
 	    		      <tr>
 	          			<th nosort="true" field="icon" dataType="String" width="23" nosort="true"></th>

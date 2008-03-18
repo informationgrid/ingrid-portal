@@ -39,6 +39,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.OperationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.OperationParameterBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.ScaleBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.TimeReferenceBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.UrlBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.VectorFormatDetailsBean"/>

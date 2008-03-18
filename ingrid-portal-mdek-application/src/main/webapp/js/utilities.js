@@ -112,7 +112,7 @@ function PageNavigation(args) {
 		}
 	
 		// Add navigation to the next set of page navigation links
-		if (this.pageSelectorStart+4 < lastPage) {
+		if (this.pageSelectorStart+4 <= lastPage) {
 			this.pagingSpan.appendChild(document.createTextNode(" "));
 			var link = document.createElement("a");
 			link.onclick = function() {

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.naming.directory.SearchResult;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -23,6 +24,7 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
 import de.ingrid.mdek.beans.MdekDataBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
@@ -310,7 +312,6 @@ public class MdekConnection implements DataConnectionInterface {
 
 		IngridDocument response = mdekCallerQuery.queryAddressesThesaurusTerm(getCurrentIPlug(), topicId, startHit, numHits, getCurrentSessionId());
 		
-		// TODO Convert the response
 		return extractAddressSearchResultsFromResponse(response);
 	}
 	
@@ -320,10 +321,18 @@ public class MdekConnection implements DataConnectionInterface {
 
 		IngridDocument response = mdekCallerQuery.queryObjectsThesaurusTerm(getCurrentIPlug(), topicId, startHit, numHits, getCurrentSessionId());
 		
-		// TODO Convert the response
 		return extractObjectSearchResultsFromResponse(response);
 	}
 
+	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits) {
+		log.debug("Searching via HQL query: "+hqlQuery);
+
+		IngridDocument response = mdekCallerQuery.queryHQL(getCurrentIPlug(), hqlQuery, startHit, numHits, getCurrentSessionId());
+
+		return extractSearchResultsFromResponse(response);
+	}
+
+	
 	public VersionInformation getVersion() {
 		IngridDocument response = mdekCaller.getVersion();
 		return extractVersionInformationFromResponse(response);
@@ -470,6 +479,11 @@ public class MdekConnection implements DataConnectionInterface {
 		if (result != null) {
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
 			ArrayList<MdekAddressBean> nodeList = new ArrayList<MdekAddressBean>();
+
+			if (adrs == null) {
+				return null;
+			}
+
 			for (IngridDocument adrEntity : adrs) {
 				nodeList.add(dataMapper.getDetailedAddressRepresentation(adrEntity));
 			}
@@ -491,6 +505,10 @@ public class MdekConnection implements DataConnectionInterface {
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			ArrayList<MdekDataBean> nodeList = new ArrayList<MdekDataBean>();
+			if (objs == null) {
+				return null;
+			}
+
 			for (IngridDocument objEntity : objs) {
 				nodeList.add(dataMapper.getDetailedObjectRepresentation(objEntity));
 			}
@@ -504,6 +522,18 @@ public class MdekConnection implements DataConnectionInterface {
 		return searchResult;
 	}
 
+	private SearchResultBean extractSearchResultsFromResponse(IngridDocument response) {
+		ObjectSearchResultBean objResult = extractObjectSearchResultsFromResponse(response);
+		AddressSearchResultBean adrResult = extractAddressSearchResultsFromResponse(response);
+
+		SearchResultBean searchResult = new SearchResultBean();
+		searchResult.setObjectSearchResult(objResult);
+		searchResult.setAddressSearchResult(adrResult);
+
+		return searchResult;
+	}
+
+	
 	private ArrayList<MdekDataBean> extractDetailedObjects(IngridDocument doc) {
 		ArrayList<MdekDataBean> results = new ArrayList<MdekDataBean>();
 

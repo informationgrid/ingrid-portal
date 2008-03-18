@@ -11,6 +11,7 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
 import de.ingrid.mdek.beans.MdekDataBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.utils.IngridDocument;
 
@@ -364,6 +365,20 @@ public interface DataConnectionInterface {
 	 */	
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
 
+	
+	/**
+	 * Search for addresses/objects with a HQL query
+	 * 
+	 * <ul>
+	 * <li><b>(String) hqlQuery</b> - A HQL query.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return SearchResultBean containing the search results and additional info.
+	 */	
+	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);
+	
 	
 	/**
 	 * Fetch Sys Lists from the server.

@@ -18,6 +18,7 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
 import de.ingrid.mdek.beans.MdekDataBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
@@ -585,6 +586,22 @@ public class EntryServiceImpl implements EntryService {
 		return new ObjectSearchResultBean();		
 	}
 
+	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits) {
+		log.debug("Starting hql query.");
+
+		try {
+			  return dataConnection.queryHQL(hqlQuery, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for objects.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+//		} catch (Exception e) {
+//			log.error("Error while searching for objects.", e);
+//			throw e;
+		}
+//		return new SearchResultBean();
+	}
+	
 	public VersionInformation getBackendVersion() {
 		return dataConnection.getVersion();
 	}

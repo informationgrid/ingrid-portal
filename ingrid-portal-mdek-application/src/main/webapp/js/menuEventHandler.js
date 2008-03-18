@@ -690,6 +690,7 @@ function displayErrorMessage(err) {
 		if (typeof(err.message) == "object")
 			err = err.message;
 
+
 		if (err.message.indexOf("OPERATION_CANCELLED") != -1) {
 			return;
 
@@ -699,6 +700,9 @@ function displayErrorMessage(err) {
 		} else if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
 		
+		} else if (err.message.indexOf("HQL_NOT_VALID") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.hqlQueryInvalidError"), dialog.WARNING);
+
 		} else if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
 			if (currentUdk.nodeAppType == "O")
 				dialog.show(message.get("general.error"), message.get("operation.error.object.parentNotPublishedError"), dialog.WARNING);
@@ -718,7 +722,7 @@ function displayErrorMessage(err) {
 			dialog.show(message.get("general.error"), message.get("operation.error.parentHasSmallerPublicationConditionError"), dialog.WARNING);
 		
 		} else {
-			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING);				
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
 		}
 	} else {
 		// Show error message if we can't determine what went wrong

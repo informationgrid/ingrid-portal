@@ -97,6 +97,7 @@
 	"dialog.generalError":"An error occured: '%{0}'",
 	"dialog.undefinedError":"An Error occured.",
 	"dialog.commentTitle":"Comments for '%{0}'",
+	"dialog.hqlQueryInvalidError":"The entered HQL query is invalid. Please check your input.",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
