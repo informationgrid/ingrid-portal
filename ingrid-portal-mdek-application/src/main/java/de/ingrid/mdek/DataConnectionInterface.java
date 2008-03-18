@@ -399,7 +399,7 @@ public interface DataConnectionInterface {
 	 * 
 	 * @return Version Information.
 	 */	
-	public VersionInformation getVersion();
+	public List<VersionInformation> getVersion();
 
 	
 	/**

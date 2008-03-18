@@ -246,7 +246,6 @@ function hideSplash(){
       <!-- START CONTENT OBJECT -->
 	  <div id="contentObject" style="display:block">
 	    <div dojoType="ContentPane" widgetId="headerFrame" id="sectionTopObject" class="sectionTop">
-	      <form dojoType="ingrid:Form" method="get" id="headerFormObject">
 	        <table cellspacing="0">
 	          <tbody>
 	            <tr>
@@ -277,7 +276,6 @@ function hideSplash(){
 	            </tr>
 	          </tbody>
 	        </table>
-	      </form>
 	    </div>
 
 	      <!-- FORM -->
@@ -1730,7 +1728,6 @@ function hideSplash(){
 	  <!-- START CONTENT ADDRESS -->
 	  <div id="contentAddress" style="display:block">
 		<div dojoType="ContentPane" widgetId="headerFrameAddress" id="sectionTopAddress" class="sectionTop">
-		  <form dojoType="ingrid:Form" method="get" id="headerFormAddress" action="">
 			<table cellspacing="0">
 		  	<tbody>
 		  		<tr>
@@ -1758,7 +1755,6 @@ function hideSplash(){
 				</tr>
 		  	</tbody>
 			</table>
-			</form>
 		</div>
 		<div dojoType="ContentPane" widgetId="contentFrameAddress" id="contentFrameAddress" class="sectionBottom" style="overflow:auto;">
 			
@@ -2030,7 +2026,7 @@ function hideSplash(){
 			  	</div>
 				  <div id="associatedObjContent" class="content" style="clear:both;">
 			  
-			      <div class="inputContainer noSpaceBelow notRequired h098">
+			      <div class="inputContainer noSpaceBelow notRequired">
 			        <div class="spacer"></div>
 			        <div class="tableContainer headHiddenRows6 full">
 			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">

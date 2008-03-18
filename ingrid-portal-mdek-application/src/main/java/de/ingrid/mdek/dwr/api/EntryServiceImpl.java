@@ -602,7 +602,7 @@ public class EntryServiceImpl implements EntryService {
 //		return new SearchResultBean();
 	}
 	
-	public VersionInformation getBackendVersion() {
+	public List<VersionInformation> getBackendVersion() {
 		return dataConnection.getVersion();
 	}
 	

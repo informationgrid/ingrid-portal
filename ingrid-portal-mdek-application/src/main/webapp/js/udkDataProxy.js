@@ -1197,10 +1197,6 @@ udkDataProxy._setObjectData = function(nodeData)
    */
 
   // ------------------ Header ------------------
-  var formWidget = dojo.widget.byId("headerFormObject");
-
-//  dojo.debug("HeaderObjectForm before setting values: " + dojo.json.serialize(formWidget.getValues()));
-
   if (nodeData.objectName == null)
   	dojo.widget.byId("objectName").setValue(message.get("tree.newNodeName"));
   else

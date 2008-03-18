@@ -333,8 +333,8 @@ public class MdekConnection implements DataConnectionInterface {
 	}
 
 	
-	public VersionInformation getVersion() {
-		IngridDocument response = mdekCaller.getVersion();
+	public List<VersionInformation> getVersion() {
+		IngridDocument response = mdekCaller.getVersion(getCurrentIPlug());
 		return extractVersionInformationFromResponse(response);
 	}
 	
@@ -563,22 +563,41 @@ public class MdekConnection implements DataConnectionInterface {
 	}
 
 	
-	private VersionInformation extractVersionInformationFromResponse(IngridDocument response) {
-		VersionInformation v = new VersionInformation();
-		if (response == null) {
-			return v;
-		}
+	private List<VersionInformation> extractVersionInformationFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
-		v.setName(response.getString(MdekKeys.BUILD_NAME));
-		v.setVersion(response.getString(MdekKeys.BUILD_VERSION));
-		v.setBuildNumber(response.getString(MdekKeys.BUILD_NUMBER));
-		try {
-			v.setTimeStamp(new Date(Long.valueOf(response.getString(MdekKeys.BUILD_TIMESTAMP))));
-		} catch (NumberFormatException e) {
-			v.setTimeStamp(new Date());
-		}
+		ArrayList<VersionInformation> verList = new ArrayList<VersionInformation>();
 
-		return v;		
+		if (result != null) {
+			// API Version
+			VersionInformation v = new VersionInformation();
+			v.setName(result.getString(MdekKeys.API_BUILD_NAME));
+			v.setVersion(result.getString(MdekKeys.API_BUILD_VERSION));
+			v.setBuildNumber(result.getString(MdekKeys.API_BUILD_NUMBER));
+			try {
+				v.setTimeStamp(new Date(Long.valueOf(result.getString(MdekKeys.API_BUILD_TIMESTAMP))));
+			} catch (NumberFormatException e) {
+				v.setTimeStamp(new Date());
+			}
+			verList.add(v);
+	
+			// Server Version
+			v = new VersionInformation();
+			v.setName(result.getString(MdekKeys.SERVER_BUILD_NAME));
+			v.setVersion(result.getString(MdekKeys.SERVER_BUILD_VERSION));
+			v.setBuildNumber(result.getString(MdekKeys.SERVER_BUILD_NUMBER));
+			try {
+				v.setTimeStamp(new Date(Long.valueOf(result.getString(MdekKeys.SERVER_BUILD_TIMESTAMP))));
+			} catch (NumberFormatException e) {
+				v.setTimeStamp(new Date());
+			}
+			verList.add(v);
+
+		} else {
+			handleError(response);
+			return null;
+		}
+		return verList;		
 	}
 	
 	private Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {

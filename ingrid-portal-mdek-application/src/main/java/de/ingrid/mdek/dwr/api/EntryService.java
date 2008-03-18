@@ -311,7 +311,7 @@ public interface EntryService {
 	public CatalogBean getCatalogData();
 
 	// Fetch version information from the backend
-	public VersionInformation getBackendVersion();
+	public List<VersionInformation> getBackendVersion();
 	
 	// Fetch info about a running job
 	public JobInfoBean getRunningJobInfo();

@@ -31,16 +31,22 @@ function setVersionInformation(ver) {
 	infoDiv.innerHTML = displayText;
 }
 
-function setBackendVersionInformation(ver) {
+function setBackendVersionInformation(verList) {
 	var infoDiv = dojo.byId("serverVersionInfo");
 	var displayText = "";
 
-	displayText += "Server Build name: "+ver.name+"<br>";
-	displayText += "Server Build version: "+ver.version+"<br>";
-	displayText += "Server Build number: "+ver.buildNumber+"<br>";
-//	displayText += "Server Build timestamp: "+dojo.date.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+	for (var i = 0; i < verList.length; ++i) {
+		if (verList[i].name.indexOf("ingrid-mdek-api") != -1) {
+			// Only display api revision for now
+			displayText += "Server Build name: "+verList[i].name+"<br>";
+			displayText += "Server Build version: "+verList[i].version+"<br>";
+			displayText += "Server Build number: "+verList[i].buildNumber+"<br>";
+		//	displayText += "Server Build timestamp: "+dojo.date.format(verList[i].timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+			displayText += "<br>";
+		}
+	}
 
-	infoDiv.innerHTML = displayText;
+	infoDiv.innerHTML = dojo.string.trim(displayText);
 }
 
 </script>
