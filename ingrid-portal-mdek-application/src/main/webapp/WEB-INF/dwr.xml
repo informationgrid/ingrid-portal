@@ -22,31 +22,31 @@
 		<convert converter="exception" match="java.lang.Exception" />
  		<convert converter="bean" match="java.lang.StackTraceElement" />
 
-		<convert converter="bean" match="de.ingrid.mdek.VersionInformation"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.AddressSearchResultBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.CatalogBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.CommentBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.DataFormatBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.DBContentBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.JobInfoBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.KeyValuePair"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.LinkDataBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.LocationBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekAddressBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.MdekDataBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.MediaOptionBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.ObjectSearchResultBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.OperationBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.OperationParameterBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.ScaleBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.TimeReferenceBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.UrlBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.VectorFormatDetailsBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSTopic"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSLocationTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.AddressSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.DataFormatBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.DBContentBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.KeyValuePair"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.LinkDataBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.LocationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.MdekAddressBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.MdekDataBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.MediaOptionBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ObjectSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.OperationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.OperationParameterBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ScaleBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.TimeReferenceBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.UrlBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.VectorFormatDetailsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.cts.Coordinate"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.cts.CTSResponse"/>
-		<convert converter="enum" match="de.ingrid.mdek.dwr.sns.Type"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.cts.SpatialReferenceSystem"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.sns.SNSLocationTopic"/>
+		<convert converter="enum" match="de.ingrid.mdek.dwr.sns.Type"/>
 	</allow>
 </dwr>

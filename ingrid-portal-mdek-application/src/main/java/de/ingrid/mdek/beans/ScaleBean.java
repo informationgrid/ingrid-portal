@@ -1,4 +1,4 @@
-package de.ingrid.mdek.dwr;
+package de.ingrid.mdek.beans;
 
 public class ScaleBean {
 	public Integer scale;

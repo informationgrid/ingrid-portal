@@ -378,7 +378,7 @@ saveLink = function() {
 		if (objData.relationType == -1) {
 			objData.relationTypeName = typeName;
 		}
-		udkDataProxy._addIcons([objData]);
+		UtilList.addIcons([objData]);
 		objStore.update(objData, "icon", objData.icon);
 		objStore.update(objData, "title", curSelectedObject.title);
 	} else if (urlData) {
@@ -394,7 +394,7 @@ saveLink = function() {
 		if (newUrl.relationType == -1) {
 			urlData.relationTypeName = newUrl.relationTypeName;
 		}
-		udkDataProxy._addIcons([urlData]);
+		UtilList.addIcons([urlData]);
 		urlStore.update(urlData, "name", newUrl.name);
 	} else if (objSelected && curSelectedObject) {
 		// Otherwise a new link has to be created
@@ -409,7 +409,7 @@ saveLink = function() {
 
 		// No checks if the store already contains the current element.
 		curSelectedObject.Id = _getNewKey();
-		udkDataProxy._addIcons([curSelectedObject]);
+		UtilList.addIcons([curSelectedObject]);
 		objStore.addData(curSelectedObject);
 		// Select the object in the list
 		dojo.widget.byId("linkListObject").resetSelections();
@@ -419,7 +419,7 @@ saveLink = function() {
 	} else if (!objSelected) {
 		var newUrl = _getUrl();
 		newUrl.Id = _getNewKey();
-		udkDataProxy._addIcons([newUrl]);
+		UtilList.addIcons([newUrl]);
 		urlStore.addData(newUrl);
 		dojo.widget.byId("linkListURL").resetSelections();
 		dojo.widget.byId("linkListURL").select(newUrl);
@@ -456,21 +456,10 @@ _getNewKey = function() {
 	var objStore = dojo.widget.byId("linkListObject").store;
 	var urlStore = dojo.widget.byId("linkListURL").store;
 
-	var key = 0;
-	var data = objStore.get();
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-	data = urlStore.get();
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
+    var objKey = UtilStore.getNewKey(objStore);
+    var urlKey = UtilStore.getNewKey(urlStore);
 
-	return key;
+	return (objKey > urlKey ? objKey : urlKey);
 }
 
 
@@ -580,11 +569,9 @@ acceptLinkList = function() {
 	var objData = dojo.widget.byId("linkListObject").store.getData();
 	var urlData = dojo.widget.byId("linkListURL").store.getData();
 	var destStore = dojo.widget.byId("linksTo").store;
-	
-	var objData = udkDataProxy._addObjectLinkLabels(objData);
-	var urlData = udkDataProxy._addObjectLinkLabels(urlData);
-	udkDataProxy._addObjectLinkLabels(objData);
-	udkDataProxy._addUrlLinkLabels(urlData);
+
+	UtilList.addObjectLinkLabels(objData);
+	UtilList.addUrlLinkLabels(urlData);
 
 	destStore.setData(objData.concat(urlData));
 

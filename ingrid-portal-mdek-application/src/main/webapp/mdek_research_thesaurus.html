@@ -152,18 +152,18 @@ function startSearch() {
 }
 
 function updateObjectResults(res) {
-	udkDataProxy._addTableIndices(res.resultList);
-	udkDataProxy._addObjectLinkLabels(res.resultList);  
-	udkDataProxy._addIcons(res.resultList);
+	UtilList.addTableIndices(res.resultList);
+	UtilList.addObjectLinkLabels(res.resultList);  
+	UtilList.addIcons(res.resultList);
 
 	dojo.widget.byId("searchThesaurusNavObjectsList").store.setData(res.resultList);
 }
 
 function updateAddressResults(res) {
-	udkDataProxy._addIcons(res.resultList);
-	udkDataProxy._addAddressTitles(res.resultList);
-	udkDataProxy._addAddressLinkLabels(res.resultList);
-	udkDataProxy._addTableIndices(res.resultList);
+	UtilList.addIcons(res.resultList);
+	UtilList.addAddressTitles(res.resultList);
+	UtilList.addAddressLinkLabels(res.resultList);
+	UtilList.addTableIndices(res.resultList);
 
 	dojo.widget.byId("searchThesaurusNavAddressesList").store.setData(res.resultList);
 }

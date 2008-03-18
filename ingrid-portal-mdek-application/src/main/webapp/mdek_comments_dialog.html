@@ -42,26 +42,13 @@ _container_.addOnUnload(function() {
 });
 
 
-// get a new key for a store. Iterates over all entries and returns max(keys)+1
-_getNewKey = function(store) {
-	var key = 0;
-	var data = store.get();
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-	return key;
-}
-
-
 addComment = function() {
 	var commentStore = dojo.widget.byId("commentCommentsTable").store;
 	var newComment = dojo.widget.byId("commentNewComment").getValue();
 	newComment = dojo.string.trim(newComment);
 
 	if (newComment != "") {
-		var key = _getNewKey(commentStore);
+		var key = UtilStore.getNewKey(commentStore);
 		commentStore.addData({Id: key, comment: newComment, date: new Date(), user: ""});
 	}
 }

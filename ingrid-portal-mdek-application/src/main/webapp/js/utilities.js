@@ -131,3 +131,209 @@ function PageNavigation(args) {
 		this.startHit = (pageIndex-1) * this.resultsPerPage;
 	}
 }
+
+
+
+/*
+ * General Helper Functions
+ */
+
+// Util functions for handling MdekAddressBeans 
+var UtilAddress = {}
+
+// Builds an address title from a given MdekAddressBean.
+// example arguments:
+//   adr: {addressClass: 0, organisation: "testOrga" }
+//        returns: "testOrga"
+//   adr: {addressClass: 1, organisation: "testOrga" }
+//        returns: "testOrga"
+//   adr: {addressClass: 2, name: "Name", givenName: "Vorname" }
+//        returns: "Name, Vorname"
+//   adr: {addressClass: 3, name: "Name", givenName: "Vorname", organisation: "testOrga" }
+//        returns: "Name, Vorname (testOrga)"
+UtilAddress.createAddressTitle = function(adr) {
+	var title = "";
+	switch (adr.addressClass) {
+		case 0: // Institution
+			title = adr.organisation;
+			break;
+		case 1:	// Unit
+			title = adr.organisation;
+			break;
+		case 2: // Person
+			if (adr.name) title += adr.name;
+			if (adr.givenName) title += ", "+adr.givenName;
+			break;
+		case 3: // Freie Adresse
+			if (adr.name) title += adr.name;
+			if (adr.givenName) title += ", "+adr.givenName;
+			if (adr.organisation) title += " ("+adr.organisation+")";
+			break;
+		default:
+			break;
+	}
+	if (title == null)
+		return message.get("tree.newAddressName");
+	else
+		return dojo.string.trim(title);
+}
+
+
+// Util functions for handling lists 
+var UtilList = {}
+
+// Iterates over an array of objects/addresses/urls and adds an 'icon' property consisting of a html image tag depending on following properties:
+// objectClass = 0..5   -> udk_classx.gif
+// addressClass = 0..3  -> addr_...gif
+// url != undefined     -> url.gif
+//
+// The list is returned
+UtilList.addIcons = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		if (typeof(list[i].objectClass) != "undefined") {
+			list[i].icon = "<img src='img/UDK/udk_class"+list[i].objectClass+".gif' width=\"16\" height=\"16\" alt=\"Object\" />";
+		} else if (typeof(list[i].addressClass) != "undefined") {
+			switch (list[i].addressClass) {
+				case 0:	// Institution
+					list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				case 1:	// Unit
+					list[i].icon = "<img src='img/UDK/addr_unit.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				case 2:	// Person
+					list[i].icon = "<img src='img/UDK/addr_person.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				case 3:	// Free
+					list[i].icon = "<img src='img/UDK/addr_free.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+				default:
+					list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
+					break;
+			}
+		} else if (typeof(list[i].url) != "undefined") {
+			list[i].icon = "<img src='img/UDK/url.gif' width=\"16\" height=\"16\" alt=\"Url\" />";		
+		} else {
+			list[i].icon = "noIcon";
+		}
+	}
+	return list;
+}
+
+// Iterates over an array of addresses, extracts their titles and adds them as properties 'title'
+// See UtilAddress.createAddressTitle for more info
+UtilList.addAddressTitles = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].title = UtilAddress.createAddressTitle(list[i]);
+	}
+	return list;
+}
+
+// Add object link labels to a passed list.
+// This function iterates over all entries in the list and adds a value: 'linkLabel' to each node
+// which is a href to the menuEventHandler 'selectNodeInTree' function
+UtilList.addObjectLinkLabels = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
+		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
+	}
+	return list;
+}
+
+// Iterates over an array of addresses and adds a property 'linkLabel' depending on the 'uuid' and 'title' of the address.
+// linkLabel is a html href to directly jump to a given address in the main tree
+UtilList.addAddressLinkLabels = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
+		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
+	}
+	return list;
+}
+
+
+// Iterates over an array of urls and adds a property 'linkLabel' depending on the 'url' and 'name' of the url.
+// linkLabel is a html href to the url target
+UtilList.addUrlLinkLabels = function(list) {
+	for (var i = 0; i < list.length; ++i) {
+		if (list[i].url) {
+			if (dojo.string.startsWith(list[i].url, "http://"))
+				list[i].linkLabel = "<a href='"+list[i].url+"' target=\"_blank\" title='"+list[i].name+"'>"+list[i].name+"</a>";
+			else
+				list[i].linkLabel = list[i].name;
+		}
+	}
+	return list;
+}
+
+// Iterates over an array and adds the 'displayDate' property to each object depending on the 'date' property (javscript date object)
+UtilList.addDisplayDates = function(list) {
+	if (list) {
+		for (var i = 0; i < list.length; ++i) {
+//			list[i].displayDate = list[i].date.toLocaleString();
+			list[i].displayDate = dojo.date.format(list[i].date, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"});
+		}
+		return list;
+	} else {
+		return [];
+	}
+}
+
+
+// Creates table data from a list of values.
+// ["a", "b", "c"] -> [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}]
+UtilList.listToTableData = function(list, identifier) {
+	var resultList = [];
+	if (typeof(identifier) == "undefined")
+		identifier = "title";
+
+	dojo.lang.forEach(list, function(item){
+		var x = {};
+		x[identifier] = item;
+		resultList.push(x);
+	});
+	return resultList;
+}
+
+
+//Creates a list from table data
+// [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}] -> ["a", "b", "c"] 
+UtilList.tableDataToList = function(tableData, identifier) {
+	var resultList = [];
+	if (typeof(identifier) == "undefined") {
+		identifier = "title";
+	}
+
+	for (var i = 0; i < tableData.length; ++i) {
+		resultList.push(tableData[i][identifier]);
+	}
+
+	return resultList;
+}
+
+
+// Add Indices (Id values) to a passed list
+UtilList.addTableIndices = function(list) {
+	if (list) {
+		for (var i = 0; i < list.length; ++i) {
+			list[i].Id = i;
+		}
+		return list;
+	} else {
+		return [];
+	}
+}
+
+
+// Util functions for dojo store 
+var UtilStore = {}
+
+// Helper function that iterates over all entries in a store and returns a key that is not in use yet
+UtilStore.getNewKey = function(store) {
+	var key = 0;
+	var data = store.get();
+	for(var i=0; i < data.length; i++){
+		if(data[i].key >= key){
+			key = data[i].key + 1;
+		}
+	}
+	return key;
+}

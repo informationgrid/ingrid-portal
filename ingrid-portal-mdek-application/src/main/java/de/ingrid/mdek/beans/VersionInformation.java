@@ -1,4 +1,4 @@
-package de.ingrid.mdek;
+package de.ingrid.mdek.beans;
 
 import java.util.Date;
 import java.util.ResourceBundle;

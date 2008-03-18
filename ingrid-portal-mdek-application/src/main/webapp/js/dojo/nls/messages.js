@@ -75,6 +75,10 @@
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 	"links.noLinkToSelfHint":"It is not possible to create a link to the same object.",
 
+	"dialog.object.deleteChildrenMessage":"Do you really want to delete the object '%{0}' and all subobjects?",
+	"dialog.address.deleteChildrenMessage":"Do you really want to delete the address '%{0}' and all subaddresses?",
+	"dialog.object.deleteMessage":"Do you really want to delete the object '%{0}'?",
+	"dialog.address.deleteMessage":"Do you really want to delete the address '%{0}'?",
 	"dialog.addDescriptorsTitle":"Add Descriptors",
 	"dialog.addDescriptorsMessage":"Add the following descriptors as search terms?",
 	"dialog.saveChangesTitle":"Save changes",

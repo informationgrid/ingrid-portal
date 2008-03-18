@@ -16,27 +16,27 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
-import de.ingrid.mdek.dwr.CommentBean;
-import de.ingrid.mdek.dwr.DBContentBean;
-import de.ingrid.mdek.dwr.DataFormatBean;
-import de.ingrid.mdek.dwr.KeyValuePair;
-import de.ingrid.mdek.dwr.LinkDataBean;
-import de.ingrid.mdek.dwr.LocationBean;
-import de.ingrid.mdek.dwr.MdekAddressBean;
-import de.ingrid.mdek.dwr.MdekDataBean;
-import de.ingrid.mdek.dwr.MediaOptionBean;
-import de.ingrid.mdek.dwr.OperationBean;
-import de.ingrid.mdek.dwr.OperationParameterBean;
-import de.ingrid.mdek.dwr.ScaleBean;
-import de.ingrid.mdek.dwr.TimeReferenceBean;
-import de.ingrid.mdek.dwr.UrlBean;
-import de.ingrid.mdek.dwr.VectorFormatDetailsBean;
+import de.ingrid.mdek.beans.CommentBean;
+import de.ingrid.mdek.beans.DBContentBean;
+import de.ingrid.mdek.beans.DataFormatBean;
+import de.ingrid.mdek.beans.KeyValuePair;
+import de.ingrid.mdek.beans.LinkDataBean;
+import de.ingrid.mdek.beans.LocationBean;
+import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.MdekDataBean;
+import de.ingrid.mdek.beans.MediaOptionBean;
+import de.ingrid.mdek.beans.OperationBean;
+import de.ingrid.mdek.beans.OperationParameterBean;
+import de.ingrid.mdek.beans.ScaleBean;
+import de.ingrid.mdek.beans.TimeReferenceBean;
+import de.ingrid.mdek.beans.UrlBean;
+import de.ingrid.mdek.beans.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
 
-public class SimpleMdekMapper implements DataMapperInterface {
+public class MdekMapper implements DataMapperInterface {
 
-	private final static Logger log = Logger.getLogger(SimpleMdekMapper.class);
+	private final static Logger log = Logger.getLogger(MdekMapper.class);
 	private SysListMapper sysListMapper;
 	
 	// -- Dispatch to the local private methods --

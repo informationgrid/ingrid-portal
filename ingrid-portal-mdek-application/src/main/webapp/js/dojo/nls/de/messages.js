@@ -7,7 +7,7 @@
     "general.hint":"Hinweis",
     "general.help":"Hilfe - Allgemeines",
     "general.showAddress":"Zeige Adresse",
-    "general.delete":"Löschen",
+    "general.delete":"L&ouml;schen",
     "general.closeWindow":"Alle nicht gespeicherten \u00c4nderungen werden dabei verworfen.",
 
     "tree.nodeNew":"Neu anlegen",
@@ -30,6 +30,10 @@
     "tree.newAddressName":"Neue Adresse",
     "tree.reload":"Neues Laden",
 
+	"dialog.object.deleteChildrenMessage":"Soll das Objekt '%{0}' und alle untergeordneten Objekte wirklich gel&ouml;scht werden?",
+	"dialog.address.deleteChildrenMessage":"Soll die Adresse '%{0}' und alle untergeordneten Adressen wirklich gel&ouml;scht werden?",
+	"dialog.object.deleteMessage":"Soll das Objekt '%{0}' wirklich gel&ouml;scht werden?",
+	"dialog.address.deleteMessage":"Soll die Adresse '%{0}' wirklich gel&ouml;scht werden?",
 	"dialog.addDescriptorTitle":"Deskriptor hinzuf&uuml;gen",
 	"dialog.addDescriptorMessage":"'%{0}' ist ein Deskriptor! Soll der Deskriptor automatisch in die Liste der Thesaurus-Suchbegriffe &uuml;bernommen werden?",
 	"dialog.addDescriptorsTitle":"Deskriptoren hinzuf&uuml;gen",

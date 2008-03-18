@@ -2,8 +2,8 @@ package de.ingrid.mdek.exception;
 
 import java.util.ArrayList;
 
-import de.ingrid.mdek.dwr.MdekAddressBean;
-import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.MdekDataBean;
 
 public class EntityReferencedException extends RuntimeException {
 

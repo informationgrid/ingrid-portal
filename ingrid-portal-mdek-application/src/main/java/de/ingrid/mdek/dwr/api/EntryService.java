@@ -6,13 +6,13 @@ package de.ingrid.mdek.dwr.api;
 import java.util.List;
 import java.util.Map;
 
-import de.ingrid.mdek.VersionInformation;
-import de.ingrid.mdek.dwr.AddressSearchResultBean;
-import de.ingrid.mdek.dwr.CatalogBean;
-import de.ingrid.mdek.dwr.JobInfoBean;
-import de.ingrid.mdek.dwr.MdekAddressBean;
-import de.ingrid.mdek.dwr.MdekDataBean;
-import de.ingrid.mdek.dwr.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.AddressSearchResultBean;
+import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.MdekDataBean;
+import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.exception.EntityReferencedException;
 
 /**

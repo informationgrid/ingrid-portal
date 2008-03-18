@@ -1,4 +1,4 @@
-package de.ingrid.mdek.dwr;
+package de.ingrid.mdek.beans;
 
 import java.util.Date;
 

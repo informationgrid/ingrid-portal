@@ -2,8 +2,8 @@ package de.ingrid.mdek;
 
 import java.util.HashMap;
 
-import de.ingrid.mdek.dwr.MdekAddressBean;
-import de.ingrid.mdek.dwr.MdekDataBean;
+import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.MdekDataBean;
 
 /**
  * @author mbenz

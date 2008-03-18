@@ -1,4 +1,4 @@
-package de.ingrid.mdek.dwr;
+package de.ingrid.mdek.dwr.test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1106,7 +1106,7 @@ udkDataProxy._setAddressData = function(nodeData)
 
 
 	// ------------------ Header ------------------
-	dojo.widget.byId("addressTitle").setValue(udkDataProxy._createAddressTitle(nodeData));
+	dojo.widget.byId("addressTitle").setValue(UtilAddress.createAddressTitle(nodeData));
 	dojo.widget.byId("addressType").setValue("AddressType"+nodeData.addressClass);
 	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
@@ -1121,21 +1121,21 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.widget.byId("addressZipPOBox").setValue(nodeData.poboxPostalCode);
 	dojo.widget.byId("addressNotes").setValue(nodeData.addressDescription);
 	dojo.widget.byId("addressTasks").setValue(nodeData.task);
-	dojo.widget.byId("addressCom").store.setData(udkDataProxy._addTableIndices(nodeData.communication));
+	dojo.widget.byId("addressCom").store.setData(UtilList.addTableIndices(nodeData.communication));
 
 	// -- Thesaurus --
-	dojo.widget.byId("thesaurusTermsAddress").store.setData(udkDataProxy._addTableIndices(nodeData.thesaurusTermsTable));
-	dojo.widget.byId("thesaurusFreeTermsListAddress").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusFreeTermsTable)));
+	dojo.widget.byId("thesaurusTermsAddress").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
+	dojo.widget.byId("thesaurusFreeTermsListAddress").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusFreeTermsTable)));
 
 	// -- Links --
 	var linkTable = nodeData.linksFromObjectTable;
-	udkDataProxy._addTableIndices(linkTable);
-	udkDataProxy._addObjectLinkLabels(linkTable);  
-	udkDataProxy._addIcons(linkTable);
+	UtilList.addTableIndices(linkTable);
+	UtilList.addObjectLinkLabels(linkTable);  
+	UtilList.addIcons(linkTable);
 	dojo.widget.byId("associatedObjName").store.setData(linkTable);
 
 	// Comments
-	commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
+	commentStore.setData(UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable)));
 
 
 	var institution = "";
@@ -1224,13 +1224,13 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("generalShortDesc").setValue(nodeData.generalShortDescription);
   dojo.widget.byId("generalDesc").setValue(nodeData.generalDescription);
   var addressTable = nodeData.generalAddressTable;
-  udkDataProxy._addTableIndices(addressTable);
-  udkDataProxy._addIcons(addressTable);
-  udkDataProxy._addAddressTitles(addressTable);
-  udkDataProxy._addAddressLinkLabels(addressTable);
+  UtilList.addTableIndices(addressTable);
+  UtilList.addIcons(addressTable);
+  UtilList.addAddressTitles(addressTable);
+  UtilList.addAddressLinkLabels(addressTable);
   dojo.widget.byId("generalAddress").store.setData(addressTable);
   // Comments
-  commentStore.setData(udkDataProxy._addTableIndices(udkDataProxy._addDisplayDates(nodeData.commentTable)));
+  commentStore.setData(UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable)));
 
 /*
   // Init the publication select widget depending on the publication condition of the parent
@@ -1257,9 +1257,9 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Spatial --
   // The table containing entries from the sns is indexed by their topicID
-  dojo.widget.byId("spatialRefAdminUnit").store.setData(udkDataProxy._addTableIndices(nodeData.spatialRefAdminUnitTable));
+  dojo.widget.byId("spatialRefAdminUnit").store.setData(UtilList.addTableIndices(nodeData.spatialRefAdminUnitTable));
   // The table containing free entries needs generated indices
-  dojo.widget.byId("spatialRefLocation").store.setData(udkDataProxy._addTableIndices(nodeData.spatialRefLocationTable));
+  dojo.widget.byId("spatialRefLocation").store.setData(UtilList.addTableIndices(nodeData.spatialRefLocationTable));
 
   dojo.widget.byId("spatialRefAltMin").setValue(nodeData.spatialRefAltMin);
   dojo.widget.byId("spatialRefAltMax").setValue(nodeData.spatialRefAltMax);
@@ -1278,7 +1278,7 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("timeRefIntervalNum").setValue(nodeData.timeRefIntervalNum);
   dojo.widget.byId("timeRefIntervalUnit").setValue(nodeData.timeRefIntervalUnit);
   dojo.widget.byId("timeRefExplanation").setValue(nodeData.timeRefExplanation);
-  dojo.widget.byId("timeRefTable").store.setData(udkDataProxy._addTableIndices(nodeData.timeRefTable));
+  dojo.widget.byId("timeRefTable").store.setData(UtilList.addTableIndices(nodeData.timeRefTable));
 
   // -- Extra Info --
   dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaData);
@@ -1286,23 +1286,23 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
   dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
-  dojo.widget.byId("extraInfoXMLExportTable").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.extraInfoXMLExportTable)));
-  dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.extraInfoLegalBasicsTable)));
+  dojo.widget.byId("extraInfoXMLExportTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.extraInfoXMLExportTable)));
+  dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.extraInfoLegalBasicsTable)));
 
   // -- Availability --
   dojo.widget.byId("availabilityOrderInfo").setValue(nodeData.availabilityOrderInfo);
   dojo.widget.byId("availabilityNoteUse").setValue(nodeData.availabilityNoteUse);
   dojo.widget.byId("availabilityCosts").setValue(nodeData.availabilityCosts);
-  dojo.widget.byId("availabilityDataFormat").store.setData(udkDataProxy._addTableIndices(nodeData.availabilityDataFormatTable));
-  dojo.widget.byId("availabilityMediaOptions").store.setData(udkDataProxy._addTableIndices(nodeData.availabilityMediaOptionsTable));
+  dojo.widget.byId("availabilityDataFormat").store.setData(UtilList.addTableIndices(nodeData.availabilityDataFormatTable));
+  dojo.widget.byId("availabilityMediaOptions").store.setData(UtilList.addTableIndices(nodeData.availabilityMediaOptionsTable));
 
 
   // -- Thesaurus --
-  dojo.widget.byId("thesaurusTerms").store.setData(udkDataProxy._addTableIndices(nodeData.thesaurusTermsTable));
-  dojo.widget.byId("thesaurusFreeTermsList").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusFreeTermsTable)));
-  dojo.widget.byId("thesaurusTopics").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusTopicsList)));
-  dojo.widget.byId("thesaurusEnvTopics").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusEnvTopicsList)));
-  dojo.widget.byId("thesaurusEnvCats").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.thesaurusEnvCatsList)));
+  dojo.widget.byId("thesaurusTerms").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
+  dojo.widget.byId("thesaurusFreeTermsList").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusFreeTermsTable)));
+  dojo.widget.byId("thesaurusTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusTopicsList)));
+  dojo.widget.byId("thesaurusEnvTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvTopicsList)));
+  dojo.widget.byId("thesaurusEnvCats").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvCatsList)));
   dojo.widget.byId("thesaurusEnvExtRes").setValue(nodeData.thesaurusEnvExtRes);
 
   // -- Links --
@@ -1310,16 +1310,16 @@ udkDataProxy._setObjectData = function(nodeData)
   var urlLinkTable = nodeData.linksToUrlTable;
   var linkTable = objLinkTable.concat(urlLinkTable);
 
-  udkDataProxy._addTableIndices(linkTable);
-  udkDataProxy._addObjectLinkLabels(linkTable);
-  udkDataProxy._addUrlLinkLabels(linkTable);
-  udkDataProxy._addIcons(linkTable);
+  UtilList.addTableIndices(linkTable);
+  UtilList.addObjectLinkLabels(linkTable);
+  UtilList.addUrlLinkLabels(linkTable);
+  UtilList.addIcons(linkTable);
   dojo.widget.byId("linksTo").store.setData(linkTable);
 
   linkTable = nodeData.linksFromObjectTable;
-  udkDataProxy._addTableIndices(linkTable);
-  udkDataProxy._addObjectLinkLabels(linkTable);  
-  udkDataProxy._addIcons(linkTable);
+  UtilList.addTableIndices(linkTable);
+  UtilList.addObjectLinkLabels(linkTable);  
+  UtilList.addIcons(linkTable);
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
   // Clear all object classes
@@ -1356,13 +1356,13 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 	dojo.widget.byId("ref1DataBasisText").setValue(nodeData.ref1DataBasisText);
 	dojo.widget.byId("ref1ProcessText").setValue(nodeData.ref1ProcessText);
 
-	dojo.widget.byId("ref1Representation").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Representation)));
-	dojo.widget.byId("ref1Data").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref1Data)));
+	dojo.widget.byId("ref1Representation").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref1Representation)));
+	dojo.widget.byId("ref1Data").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref1Data)));
 
-	dojo.widget.byId("ref1VFormatDetails").store.setData(udkDataProxy._addTableIndices(nodeData.ref1VFormatDetails));
-	dojo.widget.byId("ref1Scale").store.setData(udkDataProxy._addTableIndices(nodeData.ref1Scale));
-	dojo.widget.byId("ref1SymbolsText").store.setData(udkDataProxy._addTableIndices(nodeData.ref1SymbolsText));
-	dojo.widget.byId("ref1KeysText").store.setData(udkDataProxy._addTableIndices(nodeData.ref1KeysText));
+	dojo.widget.byId("ref1VFormatDetails").store.setData(UtilList.addTableIndices(nodeData.ref1VFormatDetails));
+	dojo.widget.byId("ref1Scale").store.setData(UtilList.addTableIndices(nodeData.ref1Scale));
+	dojo.widget.byId("ref1SymbolsText").store.setData(UtilList.addTableIndices(nodeData.ref1SymbolsText));
+	dojo.widget.byId("ref1KeysText").store.setData(UtilList.addTableIndices(nodeData.ref1KeysText));
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData) {
@@ -1389,21 +1389,21 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 	dojo.widget.byId("ref3BaseDataText").setValue(nodeData.ref3BaseDataText);
 	dojo.widget.byId("ref3Explanation").setValue(nodeData.ref3Explanation);
 
-//	dojo.debug("Setting service version to: "+udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
-	dojo.widget.byId("ref3ServiceVersion").store.setData(udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3ServiceVersion)));
+//	dojo.debug("Setting service version to: "+UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceVersion)));
+	dojo.widget.byId("ref3ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceVersion)));
 
 	// Prepare the operation table for display.
 	// Add table indices to the main obj and paramList
 	// Add table indices and convert to tableData: platform, addressList and dependencies
 	if (nodeData.ref3Operation) {
 		for (var i = 0; i < nodeData.ref3Operation.length; ++i) {
-			udkDataProxy._addTableIndices(nodeData.ref3Operation[i].paramList);
-			nodeData.ref3Operation[i].platform = udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3Operation[i].platform));
-			nodeData.ref3Operation[i].addressList = udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3Operation[i].addressList));
-			nodeData.ref3Operation[i].dependencies = udkDataProxy._addTableIndices(udkDataProxy._listToTableData(nodeData.ref3Operation[i].dependencies));		
+			UtilList.addTableIndices(nodeData.ref3Operation[i].paramList);
+			nodeData.ref3Operation[i].platform = UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3Operation[i].platform));
+			nodeData.ref3Operation[i].addressList = UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3Operation[i].addressList));
+			nodeData.ref3Operation[i].dependencies = UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3Operation[i].dependencies));		
 		}
 	}	
-	dojo.widget.byId("ref3Operation").store.setData(udkDataProxy._addTableIndices(nodeData.ref3Operation));
+	dojo.widget.byId("ref3Operation").store.setData(UtilList.addTableIndices(nodeData.ref3Operation));
 }
 
 udkDataProxy._setObjectDataClass4 = function(nodeData) {
@@ -1416,7 +1416,7 @@ udkDataProxy._setObjectDataClass5 = function(nodeData) {
 	dojo.widget.byId("ref5MethodText").setValue(nodeData.ref5MethodText);
 	dojo.widget.byId("ref5Explanation").setValue(nodeData.ref5Explanation);
 
-	dojo.widget.byId("ref5dbContent").store.setData(udkDataProxy._addTableIndices(nodeData.ref5dbContent));
+	dojo.widget.byId("ref5dbContent").store.setData(UtilList.addTableIndices(nodeData.ref5dbContent));
 }
 
 
@@ -1474,7 +1474,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 
 	// -- Thesaurus --
 	nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTermsAddress");
-	nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsListAddress"));
+	nodeData.thesaurusFreeTermsTable = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsListAddress"));
 
 	// -- Links --
 	nodeData.linksFromObjectTable = udkDataProxy._getTableData("associatedObjName");
@@ -1589,8 +1589,8 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
 	
-  nodeData.extraInfoXMLExportTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("extraInfoXMLExportTable"));
-  nodeData.extraInfoLegalBasicsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("extraInfoLegalBasicsTable"));
+  nodeData.extraInfoXMLExportTable = UtilList.tableDataToList(udkDataProxy._getTableData("extraInfoXMLExportTable"));
+  nodeData.extraInfoLegalBasicsTable = UtilList.tableDataToList(udkDataProxy._getTableData("extraInfoLegalBasicsTable"));
 
   // -- Availability --
   nodeData.availabilityOrderInfo = dojo.widget.byId("availabilityOrderInfo").getValue();
@@ -1601,10 +1601,10 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Thesaurus --
   nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
-  nodeData.thesaurusFreeTermsTable = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
-  nodeData.thesaurusTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
-  nodeData.thesaurusEnvTopicsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
-  nodeData.thesaurusEnvCatsList = udkDataProxy._tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
+  nodeData.thesaurusFreeTermsTable = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
+  nodeData.thesaurusTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
+  nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
+  nodeData.thesaurusEnvCatsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
   nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").checked;
 
 
@@ -1677,8 +1677,8 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1ProcessText = dojo.widget.byId("ref1ProcessText").getValue();
 
 
-	nodeData.ref1Representation = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Representation"));
-	nodeData.ref1Data = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref1Data"));
+	nodeData.ref1Representation = UtilList.tableDataToList(udkDataProxy._getTableData("ref1Representation"));
+	nodeData.ref1Data = UtilList.tableDataToList(udkDataProxy._getTableData("ref1Data"));
 
 	nodeData.ref1VFormatDetails = udkDataProxy._getTableData("ref1VFormatDetails");
 	nodeData.ref1Scale = udkDataProxy._getTableData("ref1Scale");
@@ -1711,7 +1711,7 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
 	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
 
-	nodeData.ref3ServiceVersion = udkDataProxy._tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
+	nodeData.ref3ServiceVersion = UtilList.tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
 
 	// Convert the containing operation tables to lists
 	// Add table indices and convert to tableData: platform, addressList and dependencies
@@ -1724,9 +1724,9 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 			operationData.description = op[i].description;
 			operationData.operationsCall = op[i].operationsCall;
 			operationData.paramList = op[i].paramList;
-			operationData.platform = udkDataProxy._tableDataToList(op[i].platform);
-			operationData.addressList = udkDataProxy._tableDataToList(op[i].addressList);
-			operationData.dependencies = udkDataProxy._tableDataToList(op[i].dependencies);
+			operationData.platform = UtilList.tableDataToList(op[i].platform);
+			operationData.addressList = UtilList.tableDataToList(op[i].addressList);
+			operationData.dependencies = UtilList.tableDataToList(op[i].dependencies);
 
 			nodeData.ref3Operation.push(operationData);
 		}
@@ -1765,7 +1765,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		title = nodeData.objectName;
 		objClass = nodeData.objectClass;
 	} else if (nodeData.nodeAppType == "A") {
-		title = udkDataProxy._createAddressTitle(nodeData);
+		title = UtilAddress.createAddressTitle(nodeData);
 		objClass = nodeData.addressClass;
 	}
 
@@ -1803,163 +1803,9 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	}
 }
 
-
 // Returns an array representing the data of the table with name 'tableName'
 // The keys are stored in the fields named: 'Id' 
 udkDataProxy._getTableData = function(tableName)
 {
   return dojo.widget.byId(tableName).store.getData();
-}
-
-// Creates table data from a list of values.
-// ["a", "b", "c"] -> [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}]
-udkDataProxy._listToTableData = function(list, identifier) {
-	var resultList = [];
-	if (typeof(identifier) == "undefined")
-		identifier = "title";
-
-	dojo.lang.forEach(list, function(item){
-		var x = {};
-		x[identifier] = item;
-		resultList.push(x);
-	});
-	return resultList;
-}
-
-
-//Creates a list from table data
-// [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}] -> ["a", "b", "c"] 
-udkDataProxy._tableDataToList = function(tableData, identifier) {
-	var resultList = [];
-	if (typeof(identifier) == "undefined") {
-		identifier = "title";
-	}
-
-	for (var i = 0; i < tableData.length; ++i) {
-		resultList.push(tableData[i][identifier]);
-	}
-
-	return resultList;
-}
-
-
-// Add Indices (Id values) to a passed list
-udkDataProxy._addTableIndices = function(list) {
-	if (list) {
-		for (var i = 0; i < list.length; ++i) {
-			list[i].Id = i;
-		}
-		return list;
-	} else {
-		return [];
-	}
-}
-
-udkDataProxy._addDisplayDates = function(list) {
-	if (list) {
-		for (var i = 0; i < list.length; ++i) {
-//			list[i].displayDate = list[i].date.toLocaleString();
-			list[i].displayDate = dojo.date.format(list[i].date, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"});
-		}
-		return list;
-	} else {
-		return [];
-	}
-}
-
-// Add object link labels to a passed list.
-// This function iterates over all entries in the list and adds a value: 'linkLabel' to each node
-// which is a href to the menuEventHandler 'selectNodeInTree' function
-udkDataProxy._addObjectLinkLabels = function(list) {
-	for (var i = 0; i < list.length; ++i) {
-		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
-		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
-	}
-	return list;
-}
-
-udkDataProxy._addAddressTitles = function(list) {
-	for (var i = 0; i < list.length; ++i) {
-		list[i].title = udkDataProxy._createAddressTitle(list[i]);
-	}
-	return list;
-}
-
-udkDataProxy._addAddressLinkLabels = function(list) {
-	for (var i = 0; i < list.length; ++i) {
-		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
-		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
-	}
-	return list;
-}
-
-
-udkDataProxy._addUrlLinkLabels = function(list) {
-	for (var i = 0; i < list.length; ++i) {
-		if (list[i].url) {
-			if (dojo.string.startsWith(list[i].url, "http://"))
-				list[i].linkLabel = "<a href='"+list[i].url+"' target=\"_blank\" title='"+list[i].name+"'>"+list[i].name+"</a>";
-			else
-				list[i].linkLabel = list[i].name;
-		}
-	}
-	return list;
-}
-
-udkDataProxy._addIcons = function(list) {
-	for (var i = 0; i < list.length; ++i) {
-		if (typeof(list[i].objectClass) != "undefined") {
-			list[i].icon = "<img src='img/UDK/udk_class"+list[i].objectClass+".gif' width=\"16\" height=\"16\" alt=\"Object\" />";
-		} else if (typeof(list[i].addressClass) != "undefined") {
-			switch (list[i].addressClass) {
-				case 0:	// Institution
-					list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
-					break;
-				case 1:	// Unit
-					list[i].icon = "<img src='img/UDK/addr_unit.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
-					break;
-				case 2:	// Person
-					list[i].icon = "<img src='img/UDK/addr_person.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
-					break;
-				case 3:	// Free
-					list[i].icon = "<img src='img/UDK/addr_free.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
-					break;
-				default:
-					list[i].icon = "<img src='img/UDK/addr_institution.gif' width=\"16\" height=\"16\" alt=\"Address\" />";		
-					break;
-			}
-		} else if (typeof(list[i].url) != "undefined") {
-			list[i].icon = "<img src='img/UDK/url.gif' width=\"16\" height=\"16\" alt=\"Url\" />";		
-		} else {
-			list[i].icon = "noIcon";
-		}
-	}
-	return list;
-}
-
-udkDataProxy._createAddressTitle = function(adr) {
-	var title = "";
-	switch (adr.addressClass) {
-		case 0: // Institution
-			title = adr.organisation;
-			break;
-		case 1:	// Unit
-			title = adr.organisation;
-			break;
-		case 2: // Person
-			if (adr.name) title += adr.name;
-			if (adr.givenName) title += ", "+adr.givenName;
-			break;
-		case 3: // Freie Adresse
-			if (adr.name) title += adr.name;
-			if (adr.givenName) title += ", "+adr.givenName;
-			if (adr.organisation) title += " ("+adr.organisation+")";
-			break;
-		default:
-			break;
-	}
-	if (title == null)
-		return message.get("tree.newAddressName");
-	else
-		return dojo.string.trim(title);
 }

@@ -1,18 +1,18 @@
-package de.ingrid.mdek.dwr;
+package de.ingrid.mdek.beans;
 
 import java.util.ArrayList;
 
-public class ObjectSearchResultBean {
+public class AddressSearchResultBean {
 	public int numHits;
 	public long totalNumHits;
 
-	public ArrayList<MdekDataBean> resultList;
+	public ArrayList<MdekAddressBean> resultList;
 
 	
-	public ObjectSearchResultBean() {
+	public AddressSearchResultBean() {
 		this.numHits = 0;
 		this.totalNumHits = 0;
-		this.resultList = new ArrayList<MdekDataBean>();
+		this.resultList = new ArrayList<MdekAddressBean>();
 	}
 	
 	public int getNumHits() {
@@ -31,11 +31,11 @@ public class ObjectSearchResultBean {
 		this.totalNumHits = totalNumHits;
 	}
 
-	public ArrayList<MdekDataBean> getResultList() {
+	public ArrayList<MdekAddressBean> getResultList() {
 		return resultList;
 	}
 
-	public void setResultList(ArrayList<MdekDataBean> resultList) {
+	public void setResultList(ArrayList<MdekAddressBean> resultList) {
 		this.resultList = resultList;
 	}
 }

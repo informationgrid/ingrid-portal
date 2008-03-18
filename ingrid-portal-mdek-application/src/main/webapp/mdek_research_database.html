@@ -28,9 +28,9 @@ _container_.addOnLoad(function() {
 function updateResultTable(res) {
 	dojo.debug("updateResultTable(res) not implemented yet.");
 
-	udkDataProxy._addTableIndices(res.resultList);
-	udkDataProxy._addObjectLinkLabels(res.resultList);  
-	udkDataProxy._addIcons(res.resultList);
+	UtilList.addTableIndices(res.resultList);
+	UtilList.addObjectLinkLabels(res.resultList);  
+	UtilList.addIcons(res.resultList);
 
 	dojo.widget.byId("datbaseSearchResults").store.setData(res);
 }

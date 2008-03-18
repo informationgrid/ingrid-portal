@@ -17,19 +17,20 @@ import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.MdekError.MdekErrorType;
-import de.ingrid.mdek.dwr.AddressSearchResultBean;
-import de.ingrid.mdek.dwr.CatalogBean;
-import de.ingrid.mdek.dwr.JobInfoBean;
-import de.ingrid.mdek.dwr.MdekAddressBean;
-import de.ingrid.mdek.dwr.MdekDataBean;
-import de.ingrid.mdek.dwr.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.AddressSearchResultBean;
+import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.MdekDataBean;
+import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.utils.IngridDocument;
 
-public class SimpleUDKConnection implements DataConnectionInterface {
+public class MdekConnection implements DataConnectionInterface {
 
-	private final static Logger log = Logger.getLogger(SimpleUDKConnection.class);
+	private final static Logger log = Logger.getLogger(MdekConnection.class);
 
 	private IMdekCaller mdekCaller;
 	private IMdekCallerObject mdekCallerObject;
@@ -38,12 +39,14 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 	private IMdekCallerCatalog mdekCallerCatalog;
 	private DataMapperInterface dataMapper;
 
-	public SimpleUDKConnection(File communicationProperties) {
+	public MdekConnection(File communicationProperties) {
 		if (communicationProperties == null || !(communicationProperties instanceof File)) {
 			throw new IllegalStateException(
 					"Please specify the location of the communication.properties file via the Property 'mdekCaller.properties' in /src/resources/mdek.properties");
 		}
+		log.debug("Initializing MdekCaller...");
 		MdekCaller.initialize(communicationProperties);
+		log.debug("MdekCaller initialized.");
 		mdekCaller = MdekCaller.getInstance();
 
 		MdekCallerObject.initialize(mdekCaller);
@@ -59,7 +62,9 @@ public class SimpleUDKConnection implements DataConnectionInterface {
 
 	// Shutdown Method is called by the Spring Framework on shutdown
 	public void destroy() {
+		log.debug("Shutting down MdekCaller...");
 		MdekCaller.shutdown();
+		log.debug("MdekCaller shut down.");
 		mdekCaller = null;
 		dataMapper = null;
 	}

@@ -152,7 +152,16 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
         button.onClick = closeAction;
   
       // add button
-      dojo.byId(dlgId+'_buttons').appendChild(button.domNode);
+//      dojo.byId(dlgId+'_buttons').appendChild(button.domNode);
+
+      var buttonSpan = document.createElement("span");
+      if (dojo.render.html.ie)				
+      	buttonSpan.style['styleFloat'] = 'right'; // ie
+      else
+        buttonSpan.style['cssFloat'] = 'right';   // firefox
+
+      buttonSpan.appendChild(button.domNode);
+      dojo.byId(dlgId+'_buttons').appendChild(buttonSpan);
     }
   }
   else

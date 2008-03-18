@@ -107,23 +107,12 @@ function addAddressIcon(adr) {
 }
 
 function addAddressTitle(adr) {
-	adr.title = udkDataProxy._createAddressTitle(adr);
+	adr.title = UtilAddress.createAddressTitle(adr);
 }
 
 function addAddressLinkLabel(adr) {
 	adr.linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+adr.uuid+"\", \"A\");'"+
 					   "title='"+adr.title+"'>"+adr.title+"</a>";
-}
-
-function getNewKey(store) {
-	var key = 0;
-	var data = store.get();
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-	return key;
 }
 
 
@@ -150,7 +139,7 @@ function addAddressToStore(adrId, store) {
 				addAddressIcon(res);
 				addAddressTitle(res);
 				addAddressLinkLabel(res);			
-				res.Id = getNewKey(store);
+				res.Id = UtilStore.getNewKey(store);
 				res.typeOfRelation = linkType;
 				res.nameOfRelation = nameOfRelation;
 				res.refOfRelation = 2010;
@@ -199,9 +188,9 @@ addSelectedAddress = function() {
 function updateResults(searchResult) {
 	dojo.html.show(dojo.byId("addressLinkSearchResults"));	
 
-	udkDataProxy._addIcons(searchResult.resultList);
-	udkDataProxy._addAddressTitles(searchResult.resultList);
-	udkDataProxy._addTableIndices(searchResult.resultList);
+	UtilList.addIcons(searchResult.resultList);
+	UtilList.addAddressTitles(searchResult.resultList);
+	UtilList.addTableIndices(searchResult.resultList);
 
 	dojo.widget.byId("addressSearchResultsTable").store.setData(searchResult.resultList);
 

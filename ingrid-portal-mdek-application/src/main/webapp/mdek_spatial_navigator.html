@@ -73,21 +73,6 @@ function showError() {
 	}	
 }
 
-// iterates over all entries in the stores and returns a key that is not in use yet
-function getNewKey() {
-	var data = dojo.widget.byId("spatialRefAdminUnit").store.get();
-
-	var key = 0;
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-
-	return key;
-}
-
-
 deleteComboboxWidgets = function() {
 	while (checkboxArray.length > 0) {
 		var checkBox = checkboxArray.pop();
@@ -215,7 +200,7 @@ addLocationTopics = function() {
 		} else {
 			// The topic was not found in the result list. Create a new key and
 			// add the topic to the list
-			var key = getNewKey();
+			var key = UtilStore.getNewKey(store);
 			if (topic.boundingBox) {
 				store.addData({
 						Id: key,

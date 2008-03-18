@@ -474,14 +474,23 @@ menuEventHandler.handleDelete = function(msg) {
 	    	dojo.event.topic.publish("/deleteRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				
 		});
 
-		// params for the first (really delete object query) dialog.
-		var params = {
-			nodeTitle: selectedNode.title,
-			nodeHasChildren: selectedNode.isFolder,
-			resultHandler: deferred
-		};
+		// Build the message key (dialog.<object|address>.delete<Children>Message)
+		var messageKey = "dialog.";
+		if (selectedNode.nodeAppType == "O")
+			messageKey += "object.delete";
+		else
+			messageKey += "address.delete";
 
-		dialog.showPage("Delete node", "mdek_delete_object_dialog.html", 342, 220, true, params);
+		if (selectedNode.isFolder)
+			messageKey += "Children";
+
+		messageKey += "Message";
+		var displayText = dojo.string.substituteParams(message.get(messageKey), selectedNode.title);
+
+		dialog.show(message.get("general.delete"), displayText, dialog.INFO, [
+                        { caption: message.get("general.cancel"), action: function() { deferred.errback(); } },
+                        { caption: message.get("general.ok"),     action: function() { deferred.callback(); } }
+		]);
 	}
 }
 
@@ -718,7 +727,7 @@ function displayErrorMessage(err) {
 }
 
 function handleEntityReferencedException(err) {
-	var addressTitle = udkDataProxy._createAddressTitle(err.targetAddress);
+	var addressTitle = UtilAddress.createAddressTitle(err.targetAddress);
 	var objectTitles = "<br><br>";
 	
 	for (var i = 0; i < err.sourceObjects.length; ++i) {

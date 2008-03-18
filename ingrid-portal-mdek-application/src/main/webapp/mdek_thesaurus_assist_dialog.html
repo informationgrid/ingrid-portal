@@ -73,7 +73,7 @@ init = function() {
 		callback:function(res) {
 			if (res && res.length > 0) {
 				var keywordTable = dojo.widget.byId("keywordsList");
-				udkDataProxy._addTableIndices(res);
+				UtilList.addTableIndices(res);
 				keywordTable.store.setData(res);
 				showStatus("");
 				dojo.byId("numberOfTerms").innerHTML = message.get("sns.numberOfTerms")+" "+res.length;
@@ -103,7 +103,7 @@ init = function() {
 		callback:function(res) {
 			if (res && res.length > 0) {
 				var keywordTable = dojo.widget.byId("keywordsList");
-				udkDataProxy._addTableIndices(res);
+				UtilList.addTableIndices(res);
 				keywordTable.store.setData(res);
 				// showStatus("");
 				dojo.byId("numberOfTerms").innerHTML = message.get("sns.numberOfTerms")+" "+res.length;
@@ -191,16 +191,6 @@ removeAll = function() {
 	}
 }
 
-getNewKey = function(store) {
-	var key = 0;
-	var data = store.get();
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-	return key;
-}
 
 // Finish Button onClick function.
 //
@@ -213,7 +203,7 @@ applyChanges = function() {
 	if (resultTopics) {
 		dojo.lang.forEach(resultTopics, function(topic) {
 			if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
-				destStore.addData( {Id: getNewKey(destStore), topicId: topic.topicId, title: topic.title} );
+				destStore.addData( {Id: UtilStore.getNewKey(destStore), topicId: topic.topicId, title: topic.title} );
 			} else {
 				return;
 			}

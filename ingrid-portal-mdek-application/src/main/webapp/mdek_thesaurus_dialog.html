@@ -320,17 +320,6 @@ findTopic = function() {
 
 };
 
-getNewKey = function(store) {
-	var key = 0;
-	var data = store.get();
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-	return key;
-}
-
 // AddTopic Button onClick function.
 //
 // This function adds the currently selected node to the descriptorList if it isn't already in the store.
@@ -347,13 +336,13 @@ addSelectedTopic = function() {
 		if (!selectedNode || selectedNode.type != "DESCRIPTOR")
 			return;
 		else
-			descStore.addData( {Id: getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
+			descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
 
 	} else if (selectedTab == "thesResultPane" && selectedTextNode) {
 		if (dojo.lang.some(descStore.getData(), function(item){ return (selectedTextNode.topicId == item.topicId); }))
 			return;
 		else
-			descStore.addData( {Id: getNewKey(descStore), topicId: selectedTextNode.topicId, title: selectedTextNode.innerHTML} );
+			descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: selectedTextNode.topicId, title: selectedTextNode.innerHTML} );
 	}
 };
 
@@ -376,7 +365,7 @@ acceptTopicList = function() {
 	dojo.lang.forEach(srcStore.getData(), function(topic){
 		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 			// Topic is new. Add it to the topic list
-			destStore.addData({Id: getNewKey(destStore), topicId: topic.topicId, title: topic.title});
+			destStore.addData({Id: UtilStore.getNewKey(destStore), topicId: topic.topicId, title: topic.title});
 		} else {
 			// Topic already exists in the destination List
 			return;

@@ -246,21 +246,6 @@ isValidOperation = function(op) {
 	return valid;
 }
 
-// iterates over all entries in the stores and returns a key that is not in use yet
-getNewKey = function() {
-	var data = dojo.widget.byId("operationsList").store.get();
-
-	var key = 0;
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-
-	return key;
-}
-
-
 // New Button onClick function
 //
 newOperation = function() {
@@ -282,7 +267,7 @@ saveOperation = function() {
 	} else {
 		var opList = dojo.widget.byId("operationsList");
 		if (operation.Id == null) {
-			var key = getNewKey();
+			var key = UtilStore.getNewKey(opList.store);
 			operation.Id = key;
 			opList.store.addData(operation);
 			opList.resetSelections();

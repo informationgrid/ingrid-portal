@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.ingrid.mdek.dwr;
+package de.ingrid.mdek.dwr.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +12,13 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.DataConnectionInterface;
 import de.ingrid.mdek.MdekError;
-import de.ingrid.mdek.VersionInformation;
-import de.ingrid.mdek.dwr.api.EntryService;
+import de.ingrid.mdek.beans.AddressSearchResultBean;
+import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.MdekDataBean;
+import de.ingrid.mdek.beans.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
 

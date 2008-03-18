@@ -296,20 +296,6 @@ function initCTS() {
 
 
 function initFreeTermsButtons() {
-// Helper function that iterates over all entries in a store and returns a key that is not in use yet
-// We need this function to add terms to the free Terms list
-// TODO Move to a helper class if we need it more often
-	var getNewKey = function(store) {
-		var key = 0;
-		var data = store.get();
-		for(var i=0; i < data.length; i++){
-			if(data[i].key >= key){
-				key = data[i].key + 1;
-			}
-		}
-		return key;
-	}
-
 	// This function executes a search for topics and adds the results to the specified lists
 	var executeSearch = function() {
 		var term = this._inputFieldWidget.getValue();
@@ -341,7 +327,7 @@ function initFreeTermsButtons() {
 						var freeTermsStore = _this._freeTermListWidget.store;
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != term; })) {
 							// If every term in the store != the entered term add it to the list
-							var identifier = getNewKey(freeTermsStore);							
+							var identifier = UtilStore.getNewKey(freeTermsStore);							
 							freeTermsStore.addData( {Id: identifier, title: term} );
 
 							// Scroll to the added descriptor
@@ -366,7 +352,7 @@ function initFreeTermsButtons() {
 						deferred.addCallback(function() {
 							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != queryTerm.topicId; })) {
 								// Topic is new. Add it to the topic list
-								topicStore.addData( {Id: getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title} );
+								topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title} );
 								// Scroll to the added descriptor
 								var rows = _this._termListWidget.domNode.tBodies[0].rows;
 									dojo.html.scrollIntoView(rows[rows.length-1]);
@@ -384,7 +370,7 @@ function initFreeTermsButtons() {
 							dojo.lang.forEach(descriptors, function(topic) {
 								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 									// Topic is new. Add it to the topic list
-									topicStore.addData( {Id: getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
+									topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
 
 									// Scroll to the added descriptor
 									var rows = _this._termListWidget.domNode.tBodies[0].rows;
@@ -400,7 +386,7 @@ function initFreeTermsButtons() {
 						var freeTermsStore = _this._freeTermListWidget.store;
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != queryTerm.title; })) {
 							// If every term in the store != the entered term add it to the list
-							var identifier = getNewKey(freeTermsStore);							
+							var identifier = UtilStore.getNewKey(freeTermsStore);							
 							freeTermsStore.addData( {Id: identifier, title: queryTerm.title} );
 
 							// Scroll to the added descriptor

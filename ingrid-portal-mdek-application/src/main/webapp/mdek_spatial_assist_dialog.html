@@ -47,7 +47,7 @@ addLocation = function() {
 				var dstStore = dojo.widget.byId("spatialRefLocation").store;
 				if (res.coordinate) {
 					dstStore.addData({
-						Id: getNewKey(dstStore),
+						Id: UtilStore.getNewKey(dstStore),
 						name: location,
 						longitude1: res.coordinate.longitude1,
 						latitude1: res.coordinate.latitude1,
@@ -56,7 +56,7 @@ addLocation = function() {
 					});
 				} else {
 					dstStore.addData({
-						Id: getNewKey(dstStore),
+						Id: UtilStore.getNewKey(dstStore),
 						name: location
 					});
 				}
@@ -67,7 +67,7 @@ addLocation = function() {
 				dojo.debug("Error: "+message);
 				var dstStore = dojo.widget.byId("spatialRefLocation").store;
 				dstStore.addData({
-					Id: getNewKey(dstStore),
+					Id: UtilStore.getNewKey(dstStore),
 					name: location
 				});
 				_container_.closeWindow();
@@ -75,20 +75,6 @@ addLocation = function() {
 		}
 	);
 }
-
-function getNewKey() {
-	var data = dojo.widget.byId("spatialRefLocation").store.get();
-
-	var key = 0;
-	for(var i=0; i < data.length; i++){
-		if(data[i].key >= key){
-			key = data[i].key + 1;
-		}
-	}
-
-	return key;
-}
-
 
 </script>
 </head>
