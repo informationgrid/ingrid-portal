@@ -71,6 +71,20 @@ function PageNavigation(args) {
 	
 		// Add navigation to the next set of page navigation links
 		if (this.pageSelectorStart > 1) {
+			// Add '<<' jump to page 1
+			this.pagingSpan.appendChild(document.createTextNode(" "));
+			var link = document.createElement("a");
+			link.onclick = function() {
+				_this.pageSelectorStart = 1;
+				_this.updateDomNodes();
+			}
+			link.setAttribute("href", "javascript:void(0);");
+			link.setAttribute("title", "Erste Seite");
+			link.innerHTML = "&lt;&lt;";
+
+			this.pagingSpan.appendChild(link);
+
+			// Add '<' jump to currentPage - 4
 			this.pagingSpan.appendChild(document.createTextNode(" "));
 			var link = document.createElement("a");
 			link.onclick = function() {
@@ -122,7 +136,19 @@ function PageNavigation(args) {
 			link.setAttribute("href", "javascript:void(0);");
 			link.setAttribute("title", "weiter");
 			link.innerHTML = "&gt;";
+			this.pagingSpan.appendChild(link);
+
 	
+			this.pagingSpan.appendChild(document.createTextNode(" "));
+			var link = document.createElement("a");
+			link.onclick = function() {
+				while (_this.pageSelectorStart+4 <= lastPage)
+					_this.pageSelectorStart += 4;
+				_this.updateDomNodes();
+			}
+			link.setAttribute("href", "javascript:void(0);");
+			link.setAttribute("title", "Letzte Seite");
+			link.innerHTML = "&gt;&gt;";
 			this.pagingSpan.appendChild(link);
 		}
 	}

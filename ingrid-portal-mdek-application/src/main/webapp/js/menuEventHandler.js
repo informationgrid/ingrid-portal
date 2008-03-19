@@ -32,23 +32,49 @@ menuEventHandler.handleNewEntity = function(mes) {
 				// TODO: Show error message
 				return;
 			}
-			
-			// publish a createNode request and attach the newly created node if it was successful
-			deferred.addCallback(function(res){ 
-				if (selectedNode.objectClass == 2 || selectedNode.objectClass == 3) {
-					return;
-				} else {
-					attachNewNode(selectedNode, res);
-				}
-			});
-			deferred.addErrback(function(err){
-				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
-			});
-			dojo.debug("Publishing event: /createAddressRequest("+selectedNode.id+")");
-	  		dojo.event.topic.publish("/createAddressRequest", {id: selectedNode.id, resultHandler: deferred});
+
+			// Determine the class of the newly created Address.
+			// If the selected node if is 'addressFreeRoot' we can directly create the address without presenting the dialog
+			if (selectedNode.id == "addressFreeRoot") {
+				menuEventHandler._createNewAddress(3, selectedNode);				
+
+			} else {
+				var selectClassDef = new dojo.Deferred();
+				selectClassDef.addCallback(function(addressClass){ menuEventHandler._createNewAddress(addressClass, selectedNode); });
+	
+				var params = { parentId: selectedNode.id, parentClass: selectedNode.objectClass, resultHandler: selectClassDef }
+				dialog.showPage("Adresse anlegen", "mdek_address_select_class_dialog.html", 350, 160, false, params);
+			}
 		}
 	}
 }
+
+menuEventHandler._createNewAddress = function(addressClass, parentNode) {
+//	dojo.debug("_createNewAddress("+addressClass+", "+parentNode.id+")");
+	var parentId = parentNode.id;
+
+	if (addressClass == 3 && parentId == "addressRoot") {
+		var treeController = dojo.widget.byId("treeController");
+		var def = treeController.expand(dojo.widget.byId("addressRoot"));
+		def.addCallback(function() {
+			menuEventHandler._createNewAddress(addressClass, dojo.widget.byId("addressFreeRoot"));
+		});
+		return;
+	}
+
+	var deferred = new dojo.Deferred();
+
+	// publish a createNode request and attach the newly created node if it was successful
+	deferred.addCallback(function(res){ 
+		attachNewNode(dojo.widget.byId(parentId), res);
+	});
+	deferred.addErrback(function(err){
+		dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+	});
+	dojo.debug("Publishing event: /createAddressRequest("+parentId+")");
+	dojo.event.topic.publish("/createAddressRequest", {id: parentId, addressClass: addressClass, resultHandler: deferred});
+}
+
 
 attachNewNode = function(selectedNode, res) {
     var tree = dojo.widget.byId("tree");

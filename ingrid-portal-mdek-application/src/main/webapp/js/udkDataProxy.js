@@ -13,8 +13,9 @@
  *     parentUuid - The Uuid of the objects parent
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
- *   topic = '/createAddressRequest' - argument: {id: parentUuid, resultHandler: deferred}
+ *   topic = '/createAddressRequest' - argument: {id: parentUuid, addressClass: int, resultHandler: deferred}
  *     parentUuid - The Uuid of the addresses parent
+ *     addressClass - The class of the newly created address
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *
  *   topic = '/saveRequest' - argument:
@@ -407,6 +408,8 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 
 udkDataProxy.handleCreateAddressRequest = function(msg)
 {
+	dojo.debug("udkDataProxy.handleCreateAddressRequest()");
+	
 	var nodeId = msg.id;
 	if (msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
 		nodeId = null;
@@ -420,10 +423,12 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 		EntryService.createNewAddress(nodeId,
 			{
 				callback: function(res){
-						if (msg.id == "addressFreeRoot") {
-							res.addressClass = 3;
-							res.nodeDocType = "PersonAddress_B";
-						}
+						res.addressClass = msg.addressClass;
+						if (res.addressClass == 0) { res.nodeDocType = "Institution_B"; }
+						else if (res.addressClass == 1) { res.nodeDocType = "InstitutionUnit_B"; }
+						else if (res.addressClass == 2) { res.nodeDocType = "InstitutionPerson_B"; }
+						else if (res.addressClass == 3) { res.nodeDocType = "PersonAddress_B"; }
+
 						msg.resultHandler.callback(res);
 						udkDataProxy._setData(res);
 						udkDataProxy.setDirtyFlag();
@@ -648,6 +653,11 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
 }
 
 udkDataProxy.handleDeleteWorkingCopyRequest = function(msg) {
+	if (msg.id == "newNode") {
+		msg.resultHandler.callback();
+		return;
+	}
+
 	var nodeAppType = dojo.widget.byId(msg.id).nodeAppType;
 	if (nodeAppType == "O")
 		udkDataProxy._handleDeleteObjectWorkingCopyRequest(msg);
@@ -1232,7 +1242,7 @@ udkDataProxy._setAddressData = function(nodeData)
 			dojo.widget.byId("headerAddressType3Institution").setValue(nodeData.organisation);
 			break;
 		default:
-			dojo.debug("Error in udkDataProxy._setAddressData - Address Class must be 0, 1, 2 or 3!");
+			dojo.debug("Error in udkDataProxy._setAddressData - Address Class must be 0, 1, 2 or 3. Wrong value: "+nodeData.addressClass);
 			break;
 	}
 }

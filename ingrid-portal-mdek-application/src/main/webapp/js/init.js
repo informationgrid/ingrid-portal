@@ -332,7 +332,8 @@ function initFreeTermsButtons() {
 
 							// Scroll to the added descriptor
 							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
-							dojo.html.scrollIntoView(rows[rows.length-1]);
+							if (!dojo.render.html.ie)				
+								dojo.html.scrollIntoView(rows[rows.length-1]);
 //							dialog.show(message.get("general.hint"), message.get("sns.freeTermAddHint"), dialog.INFO);			
 						}
 					
@@ -355,6 +356,7 @@ function initFreeTermsButtons() {
 								topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title} );
 								// Scroll to the added descriptor
 								var rows = _this._termListWidget.domNode.tBodies[0].rows;
+								if (!dojo.render.html.ie)				
 									dojo.html.scrollIntoView(rows[rows.length-1]);
 							}
 						});
@@ -379,7 +381,8 @@ function initFreeTermsButtons() {
 
 									// Scroll to the added descriptor
 									var rows = _this._termListWidget.domNode.tBodies[0].rows;
-									dojo.html.scrollIntoView(rows[rows.length-1]);
+									if (!dojo.render.html.ie)				
+										dojo.html.scrollIntoView(rows[rows.length-1]);
 								}
 							});
 						});
@@ -396,7 +399,8 @@ function initFreeTermsButtons() {
 
 							// Scroll to the added descriptor
 							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
-							dojo.html.scrollIntoView(rows[rows.length-1]);
+							if (!dojo.render.html.ie)				
+								dojo.html.scrollIntoView(rows[rows.length-1]);
 						}
 					}
 					// Clear the input field

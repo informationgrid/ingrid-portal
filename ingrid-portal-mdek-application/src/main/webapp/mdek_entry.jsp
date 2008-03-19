@@ -1736,7 +1736,7 @@ function hideSplash(){
 		  		<tr>
 		  		  <td id="addressTypeLabel" class="label required col1"><label for="addressType">Adresstyp*</label></td>
 		  		  <td class="col2">
-		          <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="addressType" name="addressType">
+		          <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" disabled="true" id="addressType" name="addressType">
 		            <!-- TODO: fill in jsp -->
 		            <option value="AddressType0">Institution</option>
 		            <option value="AddressType1">Einheit</option>
