@@ -332,7 +332,17 @@ menuEventHandler.handleUndo = function(mes) {
     		dojo.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
 	    	dojo.event.topic.publish("/loadRequest", {id: selectedNode.id, appType: selectedNode.nodeAppType, resultHandler:def});
 		});
-		dialog.showPage(message.get("dialog.undoChangesTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, {resultHandler:deferred, action:"UNDO"});
+//		dialog.showPage(message.get("dialog.undoChangesTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, {resultHandler:deferred, action:"UNDO"});
+		var displayText = "";
+		if (selectedNode.nodeAppType == "O")
+			displayText = message.get("dialog.object.undoChangesMessage");
+		else
+			displayText = message.get("dialog.address.undoChangesMessage");
+
+		dialog.show(message.get("dialog.undoChangesTitle"), displayText, dialog.INFO, [
+        	{ caption: message.get("general.cancel"),  action: function() { deferred.errback(); } },
+        	{ caption: message.get("general.yes"),     action: function() { deferred.callback(); } }
+		]);
 	}
 }
 
@@ -402,6 +412,7 @@ menuEventHandler.handleDiscard = function(msg) {
 	    	dojo.event.topic.publish("/deleteWorkingCopyRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				
 		});
 
+/*
 		// params for the first (really delete object query) dialog.
 		var params = {
 			nodeTitle: selectedNode.title,
@@ -409,13 +420,37 @@ menuEventHandler.handleDiscard = function(msg) {
 			isPublished: selectedNode.isPublished,
 			resultHandler: deferred
 		};
-
 		if (selectedNode.isPublished) {
 			dialog.showPage(message.get("dialog.discardPubExistTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
 		} else {
 			dialog.showPage(message.get("dialog.discardPubNotExistTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
 		}
-		
+*/	
+		// Build the dialog parameters
+		// messageKey = dialog.<object|address>.discardPub<Not>ExistMessage
+		var titleText = "";
+		var displayText = "";
+		var messageKey = "dialog.";
+		if (selectedNode.nodeAppType == "O") {
+			messageKey += "object.";
+		} else {
+			messageKey += "address.";
+		}
+
+		if (selectedNode.isPublished) {
+			titleText = message.get("dialog.discardPubExistTitle");
+			messageKey += "discardPubExistMessage";
+
+		} else {
+			titleText = message.get("dialog.discardPubNotExistTitle");
+			messageKey += "discardPubNotExistMessage";
+		}
+		displayText = dojo.string.substituteParams(message.get(messageKey), selectedNode.title);
+
+		dialog.show(titleText, displayText, dialog.INFO, [
+        	{ caption: message.get("general.cancel"),  action: function() { deferred.errback(); } },
+        	{ caption: message.get("general.yes"),     action: function() { deferred.callback(); } }
+		]);
 	}
 }
 

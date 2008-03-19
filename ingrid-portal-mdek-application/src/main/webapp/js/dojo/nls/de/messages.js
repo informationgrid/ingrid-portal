@@ -1,11 +1,15 @@
 (
   {
     "general.ok":"Ok",
+    "general.yes":"Ja",
+    "general.save":"Speichern",
+    "general.no":"Nein",
     "general.cancel":"Abbrechen",
     "general.error":"Fehler",
     "general.warning":"Warnung",
     "general.hint":"Hinweis",
     "general.help":"Hilfe - Allgemeines",
+    "general.move":"Verschieben",
     "general.showAddress":"Zeige Adresse",
     "general.delete":"L&ouml;schen",
     "general.closeWindow":"Alle nicht gespeicherten \u00c4nderungen werden dabei verworfen.",

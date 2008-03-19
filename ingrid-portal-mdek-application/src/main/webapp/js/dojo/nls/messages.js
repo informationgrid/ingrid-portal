@@ -1,11 +1,15 @@
 (
   {
     "general.ok":"Ok",
+    "general.yes":"Yes",
+    "general.save":"Save",
+    "general.no":"No",
     "general.cancel":"Cancel",
     "general.error":"Error",
     "general.warning":"Warning",
     "general.hint":"Hinweis",
     "general.help":"Help - General",
+    "general.move":"Move",
     "general.showAddress":"Show Address",
     "general.delete":"Delete",
     "general.closeWindow":"All unsaved changes will be discarded.",

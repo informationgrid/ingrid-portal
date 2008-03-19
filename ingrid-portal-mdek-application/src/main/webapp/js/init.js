@@ -360,7 +360,12 @@ function initFreeTermsButtons() {
 						});
 
 						// Show the dialog
-						dialog.showPage(message.get("dialog.addDescriptorTitle"), "mdek_add_descriptor_dialog.html", 342, 220, true, {descriptorTitle: term, resultHandler: deferred});
+//						dialog.showPage(message.get("dialog.addDescriptorTitle"), "mdek_add_descriptor_dialog.html", 342, 220, true, {descriptorTitle: term, resultHandler: deferred});
+						var displayText = dojo.string.substituteParams(message.get("dialog.addDescriptorMessage"), term);
+						dialog.show(message.get("dialog.addDescriptorTitle"), displayText, dialog.INFO, [
+                        	{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },
+                        	{ caption: message.get("general.yes"), action: function() { deferred.callback(); } }
+						]);
 
 					} else if (queryTerm.type == "NON_DESCRIPTOR") {
 						// Show the 'add descriptors' dialog. The user can decide if he wants to add all the found descriptors to the topic list.

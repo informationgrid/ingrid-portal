@@ -102,7 +102,7 @@ dialog.showContextHelp = function(e, caption)
 dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* array of objects with key, action properties */btnActions, /* optional */width, /* optional */height)
 {
   dojo.require("ingrid.widget.FloatingPane");
-  var dlgId = dialog.getNextId();;
+  var dlgId = dialog.getNextId();
 
   // define params
   if (!width) width = 254;
@@ -146,7 +146,9 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
         // for following modal dialogs)
         // we get the action through the event target, which shild have the same id as the button's widget id
         button.action = btnActions[i].action;
-        button.onClick = function(e) {dojo.lang.delayThese([closeAction, dojo.widget.byId(e.target.id).action]);};
+        button.onClick = function(e) {
+        	dojo.lang.delayThese([closeAction, this.action]);
+        };
       }
       else
         button.onClick = closeAction;

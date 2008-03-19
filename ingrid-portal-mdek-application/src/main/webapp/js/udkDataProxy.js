@@ -252,7 +252,27 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 
 	var deferred = new dojo.Deferred();
 	if (this.dirtyFlag == true) {
-		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 350, 145, true, {resultHandler: deferred});
+//		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 350, 145, true, {resultHandler: deferred});
+		var displayText = "";
+		if (currentUdk.nodeAppType == "O")
+			displayText = message.get("dialog.object.saveChangesHint");
+		else
+			displayText = message.get("dialog.address.saveChangesHint");
+
+		dialog.show(message.get("dialog.saveChangesTitle"), displayText, dialog.INFO, [
+        	{ caption: message.get("general.cancel"), action: function() { deferred.errback(); } },
+        	{ caption: message.get("general.no"),     action: function() {
+        		udkDataProxy.resetDirtyFlag();
+				deferred.callback("DISCARD");
+        	}},
+        	{ caption: message.get("general.yes"),    action: function() {
+				var def = new dojo.Deferred();
+				def.addCallback(function(){ deferred.callback("SAVE"); }); 
+				def.addErrback(function(){ deferred.errback(); });
+
+				dojo.event.topic.publish("/saveRequest", {resultHandler:def});
+        	}}
+		]);
 
 		// If the user was editing a newly created node and he wants to discard the changes
 		// delete the newly created node.
@@ -506,6 +526,7 @@ udkDataProxy._handleSaveObjectRequest = function(msg) {
 			timeout:10000,
 			errorHandler:function(err) {
 				// Check for the publication condition error
+				// TODO: A normal save operation shouldn't trigger it?
 				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
 					var onForceSaveDef = new dojo.Deferred();
 					
@@ -518,7 +539,13 @@ udkDataProxy._handleSaveObjectRequest = function(msg) {
 					onForceSaveDef.addErrback(onSaveDef.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForceSaveDef});
+//					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForceSaveDef});
+					var displayText = message.get("operation.hint.publicationConditionSaveHint");
+					dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+                    	{ caption: message.get("general.cancel"),  action: function() { onForceSaveDef.errback(); } },
+                    	{ caption: message.get("general.save"), action: function() { onForceSaveDef.callback(); } }
+					]);
+
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while saving nodeData:");
 					onSaveDef.errback(err);
@@ -572,7 +599,13 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 					onForcePublishDef.addErrback(onPublishDef.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
+//					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
+					var displayText = message.get("operation.hint.publicationConditionSaveHint");
+					dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+                    	{ caption: message.get("general.cancel"),  action: function() { onForcePublishDef.errback(); } },
+                    	{ caption: message.get("general.save"), action: function() { onForcePublishDef.callback(); } }
+					], 382, 220);
+
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while publishing nodeData:");
 					onPublishDef.errback(err);
@@ -689,7 +722,13 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 					onForceDeleteDef.addErrback(msg.resultHandler.errback);
 
 					// Display the 'force delete' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.warning"), "mdek_forceDelete_dialog.html", 382, 220, true, {nodeAppType:"O", nodeTitle:title, resultHandler:onForceDeleteDef});
+//					dialog.showPage(message.get("general.warning"), "mdek_forceDelete_dialog.html", 382, 220, true, {nodeAppType:"O", nodeTitle:title, resultHandler:onForceDeleteDef});
+					var displayText = dojo.string.substituteParams(message.get("operation.hint.forceDeleteObjectHint"), title);
+
+					dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+			        	{ caption: message.get("general.no"),  action: function() { onForceDeleteDef.errback(); } },
+			        	{ caption: message.get("general.yes"), action: function() { onForceDeleteDef.callback(); } }
+					]);
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while deleting object: "+err);
 					msg.resultHandler.errback(err);
@@ -728,7 +767,14 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 						onForceDeleteDef.addErrback(function() { msg.resultHandler.errback("OPERATION_CANCELLED"); });
 
 						// Display the 'force delete' dialog with the attached resultHandler
-						dialog.showPage(message.get("general.warning"), "mdek_forceDelete_dialog.html", 382, 220, true, {nodeAppType:"O", nodeTitle:title, resultHandler:onForceDeleteDef});
+//						dialog.showPage(message.get("general.warning"), "mdek_forceDelete_dialog.html", 382, 220, true, {nodeAppType:"O", nodeTitle:title, resultHandler:onForceDeleteDef});
+						var displayText = dojo.string.substituteParams(message.get("operation.hint.forceDeleteObjectHint"), title);
+	
+						dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+				        	{ caption: message.get("general.no"),  action: function() { onForceDeleteDef.errback(); } },
+				        	{ caption: message.get("general.yes"), action: function() { onForceDeleteDef.callback(); } }
+						]);
+
 					} else {
 						dojo.debug("Error in js/udkDataProxy.js: Error while deleting object: "+err);
 						msg.resultHandler.errback(err);
@@ -845,7 +891,13 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 					onForceMoveDef.addErrback(msg.resultHandler.errback);
 
 					// Display the 'publication condition' dialog with the attached resultHandler
-					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"MOVE", resultHandler:onForceMoveDef});
+//					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"MOVE", resultHandler:onForceMoveDef});
+					var displayText = message.get("operation.hint.publicationConditionMoveHint");
+					dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+                    	{ caption: message.get("general.cancel"),  action: function() { onForceMoveDef.errback(); } },
+                    	{ caption: message.get("general.move"),    action: function() { onForceMoveDef.callback(); } }
+					], 382, 220);
+
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while moving nodeData:");
 					msg.resultHandler.errback(err);
