@@ -129,6 +129,22 @@ dojo.widget.defineWidget(
 		return null;
 	},
 
+  onValueChanged: function(value) {
+  	if (this.textInputNode.value.length != 0 && this.getDisplayValueForValue(value) == null)
+  		dojo.html.addClass(this.textInputNode, "fieldInvalid");
+  	else
+  		dojo.html.removeClass(this.textInputNode, "fieldInvalid");  	
+  },
+
+  onKeyUp: function(/*Event*/ evt){
+	this.setLabel(this.textInputNode.value);
+
+  	if (this.textInputNode.value.length != 0 && this.getValueForDisplayValue(this.textInputNode.value) == null)
+  		dojo.html.addClass(this.textInputNode, "fieldInvalid");
+  	else
+  		dojo.html.removeClass(this.textInputNode, "fieldInvalid");
+  },
+
   enable: function() {
     dojo.widget.Select.superclass.enable.apply(this, arguments);
     dojo.html.removeClass(this.textInputNode, 'noEdit');

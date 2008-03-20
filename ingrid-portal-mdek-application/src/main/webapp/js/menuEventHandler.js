@@ -43,7 +43,7 @@ menuEventHandler.handleNewEntity = function(mes) {
 				selectClassDef.addCallback(function(addressClass){ menuEventHandler._createNewAddress(addressClass, selectedNode); });
 	
 				var params = { parentId: selectedNode.id, parentClass: selectedNode.objectClass, resultHandler: selectClassDef }
-				dialog.showPage("Adresse anlegen", "mdek_address_select_class_dialog.html", 350, 160, false, params);
+				dialog.showPage(message.get("dialog.createAddressTitle"), "mdek_address_select_class_dialog.html", 350, 160, false, params);
 			}
 		}
 	}

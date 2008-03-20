@@ -163,9 +163,9 @@ addSelectedAddressFromTree = function() {
 	    var dstStore = dojo.widget.byId("generalAddress").store;
 		var nodeId = selectedNode.id.substring(10);
 		if (nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
-			if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
+//			if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
 				addAddressToStore(nodeId, dstStore);
-			}
+//			}
 		}
 	}
 	_container_.closeWindow();
@@ -177,9 +177,9 @@ addSelectedAddress = function() {
 	if (selectedNode) {
 	    var dstStore = dojo.widget.byId("generalAddress").store;
 		var nodeId = selectedNode.uuid;
-		if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
+//		if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
 			addAddressToStore(nodeId, dstStore);
-		}
+//		}
 	}
 	_container_.closeWindow();
 }

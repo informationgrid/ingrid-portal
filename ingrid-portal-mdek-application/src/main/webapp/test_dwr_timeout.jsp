@@ -14,8 +14,10 @@
 <script type="text/javascript">
 
 var requestInProgress = false;
+var timer = setInterval(pollResult, 1000);
 
-setInterval(pollResult, 1000);
+dwr.engine.setPreHook(showDWRLoading);
+dwr.engine.setPostHook(hideDWRLoading);
 
 function output(str) {
 	document.getElementById("text").innerHTML += str+"<br>";
@@ -30,9 +32,11 @@ function pollResult() {
 
 	output("Starting query.");
 	SNSService.findTopics("Wasser", {
+		preHook: showDWRFunctionLoading,
+		postHook: hideDWRFunctionLoading,
 		callback: processResults,
 		timeout: 5000,
-		errorHandler: function() {output("timeout"); requestInProgress = false; }
+		errorHandler: function() {clearInterval(timer); output("timeout"); requestInProgress = false; hideDWRFunctionLoading();}
 	});
 }
 
@@ -45,12 +49,29 @@ function buttonFunc() {
 	output("setInterval()");
 	setInterval(pollResult, 1000);
 }
+
+function showDWRFunctionLoading() {
+	document.getElementById("DWRFuncLoading").innerHTML = "function loading...";
+}
+function hideDWRFunctionLoading() {
+	document.getElementById("DWRFuncLoading").innerHTML = "";
+}
+
+function showDWRLoading() {
+	document.getElementById("DWRLoading").innerHTML = "dwr loading...";
+}
+function hideDWRLoading() {
+	document.getElementById("DWRLoading").innerHTML = "";
+}
+
 </script>
 
 
 <body>
 <!-- Select Widget -->
 <button onclick="buttonFunc();">Go</button>
-<div id=text> </div>
+<div id="DWRLoading"> </div>
+<div id="DWRFuncLoading"> </div>
+<div id="text"> </div>
 </body>
 </html>

@@ -139,9 +139,8 @@ function hideSplash(){
 </div>
 </div>
 
-<!-- 
-<div id="loadingZone" style="position: absolute; top: 0px; left: 0px; width: 5px;z-index: 100; height:5px;background-color:#FF0000;visibility:hidden"></div> 
- -->
+
+<div id="blockInputDiv" style="position: absolute; top: 0px; left: 0px; width: 100%; height:100%; z-index: 99; visibility:hidden"></div> 
 
 
 <div dojoType="LayoutContainer" id="layout" class="layout" layoutChildPriority="top-bottom">
@@ -218,7 +217,6 @@ function hideSplash(){
 	<div id="loadingZone" style="float:right; margin-top:3px; z-index: 100; visibility:hidden">
 		<img id="imageZone" src="img/ladekreis.gif" style="background-color:#EEEEEE;" />
 	</div> 
-
 
     </div>
   <!-- SPLIT CONTAINER START -->

@@ -156,7 +156,7 @@ dojo.addOnLoad(function()
 			} else {
 				var deferred = udkDataProxy.checkForUnsavedChanges(invocation.args[0].id);
 				var stdCallback = function() {return invocation.proceed();};
-				var errorCallback = function() {dojo.debug("Select cancelled.");};
+				var errorCallback = function(errMsg) {dojo.debug("Select cancelled."); };
 			}
 			deferred.addCallbacks(stdCallback, errorCallback);
 			return deferred;
@@ -261,7 +261,7 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 			displayText = message.get("dialog.address.saveChangesHint");
 
 		dialog.show(message.get("dialog.saveChangesTitle"), displayText, dialog.INFO, [
-        	{ caption: message.get("general.cancel"), action: function() { deferred.errback(); } },
+        	{ caption: message.get("general.cancel"), action: function() { deferred.errback(new Error("LOAD_CANCELLED")); } },
         	{ caption: message.get("general.no"),     action: function() {
         		udkDataProxy.resetDirtyFlag();
 				deferred.callback("DISCARD");
@@ -269,7 +269,7 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
         	{ caption: message.get("general.yes"),    action: function() {
 				var def = new dojo.Deferred();
 				def.addCallback(function(){ deferred.callback("SAVE"); }); 
-				def.addErrback(function(){ deferred.errback(); });
+				def.addErrback(function(errMsg){ deferred.errback(errMsg); });
 
 				dojo.event.topic.publish("/saveRequest", {resultHandler:def});
         	}}
@@ -310,9 +310,9 @@ udkDataProxy.handleLoadRequest = function(msg)
 	// TODO Check if we are in a state where it's safe to load data.
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
 	var deferred = udkDataProxy.checkForUnsavedChanges();
-	var loadErrback = function() {
+	var loadErrback = function(err) {
 		if (typeof(resultHandler) != "undefined") {
-			resultHandler.errback(new Error("LOAD_CANCEL_ERROR"));		
+			resultHandler.errback(err);
 		}
 	}
 	var loadCallback = function() {
@@ -321,6 +321,8 @@ udkDataProxy.handleLoadRequest = function(msg)
 		if (nodeAppType == "O") {
 			EntryService.getNodeData(nodeId, nodeAppType, "false",
 				{
+					preHook: UtilDWR.enterLoadingState,
+					postHook: UtilDWR.exitLoadingState,
 					callback:function(res){
 							if (res != null) {
 								udkDataProxy._setData(res);
@@ -340,15 +342,15 @@ udkDataProxy.handleLoadRequest = function(msg)
 						},
 					timeout:20000,
 					errorHandler:function(message) {
+						UtilDWR.exitLoadingState();
 						dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message);
-					},
-					exceptionHandler:function(message) {
-						dojo.debug("Exception in js/udkDataProxy.js: Exception while waiting for nodeData: " + message);
 					}
 				});
 		} else if (nodeAppType == "A") {
 			EntryService.getAddressData(nodeId, "false",
 				{
+					preHook: UtilDWR.enterLoadingState,
+					postHook: UtilDWR.exitLoadingState,
 					callback:function(res){
 							if (res != null) {
 								udkDataProxy._setData(res);
@@ -367,10 +369,8 @@ udkDataProxy.handleLoadRequest = function(msg)
 						},
 					timeout:20000,
 					errorHandler:function(message) {
+						UtilDWR.exitLoadingState();
 						dojo.debug("Error in js/udkDataProxy.js: Error while waiting for addressData: " + message);
-					},
-					exceptionHandler:function(message) {
-						dojo.debug("Exception in js/udkDataProxy.js: Exception while waiting for addressData: " + message);
 					}
 				});
 		}
@@ -393,13 +393,18 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 	var loadCallback = function() {
 		EntryService.createNewNode(nodeId,
 			{
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){
 						msg.resultHandler.callback(res);
 						udkDataProxy._setData(res);
 						udkDataProxy.setDirtyFlag();
 					},
 				timeout:10000,
-				errorHandler:function(message) {msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new node."); }
+				errorHandler:function(message) {
+					UtilDWR.exitLoadingState();
+					msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new node.");
+				}
 			}
 		);	
 	}
@@ -422,6 +427,8 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 	var loadCallback = function() {
 		EntryService.createNewAddress(nodeId,
 			{
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){
 						res.addressClass = msg.addressClass;
 						if (res.addressClass == 0) { res.nodeDocType = "Institution_B"; }
@@ -434,7 +441,10 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 						udkDataProxy.setDirtyFlag();
 					},
 				timeout:10000,
-				errorHandler:function(message) {msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new address."); }
+				errorHandler:function(message) {
+					UtilDWR.exitLoadingState();
+					msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new address.");
+				}
 			}
 		);	
 	}
@@ -481,9 +491,12 @@ udkDataProxy._handleSaveAddressRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.saveAddressData("+nodeData.uuid+", true)");
 	EntryService.saveAddressData(nodeData, "true",
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onSaveDef.callback(res); },
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while saving addressData:");
 				onSaveDef.errback(err);
 			}
@@ -527,9 +540,12 @@ udkDataProxy._handleSaveObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
 	EntryService.saveNodeData(nodeData, "true", forcePubCond,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onSaveDef.callback(res); },
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				// Check for the publication condition error
 				// TODO: A normal save operation shouldn't trigger it?
 				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
@@ -588,9 +604,12 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, "+forcePubCond+")");
 	EntryService.saveNodeData(nodeData, "false", forcePubCond,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onPublishDef.callback(res); },
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				// Check for the publication condition error
 				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
 					var onForcePublishDef = new dojo.Deferred();
@@ -642,9 +661,12 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.saveAddressData("+nodeData.uuid+", false)");
 	EntryService.saveAddressData(nodeData, "false",
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onPublishDef.callback(res); },
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while publishing address:");
 				onPublishDef.errback(err);
 			}
@@ -676,6 +698,8 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.deleteAddressWorkingCopy("+msg.id+", "+forceDelete+")");
 	EntryService.deleteAddressWorkingCopy(msg.id, forceDelete, "false",
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res){
 				if (res != null) {
 					udkDataProxy.resetDirtyFlag();
@@ -687,6 +711,7 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 			},
 			timeout:10000,
 			errorHandler:function(errMsg, err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while deleting address working copy: "+errMsg);
 				// Wrap the dwr error in a javscript Error object
 				var e = new Error(errMsg);
@@ -708,6 +733,8 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 
 	EntryService.deleteObjectWorkingCopy(msg.id, forceDelete, "false",
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res){
 				if (res != null) {
 					udkDataProxy.resetDirtyFlag();
@@ -719,6 +746,7 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 			},
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				if (err.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
 					var onForceDeleteDef = new dojo.Deferred();
 
@@ -761,9 +789,12 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 	if (nodeAppType == "O") {
 		dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+", "+forceDelete+")");
 		EntryService.deleteNode(msg.id, forceDelete, "false", {
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
 				errorHandler:function(err) {
+					UtilDWR.exitLoadingState();
 					if (err.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
 						var onForceDeleteDef = new dojo.Deferred();
 	
@@ -797,9 +828,12 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 		dojo.debug("udkDataProxy calling EntryService.deleteAddress("+msg.id+")");
 		EntryService.deleteAddress(msg.id, forceDelete, "false",
 			{
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
 				errorHandler:function(errMsg, err) {
+					UtilDWR.exitLoadingState();
 //					dojo.debug("Error in js/udkDataProxy.js: Error while deleting address: "+err);
 					// Wrap the dwr error in a javscript Error object
 					var e = new Error(errMsg);
@@ -816,9 +850,12 @@ udkDataProxy.handleCanCutObjectRequest = function(msg) {
 
 	EntryService.canCutObject(msg.id,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res){msg.resultHandler.callback();},
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while marking a node for a cut operation: " + err);
 				msg.resultHandler.errback(err);
 			}
@@ -831,9 +868,12 @@ udkDataProxy.handleCanCutAddressRequest = function(msg) {
 
 	EntryService.canCutAddress(msg.id,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res){msg.resultHandler.callback();},
 			timeout:10000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while marking an address for a cut operation: " + err);
 				msg.resultHandler.errback(err);
 			}
@@ -847,9 +887,12 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 
 	EntryService.canCopyObject(msg.id,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res){msg.resultHandler.callback();},
 			timeout:30000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while marking a node for a copy operation: " + err);
 				msg.resultHandler.errback(err);
 			}
@@ -862,9 +905,12 @@ udkDataProxy.handleCanCopyAddressRequest = function(msg) {
 
 	EntryService.canCopyAddress(msg.id,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res){msg.resultHandler.callback();},
 			timeout:30000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while marking an address for a copy operation: " + err);
 				msg.resultHandler.errback(err);
 			}
@@ -885,9 +931,12 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.moveNode("+msg.srcId+", "+msg.dstId+", "+forcePubCond+")");	
 	EntryService.moveNode(msg.srcId, msg.dstId, forcePubCond,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { msg.resultHandler.callback(res); },
 			timeout:30000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				// Check for the publication condition error
 				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
 					var onForceMoveDef = new dojo.Deferred();
@@ -932,9 +981,12 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.moveAddress("+srcId+", "+dstId+", "+moveToFreeAddress+")");	
 	EntryService.moveAddress(srcId, dstId, moveToFreeAddress,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { msg.resultHandler.callback(res); },
 			timeout:30000,
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				dojo.debug("Error in js/udkDataProxy.js: Error while moving address:");
 				msg.resultHandler.errback(err);
 			}
@@ -963,9 +1015,12 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 
 	EntryService.copyNode(srcId, dstId, msg.copyTree,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onCopyDef.callback(res); },
 			timeout:3000,	// Wait three seconds for the call to finish and display the 'please wait' dialog afterwards 
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				if (err == "Timeout") {
 					var onCopyOpFinishedDef = new dojo.Deferred();
 					// TODO we need to return some information about the copied node!
@@ -1012,9 +1067,12 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 	dojo.debug("udkDataProxy calling EntryService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+", "+copyToFreeAddress+")");	
 	EntryService.copyAddress(srcId, dstId, msg.copyTree, copyToFreeAddress,
 		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onCopyDef.callback(res); },
 			timeout:3000,	// Wait three seconds for the call to finish and display the 'please wait' dialog afterwards 
 			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
 				if (err == "Timeout") {
 					var onCopyOpFinishedDef = new dojo.Deferred();
 					// TODO we need to return some information about the copied node!
@@ -1042,9 +1100,12 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 	var loadCallback = function() {
 		dojo.debug("udkDataProxy calling EntryService.getPathToObject("+msg.id+")");	
 		EntryService.getPathToObject(msg.id, {
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
 				errorHandler:function(message) {
+					UtilDWR.exitLoadingState();
 					alert("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
 					msg.resultHandler.errback();
 				}
@@ -1067,9 +1128,12 @@ udkDataProxy.handleGetAddressPathRequest = function(msg) {
 	var loadCallback = function() {
 		dojo.debug("udkDataProxy calling EntryService.getPathToAddress("+msg.id+")");	
 		EntryService.getPathToAddress(msg.id, {
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
 				timeout:10000,
 				errorHandler:function(message) {
+					UtilDWR.exitLoadingState();
 					alert("Error in js/udkDataProxy.js: Error while getting path to address: " + message);
 					msg.resultHandler.errback();
 				}

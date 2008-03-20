@@ -1576,7 +1576,7 @@ public class MdekMapper implements DataMapperInterface {
 				Date date = timestampFormatter.parse(timeStamp);
 				return date;
 			} catch (Exception ex){
-				log.error("Problems parsing timestamp from database: " + timeStamp, ex);
+				log.debug("Problems parsing timestamp from database: " + timeStamp, ex);
 				return null;
 			}
 		} else {

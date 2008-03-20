@@ -413,9 +413,9 @@ public class EntryServiceImpl implements EntryService {
 				log.debug("MdekException while saving node.", e);
 				throw new RuntimeException(convertToRuntimeException(e));
 			}
-			catch (Exception e) {
+			catch (RuntimeException e) {
 				log.debug("Error while saving node", e);
-				throw new RuntimeException("Error while saving node.");
+				throw e;
 			}
 		} else {
 			log.debug("Publishing node with ID: "+data.getUuid());

@@ -158,11 +158,38 @@ function PageNavigation(args) {
 	}
 }
 
-
-
 /*
  * General Helper Functions
  */
+
+// Misc DWR Utility functions 
+var UtilDWR = {}
+
+// dwr preHook Function that has to be called by each dwr call that blocks certain interface functions (save, publish, etc.) 
+UtilDWR.enterLoadingState = function() {
+    var loadingZone = dojo.byId("loadingZone");
+    var blockInputDiv = dojo.byId("blockInputDiv");
+    loadingZone.style.visibility = "visible";
+    blockInputDiv.style.visibility = "visible";
+
+	UtilDWR.onEnterLoadingState();
+}
+
+// dwr postHook Function that has to be called after the dwr call returned 
+UtilDWR.exitLoadingState = function() {
+    var loadingZone = dojo.byId("loadingZone");
+    var blockInputDiv = dojo.byId("blockInputDiv");
+    loadingZone.style.visibility = "hidden";
+    blockInputDiv.style.visibility = "hidden";
+
+	UtilDWR.onExitLoadingState();
+}
+
+// Functions for users to connect to
+UtilDWR.onEnterLoadingState = function() {}
+UtilDWR.onExitLoadingState = function() {}
+
+
 
 // Util functions for handling MdekAddressBeans 
 var UtilAddress = {}

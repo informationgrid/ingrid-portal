@@ -664,7 +664,7 @@ public class MdekConnection implements DataConnectionInterface {
 	
 	private void handleError(IngridDocument response) throws RuntimeException {
 		String errorMessage = mdekCaller.getErrorMsgFromResponse(response);
-		log.error(errorMessage);
+		log.debug(errorMessage);
 		List<MdekError> err = mdekCaller.getErrorsFromResponse(response);
 		if (err != null) {
 			if (containsErrorType(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
@@ -722,7 +722,7 @@ public class MdekConnection implements DataConnectionInterface {
 				Date date = timestampFormatter.parse(timeStamp);
 				return date;
 			} catch (Exception ex){
-				log.error("Problems parsing timestamp from database: " + timeStamp, ex);
+				log.debug("Problems parsing timestamp from database: " + timeStamp, ex);
 				return null;
 			}
 		} else {

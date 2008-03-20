@@ -14,14 +14,6 @@ dojo.addOnLoad(function()
     var console = dojo.byId("dojoDebugConsole");
     console.style.visibility = "visible";
   }
-  dwr.engine.setPreHook(function() {
-    var console = dojo.byId("loadingZone");
-    console.style.visibility = "visible";
-  });
-  dwr.engine.setPostHook(function() {
-    var console = dojo.byId("loadingZone");
-    console.style.visibility = "hidden";
-  });
 
   initGeneralEventListener();
   initToolbar();
@@ -36,7 +28,6 @@ dojo.addOnLoad(function()
   hideSplash();
   udkDataProxy.resetDirtyFlag();
 });
-
 
 function initForm() {
   // hide address and object panel after initialization
@@ -179,10 +170,14 @@ function initTree() {
 		var deferred = new dojo.Deferred();
 
 		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },
 			timeout:10000,
-			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
-			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+			errorHandler:function(message) {
+				UtilDWR.exitLoadingState();
+				deferred.errback(new dojo.RpcError(message, this));
+			}
   		});
 		
 		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
@@ -266,9 +261,12 @@ function initCTS() {
 //				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
 				var _this = this;
 				CTService.getCoordinates(fromSRS, toSRS, coords, {
+						preHook: UtilDWR.enterLoadingState,
+						postHook: UtilDWR.exitLoadingState,
 						callback: dojo.lang.hitch(this, this.updateDestinationStore),
 						timeout:8000,
 						errorHandler:function(message) {
+							UtilDWR.exitLoadingState();
 							dojo.debug(message);
 							_this.showError();
 						}
@@ -303,6 +301,8 @@ function initFreeTermsButtons() {
 		_this = this;
 		if (term.length != 0) {
 			SNSService.findTopics(term, {
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
 				callback:function(topics) {
 					// Remove all non-descriptors from the list
 					var descriptors = [];
@@ -408,7 +408,10 @@ function initFreeTermsButtons() {
 
 				},
 				timeout:8000,
-				errorHandler:function(msg) {dojo.debug("Error while executing SNSService.findTopics");}
+				errorHandler:function(msg) {
+					UtilDWR.exitLoadingState();
+					dojo.debug("Error while executing SNSService.findTopics");
+				}
 			});
 		}	
 	}
@@ -879,12 +882,15 @@ function initCatalogData() {
 	var deferred = new dojo.Deferred();
 
 	EntryService.getCatalogData({
+		preHook: UtilDWR.enterLoadingState,
+		postHook: UtilDWR.exitLoadingState,
 		callback: function(res) {
 			// Update catalog Data in udkDataProxy
 			catalogData = res;
 			deferred.callback();
 		},
 		errorHandler:function(mes){
+			UtilDWR.exitLoadingState();
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 			dojo.debug(mes);
 			deferred.errback();
@@ -930,6 +936,8 @@ function initSysLists() {
 	});
 
 	EntryService.getSysLists(lstIds, languageCode, {
+		preHook: UtilDWR.enterLoadingState,
+		postHook: UtilDWR.exitLoadingState,
 		callback: function(res) {
 			dojo.lang.forEach(selectWidgetIDs, function(widgetId) {
 				var selectWidget = dojo.widget.byId(widgetId);
@@ -937,6 +945,7 @@ function initSysLists() {
 			});
 		},
 		errorHandler:function(mes){
+			UtilDWR.exitLoadingState();
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 			dojo.debug("Error: "+mes);
 		}
