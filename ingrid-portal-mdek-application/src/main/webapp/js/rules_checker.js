@@ -294,21 +294,25 @@ function isAddressPublishable(idcAddress) {
 
 function checkValidityOfInputElements() {
 	var isValid = function(widgetId) {
-//		dojo.debug(widgetId);
 		var widget = dojo.widget.byId(widgetId);
-		if (widget.isValid) {	// check if the widget has an isValid method
-			if (widget.isEmpty) { // check if the widget has an isEmpty method
-				if (widget.required && widget.isEmpty())
-					return false;
-				else
-					return (widget.isEmpty() || widget.isValid());
-			} else {
-				return widget.isValid();
-			}
-		} else {
-//			dojo.debug(widgetId+" has no isValid method.");
-			return true;
+
+		var widgetIsValid   = widget.isValid   ? widget.isValid()   : true;
+		var widgetIsInRange = widget.isInRange ? widget.isInRange() : true;
+		var widgetIsEmpty   = widget.isEmpty   ? widget.isEmpty()   : false;
+	
+		if (widget.required && widgetIsEmpty) {
+			dojo.debug("Widget "+widgetId+" is required but empty.");
+			return false;
 		}
+
+		if (!widgetIsEmpty && (!widgetIsValid || !widgetIsInRange)) {
+			if (!widgetIsValid)
+				dojo.debug("Widget "+widgetId+" contains invalid input.");
+			if (!widgetIsInRange)
+				dojo.debug("Widget "+widgetId+" is out of range.");
+			return false;
+		}
+		return true;
 	}
 
 	var objectClassStr = dojo.widget.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class

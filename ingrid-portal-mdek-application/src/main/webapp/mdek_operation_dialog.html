@@ -347,7 +347,7 @@ closeDialog = function() {
         <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
 		<span class="input">
 			<select dojoType="ingrid:Select" class="w616" id="operationsNameSelect" />
-			<input type="text" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" />
+			<input type="text" maxlength="120" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" />
 		</span>
         <div class="spacer"></div>
         
@@ -362,7 +362,7 @@ closeDialog = function() {
             <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsPlatformEditors">
-                <div dojoType="ingrid:ValidationTextbox" widgetId="operationsPlatformText"></div>
+                <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsPlatformText"></div>
               </div>
          	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>
@@ -379,14 +379,14 @@ closeDialog = function() {
         </div>
 
         <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aufruf')">Aufruf</label></span>
-        <span class="input spaceBelow"><input type="text" id="operationsCall" name="operationsCall" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+        <span class="input spaceBelow"><input type="text" maxlength="255" id="operationsCall" name="operationsCall" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 
         <div class="inputContainer h130">
           <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 'Parameter')">Parameter</label></span>
           <div class="tableContainer rows4 fullInside">
             <div class="cellEditors" id="operationsParameterEditors">
-              <div dojoType="ingrid:ValidationTextbox" widgetId="operationsParameterName"></div>
-              <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationDirection.js" style="width:90px;" widgetId="operationsParameterDir"></div>
+              <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsParameterName"></div>
+              <div dojoType="ingrid:Select" maxlength="20" toggle="plain" dataUrl="js/data/ref3OperationDirection.js" style="width:90px;" widgetId="operationsParameterDir"></div>
               <div dojoType="ingrid:ValidationTextbox" widgetId="operationsParameterDesc"></div>
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationYesNo.js" style="width:32px;" widgetId="operationsParameterOpt"></div>
               <div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/ref3OperationYesNo.js" style="width:70px;" widgetId="operationsParameterMulti"></div>
@@ -413,7 +413,7 @@ closeDialog = function() {
             <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugriffsadresse')">Zugriffsadresse*</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsAddressEditors">
-                <div dojoType="ingrid:ValidationTextbox" widgetId="operationsAddressText"></div>
+                <div dojoType="ingrid:ValidationTextbox" maxlength="255" widgetId="operationsAddressText"></div>
               </div>
          	    <table id="operationsAddress" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>
@@ -430,7 +430,7 @@ closeDialog = function() {
             <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 'Abh&auml;ngigkeiten')">Abh&auml;ngigkeiten</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsDependenciesEditors">
-                <div dojoType="ingrid:ValidationTextbox" widgetId="operationsDependenciesText"></div>
+                <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsDependenciesText"></div>
               </div>
          	    <table id="operationsDependencies" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>

@@ -14,9 +14,13 @@ dojo.widget.defineWidget(
     },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/ComboBox.css"),
+  templatePath: dojo.uri.moduleUri("ingrid", "widget/templates/ComboBox.html"),
   buttonSrc: dojo.uri.moduleUri("ingrid", "widget/templates/images/combo_box_arrow.png"),
   dropdownToggle: "none",
-
+  
+  // Limit the size of user input to 'maxlength' chars
+  maxlength: "",
+	
 	getDisplayValueForValue: function(value) {
 		for (var i=0; i<this.dataProvider._data.length; i++) {
 			if (this.dataProvider._data[i][1] == value) {

@@ -1451,7 +1451,7 @@ public class MdekMapper implements DataMapperInterface {
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
 			OperationBean op = new OperationBean();
-			if (serviceType == -1) {
+			if (serviceType == null || serviceType == -1) {
 				op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
 			} else {
 				String val = sysListMapper.getValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY));

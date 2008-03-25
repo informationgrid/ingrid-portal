@@ -33,6 +33,19 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
    */
   popup: null,
 
+/*
+	mixInProperties: function(localProperties, frag){
+		// First initialize properties in super-class.
+		dojo.widget.ValidationTextbox.superclass.mixInProperties.apply(this, arguments);
+
+		// Get properties from markup attributes, and assign to flags object.
+		dojo.debugShallow(localProperties);
+		if (localProperties.maxLength) {
+			this.flags.maxLength = localProperties.maxLength;
+		}
+	},
+*/
+
   /*
    * Do initialization here. Override this in subclasses to add functionality
    * but don't forget to call the parent class method
@@ -81,8 +94,51 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 		return ( /^\s*$/.test(ee.value) ); // Boolean
 	},
 
+	isInRange: function() {
+		if (this.maxlength) {
+			return this[this.mode.toLowerCase()].value.length <= parseInt(this.maxlength);
+		} else {
+			return true;
+		}
+	},
+
 // TODO write missing functions (update, highlight, ...)
 
+	update: function() {
+		// summary:
+		//		Called by oninit, onblur, and onkeypress.
+		// description:
+		//		Show missing or invalid messages if appropriate, and highlight textbox field.
+		var ee = this[this.mode.toLowerCase()];				
+
+		// Limit the size of the input in case of a textarea
+		if (this.mode.toLowerCase() == "textarea" && this.maxlength && ee.value.length > parseInt(this.maxlength)) {
+			ee.value = ee.value.substr(0, this.maxlength);
+		}
+
+		this.lastCheckedValue = ee.value;
+		this.missingSpan.style.display = "none";
+		this.invalidSpan.style.display = "none";
+		this.rangeSpan.style.display = "none";
+
+		var empty = this.isEmpty();
+		var valid = true;
+		if(this.promptMessage != ee.value){ 
+			valid = this.isValid(); 
+		}
+		var missing = this.isMissing();
+
+		// Display at most one error message
+		if(missing){
+			this.missingSpan.style.display = "";
+		}else if( !empty && !valid ){
+			this.invalidSpan.style.display = "";
+		}else if( !empty && !this.isInRange() ){
+			this.rangeSpan.style.display = "";
+		}
+		this.highlight();
+	},
+		
 	updateClass: function(className){
 		// summary: used to ensure that only 1 validation class is set at a time
 	    var ee = this[this.mode.toLowerCase()];
