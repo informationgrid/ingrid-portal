@@ -3,12 +3,15 @@
  */
 package de.ingrid.mdek.dwr.api;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.DataConnectionInterface;
 import de.ingrid.mdek.MdekError;
@@ -614,6 +617,28 @@ public class EntryServiceImpl implements EntryService {
 			log.error("Error while searching for objects.", e);
 		}
 		return new ObjectSearchResultBean();		
+	}
+
+	public FileTransfer queryHQLToCSV(String hqlQuery) {
+		log.debug("Starting hql query.");
+
+		try {
+			SearchResultBean res = dataConnection.queryHQLToCSV(hqlQuery);
+
+	        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+	        buffer.write(res.getCsvSearchResult().getData().getBytes());
+
+	        return new FileTransfer("values.csv", "text/comma-separated-values", buffer.toByteArray());
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for objects.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (IOException e) {
+			log.debug("IOException while converting csv.", e);
+			return null;
+		}        
 	}
 
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits) {

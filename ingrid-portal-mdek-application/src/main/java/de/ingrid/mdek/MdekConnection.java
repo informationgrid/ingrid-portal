@@ -19,6 +19,7 @@ import org.directwebremoting.WebContextFactory;
 import de.ingrid.mdek.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.AddressSearchResultBean;
+import de.ingrid.mdek.beans.CSVSearchResultBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
@@ -354,6 +355,14 @@ public class MdekConnection implements DataConnectionInterface {
 		return extractSearchResultsFromResponse(response);
 	}
 
+	public SearchResultBean queryHQLToCSV(String hqlQuery) {
+		log.debug("Searching via HQL to csv query: "+hqlQuery);
+
+		IngridDocument response = mdekCallerQuery.queryHQLToCsv(getCurrentIPlug(), hqlQuery, getCurrentSessionId());
+
+		return extractSearchResultsFromResponse(response);
+	}
+
 	
 	public List<VersionInformation> getVersion() {
 		IngridDocument response = mdekCaller.getVersion(getCurrentIPlug());
@@ -493,6 +502,22 @@ public class MdekConnection implements DataConnectionInterface {
 		return doc;
 	}
 
+	private CSVSearchResultBean extractCSVSearchResultsFromResponse(IngridDocument response) {
+		IngridDocument result = mdekCaller.getResultFromResponse(response);
+
+		CSVSearchResultBean searchResult = new CSVSearchResultBean();
+
+		if (result != null) {
+//			searchResult.setNumHits(((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS)));
+			searchResult.setTotalNumHits((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS));
+			searchResult.setData((String) result.get(MdekKeys.CSV_RESULT));
+		} else {
+			handleError(response);
+		}
+
+		return searchResult;
+	}
+
 	private AddressSearchResultBean extractAddressSearchResultsFromResponse(IngridDocument response) {
 		IngridDocument result = mdekCaller.getResultFromResponse(response);
 
@@ -547,14 +572,15 @@ public class MdekConnection implements DataConnectionInterface {
 	private SearchResultBean extractSearchResultsFromResponse(IngridDocument response) {
 		ObjectSearchResultBean objResult = extractObjectSearchResultsFromResponse(response);
 		AddressSearchResultBean adrResult = extractAddressSearchResultsFromResponse(response);
+		CSVSearchResultBean csvResult = extractCSVSearchResultsFromResponse(response);
 
 		SearchResultBean searchResult = new SearchResultBean();
 		searchResult.setObjectSearchResult(objResult);
 		searchResult.setAddressSearchResult(adrResult);
-
+		searchResult.setCsvSearchResult(csvResult);
+		
 		return searchResult;
 	}
-
 	
 	private ArrayList<MdekDataBean> extractDetailedObjects(IngridDocument doc) {
 		ArrayList<MdekDataBean> results = new ArrayList<MdekDataBean>();

@@ -6,6 +6,8 @@ package de.ingrid.mdek.dwr.api;
 import java.util.List;
 import java.util.Map;
 
+import org.directwebremoting.io.FileTransfer;
+
 import de.ingrid.mdek.beans.AddressSearchResultBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
@@ -305,6 +307,7 @@ public interface EntryService {
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
 
+	public FileTransfer queryHQLToCSV(String hqlQuery);
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);
 
 	// Fetch sys lists from the backend

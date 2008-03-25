@@ -26,6 +26,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.AddressSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.CSVSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.DataFormatBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.DBContentBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>

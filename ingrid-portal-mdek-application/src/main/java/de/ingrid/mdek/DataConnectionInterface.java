@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.directwebremoting.io.FileTransfer;
+
 import de.ingrid.mdek.beans.AddressSearchResultBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
@@ -405,6 +407,19 @@ public interface DataConnectionInterface {
 	 */	
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);
 	
+	/**
+	 * Search for addresses/objects with a HQL query
+	 * 
+	 * <ul>
+	 * <li><b>(String) hqlQuery</b> - A HQL query.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return SearchResultBean object containing the data.
+	 */	
+	public SearchResultBean queryHQLToCSV(String hqlQuery);
+
 	
 	/**
 	 * Fetch Sys Lists from the server.
