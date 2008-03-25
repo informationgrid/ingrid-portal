@@ -860,7 +860,7 @@ function initTableValidators() {
 	// The vector format table must contain an integer as 'numElements'
 	var table = dojo.widget.byId("ref1VFormatDetails");
 	table.setValidationFunctions([
-		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item, unsignedIntFlags)));}}
+		{target: "numElements", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item+"", unsignedIntFlags)));}}
 	]);
 
 	// Availability media option 'Datenvolumen' is of type double 
@@ -872,7 +872,7 @@ function initTableValidators() {
 	// object class 1 - The 'Erstellungsmassstab' table must contain an integer and two doubles
 	var table = dojo.widget.byId("ref1Scale");
 	table.setValidationFunctions([
-		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item, unsignedIntFlags)));}},
+		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item+"", unsignedIntFlags)));}},
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
 		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
 	]);

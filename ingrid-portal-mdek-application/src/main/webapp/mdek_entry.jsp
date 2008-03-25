@@ -21,7 +21,6 @@
 <script type="text/javascript" src="js/config.js"></script>
 <script type="text/javascript" src="js/message.js"></script>
 <script type="text/javascript" src="js/includes.js"></script>
-<script type="text/javascript" src="js/recherche.js"></script>
 <script type="text/javascript" src="js/treeEventHandler.js"></script>
 <script type="text/javascript" src="js/menuEventHandler.js"></script>
 <script type="text/javascript" src="js/udkDataProxy.js"></script>

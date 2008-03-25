@@ -340,6 +340,32 @@ public interface DataConnectionInterface {
 	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits);
 
 	/**
+	 * Extended search for addresses
+	 * 
+	 * <ul>
+	 * <li><b>(Map<String,String>) params</b> - A map filled with the search parameters.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return AddressSearchResultBean containing the search results and additional info.
+	 */	
+	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits);
+
+	/**
+	 * Extended search for objects
+	 * 
+	 * <ul>
+	 * <li><b>(Map<String,String>) params</b> - A map filled with the search parameters.</li>
+	 * <li><b>(int) startHit</b> - The index of the first hit that should be returned.</li>
+	 * <li><b>(int) numHits</b> - The number of hits that should be returned.</li>
+	 * </ul>
+	 * 
+	 * @return ObjectSearchResultBean containing the search results and additional info.
+	 */	
+	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits);
+
+	/**
 	 * Search for addresses
 	 * 
 	 * <ul>

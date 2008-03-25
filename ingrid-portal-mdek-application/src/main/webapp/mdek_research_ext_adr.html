@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+
+<script type="text/javascript">
+var scriptScope = this;
+
+var resultsPerPage = 10;
+var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("adrSearchExtResultsInfo"), pagingSpan:dojo.byId("adrSearchExtResultsPaging") });
+
+var currentQuery = {	// Map of strings defining the query
+	term: null,				// representing the search query
+	relation: null,			// relation that should be used to analyze the the query (AND, OR, ...)
+	searchType: null,		// search whole word or substring (exact/like)
+	searchRange: null,		// search all fields or specific fields
+	street: null,			// street of the address
+	zipCode: null,			// zipcode of the address
+	city: null				// city of the address
+}
+
+
+_container_.addOnLoad(function() {
+	// Initially select the first tab on load
+	scriptScope.navInnerTab(0);
+	dojo.widget.byId("addrTopicInputBool").setValue(0);
+
+    // Pressing 'enter' on the input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("addrTopicInput").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+
+	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
+});
+
+
+// Starts a search with the current parameters stored in 'currentQuery' and 'pageNav'
+function startSearch() {
+
+	// TODO: Implement function
+	EntryService.queryExtAddresses(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
+}
+
+function updateResultTable(res) {
+//	dojo.debugShallow(res);
+	var resultList = res.resultList;
+	UtilList.addAddressTitles(resultList);
+	UtilList.addAddressLinkLabels(resultList);  
+	UtilList.addTableIndices(resultList);
+	UtilList.addIcons(resultList);
+
+	dojo.widget.byId("addressSearchExtResults").store.setData(resultList);
+}
+
+function updatePageNavigation(res) {
+	pageNav.setTotalNumHits(res.totalNumHits);
+	pageNav.updateDomNodes();
+}
+
+
+// Search button function. Creates a new query and starts a new search
+this.startNewSearch = function() {
+	readQueryFromInput();
+	pageNav.reset();
+	startSearch();
+}
+
+
+// Subnavigation. 'subSectionIndex' specifies the index of the tab that should be selected
+this.navInnerTab = function(subSectionIndex){
+	// number of subsections == 2
+	for (var i = 0; i < 2; i++) {
+		if (i == subSectionIndex) {
+			dojo.byId("addrTopic" + i).style.display = "block";
+		} else {
+			dojo.byId("addrTopic" + i).style.display = "none";
+		}
+	}
+}
+
+function readQueryFromInput() {
+	var searchTypeExact = dojo.byId("addrMode1").checked;
+	var searchAllFields = dojo.byId("addrFields1").checked;
+
+	currentQuery.term = dojo.string.trim(dojo.widget.byId("addrTopicInput").getValue());
+	currentQuery.relation = dojo.widget.byId("addrTopicInputBool").getValue();
+	currentQuery.searchType = searchTypeExact ? "exact" : "contains";
+	currentQuery.searchRange = searchAllFields ? "all" : "some";
+
+	currentQuery.street = dojo.string.trim(dojo.widget.byId("addrSpaceStreet").getValue());
+	currentQuery.zipCode = dojo.string.trim(dojo.widget.byId("addrSpaceZip").getValue());
+	currentQuery.city = dojo.string.trim(dojo.widget.byId("addrSpaceCity").getValue());
+
+	dojo.debugShallow(currentQuery);
+}
+
+function resetInput() {
+	dojo.byId("addrMode1").checked = true;
+	dojo.byId("addrFields1").checked = true;
+
+	dojo.widget.byId("addrTopicInput").setValue("");
+	dojo.widget.byId("addrTopicInputBool").setValue(0);
+
+	dojo.widget.byId("addrSpaceStreet").setValue("");
+	dojo.widget.byId("addrSpaceZip").setValue("");
+	dojo.widget.byId("addrSpaceCity").setValue("");
+}
+
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("addressSearchExtLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("addressSearchExtLoadingZone"), "hidden");
+}
+
+</script>
+</head>
+
+<body>
+	<!-- EXTENDED SEARCH START -->
+	<div id="extContentAdrContent" class="inputContainer noSpaceBelow">
+	
+	  <!-- EXTENDED SEARCH TAB CONTAINER START -->
+		<div id="addr" dojoType="ingrid:TabContainer" doLayout="false" class="w845" selectedChild="addrTopic">
+	    <!-- EXTENDED SEARCH TAB 1 START -->
+			<div id="addrTopic" dojoType="ContentPane" class="blueTopBorder grey" label="Thema">
+	      <!-- EXTENDED SEARCH TAB 1 SUB 1 START -->
+			  <div id="addrTopic0">
+	        <div class="tabContainerSubNavi">
+	    	    <ul>
+	    	      <li><a nohref="nohref" class="current" title="Suchbegriffe">Suchbegriffe</a></li>
+	    	      <li><a href="javascript:scriptScope.navInnerTab(1);" title="Suchmodus">Suchmodus</a></li>
+	    	    </ul>
+	    	  </div>
+	        <div class="inputContainer field noSpaceBelow">
+	          <span class="label"><label for="addrTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Bitte geben Sie die Suchbegriffe ein:</label></span>
+	          <span class="input spaceBelow"><input type="text" id="addrTopicInput" name="addrTopicInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
+	          <span class="label noSpaceBelow"><label class="inActive" for="addrTopicInputBool">Gesuchte Adresse enth&auml;lt:</label> <select dojoType="ingrid:Select" style="width:174px;" id="addrTopicInputBool">
+	              <!-- TODO: fill in jsp -->
+	            	<option value="0">Alle diese Begriffe (UND)</option>
+	            	<option value="1">Einen dieser Begriffe (ODER)</option>
+	            	<option value="2">Genau diese Wortgruppe</option>
+	            	<option value="3">Keinen dieser Begriffe (NICHT)</option>
+	            </select></span>
+	     	  </div>
+	    	</div>
+	      <!-- EXTENDED SEARCH TAB 1 SUB 1 END -->
+	      
+	      <!-- EXTENDED SEARCH TAB 1 SUB 2 START -->
+			  <div id="addrTopic1">
+	        <div class="tabContainerSubNavi">
+	    	    <ul>
+	    	      <li><a href="javascript:scriptScope.navInnerTab(0);" title="Suchbegriffe">Suchbegriffe</a></li>
+	    	      <li><a nohref="nohref" class="current" title="Suchmodus">Suchmodus</a></li>
+	    	    </ul>
+	    	  </div>
+	        <div class="inputContainer field noSpaceBelow">
+	          <span class="note">Bestimmen Sie wie gesucht werden soll:</span>
+	          <div class="spacer"></div>
+	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchmodus')">Suchmodus</label></span>
+	          <div class="checkboxContainer">
+	            <input type="radio" name="addrMode" id="addrMode1" class="radio entry first" checked />
+	            <label class="inActive entry closer w116" for="addrMode1">Ganzes Wort</label>
+	            <input type="radio" name="addrMode" id="addrMode2" class="radio entry" />
+	            <label class="inActive entry closer" for="addrMode2">Teilzeichenkette</label>
+	          </div>
+	          <div class="fill spacer"></div>
+	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchmodus')">Suche in folgenden Feldern</label></span>
+	          <div class="checkboxContainer">
+	            <input type="radio" name="addrFields" id="addrFields1" class="radio entry first" checked />
+	            <label class="inActive entry closer w116" for="addrFields1">Alle Textfelder</label>
+	            <input type="radio" name="addrFields" id="addrFields2" class="radio entry" />
+	            <label class="inActive entry closer" for="addrFields2">Institutionen, Person, Beschreibung, Schlagworte</label>
+	          </div>
+	    	  </div>
+	    	</div>
+	      <div class="fill"></div>
+	      <div class="spacerField"></div>
+	      <!-- EXTENDED SEARCH TAB 1 SUB 2 END -->
+			</div>
+	    <!-- EXTENDED SEARCH TAB 1 END -->
+	
+	    <!-- EXTENDED SEARCH TAB 2 START -->
+			<div id="addrSpace" dojoType="ContentPane" class="blueTopBorder grey" label="Raum">
+	      <!-- EXTENDED SEARCH TAB 2 SUB 1 START -->
+			  <div id="addrSpace0">
+	        <div class="tabContainerSubNavi">
+	    	    <ul>
+	    	      <li><a nohref="nohref" class="current" title="Raumbezug">Raumbezug</a></li>
+	    	    </ul>
+	    	  </div>
+	        <div class="inputContainer field grey noSpaceBelow">
+	          <span class="label"><label for="addrSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressinformationen')">F&uuml;gen Sie hier Ihrer Suchanfrage konkrete Adressinformationen zu:</label></span>
+	          <span class="label"><label for="addrSpaceStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Stra&szlig;e')">Stra&szlig;e</label></span>
+	          <span class="input spaceBelow"><input type="text" id="addrSpaceStreet" name="addrSpaceStreet" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
+	          <span class="label"><label for="addrSpaceZip" onclick="javascript:dialog.showContextHelp(arguments[0], 'PLZ')">PLZ</label></span>
+	          <span class="input spaceBelow"><input type="text" id="addrSpaceZip" name="addrSpaceZip" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
+	          <span class="label"><label for="addrSpaceCity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ort')">Ort</label></span>
+	          <span class="input"><input type="text" id="addrSpaceCity" name="addrSpaceCity" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
+	    	  </div>
+	        <div class="spacerField"></div>
+	     	</div>
+	      <!-- EXTENDED SEARCH TAB 2 SUB 1 END -->
+			</div>
+	    <!-- EXTENDED SEARCH TAB 2 END -->
+		</div>
+	  <!-- EXTENDED SEARCH TAB CONTAINER END -->
+	
+	  <div class="inputContainer">
+        <span class="button w805" style="height:20px !important;">
+          <span style="float:right;">
+            <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+		  </span>
+		  <span id="addressSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+			<img src="img/ladekreis.gif" />
+		  </span>
+	    </span>
+	  </div>
+
+    <!-- ADDRESS SEARCH RESULT LIST START -->
+    <div class="spacer"></div>
+    <div id="addressSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
+      <span class="label">Trefferliste</span>
+      <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+      <div class="listInfo w845">
+        <span id="adrSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
+        <span id="adrSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>
+    	  <div class="fill"></div>
+      </div>
+
+	  <div class="tableContainer rows10 w845">
+		  <table id="addressSearchExtResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
+		    <thead>
+			  <tr>
+	      	    <th nosort="true" field="icon" dataType="String" width="23"></th>
+	      		<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
+			  </tr>
+		    </thead>
+	        <colgroup>
+		      <col width="23">
+		      <col width="804">
+	        </colgroup>
+		    <tbody>
+		    </tbody>
+		  </table>
+		</div>
+	</div>
+    <!-- ADDRESS SEARCH RESULT LIST END -->
+
+	</div>
+	<!-- EXTENDED SEARCH END -->
+</body>

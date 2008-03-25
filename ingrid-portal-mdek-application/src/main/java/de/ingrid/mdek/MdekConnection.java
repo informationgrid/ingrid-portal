@@ -307,6 +307,28 @@ public class MdekConnection implements DataConnectionInterface {
 		return extractAddressSearchResultsFromResponse(response);
 	}
 
+	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits) {
+		IngridDocument query = new IngridDocument();
+		query.putAll(params);
+
+		//TODO Implement
+//		IngridDocument response = mdekCallerQuery.queryExtAddresses(getCurrentIPlug(), query, startHit, numHits, getCurrentSessionId());
+//		return extractAddressSearchResultsFromResponse(response);
+		return new AddressSearchResultBean();
+	}
+
+
+	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits) {
+		IngridDocument query = new IngridDocument();
+		query.putAll(params);
+
+		//TODO Implement
+//		IngridDocument response = mdekCallerQuery.queryExtAddresses(getCurrentIPlug(), query, startHit, numHits, getCurrentSessionId());
+//		return extractAddressSearchResultsFromResponse(response);
+		return new ObjectSearchResultBean();
+	}
+
+	
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits) {
 		log.debug("Searching for addresses with topicId: "+topicId);
 

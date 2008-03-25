@@ -299,6 +299,9 @@ public interface EntryService {
 
 	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits);
 
+	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits);
+	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits);
+
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
 

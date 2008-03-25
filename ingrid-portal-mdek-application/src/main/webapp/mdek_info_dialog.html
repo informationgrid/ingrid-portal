@@ -36,7 +36,7 @@ function setBackendVersionInformation(verList) {
 	var displayText = "";
 
 	for (var i = 0; i < verList.length; ++i) {
-		if (verList[i].name.indexOf("ingrid-mdek-api") != -1) {
+		if (verList[i].name && verList[i].name.indexOf("ingrid-mdek-api") != -1) {
 			// Only display api revision for now
 			displayText += "Server Build name: "+verList[i].name+"<br>";
 			displayText += "Server Build version: "+verList[i].version+"<br>";

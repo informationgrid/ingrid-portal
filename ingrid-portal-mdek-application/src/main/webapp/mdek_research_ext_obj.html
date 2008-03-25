@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+
+<script type="text/javascript">
+var scriptScope = this;
+
+var resultsPerPage = 10;
+var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchExtResultsInfo"), pagingSpan:dojo.byId("objSearchExtResultsPaging") });
+
+var currentQuery = {	// Map of strings defining the query
+}
+
+
+_container_.addOnLoad(function() {
+	// Initially select the first tabs on load
+	scriptScope.navInnerTab('objTopic', 0, 3);
+	scriptScope.navInnerTab('objSpace', 0, 3);
+	scriptScope.navInnerTab('objTime', 0, 1);
+/*
+    // Pressing 'enter' on the input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("addrTopicInput").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+*/
+	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
+});
+
+
+// Starts a search with the current parameters stored in 'currentQuery' and 'pageNav'
+function startSearch() {
+
+	// TODO: Implement function
+	EntryService.queryExtObjects(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
+}
+
+function updateResultTable(res) {
+//	dojo.debugShallow(res);
+	var resultList = res.resultList;
+	UtilList.addObjectLinkLabels(resultList);  
+	UtilList.addTableIndices(resultList);
+	UtilList.addIcons(resultList);
+
+	dojo.widget.byId("objectSearchExtResults").store.setData(resultList);
+}
+
+function updatePageNavigation(res) {
+	pageNav.setTotalNumHits(res.totalNumHits);
+	pageNav.updateDomNodes();
+}
+
+
+// Search button function. Creates a new query and starts a new search
+this.startNewSearch = function() {
+	readQueryFromInput();
+	pageNav.reset();
+	startSearch();
+}
+
+
+// Subnavigation. 'subSectionIndex' specifies the index of the tab that should be selected
+this.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
+
+	for (var i = 0; i < numSubSections; i++) {
+		if (i == subSectionIndex) {
+			dojo.byId(sectionName + i).style.display = "block";
+		} else {
+			dojo.byId(sectionName + i).style.display = "none";
+		}
+	}
+}
+
+function readQueryFromInput() {
+	// TODO: Implement
+	dojo.debugShallow(currentQuery);
+}
+
+function resetInput() {
+	// TODO: Implement
+}
+
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("addressSearchExtLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("addressSearchExtLoadingZone"), "hidden");
+}
+
+</script>
+</head>
+
+<body>
+<!-- EXTENDED SEARCH START -->
+<div id="extContentObjContent" class="inputContainer noSpaceBelow">
+
+  <!-- EXTENDED SEARCH TAB CONTAINER START -->
+	<div id="obj" dojoType="ingrid:TabContainer" doLayout="false" class="w845" selectedChild="objTopic">
+    <!-- EXTENDED SEARCH TAB 1 START -->
+		<div id="objTopic" dojoType="ContentPane" class="blueTopBorder grey" label="Thema">
+      <!-- EXTENDED SEARCH TAB 1 SUB 1 START -->
+		  <div id="objTopic0">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a nohref="nohref" class="current" title="Suchbegriffe">Suchbegriffe</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field noSpaceBelow">
+          <span class="label"><label for="objTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Sie k&ouml;nnen Suchbegriffe eingeben und diese der obigen Suchanfrage hinzuf&uuml;gen:</label></span>
+          <span class="input spaceBelow"><input type="text" id="objTopicInput" name="objTopicInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
+          <span class="label"><label class="inActive" for="objTopicInputBoolean">Gesuchtes Objekt enth&auml;lt:</label> <select dojoType="ingrid:Select" style="width:174px;" id="objTopicInputBool" name="objTopicInputBool">
+              <!-- TODO: fill in jsp -->
+            	<option value="Alle diese Begriffe (UND)">Alle diese Begriffe (UND)</option>
+            	<option value="Einen dieser Begriffe (ODER)">Einen dieser Begriffe (ODER)</option>
+            	<option value="Genau diese Wortgruppe">Genau diese Wortgruppe</option>
+            	<option value="Keinen dieser Begriffe (NICHT)">Keinen dieser Begriffe (NICHT)</option>
+            </select></span>
+          <div class="spacerField"></div>
+    	  </div>
+    	</div>
+      <!-- EXTENDED SEARCH TAB 1 SUB 1 END -->
+      
+      <!-- EXTENDED SEARCH TAB 1 SUB 2 START -->
+		  <div id="objTopic1">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchbegriffe">Suchbegriffe</a></li>
+    	      <li><a nohref="nohref" class="current" title="Objektklassen">Objektklassen</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field noSpaceBelow">
+          <div class="checkboxContainer half">
+            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass0">Organisationseinheit/Fachaufgabe</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass1">Geo-Information/Karte</label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass2">Dokument/Bericht/Literatur</label></span>
+          </div>
+          <div class="checkboxContainer">
+            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3">Dienst/Anwendung/Informationssystem</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass4">Vorhaben/Projekt/Programm</label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5">Datensammlung/Datenbank</label></span>
+          </div>
+          <span class="button w628 transparent"><a href="javascript:toggleSelection('objTopicObjectClass');" id="objTopicObjectClassBtn" class="buttonGrey" title="Alle ausw&auml;hlen">Alle ausw&auml;hlen</a></span>
+    	  </div>
+        <div class="spacerField"></div>
+    	</div>
+      <!-- EXTENDED SEARCH TAB 1 SUB 2 END -->
+      
+      <!-- EXTENDED SEARCH TAB 1 SUB 3 START -->
+		  <div id="objTopic2">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchbegriffe">Suchbegriffe</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
+    	      <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field grey noSpaceBelow">
+          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thematischer Fachbegriff')">Sie k&ouml;nnen nach thematischen Fachbegriffen suchen und diese der obigen Suchanfrage hinzuf&uuml;gen:</label></span>
+          <span class="input spaceBelow"><input type="text" id="objTopicThesaurus" name="objTopicThesaurus" class="w659" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey rightOfInput" title="In Thesaurus suchen">In Thesaurus suchen</a></span>
+          <span class="label noSpaceBelow">&Auml;hnliche Begriffe</span>
+        	<div dojoType="ContentPane" id="treeContainer">
+            <!-- tree components -->
+            <div dojoType="ingrid:TreeController" widgetId="treeController" RpcUrl="server/treelistener.php"></div>
+            <div dojoType="ingrid:TreeListener" widgetId="treeListener"></div>	
+            <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIcons"></div>	
+            <div dojoType="ingrid:TreeDecorator" listener="treeListener"></div>
+            
+            <!-- context menus -->
+            <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
+            <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu2"></div>
+            
+            <!-- tree -->
+            <div dojoType="ingrid:Tree" listeners="treeController;treeListener;contextMenu1;contextMenu2;treeDocIcons" widgetId="tree">
+              <!-- uncomment the next 2 lines in production
+            	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt" hasCheckbox="true"></div>
+            	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse" hasCheckbox="true"></div>
+              end of uncomment -->
+              <!-- remove the next lines in production -->
+            	<div dojoType="ingrid:TreeNode" title="Verschmutzung" widgetId="o1" contextMenu="contextMenu2" nodeDocType="Catalog" hasCheckbox="true">
+              	<div dojoType="ingrid:TreeNode" title="Umweltverschmutzung" widgetId="o11" contextMenu="contextMenu1" hasCheckbox="true"></div>
+              	<div dojoType="ingrid:TreeNode" title="Gew&auml;sserschutzgesetz" widgetId="o12" contextMenu="contextMenu1" hasCheckbox="true"></div>
+            	</div>
+              <!-- end of remove -->
+            </div>
+        	</div>
+
+       	<div class="spacer"></div>
+        </div>
+    	</div>
+      <!-- EXTENDED SEARCH TAB 1 SUB 3 END -->
+		</div>
+    <!-- EXTENDED SEARCH TAB 1 END -->
+
+    <!-- EXTENDED SEARCH TAB 2 START -->
+		<div id="objSpace" dojoType="ContentPane" class="blueTopBorder grey" label="Raum">
+      <!-- EXTENDED SEARCH TAB 2 SUB 1 START -->
+		  <div id="objSpace0">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a nohref="nohref" class="current" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug">Freier Raumbezug</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field grey noSpaceBelow">
+          <span class="label"><label for="objSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezug')">Sie k&ouml;nnen nach Raumbez&uuml;gen suchen und diese der obigen Suchanfrage hinzuf&uuml;gen:</label></span>
+          <span class="input spaceBelow"><input type="text" id="objSpaceAdminUnit" name="objSpaceAdminUnit" class="w636" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey rightOfInput" title="In Geo-Thesaurus suchen">In Geo-Thesaurus suchen</a></span>
+          <span class="label">Geothesaurus-Raumbezug</span>
+          <div class="checkboxContainer">
+            <span class="input"><input type="checkbox" name="objSpaceResult1" id="objSpaceResult1" dojoType="Checkbox" /><label class="inActive" for="objSpaceResult1"><a href="#" title="Darmstadt">Darmstadt</a>, Gemeinde</label></span>
+            <span class="input"><input type="checkbox" name="objSpaceResult2" id="objSpaceResult2" dojoType="Checkbox" /><label class="inActive" for="objSpaceResult2"><a href="#" title="Darmstadt">Darmstadt</a>, Kreis</label></span>
+          </div>
+    	  </div>
+        <div class="spacer"></div>
+    	</div>
+      <!-- EXTENDED SEARCH TAB 2 SUB 1 END -->
+      
+      <!-- EXTENDED SEARCH TAB 2 SUB 2 START -->
+		  <div id="objSpace1">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
+    	      <li><a nohref="nohref" class="current" title="Freier Raumbezug">Freier Raumbezug</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field noSpaceBelow">
+          <span class="label"><label for="objSpaceGeoUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freier Raumbezug')">Freier Raumbezug:</label></span>
+          <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:782px;" id="objSpaceGeoUnit" name="objSpaceGeoUnit" /></span>
+    	  </div>
+        <div class="spacerField"></div>
+    	</div>
+      <!-- EXTENDED SEARCH TAB 2 SUB 2 END -->
+      
+      <!-- EXTENDED SEARCH TAB 2 SUB 3 START -->
+		  <div id="objSpace2">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug">Freier Raumbezug</a></li>
+    	      <li><a nohref="nohref" class="current" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field noSpaceBelow xScroll yNoScroll w829">
+          <span><img src="img/map.gif" width="820" height="586" alt="Platzhalter Karte" /></span>
+          <div class="spacer"></div>
+          <span class="label">Selektiertes Gebiet <strong>Verwaltungseinheit</strong> oder <strong>geogr. Daten</strong></span>
+          <div class="spacer"></div>
+          <span class="label"><strong>Art der Einschr&auml;nkung</strong></span>
+          <div class="checkboxContainer noSpaceBelow">
+            <span class="input"><input type="checkbox" name="objSpaceMapConstraint0" widgetId="objSpaceMapConstraint0" dojoType="Checkbox" /><label class="inActive" for="objSpaceMapConstraint0">Der Raumbezug der Ergebnisse liegt innerhalb des gew&auml;hlten Kartenausschnittes</label></span>
+            <span class="input"><input type="checkbox" name="objSpaceMapConstraint1" widgetId="objSpaceMapConstraint1" dojoType="Checkbox" /><label class="inActive" for="objSpaceMapConstraint1">Der Raumbezug der Ergebnisse schneidet den gew&auml;hlten Kartenausschnittes</label></span>
+            <span class="input"><input type="checkbox" name="objSpaceMapConstraint2" widgetId="objSpaceMapConstraint2" dojoType="Checkbox" /><label class="inActive" for="objSpaceMapConstraint2">Der Raumbezug der Ergebnisse umschlie&szlig;t den gew&auml;hlten Kartenausschnittes</label></span>
+          </div>
+          <div class="spacerField"></div>
+    	  </div>
+    	</div>
+      <!-- EXTENDED SEARCH TAB 2 SUB 3 END -->
+		</div>
+    <!-- EXTENDED SEARCH TAB 2 END -->
+
+    <!-- EXTENDED SEARCH TAB 3 START -->
+		<div id="objTime" dojoType="ContentPane" class="blueTopBorder grey" label="Zeit">
+      <!-- EXTENDED SEARCH TAB 3 SUB 1 START -->
+		  <div id="objTime0">
+        <div class="tabContainerSubNavi">
+    	    <ul>
+    	      <li><a nohref="nohref" class="current" title="Zeiteinschr&auml;nkung">Zeiteinschr&auml;nkung</a></li>
+    	    </ul>
+    	  </div>
+        <div class="inputContainer field grey noSpaceBelow">
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')">Zeitbezug:</label></span>
+          <span class="note">Alle Ergebnisse mit Zeitbezug <strong>innerhalb</strong> eingegebenen Zeitraums werden angezeigt:</span>
+          <div class="spacer"></div>
+          <div class="inputContainer spaceBelow">
+            <input type="radio" name="objTimeRef" id="objTimeRef1" class="radio entry first" />
+            <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
+            <input type="text entry" id="objTimeRef1From" name="objTimeRef1From" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <label class="inActive" for="objTimeRef1To">Bis:</label>
+            <input type="text" id="objTimeRef1To" name="objTimeRef1To" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <label class="inActive">[TT.MM.JJJJ]</label>
+          </div>
+          <div class="inputContainer">
+            <input type="radio" name="objTimeRef" id="objTimeRef2" class="radio entry first" />
+            <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
+            <input type="text entry" id="objTimeRef2On" name="objTimeRef2On" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <label class="inActive">[TT.MM.JJJJ]</label>
+          </div>
+          <div class="inputContainer noSpaceBelow">
+            <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
+            <div class="checkboxContainer">
+              <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="Checkbox" checked /><label class="inActive" for="objTimeRefExtend1">Der Zeitbezug der Ergebnisse <strong>schneidet</strong> das eingegebene Suchintervall</label></span>
+              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" checked /><label class="inActive" for="objTimeRefExtend2">Der Zeitbezug der Ergebnisse <strong>umschlie&szlig;</strong> das eingegebene Suchintervall</label></span>
+            </div>
+          </div>
+    	  </div>
+        <div class="spacer"></div>
+      </div>
+      <!-- EXTENDED SEARCH TAB 3 SUB 1 END -->
+		</div>
+    <!-- EXTENDED SEARCH TAB 3 END -->
+	</div>
+  <!-- EXTENDED SEARCH TAB CONTAINER END -->
+
+  <div class="inputContainer">
+    <span class="button w805" style="height:20px !important;">
+      <span style="float:right;">
+        <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+	  </span>
+	  <span id="objectSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+		<img src="img/ladekreis.gif" />
+	  </span>
+    </span>
+  </div>
+
+    <!-- OBJECT SEARCH RESULT LIST START -->
+    <div class="spacer"></div>
+    <div id="objectSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
+      <span class="label">Trefferliste</span>
+      <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+      <div class="listInfo w845">
+        <span id="objSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
+        <span id="objSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>
+    	  <div class="fill"></div>
+      </div>
+
+	  <table id="objectSearchExtResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable relativePos">
+	    <thead>
+		  <tr>
+      	    <th nosort="true" field="icon" dataType="String" width="23"></th>
+      		<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
+		  </tr>
+	    </thead>
+        <colgroup>
+	      <col width="23">
+	      <col width="804">
+        </colgroup>
+	    <tbody>
+	    </tbody>
+	  </table>
+	</div>
+    <!-- OBJECT SEARCH RESULT LIST END -->
+
+<!-- EXTENDED SEARCH END -->
+</body>

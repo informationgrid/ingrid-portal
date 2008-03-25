@@ -632,25 +632,22 @@ closeDialog = function() {
 	
 	          <span class="label"><label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
 	 		  <span class="input"><input type="text" mode="textarea" id="linksToDescription" name="linksToDescription" class="w608 h038" dojoType="ingrid:ValidationTextbox" /></span>
-	<!-- 	  
-			  <span class="input"><textarea id="linksToDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
-	-->          
 	        </div>
 	        <!-- VERWEIS AUF URL -->
 	        <div id="linkToURL" class="outlined w616">
 	          <span class="label required"><label id="linksToNameLabel" for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bezeichnung des Verweises')">Bezeichnung des Verweises*</label></span>
-	          <span class="input spaceBelow"><input type="text" id="linksToName" name="linksToName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+	          <span class="input spaceBelow"><input type="text" maxlength="255" id="linksToName" name="linksToName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 	          <span class="label required"><label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Internet-Adresse (URL)')">Internet-Adresse (URL)*</label></span>
-	          <span class="input spaceBelow"><input type="text" id="linksToURL" name="linksToURL" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+	          <span class="input spaceBelow"><input type="text" maxlength="255" id="linksToURL" name="linksToURL" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 	
 	          <div class="inputContainer">
 	            <span class="entry first">
 	              <span class="label required"><label id="linksToDataTypeLabel" for="linksToDataType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datentyp')">Datentyp*</label></span>
-	              <span class="input"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/datatypes.js" style="width:274px;" widgetId="linksToDataType"></div></span>
+	              <span class="input"><div dojoType="ingrid:ComboBox" maxlength="40" toggle="plain" dataUrl="js/data/datatypes.js" style="width:274px;" widgetId="linksToDataType"></div></span>
 	            </span>
 	            <span class="entry">
 	              <span class="label"><label for="linksToDataVolume" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenvolumen')">Datenvolumen</label></span>
-	              <span class="input"><input type="text" id="linksToDataVolume" name="linksToDataVolume" class="w134" dojoType="ingrid:ValidationTextBox" /></span>
+	              <span class="input"><input type="text" id="linksToDataVolume" maxlength="20" name="linksToDataVolume" class="w134" dojoType="ingrid:ValidationTextBox" /></span>
 	            </span>
 	            <span class="entry">
 	              <span class="label"><label for="linksToURLType" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL-Typ')">URL-Typ</label></span>
@@ -662,20 +659,17 @@ closeDialog = function() {
 	          <div class="inputContainer spaceBelow">
 	            <span class="entry first">
 	              <span class="label"><label for="linksToIconURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Icon-URL')">Icon-URL</label></span>
-	              <span class="input"><input type="text" id="linksToIconURL" name="linksToIconURL" class="w292" dojoType="ingrid:ValidationTextBox" /></span>
+	              <span class="input"><input type="text" id="linksToIconURL" maxlength="255" name="linksToIconURL" class="w292" dojoType="ingrid:ValidationTextBox" /></span>
 	            </span>
 	            <span class="entry">
 	              <span class="label"><label for="linksToIconText" onclick="javascript:dialog.showContextHelp(arguments[0], 'Icon-Text')">Icon-Text</label></span>
-	              <span class="input"><input type="text" id="linksToIconText" name="linksToIconText" class="w292" dojoType="ingrid:ValidationTextBox" /></span>
+	              <span class="input"><input type="text" id="linksToIconText" maxlength="80" name="linksToIconText" class="w292" dojoType="ingrid:ValidationTextBox" /></span>
 	            </span>
 	            <div class="fill"></div>
 	          </div>
 	
 	          <span class="label"><label for="linksToUrlDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
 	 		  <span class="input"><input type="text" mode="textarea" id="linksToUrlDescription" name="linksToUrlDescription" class="w608 h038" dojoType="ingrid:ValidationTextbox" /></span>
-	<!-- 
-	          <span class="input"><textarea id="linksToUrlDescription" name="linksToDescription" class="w608 h038" /></textarea></span>
-	 -->
 	
 	        </div>
 	        <div class="spacerField"></div>

@@ -553,6 +553,38 @@ public class EntryServiceImpl implements EntryService {
 		return new AddressSearchResultBean();
 	}
 
+	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits) {
+		log.debug("Starting extended address query.");
+
+		try {
+			  return dataConnection.queryExtAddresses(params, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while executing an extended search for addresses.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while executing an extended search for addresses.", e);
+		}
+		return new AddressSearchResultBean();
+	}
+	
+	
+	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits) {
+		log.debug("Starting extended address query.");
+
+		try {
+			  return dataConnection.queryExtObjects(params, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while executing an extended search for objects.", e);
+			throw new RuntimeException(convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while executing an extended search for objects.", e);
+		}
+		return new ObjectSearchResultBean();		
+	}
+
+	
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits) {
 		log.debug("Starting address query.");
 
@@ -569,8 +601,6 @@ public class EntryServiceImpl implements EntryService {
 	}
 
 
-	
-	
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits){
 		log.debug("Starting object query.");
 
