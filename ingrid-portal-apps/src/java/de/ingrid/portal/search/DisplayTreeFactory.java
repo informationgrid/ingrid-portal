@@ -47,6 +47,9 @@ public class DisplayTreeFactory {
     public static DisplayTreeNode getTreeFromQueryTerms(IngridQuery query) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
+        if (query == null) {
+        	return root;
+        }
         TermQuery[] terms = UtilsSearch.getAllTerms(query);
         terms = UtilsSearch.removeDoubleTerms(terms);
         String term;
