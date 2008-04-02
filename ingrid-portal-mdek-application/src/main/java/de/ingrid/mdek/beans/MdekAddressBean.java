@@ -50,6 +50,7 @@ public class MdekAddressBean {
 
 	// References
 	public ArrayList<MdekDataBean> linksFromObjectTable;
+	public ArrayList<MdekDataBean> linksFromPublishedObjectTable;
 	public ArrayList<MdekAddressBean> parentInstitutions;
 
 	
@@ -58,6 +59,7 @@ public class MdekAddressBean {
 		this.thesaurusTermsTable = new ArrayList<SNSTopic>();
 		this.thesaurusFreeTermsTable = new ArrayList<String>();
 		this.linksFromObjectTable = new ArrayList<MdekDataBean>();
+		this.linksFromPublishedObjectTable = new ArrayList<MdekDataBean>();
 		this.parentInstitutions = new ArrayList<MdekAddressBean>();
 	}
 	
@@ -331,5 +333,14 @@ public class MdekAddressBean {
 
 	public void setRefOfRelation(Integer refOfRelation) {
 		this.refOfRelation = refOfRelation;
+	}
+
+	public ArrayList<MdekDataBean> getLinksFromPublishedObjectTable() {
+		return linksFromPublishedObjectTable;
+	}
+
+	public void setLinksFromPublishedObjectTable(
+			ArrayList<MdekDataBean> linksFromPublishedObjectTable) {
+		this.linksFromPublishedObjectTable = linksFromPublishedObjectTable;
 	}
 }

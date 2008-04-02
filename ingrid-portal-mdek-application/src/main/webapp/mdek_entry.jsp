@@ -2004,38 +2004,46 @@ function hideSplash(){
 			  
 			  <!-- ZUGEORDNETE OBJEKTE //-->
 			  <div id="associatedObj" class="contentBlock">
-			  	<div class="titleBar">
+			    <div class="titleBar">
 			  	  <div class="titleIcon"><a href="javascript:toggleFields('associatedObj');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugeordnete Objekte')">Zugeordnete Objekte</div>
-				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+				  <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugeordnete Objekte')">Zugeordnete Objekte</div>
+				  <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
-				  <div id="associatedObjContent" class="content" style="clear:both;">
-			  
+				<div id="associatedObjContent" class="content" style="clear:both;">
+
 			      <div class="inputContainer noSpaceBelow notRequired">
 			        <div class="spacer"></div>
+
+		            <div class="listInfo full">
+		              <span id="associatedObjNameInfo" style="float:left;" class="searchResultsInfo">&nbsp;</span>
+		              <span id="associatedObjNamePaging" style="float:right;" class="searchResultsPaging">&nbsp;</span>
+		        	  <div class="fill"></div>
+		            </div>
+
 			        <div class="tableContainer headHiddenRows6 full">
-			    	    <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">
-			    	      <thead>
-			    		      <tr>
-			          			<th nosort="true" field="icon" dataType="String"></th>
-			          			<th nosort="true" field="linkLabel" dataType="String">Name</th>
-			    		      </tr>
-			    	      </thead>
-						  <colgroup>
-						    <col width="23">
-						    <col width="634">
-						  </colgroup>
-			    	      <tbody>
-			    	      </tbody>
-			    	    </table>
+			          <table id="associatedObjName" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+			    	    <thead>
+			    		  <tr>
+			                <th nosort="true" field="icon" dataType="String"></th>
+			          	    <th nosort="true" field="linkLabel" dataType="String">Name</th>
+			    		  </tr>
+			    	    </thead>
+				        <colgroup>
+						  <col width="23">
+						  <col width="634">
+					    </colgroup>
+			    	    <tbody>
+			    	    </tbody>
+			    	  </table>
 			        </div>
 			      </div>
 
-			    </div>
+				</div>
 			  </div>
-			</div>
+		  	  <!-- END ZUGEORDNETE OBJEKTE //-->
 
-			</form>
+	        </div>
+		  </form>
 		</div>
 	  </div>
 	  <!-- END CONTENT ADDRESS -->

@@ -85,6 +85,7 @@ public class MdekDataBean {
 	// Links
 	public ArrayList<MdekDataBean> linksToObjectTable;
 	public ArrayList<MdekDataBean> linksFromObjectTable;
+	public ArrayList<MdekDataBean> linksFromPublishedObjectTable;
 	public ArrayList<UrlBean> linksToUrlTable;
 	public Integer relationType;
 	public String relationTypeName;
@@ -496,6 +497,7 @@ public class MdekDataBean {
 		this.setThesaurusEnvCatsList(new ArrayList<Integer>());
 		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksFromPublishedObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksToUrlTable(new ArrayList<UrlBean>());
 		this.setRef1Representation(new ArrayList<Integer>());
 		this.setRef1VFormatDetails(new ArrayList<VectorFormatDetailsBean>());
@@ -1456,6 +1458,21 @@ public class MdekDataBean {
 	public void setExtraInfoLegalBasicsTable(
 			ArrayList<String> extraInfoLegalBasicsTable) {
 		this.extraInfoLegalBasicsTable = extraInfoLegalBasicsTable;
+	}
+
+
+
+
+	public ArrayList<MdekDataBean> getLinksFromPublishedObjectTable() {
+		return linksFromPublishedObjectTable;
+	}
+
+
+
+
+	public void setLinksFromPublishedObjectTable(
+			ArrayList<MdekDataBean> linksFromPublishedObjectTable) {
+		this.linksFromPublishedObjectTable = linksFromPublishedObjectTable;
 	}
 
 }

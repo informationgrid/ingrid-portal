@@ -146,6 +146,10 @@ menuEventHandler.handleCut = function(mes) {
 			var treeController = dojo.widget.byId("treeController");
 			treeController.prepareCut(selectedNode);
 		});
+
+		deferred.callback();
+		// Removed subtree check so address and object working copies can be moved
+/*
 		deferred.addErrback(function (err) {
 			if (typeof(err) != "undefined")
 				err.nodeAppType = selectedNode.nodeAppType;
@@ -157,6 +161,7 @@ menuEventHandler.handleCut = function(mes) {
   		} else if (selectedNode.nodeAppType == "A") {
   			dojo.event.topic.publish("/canCutAddressRequest", {id: selectedNode.id, resultHandler: deferred});
   		}
+*/
 	}
 }
 

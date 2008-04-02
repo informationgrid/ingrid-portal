@@ -194,6 +194,51 @@ UtilDWR.onExitLoadingState = function() {}
 // Util functions for handling MdekAddressBeans 
 var UtilAddress = {}
 
+// Initialize the object->address reference table with a given array of links 'linkList'.
+// Sets the label and link to their initial values and stores the given (possibly large) list in
+// 'UtilAddress.objectAddressReferences'
+UtilAddress.initObjectAddressReferenceTable = function(linkList) {
+	var tableLabel = dojo.byId("associatedObjNameLabel");
+	var tableLink = dojo.byId("associatedObjNameLink");
+	var tableStore = dojo.widget.byId("associatedObjName").store;
+
+	// Add table specific data to the list
+	UtilList.addTableIndices(linkList);
+	UtilList.addObjectLinkLabels(linkList);  
+	UtilList.addIcons(linkList);
+	
+	UtilAddress.objectAddressReferences = linkList;
+
+	// Clear the underlying store
+	tableStore.clearData();
+
+	if (UtilAddress.objectAddressRefPageNav) {
+		UtilAddress.objectAddressRefPageNav.reset();	
+
+	} else {
+		UtilAddress.objectAddressRefPageNav = new PageNavigation({ resultsPerPage: 20, infoSpan:dojo.byId("associatedObjNameInfo"), pagingSpan:dojo.byId("associatedObjNamePaging") });
+		dojo.event.connectOnce("after", UtilAddress.objectAddressRefPageNav, "onPageSelected", function() { UtilAddress.navObjectAddressReferences(); });
+	}
+
+	UtilAddress.objectAddressRefPageNav.setTotalNumHits(linkList.length);
+	UtilAddress.navObjectAddressReferences();
+}
+
+UtilAddress.navObjectAddressReferences = function() {
+	var curPos = UtilAddress.objectAddressRefPageNav.getStartHit();
+	var refList = UtilAddress.objectAddressReferences;
+	var tableStore = dojo.widget.byId("associatedObjName").store;
+
+	tableStore.clearData();
+
+	for (var i = curPos; i < UtilAddress.objectAddressRefPageNav.getStartHit()+20 && i < refList.length; ++i) {
+//		dojo.debug("Adding ref: "+i);
+		tableStore.addData(refList[i]);
+	}
+	UtilAddress.objectAddressRefPageNav.updateDomNodes();
+}
+
+
 // Builds an address title from a given MdekAddressBean.
 // example arguments:
 //   adr: {addressClass: 0, organisation: "testOrga" }
@@ -284,10 +329,16 @@ UtilList.addAddressTitles = function(list) {
 // Add object link labels to a passed list.
 // This function iterates over all entries in the list and adds a value: 'linkLabel' to each node
 // which is a href to the menuEventHandler 'selectNodeInTree' function
+// If an entry contains the variable 'pubOnly = true', the text color is set to grey
 UtilList.addObjectLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
-		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
+		if (list[i].pubOnly) {
+			list[i].linkLabel = "<a class='pubOnly' href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
+		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";			
+		} else {
+			list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
+		}
 	}
 	return list;
 }

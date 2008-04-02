@@ -75,6 +75,9 @@
     "sns.freeTermAddTopTermHint":"'%{0}' is a Thesaurus-Topterm! It can't be added to the free terms list!",
     "sns.freeTermAddNodeLabelHint":"'%{0}' is a node label! It can't be added to the free terms list!",
 
+	"cts.serviceError":"An error occured while contacting the Coordinate Tranformation Service (https://upd.geodatenzentrum.de). Please try again later or contact the service operator.",
+	"cts.transformError":"The entered coordinate could not be transformed by the Coordinate Tranformation Service. Please check your input and try again.",
+
 	"links.selectNodeHint":"Please select a target node.",
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 	"links.noLinkToSelfHint":"It is not possible to create a link to the same object.",

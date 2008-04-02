@@ -9,14 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.naming.directory.SearchResult;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
-import de.ingrid.mdek.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.AddressSearchResultBean;
 import de.ingrid.mdek.beans.CSVSearchResultBean;
@@ -27,6 +25,17 @@ import de.ingrid.mdek.beans.MdekDataBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.beans.VersionInformation;
+import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.caller.IMdekCallerAddress;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
+import de.ingrid.mdek.caller.IMdekCallerObject;
+import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.MdekCaller;
+import de.ingrid.mdek.caller.MdekCallerAddress;
+import de.ingrid.mdek.caller.MdekCallerCatalog;
+import de.ingrid.mdek.caller.MdekCallerObject;
+import de.ingrid.mdek.caller.MdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.utils.IngridDocument;
@@ -282,7 +291,7 @@ public class MdekConnection implements DataConnectionInterface {
 	}
 
 	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition) {
-		IngridDocument response = mdekCallerObject.moveObject(getCurrentIPlug(), fromUuid, toUuid, true, forcePublicationCondition, getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.moveObject(getCurrentIPlug(), fromUuid, toUuid, forcePublicationCondition, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}
@@ -290,7 +299,7 @@ public class MdekConnection implements DataConnectionInterface {
 
 	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress) {
 //		log.debug("moveAddressSubTree(String, String) not implemented yet.");
-		IngridDocument response = mdekCallerAddress.moveAddress(getCurrentIPlug(), fromUuid, toUuid, true, moveToFreeAddress, getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.moveAddress(getCurrentIPlug(), fromUuid, toUuid, moveToFreeAddress, getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			handleError(response);
 		}

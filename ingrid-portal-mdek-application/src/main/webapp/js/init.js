@@ -261,8 +261,8 @@ function initCTS() {
 //				dojo.debug("Calling CTService("+fromSRS+", "+toSRS+", "+coords+")");
 				var _this = this;
 				CTService.getCoordinates(fromSRS, toSRS, coords, {
-						preHook: UtilDWR.enterLoadingState,
-						postHook: UtilDWR.exitLoadingState,
+//						preHook: UtilDWR.enterLoadingState,
+//						postHook: UtilDWR.exitLoadingState,
 						callback: dojo.lang.hitch(this, this.updateDestinationStore),
 						timeout:8000,
 						errorHandler:function(message) {
@@ -312,7 +312,22 @@ function initFreeTermsButtons() {
 						// Check if a term from the result is equal to our search query 
 						if (term.toLowerCase() == item.title.toLowerCase()) {
 							// The search term was found in the returned list. Save its type
-							queryTerm = item;
+
+							// Check if the queryTerm was already found. A term can exist as multiple types
+							// If the item type is a descriptor, use it instead of the current stored item.
+							// If the item is a non_descriptor and the stored item is != descriptor, use the non_descriptor
+							// Otherwise ignore the item
+							if (queryTerm == null) {
+								queryTerm = item;								
+
+							} else {
+								if (item.type == "DESCRIPTOR") {
+									queryTerm = item;
+								
+								} else if (item.type == "NON_DESCRIPTOR" && queryTerm.type != "DESCRIPTOR") {
+									queryTerm = item;
+								}
+							}
 						}
 
 						// Filter all the descriptors from the result

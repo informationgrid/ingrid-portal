@@ -190,6 +190,7 @@ public class MdekMapper implements DataMapperInterface {
 //		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
 		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
+		mdekObj.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
 		mdekObj.setLinksToUrlTable(mapToUrlLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LINKAGES)));
 		mdekObj.setRelationType((Integer) obj.get(MdekKeys.RELATION_TYPE_REF));
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
@@ -356,6 +357,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		// References
 		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
+		mdekAddress.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
 		mdekAddress.setParentInstitutions(mapToGeneralAddressTable((List<HashMap<String, Object>>) adr.get(MdekKeys.PATH_ORGANISATIONS)));
 
 /*
@@ -566,9 +568,6 @@ public class MdekMapper implements DataMapperInterface {
 		//Thesaurus
 		udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable(), data.getThesaurusFreeTermsTable()));
 		
-		// References
-		// udkAdr.put(MdekKeys.OBJ_REFERENCES_FROM, mapFromObjectLinksTable(data.getLinksFromObjectTable()));
-
 		// Comments
 		udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
 

@@ -7,6 +7,8 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
+var scriptScope = this;
+
 _container_.addOnLoad(function() {
 	dojo.widget.byId("spatialAssistCS").setLabel("");
 });
@@ -15,7 +17,7 @@ _container_.addOnUnload(function() {
 });
 
 
-validateInput = function() {
+function validateInput() {
 	if (dojo.widget.byId("spatialAssistCS").getValue() == ""
 	 || dojo.widget.byId("spatialAssistRef").getValue() == ""
 	 || !dojo.widget.byId("spatialAssistLon1").isValid()
@@ -27,7 +29,7 @@ validateInput = function() {
 	return true;
 }
 
-addLocation = function() {
+this.addLocation = function() {
 	if (!validateInput()) {
 	  	dialog.show(message.get("general.hint"), message.get("dialog.fillAllFieldsHint"), dialog.WARNING);
 		return;
@@ -43,37 +45,41 @@ addLocation = function() {
 				 };
 
 	CTService.getCoordinates(fromSRS, toSRS, coords, {
-			callback: function(res) {
-				var dstStore = dojo.widget.byId("spatialRefLocation").store;
-				if (res.coordinate) {
-					dstStore.addData({
-						Id: UtilStore.getNewKey(dstStore),
-						name: location,
-						longitude1: res.coordinate.longitude1,
-						latitude1: res.coordinate.latitude1,
-						longitude2: res.coordinate.longitude2,
-						latitude2: res.coordinate.latitude2					
-					});
-				} else {
-					dstStore.addData({
-						Id: UtilStore.getNewKey(dstStore),
-						name: location
-					});
-				}
-				_container_.closeWindow();
-			},
-			timeout:8000,
-			errorHandler:function(message) {
-				dojo.debug("Error: "+message);
-				var dstStore = dojo.widget.byId("spatialRefLocation").store;
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+
+		callback: function(res) {
+			var dstStore = dojo.widget.byId("spatialRefLocation").store;
+			if (res.coordinate) {
 				dstStore.addData({
 					Id: UtilStore.getNewKey(dstStore),
-					name: location
+					name: location,
+					longitude1: res.coordinate.longitude1,
+					latitude1: res.coordinate.latitude1,
+					longitude2: res.coordinate.longitude2,
+					latitude2: res.coordinate.latitude2					
 				});
+			} else {
+				dialog.show(message.get('general.error'), message.get('cts.transformError'), dialog.WARNING);
 				_container_.closeWindow();
 			}
+			_container_.closeWindow();
+		},
+		timeout:8000,
+		errorHandler:function(err) {
+			dojo.debug("Error: "+err);
+			dialog.show(message.get('general.error'), message.get('cts.serviceError'), dialog.WARNING, null, 300, 170);
+			_container_.closeWindow();
 		}
-	);
+	});
+}
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("ctsLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("ctsLoadingZone"), "hidden");
 }
 
 </script>
@@ -123,9 +129,14 @@ addLocation = function() {
 					</tr>
 				</tbody>
 		  	</table>
+
 			<span style="float:right;">
-				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="addLocation">Hinzuf&uuml;gen</button>
+				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addLocation();">Hinzuf&uuml;gen</button>
 			</span>
+			<span id="ctsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden;">
+				<img src="img/ladekreis.gif" />
+			</span>
+
 			</div>
 	  		<!-- CONTENT END -->
 		</div>

@@ -1254,11 +1254,14 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.widget.byId("thesaurusFreeTermsListAddress").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusFreeTermsTable)));
 
 	// -- Links --
-	var linkTable = nodeData.linksFromObjectTable;
-	UtilList.addTableIndices(linkTable);
-	UtilList.addObjectLinkLabels(linkTable);  
-	UtilList.addIcons(linkTable);
-	dojo.widget.byId("associatedObjName").store.setData(linkTable);
+	var unpubLinkTable = nodeData.linksFromObjectTable;
+	var pubLinkTable = nodeData.linksFromPublishedObjectTable;
+	dojo.lang.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
+	var linkTable = unpubLinkTable.concat(pubLinkTable);
+
+	// Initialize the object address reference table with the links received from the backend
+	UtilAddress.initObjectAddressReferenceTable(linkTable);
+
 
 	// Comments
 	commentStore.setData(UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable)));
@@ -1438,9 +1441,13 @@ udkDataProxy._setObjectData = function(nodeData)
   UtilList.addIcons(linkTable);
   dojo.widget.byId("linksTo").store.setData(linkTable);
 
-  linkTable = nodeData.linksFromObjectTable;
+  var unpubLinkTable = nodeData.linksFromObjectTable;
+  var pubLinkTable = nodeData.linksFromPublishedObjectTable;
+  dojo.lang.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
+  linkTable = unpubLinkTable.concat(pubLinkTable);
+
   UtilList.addTableIndices(linkTable);
-  UtilList.addObjectLinkLabels(linkTable);  
+  UtilList.addObjectLinkLabels(linkTable);
   UtilList.addIcons(linkTable);
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
