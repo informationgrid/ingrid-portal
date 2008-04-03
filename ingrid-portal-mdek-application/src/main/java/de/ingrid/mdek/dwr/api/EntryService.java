@@ -311,7 +311,7 @@ public interface EntryService {
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);
 
 	// Fetch sys lists from the backend
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 
 	// Fetch Catalog Data
 	public CatalogBean getCatalogData();

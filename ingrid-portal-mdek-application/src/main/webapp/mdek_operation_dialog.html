@@ -52,7 +52,7 @@ initOperationNameInput = function() {
 		else if (serviceType == "2")	// WFS
 			listId = 5120;
 
-		EntryService.getSysLists([listId], 121, {
+		EntryService.getSysLists([listId], "de", {
 			callback: function(res) {
 				selectWidget.dataProvider.setData(res[listId]);
 		}});

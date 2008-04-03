@@ -930,19 +930,15 @@ function initSysLists() {
 /*
 	// TODO load the initial language code map from the backend
 	var locale = dojo.hostenv.normalizeLocale(dojo.locale);
-	var language = locale.split("-")[0];
-	var languageCode = 94;
+	var languageCode = locale.split("-")[0];
 
-	if (language == "de") {
-		languageCode = 121;
-	} else if (language == "en") {
-		languageCode = 94;
-	} else {
+	if (languageCode != "de" && languageCode != "en") {
 		dojo.debug("Unsupported Language. Setting language to english.");
+		languageCode = "en";
 	}
 */
-	// Setting the language code to 121. Uncomment the previous block to enable language specific settings depending on the browser language
-	var languageCode = 121;
+	// Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
+	var languageCode = "de";
 
 
 	var lstIds = [];

@@ -664,7 +664,7 @@ public class EntryServiceImpl implements EntryService {
 		return dataConnection.getVersion();
 	}
 	
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
 		return dataConnection.getSysLists(listIds, languageCode);
 	}
 

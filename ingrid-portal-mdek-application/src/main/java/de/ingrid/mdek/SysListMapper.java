@@ -19,14 +19,14 @@ public class SysListMapper {
 	
 	private final String SYSLIST_MAPPING_PREFIX = "sysList.map.";
 
-	private Integer languageCode;
+	private String languageCode;
 
 	public void loadInitialLists() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("sysList");
 		ArrayList<Integer> initialListIds = new ArrayList<Integer>();
 		keyCache = new HashMap<String, Integer>();
 		
-		languageCode = Integer.valueOf(resourceBundle.getString("sysList.languageCode"));
+		languageCode = resourceBundle.getString("sysList.languageCode");
 
 		Enumeration<String> keys = resourceBundle.getKeys();
 		while (keys.hasMoreElements()) {

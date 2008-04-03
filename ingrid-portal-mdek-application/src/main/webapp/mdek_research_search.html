@@ -217,7 +217,9 @@ function hideAddressLoadingZone() {
 	        <div class="spacer"></div>
 	        <div id="objectSearchResultsContainer" class="inputContainer noSpaceBelow w845">
 	          <span class="label">Trefferliste</span>
+<!-- 
 	          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+ -->
 	          <div class="listInfo w845">
 	            <span id="objSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
 	            <span id="objSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -228,8 +230,8 @@ function hideAddressLoadingZone() {
 	    	    <table id="objectSearchResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
 	    	      <thead>
 	    		      <tr>
-	          			<th field="type" dataType="String" width="23"></th>
-	          			<th field="name" dataType="String" width="804">Name</th>
+	          			<th nosort="true" field="icon" dataType="String" width="23"></th>
+	          			<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
 	    		      </tr>
 	    	      </thead>
 			        <colgroup>
@@ -272,7 +274,9 @@ function hideAddressLoadingZone() {
 	        <div class="spacer"></div>
 	        <div id="addressSearchResultsContainer" class="inputContainer noSpaceBelow w845">
 	          <span class="label">Trefferliste</span>
+<!-- 
 	          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+ -->
 	          <div class="listInfo w845">
 	            <span id="adrSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
 	            <span id="adrSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>

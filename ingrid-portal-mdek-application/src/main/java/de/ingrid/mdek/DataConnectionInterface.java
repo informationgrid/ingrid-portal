@@ -426,12 +426,12 @@ public interface DataConnectionInterface {
 	 * 
 	 * <ul>
 	 * <li><b>(Integer[]) listIds</b> - List of ids for syslists that should be fetched.</li>
-	 * <li><b>(Integer) languageCode</b> - Language Code.</li>
+	 * <li><b>(String) languageCode</b> - Language Code.</li>
 	 * </ul>
 	 * 
 	 * @return Map containing the requested syslists.
 	 */	
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode);
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 
 
 	

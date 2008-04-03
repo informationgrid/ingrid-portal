@@ -38,7 +38,7 @@ _container_.addOnLoad(function() {
 
 	// Init the 'custom location' select box 
 //           listId="1100" id="objSpaceGeoUnit"
-	EntryService.getSysLists([1100], 121, {
+	EntryService.getSysLists([1100], "de", {
 		callback: function(res) {
 			dojo.widget.byId("objSpaceGeoUnit").dataProvider.setData(res[1100]);
 		},
@@ -798,7 +798,9 @@ function hideLoadingZone() {
     <div class="spacer"></div>
     <div id="objectSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
       <span class="label">Trefferliste</span>
+<!-- 
       <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+ -->
       <div class="listInfo w845">
         <span id="objSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
         <span id="objSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>

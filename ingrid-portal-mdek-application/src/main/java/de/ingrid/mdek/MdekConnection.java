@@ -318,24 +318,31 @@ public class MdekConnection implements DataConnectionInterface {
 	}
 
 	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits) {
+/*
 		IngridDocument query = new IngridDocument();
 		query.putAll(params);
-
+		
 		//TODO Implement
 //		IngridDocument response = mdekCallerQuery.queryExtAddresses(getCurrentIPlug(), query, startHit, numHits, getCurrentSessionId());
 //		return extractAddressSearchResultsFromResponse(response);
-		return new AddressSearchResultBean();
+*/
+		IngridDocument response = mdekCallerQuery.queryAddressesFullText(getCurrentIPlug(), (String) params.get("term"), startHit, numHits, getCurrentSessionId());
+		return extractAddressSearchResultsFromResponse(response);
 	}
 
 
 	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits) {
+/*
 		IngridDocument query = new IngridDocument();
 		query.putAll(params);
 
 		//TODO Implement
 //		IngridDocument response = mdekCallerQuery.queryExtAddresses(getCurrentIPlug(), query, startHit, numHits, getCurrentSessionId());
 //		return extractAddressSearchResultsFromResponse(response);
-		return new ObjectSearchResultBean();
+*/
+
+		IngridDocument response = mdekCallerQuery.queryObjectsFullText(getCurrentIPlug(), (String) params.get("term"), startHit, numHits, getCurrentSessionId());
+		return extractObjectSearchResultsFromResponse(response);
 	}
 
 	
@@ -378,7 +385,7 @@ public class MdekConnection implements DataConnectionInterface {
 		return extractVersionInformationFromResponse(response);
 	}
 	
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, Integer languageCode) {
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
 		IngridDocument response = mdekCallerCatalog.getSysLists(getCurrentIPlug(), listIds, languageCode, getCurrentSessionId());
 		return extractSysListFromResponse(response);
 	}
