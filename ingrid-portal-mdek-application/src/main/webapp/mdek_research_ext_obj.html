@@ -21,7 +21,11 @@ var currentQuery = {	// Map of strings defining the query
 	thesaurusRelation: null,	// relation that should be used to combine the thesaurus terms (AND / OR)
 	geoThesaurusTerms: null,	// array of areaIds - locations
 	geoThesaurusRelation: null,	// relation that should be used to combine the location topics (AND / OR)
-	customLocation: null		// custom location id from the catalog
+	customLocation: null,		// custom location id from the catalog
+	timeFromTo: null,			// Time reference. Array with two entries, begin and end.
+	timeAt: null,				// Time reference. Date object.
+	timeIntersect: null,		// Flag signaling if the entered interval should be cut by the result 
+	timeContains: null			// Flag signaling if the entered interval should be included in the result
 }
 
 
@@ -146,6 +150,23 @@ function readQueryFromInput() {
 	currentQuery.geoThesaurusRelation = dojo.widget.byId("geoThesaurusTermsRelation").getValue();
 
 	currentQuery.customLocation = dojo.widget.byId("objSpaceGeoUnit").getValue();
+
+	// Time ref
+	currentQuery.timeFromTo = [];
+	currentQuery.timeAt = null;
+
+	if (dojo.byId("objTimeRef1").checked) {
+		// 'From-To' checked
+		currentQuery.timeFromTo.push(dojo.widget.byId("objTimeRef1From").getValue());
+		currentQuery.timeFromTo.push(dojo.widget.byId("objTimeRef1To").getValue());
+
+	} else if (dojo.byId("objTimeRef2").checked) {
+		// 'At' checked
+		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
+	}
+
+	currentQuery.timeIntersect = dojo.widget.byId("objTimeRefExtend1").checked;
+	currentQuery.timeContains = dojo.widget.byId("objTimeRefExtend2").checked;
 
 	dojo.debugShallow(currentQuery);
 }
