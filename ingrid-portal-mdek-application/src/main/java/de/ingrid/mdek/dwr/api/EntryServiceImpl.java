@@ -638,7 +638,10 @@ public class EntryServiceImpl implements EntryService {
 		} catch (IOException e) {
 			log.debug("IOException while converting csv.", e);
 			return null;
-		}        
+		} catch (RuntimeException e) {
+			log.debug("Runtime Exception while loading csv values", e);
+			throw new RuntimeException(e.getCause());
+		}
 	}
 
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits) {

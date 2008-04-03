@@ -2,6 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
+<style type="text/css">
+div.dojoTabPaneWrapper { overflow:visible; }
+</style>
+
+
 <script type="text/javascript">
 var scriptScope = this;
 
@@ -9,6 +14,14 @@ var resultsPerPage = 10;
 var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchExtResultsInfo"), pagingSpan:dojo.byId("objSearchExtResultsPaging") });
 
 var currentQuery = {	// Map of strings defining the query
+	term: null,					// search query
+	relation: null,				// relation that should be used to analyze the query (AND / OR)
+	objClasses: null,			// array of ints that represent the object classes that should be included in the search
+	thesaurusTerms: null,		// array of topicIds - descriptors and non-descriptors
+	thesaurusRelation: null,	// relation that should be used to combine the thesaurus terms (AND / OR)
+	geoThesaurusTerms: null,	// array of areaIds - locations
+	geoThesaurusRelation: null,	// relation that should be used to combine the location topics (AND / OR)
+	customLocation: null		// custom location id from the catalog
 }
 
 
@@ -17,18 +30,43 @@ _container_.addOnLoad(function() {
 	scriptScope.navInnerTab('objTopic', 0, 3);
 	scriptScope.navInnerTab('objSpace', 0, 3);
 	scriptScope.navInnerTab('objTime', 0, 1);
-/*
-    // Pressing 'enter' on the input field is equal to a button click
-    dojo.event.connect(dojo.widget.byId("addrTopicInput").domNode, "onkeypress",
+
+	// Initialize select boxes
+	dojo.widget.byId("objTopicInputBool").setValue(0);
+	dojo.widget.byId("thesaurusTermsRelation").setValue(0);
+	dojo.widget.byId("geoThesaurusTermsRelation").setValue(0);
+
+	// Init the 'custom location' select box 
+//           listId="1100" id="objSpaceGeoUnit"
+	EntryService.getSysLists([1100], 121, {
+		callback: function(res) {
+			dojo.widget.byId("objSpaceGeoUnit").dataProvider.setData(res[1100]);
+		},
+		errorHandler: function(mes) {
+			dojo.debug("Error: "+mes);
+		}
+	});
+
+    // Pressing 'enter' on the thesaurus input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("objTopicThesaurus").domNode, "onkeypress",
         function(event) {
             if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startNewSearch();
+                scriptScope.findTopics();
             }
 	});
-*/
+
+    // Pressing 'enter' on the thesaurus input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("objLocationTopic").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.findLocationTopics();
+            }
+	});
+
 	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
 });
 
+// ************************** General Search functions **************************
 
 // Starts a search with the current parameters stored in 'currentQuery' and 'pageNav'
 function startSearch() {
@@ -82,6 +120,33 @@ this.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
 
 function readQueryFromInput() {
 	// TODO: Implement
+	currentQuery.term = dojo.string.trim(dojo.widget.byId("objTopicInput").getValue());
+	currentQuery.relation = dojo.widget.byId("objTopicInputBool").getValue();
+	// Read obj class checkboxes
+	currentQuery.objClasses = [];
+	for (var i = 0; i < 6; ++i) {
+		if (dojo.widget.byId("objTopicObjectClass" + i).checked)
+			currentQuery.objClasses.push(i);
+	}
+
+	// Read the Descriptors from the thesaurus table
+	var descStore = dojo.widget.byId("objExtSearchThesaurusTerms").store;
+	currentQuery.thesaurusTerms = [];
+	dojo.lang.forEach(descStore.getData(), function(item){
+		currentQuery.thesaurusTerms.push(item.topicId);
+	});
+	currentQuery.thesaurusRelation = dojo.widget.byId("thesaurusTermsRelation").getValue();
+
+	// Read the Location topics from the thesaurus table
+	var geoThesStore = dojo.widget.byId("objExtSearchLocationTerms").store;
+	currentQuery.geoThesaurusTerms = [];
+	dojo.lang.forEach(geoThesStore.getData(), function(item){
+		currentQuery.geoThesaurusTerms.push(item.topicId);
+	});
+	currentQuery.geoThesaurusRelation = dojo.widget.byId("geoThesaurusTermsRelation").getValue();
+
+	currentQuery.customLocation = dojo.widget.byId("objSpaceGeoUnit").getValue();
+
 	dojo.debugShallow(currentQuery);
 }
 
@@ -90,12 +155,338 @@ function resetInput() {
 }
 
 
+// ************************** Thesaurus Search functions (Thema/fachwoerterbuch) **************************
+
+// Button function which searches for descriptors/nondescriptors from a given search query
+// A list of checkboxes/labels is created and put into the div with id: 'objExtSearchThesaurusResults'
+this.findTopics = function() {
+	var term = dojo.string.trim(dojo.widget.byId("objTopicThesaurus").getValue());
+
+	// Exit if we search for an empty string
+	if (term.length == 0) {
+		return;
+	}
+
+	clearThesaurusResults();
+
+	SNSService.findTopics(term, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback:function(topics) {
+			if (dojo.lang.some(topics, function(item) { return item.type == "DESCRIPTOR"} )) {
+				addResultTextElement("\u00c4hnliche Begriffe");
+				dojo.lang.forEach(topics, function(item){
+	//				if (item.type == "DESCRIPTOR" || item.type == "NON_DESCRIPTOR") {
+					if (item.type == "DESCRIPTOR") {
+						addDescriptorCheckbox(item);
+					}
+				});
+				dojo.html.show(dojo.byId("objExtSearchAddTopicButtonSpan"));
+
+			} else {
+				showNoThesaurusResults();
+			}
+		},
+		timeout:20000,
+		errorHandler:function(err) {
+			hideLoadingZone();
+			dojo.debug("Error while executing SNSService.findTopics");
+		}
+	});
+}
+
+this.addSelectedTopics = function() {
+	var resultDiv = dojo.byId("objExtSearchThesaurusResults");
+	var resultStore = dojo.widget.byId("objExtSearchThesaurusTerms").store;
+
+	dojo.lang.forEach(resultDiv.childNodes, function(divElement) {
+		var checkBoxDiv = divElement.firstChild;
+		if (checkBoxDiv && checkBoxDiv.id) {
+			var checkBox = dojo.widget.byId(checkBoxDiv.id);
+		} else {
+			return;
+		}
+
+		if (checkBox.checked) {
+			// If the checked item is already contained in the result list then do nothing
+			if (dojo.lang.some(resultStore.getData(), function(item){ return (checkBox.id == item.topicId); }))
+				return;
+
+			// Otherwise add the item to the result list
+			resultStore.addData( {Id: UtilStore.getNewKey(resultStore), topicId: checkBox.id, title: checkBox.name} );
+		}
+	});
+}
+
+function addDescriptorCheckbox(descriptor, disableLink) {
+	var resultDiv = dojo.byId("objExtSearchThesaurusResults");
+
+	var checkBox = dojo.widget.createWidget("checkbox", {
+			id: descriptor.topicId,
+			name: descriptor.title
+		});
+
+	var divElement = document.createElement("div");
+
+	if (disableLink) {
+		var labelElement = document.createTextNode(descriptor.title);
+		resultDiv.appendChild(divElement);
+		divElement.appendChild(checkBox.domNode);
+		divElement.appendChild(labelElement);
+		return;
+	}
+
+	var linkElement = document.createElement("a"); 
+	linkElement.setAttribute("href", "javascript:void(0);");
+	linkElement.descriptor = descriptor;
+	linkElement.onclick = function() {
+		findAssociatedTopics(this.descriptor);
+	}
+	linkElement.innerHTML = descriptor.title;
+
+	resultDiv.appendChild(divElement);
+	divElement.appendChild(checkBox.domNode);
+//	divElement.appendChild(labelElement);
+	divElement.appendChild(linkElement);
+}
+
+function addResultTextElement(text) {
+	var resultDiv = dojo.byId("objExtSearchThesaurusResults");
+	var divElement = document.createElement("div");
+	var labelElement = document.createElement("b");
+	var labelText = document.createTextNode(text);
+	resultDiv.appendChild(divElement);
+	divElement.appendChild(labelElement);
+	labelElement.appendChild(labelText);
+
+	divElement.style['marginTop'] = "5px";
+}
+
+
+function findAssociatedTopics(descriptor) {
+//	dojo.debug("findAssociatedTopics: "+descriptor.topicId);
+
+	clearThesaurusResults();
+
+	SNSService.getTopicsForTopic(descriptor.topicId, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback:function(topic) {
+			if (topic.topicId != descriptor.topicId) {
+				addResultTextElement("Synonym");
+				addDescriptorCheckbox(descriptor, true);
+				addResultTextElement("Verwende stattdessen diese Fachbegriffe");
+				addDescriptorCheckbox(topic);
+			
+			} else {
+				addResultTextElement("Thesaurus-Schlagwort");
+				addDescriptorCheckbox(descriptor, true);
+	
+				if (topic.synonyms.length > 0) {
+					addResultTextElement("Synonyme");
+					dojo.lang.forEach(topic.synonyms, function(item){
+						addDescriptorCheckbox(item);
+					});
+				}
+	
+				if (topic.parents.length > 0) {
+					addResultTextElement("Oberbegriffe");
+					dojo.lang.forEach(topic.parents, function(item){
+						addDescriptorCheckbox(item);
+					});
+				}
+	
+				if (topic.children.length > 0) {
+					addResultTextElement("Unterbegriffe");
+					dojo.lang.forEach(topic.children, function(item){
+						addDescriptorCheckbox(item);
+					});
+				}
+			}
+			
+			dojo.html.show(dojo.byId("objExtSearchAddTopicButtonSpan"));
+		},
+		timeout:20000,
+		errorHandler:function(err) {
+			hideLoadingZone();
+			dojo.debug("Error while executing SNSService.getTopicsForTopic");
+		}
+	});
+}
+
+// Deletes the checkboxes contained in the div with id: 'objExtSearchThesaurusResults'
+function clearThesaurusResults() {
+	var resultDiv = dojo.byId("objExtSearchThesaurusResults");
+
+	while (resultDiv.hasChildNodes()) {
+		var divElement = resultDiv.removeChild(resultDiv.firstChild);
+		var checkBox = divElement.firstChild;
+		if (checkBox && checkBox.id) {
+			dojo.widget.byId(checkBox.id).destroy();
+		}
+	}
+}
+
+function showNoThesaurusResults() {
+	addResultTextElement(message.get("sns.noResultHint"));
+	dojo.html.hide(dojo.byId("objExtSearchAddTopicButtonSpan"));
+}
+
+// ************************** Thesaurus location Search functions (Raum/Geothesaurus-Raumbezug) **************************
+this.findLocationTopics = function() {
+	var queryTerm = dojo.string.trim(dojo.widget.byId("objLocationTopic").getValue());
+
+	if (queryTerm.length == 0)
+		return;
+
+	clearLocationResults();
+
+	SNSService.getLocationTopics(queryTerm, "exact", {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: setLocationResultList,
+		timeout: 20000,
+		errorHandler: function(err) {
+			hideLoadingZone();
+			dojo.debug("Error while executing SNSService.getLocationTopics");
+		}
+	});
+}
+
+function setLocationResultList(topicList) {
+	if (topicList == null || topicList.length == 0) {
+		showNoLocationResults();
+		return;
+	}
+
+	dojo.html.show(dojo.byId("objExtSearchAddLocationTopicButtonSpan"));
+
+	dojo.lang.forEach(topicList, function(topic) {
+		addLocationTopicCheckbox(topic);
+	});
+}
+
+function addLocationTopicCheckbox(topic) {
+	var checkboxDiv = dojo.byId("objExtSearchLocationResults");
+
+	var label = topic.name+", "+topic.type;
+	var checkBox = dojo.widget.createWidget("checkbox", {
+			id: topic.topicId,
+			name: label,
+			topic: topic
+		});
+
+	var divElement = document.createElement("div");
+
+	var linkElement = document.createElement("a"); 
+	linkElement.setAttribute("href", "javascript:void(0);");
+	linkElement.topicId = topic.topicId;
+	linkElement.onclick = function() {
+		findAssociatedLocations(this.topicId);
+	}
+	linkElement.innerHTML = label;
+
+	checkboxDiv.appendChild(divElement);
+	divElement.appendChild(checkBox.domNode);
+	divElement.appendChild(linkElement);
+}
+
+function findAssociatedLocations(topicId) {
+	clearLocationResults();
+
+	SNSService.getLocationTopicsById(topicId, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: setLocationResultList,
+		timeout: 20000,
+		errorHandler: function(err) {
+			hideLoadingZone();
+			dojo.debug("Error while executing SNSService.getLocationTopics");
+		}
+	});	
+}
+
+this.addSelectedLocationTopics = function() {
+	var resultDiv = dojo.byId("objExtSearchLocationResults");
+	var resultStore = dojo.widget.byId("objExtSearchLocationTerms").store;
+
+	dojo.lang.forEach(resultDiv.childNodes, function(divElement) {
+		var checkBoxDiv = divElement.firstChild;
+		if (checkBoxDiv && checkBoxDiv.id) {
+			var checkBox = dojo.widget.byId(checkBoxDiv.id);
+		} else {
+			return;
+		}
+
+		if (checkBox.checked) {
+			// If the checked item is already contained in the result list then do nothing
+			if (dojo.lang.some(resultStore.getData(), function(item){ return (checkBox.id == item.topicId); }))
+				return;
+
+			// Otherwise add the item to the result list
+			resultStore.addData( {Id: UtilStore.getNewKey(resultStore), topicId: checkBox.id, title: checkBox.name} );
+		}
+	});
+}
+
+
+function showNoLocationResults() {
+	addLocationResultTextElement(message.get("sns.noResultHint"));
+	dojo.html.hide(dojo.byId("objExtSearchAddLocationTopicButtonSpan"));
+}
+
+function clearLocationResults() {
+	var resultDiv = dojo.byId("objExtSearchLocationResults");
+
+	while (resultDiv.hasChildNodes()) {
+		var divElement = resultDiv.removeChild(resultDiv.firstChild);
+		var checkBox = divElement.firstChild;
+		if (checkBox && checkBox.id) {
+			dojo.widget.byId(checkBox.id).destroy();
+		}
+	}
+}
+
+function addLocationResultTextElement(text) {
+	var resultDiv = dojo.byId("objExtSearchLocationResults");
+	var divElement = document.createElement("div");
+	var labelElement = document.createElement("b");
+	var labelText = document.createTextNode(text);
+	resultDiv.appendChild(divElement);
+	divElement.appendChild(labelElement);
+	labelElement.appendChild(labelText);
+
+	divElement.style['marginTop'] = "5px";
+}
+
+// ************************** Object class functions (Thema/Objektklassen) **************************
+
+// Button function to check all existing object class checkboxes
+this.selectAllObjectClasses = function() {
+	var checkBoxId = "objTopicObjectClass";
+
+	for (var i = 0; i < 6; ++i) {
+		dojo.widget.byId(checkBoxId + i).setValue(true);
+	}
+}
+
+// Button function to uncheck all existing object class checkboxes
+this.deselectAllObjectClasses = function() {
+	var checkBoxId = "objTopicObjectClass";
+
+	for (var i = 0; i < 6; ++i) {
+		dojo.widget.byId(checkBoxId + i).setValue(false);
+	}
+}
+
+// ************************** General functions **************************
+
 function showLoadingZone() {
-    dojo.html.setVisibility(dojo.byId("addressSearchExtLoadingZone"), "visible");
+    dojo.html.setVisibility(dojo.byId("objectSearchExtLoadingZone"), "visible");
 }
 
 function hideLoadingZone() {
-    dojo.html.setVisibility(dojo.byId("addressSearchExtLoadingZone"), "hidden");
+    dojo.html.setVisibility(dojo.byId("objectSearchExtLoadingZone"), "hidden");
 }
 
 </script>
@@ -119,14 +510,12 @@ function hideLoadingZone() {
     	    </ul>
     	  </div>
         <div class="inputContainer field noSpaceBelow">
-          <span class="label"><label for="objTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Sie k&ouml;nnen Suchbegriffe eingeben und diese der obigen Suchanfrage hinzuf&uuml;gen:</label></span>
+          <span class="label"><label for="objTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Bitte geben Sie die Suchbegriffe ein:</label></span>
           <span class="input spaceBelow"><input type="text" id="objTopicInput" name="objTopicInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
           <span class="label"><label class="inActive" for="objTopicInputBoolean">Gesuchtes Objekt enth&auml;lt:</label> <select dojoType="ingrid:Select" style="width:174px;" id="objTopicInputBool" name="objTopicInputBool">
               <!-- TODO: fill in jsp -->
-            	<option value="Alle diese Begriffe (UND)">Alle diese Begriffe (UND)</option>
-            	<option value="Einen dieser Begriffe (ODER)">Einen dieser Begriffe (ODER)</option>
-            	<option value="Genau diese Wortgruppe">Genau diese Wortgruppe</option>
-            	<option value="Keinen dieser Begriffe (NICHT)">Keinen dieser Begriffe (NICHT)</option>
+            	<option value="0">Alle diese Begriffe (UND)</option>
+            	<option value="1">Einen dieser Begriffe (ODER)</option>
             </select></span>
           <div class="spacerField"></div>
     	  </div>
@@ -144,65 +533,96 @@ function hideLoadingZone() {
     	  </div>
         <div class="inputContainer field noSpaceBelow">
           <div class="checkboxContainer half">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass0">Organisationseinheit/Fachaufgabe</label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass1">Geo-Information/Karte</label></span>
-            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass2">Dokument/Bericht/Literatur</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass0">Organisationseinheit/Fachaufgabe</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass1">Geo-Information/Karte</label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass2">Dokument/Bericht/Literatur</label></span>
           </div>
           <div class="checkboxContainer">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3">Dienst/Anwendung/Informationssystem</label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass4">Vorhaben/Projekt/Programm</label></span>
-            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5">Datensammlung/Datenbank</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3">Dienst/Anwendung/Informationssystem</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass4">Vorhaben/Projekt/Programm</label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5">Datensammlung/Datenbank</label></span>
           </div>
-          <span class="button w628 transparent"><a href="javascript:toggleSelection('objTopicObjectClass');" id="objTopicObjectClassBtn" class="buttonGrey" title="Alle ausw&auml;hlen">Alle ausw&auml;hlen</a></span>
-    	  </div>
-        <div class="spacerField"></div>
     	</div>
+        <div class="spacerField" style="height:28px !important;">
+
+          <span style="float:left;">
+	        <button dojoType="ingrid:Button" title="Keine ausw&auml;hlen" onClick="javascript:scriptScope.deselectAllObjectClasses();">Keine ausw&auml;hlen</button>
+	      </span>
+          <span style="float:left;">
+	        <button dojoType="ingrid:Button" title="Alle ausw&auml;hlen" onClick="javascript:scriptScope.selectAllObjectClasses();">Alle ausw&auml;hlen</button>
+	      </span>
+
+        </div>
+      </div>
       <!-- EXTENDED SEARCH TAB 1 SUB 2 END -->
       
       <!-- EXTENDED SEARCH TAB 1 SUB 3 START -->
-		  <div id="objTopic2">
+	  <div id="objTopic2">
         <div class="tabContainerSubNavi">
-    	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchbegriffe">Suchbegriffe</a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
-    	      <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
-    	    </ul>
-    	  </div>
-        <div class="inputContainer field grey noSpaceBelow">
-          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thematischer Fachbegriff')">Sie k&ouml;nnen nach thematischen Fachbegriffen suchen und diese der obigen Suchanfrage hinzuf&uuml;gen:</label></span>
-          <span class="input spaceBelow"><input type="text" id="objTopicThesaurus" name="objTopicThesaurus" class="w659" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey rightOfInput" title="In Thesaurus suchen">In Thesaurus suchen</a></span>
-          <span class="label noSpaceBelow">&Auml;hnliche Begriffe</span>
-        	<div dojoType="ContentPane" id="treeContainer">
-            <!-- tree components -->
-            <div dojoType="ingrid:TreeController" widgetId="treeController" RpcUrl="server/treelistener.php"></div>
-            <div dojoType="ingrid:TreeListener" widgetId="treeListener"></div>	
-            <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIcons"></div>	
-            <div dojoType="ingrid:TreeDecorator" listener="treeListener"></div>
-            
-            <!-- context menus -->
-            <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
-            <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu2"></div>
-            
-            <!-- tree -->
-            <div dojoType="ingrid:Tree" listeners="treeController;treeListener;contextMenu1;contextMenu2;treeDocIcons" widgetId="tree">
-              <!-- uncomment the next 2 lines in production
-            	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt" hasCheckbox="true"></div>
-            	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse" hasCheckbox="true"></div>
-              end of uncomment -->
-              <!-- remove the next lines in production -->
-            	<div dojoType="ingrid:TreeNode" title="Verschmutzung" widgetId="o1" contextMenu="contextMenu2" nodeDocType="Catalog" hasCheckbox="true">
-              	<div dojoType="ingrid:TreeNode" title="Umweltverschmutzung" widgetId="o11" contextMenu="contextMenu1" hasCheckbox="true"></div>
-              	<div dojoType="ingrid:TreeNode" title="Gew&auml;sserschutzgesetz" widgetId="o12" contextMenu="contextMenu1" hasCheckbox="true"></div>
-            	</div>
-              <!-- end of remove -->
-            </div>
-        	</div>
-
-       	<div class="spacer"></div>
-        </div>
+    	  <ul>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchbegriffe">Suchbegriffe</a></li>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
+    	    <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	  </ul>
     	</div>
-      <!-- EXTENDED SEARCH TAB 1 SUB 3 END -->
+
+        <div class="inputContainer field grey noSpaceBelow" style="width:808px;">
+          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thematischer Fachbegriff')">Bitte geben Sie die Thesaurus-Begriffe an, nach denen gesucht werden soll:</label></span>
+          <div class="input spaceBelow">
+            <span style="float:left; width:659px;">
+              <input type="text" id="objTopicThesaurus" name="objTopicThesaurus" class="w659" dojoType="ingrid:ValidationTextBox" />
+			</span>
+
+            <span style="float:right;">
+              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopics();">In Thesaurus suchen</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="inputContainer field grey" style="width:800px; height:200px;">
+		  <span class="half" style="float:left;">
+<!-- 
+            <span class="label"><label for="objExtSearchThesaurusResults" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus Begriffe')">Ergebnisliste</label></span>
+ -->
+		    <div id="objExtSearchThesaurusResults" class="h205 checkboxContainer" style="overflow: auto;">
+			</div>
+		  </span>
+
+	      <span id="objExtSearchAddTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
+	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedTopics();">&Uuml;bernehmen -&gt;</button>
+		  </span>
+
+		  <span style="float:right;">
+              <span class="label"><label for="objExtSearchThesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus Suchbegriffe')">Suchbegriffe</label></span>
+	          <div class="tableContainer spaceBelow headHiddenRows8 w364">
+	      	    <table id="objExtSearchThesaurusTerms" dojoType="ingrid:FilteringTable" minRows="8" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+	      	      <thead>
+	      		      <tr>
+	            			<th nosort="true" field="title" dataType="String">Thesaurus Suchbegriffe</th>
+	      		      </tr>
+	      	      </thead>
+	      	      <tbody>
+	      	      </tbody>
+	      	    </table>
+	      	  </div>
+
+            <span class="label">
+              <label class="inActive" for="thesaurusTermsRelation">Gesuchtes Objekt enth&auml;lt:</label>
+              <select dojoType="ingrid:Select" style="width:174px;" id="thesaurusTermsRelation">
+              <!-- TODO: fill in jsp -->
+                <option value="0">Alle diese Begriffe (UND)</option>
+                <option value="1">Einen dieser Begriffe (ODER)</option>
+              </select>
+            </span>
+
+		  </span>
+
 		</div>
+	    
+	    <div class="spacer"></div>
+   	  </div>
+      <!-- EXTENDED SEARCH TAB 1 SUB 3 END -->
+	</div>
     <!-- EXTENDED SEARCH TAB 1 END -->
 
     <!-- EXTENDED SEARCH TAB 2 START -->
@@ -213,18 +633,63 @@ function hideLoadingZone() {
     	    <ul>
     	      <li><a nohref="nohref" class="current" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
     	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug">Freier Raumbezug</a></li>
+<!-- 
     	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+ -->
     	    </ul>
     	  </div>
-        <div class="inputContainer field grey noSpaceBelow">
-          <span class="label"><label for="objSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezug')">Sie k&ouml;nnen nach Raumbez&uuml;gen suchen und diese der obigen Suchanfrage hinzuf&uuml;gen:</label></span>
-          <span class="input spaceBelow"><input type="text" id="objSpaceAdminUnit" name="objSpaceAdminUnit" class="w636" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey rightOfInput" title="In Geo-Thesaurus suchen">In Geo-Thesaurus suchen</a></span>
-          <span class="label">Geothesaurus-Raumbezug</span>
-          <div class="checkboxContainer">
-            <span class="input"><input type="checkbox" name="objSpaceResult1" id="objSpaceResult1" dojoType="Checkbox" /><label class="inActive" for="objSpaceResult1"><a href="#" title="Darmstadt">Darmstadt</a>, Gemeinde</label></span>
-            <span class="input"><input type="checkbox" name="objSpaceResult2" id="objSpaceResult2" dojoType="Checkbox" /><label class="inActive" for="objSpaceResult2"><a href="#" title="Darmstadt">Darmstadt</a>, Kreis</label></span>
+
+
+        <div class="inputContainer field grey noSpaceBelow" style="width:808px;">
+          <span class="label"><label for="objLocationTopic" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezug')">Bitte geben Sie die Raumbez&uuml;ge an, nach denen gesucht werden soll:</label></span>
+          <div class="input spaceBelow">
+            <span style="float:left; width:636px;">
+              <input type="text" id="objLocationTopic" class="w636" dojoType="ingrid:ValidationTextBox" />
+			</span>
+
+            <span style="float:right;">
+              <button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" onClick="javascript:scriptScope.findLocationTopics();">In Geo-Thesaurus suchen</button>
+            </span>
           </div>
-    	  </div>
+        </div>
+
+        <div class="inputContainer field grey" style="width:800px; height:200px;">
+		  <span class="half" style="float:left;">
+		    <div id="objExtSearchLocationResults" class="h205 checkboxContainer" style="overflow: auto;">
+			</div>
+		  </span>
+
+	      <span id="objExtSearchAddLocationTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
+	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedLocationTopics();">&Uuml;bernehmen -&gt;</button>
+		  </span>
+
+		  <span style="float:right;">
+              <span class="label"><label for="objExtSearchLocationTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geo-Thesaurus Suchbegriffe')">Suchbegriffe</label></span>
+	          <div class="tableContainer spaceBelow headHiddenRows8 w364">
+	      	    <table id="objExtSearchLocationTerms" dojoType="ingrid:FilteringTable" minRows="8" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+	      	      <thead>
+	      		      <tr>
+	            			<th nosort="true" field="title" dataType="String">Geo-Thesaurus Suchbegriffe</th>
+	      		      </tr>
+	      	      </thead>
+	      	      <tbody>
+	      	      </tbody>
+	      	    </table>
+	      	  </div>
+
+            <span class="label">
+              <label class="inActive" for="geoThesaurusTermsRelation">Gesuchtes Objekt enth&auml;lt:</label>
+              <select dojoType="ingrid:Select" style="width:174px;" id="geoThesaurusTermsRelation">
+              <!-- TODO: fill in jsp -->
+                <option value="0">Alle diese Begriffe (UND)</option>
+                <option value="1">Einen dieser Begriffe (ODER)</option>
+              </select>
+            </span>
+
+		  </span>
+
+		</div>
+
         <div class="spacer"></div>
     	</div>
       <!-- EXTENDED SEARCH TAB 2 SUB 1 END -->
@@ -235,12 +700,14 @@ function hideLoadingZone() {
     	    <ul>
     	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
     	      <li><a nohref="nohref" class="current" title="Freier Raumbezug">Freier Raumbezug</a></li>
+<!-- 
     	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+ -->
     	    </ul>
     	  </div>
         <div class="inputContainer field noSpaceBelow">
           <span class="label"><label for="objSpaceGeoUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freier Raumbezug')">Freier Raumbezug:</label></span>
-          <span class="input"><input dojoType="ingrid:Select" dataUrl="js/data/dummy.js" style="width:782px;" id="objSpaceGeoUnit" name="objSpaceGeoUnit" /></span>
+          <span class="input"><input dojoType="ingrid:Select" listId="1100" style="width:782px;" id="objSpaceGeoUnit" /></span>
     	  </div>
         <div class="spacerField"></div>
     	</div>

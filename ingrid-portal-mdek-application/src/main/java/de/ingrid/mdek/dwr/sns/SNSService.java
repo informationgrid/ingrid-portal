@@ -205,7 +205,12 @@ public class SNSService {
 			return Type.TOP_TERM;
     }
 
+    private static String getAssociationFromTopic(Topic t) {
+    	String assoc = t.getTopicAssoc();
+    	return assoc.split("#")[1];
+    }
 
+    
     public void testIncludeSiblings(boolean includeSiblings) {
         // getHierarchy?root=uba_thes_27118&user=ingrid_test&password=ingrid_test&depth=2&direction=up&includeSiblings=true
     	// false liefert drei Knoten
@@ -352,6 +357,51 @@ public class SNSService {
 	    }
 //	    log.debug("Number of descriptors in the result: "+resultList.size());
 	    return resultList;
+    }
+
+    
+    // Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached
+    public SNSTopic getTopicsForTopic(String topicId) {
+    	int[] totalSize = new int[] {0};
+	    Topic[] snsResults = new Topic[0];
+    	try {
+    		snsResults = snsController.getTopicsForTopic(topicId, MAX_NUM_RESULTS, "mdek", totalSize, false);
+    	} catch (AxisFault f) {
+    		throw new RuntimeException(ERROR_SNS_TIMEOUT);
+    	} catch (Exception e) {
+	    	log.error("Error calling snsController.getTopicsForTopic", e);
+    	}
+
+    	ArrayList<SNSTopic> synonyms = new ArrayList<SNSTopic>();
+    	ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
+    	ArrayList<SNSTopic> children = new ArrayList<SNSTopic>();
+
+	    for (Topic topic : snsResults) {
+    		SNSTopic t = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
+        	log.debug("Found: ["+getAssociationFromTopic(topic)+", "+getTypeFromTopic(topic)+", "+topic.getTopicID()+", "+topic.getTopicName()+"]");
+
+        	String assoc = getAssociationFromTopic(topic);
+    		if (assoc.equals("widerTermMember")) {
+    			parents.add(t);
+
+    		} else if (assoc.equals("narrowerTermMember")) {
+    			children.add(t);
+    			
+    		} else if (assoc.equals("synonymMember")) {
+    			synonyms.add(t);
+
+    		} else if (assoc.equals("descriptorMember")) {
+    			return t;
+
+    		}
+	    }
+
+	    SNSTopic result = new SNSTopic(Type.DESCRIPTOR, topicId, null);
+	    result.setChildren(children);
+	    result.setParents(parents);
+	    result.setSynonyms(synonyms);
+
+	    return result;
     }
 
     

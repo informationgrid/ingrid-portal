@@ -93,17 +93,27 @@ this.saveAsCSV = function() {
 	if (currentQuery == null)
 		return;
 	
-	dojo.debug("saveAsCSV() not implemented yet.");
 //	window.open("testDownload.csv", "downloadFrame");
 /*
 	DownloadTest.downloadCSV(function(data) {
 		window.open(data);
 	});
 */
+/*
 	EntryService.queryHQLToCSV(currentQuery, function(data) {
 		window.open(data);
 		dojo.debug(data);
 	});
+*/
+	EntryService.queryHQLToCSV(currentQuery, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(data) { window.open(data); },
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
+
 }
 
 function showLoadingZone() {
