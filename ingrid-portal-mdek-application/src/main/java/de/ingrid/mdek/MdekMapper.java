@@ -147,8 +147,9 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
 		// ExtraInfo
-		mdekObj.setExtraInfoLangMetaData((String) obj.get(MdekKeys.METADATA_LANGUAGE));
-		mdekObj.setExtraInfoLangData((String) obj.get(MdekKeys.DATA_LANGUAGE));
+		mdekObj.setExtraInfoLangMetaData((String) convertLanguageCodeToIdentifier((String) obj.get(MdekKeys.METADATA_LANGUAGE)));
+		mdekObj.setExtraInfoLangData((String) convertLanguageCodeToIdentifier((String) obj.get(MdekKeys.DATA_LANGUAGE)));
+
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
@@ -614,8 +615,8 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.DATASET_REFERENCES, mapFromTimeRefTable(data.getTimeRefTable()));
 
 		// ExtraInfo
-		udkObj.put(MdekKeys.METADATA_LANGUAGE, data.getExtraInfoLangMetaData());
-		udkObj.put(MdekKeys.DATA_LANGUAGE, data.getExtraInfoLangData());
+		udkObj.put(MdekKeys.METADATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangMetaData()));
+		udkObj.put(MdekKeys.DATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangData()));
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
@@ -1652,6 +1653,32 @@ public class MdekMapper implements DataMapperInterface {
 					it.remove();
 				}
 			}
+		}
+	}
+
+	public static String convertLanguageIdentifierToCode(String identifier) {
+		if (identifier == null || identifier.length() == 0) {
+			return identifier;
+		} else if (identifier.equals(LANGUAGE_ID_GERMAN)) {
+			return LANGUAGE_CODE_GERMAN;
+		} else if (identifier.equals(LANGUAGE_ID_ENGLISH)) {
+			return LANGUAGE_CODE_ENGLISH;
+		} else {
+			log.debug("Could not convert language identifier '"+identifier+"' to code.");
+			return "";
+		}
+	}
+
+	public static String convertLanguageCodeToIdentifier(String code) {
+		if (code == null || code.length() == 0) {
+			return code;
+		} else if (code.equals(LANGUAGE_CODE_GERMAN)) {
+			return LANGUAGE_ID_GERMAN;
+		} else if (code.equals(LANGUAGE_CODE_ENGLISH)) {
+			return LANGUAGE_ID_ENGLISH;
+		} else {
+			log.debug("Could not convert language code '"+code+"' to identifier.");
+			return "";
 		}
 	}
 }
