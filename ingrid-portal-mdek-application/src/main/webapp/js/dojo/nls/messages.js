@@ -86,6 +86,8 @@
 	"dialog.address.deleteChildrenMessage":"Do you really want to delete the address '%{0}' and all subaddresses?",
 	"dialog.object.deleteMessage":"Do you really want to delete the object '%{0}'?",
 	"dialog.address.deleteMessage":"Do you really want to delete the address '%{0}'?",
+	"dialog.addDescriptorTitle":"Add Descriptor",
+	"dialog.addDescriptorMessage":"'%{0}' is a Descriptor! The topic will be added to the list of SNS-Topics.",
 	"dialog.addDescriptorsTitle":"Add Descriptors",
 	"dialog.addDescriptorsMessage":"Add the following descriptors as search terms?",
 	"dialog.saveChangesTitle":"Save changes",

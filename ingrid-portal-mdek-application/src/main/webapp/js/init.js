@@ -337,7 +337,9 @@ function initFreeTermsButtons() {
 					});
 
 					// Decide what to do based on the type of the query
-					if (queryTerm == null) {
+					// Change from http://jira.media-style.com/browse/INGRIDII-131:
+					// If the term is a top term or node label, add it to the list of free terms without comment
+					if (queryTerm == null || queryTerm.type == "TOP_TERM" || queryTerm.type == "NODE_LABEL") {
 						// The searchTerm was not found. Simply add it to the list of free terms if it doesn't already exist
 						var freeTermsStore = _this._freeTermListWidget.store;
 						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != term; })) {
@@ -351,7 +353,7 @@ function initFreeTermsButtons() {
 								dojo.html.scrollIntoView(rows[rows.length-1]);
 //							dialog.show(message.get("general.hint"), message.get("sns.freeTermAddHint"), dialog.INFO);			
 						}
-					
+/*
 					} else if (queryTerm.type == "TOP_TERM") {
 						// A top term can't be added to the free terms list. Show an info dialog and clear the input field
 						dialog.show(message.get("general.hint"), dojo.string.substituteParams(message.get("sns.freeTermAddTopTermHint"), term), dialog.INFO);			
@@ -359,7 +361,7 @@ function initFreeTermsButtons() {
 					} else if (queryTerm.type == "NODE_LABEL") {
 						// A node label can't be added to the free terms list. Show an info dialog and clear the input field
 						dialog.show(message.get("general.hint"), dojo.string.substituteParams(message.get("sns.freeTermAddNodeLabelHint"), term), dialog.INFO);			
-					
+*/				
 					} else if (queryTerm.type == "DESCRIPTOR") {
 						// The search term is a descriptor. Show a dialog to query the user if the topic should be added to the topic list
 						var topicStore = _this._termListWidget.store;
@@ -380,8 +382,8 @@ function initFreeTermsButtons() {
 //						dialog.showPage(message.get("dialog.addDescriptorTitle"), "mdek_add_descriptor_dialog.html", 342, 220, true, {descriptorTitle: term, resultHandler: deferred});
 						var displayText = dojo.string.substituteParams(message.get("dialog.addDescriptorMessage"), term);
 						dialog.show(message.get("dialog.addDescriptorTitle"), displayText, dialog.INFO, [
-                        	{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },
-                        	{ caption: message.get("general.yes"), action: function() { deferred.callback(); } }
+/*                        	{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },	*/
+                        	{ caption: message.get("general.ok"), action: function() { deferred.callback(); } }
 						]);
 
 					} else if (queryTerm.type == "NON_DESCRIPTOR") {

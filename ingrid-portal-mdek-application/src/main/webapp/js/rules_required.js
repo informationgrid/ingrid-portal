@@ -154,7 +154,13 @@ function applyRule5() {
 			snsHasBB = true;
 	}
 	for (var i = 0; i < freeData.length; ++i) {
-		if (freeData[i].longitude1 && freeData[i].longitude2 && freeData[i].latitude1 && freeData[i].latitude2)
+		// The values stored in freeData[] can be strings or numbers (when first loaded)
+		// -> convert them to strings and check the size
+		var lon1Length = dojo.string.trim(freeData[i].longitude1+"").length;
+		var lon2Length = dojo.string.trim(freeData[i].longitude2+"").length;
+		var lat1Length = dojo.string.trim(freeData[i].latitude1+"").length;
+		var lat2Length = dojo.string.trim(freeData[i].latitude2+"").length;
+		if (lon1Length != 0 && lon2Length != 0 && lat1Length != 0 && lat2Length != 0)
 			freeHasBB = true;
 	}
 
@@ -162,8 +168,6 @@ function applyRule5() {
 	var labelNode2 = dojo.byId("spatialRefLocationLabel");
 	var container1 = dojo.byId("spatialRefAdminUnitContainer");
 	var container2 = dojo.byId("spatialRefLocationContainer");
-// TODO fix toggleContent() before modifying the container 'required' state. Otherwise we could
-// end up in a situation where 'unrequired' containers are shown when only required containers shoud be displayed.
 
 	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
 	setRequiredState(labelNode2, container2, !snsHasBB);
