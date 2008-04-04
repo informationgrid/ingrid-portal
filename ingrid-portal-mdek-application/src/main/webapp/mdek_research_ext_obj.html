@@ -3,6 +3,8 @@
 <head>
 
 <style type="text/css">
+/* If the select box (AND/OR select) is opened for the first time a scrollbar is shown for the main tab.
+   to prevent this behaviour, the overflow is made invisible */
 div.dojoTabPaneWrapper { overflow:visible; }
 </style>
 
@@ -122,8 +124,8 @@ this.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
 	}
 }
 
+// Read the input fields and write the query to 'currentQuery'
 function readQueryFromInput() {
-	// TODO: Implement
 	currentQuery.term = dojo.string.trim(dojo.widget.byId("objTopicInput").getValue());
 	currentQuery.relation = dojo.widget.byId("objTopicInputBool").getValue();
 	// Read obj class checkboxes
@@ -171,8 +173,25 @@ function readQueryFromInput() {
 	dojo.debugShallow(currentQuery);
 }
 
-function resetInput() {
-	// TODO: Implement
+// Reset-Button function. Reset all the input fields to their initial values and reset 'currentQuery'
+this.resetInput = function() {
+	dojo.widget.byId("objTopicInput").setValue("");
+	dojo.widget.byId("objTopicInputBool").setValue(0);
+	scriptScope.selectAllObjectClasses();
+	dojo.widget.byId("objExtSearchThesaurusTerms").store.clearData();
+	dojo.widget.byId("thesaurusTermsRelation").setValue(0);
+	dojo.widget.byId("objExtSearchLocationTerms").store.clearData();
+	dojo.widget.byId("geoThesaurusTermsRelation").setValue(0);
+	dojo.widget.byId("objSpaceGeoUnit").setValue("");
+	dojo.byId("objTimeRef1").checked = false
+	dojo.byId("objTimeRef2").checked = false
+	dojo.widget.byId("objTimeRef1From").clearValue();
+	dojo.widget.byId("objTimeRef1To").clearValue();
+	dojo.widget.byId("objTimeRef2On").clearValue();
+	dojo.widget.byId("objTimeRefExtend1").setValue(true);
+	dojo.widget.byId("objTimeRefExtend2").setValue(true);
+
+	readQueryFromInput();
 }
 
 
@@ -777,17 +796,15 @@ function hideLoadingZone() {
           <div class="inputContainer spaceBelow">
             <input type="radio" name="objTimeRef" id="objTimeRef1" class="radio entry first" />
             <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
-            <input type="text entry" id="objTimeRef1From" name="objTimeRef1From" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1From"></div>
             <label class="inActive" for="objTimeRef1To">Bis:</label>
-            <input type="text" id="objTimeRef1To" name="objTimeRef1To" class="w116" dojoType="ingrid:ValidationTextBox" />
-            <label class="inActive">[TT.MM.JJJJ]</label>
-          </div>
+            <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1To"></div>
+           </div>
           <div class="inputContainer">
             <input type="radio" name="objTimeRef" id="objTimeRef2" class="radio entry first" />
             <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
-            <input type="text entry" id="objTimeRef2On" name="objTimeRef2On" class="w116" dojoType="ingrid:ValidationTextBox" />
-            <label class="inActive">[TT.MM.JJJJ]</label>
-          </div>
+            <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef2On"></div>
+           </div>
           <div class="inputContainer noSpaceBelow">
             <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
             <div class="checkboxContainer">
@@ -808,6 +825,9 @@ function hideLoadingZone() {
     <span class="button w805" style="height:20px !important;">
       <span style="float:right;">
         <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+	  </span>
+      <span style="float:right;">
+        <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();">Zur&uuml;cksetzen</button>
 	  </span>
 	  <span id="objectSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 		<img src="img/ladekreis.gif" />

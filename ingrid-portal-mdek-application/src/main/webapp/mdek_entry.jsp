@@ -1321,9 +1321,9 @@ function hideSplash(){
 	                      <span class="label hidden"><label for="timeRefType">Typ</label></span>
                 		  <span class="input">
                 		  	<select dojoType="ingrid:Select" autoComplete="false" style="width:61px;" id="timeRefType">
-                		  	<option value="1">Erstellung</option>
-                		  	<option value="2">Publikation</option>
-                		  	<option value="3">letzte &Auml;nderung</option>
+                		  	<option value="am">am</option>
+                		  	<option value="seit">seit</option>
+                		  	<option value="von">von - bis</option>
                 		  	</select>
                 		  </span>
 	                    </span>

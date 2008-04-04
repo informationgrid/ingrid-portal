@@ -2,6 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
+<style type="text/css">
+/* If the select box (AND/OR select) is opened for the first time a scrollbar is shown for the main tab.
+   to prevent this behaviour, the overflow is made invisible */
+div.dojoTabPaneWrapper { overflow:visible; }
+</style>
+
 <script type="text/javascript">
 var scriptScope = this;
 
@@ -72,6 +78,19 @@ this.startNewSearch = function() {
 	readQueryFromInput();
 	pageNav.reset();
 	startSearch();
+}
+
+// Reset-Button function. Reset all the input fields to their initial values and reset 'currentQuery'
+this.resetInput = function() {
+	dojo.byId("addrMode1").checked = true;
+	dojo.byId("addrFields1").checked = true;
+	dojo.widget.byId("addrTopicInput").setValue("");
+	dojo.widget.byId("addrTopicInputBool").setValue(0);
+	dojo.widget.byId("addrSpaceStreet").setValue("");
+	dojo.widget.byId("addrSpaceZip").setValue("");
+	dojo.widget.byId("addrSpaceCity").setValue("");
+
+	readQueryFromInput();
 }
 
 
@@ -219,6 +238,9 @@ function hideLoadingZone() {
         <span class="button w805" style="height:20px !important;">
           <span style="float:right;">
             <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+		  </span>
+          <span style="float:right;">
+            <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();">Zur&uuml;cksetzen</button>
 		  </span>
 		  <span id="addressSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 			<img src="img/ladekreis.gif" />
