@@ -306,7 +306,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                  */
                 addSubRecords(record, recordMap, request.getLocale(), readableColumnNames, messages);
 
-                recordMap.put("summary", getFieldFromHashTree(recordMap, "summary"));
+                // Replace all occurrences of <*> except the specified ones (<b>, </b>, <i>, ... are the ones NOT replaced)
+                String summary = (String) getFieldFromHashTree(recordMap, "summary");
+                if (summary != null)
+                	summary = summary.replaceAll("<(?!b>|/b>|i>|/i>|u>|/u>|p>|/p>|br>|br/>|br />|strong>|/strong>|ul>|/ul>|ol>|/ol>|li>|/li>)[^>]*>", "");
+
+                recordMap.put("summary", summary);
                 recordMap.put("t0", getFieldFromHashTree(recordMap, "t0"));
                 recordMap.put("t1", getFieldFromHashTree(recordMap, "t1"));
                 recordMap.put("t2", getFieldFromHashTree(recordMap, "t2"));
