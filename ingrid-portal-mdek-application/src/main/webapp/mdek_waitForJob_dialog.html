@@ -42,7 +42,7 @@ _container_.addOnUnload(function() {
 
 function requestCancelJob() {
 	dojo.debug("cancelling job...");
-	EntryService.cancelRunningJob({
+	BackendService.cancelRunningJob({
 			callback: function() {
 				dojo.debug("job cancelled.");
 				_container_.customParams.resultHandler.callback("JOB_CANCELLED");
@@ -57,7 +57,7 @@ function requestCancelJob() {
 }
 
 function requestJobInfo() {
-	EntryService.getRunningJobInfo({
+	BackendService.getRunningJobInfo({
 			callback: handleUpdatedJobInfo,
 			timeout:10000,
 			errorHandler: function(err) { requestInProgress = false; handleError(err); }

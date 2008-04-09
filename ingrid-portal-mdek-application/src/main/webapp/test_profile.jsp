@@ -7,7 +7,6 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 </head>
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 <script type="text/javascript">
 	var djConfig = {isDebug: true, debugAtAllCosts: false};

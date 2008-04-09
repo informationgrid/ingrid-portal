@@ -8,7 +8,7 @@
 </head>
 
 <script
-	src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
+	src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 <script type="text/javascript">
 	var djConfig = {isDebug: true, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
@@ -67,7 +67,7 @@ function initTree() {
 
 		var deferred = new dojo.Deferred();
 		
-		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
 			timeout:5000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
@@ -81,7 +81,7 @@ function initTree() {
 }
 
 // initially load data (first hierachy level) from server 
-EntryService.getSubTree(null, null, 1, 
+TreeService.getSubTree(null, null, 1, 
 	function (str) {
 		var tree = dojo.widget.byId('tree');
 		tree.setChildren(str);

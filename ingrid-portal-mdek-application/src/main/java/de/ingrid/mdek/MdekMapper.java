@@ -37,7 +37,7 @@ import de.ingrid.utils.IngridDocument;
 public class MdekMapper implements DataMapperInterface {
 
 	private final static Logger log = Logger.getLogger(MdekMapper.class);
-	private SysListMapper sysListMapper;
+	private SysListCache sysListMapper;
 	
 	// -- Dispatch to the local private methods --
 	public MdekDataBean getDetailedObjectRepresentation(Object obj) {
@@ -102,7 +102,6 @@ public class MdekMapper implements DataMapperInterface {
 			workState = WorkState.IN_BEARBEITUNG;
 		}
 		mdekObj.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
-		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
 
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
@@ -462,7 +461,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.put(MDEK_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
-		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
+
 		String nodeDocType = getObjectDocType(obj);
 		mdekObj.put(MDEK_DOCTYPE, nodeDocType);
 
@@ -525,7 +524,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
 		mdekAdr.put(MDEK_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
-		// DocType defines the icon which is displayed in the tree view. Move this to EntryService?
+
 		String adrDocType = getAddressDocType(adr);
 		mdekAdr.put(MDEK_DOCTYPE, adrDocType);
 
@@ -1622,10 +1621,10 @@ public class MdekMapper implements DataMapperInterface {
         }
     }
 
-	public SysListMapper getSysListMapper() {
+	public SysListCache getSysListMapper() {
 		return sysListMapper;
 	}
-	public void setSysListMapper(SysListMapper sysListMapper) {
+	public void setSysListMapper(SysListCache sysListMapper) {
 		this.sysListMapper = sysListMapper;
 	}	
 

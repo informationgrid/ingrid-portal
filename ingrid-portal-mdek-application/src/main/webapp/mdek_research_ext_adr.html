@@ -46,7 +46,7 @@ _container_.addOnLoad(function() {
 function startSearch() {
 
 	// TODO: Implement function
-	EntryService.queryExtAddresses(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryExtAddresses(currentQuery, pageNav.getStartHit(), resultsPerPage, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },

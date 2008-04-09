@@ -6,7 +6,13 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/ObjectService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
+
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>

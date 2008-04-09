@@ -13,7 +13,7 @@ _container_.addOnLoad(function() {
 		errorHandler: function(message) { dojo.debug("Error: " + message); }
 	});
 
-	EntryService.getBackendVersion({
+	BackendService.getBackendVersion({
 		callback: function(res) { setBackendVersionInformation(res); },
 		errorHandler: function(message) { dojo.debug("Error: " + message); }
 	});

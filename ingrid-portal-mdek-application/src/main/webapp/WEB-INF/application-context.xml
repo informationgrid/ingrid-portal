@@ -25,20 +25,6 @@
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
 	</bean>
 
-	<bean id="entryService"
-		class="de.ingrid.mdek.dwr.api.EntryServiceImpl">
-		<property name="dataConnection">
-			<ref local="mdekDataConnection" />
-		</property>
-	</bean>
-
-	<bean id="sysListMapper"
-		class="de.ingrid.mdek.SysListMapper">
-		<property name="dataConnection">
-			<ref local="mdekDataConnection" />
-		</property>
-	</bean>
-
 	<bean id="mdekDataMapper"
 		class="de.ingrid.mdek.MdekMapper">
 		<property name="sysListMapper">
@@ -46,16 +32,115 @@
 		</property>
  	</bean>
 
-	<bean id="mdekDataConnection"
-		class="de.ingrid.mdek.MdekConnection">
-		<constructor-arg value="${communication.properties}"/>
-		<property name="dataMapper">
-			<ref local="mdekDataMapper" />
-		</property>
-	</bean>
-
 	<bean id="snsService" class="de.ingrid.mdek.dwr.sns.SNSService" />
 	<bean id="ctService" class="de.ingrid.mdek.dwr.cts.CoordinateTransformationServiceImpl" />
 	<bean id="versionInformation" class="de.ingrid.mdek.beans.VersionInformation" />
 	<bean id="downloadTest" class="de.ingrid.mdek.dwr.test.DownloadTest" />
+
+<!-- Syslist cache -->
+	<bean id="sysListMapper"
+		class="de.ingrid.mdek.SysListCache">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+
+<!-- Utility Classes -->
+	<bean id="mdekObjectUtils"
+		class="de.ingrid.mdek.util.MdekObjectUtils">
+		<property name="dataMapper">
+			<ref local="mdekDataMapper" />
+		</property>
+	</bean>
+	<bean id="mdekAddressUtils"
+		class="de.ingrid.mdek.util.MdekAddressUtils">
+		<property name="dataMapper">
+			<ref local="mdekDataMapper" />
+		</property>
+	</bean>
+	<bean id="mdekErrorUtils"
+		class="de.ingrid.mdek.util.MdekErrorUtils">
+		<property name="dataMapper">
+			<ref local="mdekDataMapper" />
+		</property>
+ 	</bean>
+
+<!-- Services -->
+	<bean id="addressService"
+		class="de.ingrid.mdek.dwr.services.AddressServiceImpl">
+		<property name="addressRequestHandler">
+			<ref local="addressRequestHandler" />
+		</property>
+	</bean>
+	<bean id="backendService"
+		class="de.ingrid.mdek.dwr.services.BackendServiceImpl">
+		<property name="generalRequestHandler">
+			<ref local="generalRequestHandler" />
+		</property>
+	</bean>
+	<bean id="catalogService"
+		class="de.ingrid.mdek.dwr.services.CatalogServiceImpl">
+		<property name="catalogRequestHandler">
+			<ref local="catalogRequestHandler" />
+		</property>
+	</bean>
+	<bean id="objectService"
+		class="de.ingrid.mdek.dwr.services.ObjectServiceImpl">
+		<property name="objectRequestHandler">
+			<ref local="objectRequestHandler" />
+		</property>
+	</bean>
+	<bean id="queryService"
+		class="de.ingrid.mdek.dwr.services.QueryServiceImpl">
+		<property name="queryRequestHandler">
+			<ref local="queryRequestHandler" />
+		</property>
+	</bean>
+	<bean id="treeService"
+		class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
+		<property name="objectRequestHandler">
+			<ref local="objectRequestHandler" />
+		</property>
+		<property name="addressRequestHandler">
+			<ref local="addressRequestHandler" />
+		</property>
+	</bean>
+
+<!-- Request Handlers -->
+	<bean id="addressRequestHandler"
+		class="de.ingrid.mdek.handler.AddressRequestHandlerImpl">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+	<bean id="catalogRequestHandler"
+		class="de.ingrid.mdek.handler.CatalogRequestHandlerImpl">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+	<bean id="generalRequestHandler"
+		class="de.ingrid.mdek.handler.GeneralRequestHandlerImpl">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+	<bean id="objectRequestHandler"
+		class="de.ingrid.mdek.handler.ObjectRequestHandlerImpl">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+	<bean id="queryRequestHandler"
+		class="de.ingrid.mdek.handler.QueryRequestHandlerImpl">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+
+<!-- Connection Facade -->
+	<bean id="connectionFacade"
+		class="de.ingrid.mdek.handler.ConnectionFacadeImpl">
+		<constructor-arg value="${communication.properties}"/>
+	</bean>
 </beans>

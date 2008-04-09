@@ -24,7 +24,7 @@ var referenceMap = [["Standort", "3360"],
 _container_.addOnLoad(function() {
 	// Initialize the address tree	
 	// Load initial first level of the tree from the server
-	EntryService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 1, 
 		function (str) {
 			for (var i = 0; i < str.length; i++) {
 				str[i].id = "AssignAdr_"+str[i].id;
@@ -49,7 +49,7 @@ _container_.addOnLoad(function() {
 
 		var deferred = new dojo.Deferred();
 
-		EntryService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
 			timeout:20000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
@@ -133,7 +133,7 @@ function addAddressToStore(adrId, store) {
 		}
 	}
 	
-	EntryService.getAddressData(adrId, "false", {
+	AddressService.getAddressData(adrId, "false", {
 		callback:function(res){
 			if (res != null) {
 				addAddressIcon(res);
@@ -214,7 +214,7 @@ function updateQueryFromInput() {
 }
 
 function browseSearchResults() {
-	EntryService.searchAddresses(currentQuery, adrPageNav.getStartHit(), 10, {
+	QueryService.searchAddresses(currentQuery, adrPageNav.getStartHit(), 10, {
 		callback: function(res){
 			updateResults(res);
 		},
@@ -232,7 +232,7 @@ startNewSearch = function() {
 	// reset the page navigation
 	adrPageNav.reset();
 
-	EntryService.searchAddresses(currentQuery, adrPageNav.getStartHit(), 10, {
+	QueryService.searchAddresses(currentQuery, adrPageNav.getStartHit(), 10, {
 		callback: function(res){
 			updateResults(res);
 		},

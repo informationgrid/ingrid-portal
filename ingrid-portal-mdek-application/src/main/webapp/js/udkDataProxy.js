@@ -316,10 +316,10 @@ udkDataProxy.handleLoadRequest = function(msg)
 		}
 	}
 	var loadCallback = function() {
-		dojo.debug("udkDataProxy calling EntryService.getNodeData("+nodeId+", "+nodeAppType+")");
+		dojo.debug("udkDataProxy calling ObjectService.getNodeData("+nodeId+", "+nodeAppType+")");
 		// ---- DWR call to load the data ----
 		if (nodeAppType == "O") {
-			EntryService.getNodeData(nodeId, nodeAppType, "false",
+			ObjectService.getNodeData(nodeId, nodeAppType, "false",
 				{
 					preHook: UtilDWR.enterLoadingState,
 					postHook: UtilDWR.exitLoadingState,
@@ -347,7 +347,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 					}
 				});
 		} else if (nodeAppType == "A") {
-			EntryService.getAddressData(nodeId, "false",
+			AddressService.getAddressData(nodeId, "false",
 				{
 					preHook: UtilDWR.enterLoadingState,
 					postHook: UtilDWR.exitLoadingState,
@@ -391,7 +391,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 	var deferred = udkDataProxy.checkForUnsavedChanges();
 	var loadErrback = function() {msg.resultHandler.errback();}
 	var loadCallback = function() {
-		EntryService.createNewNode(nodeId,
+		ObjectService.createNewNode(nodeId,
 			{
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
@@ -425,7 +425,7 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 	var deferred = udkDataProxy.checkForUnsavedChanges();
 	var loadErrback = function() {msg.resultHandler.errback();}
 	var loadCallback = function() {
-		EntryService.createNewAddress(nodeId,
+		AddressService.createNewAddress(nodeId,
 			{
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
@@ -488,8 +488,8 @@ udkDataProxy._handleSaveAddressRequest = function(msg) {
 
 
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveAddressData("+nodeData.uuid+", true)");
-	EntryService.saveAddressData(nodeData, "true",
+	dojo.debug("udkDataProxy calling AddressService.saveAddressData("+nodeData.uuid+", true)");
+	AddressService.saveAddressData(nodeData, "true",
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -537,8 +537,8 @@ udkDataProxy._handleSaveObjectRequest = function(msg) {
 
 
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
-	EntryService.saveNodeData(nodeData, "true", forcePubCond,
+	dojo.debug("udkDataProxy calling ObjectService.saveNodeData("+nodeData.uuid+", true, "+forcePubCond+")");
+	ObjectService.saveNodeData(nodeData, "true", forcePubCond,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -601,8 +601,8 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 
 
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveNodeData("+nodeData.uuid+", false, "+forcePubCond+")");
-	EntryService.saveNodeData(nodeData, "false", forcePubCond,
+	dojo.debug("udkDataProxy calling ObjectService.saveNodeData("+nodeData.uuid+", false, "+forcePubCond+")");
+	ObjectService.saveNodeData(nodeData, "false", forcePubCond,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -658,8 +658,8 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
 
 
 	// ---- DWR call to store the data ----
-	dojo.debug("udkDataProxy calling EntryService.saveAddressData("+nodeData.uuid+", false)");
-	EntryService.saveAddressData(nodeData, "false",
+	dojo.debug("udkDataProxy calling AddressService.saveAddressData("+nodeData.uuid+", false)");
+	AddressService.saveAddressData(nodeData, "false",
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -695,8 +695,8 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 		forceDelete = msg.forceDelete;
 	}
 
-	dojo.debug("udkDataProxy calling EntryService.deleteAddressWorkingCopy("+msg.id+", "+forceDelete+")");
-	EntryService.deleteAddressWorkingCopy(msg.id, forceDelete, "false",
+	dojo.debug("udkDataProxy calling AddressService.deleteAddressWorkingCopy("+msg.id+", "+forceDelete+")");
+	AddressService.deleteAddressWorkingCopy(msg.id, forceDelete, "false",
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -723,7 +723,7 @@ udkDataProxy._handleDeleteAddressWorkingCopyRequest = function(msg) {
 }
 
 udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.deleteObjectWorkingCopy("+msg.id+")");
+	dojo.debug("udkDataProxy calling ObjectService.deleteObjectWorkingCopy("+msg.id+")");
 	var title = dojo.widget.byId(msg.id).title;
 
 	var forceDelete = false;
@@ -731,7 +731,7 @@ udkDataProxy._handleDeleteObjectWorkingCopyRequest = function(msg) {
 		forceDelete = msg.forceDelete;
 	}
 
-	EntryService.deleteObjectWorkingCopy(msg.id, forceDelete, "false",
+	ObjectService.deleteObjectWorkingCopy(msg.id, forceDelete, "false",
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -787,8 +787,8 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 	}
 
 	if (nodeAppType == "O") {
-		dojo.debug("udkDataProxy calling EntryService.deleteNode("+msg.id+", "+forceDelete+")");
-		EntryService.deleteNode(msg.id, forceDelete, "false", {
+		dojo.debug("udkDataProxy calling ObjectService.deleteNode("+msg.id+", "+forceDelete+")");
+		ObjectService.deleteNode(msg.id, forceDelete, "false", {
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
@@ -825,8 +825,8 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 		);
 	
 	} else if (nodeAppType == "A") {
-		dojo.debug("udkDataProxy calling EntryService.deleteAddress("+msg.id+")");
-		EntryService.deleteAddress(msg.id, forceDelete, "false",
+		dojo.debug("udkDataProxy calling AddressService.deleteAddress("+msg.id+")");
+		AddressService.deleteAddress(msg.id, forceDelete, "false",
 			{
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
@@ -846,9 +846,9 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 }
 
 udkDataProxy.handleCanCutObjectRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.canCutNode("+msg.id+")");	
+	dojo.debug("udkDataProxy calling ObjectService.canCutNode("+msg.id+")");	
 
-	EntryService.canCutObject(msg.id,
+	ObjectService.canCutObject(msg.id,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -864,9 +864,9 @@ udkDataProxy.handleCanCutObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCanCutAddressRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.canCutAddress("+msg.id+")");	
+	dojo.debug("udkDataProxy calling AddressService.canCutAddress("+msg.id+")");	
 
-	EntryService.canCutAddress(msg.id,
+	AddressService.canCutAddress(msg.id,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -883,9 +883,9 @@ udkDataProxy.handleCanCutAddressRequest = function(msg) {
 
 
 udkDataProxy.handleCanCopyObjectRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.canCopyNode("+msg.id+", "+msg.copyTree+")");	
+	dojo.debug("udkDataProxy calling ObjectService.canCopyNode("+msg.id+", "+msg.copyTree+")");	
 
-	EntryService.canCopyObject(msg.id,
+	ObjectService.canCopyObject(msg.id,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -901,9 +901,9 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCanCopyAddressRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.canCopyAddress("+msg.id+", "+msg.copyTree+")");	
+	dojo.debug("udkDataProxy calling AddressService.canCopyAddress("+msg.id+", "+msg.copyTree+")");	
 
-	EntryService.canCopyAddress(msg.id,
+	AddressService.canCopyAddress(msg.id,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -928,8 +928,8 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 		forcePubCond = msg.forcePublicationCondition;
 	}
 
-	dojo.debug("udkDataProxy calling EntryService.moveNode("+msg.srcId+", "+msg.dstId+", "+forcePubCond+")");	
-	EntryService.moveNode(msg.srcId, msg.dstId, forcePubCond,
+	dojo.debug("udkDataProxy calling ObjectService.moveNode("+msg.srcId+", "+msg.dstId+", "+forcePubCond+")");	
+	ObjectService.moveNode(msg.srcId, msg.dstId, forcePubCond,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -978,8 +978,8 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 		moveToFreeAddress = true;
 	}
 
-	dojo.debug("udkDataProxy calling EntryService.moveAddress("+srcId+", "+dstId+", "+moveToFreeAddress+")");	
-	EntryService.moveAddress(srcId, dstId, moveToFreeAddress,
+	dojo.debug("udkDataProxy calling AddressService.moveAddress("+srcId+", "+dstId+", "+moveToFreeAddress+")");	
+	AddressService.moveAddress(srcId, dstId, moveToFreeAddress,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -995,7 +995,7 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 }
 
 udkDataProxy.handleCopyObjectRequest = function(msg) {
-	dojo.debug("udkDataProxy calling EntryService.copyNode("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
+	dojo.debug("udkDataProxy calling ObjectService.copyNode("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
 
 	var srcId = msg.srcId;
 	var dstId = msg.dstId;
@@ -1013,7 +1013,7 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 		msg.resultHandler.errback(err);
 	});
 
-	EntryService.copyNode(srcId, dstId, msg.copyTree,
+	ObjectService.copyNode(srcId, dstId, msg.copyTree,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1064,8 +1064,8 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 		msg.resultHandler.errback(err);
 	});
 
-	dojo.debug("udkDataProxy calling EntryService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+", "+copyToFreeAddress+")");	
-	EntryService.copyAddress(srcId, dstId, msg.copyTree, copyToFreeAddress,
+	dojo.debug("udkDataProxy calling AddressService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+", "+copyToFreeAddress+")");	
+	AddressService.copyAddress(srcId, dstId, msg.copyTree, copyToFreeAddress,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1098,8 +1098,8 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 udkDataProxy.handleGetObjectPathRequest = function(msg) {
 	var loadErrback = function() {msg.resultHandler.errback();}
 	var loadCallback = function() {
-		dojo.debug("udkDataProxy calling EntryService.getPathToObject("+msg.id+")");	
-		EntryService.getPathToObject(msg.id, {
+		dojo.debug("udkDataProxy calling ObjectService.getPathToObject("+msg.id+")");	
+		ObjectService.getPathToObject(msg.id, {
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
@@ -1126,8 +1126,8 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 udkDataProxy.handleGetAddressPathRequest = function(msg) {
 	var loadErrback = function() {msg.resultHandler.errback();}
 	var loadCallback = function() {
-		dojo.debug("udkDataProxy calling EntryService.getPathToAddress("+msg.id+")");	
-		EntryService.getPathToAddress(msg.id, {
+		dojo.debug("udkDataProxy calling AddressService.getPathToAddress("+msg.id+")");	
+		AddressService.getPathToAddress(msg.id, {
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},

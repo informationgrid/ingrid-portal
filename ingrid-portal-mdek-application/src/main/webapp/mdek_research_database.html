@@ -55,7 +55,7 @@ function startSearch() {
 	if (currentQuery == null)
 		return;
 
-	EntryService.queryHQL(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryHQL(currentQuery, pageNav.getStartHit(), resultsPerPage, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
@@ -100,12 +100,12 @@ this.saveAsCSV = function() {
 	});
 */
 /*
-	EntryService.queryHQLToCSV(currentQuery, function(data) {
+	QueryService.queryHQLToCSV(currentQuery, function(data) {
 		window.open(data);
 		dojo.debug(data);
 	});
 */
-	EntryService.queryHQLToCSV(currentQuery, {
+	QueryService.queryHQLToCSV(currentQuery, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(data) { window.open(data); },

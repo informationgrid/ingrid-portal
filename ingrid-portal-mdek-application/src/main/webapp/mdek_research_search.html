@@ -33,7 +33,7 @@ function startObjectSearch() {
 	var query = { term: curObjQuery };
 
 	// TODO: Implement function
-	EntryService.queryExtObjects(query, objPageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryExtObjects(query, objPageNav.getStartHit(), resultsPerPage, {
 		preHook: showObjectLoadingZone,
 		postHook: hideObjectLoadingZone,
 		callback: function(res) { updateObjectResultTable(res); updateObjectPageNavigation(res); },
@@ -50,7 +50,7 @@ function startAddressSearch() {
 	var query = { term: curAdrQuery };
 
 	// TODO: Implement function
-	EntryService.queryExtAddresses(query, adrPageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryExtAddresses(query, adrPageNav.getStartHit(), resultsPerPage, {
 		preHook: showAddressLoadingZone,
 		postHook: hideAddressLoadingZone,
 		callback: function(res) { updateAddressResultTable(res); updateAddressPageNavigation(res); },

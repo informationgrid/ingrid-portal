@@ -6,9 +6,9 @@ _container_.addOnLoad(function() {
 	var tree = dojo.widget.byId("tree");
 	var nodeDataNew = udkDataProxy._getData();
 	var nodeOld = dojo.widget.byId(_container_.customParams.selectedNodeId);
-	dojo.debug("mdek_compare_view_dialog.html calling EntryService.getNodeData("+nodeOld.id+", "+nodeOld.nodeAppType+")");
+	dojo.debug("mdek_compare_view_dialog.html calling ObjectService.getNodeData("+nodeOld.id+", "+nodeOld.nodeAppType+")");
 
-	EntryService.getNodeData(nodeOld.id, nodeOld.nodeAppType, "false",
+	ObjectService.getNodeData(nodeOld.id, nodeOld.nodeAppType, "false",
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
 			timeout:5000,

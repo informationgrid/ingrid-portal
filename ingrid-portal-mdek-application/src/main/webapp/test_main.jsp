@@ -7,8 +7,8 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 </head>
 
-<script
-	src='/ingrid-portal-mdek-application/dwr/interface/EntryService.js'></script>
+<script	src='/ingrid-portal-mdek-application/dwr/interface/ObjectService.js'></script>
+<script	src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 <script type="text/javascript">
 	var djConfig = {isDebug: true, debugAtAllCosts: false};
@@ -75,7 +75,7 @@ function initTree() {
 
 		var deferred = new dojo.Deferred();
 		
-		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
 			timeout:5000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
@@ -162,8 +162,8 @@ function listenerTest(message)
 //  dojo.debug("  Node Title: "+ message.node.title);
 //  dojo.debug("     Node ID: "+ message.node.id);
 
-  // Hier werden Daten über den ausgewählten Baumknoten vom 'EntryService' angefordert.
-  EntryService.getNodeData(message.node.id, message.node.nodeAppType, 'false',
+  // Hier werden Daten über den ausgewählten Baumknoten vom 'ObjectService' angefordert.
+  ObjectService.getNodeData(message.node.id, message.node.nodeAppType, 'false',
     {
       callback:readNodeData,	// Callback Funktion die aufgerufen wird sobald die Daten geholt wurden
       timeout:5000,
@@ -200,7 +200,7 @@ var testFunc = function() {
 
 
 // initially load data (first hierachy level) from server 
-EntryService.getSubTree(null, null, 1, 
+TreeService.getSubTree(null, null, 1, 
 	function (str) {
 		var tree = dojo.widget.byId('tree');
 		tree.setChildren(str);

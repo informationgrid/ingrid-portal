@@ -9,18 +9,35 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-public class SysListMapper {
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
+import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
+import de.ingrid.mdek.handler.CatalogRequestHandler;
+import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.utils.IngridDocument;
 
-	private final static Logger log = Logger.getLogger(SysListMapper.class);
+public class SysListCache {
+
+	private final static Logger log = Logger.getLogger(SysListCache.class);
 	
-	private DataConnectionInterface dataConnection;
+	// Injected by Spring
+	private ConnectionFacade connectionFacade;
+
+	// Initialized by spring through the init method
+	private IMdekCallerCatalog mdekCallerCatalog;
+
+	
 	private Map<Integer, List<String[]>> listCache;
 	private Map<String, Integer> keyCache;
-	
+
 	private final String SYSLIST_MAPPING_PREFIX = "sysList.map.";
 
 	private String languageCode;
 
+	public void init() {
+		mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+	}
+		
 	public void loadInitialLists() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("sysList");
 		ArrayList<Integer> initialListIds = new ArrayList<Integer>();
@@ -39,7 +56,7 @@ public class SysListMapper {
 		}
 
 		try {
-			listCache = dataConnection.getSysLists(initialListIds.toArray(new Integer[]{}), languageCode);
+			listCache = getSysLists(initialListIds.toArray(new Integer[]{}), languageCode);
 		} catch (Exception e) {
 			// Could not get the lists from the backend
 			// Possibly the connection was not established yet
@@ -134,15 +151,21 @@ public class SysListMapper {
 	
 	public List<String[]> addSysListToCache(Integer listId) {
 		Integer[] listIds = {listId};
-		listCache.put(listId, dataConnection.getSysLists(listIds, languageCode).get(listId));
+		listCache.put(listId, getSysLists(listIds, languageCode).get(listId));
 		return listCache.get(listId);
 	}
-	
-	public DataConnectionInterface getDataConnection() {
-		return dataConnection;
+
+
+	private Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
+		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, HTTPSessionHelper.getCurrentSessionId());
+		return MdekCatalogUtils.extractSysListFromResponse(response);
 	}
 
-	public void setDataConnection(DataConnectionInterface dataConnection) {
-		this.dataConnection = dataConnection;
+	public ConnectionFacade getConnectionFacade() {
+		return connectionFacade;
 	}
+
+	public void setConnectionFacade(ConnectionFacade connectionFacade) {
+		this.connectionFacade = connectionFacade;
+	}	
 }

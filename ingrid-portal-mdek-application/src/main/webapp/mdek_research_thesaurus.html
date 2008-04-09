@@ -123,7 +123,7 @@ function startSearch() {
 	if (selectedTab == "searchThesaurusNavObjects" && !objResultsLoaded) {
 //		dojo.debug("Starting object query for "+currentQuery);
 //		dojo.debug("startHit: "+objPageNav.getStartHit());
-		EntryService.queryObjectsThesaurusTerm(currentQuery, objPageNav.getStartHit(), resultsPerPage, {
+		QueryService.queryObjectsThesaurusTerm(currentQuery, objPageNav.getStartHit(), resultsPerPage, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
 			callback: function(res){
@@ -137,7 +137,7 @@ function startSearch() {
 	} else if (selectedTab == "searchThesaurusNavAddresses" && !adrResultsLoaded){
 //		dojo.debug("Starting address query for "+currentQuery);
 //		dojo.debug("startHit: "+adrPageNav.getStartHit());
-		EntryService.queryAddressesThesaurusTerm(currentQuery, adrPageNav.getStartHit(), resultsPerPage, {
+		QueryService.queryAddressesThesaurusTerm(currentQuery, adrPageNav.getStartHit(), resultsPerPage, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
 			callback: function(res){

@@ -3,9 +3,25 @@
     "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
 <dwr>
 	<allow>
-		<create creator="spring" javascript="EntryService">
-			<param name="beanName" value="entryService" />
+		<create creator="spring" javascript="AddressService">
+			<param name="beanName" value="addressService" />
 		</create>
+		<create creator="spring" javascript="BackendService">
+			<param name="beanName" value="backendService" />
+		</create>
+		<create creator="spring" javascript="CatalogService">
+			<param name="beanName" value="catalogService" />
+		</create>
+		<create creator="spring" javascript="ObjectService">
+			<param name="beanName" value="objectService" />
+		</create>
+		<create creator="spring" javascript="QueryService">
+			<param name="beanName" value="queryService" />
+		</create>
+		<create creator="spring" javascript="TreeService">
+			<param name="beanName" value="treeService" />
+		</create>
+
 		<create creator="spring" javascript="SNSService">
 			<param name="beanName" value="snsService" />
 		</create>

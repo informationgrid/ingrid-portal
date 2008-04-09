@@ -96,7 +96,7 @@ function initForm() {
 function initTree() {
 
 	// initially load data (first hierarchy level) from server 
-	EntryService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 1, 
 		function (str) {
 			var tree = dojo.widget.byId('tree');
 			tree.setChildren(str);
@@ -169,7 +169,7 @@ function initTree() {
 
 		var deferred = new dojo.Deferred();
 
-		EntryService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },
@@ -898,7 +898,7 @@ function initTableValidators() {
 function initCatalogData() {
 	var deferred = new dojo.Deferred();
 
-	EntryService.getCatalogData({
+	CatalogService.getCatalogData({
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(res) {
@@ -948,7 +948,7 @@ function initSysLists() {
 		lstIds.push(dojo.widget.byId(item).listId);
 	});
 
-	EntryService.getSysLists(lstIds, languageCode, {
+	CatalogService.getSysLists(lstIds, languageCode, {
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(res) {

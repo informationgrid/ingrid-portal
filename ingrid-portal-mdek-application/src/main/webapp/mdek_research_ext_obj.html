@@ -44,7 +44,7 @@ _container_.addOnLoad(function() {
 
 	// Init the 'custom location' select box 
 //           listId="1100" id="objSpaceGeoUnit"
-	EntryService.getSysLists([1100], "de", {
+	CatalogService.getSysLists([1100], "de", {
 		callback: function(res) {
 			dojo.widget.byId("objSpaceGeoUnit").dataProvider.setData(res[1100]);
 		},
@@ -78,7 +78,7 @@ _container_.addOnLoad(function() {
 function startSearch() {
 
 	// TODO: Implement function
-	EntryService.queryExtObjects(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryExtObjects(currentQuery, pageNav.getStartHit(), resultsPerPage, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
