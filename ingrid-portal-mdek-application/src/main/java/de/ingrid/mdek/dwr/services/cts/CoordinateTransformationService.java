@@ -1,4 +1,4 @@
-package de.ingrid.mdek.dwr.cts;
+package de.ingrid.mdek.dwr.services.cts;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package de.ingrid.mdek.dwr.sns;
+package de.ingrid.mdek.dwr.services.sns;
 
 import java.net.URL;
 import java.text.Collator;

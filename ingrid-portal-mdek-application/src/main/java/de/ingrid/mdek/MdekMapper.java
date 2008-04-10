@@ -31,7 +31,7 @@ import de.ingrid.mdek.beans.ScaleBean;
 import de.ingrid.mdek.beans.TimeReferenceBean;
 import de.ingrid.mdek.beans.UrlBean;
 import de.ingrid.mdek.beans.VectorFormatDetailsBean;
-import de.ingrid.mdek.dwr.sns.SNSTopic;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekMapper implements DataMapperInterface {

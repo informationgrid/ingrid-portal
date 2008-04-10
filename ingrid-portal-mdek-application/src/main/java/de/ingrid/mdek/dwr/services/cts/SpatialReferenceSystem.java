@@ -1,4 +1,4 @@
-package de.ingrid.mdek.dwr.cts;
+package de.ingrid.mdek.dwr.services.cts;
 
 // TODO Move this to another package? Can't make it inline because inline enums don't work with DWR
 public enum SpatialReferenceSystem {

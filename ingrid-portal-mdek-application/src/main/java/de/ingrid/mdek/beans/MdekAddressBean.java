@@ -3,7 +3,7 @@ package de.ingrid.mdek.beans;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.ingrid.mdek.dwr.sns.SNSTopic;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 
 public class MdekAddressBean {
 	

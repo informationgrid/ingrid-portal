@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import de.ingrid.mdek.dwr.sns.SNSTopic;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 
 
 /**

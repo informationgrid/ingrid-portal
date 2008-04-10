@@ -16,7 +16,6 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
-<script src='/ingrid-portal-mdek-application/dwr/interface/DownloadTest.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 
