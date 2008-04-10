@@ -605,3 +605,15 @@ UtilStore.getNewKey = function(store) {
 	}
 	return key;
 }
+
+// Util functions for the current stored catalog 
+var UtilCatalog = {}
+
+// Helper function that returns the catalog language. If no language is specified, "de" is returned
+UtilCatalog.getCatalogLanguage = function() {
+	if (catalogData && typeof(catalogData.country) != "undefined" && catalogData.country != null) {
+		return catalogData.country;
+	} else {
+		return "de";
+	}
+}

@@ -95,6 +95,12 @@
 			<ref local="queryRequestHandler" />
 		</property>
 	</bean>
+	<bean id="securityService"
+		class="de.ingrid.mdek.dwr.services.SecurityServiceImpl">
+		<property name="securityRequestHandler">
+			<ref local="securityRequestHandler" />
+		</property>
+	</bean>
 	<bean id="treeService"
 		class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
 		<property name="objectRequestHandler">
@@ -132,6 +138,12 @@
 	</bean>
 	<bean id="queryRequestHandler"
 		class="de.ingrid.mdek.handler.QueryRequestHandlerImpl">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+	<bean id="securityRequestHandler"
+		class="de.ingrid.mdek.handler.SecurityRequestHandlerImpl">
 		<property name="connectionFacade">
 			<ref local="connectionFacade" />
 		</property>

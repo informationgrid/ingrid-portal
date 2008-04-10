@@ -52,7 +52,9 @@ initOperationNameInput = function() {
 		else if (serviceType == "2")	// WFS
 			listId = 5120;
 
-		CatalogService.getSysLists([listId], "de", {
+		var languageCode = UtilCatalog.getCatalogLanguage();
+
+		CatalogService.getSysLists([listId], languageCode, {
 			callback: function(res) {
 				selectWidget.dataProvider.setData(res[listId]);
 		}});

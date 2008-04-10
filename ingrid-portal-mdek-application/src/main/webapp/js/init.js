@@ -940,8 +940,7 @@ function initSysLists() {
 	}
 */
 	// Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
-	var languageCode = "de";
-
+	var languageCode = UtilCatalog.getCatalogLanguage();
 
 	var lstIds = [];
 	dojo.lang.forEach(selectWidgetIDs, function(item){

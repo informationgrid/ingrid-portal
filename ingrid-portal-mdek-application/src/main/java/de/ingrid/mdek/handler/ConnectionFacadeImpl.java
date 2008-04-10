@@ -10,11 +10,13 @@ import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.mdek.caller.MdekCallerAddress;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerObject;
 import de.ingrid.mdek.caller.MdekCallerQuery;
+import de.ingrid.mdek.caller.MdekCallerSecurity;
 
 public class ConnectionFacadeImpl implements ConnectionFacade {
 
@@ -25,6 +27,7 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 	private IMdekCallerAddress mdekCallerAddress;
 	private IMdekCallerQuery mdekCallerQuery;
 	private IMdekCallerCatalog mdekCallerCatalog;
+	private IMdekCallerSecurity mdekCallerSecurity;
 
 	public ConnectionFacadeImpl(File communicationProperties) {
 		if (communicationProperties == null || !(communicationProperties instanceof File)) {
@@ -40,11 +43,13 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 		MdekCallerAddress.initialize(mdekCaller);
 		MdekCallerQuery.initialize(mdekCaller);
 		MdekCallerCatalog.initialize(mdekCaller);
+		MdekCallerSecurity.initialize(mdekCaller);
 		
 		mdekCallerObject = MdekCallerObject.getInstance();
 		mdekCallerAddress = MdekCallerAddress.getInstance();
 		mdekCallerQuery = MdekCallerQuery.getInstance();
 		mdekCallerCatalog = MdekCallerCatalog.getInstance();
+		mdekCallerSecurity = MdekCallerSecurity.getInstance();
 	}
 
 	// Shutdown Method is called by the Spring Framework on shutdown
@@ -83,5 +88,9 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 
 	public IMdekCallerCatalog getMdekCallerCatalog() {
 		return mdekCallerCatalog;
+	}
+
+	public IMdekCallerSecurity getMdekCallerSecurity() {
+		return mdekCallerSecurity;
 	}
 }

@@ -18,6 +18,9 @@
 		<create creator="spring" javascript="QueryService">
 			<param name="beanName" value="queryService" />
 		</create>
+		<create creator="spring" javascript="SecurityService">
+			<param name="beanName" value="securityService" />
+		</create>
 		<create creator="spring" javascript="TreeService">
 			<param name="beanName" value="treeService" />
 		</create>
@@ -57,6 +60,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.TimeReferenceBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.UrlBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.VectorFormatDetailsBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.security.Group"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.CTSResponse"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
