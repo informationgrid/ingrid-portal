@@ -1,8 +1,10 @@
-package de.ingrid.mdek.beans;
+package de.ingrid.mdek.beans.address;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.ingrid.mdek.beans.CommentBean;
+import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 
 public class MdekAddressBean {

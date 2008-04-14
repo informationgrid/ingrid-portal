@@ -6,8 +6,8 @@ import java.util.List;
 
 import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.beans.AddressSearchResultBean;
-import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekAddressUtils {

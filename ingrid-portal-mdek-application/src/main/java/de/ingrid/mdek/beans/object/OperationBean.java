@@ -1,6 +1,7 @@
-package de.ingrid.mdek.beans;
+package de.ingrid.mdek.beans.object;
 
 import java.util.ArrayList;
+
 
 public class OperationBean {
 	String name;

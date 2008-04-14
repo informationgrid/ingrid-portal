@@ -1,4 +1,4 @@
-package de.ingrid.mdek.beans;
+package de.ingrid.mdek.beans.query;
 
 import java.util.ArrayList;
 import java.util.Date;

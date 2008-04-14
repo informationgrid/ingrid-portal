@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;

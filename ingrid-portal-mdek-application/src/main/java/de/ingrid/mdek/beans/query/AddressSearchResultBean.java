@@ -1,6 +1,8 @@
-package de.ingrid.mdek.beans;
+package de.ingrid.mdek.beans.query;
 
 import java.util.ArrayList;
+
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 
 public class AddressSearchResultBean {
 	public int numHits;

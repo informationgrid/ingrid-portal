@@ -2,12 +2,12 @@ package de.ingrid.mdek.handler;
 
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.beans.AddressExtSearchParamsBean;
-import de.ingrid.mdek.beans.AddressSearchResultBean;
-import de.ingrid.mdek.beans.MdekAddressBean;
-import de.ingrid.mdek.beans.ObjectExtSearchParamsBean;
-import de.ingrid.mdek.beans.ObjectSearchResultBean;
-import de.ingrid.mdek.beans.SearchResultBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultBean;
+import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
+import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.query.SearchResultBean;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;

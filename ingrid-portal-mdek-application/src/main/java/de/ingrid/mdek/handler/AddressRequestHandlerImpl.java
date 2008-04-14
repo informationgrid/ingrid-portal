@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekError.MdekErrorType;
-import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;

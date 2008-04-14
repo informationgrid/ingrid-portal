@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 
 public interface AddressRequestHandler {
 

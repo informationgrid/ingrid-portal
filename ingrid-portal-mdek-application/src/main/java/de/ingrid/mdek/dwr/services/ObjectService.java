@@ -3,7 +3,7 @@ package de.ingrid.mdek.dwr.services;
 import java.util.List;
 import java.util.Map;
 
-import de.ingrid.mdek.beans.MdekDataBean;
+import de.ingrid.mdek.beans.object.MdekDataBean;
 
 public interface ObjectService {
 

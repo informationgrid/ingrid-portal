@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.beans.MdekDataBean;
+import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;

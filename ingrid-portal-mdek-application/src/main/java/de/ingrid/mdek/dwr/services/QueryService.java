@@ -2,12 +2,12 @@ package de.ingrid.mdek.dwr.services;
 
 import org.directwebremoting.io.FileTransfer;
 
-import de.ingrid.mdek.beans.AddressExtSearchParamsBean;
-import de.ingrid.mdek.beans.AddressSearchResultBean;
-import de.ingrid.mdek.beans.MdekAddressBean;
-import de.ingrid.mdek.beans.ObjectExtSearchParamsBean;
-import de.ingrid.mdek.beans.ObjectSearchResultBean;
-import de.ingrid.mdek.beans.SearchResultBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultBean;
+import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
+import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.query.SearchResultBean;
 
 public interface QueryService {
 

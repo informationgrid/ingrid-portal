@@ -1,9 +1,10 @@
-package de.ingrid.mdek.beans;
+package de.ingrid.mdek.beans.object;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
+import de.ingrid.mdek.beans.CommentBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 
 
