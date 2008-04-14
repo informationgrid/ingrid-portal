@@ -14,8 +14,8 @@ var scriptScope = this;
 var resultsPerPage = 10;
 var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("adrSearchExtResultsInfo"), pagingSpan:dojo.byId("adrSearchExtResultsPaging") });
 
-var currentQuery = {	// Map of strings defining the query
-	term: null,				// representing the search query
+var currentQuery = {	// Map of strings/integers defining the query. See 'AddressExtSearchParamsBean.java' for details.
+	queryTerm: null,		// representing the search query
 	relation: null,			// relation that should be used to analyze the the query (AND, OR, ...)
 	searchType: null,		// search whole word or substring (exact/like)
 	searchRange: null,		// search all fields or specific fields
@@ -44,9 +44,7 @@ _container_.addOnLoad(function() {
 
 // Starts a search with the current parameters stored in 'currentQuery' and 'pageNav'
 function startSearch() {
-
-	// TODO: Implement function
-	QueryService.queryExtAddresses(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryAddressesExtended(currentQuery, pageNav.getStartHit(), resultsPerPage, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
@@ -110,10 +108,12 @@ function readQueryFromInput() {
 	var searchTypeExact = dojo.byId("addrMode1").checked;
 	var searchAllFields = dojo.byId("addrFields1").checked;
 
-	currentQuery.term = dojo.string.trim(dojo.widget.byId("addrTopicInput").getValue());
+	currentQuery.queryTerm = dojo.string.trim(dojo.widget.byId("addrTopicInput").getValue());
 	currentQuery.relation = dojo.widget.byId("addrTopicInputBool").getValue();
-	currentQuery.searchType = searchTypeExact ? "exact" : "contains";
-	currentQuery.searchRange = searchAllFields ? "all" : "some";
+//	currentQuery.searchType = searchTypeExact ? "exact" : "contains";
+//	currentQuery.searchRange = searchAllFields ? "all" : "some";
+	currentQuery.searchType = searchTypeExact ? 0 : 1;	// Convert to int
+	currentQuery.searchRange = searchAllFields ? 0 : 1;	// Convert to int
 
 	currentQuery.street = dojo.string.trim(dojo.widget.byId("addrSpaceStreet").getValue());
 	currentQuery.zipCode = dojo.string.trim(dojo.widget.byId("addrSpaceZip").getValue());

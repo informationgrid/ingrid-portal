@@ -2,13 +2,14 @@ package de.ingrid.mdek.dwr.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
+import de.ingrid.mdek.beans.AddressExtSearchParamsBean;
 import de.ingrid.mdek.beans.AddressSearchResultBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.handler.QueryRequestHandler;
@@ -39,11 +40,11 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	
-	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits) {
+	public AddressSearchResultBean queryAddressesExtended(AddressExtSearchParamsBean query, int startHit, int numHits) {
 		log.debug("Starting extended address query.");
 
 		try {
-			  return queryRequestHandler.queryExtAddresses(params, startHit, numHits);
+			  return queryRequestHandler.queryAddressesExtended(query, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while executing an extended search for addresses.", e);
@@ -54,12 +55,11 @@ public class QueryServiceImpl implements QueryService {
 		return new AddressSearchResultBean();
 	}
 
-	
-	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits) {
-		log.debug("Starting extended address query.");
+	public ObjectSearchResultBean queryObjectsExtended(ObjectExtSearchParamsBean query, int startHit, int numHits) {
+		log.debug("Starting extended object query.");
 
 		try {
-			  return queryRequestHandler.queryExtObjects(params, startHit, numHits);
+			  return queryRequestHandler.queryObjectsExtended(query, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while executing an extended search for objects.", e);
@@ -67,7 +67,38 @@ public class QueryServiceImpl implements QueryService {
 		} catch (Exception e) {
 			log.error("Error while executing an extended search for objects.", e);
 		}
-		return new ObjectSearchResultBean();		
+		return new ObjectSearchResultBean();
+	}
+
+	public AddressSearchResultBean queryAddressesFullText(String searchTerm, int startHit, int numHits) {
+		log.debug("Starting fulltext address query.");
+
+		try {
+			  return queryRequestHandler.queryAddressesFullText(searchTerm, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while executing a fulltext search for addresses.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while executing a fulltext search for addresses.", e);
+		}
+		return new AddressSearchResultBean();
+	}
+
+	
+	public ObjectSearchResultBean queryObjectsFullText(String searchTerm, int startHit, int numHits) {
+		log.debug("Starting fulltext object query.");
+
+		try {
+			  return queryRequestHandler.queryObjectsFullText(searchTerm, startHit, numHits);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while executing a fulltext search for objects.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while executing a fulltext search for objects.", e);
+		}
+		return new ObjectSearchResultBean();
 	}
 
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits) {

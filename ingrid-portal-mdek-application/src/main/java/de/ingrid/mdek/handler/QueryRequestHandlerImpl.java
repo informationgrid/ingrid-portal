@@ -1,11 +1,11 @@
 package de.ingrid.mdek.handler;
 
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.beans.AddressExtSearchParamsBean;
 import de.ingrid.mdek.beans.AddressSearchResultBean;
 import de.ingrid.mdek.beans.MdekAddressBean;
+import de.ingrid.mdek.beans.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
@@ -41,30 +41,27 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
-	public AddressSearchResultBean queryExtAddresses(Map<String, String> params, int startHit, int numHits) {
-	/*
-		IngridDocument query = new IngridDocument();
-		query.putAll(params);
-				
-		//TODO Implement
-//		IngridDocument response = mdekCallerQuery.queryExtAddresses(getCurrentIPlug(), query, startHit, numHits, getCurrentSessionId());
-//		return extractAddressSearchResultsFromResponse(response);
-	*/
-		IngridDocument response = mdekCallerQuery.queryAddressesFullText(connectionFacade.getCurrentPlugId(), (String) params.get("term"), startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+	public AddressSearchResultBean queryAddressesExtended(AddressExtSearchParamsBean query, int startHit, int numHits) {
+		IngridDocument queryParams = MdekUtils.convertAddressExtSearchParamsToIngridDoc(query);
+
+		IngridDocument response = mdekCallerQuery.queryAddressesExtended(connectionFacade.getCurrentPlugId(), queryParams, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
-	public ObjectSearchResultBean queryExtObjects(Map<String, String> params, int startHit, int numHits) {
-	/*
-		IngridDocument query = new IngridDocument();
-		query.putAll(params);
+	public ObjectSearchResultBean queryObjectsExtended(ObjectExtSearchParamsBean query, int startHit, int numHits) {
+		IngridDocument queryParams = MdekUtils.convertObjectExtSearchParamsToIngridDoc(query);
 
-		//TODO Implement
-//		IngridDocument response = mdekCallerQuery.queryExtAddresses(getCurrentIPlug(), query, startHit, numHits, getCurrentSessionId());
-//		return extractAddressSearchResultsFromResponse(response);
-	 */
+		IngridDocument response = mdekCallerQuery.queryObjectsExtended(connectionFacade.getCurrentPlugId(), queryParams, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
+	}
 
-		IngridDocument response = mdekCallerQuery.queryObjectsFullText(connectionFacade.getCurrentPlugId(), (String) params.get("term"), startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+	public AddressSearchResultBean queryAddressesFullText(String searchTerm, int startHit, int numHits) {
+		IngridDocument response = mdekCallerQuery.queryAddressesFullText(connectionFacade.getCurrentPlugId(), searchTerm, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
+	}
+
+	public ObjectSearchResultBean queryObjectsFullText(String searchTerm, int startHit, int numHits) {
+		IngridDocument response = mdekCallerQuery.queryObjectsFullText(connectionFacade.getCurrentPlugId(), searchTerm, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
 	}
 

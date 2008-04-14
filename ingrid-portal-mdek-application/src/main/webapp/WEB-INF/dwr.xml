@@ -39,6 +39,7 @@
  		<convert converter="bean" match="java.lang.StackTraceElement" />
 
 		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.AddressExtSearchParamsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.AddressSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
@@ -52,6 +53,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.MdekAddressBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.MdekDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.MediaOptionBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ObjectExtSearchParamsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.ObjectSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.OperationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.OperationParameterBean"/>

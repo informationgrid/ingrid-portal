@@ -15,8 +15,8 @@ var scriptScope = this;
 var resultsPerPage = 10;
 var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchExtResultsInfo"), pagingSpan:dojo.byId("objSearchExtResultsPaging") });
 
-var currentQuery = {	// Map of strings defining the query
-	term: null,					// search query
+var currentQuery = {	// Map of strings defining the query. See 'ObjectExtSearchParamsBean.java' for more details.
+	queryTerm: null,			// search query
 	relation: null,				// relation that should be used to analyze the query (AND / OR)
 	objClasses: null,			// array of ints that represent the object classes that should be included in the search
 	thesaurusTerms: null,		// array of topicIds - descriptors and non-descriptors
@@ -24,9 +24,10 @@ var currentQuery = {	// Map of strings defining the query
 	geoThesaurusTerms: null,	// array of areaIds - locations
 	geoThesaurusRelation: null,	// relation that should be used to combine the location topics (AND / OR)
 	customLocation: null,		// custom location id from the catalog
-	timeFromTo: null,			// Time reference. Array with two entries, begin and end.
+	timeBegin: null,			// Time reference. Date object begin.
+	timeEnd: null,				// Time reference. Date object end.
 	timeAt: null,				// Time reference. Date object.
-	timeIntersect: null,		// Flag signaling if the entered interval should be cut by the result 
+	timeIntersects: null,		// Flag signaling if the entered interval should be cut by the result 
 	timeContains: null			// Flag signaling if the entered interval should be included in the result
 }
 
@@ -78,9 +79,7 @@ _container_.addOnLoad(function() {
 
 // Starts a search with the current parameters stored in 'currentQuery' and 'pageNav'
 function startSearch() {
-
-	// TODO: Implement function
-	QueryService.queryExtObjects(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryObjectsExtended(currentQuery, pageNav.getStartHit(), resultsPerPage, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
@@ -128,7 +127,7 @@ this.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
 
 // Read the input fields and write the query to 'currentQuery'
 function readQueryFromInput() {
-	currentQuery.term = dojo.string.trim(dojo.widget.byId("objTopicInput").getValue());
+	currentQuery.queryTerm = dojo.string.trim(dojo.widget.byId("objTopicInput").getValue());
 	currentQuery.relation = dojo.widget.byId("objTopicInputBool").getValue();
 	// Read obj class checkboxes
 	currentQuery.objClasses = [];
@@ -156,20 +155,21 @@ function readQueryFromInput() {
 	currentQuery.customLocation = dojo.widget.byId("objSpaceGeoUnit").getValue();
 
 	// Time ref
-	currentQuery.timeFromTo = [];
+	currentQuery.timeBegin = null;
+	currentQuery.timeEnd = null;
 	currentQuery.timeAt = null;
 
 	if (dojo.byId("objTimeRef1").checked) {
 		// 'From-To' checked
-		currentQuery.timeFromTo.push(dojo.widget.byId("objTimeRef1From").getValue());
-		currentQuery.timeFromTo.push(dojo.widget.byId("objTimeRef1To").getValue());
+		currentQuery.timeBegin = dojo.widget.byId("objTimeRef1From").getValue();
+		currentQuery.timeEnd = dojo.widget.byId("objTimeRef1To").getValue();
 
 	} else if (dojo.byId("objTimeRef2").checked) {
 		// 'At' checked
 		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
 	}
 
-	currentQuery.timeIntersect = dojo.widget.byId("objTimeRefExtend1").checked;
+	currentQuery.timeIntersects = dojo.widget.byId("objTimeRefExtend1").checked;
 	currentQuery.timeContains = dojo.widget.byId("objTimeRefExtend2").checked;
 
 	dojo.debugShallow(currentQuery);

@@ -9,9 +9,11 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.beans.AddressExtSearchParamsBean;
 import de.ingrid.mdek.beans.AddressSearchResultBean;
 import de.ingrid.mdek.beans.CSVSearchResultBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.SearchResultBean;
 import de.ingrid.mdek.beans.VersionInformation;
@@ -73,6 +75,15 @@ public class MdekUtils {
 			return null;
 		}
 	}
+
+	private static String convertDateToTimestamp(Date date) {
+		if (date == null) {
+			return null;
+		} else {
+			return timestampFormatter.format(date);
+		}
+	}
+
 
 	public static List<VersionInformation> extractVersionInformationFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -201,6 +212,68 @@ public class MdekUtils {
 		result.put(MdekKeys.NAME, group.getName());
 		result.put(MdekKeys.ID, group.getId());
 
+		return result;
+	}
+
+	public static IngridDocument convertAddressExtSearchParamsToIngridDoc(AddressExtSearchParamsBean query) {
+		IngridDocument result = new IngridDocument();
+		
+		if (query == null) {
+			return result;
+		}
+
+
+		// TODO Add missing values when they're added to MdekUtils
+		result.put(MdekKeys.QUERY_TERM, query.getQueryTerm());
+		result.put(MdekKeys.RELATION, query.getRelation());
+//		result.put(MdekKeys.SEARCH_TYPE, query.getSearchType());
+//		result.put(MdekKeys.SEARCH_RANGE, query.getSearchRange());
+		result.put(MdekKeys.STREET, query.getStreet());
+		result.put(MdekKeys.POSTAL_CODE, query.getZipCode());	// ?
+		result.put(MdekKeys.CITY, query.getCity());
+
+		return result;
+	}
+
+	public static IngridDocument convertObjectExtSearchParamsToIngridDoc(ObjectExtSearchParamsBean query) {
+		IngridDocument result = new IngridDocument();
+		
+		if (query == null) {
+			return result;
+		}
+
+		result.put(MdekKeys.QUERY_TERM, query.getQueryTerm());
+		result.put(MdekKeys.RELATION, query.getRelation());
+
+		result.put(MdekKeys.OBJ_CLASSES, query.getObjClasses());
+
+		ArrayList<IngridDocument> thesaurusTerms = new ArrayList<IngridDocument>();
+		for (String snsId : query.getThesaurusTerms()) {
+			IngridDocument snsTopic = new IngridDocument();
+			snsTopic.put(MdekKeys.TERM_SNS_ID, snsId);
+			thesaurusTerms.add(snsTopic);
+		}
+		result.put(MdekKeys.THESAURUS_TERMS, thesaurusTerms);
+		result.put(MdekKeys.THESAURUS_RELATION, query.getThesaurusRelation());
+		
+		ArrayList<IngridDocument> geoThesaurusTerms = new ArrayList<IngridDocument>();
+		for (String snsId : query.getGeoThesaurusTerms()) {
+			IngridDocument snsTopic = new IngridDocument();
+			snsTopic.put(MdekKeys.LOCATION_SNS_ID, snsId);
+			thesaurusTerms.add(snsTopic);
+		}
+		result.put(MdekKeys.GEO_THESAURUS_TERMS, geoThesaurusTerms);
+		result.put(MdekKeys.GEO_THESAURUS_RELATION, query.getGeoThesaurusRelation());
+
+		result.put(MdekKeys.CUSTOM_LOCATION, query.getCustomLocation());
+
+		result.put(MdekKeys.TIME_FROM, convertDateToTimestamp(query.getTimeBegin()));
+		result.put(MdekKeys.TIME_TO, convertDateToTimestamp(query.getTimeEnd()));
+		result.put(MdekKeys.TIME_AT, convertDateToTimestamp(query.getTimeAt()));
+
+		result.put(MdekKeys.TIME_INTERSECT, query.getTimeIntersects());
+		result.put(MdekKeys.TIME_CONTAINS, query.getTimeContains());
+		
 		return result;
 	}
 }

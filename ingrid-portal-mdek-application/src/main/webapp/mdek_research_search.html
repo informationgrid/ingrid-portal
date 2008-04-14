@@ -27,13 +27,11 @@ _container_.addOnLoad(function() {
 
 // Starts a search with the current parameters stored in 'curObjQuery' and 'objPageNav'
 function startObjectSearch() {
-	if (curObjQuery == null) {
+	if (curObjQuery == null || dojo.string.trim(curObjQuery) == "") {
 		return;
 	}
-	var query = { term: curObjQuery };
 
-	// TODO: Implement function
-	QueryService.queryExtObjects(query, objPageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryObjectsFullText(curObjQuery, objPageNav.getStartHit(), resultsPerPage, {
 		preHook: showObjectLoadingZone,
 		postHook: hideObjectLoadingZone,
 		callback: function(res) { updateObjectResultTable(res); updateObjectPageNavigation(res); },
@@ -44,13 +42,11 @@ function startObjectSearch() {
 }
 // Starts a search with the current parameters stored in 'curAdrQuery' and 'adrPageNav'
 function startAddressSearch() {
-	if (curAdrQuery == null) {
+	if (curAdrQuery == null || dojo.string.trim(curAdrQuery) == "") {
 		return;
 	}
-	var query = { term: curAdrQuery };
 
-	// TODO: Implement function
-	QueryService.queryExtAddresses(query, adrPageNav.getStartHit(), resultsPerPage, {
+	QueryService.queryAddressesFullText(curAdrQuery, adrPageNav.getStartHit(), resultsPerPage, {
 		preHook: showAddressLoadingZone,
 		postHook: hideAddressLoadingZone,
 		callback: function(res) { updateAddressResultTable(res); updateAddressPageNavigation(res); },
