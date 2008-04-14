@@ -174,8 +174,8 @@ init = function() {
 	// Init table validators
 	dojo.widget.byId("operationsParameter").setValidationFunctions([
 		{target: "name", validateFunction: function(item) { return (item != null && dojo.string.trim(item) != ""); }},
-		{target: "optional", validateFunction: function(item) { return (item != null && item != ""); }},
-		{target: "multiple", validateFunction: function(item) { return (item != null && item != ""); }}
+		{target: "optional", validateFunction: function(item) { return (item != null && item+"" != ""); }},
+		{target: "multiple", validateFunction: function(item) { return (item != null && item+"" != ""); }}
 	]);
 	dojo.widget.byId("operationsPlatform").setValidationFunctions([
 		{target: "title", validateFunction: function(item) { return (item != null && dojo.string.trim(item) != ""); }}
@@ -192,8 +192,7 @@ getOperation = function() {
 		operation.name = dojo.widget.byId("operationsName").getValue();
 	else {
 		var selectWidget = dojo.widget.byId("operationsNameSelect");
-//		operation.name = selectWidget.getDisplayValueForValue(selectWidget.getValue());
-		operation.name = selectWidget.getDisplayValueForValue(selectWidget.textInputNode.value);
+		operation.name = selectWidget.getDisplayValue();
 	}
 	operation.description = dojo.widget.byId("operationsDescription").getValue();
 	operation.platform = dojo.widget.byId("operationsPlatform").store.getData();
