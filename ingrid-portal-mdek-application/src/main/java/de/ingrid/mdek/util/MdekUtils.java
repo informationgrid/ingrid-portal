@@ -226,10 +226,10 @@ public class MdekUtils {
 		// TODO Add missing values when they're added to MdekUtils
 		result.put(MdekKeys.QUERY_TERM, query.getQueryTerm());
 		result.put(MdekKeys.RELATION, query.getRelation());
-//		result.put(MdekKeys.SEARCH_TYPE, query.getSearchType());
-//		result.put(MdekKeys.SEARCH_RANGE, query.getSearchRange());
+		result.put(MdekKeys.SEARCH_TYPE, query.getSearchType());
+		result.put(MdekKeys.SEARCH_RANGE, query.getSearchRange());
 		result.put(MdekKeys.STREET, query.getStreet());
-		result.put(MdekKeys.POSTAL_CODE, query.getZipCode());	// ?
+		result.put(MdekKeys.POSTAL_CODE, query.getZipCode());
 		result.put(MdekKeys.CITY, query.getCity());
 
 		return result;

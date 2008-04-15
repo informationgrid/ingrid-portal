@@ -185,13 +185,13 @@ this.resetInput = function() {
 	dojo.widget.byId("objExtSearchLocationTerms").store.clearData();
 	dojo.widget.byId("geoThesaurusTermsRelation").setValue(0);
 	dojo.widget.byId("objSpaceGeoUnit").setValue("");
-	dojo.byId("objTimeRef1").checked = false
-	dojo.byId("objTimeRef2").checked = false
+	dojo.byId("objTimeRef1").checked = false;
+	dojo.byId("objTimeRef2").checked = false;
 	dojo.widget.byId("objTimeRef1From").clearValue();
 	dojo.widget.byId("objTimeRef1To").clearValue();
 	dojo.widget.byId("objTimeRef2On").clearValue();
-	dojo.widget.byId("objTimeRefExtend1").setValue(true);
-	dojo.widget.byId("objTimeRefExtend2").setValue(true);
+	dojo.widget.byId("objTimeRefExtend1").setValue(false);
+	dojo.widget.byId("objTimeRefExtend2").setValue(false);
 
 	readQueryFromInput();
 }
@@ -810,8 +810,8 @@ function hideLoadingZone() {
           <div class="inputContainer noSpaceBelow">
             <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
             <div class="checkboxContainer">
-              <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="Checkbox" checked /><label class="inActive" for="objTimeRefExtend1">Der Zeitbezug der Ergebnisse <strong>schneidet</strong> das eingegebene Suchintervall</label></span>
-              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" checked /><label class="inActive" for="objTimeRefExtend2">Der Zeitbezug der Ergebnisse <strong>umschlie&szlig;</strong> das eingegebene Suchintervall</label></span>
+              <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend1">Der Zeitbezug der Ergebnisse <strong>schneidet</strong> das eingegebene Suchintervall</label></span>
+              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend2">Der Zeitbezug der Ergebnisse <strong>umschlie&szlig;</strong> das eingegebene Suchintervall</label></span>
             </div>
           </div>
     	  </div>
