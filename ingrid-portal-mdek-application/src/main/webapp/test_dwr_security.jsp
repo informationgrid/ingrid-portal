@@ -94,6 +94,7 @@ storeGroup = function() {
 	});
 }
 
+
 function updateGroup(group, newData) {
 	var groupStore = dojo.widget.byId("groupTable").store;
 	groupStore.update(group, "id", newData.id);
@@ -103,6 +104,12 @@ function updateGroup(group, newData) {
 	groupStore.update(group, "modificationTime", newData.modificationTime);
 }
 
+
+testSecurity = function() {
+	SecurityService.testSecurity();
+}
+
+
 </script>
 </head>
 
@@ -111,6 +118,7 @@ function updateGroup(group, newData) {
 	<button dojoType="Button" onclick="javascript:getGroupDetails();">Get Group Details</button>
 	<button dojoType="Button" onclick="javascript:createGroup();">Create Group</button>
 	<button dojoType="Button" onclick="javascript:storeGroup();">Store Group</button>
+	<button dojoType="Button" onclick="javascript:testSecurity();">Test</button>
 
 	<table id="groupTable" valueField="id" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%m:%S" minRows="4" cellspacing="0" class="filteringTable interactive readonly">
 		<thead>

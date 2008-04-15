@@ -161,12 +161,16 @@ function readQueryFromInput() {
 
 	if (dojo.byId("objTimeRef1").checked) {
 		// 'From-To' checked
-		currentQuery.timeBegin = dojo.widget.byId("objTimeRef1From").getValue();
-		currentQuery.timeEnd = dojo.widget.byId("objTimeRef1To").getValue();
+//		currentQuery.timeBegin = dojo.widget.byId("objTimeRef1From").getValue();
+//		currentQuery.timeEnd = dojo.widget.byId("objTimeRef1To").getValue();
+
+		currentQuery.timeBegin = dojo.date.parse(dojo.widget.byId("objTimeRef1From").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
+		currentQuery.timeEnd = dojo.date.parse(dojo.widget.byId("objTimeRef1To").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
 
 	} else if (dojo.byId("objTimeRef2").checked) {
 		// 'At' checked
-		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
+//		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
+		currentQuery.timeAt = dojo.date.parse(dojo.widget.byId("objTimeRef2On").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
 	}
 
 	currentQuery.timeIntersects = dojo.widget.byId("objTimeRefExtend1").checked;
@@ -797,15 +801,29 @@ function hideLoadingZone() {
           <div class="spacer"></div>
           <div class="inputContainer spaceBelow">
             <input type="radio" name="objTimeRef" id="objTimeRef1" class="radio entry first" />
+<!-- 
             <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
             <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1From"></div>
             <label class="inActive" for="objTimeRef1To">Bis:</label>
             <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1To"></div>
-           </div>
+ -->
+            <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
+            <input type="text" id="objTimeRef1From" name="objTimeRef1From" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <label class="inActive" for="objTimeRef1To">Bis:</label>
+            <input type="text" id="objTimeRef1To" name="objTimeRef1To" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <label class="inActive">[TT.MM.JJJJ]</label>
+
+          </div>
           <div class="inputContainer">
             <input type="radio" name="objTimeRef" id="objTimeRef2" class="radio entry first" />
+<!-- 
             <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
             <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef2On"></div>
+ -->
+            <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
+            <input type="text" id="objTimeRef2On" name="objTimeRef2On" class="w116" dojoType="ingrid:ValidationTextBox" />
+            <label class="inActive">[TT.MM.JJJJ]</label>
+           
            </div>
           <div class="inputContainer noSpaceBelow">
             <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
