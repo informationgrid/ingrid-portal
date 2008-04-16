@@ -1103,7 +1103,7 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
-				timeout:10000,
+//				timeout:10000,
 				errorHandler:function(message) {
 					UtilDWR.exitLoadingState();
 					alert("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
@@ -1131,7 +1131,7 @@ udkDataProxy.handleGetAddressPathRequest = function(msg) {
 				preHook: UtilDWR.enterLoadingState,
 				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
-				timeout:10000,
+//				timeout:10000,
 				errorHandler:function(message) {
 					UtilDWR.exitLoadingState();
 					alert("Error in js/udkDataProxy.js: Error while getting path to address: " + message);

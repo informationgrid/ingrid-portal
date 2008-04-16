@@ -670,6 +670,7 @@ _expandPathRec = function(pathList, index, resultHandler) {
 
 	var objRoot = dojo.widget.byId("objectRoot");
 	var adrRoot = dojo.widget.byId("addressRoot");
+	var adrFreeRoot = dojo.widget.byId("addressFreeRoot");
 	var nextNode = dojo.widget.byId(pathList[index]);
 	var treeController = dojo.widget.byId("treeController");
 
@@ -684,8 +685,14 @@ _expandPathRec = function(pathList, index, resultHandler) {
 				_expandPathRec(pathList, 0, resultHandler);
 			});
 		} else if (!adrRoot.isExpanded) {
-			// Expand the root objects if they aren't already expanded
+			// Expand the root addresses if they aren't already expanded
 			var deferred = treeController.expand(adrRoot);
+			deferred.addCallback(function() {
+				_expandPathRec(pathList, 0, resultHandler);
+			});
+		} else if (!adrFreeRoot.isExpanded) {
+			// Expand the 'free' addresses if they aren't already expanded
+			var deferred = treeController.expand(adrFreeRoot);
 			deferred.addCallback(function() {
 				_expandPathRec(pathList, 0, resultHandler);
 			});
