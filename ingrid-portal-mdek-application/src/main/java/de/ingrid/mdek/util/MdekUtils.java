@@ -176,7 +176,7 @@ public class MdekUtils {
 			for (IngridDocument group : groups) {
 				Group g = new Group();
 				g.setName((String) group.get(MdekKeys.NAME));
-				g.setId((Long) group.get(MdekKeys.ID));
+				g.setId((Long) group.get(MdekKeysSecurity.IDC_GROUP_ID));
 				g.setLastEditor((String) group.get(MdekKeys.MOD_UUID));
 				g.setCreationTime(convertTimestampToDate((String) group.get(MdekKeys.DATE_OF_CREATION)));
 				g.setModificationTime(convertTimestampToDate((String) group.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
@@ -193,7 +193,7 @@ public class MdekUtils {
 		Group group = new Group();
 		if (result != null) {
 			group.setName((String) result.get(MdekKeys.NAME));
-			group.setId((Long) result.get(MdekKeys.ID));
+			group.setId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
 			group.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
 			group.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			group.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
@@ -210,7 +210,7 @@ public class MdekUtils {
 		}
 
 		result.put(MdekKeys.NAME, group.getName());
-		result.put(MdekKeys.ID, group.getId());
+		result.put(MdekKeysSecurity.IDC_GROUP_ID, group.getId());
 
 		return result;
 	}
