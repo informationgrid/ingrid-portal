@@ -260,7 +260,7 @@ public class MdekUtils {
 		for (String snsId : query.getGeoThesaurusTerms()) {
 			IngridDocument snsTopic = new IngridDocument();
 			snsTopic.put(MdekKeys.LOCATION_SNS_ID, snsId);
-			thesaurusTerms.add(snsTopic);
+			geoThesaurusTerms.add(snsTopic);
 		}
 		result.put(MdekKeys.GEO_THESAURUS_TERMS, geoThesaurusTerms);
 		result.put(MdekKeys.GEO_THESAURUS_RELATION, query.getGeoThesaurusRelation());
