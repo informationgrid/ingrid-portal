@@ -353,7 +353,7 @@ function checkValidityOfAddressInputElements() {
 		}
 	}
 
-	var addressClass = dojo.widget.byId("addressType").getValue().substr(11, 1);		// AddressTypex
+	var addressClass = UtilAddress.getAddressClass();
 
 	if (!dojo.lang.every(adrUiInputElements, isValid) || !dojo.lang.every(this["adrClass"+addressClass+"UiInputElements"], isValid)) {
 		return false;

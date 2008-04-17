@@ -38,6 +38,28 @@ _container_.addOnLoad(function() {
             }
 	});
 
+    // Pressing 'enter' on the street field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("addrSpaceStreet").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+    // Pressing 'enter' on the zip code field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("addrSpaceZip").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+    // Pressing 'enter' on the city field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("addrSpaceCity").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+
 	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
 });
 

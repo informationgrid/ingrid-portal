@@ -69,6 +69,26 @@ createGroup = function() {
 	});	
 }
 
+deleteGroup = function() {
+	var selectedData = dojo.widget.byId("groupTable").getSelectedData();
+
+	if (selectedData.length != 1) {
+		return;
+	}
+
+	var group = selectedData[0];
+
+	SecurityService.deleteGroup(group.id, {
+		callback: function() {
+			dojo.widget.byId("groupTable").store.removeData(group);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+}
+
 storeGroup = function() {
 	var selectedData = dojo.widget.byId("groupTable").getSelectedData();
 
@@ -86,6 +106,57 @@ storeGroup = function() {
 	SecurityService.storeGroup(group, true, {
 		callback: function(data) {
 			updateGroup(group, data);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+}
+
+createCatalogAdmin = function() {
+	var catAdmin = {
+		addressUuid: "3866462F-B449-11D2-9A86-080000507261",
+		groupId: "247308",	// Administrators
+		role: "1",			// IDC_ROLE_CATALOG_ADMINISTRATOR
+		parentUserId: null
+	}
+
+	SecurityService.createUser(catAdmin, true, {
+		callback: function(data) {
+			dojo.widget.byId("catAdminTable").store.setData([data]);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});	
+}
+
+getCatalogAdmin = function() {
+	SecurityService.getCatalogAdmin( {
+		callback: function(data) {
+			dojo.widget.byId("catAdminTable").store.setData([data]);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});	
+}
+
+deleteCatalogAdmin = function() {
+	SecurityService.getCatalogAdmin( {
+		callback: function(data) {
+			SecurityService.deleteUser(data.id, {
+				callback: function(data) {
+					dojo.widget.byId("catAdminTable").store.clearData();
+				},
+				errorHandler: function(errMsg, err) {
+					dojo.debug(errMsg);
+					dojo.debugShallow(err);
+				}
+			});			
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug(errMsg);
@@ -114,18 +185,49 @@ testSecurity = function() {
 </head>
 
 <body>
+	<h1>Group test</h1>
 	<button dojoType="Button" onclick="javascript:getGroups();">Get Groups</button>
 	<button dojoType="Button" onclick="javascript:getGroupDetails();">Get Group Details</button>
 	<button dojoType="Button" onclick="javascript:createGroup();">Create Group</button>
 	<button dojoType="Button" onclick="javascript:storeGroup();">Store Group</button>
-	<button dojoType="Button" onclick="javascript:testSecurity();">Test</button>
+	<button dojoType="Button" onclick="javascript:deleteGroup();">Delete Group</button>
 
+	<h1>Group Table</h1>
 	<table id="groupTable" valueField="id" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%m:%S" minRows="4" cellspacing="0" class="filteringTable interactive readonly">
 		<thead>
 			<tr>
-				<th field="id" dataType="String" width="120">Identifier</th>
+				<th field="id" dataType="String" width="80">Identifier</th>
  				<th field="name" dataType="String" width="200">Name</th>
  				<th field="lastEditor" dataType="String" width="200">Ge&auml;ndert von</th>
+ 				<th field="creationTime" dataType="Date" width="200">Erstellt am</th>
+ 				<th field="modificationTime" dataType="Date" width="200">Ge&auml;ndert am</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+
+	<h1>User test</h1>
+	<h2>Catalog Admin</h2>
+	<button dojoType="Button" onclick="javascript:createCatalogAdmin();">Create Catalog Administrator</button>
+	<button dojoType="Button" onclick="javascript:getCatalogAdmin();">Get Catalog Administrator</button>
+	<button dojoType="Button" onclick="javascript:deleteCatalogAdmin();">Delete Catalog Administrator</button>
+
+<!-- 
+	<h1>Misc test</h1>
+	<button dojoType="Button" onclick="javascript:testSecurity();">Test</button>
+ -->
+
+	<table id="catAdminTable" valueField="id" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%m:%S" minRows="1" cellspacing="0" class="filteringTable interactive readonly">
+		<thead>
+			<tr>
+				<th field="id" dataType="String" width="80">Identifier</th>
+ 				<th field="addressUuid" dataType="String" width="250">Address UUID</th>
+ 				<th field="groupId" dataType="String" width="80">Group ID</th>
+ 				<th field="role" dataType="String" width="80">Role</th>
+ 				<th field="parentUserId" dataType="String" width="120">Parent User ID</th>
+ 				<th field="lastEditor" dataType="String" width="250">Ge&auml;ndert von</th>
  				<th field="creationTime" dataType="Date" width="200">Erstellt am</th>
  				<th field="modificationTime" dataType="Date" width="200">Ge&auml;ndert am</th>
 			</tr>

@@ -1721,22 +1721,25 @@ function hideSplash(){
 			<table cellspacing="0">
 		  	<tbody>
 		  		<tr>
-		  		  <td class="label required"><label for="addressTitle">Adresstitel*</label></td>
+		  		  <td class="label"><label for="addressTitle">Adresstitel</label></td>
 		  		  <td colspan="2"><input type="text" id="addressTitle" name="addressTitle" class="w550" disabled="true" dojoType="ingrid:ValidationTextBox" /></td></tr>
 		  		<tr>
-		  		  <td id="addressTypeLabel" class="label required col1"><label for="addressType">Adresstyp*</label></td>
+		  		  <td id="addressTypeLabel" class="label col1"><label for="addressType">Adresstyp</label></td>
 		  		  <td class="col2">
+
+				  <input type="text" id="addressType" class="w405" disabled="true" dojoType="ingrid:ValidationTextBox" />
+<!-- 
 		          <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" disabled="true" id="addressType" name="addressType">
-		            <!-- TODO: fill in jsp -->
 		            <option value="AddressType0">Institution</option>
 		            <option value="AddressType1">Einheit</option>
 		            <option value="AddressType2">Person</option>
 		            <option value="AddressType3">Freie Adresse</option>
 		          </select>
+ -->
 		        </td>
 		  		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
 		  		<tr>
-		  		  <td class="label"><label for="addressOwner">Verantwortlicher</label></td>
+		  		  <td id="addressOwnerLabel" class="label required"><label for="addressOwner">Verantwortlicher*</label></td>
 		  		  <td><input dojoType="ingrid:Select" style="width:386px;" id="addressOwner" disabled="true" /></td>
 	              <td class="note"><strong>Status:</strong> <span id="addressWorkState"></span></td>
 

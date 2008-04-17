@@ -289,12 +289,12 @@ function selectUDKClass()
 	}
 }
 
-function selectUDKAddressType()
+function selectUDKAddressType(addressType)
 {
-	var val = dojo.widget.byId("addressType").getValue();
-	if (val) {
+	var val = UtilAddress.getAddressClass(addressType);
+	if (val != -1) {
 		var contentForm = dojo.widget.byId("contentFormAddress");
-		contentForm.setSelectedClass(val);
+		contentForm.setSelectedClass("AddressType"+val);
 		refreshTabContainers();
 	}
 }

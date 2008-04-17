@@ -86,6 +86,7 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 .sectionTop td.note { font-size:10px; color:#fff; height:27px; }
 .sectionBottom { position:relative; top:0; overflow:auto; width:730px; }
 .sectionBottomContent { position:relative; width:708px; background:#fff; }
+.sectionTop input.noEdit { background:#156496 !important; color:#ffffff !important }
 
 /*** content block ***/
 .contentBlock { position:relative; margin-top:4px; padding-bottom:3px; background:#e6f0f5; }
@@ -281,6 +282,7 @@ textarea { line-height:17px; }
 .w462 { width:462px !important; }
 .w454 { width:454px !important; }
 .w442 { width:442px !important; }
+.w405 { width:405px !important; } /* erfassung */
 .w364 { width:364px !important; }
 .w349 { width:349px !important; }
 .w328 { width:328px !important; } /* erfassung */
@@ -365,6 +367,7 @@ textarea { line-height:17px; }
 .h055 { height:55px !important; } /* erfassung */
 .h041 { height:41px !important; } /* erfassung */
 .h038 { height:38px !important; } /* erfassung */
+.h025 { height:25px !important; } /* recherche */
 
 /********************************************************************
   page footer

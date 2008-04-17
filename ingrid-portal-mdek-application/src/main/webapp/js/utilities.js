@@ -358,6 +358,43 @@ UtilDWR.onExitLoadingState = function() {}
 // Util functions for handling MdekAddressBeans 
 var UtilAddress = {}
 
+// Get the address class for an address type ('institution', 'person', etc.)
+// If no parameter is specified, the class of the currently selected address is returned
+UtilAddress.getAddressClass = function(addressType /*optional*/) {
+	if (typeof(addressType) == "undefined") {
+		addressType = dojo.widget.byId("addressType").getValue();
+	}
+
+	if (addressType == message.get('address.type.institution'))
+		return 0;
+	else if (addressType == message.get('address.type.unit'))
+		return 1;
+	else if (addressType == message.get('address.type.person'))
+		return 2;
+	else if (addressType == message.get('address.type.custom'))
+		return 3;
+	else {
+		dojo.debug("Error in UtilAddress.getAddressClass! Invalid addressType: "+addressType);
+		return -1;
+	}
+}
+
+// Get the address type for an address class (0-3)
+UtilAddress.getAddressType = function(addressClass) {
+	if (addressClass == 0)
+		return message.get('address.type.institution');
+	else if (addressClass == 1)
+		return message.get('address.type.unit');
+	else if (addressClass == 2)
+		return message.get('address.type.person');
+	else if (addressClass == 3)
+		return message.get('address.type.custom');
+	else {
+		dojo.debug("Error in UtilAddress.getAddressType! Invalid addressClass: "+addressClass);
+		return "";
+	}
+}
+
 // Initialize the object->address reference table with a given array of links 'linkList'.
 // Sets the label and link to their initial values and stores the given (possibly large) list in
 // 'UtilAddress.objectAddressReferences'

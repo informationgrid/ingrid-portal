@@ -18,6 +18,7 @@ import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.SearchResultBean;
 import de.ingrid.mdek.beans.security.Group;
+import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
 import de.ingrid.utils.IngridDocument;
@@ -197,6 +198,8 @@ public class MdekUtils {
 			group.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
 			group.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			group.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+		} else {
+			MdekErrorUtils.handleError(response);
 		}
 
 		return group;
@@ -211,6 +214,44 @@ public class MdekUtils {
 
 		result.put(MdekKeys.NAME, group.getName());
 		result.put(MdekKeysSecurity.IDC_GROUP_ID, group.getId());
+
+		return result;
+	}
+
+	public static User extractSecurityUserFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		User user = new User();
+		if (result != null) {
+			user.setId((Long) result.get(MdekKeysSecurity.IDC_USER_ID));
+			user.setAddressUuid((String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
+			user.setGroupId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
+			user.setRole((Integer) result.get(MdekKeysSecurity.IDC_ROLE));
+			user.setParentUserId((Integer) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
+
+			// Detailed info
+			user.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
+			user.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+			user.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
+
+		return user;
+	}
+
+	public static IngridDocument convertSecurityUserToIngridDoc(User user) {
+		IngridDocument result = new IngridDocument();
+
+		if (user == null) {
+			return result;
+		}
+
+		result.put(MdekKeysSecurity.IDC_USER_ID, user.getId());
+		result.put(MdekKeysSecurity.IDC_USER_ADDR_UUID, user.getAddressUuid());
+		result.put(MdekKeysSecurity.IDC_GROUP_ID, user.getGroupId());
+		result.put(MdekKeysSecurity.IDC_ROLE, user.getRole());
+		result.put(MdekKeysSecurity.PARENT_IDC_USER_ID, user.getParentUserId());
 
 		return result;
 	}

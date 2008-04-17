@@ -1193,47 +1193,9 @@ udkDataProxy._setAddressData = function(nodeData)
 			parentClass = -1;
 	}
 
-	var addressTypeDP = dojo.widget.byId("addressType").dataProvider;
-
-	var valueList = [];
-	switch (parentClass) {
-		case -2:	// Free Address Root
-			valueList.push([message.get("address.type.custom"), "AddressType3"]);
-			break;
-
-		case -1: // Root Address
-			valueList.push([message.get("address.type.institution"), "AddressType0"]);
-			break;
-
-		case 0:	// Institution
-			valueList.push([message.get("address.type.institution"), "AddressType0"]);
-			valueList.push([message.get("address.type.unit"), "AddressType1"]);
-			valueList.push([message.get("address.type.person"), "AddressType2"]);
-			break;
-
-		case 1:	// Unit
-			valueList.push([message.get("address.type.unit"), "AddressType1"]);
-			valueList.push([message.get("address.type.person"), "AddressType2"]);
-			break;
-
-		case 2:	// Person (a person must not have any subAddresses)
-			dojo.debug("Error in udkDataProxy._setAddressData - A 'person' is not allowed to have any sub addresses!");
-			break;
-
-		case 3:	// Custom Address (a custom address must not have any subAddresses)
-			dojo.debug("Error in udkDataProxy._setAddressData - A 'custom address' is not allowed to have any sub addresses!");
-			break;
-
-		default:
-			dojo.debug("Error in udkDataProxy._setAddressData - Unknown parent address type: "+parentClass);
-			break;
-	}
-	addressTypeDP.setData(valueList);
-
-
 	// ------------------ Header ------------------
-	dojo.widget.byId("addressTitle").setValue(UtilAddress.createAddressTitle(nodeData));
-	dojo.widget.byId("addressType").setValue("AddressType"+nodeData.addressClass);
+	dojo.widget.byId("addressTitle").setValue(UtilAddress.createAddressTitle(nodeData));	dojo.widget.byId("addressType").setValue(UtilAddress.getAddressType(nodeData.addressClass));
+
 	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
 	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
@@ -1588,7 +1550,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 	}
 
 	// ------------------ Header ------------------
-	nodeData.addressClass = dojo.widget.byId("addressType").getValue().substr(11, 1);		// AddressTypex
+	nodeData.addressClass = UtilAddress.getAddressClass();
 
 	// ------------------ Address and Function ------------------
 	nodeData.street = dojo.widget.byId("addressStreet").getValue();
@@ -1614,22 +1576,22 @@ udkDataProxy._getAddressData = function(nodeData) {
 
   // ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
-		case '0':
+		case 0:
 //			nodeData.organisation = dojo.widget.byId("headerAddressType0Institution").getValue();
 			nodeData.organisation = dojo.widget.byId("headerAddressType0Unit").getValue();
 			break;
-		case '1':
+		case 1:
 //			dojo.widget.byId("headerAddressType1Institution").setValue(nodeData.organisation);
 			nodeData.organisation = dojo.widget.byId("headerAddressType1Unit").getValue();
 			break;
-		case '2':
+		case 2:
 //			dojo.widget.byId("headerAddressType2Institution").setValue(nodeData.organisation);
 			nodeData.name = dojo.widget.byId("headerAddressType2Lastname").getValue();
 			nodeData.givenName = dojo.widget.byId("headerAddressType2Firstname").getValue();
 			nodeData.nameForm = dojo.widget.byId("headerAddressType2Style").getValue();
 			nodeData.titleOrFunction = dojo.widget.byId("headerAddressType2Title").getValue();
 			break;
-		case '3':
+		case 3:
 			nodeData.name = dojo.widget.byId("headerAddressType3Lastname").getValue();
 			nodeData.givenName = dojo.widget.byId("headerAddressType3Firstname").getValue();
 			nodeData.nameForm = dojo.widget.byId("headerAddressType3Style").getValue();

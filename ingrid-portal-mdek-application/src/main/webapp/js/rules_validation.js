@@ -10,6 +10,8 @@ dojo.addOnLoad(function() {
 	addMinMaxDateValidation("timeRefType", "timeRefDate1", "timeRefDate2");
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
 
+	addAddressTableInfoValidation();
+
 	// Object Name must not be empty
 	dojo.widget.byId("objectName").isValid = function() { return !this.isMissing(); };
 
@@ -158,4 +160,54 @@ function addMinMaxBoundingBoxValidation(tableId) {
 	}
 
 	table.isValid = function() { return this.store.getData().length == 0 || this._valid; }
+}
+
+function addAddressTableInfoValidation() {
+	var table = dojo.widget.byId("generalAddress");
+	var popup = dojo.widget.createWidget("PopupContainer");
+  	popup.domNode.innerHTML = "Die Addressverweistabelle muss mindestens eine Adresse vom Typ Auskunft beinhalten!";
+
+	table._valid = false;
+
+	table.applyValidation = function() {
+		this._valid = false;
+		var data = this.store.getData();
+		for (var i = 0; i < data.length; ++i) {
+			if (data[i].nameOfRelation == "Auskunft") {
+				this._valid = true;
+			}
+		}
+
+		if (this._valid) {
+			popup.close();
+
+			var rows = this.domNode.tBodies[0].rows;
+			// Iterate over all the rows in the table
+			for (var i = 0; i < rows.length; i++) {
+				var row = rows[i];
+				var rowData = this.getDataByRow(row);
+				// If we have a valid row continue. rowData can be null since we also display empty rows
+				if (rowData) {
+					var relNameIdx = this.getColumnIndex("nameOfRelation");
+					dojo.html.removeClass(row.cells[relNameIdx], this.fieldInvalidClass);
+				}
+			}
+		} else {
+			popup.open(this.domNode, this);
+			
+			var rows = this.domNode.tBodies[0].rows;
+			// Iterate over all the rows in the table
+			for (var i = 0; i < rows.length; i++) {
+				var row = rows[i];
+				var rowData = this.getDataByRow(row);
+				// If we have a valid row continue. rowData can be null since we also display empty rows
+				if (rowData) {
+					var relNameIdx = this.getColumnIndex("nameOfRelation");
+					dojo.html.addClass(row.cells[relNameIdx], this.fieldInvalidClass);
+				}
+			}
+		}
+	}
+
+//	table.isValid = function() { this._valid; }
 }

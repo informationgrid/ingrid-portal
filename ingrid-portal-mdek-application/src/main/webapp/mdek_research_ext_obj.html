@@ -56,6 +56,14 @@ _container_.addOnLoad(function() {
 		}
 	});
 
+    // Pressing 'enter' on the queryTerm field is equal to 'start search'
+    dojo.event.connect(dojo.widget.byId("objTopicInput").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+
     // Pressing 'enter' on the thesaurus input field is equal to a button click
     dojo.event.connect(dojo.widget.byId("objTopicThesaurus").domNode, "onkeypress",
         function(event) {
@@ -71,6 +79,43 @@ _container_.addOnLoad(function() {
                 scriptScope.findLocationTopics();
             }
 	});
+
+    // Pressing 'enter' on the time input fields is equal to a button click
+    dojo.event.connect(dojo.widget.byId("objTimeRef1From").domNode, "onkeypress",
+        function(event) {
+			dojo.byId("objTimeRef1").checked = true;
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+    dojo.event.connect(dojo.widget.byId("objTimeRef1To").domNode, "onkeypress",
+        function(event) {
+			dojo.byId("objTimeRef1").checked = true;
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+    dojo.event.connect(dojo.widget.byId("objTimeRef2On").domNode, "onkeypress",
+        function(event) {
+			dojo.byId("objTimeRef2").checked = true;
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+
+	// Pressing one of the radio buttons deletes the 'other' input fields
+    dojo.byId("objTimeRef1").onclick = function() {
+		dojo.widget.byId("objTimeRef2On").clearValue();
+    }
+    dojo.byId("objTimeRef2").onclick = function() {
+		dojo.widget.byId("objTimeRef1From").clearValue();
+		dojo.widget.byId("objTimeRef1To").clearValue();
+    }
+    dojo.byId("objTimeRef3").onclick = function() {
+		dojo.widget.byId("objTimeRef2On").clearValue();
+		dojo.widget.byId("objTimeRef1From").clearValue();
+		dojo.widget.byId("objTimeRef1To").clearValue();
+    }
 
 	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
 });
@@ -161,16 +206,20 @@ function readQueryFromInput() {
 
 	if (dojo.byId("objTimeRef1").checked) {
 		// 'From-To' checked
-//		currentQuery.timeBegin = dojo.widget.byId("objTimeRef1From").getValue();
-//		currentQuery.timeEnd = dojo.widget.byId("objTimeRef1To").getValue();
-
+		currentQuery.timeBegin = dojo.widget.byId("objTimeRef1From").getValue();
+		currentQuery.timeEnd = dojo.widget.byId("objTimeRef1To").getValue();
+/*
+//		Text input fields
 		currentQuery.timeBegin = dojo.date.parse(dojo.widget.byId("objTimeRef1From").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
 		currentQuery.timeEnd = dojo.date.parse(dojo.widget.byId("objTimeRef1To").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
+*/
 
 	} else if (dojo.byId("objTimeRef2").checked) {
 		// 'At' checked
-//		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
-		currentQuery.timeAt = dojo.date.parse(dojo.widget.byId("objTimeRef2On").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
+		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
+
+//		Text input field
+//		currentQuery.timeAt = dojo.date.parse(dojo.widget.byId("objTimeRef2On").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
 	}
 
 	currentQuery.timeIntersects = dojo.widget.byId("objTimeRefExtend1").checked;
@@ -184,16 +233,27 @@ this.resetInput = function() {
 	dojo.widget.byId("objTopicInput").setValue("");
 	dojo.widget.byId("objTopicInputBool").setValue(0);
 	scriptScope.selectAllObjectClasses();
+	dojo.widget.byId("objTopicThesaurus").setValue("");
 	dojo.widget.byId("objExtSearchThesaurusTerms").store.clearData();
 	dojo.widget.byId("thesaurusTermsRelation").setValue(0);
+	dojo.widget.byId("objLocationTopic").setValue("");
 	dojo.widget.byId("objExtSearchLocationTerms").store.clearData();
 	dojo.widget.byId("geoThesaurusTermsRelation").setValue(0);
 	dojo.widget.byId("objSpaceGeoUnit").setValue("");
 	dojo.byId("objTimeRef1").checked = false;
 	dojo.byId("objTimeRef2").checked = false;
+	dojo.byId("objTimeRef3").checked = true;
+
 	dojo.widget.byId("objTimeRef1From").clearValue();
 	dojo.widget.byId("objTimeRef1To").clearValue();
 	dojo.widget.byId("objTimeRef2On").clearValue();
+
+/*
+	// Text input fields 
+	dojo.widget.byId("objTimeRef1From").setValue("");
+	dojo.widget.byId("objTimeRef1To").setValue("");
+	dojo.widget.byId("objTimeRef2On").setValue("");
+*/
 	dojo.widget.byId("objTimeRefExtend1").setValue(false);
 	dojo.widget.byId("objTimeRefExtend2").setValue(false);
 
@@ -795,41 +855,45 @@ function hideLoadingZone() {
     	      <li><a nohref="nohref" class="current" title="Zeiteinschr&auml;nkung">Zeiteinschr&auml;nkung</a></li>
     	    </ul>
     	  </div>
-        <div class="inputContainer field grey noSpaceBelow">
+        <div class="inputContainer field grey">
           <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')">Zeitbezug:</label></span>
           <span class="note">Alle Ergebnisse mit Zeitbezug <strong>innerhalb</strong> eingegebenen Zeitraums werden angezeigt:</span>
           <div class="spacer"></div>
           <div class="inputContainer spaceBelow">
             <input type="radio" name="objTimeRef" id="objTimeRef1" class="radio entry first" />
-<!-- 
             <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
             <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1From"></div>
             <label class="inActive" for="objTimeRef1To">Bis:</label>
             <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1To"></div>
- -->
+<!-- 
             <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
             <input type="text" id="objTimeRef1From" name="objTimeRef1From" class="w116" dojoType="ingrid:ValidationTextBox" />
             <label class="inActive" for="objTimeRef1To">Bis:</label>
             <input type="text" id="objTimeRef1To" name="objTimeRef1To" class="w116" dojoType="ingrid:ValidationTextBox" />
             <label class="inActive">[TT.MM.JJJJ]</label>
+ -->
 
           </div>
           <div class="inputContainer">
             <input type="radio" name="objTimeRef" id="objTimeRef2" class="radio entry first" />
-<!-- 
             <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
             <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef2On"></div>
- -->
+<!-- 
             <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
             <input type="text" id="objTimeRef2On" name="objTimeRef2On" class="w116" dojoType="ingrid:ValidationTextBox" />
             <label class="inActive">[TT.MM.JJJJ]</label>
-           
-           </div>
+ -->
+          </div>
+          <div class="inputContainer h025">
+            <input type="radio" name="objTimeRef" id="objTimeRef3" class="radio entry first" checked />
+            <label class="inActive entry" for="objTimeRef3">Kein Zeitbezug</label>
+          </div>
+
           <div class="inputContainer noSpaceBelow">
             <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
             <div class="checkboxContainer">
               <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend1">Der Zeitbezug der Ergebnisse <strong>schneidet</strong> das eingegebene Suchintervall</label></span>
-              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend2">Der Zeitbezug der Ergebnisse <strong>umschlie&szlig;</strong> das eingegebene Suchintervall</label></span>
+              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend2">Der Zeitbezug der Ergebnisse <strong>umschlie&szlig;t</strong> das eingegebene Suchintervall</label></span>
             </div>
           </div>
     	  </div>

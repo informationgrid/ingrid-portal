@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.security.Group;
+import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.util.MdekUtils;
@@ -46,7 +47,41 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return MdekUtils.extractSecurityGroupFromResponse(response);
 	}
 
+	public void deleteGroup(Long groupId) {
+		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, HTTPSessionHelper.getCurrentSessionId());
 
+		return;
+	}
+
+	public User getUserDetails(String userId) {
+		IngridDocument response = mdekCallerSecurity.getUserDetails(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
+		return MdekUtils.extractSecurityUserFromResponse(response);		
+	}
+	
+	public User createUser(User user, boolean refetch) {
+		IngridDocument u = MdekUtils.convertSecurityUserToIngridDoc(user);
+		IngridDocument response = mdekCallerSecurity.createUser(connectionFacade.getCurrentPlugId(), u, refetch, HTTPSessionHelper.getCurrentSessionId());
+		return MdekUtils.extractSecurityUserFromResponse(response);
+	}
+
+	public User storeUser(User user, boolean refetch) {
+		IngridDocument u = MdekUtils.convertSecurityUserToIngridDoc(user);
+		IngridDocument response = mdekCallerSecurity.storeUser(connectionFacade.getCurrentPlugId(), u, refetch, HTTPSessionHelper.getCurrentSessionId());
+		return MdekUtils.extractSecurityUserFromResponse(response);
+	}
+
+	public void deleteUser(Long userId) {
+		IngridDocument response = mdekCallerSecurity.deleteUser(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
+		MdekUtils.extractSecurityUserFromResponse(response);
+		return;
+	}
+
+	public User getCatalogAdmin() {
+		IngridDocument response = mdekCallerSecurity.getCatalogAdmin(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		return MdekUtils.extractSecurityUserFromResponse(response);		
+	}
+
+	
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

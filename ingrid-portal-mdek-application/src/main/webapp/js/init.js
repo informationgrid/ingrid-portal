@@ -44,8 +44,8 @@ function initForm() {
   }
   var addressSelectBox = dojo.widget.byId("addressType");
   if (addressSelectBox) {
-    dojo.event.connect(addressSelectBox, "onValueChanged", "selectUDKAddressType");
-    addressSelectBox.setValue("AddressType0");
+    dojo.event.connect(addressSelectBox, "setValue", "selectUDKAddressType");
+    addressSelectBox.setValue("Institution");
   }
 
   // set context menu on object owner listbox

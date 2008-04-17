@@ -33,8 +33,10 @@ public class MdekErrorUtils {
 			} else {
 				throw new MdekException(err);
 			}
-		} else {
+		} else if (errorMessage != null){
 			throw new RuntimeException(errorMessage);
+		} else {
+			return;
 		}
 	}
 
