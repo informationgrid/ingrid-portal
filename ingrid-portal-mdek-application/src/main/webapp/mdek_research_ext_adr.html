@@ -12,7 +12,8 @@ div.dojoTabPaneWrapper { overflow:visible; }
 var scriptScope = this;
 
 var resultsPerPage = 10;
-var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("adrSearchExtResultsInfo"), pagingSpan:dojo.byId("adrSearchExtResultsPaging") });
+//var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("adrSearchExtResultsInfo"), pagingSpan:dojo.byId("adrSearchExtResultsPaging") });
+var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("adrSearchResultsInfo"), pagingSpan:dojo.byId("adrSearchResultsPaging") });
 
 var currentQuery = {	// Map of strings/integers defining the query. See 'AddressExtSearchParamsBean.java' for details.
 	queryTerm: null,		// representing the search query
@@ -29,7 +30,7 @@ _container_.addOnLoad(function() {
 	// Initially select the first tab on load
 	scriptScope.navInnerTab(0);
 	dojo.widget.byId("addrTopicInputBool").setValue(0);
-
+/*
     // Pressing 'enter' on the input field is equal to a button click
     dojo.event.connect(dojo.widget.byId("addrTopicInput").domNode, "onkeypress",
         function(event) {
@@ -37,7 +38,7 @@ _container_.addOnLoad(function() {
                 scriptScope.startNewSearch();
             }
 	});
-
+*/
     // Pressing 'enter' on the street field is equal to a button click
     dojo.event.connect(dojo.widget.byId("addrSpaceStreet").domNode, "onkeypress",
         function(event) {
@@ -84,7 +85,8 @@ function updateResultTable(res) {
 	UtilList.addTableIndices(resultList);
 	UtilList.addIcons(resultList);
 
-	dojo.widget.byId("addressSearchExtResults").store.setData(resultList);
+//	dojo.widget.byId("addressSearchExtResults").store.setData(resultList);
+	dojo.widget.byId("addressSearchResults").store.setData(resultList);
 }
 
 function updatePageNavigation(res) {
@@ -104,7 +106,7 @@ this.startNewSearch = function() {
 this.resetInput = function() {
 	dojo.byId("addrMode1").checked = true;
 	dojo.byId("addrFields1").checked = true;
-	dojo.widget.byId("addrTopicInput").setValue("");
+	dojo.widget.byId("adrSearchInput").setValue("");
 	dojo.widget.byId("addrTopicInputBool").setValue(0);
 	dojo.widget.byId("addrSpaceStreet").setValue("");
 	dojo.widget.byId("addrSpaceZip").setValue("");
@@ -116,8 +118,8 @@ this.resetInput = function() {
 
 // Subnavigation. 'subSectionIndex' specifies the index of the tab that should be selected
 this.navInnerTab = function(subSectionIndex){
-	// number of subsections == 2
-	for (var i = 0; i < 2; i++) {
+	// number of subsections == 1
+	for (var i = 0; i < 1; i++) {
 		if (i == subSectionIndex) {
 			dojo.byId("addrTopic" + i).style.display = "block";
 		} else {
@@ -130,7 +132,7 @@ function readQueryFromInput() {
 	var searchTypeExact = dojo.byId("addrMode1").checked;
 	var searchAllFields = dojo.byId("addrFields1").checked;
 
-	currentQuery.queryTerm = dojo.string.trim(dojo.widget.byId("addrTopicInput").getValue());
+	currentQuery.queryTerm = dojo.string.trim(dojo.widget.byId("adrSearchInput").getValue());
 	currentQuery.relation = dojo.widget.byId("addrTopicInputBool").getValue();
 //	currentQuery.searchType = searchTypeExact ? "exact" : "contains";
 //	currentQuery.searchRange = searchAllFields ? "all" : "some";
@@ -148,7 +150,7 @@ function resetInput() {
 	dojo.byId("addrMode1").checked = true;
 	dojo.byId("addrFields1").checked = true;
 
-	dojo.widget.byId("addrTopicInput").setValue("");
+	dojo.widget.byId("adrSearchInput").setValue("");
 	dojo.widget.byId("addrTopicInputBool").setValue(0);
 
 	dojo.widget.byId("addrSpaceStreet").setValue("");
@@ -177,6 +179,7 @@ function hideLoadingZone() {
 	    <!-- EXTENDED SEARCH TAB 1 START -->
 			<div id="addrTopic" dojoType="ContentPane" class="blueTopBorder grey" label="Thema">
 	      <!-- EXTENDED SEARCH TAB 1 SUB 1 START -->
+<!-- 
 			  <div id="addrTopic0">
 	        <div class="tabContainerSubNavi">
 	    	    <ul>
@@ -187,26 +190,32 @@ function hideLoadingZone() {
 	        <div class="inputContainer field noSpaceBelow">
 	          <span class="label"><label for="addrTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Bitte geben Sie die Suchbegriffe ein:</label></span>
 	          <span class="input spaceBelow"><input type="text" id="addrTopicInput" name="addrTopicInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-	          <span class="label noSpaceBelow"><label class="inActive" for="addrTopicInputBool">Gesuchte Adresse enth&auml;lt:</label> <select dojoType="ingrid:Select" style="width:174px;" id="addrTopicInputBool">
-	              <!-- TODO: fill in jsp -->
-	            	<option value="0">Alle diese Begriffe (UND)</option>
-	            	<option value="1">Einen dieser Begriffe (ODER)</option>
-	            </select></span>
 	     	  </div>
 	    	</div>
-	      <!-- EXTENDED SEARCH TAB 1 SUB 1 END -->
+ -->
+ 	      <!-- EXTENDED SEARCH TAB 1 SUB 1 END -->
 	      
 	      <!-- EXTENDED SEARCH TAB 1 SUB 2 START -->
-			  <div id="addrTopic1">
+			<div id="addrTopic0">
 	        <div class="tabContainerSubNavi">
 	    	    <ul>
+<!-- 
 	    	      <li><a href="javascript:scriptScope.navInnerTab(0);" title="Suchbegriffe">Suchbegriffe</a></li>
+ -->
 	    	      <li><a nohref="nohref" class="current" title="Suchmodus">Suchmodus</a></li>
 	    	    </ul>
 	    	  </div>
 	        <div class="inputContainer field noSpaceBelow">
-	          <span class="note">Bestimmen Sie wie gesucht werden soll:</span>
+	          <span class="note"><b>Bestimmen Sie wie gesucht werden soll:</b></span>
 	          <div class="spacer"></div>
+
+	          <span class="label noSpaceBelow"><label class="inActive" for="addrTopicInputBool">Die gesuchte Adresse enth&auml;lt:</label>
+	            <select dojoType="ingrid:Select" style="width:174px;" id="addrTopicInputBool">
+	              <!-- TODO: fill in jsp -->
+	            	<option value="0">Alle diese Begriffe (UND)</option>
+	            	<option value="1">Einen dieser Begriffe (ODER)</option>
+	            </select></span>
+
 	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchmodus')">Suchmodus</label></span>
 	          <div class="checkboxContainer">
 	            <input type="radio" name="addrMode" id="addrMode1" class="radio entry first" checked />
@@ -271,12 +280,13 @@ function hideLoadingZone() {
 	  </div>
 
     <!-- ADDRESS SEARCH RESULT LIST START -->
+<!-- 
     <div class="spacer"></div>
     <div id="addressSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
       <span class="label">Trefferliste</span>
-<!-- 
+
       <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
- -->
+
       <div class="listInfo w845">
         <span id="adrSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
         <span id="adrSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -300,6 +310,7 @@ function hideLoadingZone() {
 		  </table>
 		</div>
 	</div>
+ -->
     <!-- ADDRESS SEARCH RESULT LIST END -->
 
 	</div>

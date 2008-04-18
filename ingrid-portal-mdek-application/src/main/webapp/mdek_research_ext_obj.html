@@ -13,11 +13,13 @@ div.dojoTabPaneWrapper { overflow:visible; }
 var scriptScope = this;
 
 var resultsPerPage = 10;
-var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchExtResultsInfo"), pagingSpan:dojo.byId("objSearchExtResultsPaging") });
+//var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchExtResultsInfo"), pagingSpan:dojo.byId("objSearchExtResultsPaging") });
+var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchResultsInfo"), pagingSpan:dojo.byId("objSearchResultsPaging") });
 
 var currentQuery = {	// Map of strings defining the query. See 'ObjectExtSearchParamsBean.java' for more details.
 	queryTerm: null,			// search query
 	relation: null,				// relation that should be used to analyze the query (AND / OR)
+	searchType: null,			// search whole word or substring (exact/like)
 	objClasses: null,			// array of ints that represent the object classes that should be included in the search
 	thesaurusTerms: null,		// array of topicIds - descriptors and non-descriptors
 	thesaurusRelation: null,	// relation that should be used to combine the thesaurus terms (AND / OR)
@@ -54,14 +56,6 @@ _container_.addOnLoad(function() {
 		errorHandler: function(mes) {
 			dojo.debug("Error: "+mes);
 		}
-	});
-
-    // Pressing 'enter' on the queryTerm field is equal to 'start search'
-    dojo.event.connect(dojo.widget.byId("objTopicInput").domNode, "onkeypress",
-        function(event) {
-            if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startNewSearch();
-            }
 	});
 
     // Pressing 'enter' on the thesaurus input field is equal to a button click
@@ -141,7 +135,8 @@ function updateResultTable(res) {
 	UtilList.addTableIndices(resultList);
 	UtilList.addIcons(resultList);
 
-	dojo.widget.byId("objectSearchExtResults").store.setData(resultList);
+//	dojo.widget.byId("objectSearchExtResults").store.setData(resultList);
+	dojo.widget.byId("objectSearchResults").store.setData(resultList);
 }
 
 function updatePageNavigation(res) {
@@ -172,8 +167,10 @@ this.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
 
 // Read the input fields and write the query to 'currentQuery'
 function readQueryFromInput() {
-	currentQuery.queryTerm = dojo.string.trim(dojo.widget.byId("objTopicInput").getValue());
+	currentQuery.queryTerm = dojo.string.trim(dojo.widget.byId("objSearchInput").getValue());
 	currentQuery.relation = dojo.widget.byId("objTopicInputBool").getValue();
+	currentQuery.searchType = dojo.byId("objMode1").checked ? 0 : 1;	// Convert to int
+	
 	// Read obj class checkboxes
 	currentQuery.objClasses = [];
 	for (var i = 0; i < 6; ++i) {
@@ -230,7 +227,8 @@ function readQueryFromInput() {
 
 // Reset-Button function. Reset all the input fields to their initial values and reset 'currentQuery'
 this.resetInput = function() {
-	dojo.widget.byId("objTopicInput").setValue("");
+	dojo.byId("addrMode1").checked = true;
+	dojo.widget.byId("objSearchInput").setValue("");
 	dojo.widget.byId("objTopicInputBool").setValue(0);
 	scriptScope.selectAllObjectClasses();
 	dojo.widget.byId("objTopicThesaurus").setValue("");
@@ -607,14 +605,15 @@ function hideLoadingZone() {
     <!-- EXTENDED SEARCH TAB 1 START -->
 		<div id="objTopic" dojoType="ContentPane" class="blueTopBorder grey" label="Thema">
       <!-- EXTENDED SEARCH TAB 1 SUB 1 START -->
-		  <div id="objTopic0">
+		<div id="objTopic0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Suchbegriffe">Suchbegriffe</a></li>
+    	      <li><a nohref="nohref" class="current" title="Suchmodus">Suchmodus</a></li>
     	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
     	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
     	    </ul>
     	  </div>
+<!-- 
         <div class="inputContainer field noSpaceBelow">
           <span class="label"><label for="objTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Bitte geben Sie die Suchbegriffe ein:</label></span>
           <span class="input spaceBelow"><input type="text" id="objTopicInput" name="objTopicInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
@@ -625,6 +624,28 @@ function hideLoadingZone() {
             </select></span>
           <div class="spacerField"></div>
     	  </div>
+ -->
+        <div class="inputContainer field noSpaceBelow">
+          <span class="note"><b>Bestimmen Sie wie gesucht werden soll:</b></span>
+          <div class="spacer"></div>
+
+          <span class="label noSpaceBelow"><label class="inActive" for="objTopicInputBool">Das gesuchte Objekt enth&auml;lt:</label>
+            <select dojoType="ingrid:Select" style="width:174px;" id="objTopicInputBool">
+              <!-- TODO: fill in jsp -->
+            	<option value="0">Alle diese Begriffe (UND)</option>
+            	<option value="1">Einen dieser Begriffe (ODER)</option>
+            </select></span>
+
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchmodus')">Suchmodus</label></span>
+          <div class="checkboxContainer">
+            <input type="radio" name="objMode" id="objMode1" class="radio entry first" checked />
+            <label class="inActive entry closer w116" for="objMode1">Ganzes Wort</label>
+            <input type="radio" name="objMode" id="objMode2" class="radio entry" />
+            <label class="inActive entry closer" for="objMode2">Teilzeichenkette</label>
+          </div>
+	      <div class="fill"></div>
+	      <div class="spacerField"></div>
+   	     </div>
     	</div>
       <!-- EXTENDED SEARCH TAB 1 SUB 1 END -->
       
@@ -632,7 +653,7 @@ function hideLoadingZone() {
 		  <div id="objTopic1">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchbegriffe">Suchbegriffe</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus">Suchmodus</a></li>
     	      <li><a nohref="nohref" class="current" title="Objektklassen">Objektklassen</a></li>
     	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
     	    </ul>
@@ -666,7 +687,7 @@ function hideLoadingZone() {
 	  <div id="objTopic2">
         <div class="tabContainerSubNavi">
     	  <ul>
-    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchbegriffe">Suchbegriffe</a></li>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus">Suchmodus</a></li>
     	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
     	    <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
     	  </ul>
@@ -920,12 +941,13 @@ function hideLoadingZone() {
   </div>
 
     <!-- OBJECT SEARCH RESULT LIST START -->
+<!-- 
     <div class="spacer"></div>
     <div id="objectSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
       <span class="label">Trefferliste</span>
-<!-- 
+
       <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
- -->
+
       <div class="listInfo w845">
         <span id="objSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
         <span id="objSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -947,6 +969,7 @@ function hideLoadingZone() {
 	    </tbody>
 	  </table>
 	</div>
+ -->
     <!-- OBJECT SEARCH RESULT LIST END -->
 
 <!-- EXTENDED SEARCH END -->

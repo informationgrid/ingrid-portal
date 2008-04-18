@@ -12,12 +12,46 @@ var curObjQuery = null;		// string representing the current object query
 var curAdrQuery = null;		// string representing the current address query
 
 _container_.addOnLoad(function() {
-    // Pressing 'enter' on the address input field is equal to a button click. The object input allows multiple lines
+    // Pressing 'enter' on the address input field is equal to a button click.
     dojo.event.connect(dojo.widget.byId("adrSearchInput").domNode, "onkeypress",
         function(event) {
             if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startNewAddressSearch();
+                // Check if we have to do a normal or an extended search 
+                if (isExtendedSearchActive("adr")) {
+                	dojo.widget.byId("extContentAdr").scriptScope.startNewSearch();
+                } else {
+	                scriptScope.startNewAddressSearch();
+                }
             }
+	});
+    
+    // Pressing 'enter' on the object input field is equal to a button click.
+    dojo.event.connect(dojo.widget.byId("objSearchInput").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                // Check if we have to do a normal or an extended search 
+                if (isExtendedSearchActive("obj")) {
+                	dojo.widget.byId("extContentObj").scriptScope.startNewSearch();
+                } else {
+	                scriptScope.startNewObjectSearch();
+                }
+            }
+	});
+
+	// Synchronize address and object search input
+	dojo.event.connect(dojo.widget.byId("objSearchInput"), "update",
+		function() {
+			var newVal = dojo.widget.byId("objSearchInput").getValue();
+			if (dojo.widget.byId("adrSearchInput").getValue() != newVal) {
+				dojo.widget.byId("adrSearchInput").setValue(newVal);
+			}
+	});
+	dojo.event.connect(dojo.widget.byId("adrSearchInput"), "update",
+		function() {
+			var newVal = dojo.widget.byId("adrSearchInput").getValue();
+			if (dojo.widget.byId("objSearchInput").getValue() != newVal) {
+				dojo.widget.byId("objSearchInput").setValue(newVal);
+			}
 	});
 
 	dojo.event.connect("after", objPageNav, "onPageSelected", function() { startObjectSearch(); });
@@ -136,26 +170,29 @@ this.toggleContent = function(type){
 	    contentAreaNode.style.display = "block";
 	    arrow.src = "img/ic_info_deflate.gif";
 	
-	    searchFieldWidget.disable();
-//		dojo.html.addClass(searchFieldNode, "noEdit");		
+//	    searchFieldWidget.disable();
 
 		searchButtonContainer.style.display = "none";
-		searchResultContainer.style.display = "none";
+//		searchResultContainer.style.display = "none";
 
 	} else {
 	    contentAreaNode.style.display = "none";
 	    arrow.src = "img/ic_info_expand.gif";
 	
-	    searchFieldWidget.enable();
-//	    searchFieldNode.disabled = false;
-//		dojo.html.removeClass(searchFieldNode, "noEdit");
+//	    searchFieldWidget.enable();
 	
-		searchResultContainer.style.display = "block";
 		searchButtonContainer.style.display = "block";
+//		searchResultContainer.style.display = "block";
 	}
-//	searchFieldNode.value = "";
 }
 
+function isExtendedSearchActive(type) {
+	if (type == "obj") {
+		return (dojo.byId("extContentObjToggleArrow").src.indexOf("ic_info_expand.gif") == -1);
+	} else if (type == "adr") {
+		return (dojo.byId("extContentAdrToggleArrow").src.indexOf("ic_info_expand.gif") == -1);
+	}
+}
 
 function showObjectLoadingZone() {
     dojo.html.setVisibility(dojo.byId("objectSearchLoadingZone"), "visible");
@@ -191,7 +228,10 @@ function hideAddressLoadingZone() {
           <!-- MAIN TAB 1 START -->
       		<div id="objSearch" dojoType="ContentPane" class="blueTopBorder" label="Objekte">
               <div class="inputContainer field grey noSpaceBelow w829">
+              <span class="input"><input type="text" id="objSearchInput" name="objSearchInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
+<!-- 
               <span class="input"><input type="text" mode="textarea" id="objSearchInput" name="objSearchInput" class="w800 h055" dojoType="ingrid:ValidationTextbox" /></span>
+ -->
               <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('obj');" title="Erweiterte Suche"><img id="extContentObjToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" />Erweiterte Suche</a></span>
               <div class="spacer"></div>
         	  </div>

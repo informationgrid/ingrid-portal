@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class ObjectExtSearchParamsBean {
 	private String queryTerm;
+	private Integer searchType;
 	private Integer relation;
 	private ArrayList<Integer> objClasses;
 
@@ -124,5 +125,13 @@ public class ObjectExtSearchParamsBean {
 
 	public void setTimeContains(Boolean timeContains) {
 		this.timeContains = timeContains;
+	}
+
+	public Integer getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(Integer searchType) {
+		this.searchType = searchType;
 	}
 }

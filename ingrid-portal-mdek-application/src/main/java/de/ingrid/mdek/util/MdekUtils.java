@@ -285,6 +285,7 @@ public class MdekUtils {
 
 		result.put(MdekKeys.QUERY_TERM, query.getQueryTerm());
 		result.put(MdekKeys.RELATION, query.getRelation());
+		result.put(MdekKeys.SEARCH_TYPE, query.getSearchType());
 
 		result.put(MdekKeys.OBJ_CLASSES, query.getObjClasses());
 
