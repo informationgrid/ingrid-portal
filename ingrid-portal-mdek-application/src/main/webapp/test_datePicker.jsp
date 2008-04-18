@@ -7,6 +7,10 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 </head>
 
+<style type="text/css">
+.fieldInvalid { background:#fcc !important; color:#000000 !important; }
+</style>
+
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 <script type="text/javascript">
 	var djConfig = {isDebug: true, debugAtAllCosts: false};

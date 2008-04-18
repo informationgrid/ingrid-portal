@@ -93,6 +93,9 @@ dojo.widget.defineWidget(
     dojo.widget.Select.prototype.setValue.apply(this, [value2]);
   },
 
+  _isValidOption: function() {
+	return (!dojo.html.hasClass(this.textInputNode, "fieldInvalid"));
+  },
   /*
    * Get the display value (=label) for a value (=key)
    */
