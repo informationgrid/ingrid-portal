@@ -72,6 +72,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.HelpMessage"/>
+		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.UserData"/>
 
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.Type"/>

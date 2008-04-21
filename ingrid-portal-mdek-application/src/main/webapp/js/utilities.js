@@ -478,6 +478,46 @@ UtilAddress.createAddressTitle = function(adr) {
 }
 
 
+// Utility functions for handling misc data from the frontend
+var UtilUdk = {}
+
+UtilUdk.isObjectSelected = function() {
+	var node = dojo.widget.byId("tree").selectedNode;
+	if (typeof(node) != "undefined" && node != null) {
+		return (node.nodeAppType == "O");
+	}
+}
+
+UtilUdk.getCurrentObjectClass = function() {	
+	return dojo.widget.byId("objectClass").getValue()[5];
+}
+
+UtilUdk.getCurrentAddressClass = function() {	
+	return UtilAddress.getAddressClass();	
+}
+
+// Load a helpMessage for the specified guiId from the server.
+// Returns a dojo deferred. The callback is invoked with a HelpMessage object
+UtilUdk.loadHelpMessage = function(guiId) {
+	var deferred = new dojo.Deferred();
+	// Load the help message for 'guiId' from the backend.
+	// First we need the current object/address class
+	var cls = this.isObjectSelected() ? this.getCurrentObjectClass() : this.getCurrentAddressClass(); 
+
+	// Then load the help message via HelpService
+	HelpService.getHelpEntry(guiId, cls, {
+		callback: function(helpEntry) { deferred.callback(helpEntry); },
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+
+	return deferred;
+}
+
+
+
 // Util functions for handling lists 
 var UtilList = {}
 

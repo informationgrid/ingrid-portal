@@ -22,10 +22,16 @@ public class HelpServiceImpl {
 		IGenericDao<IEntity> dao = daoFactory.getDao(HelpMessage.class);
 		HelpMessage sampleMessage = new HelpMessage();
 		sampleMessage.setGuiId(guiId);
-		sampleMessage.setEntityClass(entityClass);
+		if (guiId != null)
+			sampleMessage.setEntityClass(entityClass);
 
 		dao.beginTransaction();
 		HelpMessage helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);
+		if (helpMessage == null) {
+			// Try to load any helpMessage for the specified guiId
+			sampleMessage.setEntityClass(null);
+			helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);
+		}
 		dao.commitTransaction();
 
 		return helpMessage;

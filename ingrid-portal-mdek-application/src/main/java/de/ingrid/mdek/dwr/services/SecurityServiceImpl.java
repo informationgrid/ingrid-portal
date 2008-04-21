@@ -27,6 +27,11 @@ import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.handler.SecurityRequestHandler;
 import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.persistence.db.model.HelpMessage;
+import de.ingrid.mdek.persistence.db.model.UserData;
+import de.ingrid.mdek.services.persistence.db.IDaoFactory;
+import de.ingrid.mdek.services.persistence.db.IEntity;
+import de.ingrid.mdek.services.persistence.db.IGenericDao;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.portal.security.util.SecurityHelper;
 
@@ -36,6 +41,7 @@ public class SecurityServiceImpl {
 
 	// Injected by Spring
 	private SecurityRequestHandler securityRequestHandler;
+	private IDaoFactory daoFactory;
 
 
 	public List<Group> getGroups() {
@@ -137,7 +143,34 @@ public class SecurityServiceImpl {
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
-	
+
+	public UserData getUserData(String portalLogin) {
+		// Load user data directly from the db via hibernate
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+		UserData sampleUser = new UserData();
+		sampleUser.setPortalLogin(portalLogin);
+
+		dao.beginTransaction();
+		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
+		dao.commitTransaction();
+
+		return userData;
+	}
+
+	public UserData getCurrentPortalUserData() {
+		WebContext wctx = WebContextFactory.get();
+		HttpServletRequest req = wctx.getHttpServletRequest();
+
+		log.debug("Remote user: "+req.getRemoteUser());
+		if (req.getUserPrincipal() != null) {
+			log.debug("User Principal: "+req.getUserPrincipal().getName());
+			return getUserData(req.getUserPrincipal().getName());
+		} else {
+			throw new RuntimeException("User not logged in.");
+		}
+	}
+
+
 	public SecurityRequestHandler getSecurityRequestHandler() {
 		return securityRequestHandler;
 	}
@@ -235,5 +268,13 @@ public class SecurityServiceImpl {
         }
         return principal;
     }
+
+	public IDaoFactory getDaoFactory() {
+		return daoFactory;
+	}
+
+	public void setDaoFactory(IDaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
 
 }

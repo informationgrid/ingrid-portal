@@ -47,44 +47,54 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
   }
 }
 
+
 /*
  * Show the context help
  */
-dialog.showContextHelp = function(e, caption)
-{
-  dojo.require("ingrid.widget.FloatingPane");
+dialog.showContextHelp = function(e, guiId, caption /* optional */) {
+	// Fetch the help message from the server
+	var def = UtilUdk.loadHelpMessage(guiId);
 
-  var mouseX = getMousePos(e)[0];
-  var mouseY = getMousePos(e)[1];
-  
-  var dlg = dojo.widget.byId('ContextHelpDlg');
-  if (dlg) {
-    dlg.titleBarText.innerHTML = caption;
-    dlg.containerNode.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+caption+': Sed arcu magna, molestie at, fringilla in, sodales eu, elit. Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus ut elit convallis eleifend. Fusce tincidunt, justo quis tempus euismod, magna nulla</div>';
-    dlg.domNode.style['left'] = mouseX + 30 + "px";
-    dlg.domNode.style['top'] = mouseY + "px";
-  }
-  else {
-    // define params
-    var params = {};
-    params['displayCloseAction'] = true;
-    params['constrainToContainer'] = true;
-    params['title'] = caption;
-    params['widgetId'] = 'ContextHelpDlg';
-  
-    // define inner div
-    var div = document.createElement("div");
-    div.style.position = "absolute";
-    div.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+caption+': Sed arcu magna, molestie at, fringilla in, sodales eu, elit. Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus ut elit convallis eleifend. Fusce tincidunt, justo quis tempus euismod, magna nulla</div>';
-    document.body.appendChild(div);
-    div.style['width'] = "300px";
-    div.style['height'] = "200px";
-    div.style['left'] = mouseX + 30 + "px";
-    div.style['top'] = mouseY + "px";
-    
-    // make the widget
-    var widget = dojo.widget.createWidget("ingrid:FloatingPane", params, div);
-  }
+	var mouseX = getMousePos(e)[0];
+	var mouseY = getMousePos(e)[1];
+
+	def.addCallback(function(helpMessage) {
+		dojo.require("ingrid.widget.FloatingPane");
+		  
+		if (typeof(caption) == "undefined") {
+			caption = helpMessage.name;
+		}
+
+		var dlg = dojo.widget.byId('ContextHelpDlg');
+		if (dlg) {
+			// If the dialog already exists, update the caption&message and display it
+			dlg.titleBarText.innerHTML = caption;
+			dlg.containerNode.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+caption+': '+helpMessage.helpText+'<br>Beispiel: '+helpMessage.sample+'</div>';
+			dlg.domNode.style['left'] = mouseX + 30 + "px";
+			dlg.domNode.style['top'] = mouseY + "px";
+		
+		} else {
+			// define params
+			var params = {};
+			params['displayCloseAction'] = true;
+			params['constrainToContainer'] = true;
+			params['title'] = caption;
+			params['widgetId'] = 'ContextHelpDlg';
+			  
+			    // define inner div
+			var div = document.createElement("div");
+			div.style.position = "absolute";
+			div.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+caption+': '+helpMessage.helpText+'<br>Beispiel: '+helpMessage.sample+'</div>';
+			document.body.appendChild(div);
+			div.style['width'] = "300px";
+			div.style['height'] = "200px";
+			div.style['left'] = mouseX + 30 + "px";
+			div.style['top'] = mouseY + "px";
+	    
+			// make the widget
+			var widget = dojo.widget.createWidget("ingrid:FloatingPane", params, div);
+		}
+	});
 }
 
 /*

@@ -165,6 +165,18 @@ deleteCatalogAdmin = function() {
 	});
 }
 
+getCurrentPortalUserData = function() {
+	SecurityService.getCurrentPortalUserData({
+		callback: function(userData) {
+			dojo.widget.byId("portalUserTable").store.setData([userData]);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+
+}
 
 function updateGroup(group, newData) {
 	var groupStore = dojo.widget.byId("groupTable").store;
@@ -230,6 +242,22 @@ testSecurity = function() {
  				<th field="lastEditor" dataType="String" width="250">Ge&auml;ndert von</th>
  				<th field="creationTime" dataType="Date" width="200">Erstellt am</th>
  				<th field="modificationTime" dataType="Date" width="200">Ge&auml;ndert am</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<h2>Portal User</h2>
+	<button dojoType="Button" onclick="javascript:getCurrentPortalUserData();">Get current portal user data</button>
+
+	<table id="portalUserTable" valueField="id" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%m:%S" minRows="1" cellspacing="0" class="filteringTable interactive readonly">
+		<thead>
+			<tr>
+				<th field="id" dataType="String" width="80">Identifier</th>
+ 				<th field="addressUuid" dataType="String" width="250">Address UUID</th>
+ 				<th field="plugId" dataType="String" width="100">Plug ID</th>
+ 				<th field="portalLogin" dataType="String" width="80">Portal Login</th>
 			</tr>
 		</thead>
 		<tbody>

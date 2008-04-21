@@ -104,6 +104,9 @@
 		<property name="securityRequestHandler">
 			<ref local="securityRequestHandler" />
 		</property>
+		<property name="daoFactory">
+			<ref bean="daoFactory" />
+		</property>
 	</bean>
 	<bean id="treeService"
 		class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
