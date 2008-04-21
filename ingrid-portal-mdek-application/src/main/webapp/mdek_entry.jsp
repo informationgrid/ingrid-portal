@@ -1760,11 +1760,13 @@ function hideSplash(){
 			  <div id="headerAddressType0" class="contentBlock firstBlock grey">
 				<div id="headerAddressType0Content" class="content">
 
+<!-- AddressType0 parent institutions must not be displayed (http://jira.media-style.com/browse/INGRIDII-130) -->  
+<!--
 			      <div class="inputContainer">
 			        <span class="label"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Institution" class="w668 h038" disabled="true" /></span>
 			  	  </div>
-
+-->
 			      <div class="inputContainer noSpaceBelow">
 			        <span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
 			        <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType0Unit" class="w668 h038" /></span>
@@ -1781,7 +1783,7 @@ function hideSplash(){
 			        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Institution" class="w668 h038" disabled=true" /></span>
 			  	  </div>
-			  	  
+
 			      <div class="inputContainer noSpaceBelow">
 			        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
 			        <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType1Unit" class="w668 h038" /></span>

@@ -1229,6 +1229,8 @@ udkDataProxy._setAddressData = function(nodeData)
 	commentStore.setData(UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable)));
 
 
+/*
+// Don't display all 'institutions', only the first one that is found (http://jira.media-style.com/browse/INGRIDII-130)
 	var institution = "";
 	dojo.lang.forEach(nodeData.parentInstitutions, function(item) {
 		if (item.addressClass == 0) {
@@ -1238,8 +1240,23 @@ udkDataProxy._setAddressData = function(nodeData)
 		}
 	});
 	institution = dojo.string.trim(institution);
+*/
 
-	var addressFields = ["headerAddressType0Institution", "headerAddressType0Unit", "headerAddressType1Institution", "headerAddressType1Unit",
+	var institution = "";
+	for (var i = nodeData.parentInstitutions.length-1; i >= 0; --i) {
+		if (nodeData.parentInstitutions[i].addressClass == 0) {
+			// Only display the first institution we encounter and break
+			institution = nodeData.parentInstitutions[i].organisation+"\n"+institution;
+			break;
+
+		} else if (nodeData.parentInstitutions[i].addressClass == 1) {
+			institution = "\t"+nodeData.parentInstitutions[i].organisation+"\n"+institution;
+		}
+	}
+	institution = dojo.string.trim(institution);
+
+//	var addressFields = ["headerAddressType0Institution", "headerAddressType0Unit", "headerAddressType1Institution", "headerAddressType1Unit",
+	var addressFields = ["headerAddressType0Unit", "headerAddressType1Institution", "headerAddressType1Unit",
 		"headerAddressType2Institution", "headerAddressType2Lastname", "headerAddressType2Firstname", "headerAddressType2Style",
 		"headerAddressType2Title", "headerAddressType3Lastname", "headerAddressType3Firstname", "headerAddressType3Style",
 		"headerAddressType3Title", "headerAddressType3Institution"];
@@ -1249,7 +1266,7 @@ udkDataProxy._setAddressData = function(nodeData)
 	// ------------------ Class specific content ------------------
 	switch(nodeData.addressClass) {
 		case 0:
-			dojo.widget.byId("headerAddressType0Institution").setValue(institution);
+//			dojo.widget.byId("headerAddressType0Institution").setValue(institution);
 			dojo.widget.byId("headerAddressType0Unit").setValue(nodeData.organisation);
 			break;
 		case 1:

@@ -65,7 +65,7 @@ var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
 
 
-var notEmptyAddressFields = [["addressClass", "addressTypeLabel"],
+var notEmptyAddressFields = [ // ["addressClass", "addressTypeLabel"],
 						     ["countryCode", "addressCountryLabel"],
 						     ["city", "addressCityLabel"]];
 
@@ -211,8 +211,9 @@ function isAddressPublishable(idcAddress) {
 	resetRequiredFields();
 
 	for (var i in notEmptyAddressFields) {
-		if (!idcAddress[notEmptyAddressFields[i][0]] || idcAddress[notEmptyAddressFields[i][0]] == "") {
+		if (idcAddress[notEmptyAddressFields[i][0]] == null || idcAddress[notEmptyAddressFields[i][0]]+"" == "") {
 			dojo.html.addClass(dojo.byId(notEmptyAddressFields[i][1]), "important");
+			dojo.debug("Address field: "+notEmptyAddressFields[i][0]+" must not be empty.");
 			publishable = false;
 		}
 	}
@@ -246,7 +247,7 @@ function isAddressPublishable(idcAddress) {
 	}
 
 	// Check the required fields per address type:
-	switch (idcAddress.addressClass)
+	switch (""+idcAddress.addressClass)
 	{
 		case '0':
 			for (var i in notEmptyAddressFieldsClass0) {
