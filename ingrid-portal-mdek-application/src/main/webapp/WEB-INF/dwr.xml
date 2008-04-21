@@ -12,6 +12,9 @@
 		<create creator="spring" javascript="CatalogService">
 			<param name="beanName" value="catalogService" />
 		</create>
+		<create creator="spring" javascript="HelpService">
+			<param name="beanName" value="helpService" />
+		</create>
 		<create creator="spring" javascript="ObjectService">
 			<param name="beanName" value="objectService" />
 		</create>
@@ -66,9 +69,11 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.CTSResponse"/>
-		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.HelpMessage"/>
+
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.Type"/>
 	</allow>
 </dwr>

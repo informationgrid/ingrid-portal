@@ -16,10 +16,14 @@
 	limitations under the License.
 -->
 <beans default-init-method="init" default-destroy-method="destroy">
+	<!-- Import hibernate bean definitions -->
+	<import resource="core-services.xml"/>
+
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configuration">
 		<property name="locations">
             <list>
                 <value>classpath:mdek.properties</value>
+                <value>classpath:default-datasource.properties</value>
             </list>
 		</property>
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
@@ -108,6 +112,13 @@
 		</property>
 		<property name="addressRequestHandler">
 			<ref local="addressRequestHandler" />
+		</property>
+	</bean>
+	
+	<bean id="helpService"
+		class="de.ingrid.mdek.dwr.services.HelpServiceImpl">
+		<property name="daoFactory">
+			<ref bean="daoFactory" />
 		</property>
 	</bean>
 

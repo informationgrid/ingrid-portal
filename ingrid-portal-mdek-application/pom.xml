@@ -21,6 +21,13 @@
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
       </resource>
+		<!-- Copy xml files in java folders to target (Hibernate mapping files) -->
+		<resource>
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.xml</include>
+			</includes>
+		</resource>
 	</resources>
 
 	  <plugins>
@@ -135,6 +142,11 @@
 		<artifactId>ingrid-mdek-api</artifactId>
 		<version>1.1.0-SNAPSHOT</version>
     </dependency>
+     <dependency>
+		<groupId>de.ingrid.mdek</groupId>
+		<artifactId>ingrid-mdek-services</artifactId>
+		<version>1.1.0-SNAPSHOT</version>
+    </dependency>
     <dependency>
         <groupId>ingrid</groupId>
         <artifactId>ingrid-portal-utils</artifactId>
@@ -217,8 +229,56 @@
             <type>jar</type>
         </dependency>
  -->
+<!-- Hibernate includes -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-hibernate3</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.2.1.ga</version>
+			<exclusions>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm-attrs</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>cglib</groupId>
+					<artifactId>cglib</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>3.2.5.ga</version>
+			<!-- Because of asm version conflicts with cglib spring, we can't use the normal cglib dependency of hibernate
+		Rather we use the cglib-nodep lib, which has its own implementation of asm. -->
+			<exclusions>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm-attrs</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>cglib</groupId>
+					<artifactId>cglib</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+<!-- END Hibernate includes -->
+
 	</dependencies>
-	
+
 	<repositories>
 		<repository>
 			<snapshots/>
