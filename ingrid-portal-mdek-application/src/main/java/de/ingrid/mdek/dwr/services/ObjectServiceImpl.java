@@ -9,6 +9,7 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;
+import de.ingrid.mdek.util.MdekObjectUtils;
 
 public class ObjectServiceImpl implements ObjectService {
 
@@ -84,6 +85,8 @@ public class ObjectServiceImpl implements ObjectService {
 		} catch (Exception e) {
 			log.error("Error while getting node data.", e);
 		}
+
+		MdekObjectUtils.setInitialValues(data);
 
 		data.setNodeAppType(OBJECT_APPTYPE);
 		data.setNodeDocType(OBJECT_INITIAL_DOCTYPE);

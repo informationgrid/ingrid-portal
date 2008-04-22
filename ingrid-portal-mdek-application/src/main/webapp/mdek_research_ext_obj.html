@@ -227,7 +227,7 @@ function readQueryFromInput() {
 
 // Reset-Button function. Reset all the input fields to their initial values and reset 'currentQuery'
 this.resetInput = function() {
-	dojo.byId("addrMode1").checked = true;
+	dojo.byId("objMode1").checked = true;
 	dojo.widget.byId("objSearchInput").setValue("");
 	dojo.widget.byId("objTopicInputBool").setValue(0);
 	scriptScope.selectAllObjectClasses();

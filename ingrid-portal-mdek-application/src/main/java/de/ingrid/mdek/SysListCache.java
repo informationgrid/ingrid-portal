@@ -82,6 +82,25 @@ public class SysListCache {
 		return "";
 	}
 
+	public String getInitialValue(String key) {
+		if (listCache == null) {
+			this.loadInitialLists();
+		}
+
+		List<String[]> sysList = listCache.get(keyCache.get(key));
+
+		// The third entry in the string marks the default entry.
+		for (String[] entry : sysList) {
+			if (entry.length < 3) { continue; }
+			if (entry[2].equalsIgnoreCase("Y")) {
+				return entry[0];
+			}
+		}
+
+		log.debug("Could not find default syslist entry for: ["+key+"]");
+		return null;
+	}
+
 	public String getValueFromListId(Integer listId, Integer entryId) {
 		if (listCache == null) {
 			this.loadInitialLists();
@@ -102,7 +121,28 @@ public class SysListCache {
 		return "";
 	}
 
-	
+	public String getInitialValueFromListId(Integer listId) {
+		if (listCache == null) {
+			this.loadInitialLists();
+		}
+
+		List<String[]> sysList = listCache.get(listId);
+		if (sysList == null) {
+			sysList = addSysListToCache(listId);
+		}
+
+		// The third entry in the string marks the default entry.
+		for (String[] entry : sysList) {
+			if (entry.length < 3) { continue; }
+			if (entry[2].equalsIgnoreCase("Y")) {
+				return entry[0];
+			}
+		}
+
+		log.debug("Could not find default syslist entry for list: ["+listId+"]");
+		return null;
+	}
+
 	public Integer getKey(String key, String entryVal) {
 		if (listCache == null) {
 			this.loadInitialLists();
@@ -148,7 +188,29 @@ public class SysListCache {
 		return null;
 	}
 
-	
+	public Integer getInitialKeyFromListId(Integer listId) {
+		if (listCache == null) {
+			this.loadInitialLists();
+		}
+
+		List<String[]> sysList = listCache.get(listId);
+		if (sysList == null) {
+			sysList = addSysListToCache(listId);
+		}
+
+		// The third entry in the string marks the default entry.
+		for (String[] entry : sysList) {
+			if (entry.length < 3) { continue; }
+			if (entry[2].equalsIgnoreCase("Y")) {
+				return Integer.valueOf(entry[1]);
+			}
+		}
+
+		log.debug("Could not find default syslist entry for list: ["+listId+"]");
+		return null;
+	}
+
+
 	public List<String[]> addSysListToCache(Integer listId) {
 		Integer[] listIds = {listId};
 		listCache.put(listId, getSysLists(listIds, languageCode).get(listId));

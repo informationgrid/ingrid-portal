@@ -746,7 +746,35 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 	
-	
+	public void setInitialValues(MdekAddressBean addr) {
+		addr.setNameForm(sysListMapper.getInitialValue(MdekKeys.NAME_FORM_KEY));
+		addr.setTitleOrFunction(sysListMapper.getInitialValue(MdekKeys.TITLE_OR_FUNCTION_KEY));
+	}
+
+	public void setInitialValues(MdekDataBean obj) {
+		obj.setSpatialRefAltVDate(sysListMapper.getInitialKeyFromListId(VERTICAL_EXTENT_VDATUM_ID));
+		obj.setSpatialRefAltMeasure(sysListMapper.getInitialKeyFromListId(VERTICAL_EXTENT_UNIT_ID));
+		obj.setTimeRefPeriodicity(sysListMapper.getInitialKeyFromListId(TIME_PERIOD_ID));
+		obj.setTimeRefStatus(sysListMapper.getInitialKeyFromListId(TIME_STATUS_ID));
+		obj.setRef1DataSet(sysListMapper.getInitialKeyFromListId(HIERARCHY_LEVEL_ID));
+		// TODO Check if Ref1VFormatTopology is set properly
+		obj.setRef1VFormatTopology(sysListMapper.getInitialKeyFromListId(VECTOR_TOPOLOGY_LEVEL_ID));
+
+		Integer key = sysListMapper.getInitialKeyFromListId(TIME_SCALE_ID);
+		if (key != null) { obj.setTimeRefIntervalUnit(key.toString()); };
+
+		obj.setRef1SpatialSystem(sysListMapper.getInitialValue(MdekKeys.REFERENCESYSTEM_ID));
+		obj.setRef3ServiceType(sysListMapper.getInitialValue(MdekKeys.SERVICE_TYPE_KEY));
+
+		key = sysListMapper.getInitialKeyFromListId(DATA_LANGUAGE_ID);
+		if (key != null) {
+			obj.setExtraInfoLangData(key.toString());
+			obj.setExtraInfoLangMetaData(key.toString());
+		}
+
+		obj.setExtraInfoPublishArea(sysListMapper.getInitialKeyFromListId(PUBLICATION_CONDITION_ID));
+	}
+
 	// ------------------------------- Helper Methods -----------------------------------
 
 	

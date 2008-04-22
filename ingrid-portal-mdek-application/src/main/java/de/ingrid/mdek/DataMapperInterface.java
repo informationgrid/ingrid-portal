@@ -26,11 +26,26 @@ public interface DataMapperInterface {
 	public MdekAddressBean getDetailedAddressRepresentation(Object obj);
 	public Object convertFromAddressRepresentation(MdekAddressBean data);
 
+	// Sets the initial values for the address addr. Initial values are loaded from the backend.
+	public void setInitialValues(MdekAddressBean addr);
+	// Sets the initial values for the object obj. Initial values are loaded from the backend.
+	public void setInitialValues(MdekDataBean obj);
+
 	// List IDs for key/value lookup
 	public final static int MDEK_ADDRESS_REF_ID = 505;
 	public final static int MDEK_ADDRESS_REF_SPECIAL_ID = 2010;
-	
-	
+
+	// List IDs for initial value lookup.
+	public final static int VERTICAL_EXTENT_VDATUM_ID = 101;
+	public final static int VERTICAL_EXTENT_UNIT_ID = 102;
+	public final static int TIME_PERIOD_ID = 518;
+	public final static int TIME_STATUS_ID = 523;
+	public final static int HIERARCHY_LEVEL_ID = 525;
+	public final static int VECTOR_TOPOLOGY_LEVEL_ID = 528;
+	public final static int TIME_SCALE_ID = 1230;
+	public final static int DATA_LANGUAGE_ID = 99999999;
+	public final static int PUBLICATION_CONDITION_ID = 3571;
+
 	// Miscellaneous
 	public final static String MDEK_ID = "id";
 	public final static String MDEK_HAS_CHILDREN = "isFolder";

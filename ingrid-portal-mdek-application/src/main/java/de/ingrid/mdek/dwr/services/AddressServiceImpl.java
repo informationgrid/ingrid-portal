@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class AddressServiceImpl implements AddressService {
@@ -81,6 +82,8 @@ public class AddressServiceImpl implements AddressService {
 		} catch (Exception e) {
 			log.error("Error while getting address data.", e);
 		}
+
+		MdekAddressUtils.setInitialValues(data);
 
 		data.setNodeAppType(ADDRESS_APPTYPE);
 		data.setUuid("newNode");

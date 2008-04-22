@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.utils.IngridDocument;
@@ -101,6 +102,10 @@ public class MdekObjectUtils {
 	}
 
 	
+	public static void setInitialValues(MdekDataBean obj) {
+		dataMapper.setInitialValues(obj);
+	}
+
 	public DataMapperInterface getDataMapper() {
 		return dataMapper;
 	}

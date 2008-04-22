@@ -26,7 +26,7 @@ public class MdekCatalogUtils {
 //				resultList.add( new String[] {"", ""} );
 				for (IngridDocument entry : entries) {
 //					resultList.add( new String[] {StringEscapeUtils.escapeJavaScript(entry.getString(MdekKeys.ENTRY_NAME)), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString()} );
-					resultList.add( new String[] {entry.getString(MdekKeys.ENTRY_NAME), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString()} );
+					resultList.add( new String[] {entry.getString(MdekKeys.ENTRY_NAME), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString(), (String) entry.get(MdekKeys.IS_DEFAULT) } );
 				}
 				resultMap.put(listId, resultList);
 			}

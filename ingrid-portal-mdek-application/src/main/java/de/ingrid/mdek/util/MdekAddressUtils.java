@@ -99,6 +99,10 @@ public class MdekAddressUtils {
 		return searchResult;
 	}
 
+	public static void setInitialValues(MdekAddressBean addr) {
+		dataMapper.setInitialValues(addr);
+	}
+	
 
 	public DataMapperInterface getDataMapper() {
 		return dataMapper;
