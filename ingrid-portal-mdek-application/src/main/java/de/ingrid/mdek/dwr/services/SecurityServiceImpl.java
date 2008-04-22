@@ -157,6 +157,20 @@ public class SecurityServiceImpl {
 		return userData;
 	}
 
+	public UserData getUserDataForAddress(String addressUuid) {
+		// Load user data directly from the db via hibernate
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+		UserData sampleUser = new UserData();
+		sampleUser.setAddressUuid(addressUuid);
+
+		dao.beginTransaction();
+		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
+		dao.commitTransaction();
+
+		return userData;
+	}
+
+	
 	public UserData getCurrentPortalUserData() {
 		WebContext wctx = WebContextFactory.get();
 		HttpServletRequest req = wctx.getHttpServletRequest();

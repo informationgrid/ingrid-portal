@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+
+var currentSelectedAddressId = null;
+
+
+_container_.addOnLoad(function() {
+	initializeUserTree();
+	initializeGroupList();
+});
+
+function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
+/*
+	dojo.debugShallow(catAdmin);
+	dojo.debugShallow(catAdminData);
+	dojo.debugShallow(catAdminAddress);
+*/
+	// Add the data to the tree
+	var title = UtilAddress.createAddressTitle(catAdminAddress);
+	var role = catAdmin.role;
+	var group = catAdmin.groupId;
+	var portalLogin = catAdminData.portalLogin;
+	// var canCreateRootNodes = user.canCreateRootNodes();
+
+	var rootNode = {
+		addressUuid: catAdminAddress.uuid,
+		title: title,
+		role: role,
+		group: group,
+		portalLogin: portalLogin,
+		nodeDocType: "KatalogAdmin"
+	}
+	dojo.widget.byId("treeUser").setChildren([rootNode]);
+}
+
+
+// Resets the tree view and loads the catalog administrator from the backend
+function initializeUserTree() {
+
+	var def = getCatalogAdmin();
+	def.addCallback(function(catAdmin) {
+		var d1 = getAddressData(catAdmin.addressUuid);
+		var d2 = getUserDataForAddress(catAdmin.addressUuid);
+
+		var l1 = new dojo.DeferredList([d1, d2], false, false, true);
+		l1.addCallback(function (resultList) {
+			var addrData = resultList[0][1];
+			var userData = resultList[1][1];
+
+			setTreeRoot(catAdmin, userData, addrData);
+		});
+	});
+
+  var treeListener = dojo.widget.byId('treeListenerUser');
+  dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { updateInputElements(data.node); });
+}
+
+function initializeGroupList() {
+	var def = getAllGroups();
+
+	def.addCallback(function(groupList) {
+		var list = [];
+		dojo.lang.forEach(groupList, function(item) {
+			list.push( [item.name, item.id] );
+		});
+		dojo.widget.byId("userDataGroup").dataProvider.setData(list);
+	});
+}
+
+
+// Updates the input elements with the data from 'treeNode'
+function updateInputElements(treeNode) {
+	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
+	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
+	dojo.widget.byId("userDataRole").setValue(treeNode.role);
+	dojo.widget.byId("userDataGroup").setValue(treeNode.group);
+	dojo.widget.byId("userDataCreate").checked = treeNode.canCreateRootNodes;
+	currentSelectedAddressId = treeNode.addressUuid;
+}
+
+
+this.searchForAddress = function() {
+	var def = new dojo.Deferred();
+	dialog.showPage('Adresse suchen', 'mdek_address_dialog.html', 755, 580, true, { resultHandler: def });
+
+	def.addCallback(getAddressData);
+	def.addCallback(function(addressData) {
+		currentSelectedAddressId = addressData.uuid;
+		var title = UtilAddress.createAddressTitle(addressData);
+		dojo.widget.byId("userDataAddressLink").setValue(title);
+	});
+}
+
+function getAllGroups() {
+	var deferred = new dojo.Deferred();
+
+	SecurityService.getGroups( {
+		callback: function(groupList) {
+			deferred.callback(groupList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);			
+		}
+	});
+
+	return deferred;
+}
+
+function getUserDataForAddress(adrUuid) {
+	var deferred = new dojo.Deferred();
+
+	SecurityService.getUserDataForAddress( adrUuid, {
+		callback: function(userData) {
+			deferred.callback(userData);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);
+		}
+	});
+
+	return deferred;
+}
+
+function getAddressData(adrUuid) {
+	var deferred = new dojo.Deferred();
+
+	AddressService.getAddressData( adrUuid, null, {
+		callback: function(adr) {
+			deferred.callback(adr);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);
+		}
+	});
+
+	return deferred;
+}
+
+function getCatalogAdmin() {
+	var deferred = new dojo.Deferred();
+
+	SecurityService.getCatalogAdmin( {
+		callback: function(user) {
+			deferred.callback(user);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);
+		}
+	});
+
+	return deferred;
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="userAdmin" class="content">
+
+			<!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+		
+		    <div class="inputContainer grey noSpaceBelow w264 h349 scrollable">
+				<div dojoType="ContentPane" id="treeContainerUser">
+					<!-- tree components -->
+			        <div dojoType="ingrid:TreeController" widgetId="treeControllerUser"></div>
+			        <div dojoType="ingrid:TreeListener" widgetId="treeListenerUser"></div>	
+			        <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsUser"></div>	
+			        <div dojoType="ingrid:TreeDecorator" listener="treeListenerUser"></div>
+		
+			        <!-- tree -->
+			        <div dojoType="ingrid:Tree" listeners="treeControllerUser;treeListenerUser;treeDocIconsUser" widgetId="treeUser">
+<!-- 
+		        	<div dojoType="ingrid:TreeNode" title="Root" objectId="root" isFolder="true" nodeDocType="KatalogAdmin"></div>
+-->	
+		          <!-- remove the next lines in production -->
+		<!-- 
+		            	<div dojoType="ingrid:TreeNode" title="Bernhart, Hans" widgetId="u1" nodeDocType="KatalogAdmin">
+		              	<div dojoType="ingrid:TreeNode" title="Altm&uuml;ller, Reinhard" widgetId="u2" nodeDocType="MDAdmin">
+		              		<div dojoType="ingrid:TreeNode" title="Backhaus, Hermann" widgetId="u3" nodeDocType="MDAutor"></div>
+		                </div>
+		              	<div dojoType="ingrid:TreeNode" title="Gerdes, G&uuml;nter" widgetId="u4" nodeDocType="MDAdmin">
+		              		<div dojoType="ingrid:TreeNode" title="Schmitt, Walter" widgetId="u5" nodeDocType="MDAutor"></div>
+		                </div>
+		            	</div>
+		 -->
+		          <!-- end of remove -->
+					</div>
+		    	</div>
+				<div class="spacer"></div>
+			</div>
+		
+			<div class="inputContainer">
+				<span class="button w224"><a href="#" class="buttonBlue" title="Nutzer l&ouml;schen">Nutzer l&ouml;schen</a></span>
+			</div>
+		    <!-- LEFT HAND SIDE CONTENT BLOCK 1 END -->
+	
+		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
+			<div id="userData" class="inputContainer">
+				<span class="label"><label>Nutzerdaten</label></span>
+<!-- 
+				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a href="admin_nutzer_gruppe.html" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a class="current" title="Nutzer">Nutzer</a></span>
+-->
+				<div class="inputContainer field grey noSpaceBelow h313">
+
+<!--
+					<div class="inputContainer">
+						<div class="half left">
+							<span class="label required"><label for="userDataLastName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+							<span class="input"><input type="text" id="userDataLastName" name="userDataLastName" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
+						</div>
+						<div class="half">
+							<span class="label required"><label for="userDataFirstName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname*</label></span>
+							<span class="input"><input type="text" id="userDataFirstName" name="userDataFirstName" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
+						</div>
+						<div class="fill"></div>
+					</div>
+-->
+					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 'Login')">Login</label></span>
+					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+					<span class="label required"><label for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressverweis')">Adressverweis*</label></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]">Adresse suchen</a></span>
+					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rolle')">Rolle</label></span>
+					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+					
+					<span class="label"><label for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe</label></span>
+					<span class="input spaceBelow"><div dojoType="ingrid:Select" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
+					<div class="checkboxContainer noSpaceBelow">
+						<span class="input"><input type="checkbox" name="userDataCreate" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
+						<span class="input"><input type="checkbox" name="userDataQS" id="userDataQS" disabled="true" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+			        </div>
+			        <div class="fill"></div>
+				</div>
+			
+				<div class="inputContainer">
+					<span class="button w644"><a href="#" class="buttonBlue" title="Nutzer aus Portal &uuml;bernehmen">Nutzer aus Portal &uuml;bernehmen</a><a href="#" class="buttonBlue" title="Speichern">Speichern</a></span>
+				</div>
+			</div>
+		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
+	
+		</div>
+	</div>
+</div>
+<!-- CONTENT END -->
+
+</body>
+</html>

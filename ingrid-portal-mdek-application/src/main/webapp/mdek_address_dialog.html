@@ -21,6 +21,15 @@ var referenceMap = [["Standort", "3360"],
 					["Beteiligte", "3410"]];
 
 
+_container_.addOnUnload(function() {
+	if (_container_.customParams && _container_.customParams.resultHandler) {
+		if (_container_.customParams.resultHandler.fired == -1) {
+			_container_.customParams.resultHandler.errback();
+		}
+	}
+});
+
+
 _container_.addOnLoad(function() {
 	// Initialize the address tree	
 	// Load initial first level of the tree from the server
@@ -82,7 +91,6 @@ _container_.addOnLoad(function() {
     dojo.event.connect(dojo.widget.byId("addressSearchUnit").domNode, "onkeypress", startSearchOnEnter);
     dojo.event.connect(dojo.widget.byId("addressSearchLastname").domNode, "onkeypress", startSearchOnEnter);
     dojo.event.connect(dojo.widget.byId("addressSearchFirstname").domNode, "onkeypress", startSearchOnEnter);
-
 });
 
 
@@ -116,7 +124,15 @@ function addAddressLinkLabel(adr) {
 }
 
 
-function addAddressToStore(adrId, store) {
+function addAddressToStore(adrId) {
+	// If the dialog was called with a resultHandler, call it with the selected address uuid and return
+	if (_container_.customParams && _container_.customParams.resultHandler) {
+		_container_.customParams.resultHandler.callback(adrId);
+		return;
+	}
+
+    var store = dojo.widget.byId("generalAddress").store;
+
 	var linkType = null;
 	var nameOfRelation = "";
 	var typeOfRelation = 0;
@@ -160,11 +176,10 @@ addSelectedAddressFromTree = function() {
 	var selectedNode = dojo.widget.byId("treeAdr").selectedNode;
 
 	if (selectedNode) {
-	    var dstStore = dojo.widget.byId("generalAddress").store;
 		var nodeId = selectedNode.id.substring(10);
 		if (nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
 //			if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
-				addAddressToStore(nodeId, dstStore);
+				addAddressToStore(nodeId);
 //			}
 		}
 	}
@@ -175,10 +190,9 @@ addSelectedAddress = function() {
 	var selectedNode = dojo.widget.byId("addressSearchResultsTable").getSelectedData();
 
 	if (selectedNode) {
-	    var dstStore = dojo.widget.byId("generalAddress").store;
 		var nodeId = selectedNode.uuid;
 //		if (dojo.lang.every(dstStore.getData(), function(item){ return (item.uuid != nodeId); })) {
-			addAddressToStore(nodeId, dstStore);
+			addAddressToStore(nodeId);
 //		}
 	}
 	_container_.closeWindow();

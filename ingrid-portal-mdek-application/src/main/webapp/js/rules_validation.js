@@ -167,6 +167,9 @@ function addAddressTableInfoValidation() {
 	var popup = dojo.widget.createWidget("PopupContainer");
   	popup.domNode.innerHTML = "Die Addressverweistabelle muss mindestens eine Adresse vom Typ Auskunft beinhalten!";
 
+	dojo.event.connectOnce(table.store, "onAddData", table, "applyValidation");
+
+
 	table._valid = false;
 
 	table.applyValidation = function() {
