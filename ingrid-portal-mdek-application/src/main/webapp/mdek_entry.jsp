@@ -299,7 +299,7 @@ function hideSplash(){
 	        	  <div id="generalContent" class="content">
 
 	              <div class="inputContainer notRequired">
-	                <span class="label"><label for="generalShortDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kurzbezeichnung')">Kurzbezeichnung</label></span>
+	                <span class="label"><label for="generalShortDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 5000)">Kurzbezeichnung</label></span>
 	                <span class="input"><input type="text" maxlength="40" id="generalShortDesc" name="generalShortDesc" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
 	          	  </div>
 
@@ -833,7 +833,7 @@ function hideSplash(){
 
 	              <div class="inputContainer required">
 	                <div class="half left">
-	                  <span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Servicetyp')">Servicetyp*</label></span>
+	                  <span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)">Servicetyp*</label></span>
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
 	                  <span class="input spaceBelow">
 <!-- 
@@ -845,7 +845,7 @@ function hideSplash(){
 	            	</div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 'Version des Services')">Version des Services</label></span>
+	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)">Version des Services</label></span>
 	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="ref3ServiceVersionEditors">
 	                      <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="ref3ServiceVersionServiceType"></div>
@@ -866,12 +866,12 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 'Systemumgebung')">Systemumgebung</label></span>
+	                  <span class="label"><label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 3200)">Systemumgebung</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3SystemEnv" name="ref3SystemEnv" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
  	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 'Historie')">Historie</label></span>
+	                  <span class="label"><label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 3240)">Historie</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3History" name="ref3History" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
   	                </div>
 	                <div class="fill"></div>
@@ -879,7 +879,7 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Basisdaten')">Basisdaten</label></span>
+	                  <span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)">Basisdaten</label></span>
 	                  <span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3210});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref3BaseDataTab1">
 	                		<div id="ref3BaseDataTab1" dojoType="ContentPane" label="Text">
@@ -909,7 +909,7 @@ function hideSplash(){
 	                </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3250)">Erl&auml;uterungen</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3Explanation" name="ref3Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	                </div>
 	                <div class="fill"></div>
@@ -946,7 +946,7 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beteiligte')">Beteiligte</label></span>
+	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3410)">Beteiligte</label></span>
 	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4ParticipantsTab1">
 	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
@@ -976,7 +976,7 @@ function hideSplash(){
 	                </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Projektleiter')">Projektleiter</label></span>
+	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3400)">Projektleiter</label></span>
 	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
 	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4PMTab1">
 	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
@@ -1008,7 +1008,7 @@ function hideSplash(){
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired">
-	                <span class="label"><label for="ref4Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                <span class="label"><label for="ref4Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3420)">Erl&auml;uterungen</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref4Explanation" name="ref4Explanation" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	          	  </div>
 
@@ -1025,7 +1025,7 @@ function hideSplash(){
 	        	  <div id="ref5Content" class="content">
 
 	              <div class="inputContainer notRequired h130">
-	                <span class="label"><label for="ref5dbContent" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalte der Datensammlung/Datenbank')">Inhalte der Datensammlung/Datenbank</label></span>
+	                <span class="label"><label for="ref5dbContent" onclick="javascript:dialog.showContextHelp(arguments[0], 3110)">Inhalte der Datensammlung/Datenbank</label></span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="ref5dbContentEditors">
 	                    <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="ref5dbContentParameter"></div>
@@ -1046,7 +1046,7 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 'Methode/Datengrundlage')">Methode/Datengrundlage</label></span>
+	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3100)">Methode/Datengrundlage</label></span>
 	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3100});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
 	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref5MethodTab1">
 	                		<div id="ref5MethodTab1" dojoType="ContentPane" label="Text">
@@ -1076,7 +1076,7 @@ function hideSplash(){
 	                </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref5Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="label"><label for="ref5Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3120)">Erl&auml;uterungen</label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref5Explanation" name="ref5Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
   	                </div>
 	                <div class="fill"></div>
@@ -1252,26 +1252,26 @@ function hideSplash(){
 	                  <span class="label">H&ouml;he</span>
 	                  <div id="spatialRefAltitude">
 	                    <span class="entry">
-	                      <span class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 'Minimum')">Minimum</label></span>
+	                      <span class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 1130)">Minimum</label></span>
 	                      <span class="input"><input type="text" id="spatialRefAltMin" name="spatialRefAltMin" class="w080" dojoType="RealNumberTextBox" /></span>
 	                    </span>
 	                    <span class="entry">
-	                      <span class="label"><label for="spatialRefAltMax" onclick="javascript:dialog.showContextHelp(arguments[0], 'Maximum')">Maximum</label></span>
+	                      <span class="label"><label for="spatialRefAltMax" onclick="javascript:dialog.showContextHelp(arguments[0], 5020)">Maximum</label></span>
 	                      <span class="input"><input type="text" id="spatialRefAltMax" name="spatialRefAltMax" class="w080" dojoType="RealNumberTextBox" /></span>
 	                    </span>
 	                    <span class="entry">
-	                      <span class="label"><label for="spatialRefAltMeasure" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ma&szlig;einheit')">Ma&szlig;einheit</label></span>
+	                      <span class="label"><label for="spatialRefAltMeasure" onclick="javascript:dialog.showContextHelp(arguments[0], 5021)">Ma&szlig;einheit</label></span>
 	                      <span class="input"><input dojoType="ingrid:Select" style="width:58px;" listId="102" id="spatialRefAltMeasure" /></span>
 	                    </span>
 	                    <span class="entry">
-	                      <span class="label"><label for="spatialRefAltVDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vertikaldatum')">Vertikaldatum</label></span>
+	                      <span class="label"><label for="spatialRefAltVDate" onclick="javascript:dialog.showContextHelp(arguments[0], 5022)">Vertikaldatum</label></span>
 	                      <span class="input"><input dojoType="ingrid:Select" style="width:266px;" listId="101" id="spatialRefAltVDate" /></span>
 	                    </span>
 	                  </div>
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="spatialRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="label"><label for="spatialRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 1140)">Erl&auml;uterungen</label></span>
                		<span class="input"><input type="text" mode="textarea" id="spatialRefExplanation" name="spatialRefExplanation" class="w320 h118" dojoType="ingrid:ValidationTextbox" /></span> 
  	                </div>
 	                <div class="fill"></div>
@@ -1292,7 +1292,7 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow">
 	                <div class="half left">
-	                  <span id="timeRefTableLabel" class="label required"><label for="timeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug des Datensatzes')">Zeitbezug des Datensatzes*</label></span>
+	                  <span id="timeRefTableLabel" class="label required"><label for="timeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 5030)">Zeitbezug des Datensatzes*</label></span>
 	                  <div class="tableContainer rows4 half">
 	                    <div class="cellEditors" id="timeRefTableEditors">
 	                      <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="timeRefDateDatePicker"></div>
@@ -1312,7 +1312,7 @@ function hideSplash(){
 	            	  </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="timeRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erl&auml;uterungen')">Erl&auml;uterungen</label></span>
+	                  <span class="label"><label for="timeRefExplanation" onclick="javascript:dialog.showContextHelp(arguments[0], 1250)">Erl&auml;uterungen</label></span>
                		  <span class="input"><input type="text" mode="textarea" id="timeRefExplanation" name="timeRefExplanation" class="w320 h105" dojoType="ingrid:ValidationTextbox" /></span> 
 	                </div>
 
@@ -1345,19 +1345,19 @@ function hideSplash(){
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="timeRefStatus" onclick="javascript:dialog.showContextHelp(arguments[0], 'Status')">Status</label></span>
+	                  <span class="label"><label for="timeRefStatus" onclick="javascript:dialog.showContextHelp(arguments[0], 1220)">Status</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" style="width:301px;" listId="523" id="timeRefStatus" /></span>
 	                </div>
 	              </div>
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="timeRefPeriodicity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Periodizit&auml;t')">Periodizit&auml;t</label></span>
+	                  <span class="label"><label for="timeRefPeriodicity" onclick="javascript:dialog.showContextHelp(arguments[0], 1240)">Periodizit&auml;t</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" style="width:302px;" listId="518" id="timeRefPeriodicity" /></span>
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Im Intervall')">Im Intervall</label></span>
+	                  <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 1230)">Im Intervall</label></span>
 	                  <div id="timeRefInterval">
 	                    <span>Alle</span>
 	                    <span class="label hidden"><label for="timeRefIntervalNum">Intervall Anzahl</label></span>
@@ -1383,12 +1383,12 @@ function hideSplash(){
 	        	  
 	              <div class="inputContainer">
 	                <div class="half left">
-	                  <span id="extraInfoLangMetaDataLabel" class="label required"><label for="extraInfoLangMetaData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Metadatensatzes')">Sprache des Metadatensatzes*</label></span>
+	                  <span id="extraInfoLangMetaDataLabel" class="label required"><label for="extraInfoLangMetaData" onclick="javascript:dialog.showContextHelp(arguments[0], 5041)">Sprache des Metadatensatzes*</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:302px;" listId="99999999" id="extraInfoLangMetaData" /></span>
 	                </div>
 	          
 	                <div class="half">
-	                  <span id="extraInfoLangDataLabel" class="label required"><label for="extraInfoLangData" onclick="javascript:dialog.showContextHelp(arguments[0], 'Sprache des Datensatzes')">Sprache des Datensatzes*</label></span>
+	                  <span id="extraInfoLangDataLabel" class="label required"><label for="extraInfoLangData" onclick="javascript:dialog.showContextHelp(arguments[0], 5042)">Sprache des Datensatzes*</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:302px;" listId="99999999" id="extraInfoLangData" /></span>
 	                </div>
 	                <div class="fill"></div>
@@ -1396,7 +1396,7 @@ function hideSplash(){
 
 	              <div class="inputContainer">
 	                <div class="half left">
-	                  <span class="label required"><label id="extraInfoPublishAreaLabel" for="extraInfoPublishArea" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ver&ouml;ffentlichung')">Ver&ouml;ffentlichung*</label></span>
+	                  <span class="label required"><label id="extraInfoPublishAreaLabel" for="extraInfoPublishArea" onclick="javascript:dialog.showContextHelp(arguments[0], 3571)">Ver&ouml;ffentlichung*</label></span>
 	                  <span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:302px;" listId="3571" id="extraInfoPublishArea" /></span>
  	                </div>
 	                <div class="fill"></div>
@@ -1422,7 +1422,7 @@ function hideSplash(){
 	            	  </div>
 	          
 	                <div class="third2">
-	                  <span class="label"><label for="extraInfoLegalBasicsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rechtliche Grundlagen')">Rechtliche Grundlagen</label></span>
+	                  <span class="label"><label for="extraInfoLegalBasicsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1350)">Rechtliche Grundlagen</label></span>
 	                  <div class="tableContainer headHiddenRows4 third2">
 	                    <div class="cellEditors" id="extraInfoLegalBasicsTableEditors">
 	                      <div dojoType="ingrid:ComboBox" maxlength="120" toggle="plain" style="width:397px;" listId="1350" id="extraInfoLegalBasicsTableEditor"></div>
@@ -1448,7 +1448,7 @@ function hideSplash(){
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="extraInfoUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Eignung/Nutzung')">Eignung/Nutzung</label></span>
+	                  <span class="label"><label for="extraInfoUse" onclick="javascript:dialog.showContextHelp(arguments[0], 5040)">Eignung/Nutzung</label></span>
                		<span class="input"><input type="text" mode="textarea" id="extraInfoUse" name="extraInfoUse" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
 	                </div>
 	                <div class="fill"></div>
@@ -1467,7 +1467,7 @@ function hideSplash(){
 	        	  <div id="availabilityContent" class="content">
 	        	  
 	              <div class="inputContainer notRequired h130">
-	                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenformat')">Datenformat</label></span>
+	                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 1320)">Datenformat</label></span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="availabilityDataFormatEditors">
                         <div dojoType="ingrid:ComboBox" maxlength="80" toggle="plain" style="width:150px;" listId="1320" widgetId="availabilityDataFormatName"></div>
@@ -1491,7 +1491,7 @@ function hideSplash(){
 	              </div>
 
 	              <div class="inputContainer notRequired h130">
-	                <span class="label"><label for="availabilityMediaOptions" onclick="javascript:dialog.showContextHelp(arguments[0], 'Medienoption')">Medienoption</label></span>
+	                <span class="label"><label for="availabilityMediaOptions" onclick="javascript:dialog.showContextHelp(arguments[0], 1310)">Medienoption</label></span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="availabilityMediaOptionsEditors">
 	                    <div dojoType="ingrid:Select" toggle="plain" style="width:117px;" listId="520" id="availabilityMediaOptionsMediumCombobox"></div>
@@ -1514,13 +1514,13 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 'Bestellinformation')">Bestellinformation</label></span>
+	                  <span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 5052)">Bestellinformation</label></span>
                		<span class="input"><input type="text" mode="textarea" id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
 
 	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kosten')">Kosten</label></span>
+	                  <span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 5051)">Kosten</label></span>
                		<span class="input"><input type="text" mode="textarea" maxlength="255" id="availabilityCosts" name="availabilityCosts" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
 
  	                </div>
@@ -1529,7 +1529,7 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="full">
-	                  <span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nutzungsanmerkung')">Nutzungsanmerkung</label></span>
+	                  <span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 5040)">Nutzungsanmerkung</label></span>
                		<span class="input"><input type="text" mode="textarea" id="availabilityNoteUse" name="availabilityNoteUse" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span> 
 	                </div>
 	                <div class="fill"></div>
@@ -1548,7 +1548,7 @@ function hideSplash(){
 	        	  <div id="thesaurusContent" class="content">
 	        	  
 	              <div class="inputContainer h110">
-	                <span id="thesaurusTermsLabel" class="label required"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
+	                <span id="thesaurusTermsLabel" class="label required"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)">Thesaurus-Suchbegriffe (mindestens 3)*</label></span>
 	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 430, true);" title="Verschlagwortungsassistent [Popup]">Verschlagwortungsassistent</a>
 	                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 	                <div class="tableContainer headHiddenRows4 full">
@@ -1564,7 +1564,7 @@ function hideSplash(){
 
 	              <div class="inputContainer h116">
 	                <div class="half left">
-	                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorie')">Themenkategorie*</label></span>
+	                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)">Themenkategorie*</label></span>
 	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="thesaurusTopicsEditors">
 	                      <div dojoType="ingrid:Select" toggle="plain" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
@@ -1582,7 +1582,7 @@ function hideSplash(){
 	            	  </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
+	                  <span class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1410)">Freie Suchbegriffe</label></span>
 	                  <div class="tableContainer spaceBelow headHiddenRows3 half">
 	              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
@@ -1769,7 +1769,7 @@ function hideSplash(){
 			  	  </div>
 -->
 			      <div class="inputContainer noSpaceBelow">
-			        <span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution*</label></span>
+			        <span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 4100)">Institution*</label></span>
 			        <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType0Unit" class="w668 h038" /></span>
 			  	  </div>
 
@@ -1781,12 +1781,12 @@ function hideSplash(){
 				  <div id="headerAddressType1Content" class="content">
 
 			      <div class="inputContainer">
-			        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+			        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 4210)">Institution/&uuml;bergeordnete Einheit(en)</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Institution" class="w668 h038" disabled=true" /></span>
 			  	  </div>
 
 			      <div class="inputContainer noSpaceBelow">
-			        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit')">Einheit*</label></span>
+			        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 4200)">Einheit*</label></span>
 			        <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType1Unit" class="w668 h038" /></span>
 			  	  </div>
 
@@ -1798,18 +1798,18 @@ function hideSplash(){
 				  <div id="headerAddressType2Content" class="content">
 
 			      <div class="inputContainer">
-			        <span class="label"><label for="headerAddressType2Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+			        <span class="label"><label for="headerAddressType2Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 4210)">Institution/&uuml;bergeordnete Einheit(en)</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType2Institution" class="w668 h038" disabled="true" /></span>
 			  	  </div>
 			  	  
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span id="headerAddressType2LastnameLabel" class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+			          <span id="headerAddressType2LastnameLabel" class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 4315)">Name*</label></span>
 			          <span class="input"><input type="text" maxlength="40" id="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span id="headerAddressType2FirstnameLabel" class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+			          <span id="headerAddressType2FirstnameLabel" class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 4310)">Vorname</label></span>
 			          <span class="input"><input type="text" maxlength="40" id="headerAddressType2Firstname" name="headerAddressType2Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1817,12 +1817,12 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow">
 			        <div class="half left">
-			          <span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
+			          <span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4300)">Anrede*</label></span>
 			          <span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span id="headerAddressType2TitleLabel" class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+			          <span id="headerAddressType2TitleLabel" class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 4305)">Titel</label></span>
 			          <span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1837,12 +1837,12 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span id="headerAddressType3LastnameLabel" class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
+			          <span id="headerAddressType3LastnameLabel" class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 4000)">Name*</label></span>
 			            <span class="input"><input type="text" maxlength="40" id="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span id="headerAddressType3FirstnameLabel" class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+			          <span id="headerAddressType3FirstnameLabel" class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 4005)">Vorname</label></span>
 			            <span class="input"><input type="text" maxlength="40" id="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1850,19 +1850,19 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anrede')">Anrede*</label></span>
+			          <span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4015)">Anrede*</label></span>
 			          <span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
 			        </div>
 			  
 			        <div class="half">
-			          <span class="label"><label for="headerAddressType3Title" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+			          <span class="label"><label for="headerAddressType3Title" onclick="javascript:dialog.showContextHelp(arguments[0], 4020)">Titel</label></span>
 			          <span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
 			        </div>
 			        <div class="fill"></div>
 			  	  </div>
 
 			      <div class="inputContainer noSpaceBelow">
-			        <span class="label"><label for="headerAddressType3Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution')">Institution</label></span>
+			        <span class="label"><label for="headerAddressType3Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 4010)">Institution</label></span>
 			        <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" id="headerAddressType3Institution" class="w668 h038" /></span>
 			  	  </div>
 
@@ -1880,12 +1880,12 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
-			          <span id="addressStreetLabel" class="label required"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Stra&szlig;e/Hausnummer')">Stra&szlig;e/Hausnummer*</label></span>
+			          <span id="addressStreetLabel" class="label required"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 4400)">Stra&szlig;e/Hausnummer*</label></span>
 			          <span class="input spaceBelow"><input type="text" id="addressStreet" maxlength="80" name="addressStreet" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 
 			          <div id="addressDetails1">
 			            <span class="entry first">
-			              <span id="addressCountryLabel" class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
+			              <span id="addressCountryLabel" class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)">Staat*</label></span>
 			              <span class="input spaceBelow">
 			              	<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
 			              		<option value="de">DE</option>
@@ -1893,29 +1893,29 @@ function hideSplash(){
 			              </span>
 			            </span>
 			            <span class="entry">
-			              <span id="addressZipCodeLabel" class="label required"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 'PLZ')">PLZ*</label></span>
+			              <span id="addressZipCodeLabel" class="label required"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)">PLZ*</label></span>
 			              <span class="input spaceBelow"><input type="text" maxlength="10" id="addressZipCode" name="addressZipCode" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			            <span class="entry">
-			              <span id="addressCityLabel" class="label required"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ort')">Ort*</label></span>
+			              <span id="addressCityLabel" class="label required"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 4415)">Ort*</label></span>
 			              <span class="input spaceBelow"><input type="text" maxlength="80" id="addressCity" name="addressCity" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			          </div>
 
 			          <div id="addressDetails2">
 			            <span class="entry first">
-			              <span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 'Postfach')">Postfach</label></span>
+			              <span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4420)">Postfach</label></span>
 			              <span class="input"><input type="text" id="addressPOBox" maxlength="10" name="addressPOBox" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			            <span class="entry">
-			              <span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 'PLZ (Postfach)')">PLZ (Postfach)</label></span>
+			              <span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4425)">PLZ (Postfach)</label></span>
 			              <span class="input"><input type="text" id="addressZipPOBox" maxlength="10" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			          </div>
 			        </div>
 			  
 			        <div class="half">
-			          <span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 'Notizen')">Notizen</label></span>
+			          <span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 4435)">Notizen</label></span>
 			          <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" id="addressNotes" class="w320 h120" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1923,7 +1923,7 @@ function hideSplash(){
 
 			      <div class="inputContainer noSpaceBelow notRequired">
 			        <div class="half left">
-			          <span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kommunikation')">Kommunikation</label></span>
+			          <span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation</label></span>
 			          <div class="tableContainer rows4 half">
 			            <div class="cellEditors" id="addressComEditors">
 			              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
@@ -1943,7 +1943,7 @@ function hideSplash(){
 			        </div>
 
 			        <div class="half">
-			          <span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aufgaben')">Aufgaben</label></span>
+			          <span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 4440)">Aufgaben</label></span>
 			          <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="addressTasks" class="w320 h105" /></span>
 			        </div>
 			        <div class="fill"></div>
@@ -1962,7 +1962,7 @@ function hideSplash(){
 					<div id="adrThesaurusContent" class="content">
 				  
 						<div class="inputContainer notRequired h088">
-							<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus-Suchbegriffe')">Thesaurus-Suchbegriffe</label></span>
+							<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)">Thesaurus-Suchbegriffe</label></span>
 							<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
 
 							<div class="tableContainer headHiddenRows3 full">
@@ -1980,7 +1980,7 @@ function hideSplash(){
 
 						<div class="inputContainer notRequired h088">
 							<div class="full">
-								<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freie Suchbegriffe')">Freie Suchbegriffe</label></span>
+								<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4500)">Freie Suchbegriffe</label></span>
 
 								<div class="fill"></div>
 								<div class="tableContainer headHiddenRows3 full">
