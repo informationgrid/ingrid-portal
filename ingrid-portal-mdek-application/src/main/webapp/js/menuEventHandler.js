@@ -489,6 +489,12 @@ menuEventHandler.handleDiscard = function(msg) {
 menuEventHandler.handleDelete = function(msg) {
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
+
+	if (selectedNode.id == "newNode") {
+		menuEventHandler.handleDiscard(msg);
+		return;
+	}
+
 	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode == "addressRoot" || selectedNode == "addressFreeRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
