@@ -53,6 +53,11 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return;
 	}
 
+	public List<User> getSubUsers(Long userId) {
+		IngridDocument response = mdekCallerSecurity.getSubUsers(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
+		return MdekUtils.extractSecurityUsersFromResponse(response);		
+	}
+	
 	public User getUserDetails(String userId) {
 		IngridDocument response = mdekCallerSecurity.getUserDetails(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
 		return MdekUtils.extractSecurityUserFromResponse(response);		

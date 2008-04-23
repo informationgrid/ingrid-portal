@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.MdekUtilsSecurity.IdcRole;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
@@ -226,7 +228,11 @@ public class MdekUtils {
 			user.setId((Long) result.get(MdekKeysSecurity.IDC_USER_ID));
 			user.setAddressUuid((String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
 			user.setGroupId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
-			user.setRole((Integer) result.get(MdekKeysSecurity.IDC_ROLE));
+			Integer role = (Integer) result.get(MdekKeysSecurity.IDC_ROLE);
+			IdcRole idcRole = EnumUtil.mapDatabaseToEnumConst(IdcRole.class, role);
+
+			user.setRole(role);
+			user.setRoleName(idcRole.toString());
 			user.setParentUserId((Integer) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
 
 			// Detailed info
@@ -240,6 +246,32 @@ public class MdekUtils {
 		return user;
 	}
 
+	public static List<User> extractSecurityUsersFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		ArrayList<User> userList = new ArrayList<User>();
+		if (result != null) {
+			User user = new User();
+			/*
+			user.setId((Long) result.get(MdekKeysSecurity.IDC_USER_ID));
+			user.setAddressUuid((String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
+			user.setGroupId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
+			user.setRole((Integer) result.get(MdekKeysSecurity.IDC_ROLE));
+			user.setParentUserId((Integer) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
+
+			// Detailed info
+			user.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
+			user.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+			user.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
+			*/
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
+
+		return userList;
+	}
+
+	
 	public static IngridDocument convertSecurityUserToIngridDoc(User user) {
 		IngridDocument result = new IngridDocument();
 

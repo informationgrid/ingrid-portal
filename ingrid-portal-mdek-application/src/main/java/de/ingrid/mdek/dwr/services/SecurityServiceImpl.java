@@ -2,6 +2,7 @@ package de.ingrid.mdek.dwr.services;
 
 import java.security.Permissions;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -90,6 +91,16 @@ public class SecurityServiceImpl {
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while deleting group.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+	}
+
+	public List<User> getSubUsers(Long userId) {
+		try {
+			return securityRequestHandler.getSubUsers(userId);		
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching subusers.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -184,6 +195,31 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	public List<String> getPortalUsers() {
+		ArrayList<String> userList = new ArrayList<String>();
+		
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+
+		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
+
+		try {
+			UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+			Iterator<org.apache.jetspeed.security.User> users = userManager.getUsers("");
+
+			while (users.hasNext()) {
+				org.apache.jetspeed.security.User user = users.next();
+				Principal userPrincipal = getPrincipal(user.getSubject(), UserPrincipal.class);
+				userList.add(userPrincipal.getName());
+			}
+
+		} catch (Exception err) {
+			log.error("Exception: ", err);
+			throw new RuntimeException("Error while fetching users from the portal context.", err);
+		}
+		
+		return userList;
+	}
 
 	public SecurityRequestHandler getSecurityRequestHandler() {
 		return securityRequestHandler;

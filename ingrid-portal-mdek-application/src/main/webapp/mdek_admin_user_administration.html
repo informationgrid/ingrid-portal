@@ -22,17 +22,21 @@ function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
 	// Add the data to the tree
 	var title = UtilAddress.createAddressTitle(catAdminAddress);
 	var role = catAdmin.role;
+	var roleName = catAdmin.roleName;
 	var group = catAdmin.groupId;
 	var portalLogin = catAdminData.portalLogin;
 	// var canCreateRootNodes = user.canCreateRootNodes();
 
 	var rootNode = {
+		userId: catAdmin.id,
 		addressUuid: catAdminAddress.uuid,
 		title: title,
 		role: role,
+		roleName: roleName,
 		group: group,
 		portalLogin: portalLogin,
-		nodeDocType: "KatalogAdmin"
+		nodeDocType: "KatalogAdmin",
+		isFolder: true
 	}
 	dojo.widget.byId("treeUser").setChildren([rootNode]);
 }
@@ -55,8 +59,33 @@ function initializeUserTree() {
 		});
 	});
 
-  var treeListener = dojo.widget.byId('treeListenerUser');
-  dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { updateInputElements(data.node); });
+	var treeController = dojo.widget.byId("treeControllerUser");
+	treeController.loadRemote = function(node, sync) {
+
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		SecurityService.getSubUsers(node.userId, {
+  			callback:function(res) { deferred.callback(res); },
+			timeout:10000,
+			errorHandler:function(message) {
+				deferred.errback(new dojo.RpcError(message, this));
+			}
+  		});
+		
+		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+		return deferred;
+	};
+
+	var treeListener = dojo.widget.byId('treeListenerUser');
+	dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { updateInputElements(data.node); });
 }
 
 function initializeGroupList() {
@@ -71,12 +100,50 @@ function initializeGroupList() {
 	});
 }
 
+// 'Delete user' button function
+// Get the selected user from the tree and delete it
+scriptScope.deleteUser = function() {
+	var user = dojo.widget.byId("treeUser").selectedNode;
+
+	if (user == null) {
+		return;
+	}
+
+	SecurityService.deleteUser( {
+		callback: function() {
+			user.destroy();
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+}
+
+// 'Import portal user' button function
+scriptScope.importPortalUser = function() {
+	
+	SecurityService.getPortalUsers( {
+		callback: function(userList) {
+			dojo.debug(userList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+}
+
+// 'Save user' button function
+scriptScope.saveUser = function() {
+}
+
 
 // Updates the input elements with the data from 'treeNode'
 function updateInputElements(treeNode) {
 	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
 	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
-	dojo.widget.byId("userDataRole").setValue(treeNode.role);
+	dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
 	dojo.widget.byId("userDataGroup").setValue(treeNode.group);
 	dojo.widget.byId("userDataCreate").checked = treeNode.canCreateRootNodes;
 	currentSelectedAddressId = treeNode.addressUuid;
@@ -210,10 +277,17 @@ function getCatalogAdmin() {
 		    	</div>
 				<div class="spacer"></div>
 			</div>
-		
+<!-- 
 			<div class="inputContainer">
 				<span class="button w224"><a href="#" class="buttonBlue" title="Nutzer l&ouml;schen">Nutzer l&ouml;schen</a></span>
 			</div>
+ -->
+			<div class="inputContainer">
+				<span class="button w224" style="height:20px !important;">
+					<button dojoType="ingrid:Button" title="Nutzer l&ouml;schen" onClick="javascript:scriptScope.deleteUser();">Nutzer l&ouml;schen</button>
+				</span>
+			</div>
+
 		    <!-- LEFT HAND SIDE CONTENT BLOCK 1 END -->
 	
 		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
@@ -245,7 +319,7 @@ function getCatalogAdmin() {
 					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rolle')">Rolle</label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
-					<span class="label"><label for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe</label></span>
+					<span class="label required"><label for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe*</label></span>
 					<span class="input spaceBelow"><div dojoType="ingrid:Select" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
 					<div class="checkboxContainer noSpaceBelow">
 						<span class="input"><input type="checkbox" name="userDataCreate" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
@@ -253,9 +327,26 @@ function getCatalogAdmin() {
 			        </div>
 			        <div class="fill"></div>
 				</div>
-			
+<!-- 
 				<div class="inputContainer">
-					<span class="button w644"><a href="#" class="buttonBlue" title="Nutzer aus Portal &uuml;bernehmen">Nutzer aus Portal &uuml;bernehmen</a><a href="#" class="buttonBlue" title="Speichern">Speichern</a></span>
+					<span class="button w644">
+						<a href="#" class="buttonBlue" title="Nutzer aus Portal &uuml;bernehmen">Nutzer aus Portal &uuml;bernehmen</a>
+						<a href="#" class="buttonBlue" title="Speichern">Speichern</a>
+					</span>
+				</div>
+ -->
+				<div class="inputContainer">
+					<span class="button w644" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveUser();">Speichern</button>
+						</span>
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Nutzer aus Portal &uuml;bernehmen" onClick="javascript:scriptScope.importPortalUser();">Nutzer aus Portal &uuml;bernehmen</button>
+						</span>
+						<span id="adminUserLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img src="img/ladekreis.gif" />
+						</span>
+					</span>
 				</div>
 			</div>
 		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->

@@ -13,6 +13,7 @@ public interface SecurityRequestHandler {
 	public Group storeGroup(Group group, boolean refetch);
 	public void deleteGroup(Long groupId);
 
+	public List<User> getSubUsers(Long userId);
 	public User getUserDetails(String userId);
 	public User createUser(User user, boolean refetch);
 	public User storeUser(User user, boolean refetch);

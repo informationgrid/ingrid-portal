@@ -11,6 +11,7 @@ public class User {
 	private String addressUuid;
 	private Long groupId;
 	private Integer role;
+	private String roleName;
 	private Integer parentUserId;
 
 	private MdekAddressBean address;
@@ -74,5 +75,11 @@ public class User {
 	}
 	public void setAddress(MdekAddressBean address) {
 		this.address = address;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 }
