@@ -1,0 +1,575 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+_container_.addOnLoad(function() {
+	initObjectTree();
+	initAddressTree();
+	initGroupList();
+	resetAllInputData();
+	hidePermissionLists();
+
+
+	var groupList = dojo.widget.byId("groups");
+	var groupStore = groupList.store;
+	dojo.event.connectOnce(groupStore, "onRemoveData", function(item) {
+		deleteGroup(item.src);
+	});
+
+	// If the user deletes a group that is currently selected, the input fields have to be reset
+	dojo.event.connectOnce("after", groupStore, "onRemoveData", function(data) {
+		if (dojo.lang.some(groupList.getSelectedData(), function(item){ return (item == data.src); })) {
+			resetAllInputData();
+			hidePermissionLists();
+		}
+	});
+
+	// Selection of data via list.select() doesn't fire an 'onDataSelect' event.
+	// Therefore we can't rely on the 'onSelect' event and have to update the input manually  
+	dojo.event.connectOnce("after", groupList, "onDataSelect", function(item) {
+		// Update the displayed data
+		updateAllInputData(item);
+		showPermissionLists();
+	});
+
+	dojo.event.connectOnce("after", groupList, "onSelect", function() {
+		// Update the displayed data
+		var selectedGroups = groupList.getSelectedData();
+		if (selectedGroups.length == 1) {
+			// one group selected, load and display it's group data
+			updateAllInputData(selectedGroups[0]);
+			showPermissionLists();
+
+		} else {
+			// zero or multiple groups selected
+			resetAllInputData();
+			hidePermissionLists();
+		}
+	});
+
+});
+
+
+function deleteGroup(group) {
+	SecurityService.deleteGroup(group.id, {
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+}
+
+
+function addObjectToPermissionTable(obj) {
+	var objStore = dojo.widget.byId("groupDataRightsObjectsList").store;
+
+	if (dojo.lang.every(objStore.getData(), function(item){ return (item.id != obj.id); })) {
+		obj.Id = UtilStore.getNewKey(objStore);
+		obj.single =  "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_single' class='radio' checked='true' />";
+		obj.subtree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subtree' class='radio' />";
+
+		objStore.addData(obj);
+	}
+}
+
+
+function addAddressToPermissionTable(adr) {
+	var adrStore = dojo.widget.byId("groupDataRightsAddressesList").store;
+
+	if (dojo.lang.every(adrStore.getData(), function(item){ return (item.id != adr.id); })) {
+		adr.Id = UtilStore.getNewKey(adrStore);
+		adr.single =  "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_single' class='radio' checked='true' />";
+		adr.subtree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subtree' class='radio' />";
+
+		adrStore.addData(adr);
+	}
+}
+
+// 'Create new group' button function.
+// If a group is selected, reset the input fields and deselect any selected groups
+// Otherwise create a new group
+scriptScope.newGroup = function() {
+	var groupList = dojo.widget.byId("groups");
+	var groupStore = groupList.store;
+	var groupName = dojo.string.trim(dojo.widget.byId("groupDataName").getValue());
+
+	if (groupList.getSelectedData().length != 1) {
+		createNewGroup(groupName);
+
+	} else {
+		groupList.resetSelections();
+		groupList.renderSelections();
+	
+		resetAllInputData();
+		hidePermissionLists();
+	}
+}
+
+
+// 'Save group' button function.
+// If a group is selected update it with the new name.
+// If zero or multiple groups are selected, create a new group.
+scriptScope.saveGroup = function() {
+	var groupList = dojo.widget.byId("groups");
+	var groupStore = groupList.store;
+	var groupName = dojo.string.trim(dojo.widget.byId("groupDataName").getValue());
+
+	var selectedGroups = groupList.getSelectedData();
+	if (selectedGroups.length == 1) {
+		// exactly one group selected
+		var group = selectedGroups[0];
+		group.name = groupName;
+
+		SecurityService.storeGroup(group, true, {
+			callback: function(data) {
+				groupStore.update(group, "name", data.name);
+			},
+			errorHandler: function(errMsg, err) {
+				dojo.debug(errMsg);
+				dojo.debugShallow(err);
+			}
+		});
+
+	} else {
+		// zero or multiple groups selected
+		createNewGroup(groupName);
+	}
+}
+
+
+scriptScope.saveObjectPermissions = function() {
+	var group = dojo.widget.byId("groups").getSelectedData[0];
+	var objs = dojo.widget.byId("groupDataRightsObjectsList").store.getData();
+
+	var permissionList = [];
+
+	dojo.lang.forEach(objs, function(obj){
+		var id = obj.id;
+		var subtree = dojo.byId(obj.id+"_subtree").checked;
+		permissionList.push( { id:id, subtree:subtree } );
+	});
+
+	// TODO Save 'group' with permissions from 'permissionList'
+}
+
+scriptScope.saveAddressPermissions = function() {
+	var group = dojo.widget.byId("groups").getSelectedData[0];
+	var adrs = dojo.widget.byId("groupDataRightsAddressesList").store.getData();
+
+	var permissionList = [];
+
+	dojo.lang.forEach(adrs, function(adr){
+		var id = adr.id;
+		var subtree = dojo.byId(adr.id+"_subtree").checked;
+		permissionList.push( { id:id, subtree:subtree } );
+	});
+
+	// TODO Save 'group' with permissions from 'permissionList'
+}
+
+// 'Add Object' button function.
+scriptScope.addObject = function() {
+	var obj = dojo.widget.byId("treeObjects").selectedNode;
+
+	if (obj == null || obj.id == "objectRoot") {
+		return;
+	
+	} else {
+		addObjectToPermissionTable(obj);
+	}
+}
+
+// 'Add Address' button function.
+scriptScope.addAddress = function() {
+	var adr = dojo.widget.byId("treeAddresses").selectedNode;
+
+	if (adr == null || adr.id == "addressRoot" || adr.id == "addressFreeRoot") {
+		return;
+
+	} else {
+		addAddressToPermissionTable(adr);
+	}
+}
+
+// Creates a new group and returns a deferred obj which is called with the newly created group
+function createNewGroup(groupName) {
+	var deferred = new dojo.Deferred();
+
+	if (groupName.length == 0) {
+		return;
+	}
+
+	SecurityService.createGroup( { name: groupName }, true, {
+		callback: function(data) {
+			var groupList = dojo.widget.byId("groups");
+			var groupStore = groupList.store;
+			data.Id = UtilStore.getNewKey(groupStore);
+			groupStore.addData(data);
+			deferred.callback(data);
+
+			groupList.resetSelections();
+			groupList.select(data);
+			groupList.renderSelections();
+
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);
+		}
+	});	
+
+	return deferred;
+}
+
+function initObjectTree() {
+	var tree = dojo.widget.byId("treeObjects");
+	var treeController = dojo.widget.byId("treeControllerObjects");
+
+	// initially load data (first hierarchy level) from server 
+	TreeService.getSubTree(null, null, 1, function (str) {
+		tree.setChildren([str[0]]);
+	});
+
+  treeController.loadRemote = function(node, sync) {
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
+//			preHook: UtilDWR.enterLoadingState,
+//			postHook: UtilDWR.exitLoadingState,
+  			callback:function(res) { deferred.callback(res); },
+			timeout:10000,
+			errorHandler:function(message) {
+//				UtilDWR.exitLoadingState();
+				deferred.errback(new dojo.RpcError(message, this));
+			}
+  		});
+		
+		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+		return deferred;
+	};
+}
+
+function initAddressTree() {
+	var tree = dojo.widget.byId("treeAddresses");
+	var treeController = dojo.widget.byId("treeControllerAddresses");
+
+	// initially load data (first hierarchy level) from server 
+	TreeService.getSubTree(null, null, 1, function (str) {
+		tree.setChildren([str[1]]);
+	});
+
+  treeController.loadRemote = function(node, sync) {
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
+//			preHook: UtilDWR.enterLoadingState,
+//			postHook: UtilDWR.exitLoadingState,
+  			callback:function(res) { deferred.callback(res); },
+			timeout:10000,
+			errorHandler:function(message) {
+//				UtilDWR.exitLoadingState();
+				deferred.errback(new dojo.RpcError(message, this));
+			}
+  		});
+		
+		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+		return deferred;
+	};
+}
+
+
+// Initialize the group table
+function initGroupList() {
+	var def = getAllGroups();
+
+	def.addCallback(function(groupList) {
+		UtilList.addTableIndices(groupList);
+		dojo.widget.byId("groups").store.setData(groupList);
+	});
+}
+
+// Fetch all groups from the backend. Returns a dojo.Deferred which is called with the groupList.
+function getAllGroups() {
+	var deferred = new dojo.Deferred();
+
+	SecurityService.getGroups( {
+		callback: function(groupList) {
+			deferred.callback(groupList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);			
+		}
+	});
+
+	return deferred;
+}
+
+function updateAllInputData(group) {
+//	dojo.debugShallow(group);
+	dojo.widget.byId("groupDataName").setValue(group.name);
+	
+}
+
+function resetAllInputData() {
+	dojo.widget.byId("groupDataName").setValue("");
+
+	dojo.widget.byId("groupDataRightsObjectsList").store.clearData();
+	dojo.widget.byId("groupDataRightsAddressesList").store.clearData();
+}
+
+function hidePermissionLists() {
+	dojo.html.hide(dojo.byId("permissionListObjects"));
+	dojo.html.hide(dojo.byId("permissionListAddresses"));
+}
+
+function showPermissionLists() {
+	dojo.html.show(dojo.byId("permissionListObjects"));
+	dojo.html.show(dojo.byId("permissionListAddresses"));
+
+	dojo.widget.byId("groupDataObjects").onResized();
+	dojo.widget.byId("groupDataAddresses").onResized();
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+  
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="groupAdmin" class="content">
+
+	        <!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
+	        <div class="spacer"></div>
+	        <div class="spacer"></div>
+
+	        <div class="inputContainer noSpaceBelow">
+				<div class="tableContainer w364 headHiddenRows9">
+					<table id="groups" dojoType="ingrid:FilteringTable" minRows="9" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+						<thead>
+							<tr>
+								<th nosort="true" field="name" dataType="String">Name</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	        <!-- LEFT HAND SIDE CONTENT BLOCK 1 END -->
+	
+	        <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
+	        <div id="groupData" class="inputContainer">
+				<span class="label"><label>Gruppendaten</label></span>
+<!-- 
+				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a class="current" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a href="admin_nutzer_benutzer.html" title="Nutzer">Nutzer</a></span>
+ -->
+				<div class="inputContainer field grey noSpaceBelow">
+	            	<span class="label"><label for="groupDataName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppenname')">Gruppenname</label></span>
+	            	<span class="input"><input type="text" maxlength="50" id="groupDataName" class="w550" dojoType="ingrid:ValidationTextBox" /></span>
+	            	<div class="spacerField"></div>
+	      	  	</div>
+
+				<div class="inputContainer">
+					<span class="button" style="width:556px; height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGroup();">Speichern</button>
+						</span>
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Neue Gruppe anlegen" onClick="javascript:scriptScope.newGroup();">Neue Gruppe anlegen</button>
+						</span>
+						<span id="adminGroupLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img src="img/ladekreis.gif" />
+						</span>
+					</span>
+				</div>
+			</div>
+			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
+	
+	        <!-- CONTENT BLOCK 2 START -->
+	        <!-- SPLIT CONTAINER START -->
+			<div id="permissionListObjects" style="display:none;">
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+				<span class="label"><label>Berechtigungen f&uuml;r Objekte</label></span>
+				<div dojoType="SplitContainer" id="groupDataObjects" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+		            <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
+		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
+						<div class="inputContainer grey noSpaceBelow">
+							<div dojoType="ContentPane" id="treeContainerObjects">
+								<!-- tree components -->
+								<div dojoType="ingrid:TreeController" widgetId="treeControllerObjects"></div>
+								<div dojoType="ingrid:TreeListener" widgetId="treeListenerObjects"></div>	
+								<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsObjects"></div>	
+								<div dojoType="ingrid:TreeDecorator" listener="treeListenerObjects"></div>
+		                  
+								<!-- tree -->
+								<div dojoType="ingrid:Tree" listeners="treeControllerObjects;treeListenerObjects;treeDocIconsObjects" widgetId="treeObjects">
+<!-- 
+									<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
+ -->
+								</div>
+							</div>
+							<div class="spacer"></div>
+						</div>
+					</div>
+					<!-- LEFT HAND SIDE CONTENT BLOCK 2 END -->
+		
+		            <!-- RIGHT HAND SIDE CONTENT BLOCK 2 START -->
+		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="62">
+<!-- 
+						<div class="selectEntryBtn">
+							<span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+						</div>
+ -->
+ 						<div class="selectEntryBtn">
+							<button dojoType="ingrid:Button" id="addObjectButton" onClick="javascript:scriptScope.addObject();">&nbsp;>&nbsp;</button>
+						</div>
+
+						<div id="groupDataObjectsData" class="inputContainer grey field">
+							<div class="tableContainer third2 rows7">
+								<table id="groupDataRightsObjectsList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
+									<thead>
+										<tr>
+											<th nosort="true" field="title" dataType="String" width="358">Name des Objekts</th>
+											<th nosort="true" field="single" dataType="String" width="85">Einzelobjekt</th>
+											<th nosort="true" field="subtree" dataType="String" width="85">Teilbaum</th>
+										</tr>
+									</thead>
+									<tbody>
+	<!-- 
+										<tr value="1">
+											<td>Objektname</td>
+											<td><input type="radio" name="groupDataRightsObjectsListSelType0" id="groupDataRightsObjectsListSelType01" class="radio" /></td>
+											<td><input type="radio" name="groupDataRightsObjectsListSelType0" id="groupDataRightsObjectsListSelType02" class="radio" /></td>
+										</tr>
+	 -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
+				</div>
+		
+				<div class="inputContainer">
+					<span class="button w925" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Berechtigungen speichern" onClick="javascript:scriptScope.saveObjectPermissions();">Berechtigungen speichern</button>
+						</span>
+						<span id="adminGroupObjectsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img src="img/ladekreis.gif" />
+						</span>
+					</span>
+				</div>
+
+			</div>
+			<!-- CONTENT BLOCK 2 END -->
+	
+	        <!-- CONTENT BLOCK 3 START -->
+	        <!-- SPLIT CONTAINER START -->
+			<div id="permissionListAddresses" style="display:none;">
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+				<span class="label"><label>Berechtigungen f&uuml;r Adressen</label></span>
+				<div dojoType="SplitContainer" id="groupDataAddresses" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+		            <!-- LEFT HAND SIDE CONTENT BLOCK 3 START -->
+		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
+						<div class="inputContainer grey noSpaceBelow">
+							<div dojoType="ContentPane" id="treeContainerAddresses">
+								<!-- tree components -->
+								<div dojoType="ingrid:TreeController" widgetId="treeControllerAddresses"></div>
+								<div dojoType="ingrid:TreeListener" widgetId="treeListenerAddresses"></div>	
+								<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAddresses"></div>	
+								<div dojoType="ingrid:TreeDecorator" listener="treeListenerAddresses"></div>
+		                  
+								<!-- tree -->
+								<div dojoType="ingrid:Tree" listeners="treeControllerAddresses;treeListenerAddresses;treeDocIconsAddresses" widgetId="treeAddresses">
+<!-- 
+									<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+ -->
+								</div>
+							</div>
+							<div class="spacer"></div>
+						</div>
+					</div>
+					<!-- LEFT HAND SIDE CONTENT BLOCK 3 END -->
+		
+		            <!-- RIGHT HAND SIDE CONTENT BLOCK 3 START -->
+		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="62">
+<!-- 
+						<div class="selectEntryBtn">
+							<span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+						</div>
+ -->
+
+  						<div class="selectEntryBtn">
+							<button dojoType="ingrid:Button" id="addAddressButton" onClick="javascript:scriptScope.addAddress();">&nbsp;>&nbsp;</button>
+						</div>
+
+
+						<div id="groupDataAddressesData" class="inputContainer grey field">
+							<div class="tableContainer third2 rows7">
+								<table id="groupDataRightsAddressesList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
+									<thead>
+										<tr>
+											<th nosort="true" field="title" dataType="String" width="358">Name der Adresse</th>
+											<th nosort="true" field="single" dataType="String" width="85">Einzeladresse</th>
+											<th nosort="true" field="subtree" dataType="String" width="85">Teilbaum</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
+				</div>
+		
+				<div class="inputContainer">
+					<span class="button w925" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Berechtigungen speichern" onClick="javascript:scriptScope.saveAddressPermissions();">Berechtigungen speichern</button>
+						</span>
+						<span id="adminGroupAddressesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img src="img/ladekreis.gif" />
+						</span>
+					</span>
+				</div>
+
+			</div>
+			<!-- CONTENT BLOCK 2 END -->
+		</div>
+	</div>
+</div>
+<!-- CONTENT END -->
+
+</body>
+</html>
