@@ -234,7 +234,8 @@ public class MdekUtils {
 			user.setRole(role);
 			user.setRoleName(idcRole.toString());
 			user.setParentUserId((Integer) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
-
+			user.setHasChildren((Boolean) result.get(MdekKeys.HAS_CHILD));
+			
 			// Detailed info
 			user.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			user.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));

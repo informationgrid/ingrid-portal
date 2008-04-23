@@ -13,7 +13,8 @@ public class User {
 	private Integer role;
 	private String roleName;
 	private Integer parentUserId;
-
+	private Boolean hasChildren;
+	
 	private MdekAddressBean address;
 	
 	// Group Details
@@ -81,5 +82,11 @@ public class User {
 	}
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	public Boolean getHasChildren() {
+		return hasChildren;
+	}
+	public void setHasChildren(Boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 }

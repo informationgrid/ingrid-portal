@@ -25,6 +25,7 @@ function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
 	var roleName = catAdmin.roleName;
 	var group = catAdmin.groupId;
 	var portalLogin = catAdminData.portalLogin;
+	var hasChildren = catAdmin.hasChildren;
 	// var canCreateRootNodes = user.canCreateRootNodes();
 
 	var rootNode = {
@@ -36,7 +37,7 @@ function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
 		group: group,
 		portalLogin: portalLogin,
 		nodeDocType: "KatalogAdmin",
-		isFolder: true
+		isFolder: hasChildren
 	}
 	dojo.widget.byId("treeUser").setChildren([rootNode]);
 }
