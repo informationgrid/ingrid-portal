@@ -3,6 +3,7 @@ package de.ingrid.mdek.beans.security;
 import java.util.Date;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.persistence.db.model.UserData;
 
 public class User {
 
@@ -12,11 +13,12 @@ public class User {
 	private Long groupId;
 	private Integer role;
 	private String roleName;
-	private Integer parentUserId;
+	private Long parentUserId;
 	private Boolean hasChildren;
-	
+
 	private MdekAddressBean address;
-	
+	private UserData userData;
+
 	// Group Details
 	private Date creationTime;
 	private Date modificationTime;
@@ -65,10 +67,10 @@ public class User {
 	public void setRole(Integer role) {
 		this.role = role;
 	}
-	public Integer getParentUserId() {
+	public Long getParentUserId() {
 		return parentUserId;
 	}
-	public void setParentUserId(Integer parentUserId) {
+	public void setParentUserId(Long parentUserId) {
 		this.parentUserId = parentUserId;
 	}
 	public MdekAddressBean getAddress() {
@@ -88,5 +90,11 @@ public class User {
 	}
 	public void setHasChildren(Boolean hasChildren) {
 		this.hasChildren = hasChildren;
+	}
+	public UserData getUserData() {
+		return userData;
+	}
+	public void setUserData(UserData userData) {
+		this.userData = userData;
 	}
 }

@@ -40,19 +40,32 @@ var menus = [{menu:"page1", submenus:["page1", "page1Sub2"]},
 var currentMenu = null;
 var currentSubMenu = new Array();
 
+var currentUser = null;
+
+
 dojo.addOnLoad(function() {
 	hideSplash();
 
 	// Initially select 'Nutzerverwaltung - Nutzeradministration'
 	clickMenu('page2', 'page2');
 
-  // initiate debug console if necessary
-  if (djConfig.isDebug)
-  {
-    dojo.debug("The current version of dojo is: ", dojo.version.toString());
-    var console = dojo.byId("dojoDebugConsole");
-    console.style.visibility = "visible";
-  }
+	// initiate debug console if necessary
+	if (djConfig.isDebug) {
+		dojo.debug("The current version of dojo is: ", dojo.version.toString());
+		var console = dojo.byId("dojoDebugConsole");
+		console.style.visibility = "visible";
+	}
+
+	SecurityService.getCurrentUser( {
+		callback: function(user) {
+			currentUser = user;
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);			
+		}
+	});
 });
 
 function clickMenu(menuName, submenuName) {

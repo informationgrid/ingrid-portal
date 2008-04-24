@@ -6,11 +6,19 @@ var scriptScope = this;
 
 
 var currentSelectedAddressId = null;
+var currentSelectedUser = null;
+var catAdminUserData = null;
+
+var requiredElements = [/*["operationsName", "operationsNameLabel"],*/	// This element is added when the operation input is initialized
+					    ["userDataAddressLink", "userDataAddressLinkLabel"],
+					    ["userDataGroup", "userDataGroupLabel"]];
 
 
 _container_.addOnLoad(function() {
 	initializeUserTree();
 	initializeGroupList();
+
+	dojo.widget.byId("userDataAddressLink").isValid = function() { return !this.isEmpty(); };
 });
 
 function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
@@ -23,7 +31,7 @@ function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
 	var title = UtilAddress.createAddressTitle(catAdminAddress);
 	var role = catAdmin.role;
 	var roleName = catAdmin.roleName;
-	var group = catAdmin.groupId;
+	var groupId = catAdmin.groupId;
 	var portalLogin = catAdminData.portalLogin;
 	var hasChildren = catAdmin.hasChildren;
 	// var canCreateRootNodes = user.canCreateRootNodes();
@@ -34,9 +42,9 @@ function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
 		title: title,
 		role: role,
 		roleName: roleName,
-		group: group,
+		groupId: groupId,
 		portalLogin: portalLogin,
-		nodeDocType: "KatalogAdmin",
+		nodeDocType: getDocTypeForRole(role),
 		isFolder: hasChildren
 	}
 	dojo.widget.byId("treeUser").setChildren([rootNode]);
@@ -55,6 +63,9 @@ function initializeUserTree() {
 		l1.addCallback(function (resultList) {
 			var addrData = resultList[0][1];
 			var userData = resultList[1][1];
+
+			// Cache the cat admin user data
+			catAdminUserData = userData;
 
 			setTreeRoot(catAdmin, userData, addrData);
 		});
@@ -80,7 +91,10 @@ function initializeUserTree() {
 			}
   		});
 		
-		deferred.addCallback(function(res) { return _this.loadProcessResponse(node,res); });
+		deferred.addCallback(function(res) {
+			return _this.loadProcessResponse(node, convertUserListToTreeNodes(res));
+		});
+
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 		return deferred;
 	};
@@ -99,6 +113,10 @@ function initializeGroupList() {
 		});
 		dojo.widget.byId("userDataGroup").dataProvider.setData(list);
 	});
+
+	dojo.widget.byId("userDataGroup").isValid = function() {
+		return (this.getValue() != "");
+	}
 }
 
 // 'Delete user' button function
@@ -106,52 +124,213 @@ function initializeGroupList() {
 scriptScope.deleteUser = function() {
 	var user = dojo.widget.byId("treeUser").selectedNode;
 
-	if (user == null) {
+	// Can't delete the cat admin. This is also checked in the backend.
+	if (user == null || user.role == 1) {
+		dojo.debug("Can't delete.");
 		return;
 	}
 
-	SecurityService.deleteUser( {
-		callback: function() {
-			user.destroy();
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug(errMsg);
-			dojo.debugShallow(err);
-		}
+	var deferred = new dojo.Deferred();
+
+	var displayText = "Wollen Sie den Benutzer "+user.title+" wirklich l&ouml;schen?";
+	dialog.show("Benutzer l&ouml;schen", displayText, dialog.INFO, [
+		{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },	
+    	{ caption: message.get("general.ok"), action: function() { deferred.callback(); } }
+	]);
+
+	deferred.addCallback(function() {
+		SecurityService.deleteUser(user.userId, user.addressUuid, {
+			callback: function() {
+				user.destroy();
+				resetInputFields();
+				dojo.widget.byId("treeUser").selectedNode = null;
+			},
+			errorHandler: function(errMsg, err) {
+				dojo.debug(errMsg);
+				dojo.debugShallow(err);
+			}
+		});	
 	});
 }
 
 // 'Import portal user' button function
 scriptScope.importPortalUser = function() {
-	
-	SecurityService.getPortalUsers( {
-		callback: function(userList) {
-			dojo.debug(userList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug(errMsg);
-			dojo.debugShallow(err);
+	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
+	if (currentUser.role == 1 && selectedUser == null) {
+		dojo.debug("No node selected.");
+		return;
+	}
+
+	var deferred = new dojo.Deferred();
+	dialog.showPage("Import Portal users", "mdek_admin_import_user_dialog.html", 360, 240, true, { resultHandler:deferred });
+
+	deferred.addCallback(function(portalUser){
+		resetInputFields();
+		dojo.widget.byId("userDataLogin").setValue(portalUser);
+		
+		// Select the user's role depending on:
+		// The current selected node if the currentUser is catAdmin (role==1)
+		// mdAuthor if the currentUser is mdAdmin (role==2)
+		if (currentUser.role == 2) {
+			dojo.widget.byId("userDataRole").setValue(message.get("security.role.metadataAuthor"));
+		
+		} else if (currentUser.role == 1) {
+			if (selectedUser.role == 1) {
+				dojo.widget.byId("userDataRole").setValue(message.get("security.role.metadataAdmin"));
+
+			} else if (selectedUser.role == 2) {
+				dojo.widget.byId("userDataRole").setValue(message.get("security.role.metadataAuthor"));
+			}
 		}
 	});
 }
 
 // 'Save user' button function
 scriptScope.saveUser = function() {
+	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
+	var login = dojo.widget.byId("userDataLogin").getValue();
+
+	if (dojo.string.trim(login).length == 0) {
+		dojo.debug("No user selected for save/import.");
+		return;
+	}
+	
+	// In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
+	if (currentUser.role == 2) {		
+		if (selectedUser.userId != currentUser.id) {
+			dojo.debug("Can't create users here. Select the corrent mdAdmin.");
+		}
+	}
+
+	// In case a user with role mdAutor is selected, do nothing and return
+	if (currentUser.role < 1 || currentUser.role > 2) {
+		dojo.debug("Select a user with role catAdmin or mdAdmin.");
+		return;
+	}
+
+	if (!isValidUser()) {
+		dojo.debug("Invalid information entered.");
+		return;
+	}
+
+	var user = {};
+	var userData = {};
+
+	if (currentSelectedUser == null) {
+		// If the current displayed user is null, we have to create a new user
+		user.addressUuid = currentSelectedAddressId;
+		user.groupId = dojo.widget.byId("userDataGroup").getValue();
+		user.roleName = dojo.widget.byId("userDataRole").getValue();
+		user.role = getRoleId(user.roleName);
+		user.parentUserId = selectedUser.userId;
+
+		dojo.debugShallow(user);
+	
+		SecurityService.createUser(user, login, true, {
+			callback: function(newUser) {
+				dojo.debugShallow(newUser);
+				var tree = dojo.widget.byId("treeUser");
+				var treeController = dojo.widget.byId("treeControllerUser");
+				var treeListener = dojo.widget.byId("treeListenerUser");
+				treeController.createChild(selectedUser, "last", convertUserToTreeNode(newUser));
+
+				treeController.expand(selectedUser);
+				tree.selectNode(selectedUser);
+				tree.selectedNode = selectedUser;
+				dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedUser});
+			},
+			errorHandler: function(errMsg, err) {
+				dojo.debug(errMsg);
+				dojo.debugShallow(err);
+			}
+		});
+
+	} else {
+		user.id = currentSelectedUser.userId;
+		user.addressUuid = currentSelectedAddressId;
+		user.groupId = dojo.widget.byId("userDataGroup").getValue();
+		user.role = currentSelectedUser.role;
+		user.parentUserId = currentSelectedUser.parentUserId;
+
+		SecurityService.storeUser(user, login, true, {
+			callback: function(newUser) {
+				updateTreeNode(selectedUser, newUser);
+			},
+			errorHandler: function(errMsg, err) {
+				dojo.debug(errMsg);
+				dojo.debugShallow(err);
+			}
+		});		
+	}
 }
 
+function updateTreeNode(user, newUser) {
+	user.setTitle(UtilAddress.createAddressTitle(newUser.address));
+	user.addressUuid = newUser.addressUuid;
+	user.groupId = newUser.groupId;
+//			title: UtilAddress.createAddressTitle(user.address),
+	updateInputElements(user);
+}
+
+// Check all input fields for their validity
+function isValidUser() {
+	resetRequiredElements();
+
+	var valid = true;
+
+	dojo.lang.forEach(requiredElements, function(element) {
+		if (!dojo.widget.byId(element[0]).isValid()) {
+			dojo.html.addClass(dojo.byId(element[1]), "important");		
+			valid = false;
+		}
+	});
+
+	return valid;
+}
+
+// Resolves the current group id from the input string
+function getRoleId(roleName) {
+	if (roleName == message.get("security.role.catalogAdmin")) {
+		return 1;
+
+	} else if (roleName == message.get("security.role.metadataAdmin")) {
+		return 2;
+
+	} else if (roleName == message.get("security.role.metadataAuthor")) {
+		return 3;
+	}
+}
+
+// Resets all labels that are tagged as 'important' to their initial state
+function resetRequiredElements() {
+	dojo.lang.forEach(requiredElements, function(element) {
+		dojo.html.removeClass(dojo.byId(element[1]), "important");		
+	});
+}
 
 // Updates the input elements with the data from 'treeNode'
 function updateInputElements(treeNode) {
 	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
 	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
 	dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
-	dojo.widget.byId("userDataGroup").setValue(treeNode.group);
+	dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
 	dojo.widget.byId("userDataCreate").checked = treeNode.canCreateRootNodes;
 	currentSelectedAddressId = treeNode.addressUuid;
+	currentSelectedUser = treeNode;
 }
 
 
-this.searchForAddress = function() {
+function resetInputFields() {
+	dojo.widget.byId("userDataLogin").setValue("");
+	dojo.widget.byId("userDataAddressLink").setValue("");
+	dojo.widget.byId("userDataRole").setValue("");
+	dojo.widget.byId("userDataGroup").setValue("");
+	dojo.widget.byId("userDataCreate").checked = false;	
+	currentSelectedAddressId = null;
+	currentSelectedUser = null;
+}
+
+scriptScope.searchForAddress = function() {
 	var def = new dojo.Deferred();
 	dialog.showPage('Adresse suchen', 'mdek_address_dialog.html', 755, 580, true, { resultHandler: def });
 
@@ -229,6 +408,44 @@ function getCatalogAdmin() {
 	});
 
 	return deferred;
+}
+
+function convertUserListToTreeNodes(userList) {
+	var treeNodes = [];
+
+	dojo.lang.forEach(userList, function(user) {
+		treeNodes.push(convertUserToTreeNode(user));
+	});
+
+	return treeNodes;
+}
+
+function convertUserToTreeNode(user) {
+	return {
+		userId: user.id,
+		parentUserId: user.parentUserId,
+		addressUuid: user.addressUuid,
+		title: UtilAddress.createAddressTitle(user.address),
+		role: user.role,
+		roleName: user.roleName,
+		groupId: user.groupId,
+		portalLogin: user.userData.portalLogin,
+		nodeDocType: getDocTypeForRole(user.role),
+		isFolder: user.hasChildren
+	}
+}
+
+function getDocTypeForRole(roleId) {
+	switch (roleId) {
+		case 1:
+			return "KatalogAdmin";
+		case 2:
+			return "MDAdmin";
+		case 3:
+			return "MDAutor";
+		default:
+			return null;
+	}
 }
 
 </script>
@@ -314,13 +531,13 @@ function getCatalogAdmin() {
 -->
 					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 'Login')">Login</label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label required"><label for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressverweis')">Adressverweis*</label></span>
+					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressverweis')">Adressverweis*</label></span>
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]">Adresse suchen</a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rolle')">Rolle</label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
-					<span class="label required"><label for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe*</label></span>
+					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe*</label></span>
 					<span class="input spaceBelow"><div dojoType="ingrid:Select" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
 					<div class="checkboxContainer noSpaceBelow">
 						<span class="input"><input type="checkbox" name="userDataCreate" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>

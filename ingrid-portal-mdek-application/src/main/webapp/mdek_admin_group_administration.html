@@ -10,45 +10,6 @@ _container_.addOnLoad(function() {
 	initGroupList();
 	resetAllInputData();
 	hidePermissionLists();
-
-
-	var groupList = dojo.widget.byId("groups");
-	var groupStore = groupList.store;
-	dojo.event.connectOnce(groupStore, "onRemoveData", function(item) {
-		deleteGroup(item.src);
-	});
-
-	// If the user deletes a group that is currently selected, the input fields have to be reset
-	dojo.event.connectOnce("after", groupStore, "onRemoveData", function(data) {
-		if (dojo.lang.some(groupList.getSelectedData(), function(item){ return (item == data.src); })) {
-			resetAllInputData();
-			hidePermissionLists();
-		}
-	});
-
-	// Selection of data via list.select() doesn't fire an 'onDataSelect' event.
-	// Therefore we can't rely on the 'onSelect' event and have to update the input manually  
-	dojo.event.connectOnce("after", groupList, "onDataSelect", function(item) {
-		// Update the displayed data
-		updateAllInputData(item);
-		showPermissionLists();
-	});
-
-	dojo.event.connectOnce("after", groupList, "onSelect", function() {
-		// Update the displayed data
-		var selectedGroups = groupList.getSelectedData();
-		if (selectedGroups.length == 1) {
-			// one group selected, load and display it's group data
-			updateAllInputData(selectedGroups[0]);
-			showPermissionLists();
-
-		} else {
-			// zero or multiple groups selected
-			resetAllInputData();
-			hidePermissionLists();
-		}
-	});
-
 });
 
 
@@ -67,8 +28,8 @@ function addObjectToPermissionTable(obj) {
 
 	if (dojo.lang.every(objStore.getData(), function(item){ return (item.id != obj.id); })) {
 		obj.Id = UtilStore.getNewKey(objStore);
-		obj.single =  "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_single' class='radio' checked='true' />";
-		obj.subtree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subtree' class='radio' />";
+		obj.single =  "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_single' class='radio' />";
+		obj.subtree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subtree' class='radio' checked='true' />";
 
 		objStore.addData(obj);
 	}
@@ -80,8 +41,8 @@ function addAddressToPermissionTable(adr) {
 
 	if (dojo.lang.every(adrStore.getData(), function(item){ return (item.id != adr.id); })) {
 		adr.Id = UtilStore.getNewKey(adrStore);
-		adr.single =  "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_single' class='radio' checked='true' />";
-		adr.subtree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subtree' class='radio' />";
+		adr.single =  "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_single' class='radio' />";
+		adr.subtree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subtree' class='radio' checked='true' />";
 
 		adrStore.addData(adr);
 	}
@@ -304,6 +265,43 @@ function initGroupList() {
 	def.addCallback(function(groupList) {
 		UtilList.addTableIndices(groupList);
 		dojo.widget.byId("groups").store.setData(groupList);
+	});
+
+	var groupList = dojo.widget.byId("groups");
+	var groupStore = groupList.store;
+	dojo.event.connectOnce(groupStore, "onRemoveData", function(item) {
+		deleteGroup(item.src);
+	});
+
+	// If the user deletes a group that is currently selected, the input fields have to be reset
+	dojo.event.connectOnce("after", groupStore, "onRemoveData", function(data) {
+		if (dojo.lang.some(groupList.getSelectedData(), function(item){ return (item == data.src); })) {
+			resetAllInputData();
+			hidePermissionLists();
+		}
+	});
+
+	// Selection of data via list.select() doesn't fire an 'onDataSelect' event.
+	// Therefore we can't rely on the 'onSelect' event and have to update the input manually  
+	dojo.event.connectOnce("after", groupList, "onDataSelect", function(item) {
+		// Update the displayed data
+		updateAllInputData(item);
+		showPermissionLists();
+	});
+
+	dojo.event.connectOnce("after", groupList, "onSelect", function() {
+		// Update the displayed data
+		var selectedGroups = groupList.getSelectedData();
+		if (selectedGroups.length == 1) {
+			// one group selected, load and display it's group data
+			updateAllInputData(selectedGroups[0]);
+			showPermissionLists();
+
+		} else {
+			// zero or multiple groups selected
+			resetAllInputData();
+			hidePermissionLists();
+		}
 	});
 }
 

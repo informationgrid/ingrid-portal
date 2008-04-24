@@ -80,6 +80,10 @@
 	"address.type.person":"Person",
 	"address.type.custom":"Freie Adresse",
 
+	"security.role.catalogAdmin":"Katalog-Administrator",
+	"security.role.metadataAdmin":"Metadaten-Administrator",
+	"security.role.metadataAuthor":"Metadaten-Autor",
+
 	"cts.serviceError":"Der zur Transformation der eingegebenen Koordinaten verwendete Coordinate Tranformation Service des BKG (https://upd.geodatenzentrum.de) ist zur Zeit nicht zu erreichen. Bitte probieren Sie es zu einem sp&auml;teren Zeitpunkt erneut oder wenden Sie sich an die Betreiber des Dienstes.",
 	"cts.transformError":"Die eingegebenen Koordinaten konnten vom verwendeten Coordinate Tranformation Service (https://upd.geodatenzentrum.de) nicht transformiert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe.",
 

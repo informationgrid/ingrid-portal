@@ -233,13 +233,16 @@ public class MdekUtils {
 
 			user.setRole(role);
 			user.setRoleName(idcRole.toString());
-			user.setParentUserId((Integer) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
+			user.setParentUserId((Long) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
 			user.setHasChildren((Boolean) result.get(MdekKeys.HAS_CHILD));
 			
 			// Detailed info
 			user.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			user.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 			user.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
+
+			user.setAddress(MdekAddressUtils.extractSingleAddressFromResponse(response));
+
 		} else {
 			MdekErrorUtils.handleError(response);
 		}
@@ -252,19 +255,23 @@ public class MdekUtils {
 
 		ArrayList<User> userList = new ArrayList<User>();
 		if (result != null) {
-			User user = new User();
-			/*
-			user.setId((Long) result.get(MdekKeysSecurity.IDC_USER_ID));
-			user.setAddressUuid((String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
-			user.setGroupId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
-			user.setRole((Integer) result.get(MdekKeysSecurity.IDC_ROLE));
-			user.setParentUserId((Integer) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
+			List<IngridDocument> users = (List<IngridDocument>) result.get(MdekKeysSecurity.IDC_USERS);
+			for (IngridDocument user : users) {
+				User u = new User();
+				u.setParentUserId((Long) user.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
+				u.setGroupId((Long) user.get(MdekKeysSecurity.IDC_GROUP_ID));
+				u.setHasChildren((Boolean) user.get(MdekKeys.HAS_CHILD));
+				u.setId((Long) user.get(MdekKeysSecurity.IDC_USER_ID));
+				u.setAddressUuid((String) user.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
+				Integer role = (Integer) user.get(MdekKeysSecurity.IDC_ROLE);
+				IdcRole idcRole = EnumUtil.mapDatabaseToEnumConst(IdcRole.class, role);
 
-			// Detailed info
-			user.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
-			user.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-			user.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
-			*/
+				u.setRole(role);
+				u.setRoleName(idcRole.toString());
+				
+				userList.add(u);
+			}
+
 		} else {
 			MdekErrorUtils.handleError(response);
 		}

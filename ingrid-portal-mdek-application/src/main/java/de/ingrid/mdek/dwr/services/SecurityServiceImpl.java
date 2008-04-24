@@ -97,7 +97,15 @@ public class SecurityServiceImpl {
 
 	public List<User> getSubUsers(Long userId) {
 		try {
-			return securityRequestHandler.getSubUsers(userId);		
+			List<User> users = securityRequestHandler.getSubUsers(userId);		
+			List<User> resultList = new ArrayList<User>();
+			for (User user : users) {
+				User detailedUser = getUserDetails(user.getAddressUuid());
+				detailedUser.setUserData(getUserDataForAddress(user.getAddressUuid()));
+				resultList.add(detailedUser);
+			}
+			return resultList;
+
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while fetching subusers.", e);
@@ -115,9 +123,20 @@ public class SecurityServiceImpl {
 		}
 	}
 
-	public User createUser(User user, boolean refetch) {
+	public User createUser(User user, String portalLogin, boolean refetch) {
 		try {
-			return securityRequestHandler.createUser(user, refetch);
+			User u = securityRequestHandler.createUser(user, refetch);
+			UserData userData = new UserData();
+			userData.setPortalLogin(portalLogin);
+			userData.setAddressUuid(user.getAddressUuid());
+//			userData.setPlugId(getCurrentPortalUserData().getPlugId());
+// TODO Fix! Changed so we don't have to log in
+			userData.setPlugId(getCurrentUser().getUserData().getPlugId());
+
+			createUserData(userData);
+			u.setUserData(userData);
+			return u;
+
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while creating user.", e);
@@ -125,9 +144,19 @@ public class SecurityServiceImpl {
 		}
 	}
 
-	public User storeUser(User user, boolean refetch) {
+	public User storeUser(User user, String portalLogin, boolean refetch) {
 		try {
-			return securityRequestHandler.storeUser(user, refetch);
+			User u = securityRequestHandler.storeUser(user, refetch);
+			UserData userData = new UserData();
+			userData.setPortalLogin(portalLogin);
+			userData.setAddressUuid(user.getAddressUuid());
+//			userData.setPlugId(getCurrentPortalUserData().getPlugId());
+// TODO Fix! Changed so we don't have to log in
+			userData.setPlugId(getCurrentUser().getUserData().getPlugId());
+
+			storeUserData(userData);
+			return u;
+
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while storing user.", e);
@@ -135,9 +164,11 @@ public class SecurityServiceImpl {
 		}
 	}
 
-	public void deleteUser(Long userId) {
+	public void deleteUser(Long userId, String addressUuid) {
 		try {
-			securityRequestHandler.deleteUser(userId);		
+			securityRequestHandler.deleteUser(userId);
+			deleteUserDataForAddress(addressUuid);
+
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while deleting user.", e);
@@ -181,6 +212,44 @@ public class SecurityServiceImpl {
 		return userData;
 	}
 
+	public UserData createUserData(UserData userData) {
+		// Write the data directly to the db via hibernate
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+
+		dao.beginTransaction();
+		dao.makePersistent(userData);
+		dao.commitTransaction();
+
+		return userData;
+	}
+
+	public UserData storeUserData(UserData userData) {
+		// Update the data in the db via hibernate
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+
+		UserData sampleUser = new UserData();
+		sampleUser.setPortalLogin(userData.getPortalLogin());
+
+		dao.beginTransaction();
+		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
+		u.setAddressUuid(userData.getAddressUuid());
+		dao.makePersistent(u);
+		dao.commitTransaction();
+
+		return userData;
+	}
+
+	
+	public void deleteUserDataForAddress(String addressUuid) {
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+		UserData sampleUser = new UserData();
+		sampleUser.setAddressUuid(addressUuid);
+
+		dao.beginTransaction();
+		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
+		dao.makeTransient(userData);
+		dao.commitTransaction();
+	}
 	
 	public UserData getCurrentPortalUserData() {
 		WebContext wctx = WebContextFactory.get();
@@ -195,6 +264,15 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	public User getCurrentUser() {
+//		UserData curUserData = getCurrentPortalUserData();
+		UserData curUserData = getUserDataForAddress("10D9134B-D75D-4F37-B870-E4B7C238BFEE");
+		User curUser = getUserDetails(curUserData.getAddressUuid());
+		curUser.setUserData(curUserData);
+		return curUser;
+	}
+
+	
 	public List<String> getPortalUsers() {
 		ArrayList<String> userList = new ArrayList<String>();
 		

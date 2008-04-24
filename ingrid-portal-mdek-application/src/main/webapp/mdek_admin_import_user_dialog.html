@@ -1,0 +1,89 @@
+<html>
+<head>
+
+<script type="text/javascript">
+_container_.addOnLoad(function() {
+	var msgDiv = dojo.byId("messageDiv");
+	msgDiv.innerHTML = "Bitte w&auml;hlen Sie einen Portal-Benutzer aus:";
+
+	initUserTable();
+});
+
+_container_.addOnUnload(function() {
+	// If the dialog was cancelled via the dialogs close button
+	// we need to signal an error (cancel action)
+	if (_container_.customParams.resultHandler.fired == -1) {
+		_container_.customParams.resultHandler.errback();
+	}
+});
+
+function initUserTable() {
+	var userList = ["admin","devmgr","guest"];
+
+	dojo.widget.byId("userList").store.setData(UtilList.addTableIndices(UtilList.listToTableData(userList)));
+/*
+	SecurityService.getPortalUsers( {
+		callback: function(userList) {
+			dojo.debug(userList);
+			dojo.widget.byId("userList").store.setData(UtilList.addTableIndices(UtilList.listToTableData(userList)));
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+*/
+}
+
+
+// 'Yes Button' onClick function
+yesButtonFunc = function() {
+	var selectedUser = dojo.widget.byId("userList").getSelectedData();
+
+	if (selectedUser != null) {
+		_container_.customParams.resultHandler.callback(selectedUser.title);
+	} else {
+		_container_.customParams.resultHandler.errback();
+	}
+	_container_.closeWindow();
+}
+
+// 'No Button' onClick function
+noButtonFunc = function() {
+	_container_.customParams.resultHandler.errback();
+	_container_.closeWindow();
+}
+
+</script>
+</head>
+
+
+
+<body>
+<div dojoType="ContentPane">
+	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
+		<div id="dialogContent" class="content">
+			<div id="messageDiv" class="field grey w296">
+			</div>
+
+			<div class="grey tableContainer headHiddenRows4 halfInside">
+      	    <table id="userList" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" multiple="false" class="filteringTable nosort readonly interactive">
+				<thead>
+					<tr>
+						<th nosort="true" field="title" dataType="String">User</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			</div>
+
+			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="yesButtonFunc">&Uuml;bernehmen</button></span>
+			</div>
+	  	</div>
+	</div>
+</div>
+</body>
+</html>

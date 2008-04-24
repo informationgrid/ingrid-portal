@@ -53,6 +53,10 @@
     "tree.newAddressName":"New Address",
     "tree.reload":"Reload",
 
+	"security.role.catalogAdmin":"Catalog-Administrator",
+	"security.role.metadataAdmin":"Metadata-Administrator",
+	"security.role.metadataAuthor":"Metadaten-Author",
+
     "spatial.noResultsHint":"No results found.",
     "spatial.loadingHint":"Please wait, loading...",
     "spatial.connectionError":"An error occured while contacting the SNS Service.",
