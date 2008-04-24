@@ -11,7 +11,7 @@ public class MdekApplicationSeleniumTestCase extends AbstractSeleniumTestCase {
 	 */
 	@Override
 	public void init() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox", "http://localhost:8080");
+		selenium = new IngridSelenium("localhost", 4444, "*firefox", "http://localhost:8080");
 		selenium.start();
 	}
 }

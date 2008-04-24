@@ -11,7 +11,7 @@ public class PortalUSeleniumTestCase extends AbstractSeleniumTestCase {
 	 */
 	@Override
 	public void init() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox", "http://harrison.its-technidata.de");
+		selenium = new IngridSelenium("localhost", 4444, "*firefox", "http://harrison.its-technidata.de");
 		selenium.start();
 	}
 }

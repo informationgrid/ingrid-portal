@@ -9,7 +9,7 @@ import com.thoughtworks.selenium.Selenium;
 public abstract class AbstractSeleniumTestCase extends TestCase {
 
 	protected SeleniumServer seleniumServer;
-	protected Selenium selenium = null;
+	protected IngridSelenium selenium = null;
 
 	public void setUp() {
 		try {
