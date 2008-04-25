@@ -100,7 +100,7 @@ function initializeUserTree() {
 	};
 
 	var treeListener = dojo.widget.byId('treeListenerUser');
-	dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { updateInputElements(data.node); });
+	dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { treeNodeSelected(data.node); });
 }
 
 function initializeGroupList() {
@@ -125,7 +125,7 @@ scriptScope.deleteUser = function() {
 	var user = dojo.widget.byId("treeUser").selectedNode;
 
 	// Can't delete the cat admin. This is also checked in the backend.
-	if (user == null || user.role == 1) {
+	if (user == null || user.role == 1 || user.isFolder) {
 		dojo.debug("Can't delete.");
 		return;
 	}
@@ -156,32 +156,50 @@ scriptScope.deleteUser = function() {
 // 'Import portal user' button function
 scriptScope.importPortalUser = function() {
 	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
+
 	if (currentUser.role == 1 && selectedUser == null) {
 		dojo.debug("No node selected.");
 		return;
 	}
 
+	// In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
+	if (currentUser.role == 2) {		
+		if (selectedUser.userId != currentUser.id) {
+			dojo.debug("Can't create users here. Select the correct mdAdmin.");
+		}
+	}
+
+	// In case a user with role mdAutor is selected, do nothing and return
+	if (selectedUser.role < 1 || selectedUser.role > 2) {
+		dojo.debug("Select a user with role catAdmin or mdAdmin.");
+		return;
+	}
+
+	// In case a newUserNode already exists, return
+	if (selectedUser.id == "newUserNode") {
+		dojo.debug("Please save the current user before creating a new one.");
+		return;
+	}
+
+
 	var deferred = new dojo.Deferred();
 	dialog.showPage("Import Portal users", "mdek_admin_import_user_dialog.html", 360, 240, true, { resultHandler:deferred });
 
 	deferred.addCallback(function(portalUser){
-		resetInputFields();
-		dojo.widget.byId("userDataLogin").setValue(portalUser);
-		
-		// Select the user's role depending on:
-		// The current selected node if the currentUser is catAdmin (role==1)
-		// mdAuthor if the currentUser is mdAdmin (role==2)
-		if (currentUser.role == 2) {
-			dojo.widget.byId("userDataRole").setValue(message.get("security.role.metadataAuthor"));
-		
-		} else if (currentUser.role == 1) {
-			if (selectedUser.role == 1) {
-				dojo.widget.byId("userDataRole").setValue(message.get("security.role.metadataAdmin"));
+		var tree = dojo.widget.byId("treeUser");
+		var treeController = dojo.widget.byId("treeControllerUser");
+		var treeListener = dojo.widget.byId("treeListenerUser");
+		treeController.expand(selectedUser);
+		var def = treeController.createChild(selectedUser, "last", createNewUserNode(selectedUser, portalUser));
 
-			} else if (selectedUser.role == 2) {
-				dojo.widget.byId("userDataRole").setValue(message.get("security.role.metadataAuthor"));
-			}
-		}
+		def.addBoth(function(data){
+			resetInputFields();
+			treeController.expand(selectedUser);
+			var newNode = dojo.widget.byId("newUserNode");
+			tree.selectNode(newNode);
+			tree.selectedNode = newNode;
+			dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+		});
 	});
 }
 
@@ -194,19 +212,6 @@ scriptScope.saveUser = function() {
 		dojo.debug("No user selected for save/import.");
 		return;
 	}
-	
-	// In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
-	if (currentUser.role == 2) {		
-		if (selectedUser.userId != currentUser.id) {
-			dojo.debug("Can't create users here. Select the corrent mdAdmin.");
-		}
-	}
-
-	// In case a user with role mdAutor is selected, do nothing and return
-	if (currentUser.role < 1 || currentUser.role > 2) {
-		dojo.debug("Select a user with role catAdmin or mdAdmin.");
-		return;
-	}
 
 	if (!isValidUser()) {
 		dojo.debug("Invalid information entered.");
@@ -216,28 +221,27 @@ scriptScope.saveUser = function() {
 	var user = {};
 	var userData = {};
 
-	if (currentSelectedUser == null) {
-		// If the current displayed user is null, we have to create a new user
+	if (selectedUser.id == "newUserNode") {
+		// If the current selected node is a new node, create it in the db
 		user.addressUuid = currentSelectedAddressId;
 		user.groupId = dojo.widget.byId("userDataGroup").getValue();
-		user.roleName = dojo.widget.byId("userDataRole").getValue();
-		user.role = getRoleId(user.roleName);
-		user.parentUserId = selectedUser.userId;
+		user.roleName = selectedUser.roleName;
+		user.role = selectedUser.role;
+		user.parentUserId = selectedUser.parentUserId;
 
 		dojo.debugShallow(user);
-	
+
 		SecurityService.createUser(user, login, true, {
 			callback: function(newUser) {
-				dojo.debugShallow(newUser);
 				var tree = dojo.widget.byId("treeUser");
-				var treeController = dojo.widget.byId("treeControllerUser");
 				var treeListener = dojo.widget.byId("treeListenerUser");
-				treeController.createChild(selectedUser, "last", convertUserToTreeNode(newUser));
+				updateTreeNode(selectedUser, newUser);
 
-				treeController.expand(selectedUser);
-				tree.selectNode(selectedUser);
-				tree.selectedNode = selectedUser;
-				dojo.event.topic.publish(treeListener.eventNames.select, {node: selectedUser});
+				var newNode = dojo.widget.byId("TreeNode_"+newUser.id);
+				tree.selectNode(newNode);
+				tree.selectedNode = newNode;
+				dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+
 			},
 			errorHandler: function(errMsg, err) {
 				dojo.debug(errMsg);
@@ -265,10 +269,21 @@ scriptScope.saveUser = function() {
 }
 
 function updateTreeNode(user, newUser) {
-	user.setTitle(UtilAddress.createAddressTitle(newUser.address));
-	user.addressUuid = newUser.addressUuid;
-	user.groupId = newUser.groupId;
-//			title: UtilAddress.createAddressTitle(user.address),
+	if (user.id == "newUserNode") {
+		var parent = user.parent;
+
+		// A new node is a leaf node. It's safe to destroy it
+		user.destroy();
+		var treeController = dojo.widget.byId("treeControllerUser");
+		treeController.createChild(parent, "last", convertUserToTreeNode(newUser));
+	
+	} else {
+		user.setTitle(UtilAddress.createAddressTitle(newUser.address));
+		user.addressUuid = newUser.addressUuid;
+		user.groupId = newUser.groupId;
+	//			title: UtilAddress.createAddressTitle(user.address),
+	}
+
 	updateInputElements(user);
 }
 
@@ -288,7 +303,7 @@ function isValidUser() {
 	return valid;
 }
 
-// Resolves the current group id from the input string
+// Resolves the current role id from the input string
 function getRoleId(roleName) {
 	if (roleName == message.get("security.role.catalogAdmin")) {
 		return 1;
@@ -301,11 +316,41 @@ function getRoleId(roleName) {
 	}
 }
 
+// Resolves the role name from the input id
+function getRoleName(roleId) {
+	switch(roleId) {
+		case 1:
+			return message.get("security.role.catalogAdmin");
+		case 2:
+			return message.get("security.role.metadataAdmin");
+		case 3:
+			return message.get("security.role.metadataAuthor");
+		default:
+			return null;
+	}
+}
+
 // Resets all labels that are tagged as 'important' to their initial state
 function resetRequiredElements() {
 	dojo.lang.forEach(requiredElements, function(element) {
 		dojo.html.removeClass(dojo.byId(element[1]), "important");		
 	});
+}
+
+// Function that is called when a treeNode is clicked
+function treeNodeSelected(treeNode) {
+	// Check if a 'newUserNode' exists. If it does and the user clicked another node, delete the newUserNode.
+	var newUserNode = dojo.widget.byId("newUserNode");
+	if (newUserNode != null && treeNode.id != "newUserNode") {
+		newUserNode.destroy();
+	}
+
+	updateInputElements(treeNode);
+
+	// Delete the displayed address link since it's build from the node title ('Neuer Benutzer')
+	if (newUserNode != null && treeNode.id == "newUserNode") {
+		dojo.widget.byId("userDataAddressLink").setValue("");
+	}
 }
 
 // Updates the input elements with the data from 'treeNode'
@@ -431,7 +476,23 @@ function convertUserToTreeNode(user) {
 		groupId: user.groupId,
 		portalLogin: user.userData.portalLogin,
 		nodeDocType: getDocTypeForRole(user.role),
-		isFolder: user.hasChildren
+		isFolder: user.hasChildren,
+		id: "TreeNode_"+user.id
+	}
+}
+
+function createNewUserNode(parentNode, login) {
+	return {
+		id: "newUserNode",
+		parentUserId: parentNode.userId,
+//		addressUuid: user.addressUuid,
+		title: "Neuer Benutzer",
+		role: parentNode.role + 1,
+		roleName: getRoleName(parentNode.role + 1),
+//		groupId: parentNode.groupId,
+		portalLogin: login,
+		nodeDocType: getDocTypeForRole(parentNode.role + 1),
+		isFolder: false
 	}
 }
 
