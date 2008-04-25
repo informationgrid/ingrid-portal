@@ -265,8 +265,10 @@ public class SecurityServiceImpl {
 	}
 
 	public User getCurrentUser() {
+		// TODO FIXME! The current user is set to admin for testing purpose only.
 //		UserData curUserData = getCurrentPortalUserData();
-		UserData curUserData = getUserDataForAddress("10D9134B-D75D-4F37-B870-E4B7C238BFEE");
+//		UserData curUserData = getUserDataForAddress("6207DE65-025E-4418-9737-A5BEC95BE08C");
+		UserData curUserData = getUserData("admin");
 		User curUser = getUserDetails(curUserData.getAddressUuid());
 		curUser.setUserData(curUserData);
 		return curUser;

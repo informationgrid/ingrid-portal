@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.MdekUtilsSecurity;
+import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcRole;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.VersionInformation;
@@ -20,6 +22,7 @@ import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.SearchResultBean;
 import de.ingrid.mdek.beans.security.Group;
+import de.ingrid.mdek.beans.security.Permission;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
@@ -182,7 +185,11 @@ public class MdekUtils {
 				g.setId((Long) group.get(MdekKeysSecurity.IDC_GROUP_ID));
 				g.setLastEditor((String) group.get(MdekKeys.MOD_UUID));
 				g.setCreationTime(convertTimestampToDate((String) group.get(MdekKeys.DATE_OF_CREATION)));
-				g.setModificationTime(convertTimestampToDate((String) group.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+				g.setModificationTime(convertTimestampToDate((String) group.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));				
+
+				g.setObjectPermissions(getObjectPermissions((ArrayList<IngridDocument>) result.get(MdekKeysSecurity.IDC_OBJECT_PERMISSIONS)));
+				g.setAddressPermissions(getAddressPermissions((ArrayList<IngridDocument>) result.get(MdekKeysSecurity.IDC_ADDRESS_PERMISSIONS)));
+
 				groupList.add(g);
 			}
 		}
@@ -200,11 +207,71 @@ public class MdekUtils {
 			group.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
 			group.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			group.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+
+			group.setObjectPermissions(getObjectPermissions((ArrayList<IngridDocument>) result.get(MdekKeysSecurity.IDC_OBJECT_PERMISSIONS)));
+			group.setAddressPermissions(getAddressPermissions((ArrayList<IngridDocument>) result.get(MdekKeysSecurity.IDC_ADDRESS_PERMISSIONS)));
+
 		} else {
 			MdekErrorUtils.handleError(response);
 		}
 
 		return group;
+	}
+
+	private static ArrayList<Permission> getAddressPermissions(ArrayList<IngridDocument> docList) {
+		ArrayList<Permission> resultList = new ArrayList<Permission>();
+
+		if (docList == null) {
+			return resultList;
+		}
+
+		for (IngridDocument doc : docList) {
+			Permission p = new Permission();
+			p.setUuid((String) doc.get(MdekKeys.UUID));
+			String permissionType = (String) doc.get(MdekKeysSecurity.IDC_PERMISSION);
+			p.setPermission(EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permissionType));
+			p.setAddress(MdekAddressUtils.extractSingleAddress(doc));
+			resultList.add(p);
+		}
+
+		return resultList;
+	}
+	
+	private static ArrayList<Permission> getObjectPermissions(ArrayList<IngridDocument> docList) {
+		ArrayList<Permission> resultList = new ArrayList<Permission>();
+
+		if (docList == null) {
+			return resultList;
+		}
+
+		for (IngridDocument doc : docList) {
+			Permission p = new Permission();
+			p.setUuid((String) doc.get(MdekKeys.UUID));
+			String permissionType = (String) doc.get(MdekKeysSecurity.IDC_PERMISSION);
+			p.setPermission(EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permissionType));
+			p.setObject(MdekObjectUtils.extractSingleObject(doc));
+			resultList.add(p);
+		}
+
+		return resultList;
+	}
+
+	private static ArrayList<IngridDocument> convertPermissionsToIngridDocs(ArrayList<Permission> pList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+
+		if (pList == null) {
+			return resultList;
+		}
+
+		for (Permission perm : pList) {
+			IngridDocument doc = new IngridDocument();
+			doc.put(MdekKeys.UUID, perm.getUuid());
+			doc.put(MdekKeysSecurity.IDC_PERMISSION, perm.getPermission().getDbValue());
+
+			resultList.add(doc);
+		}
+
+		return resultList;
 	}
 
 	public static IngridDocument convertSecurityGroupToIngridDoc(Group group) {
@@ -216,6 +283,9 @@ public class MdekUtils {
 
 		result.put(MdekKeys.NAME, group.getName());
 		result.put(MdekKeysSecurity.IDC_GROUP_ID, group.getId());
+
+		result.put(MdekKeysSecurity.IDC_ADDRESS_PERMISSIONS, convertPermissionsToIngridDocs(group.getAddressPermissions()));
+		result.put(MdekKeysSecurity.IDC_OBJECT_PERMISSIONS, convertPermissionsToIngridDocs(group.getObjectPermissions()));
 
 		return result;
 	}

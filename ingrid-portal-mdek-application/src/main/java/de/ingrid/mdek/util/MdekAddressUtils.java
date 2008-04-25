@@ -31,6 +31,10 @@ public class MdekAddressUtils {
 		}
 	}
 
+	public static MdekAddressBean extractSingleAddress(IngridDocument doc) {
+		return dataMapper.getDetailedAddressRepresentation(doc);		
+	}
+
 	public static MdekAddressBean extractSingleAddressFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 

@@ -66,6 +66,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.SearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.Group"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.security.Permission"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.CTSResponse"/>
@@ -76,5 +77,7 @@
 
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.Type"/>
+
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
 	</allow>
 </dwr>

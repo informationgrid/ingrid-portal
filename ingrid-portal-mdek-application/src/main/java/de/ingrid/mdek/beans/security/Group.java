@@ -1,5 +1,6 @@
 package de.ingrid.mdek.beans.security;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Group {
@@ -13,6 +14,9 @@ public class Group {
 	private Date modificationTime;
 	private String lastEditor;
 
+	// Permissions
+	private ArrayList<Permission> objectPermissions;
+	private ArrayList<Permission> addressPermissions;
 
 	public String getName() {
 		return name;
@@ -43,5 +47,17 @@ public class Group {
 	}
 	public void setLastEditor(String lastEditor) {
 		this.lastEditor = lastEditor;
+	}
+	public ArrayList<Permission> getObjectPermissions() {
+		return objectPermissions;
+	}
+	public void setObjectPermissions(ArrayList<Permission> objectPermissions) {
+		this.objectPermissions = objectPermissions;
+	}
+	public ArrayList<Permission> getAddressPermissions() {
+		return addressPermissions;
+	}
+	public void setAddressPermissions(ArrayList<Permission> addressPermissions) {
+		this.addressPermissions = addressPermissions;
 	}
 }

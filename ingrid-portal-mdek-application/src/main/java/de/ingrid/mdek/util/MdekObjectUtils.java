@@ -22,6 +22,10 @@ public class MdekObjectUtils {
 	}
 
 	
+	public static MdekDataBean extractSingleObject(IngridDocument doc) {
+			return dataMapper.getDetailedObjectRepresentation(doc);
+	}
+
 	public static MdekDataBean extractSingleObjectFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 

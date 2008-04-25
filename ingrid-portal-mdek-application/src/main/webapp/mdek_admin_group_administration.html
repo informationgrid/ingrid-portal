@@ -4,6 +4,9 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+var curSelectedGroupDetails = null;
+
+
 _container_.addOnLoad(function() {
 	initObjectTree();
 	initAddressTree();
@@ -26,12 +29,15 @@ function deleteGroup(group) {
 function addObjectToPermissionTable(obj) {
 	var objStore = dojo.widget.byId("groupDataRightsObjectsList").store;
 
-	if (dojo.lang.every(objStore.getData(), function(item){ return (item.id != obj.id); })) {
-		obj.Id = UtilStore.getNewKey(objStore);
-		obj.single =  "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_single' class='radio' />";
-		obj.subtree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subtree' class='radio' checked='true' />";
+	if (dojo.lang.every(objStore.getData(), function(item){ return (item.uuid != obj.id); })) {
+		var permission = {}
+		permission.Id = UtilStore.getNewKey(objStore);
+		permission.title = obj.title;
+		permission.uuid = obj.id;
+		permission.single =  "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_single' class='radio' />";
+		permission.subtree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subtree' class='radio' checked='true' />";
 
-		objStore.addData(obj);
+		objStore.addData(permission);
 	}
 }
 
@@ -39,12 +45,15 @@ function addObjectToPermissionTable(obj) {
 function addAddressToPermissionTable(adr) {
 	var adrStore = dojo.widget.byId("groupDataRightsAddressesList").store;
 
-	if (dojo.lang.every(adrStore.getData(), function(item){ return (item.id != adr.id); })) {
-		adr.Id = UtilStore.getNewKey(adrStore);
-		adr.single =  "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_single' class='radio' />";
-		adr.subtree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subtree' class='radio' checked='true' />";
+	if (dojo.lang.every(adrStore.getData(), function(item){ return (item.uuid != adr.id); })) {
+		var permission = {}
+		permission.Id = UtilStore.getNewKey(adrStore);
+		permission.title = adr.title;
+		permission.uuid = adr.id;
+		permission.single =  "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_single' class='radio' />";
+		permission.subtree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subtree' class='radio' checked='true' />";
 
-		adrStore.addData(adr);
+		adrStore.addData(permission);
 	}
 }
 
@@ -80,7 +89,8 @@ scriptScope.saveGroup = function() {
 	var selectedGroups = groupList.getSelectedData();
 	if (selectedGroups.length == 1) {
 		// exactly one group selected
-		var group = selectedGroups[0];
+//		var group = selectedGroups[0];
+		var group = curSelectedGroupDetails;
 		group.name = groupName;
 
 		SecurityService.storeGroup(group, true, {
@@ -101,33 +111,47 @@ scriptScope.saveGroup = function() {
 
 
 scriptScope.saveObjectPermissions = function() {
-	var group = dojo.widget.byId("groups").getSelectedData[0];
+//	var group = dojo.widget.byId("groups").getSelectedData[0];
+	var group = curSelectedGroupDetails;
 	var objs = dojo.widget.byId("groupDataRightsObjectsList").store.getData();
 
 	var permissionList = [];
 
 	dojo.lang.forEach(objs, function(obj){
-		var id = obj.id;
-		var subtree = dojo.byId(obj.id+"_subtree").checked;
-		permissionList.push( { id:id, subtree:subtree } );
+//		dojo.debugShallow(obj);
+		var id = obj.uuid;
+		var permissionType = dojo.byId(obj.uuid+"_subtree").checked ? "WRITE_TREE" : "WRITE_SINGLE";
+		permissionList.push( { uuid:id, permission:permissionType } );
 	});
 
-	// TODO Save 'group' with permissions from 'permissionList'
+	group.objectPermissions = permissionList;
+	var def = storeGroup(group, true);
+
+	def.addCallback(function(storedGroup) {
+		curSelectedGroupDetails = storedGroup;
+//		updateAllInputData(item);
+	});
 }
 
 scriptScope.saveAddressPermissions = function() {
-	var group = dojo.widget.byId("groups").getSelectedData[0];
+	var group = curSelectedGroupDetails;
 	var adrs = dojo.widget.byId("groupDataRightsAddressesList").store.getData();
 
 	var permissionList = [];
 
 	dojo.lang.forEach(adrs, function(adr){
-		var id = adr.id;
-		var subtree = dojo.byId(adr.id+"_subtree").checked;
-		permissionList.push( { id:id, subtree:subtree } );
+		var id = adr.uuid;
+		var permissionType = dojo.byId(adr.uuid+"_subtree").checked ? "WRITE_TREE" : "WRITE_SINGLE";
+		permissionList.push( { uuid:id, permission:permissionType } );
 	});
 
-	// TODO Save 'group' with permissions from 'permissionList'
+	group.addressPermissions = permissionList;
+	var def = storeGroup(group, true);
+
+	def.addCallback(function(storedGroup) {
+		curSelectedGroupDetails = storedGroup;
+//		updateAllInputData(item);
+	});
 }
 
 // 'Add Object' button function.
@@ -323,10 +347,85 @@ function getAllGroups() {
 	return deferred;
 }
 
+// Store the group 'group'
+function storeGroup(group, refetch) {
+	var deferred = new dojo.Deferred();
+
+	SecurityService.storeGroup(group, refetch, {
+		callback: function(group) {
+			deferred.callback(group);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);			
+		}
+	});
+
+	return deferred;
+}
+
+
 function updateAllInputData(group) {
 //	dojo.debugShallow(group);
 	dojo.widget.byId("groupDataName").setValue(group.name);
-	
+
+	// Load the group details from the server
+	var def = getGroupDetails(group.name);
+	def.addCallback(function(groupDetails) {
+//		dojo.debug("groupDetails: ");
+//		dojo.debugShallow(groupDetails);
+		curSelectedGroupDetails = groupDetails;
+
+		setAddressPermissions(groupDetails.addressPermissions);
+		setObjectPermissions(groupDetails.objectPermissions);
+	});
+}
+
+function setAddressPermissions(permissionList) {
+	var adrStore = dojo.widget.byId("groupDataRightsAddressesList").store;
+	adrStore.clearData();
+
+	dojo.lang.forEach(permissionList, function(p) {
+		var adr = {}
+
+		adr.Id = UtilStore.getNewKey(adrStore);
+		adr.title = UtilAddress.createAddressTitle(p.address);
+		adr.uuid = p.uuid;
+
+		if (p.permission == "WRITE_SINGLE") {
+			adr.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' checked='true' />";
+			adr.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' />";
+		} else {
+			adr.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
+			adr.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' checked='true' />";
+		}
+
+		adrStore.addData(adr);
+	});
+}
+
+function setObjectPermissions(permissionList) {
+	var objStore = dojo.widget.byId("groupDataRightsObjectsList").store;
+	objStore.clearData();
+
+	dojo.lang.forEach(permissionList, function(p) {
+		var obj = {}
+		
+		obj.Id = UtilStore.getNewKey(objStore);
+		obj.title = p.object.title;
+		obj.uuid = p.uuid;
+
+		if (p.permission == "WRITE_SINGLE") {
+			obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' checked='true' />";
+			obj.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' />";
+		} else {
+			obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
+			obj.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' checked='true' />";
+		}
+
+		objStore.addData(obj);
+	});
 }
 
 function resetAllInputData() {
@@ -348,6 +447,25 @@ function showPermissionLists() {
 	dojo.widget.byId("groupDataObjects").onResized();
 	dojo.widget.byId("groupDataAddresses").onResized();
 }
+
+function getGroupDetails(groupName) {
+
+	var deferred = new dojo.Deferred();
+
+	SecurityService.getGroupDetails(groupName, {
+		callback: function(groupDetails) {
+			deferred.callback(groupDetails);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);
+		}
+	});
+
+	return deferred;
+}
+
 
 </script>
 </head>
