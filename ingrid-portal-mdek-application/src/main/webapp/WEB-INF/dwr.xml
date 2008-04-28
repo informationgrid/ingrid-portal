@@ -78,6 +78,8 @@
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.Type"/>
 
+		<!-- both converters are needed to make dwr happy --> 
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity.IdcPermission"/>
 	</allow>
 </dwr>

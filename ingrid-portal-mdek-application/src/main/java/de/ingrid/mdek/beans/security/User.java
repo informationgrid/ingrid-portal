@@ -1,7 +1,9 @@
 package de.ingrid.mdek.beans.security;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.persistence.db.model.UserData;
 
@@ -15,7 +17,8 @@ public class User {
 	private String roleName;
 	private Long parentUserId;
 	private Boolean hasChildren;
-
+	private ArrayList<IdcPermission> userPermissions;
+	
 	private MdekAddressBean address;
 	private UserData userData;
 
@@ -96,5 +99,11 @@ public class User {
 	}
 	public void setUserData(UserData userData) {
 		this.userData = userData;
+	}
+	public ArrayList<IdcPermission> getUserPermissions() {
+		return userPermissions;
+	}
+	public void setUserPermissions(ArrayList<IdcPermission> userPermissions) {
+		this.userPermissions = userPermissions;
 	}
 }

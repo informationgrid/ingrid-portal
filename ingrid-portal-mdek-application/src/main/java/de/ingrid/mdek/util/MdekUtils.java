@@ -305,7 +305,19 @@ public class MdekUtils {
 			user.setRoleName(idcRole.toString());
 			user.setParentUserId((Long) result.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
 			user.setHasChildren((Boolean) result.get(MdekKeys.HAS_CHILD));
-			
+
+			// Get additional permissions
+			List<IngridDocument> userPermissions = (List<IngridDocument>) result.get(MdekKeysSecurity.IDC_USER_PERMISSIONS);
+			ArrayList<IdcPermission> userPermList = new ArrayList<IdcPermission>();
+			if (userPermissions != null) {
+				for (IngridDocument p : userPermissions) {
+					String permDbVal = (String) p.get(MdekKeysSecurity.IDC_PERMISSION);
+					IdcPermission userPermission = EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permDbVal);
+					userPermList.add(userPermission);
+				}
+			}
+			user.setUserPermissions(userPermList);
+
 			// Detailed info
 			user.setCreationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			user.setModificationTime(convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
@@ -336,6 +348,18 @@ public class MdekUtils {
 				Integer role = (Integer) user.get(MdekKeysSecurity.IDC_ROLE);
 				IdcRole idcRole = EnumUtil.mapDatabaseToEnumConst(IdcRole.class, role);
 
+				// Get additional permissions
+				List<IngridDocument> userPermissions = (List<IngridDocument>) user.get(MdekKeysSecurity.IDC_USER_PERMISSIONS);
+				ArrayList<IdcPermission> userPermList = new ArrayList<IdcPermission>();
+				if (userPermissions != null) {
+					for (IngridDocument p : userPermissions) {
+						String permDbVal = (String) p.get(MdekKeysSecurity.IDC_PERMISSION);
+						IdcPermission userPermission = EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permDbVal);
+						userPermList.add(userPermission);
+					}
+				}
+				u.setUserPermissions(userPermList);
+
 				u.setRole(role);
 				u.setRoleName(idcRole.toString());
 				
@@ -362,6 +386,18 @@ public class MdekUtils {
 		result.put(MdekKeysSecurity.IDC_GROUP_ID, user.getGroupId());
 		result.put(MdekKeysSecurity.IDC_ROLE, user.getRole());
 		result.put(MdekKeysSecurity.PARENT_IDC_USER_ID, user.getParentUserId());
+
+		// Set additional permissions
+		List<IdcPermission> userPermList = user.getUserPermissions();
+		if (userPermList != null) {
+			List<IngridDocument> resultPermissionList = new ArrayList<IngridDocument>();
+			for (IdcPermission perm : userPermList) {
+				IngridDocument resultPerm = new IngridDocument();
+				resultPerm.put(MdekKeysSecurity.IDC_PERMISSION, perm.getDbValue());
+				resultPermissionList.add(resultPerm);
+			}
+			result.put(MdekKeysSecurity.IDC_USER_PERMISSIONS, resultPermissionList);
+		}
 
 		return result;
 	}

@@ -9,8 +9,7 @@ var currentSelectedAddressId = null;
 var currentSelectedUser = null;
 var catAdminUserData = null;
 
-var requiredElements = [/*["operationsName", "operationsNameLabel"],*/	// This element is added when the operation input is initialized
-					    ["userDataAddressLink", "userDataAddressLinkLabel"],
+var requiredElements = [["userDataAddressLink", "userDataAddressLinkLabel"],
 					    ["userDataGroup", "userDataGroupLabel"]];
 
 
@@ -21,32 +20,42 @@ _container_.addOnLoad(function() {
 	dojo.widget.byId("userDataAddressLink").isValid = function() { return !this.isEmpty(); };
 });
 
-function setTreeRoot(catAdmin, catAdminData, catAdminAddress) {
+function setTreeRoot(catAdmin) {
 /*
 	dojo.debugShallow(catAdmin);
-	dojo.debugShallow(catAdminData);
-	dojo.debugShallow(catAdminAddress);
+	dojo.debugShallow(catAdmin.userData);
+	dojo.debugShallow(catAdmin.address);
 */
 	// Add the data to the tree
-	var title = UtilAddress.createAddressTitle(catAdminAddress);
+	var title = UtilAddress.createAddressTitle(catAdmin.address);
 	var role = catAdmin.role;
 	var roleName = catAdmin.roleName;
 	var groupId = catAdmin.groupId;
-	var portalLogin = catAdminData.portalLogin;
+	var portalLogin = catAdmin.userData.portalLogin;
 	var hasChildren = catAdmin.hasChildren;
-	// var canCreateRootNodes = user.canCreateRootNodes();
+	var canCreateRootNodes = false;
+
+	if (catAdmin.userPermissions != null) {
+		dojo.lang.forEach(catAdmin.userPermissions, function(p) {
+			if (p == ("CREATE_ROOT")) {
+				canCreateRootNodes = true;
+			}
+		});
+	}
 
 	var rootNode = {
 		userId: catAdmin.id,
-		addressUuid: catAdminAddress.uuid,
+		addressUuid: catAdmin.addressUuid,
 		title: title,
 		role: role,
 		roleName: roleName,
 		groupId: groupId,
 		portalLogin: portalLogin,
 		nodeDocType: getDocTypeForRole(role),
-		isFolder: hasChildren
+		isFolder: hasChildren,
+		createRoot: canCreateRootNodes
 	}
+
 	dojo.widget.byId("treeUser").setChildren([rootNode]);
 }
 
@@ -56,19 +65,7 @@ function initializeUserTree() {
 
 	var def = getCatalogAdmin();
 	def.addCallback(function(catAdmin) {
-		var d1 = getAddressData(catAdmin.addressUuid);
-		var d2 = getUserDataForAddress(catAdmin.addressUuid);
-
-		var l1 = new dojo.DeferredList([d1, d2], false, false, true);
-		l1.addCallback(function (resultList) {
-			var addrData = resultList[0][1];
-			var userData = resultList[1][1];
-
-			// Cache the cat admin user data
-			catAdminUserData = userData;
-
-			setTreeRoot(catAdmin, userData, addrData);
-		});
+		setTreeRoot(catAdmin);
 	});
 
 	var treeController = dojo.widget.byId("treeControllerUser");
@@ -229,6 +226,7 @@ scriptScope.saveUser = function() {
 		user.roleName = selectedUser.roleName;
 		user.role = selectedUser.role;
 		user.parentUserId = selectedUser.parentUserId;
+		user.userPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
 		dojo.debugShallow(user);
 
@@ -256,6 +254,7 @@ scriptScope.saveUser = function() {
 		user.groupId = dojo.widget.byId("userDataGroup").getValue();
 		user.role = currentSelectedUser.role;
 		user.parentUserId = currentSelectedUser.parentUserId;
+		user.userPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
 		SecurityService.storeUser(user, login, true, {
 			callback: function(newUser) {
@@ -282,7 +281,13 @@ function updateTreeNode(user, newUser) {
 		user.setTitle(UtilAddress.createAddressTitle(newUser.address));
 		user.addressUuid = newUser.addressUuid;
 		user.groupId = newUser.groupId;
-	//			title: UtilAddress.createAddressTitle(user.address),
+		if (newUser.userPermissions != null) {
+			dojo.lang.forEach(newUser.userPermissions, function(p) {
+				if (p == ("CREATE_ROOT")) {
+					user.createRoot = true;
+				}
+			});
+		}
 	}
 
 	updateInputElements(user);
@@ -357,16 +362,22 @@ function treeNodeSelected(treeNode) {
 // Updates the input elements with the data from 'treeNode'
 function updateInputElements(treeNode) {
 	if (treeNode.role == 1) {
+		// Standards for catAdmin
 		dojo.widget.byId("userDataGroup").disable();
+		dojo.widget.byId("userDataCreate").setValue(true);
+		dojo.widget.byId("userDataCreate").disable();
+
 	} else {
 		dojo.widget.byId("userDataGroup").enable();	
+		dojo.widget.byId("userDataCreate").enable();
+		dojo.widget.byId("userDataCreate").setValue(false);
 	}
 
 	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
 	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
 	dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
 	dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
-	dojo.widget.byId("userDataCreate").checked = treeNode.canCreateRootNodes;
+	dojo.widget.byId("userDataCreate").setValue(treeNode.createRoot);
 	currentSelectedAddressId = treeNode.addressUuid;
 	currentSelectedUser = treeNode;
 }
@@ -473,6 +484,15 @@ function convertUserListToTreeNodes(userList) {
 }
 
 function convertUserToTreeNode(user) {
+	var canCreateRootNodes = false;
+	if (user.userPermissions != null) {
+		dojo.lang.forEach(user.userPermissions, function(p) {
+			if (p == ("CREATE_ROOT")) {
+				canCreateRootNodes = true;
+			}
+		});
+	}
+
 	return {
 		userId: user.id,
 		parentUserId: user.parentUserId,
@@ -484,7 +504,8 @@ function convertUserToTreeNode(user) {
 		portalLogin: user.userData.portalLogin,
 		nodeDocType: getDocTypeForRole(user.role),
 		isFolder: user.hasChildren,
-		id: "TreeNode_"+user.id
+		id: "TreeNode_"+user.id,
+		createRoot: canCreateRootNodes
 	}
 }
 
@@ -497,6 +518,7 @@ function createNewUserNode(parentNode, login) {
 		role: parentNode.role + 1,
 		roleName: getRoleName(parentNode.role + 1),
 //		groupId: parentNode.groupId,
+		createRoot: false,
 		portalLogin: login,
 		nodeDocType: getDocTypeForRole(parentNode.role + 1),
 		isFolder: false

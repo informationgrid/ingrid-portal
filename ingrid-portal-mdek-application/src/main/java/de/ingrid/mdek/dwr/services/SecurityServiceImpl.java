@@ -181,7 +181,10 @@ public class SecurityServiceImpl {
 
 	public User getCatalogAdmin() {
 		try {
-			return securityRequestHandler.getCatalogAdmin();
+			User u = securityRequestHandler.getCatalogAdmin();
+			u.setUserData(MdekSecurityUtils.getUserDataForAddress(u.getAddressUuid()));
+			return u;
+
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while fetching cat admin.", e);
