@@ -28,12 +28,9 @@ import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.handler.SecurityRequestHandler;
 import de.ingrid.mdek.job.MdekException;
-import de.ingrid.mdek.persistence.db.model.HelpMessage;
 import de.ingrid.mdek.persistence.db.model.UserData;
-import de.ingrid.mdek.services.persistence.db.IDaoFactory;
-import de.ingrid.mdek.services.persistence.db.IEntity;
-import de.ingrid.mdek.services.persistence.db.IGenericDao;
 import de.ingrid.mdek.util.MdekErrorUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.portal.security.util.SecurityHelper;
 
 public class SecurityServiceImpl {
@@ -42,9 +39,8 @@ public class SecurityServiceImpl {
 
 	// Injected by Spring
 	private SecurityRequestHandler securityRequestHandler;
-	private IDaoFactory daoFactory;
 
-
+	
 	public List<Group> getGroups() {
 		try {
 			return securityRequestHandler.getGroups();
@@ -95,13 +91,17 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	public UserData getUserDataForAddress(String addressUuid) {
+		return MdekSecurityUtils.getUserDataForAddress(addressUuid);
+	} 
+
 	public List<User> getSubUsers(Long userId) {
 		try {
 			List<User> users = securityRequestHandler.getSubUsers(userId);		
 			List<User> resultList = new ArrayList<User>();
 			for (User user : users) {
 				User detailedUser = getUserDetails(user.getAddressUuid());
-				detailedUser.setUserData(getUserDataForAddress(user.getAddressUuid()));
+				detailedUser.setUserData(MdekSecurityUtils.getUserDataForAddress(user.getAddressUuid()));
 				resultList.add(detailedUser);
 			}
 			return resultList;
@@ -111,6 +111,13 @@ public class SecurityServiceImpl {
 			log.debug("MdekException while fetching subusers.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
+	}
+
+	public User getCurrentUser() {
+		UserData curUserData = MdekSecurityUtils.getCurrentPortalUserData();
+		User curUser = getUserDetails(curUserData.getAddressUuid());
+		curUser.setUserData(curUserData);
+		return curUser;
 	}
 
 	public User getUserDetails(String userId) {
@@ -129,11 +136,9 @@ public class SecurityServiceImpl {
 			UserData userData = new UserData();
 			userData.setPortalLogin(portalLogin);
 			userData.setAddressUuid(user.getAddressUuid());
-//			userData.setPlugId(getCurrentPortalUserData().getPlugId());
-// TODO Fix! Changed so we don't have to log in
-			userData.setPlugId(getCurrentUser().getUserData().getPlugId());
+			userData.setPlugId(MdekSecurityUtils.getCurrentPortalUserData().getPlugId());
 
-			createUserData(userData);
+			MdekSecurityUtils.createUserData(userData);
 			u.setUserData(userData);
 			return u;
 
@@ -150,11 +155,9 @@ public class SecurityServiceImpl {
 			UserData userData = new UserData();
 			userData.setPortalLogin(portalLogin);
 			userData.setAddressUuid(user.getAddressUuid());
-//			userData.setPlugId(getCurrentPortalUserData().getPlugId());
-// TODO Fix! Changed so we don't have to log in
-			userData.setPlugId(getCurrentUser().getUserData().getPlugId());
+			userData.setPlugId(MdekSecurityUtils.getCurrentPortalUserData().getPlugId());
 
-			storeUserData(userData);
+			MdekSecurityUtils.storeUserData(userData);
 			return u;
 
 		} catch (MdekException e) {
@@ -167,7 +170,7 @@ public class SecurityServiceImpl {
 	public void deleteUser(Long userId, String addressUuid) {
 		try {
 			securityRequestHandler.deleteUser(userId);
-			deleteUserDataForAddress(addressUuid);
+			MdekSecurityUtils.deleteUserDataForAddress(addressUuid);
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
@@ -185,95 +188,7 @@ public class SecurityServiceImpl {
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
-
-	public UserData getUserData(String portalLogin) {
-		// Load user data directly from the db via hibernate
-		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
-		UserData sampleUser = new UserData();
-		sampleUser.setPortalLogin(portalLogin);
-
-		dao.beginTransaction();
-		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
-		dao.commitTransaction();
-
-		return userData;
-	}
-
-	public UserData getUserDataForAddress(String addressUuid) {
-		// Load user data directly from the db via hibernate
-		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
-		UserData sampleUser = new UserData();
-		sampleUser.setAddressUuid(addressUuid);
-
-		dao.beginTransaction();
-		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
-		dao.commitTransaction();
-
-		return userData;
-	}
-
-	public UserData createUserData(UserData userData) {
-		// Write the data directly to the db via hibernate
-		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
-
-		dao.beginTransaction();
-		dao.makePersistent(userData);
-		dao.commitTransaction();
-
-		return userData;
-	}
-
-	public UserData storeUserData(UserData userData) {
-		// Update the data in the db via hibernate
-		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
-
-		UserData sampleUser = new UserData();
-		sampleUser.setPortalLogin(userData.getPortalLogin());
-
-		dao.beginTransaction();
-		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
-		u.setAddressUuid(userData.getAddressUuid());
-		dao.makePersistent(u);
-		dao.commitTransaction();
-
-		return userData;
-	}
-
 	
-	public void deleteUserDataForAddress(String addressUuid) {
-		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
-		UserData sampleUser = new UserData();
-		sampleUser.setAddressUuid(addressUuid);
-
-		dao.beginTransaction();
-		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
-		dao.makeTransient(userData);
-		dao.commitTransaction();
-	}
-	
-	public UserData getCurrentPortalUserData() {
-		WebContext wctx = WebContextFactory.get();
-		HttpServletRequest req = wctx.getHttpServletRequest();
-
-		log.debug("Remote user: "+req.getRemoteUser());
-		if (req.getUserPrincipal() != null) {
-			log.debug("User Principal: "+req.getUserPrincipal().getName());
-			return getUserData(req.getUserPrincipal().getName());
-		} else {
-			throw new RuntimeException("User not logged in.");
-		}
-	}
-
-	public User getCurrentUser() {
-		// TODO FIXME! The current user is set to admin for testing purpose only.
-//		UserData curUserData = getCurrentPortalUserData();
-//		UserData curUserData = getUserDataForAddress("6207DE65-025E-4418-9737-A5BEC95BE08C");
-		UserData curUserData = getUserData("admin");
-		User curUser = getUserDetails(curUserData.getAddressUuid());
-		curUser.setUserData(curUserData);
-		return curUser;
-	}
-
 	
 	public List<String> getPortalUsers() {
 		ArrayList<String> userList = new ArrayList<String>();
@@ -398,13 +313,4 @@ public class SecurityServiceImpl {
         }
         return principal;
     }
-
-	public IDaoFactory getDaoFactory() {
-		return daoFactory;
-	}
-
-	public void setDaoFactory(IDaoFactory daoFactory) {
-		this.daoFactory = daoFactory;
-	}
-
 }

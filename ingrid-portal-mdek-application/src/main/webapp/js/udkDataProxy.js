@@ -1373,10 +1373,18 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Time --
   dojo.widget.byId("timeRefType").setValue(nodeData.timeRefType);
-  if (nodeData.timeRefDate1) { dojo.widget.byId("timeRefDate1").setValue(nodeData.timeRefDate1); }
-  else { dojo.widget.byId("timeRefDate1").clearValue(); }
-  if (nodeData.timeRefDate2) { dojo.widget.byId("timeRefDate2").setValue(nodeData.timeRefDate2); }
-  else { dojo.widget.byId("timeRefDate2").clearValue(); }
+  if (nodeData.timeRefType == "bis") {
+	if (nodeData.timeRefDate2) { dojo.widget.byId("timeRefDate1").setValue(nodeData.timeRefDate2); }
+	else { dojo.widget.byId("timeRefDate1").clearValue(); }
+	dojo.widget.byId("timeRefDate2").clearValue();  		
+
+  } else {
+	if (nodeData.timeRefDate1) { dojo.widget.byId("timeRefDate1").setValue(nodeData.timeRefDate1); }
+	else { dojo.widget.byId("timeRefDate1").clearValue(); }
+	if (nodeData.timeRefDate2) { dojo.widget.byId("timeRefDate2").setValue(nodeData.timeRefDate2); }
+	else { dojo.widget.byId("timeRefDate2").clearValue(); }  	
+  }
+
   dojo.widget.byId("timeRefStatus").setValue(nodeData.timeRefStatus);
   dojo.widget.byId("timeRefPeriodicity").setValue(nodeData.timeRefPeriodicity);
   dojo.widget.byId("timeRefIntervalNum").setValue(nodeData.timeRefIntervalNum);
@@ -1673,13 +1681,23 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Time --
   nodeData.timeRefType = dojo.widget.byId("timeRefType").getValue();
-
-  if (dojo.widget.byId("timeRefType").getValue() != "") {
-	  if (dojo.widget.byId("timeRefDate1").getValue() != "") {
-		  nodeData.timeRefDate1 = dojo.widget.byId("timeRefDate1").getDate();
+  var timeFrom = dojo.widget.byId("timeRefDate1").getValue();
+  var timeTo = dojo.widget.byId("timeRefDate2").getValue();
+  if (nodeData.timeRefType == "bis") {
+	  if (timeFrom != "") {
+		  nodeData.timeRefDate2 = timeFrom;
 	  }
-	  if (dojo.widget.byId("timeRefDate2").getValue() != "") {
-		  nodeData.timeRefDate2 = dojo.widget.byId("timeRefDate2").getDate();
+  } else if (timeRefType == "am") {
+	  if (timeFrom != "") {
+		  nodeData.timeRefDate1 = timeFrom;
+		  nodeData.timeRefDate2 = timeFrom;
+	  }
+  } else if (timeRefType != "") {
+	  if (timeFrom != "") {
+		  nodeData.timeRefDate1 = timeFrom;
+	  }
+	  if (timeTo != "") {
+		  nodeData.timeRefDate2 = timeTo;
 	  }
   }
 

@@ -111,6 +111,7 @@
 	"dialog.undefinedError":"An Error occured.",
 	"dialog.commentTitle":"Comments for '%{0}'",
 	"dialog.hqlQueryInvalidError":"The entered HQL query is invalid. Please check your input.",
+	"dialog.noPermissionError":"You don't have permission to execute this operation.",
 	"dialog.createAddressTitle":"Create address",
 	"dialog.createAddressMessage":"Please chose the address type of the newly created address:",
 

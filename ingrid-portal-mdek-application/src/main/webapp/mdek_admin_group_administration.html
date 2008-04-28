@@ -95,7 +95,7 @@ scriptScope.saveGroup = function() {
 
 		SecurityService.storeGroup(group, true, {
 			callback: function(data) {
-				groupStore.update(group, "name", data.name);
+				groupStore.update(selectedGroups[0], "name", data.name);
 			},
 			errorHandler: function(errMsg, err) {
 				dojo.debug(errMsg);

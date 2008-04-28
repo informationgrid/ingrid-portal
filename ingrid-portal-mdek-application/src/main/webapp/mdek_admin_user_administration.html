@@ -166,6 +166,7 @@ scriptScope.importPortalUser = function() {
 	if (currentUser.role == 2) {		
 		if (selectedUser.userId != currentUser.id) {
 			dojo.debug("Can't create users here. Select the correct mdAdmin.");
+			return;
 		}
 	}
 
@@ -355,6 +356,12 @@ function treeNodeSelected(treeNode) {
 
 // Updates the input elements with the data from 'treeNode'
 function updateInputElements(treeNode) {
+	if (treeNode.role == 1) {
+		dojo.widget.byId("userDataGroup").disable();
+	} else {
+		dojo.widget.byId("userDataGroup").enable();	
+	}
+
 	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
 	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
 	dojo.widget.byId("userDataRole").setValue(treeNode.roleName);

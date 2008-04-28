@@ -1,13 +1,12 @@
 package de.ingrid.mdek.dwr.util;
 
-import javax.servlet.http.HttpSession;
-
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 
 public class HTTPSessionHelper {
 	
 	public static String getCurrentSessionId() {
+		return MdekSecurityUtils.getCurrentPortalUserData().getAddressUuid();
+	/*
 		try {
 			WebContext wctx = WebContextFactory.get();
 			HttpSession session = wctx.getSession();
@@ -15,5 +14,6 @@ public class HTTPSessionHelper {
 		} catch (Exception e) {
 			return "";
 		}
+	*/
 	}
 }

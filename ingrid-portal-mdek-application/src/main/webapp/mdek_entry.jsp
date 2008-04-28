@@ -1329,6 +1329,7 @@ function hideSplash(){
                 		  	<select dojoType="ingrid:Select" autoComplete="false" style="width:61px;" id="timeRefType">
                 		  	<option value="am">am</option>
                 		  	<option value="seit">seit</option>
+                		  	<option value="bis">bis</option>
                 		  	<option value="von">von - bis</option>
                 		  	</select>
                 		  </span>

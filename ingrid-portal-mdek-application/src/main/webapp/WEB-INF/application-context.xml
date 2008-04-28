@@ -67,6 +67,12 @@
 			<ref local="mdekDataMapper" />
 		</property>
  	</bean>
+	<bean id="mdekSecurityUtils"
+		class="de.ingrid.mdek.util.MdekSecurityUtils">
+		<property name="daoFactory">
+			<ref bean="daoFactory" />
+		</property>
+ 	</bean>
 
 <!-- Services -->
 	<bean id="addressService"
@@ -103,9 +109,6 @@
 		class="de.ingrid.mdek.dwr.services.SecurityServiceImpl">
 		<property name="securityRequestHandler">
 			<ref local="securityRequestHandler" />
-		</property>
-		<property name="daoFactory">
-			<ref bean="daoFactory" />
 		</property>
 	</bean>
 	<bean id="treeService"

@@ -60,6 +60,7 @@
 	"dialog.commentTitle":"Kommentare zu '%{0}'",
 	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
 	"dialog.hqlQueryInvalidError":"Der eingegebene HQL Suchstring ist ung&uuml;ltig. Bitte &uuml;berpr&uuml;fen sie die Eingabe.",
+	"dialog.noPermissionError":"Sie verf&uuml;gen nicht &uuml;ber die Berechtigung diese Aktion auszuf&uuml;hren.",
 	"dialog.createAddressTitle":"Adresse anlegen",
 	"dialog.createAddressMessage":"Bitte w&auml;hlen sie den Adresstyp der neu anzulegenden Adresse aus:",
 

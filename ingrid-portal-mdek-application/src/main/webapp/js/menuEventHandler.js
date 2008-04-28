@@ -776,6 +776,9 @@ function displayErrorMessage(err) {
 		} else if (err.message.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
 	    	handleEntityReferencedException(err);
 
+		} else if (err.message.indexOf("USER_HAS_NO_PERMISSION") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.noPermissionError"), dialog.WARNING);
+
 		} else if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
 		

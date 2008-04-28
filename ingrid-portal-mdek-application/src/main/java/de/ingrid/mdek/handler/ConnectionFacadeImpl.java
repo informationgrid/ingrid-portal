@@ -17,6 +17,7 @@ import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerObject;
 import de.ingrid.mdek.caller.MdekCallerQuery;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 
 public class ConnectionFacadeImpl implements ConnectionFacade {
 
@@ -62,12 +63,15 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 
 
 	public String getCurrentPlugId() {
+/*
 		List<String> iPlugs = mdekCaller.getRegisteredIPlugs();
 		if (iPlugs.size() > 0) {
 			return iPlugs.get(0);
 		} else {
 			return null;
 		}
+*/
+		return MdekSecurityUtils.getCurrentPortalUserData().getPlugId();
 	}
 
 	public IMdekCaller getMdekCaller() {
