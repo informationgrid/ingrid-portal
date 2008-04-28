@@ -326,6 +326,7 @@ public class MdekMapper implements DataMapperInterface {
 			adr.put(MdekKeys.WORK_STATE, "B");
 		}
 		mdekAddress.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
+		mdekAddress.setHasChildren((Boolean) adr.get(MdekKeys.HAS_CHILD));		
 		mdekAddress.setCreationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_CREATION)));
 		mdekAddress.setModificationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 		

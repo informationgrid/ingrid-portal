@@ -15,6 +15,7 @@ public class MdekAddressBean {
 	public String information;
 	public String nodeAppType;
 	public String nodeDocType;
+	public Boolean hasChildren;
 	
 	public String objectOwner;
 	public String creationTime;
@@ -40,7 +41,7 @@ public class MdekAddressBean {
 	public Integer typeOfRelation;
 	public String nameOfRelation;
 	public Integer refOfRelation;
-
+	
 	// Comments
 	public ArrayList<CommentBean> commentTable;
 	
@@ -344,5 +345,13 @@ public class MdekAddressBean {
 	public void setLinksFromPublishedObjectTable(
 			ArrayList<MdekDataBean> linksFromPublishedObjectTable) {
 		this.linksFromPublishedObjectTable = linksFromPublishedObjectTable;
+	}
+
+	public Boolean getHasChildren() {
+		return hasChildren;
+	}
+
+	public void setHasChildren(Boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 }

@@ -4,15 +4,28 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+var currentUserGroupDetails = null;
 var curSelectedGroupDetails = null;
 
 
 _container_.addOnLoad(function() {
-	initObjectTree();
-	initAddressTree();
-	initGroupList();
-	resetAllInputData();
-	hidePermissionLists();
+	if (currentUser.role == 1) {
+		var def = new dojo.Deferred();
+		def.callback(null);
+
+	} else {
+		var def = getGroupDetailsById(currentUser.groupId);
+	}
+
+	def.addCallback(function(groupDetails) {
+		currentUserGroupDetails = groupDetails;
+
+		initObjectTree();
+		initAddressTree();
+		initGroupList();
+		resetAllInputData();
+		hidePermissionLists();	
+	});
 });
 
 
@@ -213,12 +226,25 @@ function initObjectTree() {
 	var tree = dojo.widget.byId("treeObjects");
 	var treeController = dojo.widget.byId("treeControllerObjects");
 
-	// initially load data (first hierarchy level) from server 
-	TreeService.getSubTree(null, null, 1, function (str) {
-		tree.setChildren([str[0]]);
-	});
+	// initially load data (first hierarchy level) from server if the user is catAdmin
+	if (currentUser.role == 1) {
+		// catAdmin. Display all nodes starting from the rootNode
+		TreeService.getSubTree(null, null, 1, function (str) {
+			tree.setChildren([str[0]]);
+		});
+	
+	} else {
+		// mdAdmin. Only display nodes from user's group
+		var treeNodes = [];
+		dojo.lang.forEach(currentUserGroupDetails.objectPermissions, function(p){
+			treeNodes.push(convertObjectPermissionToTreeNode(p));
+		});
 
-  treeController.loadRemote = function(node, sync) {
+		tree.setChildren(treeNodes);
+	}
+	
+	
+	treeController.loadRemote = function(node, sync) {
 		var _this = this;
 
 		var params = {
@@ -249,12 +275,27 @@ function initAddressTree() {
 	var tree = dojo.widget.byId("treeAddresses");
 	var treeController = dojo.widget.byId("treeControllerAddresses");
 
-	// initially load data (first hierarchy level) from server 
-	TreeService.getSubTree(null, null, 1, function (str) {
-		tree.setChildren([str[1]]);
-	});
+	// initially load data (first hierarchy level) from server if the user is catAdmin
+	if (currentUser.role == 1) {
+		// catAdmin. Display all nodes starting from the rootNode
+		TreeService.getSubTree(null, null, 1, function (str) {
+			tree.setChildren([str[1]]);
+		});
+	
+	} else {
+		// mdAdmin. Only display nodes from user's group
+		var treeNodes = [];
+		dojo.lang.forEach(currentUserGroupDetails.addressPermissions, function(p){
+			treeNodes.push(convertAddressPermissionToTreeNode(p));
+		});
 
-  treeController.loadRemote = function(node, sync) {
+		tree.setChildren(treeNodes);
+	}
+
+
+
+
+	treeController.loadRemote = function(node, sync) {
 		var _this = this;
 
 		var params = {
@@ -382,6 +423,7 @@ function updateAllInputData(group) {
 	});
 }
 
+
 function setAddressPermissions(permissionList) {
 	var adrStore = dojo.widget.byId("groupDataRightsAddressesList").store;
 	adrStore.clearData();
@@ -405,13 +447,14 @@ function setAddressPermissions(permissionList) {
 	});
 }
 
+
 function setObjectPermissions(permissionList) {
 	var objStore = dojo.widget.byId("groupDataRightsObjectsList").store;
 	objStore.clearData();
 
 	dojo.lang.forEach(permissionList, function(p) {
 		var obj = {}
-		
+
 		obj.Id = UtilStore.getNewKey(objStore);
 		obj.title = p.object.title;
 		obj.uuid = p.uuid;
@@ -427,6 +470,7 @@ function setObjectPermissions(permissionList) {
 		objStore.addData(obj);
 	});
 }
+
 
 function resetAllInputData() {
 	dojo.widget.byId("groupDataName").setValue("");
@@ -466,6 +510,43 @@ function getGroupDetails(groupName) {
 	return deferred;
 }
 
+function getGroupDetailsById(groupId) {
+
+	var def = getAllGroups();
+
+	def.addCallback(function(groupList) {
+		for (var i = 0; i < groupList.length; ++i) {
+			if (groupList[i].id == groupId) {
+				return groupList[i].name;
+			}
+		}
+		return null;
+	});
+
+	return def.addCallback(getGroupDetails);
+}
+
+function convertObjectPermissionToTreeNode(p) {
+	return {
+		id: p.object.uuid,
+		title: p.object.title,
+		isFolder: p.object.hasChildren && p.permission == "WRITE_TREE",
+		nodeDocType: p.object.nodeDocType,
+		dojoType: "ingrid:TreeNode",
+		nodeAppType: "O"
+	}
+}
+
+function convertAddressPermissionToTreeNode(p) {
+	return {
+		id: p.address.uuid,
+		title: UtilAddress.createAddressTitle(p.address),
+		isFolder: p.address.hasChildren && p.permission == "WRITE_TREE",
+		nodeDocType: p.address.nodeDocType,
+		dojoType: "ingrid:TreeNode",
+		nodeAppType: "A"
+	}
+}
 
 </script>
 </head>
