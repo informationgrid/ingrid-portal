@@ -17,7 +17,6 @@ public class User {
 	private String roleName;
 	private Long parentUserId;
 	private Boolean hasChildren;
-	private ArrayList<IdcPermission> userPermissions;
 	
 	private MdekAddressBean address;
 	private UserData userData;
@@ -99,11 +98,5 @@ public class User {
 	}
 	public void setUserData(UserData userData) {
 		this.userData = userData;
-	}
-	public ArrayList<IdcPermission> getUserPermissions() {
-		return userPermissions;
-	}
-	public void setUserPermissions(ArrayList<IdcPermission> userPermissions) {
-		this.userPermissions = userPermissions;
 	}
 }

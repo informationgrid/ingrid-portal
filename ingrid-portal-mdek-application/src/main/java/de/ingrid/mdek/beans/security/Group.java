@@ -3,6 +3,8 @@ package de.ingrid.mdek.beans.security;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
+
 public class Group {
 
 	// General parameters
@@ -17,7 +19,9 @@ public class Group {
 	// Permissions
 	private ArrayList<Permission> objectPermissions;
 	private ArrayList<Permission> addressPermissions;
+	private ArrayList<IdcPermission> groupPermissions;
 
+	
 	public String getName() {
 		return name;
 	}
@@ -59,5 +63,11 @@ public class Group {
 	}
 	public void setAddressPermissions(ArrayList<Permission> addressPermissions) {
 		this.addressPermissions = addressPermissions;
+	}
+	public ArrayList<IdcPermission> getGroupPermissions() {
+		return groupPermissions;
+	}
+	public void setGroupPermissions(ArrayList<IdcPermission> groupPermissions) {
+		this.groupPermissions = groupPermissions;
 	}
 }

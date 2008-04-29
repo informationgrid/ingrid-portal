@@ -63,7 +63,6 @@ dojo.addOnLoad(function() {
 		errorHandler: function(errMsg, err) {
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
-			deferred.errback(err);			
 		}
 	});
 });

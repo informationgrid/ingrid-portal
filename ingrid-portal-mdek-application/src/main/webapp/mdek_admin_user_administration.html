@@ -33,15 +33,6 @@ function setTreeRoot(catAdmin) {
 	var groupId = catAdmin.groupId;
 	var portalLogin = catAdmin.userData.portalLogin;
 	var hasChildren = catAdmin.hasChildren;
-	var canCreateRootNodes = false;
-
-	if (catAdmin.userPermissions != null) {
-		dojo.lang.forEach(catAdmin.userPermissions, function(p) {
-			if (p == ("CREATE_ROOT")) {
-				canCreateRootNodes = true;
-			}
-		});
-	}
 
 	var rootNode = {
 		userId: catAdmin.id,
@@ -52,8 +43,7 @@ function setTreeRoot(catAdmin) {
 		groupId: groupId,
 		portalLogin: portalLogin,
 		nodeDocType: getDocTypeForRole(role),
-		isFolder: hasChildren,
-		createRoot: canCreateRootNodes
+		isFolder: hasChildren
 	}
 
 	dojo.widget.byId("treeUser").setChildren([rootNode]);
@@ -226,7 +216,6 @@ scriptScope.saveUser = function() {
 		user.roleName = selectedUser.roleName;
 		user.role = selectedUser.role;
 		user.parentUserId = selectedUser.parentUserId;
-		user.userPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
 		dojo.debugShallow(user);
 
@@ -254,7 +243,6 @@ scriptScope.saveUser = function() {
 		user.groupId = dojo.widget.byId("userDataGroup").getValue();
 		user.role = currentSelectedUser.role;
 		user.parentUserId = currentSelectedUser.parentUserId;
-		user.userPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
 		SecurityService.storeUser(user, login, true, {
 			callback: function(newUser) {
@@ -364,20 +352,15 @@ function updateInputElements(treeNode) {
 	if (treeNode.role == 1) {
 		// Standards for catAdmin
 		dojo.widget.byId("userDataGroup").disable();
-		dojo.widget.byId("userDataCreate").setValue(true);
-		dojo.widget.byId("userDataCreate").disable();
 
 	} else {
 		dojo.widget.byId("userDataGroup").enable();	
-		dojo.widget.byId("userDataCreate").enable();
-		dojo.widget.byId("userDataCreate").setValue(false);
 	}
 
 	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
 	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
 	dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
 	dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
-	dojo.widget.byId("userDataCreate").setValue(treeNode.createRoot);
 	currentSelectedAddressId = treeNode.addressUuid;
 	currentSelectedUser = treeNode;
 }
@@ -388,7 +371,6 @@ function resetInputFields() {
 	dojo.widget.byId("userDataAddressLink").setValue("");
 	dojo.widget.byId("userDataRole").setValue("");
 	dojo.widget.byId("userDataGroup").setValue("");
-	dojo.widget.byId("userDataCreate").checked = false;	
 	currentSelectedAddressId = null;
 	currentSelectedUser = null;
 }
@@ -484,15 +466,6 @@ function convertUserListToTreeNodes(userList) {
 }
 
 function convertUserToTreeNode(user) {
-	var canCreateRootNodes = false;
-	if (user.userPermissions != null) {
-		dojo.lang.forEach(user.userPermissions, function(p) {
-			if (p == ("CREATE_ROOT")) {
-				canCreateRootNodes = true;
-			}
-		});
-	}
-
 	return {
 		userId: user.id,
 		parentUserId: user.parentUserId,
@@ -504,8 +477,7 @@ function convertUserToTreeNode(user) {
 		portalLogin: user.userData.portalLogin,
 		nodeDocType: getDocTypeForRole(user.role),
 		isFolder: user.hasChildren,
-		id: "TreeNode_"+user.id,
-		createRoot: canCreateRootNodes
+		id: "TreeNode_"+user.id
 	}
 }
 
@@ -629,10 +601,6 @@ function getDocTypeForRole(roleId) {
 					
 					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe*</label></span>
 					<span class="input spaceBelow"><div dojoType="ingrid:Select" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
-					<div class="checkboxContainer noSpaceBelow">
-						<span class="input"><input type="checkbox" name="userDataCreate" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
-						<span class="input"><input type="checkbox" name="userDataQS" id="userDataQS" disabled="true" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
-			        </div>
 			        <div class="fill"></div>
 				</div>
 <!-- 

@@ -105,6 +105,7 @@ scriptScope.saveGroup = function() {
 //		var group = selectedGroups[0];
 		var group = curSelectedGroupDetails;
 		group.name = groupName;
+		group.groupPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
 		SecurityService.storeGroup(group, true, {
 			callback: function(data) {
@@ -420,6 +421,7 @@ function updateAllInputData(group) {
 
 		setAddressPermissions(groupDetails.addressPermissions);
 		setObjectPermissions(groupDetails.objectPermissions);
+		setGroupPermissions(groupDetails.groupPermissions);
 	});
 }
 
@@ -471,20 +473,36 @@ function setObjectPermissions(permissionList) {
 	});
 }
 
+function setGroupPermissions(permissionList) {
+	var canCreateRoot = false;	
+	dojo.lang.forEach(permissionList, function(idcPermission){
+		if (idcPermission == "CREATE_ROOT") {
+			canCreateRoot = true;
+		}
+	});
+
+	dojo.widget.byId("userDataCreate").setValue(canCreateRoot);
+}
+
 
 function resetAllInputData() {
 	dojo.widget.byId("groupDataName").setValue("");
 
 	dojo.widget.byId("groupDataRightsObjectsList").store.clearData();
 	dojo.widget.byId("groupDataRightsAddressesList").store.clearData();
+
+	dojo.widget.byId("userDataCreate").setValue(false);
+	dojo.widget.byId("userDataQS").setValue(false);
 }
 
 function hidePermissionLists() {
+	dojo.html.hide(dojo.byId("permissionCheckboxContainer"));
 	dojo.html.hide(dojo.byId("permissionListObjects"));
 	dojo.html.hide(dojo.byId("permissionListAddresses"));
 }
 
 function showPermissionLists() {
+	dojo.html.show(dojo.byId("permissionCheckboxContainer"));
 	dojo.html.show(dojo.byId("permissionListObjects"));
 	dojo.html.show(dojo.byId("permissionListAddresses"));
 
@@ -606,6 +624,10 @@ function convertAddressPermissionToTreeNode(p) {
 						</span>
 					</span>
 				</div>
+				<div id="permissionCheckboxContainer" class="inputContainer grey field checkboxContainer" style="display:none;">
+					<span class="input"><input type="checkbox" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
+					<span class="input"><input type="checkbox" id="userDataQS" disabled="true" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+		        </div>
 			</div>
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
 	
