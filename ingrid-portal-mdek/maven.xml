@@ -1,4 +1,4 @@
-<project default="java:jar"
+<project default="war:install"
          xmlns:j="jelly:core" 
          xmlns:define="jelly:define">
 
