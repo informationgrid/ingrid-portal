@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+		<property name="connection.datasource">java:/comp/env/jdbc/mdek</property> 
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+<!--
+        <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+        <property name="cache.use_query_cache">true</property>
+-->        
+
+        <!-- SQL dialect -->
+<!--    <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property> -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">false</property>
+
+        <mapping jar="ingrid-portal-mdek-application-1.0-SNAPSHOT.jar" resource="de/ingrid/mdek/persistence/db/model/HelpMessage.hbm.xml"/>
+        <mapping jar="ingrid-portal-mdek-application-1.0-SNAPSHOT.jar" resource="de/ingrid/mdek/persistence/db/model/UserData.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
