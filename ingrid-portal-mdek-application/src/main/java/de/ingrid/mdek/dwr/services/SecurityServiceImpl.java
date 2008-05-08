@@ -20,6 +20,7 @@ import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
+import org.apache.jetspeed.security.SecurityException;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
@@ -140,12 +141,19 @@ public class SecurityServiceImpl {
 
 			MdekSecurityUtils.createUserData(userData);
 			u.setUserData(userData);
+
+			// Add the proper role to the user
+			addRoleToUser(portalLogin, "mdek");
+
 			return u;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while creating user.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (SecurityException e) {
+			log.debug("SecurityException while creating user.", e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -170,12 +178,16 @@ public class SecurityServiceImpl {
 	public void deleteUser(Long userId, String addressUuid) {
 		try {
 			securityRequestHandler.deleteUser(userId);
-			MdekSecurityUtils.deleteUserDataForAddress(addressUuid);
-
+			UserData user = MdekSecurityUtils.deleteUserDataForAddress(addressUuid);
+			removeRoleFromUser(user.getPortalLogin(), "mdek");
+			
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while deleting user.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (SecurityException e) {
+			log.debug("SecurityException while deleting user.", e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -203,12 +215,16 @@ public class SecurityServiceImpl {
 
 		try {
 			UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-			Iterator<org.apache.jetspeed.security.User> users = userManager.getUsers("");
+			RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+			Iterator<String> users = userManager.getUserNames("");
 
 			while (users.hasNext()) {
-				org.apache.jetspeed.security.User user = users.next();
-				Principal userPrincipal = getPrincipal(user.getSubject(), UserPrincipal.class);
-				userList.add(userPrincipal.getName());
+				String user = users.next();
+				if (!roleManager.isUserInRole(user, "admin-portal") &&
+					!roleManager.isUserInRole(user, "admin-catalog") &&
+					!roleManager.isUserInRole(user, "mdek")) {
+					userList.add(user);
+				}
 			}
 
 		} catch (Exception err) {
@@ -300,6 +316,21 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	private void addRoleToUser(String userName, String role) throws SecurityException {
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
+		RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+		roleManager.addRoleToUser(userName, role);
+	}
+
+	private void removeRoleFromUser(String userName, String role) throws SecurityException {
+		WebContext wctx = WebContextFactory.get();
+		HttpSession session = wctx.getSession();
+		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
+		RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+		roleManager.removeRoleFromUser(userName, role);		
+	}
 
     private static Principal getPrincipal(Subject subject, Class classe)
     {

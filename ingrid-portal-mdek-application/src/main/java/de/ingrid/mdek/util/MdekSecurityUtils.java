@@ -86,7 +86,7 @@ public class MdekSecurityUtils {
 	}
 
 	
-	public static void deleteUserDataForAddress(String addressUuid) {
+	public static UserData deleteUserDataForAddress(String addressUuid) {
 		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
 		UserData sampleUser = new UserData();
 		sampleUser.setAddressUuid(addressUuid);
@@ -95,6 +95,8 @@ public class MdekSecurityUtils {
 		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
 		dao.makeTransient(userData);
 		dao.commitTransaction();
+
+		return userData;
 	}
 
 

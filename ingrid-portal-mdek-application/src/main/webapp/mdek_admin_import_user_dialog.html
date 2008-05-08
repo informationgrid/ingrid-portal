@@ -18,10 +18,9 @@ _container_.addOnUnload(function() {
 });
 
 function initUserTable() {
-	var userList = ["admin","devmgr","guest"];
+//	var userList = ["admin","devmgr","guest"];
+//	dojo.widget.byId("userList").store.setData(UtilList.addTableIndices(UtilList.listToTableData(userList)));
 
-	dojo.widget.byId("userList").store.setData(UtilList.addTableIndices(UtilList.listToTableData(userList)));
-/*
 	SecurityService.getPortalUsers( {
 		callback: function(userList) {
 			dojo.debug(userList);
@@ -32,7 +31,6 @@ function initUserTable() {
 			dojo.debugShallow(err);
 		}
 	});
-*/
 }
 
 
