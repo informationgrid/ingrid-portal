@@ -51,7 +51,11 @@ public class MdekCatalogUtils {
 			resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
 			resultCat.setDateOfCreation(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			resultCat.setDateOfLastModification(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-			resultCat.setModUuid(result.getString(MdekKeys.MOD_UUID));
+//			resultCat.setModUuid(result.getString(MdekKeys.MOD_UUID));
+			IngridDocument modUserDoc = (IngridDocument) result.get(MdekKeys.MOD_USER);
+			if (modUserDoc != null)
+				resultCat.setModUuid((String) modUserDoc.get(MdekKeys.UUID));
+
 			return resultCat;
 		} else {
 			MdekErrorUtils.handleError(response);

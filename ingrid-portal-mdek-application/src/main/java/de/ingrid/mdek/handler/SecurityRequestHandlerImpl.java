@@ -48,8 +48,9 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 	}
 
 	public void deleteGroup(Long groupId) {
-		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, HTTPSessionHelper.getCurrentSessionId());
-
+		// TODO: Implement forceDelete param
+		boolean forceDelete = false;
+		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, forceDelete, HTTPSessionHelper.getCurrentSessionId());
 		return;
 	}
 

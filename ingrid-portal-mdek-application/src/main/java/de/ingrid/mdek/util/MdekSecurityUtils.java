@@ -1,6 +1,10 @@
 package de.ingrid.mdek.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.services.persistence.db.IDaoFactory;
@@ -16,7 +20,6 @@ public class MdekSecurityUtils {
 
 
 	public static UserData getCurrentPortalUserData() {
-/*
 		WebContext wctx = WebContextFactory.get();
 		HttpServletRequest req = wctx.getHttpServletRequest();
 
@@ -27,8 +30,6 @@ public class MdekSecurityUtils {
 		} else {
 			throw new RuntimeException("User not logged in.");
 		}
-*/
-		return getUserData("admin");
 	}
 
 	public static UserData getUserData(String portalLogin) {
