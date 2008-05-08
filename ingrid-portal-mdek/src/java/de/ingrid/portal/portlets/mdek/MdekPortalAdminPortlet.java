@@ -19,8 +19,6 @@ import javax.portlet.PortletException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.security.GroupManager;
-import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.UserManager;
@@ -31,14 +29,12 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -74,8 +70,6 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     // Parameters set on init
     private UserManager userManager;
     private RoleManager roleManager;
-    private GroupManager groupManager;
-    private PermissionManager permissionManager;
     private IMdekCaller mdekCaller;
 
     
@@ -93,15 +87,6 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
         if (null == roleManager) {
             throw new PortletException("Failed to find the Role Manager on portlet initialization");
-        }
-        groupManager = (GroupManager) getPortletContext().getAttribute(
-                CommonPortletServices.CPS_GROUP_MANAGER_COMPONENT);
-        if (null == groupManager) {
-            throw new PortletException("Failed to find the Group Manager on portlet initialization");
-        }
-        permissionManager = (PermissionManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PERMISSION_MANAGER);
-        if (null == permissionManager) {
-            throw new PortletException("Could not get instance of portal permission manager component");
         }
 
 		try {
@@ -122,8 +107,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 		setDefaultViewPage(TEMPLATE_START);
     	
     	Context context = getContext(request);
-
-        context.put("testList", buildConnectedCatalogList());
+        context.put("catalogList", buildConnectedCatalogList());
     }
     
     public void doViewNew(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)

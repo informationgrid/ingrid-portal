@@ -1,0 +1,49 @@
+#macro (displayListItems $strList)
+  #foreach ($item in $strList)
+    <option value="$item" title="$item">$item</option>
+  #end
+#end
+
+#macro (renderFooter)
+<div class="formfooter" align="right">
+	<input class="btn" type="submit" name="doCreateCatalog" value="Katalog anlegen" />
+	<input class="btn" type="submit" name="doCancel" value="Zurück zur Übersicht" />
+</div>
+#end
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
+	<div class="formbody" style="overflow: auto;">
+		<h2 class="nospace">Neuen Katalog anlegen</h2>
+		<br />
+
+		<div class="float_left">
+			<h3>Angeschlossene Kataloge</h3>
+			<select class="inputstyle" style="width:15em;" name="plugId" size="5">
+#displayListItems($plugIdList)
+			</select>
+		</div>
+		<div class="float_left marginleft">
+			<h3>Katalogadministrator</h3>
+			<select class="inputstyle" style="width:15em;" name="userName" size="5">
+#displayListItems($userNameList)
+			</select>
+		</div>
+		<div class="clearer"></div>
+		<br />
+<!--
+		<label for="catalogName">Katalogname: </label><input type="text" id="catalogName" name="catalogName" />
+		<div class="clearer"></div>
+		<br />
+-->
+	</div>
+
+#renderFooter()
+<!--
+	<div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" value="Speichern" />
+		</div>
+	</div>
+	-->
+</form>

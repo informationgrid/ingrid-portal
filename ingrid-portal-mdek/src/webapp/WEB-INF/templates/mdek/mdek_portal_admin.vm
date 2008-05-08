@@ -1,0 +1,81 @@
+#macro (renderDBBrowserNavigation)
+<div class="contentNavigation">
+   	<div class="contentNavigationLeft">
+	</div>
+   	<div class="contentNavigationMiddle">Angeschlossene Kataloge</div>
+   	<div class="contentNavigationRight">
+		&nbsp;
+	</div>
+	<p class="clearer"></p>
+</div>
+#end
+
+#macro (renderDBBrowserHeader $colNames $colTitles)
+<tr>
+	<td class="contentColumnHead"></td>
+	#foreach ($colTitle in $colTitles)
+   		<td class="contentColumnHead">$colTitle</td>
+	#end
+</tr>
+#end
+
+#macro (renderDBBrowserRow $rowId $rowValues)
+<tr>
+#if ($velocityCount % 2 == 0)
+	#set ($rowstyle = "contentRowEven")
+#else
+	#set ($rowstyle = "contentRowOdd")
+#end   
+	<td class="$rowstyle">
+		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+    </td>
+	<td class="$rowstyle">$rowId</td>
+#foreach ($rowValue in $rowValues)
+	<td class="$rowstyle">$rowValue</td>
+#end
+</tr>
+#end
+#macro (renderDBBrowserFooterButtons $buttons)
+<div class="formfooter">
+#foreach ($button in $buttons)
+	#if($button == "doEdit")
+    	<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
+    	<span class="float_left">&nbsp;</span>
+	#end
+	#if($button == "doDelete")
+		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
+	#end
+	#if($button == "doRefresh")
+    	<input class="btn float_right" type="submit" name="doRefresh" value="Neu Laden" />
+    	<span class="float_right">&nbsp;</span>
+	#end
+	#if($button == "doNew")
+		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
+	#end
+#end
+	<p class="clearer"></p>
+</div>
+#end
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="mdek_portal_admin" id="mdek_portal_admin">
+	<div class="formbody">
+#renderDBBrowserNavigation()
+		<p>
+		<table class="border fullwidth">
+#set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin"])
+#set ($colTitles = ["Id", "Katalogname", "Partner", "Anbieter", "Administrator"])
+#renderDBBrowserHeader($colNames $colTitles)
+
+#foreach ($entry in $catalogList)
+	#set ($rowId = $entry.plugId)
+	#set ($rowValues = [$entry.catName, $entry.partner, $entry.provider, $entry.catAdmin])
+	#renderDBBrowserRow($rowId $rowValues)
+#end
+
+		</table>
+		</p>
+	</div>
+#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#renderDBBrowserFooterButtons($buttons)
+</form>

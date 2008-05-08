@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<portlet-app id="ingrid-portal-mdek" version="1.0" 
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" 
+    xmlns:js="http://portals.apache.org/jetspeed" 
+    xmlns:dc="http://www.purl.org/dc">
+    
+    <dc:title>ingrid portal mdek</dc:title>
+    <dc:title xml:lang="en">ingrid portal mdek</dc:title>
+
+	<js:services>
+        <js:service name='UserManager'/>  
+        <js:service name='RoleManager'/>  
+        <js:service name='GroupManager'/>  
+        <js:service name='Profiler'/>  
+        <js:service name='PortletRegistryComponent'/>  
+        <js:service name='PageManager'/>  
+        <js:service name='PortalAdministration'/>        
+        <js:service name='PermissionManager'/>        
+	</js:services>
+	
+</portlet-app>
