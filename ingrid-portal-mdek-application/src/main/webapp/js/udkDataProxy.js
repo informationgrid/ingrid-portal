@@ -1171,10 +1171,12 @@ udkDataProxy._setData = function(nodeData)
 	switch (nodeData.nodeAppType.toUpperCase())
 	{
 	case 'A':
-		udkDataProxy._setAddressData(nodeData);
+		var def = udkDataProxy._initResponsibleUserAddressList(nodeData);
+		def.addCallback(udkDataProxy._setAddressData(nodeData));
 		break;
 	case 'O':
-		udkDataProxy._setObjectData(nodeData);
+		var def = udkDataProxy._initResponsibleUserObjectList(nodeData);
+		def.addCallback(udkDataProxy._setObjectData(nodeData));
 		break;
 	default:
 		dojo.debug("Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!");
@@ -1195,10 +1197,12 @@ udkDataProxy._setAddressData = function(nodeData)
 
 	// ------------------ Header ------------------
 	dojo.widget.byId("addressTitle").setValue(UtilAddress.createAddressTitle(nodeData));	dojo.widget.byId("addressType").setValue(UtilAddress.getAddressType(nodeData.addressClass));
+	dojo.widget.byId("addressOwner").setValue(nodeData.addressOwner);
 
 	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
 	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
+	dojo.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
 
 	// ------------------ Address and Function ------------------
 	dojo.widget.byId("addressStreet").setValue(nodeData.street);
@@ -1314,6 +1318,9 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.byId("workState").innerHTML = nodeData.workState;
   dojo.byId("creationTime").innerHTML = nodeData.creationTime;
   dojo.byId("modificationTime").innerHTML = nodeData.modificationTime;
+  dojo.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
+
+  dojo.widget.byId("objectOwner").setValue(nodeData.objectOwner);
 
 //  dojo.widget.byId("last_editor").setValue("test last editor");
 
@@ -1573,6 +1580,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 	if (parentUuid != "addressRoot" && parentUuid != "addressFreeRoot") {
 		nodeData.parentUuid = parentUuid;
 	}
+	nodeData.addressOwner = dojo.widget.byId("addressOwner").getValue();
 
 	// ------------------ Header ------------------
 	nodeData.addressClass = UtilAddress.getAddressClass();
@@ -1654,7 +1662,7 @@ udkDataProxy._getObjectData = function(nodeData)
   if (parentUuid != "objectRoot") {
   	nodeData.parentUuid = parentUuid;
   }
-
+  nodeData.objectOwner = dojo.widget.byId("objectOwner").getValue();
 
   // ------------------ Header ------------------
   nodeData.objectName = dojo.widget.byId("objectName").getValue();
@@ -1687,12 +1695,12 @@ udkDataProxy._getObjectData = function(nodeData)
 	  if (timeFrom != "") {
 		  nodeData.timeRefDate2 = timeFrom;
 	  }
-  } else if (timeRefType == "am") {
+  } else if (nodeData.timeRefType == "am") {
 	  if (timeFrom != "") {
 		  nodeData.timeRefDate1 = timeFrom;
 		  nodeData.timeRefDate2 = timeFrom;
 	  }
-  } else if (timeRefType != "") {
+  } else if (nodeData.timeRefType != "") {
 	  if (timeFrom != "") {
 		  nodeData.timeRefDate1 = timeFrom;
 	  }
@@ -1877,6 +1885,52 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 /*******************************************
  *            Helper functions             *
  *******************************************/
+
+udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
+	var def = new dojo.Deferred();
+
+	SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, {
+		callback: function(userList) {
+			var list = [];
+			dojo.lang.forEach(userList, function(user){
+				var title = UtilAddress.createAddressTitle(user.address);
+				var uuid = user.address.uuid;
+				list.push([title, uuid]);
+			});
+			var selectWidget = dojo.widget.byId("objectOwner");
+			selectWidget.dataProvider.setData(list);	
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+
+	return def;
+}
+
+udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
+	var def = new dojo.Deferred();
+
+	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, {
+		callback: function(userList) {
+			var list = [];
+			dojo.lang.forEach(userList, function(user){
+				var title = UtilAddress.createAddressTitle(user.address);
+				var uuid = user.address.uuid;
+				list.push([title, uuid]);
+			});
+			var selectWidget = dojo.widget.byId("addressOwner");
+			selectWidget.dataProvider.setData(list);	
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+
+	return def;	
+}
 
 // Looks for the node widget with uuid = nodeData.uuid and updates the
 // tree data (label, type, etc.) according to the given nodeData

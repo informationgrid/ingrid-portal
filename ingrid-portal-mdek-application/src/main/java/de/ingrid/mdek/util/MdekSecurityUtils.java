@@ -23,9 +23,9 @@ public class MdekSecurityUtils {
 		WebContext wctx = WebContextFactory.get();
 		HttpServletRequest req = wctx.getHttpServletRequest();
 
-		log.debug("Remote user: "+req.getRemoteUser());
+//		log.debug("Remote user: "+req.getRemoteUser());
 		if (req.getUserPrincipal() != null) {
-			log.debug("User Principal: "+req.getUserPrincipal().getName());
+//			log.debug("User Principal: "+req.getUserPrincipal().getName());
 			return getUserData(req.getUserPrincipal().getName());
 		} else {
 			throw new RuntimeException("User not logged in.");

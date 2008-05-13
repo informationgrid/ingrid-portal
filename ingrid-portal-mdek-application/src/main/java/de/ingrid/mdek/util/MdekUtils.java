@@ -381,7 +381,9 @@ public class MdekUtils {
 
 				u.setRole(role);
 				u.setRoleName(idcRole.toString());
-				
+
+				u.setAddress(MdekAddressUtils.extractSingleAddress(user));
+
 				userList.add(u);
 			}
 

@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.handler.SecurityRequestHandler;
@@ -235,6 +236,15 @@ public class SecurityServiceImpl {
 		return userList;
 	}
 
+	public List<User> getUsersWithWritePermissionForObject(String objectUuid) {
+		return securityRequestHandler.getUsersWithWritePermissionForObject(objectUuid);
+	}
+	
+	public List<User> getUsersWithWritePermissionForAddress(String addressUuid) {
+		return securityRequestHandler.getUsersWithWritePermissionForAddress(addressUuid);
+	}
+
+	
 	public SecurityRequestHandler getSecurityRequestHandler() {
 		return securityRequestHandler;
 	}

@@ -94,6 +94,11 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setObjectClass(objClass);
 		}
 
+		MdekAddressBean responsibleUser = getDetailedAddressRepresentation(obj.get(MdekKeysSecurity.RESPONSIBLE_USER));
+		if (responsibleUser != null) {
+			mdekObj.setObjectOwner(responsibleUser.getUuid());
+		}
+
 		String workStateStr = (String) obj.get(MdekKeys.WORK_STATE); 
 		WorkState workState = null;
 		if (workStateStr != null) {
@@ -108,6 +113,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_REFERENCES_TO)));
 		mdekObj.setCreationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_CREATION)));
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
+		mdekObj.setLastEditor(getDetailedAddressRepresentation(obj.get(MdekKeys.MOD_USER)));
 
 		// Comments
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
@@ -304,6 +310,11 @@ public class MdekMapper implements DataMapperInterface {
 			mdekAddress.setParentClass((Integer) parentDetails.get(MdekKeys.CLASS));
 		}
 
+		MdekAddressBean responsibleUser = getDetailedAddressRepresentation(adr.get(MdekKeysSecurity.RESPONSIBLE_USER));
+		if (responsibleUser != null) {
+			mdekAddress.setAddressOwner(responsibleUser.getUuid());
+		}
+
 		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
@@ -329,7 +340,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setHasChildren((Boolean) adr.get(MdekKeys.HAS_CHILD));		
 		mdekAddress.setCreationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_CREATION)));
 		mdekAddress.setModificationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-		
+		mdekAddress.setLastEditor(getDetailedAddressRepresentation(adr.get(MdekKeys.MOD_USER)));
+
 		// Class specific information
 		mdekAddress.setOrganisation((String) adr.get(MdekKeys.ORGANISATION));
 		mdekAddress.setName((String) adr.get(MdekKeys.NAME));
@@ -540,6 +552,10 @@ public class MdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.UUID, data.getUuid());
 		udkAdr.put(MdekKeys.CLASS, data.getAddressClass());
 
+		IngridDocument responsibleUser = new IngridDocument();
+		responsibleUser.put(MdekKeys.UUID, data.getAddressOwner());
+		udkAdr.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
+
 		// Class specific information
 		udkAdr.put(MdekKeys.ORGANISATION, data.getOrganisation());
 		udkAdr.put(MdekKeys.NAME, data.getName());
@@ -587,6 +603,11 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.UUID, data.getUuid());
 		udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());
 		udkObj.put(MdekKeys.TITLE, data.getObjectName());
+
+		IngridDocument responsibleUser = new IngridDocument();
+		responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
+		udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
+
 		// extrahieren des int Wertes für die Objekt-Klasse
 		udkObj.put(MdekKeys.CLASS, data.getObjectClass());
 //		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());

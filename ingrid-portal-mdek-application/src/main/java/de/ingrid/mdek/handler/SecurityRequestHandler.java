@@ -2,6 +2,7 @@ package de.ingrid.mdek.handler;
 
 import java.util.List;
 
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.User;
 
@@ -20,4 +21,7 @@ public interface SecurityRequestHandler {
 	public void deleteUser(Long userId);
 
 	public User getCatalogAdmin();
+
+	public List<User> getUsersWithWritePermissionForAddress(String addressUuid);
+	public List<User> getUsersWithWritePermissionForObject(String objectUuid);
 }

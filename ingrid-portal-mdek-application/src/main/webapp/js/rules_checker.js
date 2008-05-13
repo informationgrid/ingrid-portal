@@ -40,11 +40,11 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 	"headerAddressType3Title", "headerAddressType3Institution"];
 
 
-var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
+var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel",
 			  "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
-			  "addressTypeLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
+			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
 			  "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
 			  "addressZipPOBoxLabel"];
@@ -52,6 +52,7 @@ var labels = ["objectNameLabel", "objectClassLabel", "generalDescLabel", "extraI
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["objectClass", "objectClassLabel"],
+					  ["objectOwner", "objectOwnerLabel"],
 					  ["generalDescription", "generalDescLabel"],
 					  ["extraInfoLangData", "extraInfoLangDataLabel"],
 					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"],
@@ -66,6 +67,7 @@ var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 
 
 var notEmptyAddressFields = [ // ["addressClass", "addressTypeLabel"],
+							 ["addressOwner", "addressOwnerLabel"],
 						     ["countryCode", "addressCountryLabel"],
 						     ["city", "addressCityLabel"]];
 

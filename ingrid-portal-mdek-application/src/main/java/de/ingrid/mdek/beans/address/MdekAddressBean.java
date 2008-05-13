@@ -17,10 +17,10 @@ public class MdekAddressBean {
 	public String nodeDocType;
 	public Boolean hasChildren;
 	
-	public String objectOwner;
+	public String addressOwner;
 	public String creationTime;
 	public String modificationTime;
-	public String lastEditor;
+	public MdekAddressBean lastEditor;
 	public String workState;
 
 	public Integer addressClass;
@@ -66,12 +66,12 @@ public class MdekAddressBean {
 		this.parentInstitutions = new ArrayList<MdekAddressBean>();
 	}
 	
-	public String getObjectOwner() {
-		return objectOwner;
+	public String getAddressOwner() {
+		return addressOwner;
 	}
 
-	public void setObjectOwner(String objectOwner) {
-		this.objectOwner = objectOwner;
+	public void setAddressOwner(String addressOwner) {
+		this.addressOwner = addressOwner;
 	}
 
 	public String getCreationTime() {
@@ -90,11 +90,11 @@ public class MdekAddressBean {
 		this.modificationTime = modificationTime;
 	}
 
-	public String getLastEditor() {
+	public MdekAddressBean getLastEditor() {
 		return lastEditor;
 	}
 
-	public void setLastEditor(String lastEditor) {
+	public void setLastEditor(MdekAddressBean lastEditor) {
 		this.lastEditor = lastEditor;
 	}
 

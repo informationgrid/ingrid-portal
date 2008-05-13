@@ -12,6 +12,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/ObjectService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
 
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
@@ -270,12 +271,12 @@ function hideSplash(){
 	              <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
 	            </tr>
 	            <tr>
-	              <td class="label"><label for="objectOwner">Verantwortlicher</label></td>
-	              <td><input dojoType="ingrid:Select" autoComplete="false" disabled="true" style="width:386px;" id="objectOwner" /></td>
+	              <td id="objectOwnerLabel" class="label required"><label for="objectOwner">Verantwortlicher*</label></td>
+	              <td><input dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectOwner" /></td>
 	              <td class="note"><strong>Status:</strong> <span id="workState"></span></td>
 	            </tr>
 	            <tr>
-	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="creationTime">26.06.1998</span> | <strong>Ge&auml;ndert am:</strong> <span id="modificationTime">27.09.2000</span> | <strong>Von:</strong> <span id="last_editor">---</span></td>
+	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="creationTime">26.06.1998</span> | <strong>Ge&auml;ndert am:</strong> <span id="modificationTime">27.09.2000</span> | <strong>Von:</strong> <span id="lastEditor">---</span></td>
 	            </tr>
 	          </tbody>
 	        </table>
@@ -1742,7 +1743,7 @@ function hideSplash(){
 		  		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
 		  		<tr>
 		  		  <td id="addressOwnerLabel" class="label required"><label for="addressOwner">Verantwortlicher*</label></td>
-		  		  <td><input dojoType="ingrid:Select" style="width:386px;" id="addressOwner" disabled="true" /></td>
+		  		  <td><input dojoType="ingrid:Select" style="width:386px;" id="addressOwner" /></td>
 	              <td class="note"><strong>Status:</strong> <span id="addressWorkState"></span></td>
 
 		  		<tr>

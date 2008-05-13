@@ -30,7 +30,7 @@ public class MdekDataBean {
 	public String objectOwner;
 	public String creationTime;
 	public String modificationTime;
-	public String lastEditor;
+	public MdekAddressBean lastEditor;
 
 	// General
 	public String generalShortDescription;
@@ -614,11 +614,11 @@ public class MdekDataBean {
 		this.objectOwner = objectOwner;
 	}
 
-	public String getLastEditor() {
+	public MdekAddressBean getLastEditor() {
 		return lastEditor;
 	}
 
-	public void setLastEditor(String lastEditor) {
+	public void setLastEditor(MdekAddressBean lastEditor) {
 		this.lastEditor = lastEditor;
 	}
 
@@ -1361,37 +1361,6 @@ public class MdekDataBean {
 	public void setRef3ServiceType(String ref3ServiceType) {
 		this.ref3ServiceType = ref3ServiceType;
 	}
-
-
-
-/*
-	public String getCatalogUuid() {
-		return catalogUuid;
-	}
-
-
-
-
-	public void setCatalogUuid(String catalogUuid) {
-		this.catalogUuid = catalogUuid;
-	}
-
-
-
-
-	public String getCatalogName() {
-		return catalogName;
-	}
-
-
-
-
-	public void setCatalogName(String catalogName) {
-		this.catalogName = catalogName;
-	}
-*/
-
-
 
 	public Integer getParentPublicationCondition() {
 		return parentPublicationCondition;
