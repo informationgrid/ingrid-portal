@@ -474,6 +474,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.put(MDEK_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
+		mdekObj.put(MDEK_USER_WRITE_PERMISSION, obj.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
 
 		String nodeDocType = getObjectDocType(obj);
 		mdekObj.put(MDEK_DOCTYPE, nodeDocType);
@@ -537,6 +538,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
 		mdekAdr.put(MDEK_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
+		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, adr.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
 
 		String adrDocType = getAddressDocType(adr);
 		mdekAdr.put(MDEK_DOCTYPE, adrDocType);

@@ -108,6 +108,12 @@ var commentStore = {};
 // This object holds general information about the catalog (see CatalogBean for content).
 var catalogData = {};
 
+// This object holds the current user (See de.ingrid.mdek.beans.security.User for content)
+var currentUser = {};
+
+// This object holds the current group (See de.ingrid.mdek.beans.security.Group for content)
+var currentGroup = {};
+
 
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
@@ -188,8 +194,6 @@ dojo.addOnLoad(function()
 	dojo.lang.forEach(adrClass3UiInputElements, _connectWidgetWithDirtyFlag);
 
 	_connectStoreWithDirtyFlag(commentStore);
-
-	dojo.event.connect(udkDataProxy, "_setData", udkDataProxy, "resetDirtyFlag");
   }
 );
 
@@ -1172,16 +1176,18 @@ udkDataProxy._setData = function(nodeData)
 	{
 	case 'A':
 		var def = udkDataProxy._initResponsibleUserAddressList(nodeData);
-		def.addCallback(udkDataProxy._setAddressData(nodeData));
+		def.addCallback(udkDataProxy._setAddressData);
 		break;
 	case 'O':
 		var def = udkDataProxy._initResponsibleUserObjectList(nodeData);
-		def.addCallback(udkDataProxy._setObjectData(nodeData));
+		def.addCallback(udkDataProxy._setObjectData);
 		break;
 	default:
 		dojo.debug("Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!");
 		break;
 	}  
+	
+	def.addCallback(udkDataProxy.resetDirtyFlag);
 }
 
 udkDataProxy._setAddressData = function(nodeData)
@@ -1324,8 +1330,6 @@ udkDataProxy._setObjectData = function(nodeData)
 
   dojo.widget.byId("objectOwner").setValue(nodeData.objectOwner);
 
-//  dojo.widget.byId("last_editor").setValue("test last editor");
-
 //  dojo.debug("HeaderObjectForm after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
 
@@ -1462,6 +1466,7 @@ udkDataProxy._setObjectData = function(nodeData)
 //  dojo.widget.byId("contentFormObject").setValues(myObj);
 //  dojo.widget.byId("headerFormAddress").setValues(myObj);
 //  dojo.widget.byId("contentFormAddress").setValues(myObj);
+
 }
 
 udkDataProxy._setObjectDataClass0 = function(nodeData) {}
@@ -1891,6 +1896,16 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 	var def = new dojo.Deferred();
 
+    if (nodeData.uuid == "newNode") {
+		var selectWidget = dojo.widget.byId("objectOwner");
+		var title = UtilAddress.createAddressTitle(currentUser.address);
+		selectWidget.dataProvider.setData([[title, currentUser.addressUuid]]);
+
+    	def.callback(nodeData);
+    	return def;
+    }
+
+
 	SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, {
 		callback: function(userList) {
 			var list = [];
@@ -1901,10 +1916,12 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 			});
 			var selectWidget = dojo.widget.byId("objectOwner");
 			selectWidget.dataProvider.setData(list);	
+			def.callback(nodeData);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
+			def.errback(err);
 		}
 	});
 
@@ -1913,6 +1930,15 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 
 udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 	var def = new dojo.Deferred();
+
+    if (nodeData.uuid == "newNode") {
+		var selectWidget = dojo.widget.byId("addressOwner");
+		var title = UtilAddress.createAddressTitle(currentUser.address);
+		selectWidget.dataProvider.setData([[title, currentUser.addressUuid]]);
+
+    	def.callback(nodeData);
+    	return def;
+    }
 
 	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, {
 		callback: function(userList) {
@@ -1924,10 +1950,12 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 			});
 			var selectWidget = dojo.widget.byId("addressOwner");
 			selectWidget.dataProvider.setData(list);	
+			def.callback(nodeData);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
+			def.errback(err);
 		}
 	});
 
@@ -1970,6 +1998,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			objectClass: objClass,
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: nodeData.nodeAppType,
+			userWritePermission: true,
 			id: nodeData.uuid
 		});
 	} else {

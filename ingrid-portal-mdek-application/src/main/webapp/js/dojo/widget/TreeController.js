@@ -111,7 +111,10 @@ dojo.widget.defineWidget(
 			return false;
 
 		if (node != null) {
-			if (node.id == "newNode")
+			if (node.id == "newNode" || node.userWritePermission == false)
+				return false;
+
+			if (!UtilSecurity.canCreateRootNodes() && (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot"))
 				return false;
 
 			if (node.nodeAppType == srcNode.nodeAppType) {

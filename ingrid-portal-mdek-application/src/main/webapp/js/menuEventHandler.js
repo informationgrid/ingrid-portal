@@ -327,6 +327,10 @@ menuEventHandler.handleSave = function() {
 		tree.selectedNode = dojo.widget.byId(res.uuid);
 		tree.selectedNode.viewUnselect();
 		tree.selectedNode.viewSelect();
+		
+		var treeListener = dojo.widget.byId("treeListener");
+		dojo.event.topic.publish(treeListener.eventNames.select, {node: tree.selectedNode});
+
 		resetRequiredFields();
 	});
 	
@@ -857,6 +861,7 @@ function _createNewNode(obj, parentClass)
 			title: title,
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: obj.nodeAppType,
+			userWritePermission: true,
 			id: obj.uuid};	// "newNode"
 }
 

@@ -711,3 +711,12 @@ UtilSecurity.getRoleName = function(roleId) {
 			return null;
 	}
 }
+
+UtilSecurity.canCreateRootNodes = function() {
+	for (var i = 0; i < currentGroup.groupPermissions.length; ++i) {
+		if (currentGroup.groupPermissions[i] == "CREATE_ROOT") {
+			return true;
+		}
+	}
+	return false;
+}

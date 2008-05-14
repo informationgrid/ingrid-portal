@@ -25,7 +25,8 @@ dojo.addOnLoad(function()
   initReferenceTables();
   var deferred = initCatalogData();
   deferred.addCallback(initSysLists);
-  deferred.addCallback(initCurrentUserDisplay);
+  deferred.addCallback(initCurrentUser);
+  deferred.addCallback(initCurrentGroup);
 
   hideSplash();
   udkDataProxy.resetDirtyFlag();
@@ -796,21 +797,34 @@ function initToolbar() {
 	var treeController = dojo.widget.byId("treeController");
 
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
+		var hasWritePermission = message.node.userWritePermission;
+		var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
+//		dojo.debug("User has write permission? "+hasWritePermission);
+
 		var disableList = [];
 		var enableList = [];
 		if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
-			disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
-			enableList = [newEntityButton];
+			if (canCreateRootNodes) {
+				disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
+				enableList = [newEntityButton];
+			} else {
+				disableList = [newEntityButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
+				enableList = [];				
+			}
 
 		} else if (message.node.id == "newNode") {
 			disableList = [copyTreeButton, cutButton, copyEntityButton, newEntityButton];
 			enableList = [previewButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
 
-		} else if (message.node.isFolder) {
+		} else if (message.node.isFolder && hasWritePermission) {
 			disableList = [];
 			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 
-		} else {
+		} else if (message.node.isFolder && !hasWritePermission) {
+			disableList = [cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
+			enableList = [previewButton, copyEntityButton, copyTreeButton, showCommentButton];
+
+		} else if (hasWritePermission) {
 			disableList = [copyTreeButton];
 			enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
 
@@ -825,11 +839,14 @@ function initToolbar() {
 					enableList.unshift(newEntityButton);
 				}
 			}
+		} else if (!hasWritePermission) {
+			disableList = [copyTreeButton, cutButton, saveButton, discardButton, finalSaveButton, deleteButton];
+			enableList = [previewButton, copyEntityButton, showCommentButton];
 		}
 
 		// The paste button depends on the current selection in treeController and the current selected node
 		if (treeController.canPaste(message.node)) {
-			enableList.push(pasteButton);			
+			enableList.push(pasteButton);
 		} else {
 			disableList.push(pasteButton);
 		}
@@ -920,14 +937,66 @@ function initCatalogData() {
 	return deferred;
 }
 
-function initCurrentUserDisplay() {
+function initCurrentGroup() {
+	var def = getCurrentGroupName();
+
+	def.addCallback(function(groupName) {
+		SecurityService.getGroupDetails(groupName, {
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+			callback: function(group) {
+//				dojo.debug("Group Details:");
+//				dojo.debugShallow(group);
+				currentGroup = group;
+			},
+
+			errorHandler:function(mes){
+				UtilDWR.exitLoadingState();
+				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+				dojo.debug("Error: "+mes);
+			}
+		});
+	});
+
+	return def;
+}
+
+function getCurrentGroupName() {
 	var def = new dojo.Deferred();
 
+	SecurityService.getGroups({
+		preHook: UtilDWR.enterLoadingState,
+		postHook: UtilDWR.exitLoadingState,
+		callback: function(groupList) {
+			for (var i = 0; i < groupList.length; ++i) {
+				if (groupList[i].id == currentUser.groupId) {
+//					dojo.debug("Found user group:");
+//					dojo.debugShallow(groupList[i]);
+					def.callback(groupList[i].name);
+					break;
+				}
+			}
+		},
+		errorHandler:function(mes){
+			UtilDWR.exitLoadingState();
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
+
+	return def;		
+}
+
+function initCurrentUser() {
+	var def = new dojo.Deferred();
 
 	SecurityService.getCurrentUser({
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(user) {
+			currentUser = user;
+
 			var roleName = UtilSecurity.getRoleName(user.role);
 			var title = UtilAddress.createAddressTitle(user.address);
 			dojo.byId("currentUserName").innerHTML = title;

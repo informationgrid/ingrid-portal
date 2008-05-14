@@ -90,7 +90,11 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		obj.put(MdekKeys.PARENT_UUID, parentUuid);
 
 		IngridDocument response = mdekCallerObject.getInitialObject(connectionFacade.getCurrentPlugId(), obj, HTTPSessionHelper.getCurrentSessionId());
-		return MdekObjectUtils.extractSingleObjectFromResponse(response);
+
+		// TODO: Set this value in the backend. Temproarily set it here till it gets fixed!
+		MdekDataBean dat = MdekObjectUtils.extractSingleObjectFromResponse(response);
+		dat.setObjectOwner(HTTPSessionHelper.getCurrentSessionId());
+		return dat;
 	}
 
 	public List<String> getPathToObject(String uuid) {

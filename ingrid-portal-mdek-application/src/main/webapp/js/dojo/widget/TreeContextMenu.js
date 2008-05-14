@@ -39,6 +39,18 @@ dojo.widget.defineWidget(
 		  node.actionsDisabled.push("PASTE");
       }
 
+	  if (!node.userWritePermission && node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
+	  	node.actionsDisabled.push("MOVE");
+	  	node.actionsDisabled.push("ADDCHILD");
+	  	node.actionsDisabled.push("CUT");
+	  	node.actionsDisabled.push("PASTE");
+	  	node.actionsDisabled.push("DETACH");
+	  }
+
+	  if (!UtilSecurity.canCreateRootNodes() && (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot")) {
+	  	node.actionsDisabled.push("ADDCHILD");        
+	  }
+
       result = dojo.widget.TreeContextMenuV3.prototype.open.apply(this, arguments);
     }
     return result;
