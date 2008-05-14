@@ -268,7 +268,7 @@ function hideSplash(){
 	                	<option value="Class5">Datensammlung/Datenbank</option>
 	                </select>
  	              </td>
-	              <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
+	              <td class="col3"><img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
 	            </tr>
 	            <tr>
 	              <td id="objectOwnerLabel" class="label required"><label for="objectOwner">Verantwortlicher*</label></td>
@@ -1740,7 +1740,7 @@ function hideSplash(){
 		          </select>
  -->
 		        </td>
-		  		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
+		  		  <td class="col3"><img id="permissionAdrLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
 		  		<tr>
 		  		  <td id="addressOwnerLabel" class="label required"><label for="addressOwner">Verantwortlicher*</label></td>
 		  		  <td><input dojoType="ingrid:Select" required="true" style="width:386px;" id="addressOwner" /></td>

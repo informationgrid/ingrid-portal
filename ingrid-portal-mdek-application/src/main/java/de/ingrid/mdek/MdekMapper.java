@@ -115,6 +115,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 		mdekObj.setLastEditor(getDetailedAddressRepresentation(obj.get(MdekKeys.MOD_USER)));
 
+		mdekObj.setWritePermission((Boolean) obj.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+
 		// Comments
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
 
@@ -314,6 +316,8 @@ public class MdekMapper implements DataMapperInterface {
 		if (responsibleUser != null) {
 			mdekAddress.setAddressOwner(responsibleUser.getUuid());
 		}
+
+		mdekAddress.setWritePermission((Boolean) adr.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
 
 		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));

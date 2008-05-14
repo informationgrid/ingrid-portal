@@ -16,7 +16,8 @@ public class MdekAddressBean {
 	public String nodeAppType;
 	public String nodeDocType;
 	public Boolean hasChildren;
-	
+	public Boolean writePermission;
+
 	public String addressOwner;
 	public String creationTime;
 	public String modificationTime;
@@ -353,5 +354,13 @@ public class MdekAddressBean {
 
 	public void setHasChildren(Boolean hasChildren) {
 		this.hasChildren = hasChildren;
+	}
+
+	public Boolean getWritePermission() {
+		return writePermission;
+	}
+
+	public void setWritePermission(Boolean writePermission) {
+		this.writePermission = writePermission;
 	}
 }

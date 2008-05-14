@@ -1211,6 +1211,12 @@ udkDataProxy._setAddressData = function(nodeData)
 	if (nodeData.lastEditor != null)
 		dojo.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
 
+	if (nodeData.writePermission == true) {
+		dojo.html.hide(dojo.byId("permissionAdrLock"));
+	} else {
+		dojo.html.show(dojo.byId("permissionAdrLock"));
+	}
+
 	// ------------------ Address and Function ------------------
 	dojo.widget.byId("addressStreet").setValue(nodeData.street);
 	dojo.widget.byId("addressCountry").setValue(nodeData.countryCode);
@@ -1329,6 +1335,12 @@ udkDataProxy._setObjectData = function(nodeData)
 	dojo.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
 
   dojo.widget.byId("objectOwner").setValue(nodeData.objectOwner);
+
+  if (nodeData.writePermission == true) {
+  	dojo.html.hide(dojo.byId("permissionObjLock"));
+  } else {
+  	dojo.html.show(dojo.byId("permissionObjLock"));
+  }
 
 //  dojo.debug("HeaderObjectForm after setting values: " + dojo.json.serialize(formWidget.getValues()));
 

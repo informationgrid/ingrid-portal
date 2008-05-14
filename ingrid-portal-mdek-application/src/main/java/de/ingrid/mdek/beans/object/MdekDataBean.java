@@ -23,7 +23,8 @@ public class MdekDataBean {
 	public String title;
 	public String nodeDocType;
 	public String nodeAppType;
-	
+	public Boolean writePermission;
+
 	// Identification 
 	public String objectName;
 	public Integer objectClass;
@@ -1443,6 +1444,20 @@ public class MdekDataBean {
 	public void setLinksFromPublishedObjectTable(
 			ArrayList<MdekDataBean> linksFromPublishedObjectTable) {
 		this.linksFromPublishedObjectTable = linksFromPublishedObjectTable;
+	}
+
+
+
+
+	public Boolean getWritePermission() {
+		return writePermission;
+	}
+
+
+
+
+	public void setWritePermission(Boolean writePermission) {
+		this.writePermission = writePermission;
 	}
 
 }
