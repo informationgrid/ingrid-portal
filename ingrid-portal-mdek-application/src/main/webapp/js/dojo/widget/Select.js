@@ -11,6 +11,8 @@ dojo.widget.defineWidget(
     function() {
       // The listId used for populating this select box with values from sys_list
       this.listId = "";
+      // Flag signaling if the field has to contain a value
+      this.required = false;
     },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/ComboBox.css"),
@@ -133,19 +135,33 @@ dojo.widget.defineWidget(
 	},
 
   onValueChanged: function(value) {
-  	if (this.textInputNode.value.length != 0 && this.getDisplayValueForValue(value) == null)
-  		dojo.html.addClass(this.textInputNode, "fieldInvalid");
-  	else
-  		dojo.html.removeClass(this.textInputNode, "fieldInvalid");  	
+	var valid = (this.getDisplayValueForValue(value) != null);
+	var empty = this.isEmpty();
+
+	if (this.required && empty || !valid && !empty) {
+		dojo.html.addClass(this.textInputNode, "fieldInvalid");
+	} else {
+		dojo.html.removeClass(this.textInputNode, "fieldInvalid");
+	}
   },
 
   onKeyUp: function(/*Event*/ evt){
 	this.setLabel(this.textInputNode.value);
+    
+	var valid = (this.getValueForDisplayValue(this.textInputNode.value) != null);
+	var empty = this.isEmpty();
 
-  	if (this.textInputNode.value.length != 0 && this.getValueForDisplayValue(this.textInputNode.value) == null)
-  		dojo.html.addClass(this.textInputNode, "fieldInvalid");
-  	else
-  		dojo.html.removeClass(this.textInputNode, "fieldInvalid");
+	if (this.required && empty || !valid && !empty) {
+		dojo.html.addClass(this.textInputNode, "fieldInvalid");
+	} else {
+		dojo.html.removeClass(this.textInputNode, "fieldInvalid");
+	}
+  },
+
+
+  // Function to check if the input field is empty for validation
+  isEmpty: function() {
+  	return dojo.string.trim(this.textInputNode.value).length == 0;
   },
 
   enable: function() {

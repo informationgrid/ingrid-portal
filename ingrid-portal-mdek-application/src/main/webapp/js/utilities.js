@@ -694,3 +694,20 @@ UtilCatalog.getCatalogLanguage = function() {
 		return "de";
 	}
 }
+
+// Security related utility functions
+var UtilSecurity = {}
+
+// Retrieve the role name for a given role id
+UtilSecurity.getRoleName = function(roleId) {
+	switch(roleId) {
+		case 1:
+			return message.get("security.role.catalogAdmin");
+		case 2:
+			return message.get("security.role.metadataAdmin");
+		case 3:
+			return message.get("security.role.metadataAuthor");
+		default:
+			return null;
+	}
+}

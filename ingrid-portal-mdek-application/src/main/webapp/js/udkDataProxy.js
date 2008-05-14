@@ -1202,7 +1202,8 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
 	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
-	dojo.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
+	if (nodeData.lastEditor != null)
+		dojo.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
 
 	// ------------------ Address and Function ------------------
 	dojo.widget.byId("addressStreet").setValue(nodeData.street);
@@ -1318,7 +1319,8 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.byId("workState").innerHTML = nodeData.workState;
   dojo.byId("creationTime").innerHTML = nodeData.creationTime;
   dojo.byId("modificationTime").innerHTML = nodeData.modificationTime;
-  dojo.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
+  if (nodeData.lastEditor != null)
+	dojo.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
 
   dojo.widget.byId("objectOwner").setValue(nodeData.objectOwner);
 

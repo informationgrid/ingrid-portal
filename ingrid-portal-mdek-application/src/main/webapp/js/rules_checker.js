@@ -30,7 +30,7 @@ var class3UiInputElements = ["ref3ServiceType", "ref3ServiceVersion", "ref3Syste
 var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
 var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
 
-var adrUiInputElements = ["addressType", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
+var adrUiInputElements = ["addressType", "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
 	"addressZipPOBox", "addressNotes", "addressCom", "addressTasks", "thesaurusTermsAddress", "thesaurusFreeTermsListAddress"];
 var adrClass0UiInputElements = ["headerAddressType0Unit"];
 var adrClass1UiInputElements = ["headerAddressType1Unit"];
@@ -338,6 +338,7 @@ function checkValidityOfInputElements() {
 
 
 function checkValidityOfAddressInputElements() {
+/*
 	var isValid = function(widgetId) {
 //		dojo.debug(widgetId);
 		var widget = dojo.widget.byId(widgetId);
@@ -355,6 +356,31 @@ function checkValidityOfAddressInputElements() {
 			return true;
 		}
 	}
+*/
+	dojo.debug("Checking validity of address ui elements...");
+
+	var isValid = function(widgetId) {
+		var widget = dojo.widget.byId(widgetId);
+
+		var widgetIsValid   = widget.isValid   ? widget.isValid()   : true;
+		var widgetIsInRange = widget.isInRange ? widget.isInRange() : true;
+		var widgetIsEmpty   = widget.isEmpty   ? widget.isEmpty()   : false;
+	
+		if (widget.required && widgetIsEmpty) {
+			dojo.debug("Widget "+widgetId+" is required but empty.");
+			return false;
+		}
+
+		if (!widgetIsEmpty && (!widgetIsValid || !widgetIsInRange)) {
+			if (!widgetIsValid)
+				dojo.debug("Widget "+widgetId+" contains invalid input.");
+			if (!widgetIsInRange)
+				dojo.debug("Widget "+widgetId+" is out of range.");
+			return false;
+		}
+		return true;
+	}
+
 
 	var addressClass = UtilAddress.getAddressClass();
 

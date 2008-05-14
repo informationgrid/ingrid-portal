@@ -163,7 +163,7 @@ function hideSplash(){
   	  <div id="title"><img src="img/title_erfassung.gif" width="158" height="24" alt="Metadatenerfassung" /></div>
   	  <div id="metaNavi">
   	    <ul>
-  	      <li>Fred Kruse · Rollenbezeichnung · Katalog Niedersachsen</li>
+  	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" title="Hilfe">Hilfe</a></li>
   	      <li class="seperator">|</li>
@@ -259,7 +259,7 @@ function hideSplash(){
 	              <td id="objectClassLabel" class="label required col1"><label for="objectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 1020)">Objektklasse*</label></td>
 	              <td class="col2">
 	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
-	                <select dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectClass" name="objectClass">
+	                <select dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectClass" name="objectClass">
 	                	<option value="Class0">Organisationseinheit/Fachaufgabe</option>
 	                	<option value="Class1">Geo-Information/Karte</option>
 	                	<option value="Class2">Dokument/Bericht/Literatur</option>
@@ -272,7 +272,7 @@ function hideSplash(){
 	            </tr>
 	            <tr>
 	              <td id="objectOwnerLabel" class="label required"><label for="objectOwner">Verantwortlicher*</label></td>
-	              <td><input dojoType="ingrid:Select" autoComplete="false" style="width:386px;" id="objectOwner" /></td>
+	              <td><input dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectOwner" /></td>
 	              <td class="note"><strong>Status:</strong> <span id="workState"></span></td>
 	            </tr>
 	            <tr>
@@ -1743,7 +1743,7 @@ function hideSplash(){
 		  		  <td class="col3"><img src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
 		  		<tr>
 		  		  <td id="addressOwnerLabel" class="label required"><label for="addressOwner">Verantwortlicher*</label></td>
-		  		  <td><input dojoType="ingrid:Select" style="width:386px;" id="addressOwner" /></td>
+		  		  <td><input dojoType="ingrid:Select" required="true" style="width:386px;" id="addressOwner" /></td>
 	              <td class="note"><strong>Status:</strong> <span id="addressWorkState"></span></td>
 
 		  		<tr>

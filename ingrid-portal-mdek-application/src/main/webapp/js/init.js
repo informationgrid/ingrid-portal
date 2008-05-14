@@ -25,6 +25,8 @@ dojo.addOnLoad(function()
   initReferenceTables();
   var deferred = initCatalogData();
   deferred.addCallback(initSysLists);
+  deferred.addCallback(initCurrentUserDisplay);
+
   hideSplash();
   udkDataProxy.resetDirtyFlag();
 });
@@ -904,6 +906,7 @@ function initCatalogData() {
 		callback: function(res) {
 			// Update catalog Data in udkDataProxy
 			catalogData = res;
+			dojo.byId("currentCatalogName").innerHTML = catalogData.catalogName;
 			deferred.callback();
 		},
 		errorHandler:function(mes){
@@ -917,8 +920,35 @@ function initCatalogData() {
 	return deferred;
 }
 
+function initCurrentUserDisplay() {
+	var def = new dojo.Deferred();
+
+
+	SecurityService.getCurrentUser({
+		preHook: UtilDWR.enterLoadingState,
+		postHook: UtilDWR.exitLoadingState,
+		callback: function(user) {
+			var roleName = UtilSecurity.getRoleName(user.role);
+			var title = UtilAddress.createAddressTitle(user.address);
+			dojo.byId("currentUserName").innerHTML = title;
+			dojo.byId("currentUserRole").innerHTML = roleName;
+
+			def.callback();
+		},
+		errorHandler:function(mes){
+			UtilDWR.exitLoadingState();
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
+
+	return def;
+}
 
 function initSysLists() {
+	var def = new dojo.Deferred();
+
 	var selectWidgetIDs = ["spatialRefAltVDate", "spatialRefAltMeasure", "timeRefTypeCombobox",
 		"generalAddressCombobox", "geometryTypeEditor", "timeRefPeriodicity", "availabilityMediaOptionsMediumCombobox",
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
@@ -955,13 +985,17 @@ function initSysLists() {
 				var selectWidget = dojo.widget.byId(widgetId);
 				selectWidget.dataProvider.setData(res[selectWidget.listId]);	
 			});
+			def.callback();
 		},
 		errorHandler:function(mes){
 			UtilDWR.exitLoadingState();
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 			dojo.debug("Error: "+mes);
+			def.errback(mes);
 		}
 	});
+
+	return def;
 }
 
 
