@@ -30,12 +30,23 @@ _container_.addOnLoad(function() {
 
 
 function deleteGroup(group) {
+	var def = new dojo.Deferred();
+
 	SecurityService.deleteGroup(group.id, {
+		callback: function() {
+			def.callback();
+		},
 		errorHandler: function(errMsg, err) {
+			displayDeleteGroupError(err);
+/*
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
+*/
+			def.errback();
 		}
 	});
+
+	return def;
 }
 
 
@@ -107,14 +118,9 @@ scriptScope.saveGroup = function() {
 		group.name = groupName;
 		group.groupPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
-		SecurityService.storeGroup(group, true, {
-			callback: function(data) {
-				groupStore.update(selectedGroups[0], "name", data.name);
-			},
-			errorHandler: function(errMsg, err) {
-				dojo.debug(errMsg);
-				dojo.debugShallow(err);
-			}
+		var def = storeGroup(group, true);
+		def.addCallback(function(storedGroup) {
+			groupStore.update(selectedGroups[0], "name", storedGroup.name);
 		});
 
 	} else {
@@ -214,8 +220,11 @@ function createNewGroup(groupName) {
 
 		},
 		errorHandler: function(errMsg, err) {
+			displayCreateGroupErrorMessage(err);
+/*
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
+*/
 			deferred.errback(err);
 		}
 	});	
@@ -335,10 +344,22 @@ function initGroupList() {
 
 	var groupList = dojo.widget.byId("groups");
 	var groupStore = groupList.store;
+
+	dojo.event.connectOnce("around", groupList, "deleteRow", function(invocation) {
+//		dojo.debug("delete row called on obj:");
+//		dojo.debugShallow(invocation.args[0]);
+		var def = deleteGroup(invocation.args[0]);
+		def.addCallback(function() {
+			var result = invocation.proceed();
+			return result;		
+		});
+	});
+
+/*
 	dojo.event.connectOnce(groupStore, "onRemoveData", function(item) {
 		deleteGroup(item.src);
 	});
-
+*/
 	// If the user deletes a group that is currently selected, the input fields have to be reset
 	dojo.event.connectOnce("after", groupStore, "onRemoveData", function(data) {
 		if (dojo.lang.some(groupList.getSelectedData(), function(item){ return (item == data.src); })) {
@@ -398,8 +419,11 @@ function storeGroup(group, refetch) {
 			deferred.callback(group);
 		},
 		errorHandler: function(errMsg, err) {
+			displayStoreGroupErrorMessage(err);
+/*
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
+*/
 			deferred.errback(err);			
 		}
 	});
@@ -563,6 +587,92 @@ function convertAddressPermissionToTreeNode(p) {
 		nodeDocType: p.address.nodeDocType,
 		dojoType: "ingrid:TreeNode",
 		nodeAppType: "A"
+	}
+}
+
+
+// -- Error handling --
+function displayCreateGroupErrorMessage(err) {
+	if (err && err.message) {
+		if (err.message.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
+//			dialog.show(message.get("general.error"), message.get("dialog.noPermissionError"), dialog.WARNING);
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht angelegt werden, da der angegebene Gruppenname bereits existiert!", dialog.WARNING);
+
+		} else {
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
+		}
+
+	} else {
+		// Show general error message if we can't determine what went wrong
+		dialog.show(message.get("general.error"), message.get("dialog.undefinedError"), dialog.WARNING);
+	}
+}
+
+function displayStoreGroupErrorMessage(err) {
+	if (err && err.message) {
+		if (err.message.indexOf("SINGLE_BELOW_TREE_OBJECT_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+err.rootObject.title+"' geerbt. Bitte entfernen Sie eines der beiden Objekte aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("TREE_BELOW_TREE_OBJECT_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r den Teilbaum '"+err.invalidObject.title+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+err.rootObject.title+"' geerbt. Bitte entfernen Sie eines der beiden Objekte aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("SINGLE_BELOW_TREE_ADDRESS_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+UtilAddress.createAddressTitle(err.rootAddress)+"' geerbt. Bitte entfernen Sie eine der beiden Adressen aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("TREE_BELOW_TREE_ADDRESS_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r den Teilbaum '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+UtilAddress.createAddressTitle(err.rootAddress)+"' geerbt. Bitte entfernen Sie eine der beiden Adressen aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_EDITING_OBJECT_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da es sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"', noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_OBJECT_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_EDITING_ADDRESS_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da sie sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"', noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+
+		} else {
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
+		}
+
+	} else {
+		// Show general error message if we can't determine what went wrong
+		dialog.show(message.get("general.error"), message.get("dialog.undefinedError"), dialog.WARNING);
+	}
+}
+
+function displayDeleteGroupError(err) {
+	if (err && err.message) {
+		if (err.message.indexOf("GROUP_HAS_USERS") != -1) {
+			var userList = "";
+			dojo.lang.forEach(err.addresses, function(adr) {
+				userList += UtilAddress.createAddressTitle(adr)+"\n";
+			});
+			userList = dojo.string.trim(userList);
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden, da folgende Benutzer dieser Gruppe zugewiesen sind: '"+userList+"'", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_EDITING_OBJECT_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da es sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_OBJECT_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_EDITING_ADDRESS_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da sie sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+
+		} else {
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
+		}
+
+	} else {
+		// Show general error message if we can't determine what went wrong
+		dialog.show(message.get("general.error"), message.get("dialog.undefinedError"), dialog.WARNING);
 	}
 }
 

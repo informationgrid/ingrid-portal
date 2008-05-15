@@ -225,6 +225,13 @@ public class MdekUtils {
 		return group;
 	}
 
+	public static void checkForErrors(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result == null) {
+			MdekErrorUtils.handleError(response);
+		}
+	}
+
 	private static ArrayList<Permission> getAddressPermissions(ArrayList<IngridDocument> docList) {
 		ArrayList<Permission> resultList = new ArrayList<Permission>();
 

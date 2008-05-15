@@ -8,6 +8,7 @@
 
 <script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
@@ -41,6 +42,8 @@ var currentMenu = null;
 var currentSubMenu = new Array();
 
 var currentUser = null;
+var currentGroup = null;
+var catalogData = null;
 
 
 dojo.addOnLoad(function() {
@@ -56,16 +59,103 @@ dojo.addOnLoad(function() {
 		console.style.visibility = "visible";
 	}
 
-	SecurityService.getCurrentUser( {
-		callback: function(user) {
-			currentUser = user;
+	var def = initCatalogData();
+	def.addCallback(initCurrentUser);
+	def.addCallback(initCurrentGroup);
+	def.addCallback(initPageHeader);
+});
+
+function initPageHeader() {
+	// Display the current user and role
+	var roleName = UtilSecurity.getRoleName(currentUser.role);
+	var title = UtilAddress.createAddressTitle(currentUser.address);
+	dojo.byId("currentUserName").innerHTML = title;
+	dojo.byId("currentUserRole").innerHTML = roleName;
+
+	// Display the current catalog name
+	dojo.byId("currentCatalogName").innerHTML = catalogData.catalogName;
+}
+
+
+function initCatalogData() {
+	var deferred = new dojo.Deferred();
+
+	CatalogService.getCatalogData({
+		callback: function(res) {
+			// Update catalog Data
+			catalogData = res;
+			deferred.callback();
 		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug(errMsg);
-			dojo.debugShallow(err);
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug(mes);
+			deferred.errback();
 		}
 	});
-});
+
+	return deferred;
+}
+
+function initCurrentGroup() {
+	var def = getCurrentGroupName();
+
+	def.addCallback(function(groupName) {
+		SecurityService.getGroupDetails(groupName, {
+			callback: function(group) {
+				currentGroup = group;
+			},
+
+			errorHandler:function(mes){
+				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+				dojo.debug("Error: "+mes);
+			}
+		});
+	});
+
+	return def;
+}
+
+function getCurrentGroupName() {
+	var def = new dojo.Deferred();
+
+	SecurityService.getGroups({
+		callback: function(groupList) {
+			for (var i = 0; i < groupList.length; ++i) {
+				if (groupList[i].id == currentUser.groupId) {
+					def.callback(groupList[i].name);
+					break;
+				}
+			}
+		},
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
+
+	return def;		
+}
+
+function initCurrentUser() {
+	var def = new dojo.Deferred();
+
+	SecurityService.getCurrentUser({
+		callback: function(user) {
+			currentUser = user;
+			def.callback();
+		},
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
+
+	return def;
+}
+
+
 
 function clickMenu(menuName, submenuName) {
 	// Activate the menu by removing the following lines
@@ -165,7 +255,7 @@ function hideSplash(){
   	  <div id="title"><img src="img/title_erfassung.gif" width="158" height="24" alt="Metadatenerfassung" /></div>
   	  <div id="metaNavi">
   	    <ul>
-  	      <li>Fred Kruse · Rollenbezeichnung · Katalog Niedersachsen</li>
+  	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" title="Hilfe">Hilfe</a></li>
   	      <li class="seperator">|</li>
