@@ -113,6 +113,7 @@ scriptScope.deleteUser = function() {
 
 	// Can't delete the cat admin. This is also checked in the backend.
 	if (user == null || user.role == 1 || user.isFolder) {
+		dialog.show(message.get("general.error"), "Der markierte Benutzer kann nicht gel&ouml;scht werden.", dialog.WARNING);
 		dojo.debug("Can't delete.");
 		return;
 	}
@@ -145,6 +146,7 @@ scriptScope.importPortalUser = function() {
 	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
 
 	if (currentUser.role == 1 && selectedUser == null) {
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen Benutzer aus, dem der neue Benutzer zugeordnet werden soll.", dialog.WARNING);
 		dojo.debug("No node selected.");
 		return;
 	}
@@ -152,6 +154,7 @@ scriptScope.importPortalUser = function() {
 	// In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
 	if (currentUser.role == 2) {		
 		if (selectedUser.userId != currentUser.id) {
+			dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Stelle aus, an die der neue Benutzer angef&uuml;gt werden soll. Sie d&uuml;rfen lediglich Metadaten-Autoren unter Ihrer eigenen Adresse anlegen!", dialog.WARNING);
 			dojo.debug("Can't create users here. Select the correct mdAdmin.");
 			return;
 		}
@@ -159,12 +162,14 @@ scriptScope.importPortalUser = function() {
 
 	// In case a user with role mdAutor is selected, do nothing and return
 	if (selectedUser.role < 1 || selectedUser.role > 2) {
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Stelle aus, an die der neue Benutzer angef&uuml;gt werden soll.", dialog.WARNING);
 		dojo.debug("Select a user with role catAdmin or mdAdmin.");
 		return;
 	}
 
 	// In case a newUserNode already exists, return
 	if (selectedUser.id == "newUserNode") {
+		dialog.show(message.get("general.error"), "Sie m&uuml;ssen den neu angelegten Benutzer zun&auml;chst speichern bevor Sie einen neuen Benutzer anlegen.", dialog.WARNING);
 		dojo.debug("Please save the current user before creating a new one.");
 		return;
 	}
@@ -197,11 +202,13 @@ scriptScope.saveUser = function() {
 	var login = dojo.widget.byId("userDataLogin").getValue();
 
 	if (dojo.string.trim(login).length == 0) {
+		dialog.show(message.get("general.error"), "Sie m&uuml;ssen zun&auml;chst einen g&uuml;ltigen Portalbenutzer ausw&auml;hlen, bevor Sie den Benutzer speichern k&ouml;nnen.", dialog.WARNING);
 		dojo.debug("No user selected for save/import.");
 		return;
 	}
 
 	if (!isValidUser()) {
+		dialog.show(message.get("general.error"), "Fehlerhafte Eingabe! Bitte &uuml;berpr&uuml;fen Sie alle Eingabefelder.", dialog.WARNING);
 		dojo.debug("Invalid information entered.");
 		return;
 	}
