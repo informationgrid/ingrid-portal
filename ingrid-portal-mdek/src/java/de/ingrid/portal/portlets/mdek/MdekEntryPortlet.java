@@ -46,9 +46,12 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     // Parameters set on init
     private UserManager userManager;
     private RoleManager roleManager;
+	IMdekCallerSecurity mdekCallerSecurity;
 
     public void init(PortletConfig config) throws PortletException {
     	super.init(config);
+
+    	mdekCallerSecurity = MdekCallerSecurity.getInstance();
 
         userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
         if (null == userManager) {
@@ -90,8 +93,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     }
     
     private boolean hasUserAccessToMdekAdmin(String userName) throws SecurityException {
-    	if (!roleManager.isUserInRole(userName, "admin-catalog") &&
-    		!roleManager.isUserInRole(userName, "mdek")) {
+    		if (!roleManager.isUserInRole(userName, "mdek")) {
     		return false;
     	}
 
@@ -102,7 +104,6 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	HibernateUtil.closeSession();
 
     	// Check for the idcRole of the user
-    	IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
     	IngridDocument response = mdekCallerSecurity.getUserDetails(userData.getPlugId(), userData.getAddressUuid(), userData.getAddressUuid());
 		IngridDocument userDoc = MdekUtils.getResultFromResponse(response);
 		Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);

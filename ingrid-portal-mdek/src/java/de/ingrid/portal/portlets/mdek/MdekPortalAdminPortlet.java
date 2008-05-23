@@ -29,14 +29,17 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
+import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.utils.IngridDocument;
@@ -90,9 +93,6 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         }
 
 		try {
-			if (!roleManager.roleExists("admin-catalog")) {
-				roleManager.addRole("admin-catalog");
-			}
 			if (!roleManager.roleExists("mdek")) {
 				roleManager.addRole("mdek");
 			}
@@ -115,7 +115,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 		setDefaultViewPage(TEMPLATE_NEW);
     	
     	Context context = getContext(request);
-        context.put("plugIdList", getUnconnectedPlugIdList());
+        context.put("plugIdList", getUnconnectedPlugIdList(request));
         context.put("userNameList", getUnconnectedUserList());
     }
 
@@ -191,7 +191,6 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 	    		// TODO Delete all idc users in the catalog?
 	    		for(UserData userData : userDataList) {
 		    		s.delete(userData);
-		    		roleManager.removeRoleFromUser(userData.getPortalLogin(), "admin-catalog");
 		    		roleManager.removeRoleFromUser(userData.getPortalLogin(), "mdek");
 	    		}
 	        	s.getTransaction().commit();
@@ -237,7 +236,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	try {    	
         	s.beginTransaction();
         	s.persist(user);
-        	roleManager.addRoleToUser(userName, "admin-catalog");
+        	roleManager.addRoleToUser(userName, "mdek");
         	s.getTransaction().commit();
 
     	} catch (SecurityException e) {
@@ -289,11 +288,11 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         }
     }
 
-    private List<String> getUnconnectedPlugIdList() throws PortletException {
+    private List<String> getUnconnectedPlugIdList(javax.portlet.RenderRequest request) throws PortletException {
     	List<String> plugIdList = new ArrayList<String>();
     
     	for (String plugId : this.mdekCaller.getRegisteredIPlugs()) {
-    		if (!hasCatalogAdmin(plugId)) {
+    		if (!hasCatalogAdmin(request, plugId)) {
             	log.debug("Catalog '"+plugId+"' does not have a catAdmin.");
     			plugIdList.add(plugId);
 
@@ -369,31 +368,31 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	return title;
     }
 
-    private boolean hasCatalogAdmin(String plugId) throws PortletException {
+    private boolean hasCatalogAdmin(javax.portlet.RenderRequest request, String plugId) throws PortletException {
+    	IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
+		IngridDocument response = mdekCallerSecurity.getCatalogAdmin(plugId, request.getUserPrincipal().getName());
+    	IngridDocument catAdmin = MdekUtils.getResultFromResponse(response);
+    	String addressUuid = (String) catAdmin.get(MdekKeys.UUID);
+
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
-    	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
+    	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", addressUuid)).list();
 
     	s.getTransaction().commit();
     	HibernateUtil.closeSession();
 
-    	if (userDataList != null) {
-    		try {
-    			for (UserData userData : userDataList) {
-    				if (roleManager.isUserInRole(userData.getPortalLogin(), "admin-catalog")) {
-    					return true;
-    				}
-    			}
-    		} catch (SecurityException e) {
-				throw new PortletException(e);
-			}
+    	if (userDataList != null && userDataList.size() != 0) {
+    		return true;
     	}
+
     	return false;
     }
-    
+
+
     private boolean canBecomeCatalogAdmin(String userName) throws SecurityException {
-    	return (!roleManager.isUserInRole(userName, "admin-portal")
-    		 && !roleManager.isUserInRole(userName, "admin-catalog")
+    	return (!userName.equals("admin") && !userName.equals("guest") && !userName.equals("devmgr")
+       	     && !roleManager.isUserInRole(userName, "admin")
+    	     && !roleManager.isUserInRole(userName, "admin-portal")
     		 && !roleManager.isUserInRole(userName, "mdek"));
     }
 }
