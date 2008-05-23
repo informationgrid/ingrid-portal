@@ -137,8 +137,9 @@ public class ObjectServiceImpl implements ObjectService {
 
 		try {
 			data = objectRequestHandler.getObjectDetail(nodeUuid);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			log.debug("Error while getting node data.", e);
+			throw e;
 		}
 
 		// Return a newly created node
@@ -192,9 +193,9 @@ public class ObjectServiceImpl implements ObjectService {
 				log.debug("MdekException while publishing node.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
-			catch (Exception e) {
+			catch (RuntimeException e) {
 				log.debug("Error while publishing node", e);
-				throw new RuntimeException("Error while publishing node.");
+				throw e;
 			}
 		}
 	}

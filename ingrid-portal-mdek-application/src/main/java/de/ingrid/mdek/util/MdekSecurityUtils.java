@@ -1,7 +1,14 @@
 package de.ingrid.mdek.util;
 
-import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
@@ -23,14 +30,39 @@ public class MdekSecurityUtils {
 		WebContext wctx = WebContextFactory.get();
 		HttpServletRequest req = wctx.getHttpServletRequest();
 
-//		log.debug("Remote user: "+req.getRemoteUser());
-		if (req.getUserPrincipal() != null) {
-//			log.debug("User Principal: "+req.getUserPrincipal().getName());
-			return getUserData(req.getUserPrincipal().getName());
+		HttpSession ses = wctx.getSession();
+/*
+		// Test code begin
+		log.debug("Session parameters:");
+		log.debug("            Id: "+ses.getId());
+		log.debug(" Creation Time: "+new Date(ses.getCreationTime()).toString());
+		log.debug("   Last Access: "+new Date(ses.getLastAccessedTime()).toString());
+		log.debug("  Max inactive: "+ses.getMaxInactiveInterval());
+		// Test code end
+*/
+		Principal userPrincipal = req.getUserPrincipal(); 
+		if (userPrincipal != null) {
+			// userPrincipal found. return the UserData associated with the userName			
+			ses.setAttribute("userName", userPrincipal.getName());
+			return getUserData(userPrincipal.getName());
+
 		} else {
-			throw new RuntimeException("User not logged in.");
+			// userPrincipal not found. Check if we have stored the usrName in the session			
+			String userName = (String) ses.getAttribute("userName");
+
+			if (userName != null) {
+				// userName was stored in the session. Return the UserData obj associated with the userName
+				return getUserData(userName);
+
+			} else {
+				// UserPrincipal and userName not found. Throw an error since we can't determine the user
+				throw new RuntimeException("USER_LOGIN_ERROR");
+			}
 		}
+//		return getUserData("Testmdadmin");
+//		return getUserData("Testcatadmin");
 	}
+
 
 	public static UserData getUserData(String portalLogin) {
 		// Load user data directly from the db via hibernate
@@ -48,8 +80,10 @@ public class MdekSecurityUtils {
 	public static UserData getUserDataForAddress(String addressUuid) {
 		// Load user data directly from the db via hibernate
 		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+		// Find the user via addressUuid and the current iPlug
 		UserData sampleUser = new UserData();
 		sampleUser.setAddressUuid(addressUuid);
+		sampleUser.setPlugId(getCurrentPortalUserData().getPlugId());
 
 		dao.beginTransaction();
 		UserData userData = (UserData) dao.findUniqueByExample(sampleUser);

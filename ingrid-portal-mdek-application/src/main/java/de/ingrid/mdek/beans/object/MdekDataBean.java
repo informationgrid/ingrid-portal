@@ -24,6 +24,8 @@ public class MdekDataBean {
 	public String nodeDocType;
 	public String nodeAppType;
 	public Boolean writePermission;
+	public Boolean writeSinglePermission;
+	public Boolean writeTreePermission;
 
 	// Identification 
 	public String objectName;
@@ -1458,6 +1460,34 @@ public class MdekDataBean {
 
 	public void setWritePermission(Boolean writePermission) {
 		this.writePermission = writePermission;
+	}
+
+
+
+
+	public Boolean getWriteSinglePermission() {
+		return writeSinglePermission;
+	}
+
+
+
+
+	public void setWriteSinglePermission(Boolean writeSinglePermission) {
+		this.writeSinglePermission = writeSinglePermission;
+	}
+
+
+
+
+	public Boolean getWriteTreePermission() {
+		return writeTreePermission;
+	}
+
+
+
+
+	public void setWriteTreePermission(Boolean writeTreePermission) {
+		this.writeTreePermission = writeTreePermission;
 	}
 
 }

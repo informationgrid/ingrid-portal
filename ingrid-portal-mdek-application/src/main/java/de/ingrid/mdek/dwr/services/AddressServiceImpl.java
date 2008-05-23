@@ -129,8 +129,9 @@ public class AddressServiceImpl implements AddressService {
 
 		try {
 			address = addressRequestHandler.getAddressDetail(nodeUuid);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			log.debug("Error while getting address data.", e);
+			throw e;
 		}
 
 		// TODO check for errors and throw an exception?
@@ -174,9 +175,9 @@ public class AddressServiceImpl implements AddressService {
 				log.debug("MdekException while saving address.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
-			catch (Exception e) {
+			catch (RuntimeException e) {
 				log.debug("Error while saving node", e);
-				throw new RuntimeException("Error while saving address.");
+				throw e;
 			}
 		} else {
 			log.debug("Publishing address with ID: "+data.getUuid());
@@ -187,9 +188,9 @@ public class AddressServiceImpl implements AddressService {
 				log.debug("MdekException while publishing address.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
-			catch (Exception e) {
+			catch (RuntimeException e) {
 				log.debug("Error while publishing address", e);
-				throw new RuntimeException("Error while publishing address.");
+				throw e;
 			}
 		}
 	}

@@ -14,6 +14,9 @@
     "general.delete":"L&ouml;schen",
     "general.closeWindow":"Alle nicht gespeicherten \u00c4nderungen werden dabei verworfen.",
 
+    "init.loadError":"Fehler in der Initialisierungsphase. Bitte versuchen Sie es erneut oder kontaktieren Sie den zuständigen Systemadministrator.",
+    "init.userError":"Fehler in der Initialisierungsphase. Der aktuelle Benutzer konnte nicht ermittelt werden. Bitte melden Sie sich zuerst am Portal an bevor Sie auf die Mdek Applikation zugreifen!",
+
     "tree.nodeNew":"Neu anlegen",
     "tree.nodePreview":"Vorschau und Druckansicht",
     "tree.nodeCut":"Objekt / Adresse ausschneiden / Teilbaum ausschneiden",
@@ -54,9 +57,14 @@
 	"dialog.undoChangesTitle":"aktuelle &Auml;nderungen verwerfen",
 	"dialog.object.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern am Objekt vorgenommenen &Auml;nderungen verwerfen?",
 	"dialog.address.undoChangesMessage":"Wollen Sie die seit dem letzten Zwischenspeichern an der Adresse vorgenommenen &Auml;nderungen verwerfen?",
+	"dialog.finalSaveTitle":"Ver&ouml;ffentlichen",
+	"dialog.object.finalSaveMessage":"Wollen Sie das Objekt wirklich ver&ouml;ffentlichen?",
+	"dialog.address.finalSaveMessage":"Wollen Sie die Adresse wirklich ver&ouml;ffentlichen?",
+
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 	"dialog.generalError":"Beim Ausf&uuml;hren der Aktion ist folgender Fehler aufgetreten: '%{0}'",
 	"dialog.undefinedError":"Beim Ausf&uuml;hren der Aktion ist ein Fehler aufgetreten.",
+	"dialog.sessionTimeoutError":"Ihre Session ist abgelaufen. Bitte schliessen Sie die Anwendung und melden Sie sich erneut an.",
 	"dialog.commentTitle":"Kommentare zu '%{0}'",
 	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
 	"dialog.hqlQueryInvalidError":"Der eingegebene HQL Suchstring ist ung&uuml;ltig. Bitte &uuml;berpr&uuml;fen sie die Eingabe.",

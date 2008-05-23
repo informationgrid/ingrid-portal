@@ -221,9 +221,10 @@ public class SecurityServiceImpl {
 
 			while (users.hasNext()) {
 				String user = users.next();
-				if (!roleManager.isUserInRole(user, "admin-portal") &&
-					!roleManager.isUserInRole(user, "admin-catalog") &&
-					!roleManager.isUserInRole(user, "mdek")) {
+		    	if (!user.equals("admin") && !user.equals("guest") && !user.equals("devmgr")
+		          	 && !roleManager.isUserInRole(user, "admin")
+		       	     && !roleManager.isUserInRole(user, "admin-portal")
+		       		 && !roleManager.isUserInRole(user, "mdek")) {
 					userList.add(user);
 				}
 			}

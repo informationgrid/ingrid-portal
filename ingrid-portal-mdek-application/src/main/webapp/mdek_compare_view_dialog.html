@@ -11,7 +11,7 @@ _container_.addOnLoad(function() {
 	ObjectService.getNodeData(nodeOld.id, nodeOld.nodeAppType, "false",
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
-			timeout:5000,
+//			timeout:5000,
 			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_dialog.html: Error while waiting for nodeData: " + message); }
 		}
 	);

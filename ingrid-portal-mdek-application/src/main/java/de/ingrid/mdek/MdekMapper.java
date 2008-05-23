@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -115,7 +116,10 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
 		mdekObj.setLastEditor(getDetailedAddressRepresentation(obj.get(MdekKeys.MOD_USER)));
 
-		mdekObj.setWritePermission((Boolean) obj.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+		List<IngridDocument> idcPermissions = (List<IngridDocument>) obj.get(MdekKeysSecurity.IDC_PERMISSIONS);
+		mdekObj.setWritePermission(hasWritePermission(idcPermissions));
+		mdekObj.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
+		mdekObj.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
 
 		// Comments
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
@@ -317,7 +321,10 @@ public class MdekMapper implements DataMapperInterface {
 			mdekAddress.setAddressOwner(responsibleUser.getUuid());
 		}
 
-		mdekAddress.setWritePermission((Boolean) adr.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+		List<IngridDocument> idcPermissions = (List<IngridDocument>) adr.get(MdekKeysSecurity.IDC_PERMISSIONS);
+		mdekAddress.setWritePermission(hasWritePermission(idcPermissions));
+		mdekAddress.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
+		mdekAddress.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
 
 		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
@@ -478,7 +485,11 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.put(MDEK_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
-		mdekObj.put(MDEK_USER_WRITE_PERMISSION, obj.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+
+		List<IngridDocument> idcPermissions = (List<IngridDocument>) obj.get(MdekKeysSecurity.IDC_PERMISSIONS);
+		mdekObj.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
+		mdekObj.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
+		mdekObj.put(MDEK_USER_WRITE_TREE_PERMISSION, hasWriteTreePermission(idcPermissions));
 
 		String nodeDocType = getObjectDocType(obj);
 		mdekObj.put(MDEK_DOCTYPE, nodeDocType);
@@ -542,7 +553,11 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
 		mdekAdr.put(MDEK_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
-		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, adr.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+//		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, adr.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+		List<IngridDocument> idcPermissions = (List<IngridDocument>) adr.get(MdekKeysSecurity.IDC_PERMISSIONS);
+		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
+		mdekAdr.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
+		mdekAdr.put(MDEK_USER_WRITE_TREE_PERMISSION, hasWriteTreePermission(idcPermissions));
 
 		String adrDocType = getAddressDocType(adr);
 		mdekAdr.put(MDEK_DOCTYPE, adrDocType);
@@ -1623,6 +1638,24 @@ public class MdekMapper implements DataMapperInterface {
 	/********************************
 	 * Miscellaneous Helper Methods *
 	 ********************************/
+	private boolean hasWritePermission(List<IngridDocument> permissionList) {
+		// TODO Implement tree and single user permissions
+/*
+		System.out.println("HAS_WRITE_ACCESS: " + MdekUtilsSecurity.hasWritePermission(permissionList));
+		System.out.println("HAS_WRITE_TREE_ACCESS: " + MdekUtilsSecurity.hasWriteTreePermission(permissionList));
+		System.out.println("HAS_WRITE_SINGLE_ACCESS: " + MdekUtilsSecurity.hasWriteSinglePermission(permissionList));
+*/
+		return MdekUtilsSecurity.hasWritePermission(permissionList);
+	}
+
+	private boolean hasWriteSinglePermission(List<IngridDocument> permissionList) {
+		return MdekUtilsSecurity.hasWriteSinglePermission(permissionList);
+	}
+	private boolean hasWriteTreePermission(List<IngridDocument> permissionList) {
+		return MdekUtilsSecurity.hasWriteTreePermission(permissionList);
+	}
+
+
 	private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	private static Date convertTimestampToDate(String timeStamp) {

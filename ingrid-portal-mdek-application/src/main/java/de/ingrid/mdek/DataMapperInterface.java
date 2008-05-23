@@ -51,6 +51,8 @@ public interface DataMapperInterface {
 	public final static String MDEK_HAS_CHILDREN = "isFolder";
 	public final static String MDEK_IS_PUBLISHED = "isPublished";
 	public final static String MDEK_USER_WRITE_PERMISSION = "userWritePermission";
+	public final static String MDEK_USER_WRITE_SINGLE_PERMISSION = "userWriteSinglePermission";
+	public final static String MDEK_USER_WRITE_TREE_PERMISSION = "userWriteTreePermission";
 
 	// TODO: Some values are duplicates. Merge them!
 	public final static String MDEK_TITLE = "title";

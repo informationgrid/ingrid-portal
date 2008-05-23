@@ -22,7 +22,8 @@ menuEventHandler.handleNewEntity = function(mes) {
 			// publish a createObject request and attach the newly created node if it was successful
 			deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
 			deferred.addErrback(function(err){
-				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+//				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+				displayErrorMessage(err);
 			});
 			dojo.debug("Publishing event: /createObjectRequest("+selectedNode.id+")");
 	  		dojo.event.topic.publish("/createObjectRequest", {id: selectedNode.id, resultHandler: deferred});
@@ -69,7 +70,8 @@ menuEventHandler._createNewAddress = function(addressClass, parentNode) {
 		attachNewNode(dojo.widget.byId(parentId), res);
 	});
 	deferred.addErrback(function(err){
-		dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+//		dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
+		displayErrorMessage(err);
 	});
 	dojo.debug("Publishing event: /createAddressRequest("+parentId+")");
 	dojo.event.topic.publish("/createAddressRequest", {id: parentId, addressClass: addressClass, resultHandler: deferred});
@@ -612,8 +614,16 @@ menuEventHandler._handleFinalSaveObject = function(msg) {
 		var deferred = new dojo.Deferred();
 		deferred.addErrback(displayErrorMessage);
 
-		dojo.debug("Publishing event: /publishObjectRequest");
-		dojo.event.topic.publish("/publishObjectRequest", {resultHandler: deferred});		
+		// Show a dialog to query the user before publishing
+		dialog.show(message.get("dialog.finalSaveTitle"), message.get("dialog.object.finalSaveMessage"), dialog.INFO, [
+        	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
+        	{ caption: message.get("general.yes"), action: function() {
+					dojo.debug("Publishing event: /publishObjectRequest");
+					dojo.event.topic.publish("/publishObjectRequest", {resultHandler: deferred});
+        		}
+        	}
+		]);
+
 	} else {
   		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
 	}
@@ -629,8 +639,16 @@ menuEventHandler._handleFinalSaveAddress = function(msg) {
 		var deferred = new dojo.Deferred();
 		deferred.addErrback(displayErrorMessage);
 
-		dojo.debug("Publishing event: /publishAddressRequest");
-		dojo.event.topic.publish("/publishAddressRequest", {resultHandler: deferred});		
+		// Show a dialog to query the user before publishing
+		dialog.show(message.get("dialog.finalSaveTitle"), message.get("dialog.address.finalSaveMessage"), dialog.INFO, [
+        	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
+        	{ caption: message.get("general.yes"), action: function() {
+					dojo.debug("Publishing event: /publishAddressRequest");
+					dojo.event.topic.publish("/publishAddressRequest", {resultHandler: deferred});		
+        		}
+        	}
+		]);
+
 	} else {
   		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
 	}
@@ -770,9 +788,11 @@ function displayErrorMessage(err) {
 	if (err && err.message) {
 
 		// In case an exception is wrappen inside another exception (dwr exception isn't of type Error)
-		if (typeof(err.message) == "object")
+		while(typeof(err.message) == "object") {
+			dojo.debug("Error message is obj. Extracting...");
 			err = err.message;
-
+			dojo.debug("err.message: "+err.message);
+		}
 
 		if (err.message.indexOf("OPERATION_CANCELLED") != -1) {
 			return;
@@ -807,6 +827,9 @@ function displayErrorMessage(err) {
 		} else if (err.message.indexOf("PARENT_HAS_SMALLER_PUBLICATION_CONDITION") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.parentHasSmallerPublicationConditionError"), dialog.WARNING);
 		
+		} else if (err.message.indexOf("USER_LOGIN_ERROR") != -1) {
+			dialog.show(message.get("general.error"), message.get("dialog.sessionTimeoutError"), dialog.WARNING);
+
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
 		}

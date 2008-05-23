@@ -72,7 +72,7 @@ function initializeUserTree() {
 
 		SecurityService.getSubUsers(node.userId, {
   			callback:function(res) { deferred.callback(res); },
-			timeout:10000,
+//			timeout:10000,
 			errorHandler:function(message) {
 				deferred.errback(new dojo.RpcError(message, this));
 			}

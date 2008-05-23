@@ -121,7 +121,7 @@ init = function() {
 
 		TreeService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
-			timeout:5000,
+//			timeout:5000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
 			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
   		});

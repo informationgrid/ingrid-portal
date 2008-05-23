@@ -23,9 +23,9 @@ dojo.addOnLoad(function()
   initCTS();
   initFreeTermsButtons();
   initReferenceTables();
-  var deferred = initCatalogData();
+  var deferred = initCurrentUser();
+  deferred.addCallback(initCatalogData);
   deferred.addCallback(initSysLists);
-  deferred.addCallback(initCurrentUser);
   deferred.addCallback(initCurrentGroup);
 
   hideSplash();
@@ -176,7 +176,7 @@ function initTree() {
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },
-			timeout:10000,
+//			timeout:10000,
 			errorHandler:function(message) {
 				UtilDWR.exitLoadingState();
 				deferred.errback(new dojo.RpcError(message, this));
@@ -798,6 +798,8 @@ function initToolbar() {
 
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 		var hasWritePermission = message.node.userWritePermission;
+		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
+		var hasWriteTreePermission = message.node.userWriteTreePermission;
 		var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
 //		dojo.debug("User has write permission? "+hasWritePermission);
 
@@ -816,29 +818,44 @@ function initToolbar() {
 			disableList = [copyTreeButton, cutButton, copyEntityButton, newEntityButton];
 			enableList = [previewButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
 
-		} else if (message.node.isFolder && hasWritePermission) {
+		} else if (message.node.isFolder && hasWriteTreePermission) {
 			disableList = [];
 			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
+
+		} else if (message.node.isFolder && hasWriteSinglePermission) {
+			disableList = [cutButton, deleteButton, newEntityButton];
+			enableList = [previewButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, showCommentButton];
 
 		} else if (message.node.isFolder && !hasWritePermission) {
 			disableList = [cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
 			enableList = [previewButton, copyEntityButton, copyTreeButton, showCommentButton];
 
 		} else if (hasWritePermission) {
-			disableList = [copyTreeButton];
-			enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+			if (hasWriteTreePermission) {
+				disableList = [copyTreeButton];
+				enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+
+			} else if (hasWriteSinglePermission) {
+				disableList = [copyTreeButton, cutButton, deleteButton];
+				enableList = [previewButton, copyEntityButton, saveButton, discardButton, finalSaveButton, showCommentButton];				
+			}
 
 			if (message.node.nodeAppType == "O") {
-				enableList.unshift(newEntityButton);				
+				if (hasWriteTreePermission) {
+					enableList.push(newEntityButton);
+				} else {
+					disableList.push(newEntityButton);
+				}
 
 			} else if (message.node.nodeAppType == "A") {
 				// For addresses, the new entity button depends on the class of the selected node
-				if (message.node.objectClass == 2 || message.node.objectClass == 3) {
-					disableList.unshift(newEntityButton);
+				if (message.node.objectClass == 2 || message.node.objectClass == 3 || !hasWriteTreePermission) {
+					disableList.push(newEntityButton);
 				} else {
-					enableList.unshift(newEntityButton);
+					enableList.push(newEntityButton);
 				}
 			}
+
 		} else if (!hasWritePermission) {
 			disableList = [copyTreeButton, cutButton, saveButton, discardButton, finalSaveButton, deleteButton];
 			enableList = [previewButton, copyEntityButton, showCommentButton];
@@ -1006,7 +1023,7 @@ function initCurrentUser() {
 		},
 		errorHandler:function(mes){
 			UtilDWR.exitLoadingState();
-			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dialog.show(message.get("general.error"), message.get("init.userError"), dialog.WARNING);
 			dojo.debug("Error: "+mes);
 			def.errback(mes);
 		}

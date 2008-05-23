@@ -115,12 +115,39 @@ scriptScope.saveGroup = function() {
 		// exactly one group selected
 //		var group = selectedGroups[0];
 		var group = curSelectedGroupDetails;
+		
+		// update group name
 		group.name = groupName;
+
+		// update object permissions
+		var objs = dojo.widget.byId("groupDataRightsObjectsList").store.getData();
+		var objPermissionList = [];
+	
+		dojo.lang.forEach(objs, function(obj){
+			var id = obj.uuid;
+			var permissionType = dojo.byId(obj.uuid+"_subtree").checked ? "WRITE_TREE" : "WRITE_SINGLE";
+			objPermissionList.push( { uuid:id, permission:permissionType } );
+		});
+		group.objectPermissions = objPermissionList;
+
+		// update address permissions
+		var adrs = dojo.widget.byId("groupDataRightsAddressesList").store.getData();
+		var adrPermissionList = [];
+
+		dojo.lang.forEach(adrs, function(adr){
+			var id = adr.uuid;
+			var permissionType = dojo.byId(adr.uuid+"_subtree").checked ? "WRITE_TREE" : "WRITE_SINGLE";
+			adrPermissionList.push( { uuid:id, permission:permissionType } );
+		});
+		group.addressPermissions = adrPermissionList;
+
+		// update group permissions
 		group.groupPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
 
 		var def = storeGroup(group, true);
 		def.addCallback(function(storedGroup) {
 			groupStore.update(selectedGroups[0], "name", storedGroup.name);
+			curSelectedGroupDetails = storedGroup;
 		});
 
 	} else {
@@ -268,7 +295,7 @@ function initObjectTree() {
 //			preHook: UtilDWR.enterLoadingState,
 //			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },
-			timeout:10000,
+//			timeout:10000,
 			errorHandler:function(message) {
 //				UtilDWR.exitLoadingState();
 				deferred.errback(new dojo.RpcError(message, this));
@@ -319,7 +346,7 @@ function initAddressTree() {
 //			preHook: UtilDWR.enterLoadingState,
 //			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },
-			timeout:10000,
+//			timeout:10000,
 			errorHandler:function(message) {
 //				UtilDWR.exitLoadingState();
 				deferred.errback(new dojo.RpcError(message, this));
@@ -806,7 +833,8 @@ function displayDeleteGroupError(err) {
 					</div>
 					<!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
 				</div>
-		
+
+<!-- 		
 				<div class="inputContainer">
 					<span class="button w925" style="height:20px !important;">
 						<span style="float:right;">
@@ -817,7 +845,7 @@ function displayDeleteGroupError(err) {
 						</span>
 					</span>
 				</div>
-
+ -->
 			</div>
 			<!-- CONTENT BLOCK 2 END -->
 	
@@ -881,7 +909,8 @@ function displayDeleteGroupError(err) {
 					</div>
 					<!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
 				</div>
-		
+
+<!-- 
 				<div class="inputContainer">
 					<span class="button w925" style="height:20px !important;">
 						<span style="float:right;">
@@ -892,7 +921,7 @@ function displayDeleteGroupError(err) {
 						</span>
 					</span>
 				</div>
-
+ -->
 			</div>
 			<!-- CONTENT BLOCK 2 END -->
 		</div>

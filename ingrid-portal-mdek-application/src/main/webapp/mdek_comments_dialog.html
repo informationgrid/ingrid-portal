@@ -23,8 +23,14 @@ _container_.addOnLoad(function() {
 		nodeTitle = dojo.widget.byId("addressTitle").getValue();	
 	}
 	dojo.byId("commentTableLabel").innerHTML = dojo.string.substituteParams(message.get("dialog.commentTitle"), nodeTitle);
-
 	dstStore.setData(srcStore.getData());
+
+	if (!currentUdk.writePermission) {
+		dojo.widget.byId("addCommentButton").disable();
+		dojo.html.addClass(dojo.widget.byId("commentCommentsTable").domNode, "readonly");
+		dojo.html.removeClass(dojo.widget.byId("commentCommentsTable").domNode, "interactive");
+		dojo.widget.byId("commentCommentsTable").removeContextMenu();
+	}
 
 	var setDirtyFlag = function(){ dirtyFlag = true; }
 	dojo.event.connectOnce(dstStore, "onAddData", setDirtyFlag);
@@ -49,7 +55,9 @@ addComment = function() {
 
 	if (newComment != "") {
 		var key = UtilStore.getNewKey(commentStore);
-		commentStore.addData({Id: key, comment: newComment, date: new Date(), user: ""});
+		var userName = UtilAddress.createAddressTitle(currentUser.address);
+//		commentStore.addData({Id: key, comment: newComment, date: new Date(), user: userName});
+		commentStore.addData({Id: key, comment: newComment, date: new Date(), user: currentUser.addressUuid});
 	}
 }
 

@@ -15,6 +15,7 @@
     "general.closeWindow":"All unsaved changes will be discarded.",
 
     "init.loadError":"Error while loading initial values from the server. Please check your connection and try again.",
+    "init.userError":"Error while loading initial values from the server. The current user could not be found. Please log in to the portal before accessing the mdek application.",
    
     "tree.nodeNew":"New",
     "tree.nodePreview":"Preview",
@@ -106,7 +107,11 @@
 	"dialog.undoChangesTitle":"Discard current changes",
 	"dialog.object.undoChangesMessage":"Do you want to discard all changes to the current object since the last save?",
 	"dialog.address.undoChangesMessage":"Do you want to discard all changes to the current address since the last save?",
+	"dialog.finalSaveTitle":"Publish",
+	"dialog.object.finalSaveMessage":"Do you really want to publish the current object?",
+	"dialog.address.finalSaveMessage":"Do you really want to publish the current address?",
 	"dialog.inputInvalidError":"There was an error validating input fields. Please check all entered data and try again.",
+	"dialog.sessionTimeoutError":"Your session timed out. Please close the application and log in again.",
 	"dialog.generalError":"An error occured: '%{0}'",
 	"dialog.undefinedError":"An Error occured.",
 	"dialog.commentTitle":"Comments for '%{0}'",

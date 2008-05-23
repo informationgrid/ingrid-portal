@@ -76,6 +76,13 @@ dojo.widget.defineWidget(
     return this._contextMenuInst;
   },
 
+  removeContextMenu: function() {
+    if (this._contextMenuInst) {
+      this._contextMenuInst.unBindDomNode(this.domNode);
+      this._contextMenuInst = null;
+    }
+  },
+
   /*
    * Add default context menus
    */ 

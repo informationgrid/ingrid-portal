@@ -60,7 +60,7 @@ _container_.addOnLoad(function() {
 
 		TreeService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
-			timeout:20000,
+//			timeout:20000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
 			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
   		});
@@ -165,7 +165,7 @@ function addAddressToStore(adrId) {
 				store.addData(res);
 			}
 		},
-		timeout:20000,
+//		timeout:20000,
 		errorHandler:function(message) {
 			dojo.debug("Error in js/udkDataProxy.js: Error while waiting for addressData: " + message);
 		}
@@ -232,7 +232,7 @@ function browseSearchResults() {
 		callback: function(res){
 			updateResults(res);
 		},
-		timeout:30000,
+//		timeout:30000,
 		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.html: Error while searching for addresses:"+message); }
 	});
 }
@@ -250,7 +250,7 @@ startNewSearch = function() {
 		callback: function(res){
 			updateResults(res);
 		},
-		timeout:30000,
+//		timeout:30000,
 		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.html: Error while searching for addresses:"+message); }
 	});
 }
