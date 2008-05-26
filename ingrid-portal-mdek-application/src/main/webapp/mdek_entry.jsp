@@ -1569,7 +1569,7 @@ function hideSplash(){
 	                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)">Themenkategorie*</label></span>
 	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="thesaurusTopicsEditors">
-	                      <div dojoType="ingrid:Select" toggle="plain" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
 	                    </div>
 	              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>

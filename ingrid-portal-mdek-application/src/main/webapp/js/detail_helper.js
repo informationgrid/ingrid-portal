@@ -50,6 +50,11 @@ detailHelper.renderAddressEntry = function(address) {
 			entry += c.communicationMedium + ": " + c.communicationValue + "\n"; 
 		}
 	}
+	
+	if (this.isValid(address.addressDescription)) {
+		entry += "\n"+address.addressDescription;
+	}
+
 	return entry;
 }
 

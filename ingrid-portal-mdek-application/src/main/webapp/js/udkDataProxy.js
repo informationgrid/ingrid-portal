@@ -254,8 +254,17 @@ function _connectStoreWithDirtyFlag(store) {
 udkDataProxy.checkForUnsavedChanges = function(nodeId)
 {
 	dojo.debug("Check for unsaved changes called.");
-
 	var deferred = new dojo.Deferred();
+
+	// If the current user does not have write permission on the current obj/adr, don't display a dialog,
+	// clear the dirty flag and return as normal
+	if (currentUdk.writePermission == false) {
+		this.resetDirtyFlag();
+		deferred.callback();
+		return deferred;
+	}
+
+
 	if (this.dirtyFlag == true) {
 //		dialog.showPage(message.get("dialog.saveChangesTitle"), "mdek_save_changes.html", 350, 145, true, {resultHandler: deferred});
 		var displayText = "";

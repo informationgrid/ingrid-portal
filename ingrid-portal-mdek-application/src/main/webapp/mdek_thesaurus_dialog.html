@@ -184,16 +184,24 @@ function displaySearchResults(resultList) {
 //
 // The function adds the topics in 'topicList' as children to the tree 
 function handleRootTopics(topicList) {
-	for (i in topicList) {
+	for (var i in topicList) {
 		topicList[i].isFolder = true;
 		topicList[i].nodeDocType = topicList[i].type;
+		// Top Terms are not selectable. Add the proper class to make them grey
+		topicList[i].labelClass = "TreeNodeNotSelectable";
 	}
-	
 
 	var tree = dojo.widget.byId('thesTree');
 	// Check if the tree exists. If the user closed the dialog it won't.
-	if (tree)
+	if (tree) {
 		tree.setChildren(topicList);
+
+		// Iterate over all added child widgets and remove the mouseOver function.
+		// This is done so the node labels won't be underlined on mouseOver.
+		for (var i in tree.children) {
+			tree.children[i].viewMouseOver = function() {};
+		}
+	}
 }
 
 // Expands the tree to the topic with id 'topicID'
