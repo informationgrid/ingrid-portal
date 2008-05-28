@@ -21,12 +21,12 @@ scriptScope.displayPermissionsForObject = function(event) {
 		return;
 	}
 
-	SecurityService.getUsersWithWritePermissionForObject(uuid, {
+	SecurityService.getUsersWithWritePermissionForObject(uuid, true, {
 		callback: function(userList) {
 			objPermissionStore.clearData();
 			for (var i in userList) {
+				addPermissionsToUser(userList[i]);
 				userList[i].title = UtilAddress.createAddressTitle(userList[i].address);
-				userList[i].writeSingle = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 
 				objPermissionStore.addData(userList[i]);
 			}
@@ -50,12 +50,12 @@ scriptScope.displayPermissionsForAddress = function(event) {
 		return;
 	}
 
-	SecurityService.getUsersWithWritePermissionForAddress(uuid, {
+	SecurityService.getUsersWithWritePermissionForAddress(uuid, true, {
 		callback: function(userList) {
 			adrPermissionStore.clearData();
 			for (var i in userList) {
+				addPermissionsToUser(userList[i]);
 				userList[i].title = UtilAddress.createAddressTitle(userList[i].address);
-				userList[i].writeSingle = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 
 				adrPermissionStore.addData(userList[i]);
 			}
@@ -165,6 +165,23 @@ function initAddressTree() {
 	dojo.event.topic.subscribe(treeListener.eventNames.select, scriptScope, "displayPermissionsForAddress");
 }
 
+// Helper function that adds html tags to a user object, for display in the result table.
+function addPermissionsToUser(user) {
+	for (var i in user.permissions) {
+		if (user.permissions[i] == "WRITE_SINGLE") {
+			user.writeSingle = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
+
+		} else if (user.permissions[i] == "WRITE_TREE") {
+			user.writeTree = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
+
+		} else if (user.permissions[i] == "QUALITY_ASSURANCE") {
+			user.qa = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
+
+//		} else if (user.permission[i] == "CREATE_ROOT") {
+//			user.writeSingle = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
+		}
+	}
+}
 
 </script>
 

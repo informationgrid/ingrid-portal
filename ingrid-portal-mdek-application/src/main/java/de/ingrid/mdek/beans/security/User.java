@@ -2,6 +2,7 @@ package de.ingrid.mdek.beans.security;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -17,9 +18,12 @@ public class User {
 	private String roleName;
 	private Long parentUserId;
 	private Boolean hasChildren;
-	
+
 	private MdekAddressBean address;
 	private UserData userData;
+
+	// Optional list with permissions on a specific object/address. This field is set depending on the backend query.
+	private List<IdcPermission> permissions;
 
 	// Group Details
 	private Date creationTime;
@@ -98,5 +102,11 @@ public class User {
 	}
 	public void setUserData(UserData userData) {
 		this.userData = userData;
+	}
+	public List<IdcPermission> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(List<IdcPermission> permissions) {
+		this.permissions = permissions;
 	}
 }

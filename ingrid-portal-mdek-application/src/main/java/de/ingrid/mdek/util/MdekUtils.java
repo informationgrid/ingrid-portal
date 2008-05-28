@@ -389,6 +389,17 @@ public class MdekUtils {
 				u.setRole(role);
 				u.setRoleName(idcRole.toString());
 
+				// Extract optional idc permissions
+				List<IngridDocument> idcPermissions = (List<IngridDocument>) user.get(MdekKeysSecurity.IDC_PERMISSIONS);
+				if (idcPermissions != null) {
+					ArrayList<IdcPermission> pList = new ArrayList<IdcPermission>();
+					for (IngridDocument permissionDoc : idcPermissions) {
+						String pStr = (String) permissionDoc.get(MdekKeysSecurity.IDC_PERMISSION);
+						pList.add(EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, pStr));
+					}
+					u.setPermissions(pList);
+				}
+
 				u.setAddress(MdekAddressUtils.extractSingleAddress(user));
 
 				userList.add(u);

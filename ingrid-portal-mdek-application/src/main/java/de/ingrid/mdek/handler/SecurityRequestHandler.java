@@ -22,6 +22,6 @@ public interface SecurityRequestHandler {
 
 	public User getCatalogAdmin();
 
-	public List<User> getUsersWithWritePermissionForAddress(String addressUuid);
-	public List<User> getUsersWithWritePermissionForObject(String objectUuid);
+	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean detailedPermissions);
+	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean detailedPermissions);
 }

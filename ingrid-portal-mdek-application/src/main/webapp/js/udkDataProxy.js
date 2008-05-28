@@ -1933,7 +1933,7 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
     }
 
 
-	SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, {
+	SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, false, {
 		callback: function(userList) {
 			var list = [];
 			dojo.lang.forEach(userList, function(user){
@@ -1967,7 +1967,7 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
     	return def;
     }
 
-	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, {
+	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, false, {
 		callback: function(userList) {
 			var list = [];
 			dojo.lang.forEach(userList, function(user){

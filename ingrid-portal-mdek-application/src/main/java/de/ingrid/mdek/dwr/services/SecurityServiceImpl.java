@@ -237,15 +237,14 @@ public class SecurityServiceImpl {
 		return userList;
 	}
 
-	public List<User> getUsersWithWritePermissionForObject(String objectUuid) {
-		return securityRequestHandler.getUsersWithWritePermissionForObject(objectUuid);
+	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean includePermissions) {
+		return securityRequestHandler.getUsersWithWritePermissionForObject(objectUuid, includePermissions);
 	}
 	
-	public List<User> getUsersWithWritePermissionForAddress(String addressUuid) {
-		return securityRequestHandler.getUsersWithWritePermissionForAddress(addressUuid);
+	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean includePermissions) {
+		return securityRequestHandler.getUsersWithWritePermissionForAddress(addressUuid, includePermissions);
 	}
 
-	
 	public SecurityRequestHandler getSecurityRequestHandler() {
 		return securityRequestHandler;
 	}
