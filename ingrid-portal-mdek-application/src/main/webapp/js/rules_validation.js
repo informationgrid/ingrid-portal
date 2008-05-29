@@ -176,7 +176,7 @@ function addAddressTableInfoValidation() {
 		this._valid = false;
 		var data = this.store.getData();
 		for (var i = 0; i < data.length; ++i) {
-			if (data[i].nameOfRelation == "Auskunft") {
+			if (data[i].nameOfRelation == "Auskunft" && typeof(data[i].uuid) != "undefined") {
 				this._valid = true;
 			}
 		}
@@ -212,5 +212,18 @@ function addAddressTableInfoValidation() {
 		}
 	}
 
-//	table.isValid = function() { this._valid; }
+	table.isValid = function() {
+		var data = this.store.getData();
+		var rows = this.domNode.tBodies[0].rows;
+		var relNameIdx = this.getColumnIndex("nameOfRelation");
+		for (var i in data) {
+			if (typeof(data[i].uuid) == "undefined") {
+				dojo.html.addClass(rows[i].cells[relNameIdx], this.fieldInvalidClass);
+				return false;
+			} else {
+				dojo.html.removeClass(rows[i].cells[relNameIdx], this.fieldInvalidClass);				
+			}
+		}
+		return true;
+	}
 }

@@ -155,6 +155,34 @@ function addAddressToStore(adrId) {
 				addAddressIcon(res);
 				addAddressTitle(res);
 				addAddressLinkLabel(res);			
+
+				// If the user adds a new address to the 'generalAddress' table
+				if (nameOfRelation == "") {
+					var data = store.getData();
+					// Ckeck if there already is an empty row where the address can be added
+					for (var i in data) {
+						if (typeof(data[i].uuid) == "undefined") {
+							// Remove the object references since we don't need them in the address table
+							// This information is removed because it can be quite large if the address is referenced by many objects 
+							res.linksFromObjectTable = [];
+
+							// Copy all properties from res to data[i] except the nameOfRelation field
+							for (p in res) {
+								if (p == "nameOfRelation")
+									continue;
+								data[i][p] = res[p];
+							}
+
+							store.update(data[i], "icon", res.icon);
+							store.update(data[i], "linkLabel", res.linkLabel);
+							data[i].typeOfRelation = linkType;
+							data[i].refOfRelation = 2010;
+							dojo.widget.byId("generalAddress").applyValidation();
+							return;
+						}
+					}
+				}
+
 				res.Id = UtilStore.getNewKey(store);
 				res.typeOfRelation = linkType;
 				res.nameOfRelation = nameOfRelation;
