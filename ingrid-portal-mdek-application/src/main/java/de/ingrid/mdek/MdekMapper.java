@@ -87,6 +87,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
 		mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
 		mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
+		mdekObj.setParentUuid((String) obj.get(MdekKeys.PARENT_UUID));
 		mdekObj.setTitle((String) obj.get(MdekKeys.TITLE));
 		Integer objClass = (Integer) obj.get(MdekKeys.CLASS);
 		if (objClass == null) {
@@ -328,6 +329,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
+		mdekAddress.setParentUuid((String) adr.get(MdekKeys.PARENT_UUID));
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
 		if (adrClass == null) {
 			// Set the initial class according to the parent Class

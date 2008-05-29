@@ -258,7 +258,7 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 
 	// If the current user does not have write permission on the current obj/adr, don't display a dialog,
 	// clear the dirty flag and return as normal
-	if (currentUdk.writePermission == false) {
+	if (currentUdk.writePermission == false && currentUdk.uuid != "newNode") {
 		this.resetDirtyFlag();
 		deferred.callback();
 		return deferred;
@@ -412,8 +412,8 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 				postHook: UtilDWR.exitLoadingState,
 				callback: function(res){
 						msg.resultHandler.callback(res);
-						udkDataProxy._setData(res);
-						udkDataProxy.setDirtyFlag();
+						var def = udkDataProxy._setData(res);
+						def.addCallback(udkDataProxy.setDirtyFlag);
 					},
 //				timeout:10000,
 				errorHandler:function(message, err) {
@@ -454,8 +454,8 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 						else if (res.addressClass == 3) { res.nodeDocType = "PersonAddress_B"; }
 
 						msg.resultHandler.callback(res);
-						udkDataProxy._setData(res);
-						udkDataProxy.setDirtyFlag();
+						var def = udkDataProxy._setData(res);
+						def.addCallback(udkDataProxy.setDirtyFlag);
 					},
 //				timeout:10000,
 				errorHandler:function(message, err) {
@@ -1201,8 +1201,10 @@ udkDataProxy._setData = function(nodeData)
 		dojo.debug("Error in udkDataProxy._setData - Node Type must be \'A\' or \'O\'!");
 		break;
 	}  
-	
+
 	def.addCallback(udkDataProxy.resetDirtyFlag);
+
+	return def;
 }
 
 udkDataProxy._setAddressData = function(nodeData)
@@ -1937,7 +1939,40 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 		var title = UtilAddress.createAddressTitle(currentUser.address);
 		selectWidget.dataProvider.setData([[title, currentUser.addressUuid]]);
 
-    	def.callback(nodeData);
+		var parentUuid = nodeData.parentUuid;
+
+		if (parentUuid != null) {
+			// new node && not root
+			SecurityService.getUsersWithWritePermissionForObject(parentUuid, true, {
+				callback: function(userList) {
+					var list = [];
+					// Iterate over all users and include those with 'write tree' permission on the parent node
+					dojo.lang.forEach(userList, function(user){
+						// Check user permissions
+						for (var i in user.permissions) {
+							if (user.permissions[i] == "WRITE_TREE") {
+								// Only include users with write tree permission
+								var title = UtilAddress.createAddressTitle(user.address);
+								var uuid = user.address.uuid;
+								list.push([title, uuid]);
+								break;
+							}
+						}
+					});
+					selectWidget.dataProvider.setData(list);	
+					def.callback(nodeData);
+				},
+				errorHandler: function(errMsg, err) {
+					dojo.debug(errMsg);
+					dojo.debugShallow(err);
+					def.errback(err);
+				}
+			});
+		} else {
+			// new root node
+	    	def.callback(nodeData);
+		}
+
     	return def;
     }
 
@@ -1972,9 +2007,44 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 		var title = UtilAddress.createAddressTitle(currentUser.address);
 		selectWidget.dataProvider.setData([[title, currentUser.addressUuid]]);
 
-    	def.callback(nodeData);
+		var parentUuid = nodeData.parentUuid;
+
+		if (parentUuid != null) {
+			// new node && not root
+			SecurityService.getUsersWithWritePermissionForAddress(parentUuid, true, {
+				callback: function(userList) {
+					var list = [];
+					// Iterate over all users and include those with 'write tree' permission on the parent node
+					dojo.lang.forEach(userList, function(user){
+						// Check user permissions
+						for (var i in user.permissions) {
+							if (user.permissions[i] == "WRITE_TREE") {
+								// Only include users with write tree permission
+								var title = UtilAddress.createAddressTitle(user.address);
+								var uuid = user.address.uuid;
+								list.push([title, uuid]);
+								break;
+							}
+						}
+					});
+					selectWidget.dataProvider.setData(list);	
+					def.callback(nodeData);
+				},
+				errorHandler: function(errMsg, err) {
+					dojo.debug(errMsg);
+					dojo.debugShallow(err);
+					def.errback(err);
+				}
+			});
+		} else {
+			// new root node
+	    	def.callback(nodeData);
+		}
+
     	return def;
     }
+
+
 
 	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, false, {
 		callback: function(userList) {

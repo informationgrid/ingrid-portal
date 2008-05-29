@@ -52,6 +52,7 @@ function initForm() {
   }
 
   // set context menu on object owner listbox
+/*
   var objectOwnerWidget = dojo.widget.byId('objectOwner');
   if (objectOwnerWidget) {
     var objectOwnerCM = dojo.widget.createWidget("ingrid:ContextMenu");
@@ -59,6 +60,7 @@ function initForm() {
     objectOwnerCM.bindDomNode(objectOwnerWidget.domNode);
     objectOwnerWidget.textInputNode.style.cursor='pointer';
   }
+*/
 
   // set context menu on last editor label
   var lastEditorLabel = dojo.byId('last_editor');
