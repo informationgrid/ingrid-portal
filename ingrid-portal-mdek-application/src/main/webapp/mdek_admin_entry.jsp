@@ -34,9 +34,11 @@
 
 // click handler for main menus
 var menus = [{menu:"page1", submenus:["page1", "page1Sub2"]}, 
-			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]},
-			 {menu:"page3", submenus:["page3", "page3Sub2", "page3Sub3", "page3Sub4", "page3Sub5", "page3Sub6", "page3Sub7", "page3Sub8"]},
-			 {menu:"page4", submenus:["page4", "page4Sub2"]}
+			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]}
+
+// The following pages are not implemented yet
+//			 {menu:"page3", submenus:["page3", "page3Sub2", "page3Sub3", "page3Sub4", "page3Sub5", "page3Sub6", "page3Sub7", "page3Sub8"]},
+//			 {menu:"page4", submenus:["page4", "page4Sub2"]}
 			];
 var currentMenu = null;
 var currentSubMenu = new Array();
@@ -272,8 +274,11 @@ function hideSplash(){
   	    <ul>
   	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung">Katalogverwaltung</a></li>
   	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung">Nutzerverwaltung</a></li>
+<!-- The following pages are not implemented yet -->
+<!--
   	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement">Gesamtkatalogmanagement</a></li>
   	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
+-->
   	    </ul>
   	  </div>
   	  
@@ -290,6 +295,8 @@ function hideSplash(){
   	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Berechtigungsübersicht">Berechtigungsübersicht</a></li>
   	    </ul>
   	  </div>
+<!-- The following pages are not implemented yet -->
+<!--
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" title="Analyse">Analyse</a></li>	  
@@ -308,6 +315,7 @@ function hideSplash(){
   	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Import">Import</a></li>
   	    </ul>
   	  </div>
+-->
     </div>
   
   </div>
@@ -320,6 +328,8 @@ function hideSplash(){
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_group_administration.html" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.html" preload="false" executeScripts="true"></div>
 
+<!-- The following pages are not implemented yet -->
+<!--
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
   <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
   <div widgetId="page3Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
@@ -331,7 +341,7 @@ function hideSplash(){
 
   <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
   <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-
+-->
 </div>
 
 </body>

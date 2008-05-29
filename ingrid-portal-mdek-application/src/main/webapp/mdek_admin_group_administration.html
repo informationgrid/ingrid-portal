@@ -423,7 +423,8 @@ function initGroupList() {
 function getAllGroups() {
 	var deferred = new dojo.Deferred();
 
-	SecurityService.getGroups(true, {
+	// Don't display the administrator group
+	SecurityService.getGroups(false, {
 		callback: function(groupList) {
 			deferred.callback(groupList);
 		},

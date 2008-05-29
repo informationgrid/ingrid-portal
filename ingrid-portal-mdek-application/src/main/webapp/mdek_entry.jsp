@@ -51,9 +51,10 @@ dojo.require("ingrid.widget.Form");
 
 // click handler for main menus
 var menus = [{menu:"page1", submenus:[]}, 
-			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]},
-			 {menu:"page3", submenus:[]},
-			 {menu:"page4", submenus:["page4", "page4Sub2"]}
+			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]}
+// The following pages are not implemented yet
+//			 {menu:"page3", submenus:[]},
+//			 {menu:"page4", submenus:["page4", "page4Sub2"]}
 			];
 var currentMenu = null;
 var currentSubMenu = new Array();
@@ -173,15 +174,18 @@ function hideSplash(){
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 160, false);" title="Info">Info</a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.close();" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">
   	    <ul>
   	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Hierarchie & Erfassung">Hierarchie & Erfassung</a></li>
   	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Recherche">Recherche</a></li>
+<!-- The following pages are not implemented yet -->
+<!-- 
   	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Statistik">Statistik</a></li>
   	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Qualitätssicherung">Qualitätssicherung</a></li>
+-->
   	    </ul>
   	  </div>
   	  
@@ -193,6 +197,8 @@ function hideSplash(){
   	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Datenbank-Suche">Datenbank-Suche</a></li>
   	    </ul>
   	  </div>
+<!-- The following pages are not implemented yet -->
+<!-- 
 	  <div id="page3Subnavi" class="subnavi" style="display:none"></div>
 	  <div id="page4Subnavi" class="subnavi" style="display:none">
   	    <ul>
@@ -200,6 +206,7 @@ function hideSplash(){
   	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Qualitätssicherung">Qualitätssicherung</a></li>
   	    </ul>
   	  </div>
+ -->
     </div>
   
   </div>
@@ -1171,7 +1178,10 @@ function hideSplash(){
 	                <span id="spatialRefLocationLabel" class="label required"><label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freier Raumbezug')">Freier Raumbezug*</label></span>
 	                <span class="functionalLink">
 	                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Raumbezug hinzuf&uuml;gen', 'mdek_spatial_assist_dialog.html', 505, 220, true);" title="Raumbezug Assistent [Popup]">Raumbezug hinzuf&uuml;gen</a>
+<!-- The following feature is not yet implemented -->
+<!-- 
 	                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a>
+ -->
 	                </span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
@@ -2075,9 +2085,13 @@ function hideSplash(){
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_search.html" preload="true" executeScripts="true"></div>
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true" executeScripts="true"></div>
+
+<!-- the following pages are not implemented yet -->
+<!--
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
   <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="true"></div>
   <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.html" preload="true"></div>
+ -->
   </div>
 
 </body>
