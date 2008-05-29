@@ -118,7 +118,7 @@ function initCurrentGroup() {
 function getCurrentGroupName() {
 	var def = new dojo.Deferred();
 
-	SecurityService.getGroups({
+	SecurityService.getGroups(true, {
 		callback: function(groupList) {
 			for (var i = 0; i < groupList.length; ++i) {
 				if (groupList[i].id == currentUser.groupId) {

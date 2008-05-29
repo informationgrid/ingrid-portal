@@ -1203,7 +1203,9 @@ public class MdekMapper implements DataMapperInterface {
 		for (CommentBean c : commentList) {
 			IngridDocument result = new IngridDocument();
 			result.put(MdekKeys.COMMENT, c.getComment());
-			result.put(MdekKeys.CREATE_UUID, c.getUser());
+			IngridDocument createUserDoc = new IngridDocument();
+			createUserDoc.put(MdekKeys.UUID, c.getUser().getUuid());
+			result.put(MdekKeys.CREATE_USER, createUserDoc);
 			result.put(MdekKeys.CREATE_TIME, convertDateToTimestamp(c.getDate()));
 			resultList.add(result);
 		}
@@ -1564,7 +1566,8 @@ public class MdekMapper implements DataMapperInterface {
 		for (HashMap<String, Object> comment : commentList) {
 			CommentBean c = new CommentBean();
 			c.setComment((String) comment.get(MdekKeys.COMMENT));
-			c.setUser((String) comment.get(MdekKeys.CREATE_UUID));
+			IngridDocument createUserDoc = (IngridDocument) comment.get(MdekKeys.CREATE_USER);
+			c.setUser(getDetailedAddressRepresentation(createUserDoc));
 			c.setDate(convertTimestampToDate((String) comment.get(MdekKeys.CREATE_TIME)));
 			resultList.add(c);
 		}

@@ -8,7 +8,7 @@ import de.ingrid.mdek.beans.security.User;
 
 public interface SecurityRequestHandler {
 
-	public List<Group> getGroups();
+	public List<Group> getGroups(boolean includeCatAdminGroup);
 	public Group getGroupDetails(String name);
 	public Group createGroup(Group group, boolean refetch);
 	public Group storeGroup(Group group, boolean refetch);

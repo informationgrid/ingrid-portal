@@ -1258,7 +1258,11 @@ udkDataProxy._setAddressData = function(nodeData)
 
 
 	// Comments
-	commentStore.setData(UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable)));
+	var commentData = UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable));
+	for (var i in commentData) {
+		commentData[i].title = UtilAddress.createAddressTitle(commentData[i].user);
+	}
+	commentStore.setData(commentData);
 
 
 /*
@@ -1373,8 +1377,13 @@ udkDataProxy._setObjectData = function(nodeData)
   UtilList.addAddressTitles(addressTable);
   UtilList.addAddressLinkLabels(addressTable);
   dojo.widget.byId("generalAddress").store.setData(addressTable);
+
   // Comments
-  commentStore.setData(UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable)));
+  var commentData = UtilList.addTableIndices(UtilList.addDisplayDates(nodeData.commentTable));
+  for (var i in commentData) {
+    commentData[i].title = UtilAddress.createAddressTitle(commentData[i].user);
+  }
+  commentStore.setData(commentData);
 
 /*
   // Init the publication select widget depending on the publication condition of the parent

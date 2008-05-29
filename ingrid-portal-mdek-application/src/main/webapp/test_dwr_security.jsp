@@ -24,7 +24,7 @@ dojo.require("ingrid.widget.TableContextMenu");
 
 
 getGroups = function() {
-	SecurityService.getGroups( {
+	SecurityService.getGroups(true, {
 		callback: function(groupList) {
 			dojo.widget.byId("groupTable").store.setData(groupList);
 		},

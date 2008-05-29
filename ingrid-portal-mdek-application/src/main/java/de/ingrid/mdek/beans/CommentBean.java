@@ -2,10 +2,12 @@ package de.ingrid.mdek.beans;
 
 import java.util.Date;
 
+import de.ingrid.mdek.beans.address.MdekAddressBean;
+
 public class CommentBean {
 	public Date date;
 	public String comment;
-	public String user;
+	public MdekAddressBean user;
 
 	
 	public Date getDate() {
@@ -20,10 +22,10 @@ public class CommentBean {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public String getUser() {
+	public MdekAddressBean getUser() {
 		return user;
 	}
-	public void setUser(String user) {
+	public void setUser(MdekAddressBean user) {
 		this.user = user;
 	}
 }

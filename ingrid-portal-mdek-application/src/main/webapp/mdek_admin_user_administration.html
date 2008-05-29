@@ -397,7 +397,7 @@ scriptScope.searchForAddress = function() {
 function getAllGroups() {
 	var deferred = new dojo.Deferred();
 
-	SecurityService.getGroups( {
+	SecurityService.getGroups(true, {
 		callback: function(groupList) {
 			deferred.callback(groupList);
 		},

@@ -25,8 +25,8 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		this.mdekCallerSecurity = connectionFacade.getMdekCallerSecurity();
 	}
 	
-	public List<Group> getGroups() {
-		IngridDocument response = mdekCallerSecurity.getGroups(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+	public List<Group> getGroups(boolean includeCatAdminGroup) {
+		IngridDocument response = mdekCallerSecurity.getGroups(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId(), includeCatAdminGroup);
 		return MdekUtils.extractSecurityGroupsFromResponse(response);
 	}
 

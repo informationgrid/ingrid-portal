@@ -43,9 +43,9 @@ public class SecurityServiceImpl {
 	private SecurityRequestHandler securityRequestHandler;
 
 	
-	public List<Group> getGroups() {
+	public List<Group> getGroups(boolean includeCatAdminGroup) {
 		try {
-			return securityRequestHandler.getGroups();
+			return securityRequestHandler.getGroups(includeCatAdminGroup);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while fetching groups.", e);

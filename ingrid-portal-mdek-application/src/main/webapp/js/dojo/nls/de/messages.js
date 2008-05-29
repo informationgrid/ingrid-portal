@@ -14,7 +14,7 @@
     "general.delete":"L&ouml;schen",
     "general.closeWindow":"Alle nicht gespeicherten \u00c4nderungen werden dabei verworfen.",
 
-    "init.loadError":"Fehler in der Initialisierungsphase. Bitte versuchen Sie es erneut oder kontaktieren Sie den zuständigen Systemadministrator.",
+    "init.loadError":"Fehler in der Initialisierungsphase. Bitte versuchen Sie es erneut oder kontaktieren Sie den zust&auml;ndigen Systemadministrator.",
     "init.userError":"Fehler in der Initialisierungsphase. Der aktuelle Benutzer konnte nicht ermittelt werden. Bitte melden Sie sich zuerst am Portal an bevor Sie auf die Mdek Applikation zugreifen!",
 
     "tree.nodeNew":"Neu anlegen",

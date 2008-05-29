@@ -981,7 +981,7 @@ function initCurrentGroup() {
 function getCurrentGroupName() {
 	var def = new dojo.Deferred();
 
-	SecurityService.getGroups({
+	SecurityService.getGroups(true, {
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(groupList) {
