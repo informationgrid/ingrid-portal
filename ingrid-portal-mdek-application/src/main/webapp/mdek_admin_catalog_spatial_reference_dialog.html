@@ -69,14 +69,17 @@ function setResultList(topicList)
 
 			var divElement = document.createElement("div");
 
+/*
+			// Don't display a link, only text.
 			var linkElement = document.createElement("a"); 
 			linkElement.setAttribute("href", "javascript:void(0);");
 			linkElement.topicId = topicList[i].topicId;
 			linkElement.onclick = function() {
 				findAssociatedLocations(this.topicId);
 			}
-			linkElement.setAttribute("href", "javascript:void(0);");
 			linkElement.innerHTML = label;
+*/
+			var linkElement = document.createTextNode(label);
 
 			checkboxDiv.appendChild(divElement);
 			divElement.appendChild(radioButton);
@@ -116,7 +119,7 @@ scriptScope.findLocationTopics = function() {
 	resetResultDiv();
 	showLoading();
 
-	SNSService.getLocationTopics(queryTerm, "exact", {
+	SNSService.getLocationTopics(queryTerm, "exact", "/location/admin", {
 		preHook: function() { showLoadingZone(); disableUiElements(); },
 		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,
