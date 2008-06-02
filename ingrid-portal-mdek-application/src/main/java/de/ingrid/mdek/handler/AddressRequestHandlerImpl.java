@@ -86,7 +86,11 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		adr.put(MdekKeys.PARENT_UUID, parentUuid);
 
 		IngridDocument response = mdekCallerAddress.getInitialAddress(connectionFacade.getCurrentPlugId(), adr, HTTPSessionHelper.getCurrentSessionId());
-		return MdekAddressUtils.extractSingleAddressFromResponse(response);
+
+		// TODO: Set this value in the backend. Temproarily set it here till it gets fixed!
+		MdekAddressBean dat = MdekAddressUtils.extractSingleAddressFromResponse(response);
+		dat.setAddressOwner(HTTPSessionHelper.getCurrentSessionId());
+		return dat;
 	}
 
 	public List<String> getPathToAddress(String uuid) {

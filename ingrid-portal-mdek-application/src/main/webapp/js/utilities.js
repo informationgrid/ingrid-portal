@@ -720,3 +720,23 @@ UtilSecurity.canCreateRootNodes = function() {
 	}
 	return false;
 }
+
+UtilSecurity.getUsersFromCurrentGroup = function() {
+	var def = new dojo.Deferred();
+
+	SecurityService.getUsersOfGroup(currentGroup.name, {
+		callback: function(userList) { def.callback(userList); },
+		errback: function(errMsg, err) { def.errback(err); }
+	});
+	return def;
+}
+
+UtilSecurity.getCatAdmin = function() {
+	var def = new dojo.Deferred();
+
+	SecurityService.getCatalogAdmin( {
+		callback: function(userList) { def.callback(userList); },
+		errback: function(errMsg, err) { def.errback(err); }
+	});
+	return def;	
+}

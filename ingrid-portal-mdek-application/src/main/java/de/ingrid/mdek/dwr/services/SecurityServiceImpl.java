@@ -245,6 +245,10 @@ public class SecurityServiceImpl {
 		return securityRequestHandler.getUsersWithWritePermissionForAddress(addressUuid, includePermissions);
 	}
 
+	public List<User> getUsersOfGroup(String groupName) {
+		return securityRequestHandler.getUsersOfGroup(groupName);
+	}
+
 	public SecurityRequestHandler getSecurityRequestHandler() {
 		return securityRequestHandler;
 	}

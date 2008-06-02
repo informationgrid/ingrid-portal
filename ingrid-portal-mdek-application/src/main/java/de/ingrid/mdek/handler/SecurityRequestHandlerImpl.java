@@ -98,6 +98,11 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 
+	public List<User> getUsersOfGroup(String groupName) {
+		IngridDocument response = mdekCallerSecurity.getUsersOfGroup(connectionFacade.getCurrentPlugId(), groupName, HTTPSessionHelper.getCurrentSessionId());
+		return MdekUtils.extractSecurityUsersFromResponse(response);
+	}
+
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

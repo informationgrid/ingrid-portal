@@ -1936,8 +1936,6 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 
     if (nodeData.uuid == "newNode") {
 		var selectWidget = dojo.widget.byId("objectOwner");
-		var title = UtilAddress.createAddressTitle(currentUser.address);
-		selectWidget.dataProvider.setData([[title, currentUser.addressUuid]]);
 
 		var parentUuid = nodeData.parentUuid;
 
@@ -1970,7 +1968,36 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 			});
 		} else {
 			// new root node
-	    	def.callback(nodeData);
+	    	// get all users from the current group and the catalog admin
+			var getUsersDef = UtilSecurity.getUsersFromCurrentGroup();
+			var getCatAdminDef = UtilSecurity.getCatAdmin();
+
+			var defList = new dojo.DeferredList([getUsersDef, getCatAdminDef], false, false, true);
+			defList.addCallback(function(resultList) {
+				var list = [];
+				
+				// Add all users from the current group
+				for (var i in resultList[0][1]) {
+					// Iterate over the users from the current group
+					var user = resultList[0][1][i];
+					var title = UtilAddress.createAddressTitle(user.address);
+					var uuid = user.address.uuid;
+					list.push([title, uuid]);
+				}
+
+				// Add the catalog administrator
+				// only if the current user is not the cat admin himself
+				if (currentUser.role != 1) {
+					var catAdmin = resultList[1][1];
+					var catAdminTitle = UtilAddress.createAddressTitle(catAdmin.address);
+					var catAdminUuid = catAdmin.address.uuid;
+					list.push([catAdminTitle, catAdminUuid]);
+				}
+
+				selectWidget.dataProvider.setData(list);	
+				def.callback(nodeData);
+			});
+			defList.addErrback(function(errMsg, err) { def.errback(err); });
 		}
 
     	return def;
@@ -2004,8 +2031,6 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
     if (nodeData.uuid == "newNode") {
 		var selectWidget = dojo.widget.byId("addressOwner");
-		var title = UtilAddress.createAddressTitle(currentUser.address);
-		selectWidget.dataProvider.setData([[title, currentUser.addressUuid]]);
 
 		var parentUuid = nodeData.parentUuid;
 
@@ -2038,7 +2063,36 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 			});
 		} else {
 			// new root node
-	    	def.callback(nodeData);
+	    	// get all users from the current group and the catalog admin
+			var getUsersDef = UtilSecurity.getUsersFromCurrentGroup();
+			var getCatAdminDef = UtilSecurity.getCatAdmin();
+
+			var defList = new dojo.DeferredList([getUsersDef, getCatAdminDef], false, false, true);
+			defList.addCallback(function(resultList) {
+				var list = [];
+				
+				// Add all users from the current group
+				for (var i in resultList[0][1]) {
+					// Iterate over the users from the current group
+					var user = resultList[0][1][i];
+					var title = UtilAddress.createAddressTitle(user.address);
+					var uuid = user.address.uuid;
+					list.push([title, uuid]);
+				}
+
+				// Add the catalog administrator
+				// only if the current user is not the cat admin himself
+				if (currentUser.role != 1) {
+					var catAdmin = resultList[1][1];
+					var catAdminTitle = UtilAddress.createAddressTitle(catAdmin.address);
+					var catAdminUuid = catAdmin.address.uuid;
+					list.push([catAdminTitle, catAdminUuid]);
+				}
+
+				selectWidget.dataProvider.setData(list);	
+				def.callback(nodeData);
+			});
+			defList.addErrback(function(errMsg, err) { def.errback(err); });
 		}
 
     	return def;

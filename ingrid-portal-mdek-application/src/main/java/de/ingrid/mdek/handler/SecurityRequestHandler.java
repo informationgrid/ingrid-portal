@@ -24,4 +24,6 @@ public interface SecurityRequestHandler {
 
 	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean detailedPermissions);
 	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean detailedPermissions);
+
+	public List<User> getUsersOfGroup(String groupName);
 }
