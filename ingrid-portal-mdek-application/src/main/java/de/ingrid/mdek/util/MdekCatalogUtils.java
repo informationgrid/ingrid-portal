@@ -8,6 +8,7 @@ import java.util.Set;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekCatalogUtils {
@@ -51,7 +52,8 @@ public class MdekCatalogUtils {
 			resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
 			resultCat.setDateOfCreation(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			resultCat.setDateOfLastModification(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-//			resultCat.setModUuid(result.getString(MdekKeys.MOD_UUID));
+			resultCat.setLocation(mapToLocationBean((IngridDocument) result.get(MdekKeys.CATALOG_LOCATION)));			
+
 			IngridDocument modUserDoc = (IngridDocument) result.get(MdekKeys.MOD_USER);
 			if (modUserDoc != null)
 				resultCat.setModUuid((String) modUserDoc.get(MdekKeys.UUID));
@@ -61,5 +63,18 @@ public class MdekCatalogUtils {
 			MdekErrorUtils.handleError(response);
 			return null;
 		}
+	}
+
+	private static LocationBean mapToLocationBean(IngridDocument locationDoc) {
+		LocationBean location = new LocationBean();
+		location.setType((String) locationDoc.get(MdekKeys.LOCATION_TYPE));
+		location.setName((String) locationDoc.get(MdekKeys.LOCATION_NAME));
+		location.setNativeKey((String) locationDoc.get(MdekKeys.LOCATION_CODE));
+		location.setTopicId((String) locationDoc.get(MdekKeys.LOCATION_SNS_ID));
+		location.setLongitude1((Double) locationDoc.get(MdekKeys.WEST_BOUNDING_COORDINATE));
+		location.setLatitude1((Double) locationDoc.get(MdekKeys.SOUTH_BOUNDING_COORDINATE));
+		location.setLongitude2((Double) locationDoc.get(MdekKeys.EAST_BOUNDING_COORDINATE));
+		location.setLatitude2((Double) locationDoc.get(MdekKeys.NORTH_BOUNDING_COORDINATE));
+		return location;
 	}
 }

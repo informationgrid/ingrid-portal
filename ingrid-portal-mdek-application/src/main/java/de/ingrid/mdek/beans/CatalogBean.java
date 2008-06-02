@@ -2,10 +2,13 @@ package de.ingrid.mdek.beans;
 
 import java.util.Date;
 
+import de.ingrid.mdek.beans.object.LocationBean;
+
 public class CatalogBean {
 	String uuid;
 	String catalogName;
 	String country;
+	LocationBean location;
 	String workflowControl;
 	Integer expiryDuration;
 	Date dateOfCreation;
@@ -59,5 +62,11 @@ public class CatalogBean {
 	}
 	public void setModUuid(String modUuid) {
 		this.modUuid = modUuid;
+	}
+	public LocationBean getLocation() {
+		return location;
+	}
+	public void setLocation(LocationBean location) {
+		this.location = location;
 	}
 }

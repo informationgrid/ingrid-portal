@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+_container_.addOnLoad(function() {
+	// Fill input fields with data from the current catalog
+	dojo.debugShallow(catalogData);
+	dojo.debugShallow(catalogData.location);
+
+	updateInputFields(catalogData);
+});
+
+function updateInputFields(catalogData) {
+	dojo.widget.byId("adminCatalogName").setValue(catalogData.catalogName);
+	dojo.widget.byId("adminCatalogPartnerName").setValue(catalogData.partnerName);
+	dojo.widget.byId("adminCatalogProviderName").setValue(catalogData.providerName);
+	dojo.widget.byId("adminCatalogCountry").setValue(catalogData.country);
+	dojo.widget.byId("adminCatalogLanguage").setValue(catalogData.language);
+	dojo.widget.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
+	dojo.widget.byId("adminCatalogSpatialRef").location = catalogData.location;
+}
+
+scriptScope.reloadCatalogData = function() {
+	CatalogService.getCatalogData({
+		callback: function(res) {
+			// Update catalog Data
+			updateInputFields(res);
+		},
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("dialog.loadCatalogError"), dialog.WARNING);
+			dojo.debug(mes);
+		}
+	});
+}
+
+scriptScope.saveCatalogData = function() {
+	var newCatalogData = {};
+	newCatalogData.catalogName = dojo.widget.byId("adminCatalogName").getValue();
+	newCatalogData.partnerName = dojo.widget.byId("adminCatalogPartnerName").getValue();
+	newCatalogData.providerName = dojo.widget.byId("adminCatalogProviderName").getValue();
+	newCatalogData.country = dojo.widget.byId("adminCatalogCountry").getValue();
+	newCatalogData.language = dojo.widget.byId("adminCatalogLanguage").getValue();
+	newCatalogData.location = dojo.widget.byId("adminCatalogSpatialRef").location;
+
+	dojo.debugShallow(newCatalogData);
+}
+
+scriptScope.selectSpatialReference = function() {
+	var def = new dojo.Deferred();
+	dialog.showPage('Raumbezug ausw&auml;hlen', "mdek_admin_catalog_spatial_reference_dialog.html", 530, 230, true, { resultHandler: def });
+
+	def.addCallback(function(result) {
+		var spatialRefWidget = dojo.widget.byId("adminCatalogSpatialRef");
+		spatialRefWidget.setValue(result.name);
+		spatialRefWidget.location = result;
+	});
+}
+
+</script>
+</head>
+
+<body>
+<!-- CONTENT START -->
+	<div dojoType="ContentPane" layoutAlign="client">
+	
+		<div id="contentSection" class="contentBlockWhite top">
+			<div id="winNavi">
+				<a href="#" title="Hilfe">[?]</a>
+			</div>
+			<div id="adminCatalog" class="content">
+
+				<!-- LEFT HAND SIDE CONTENT START -->
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+				<div class="inputContainer field grey noSpaceBelow">
+					<span class="label"><label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name des Kataloges')">Name des Kataloges</label></span>
+					<span class="input spaceBelow"><input type="text" id="adminCatalogName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+
+					<span class="label"><label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name des Partners')">Name des Partners</label></span>
+					<span class="input spaceBelow"><input type="text" id="adminCatalogPartnerName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+		
+					<span class="label"><label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name des Anbieters')">Name des Anbieters</label></span>
+					<span class="input spaceBelow"><input type="text" id="adminCatalogProviderName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+		
+					<span class="label required"><label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
+					<select class="spaceBelow" dojoType="ingrid:Select" style="width:622px;" id="adminCatalogCountry" >
+						<option value="de">Deutschland</option>
+					</select>
+
+					<span class="label required"><label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 'Katalogsprache')">Katalogsprache*</label></span>
+					<select class="spaceBelow" dojoType="ingrid:Select" style="width:622px;" id="adminCatalogLanguage" >
+						<option value="de">Deutsch</option>
+						<option value="en">Englisch</option>
+					</select>
+
+					<span class="label required"><label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezug')">Raumbezug*</label></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="Raumbezug ausw&auml;hlen [Popup]">Raumbezug ausw&auml;hlen</a></span>
+					<span class="input spaceBelow"><input type="text" widgetId="adminCatalogSpatialRef" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+					
+					<div class="checkboxContainer">
+						<span class="input"><input type="checkbox" disabled="true" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Workflow-Kontrolle aktivieren')">Workflow-Kontrolle aktivieren</label></span>
+						<span class="input"><input type="checkbox" disabled="true" id="adminCatalogExpire" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], '&Uuml;berarbeiten nach xxx Tagen')">&Uuml;berarbeiten nach <input type="text" widgetId="adminCatalogExpiryDuration" class="w033" disabled="true" dojoType="ingrid:ValidationTextBox" /> Tagen</label></span>
+					</div>
+		
+					<div class="spacerField"></div>
+				</div>
+		<!-- 
+						<div class="inputContainer">
+		          			<span class="button w644"><a href="#" class="buttonBlue" title="Speichern">Speichern</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
+						</div>
+		 -->
+				<div class="inputContainer">
+					<span class="button w644" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveCatalogData();">Speichern</button>
+						</span>
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.reloadCatalogData();">Zur&uuml;cksetzen</button>
+						</span>
+						<span id="adminCatalogLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img src="img/ladekreis.gif" />
+						</span>
+					</span>
+				</div>
+				<!-- LEFT HAND SIDE CONTENT END -->
+			</div>
+		</div>
+	</div>
+<!-- CONTENT END -->
+
+</body>
+</html>

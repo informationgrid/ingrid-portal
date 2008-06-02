@@ -9,8 +9,10 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
 
@@ -321,7 +323,7 @@ function hideSplash(){
   </div>
   <!-- NAVIGATION END -->
   
-  <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_dummy.html" preload="true" executeScripts="true"></div>
+  <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.html" preload="true" executeScripts="true"></div>
   <div widgetId="page1Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
 
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_user_administration.html" preload="false" refreshOnShow="true" executeScripts="true"></div>

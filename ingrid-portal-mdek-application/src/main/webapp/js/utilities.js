@@ -482,14 +482,25 @@ UtilAddress.createAddressTitle = function(adr) {
 var UtilUdk = {}
 
 UtilUdk.isObjectSelected = function() {
-	var node = dojo.widget.byId("tree").selectedNode;
+	var treeWidget = dojo.widget.byId("tree");
+
+	if (typeof(treeWidget) == "undefined") {
+		return true;
+	}
+
+	var node = treeWidget.selectedNode;
 	if (typeof(node) != "undefined" && node != null) {
 		return (node.nodeAppType == "O");
 	}
 }
 
 UtilUdk.getCurrentObjectClass = function() {	
-	return dojo.widget.byId("objectClass").getValue()[5];
+	var objectClassWidget = dojo.widget.byId("objectClass");
+	if (typeof(objectClassWidget) == "undefined") {
+		return 0;
+	}
+
+	return objectClassWidget.getValue()[5];
 }
 
 UtilUdk.getCurrentAddressClass = function() {	

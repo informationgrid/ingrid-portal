@@ -71,6 +71,7 @@
 	"dialog.noPermissionError":"Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tige Berechtigung um diese Aktion auszuf&uuml;hren.",
 	"dialog.createAddressTitle":"Adresse anlegen",
 	"dialog.createAddressMessage":"Bitte w&auml;hlen sie den Adresstyp der neu anzulegenden Adresse aus:",
+	"dialog.loadCatalogError":"Die Katalogdaten konnten nicht geladen werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Administrator.",
 
 	"operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",

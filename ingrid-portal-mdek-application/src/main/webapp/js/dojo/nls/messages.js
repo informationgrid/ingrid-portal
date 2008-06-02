@@ -119,6 +119,7 @@
 	"dialog.noPermissionError":"You don't have permission to execute this operation.",
 	"dialog.createAddressTitle":"Create address",
 	"dialog.createAddressMessage":"Please chose the address type of the newly created address:",
+	"dialog.loadCatalogError":"Error while fetching catalog data. Please try again or contact the administrator.",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
