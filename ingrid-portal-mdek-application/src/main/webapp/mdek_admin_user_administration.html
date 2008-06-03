@@ -153,7 +153,7 @@ scriptScope.importPortalUser = function() {
 
 	// In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
 	if (currentUser.role == 2) {		
-		if (selectedUser.userId != currentUser.id) {
+		if (selectedUser == null || (selectedUser.userId != currentUser.id)) {
 			dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Stelle aus, an die der neue Benutzer angef&uuml;gt werden soll. Sie d&uuml;rfen lediglich Metadaten-Autoren unter Ihrer eigenen Adresse anlegen!", dialog.WARNING);
 			dojo.debug("Can't create users here. Select the correct mdAdmin.");
 			return;
@@ -239,6 +239,7 @@ scriptScope.saveUser = function() {
 
 			},
 			errorHandler: function(errMsg, err) {
+				dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
 			}
@@ -256,6 +257,7 @@ scriptScope.saveUser = function() {
 				updateTreeNode(selectedUser, newUser);
 			},
 			errorHandler: function(errMsg, err) {
+				dialog.show(message.get("general.error"), "Die Benutzerdaten konnten nicht gespeichert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
 			}

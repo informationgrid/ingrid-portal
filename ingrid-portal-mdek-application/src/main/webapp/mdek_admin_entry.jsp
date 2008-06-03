@@ -269,7 +269,7 @@ function hideSplash(){
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 160, false);" title="Info">Info</a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.close();" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">

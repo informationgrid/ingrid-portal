@@ -2,11 +2,14 @@
 <head>
 
 <script type="text/javascript">
+var scriptScope = this;
+
 _container_.addOnLoad(function() {
 	var msgDiv = dojo.byId("messageDiv");
 	msgDiv.innerHTML = "Bitte w&auml;hlen Sie einen Portal-Benutzer aus:";
 
-	initUserTable();
+//	initUserTable();
+	initUserList();
 });
 
 _container_.addOnUnload(function() {
@@ -34,6 +37,25 @@ function initUserTable() {
 }
 
 
+function initUserList() {
+
+	SecurityService.getPortalUsers( {
+		callback: function(userList) {
+			var list = [];
+			for (var i in userList) {
+				list.push([userList[i], userList[i]]);
+			}
+
+			dojo.widget.byId("userList").dataProvider.setData(list);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+		}
+	});
+}
+
+/*
 // 'Yes Button' onClick function
 yesButtonFunc = function() {
 	var selectedUser = dojo.widget.byId("userList").getSelectedData();
@@ -45,9 +67,23 @@ yesButtonFunc = function() {
 	}
 	_container_.closeWindow();
 }
+*/
+
+// 'Yes Button' onClick function
+scriptScope.yesButtonFunc = function() {
+	var selectedUser = dojo.widget.byId("userList").getValue();
+
+	if (selectedUser != null && selectedUser != "") {
+		_container_.customParams.resultHandler.callback(selectedUser);
+	} else {
+		_container_.customParams.resultHandler.errback();
+	}
+	_container_.closeWindow();
+}
+
 
 // 'No Button' onClick function
-noButtonFunc = function() {
+scriptScope.noButtonFunc = function() {
 	_container_.customParams.resultHandler.errback();
 	_container_.closeWindow();
 }
@@ -63,7 +99,10 @@ noButtonFunc = function() {
 		<div id="dialogContent" class="content">
 			<div id="messageDiv" class="field grey w296">
 			</div>
-
+			<div class="grey">
+				<span class="input" style="margin-left:20px;"><input dojoType="ingrid:Select" style="width:250px;" id="userList" /></span>
+			</div>
+<!-- 
 			<div class="grey tableContainer headHiddenRows4 halfInside">
       	    <table id="userList" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" multiple="false" class="filteringTable nosort readonly interactive">
 				<thead>
@@ -75,10 +114,10 @@ noButtonFunc = function() {
 				</tbody>
 			</table>
 			</div>
-
+ -->
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="noButtonFunc">Abbrechen</button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="yesButtonFunc">&Uuml;bernehmen</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.noButtonFunc();">Abbrechen</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.yesButtonFunc();">&Uuml;bernehmen</button></span>
 			</div>
 	  	</div>
 	</div>

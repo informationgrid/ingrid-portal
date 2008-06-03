@@ -226,4 +226,27 @@ function addAddressTableInfoValidation() {
 		}
 		return true;
 	}
+
+
+	table.deleteRow = function(obj) {
+//		dojo.debug("delete called on:");
+//		dojo.debugShallow(obj);
+
+		// If a row of type 'Auskunft' is deleted, check if it is the last one in the table
+		if (obj.nameOfRelation == "Auskunft") {
+			var data = this.store.getData();
+			var numInfoEntries = 0;
+			for (var i in data) {
+				if (data[i].nameOfRelation == "Auskunft") {
+					numInfoEntries += 1;
+				}
+			}
+			if (numInfoEntries <= 1) {
+				return;
+			}
+		}
+
+		this.store.removeData(obj);
+		this.onValueDeleted(obj);
+	}
 }

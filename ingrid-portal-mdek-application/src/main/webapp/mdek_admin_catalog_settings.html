@@ -6,8 +6,8 @@ var scriptScope = this;
 
 _container_.addOnLoad(function() {
 	// Fill input fields with data from the current catalog
-	dojo.debugShallow(catalogData);
-	dojo.debugShallow(catalogData.location);
+//	dojo.debugShallow(catalogData);
+//	dojo.debugShallow(catalogData.location);
 
 	updateInputFields(catalogData);
 });
@@ -44,7 +44,7 @@ scriptScope.saveCatalogData = function() {
 	newCatalogData.language = dojo.widget.byId("adminCatalogLanguage").getValue();
 	newCatalogData.location = dojo.widget.byId("adminCatalogSpatialRef").location;
 
-	dojo.debugShallow(newCatalogData);
+//	dojo.debugShallow(newCatalogData);
 }
 
 scriptScope.selectSpatialReference = function() {

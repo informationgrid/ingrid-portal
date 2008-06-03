@@ -4,6 +4,7 @@ import java.security.Permissions;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -233,7 +234,8 @@ public class SecurityServiceImpl {
 			log.error("Exception: ", err);
 			throw new RuntimeException("Error while fetching users from the portal context.", err);
 		}
-		
+
+		Collections.sort(userList);
 		return userList;
 	}
 
