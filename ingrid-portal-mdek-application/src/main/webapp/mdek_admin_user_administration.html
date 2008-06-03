@@ -176,7 +176,7 @@ scriptScope.importPortalUser = function() {
 
 
 	var deferred = new dojo.Deferred();
-	dialog.showPage("Import Portal users", "mdek_admin_import_user_dialog.html", 360, 240, true, { resultHandler:deferred });
+	dialog.showPage("Portalbenutzer importieren", "mdek_admin_import_user_dialog.html", 360, 240, true, { resultHandler:deferred });
 
 	deferred.addCallback(function(portalUser){
 		var tree = dojo.widget.byId("treeUser");
@@ -573,14 +573,19 @@ function getDocTypeForRole(roleId) {
  -->
 			<div class="inputContainer">
 				<span class="button w224" style="height:20px !important;">
-					<button dojoType="ingrid:Button" title="Nutzer l&ouml;schen" onClick="javascript:scriptScope.deleteUser();">Nutzer l&ouml;schen</button>
+					<span style="float:left;">
+						<button dojoType="ingrid:Button" title="Nutzer l&ouml;schen" onClick="javascript:scriptScope.deleteUser();">Nutzer l&ouml;schen</button>
+					</span>
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Nutzer anlegen" onClick="javascript:scriptScope.importPortalUser();">Nutzer anlegen</button>
+					</span>
 				</span>
 			</div>
 
 		    <!-- LEFT HAND SIDE CONTENT BLOCK 1 END -->
 	
 		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
-			<div id="userData" class="inputContainer">
+			<div id="userData" class="inputContainer" style="float:right;">
 				<span class="label"><label>Nutzerdaten</label></span>
 <!-- 
 				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a href="admin_nutzer_gruppe.html" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a class="current" title="Nutzer">Nutzer</a></span>
@@ -602,31 +607,22 @@ function getDocTypeForRole(roleId) {
 -->
 					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 'Login')">Login</label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rolle')">Rolle</label></span>
+					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+
 					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressverweis')">Adressverweis*</label></span>
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]">Adresse suchen</a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rolle')">Rolle</label></span>
-					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
 					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe*</label></span>
 					<span class="input spaceBelow"><div dojoType="ingrid:Select" autoComplete="false" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
 			        <div class="fill"></div>
 				</div>
-<!-- 
-				<div class="inputContainer">
-					<span class="button w644">
-						<a href="#" class="buttonBlue" title="Nutzer aus Portal &uuml;bernehmen">Nutzer aus Portal &uuml;bernehmen</a>
-						<a href="#" class="buttonBlue" title="Speichern">Speichern</a>
-					</span>
-				</div>
- -->
+
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
 							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveUser();">Speichern</button>
-						</span>
-						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Nutzer aus Portal &uuml;bernehmen" onClick="javascript:scriptScope.importPortalUser();">Nutzer aus Portal &uuml;bernehmen</button>
 						</span>
 						<span id="adminUserLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />
