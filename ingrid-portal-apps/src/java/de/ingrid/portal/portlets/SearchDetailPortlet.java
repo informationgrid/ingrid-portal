@@ -35,6 +35,9 @@ import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.DetailDataPreparer;
+import de.ingrid.portal.search.DetailDataPreparerFactory;
+import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -155,7 +158,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_ECS)
                         || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_CSW)) {
                     setDefaultViewPage(TEMPLATE_DETAIL_ECS);
-
+                    
+                    String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+                    
+                    if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
+                    	DetailDataPreparer detailPreparer = DetailDataPreparerFactory.getInstance().getDetailDataPreparer(iPlugVersion);
+                    	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
+                        context.put("rec", detailPreparer.prepare(record));
+                    } else {
+                    	
+                    }
+                    
                     String objId = (String) record.get("T01_OBJECT.OBJ_ID");
                     // get references
                     ArrayList superiorReferences = null;
