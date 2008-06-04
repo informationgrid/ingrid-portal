@@ -2153,14 +2153,26 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		treeController.createChild(parent, "last", {
 			contextMenu: 'contextMenu1',
 			isFolder: false,
+			isPublished: nodeData.isPublished,
 			nodeDocType: nodeData.nodeDocType,
 			title: title,
 			objectClass: objClass,
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: nodeData.nodeAppType,
-			userWritePermission: true,
+			userWritePermission: nodeData.writePermission,
+			userWriteSinglePermission: nodeData.writeSinglePermission,
+			userWriteTreePermission: nodeData.writeTreePermission,
 			id: nodeData.uuid
 		});
+
+		var tree = dojo.widget.byId("tree");
+		var treeListener = dojo.widget.byId("treeListener");
+		var newNode = dojo.widget.byId(nodeData.uuid);
+		tree.selectNode(newNode);
+		tree.selectedNode = newNode;
+		dojo.html.scrollIntoView(newNode.domNode);
+		dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
+
 	} else {
 		var node = dojo.widget.byId(oldUuid);
 		if (node) {

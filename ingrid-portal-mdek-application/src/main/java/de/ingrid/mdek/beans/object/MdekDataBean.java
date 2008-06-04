@@ -19,7 +19,8 @@ public class MdekDataBean {
 	public Boolean hasChildren;
 	public String workState;
 	public Integer parentPublicationCondition;
-	
+	public Boolean isPublished;
+
 	public String title;
 	public String nodeDocType;
 	public String nodeAppType;
@@ -1488,6 +1489,20 @@ public class MdekDataBean {
 
 	public void setWriteTreePermission(Boolean writeTreePermission) {
 		this.writeTreePermission = writeTreePermission;
+	}
+
+
+
+
+	public Boolean getIsPublished() {
+		return isPublished;
+	}
+
+
+
+
+	public void setIsPublished(Boolean isPublished) {
+		this.isPublished = isPublished;
 	}
 
 }

@@ -19,7 +19,8 @@ public class MdekAddressBean {
 	public Boolean writePermission;
 	public Boolean writeSinglePermission;
 	public Boolean writeTreePermission;
-
+	public Boolean isPublished;
+	
 	public String addressOwner;
 	public String creationTime;
 	public String modificationTime;
@@ -380,5 +381,13 @@ public class MdekAddressBean {
 
 	public void setWriteTreePermission(Boolean writeTreePermission) {
 		this.writeTreePermission = writeTreePermission;
+	}
+
+	public Boolean getIsPublished() {
+		return isPublished;
+	}
+
+	public void setIsPublished(Boolean isPublished) {
+		this.isPublished = isPublished;
 	}
 }

@@ -122,6 +122,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekObj.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
 
+		mdekObj.setIsPublished((Boolean) obj.get(MdekKeys.IS_PUBLISHED));
+		
 		// Comments
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
 
@@ -327,6 +329,9 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekAddress.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
 
+		mdekAddress.setIsPublished((Boolean) adr.get(MdekKeys.IS_PUBLISHED));
+
+		
 		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
 		mdekAddress.setParentUuid((String) adr.get(MdekKeys.PARENT_UUID));
