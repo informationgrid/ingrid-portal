@@ -120,6 +120,8 @@
 	"dialog.createAddressTitle":"Create address",
 	"dialog.createAddressMessage":"Please chose the address type of the newly created address:",
 	"dialog.loadCatalogError":"Error while fetching catalog data. Please try again or contact the administrator.",
+	"dialog.storeGroupTitle":"Store Group",
+	"dialog.storeGroupSuccess":"The group was saved successfully.",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",

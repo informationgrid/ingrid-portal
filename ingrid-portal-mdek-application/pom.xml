@@ -167,13 +167,19 @@
 	    <version>1.4</version>
         <type>jar</type>
       </dependency>		
-<!-- 
       <dependency>
         <groupId>axis</groupId>
         <artifactId>axis-jaxrpc</artifactId>
 	    <version>1.4</version>
         <type>jar</type>
       </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.4</version>
+            <type>jar</type>
+        </dependency>
+<!-- 
         <dependency>
         <groupId>wsdl4j</groupId>
         <artifactId>wsdl4j</artifactId>

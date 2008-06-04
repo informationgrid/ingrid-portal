@@ -148,6 +148,10 @@ scriptScope.saveGroup = function() {
 		def.addCallback(function(storedGroup) {
 			groupStore.update(selectedGroups[0], "name", storedGroup.name);
 			curSelectedGroupDetails = storedGroup;
+
+			dialog.show(message.get("dialog.storeGroupTitle"), message.get("dialog.storeGroupSuccess"), dialog.INFO, [
+	        	{ caption: message.get("general.ok"),  action: function() {} }
+			]);
 		});
 
 	} else {
@@ -176,6 +180,10 @@ scriptScope.saveObjectPermissions = function() {
 
 	def.addCallback(function(storedGroup) {
 		curSelectedGroupDetails = storedGroup;
+
+		dialog.show(message.get("dialog.storeGroupTitle"), message.get("dialog.storeGroupSuccess"), dialog.INFO, [
+	    	{ caption: message.get("general.ok"),  action: function() {} }
+		]);
 //		updateAllInputData(item);
 	});
 }
@@ -198,6 +206,10 @@ scriptScope.saveAddressPermissions = function() {
 	def.addCallback(function(storedGroup) {
 		curSelectedGroupDetails = storedGroup;
 //		updateAllInputData(item);
+
+		dialog.show(message.get("dialog.storeGroupTitle"), message.get("dialog.storeGroupSuccess"), dialog.INFO, [
+	    	{ caption: message.get("general.ok"),  action: function() {} }
+		]);
 	});
 }
 

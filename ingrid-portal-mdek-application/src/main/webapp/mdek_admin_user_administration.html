@@ -239,7 +239,12 @@ scriptScope.saveUser = function() {
 
 			},
 			errorHandler: function(errMsg, err) {
-				dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
+					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer anzulegen!", dialog.WARNING);				
+
+				} else {
+					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+				}
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
 			}
@@ -255,9 +260,16 @@ scriptScope.saveUser = function() {
 		SecurityService.storeUser(user, login, true, {
 			callback: function(newUser) {
 				updateTreeNode(selectedUser, newUser);
+				dialog.show(message.get("general.error"), "Die Benutzerdaten wurden erfolgreich aktualisiert.", dialog.INFO);				
+
 			},
 			errorHandler: function(errMsg, err) {
-				dialog.show(message.get("general.error"), "Die Benutzerdaten konnten nicht gespeichert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
+					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu &auml;ndern!", dialog.WARNING);				
+
+				} else {
+					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+				}
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
 			}

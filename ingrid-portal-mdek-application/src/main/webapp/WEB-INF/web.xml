@@ -17,6 +17,16 @@
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
 
+<!-- help servlet -->
+	<servlet>
+		<servlet-name>help-servlet</servlet-name>
+		<servlet-class>de.ingrid.mdek.servlets.HelpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>help-servlet</servlet-name>
+		<url-pattern>/help/*</url-pattern>
+	</servlet-mapping>
+
 <!-- Uncomment the following security-constraint to restrict access to the mdek-application to the role 'admin' -->
 <!--
 	<security-constraint>
