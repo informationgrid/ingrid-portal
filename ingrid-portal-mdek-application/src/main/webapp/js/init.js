@@ -17,6 +17,7 @@ dojo.addOnLoad(function()
 
   initGeneralEventListener();
   initToolbar();
+  disableInputOnWrongPermission();
   initTree();
   initForm();
   initTableValidators();
@@ -1125,4 +1126,119 @@ function initGeneralEventListener() {
 			evt.returnValue = message.get("general.closeWindow");
 		}
 	}
+}
+
+function _enableInputElement(widgetId) {
+	var widget = dojo.widget.byId(widgetId);
+	
+	// Check if the enable method exists
+	if (widget.enable) {
+		// If it does, enable the widget
+    	widget.enable();
+
+	} else {
+		dojo.debug("Can't enable widget "+widgetId+". Method not implemented for "+widget);
+	}
+}
+
+function _disableInputElement(widgetId) {
+	var widget = dojo.widget.byId(widgetId);
+
+	// Check if the disable method exists
+	if (widget.disable) {
+		// If it does, disable the widget
+    	widget.disable();
+
+	} else {
+		dojo.debug("Can't disable widget "+widgetId+". Method not implemented for "+widget);
+	}
+}
+
+function _disableHtmlLink(elementId) {
+	var element = dojo.byId(elementId);
+	
+	if (element.onClick) {
+		element._disabledOnClick = element.onClick;
+		element.onClick = void(0);
+
+	} else if (element.onclick) {
+		element._disabledOnClick = element.onclick;
+		element.onclick = void(0);
+	}
+}
+
+function _enableHtmlLink(elementId) {
+	var element = dojo.byId(elementId);
+	
+	if (element._disabledOnClick) {
+		element.onclick = element._disabledOnClick;
+	}
+}
+
+function disableInputOnWrongPermission() {
+    var treeListener = dojo.widget.byId("treeListener");
+
+	var htmlLinks = ["generalAddressTableLink", "spatialRefAdminUnitLink", "spatialRefLocationLink", "thesaurusTermsLink", "thesaurusTermsNavigatorLink",
+					 "ref1AddSymbolsLink", "ref1AddKeysLink", "ref1AddServiceLink", "ref1AddBasisLink", "ref1AddDataBasisLink", "ref1AddProcessLink",
+					 "ref2AddLocationLink", "ref2AddBaseDataLink", "ref3AddBaseDataLink", "ref4AddParticipantsLink", "ref4AddPMLink", "ref5AddMethodLink"];
+
+    dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
+		var hasWritePermission = message.node.userWritePermission;
+//		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
+//		var hasWriteTreePermission = message.node.userWriteTreePermission;
+		if (hasWritePermission) {
+			// Enable all input elements
+			dojo.lang.forEach(headerUiInputElements, _enableInputElement);
+			dojo.lang.forEach(generalUiInputElements, _enableInputElement);
+			dojo.lang.forEach(spatialUiInputElements, _enableInputElement);
+			dojo.lang.forEach(timeUiInputElements, _enableInputElement);
+			dojo.lang.forEach(extraUiInputElements, _enableInputElement);
+			dojo.lang.forEach(availUiInputElements, _enableInputElement);
+			dojo.lang.forEach(thesUiInputElements, _enableInputElement);
+			dojo.lang.forEach(class0UiInputElements, _enableInputElement);
+			dojo.lang.forEach(class1UiInputElements, _enableInputElement);
+			dojo.lang.forEach(class2UiInputElements, _enableInputElement);
+			dojo.lang.forEach(class3UiInputElements, _enableInputElement);
+			dojo.lang.forEach(class4UiInputElements, _enableInputElement);
+			dojo.lang.forEach(class5UiInputElements, _enableInputElement);
+		
+			dojo.lang.forEach(adrUiInputElements, _enableInputElement);
+			dojo.lang.forEach(adrClass0UiInputElements, _enableInputElement);
+			dojo.lang.forEach(adrClass1UiInputElements, _enableInputElement);
+			dojo.lang.forEach(adrClass2UiInputElements, _enableInputElement);
+			dojo.lang.forEach(adrClass3UiInputElements, _enableInputElement);
+
+			dojo.lang.forEach(htmlLinks, _enableHtmlLink);
+
+			_enableInputElement("thesaurusFreeTermsAddButton");
+			_enableInputElement("thesaurusFreeTermsAddressAddButton");
+
+		} else {
+			// Disable all input elements
+			dojo.lang.forEach(headerUiInputElements, _disableInputElement);
+			dojo.lang.forEach(generalUiInputElements, _disableInputElement);
+			dojo.lang.forEach(spatialUiInputElements, _disableInputElement);
+			dojo.lang.forEach(timeUiInputElements, _disableInputElement);
+			dojo.lang.forEach(extraUiInputElements, _disableInputElement);
+			dojo.lang.forEach(availUiInputElements, _disableInputElement);
+			dojo.lang.forEach(thesUiInputElements, _disableInputElement);
+			dojo.lang.forEach(class0UiInputElements, _disableInputElement);
+			dojo.lang.forEach(class1UiInputElements, _disableInputElement);
+			dojo.lang.forEach(class2UiInputElements, _disableInputElement);
+			dojo.lang.forEach(class3UiInputElements, _disableInputElement);
+			dojo.lang.forEach(class4UiInputElements, _disableInputElement);
+			dojo.lang.forEach(class5UiInputElements, _disableInputElement);
+		
+			dojo.lang.forEach(adrUiInputElements, _disableInputElement);
+			dojo.lang.forEach(adrClass0UiInputElements, _disableInputElement);
+			dojo.lang.forEach(adrClass1UiInputElements, _disableInputElement);
+			dojo.lang.forEach(adrClass2UiInputElements, _disableInputElement);
+			dojo.lang.forEach(adrClass3UiInputElements, _disableInputElement);
+
+			dojo.lang.forEach(htmlLinks, _disableHtmlLink);
+
+			_disableInputElement("thesaurusFreeTermsAddButton");
+			_disableInputElement("thesaurusFreeTermsAddressAddButton");
+		}
+    });
 }

@@ -83,6 +83,19 @@ dojo.widget.defineWidget(
     }
   },
 
+  disableContextMenu: function() {
+    if (this._contextMenuInst) {
+      this._contextMenuInst.unBindDomNode(this.domNode);
+    }
+  },
+
+  enableContextMenu: function() {
+    if (this._contextMenuInst) {
+      this._contextMenuInst.bindDomNode(this.domNode);
+    }
+  },
+
+
   /*
    * Add default context menus
    */ 
@@ -876,11 +889,13 @@ dojo.widget.defineWidget(
   	dojo.html.addClass(this.domNode, "interactive");
     if(!dojo.html.hasClass(this.domNode, 'readonly'))
 	    dojo.event.connectOnce(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
+  	this.enableContextMenu();
   },
 
   disable: function() {
   	dojo.html.removeClass(this.domNode, "interactive");
 	dojo.event.disconnect(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
+  	this.disableContextMenu();
   },
 	
 	/* overwritten because of the display of "Invalid Date" for empty date cells */
