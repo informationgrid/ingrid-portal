@@ -1,9 +1,7 @@
 /**
  * 
  */
-package de.ingrid.portal.search;
-
-import java.util.HashMap;
+package de.ingrid.portal.search.detail;
 
 import de.ingrid.utils.dsc.Record;
 
@@ -16,6 +14,6 @@ import de.ingrid.utils.dsc.Record;
  */
 public interface DetailDataPreparer {
 
-	public HashMap prepare(Record record);
+	public void prepare(Record record) throws Throwable;
 	
 }

@@ -1,0 +1,88 @@
+#macro (renderEntryInLine $entry)
+	#if($tool.hasContent($entry.body))
+		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong> #end$entry.body</p>
+    #end
+#end
+
+#macro (renderEntry $entry)
+	#if($tool.hasContent($entry.body))
+		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end$entry.body</p>
+    #end
+#end
+
+#macro (renderLinkList $entry)
+	#if($tool.hasContent($entry.get("linkList")))
+		<p>#if($tool.hasContent($entry.title))<strong>entry.title:</strong><br />#end
+		#foreach($link in $entry.linkList)
+		#if($link.has_link_icon)
+		<span class="icon">
+		#if($link.is_extern)
+			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
+		#else
+			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+		#end
+		</span>
+		#end
+		#if($link.is_extern)
+			<a href="$link.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$link.title</a><br />
+		#else
+			<a href="$link.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$link.title</a><br />
+		#end
+		#end
+		</p>
+	#end
+#end
+
+
+
+#set ($action = $renderResponse.createActionURL())
+<div id="content_full">
+
+## render "zurueck" link if no IngridSession (entry via google)
+#if($noIngridSession)
+	<div class="section-header">
+		<p class="iconLink">
+    		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+    		<span><a href="portal/default-page.psml">$MESSAGES.getString('search.detail.back')</a></span>
+    		<span class="clearer"></span>
+		</p>
+	</div>
+#end
+
+#if($data)
+	<div class="section-header">
+		<h1>$data.get("general").get("title")</h1>
+		#if($data.get("general").get("modTime"))<p class="float_right"><span class="smaller">$MESSAGES.getString('search.detail.last.changed') $data.get("general").get("modTime")</span></p>#end
+	</div>
+	<span class="clearer"></span>
+	<div class="section">
+		#foreach($e in $data.elements)
+			#if($e.type=="entry")
+				#renderEntry($e)
+			#elseif($e.type=="entry-inline")
+				#renderEntryInLine($e)
+			#elseif($e.type=="link-list")
+				#renderLinkList($e)
+			#end
+		#end
+	</div>
+#else
+	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+#end	
+</div>
