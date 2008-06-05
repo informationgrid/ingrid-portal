@@ -7,7 +7,10 @@ import de.ingrid.mdek.beans.object.LocationBean;
 public class CatalogBean {
 	String uuid;
 	String catalogName;
+	String partnerName;
+	String providerName;
 	String country;
+	String language;
 	LocationBean location;
 	String workflowControl;
 	Integer expiryDuration;
@@ -15,6 +18,7 @@ public class CatalogBean {
 	Date dateOfLastModification;
 	String modUuid;
 
+	
 	public String getUuid() {
 		return uuid;
 	}
@@ -32,12 +36,6 @@ public class CatalogBean {
 	}
 	public void setCountry(String country) {
 		this.country = country;
-	}
-	public String getWorkflowControl() {
-		return workflowControl;
-	}
-	public void setWorkflowControl(String workflowControl) {
-		this.workflowControl = workflowControl;
 	}
 	public Integer getExpiryDuration() {
 		return expiryDuration;
@@ -68,5 +66,29 @@ public class CatalogBean {
 	}
 	public void setLocation(LocationBean location) {
 		this.location = location;
+	}
+	public String getPartnerName() {
+		return partnerName;
+	}
+	public void setPartnerName(String partnerName) {
+		this.partnerName = partnerName;
+	}
+	public String getProviderName() {
+		return providerName;
+	}
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getWorkflowControl() {
+		return workflowControl;
+	}
+	public void setWorkflowControl(String workflowControl) {
+		this.workflowControl = workflowControl;
 	}
 }

@@ -236,7 +236,8 @@ scriptScope.saveUser = function() {
 				tree.selectNode(newNode);
 				tree.selectedNode = newNode;
 				dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
-
+				dialog.show(message.get("general.hint"), "Die Benutzerdaten wurden erfolgreich erstellt.", dialog.INFO);
+			
 			},
 			errorHandler: function(errMsg, err) {
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
@@ -260,7 +261,7 @@ scriptScope.saveUser = function() {
 		SecurityService.storeUser(user, login, true, {
 			callback: function(newUser) {
 				updateTreeNode(selectedUser, newUser);
-				dialog.show(message.get("general.error"), "Die Benutzerdaten wurden erfolgreich aktualisiert.", dialog.INFO);				
+				dialog.show(message.get("general.hint"), "Die Benutzerdaten wurden erfolgreich aktualisiert.", dialog.INFO);				
 
 			},
 			errorHandler: function(errMsg, err) {

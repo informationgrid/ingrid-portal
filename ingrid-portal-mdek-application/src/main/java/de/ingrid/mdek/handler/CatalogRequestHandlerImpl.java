@@ -3,6 +3,8 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
@@ -11,7 +13,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
-//	private final static Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
+	private final static Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
 
 	// Injected by Spring
 	private ConnectionFacade connectionFacade;
@@ -34,7 +36,17 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractCatalogFromResponse(response);
 	}
 
+	public CatalogBean storeCatalogData(CatalogBean cat) {
+		IngridDocument catDoc = (IngridDocument) MdekCatalogUtils.convertFromCatalogRepresentation(cat);
 
+		log.debug("Sending the following catalogfor storage:");
+		log.debug(catDoc);
+
+		IngridDocument response = mdekCallerCatalog.storeCatalog(connectionFacade.getCurrentPlugId(), catDoc, true, HTTPSessionHelper.getCurrentSessionId());
+		return MdekCatalogUtils.extractCatalogFromResponse(response);
+	}
+
+	
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

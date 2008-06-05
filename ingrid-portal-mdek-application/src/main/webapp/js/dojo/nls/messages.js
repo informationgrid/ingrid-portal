@@ -120,6 +120,7 @@
 	"dialog.createAddressTitle":"Create address",
 	"dialog.createAddressMessage":"Please chose the address type of the newly created address:",
 	"dialog.loadCatalogError":"Error while fetching catalog data. Please try again or contact the administrator.",
+	"dialog.storeCatalogError":"Error while storing catalog data. Please try again or contact the administrator.",
 	"dialog.storeGroupTitle":"Store Group",
 	"dialog.storeGroupSuccess":"The group was saved successfully.",
 

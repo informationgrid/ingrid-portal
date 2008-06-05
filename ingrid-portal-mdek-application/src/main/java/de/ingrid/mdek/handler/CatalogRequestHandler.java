@@ -9,4 +9,5 @@ public interface CatalogRequestHandler {
 
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public CatalogBean getCatalogData();
+	public CatalogBean storeCatalogData(CatalogBean cat);
 }

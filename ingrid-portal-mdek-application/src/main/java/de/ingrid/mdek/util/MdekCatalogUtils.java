@@ -47,7 +47,10 @@ public class MdekCatalogUtils {
 	
 			resultCat.setUuid(result.getString(MdekKeys.UUID));
 			resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
+			resultCat.setPartnerName(result.getString(MdekKeys.PARTNER_NAME));
+			resultCat.setProviderName(result.getString(MdekKeys.PROVIDER_NAME));
 			resultCat.setCountry(result.getString(MdekKeys.COUNTRY));
+			resultCat.setLanguage(result.getString(MdekKeys.LANGUAGE));
 			resultCat.setWorkflowControl(result.getString(MdekKeys.WORKFLOW_CONTROL));
 			resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
 			resultCat.setDateOfCreation(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
@@ -65,6 +68,22 @@ public class MdekCatalogUtils {
 		}
 	}
 
+	public static IngridDocument convertFromCatalogRepresentation(CatalogBean cat) {
+		IngridDocument catDoc = new IngridDocument();
+
+		catDoc.put(MdekKeys.UUID, cat.getUuid());
+		catDoc.put(MdekKeys.CATALOG_NAME, cat.getCatalogName());
+		catDoc.put(MdekKeys.PARTNER_NAME, cat.getPartnerName());
+		catDoc.put(MdekKeys.PROVIDER_NAME, cat.getProviderName());
+		catDoc.put(MdekKeys.COUNTRY, cat.getCountry());
+		catDoc.put(MdekKeys.LANGUAGE, cat.getLanguage());
+		catDoc.put(MdekKeys.WORKFLOW_CONTROL, cat.getWorkflowControl());
+		catDoc.put(MdekKeys.EXPIRY_DURATION, cat.getExpiryDuration());
+		catDoc.put(MdekKeys.CATALOG_LOCATION, mapLocationBeanToIngridDoc(cat.getLocation()));
+
+		return catDoc;
+	}
+
 	private static LocationBean mapToLocationBean(IngridDocument locationDoc) {
 		LocationBean location = new LocationBean();
 		location.setType((String) locationDoc.get(MdekKeys.LOCATION_TYPE));
@@ -76,5 +95,20 @@ public class MdekCatalogUtils {
 		location.setLongitude2((Double) locationDoc.get(MdekKeys.EAST_BOUNDING_COORDINATE));
 		location.setLatitude2((Double) locationDoc.get(MdekKeys.NORTH_BOUNDING_COORDINATE));
 		return location;
+	}
+
+	private static IngridDocument mapLocationBeanToIngridDoc(LocationBean loc) {
+		IngridDocument locDoc = new IngridDocument();
+
+		locDoc.put(MdekKeys.LOCATION_TYPE, "G");
+		locDoc.put(MdekKeys.LOCATION_NAME, loc.getName());
+		locDoc.put(MdekKeys.LOCATION_CODE, loc.getNativeKey());
+		locDoc.put(MdekKeys.LOCATION_SNS_ID, loc.getTopicId());
+		locDoc.put(MdekKeys.WEST_BOUNDING_COORDINATE, loc.getLongitude1());
+		locDoc.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
+		locDoc.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
+		locDoc.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
+	
+		return locDoc;
 	}
 }
