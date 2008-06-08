@@ -12,18 +12,18 @@
 
 #macro (renderLinkList $entry)
 	#if($tool.hasContent($entry.get("linkList")))
-		<p>#if($tool.hasContent($entry.title))<strong>entry.title:</strong><br />#end
+		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end
 		#foreach($link in $entry.linkList)
-		#if($link.has_link_icon)
+		#if($link.hasLinkIcon)
 		<span class="icon">
-		#if($link.is_extern)
+		#if($link.isExtern)
 			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 		#else
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		#end
 		</span>
 		#end
-		#if($link.is_extern)
+		#if($link.isExtern)
 			<a href="$link.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$link.title</a><br />
 		#else
 			<a href="$link.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$link.title</a><br />
@@ -33,6 +33,12 @@
 	#end
 #end
 
+#macro (renderUdkClass $entry)
+	#if($tool.hasContent($entry.udkClass))
+		<p class="float_left"><span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("udkClass")}.gif" alt="${entry.get("udkClassName")}" /></span>&nbsp;<strong>${entry.get("udkClassName")}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span></p>
+		<span class="clearer"></span>
+    #end
+#end
 
 
 #set ($action = $renderResponse.createActionURL())
@@ -59,10 +65,12 @@
 		#foreach($e in $data.elements)
 			#if($e.type=="entry")
 				#renderEntry($e)
-			#elseif($e.type=="entry-inline")
+			#elseif($e.type=="entryInline")
 				#renderEntryInLine($e)
-			#elseif($e.type=="link-list")
+			#elseif($e.type=="linkList")
 				#renderLinkList($e)
+			#elseif($e.type=="udkClass")
+				#renderUdkClass($e)
 			#end
 		#end
 	</div>

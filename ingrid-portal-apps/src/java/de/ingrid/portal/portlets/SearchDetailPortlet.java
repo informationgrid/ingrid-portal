@@ -142,7 +142,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 context.put("codeList", new IngridSysCodeList(request.getLocale()));
 
                 String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
-                DetailDataPreparerFactory ddpf = new DetailDataPreparerFactory(context, iplugId, dateFields, request, replacementFields);
+                DetailDataPreparerFactory ddpf = new DetailDataPreparerFactory(context, iplugId, dateFields, request, response, replacementFields);
                 
                 if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
