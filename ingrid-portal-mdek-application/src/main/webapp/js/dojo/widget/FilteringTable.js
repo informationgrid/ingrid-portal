@@ -103,7 +103,14 @@ dojo.widget.defineWidget(
     // parse properties from string if necessary
     this.multiple = this.multiple == "true" || this.multiple == true;
     this.customContextMenu = this.customContextMenu == "true" || this.customContextMenu == true;
-	
+
+	var self=this;
+	//	connect up binding listeners here.
+	dojo.event.connect("before", this.store, "onSetData", function(){
+		self._disconnectEditorEvents();
+		self.save();
+	});
+
     ingrid.widget.FilteringTable.superclass.initialize.apply(this, arguments);
   },
 
