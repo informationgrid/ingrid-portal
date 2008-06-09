@@ -7,37 +7,37 @@
             <content>
                 <ul>
                     <li>
-                        <a href="mdek_help.jsp?hkey=about-1">Über PortalU</a>
+                        <a href="?hkey=about-1">Über PortalU</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-1">Suche</a>
+                        <a href="?hkey=search-1">Suche</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-topics-1">Umweltthemen</a>
+                        <a href="?hkey=search-topics-1">Umweltthemen</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-service-1">Service</a>
+                        <a href="?hkey=search-service-1">Service</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-measure-1">Messwerte</a>
+                        <a href="?hkey=search-measure-1">Messwerte</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-chronicle-1">Umweltchronik</a>
+                        <a href="?hkey=search-chronicle-1">Umweltchronik</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=maps-1">Karten</a>
+                        <a href="?hkey=maps-1">Karten</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=rss-news-1">Aktuelles</a>
+                        <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ingrid-inform-1">PortalU informiert</a>
+                        <a href="?hkey=ingrid-inform-1">PortalU informiert</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=myingrid-1">Mein PortalU</a>
+                        <a href="?hkey=myingrid-1">Mein PortalU</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ingrid-newsletter-1">Newsletter</a>
+                        <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
                     </li>
                 </ul>
             </content>
@@ -94,12 +94,12 @@
             <content>
                 <p>
                     <b>Suche:</b> Zentrale Funktion des Portals ist die
-                    PortalU-Suche (<a href="mdek_help.jsp?hkey=search-1">Suche</a>)
+                    PortalU-Suche (<a href="?hkey=search-1">Suche</a>)
                     mit deren Hilfe Webseiten und Datenbankeinträge über eine
                     herkömmliche Volltextsuche (<a
-                        href="mdek_help.jsp?hkey=search-1">Einfache Suche</a>), aber
+                        href="?hkey=search-1">Einfache Suche</a>), aber
                     auch über ein differenziertes Fachvokabular (<a
-                        href="mdek_help.jsp?hkey=ext-search-1">Erweiterte Suche</a>)
+                        href="?hkey=ext-search-1">Erweiterte Suche</a>)
                     durchsucht werden können. </p>
                 <p>
                     <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
@@ -190,43 +190,43 @@
                     verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ext-search-1">Erweiterte Suche
+                        <a href="?hkey=ext-search-1">Erweiterte Suche
                             nach Umweltinformationen</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ext-search-address-1">Erweiterte
+                        <a href="?hkey=ext-search-address-1">Erweiterte
                             Suche nach Adressen</a>
                     </li>
                     <li>
                         <a
-                            href="mdek_help.jsp?hkey=ext-search-research-1">Erweiterte
+                            href="?hkey=ext-search-research-1">Erweiterte
                             Suche nach Forschungsprojekten</a>
                     </li>
                     <li>
                         <a
-                            href="mdek_help.jsp?hkey=ext-search-law-1">Erweiterte
+                            href="?hkey=ext-search-law-1">Erweiterte
                             Suche nach Rechtsvorschriften</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-history-1">Suchhistorie</a>
+                        <a href="?hkey=search-history-1">Suchhistorie</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-settings-1">Einstellungen</a>
+                        <a href="?hkey=search-settings-1">Einstellungen</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-tipps-1">Suchtipps</a>
+                        <a href="?hkey=search-tipps-1">Suchtipps</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-save-1">Suche Speichern</a>
+                        <a href="?hkey=search-save-1">Suche Speichern</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-expert-1">Experteneingabe</a>
+                        <a href="?hkey=search-expert-1">Experteneingabe</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-results-1">Suchergebnisliste</a>
+                        <a href="?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=search-catalog-1">Datenkataloge</a>
+                        <a href="?hkey=search-catalog-1">Datenkataloge</a>
                     </li>
                 </ul>
             </content>
@@ -242,7 +242,7 @@
                 <p>Prinzipiell setzt sich ein Suchausdruck aus einzelnen
                     Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
                     NICHT) verbunden werden. Wie Sie diese Operatoren von Hand
-                    eingeben können lesen Sie in dem Kapitel &#8222;<a href="mdek_help.jsp?hkey=search-expert-1">Experteneingabe</a>&#8220;.</p>
+                    eingeben können lesen Sie in dem Kapitel &#8222;<a href="?hkey=search-expert-1">Experteneingabe</a>&#8220;.</p>
                 <p>Die &#8222;Erweiterte Suche&#8220; bietet Ihnen die
                     Möglichkeit Ihren Suchausdruck per Assistenten aufzubauen.</p>
             </content>
@@ -256,16 +256,16 @@
                     des Suchraumes stehen Ihnen zur Verfügung:</p>
                 <ul>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ext-search-subject-1">Thema</a>
+                        <a href="?hkey=ext-search-subject-1">Thema</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ext-search-spacial-1">Raum</a>
+                        <a href="?hkey=ext-search-spacial-1">Raum</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ext-search-time-1">Zeit</a>
+                        <a href="?hkey=ext-search-time-1">Zeit</a>
                     </li>
                     <li>
-                        <a href="mdek_help.jsp?hkey=ext-search-area-1">Suchbereich</a>
+                        <a href="?hkey=ext-search-area-1">Suchbereich</a>
                     </li>
                 </ul>
             </content>
@@ -948,7 +948,7 @@
                 <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung mitgeführt
                     wird, können Sie als eingeloggter Nutzer (siehe <a
-                        href="mdek_help.jsp?hkey=myingrid-1">Mein PortalU</a>) auch
+                        href="?hkey=myingrid-1">Mein PortalU</a>) auch
                     Suchanfragen permanent speichern.</p>
                 <p>Beide Formen gespeicherter Suchanfragen können Sie über die
                     Funktion &#8222;Suchhistorie&#8220; erneut aufrufen.</p>
@@ -1005,7 +1005,7 @@
                         target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
                     werden den Web-Seiten Fachbegriffe aus dem  <a
-                    href="mdek_help.jsp?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a> zugeordnet.</p>
+                    href="?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a> zugeordnet.</p>
                 <p>Wenn Sie durch Ankreuzen die Einstellung &#8222;Ähnliche
                     Begriffe in die Suche einbeziehen&#8220; wählen werden
                     die zugeordneten ähnlichen Begriffe in der Suche
@@ -1023,21 +1023,21 @@
                 <ul>
                     <li>Automatisiert: Kreuzen Sie hierzu im Formular
                         &#8222;Einstellungen für die Suche&#8220; (<a
-                        href="mdek_help.jsp?hkey=search-settings-1">Suche/Einstellungen</a>)
+                        href="?hkey=search-settings-1">Suche/Einstellungen</a>)
                         die Option &#8222;Ähnliche Begriffe in die Suche
                         einbeziehen&#8220; an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe <a
-                            href="mdek_help.jsp?hkey=myingrid-1">Mein PortalU</a>).</li>
+                            href="?hkey=myingrid-1">Mein PortalU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die die Funktionalität
                             &#8222;<a
-                        href="mdek_help.jsp?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>&#8220;
+                        href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>&#8220;
                         der &#8222;<a
-                            href="mdek_help.jsp?hkey=ext-search-1">Erweiterten
+                            href="?hkey=ext-search-1">Erweiterten
                         Suche</a>&#8220; nutzen.</li>
                     <li>Nach einer Suche werden Ihnen neben der
                         Suchergebnisliste &#8222;<a
-                            href="mdek_help.jsp?hkey=ext-search-subject-5">ähnliche
+                            href="?hkey=ext-search-subject-5">ähnliche
                         Begriffe</a>&#8220; angeboten, über die Sie ihren
                         Suchausdruck erweitern können.</li>
                 </ul>
@@ -1047,25 +1047,25 @@
             <header>Sie möchten Ihre Suche auf Informationen zu Ihrem Wohnort begrenzen?</header>
             <content>
                 <p>Nutzen Sie hierzu die <a
-                        href="mdek_help.jsp?hkey=ext-search-spacial-1">Räumliche
+                        href="?hkey=ext-search-spacial-1">Räumliche
                     Suche</a>. Sie können entweder ein Suchrechteck über den
                     gewünschten Suchbereich aufziehen (<a
-                    href="mdek_help.jsp?hkey=ext-search-spacial-6">Kartensuche</a>)
+                    href="?hkey=ext-search-spacial-6">Kartensuche</a>)
                     oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a
-                        href="mdek_help.jsp?hkey=ext-search-spacial-2">begriffliche Raumsuche</a>).</p>
+                        href="?hkey=ext-search-spacial-2">begriffliche Raumsuche</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-3">
             <header>Sie interessieren sich nur für Informationen ihres Landes?</header>
             <content>
                 <p>Über den <a
-                    href="mdek_help.jsp?hkey=ext-search-area-1">Suchbereich</a> der
+                    href="?hkey=ext-search-area-1">Suchbereich</a> der
                     Suche können Sie ihr Land auswählen. Bedenken Sie das auch
                     Informationen auf Bundesebene für Sie interessant sein
                     können. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="mdek_help.jsp?hkey=myingrid-1">Mein PortalU</a>).</p>
+                    (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
@@ -1077,7 +1077,7 @@
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
                     usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
                     Abschnitt &#8222;<a
-                    href="mdek_help.jsp?hkey=search-expert-1">Expertensuche</a>&#8220;
+                    href="?hkey=search-expert-1">Expertensuche</a>&#8220;
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
         </section>
@@ -1209,9 +1209,9 @@
                 <p>Über das Fachwörterbuch können Sie Ihrem Suchausdruck
                     Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
                     Begriff in das Eingabefeld ein und senden eine Anfrage an
-                    den <a href="mdek_help.jsp?hkey=ext-search-subject-3#ext-search-subject-3">Thesaurus</a> ab.</p>
+                    den <a href="?hkey=ext-search-subject-3#ext-search-subject-3">Thesaurus</a> ab.</p>
                 <p>Sie erhalten dann eine Reihe <a
-                        href="mdek_help.jsp?hkey=ext-search-subject-5#ext-search-subject-5">ähnlicher Begriffe</a>, die
+                        href="?hkey=ext-search-subject-5#ext-search-subject-5">ähnlicher Begriffe</a>, die
                     Sie dem Suchausdruck hinzufügen können oder über deren
                     Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
             </content>
@@ -1240,13 +1240,13 @@
             <header>Suche Speichern</header>
             <content>
                 <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
-                    Nutzer (siehe <a href="mdek_help.jsp?hkey=myingrid-1">Mein
+                    Nutzer (siehe <a href="?hkey=myingrid-1">Mein
                     PortalU</a>) die Möglichkeit den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
                     &#8222;Suche speichern&#8220;.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
                     Speicherung für die laufende Sitzung über die &#8222;<a
-                    href="mdek_help.jsp?hkey=search-history-1">Suchhistorie</a>&#8220; zugänglich.</p>
+                    href="?hkey=search-history-1">Suchhistorie</a>&#8220; zugänglich.</p>
             </content>
         </section>
     </chapter>
@@ -1459,7 +1459,7 @@
                     (linke Spalte) und die Liste mit Ergebnissen aus weiteren
                     Datenquellen (rechte Spalte). Weiterhin wird Ihnen die
                     Möglichkeit gegeben, über das <a
-                    href="mdek_help.jsp?hkey=search-1">Suchformular</a> ihre
+                    href="?hkey=search-1">Suchformular</a> ihre
                     Suchanfrage zu verfeinern und erneut zu suchen. Hierzu
                     können Sie auch die Ihnen angebotenen ähnlichen Begriffe nutzen.</p>
             </content>
@@ -1473,8 +1473,8 @@
                     Relevanz gewichteten Liste angezeigt.</p>
                 <p>Anstatt der einfachen gewichteten Liste können Sie sich die
                     Ergebnisse auch nach Bund und Ländern oder nach Anbietern <a
-                    href="mdek_help.jsp?hkey=search-settings-2#search-settings-2">gruppiert</a>
-                    anzeigen lassen oder sie nach Aktualität <a href="mdek_help.jsp?hkey=search-settings-2#search-settings-2">sortieren</a>.</p>
+                    href="?hkey=search-settings-2#search-settings-2">gruppiert</a>
+                    anzeigen lassen oder sie nach Aktualität <a href="?hkey=search-settings-2#search-settings-2">sortieren</a>.</p>
                 <p>Ist die Fundstelle eine Web-Seite, erhalten Sie neben einer
                     Reihe von Informationen (z.B. Titel, Beschreibung und
                     Anbieter) einen Link über den Sie direkt auf die
@@ -1543,7 +1543,7 @@
                 	oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
                 	erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich 
                 	wie in der <a
-                    href="mdek_help.jsp?hkey=search-results-2">Hauptergebnisliste</a> bei 
+                    href="?hkey=search-results-2">Hauptergebnisliste</a> bei 
                     der freien Suche.</p>
             </content>
         </section>
@@ -2053,7 +2053,7 @@
                     sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
                     auf den Orginal-Servern der jeweiligen Bundes- oder
                     Landesbehörde finden. Klicken Sie hierzu auf <a
-                        href="mdek_help.jsp?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
+                        href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
             </content>
         </section>
     </chapter>
@@ -2155,7 +2155,7 @@
                     nur der anonymisierten statistischen Auswertung.</p>
                 <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
                     PortalU erhalten möchten, können Sie den <a
-                    href="mdek_help.jsp?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
+                    href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
                     abbonieren. Kreuzen Sie einfach am Ende des Formulars
                     &#8222;Ich möchte den Newsletter abonnieren&#8220;
                     an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
@@ -2244,7 +2244,7 @@
                             target="_new">Semantic Network Service (SNS)</a> des
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
                         Analyse werden geeignete Fachbegriffe aus dem <a
-                        href="mdek_help.jsp?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>
+                        href="?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>
                         den Web-Seiten zugeordnet.</p>
                     <p>Wenn Sie durch Ankreuzen die Einstellung
                         &#8222;Ähnliche Begriffe in die Suche

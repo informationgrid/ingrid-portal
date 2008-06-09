@@ -1,6 +1,5 @@
 package de.ingrid.mdek.servlets;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -56,6 +55,8 @@ public class HelpServlet extends HttpServlet {
 						+ "_" + request.getLocale().getLanguage() + ".xml";
 
 		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF8");
+		
 		PrintWriter out = null;		
 		try {
 			out = response.getWriter();
