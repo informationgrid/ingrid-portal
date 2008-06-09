@@ -699,8 +699,8 @@ var UtilCatalog = {}
 
 // Helper function that returns the catalog language. If no language is specified, "de" is returned
 UtilCatalog.getCatalogLanguage = function() {
-	if (catalogData && typeof(catalogData.country) != "undefined" && catalogData.country != null) {
-		return catalogData.country;
+	if (catalogData && typeof(catalogData.language) != "undefined" && catalogData.language != null) {
+		return catalogData.language;
 	} else {
 		return "de";
 	}

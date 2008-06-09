@@ -33,7 +33,11 @@ public class MdekErrorUtils {
 		List<MdekError> err = getErrorsFromResponse(response);
 		if (err != null) {
 			if (containsErrorType(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
-				handleEntityReferencedByObjectError(err);
+				handleEntityReferencedByObjectError(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ);
+			
+			} else if (containsErrorType(err, MdekErrorType.ADDRESS_IS_AUSKUNFT)) {
+				handleEntityReferencedByObjectError(err, MdekErrorType.ADDRESS_IS_AUSKUNFT);
+
 			} else if (containsErrorType(err, MdekErrorType.SINGLE_BELOW_TREE_OBJECT_PERMISSION)
 					|| containsErrorType(err, MdekErrorType.TREE_BELOW_TREE_OBJECT_PERMISSION)
 					|| containsErrorType(err, MdekErrorType.SINGLE_BELOW_TREE_ADDRESS_PERMISSION)
@@ -57,14 +61,14 @@ public class MdekErrorUtils {
 		}
 	}
 
-	private static void handleEntityReferencedByObjectError(List<MdekError> errorList) {
+	private static void handleEntityReferencedByObjectError(List<MdekError> errorList, MdekErrorType errType) {
 		MdekAddressBean targetAddress = null;
 		MdekDataBean targetObject = null;
 		ArrayList<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
 		ArrayList<MdekDataBean> sourceObjects = new ArrayList<MdekDataBean>();
 
 		for (MdekError mdekError : errorList) {
-			if (mdekError.getErrorType().equals(MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
+			if (mdekError.getErrorType().equals(errType)) {
 				// In the case of this exception, we have to build an MdekAppException containing additional data
 				IngridDocument errorInfo = mdekError.getErrorInfo();
 				ArrayList<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
@@ -76,7 +80,7 @@ public class MdekErrorUtils {
 			}
 		}
 
-		EntityReferencedException e = new EntityReferencedException(MdekErrorType.ENTITY_REFERENCED_BY_OBJ.toString());
+		EntityReferencedException e = new EntityReferencedException(errType.toString());
 		e.setTargetAddress(targetAddress);
 		e.setTargetObject(targetObject);
 		e.setSourceAddresses(sourceAddresses);
