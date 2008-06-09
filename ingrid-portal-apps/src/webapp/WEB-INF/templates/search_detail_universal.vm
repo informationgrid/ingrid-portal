@@ -1,3 +1,15 @@
+#macro (renderTitleLine $entry)
+	#if($tool.hasContent($entry.title))
+		<strong>$entry.title:</strong><br />
+    #end
+#end
+
+#macro (renderTextLine $entry)
+	#if($tool.hasContent($entry.body))
+		$entry.body<br />
+    #end
+#end
+
 #macro (renderEntryInLine $entry)
 	#if($tool.hasContent($entry.body))
 		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong> #end$entry.body</p>
@@ -14,24 +26,54 @@
 	#if($tool.hasContent($entry.get("linkList")))
 		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end
 		#foreach($link in $entry.linkList)
-		#if($link.hasLinkIcon)
+			#renderLinkLine($link)
+		#end
+		</p>
+	#end
+#end
+
+#macro (renderLinkLine $entry)
+	#if($entry.hasLinkIcon)
 		<span class="icon">
-		#if($link.isExtern)
+		#if($entry.isExtern)
 			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 		#else
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		#end
 		</span>
+	#end
+	#if($entry.isExtern)
+		<a href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a><br />
+	#else
+		<a href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a><br />
+	#end	
+#end
+
+#macro (renderTable $entry)
+	#if($tool.hasContent($entry.get("body")))
+		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end
+		<table class="border" border="1">
+		#if($tool.hasContent($entry.get("head")))
+			<thead><tr>
+			#foreach($th in $entry.head)
+				<th>$th</th>
+			#end
+			</tr></thead>
 		#end
-		#if($link.isExtern)
-			<a href="$link.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$link.title</a><br />
-		#else
-			<a href="$link.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$link.title</a><br />
+		<tbody>
+		#foreach($tr in $entry.body)
+		<tr>
+			#foreach($td in $tr)
+			<td>$td</td>
+			#end
+		</tr>
 		#end
-		#end
+		</tbody>
+		</table>
 		</p>
 	#end
 #end
+
 
 #macro (renderUdkClass $entry)
 	#if($tool.hasContent($entry.udkClass))
@@ -39,6 +81,35 @@
 		<span class="clearer"></span>
     #end
 #end
+
+#macro (renderLine $entry)
+	#if($tool.hasContent($entry.udkClass))
+		<p class="float_left"><span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("udkClass")}.gif" alt="${entry.get("udkClassName")}" /></span>&nbsp;<strong>${entry.get("udkClassName")}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span></p>
+		<span class="clearer"></span>
+    #end
+#end
+
+
+#macro (renderMultiLine $entry)
+	#if($tool.hasContent($entry.elements))
+		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end
+		#foreach($e in $entry.elements)
+			#if($e.type=="multiLine")
+				#renderMultiLine($e)
+			#elseif($e.type=="textLine")
+				#renderTextLine($e)
+			#elseif($e.type=="linkLine")
+				#renderLinkLine($e)
+			#elseif($e.type=="line")
+				<div class="line"><hr /></div><br/>
+			#elseif($e.type=="space")
+				<br />
+			#end
+		#end		
+		</p>
+    #end
+#end
+
 
 
 #set ($action = $renderResponse.createActionURL())
@@ -65,12 +136,24 @@
 		#foreach($e in $data.elements)
 			#if($e.type=="entry")
 				#renderEntry($e)
+			#elseif($e.type=="multiLine")
+				#renderMultiLine($e)
 			#elseif($e.type=="entryInline")
 				#renderEntryInLine($e)
 			#elseif($e.type=="linkList")
 				#renderLinkList($e)
+			#elseif($e.type=="table")
+				#renderTable($e)
 			#elseif($e.type=="udkClass")
 				#renderUdkClass($e)
+			#elseif($e.type=="textLine")
+				#renderTextLine($e)
+			#elseif($e.type=="linkLine")
+				#renderLinkLine($e)
+			#elseif($e.type=="line")
+				<div class="line"><hr /></div><br/>
+			#elseif($e.type=="space")
+				<p></p>
 			#end
 		#end
 	</div>
