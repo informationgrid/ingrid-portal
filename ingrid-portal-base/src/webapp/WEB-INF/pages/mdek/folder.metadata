@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<folder>
+  <title>ingrid.page.mdek</title>  
+
+<!--
+  <menu name="sub-menu">
+    <options>/mdek/mdek_portal_admin.psml</options>
+    <options>/mdek/mdek_entry.psml</options>
+  </menu>
+-->
+  
+  <security-constraints>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
+
+    <security-constraint>
+      <roles>mdek</roles>
+      <permissions>view</permissions>
+    </security-constraint>
+
+  </security-constraints>
+</folder>

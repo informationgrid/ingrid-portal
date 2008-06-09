@@ -8,6 +8,18 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>mdek/mdek_entry.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>mdek/catalog_admin.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>

@@ -1,0 +1,29 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>Metadaten-Erfassungskomponente</title>
+  <metadata name="title" xml:lang="en">Mdek</metadata>
+
+  <fragment id="mdek-entry" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="mdek-entry-0" type="portlet" name="ingrid-portal-mdek::MdekEntryPortlet">
+      <property layout="OneColumn" name="row" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <!-- Explicitly exclude the portal-admin and admin -->
+    <security-constraint>
+      <roles>admin-portal</roles>
+      <users>admin</users>
+    </security-constraint>
+
+    <!-- Only mdek users are allowed to view this page -->
+    <security-constraint>
+      <roles>mdek</roles>
+      <permissions>view</permissions>
+    </security-constraint>
+  </security-constraints>
+</page>

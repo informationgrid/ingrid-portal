@@ -36,6 +36,18 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>mdek/mdek_entry.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>mdek/catalog_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -118,7 +130,7 @@
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
       </pages>
     <files>

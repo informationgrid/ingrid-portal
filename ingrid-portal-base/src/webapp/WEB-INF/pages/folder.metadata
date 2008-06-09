@@ -50,7 +50,10 @@
     <options>/main-chronicle.psml</options>
     <options>/main-about.psml</options>
     <options>/administration</options>
+    <options>/mdek</options>
+<!--
     <options>/Administrative</options>
+-->
   </menu>
 
   <menu name="sub-menu-search">
