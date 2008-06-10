@@ -269,7 +269,7 @@ scriptScope.saveUser = function() {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu &auml;ndern!", dialog.WARNING);				
 
 				} else {
-					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht gespeichert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
 				}
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
@@ -297,6 +297,13 @@ function updateTreeNode(user, newUser) {
 					user.createRoot = true;
 				}
 			});
+		}
+		
+		if (user.role == 1) {
+			// The catAdmin address was changed. This can only be done by the catAdmin himself
+			// -> Update the current user data
+			var def = initCurrentUser();
+			def.addCallback(initPageHeader);
 		}
 	}
 

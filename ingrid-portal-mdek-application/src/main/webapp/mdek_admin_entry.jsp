@@ -35,7 +35,7 @@
 <script type="text/javascript">
 
 // click handler for main menus
-var menus = [{menu:"page1", submenus:["page1", "page1Sub2"]}, 
+var menus = [{menu:"page1", submenus:["page1" /*, "page1Sub2" */]}, 
 			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]}
 
 // The following pages are not implemented yet
@@ -67,7 +67,16 @@ dojo.addOnLoad(function() {
 	def.addCallback(initCurrentUser);
 	def.addCallback(initCurrentGroup);
 	def.addCallback(initPageHeader);
+	def.addCallback(initMenu);
 });
+
+function initMenu() {
+	// Hide the first menu for all roles except the catAdmin
+	if (currentUser.role != 1) {
+		dojo.byId("page1Menu").style.display = "none";
+	}
+}
+
 
 function initPageHeader() {
 	// Display the current user and role
@@ -287,7 +296,9 @@ function hideSplash(){
 	  <div id="page1Subnavi" class="subnavi" style="display:none">
   	    <ul>
   	      <li><a id="page1Subnavi1" onClick="clickMenu('page1', 'page1')" href="javascript:void(0);" class="current" title="Katalogeinstellungen">Katalogeinstellungen</a></li>
+<!-- 
   	      <li><a id="page1Subnavi2" onClick="clickMenu('page1', 'page1Sub2')" href="javascript:void(0);" title="Feldeinstellungen">Feldeinstellungen</a></li>
+ -->
   	    </ul>	  
 	  </div>
 	  <div id="page2Subnavi" class="subnavi" style="display:none">
@@ -324,8 +335,9 @@ function hideSplash(){
   <!-- NAVIGATION END -->
   
   <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.html" preload="true" executeScripts="true"></div>
+<!-- 
   <div widgetId="page1Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-
+ -->
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_user_administration.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_group_administration.html" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.html" preload="false" executeScripts="true"></div>

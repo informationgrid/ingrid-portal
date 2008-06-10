@@ -65,7 +65,9 @@ scriptScope.saveCatalogData = function() {
 		callback: function(res) {
 			// Update catalog Data
 			updateInputFields(res);
+			catalogData = res;
 			currentCatalogData = res;
+			initPageHeader();
 			dialog.show(message.get("general.hint"), "Die Katalogdaten wurden erfolgreich aktualisiert.", dialog.INFO);
 
 		},

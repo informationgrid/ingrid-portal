@@ -37,7 +37,9 @@ public class SNSService {
 	private final static Logger log = Logger.getLogger(SNSService.class);	
 
 	private static final String SNS_ROOT_TOPIC = "toplevel"; 
-	private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
+	// Switch to "rs:" when the native key changes
+	// private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
+	private static final String SNS_NATIVE_KEY_PREFIX = "ags:"; 
     private static final String THESAURUS_LANGUAGE_FILTER = "de";
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
