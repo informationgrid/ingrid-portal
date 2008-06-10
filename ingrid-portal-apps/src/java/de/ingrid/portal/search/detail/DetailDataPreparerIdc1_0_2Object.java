@@ -100,6 +100,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		// add horizontal line
 		addLine(elements);
 		
+		// add subject data
 		if (objClassStr.equals("5")) {
 			addReferenceObjectClass5(elements, record);
 		} else if (objClassStr.equals("3")) {
@@ -112,9 +113,167 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			addReferenceObjectClass1(elements, record);
 		}
 		
+		// add horizontal line
+		addLine(elements);
+
+		// add spatial reference data
+		addSpatialReference(elements, record);
+
+		// add horizontal line
+		addLine(elements);
+		
+		// add time reference data
+		addTimeReference(elements, record);
+		
 		data.put("elements", elements);
 		
 		context.put("data", data);
+	}
+
+	
+	private void addTimeReference(List elements, Record record) {
+    	// time reference
+		List refRecords = getSubRecordsByColumnName(record, "t01_object.id");
+    	if (refRecords.size() > 0) {
+	    	for (int i=0; i<refRecords.size(); i++) {
+	    		Record refRecord = (Record)refRecords.get(i);
+       	    	String timeType = refRecord.getString("t01_object.time_type");
+	    		if(UtilsVelocity.hasContent(timeType).booleanValue()) {
+	       	    	String entryLine = "";
+	       	    	if (timeType.equals("von")) {
+	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
+	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	       	    		entryLine = entryLine.concat(" ").concat(messages.getString("search.detail.time.to")).concat(": ");
+	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	       	    	} else if (timeType.equals("seit")) {
+	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.since")).concat(": ");
+	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	       	    	} else if (timeType.equals("am")) {
+	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.at")).concat(": ");
+	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	       	    	} else if (timeType.equals("bis")) {
+	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.until")).concat(": ");
+	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	       	    	}
+	       	    	if (entryLine.length() > 0) {
+	       	    		addElementEntry(elements, entryLine, messages.getString("time_reference_content"));
+	       	    	}
+	    		}
+	    	}
+    	}
+    	
+    	addElementEntry(elements, sysCodeList.getName("523", record.getString("t01_object.time_status")), messages.getString("t01_object.time_status"));
+    	addElementEntry(elements, sysCodeList.getName("518", record.getString("t01_object.time_period")), messages.getString("t01_object.time_period"));
+    	if (UtilsVelocity.hasContent(record.getString("t01_object.time_alle")).booleanValue() 
+    			&& UtilsVelocity.hasContent(record.getString("t01_object.time_interval")).booleanValue()) {
+        	String entryLine = record.getString("t01_object.time_alle").concat(" ").concat(record.getString("t01_object.time_interval"));
+    		addElementEntry(elements, entryLine, messages.getString("t01_object.time_interval"));
+    	}
+    	
+    	// time references
+		List listRecords = getSubRecordsByColumnName(record, "t0113_dataset_reference.line");
+    	if (listRecords.size() > 0) {
+	    	ArrayList lines = new ArrayList();
+	    	for (int i=0; i<listRecords.size(); i++) {
+	    		Record listRecord = (Record)listRecords.get(i);
+	    		HashMap line = new HashMap();
+	        	line.put("type", "textLine");
+	        	String textLine = sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type"));
+	        	textLine = textLine.concat(": ").concat(UtilsDate.convertDateString(listRecord.getString("t0113_dataset_reference.reference_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	        	line.put("body", textLine);
+	        	lines.add(line);
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("time_reference_record"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+    	addElementEntry(elements, record.getString("t01_object.time_descr"), messages.getString("t01_object.time_descr"));
+	}
+
+	
+	private void addSpatialReference(List elements, Record record) {
+    	// geo thesaurus references
+		List refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
+    	if (refRecords.size() > 0) {
+	    	ArrayList lines = new ArrayList();
+	    	for (int i=0; i<refRecords.size(); i++) {
+	    		Record listRecord = (Record)refRecords.get(i);
+	        	if (listRecord.getString("spatial_ref_value.type") != null && listRecord.getString("spatial_ref_value.type").equals("G")) {
+		    		HashMap line = new HashMap();
+		        	line.put("type", "textLine");
+		        	String textLine = listRecord.getString("spatial_ref_value.name_value");
+		        	if (textLine != null && listRecord.getString("spatial_ref_value.nativekey") != null) {
+		        		textLine = textLine.concat(" (").concat(listRecord.getString("spatial_ref_value.nativekey")).concat(")");
+		        	}
+		        	line.put("body", textLine);
+		        	lines.add(line);
+	        	}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("t011_township.township_no"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+
+    	// geo thesaurus references
+		refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
+    	if (refRecords.size() > 0) {
+	    	ArrayList lines = new ArrayList();
+	    	for (int i=0; i<refRecords.size(); i++) {
+	    		Record listRecord = (Record)refRecords.get(i);
+	        	if (listRecord.getString("spatial_ref_value.type") != null && listRecord.getString("spatial_ref_value.type").equals("F") && listRecord.getString("spatial_ref_value.name_value") != null ) {
+		    		HashMap line = new HashMap();
+		        	line.put("type", "textLine");
+		        	line.put("body", listRecord.getString("spatial_ref_value.name_value"));
+		        	lines.add(line);
+	        	}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("t019_coordinates.bezug"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+    	
+    	// vertical extend
+    	if (UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_minimum")).booleanValue()
+    			|| UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_maximum")).booleanValue()
+    			|| UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_unit")).booleanValue()
+    			|| UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_vdatum")).booleanValue()
+    		) {
+	    	HashMap element = new HashMap();
+	    	element.put("type", "table");
+	    	element.put("title", messages.getString("t01_object.vertical_extent"));
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("t01_object.vertical_extent_maximum"));
+			head.add(messages.getString("t01_object.vertical_extent_minimum"));
+			head.add(messages.getString("t01_object.vertical_extent_unit"));
+			head.add(messages.getString("t01_object.vertical_extent_vdatum"));
+			element.put("head", head);
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+			ArrayList row = new ArrayList();
+			row.add(notNull(record.getString("t01_object.vertical_extent_maximum")));
+			row.add(notNull(record.getString("t01_object.vertical_extent_minimum")));
+			row.add(notNull(record.getString("t01_object.vertical_extent_unit")));
+			row.add(notNull(record.getString("t01_object.vertical_extent_vdatum")));
+			body.add(row);
+	    	elements.add(element);
+	    	element = new HashMap();
+	    	element.put("type", "space");
+			elements.add(element);
+    	}
+    	
+    	this.addElementEntry(elements, record.getString("t01_object.loc_descr"), messages.getString("t01_object.loc_descr"));
 	}
 
 	
@@ -414,6 +573,10 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	    		body.add(row);
 	    	}
 	    	elements.add(element);
+	    	element = new HashMap();
+	    	element.put("type", "space");
+			elements.add(element);
+	    	
     	}
     	refRecords = getSubRecordsByColumnName(record, "t011_obj_data.base");
     	if (refRecords.size() > 0) {
@@ -547,8 +710,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	// address type
     	int addressType = -1;
 		try {
-			addressType = record.getInt("t02_address.adr_type");
-		} catch (IllegalArgumentException e) {
+			addressType = Integer.parseInt(record.getString("t02_address.adr_type"));
+		} catch (NumberFormatException e) {
 			log.debug("Illegal address classification (institution, unit, ...) found: " + record.getString("t02_address.adr_type"));
 		}
     	if (addressType == 0 || addressType == 3) {
