@@ -134,7 +134,23 @@ scriptScope.addLocationTopics = function() {
 
 	for (var i in radioButtonArray) {
 		if (radioButtonArray[i].checked) {
-			_container_.customParams.resultHandler.callback(radioButtonArray[i].topic);
+			// Convert SNSLocationTopic to LocationBean
+			var location = {
+				topicId: radioButtonArray[i].topic.topicId,
+				name: radioButtonArray[i].topic.name,
+				type: radioButtonArray[i].topic.type,
+				nativeKey: radioButtonArray[i].topic.nativeKey
+			}
+
+			if (radioButtonArray[i].topic.boundingBox && radioButtonArray[i].topic.boundingBox.length == 4) {
+				location.longitude1 = radioButtonArray[i].topic.boundingBox[0];
+				location.latitude1 = radioButtonArray[i].topic.boundingBox[1];
+				location.longitude2 = radioButtonArray[i].topic.boundingBox[2];
+				location.latitude2 = radioButtonArray[i].topic.boundingBox[3];
+			}
+
+//			_container_.customParams.resultHandler.callback(radioButtonArray[i].topic);
+			_container_.customParams.resultHandler.callback(location);
 		}
 	}
 
