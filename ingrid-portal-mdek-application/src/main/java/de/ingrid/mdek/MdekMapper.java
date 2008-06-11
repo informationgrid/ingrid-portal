@@ -822,7 +822,9 @@ public class MdekMapper implements DataMapperInterface {
 			obj.setExtraInfoLangMetaData(key.toString());
 		}
 
-		obj.setExtraInfoPublishArea(sysListMapper.getInitialKeyFromListId(PUBLICATION_CONDITION_ID));
+		if (obj.getExtraInfoPublishArea() == null) {
+			obj.setExtraInfoPublishArea(sysListMapper.getInitialKeyFromListId(PUBLICATION_CONDITION_ID));
+		}
 	}
 
 	// ------------------------------- Helper Methods -----------------------------------

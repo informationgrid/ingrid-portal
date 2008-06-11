@@ -242,6 +242,7 @@ function addAddressTableInfoValidation() {
 				}
 			}
 			if (numInfoEntries <= 1) {
+				popup.open(this.domNode, this);
 				return;
 			}
 		}

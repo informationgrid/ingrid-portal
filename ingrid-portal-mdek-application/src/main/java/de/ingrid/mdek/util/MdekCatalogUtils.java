@@ -86,6 +86,11 @@ public class MdekCatalogUtils {
 
 	private static LocationBean mapToLocationBean(IngridDocument locationDoc) {
 		LocationBean location = new LocationBean();
+
+		if (locationDoc == null) {
+			return location;
+		}
+
 		location.setType((String) locationDoc.get(MdekKeys.LOCATION_TYPE));
 		location.setName((String) locationDoc.get(MdekKeys.LOCATION_NAME));
 		location.setNativeKey((String) locationDoc.get(MdekKeys.LOCATION_CODE));

@@ -334,7 +334,7 @@ function hideSplash(){
   </div>
   <!-- NAVIGATION END -->
   
-  <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.html" preload="true" executeScripts="true"></div>
+  <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.html" preload="false" executeScripts="true"></div>
 <!-- 
   <div widgetId="page1Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
  -->

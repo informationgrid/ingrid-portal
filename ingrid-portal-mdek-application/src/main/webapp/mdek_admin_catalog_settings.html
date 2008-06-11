@@ -98,7 +98,7 @@ scriptScope.selectSpatialReference = function() {
 function isValidCatalog(cat) {
 	return (dojo.string.trim(cat.country).length != 0
 		 && dojo.string.trim(cat.language).length != 0
-		 && dojo.string.trim(cat.location).length != 0);
+		 && dojo.string.trim(cat.location.name).length != 0);
 }
 
 </script>
