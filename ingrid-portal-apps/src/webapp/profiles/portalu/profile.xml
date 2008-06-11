@@ -40,10 +40,6 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>mdek/catalog_admin.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>mdek/mdek_portal_admin.psml</name>
             <hidden>false</hidden>
         </page>
