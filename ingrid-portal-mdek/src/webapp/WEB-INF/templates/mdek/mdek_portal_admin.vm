@@ -63,13 +63,13 @@
 #renderDBBrowserNavigation()
 		<p>
 		<table class="border fullwidth">
-#set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin"])
-#set ($colTitles = ["Id", "Katalogname", "Partner", "Anbieter", "Administrator"])
+#set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin", "portalLogin"])
+#set ($colTitles = ["Id", "Katalogname", "Partner", "Anbieter", "Administrator", "Portal Login"])
 #renderDBBrowserHeader($colNames $colTitles)
 
 #foreach ($entry in $catalogList)
 	#set ($rowId = $entry.plugId)
-	#set ($rowValues = [$entry.catName, $entry.partner, $entry.provider, $entry.catAdmin])
+	#set ($rowValues = [$entry.catName, $entry.partner, $entry.provider, $entry.catAdmin, $entry.portalLogin])
 	#renderDBBrowserRow($rowId $rowValues)
 #end
 

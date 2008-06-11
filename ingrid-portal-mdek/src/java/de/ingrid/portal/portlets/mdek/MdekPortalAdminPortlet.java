@@ -319,12 +319,18 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
         		IngridDocument cat = mdekCallerCatalog.fetchCatalog(plugId, userData.getAddressUuid());
         		IngridDocument adm = mdekCallerSecurity.getCatalogAdmin(plugId, userData.getAddressUuid());
-
+        		String catAdminUuid = extractCatalogAdminUuid(adm);
+        		
         		CatalogBean catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
 
+
+        		UserData catAdminUserData = (UserData) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", catAdminUuid)).uniqueResult();
+        		
+        		
         		catalogData.put("plugId", plugId);
         		catalogData.put("catName", catBean.getCatalogName());
         		catalogData.put("catAdmin", extractCatalogAdminName(adm));
+        		catalogData.put("portalLogin", catAdminUserData.getPortalLogin());
         		// TODO: Implement partner & provider
         		catalogData.put("partner", "---");
         		catalogData.put("provider", "---");
@@ -336,6 +342,12 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	HibernateUtil.closeSession();
     	return catalogList;
     }
+
+    private static String extractCatalogAdminUuid(IngridDocument catAdmin) {
+    	IngridDocument result = MdekUtils.getResultFromResponse(catAdmin);
+    	return (String) result.get(MdekKeys.UUID);
+    }
+
 
     private static String extractCatalogAdminName(IngridDocument catAdmin) {
     	IngridDocument result = MdekUtils.getResultFromResponse(catAdmin);
