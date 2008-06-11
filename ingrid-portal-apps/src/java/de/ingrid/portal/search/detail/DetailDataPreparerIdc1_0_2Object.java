@@ -55,6 +55,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	 * @see de.ingrid.portal.search.detail.DetailDataPreparer#prepare(de.ingrid.utils.dsc.Record)
 	 */
 	public void prepare(Record record) {
+
 		HashMap data = new HashMap();
 		HashMap general = new HashMap();
 		general.put("title", record.getString("t01_object.obj_name"));
@@ -68,6 +69,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		data.put("general", general);
 		
 		ArrayList elements = new ArrayList();
+		int previousElementsSize = elements.size();
 
 		// alternate name
 		addElementEntry(elements, record.getString("t01_object.dataset_alternate_name"), null);
@@ -76,8 +78,11 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		// description
 		addElementEntry(elements, record.getString("t01_object.obj_descr"), null);
 		
-		// add horizontal line
-		addLine(elements);
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
 		
 		// superior objects
 		addSuperiorObjects(elements, record.getString("t01_object.obj_uuid"));
@@ -91,14 +96,20 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		//	URL references
 		addUrlReferences(elements, record);
 
-		// add horizontal line
-		addLine(elements);
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
 
 		//	addresses
 		addAddresses(elements, record);
 
-		// add horizontal line
-		addLine(elements);
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
 		
 		// add subject data
 		if (objClassStr.equals("5")) {
@@ -113,21 +124,254 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			addReferenceObjectClass1(elements, record);
 		}
 		
-		// add horizontal line
-		addLine(elements);
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
 
 		// add spatial reference data
 		addSpatialReference(elements, record);
 
-		// add horizontal line
-		addLine(elements);
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
 		
 		// add time reference data
 		addTimeReference(elements, record);
+
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
+		
+		// add availability information
+		addAvailabilityInformation(elements, record);
+
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
+		
+		// add additional information
+		addAdditionalInformation(elements, record);
+
+		if (previousElementsSize < elements.size()) {
+			// add horizontal line
+			addLine(elements);
+			previousElementsSize = elements.size();
+		}
+
+		// add index information
+		addIndexInformation(elements, record);
 		
 		data.put("elements", elements);
 		
 		context.put("data", data);
+	}
+	
+	
+	private void addIndexInformation(List elements, Record record) {
+
+    	// index references
+		List listRecords = getSubRecordsByColumnName(record, "t04_search.type");
+    	if (listRecords.size() > 0) {
+	    	ArrayList lines = new ArrayList();
+	    	for (int i=0; i<listRecords.size(); i++) {
+	    		Record listRecord = (Record)listRecords.get(i);
+	    		HashMap line = new HashMap();
+	        	line.put("type", "textLine");
+	        	line.put("body", listRecord.getString("searchterm_value.term"));
+	        	if (!isEmptyLine(line)) {
+	        		lines.add(line);
+	        	}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("search_terms"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+
+    	// topic categories
+		listRecords = getSubRecordsByColumnName(record, "t011_obj_topic_cat.line");
+    	if (listRecords.size() > 0) {
+	    	ArrayList lines = new ArrayList();
+	    	for (int i=0; i<listRecords.size(); i++) {
+	    		Record listRecord = (Record)listRecords.get(i);
+	    		HashMap line = new HashMap();
+	        	line.put("type", "textLine");
+	        	line.put("body", sysCodeList.getName("527", listRecord.getString("t011_obj_topic_cat.topic_category")));
+	        	if (!isEmptyLine(line)) {
+	        		lines.add(line);
+	        	}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("t011_obj_geo_topic_cat.topic_category"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+
+    	// environment categories
+		listRecords = getSubRecordsByColumnName(record, "t0114_env_category.cat_value");
+    	if (listRecords.size() > 0) {
+    		ArrayList lines = new ArrayList();
+	    	for (int i=0; i<listRecords.size(); i++) {
+	    		Record listRecord = (Record)listRecords.get(i);
+	    		if (listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
+		    		HashMap line = new HashMap();
+		        	line.put("type", "textLine");
+		        	line.put("body", listRecord.get("syslist.name"));
+		        	if (!isEmptyLine(line)) {
+		        		lines.add(line);
+		        	}
+	    		}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("t0114_env_category"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+    	
+    	// environment categories
+		listRecords = getSubRecordsByColumnName(record, "t0114_env_topic.topic_name");
+    	if (listRecords.size() > 0) {
+    		ArrayList lines = new ArrayList();
+	    	for (int i=0; i<listRecords.size(); i++) {
+	    		Record listRecord = (Record)listRecords.get(i);
+	    		if (listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
+		    		HashMap line = new HashMap();
+		        	line.put("type", "textLine");
+		        	line.put("body", listRecord.get("syslist.name"));
+		        	if (!isEmptyLine(line)) {
+		        		lines.add(line);
+		        	}
+	    		}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("t0114_env_topic"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+    	
+	}
+
+	private void addAdditionalInformation(List elements, Record record) {
+
+   		if (UtilsVelocity.hasContent(record.getString("t01_object.metadata_language")).booleanValue()) {
+   			addElementEntryInline(elements, messages.getString("iso.language.code.".concat(record.getString("t01_object.metadata_language"))), messages.getString("t01_object.metadata_language"));
+   		}
+   		if (UtilsVelocity.hasContent(record.getString("t01_object.data_language")).booleanValue()) {
+   			addElementEntryInline(elements, messages.getString("iso.language.code.".concat(record.getString("t01_object.data_language"))), messages.getString("t01_object.data_language"));
+   		}
+		
+    	// legal references
+		List listRecords = getSubRecordsByColumnName(record, "t015_legist.name");
+    	if (listRecords.size() > 0) {
+	    	ArrayList lines = new ArrayList();
+	    	for (int i=0; i<listRecords.size(); i++) {
+	    		Record listRecord = (Record)listRecords.get(i);
+	    		HashMap line = new HashMap();
+	        	line.put("type", "textLine");
+	        	line.put("body", listRecord.getString("t0113_dataset_reference.legist_value"));
+	        	if (!isEmptyLine(line)) {
+	        		lines.add(line);
+	        	}
+	    	}
+	    	if (lines.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("title", messages.getString("legal_basis"));
+		    	element.put("elements", lines);
+	    	    elements.add(element);
+	    	}
+    	}
+   		
+    	addElementEntry(elements, record.getString("t01_object.dataset_usage"), messages.getString("t01_object.dataset_usage"));
+   		addElementEntry(elements, record.getString("t01_object.info_note"), messages.getString("t01_object.info_note"));
+	}
+	
+	
+	private void addAvailabilityInformation(List elements, Record record) {
+		List tableRecords = getSubRecordsByColumnName(record, "t0110_avail_format.line");
+		if (tableRecords.size() > 0) {
+	    	HashMap element = new HashMap();
+	    	element.put("type", "table");
+	    	element.put("title", messages.getString("data_format"));
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("t0110_avail_format.name"));
+			head.add(messages.getString("t0110_avail_format.version"));
+			head.add(messages.getString("t0110_avail_format.file_decompression_technique"));
+			head.add(messages.getString("t0110_avail_format.specification"));
+			element.put("head", head);
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+	    	for (int i=0; i<tableRecords.size(); i++) {
+	    		Record tableRecord = (Record)tableRecords.get(i);
+	    		ArrayList row = new ArrayList();
+	    		row.add(notNull(tableRecord.getString("t0110_avail_format.format_value")));
+	    		row.add(notNull(tableRecord.getString("t0110_avail_format.ver")));
+	    		row.add(notNull(tableRecord.getString("t0110_avail_format.file_decompression_technique")));
+	    		row.add(notNull(tableRecord.getString("t0110_avail_format.specification")));
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
+	    	}
+	    	if (body.size() > 0) {
+		    	elements.add(element);
+		    	element = new HashMap();
+		    	element.put("type", "space");
+				elements.add(element);
+	    	}
+	    	
+		}
+
+		tableRecords = getSubRecordsByColumnName(record, "t0112_media_option.line");
+		if (tableRecords.size() > 0) {
+	    	HashMap element = new HashMap();
+	    	element.put("type", "table");
+	    	element.put("title", messages.getString("t0112_media_option.medium"));
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("t0112_media_option.medium_name"));
+			head.add(messages.getString("t0112_media_option.transfer_size"));
+			head.add(messages.getString("t0112_media_option.medium_note"));
+			element.put("head", head);
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+	    	for (int i=0; i<tableRecords.size(); i++) {
+	    		Record tableRecord = (Record)tableRecords.get(i);
+	    		ArrayList row = new ArrayList();
+	    		row.add(notNull(sysCodeList.getName("520", tableRecord.getString("t0112_media_option.medium_name"))));
+	    		row.add(notNull(tableRecord.getString("t0112_media_option.transfer_size")));
+	    		row.add(notNull(tableRecord.getString("t0112_media_option.medium_note")));
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
+	    	}
+	    	elements.add(element);
+	    	element = new HashMap();
+	    	element.put("type", "space");
+			elements.add(element);
+		}
+   		addElementEntry(elements, record.getString("t01_object.ordering_instructions"), messages.getString("t01_object.ordering_instructions"));
+   		addElementEntry(elements, record.getString("t01_object.avail_access_note"), messages.getString("t01_object.avail_access_note"));
+   		addElementEntry(elements, record.getString("t01_object.fees"), messages.getString("t01_object.fees"));
+   		
 	}
 
 	
@@ -181,7 +425,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	        	String textLine = sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type"));
 	        	textLine = textLine.concat(": ").concat(UtilsDate.convertDateString(listRecord.getString("t0113_dataset_reference.reference_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 	        	line.put("body", textLine);
-	        	lines.add(line);
+	        	if (!isEmptyLine(line)) {
+	        		lines.add(line);
+	        	}
 	    	}
 	    	if (lines.size() > 0) {
 		    	HashMap element = new HashMap();
@@ -210,7 +456,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		        		textLine = textLine.concat(" (").concat(listRecord.getString("spatial_ref_value.nativekey")).concat(")");
 		        	}
 		        	line.put("body", textLine);
-		        	lines.add(line);
+		        	if (!isEmptyLine(line)) {
+		        		lines.add(line);
+		        	}
 	        	}
 	    	}
 	    	if (lines.size() > 0) {
@@ -232,7 +480,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		    		HashMap line = new HashMap();
 		        	line.put("type", "textLine");
 		        	line.put("body", listRecord.getString("spatial_ref_value.name_value"));
-		        	lines.add(line);
+		        	if (!isEmptyLine(line)) {
+		        		lines.add(line);
+		        	}
 	        	}
 	    	}
 	    	if (lines.size() > 0) {
@@ -266,11 +516,15 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			row.add(notNull(record.getString("t01_object.vertical_extent_minimum")));
 			row.add(notNull(record.getString("t01_object.vertical_extent_unit")));
 			row.add(notNull(record.getString("t01_object.vertical_extent_vdatum")));
-			body.add(row);
-	    	elements.add(element);
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			elements.add(element);
+    		if (!isEmptyRow(row)) {
+    			body.add(row);
+    		}
+	    	if (body.size() > 0) {
+		    	elements.add(element);
+		    	element = new HashMap();
+		    	element.put("type", "space");
+				elements.add(element);
+	    	}
     	}
     	
     	this.addElementEntry(elements, record.getString("t01_object.loc_descr"), messages.getString("t01_object.loc_descr"));
@@ -301,12 +555,16 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_symc.symbol_cat_value")));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_symc.symbol_date")));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_symc.edition")));
-    	    		body.add(row);
+    	    		if (!isEmptyRow(row)) {
+    	    			body.add(row);
+    	    		}
     	    	}
-    	    	elements.add(element);
-    	    	element = new HashMap();
-    	    	element.put("type", "space");
-    			elements.add(element);
+    	    	if (body.size() > 0) {
+    		    	elements.add(element);
+    		    	element = new HashMap();
+    		    	element.put("type", "space");
+    				elements.add(element);
+    	    	}
     		}    	
 
     		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_keyc.line");
@@ -327,12 +585,16 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_keyc.keyc_value")));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_keyc.key_date")));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_keyc.edition")));
-    	    		body.add(row);
+    	    		if (!isEmptyRow(row)) {
+    	    			body.add(row);
+    	    		}
     	    	}
-    	    	elements.add(element);
-    	    	element = new HashMap();
-    	    	element.put("type", "space");
-    			elements.add(element);
+    	    	if (body.size() > 0) {
+    		    	elements.add(element);
+    		    	element = new HashMap();
+    		    	element.put("type", "space");
+    				elements.add(element);
+    	    	}
     		}
     		
     		boolean showVectorData = false;
@@ -349,7 +611,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	        	line.put("type", "textLine");
     	        	String repType = listRecord.getString("t011_obj_geo_spatial_rep.type");
     	        	line.put("body", sysCodeList.getName("526", repType));
-    	        	lines.add(line);
+    	        	if (!isEmptyLine(line)) {
+    	        		lines.add(line);
+    	        	}
     	        	if (repType != null && repType.equals("1")) {
     	        		showVectorData = true;
     	        	}
@@ -376,12 +640,16 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         	    		ArrayList row = new ArrayList();
         	    		row.add(notNull(tableRecord.getString("t011_obj_geo_vector.geometric_object_type")));
         	    		row.add(notNull(tableRecord.getString("t011_obj_geo_vector.geometric_object_count")));
-        	    		body.add(row);
+        	    		if (!isEmptyRow(row)) {
+        	    			body.add(row);
+        	    		}
         	    	}
-        	    	elements.add(element);
-        	    	element = new HashMap();
-        	    	element.put("type", "space");
-        			elements.add(element);
+        	    	if (body.size() > 0) {
+        		    	elements.add(element);
+        		    	element = new HashMap();
+        		    	element.put("type", "space");
+        				elements.add(element);
+        	    	}
         		}
     		}
     		if (refRecord.getString("t011_obj_geo.rec_grade") != null) {
@@ -407,12 +675,16 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_scale.scale")));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_scale.resolution_ground")));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_scale.resolution_scan")));
-    	    		body.add(row);
+    	    		if (!isEmptyRow(row)) {
+    	    			body.add(row);
+    	    		}
     	    	}
-    	    	elements.add(element);
-    	    	element = new HashMap();
-    	    	element.put("type", "space");
-    			elements.add(element);
+    	    	if (body.size() > 0) {
+    		    	elements.add(element);
+    		    	element = new HashMap();
+    		    	element.put("type", "space");
+    				elements.add(element);
+    	    	}
     		}    		
     		if (refRecord.getString("t011_obj_geo.pos_accuracy_vertical") != null) {
     			addElementEntry(elements, refRecord.getString("t011_obj_geo.pos_accuracy_vertical").concat(" m"), messages.getString("t011_obj_geo.pos_accuracy_vertical"));
@@ -439,7 +711,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	        	HashMap line = new HashMap();
     	        	line.put("type", "textLine");
     	        	line.put("body", listRecord.getString("t011_obj_geo_supplinfo.feature_type"));
-    	        	lines.add(line);
+    	        	if (!isEmptyLine(line)) {
+    	        		lines.add(line);
+    	        	}
     	    	}
         	    elements.add(element);
     		}
@@ -499,7 +773,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	        	HashMap line = new HashMap();
     	        	line.put("type", "textLine");
     	        	line.put("body", refRecord.getString("t011_obj_serv_version.version"));
-    	        	lines.add(line);
+    	        	if (!isEmptyLine(line)) {
+    	        		lines.add(line);
+    	        	}
     	    	}
         	    elements.add(element);
     		}
@@ -521,12 +797,16 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.name_value")));
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.descr")));
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.invocation_name")));
-    	    		body.add(row);
+    	    		if (!isEmptyRow(row)) {
+    	    			body.add(row);
+    	    		}
     	    	}
-    	    	elements.add(element);
-    	    	element = new HashMap();
-    	    	element.put("type", "space");
-    			elements.add(element);
+    	    	if (body.size() > 0) {
+    		    	elements.add(element);
+    		    	element = new HashMap();
+    		    	element.put("type", "space");
+    				elements.add(element);
+    	    	}
 
     		}
     		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_op_connpoint.line");
@@ -570,12 +850,16 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	    		ArrayList row = new ArrayList();
 	    		row.add(notNull(refRecord.getString("t011_obj_data_para.parameter")));
 	    		row.add(notNull(refRecord.getString("t011_obj_data_para.unit")));
-	    		body.add(row);
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
 	    	}
-	    	elements.add(element);
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			elements.add(element);
+	    	if (body.size() > 0) {
+		    	elements.add(element);
+		    	element = new HashMap();
+		    	element.put("type", "space");
+				elements.add(element);
+	    	}
 	    	
     	}
     	refRecords = getSubRecordsByColumnName(record, "t011_obj_data.base");
@@ -887,6 +1171,24 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
             result.addAll(getSubRecordsByColumnName(subRecord, columnName));
         }
         return result;
+    }
+    
+    private boolean isEmptyRow(List row) {
+    	for (int i=0; i<row.size(); i++) {
+    		if (row.get(i) != null && row.get(i) instanceof String && ((String)row.get(i)).length() > 0) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+
+    private boolean isEmptyLine(HashMap line) {
+    	if (line.get("type") != null && line.get("type").equals("textLine")) {
+        	if (line.get("body") != null && line.get("body") instanceof String && ((String)line.get("body")).length() > 0) {
+        		return false;
+        	}
+    	}
+    	return true;
     }
     
     
