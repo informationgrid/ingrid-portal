@@ -3,7 +3,7 @@
   <title>ingrid.page.mdek</title>  
 
 <!--
-  <menu name="sub-menu">
+  <menu name="sub-menu-mdek">
     <options>/mdek/mdek_portal_admin.psml</options>
     <options>/mdek/mdek_entry.psml</options>
   </menu>

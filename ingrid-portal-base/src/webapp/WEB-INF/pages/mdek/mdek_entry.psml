@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Metadaten-Erfassungskomponente</title>
-  <metadata name="title" xml:lang="en">Mdek</metadata>
+  <title>ingrid.page.mdek.entry</title>
 
   <fragment id="mdek-entry" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="mdek-entry-0" type="portlet" name="ingrid-portal-mdek::MdekEntryPortlet">

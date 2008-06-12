@@ -4,8 +4,7 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Katalogadministration - Portal-Admin</title>
-  <metadata name="title" xml:lang="en">Mdek</metadata>
+  <title>ingrid.page.mdek.catadmin</title>
 
   <fragment id="mdek-portal" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="mdek-portal-0" type="portlet" name="ingrid-portal-mdek::MdekPortalAdminPortlet">
