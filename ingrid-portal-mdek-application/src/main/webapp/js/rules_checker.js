@@ -30,7 +30,8 @@ var class3UiInputElements = ["ref3ServiceType", "ref3ServiceVersion", "ref3Syste
 var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
 var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
 
-var adrUiInputElements = ["addressType", "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
+// Address Type is not included since the field is filled automatically
+var adrUiInputElements = [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
 	"addressZipPOBox", "addressNotes", "addressCom", "addressTasks", "thesaurusTermsAddress", "thesaurusFreeTermsListAddress"];
 var adrClass0UiInputElements = ["headerAddressType0Unit"];
 var adrClass1UiInputElements = ["headerAddressType1Unit"];

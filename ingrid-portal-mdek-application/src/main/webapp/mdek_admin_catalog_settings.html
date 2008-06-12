@@ -12,8 +12,10 @@ _container_.addOnLoad(function() {
 //	dojo.debugShallow(catalogData);
 //	dojo.debugShallow(catalogData.location);
 
-	updateInputFields(catalogData);
-	currentCatalogData = catalogData;
+	if (catalogData != null) {
+		updateInputFields(catalogData);
+		currentCatalogData = catalogData;
+	}
 
 //	Dojo displays 30 entries max. Enable the next line to display all entries in the select box
 //	dojo.widget.byId("adminCatalogCountry").dataProvider.searchLimit = 10000;
