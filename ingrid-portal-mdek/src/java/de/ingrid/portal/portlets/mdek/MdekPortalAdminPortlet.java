@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets.mdek;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,17 +30,14 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
-import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.utils.IngridDocument;
@@ -109,14 +107,20 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	Context context = getContext(request);
         context.put("catalogList", buildConnectedCatalogList());
     }
-    
+
+
     public void doViewNew(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
     throws PortletException, IOException {
 		setDefaultViewPage(TEMPLATE_NEW);
-    	
+
     	Context context = getContext(request);
-        context.put("plugIdList", getUnconnectedPlugIdList(request));
-        context.put("userNameList", getUnconnectedUserList());
+        List<String> plugIdList = getUnconnectedPlugIdList(request);
+        List<String> userNameList = getUnconnectedUserList();
+        Collections.sort(plugIdList);
+        Collections.sort(userNameList);
+
+        context.put("plugIdList", plugIdList);
+        context.put("userNameList", userNameList);
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -177,33 +181,15 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     public void processActionDelete(ActionRequest request, ActionResponse actionResponse) throws PortletException,
     IOException {
-    	// TODO: Implement for multiple selections
-    	String plugId = request.getParameter("id");
-    	if (plugId == null) {
+    	String[] plugIdList = request.getParameterValues("id");
+
+    	if (plugIdList == null) {
     		return;
     	}
 
-    	Session s = HibernateUtil.currentSession();
-    	s.beginTransaction();
-    	try {
-	    	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
-	    	if (userDataList != null && userDataList.size() != 0) {
-	    		// TODO Delete all idc users in the catalog?
-	    		for(UserData userData : userDataList) {
-		    		s.delete(userData);
-		    		roleManager.removeRoleFromUser(userData.getPortalLogin(), "mdek");
-	    		}
-	        	s.getTransaction().commit();
-	    	}
-
-    	} catch (SecurityException e) {
-    		if (s.getTransaction() != null) {
-    			s.getTransaction().rollback();
-    		}
-    		throw new PortletException(e);
-
-    	} finally {    		
-    		HibernateUtil.closeSession();
+    	// Remove all connections from the givenlist
+    	for (String plugId : plugIdList) {
+    		removeConnectedIPlug(plugId);
     	}
     }
 
@@ -250,6 +236,31 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	}
 
     	this.state = STATE.START;
+    }
+
+    private void removeConnectedIPlug(String plugId) throws PortletException {
+    	Session s = HibernateUtil.currentSession();
+    	s.beginTransaction();
+    	try {
+	    	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
+	    	if (userDataList != null && userDataList.size() != 0) {
+	    		// TODO Delete all idc users in the catalog?
+	    		for(UserData userData : userDataList) {
+		    		s.delete(userData);
+		    		roleManager.removeRoleFromUser(userData.getPortalLogin(), "mdek");
+	    		}
+	        	s.getTransaction().commit();
+	    	}
+
+    	} catch (SecurityException e) {
+    		if (s.getTransaction() != null) {
+    			s.getTransaction().rollback();
+    		}
+    		throw new PortletException(e);
+
+    	} finally {    		
+    		HibernateUtil.closeSession();
+    	}
     }
 
     private static ACTION getAction(ActionRequest request) {
