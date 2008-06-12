@@ -342,9 +342,8 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         		catalogData.put("catName", catBean.getCatalogName());
         		catalogData.put("catAdmin", extractCatalogAdminName(adm));
         		catalogData.put("portalLogin", catAdminUserData.getPortalLogin());
-        		// TODO: Implement partner & provider
-        		catalogData.put("partner", "---");
-        		catalogData.put("provider", "---");
+        		catalogData.put("partner", catBean.getPartnerName());
+        		catalogData.put("provider", catBean.getProviderName());
         		catalogList.add(catalogData);
         	}
     	}
