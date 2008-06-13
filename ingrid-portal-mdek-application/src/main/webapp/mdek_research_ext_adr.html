@@ -121,9 +121,9 @@ this.navInnerTab = function(subSectionIndex){
 	// number of subsections == 1
 	for (var i = 0; i < 1; i++) {
 		if (i == subSectionIndex) {
-			dojo.byId("addrTopic" + i).style.display = "block";
+			dojo.html.show(dojo.byId("addrTopic"+i));
 		} else {
-			dojo.byId("addrTopic" + i).style.display = "none";
+			dojo.html.hide(dojo.byId("addrTopic"+i));
 		}
 	}
 }

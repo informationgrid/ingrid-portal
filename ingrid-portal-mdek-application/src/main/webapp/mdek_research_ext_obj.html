@@ -74,44 +74,6 @@ _container_.addOnLoad(function() {
             }
 	});
 
-    // Pressing 'enter' on the time input fields is equal to a button click
-/*
-    dojo.event.connect(dojo.widget.byId("objTimeRef1From").domNode, "onkeypress",
-        function(event) {
-			dojo.byId("objTimeRef1").checked = true;
-            if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startNewSearch();
-            }
-	});
-    dojo.event.connect(dojo.widget.byId("objTimeRef1To").domNode, "onkeypress",
-        function(event) {
-			dojo.byId("objTimeRef1").checked = true;
-            if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startNewSearch();
-            }
-	});
-    dojo.event.connect(dojo.widget.byId("objTimeRef2On").domNode, "onkeypress",
-        function(event) {
-			dojo.byId("objTimeRef2").checked = true;
-            if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startNewSearch();
-            }
-	});
-
-	// Pressing one of the radio buttons deletes the 'other' input fields
-    dojo.byId("objTimeRef1").onclick = function() {
-		dojo.widget.byId("objTimeRef2On").clearValue();
-    }
-    dojo.byId("objTimeRef2").onclick = function() {
-		dojo.widget.byId("objTimeRef1From").clearValue();
-		dojo.widget.byId("objTimeRef1To").clearValue();
-    }
-    dojo.byId("objTimeRef3").onclick = function() {
-		dojo.widget.byId("objTimeRef2On").clearValue();
-		dojo.widget.byId("objTimeRef1From").clearValue();
-		dojo.widget.byId("objTimeRef1To").clearValue();
-    }
-*/
 	dojo.event.connect(dojo.widget.byId("objTimeRef1"), "onValueChanged", function(value) {displayTimeToInput(value);});
 	dojo.widget.byId("objTimeRef1").setValue("am");
 
@@ -156,16 +118,38 @@ this.startNewSearch = function() {
 	startSearch();
 }
 
-
 // Subnavigation. 'subSectionIndex' specifies the index of the tab that should be selected
-this.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
-
+scriptScope.navInnerTab = function(sectionName, subSectionIndex, numSubSections){
 	for (var i = 0; i < numSubSections; i++) {
 		if (i == subSectionIndex) {
-			dojo.byId(sectionName + i).style.display = "block";
+			dojo.html.show(dojo.byId(sectionName + i));
+
 		} else {
-			dojo.byId(sectionName + i).style.display = "none";
+			dojo.html.hide(dojo.byId(sectionName + i));
 		}
+	}
+
+	// The page does not get refreshed properly on IE if we change the 'display' style of elements.
+	// It looks like the dojo containers don't get refreshed.
+	// Refresh the page manually for IE:
+	if (dojo.render.html.ie) {
+		setTimeout("window._refreshExtendedSearchObjectPage('"+sectionName+"', '"+subSectionIndex+"')", 1);
+	}
+}
+
+// Evil hack for IE to refresh the dojo containers.
+window._refreshExtendedSearchObjectPage = function(sectionName, sectionIndex) {
+	// If the section 'objTopic2' is toggled it will be hidden.
+	// TODO: Why does this happen? I assume it has to do with the content 
+	if (sectionName+sectionIndex == "objTopic2") {
+		return;
+	}
+
+	var sectionDiv = dojo.byId(sectionName + sectionIndex);
+
+	if (sectionDiv) {
+		dojo.html.toggleDisplay(sectionDiv);
+		dojo.html.toggleDisplay(sectionDiv);
 	}
 }
 
@@ -642,18 +626,7 @@ function hideLoadingZone() {
     	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
     	    </ul>
     	  </div>
-<!-- 
-        <div class="inputContainer field noSpaceBelow">
-          <span class="label"><label for="objTopicInput" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suchbegriff')">Bitte geben Sie die Suchbegriffe ein:</label></span>
-          <span class="input spaceBelow"><input type="text" id="objTopicInput" name="objTopicInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-          <span class="label"><label class="inActive" for="objTopicInputBoolean">Gesuchtes Objekt enth&auml;lt:</label> <select dojoType="ingrid:Select" style="width:174px;" id="objTopicInputBool" name="objTopicInputBool">
-              <!-- TODO: fill in jsp -->
-            	<option value="0">Alle diese Begriffe (UND)</option>
-            	<option value="1">Einen dieser Begriffe (ODER)</option>
-            </select></span>
-          <div class="spacerField"></div>
-    	  </div>
- -->
+
         <div class="inputContainer field noSpaceBelow">
           <span class="note"><b>Bestimmen Sie wie gesucht werden soll:</b></span>
           <div class="spacer"></div>
@@ -713,7 +686,7 @@ function hideLoadingZone() {
       <!-- EXTENDED SEARCH TAB 1 SUB 2 END -->
       
       <!-- EXTENDED SEARCH TAB 1 SUB 3 START -->
-	  <div id="objTopic2">
+	  <div id="objTopic2" style="display:none;">
         <div class="tabContainerSubNavi">
     	  <ul>
     	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus">Suchmodus</a></li>
@@ -931,42 +904,9 @@ function hideLoadingZone() {
               <span class="input"><div dojoType="ingrid:DropdownDatePicker" id="objTimeRef1To" displayFormat="dd.MM.yyyy" name="timeRefDate2"></div><br />TT.MM.JJJJ</span>
             </span>
 
-
-<!--
-            <input type="radio" name="objTimeRef" id="objTimeRef1" class="radio entry first" />
-            <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
-            <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1From"></div>
-            <label class="inActive" for="objTimeRef1To">Bis:</label>
-            <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef1To"></div>
- -->
-<!-- 
-            <label class="inActive entry w033" for="objTimeRef1From">Von:</label>
-            <input type="text" id="objTimeRef1From" name="objTimeRef1From" class="w116" dojoType="ingrid:ValidationTextBox" />
-            <label class="inActive" for="objTimeRef1To">Bis:</label>
-            <input type="text" id="objTimeRef1To" name="objTimeRef1To" class="w116" dojoType="ingrid:ValidationTextBox" />
-            <label class="inActive">[TT.MM.JJJJ]</label>
- -->
-
           </div>
           <div class="inputContainer">
-<!-- 
-            <input type="radio" name="objTimeRef" id="objTimeRef2" class="radio entry first" />
-            <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
-            <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="objTimeRef2On"></div>
- -->
-<!-- 
-            <label class="inActive entry w033" for="objTimeRef2On">Am:</label>
-            <input type="text" id="objTimeRef2On" name="objTimeRef2On" class="w116" dojoType="ingrid:ValidationTextBox" />
-            <label class="inActive">[TT.MM.JJJJ]</label>
- -->
           </div>
-
-<!-- 
-          <div class="inputContainer h025">
-            <input type="radio" name="objTimeRef" id="objTimeRef3" class="radio entry first" checked />
-            <label class="inActive entry" for="objTimeRef3">Kein Zeitbezug</label>
-          </div>
- -->
 
           <div class="inputContainer noSpaceBelow">
             <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
@@ -998,37 +938,6 @@ function hideLoadingZone() {
     </span>
   </div>
 
-    <!-- OBJECT SEARCH RESULT LIST START -->
-<!-- 
-    <div class="spacer"></div>
-    <div id="objectSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
-      <span class="label">Trefferliste</span>
-
-      <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
-
-      <div class="listInfo w845">
-        <span id="objSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
-        <span id="objSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>
-    	  <div class="fill"></div>
-      </div>
-
-	  <table id="objectSearchExtResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable relativePos">
-	    <thead>
-		  <tr>
-      	    <th nosort="true" field="icon" dataType="String" width="23"></th>
-      		<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
-		  </tr>
-	    </thead>
-        <colgroup>
-	      <col width="23">
-	      <col width="804">
-        </colgroup>
-	    <tbody>
-	    </tbody>
-	  </table>
-	</div>
- -->
-    <!-- OBJECT SEARCH RESULT LIST END -->
 
 <!-- EXTENDED SEARCH END -->
 </body>
