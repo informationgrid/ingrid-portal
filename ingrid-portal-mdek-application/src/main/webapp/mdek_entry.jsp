@@ -1630,7 +1630,7 @@ function hideSplash(){
 	                    <span id="thesaurusEnvTopicsLabel" class="label"><label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themen')">Themen</label></span>
 	                    <div class="tableContainer headHiddenRows4 halfInside">
 	                      <div class="cellEditors" id="thesaurusEnvTopicsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1400" id="thesaurusEnvTopicsCombobox"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1410" id="thesaurusEnvTopicsCombobox"></div>
 	                      </div>
 	                	    <table id="thesaurusEnvTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
@@ -1648,7 +1648,7 @@ function hideSplash(){
 	                    <span id="thesaurusEnvCatsLabel" class="label"><label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 'Kategorien')">Kategorien</label></span>
 	                    <div class="tableContainer headHiddenRows4 halfInside">
 	                      <div class="cellEditors" id="thesaurusEnvCatsEditors">
-	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1410" id="thesaurusEnvCatsCombobox"></div>
+	                        <div dojoType="ingrid:Select" toggle="plain" style="width:240px;" listId="1400" id="thesaurusEnvCatsCombobox"></div>
 	                      </div>
 	                	    <table id="thesaurusEnvCats" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	                	      <thead>
