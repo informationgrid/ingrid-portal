@@ -22,6 +22,8 @@ import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
+import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
+import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.PlugDescription;
@@ -278,11 +280,15 @@ public class DisplayTreeFactory {
         String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
         String key_udkDocId = "";
         String key_udkClass = "";
-        ArrayList hits = new ArrayList();
+        List hits = new ArrayList();
+        
+        PlugDescription pd = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
+        CatalogTreeDataProvider ctdp = CatalogTreeDataProviderFactory.getDetailDataPreparer(IPlugVersionInspector.getIPlugVersion(pd));
+        
 		if (udkDocId == null) {
-			hits = IPlugHelperDscEcs.getTopDocs(plugId, plugType);
+			hits = ctdp.getTopEntities(plugId, plugType);
 		} else {
-			hits = IPlugHelperDscEcs.getSubDocs(udkDocId, plugId, plugType, null);			
+			hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);			
 		}
 
 		// keys for extracting data
@@ -321,11 +327,7 @@ public class DisplayTreeFactory {
             }
 
             // check whether child node has children as well -> request only 1 child !
-            boolean hasChildren = false;
-            ArrayList subHits = IPlugHelperDscEcs.getSubDocs(udkDocId, plugId, plugType, new Integer(1));
-            if (subHits.size() > 0) {
-            	hasChildren = true;
-            }
+            boolean hasChildren = ctdp.hasChildren(udkDocId, plugId, plugType);
             
             DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
             childNode.setType(DisplayTreeNode.GENERIC);

@@ -213,7 +213,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param maxNumberOfHits how many hits requested ? pass null if all hits !
      * @return
      */
-    static private ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumberOfHits) {
+    static public ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumberOfHits) {
         ArrayList result = new ArrayList();
         
         // request hits in chunks of 20 results per page, when all hits requested !
