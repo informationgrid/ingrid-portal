@@ -54,14 +54,14 @@ function showDWRFunctionLoading() {
 	document.getElementById("DWRFuncLoading").innerHTML = "function loading...";
 }
 function hideDWRFunctionLoading() {
-	document.getElementById("DWRFuncLoading").innerHTML = "";
+	document.getElementById("DWRFuncLoading").innerHTML = "-------------------";
 }
 
 function showDWRLoading() {
 	document.getElementById("DWRLoading").innerHTML = "dwr loading...";
 }
 function hideDWRLoading() {
-	document.getElementById("DWRLoading").innerHTML = "";
+	document.getElementById("DWRLoading").innerHTML = "--------------";
 }
 
 </script>

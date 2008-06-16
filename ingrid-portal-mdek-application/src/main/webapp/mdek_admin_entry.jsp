@@ -63,6 +63,9 @@ dojo.addOnLoad(function() {
 		console.style.visibility = "visible";
 	}
 
+
+	initGeneralEventListeners();
+
 	var def = initCatalogData();
 	def.addCallback(initCurrentUser);
 	def.addCallback(initCurrentGroup);
@@ -168,6 +171,48 @@ function initCurrentUser() {
 	return def;
 }
 
+function initGeneralEventListeners() {
+	// Disable backspace default behaviour (browser back button)
+	if (dojo.render.html.ie) {
+		// Registering IE onkeydown with dojo doesn't work as it should
+		// Therefore we need to directly register with the documents onkeydown function
+		document.onkeydown = function(e) {
+			var evt = (e) ? e : window.event; 
+			dojo.event.browser.fixEvent(evt);
+			if (evt.keyCode == evt.KEY_BACKSPACE) {
+				var tagName = evt.target.tagName.toLowerCase();
+				if (!(tagName == 'input') && !(tagName == 'textarea')) {
+//					dojo.debug("Preventing backspace default behaviour on "+evt.target);
+					evt.preventDefault();
+				}
+			}
+		}
+	} else {
+		dojo.event.browser.addListener(document, "onkeydown", function(evt){
+			if (evt.keyCode == evt.KEY_BACKSPACE) {
+				if (!(evt.target instanceof HTMLInputElement) && !(evt.target instanceof HTMLTextAreaElement)) {
+//					dojo.debug("Preventing backspace default behaviour on "+evt.target);
+					evt.preventDefault();
+				}
+			}
+		});
+	}
+
+
+	// Catch the window close event
+	window.onbeforeunload = function(evt){
+		if (dojo.render.html.ie) {
+			// Catch clicks on the upper left and upper right corner. Also catch clicks on the app's 'close' button.
+			if ( (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15))
+			   ||(event.clientY < 22 && event.clientX > document.documentElement.clientWidth - 78 && event.clientX < document.documentElement.clientWidth - 9) ) {
+		  		event.returnValue = message.get("general.closeWindow");
+			}
+
+		} else {
+			return message.get("general.closeWindow");
+		}
+	}
+}
 
 
 function clickMenu(menuName, submenuName) {

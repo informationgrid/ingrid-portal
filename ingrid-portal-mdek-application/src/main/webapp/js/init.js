@@ -1119,11 +1119,14 @@ function initGeneralEventListener() {
 	// Catch the window close event
 	window.onbeforeunload = function(evt){
 		if (dojo.render.html.ie) {
-			if (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15) ) {
+			// Catch clicks on the upper left and upper right corner. Also catch clicks on the app's 'close' button.
+			if ( (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15))
+			   ||(event.clientY < 22 && event.clientX > document.documentElement.clientWidth - 78 && event.clientX < document.documentElement.clientWidth - 9) ) {
 		  		event.returnValue = message.get("general.closeWindow");
 			}
+
 		} else {
-			evt.returnValue = message.get("general.closeWindow");
+			return message.get("general.closeWindow");
 		}
 	}
 }
