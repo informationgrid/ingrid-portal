@@ -62,6 +62,7 @@
 	"dialog.address.finalSaveMessage":"Wollen Sie die Adresse wirklich ver&ouml;ffentlichen?",
 	"dialog.storeGroupTitle":"Gruppe speichern",
 	"dialog.storeGroupSuccess":"Die Gruppe wurde erfolgreich gespeichert.",
+	"dialog.browserFunctionDisabled":"Diese Funktionalit&auml;t ist in der MDEK deaktiviert.",
 
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 	"dialog.generalError":"Beim Ausf&uuml;hren der Aktion ist folgender Fehler aufgetreten: '%{0}'",

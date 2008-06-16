@@ -123,6 +123,7 @@
 	"dialog.storeCatalogError":"Error while storing catalog data. Please try again or contact the administrator.",
 	"dialog.storeGroupTitle":"Store Group",
 	"dialog.storeGroupSuccess":"The group was saved successfully.",
+	"dialog.browserFunctionDisabled":"This functionality is disabled.",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",

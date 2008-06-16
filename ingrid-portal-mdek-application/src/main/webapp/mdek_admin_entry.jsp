@@ -179,14 +179,24 @@ function initGeneralEventListeners() {
 		document.onkeydown = function(e) {
 			var evt = (e) ? e : window.event; 
 			dojo.event.browser.fixEvent(evt);
+
 			if (evt.keyCode == evt.KEY_BACKSPACE) {
 				var tagName = evt.target.tagName.toLowerCase();
 				if (!(tagName == 'input') && !(tagName == 'textarea')) {
 //					dojo.debug("Preventing backspace default behaviour on "+evt.target);
 					evt.preventDefault();
 				}
+
+			} else if (evt.keyCode == evt.KEY_F5) {			
+				dialog.show(message.get("general.hint"), message.get("dialog.browserFunctionDisabled"), dialog.INFO);
+
+			    evt.keyCode = 0;
+			    evt.cancelBubble = true;
+			    evt.returnValue = false;
+			    return false;
 			}
 		}
+
 	} else {
 		dojo.event.browser.addListener(document, "onkeydown", function(evt){
 			if (evt.keyCode == evt.KEY_BACKSPACE) {
@@ -194,6 +204,10 @@ function initGeneralEventListeners() {
 //					dojo.debug("Preventing backspace default behaviour on "+evt.target);
 					evt.preventDefault();
 				}
+
+			} else if (evt.keyCode == evt.KEY_F5) {			
+				dialog.show(message.get("general.hint"), message.get("dialog.browserFunctionDisabled"), dialog.INFO);
+				evt.preventDefault();
 			}
 		});
 	}
