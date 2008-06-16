@@ -138,12 +138,12 @@ function addMinMaxBoundingBoxValidation(tableId) {
 				dojo.html.addClass(row.cells[lat1Idx], this.fieldInvalidClass);
 				dojo.html.addClass(row.cells[lat2Idx], this.fieldInvalidClass);		
 
-				if (dojo.validate.isRealNumber(lon1) && dojo.validate.isRealNumber(lon2) && parseFloat(lon1) < parseFloat(lon2)) {
+				if (dojo.validate.isRealNumber(lon1) && dojo.validate.isRealNumber(lon2) && parseFloat(lon1) <= parseFloat(lon2)) {
 					lonValid = true;
 					dojo.html.removeClass(row.cells[lon1Idx], this.fieldInvalidClass);
 					dojo.html.removeClass(row.cells[lon2Idx], this.fieldInvalidClass);		
 				}
-				if (dojo.validate.isRealNumber(lat1) && dojo.validate.isRealNumber(lat2) && parseFloat(lat1) < parseFloat(lat2)) {
+				if (dojo.validate.isRealNumber(lat1) && dojo.validate.isRealNumber(lat2) && parseFloat(lat1) <= parseFloat(lat2)) {
 					latValid = true;
 					dojo.html.removeClass(row.cells[lat1Idx], this.fieldInvalidClass);
 					dojo.html.removeClass(row.cells[lat2Idx], this.fieldInvalidClass);		
