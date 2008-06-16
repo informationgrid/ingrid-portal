@@ -231,8 +231,57 @@ dojo.widget.defineWidget(
 			}
 		}
     }
-    
-    dojo.widget.FilteringTable.prototype.postCreate.apply(this, arguments);
+
+/* BEGIN COPY */
+/* Copy of postCreate from the superclass to enable text selection */
+
+	//	summary
+	//	finish widget initialization.
+	this.store.keyField = this.valueField;
+
+	if(this.domNode){
+		//	start by making sure domNode is a table element;
+		if(this.domNode.nodeName.toLowerCase() != "table"){
+		}
+
+		//	see if there is columns set up already
+		if(this.domNode.getElementsByTagName("thead")[0]){
+			var head=this.domNode.getElementsByTagName("thead")[0];
+			if(this.headClass.length > 0){
+				head.className = this.headClass;
+			}
+//			dojo.html.disableSelection(this.domNode);
+			this.parseMetadata(head);
+
+			var header="td";
+			if(head.getElementsByTagName(header).length==0){
+				header="th";
+			}
+			var headers = head.getElementsByTagName(header);
+			for(var i=0; i<headers.length; i++){
+				if(!this.columns[i].noSort){
+					dojo.event.connect(headers[i], "onclick", this, "onSort");
+				}
+			}
+		} else {
+			this.domNode.appendChild(document.createElement("thead"));
+		}
+
+		// if the table doesn't have a tbody already, add one and grab a reference to it
+		if (this.domNode.tBodies.length < 1) {
+			var body = document.createElement("tbody");
+			this.domNode.appendChild(body);
+		} else {
+			var body = this.domNode.tBodies[0];
+		}
+
+		if (this.tbodyClass.length > 0){
+			body.className = this.tbodyClass;
+		}
+		dojo.event.connect(body, "onclick", this, "onSelect");
+		this.parseData(body);
+	}
+/* END COPY */
   },
 
   /*
@@ -940,6 +989,108 @@ dojo.widget.defineWidget(
 				cell.innerHTML = val;
 			}
 		}
+	},
+
+	createRow: function(/* object */obj){
+		//	summary
+		//	Create an HTML row based on the passed object
+		var row=document.createElement("tr");
+//		dojo.html.disableSelection(row);
+		if(obj.key != null){
+			row.setAttribute("value", obj.key);
+		}
+		for(var j=0; j<this.columns.length; j++){
+			var cell=document.createElement("td");
+			cell.setAttribute("align", this.columns[j].align);
+			cell.setAttribute("valign", this.columns[j].valign);
+//			dojo.html.disableSelection(cell);
+			var val = this.store.getField(obj.src, this.columns[j].getField());
+			if(typeof(val)=="undefined"){
+				val="";
+			}
+			this.fillCell(cell, this.columns[j], val);
+			row.appendChild(cell);
+		}
+		return row;	//	HTMLTableRow
+	},
+
+	init: function(){
+		//	summary
+		//	initializes the table of data
+		this.isInitialized=false;
+
+		//	if there is no thead, create it now.
+		var head=this.domNode.getElementsByTagName("thead")[0];
+		if(head.getElementsByTagName("tr").length == 0){
+			//	render the column code.
+			var row=document.createElement("tr");
+			for(var i=0; i<this.columns.length; i++){
+				var cell=document.createElement("td");
+				cell.setAttribute("align", this.columns[i].align);
+				cell.setAttribute("valign", this.columns[i].valign);
+//				dojo.html.disableSelection(cell);
+				cell.innerHTML=this.columns[i].label;
+				row.appendChild(cell);
+
+				//	attach the events.
+				if(!this.columns[i].noSort){
+					dojo.event.connect(cell, "onclick", this, "onSort");
+				}
+			}
+			dojo.html.prependChild(row, head);
+		}
+		
+		if(this.store.get().length == 0){
+			return false;
+		}
+
+		var idx=this.domNode.tBodies[0].rows.length;
+		if(!idx || idx==0 || this.domNode.tBodies[0].rows[0].getAttribute("emptyRow")=="true"){
+			idx = 0;
+			var body = this.domNode.tBodies[0];
+			while(body.childNodes.length>0){
+				body.removeChild(body.childNodes[0]);
+			}
+
+			var data = this.store.get();
+			for(var i=0; i<data.length; i++){
+				var row = this.createRow(data[i]);
+				body.appendChild(row);
+				idx++;
+			}
+		}
+
+		//	add empty rows
+		if(this.minRows > 0 && idx < this.minRows){
+			idx = this.minRows - idx;
+			for(var i=0; i<idx; i++){
+				row=document.createElement("tr");
+				row.setAttribute("emptyRow","true");
+				for(var j=0; j<this.columns.length; j++){
+					cell=document.createElement("td");
+					cell.innerHTML="&nbsp;";
+					row.appendChild(cell);
+				}
+				body.appendChild(row);
+			}
+		}
+
+		//	last but not least, show any columns that have sorting already on them.
+		var row=this.domNode.getElementsByTagName("thead")[0].rows[0];
+		var cellTag="td";
+		if(row.getElementsByTagName(cellTag).length==0) cellTag="th";
+		var headers=row.getElementsByTagName(cellTag);
+		for(var i=0; i<headers.length; i++){
+			dojo.html.setClass(headers[i], this.headerClass);
+		}
+		for(var i=0; i<this.sortInformation.length; i++){
+			var idx=this.sortInformation[i].index;
+			var dir=(~this.sortInformation[i].direction)&1;
+			dojo.html.setClass(headers[idx], dir==0?this.headerDownClass:this.headerUpClass);
+		}
+
+		this.isInitialized=true;
+		return this.isInitialized;
 	},
 
 
