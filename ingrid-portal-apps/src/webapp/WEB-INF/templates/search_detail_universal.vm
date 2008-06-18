@@ -34,11 +34,16 @@
 
 #macro (renderLinkLine $entry)
 	#if($entry.hasLinkIcon)
+		#if($entry.iconImage)
+		<span class="icon_udk">
+			<img src="/ingrid-portal-apps/images/$entry.iconImage" alt="$entry.iconImageAltText" />
+		#else
 		<span class="icon">
 		#if($entry.isExtern)
 			<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 		#else
 			<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+		#end
 		#end
 		</span>
 	#end
@@ -81,6 +86,14 @@
 		<span class="clearer"></span>
     #end
 #end
+
+#macro (renderAddressType $entry)
+	#if($tool.hasContent($entry.addressType))
+		<p class="float_left"><span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_adr_${entry.get("addressType")}.gif" alt="${entry.get("addressTypeName")}" /></span>&nbsp;<strong>${entry.get("addressTypeName")}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.category')</span></p>
+		<span class="clearer"></span>
+    #end
+#end
+
 
 #macro (renderLine $entry)
 	#if($tool.hasContent($entry.udkClass))
@@ -146,6 +159,8 @@
 				#renderTable($e)
 			#elseif($e.type=="udkClass")
 				#renderUdkClass($e)
+			#elseif($e.type=="addressType")
+				#renderAddressType($e)
 			#elseif($e.type=="textLine")
 				#renderTextLine($e)
 			#elseif($e.type=="linkLine")

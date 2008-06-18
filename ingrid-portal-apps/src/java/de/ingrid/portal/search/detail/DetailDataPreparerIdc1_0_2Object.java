@@ -22,6 +22,7 @@ import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.udk.UtilsDate;
@@ -384,18 +385,18 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
        	    	String timeType = refRecord.getString("t01_object.time_type");
 	    		if(UtilsVelocity.hasContent(timeType).booleanValue()) {
 	       	    	String entryLine = "";
-	       	    	if (timeType.equals("von")) {
+	       	    	if (timeType.equals("von") && refRecord.getString("t01_object.time_from") != null && refRecord.getString("t01_object.timeto") != null) {
 	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
 	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 	       	    		entryLine = entryLine.concat(" ").concat(messages.getString("search.detail.time.to")).concat(": ");
 	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	} else if (timeType.equals("seit")) {
+	       	    	} else if (timeType.equals("seit") && refRecord.getString("t01_object.time_from") != null) {
 	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.since")).concat(": ");
 	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	} else if (timeType.equals("am")) {
+	       	    	} else if (timeType.equals("am") && refRecord.getString("t01_object.time_from") != null) {
 	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.at")).concat(": ");
 	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	} else if (timeType.equals("bis")) {
+	       	    	} else if (timeType.equals("bis") && refRecord.getString("t01_object.time_to") != null) {
 	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.until")).concat(": ");
 	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 	       	    	}
@@ -973,7 +974,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	element.put("title", record.getString("t012_obj_adr.special_name"));
     	element.put("elements", new ArrayList());
     	elements.add(element);
-    	List refRecords = getSubRecordsByColumnName(record, "t02_address.adr_id");
+    	
+    	List refRecords = getSubRecordsByColumnName(record, "parent.address_node.addr_uuid");
     	for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
     		addAddress((List)(element.get("elements")), refRecord);
@@ -982,56 +984,99 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 
     private void addAddress(List elements, Record record) {
     	HashMap element = new HashMap();
-    	// get address parents
-    	// TODO after mapping addresses
-
-    	// generate action url to show address detail
-    	PortletURL actionUrl = response.createActionURL();
-    	actionUrl.setParameter("cmd", "doShowAddressDetail");
-		actionUrl.setParameter("addrId", record.getString("t02_address.adr_uuid"));
-		actionUrl.setParameter("plugid", iPlugId);
+    	List refRecords = getSubRecordsByColumnName(record, "t02_address.adr_id");
+    	Record addrRecord = null;
+    	if (refRecords.size() > 0) {
+    		addrRecord = (Record)refRecords.get(0);
+    	} else {
+    		if (log.isDebugEnabled()) {
+    			log.debug("No published t02_address entry for existing address_node. Check mapping!");
+    		}
+    		return;
+    	}
+		
     	
     	// address type
     	int addressType = -1;
 		try {
-			addressType = Integer.parseInt(record.getString("t02_address.adr_type"));
+			addressType = Integer.parseInt(addrRecord.getString("t02_address.adr_type"));
 		} catch (NumberFormatException e) {
-			log.debug("Illegal address classification (institution, unit, ...) found: " + record.getString("t02_address.adr_type"));
+			log.debug("Illegal address classification (institution, unit, ...) found: " + addrRecord.getString("t02_address.adr_type"));
 		}
-    	if (addressType == 0 || addressType == 3) {
+
+    	// get address parents
+    	// TODO refactor common functions to base class
+		if (addressType == 1 || addressType == 2) {
+        	ArrayList addressParents = new ArrayList();
+        	IngridHit hit = getAddress(record.getString("address_node.fk_addr_uuid"));
+			while (hit != null) {
+		    	element = new HashMap();
+		    	element.put("type", "linkLine");
+		    	element.put("hasLinkIcon", new Boolean(false));
+		    	element.put("isExtern", new Boolean(false));
+				element.put("title", ((IngridHitDetail)hit.get("detail")).getString("title"));
+				PortletURL actionUrl = response.createActionURL();
+		    	actionUrl.setParameter("cmd", "doShowAddressDetail");
+				actionUrl.setParameter("addrId", ((IngridHitDetail)hit.get("detail")).getString("T02_address.adr_id"));
+				actionUrl.setParameter("plugid", iPlugId);
+				element.put("href", actionUrl.toString());
+				addressParents.add(element);
+        		if (UtilsVelocity.hasContent(((IngridHitDetail)hit.get("detail")).getString("parent.address_node.addr_uuid")).booleanValue()
+        				&& !((IngridHitDetail)hit.get("detail")).getString(Settings.HIT_KEY_ADDRESS_CLASS).equals("0")) {
+        			hit = getAddress(((IngridHitDetail)hit.get("detail")).getString("parent.address_node.addr_uuid"));
+        		} else {
+        			hit = null;
+        		}
+			}
+            	
+        	if (addressParents.size() > 0) {
+        		for (int i=addressParents.size()-1;i>=0; i--) {
+        			elements.add(addressParents.get(i));
+        		}
+        	}        		
+    	}		
+		
+    	// generate action url to show address detail
+    	PortletURL actionUrl = response.createActionURL();
+    	actionUrl.setParameter("cmd", "doShowAddressDetail");
+		actionUrl.setParameter("addrId", addrRecord.getString("t02_address.adr_uuid"));
+		actionUrl.setParameter("plugid", iPlugId);
+		
+		element = new HashMap();
+		if (addressType == 0 || addressType == 3 || addressType == 1) {
 	    	element.put("type", "linkLine");
 	    	element.put("hasLinkIcon", new Boolean(false));
 	    	element.put("isExtern", new Boolean(false));
-			element.put("title", record.getString("t02_address.institution"));
+			element.put("title", addrRecord.getString("t02_address.institution"));
 			element.put("href", actionUrl.toString());
     	} else {
 	    	element.put("type", "textLine");
-			element.put("body", record.getString("t02_address.institution"));
+			element.put("body", addrRecord.getString("t02_address.institution"));
     	}
 		elements.add(element);
     	// address, title, name with link
-		if (UtilsVelocity.hasContent(record.getString("t02_address.lastname")).booleanValue()) {
+		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.lastname")).booleanValue()) {
 	    	String textLine = "";
-	    	if (UtilsVelocity.hasContent(record.getString("t02_address.address_value")).booleanValue()) {
-	    		textLine = textLine.concat(record.getString("t02_address.address_value"));
+	    	if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.address_value")).booleanValue()) {
+	    		textLine = textLine.concat(addrRecord.getString("t02_address.address_value"));
 	    	}
-	    	if (UtilsVelocity.hasContent(record.getString("t02_address.title_value")).booleanValue()) {
+	    	if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.title_value")).booleanValue()) {
 	    		if (textLine.length() > 0) {
 	    			textLine = textLine.concat(" ");
 	    		}
-	    		textLine = textLine.concat(record.getString("t02_address.title_value"));
+	    		textLine = textLine.concat(addrRecord.getString("t02_address.title_value"));
 	    	}
-	    	if (UtilsVelocity.hasContent(record.getString("t02_address.firstname")).booleanValue()) {
+	    	if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.firstname")).booleanValue()) {
 	    		if (textLine.length() > 0) {
 	    			textLine = textLine.concat(" ");
 	    		}
-	    		textLine = textLine.concat(record.getString("t02_address.firstname"));
+	    		textLine = textLine.concat(addrRecord.getString("t02_address.firstname"));
 	    	}
-	    	if (UtilsVelocity.hasContent(record.getString("t02_address.lastname")).booleanValue()) {
+	    	if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.lastname")).booleanValue()) {
 	    		if (textLine.length() > 0) {
 	    			textLine = textLine.concat(" ");
 	    		}
-	    		textLine = textLine.concat(record.getString("t02_address.lastname"));
+	    		textLine = textLine.concat(addrRecord.getString("t02_address.lastname"));
 	    	}
 			
 	    	element = new HashMap();
@@ -1043,25 +1088,25 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			elements.add(element);
 		}
 		// description
-		if (UtilsVelocity.hasContent(record.getString("t02_address.descr")).booleanValue()) {
+		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.descr")).booleanValue()) {
 	    	element = new HashMap();
 	    	element.put("type", "textLine");
-			element.put("body", record.getString("t02_address.descr"));
+			element.put("body", addrRecord.getString("t02_address.descr"));
 			elements.add(element);
 		}
 		// post box information
-		if (UtilsVelocity.hasContent(record.getString("t02_address.postbox")).booleanValue()) {
+		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.postbox")).booleanValue()) {
 	    	element = new HashMap();
 	    	element.put("type", "textLine");
-			element.put("body", messages.getString("postbox_label").concat(" ").concat(record.getString("t02_address.postbox")));
+			element.put("body", messages.getString("postbox_label").concat(" ").concat(addrRecord.getString("t02_address.postbox")));
 			elements.add(element);
-			if (UtilsVelocity.hasContent(record.getString("t02_address.postbox_pc")).booleanValue()) {
-				String textLine = record.getString("t02_address.postbox_pc");
-				if (UtilsVelocity.hasContent(record.getString("t02_address.country_code")).booleanValue()) {
-					textLine = messages.getString("postal.country.code.".concat(record.getString("t02_address.country_code"))).concat("-").concat(textLine);
+			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.postbox_pc")).booleanValue()) {
+				String textLine = addrRecord.getString("t02_address.postbox_pc");
+				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.country_code")).booleanValue()) {
+					textLine = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code"))).concat("-").concat(textLine);
 				}
-				if (UtilsVelocity.hasContent(record.getString("t02_address.city")).booleanValue()) {
-					textLine = textLine.concat(" ").concat(record.getString("t02_address.city"));
+				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.city")).booleanValue()) {
+					textLine = textLine.concat(" ").concat(addrRecord.getString("t02_address.city"));
 				}
 				element = new HashMap();
 				element.put("type", "textLine");
@@ -1073,20 +1118,20 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			elements.add(element);
 			
 		}
-		if (UtilsVelocity.hasContent(record.getString("t02_address.street")).booleanValue()) {
-			if (UtilsVelocity.hasContent(record.getString("t02_address.street")).booleanValue()) {
+		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.street")).booleanValue()) {
+			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.street")).booleanValue()) {
 				element = new HashMap();
 				element.put("type", "textLine");
-				element.put("body", record.getString("t02_address.street"));
+				element.put("body", addrRecord.getString("t02_address.street"));
 				elements.add(element);
 			}
-			if (UtilsVelocity.hasContent(record.getString("t02_address.postcode")).booleanValue()) {
-				String textLine = record.getString("t02_address.postcode");
-				if (UtilsVelocity.hasContent(record.getString("t02_address.country_code")).booleanValue()) {
-					textLine = messages.getString("postal.country.code.".concat(record.getString("t02_address.country_code"))).concat("-").concat(textLine);
+			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.postcode")).booleanValue()) {
+				String textLine = addrRecord.getString("t02_address.postcode");
+				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.country_code")).booleanValue()) {
+					textLine = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code"))).concat("-").concat(textLine);
 				}
-				if (UtilsVelocity.hasContent(record.getString("t02_address.city")).booleanValue()) {
-					textLine = textLine.concat(" ").concat(record.getString("t02_address.city"));
+				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.city")).booleanValue()) {
+					textLine = textLine.concat(" ").concat(addrRecord.getString("t02_address.city"));
 				}
 				element = new HashMap();
 				element.put("type", "textLine");
@@ -1097,13 +1142,34 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	    	element.put("type", "space");
 			elements.add(element);
 		}
-    	List refRecords = getSubRecordsByColumnName(record, "t021_communication.comm_value");
+    	refRecords = getSubRecordsByColumnName(addrRecord, "t021_communication.comm_value");
     	for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
     		addCommunication(elements, refRecord);
     	}
     }
 
+    
+    private IngridHit getAddress(String addrUuid) {
+        String[] requestedMetadata = new String[] {
+        		// udk address metadata
+        		Settings.HIT_KEY_ADDRESS_CLASS,
+        		Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+        		Settings.HIT_KEY_ADDRESS_LASTNAME,
+        		Settings.HIT_KEY_ADDRESS_TITLE,
+        		"t02_address.address_value",
+        		Settings.HIT_KEY_ADDRESS_ADDRID,
+        		"parent.address_node.addr_uuid"
+        };
+        ArrayList result = DetailDataPreparerHelper.getHits("t02_address.adr_id:".concat(addrUuid).concat(
+        " iplugs:\"").concat(DetailDataPreparerHelper.getAddressPlugIdFromPlugId(iPlugId)).concat("\""), requestedMetadata, null);
+        if (result.size() > 0) {
+        	return (IngridHit) result.get(0);
+        } else {
+        	return null;
+        }
+    }
+    
     
     private void addCommunication(List elements, Record record) {
     	HashMap element = new HashMap();
