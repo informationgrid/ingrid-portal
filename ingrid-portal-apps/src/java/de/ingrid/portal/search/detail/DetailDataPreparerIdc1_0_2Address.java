@@ -144,7 +144,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 	private void addIndexInformation(List elements, Record record) {
 
     	// index references
-		List listRecords = getSubRecordsByColumnName(record, "searchterm_value.type");
+		List listRecords = getSubRecordsByColumnName(record, "t04_search.searchterm");
     	if (listRecords.size() > 0) {
 	    	ArrayList lines = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {

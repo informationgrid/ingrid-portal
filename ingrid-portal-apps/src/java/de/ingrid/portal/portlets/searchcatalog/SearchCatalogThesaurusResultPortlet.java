@@ -177,8 +177,8 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
     		fullQueryZeigeAlle += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
     	}
         else {
-        	fullQueryZeigeAlle = "(t04_search.searchterm:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\" OR searchterm_value.term:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\")";
-        	fullQueryZeigeAlle += " (t04_search.type:4 OR searchterm_value.type:T)";
+            fullQueryZeigeAlle = "t04_search.searchterm:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\"";
+        	fullQueryZeigeAlle += " (t04_search.type:4 OR t04_search.type:T)";
         	fullQueryZeigeAlle += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
         }
         SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, fullQueryZeigeAlle, SEARCH_STATE_TOPIC);
