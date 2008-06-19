@@ -21,13 +21,13 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
 	/* (non-Javadoc)
 	 * @see de.ingrid.portal.search.catalog.CatalogTreeDataProvider#getSubEntities(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)
 	 */
-	public List getSubEntities(String docParentId, String plugId, String plugType, Integer maxNumber) {
+	public List getSubEntities(String docParentUuid, String plugId, String plugType, Integer maxNumber) {
         List hits = new ArrayList();
         
     	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-    		hits = getSubordinatedObjects(docParentId, plugId, null);
+    		hits = getSubordinatedObjects(docParentUuid, plugId, null);
     	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    		hits = new ArrayList();
+    		hits = getSubordinatedAddresses(docParentUuid, plugId, null);
     	}
 
         return hits;
@@ -41,7 +41,7 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
     	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
     		hits = getTopObjects(plugId);
     	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    		hits = IPlugHelperDscEcs.getTopAddresses(plugId);
+    		hits = getTopAddresses(plugId);
     	}
 
         return hits;
@@ -61,13 +61,35 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
                 " iplugs:\"".concat(IPlugHelperDscEcs.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
         return result;
     }
+
+    /**
+     * Get top ECS Addresses as a List of IngridHits (containing metadata ID and UDK_CLASS)
+     *  
+     * @param iPlugId plug id
+     * @return List of IngridHit
+     */
+    public List getTopAddresses(String iPlugId) {
+        String[] requestedMetadata = new String[] {
+        		Settings.HIT_KEY_ADDRESS_CLASS,
+        		Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+        		Settings.HIT_KEY_ADDRESS_LASTNAME,
+        		Settings.HIT_KEY_ADDRESS_TITLE,
+        		"T02_address.address_value",
+        		Settings.HIT_KEY_ADDRESS_ADDRID
+        };
+        
+        List result = IPlugHelperDscEcs.getHits("t02_address.id:[0 TO A] -parent.address_node.addr_uuid:[0 TO Z]".concat(
+                " iplugs:\"".concat(IPlugHelperDscEcs.getAddressPlugIdFromPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
+        return result;
+    }
     
-    public boolean hasChildren(String objUuid, String plugId, String plugType) {
+    
+    public boolean hasChildren(String uuid, String plugId, String plugType) {
     	List hits = null;
     	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-    		hits = getSubordinatedObjects(objUuid, plugId, new Integer(1));
+    		hits = getSubordinatedObjects(uuid, plugId, new Integer(1));
     	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    		hits = new ArrayList();
+    		hits = getSubordinatedAddresses(uuid, plugId, new Integer(1));
     	}
         if (hits != null && hits.size() > 0) {
         	return true;
@@ -84,4 +106,17 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
         " iplugs:\"").concat(IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
     }
 
+    private List getSubordinatedAddresses(String addrUuid, String plugId, Integer maxResults) {
+        String[] requestedMetadata = new String[] {
+        		Settings.HIT_KEY_ADDRESS_CLASS,
+        		Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+        		Settings.HIT_KEY_ADDRESS_LASTNAME,
+        		Settings.HIT_KEY_ADDRESS_TITLE,
+        		"T02_address.address_value",
+        		Settings.HIT_KEY_ADDRESS_ADDRID
+        };
+    	return IPlugHelperDscEcs.getHits("parent.address_node.addr_uuid:".concat(addrUuid).concat(
+        " iplugs:\"").concat(IPlugHelperDscEcs.getAddressPlugIdFromPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
+    }
+    
 }

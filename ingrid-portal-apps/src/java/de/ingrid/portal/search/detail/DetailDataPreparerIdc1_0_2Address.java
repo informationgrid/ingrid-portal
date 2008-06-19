@@ -59,17 +59,22 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 		HashMap general = new HashMap();
 		String addrType = record.getString("t02_address.adr_type");
 		String title = null;
-		if (addrType.equals("2")) {
+		if (addrType.equals("2") || addrType.equals("3")) {
 			title = addStrWithSeparator(title, record.getString("t02_address.address_value"), " ");
 			title = addStrWithSeparator(title, record.getString("t02_address.title_value"), " ");
 			title = addStrWithSeparator(title, record.getString("t02_address.firstname"), " ");
 			title = addStrWithSeparator(title, record.getString("t02_address.lastname"), " ");
+			if (addrType.equals("3")) {
+				title = addStrWithSeparator(record.getString("t02_address.institution"), title, ", ");
+			}
 		} else {
 			title = addStrWithSeparator(title, record.getString("t02_address.institution"), " ");
 		}
 		general.put("title", title);
 		
-		general.put("modTime", UtilsDate.convertDateString(record.getString("t02_address.mod_time").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		if (record.getString("t02_address.mod_time") != null) {
+			general.put("modTime", UtilsDate.convertDateString(record.getString("t02_address.mod_time").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		}
 		data.put("general", general);
 		
 		String addrUuid = record.getString("t02_address.adr_uuid");

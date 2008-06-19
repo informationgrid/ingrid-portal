@@ -22,6 +22,6 @@ public class LinkListComparator implements Comparator {
             return 0;
         }
 
-        return sa.compareTo(sb);
+        return sa.compareToIgnoreCase(sb);
     }
 }

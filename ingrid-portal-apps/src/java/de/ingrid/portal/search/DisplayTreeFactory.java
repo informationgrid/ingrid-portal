@@ -315,14 +315,20 @@ public class DisplayTreeFactory {
             String nodeName = detail.getTitle();
             // different node text, when person
             if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-            	if (udkClass.equals("2")) {
+            	if (udkClass.equals("2") || udkClass.equals("3")) {
             		String[] titleElements = new String[] {
+                		UtilsSearch.getDetailValue(detail, "T02_address.address_value"),
             			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
             			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
             			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
             			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
             		};
-            		nodeName =  UtilsString.concatStringsIfNotNull(titleElements, " ");
+            		String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
+            		if (personStr != null && personStr.length() > 0 && nodeName != null && nodeName.length() > 0) {
+            			nodeName = nodeName.concat(", ").concat(personStr);
+            		} else if (personStr != null && personStr.length() > 0) {
+            			nodeName = personStr;
+            		}
             	}
             }
 
