@@ -386,6 +386,8 @@ span.buttons { display:block; position:absolute; bottom:8px; right:7px; }
 
 div.popupWarning { display:block; height:20px; padding-left:4px; font-weight:bold; line-height:20px; background-color:#ffcaca; color:#c21130; }
 div.popupContent { margin:6px; padding:0; }
+div.popupContent h1 {font-size:11px;}
+div.popupContent h2 {font-size:10px;}
 
 
 /********************************************************************
