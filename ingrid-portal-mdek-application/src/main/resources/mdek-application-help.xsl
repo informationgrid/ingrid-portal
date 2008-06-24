@@ -4,11 +4,11 @@
 <xsl:output method="html" encoding="UTF-8" />
 
 <xsl:template match="/">
-    <help>
+    <div>
     <xsl:for-each select="chapter">
         <h1><xsl:value-of select="header"/></h1>
           <div class="left">
-            <h3>Navigation</h3>
+            <h2>Navigation</h2>
             <div class="helpcontent">
               <ul>
                 <xsl:for-each select="section">
@@ -33,7 +33,7 @@
           </div>
                         
     </xsl:for-each>
-    </help>
+    </div>
 </xsl:template>
 
 <xsl:template match="content">
