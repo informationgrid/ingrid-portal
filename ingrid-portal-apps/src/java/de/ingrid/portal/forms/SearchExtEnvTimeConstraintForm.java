@@ -60,21 +60,23 @@ public class SearchExtEnvTimeConstraintForm extends ActionForm {
         boolean valid = true;
         clearErrors();
         if (getInput(FIELD_RADIO_TIME_SELECT).equals("1")) {
-            if (!hasInput(FIELD_FROM)) {
-                setError(FIELD_FROM, "searchExtEnvTimeConstraint.error.no_from");
+            if (!hasInput(FIELD_FROM) && !hasInput(FIELD_TO)) {
+                setError(FIELD_FROM, "searchExtEnvTimeConstraint.error.no_from_to");
+                setError(FIELD_TO, "");
                 valid = false;
-            }
-            if (!hasInput(FIELD_TO)) {
-                setError(FIELD_TO, "searchExtEnvTimeConstraint.error.no_to");
-                valid = false;
-            }
-            if (!getInput(FIELD_FROM).matches("[0-3][0-9]\\.[0-1][0-9]\\.[0-9][0-9][0-9][0-9]")) {
-                setError(FIELD_FROM, "searchExtEnvTimeConstraint.error.invalid_date");
-                valid = false;
-            }
-            if (!getInput(FIELD_TO).matches("[0-3][0-9]\\.[0-1][0-9]\\.[0-9][0-9][0-9][0-9]")) {
-                setError(FIELD_TO, "searchExtEnvTimeConstraint.error.invalid_date");
-                valid = false;
+            } else {
+            	if (hasInput(FIELD_FROM)) {
+                    if (!getInput(FIELD_FROM).matches("[0-3][0-9]\\.[0-1][0-9]\\.[0-9][0-9][0-9][0-9]")) {
+                        setError(FIELD_FROM, "searchExtEnvTimeConstraint.error.invalid_date");
+                        valid = false;
+                    }
+            	}
+            	if (hasInput(FIELD_TO)) {
+                    if (!getInput(FIELD_TO).matches("[0-3][0-9]\\.[0-1][0-9]\\.[0-9][0-9][0-9][0-9]")) {
+                        setError(FIELD_TO, "searchExtEnvTimeConstraint.error.invalid_date");
+                        valid = false;
+                    }            		
+            	}
             }
         } else if(getInput(FIELD_RADIO_TIME_SELECT).equals("2")) {
             if (!hasInput(FIELD_AT)) {

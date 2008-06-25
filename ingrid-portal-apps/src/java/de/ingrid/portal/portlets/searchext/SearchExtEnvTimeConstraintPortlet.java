@@ -66,9 +66,11 @@ public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnvTime {
             // Zur Suchanfrage hinzufuegen
             String subTerm = "";
             if (f.getInput(SearchExtEnvTimeConstraintForm.FIELD_RADIO_TIME_SELECT).equals(SearchExtEnvTimeConstraintForm.VALUE_FROM_TO)) {
+            	String timeFrom = f.hasInput(SearchExtEnvTimeConstraintForm.FIELD_FROM) ? f.getInput(SearchExtEnvTimeConstraintForm.FIELD_FROM) : "01.01.0001";
+            	String timeTo = f.hasInput(SearchExtEnvTimeConstraintForm.FIELD_TO) ? f.getInput(SearchExtEnvTimeConstraintForm.FIELD_TO) : "31.12.9999";
                 subTerm = subTerm
-                    .concat("t1:").concat(UtilsDate.convertDateString(f.getInput(SearchExtEnvTimeConstraintForm.FIELD_FROM), "dd.MM.yyyy", "yyyy-MM-dd"))
-                    .concat(" t2:").concat(UtilsDate.convertDateString(f.getInput(SearchExtEnvTimeConstraintForm.FIELD_TO), "dd.MM.yyyy", "yyyy-MM-dd"));
+                    .concat("t1:").concat(UtilsDate.convertDateString(timeFrom, "dd.MM.yyyy", "yyyy-MM-dd"))
+                    .concat(" t2:").concat(UtilsDate.convertDateString(timeTo, "dd.MM.yyyy", "yyyy-MM-dd"));
             } else if (f.getInput(SearchExtEnvTimeConstraintForm.FIELD_RADIO_TIME_SELECT).equals(SearchExtEnvTimeConstraintForm.VALUE_AT)) {
                 subTerm = subTerm
                 .concat("t0:").concat(UtilsDate.convertDateString(f.getInput(SearchExtEnvTimeConstraintForm.FIELD_AT), "dd.MM.yyyy", "yyyy-MM-dd"));
