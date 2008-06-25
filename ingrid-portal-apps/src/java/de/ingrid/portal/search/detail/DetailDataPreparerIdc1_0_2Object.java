@@ -385,7 +385,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
        	    	String timeType = refRecord.getString("t01_object.time_type");
 	    		if(UtilsVelocity.hasContent(timeType).booleanValue()) {
 	       	    	String entryLine = "";
-	       	    	if (timeType.equals("von") && refRecord.getString("t01_object.time_from") != null && refRecord.getString("t01_object.timeto") != null) {
+	       	    	if (timeType.equals("von") && refRecord.getString("t01_object.time_from") != null && refRecord.getString("t01_object.time_to") != null) {
 	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
 	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 	       	    		entryLine = entryLine.concat(" ").concat(messages.getString("search.detail.time.to")).concat(": ");
