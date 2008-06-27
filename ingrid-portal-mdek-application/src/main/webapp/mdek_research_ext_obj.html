@@ -74,6 +74,42 @@ _container_.addOnLoad(function() {
             }
 	});
 
+    // Pressing 'enter' on the date fields is equal to a new search
+    dojo.event.connect(dojo.widget.byId("objTimeRef1From").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+    dojo.event.connect(dojo.widget.byId("objTimeRef1To").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startNewSearch();
+            }
+	});
+
+    dojo.event.connect(dojo.widget.byId("objTimeRef1From"), "onInvalidInput",
+        function(input) {
+/*
+			dojo.debug("valueNode: "+dojo.widget.byId("objTimeRef1From").valueNode.value);
+			dojo.debug("inputNode: "+dojo.widget.byId("objTimeRef1From").inputNode.value);
+			dojo.debug("input: "+input);
+*/
+			dojo.widget.byId("objTimeRef1From").clearValue();
+			dialog.show(message.get("general.error"), "Das von Ihnen eingegebene Datum '"+input+"' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.", dialog.WARNING);
+	});
+    dojo.event.connect(dojo.widget.byId("objTimeRef1To"), "onInvalidInput",
+        function(input) {
+/*
+			dojo.debug("valueNode: "+dojo.widget.byId("objTimeRef1To").valueNode.value);
+			dojo.debug("inputNode: "+dojo.widget.byId("objTimeRef1To").inputNode.value);
+			dojo.debug("input: "+input);
+*/
+			dojo.widget.byId("objTimeRef1To").clearValue();
+			dialog.show(message.get("general.error"), "Das von Ihnen eingegebene Datum '"+input+"' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.", dialog.WARNING);
+	});
+
+
 	dojo.event.connect(dojo.widget.byId("objTimeRef1"), "onValueChanged", function(value) {displayTimeToInput(value);});
 	dojo.widget.byId("objTimeRef1").setValue("am");
 

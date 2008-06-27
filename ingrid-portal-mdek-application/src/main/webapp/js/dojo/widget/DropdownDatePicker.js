@@ -75,6 +75,11 @@ dojo.widget.defineWidget(
     ingrid.widget.DropdownDatePicker.superclass.onShow.apply(this, arguments);
     this.inputNode.focus();
 	},
+	
+	// This function is called on onvalid input. Attach point for error messages, etc.
+	onInvalidInput: function(/*String*/input) {
+	},
+
 	onInputChange: function(){
 		// summary: callback when user manually types a date into the <input> field
 		if(this.dateFormat){
@@ -87,7 +92,12 @@ dojo.widget.defineWidget(
 						{formatLength:this.formatLength, datePattern:"dd.MM.yy", selector:'dateOnly', locale:this.lang});			
 				if(inputDate){
 					this.setDate(inputDate);
+
+				} else {
+					this.onInvalidInput(input);
+					return;
 				}
+
 			} else {
 				this.valueNode.value = input;
 			}

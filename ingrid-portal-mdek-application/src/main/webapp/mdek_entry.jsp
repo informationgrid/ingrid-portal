@@ -362,7 +362,7 @@ function hideSplash(){
 	                  <span id="ref1DataSetLabel" class="label required"><label for="ref1DataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 5061)">Datensatz/Datenserie*</label></span>
 	                  <span class="input spaceBelow"><input dojoType="ingrid:Select" style="width:302px;" listId="525" id="ref1DataSet" /></span>
 	                  <span class="label"><label for="ref1Coverage" onclick="javascript:dialog.showContextHelp(arguments[0], 3565)">Erfassungsgrad</label></span>
-	                  <span class="input"><input type="text" id="ref1Coverage" min="0" max="100" name="ref1Coverage" class="w038" dojoType="RealNumberTextbox" /> %</span>
+	                  <span class="input"><input type="text" id="ref1Coverage" min="0" max="100" name="ref1Coverage" class="w038" decimal="," dojoType="ingrid:RealNumberTextbox" /> %</span>
 	            	  </div>
 
 	                <div class="half">
@@ -426,8 +426,8 @@ function hideSplash(){
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="ref1ScaleEditors">
 	                    <div dojoType="IntegerTextbox" min="0" max="2147483647" maxlength="10" widgetId="ref1ScaleScale"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="ref1ScaleGroundResolution"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="ref1ScaleScanResolution"></div>
+	                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref1ScaleGroundResolution"></div>
+	                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref1ScaleScanResolution"></div>
 	                  </div>
 	            	    <table id="ref1Scale" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
@@ -446,12 +446,12 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
 	                  <span class="label"><label for="ref1AltAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 5069)">H&ouml;hengenauigkeit (m)</label></span>
-	                  <span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="w320" dojoType="RealNumberTextbox" /></span>
+	                  <span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="w320" decimal="," dojoType="ingrid:RealNumberTextbox" /></span>
 	                </div>
 	          
 	                <div class="half">
 	                  <span class="label"><label for="ref1PosAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 3530)">Lagegenauigkeit (m)</label></span>
-	                  <span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="w320" dojoType="RealNumberTextbox" /></span>
+	                  <span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="w320" decimal="," dojoType="ingrid:RealNumberTextbox" /></span>
 	                </div>
 	                <div class="fill"></div>
 	          	  </div>
@@ -1188,10 +1188,10 @@ function hideSplash(){
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="spatialRefLocationEditors">
 	                    <div dojoType="ingrid:ComboBox" toggle="plain" maxlength="60" style="width:300px;" listId="1100" id="freeReferencesEditor"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="latitude1Editor"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="longitude1Editor"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="latitude2Editor"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="longitude2Editor"></div>
+	                    <div decimal="," dojoType="ingrid:RealNumberTextbox" widgetId="latitude1Editor"></div>
+	                    <div decimal="," dojoType="ingrid:RealNumberTextbox" widgetId="longitude1Editor"></div>
+	                    <div decimal="," dojoType="ingrid:RealNumberTextbox" widgetId="latitude2Editor"></div>
+	                    <div decimal="," dojoType="ingrid:RealNumberTextbox" widgetId="longitude2Editor"></div>
 	                  </div>
 	            	    <table id="spatialRefLocation" dojoType="ingrid:FilteringTable" minRows="4" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
@@ -1509,7 +1509,7 @@ function hideSplash(){
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="availabilityMediaOptionsEditors">
 	                    <div dojoType="ingrid:Select" toggle="plain" style="width:117px;" listId="520" id="availabilityMediaOptionsMediumCombobox"></div>
-	                    <div dojoType="RealNumberTextbox" widgetId="availabilityMediaOptionsSize"></div>
+	                    <div decimal="," dojoType="ingrid:RealNumberTextbox" widgetId="availabilityMediaOptionsSize"></div>
 	                    <div dojoType="ingrid:ValidationTextbox" maxlength="255" widgetId="availabilityMediaOptionsLocation"></div>
 	                  </div>
 	            	    <table id="availabilityMediaOptions" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">

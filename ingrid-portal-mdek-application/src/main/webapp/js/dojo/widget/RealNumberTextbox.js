@@ -76,7 +76,12 @@ dojo.widget.defineWidget(
 			} else
 				return ee.value;
 		},
-		
+
+		getDisplayValue: function() {
+			var ee = this[this.mode.toLowerCase()];				
+			return ee.value;			
+		},
+
 		setValue: function(value) {
 			var ee = this[this.mode.toLowerCase()];				
 			if (this.flags.decimal && value) {
