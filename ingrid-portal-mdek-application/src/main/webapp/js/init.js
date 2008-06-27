@@ -860,7 +860,7 @@ function initToolbar() {
 			}
 
 		} else if (!hasWritePermission) {
-			disableList = [copyTreeButton, cutButton, saveButton, discardButton, finalSaveButton, deleteButton];
+			disableList = [copyTreeButton, cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
 			enableList = [previewButton, copyEntityButton, showCommentButton];
 		}
 
