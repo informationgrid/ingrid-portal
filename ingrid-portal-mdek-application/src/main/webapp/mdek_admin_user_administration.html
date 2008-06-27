@@ -243,6 +243,9 @@ scriptScope.saveUser = function() {
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer anzulegen!", dialog.WARNING);				
 
+				} else if (errMsg.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
+					dialog.show(message.get("general.error"), "Die angegebene Adresse ist bereits mit einem existierenden Benutzer verkn&uuml;pft. Die Zuordnung der Adressen zu Benutzern muss eindeutig sein, bitte w&auml;hlen Sie daher eine noch nicht zugewiesene Adresse aus und versuchen Sie es erneut!", dialog.WARNING);				
+
 				} else {
 					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
 				}
@@ -267,6 +270,10 @@ scriptScope.saveUser = function() {
 			errorHandler: function(errMsg, err) {
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu &auml;ndern!", dialog.WARNING);				
+
+				} else if (errMsg.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
+					dialog.show(message.get("general.error"), "Die angegebene Adresse ist bereits mit einem existierenden Benutzer verkn&uuml;pft. Die Zuordnung der Adressen zu Benutzern muss eindeutig sein, bitte w&auml;hlen Sie daher eine noch nicht zugewiesene Adresse aus und versuchen Sie es erneut!", dialog.WARNING);				
+
 
 				} else {
 					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht gespeichert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
