@@ -131,6 +131,9 @@ public class SysListCache {
 		}
 
 		List<String[]> sysList = getSysListForListId(keyCache.get(key));
+		if (sysList == null) {
+			sysList = addSysListToCache(keyCache.get(key));
+		}
 
 		for (String[] entry : sysList) {
 			if (entry[1].equals(entryId.toString())) {
@@ -148,6 +151,9 @@ public class SysListCache {
 		}
 
 		List<String[]> sysList = getSysListForListId(keyCache.get(key));
+		if (sysList == null) {
+			sysList = addSysListToCache(keyCache.get(key));
+		}
 
 		// The third entry in the string marks the default entry.
 		for (String[] entry : sysList) {
@@ -284,10 +290,17 @@ public class SysListCache {
 		Element e = sysListCache.get(createCacheKey(listId));
 
 		if (e == null) {
-			return null;
+			return addSysListToCache(listId);
 
 		} else {
-			return (List<String[]>) e.getValue();
+			List<String[]> sysList = (List<String[]>) e.getValue();
+			if (sysList == null) {
+				// Reload the list since it is no longer valid
+				return addSysListToCache(listId);
+
+			} else {
+				return sysList;
+			}
 		}
 	}
 
