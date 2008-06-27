@@ -1738,6 +1738,7 @@ udkDataProxy._getObjectData = function(nodeData)
   var timeTo = dojo.widget.byId("timeRefDate2").getValue();
   if (nodeData.timeRefType == "bis") {
 	  if (timeFrom != "") {
+		  nodeData.timeRefDate1 = null;
 		  nodeData.timeRefDate2 = timeFrom;
 	  }
   } else if (nodeData.timeRefType == "am") {
@@ -1745,7 +1746,12 @@ udkDataProxy._getObjectData = function(nodeData)
 		  nodeData.timeRefDate1 = timeFrom;
 		  nodeData.timeRefDate2 = timeFrom;
 	  }
-  } else if (nodeData.timeRefType != "") {
+  } else if (nodeData.timeRefType == "seit") {
+	  if (timeFrom != "") {
+		  nodeData.timeRefDate1 = timeFrom;
+		  nodeData.timeRefDate2 = null;
+	  }
+  } else if (nodeData.timeRefType == "von") {
 	  if (timeFrom != "") {
 		  nodeData.timeRefDate1 = timeFrom;
 	  }
