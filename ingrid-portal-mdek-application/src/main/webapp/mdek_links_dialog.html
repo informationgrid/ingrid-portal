@@ -14,6 +14,8 @@ var dirtyFlag = null;
 _container_.addOnLoad(function() {
 	dirtyFlag = udkDataProxy.dirtyFlag;
 	init();
+
+	disableInputElementsOnWrongPermission();
 });
 _container_.addOnUnload(function() {
 	acceptLinkList();
@@ -55,6 +57,27 @@ connectStoreWithDirtyFlag = function(store)
 	dojo.event.connect(store, "onUpdateField", this, "setDirtyFlag");
 }
 
+disableInputElementsOnWrongPermission = function() {
+	if (currentUdk.writePermission == false) {
+		dojo.widget.byId("newLinkButton").disable();
+		dojo.widget.byId("saveButton").disable();
+		dojo.widget.byId("resetButton").disable();
+		dojo.byId("linksLinkType1").disabled = true;
+		dojo.byId("linksLinkType2").disabled = true;
+		dojo.widget.byId("linksFromFieldName").disable();
+		dojo.widget.byId("linksToDescription").disable();
+
+		// URL Input Fields
+		dojo.widget.byId("linksToURL").disable();
+		dojo.widget.byId("linksToDataType").disable();
+		dojo.widget.byId("linksToDataVolume").disable();
+		dojo.widget.byId("linksToURLType").disable();
+		dojo.widget.byId("linksToIconURL").disable();
+		dojo.widget.byId("linksToIconText").disable();
+		dojo.widget.byId("linksToUrlDescription").disable();
+		dojo.widget.byId("linksToName").disable();
+	}
+}
 
 resetRequiredInputElements = function() {
 	var resetRequiredState = function(widgetLabelList) {
@@ -104,7 +127,8 @@ showInputElements = function() {
 	dojo.byId("inputButtons").style.display = "";
 
 	if (!_container_.customParams || !_container_.customParams.filter) {
-		dojo.widget.byId("linksFromFieldName").enable();
+		if (currentUdk.writePermission)
+			dojo.widget.byId("linksFromFieldName").enable();
 	}
 }
 
@@ -480,6 +504,10 @@ newLink = function() {
 }
 
 showAssignObjectDialog = function() {
+	if (currentUdk.writePermission == false) {
+		return;
+	}
+
 	var deferred = new dojo.Deferred();
 	var setSelectedObject = function(obj) {
 		if (obj.uuid != "objectRoot") {
@@ -530,7 +558,9 @@ resetInputFields = function() {
 	curSelectedUrl = {};
 	
 	if (!_container_.customParams || !_container_.customParams.filter) {
-		dojo.widget.byId("linksFromFieldName").enable();
+		if (currentUdk.writePermission) {
+			dojo.widget.byId("linksFromFieldName").enable();
+		}
 //		dojo.widget.byId("linksFromFieldName").setValue("");
 	}
 
@@ -609,7 +639,7 @@ closeDialog = function() {
 
          </div>
         <span class="button transparent w644" style="height:20px !important;">
-        	<span style="float:right; padding-right:16px;"><button dojoType="ingrid:Button" onClick="newLink">Neu</button></span>
+        	<span style="float:right; padding-right:16px;"><button dojoType="ingrid:Button" id="newLinkButton" onClick="newLink">Neu</button></span>
 		</span>
 
 		<span id="inputFields" style="display:none;">
@@ -625,7 +655,7 @@ closeDialog = function() {
 	        <!-- VERWEIS AUF OBJEKT -->
 	        <div id="linkToObject" class="outlined w616">
 	          <span class="label required"><label id="linksToObjectNameLabel" for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname*</label></span>
-	          <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:showAssignObjectDialog();" title="Objekt ausw&auml;hlen [Popup]">Objekt ausw&auml;hlen</a></span>
+	          <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="assignObjectDialogLink" href="javascript:void(0);" onClick="javascript:showAssignObjectDialog();" title="Objekt ausw&auml;hlen [Popup]">Objekt ausw&auml;hlen</a></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToObjectName" name="linksToObjectName" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 	          <span class="label required"><label id="linksToObjectClassLabel" class="inActive" for="linksToObjectClass">Objektklasse*</label></span>
 	          <span class="input spaceBelow"><input type="text" id="linksToObjectClass" name="linksToObjectClass" class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
@@ -679,7 +709,7 @@ closeDialog = function() {
 	<span id="inputButtons" style="display:none;">
       <div class="inputContainer full noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
-        	<span style="float:right;"><button dojoType="ingrid:Button" onClick="resetInput">Abbrechen</button></span>
+        	<span style="float:right;"><button dojoType="ingrid:Button" id="resetButton" onClick="resetInput">Abbrechen</button></span>
 <!-- 
         	<span style="float:right; padding-right:5px;"><button dojoType="ingrid:Button" onClick="acceptLinkList">&Auml;nderungen &uuml;bernehmen</button></span>
  -->

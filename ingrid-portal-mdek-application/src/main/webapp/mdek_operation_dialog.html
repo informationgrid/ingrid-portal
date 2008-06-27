@@ -24,6 +24,8 @@ var _opNameIsTextInput = null;
 _container_.addOnLoad(function() {
 	dirtyFlag = udkDataProxy.dirtyFlag;
 	init();
+
+	disableButtonsOnWrongPermission();
 });
 
 _container_.addOnUnload(function() {
@@ -87,6 +89,14 @@ connectStoreWithDirtyFlag = function(store)
 	dojo.event.connect(store, "onUpdateField", this, "setDirtyFlag");
 }
 
+disableButtonsOnWrongPermission = function() {
+	if (currentUdk.writePermission == false) {
+		dojo.widget.byId("newButton").disable();
+		dojo.widget.byId("saveButton").disable();
+//		dojo.widget.byId("cancelButton").disable();
+	}
+}
+
 disableInputElements = function() {
 	dojo.lang.forEach(inputElements, function(item) {
 		dojo.widget.byId(item).disable();
@@ -136,7 +146,9 @@ init = function() {
 
 	var opList = dojo.widget.byId("operationsList");
 	dojo.event.connectOnce("after", opList, "onDataSelect", function(op) {
-		enableInputElements();
+		if (currentUdk.writePermission) {
+			enableInputElements();
+		}
 		displayOperation(op);
 		currentOperationId = op.Id;
 		dojo.widget.byId("saveButton").setCaption("Speichern");
@@ -145,7 +157,9 @@ init = function() {
 	dojo.event.connectOnce("after", opList, "onSelect", function(e) {
 		var op = opList.getSelectedData();
 		if (op.length == 1) {
-			enableInputElements();
+			if (currentUdk.writePermission) {
+				enableInputElements();
+			}
 			displayOperation(op[0]);
 			currentOperationId = op[0].Id;
 			dojo.widget.byId("saveButton").setCaption("Speichern");
@@ -340,7 +354,7 @@ closeDialog = function() {
 
       <div class="inputContainer full">
         <span class="button w644" style="height:20px !important;">
-        	<span style="float:right;"><button dojoType="ingrid:Button" onClick="newOperation">Neu</button></span>
+        	<span style="float:right;"><button dojoType="ingrid:Button" id="newButton" onClick="newOperation">Neu</button></span>
         </span>
   	  </div>
 

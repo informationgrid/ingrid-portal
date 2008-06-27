@@ -445,7 +445,7 @@ function initFreeTermsButtons() {
 	var inputField = dojo.widget.byId("thesaurusFreeTerms");
     dojo.event.connect(inputField.domNode, "onkeypress",
         function(event) {
-            if (event.keyCode == event.KEY_ENTER) {
+            if (event.keyCode == event.KEY_ENTER && currentUdk.writePermission) {
                 dojo.widget.byId("thesaurusFreeTermsAddButton").onClick();
             }
         });
@@ -462,7 +462,7 @@ function initFreeTermsButtons() {
 	inputField = dojo.widget.byId("thesaurusFreeTermInputAddress");
     dojo.event.connect(inputField.domNode, "onkeypress",
         function(event) {
-            if (event.keyCode == event.KEY_ENTER) {
+            if (event.keyCode == event.KEY_ENTER && currentUdk.writePermission) {
                 dojo.widget.byId("thesaurusFreeTermsAddressAddButton").onClick();
             }
         });
