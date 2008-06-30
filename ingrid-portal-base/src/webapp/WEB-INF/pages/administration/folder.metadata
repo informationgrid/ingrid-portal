@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <folder>
   <title>ingrid.page.administration</title>  
+  <default-page>admin-cms.psml</default-page>
 
   <menu name="sub-menu">
     <options>/administration/admin-usermanagement.psml</options>

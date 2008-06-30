@@ -1,0 +1,8 @@
+<folder
+    xmlns="http://portals.apache.org/jetspeed"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://portals.apache.org/jetspeed http://portals.apache.org/jetspeed-2/2.1/schemas/folder-metadata.xsd">
+
+  <title>Extended Search Folder</title>  
+  <default-page>search-ext-env-topic-terms.psml</default-page>
+</folder>
