@@ -101,6 +101,7 @@
 	"cts.serviceError":"Der zur Transformation der eingegebenen Koordinaten verwendete Coordinate Tranformation Service des BKG (https://upd.geodatenzentrum.de) ist zur Zeit nicht zu erreichen. Bitte probieren Sie es zu einem sp&auml;teren Zeitpunkt erneut oder wenden Sie sich an die Betreiber des Dienstes.",
 	"cts.transformError":"Die eingegebenen Koordinaten konnten vom verwendeten Coordinate Tranformation Service (https://upd.geodatenzentrum.de) nicht transformiert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe.",
 
+    "sns.numberOfTerms":"Anzahl der Begriffe:",
     "sns.noDescriptorHint":"Es wurde kein Deskiptor gefunden.",
     "sns.noResultHint":"Die Suchanfrage lieferte keine Ergebnisse.",
     "sns.timeoutError":"SNS hat eine Zeit&uuml;berschreitung bei der Auswertung Ihrer Anfrage mitgeteilt. Bitte probieren Sie es daher sp&auml;ter noch einmal oder stellen Sie eine einfachere Anfrage.",

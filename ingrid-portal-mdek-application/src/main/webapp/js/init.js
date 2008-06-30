@@ -932,6 +932,13 @@ function initTableValidators() {
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
 		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
 	]);
+/*
+	var table = dojo.widget.byId("timeRefTable");
+	table.setValidationFunctions([
+		{target: "date", validateFunction: function(item) {return (item != null && dojo.string.trim(item).length != 0);}},
+		{target: "type", validateFunction: function(item) {return (item != null && dojo.string.trim(item).length != 0);}}
+	]);
+*/
 }
 
 function initCatalogData() {

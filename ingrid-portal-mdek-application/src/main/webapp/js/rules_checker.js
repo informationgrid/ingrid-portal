@@ -107,6 +107,15 @@ function isObjectPublishable(idcObject) {
 		}
 	}
 
+	// Check if the timeRef table contains valid input (both date and type must contain data)
+	var timeRefData = idcObject.timeRefTable;
+	if (dojo.lang.some(timeRefData, function(timeRef) {
+			return (typeof(timeRef.type) == "undefined" || timeRef.type == null || dojo.string.trim(timeRef.type).length == 0
+			     || typeof(timeRef.date) == "undefined" || timeRef.date == null || dojo.string.trim(timeRef.date).length == 0); })) {
+		dojo.html.addClass(dojo.byId("timeRefTableLabel"), "important");		
+		dojo.debug("All entries in the timeRef table must have a valid type and date.");
+		publishable = false;
+	}
 
 	// Check if all entries in the address table have valid reference types
 	var addressData = idcObject.generalAddressTable;
@@ -134,6 +143,15 @@ function isObjectPublishable(idcObject) {
 		dojo.debug("At least one 'spatial' table has to contain an entry with a BB.");
 		publishable = false;
 	}
+/*
+	// Check if all the 'Raumbezug' entries have a valid name
+	var freeData = idcObject.spatialRefLocationTable;
+	if (dojo.lang.some(freeData, function(spatialRef) { return (typeof(spatialRef.name) == "undefined" || spatialRef.name == null || dojo.string.trim(spatialRef.name).length == 0); })) {
+		dojo.html.addClass(dojo.byId("spatialRefLocationLabel"), "important");
+		dojo.debug("All spatialRefs must have a valid name");
+		publishable = false;		
+	}
+*/
 
 	// Check if the thesaurus table has at least three entries
 	if (idcObject.thesaurusTermsTable.length < 3) {

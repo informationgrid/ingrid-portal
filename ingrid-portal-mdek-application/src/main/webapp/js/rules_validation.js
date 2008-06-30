@@ -21,6 +21,34 @@ dojo.addOnLoad(function() {
 	dojo.widget.byId("headerAddressType2Lastname").isValid = function() { return !this.isMissing(); };
 	dojo.widget.byId("headerAddressType3Lastname").isValid = function() { return !this.isMissing(); };
 
+	// If timeRefIntervalNum is not empty, timeRefIntervalUnit must not be empty and vice versa
+	dojo.widget.byId("timeRefIntervalNum").isValid = function() {
+		var unitVal = dojo.widget.byId("timeRefIntervalUnit").getValue();
+		var unitEmpty = (unitVal == null || unitVal.length == 0);
+
+		if (unitEmpty) {
+			dojo.widget.byId("timeRefIntervalNum").required = false;		
+			return true;
+
+		} else {
+			dojo.widget.byId("timeRefIntervalNum").required = true;
+			return !this.isMissing();
+		}
+	};
+
+	dojo.event.connect(dojo.widget.byId("timeRefIntervalNum"), "onkeyup", function() {
+		var val = dojo.widget.byId("timeRefIntervalNum").textbox.value;
+		var selectVal = dojo.widget.byId("timeRefIntervalUnit").getValue();
+
+		if (val == null || dojo.string.trim(val).length == 0) {
+			dojo.widget.byId("timeRefIntervalUnit").required = false;
+			dojo.widget.byId("timeRefIntervalUnit").onValueChanged(selectVal);
+
+		} else {
+			dojo.widget.byId("timeRefIntervalUnit").required = true;
+			dojo.widget.byId("timeRefIntervalUnit").onValueChanged(selectVal);
+		}
+	});
 });
 
 
@@ -108,10 +136,12 @@ function addMinMaxBoundingBoxValidation(tableId) {
 			var rowData = this.getDataByRow(row);
 			// If we have a valid row continue. rowData can be null since we also display empty rows
 			if (rowData) {
+				var spatialRefName = this.store.getField(rowData, "name");
 				var lon1 = this.store.getField(rowData, "longitude1");
 				var lon2 = this.store.getField(rowData, "longitude2");
 				var lat1 = this.store.getField(rowData, "latitude1");
 				var lat2 = this.store.getField(rowData, "latitude2");
+				var nameIdx = this.getColumnIndex("name");
 				var lon1Idx = this.getColumnIndex("longitude1");
 				var lon2Idx = this.getColumnIndex("longitude2");
 				var lat1Idx = this.getColumnIndex("latitude1");
@@ -121,6 +151,7 @@ function addMinMaxBoundingBoxValidation(tableId) {
 				 && (lon2 == null || lon2 == "")
 				 && (lat1 == null || lat1 == "")
 				 && (lat2 == null || lat2 == "")) {
+					dojo.html.removeClass(row.cells[nameIdx], this.fieldInvalidClass);
 					dojo.html.removeClass(row.cells[lon1Idx], this.fieldInvalidClass);
 					dojo.html.removeClass(row.cells[lon2Idx], this.fieldInvalidClass);		
 					dojo.html.removeClass(row.cells[lat1Idx], this.fieldInvalidClass);
@@ -131,12 +162,19 @@ function addMinMaxBoundingBoxValidation(tableId) {
 				}
 
 				this._valid = false;
+				var nameValid = false;
 				var lonValid = false;
 				var latValid = false;
+				dojo.html.addClass(row.cells[nameIdx], this.fieldInvalidClass);
 				dojo.html.addClass(row.cells[lon1Idx], this.fieldInvalidClass);
 				dojo.html.addClass(row.cells[lon2Idx], this.fieldInvalidClass);		
 				dojo.html.addClass(row.cells[lat1Idx], this.fieldInvalidClass);
 				dojo.html.addClass(row.cells[lat2Idx], this.fieldInvalidClass);		
+
+				if (spatialRefName != null && dojo.string.trim(spatialRefName).length != 0) {
+					nameValid = true;
+					dojo.html.removeClass(row.cells[nameIdx], this.fieldInvalidClass);
+				}
 
 				if (dojo.validate.isRealNumber(lon1) && dojo.validate.isRealNumber(lon2) && parseFloat(lon1) <= parseFloat(lon2)) {
 					lonValid = true;
@@ -149,7 +187,7 @@ function addMinMaxBoundingBoxValidation(tableId) {
 					dojo.html.removeClass(row.cells[lat2Idx], this.fieldInvalidClass);		
 				}
 
-				if (lonValid && latValid) {
+				if (nameValid && lonValid && latValid) {
 					popup.close();
 					this._valid = true;
 				} else {
