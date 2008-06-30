@@ -103,7 +103,7 @@ limitations under the License.
        default page specified in PSML, (or the first page in
        the folder), is always selected
    -->
-   <constructor-arg index="4"><value>true</value></constructor-arg>    
+   <constructor-arg index="4"><value>false</value></constructor-arg>    
   </bean>
      
   <!-- 
