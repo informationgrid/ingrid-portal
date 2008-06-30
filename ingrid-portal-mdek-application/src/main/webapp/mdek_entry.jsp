@@ -22,7 +22,14 @@
 
 
 <script type="text/javascript">
-	var djConfig = {isDebug: true, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
+	var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
+
+	var djConfig = {
+		locale: userLocale,
+		isDebug: true, // use with care, may lead to unexpected errors!
+		debugAtAllCosts: false,
+		debugContainerId: "dojoDebugOutput"
+	};
 </script>
 <script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
@@ -138,7 +145,7 @@ function hideSplash(){
    <div align="center" style="line-height:16px">
         <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
         <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
-          <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px"> Metadaten-Erfassungskomponente</p>
+          <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px">Metadaten-Erfassungskomponente</p>
 <!--           <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>  -->
           <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Applikation wird geladen...</p>
         </div>
@@ -260,10 +267,10 @@ function hideSplash(){
 	        <table cellspacing="0">
 	          <tbody>
 	            <tr>
-	              <td id="objectNameLabel" class="label required"><label for="objectName">Objektname*</label></td>
+	              <td id="objectNameLabel" class="label required"><label for="objectName"><script>document.write(message.get("ui.obj.header.objectName"))</script>*</label></td>
 	              <td colspan="2"><input type="text" maxlength="255" id="objectName" required="true" name="objectName" class="w550" dojoType="ingrid:ValidationTextBox" /></td></tr>
 	            <tr>
-	              <td id="objectClassLabel" class="label required col1"><label for="objectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 1020)">Objektklasse*</label></td>
+	              <td id="objectClassLabel" class="label required col1"><label for="objectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 1020)"><script>document.write(message.get("ui.obj.header.objectClass"))</script>*</label></td>
 	              <td class="col2">
 	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
 	                <select dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectClass" name="objectClass">
@@ -278,12 +285,12 @@ function hideSplash(){
 	              <td class="col3"><img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
 	            </tr>
 	            <tr>
-	              <td id="objectOwnerLabel" class="label required"><label for="objectOwner">Verantwortlicher*</label></td>
+	              <td id="objectOwnerLabel" class="label required"><label for="objectOwner"><script>document.write(message.get("ui.obj.header.responsibleUser"))</script>*</label></td>
 	              <td><input dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectOwner" /></td>
-	              <td class="note"><strong>Status:</strong> <span id="workState"></span></td>
+	              <td class="note"><strong><script>document.write(message.get("ui.obj.header.workState"))</script>:</strong> <span id="workState"></span></td>
 	            </tr>
 	            <tr>
-	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="creationTime">26.06.1998</span> | <strong>Ge&auml;ndert am:</strong> <span id="modificationTime">27.09.2000</span> | <strong>Von:</strong> <span id="lastEditor">---</span></td>
+	              <td class="note" colspan="3"><strong><script>document.write(message.get("ui.obj.header.creationTime"))</script>:</strong> <span id="creationTime">26.06.1998</span> | <strong><script>document.write(message.get("ui.obj.header.modificationTime"))</script>:</strong> <span id="modificationTime">27.09.2000</span> | <strong><script>document.write(message.get("ui.obj.header.modUser"))</script>:</strong> <span id="lastEditor">---</span></td>
 	            </tr>
 	          </tbody>
 	        </table>

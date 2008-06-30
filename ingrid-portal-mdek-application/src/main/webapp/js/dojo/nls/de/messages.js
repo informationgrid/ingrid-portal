@@ -140,6 +140,14 @@
     "table.confirmDeleteReference":"Wollen Sie wirklich die ungültigen Verweise in Objekt/Adresse '%{0}' löschen?",
     "table.rowDeleteReference":"Ungültige Verweise in Objekt/Adresse löschen",
 
-    "validation.minmax":"Der Wert des Feldes '%{0}' muß größer sein als der Wert des Feldes '%{1}'."
+    "validation.minmax":"Der Wert des Feldes '%{0}' muß größer sein als der Wert des Feldes '%{1}'.",
+
+	"ui.obj.header.objectName":"Objektname",
+	"ui.obj.header.objectClass":"Objektklasse",
+	"ui.obj.header.responsibleUser":"Verantwortlicher",
+	"ui.obj.header.workState":"Status",
+	"ui.obj.header.creationTime":"Erstellt am",
+	"ui.obj.header.modificationTime":"Ge&auml;ndert am",
+	"ui.obj.header.modUser":"Von"
   }
 )

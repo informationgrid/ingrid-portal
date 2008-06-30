@@ -164,6 +164,14 @@
     "table.confirmDeleteReference":"Do you really want to delete the references in '%{0}'?",
     "table.rowDeleteReference":"Delete references in object/address",
 
-    "validation.minmax":"The Value of field '%{0}' must be larger than the value of field '%{1}'."
+    "validation.minmax":"The Value of field '%{0}' must be larger than the value of field '%{1}'.",
+
+	"ui.obj.header.objectName":"Object name",
+	"ui.obj.header.objectClass":"Object class",
+	"ui.obj.header.responsibleUser":"Responsible user",
+	"ui.obj.header.workState":"State",
+	"ui.obj.header.creationTime":"Created",
+	"ui.obj.header.modificationTime":"Modified",
+	"ui.obj.header.modUser":"Last change"
   }
 )

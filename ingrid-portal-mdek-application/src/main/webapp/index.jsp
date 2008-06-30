@@ -10,7 +10,14 @@
 <script>
 
 function loadit() {
-  document.location.href="mdek_entry.jsp";
+  var queryString = '<%= request.getQueryString() == null ? "" : request.getQueryString() %>';
+
+  if (queryString.length == 0) {
+  	document.location.href="mdek_entry.jsp";
+
+  } else {
+  	document.location.href="mdek_entry.jsp?"+queryString;
+  }
 }
 
 ;
