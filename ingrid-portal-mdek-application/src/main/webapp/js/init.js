@@ -1141,7 +1141,7 @@ function initGeneralEventListener() {
 		if (dojo.render.html.ie) {
 			// Catch clicks on the upper left and upper right corner. Also catch clicks on the app's 'close' button.
 			if ( (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15))
-			   ||(event.clientY < 22 && event.clientX > document.documentElement.clientWidth - 78 && event.clientX < document.documentElement.clientWidth - 9) ) {
+			   ||(event.clientY < 23 && event.clientX > document.documentElement.clientWidth - 172 && event.clientX < document.documentElement.clientWidth - 9) ) {
 		  		event.returnValue = message.get("general.closeWindow");
 			}
 

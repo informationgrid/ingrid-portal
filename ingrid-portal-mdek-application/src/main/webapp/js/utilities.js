@@ -751,3 +751,33 @@ UtilSecurity.getCatAdmin = function() {
 	});
 	return def;	
 }
+
+// Language related utility functions
+var UtilLanguage = {}
+
+UtilLanguage.getCurrentLanguage = function() {
+	return djConfig.locale;
+}
+
+UtilLanguage.getNextLanguage = function() {
+	var lang = UtilLanguage.getCurrentLanguage();
+
+	if (lang == "en") {
+		return "de";
+
+	} else if (lang == "de") {
+		return "en";
+
+	} else {
+		// If the current language can't be determined, return 'de'
+		return "de";
+	}
+}
+
+UtilLanguage.getLanguageName = function(lang) {
+	return message.get("general.lang."+lang);
+}
+
+UtilLanguage.getNextLanguageName = function() {
+	return UtilLanguage.getLanguageName(UtilLanguage.getNextLanguage());
+}

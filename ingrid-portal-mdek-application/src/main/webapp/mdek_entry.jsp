@@ -173,21 +173,21 @@ function hideSplash(){
   	    <ul>
   	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">Hilfe</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe"><script>document.write(message.get("menu.general.help"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum">Impressum</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum"><script>document.write(message.get("menu.general.disclaimer"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" title="English">English</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:menuEventHandler.switchLanguage();"><script>document.write(UtilLanguage.getNextLanguageName())</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false);" title="Info">Info</a></li>
+  	      <li><a href="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false);" title="Info"><script>document.write(message.get("menu.general.info"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.close();" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.close();" title="schlie&szlig;en"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">
   	    <ul>
-  	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Hierarchie & Erfassung">Hierarchie & Erfassung</a></li>
-  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Recherche">Recherche</a></li>
+  	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Hierarchie & Erfassung"><script>document.write(message.get("menu.main.hierarchyAcquisition"))</script></a></li>
+  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Recherche"><script>document.write(message.get("menu.main.research"))</script></a></li>
 <!-- The following pages are not implemented yet -->
 <!-- 
   	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Statistik">Statistik</a></li>
@@ -199,9 +199,9 @@ function hideSplash(){
 	  <div id="page1Subnavi" class="subnavi" style="display:none"></div>
 	  <div id="page2Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Suche">Suche</a></li>
-  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Thesaurus-Navigator">Thesaurus-Navigator</a></li>
-  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Datenbank-Suche">Datenbank-Suche</a></li>
+  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Suche"><script>document.write(message.get("menu.main.research.search"))</script></a></li>
+  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Thesaurus-Navigator"><script>document.write(message.get("menu.main.research.thesaurusNavigator"))</script></a></li>
+  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Datenbank-Suche"><script>document.write(message.get("menu.main.research.databaseSearch"))</script></a></li>
   	    </ul>
   	  </div>
 <!-- The following pages are not implemented yet -->
@@ -844,14 +844,14 @@ function hideSplash(){
 	          <div id="refClass3" class="contentBlock">
 	          	<div class="titleBar">
 	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass3');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')"><script>document.write(message.get("ui.obj.relevance"))</script></div>
 	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref3Content" class="content">
 
 	              <div class="inputContainer required">
 	                <div class="half left">
-	                  <span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)">Servicetyp*</label></span>
+	                  <span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)"><script>document.write(message.get("ui.obj.type3.serviceType"))</script>*</label></span>
 <!-- 
 	                  <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
  -->
@@ -865,7 +865,7 @@ function hideSplash(){
 	            	</div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)">Version des Services</label></span>
+	                  <span class="label"><label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)"><script>document.write(message.get("ui.obj.type3.serviceVersion"))</script></label></span>
 	                  <div class="tableContainer headHiddenRows4 half">
 	                    <div class="cellEditors" id="ref3ServiceVersionEditors">
 	                      <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="ref3ServiceVersionServiceType"></div>
@@ -886,12 +886,12 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 3200)">Systemumgebung</label></span>
+	                  <span class="label"><label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 3200)"><script>document.write(message.get("ui.obj.type3.environment"))</script></label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3SystemEnv" name="ref3SystemEnv" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
  	                </div>
 	          
 	                <div class="half">
-	                  <span class="label"><label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 3240)">Historie</label></span>
+	                  <span class="label"><label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 3240)"><script>document.write(message.get("ui.obj.type3.history"))</script></label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3History" name="ref3History" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
   	                </div>
 	                <div class="fill"></div>
@@ -899,15 +899,15 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)">Basisdaten</label></span>
-	                  <span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3210});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)"><script>document.write(message.get("ui.obj.type3.generalDataTable.title"))</script></label></span>
+	                  <span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3210});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type3.generalDataTable.link"))</script></a></span>
 	                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref3BaseDataTab1">
-	                		<div id="ref3BaseDataTab1" dojoType="ContentPane" label="Text">
+							<script>document.write("<div id='ref3BaseDataTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type3.generalDataTable.tab.text")+"'>")</script>
 	                      	<span class="input">
 	                      		<input type="text" maxlength="255" mode="textarea" id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
-	                		<div id="ref3MethodTab2" dojoType="ContentPane" label="Verweise">
+							<script>document.write("<div id='ref3MethodTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type3.generalDataTable.tab.links")+"'>")</script>
 	                      <div class="tableContainer headHiddenRows2 half">
 	                  	    <table id="ref3BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
@@ -929,21 +929,21 @@ function hideSplash(){
 	                </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3250)">Erl&auml;uterungen</label></span>
+	                  <span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3250)"><script>document.write(message.get("ui.obj.type3.description"))</script></label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref3Explanation" name="ref3Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	                </div>
 	                <div class="fill"></div>
 	          	  </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired h130">
-	                <span class="label">Operationen</span>
-	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Operation hinzuf&uuml;gen/bearbeiten', 'mdek_operation_dialog.html', 735, 745, true);" title="Operation hinzuf&uuml;gen/bearbeiten [Popup]">Operation hinzuf&uuml;gen/bearbeiten</a></span>
+	                <span class="label"><script>document.write(message.get("ui.obj.type3.operationTable.title"))</script></span>
+	                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Operation hinzuf&uuml;gen/bearbeiten', 'mdek_operation_dialog.html', 735, 745, true);" title="Operation hinzuf&uuml;gen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type3.operationTable.link"))</script></a></span>
 	                <div class="tableContainer rows4 full">
 	            	    <table id="ref3Operation" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="name" dataType="String" width="165">Name</th>
-	                  			<th nosort="true" field="description" dataType="String" width="510">Beschreibung</th>
+	                  			<th nosort="true" field="name" dataType="String" width="165"><script>document.write(message.get("ui.obj.type3.operationTable.header.name"))</script></th>
+	                  			<th nosort="true" field="description" dataType="String" width="510"><script>document.write(message.get("ui.obj.type3.operationTable.header.description"))</script></th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -959,22 +959,22 @@ function hideSplash(){
 	          <div id="refClass4" class="contentBlock">
 	          	<div class="titleBar">
 	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass4');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')"><script>document.write(message.get("ui.obj.relevance"))</script></div>
 	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref4Content" class="content">
 
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3410)">Beteiligte</label></span>
-	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3410)"><script>document.write(message.get("ui.obj.type4.participantsTable.title"))</script></label></span>
+	                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.participantsTable.link"))</script></a></span>
 	                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4ParticipantsTab1">
-	                		<div id="ref4ParticipantsTab1" dojoType="ContentPane" label="Text">
+							<script>document.write("<div id='ref4ParticipantsTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type4.participantsTable.tab.text")+"'>")</script>
 	                      	<span class="input">
 	                      		<input type="text" maxlength="255" mode="textarea" id="ref4ParticipantsText" name="ref4ParticipantsText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
-	                		<div id="ref4ParticipantsTab2" dojoType="ContentPane" label="Verweise">
+							<script>document.write("<div id='ref4ParticipantsTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type4.participantsTable.tab.links")+"'>")</script>
 	                      <div class="tableContainer headHiddenRows2 half">
 	                  	    <table id="ref4ParticipantsLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive nosort">
 	                  	      <thead>
@@ -996,15 +996,15 @@ function hideSplash(){
 	                </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3400)">Projektleiter</label></span>
-	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]">Adresse hinzuf&uuml;gen</a></span>
+	                  <span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3400)"><script>document.write(message.get("ui.obj.type4.projectManagerTable.title"))</script></label></span>
+	                  <span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.projectManagerTable.link"))</script></a></span>
 	                	<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4PMTab1">
-	                		<div id="ref4PMTab1" dojoType="ContentPane" label="Text">
+							<script>document.write("<div id='ref4PMTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type4.projectManagerTable.tab.text")+"'>")</script>
 	                      	<span class="input">
 	                      		<input type="text" maxlength="80" mode="textarea" id="ref4PMText" name="ref4PMText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
-	                		<div id="ref4PMTab2" dojoType="ContentPane" label="Verweise">
+							<script>document.write("<div id='ref4PMTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type4.projectManagerTable.tab.links")+"'>")</script>
 	                      <div class="tableContainer rows2 half">
 	                  	    <table id="ref4PMLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive nosort">
 	                  	      <thead>
@@ -1028,7 +1028,7 @@ function hideSplash(){
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired">
-	                <span class="label"><label for="ref4Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3420)">Erl&auml;uterungen</label></span>
+	                <span class="label"><label for="ref4Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3420)"><script>document.write(message.get("ui.obj.type4.description"))</script></label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref4Explanation" name="ref4Explanation" class="w668 h055" dojoType="ingrid:ValidationTextbox" /></span> 
 	          	  </div>
 
@@ -1039,13 +1039,13 @@ function hideSplash(){
 	          <div id="refClass5" class="contentBlock">
 	          	<div class="titleBar">
 	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass5');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')">Fachbezug</div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 'Fachbezug')"><script>document.write(message.get("ui.obj.relevance"))</script></div>
 	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref5Content" class="content">
 
 	              <div class="inputContainer notRequired h130">
-	                <span class="label"><label for="ref5dbContent" onclick="javascript:dialog.showContextHelp(arguments[0], 3110)">Inhalte der Datensammlung/Datenbank</label></span>
+	                <span class="label"><label for="ref5dbContent" onclick="javascript:dialog.showContextHelp(arguments[0], 3110)"><script>document.write(message.get("ui.obj.type5.contentTable.title"))</script></label></span>
 	                <div class="tableContainer rows4 full">
 	                  <div class="cellEditors" id="ref5dbContentEditors">
 	                    <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="ref5dbContentParameter"></div>
@@ -1054,8 +1054,8 @@ function hideSplash(){
 	            	    <table id="ref5dbContent" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="parameter" dataType="String" width="335" editor="ref5dbContentParameter">Parameter</th>
-	                  			<th nosort="true" field="additionalData" dataType="String" width="340" editor="ref5dbContentAdditionalData">Erg&auml;nzende Angaben</th>
+	                  			<th nosort="true" field="parameter" dataType="String" width="335" editor="ref5dbContentParameter"><script>document.write(message.get("ui.obj.type5.contentTable.header.parameter"))</script></th>
+	                  			<th nosort="true" field="additionalData" dataType="String" width="340" editor="ref5dbContentAdditionalData"><script>document.write(message.get("ui.obj.type5.contentTable.header.additionalData"))</script></th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -1066,15 +1066,15 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
-	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3100)">Methode/Datengrundlage</label></span>
-	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3100});" title="Verweis anlegen/bearbeiten [Popup]">Verweis anlegen/bearbeiten</a></span>
+	                  <span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3100)"><script>document.write(message.get("ui.obj.type5.methodTable.title"))</script></label></span>
+	                  <span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3100});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type5.methodTable.link"))</script></a></span>
 	                	<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref5MethodTab1">
-	                		<div id="ref5MethodTab1" dojoType="ContentPane" label="Text">
+							<script>document.write("<div id='ref5MethodTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type5.methodTable.tab.text")+"'>")</script>
 	                      	<span class="input">
 	                      		<input type="text" mode="textarea" maxlength="255" id="ref5MethodText" name="ref5MethodText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 	                      	</span>
 	                		</div>
-	                		<div id="ref5MethodTab2" dojoType="ContentPane" label="Verweise">
+							<script>document.write("<div id='ref5MethodTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type5.methodTable.tab.links")+"'>")</script>
 	                      <div class="tableContainer headHiddenRows2 half">
 	                  	    <table id="ref5MethodLink" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	                  	      <thead>
@@ -1096,7 +1096,7 @@ function hideSplash(){
 	                </div>
 
 	                <div class="half">
-	                  <span class="label"><label for="ref5Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3120)">Erl&auml;uterungen</label></span>
+	                  <span class="label"><label for="ref5Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3120)"><script>document.write(message.get("ui.obj.type5.description"))</script></label></span>
                		<span class="input"><input type="text" mode="textarea" id="ref5Explanation" name="ref5Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span> 
   	                </div>
 	                <div class="fill"></div>
@@ -2082,7 +2082,7 @@ function hideSplash(){
 		</div>
 	  </div>
 	  <!-- END CONTENT ADDRESS -->
-      <div id="contentNone">Kein Objekt oder Adresse ausgewählt</div>
+      <div id="contentNone"><script>document.write(message.get("general.noObjectAddressSelected"))</script></div>
     </div>
 
   </div>

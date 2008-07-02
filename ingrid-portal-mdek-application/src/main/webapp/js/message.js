@@ -11,5 +11,8 @@ var message={};
 message.get = function(messageId)
 {
   var messages = dojo.i18n.getLocalization("ingrid", "messages", locale);
-  return messages[messageId];
+  var msg = messages[messageId];
+
+  // If the localized text could not be found return the key
+  return (typeof(msg) == "undefined") ? messageId : msg; 
 }

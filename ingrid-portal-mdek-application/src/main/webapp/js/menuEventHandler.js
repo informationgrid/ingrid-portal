@@ -781,6 +781,11 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
 	}
 }
 
+
+menuEventHandler.switchLanguage = function() {
+	document.location.href="index.jsp?lang="+UtilLanguage.getNextLanguage();
+}
+
 // ------------------------- Helper functions -------------------------
 
 function displayErrorMessage(err) {
@@ -811,6 +816,9 @@ function displayErrorMessage(err) {
 		
 		} else if (err.message.indexOf("HQL_NOT_VALID") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.hqlQueryInvalidError"), dialog.WARNING);
+
+		} else if (err.message.indexOf("ADDRESS_IS_IDCUSER_ADDRESS") != -1) {
+			dialog.show(message.get("general.error"), message.get("operation.error.deletedAddressIsIdcUser"), dialog.WARNING);
 
 		} else if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
 			if (currentUdk.nodeAppType == "O")
