@@ -4,12 +4,14 @@
 package de.ingrid.portal.portlets.mdek;
 
 import java.io.IOException;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -117,7 +119,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         List<String> plugIdList = getUnconnectedPlugIdList(request);
         List<String> userNameList = getUnconnectedUserList();
         Collections.sort(plugIdList);
-        Collections.sort(userNameList);
+        Collections.sort(userNameList, Collator.getInstance(Locale.GERMAN));
 
         context.put("plugIdList", plugIdList);
         context.put("userNameList", userNameList);
