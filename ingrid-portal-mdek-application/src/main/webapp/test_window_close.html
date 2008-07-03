@@ -8,9 +8,15 @@
 window.onbeforeunload = function(evt) {
 	return "close window?";
 }
+
+function navigateToClosePage() {
+	window.location.href='closeWindow.jsp';
+	return false;
+}
 </script>
 
 <body>
-	<input type="button" value="Close Window" onClick="javascript:window.close();" >
+	<input type="button" value="Close Window" onclick="return navigateToClosePage();" >
+	<a href="#dummyAnchor" onclick="return navigateToClosePage();" title="close">Close Window</a>
 </body>
 </html>

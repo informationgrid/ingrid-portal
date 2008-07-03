@@ -181,7 +181,7 @@ function hideSplash(){
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false);" title="Info"><script>document.write(message.get("menu.general.info"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:window.close();" title="schlie&szlig;en"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
+  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="schlie&szlig;en"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">

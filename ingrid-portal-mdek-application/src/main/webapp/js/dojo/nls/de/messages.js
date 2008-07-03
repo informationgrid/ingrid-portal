@@ -310,7 +310,7 @@
 	"ui.obj.type3.generalDataTable.link":"Verweis anlegen/bearbeiten",
 	"ui.obj.type3.generalDataTable.tab.text":"Text",
 	"ui.obj.type3.generalDataTable.tab.links":"Verweise",
-	"ui.obj.type3.description":"Verweise",
+	"ui.obj.type3.description":"Erl&auml;uterungen",
 	"ui.obj.type3.operationTable.title":"Operationen",
 	"ui.obj.type3.operationTable.link":"Operation hinzuf&uuml;gen/bearbeiten",
 	"ui.obj.type3.operationTable.header.name":"Name",
@@ -324,7 +324,6 @@
 	"ui.obj.type4.projectManagerTable.tab.text":"Text",
 	"ui.obj.type4.projectManagerTable.tab.links":"Verweise",
 	"ui.obj.type4.description":"Erl&auml;uterungen",
-
 	"ui.obj.type5.contentTable.title":"Inhalte der Datensammlung/Datenbank",
 	"ui.obj.type5.contentTable.header.parameter":"Parameter",
 	"ui.obj.type5.contentTable.header.additionalData":"Erg&auml;nzende Angaben",

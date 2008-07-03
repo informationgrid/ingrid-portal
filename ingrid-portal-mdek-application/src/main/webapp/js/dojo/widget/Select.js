@@ -13,6 +13,8 @@ dojo.widget.defineWidget(
       this.listId = "";
       // Flag signaling if the field has to contain a value
       this.required = false;
+       // Number of max items that are displayed in the list. 1000 is the default and can be changed.
+      this.searchLimit = 1000;
     },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/ComboBox.css"),
@@ -32,7 +34,10 @@ dojo.widget.defineWidget(
    */
   postCreate: function() {
     ingrid.widget.Select.superclass.postCreate.apply(this, arguments);
-    //this.textInputNode.setAttribute("disabled",true);
+
+  	if (this.dataProvider && typeof(this.dataProvider.searchLimit) != "undefined") {
+  		this.dataProvider.searchLimit = this.searchLimit;
+  	}
   },
 
   /*

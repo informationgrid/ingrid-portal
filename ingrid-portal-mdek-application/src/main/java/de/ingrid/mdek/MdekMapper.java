@@ -823,7 +823,14 @@ public class MdekMapper implements DataMapperInterface {
 		}
 
 		if (obj.getExtraInfoPublishArea() == null) {
-			obj.setExtraInfoPublishArea(sysListMapper.getInitialKeyFromListId(PUBLICATION_CONDITION_ID));
+			Integer pubCondKey = sysListMapper.getInitialKeyFromListId(PUBLICATION_CONDITION_ID);
+
+			if (pubCondKey == null) {
+				obj.setExtraInfoPublishArea(1);
+
+			} else {
+				obj.setExtraInfoPublishArea(pubCondKey);
+			}
 		}
 	}
 

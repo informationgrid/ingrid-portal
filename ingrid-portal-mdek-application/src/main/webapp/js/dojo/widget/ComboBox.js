@@ -11,6 +11,8 @@ dojo.widget.defineWidget(
     function() {
       // The listId used for populating this combo box with values from sys_list
       this.listId = "";
+      // Number of max items that are displayed in the list. 1000 is the default and can be changed.
+      this.searchLimit = 1000;
     },
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/ComboBox.css"),
@@ -58,6 +60,14 @@ dojo.widget.defineWidget(
   	else
   		return val;
   },
+  
+  postCreate: function(){
+    ingrid.widget.ComboBox.superclass.postCreate.apply(this, arguments);
+
+  	if (this.dataProvider && typeof(this.dataProvider.searchLimit) != "undefined") {
+  		this.dataProvider.searchLimit = this.searchLimit;
+  	}
+  },
 
   enable: function() {
     dojo.widget.ComboBox.superclass.enable.apply(this, arguments);
@@ -70,6 +80,4 @@ dojo.widget.defineWidget(
     dojo.html.addClass(this.textInputNode, 'noEdit');
     this.textInputNode.setAttribute("disabled", "disabled");
   }
-	
-	
 });
