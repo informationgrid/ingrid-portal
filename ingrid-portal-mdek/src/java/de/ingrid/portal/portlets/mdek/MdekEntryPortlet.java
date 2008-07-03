@@ -92,8 +92,8 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
             IOException {
     }
     
-    private boolean hasUserAccessToMdekAdmin(String userName) throws SecurityException {
-    		if (!roleManager.isUserInRole(userName, "mdek")) {
+    private boolean hasUserAccessToMdekAdmin(String userName) throws SecurityException, PortletException {
+    	if (!roleManager.isUserInRole(userName, "mdek")) {
     		return false;
     	}
 
@@ -106,8 +106,13 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	// Check for the idcRole of the user
     	IngridDocument response = mdekCallerSecurity.getUserDetails(userData.getPlugId(), userData.getAddressUuid(), userData.getAddressUuid());
 		IngridDocument userDoc = MdekUtils.getResultFromResponse(response);
-		Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);
 
-		return (role == 1 || role == 2);
+		try {
+			Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);
+			return (role == 1 || role == 2);
+
+		} catch (Exception e) {
+			throw new PortletException ("The connection to the iPlug with id '"+userData.getPlugId()+"' could not be established. The user with name '"+userName+"' and addressUuid '"+userData.getAddressUuid()+"' could not be found by the iPlug.", e);
+		}
     }
 }

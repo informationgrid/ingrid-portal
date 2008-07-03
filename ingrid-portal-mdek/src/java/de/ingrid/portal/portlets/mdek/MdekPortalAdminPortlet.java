@@ -338,15 +338,28 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
 
         		UserData catAdminUserData = (UserData) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", catAdminUuid)).uniqueResult();
-        		
-        		
-        		catalogData.put("plugId", plugId);
-        		catalogData.put("catName", catBean.getCatalogName());
-        		catalogData.put("catAdmin", extractCatalogAdminName(adm));
-        		catalogData.put("portalLogin", catAdminUserData.getPortalLogin());
-        		catalogData.put("partner", catBean.getPartnerName());
-        		catalogData.put("provider", catBean.getProviderName());
-        		catalogList.add(catalogData);
+
+        		if (catAdminUserData == null) {
+        			// The catalog admin was not found in the user table. This should never be the case!
+        			// Possibly the addressUuid has changed. Display the catalog, but also display an error
+            		catalogData.put("plugId", plugId);
+            		catalogData.put("catName", catBean.getCatalogName());
+            		catalogData.put("catAdmin", extractCatalogAdminName(adm));
+            		catalogData.put("portalLogin", "ERROR: portalLogin not found!");
+            		catalogData.put("partner", catBean.getPartnerName());
+            		catalogData.put("provider", catBean.getProviderName());
+            		catalogList.add(catalogData);
+
+        		} else {
+        			// Display the catalogData
+	        		catalogData.put("plugId", plugId);
+	        		catalogData.put("catName", catBean.getCatalogName());
+	        		catalogData.put("catAdmin", extractCatalogAdminName(adm));
+	        		catalogData.put("portalLogin", catAdminUserData.getPortalLogin());
+	        		catalogData.put("partner", catBean.getPartnerName());
+	        		catalogData.put("provider", catBean.getProviderName());
+	        		catalogList.add(catalogData);
+        		}
         	}
     	}
     	
