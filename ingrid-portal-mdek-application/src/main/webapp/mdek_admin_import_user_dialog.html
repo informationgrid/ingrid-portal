@@ -76,6 +76,7 @@ scriptScope.yesButtonFunc = function() {
 	if (selectedUser != null && selectedUser != "") {
 		_container_.customParams.resultHandler.callback(selectedUser);
 	} else {
+		dialog.show(message.get('general.hint'), "Der von Ihnen eingegebene Benutzername konnte nicht gefunden werden. Bitte pr&uuml;fen Sie ob der Benutzer im Portal existiert und nicht bereits die Rolle mdek besitzt!", dialog.WARNING);
 		_container_.customParams.resultHandler.errback();
 	}
 	_container_.closeWindow();

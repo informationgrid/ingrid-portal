@@ -138,6 +138,8 @@
 	"dialog.storeGroupSuccess":"The group was saved successfully.",
 	"dialog.browserFunctionDisabled":"This functionality is disabled.",
 
+	"dialog.admin.userNotFoundError":"The user could not be found. The user must exist in the portal and must not already have the role 'mdek'.",
+
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
 	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",
