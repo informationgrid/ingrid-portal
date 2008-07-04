@@ -104,8 +104,15 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	HibernateUtil.closeSession();
 
     	// Check for the idcRole of the user
-    	IngridDocument response = mdekCallerSecurity.getUserDetails(userData.getPlugId(), userData.getAddressUuid(), userData.getAddressUuid());
-		IngridDocument userDoc = MdekUtils.getResultFromResponse(response);
+    	IngridDocument response = null;
+    	try {
+    		response = mdekCallerSecurity.getUserDetails(userData.getPlugId(), userData.getAddressUuid(), userData.getAddressUuid());
+
+    	} catch (Exception e) {
+			throw new PortletException ("The connection to the iPlug with id '"+userData.getPlugId()+"' could not be established.", e);    		
+    	}
+
+    	IngridDocument userDoc = MdekUtils.getResultFromResponse(response);
 
 		try {
 			Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);
