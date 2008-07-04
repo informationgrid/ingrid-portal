@@ -58,7 +58,7 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
 
             if (columns[i].toIndex()) {
                 String columnName = columns[i].getTargetName();
-                columnName = convert2readableColumnName(columnName, (IngridResourceBundle)context.get("context"));
+                columnName = convert2readableColumnName(columnName, (IngridResourceBundle)context.get("MESSAGES"));
 
                 if (dateFields.contains(columnName)) {
                     recordMap.put(columnName, UtilsDate.parseDateToLocale(record.getValueAsString(columns[i])
@@ -96,7 +96,7 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
 
          //myHash2.put("t011_obj_literatur.autor", "mm");
          */
-        DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), true, (IngridResourceBundle)context.get("context"), dateFields, replacementFields);
+        DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), true, (IngridResourceBundle)context.get("MESSAGES"), dateFields, replacementFields);
 
         // Replace all occurrences of <*> except the specified ones (<b>, </b>, <i>, ... are the ones NOT replaced)
         String summary = (String) DetailDataPreparerHelper.getFieldFromHashTree(recordMap, "summary");

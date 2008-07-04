@@ -137,7 +137,7 @@ public class DetailDataPreparer_UDK_5_0_Object implements DetailDataPreparer {
 
          //myHash2.put("t011_obj_literatur.autor", "mm");
          */
-        DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), false, (IngridResourceBundle)context.get("context"), dateFields, replacementFields);
+        DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), false, (IngridResourceBundle)context.get("MESSAGES"), dateFields, replacementFields);
 
         // Replace all occurrences of <*> except the specified ones (<b>, </b>, <i>, ... are the ones NOT replaced)
         String summary = (String) DetailDataPreparerHelper.getFieldFromHashTree(recordMap, "summary");
