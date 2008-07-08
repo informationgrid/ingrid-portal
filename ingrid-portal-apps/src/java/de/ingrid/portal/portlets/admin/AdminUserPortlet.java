@@ -314,7 +314,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * 
      * <li>for admins with permission "admin": all users </li>
      * <li>for admins with permission "admin.portal": users with only role
-     * "user" </li>
+     * "user" or "mdek" </li>
      * <li>for admins with permission "admin.portal": users with a permission
      * "admin.portal.*" </li>
      * <li>for admins with permission "admin.portal.partner": users with
@@ -355,10 +355,10 @@ public class AdminUserPortlet extends ContentPortlet {
             if (!it.hasNext()) {
                 return false;
             }
-            // check for users with roles others than 'user' -> exit if found
+            // check for users with roles others than 'user' or 'mdek' -> exit if found
             while (it.hasNext()) {
                 Role r = (Role) it.next();
-                if (!r.getPrincipal().getName().equals("user")) {
+                if (!r.getPrincipal().getName().equals("user") && !r.getPrincipal().getName().equals("mdek")) {
                     return false;
                 }
             }
