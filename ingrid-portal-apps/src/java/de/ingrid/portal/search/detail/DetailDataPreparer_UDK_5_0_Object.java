@@ -142,6 +142,7 @@ public class DetailDataPreparer_UDK_5_0_Object implements DetailDataPreparer {
         // Replace all occurrences of <*> except the specified ones (<b>, </b>, <i>, ... are the ones NOT replaced)
         String summary = (String) DetailDataPreparerHelper.getFieldFromHashTree(recordMap, "summary");
         if (summary != null)
+        	summary = summary.replaceAll("\n", "<br/>");
         	summary = summary.replaceAll("<(?!b>|/b>|i>|/i>|u>|/u>|p>|/p>|br>|br/>|br />|strong>|/strong>|ul>|/ul>|ol>|/ol>|li>|/li>)[^>]*>", "");
 
         recordMap.put("summary", summary);

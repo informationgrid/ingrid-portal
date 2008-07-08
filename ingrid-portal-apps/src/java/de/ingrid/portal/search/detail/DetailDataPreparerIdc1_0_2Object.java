@@ -77,7 +77,12 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		// udk class
 		addElementUdkClass(elements, record.getString("t01_object.obj_class"));
 		// description
-		addElementEntry(elements, record.getString("t01_object.obj_descr"), null);
+        String description = record.getString("t01_object.obj_descr");
+		if (description != null) {
+			description = description.replaceAll("\n", "<br/>");
+			description = description.replaceAll("<(?!b>|/b>|i>|/i>|u>|/u>|p>|/p>|br>|br/>|br />|strong>|/strong>|ul>|/ul>|ol>|/ol>|li>|/li>)[^>]*>", "");
+        }
+		addElementEntry(elements, description, null);
 		
 		if (previousElementsSize < elements.size()) {
 			// add horizontal line
