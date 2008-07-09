@@ -1047,18 +1047,20 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		actionUrl.setParameter("addrId", addrRecord.getString("t02_address.adr_uuid"));
 		actionUrl.setParameter("plugid", iPlugId);
 		
-		element = new HashMap();
-		if (addressType == 0 || addressType == 3 || addressType == 1) {
-	    	element.put("type", "linkLine");
-	    	element.put("hasLinkIcon", new Boolean(false));
-	    	element.put("isExtern", new Boolean(false));
-			element.put("title", addrRecord.getString("t02_address.institution"));
-			element.put("href", actionUrl.toString());
-    	} else {
-	    	element.put("type", "textLine");
-			element.put("body", addrRecord.getString("t02_address.institution"));
-    	}
-		elements.add(element);
+		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.institution")).booleanValue()) {
+			element = new HashMap();
+			if (addressType == 0 || addressType == 3 || addressType == 1) {
+		    	element.put("type", "linkLine");
+		    	element.put("hasLinkIcon", new Boolean(false));
+		    	element.put("isExtern", new Boolean(false));
+				element.put("title", addrRecord.getString("t02_address.institution"));
+				element.put("href", actionUrl.toString());
+	    	} else {
+		    	element.put("type", "textLine");
+				element.put("body", addrRecord.getString("t02_address.institution"));
+	    	}
+			elements.add(element);
+		}
     	// address, title, name with link
 		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.lastname")).booleanValue()) {
 	    	String textLine = "";
