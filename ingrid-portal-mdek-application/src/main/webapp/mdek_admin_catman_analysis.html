@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+</script>
+</head>
+
+
+<body>
+
+	<!-- CONTENT START -->
+	<div dojoType="ContentPane" layoutAlign="client">
+  
+		<div id="contentSection" class="contentBlockWhite top">
+			<div id="winNavi">
+				<a href="#" title="Hilfe">[?]</a>
+			</div>
+
+			<div id="analysisContent" class="content">
+
+				<!-- LEFT HAND SIDE CONTENT START -->
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+				<div class="inputContainer">
+					<span class="buttonLeft w644 transparent"><a href="#" class="buttonBlue first" title="Pr&uuml;fung starten">Pr&uuml;fung starten</a></span>
+				</div>
+        
+				<div class="inputContainer noSpaceBelow">
+					<div id="analysisInfo" class="infobox w652">
+						<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+						<span class="title"><a href="javascript:toggleInfo('analysisInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+							<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+						<span class="processInfo">Der Prozess wird momentan ausgef&uuml;hrt. <a href="#" title="Hilfe">Hilfe</a>?<img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
+						<div id="analysisInfoContent">
+							<table cellspacing="0">
+								<tr>
+								<td>Gestartet am:</td>
+								<td>13.2.2007, 00:02 Uhr</td></tr>
+								<td>Beendet am:</td>
+								<td>Noch nicht beendet</td></tr>
+								<td>Anzahl Objekte:</td>
+								<td>132110</td></tr>
+								<td>Anzahl Adressen:</td>
+								<td>10</td></tr>
+							</table>
+							<span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="inputContainer">
+					<span class="label">Ergebnis der Analyse des Datenbestandes</span>
+					<div widgetId="analysisAccordion" dojoType="AccordionContainer" duration="200" labelNodeClass="label" containerNodeClass="accBody"	style="width:666px; height:572px;">
+						<div dojoType="ingrid:AccordionPane" label="Fehlerhafte Einträge in 1:n Tabellen" icon="img/ic_analysis_cross.gif" itemCount="2" infoUrl="" selected="true">
+							<div dojoType="ContentPane">
+								<table id="analysisList1" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" headClass="fixedHeader" tbodyClass="scrollContent rows13" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="60">Anzahl</th>
+											<th field="name" dataType="String" width="523">Beschreibung</th>
+											<th field="info" dataType="String" width="60">Info</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>123</td>
+											<td>fehlerhafte Einträge in t011_obj_project</td>
+											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in 1:n Tabellen', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
+										<tr value="2">
+											<td>3</td>
+											<td>fehlerhafte Einträge in t011_obj_serv</td>
+											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in 1:n Tabellen', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
+										<tr value="3">
+											<td>26</td>
+											<td>fehlerhafte Einträge in t011_obj_data</td>
+											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in 1:n Tabellen', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+              
+						<div dojoType="ingrid:AccordionPane" label="Objekte, die keine Eltern-Objekte haben" icon="img/ic_analysis_excl_mark.gif" itemCount="240" infoUrl="javascript:dialog.showPage('Objekte, die keine Eltern-Objekte haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<div class="listInfo w668">
+									<span class="searchResultsInfo">1-10 von 240</span>
+									<span class="searchResultsPaging">(Seite 1 von 24)
+										<em>1</em>
+										<a href="#" title="Seite 2">2</a>
+										<a href="#" title="Seite 3">3</a>
+										<a href="#" title="Seite 4">4</a>
+										<a href="#" title="weiter">></a>
+									</span>
+									<div class="fill"></div>
+								</div>
+      
+								<table id="analysisList2" dojoType="ingrid:FilteringTable" minRows="10" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="name" dataType="String" width="605">Beschreibung des Objekts</th>
+											<th field="edit" dataType="String" width="33">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="2">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="3">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="4">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="5">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="6">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="7">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="8">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="9">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="10">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+									</tbody>
+								</table>
+  
+								<div class="listInfo w668 noSpaceBelow">
+									<span class="searchResultsInfo">1-10 von 240</span>
+									<span class="searchResultsPaging">(Seite 1 von 24)
+										<em>1</em>
+										<a href="#" title="Seite 2">2</a>
+										<a href="#" title="Seite 3">3</a>
+										<a href="#" title="Seite 4">4</a>
+										<a href="#" title="weiter">></a>
+									</span>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Objekte, die ungültige Adressverweise haben" icon="img/ic_analysis_check.gif" itemCount="10" infoUrl="javascript:dialog.showPage('Objekte, die ungültige Adressverweise haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<table id="analysisList3" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="name" dataType="String" width="638">Beschreibung des Objekts</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td></tr>
+										<tr value="2">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Objekte, die keine Datenauskunft (=Adresse) haben" icon="img/ic_analysis_check.gif" itemCount="4" infoUrl="javascript:dialog.showPage('Objekte, die keine Datenauskunft (=Adresse) haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<table id="analysisList4" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="name" dataType="String" width="605">Beschreibung des Objekts</th>
+											<th field="edit" dataType="String" width="33">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Adresse zuordnen', 'admin_g_katalog_adresse_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="2">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Adresse zuordnen', 'admin_g_katalog_adresse_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Adressen, die keine Eltern-Adresse haben" icon="img/ic_analysis_check.gif" itemCount="2" infoUrl="javascript:dialog.showPage('Adressen, die keine Eltern-Adresse haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<table id="analysisList5" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="name" dataType="String" width="605">Beschreibung der Adresse</th>
+											<th field="edit" dataType="String" width="33">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Freie Adresse" /></td>
+											<td>Adresse</td>
+											<td><a href="javascript:dialog.showPage('Adresse zuordnen', 'admin_g_katalog_adresse_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="2">
+											<td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+											<td>Adresse</td>
+											<td><a href="javascript:dialog.showPage('Adresse zuordnen', 'admin_g_katalog_adresse_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Fehlerhafte Einträge in Objekt- bzw. Adress-Verweistabellen" icon="img/ic_analysis_check.gif" itemCount="2" infoUrl="">
+							<div dojoType="ContentPane">
+								<table id="analysisList6" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="60">Anzahl</th>
+											<th field="name" dataType="String" width="523">Beschreibung</th>
+											<th field="info" dataType="String" width="60">Info</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>424</td>
+											<td>Fehlerhafte Einträge in der Objekthierarchie (auch Verweise): kein gültiges Zielobjekt</td>
+											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in der Objekthierarchie', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
+										<tr value="2">
+											<td>2</td>
+											<td>Fehlerhafte Einträge in der Adresshierarchie (auch Verweise): keine gültige Zieladresse</td>
+											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in der Adresshierarchie', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Objekte, die multiple Eltern-Objekte haben" icon="img/ic_analysis_check.gif" itemCount="7" infoUrl="javascript:dialog.showPage('Objekte, die multiple Eltern-Objekte haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<table id="analysisList7" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="name" dataType="String" width="605">Beschreibung des Objekts</th>
+											<th field="edit" dataType="String" width="33">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="2">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Objekt zuordnen', 'admin_g_katalog_objekt_zuordnen.html', 502, 500, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Objekte bzw. Adressen mit fehlerhaften Einträgen in geändert von und MD-Verantwortlicher" icon="img/ic_analysis_check.gif" itemCount="5" infoUrl="javascript:dialog.showPage('Objekte bzw. Adressen mit fehlerhaften Eintr&auml;gen', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<table id="analysisList8" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="name" dataType="String" width="605">Beschreibung</th>
+											<th field="edit" dataType="String" width="33">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Nutzer zuordnen', 'admin_g_katalog_nutzer_zuordnen.html', 505, 190, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+										<tr value="2">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>Objektname</td>
+											<td><a href="javascript:dialog.showPage('Nutzer zuordnen', 'admin_g_katalog_nutzer_zuordnen.html', 505, 190, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div dojoType="ingrid:AccordionPane" label="Einträge im Feld gesetzliche Grundlagen, die nicht in der Schlüsseltabelle auftreten" icon="img/ic_analysis_info.gif" itemCount="1" infoUrl="javascript:dialog.showPage('Eintr&auml;ge im Feld gesetzliche Grundlagen', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+							<div dojoType="ContentPane">
+								<table id="analysisList9" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" headClass="fixedHeader" tbodyClass="scrollContent rows13" cellspacing="0" class="filteringTable w668 relativePos lightHead">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="60">Anzahl</th>
+											<th field="name" dataType="String" width="550">Beschreibung</th>
+											<th field="edit" dataType="String" width="33">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>261</td>
+											<td>Einträge 'gesetzliche Grundlagen', die nicht in der Schlüsseltabelle vorhanden sind</td>
+											<td><a href="javascript:dialog.showPage('Eintr&auml;ge, die nicht in der Schl&uuml;sseltabelle vorhanden sind', 'admin_g_katalog_gesetzl_grundlagen.html', 670, 290, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- LEFT HAND SIDE CONTENT END -->
+        
+			</div>
+		</div>
+	</div>
+	<!-- CONTENT END -->
+
+</body>
+</html>
