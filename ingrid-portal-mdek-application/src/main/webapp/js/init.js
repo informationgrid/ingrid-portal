@@ -1182,11 +1182,11 @@ function _disableHtmlLink(elementId) {
 	
 	if (element.onClick) {
 		element._disabledOnClick = element.onClick;
-		element.onClick = void(0);
+		element.onClick = function() { return false; };
 
 	} else if (element.onclick) {
 		element._disabledOnClick = element.onclick;
-		element.onclick = void(0);
+		element.onclick = function() { return false; };
 	}
 }
 
