@@ -89,7 +89,8 @@ attachNewNode = function(selectedNode, res) {
 		tree.selectNode(res);
 		tree.selectedNode = res;
 		dojo.event.topic.publish(treeListener.eventNames.select, {node: res});
-		dojo.html.scrollIntoView(res.domNode);
+		if (!dojo.render.html.ie)				
+			dojo.html.scrollIntoView(res.domNode);
 	});
 	def.addErrback(function(mes){
 		// If we got an error while attaching the node we still check if the node exists and select it
@@ -100,7 +101,8 @@ attachNewNode = function(selectedNode, res) {
 			tree.selectNode(newNode);
 			tree.selectedNode = newNode;
 			dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
-			dojo.html.scrollIntoView(res.domNode);
+			if (!dojo.render.html.ie)				
+				dojo.html.scrollIntoView(res.domNode);
 		} else {
 			dialog.show(message.get("general.error"), message.get("tree.nodeCreateLocalError"), dialog.WARNING);
 			dojo.debug(mes);
@@ -423,7 +425,8 @@ menuEventHandler.handleDiscard = function(msg) {
 							tree.selectNode(newSelectNode);
 							tree.selectedNode = newSelectNode;
 							dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
-							dojo.html.scrollIntoView(newSelectNode.domNode);
+							if (!dojo.render.html.ie)				
+								dojo.html.scrollIntoView(newSelectNode.domNode);
 						});
 						d.addErrback(function(msg){
 							dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
@@ -529,7 +532,8 @@ menuEventHandler.handleDelete = function(msg) {
 						tree.selectNode(newSelectNode);
 						tree.selectedNode = newSelectNode;
 						dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
-						dojo.html.scrollIntoView(newSelectNode.domNode);
+						if (!dojo.render.html.ie)				
+							dojo.html.scrollIntoView(newSelectNode.domNode);
 					});
 					d.addErrback(function(msg){
 						dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
@@ -760,7 +764,8 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
 				d.addCallback(function(){				
 					tree.selectNode(targetNode);
 					tree.selectedNode = targetNode;
-					dojo.html.scrollIntoView(targetNode.domNode);
+					if (!dojo.render.html.ie)				
+						dojo.html.scrollIntoView(targetNode.domNode);
 					dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
 				});
 				d.addErrback(function(msg){

@@ -2176,7 +2176,8 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		var newNode = dojo.widget.byId(nodeData.uuid);
 		tree.selectNode(newNode);
 		tree.selectedNode = newNode;
-		dojo.html.scrollIntoView(newNode.domNode);
+		if (!dojo.render.html.ie)				
+			dojo.html.scrollIntoView(newNode.domNode);
 		dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
 
 	} else {
