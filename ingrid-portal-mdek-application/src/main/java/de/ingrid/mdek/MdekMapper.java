@@ -155,8 +155,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefDate2(convertTimestampToDate((String) obj.get(MdekKeys.ENDING_DATE)));
 		mdekObj.setTimeRefStatus((Integer) obj.get(MdekKeys.TIME_STATUS));
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
-		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_STEP));
-		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
+		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_SCALE));
+		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_STEP));
 		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
@@ -658,8 +658,8 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.ENDING_DATE, convertDateToTimestamp(data.getTimeRefDate2()));
 		udkObj.put(MdekKeys.TIME_STATUS, data.getTimeRefStatus());
 		udkObj.put(MdekKeys.TIME_PERIOD, data.getTimeRefPeriodicity());
-		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalNum());
-		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalUnit());
+		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalNum());
+		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalUnit());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
 		udkObj.put(MdekKeys.DATASET_REFERENCES, mapFromTimeRefTable(data.getTimeRefTable()));
 
@@ -810,7 +810,7 @@ public class MdekMapper implements DataMapperInterface {
 		// TODO Check if Ref1VFormatTopology is set properly
 		obj.setRef1VFormatTopology(sysListMapper.getInitialKeyFromListId(VECTOR_TOPOLOGY_LEVEL_ID));
 
-		Integer key = sysListMapper.getInitialKeyFromListId(TIME_SCALE_ID);
+		Integer key = sysListMapper.getInitialKeyFromListId(TIME_STEP_ID);
 		if (key != null) { obj.setTimeRefIntervalUnit(key.toString()); };
 
 		obj.setRef1SpatialSystem(sysListMapper.getInitialValue(MdekKeys.REFERENCESYSTEM_ID));

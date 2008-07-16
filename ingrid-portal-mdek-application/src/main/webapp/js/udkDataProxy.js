@@ -1439,7 +1439,12 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("timeRefStatus").setValue(nodeData.timeRefStatus);
   dojo.widget.byId("timeRefPeriodicity").setValue(nodeData.timeRefPeriodicity);
   dojo.widget.byId("timeRefIntervalNum").setValue(nodeData.timeRefIntervalNum);
-  dojo.widget.byId("timeRefIntervalUnit").setValue(nodeData.timeRefIntervalUnit);
+  // TODO Temporarily read the display value from the db till it is changed in the backend
+//  dojo.widget.byId("timeRefIntervalUnit").setValue(nodeData.timeRefIntervalUnit);
+  var timeRefValue = dojo.widget.byId("timeRefIntervalUnit").getValueForDisplayValue(nodeData.timeRefIntervalUnit);
+  dojo.widget.byId("timeRefIntervalUnit").setValue(timeRefValue);
+
+
   dojo.widget.byId("timeRefExplanation").setValue(nodeData.timeRefExplanation);
   dojo.widget.byId("timeRefTable").store.setData(UtilList.addTableIndices(nodeData.timeRefTable));
 
@@ -1763,7 +1768,10 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.timeRefStatus = dojo.widget.byId("timeRefStatus").getValue();
   nodeData.timeRefPeriodicity = dojo.widget.byId("timeRefPeriodicity").getValue();
   nodeData.timeRefIntervalNum = dojo.widget.byId("timeRefIntervalNum").getValue();
-  nodeData.timeRefIntervalUnit = dojo.widget.byId("timeRefIntervalUnit").getValue();
+  // TODO Temporarily store the display value in the database till it is changed in the backend
+//  nodeData.timeRefIntervalUnit = dojo.widget.byId("timeRefIntervalUnit").getValue();
+  nodeData.timeRefIntervalUnit = dojo.widget.byId("timeRefIntervalUnit").getDisplayValue();
+
   nodeData.timeRefExplanation = dojo.widget.byId("timeRefExplanation").getValue();
   nodeData.timeRefTable = udkDataProxy._getTableData("timeRefTable");
 
