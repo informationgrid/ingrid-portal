@@ -1,29 +1,32 @@
-function sizeContent()
-{
-  // adjust height of right bottom content within split pane
-  var splitPaneDiv = dojo.byId('contentSection');
-  var sectionTopDivName = "sectionTopObject";
-  if (currentUdk && currentUdk.nodeAppType == "A") {
-    sectionTopDivName = "sectionTopAddress";
-  }
-  var sectionTopDiv = dojo.byId(sectionTopDivName);
-  var contentFrameDivName = "contentFrameObject";
-  if (currentUdk && currentUdk.nodeAppType == "A") {
-    contentFrameDivName = "contentFrameAddress";
-  }
-  var contentFrame = dojo.widget.byId(contentFrameDivName);
-  contentFrame.resizeTo(730, splitPaneDiv.offsetHeight - sectionTopDiv.offsetHeight - 4);
+function sizeContent() {
+	// adjust height of right bottom content within split pane
+	var splitPaneDiv = dojo.byId('contentSection');
+	var sectionTopDivName = "sectionTopObject";
+	if (currentUdk && currentUdk.nodeAppType == "A") {
+		sectionTopDivName = "sectionTopAddress";
+	}
+	var sectionTopDiv = dojo.byId(sectionTopDivName);
+	var contentFrameDivName = "contentFrameObject";
+	if (currentUdk && currentUdk.nodeAppType == "A") {
+		contentFrameDivName = "contentFrameAddress";
+	}
+	var contentFrame = dojo.widget.byId(contentFrameDivName);
+	contentFrame.resizeTo(730, splitPaneDiv.offsetHeight - sectionTopDiv.offsetHeight - 4);
 
 	refreshTabContainers();
 	// IE hack so the input containers are drawn correctly
 	if (dojo.render.html.ie) {
 		setTimeout("refreshInputContainers()", 1);
 	}
+
+	var scrollPos = dojo.byId(contentFrameDivName).scrollTop;
+	setTimeout("setContentFrameScrollPosition('"+contentFrameDivName+"', '"+scrollPos+"')", 1);
 }
 
-function selectNode() {
-	alert("selectNode");
+function setContentFrameScrollPosition(contentFrameId, scrollPos) {
+	dojo.byId(contentFrameId).scrollTop = scrollPos;
 }
+
 
 function refreshInputContainers(section) {
 	var sectionDivId = "contentFrameBodyObject";
@@ -81,95 +84,150 @@ function refreshTabContainers() {
 }
 
 
-function toggleFields(section) {
-	// mode 'required' or 'all', needed for main toggle button on toolbar
-	// if called from section's toggle button, then just invert display mode (determined by actual state)
-	var mode = "";
-	// get section or all sections respectively
-	var rootNodes = [];
-	if (section != undefined && section != "Object" && section != "Address") {
-		rootNodes.push(dojo.byId(section));
+function toggleFields(section, /* optional */ mode, /* optional flag */ refreshContainers) {
+//	dojo.debug("toggleFields("+section+", "+mode+")");
 
-//		dojo.debug("toggle fields in '" +section+ "'");
+	if (typeof(refreshContainers) == "undefined") {
+		refreshContainers = true;
+	}
+
+	var sectionElement;
+	var allSpanElements;
+	var allDivElements;
+
+	if (typeof(section) != "undefined" && section != "Object" && section != "Address") {
+		sectionElement = dojo.byId(section);
+		allSpanElements = sectionElement.getElementsByTagName("span");
+		allDivElements = sectionElement.getElementsByTagName("div");
+
+//		dojo.debug("number of div elements: "+allDivElements.length);
+//		dojo.debug("number of span elements: "+allSpanElements.length);
+
+		if (typeof(mode) == "undefined") {
+			if (typeof(sectionElement.isExpanded) == "undefined" || sectionElement.isExpanded == false) {
+				mode = "showAll";
+	
+			} else {
+				mode = "showRequired";
+			}			
+		}
+
+		if (mode == "showAll") {
+			sectionElement.isExpanded = true;
+
+		} else if (mode == "showRequired") {
+			sectionElement.isExpanded = false;
+		}
+
+//		dojo.debug("mode: "+mode);
+//		dojo.debug("sectionElement will be expanded: "+sectionElement.isExpanded);
+
+		if (sectionElement.getElementsByTagName('img')[0] && sectionElement.getElementsByTagName('img')[0].src.indexOf("expand") != -1) {
+			var btnImage = sectionElement.getElementsByTagName('img')[0];
+			var link = sectionElement.getElementsByTagName('a')[0];
+			toggleButton(btnImage, link, 'blue', mode);
+		}
+
 	} else {
-		var sectionDivId = "contentFrameBodyObject";
+		var sectionDivId;
+
 		if (section == "Address" || currentUdk && currentUdk.nodeAppType == "A") {
 			sectionDivId = "contentFrameBodyAddress";
+  		} else {
+			sectionDivId = "contentFrameBodyObject";
   		}
-//		dojo.debug("toggle fields in container '" + sectionDivId + "'");
+		var sectionDiv = dojo.byId(sectionDivId);
 
-		// button on toolbar clicked, toggle all fields on page
-//		dojo.debug("Toolbar button clicked.");
-		rootNodes = dojo.byId(sectionDivId).childNodes;
+		if (typeof(sectionDiv.isExpanded) == "undefined") {
+			sectionDiv.isExpanded = true;
+		}
+
+		if (sectionDiv.isExpanded == false) {
+			mode = "showAll";
+			sectionDiv.isExpanded = true;
+
+		} else {
+			mode = "showRequired";
+			sectionDiv.isExpanded = false;			
+		}
+
 		var toggleBtn = dojo.widget.byId('toggleFieldsBtn');
 		var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
-		toggleButton(btnImage, toggleBtn.domNode, 'grey');
-		if (btnImage.src.indexOf("expand_required") != -1)
-			mode = "all";
-		else
-			mode = "required";
+		toggleButton(btnImage, toggleBtn.domNode, 'grey', mode);
+
+		dojo.lang.forEach(sectionDiv.childNodes, function(section) {
+			if (typeof(section.id) != "undefined" && dojo.html.hasClass(section, "contentBlock")) {
+//				console.log("calling toggleFields("+section.id+", "+mode+").");
+				toggleFields(section.id, mode, false);
+			}
+		});
+		
+		refreshTabContainers();
+
+		if (dojo.render.html.ie) {
+			setTimeout("refreshInputContainers('"+section+"')", 1);
+		}
+
+		return;
+	}
+/*
+	dojo.debug("Mode: "+mode);
+	dojo.debug("Number of elements of type span: "+allSpanElements.length);
+*/
+	var allOptionalUIElements = dojo.lang.filter(allSpanElements, function(spanElement) {
+		return (dojo.string.startsWith(spanElement.id, "uiElement") && (spanElement.getAttribute("type") == "optional"));
+	});
+
+//	dojo.debug("Number of optional UI Elements: "+allOptionalUIElements.length);
+
+	// Hide all optional input elements
+	if (mode == "showAll") {
+		dojo.lang.forEach(allOptionalUIElements, dojo.html.show);
+
+	} else {
+		dojo.lang.forEach(allOptionalUIElements, dojo.html.hide);
 	}
 
-  // loop over content blocks and hide or show indvidual input containers
-	for (var i=0; i<rootNodes.length; i++)
-	{
-		var currentSection = rootNodes[i];
-		if (currentSection.nodeName == 'DIV')
-		{
-			var contentBlocks = rootNodes[i].childNodes;
-			for (var j=0; j<contentBlocks.length; j++)
-			{
-				if (contentBlocks[j].nodeName == 'DIV' && contentBlocks[j].className.indexOf('content') != -1)
-				{
-					if (mode == "") {
-						contentBlocks[j].isExpanded = !contentBlocks[j].isExpanded;
-					} else if (mode == "required") {
-						contentBlocks[j].isExpanded = false;
-					} else if (mode == "all") {
-						contentBlocks[j].isExpanded = true;
-					}
 
-					var inputContainer = contentBlocks[j].childNodes;
-					for (var k=0; k<inputContainer.length; k++)
-					{
-						if (inputContainer[k].className != undefined && inputContainer[k].className.indexOf('notRequired') != -1)
-						{
-							if (mode == "") {
-								dojo.html.toggleDisplay(inputContainer[k]);
-/*
-								if (inputContainer[k].style.display == "" || inputContainer[k].style.display == "block")
-									inputContainer[k].style.display = "none";
-								else
-									inputContainer[k].style.display = "block";
-*/						
-							} else if (mode == 'required') {
-								dojo.html.hide(inputContainer[k]);
-//								inputContainer[k].style.display = "none";
-							} else if (mode == 'all') {
-								dojo.html.show(inputContainer[k]);
-//								inputContainer[k].style.display = "block";
-							}
-						}
-					}
-				}
-			}
-			// change toggle button images for sections
-			if (currentSection.getElementsByTagName('img')[0] && currentSection.getElementsByTagName('img')[0].src.indexOf("expand") != -1)
-			{
-				var btnImage = currentSection.getElementsByTagName('img')[0];
-				var link = currentSection.getElementsByTagName('a')[0];
-				toggleButton(btnImage, link, 'blue', mode);
+	var allInputContainers = dojo.lang.filter(allDivElements, function(divElement) {
+		return dojo.html.hasClass(divElement, "inputContainer");
+	});
+
+//	dojo.debug("Number of inputContainer Elements: "+allInputContainers.length);
+
+	// Hide all input containers where all input elements are hidden when mode == showRequired
+	// Else show all
+	dojo.lang.forEach(allInputContainers, function(inputContainer) {
+		// Get all span elements below the current 'inputContainer'
+		var spanElements = inputContainer.getElementsByTagName("span");
+		// Get a list with all span elements where the id starts with 'uiElement'
+		var uiElements = dojo.lang.filter(spanElements, function(span) {
+			return (span.id && typeof(span.id) == "string" && dojo.string.startsWith(span.id, "uiElement"));
+		});
+
+//		dojo.debug("Number of uiElements in inputContainer: "+uiElements.length);
+
+		// if every uiElement has the type attribute set to optional...
+		if (dojo.lang.every(uiElements, function(uiElement) {
+			return uiElement.getAttribute ? uiElement.getAttribute("type") == "optional" : true;
+		})) {
+			if (mode == "showAll") {
+				dojo.html.show(inputContainer);
+
+			} else {
+				// ... and mode == showRequired, then hide the inputContainer
+				dojo.html.hide(inputContainer);
 			}
 		}
-	}
+	});
 
 
-	// Redraw the tab containers so they are displayed correctly
-	refreshTabContainers();
+	if (refreshContainers) {
+		refreshTabContainers();
 
-	// IE hack so the input containers are drawn correctly
-	if (dojo.render.html.ie) {
-		setTimeout("refreshInputContainers('"+section+"')", 1);
+		if (dojo.render.html.ie) {
+			setTimeout("refreshInputContainers('"+section+"')", 1);
+		}
 	}
 }
 
@@ -185,15 +243,16 @@ function toggleButton(btnImage, labelElement, color, mode)
   titles['required'] = 'Nur Pflichtfelder aufklappen';
   titles['all'] = 'Alle Felder aufklappen';
   
-  if (mode == "required")
-    toggleTo = "all";
-  else if (mode == "all")
+  if (mode == "showAll")
     toggleTo = "required";
+  else if (mode == "showRequired")
+    toggleTo = "all";
+/*
   else if (btnImage.src.indexOf("expand_required") != -1)
     toggleTo = "all";
   else if (btnImage.src.indexOf("expand_all") != -1)
     toggleTo = "required";
-
+*/
   btnImage.src = "img/ic_expand_" + toggleTo + "_" + color + ".gif";
   btnImage.setAttribute('alt', titles[toggleTo]);
   if(labelElement)

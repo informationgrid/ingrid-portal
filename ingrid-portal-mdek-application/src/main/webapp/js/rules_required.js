@@ -115,8 +115,9 @@ function applyRule2() {
 	var labelNode1 = dojo.byId("thesaurusEnvTopicsLabel");
 	var labelNode2 = dojo.byId("thesaurusEnvCatsLabel");
 	var containerNode = labelNode1.parentNode.parentNode.parentNode;
-	setRequiredState(labelNode1, containerNode, required);
-	setRequiredState(labelNode2, containerNode, required);
+
+//	setRequiredState(labelNode1, containerNode, required);
+//	setRequiredState(labelNode2, containerNode, required);
 }
 	
 function applyRule3(value) {
@@ -169,6 +170,6 @@ function applyRule5() {
 	var container1 = dojo.byId("spatialRefAdminUnitContainer");
 	var container2 = dojo.byId("spatialRefLocationContainer");
 
-	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
-	setRequiredState(labelNode2, container2, !snsHasBB);
+//	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
+//	setRequiredState(labelNode2, container2, !snsHasBB);
 }

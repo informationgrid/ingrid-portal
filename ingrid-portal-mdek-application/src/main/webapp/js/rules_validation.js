@@ -22,7 +22,8 @@ dojo.addOnLoad(function() {
 	dojo.widget.byId("headerAddressType3Lastname").isValid = function() { return !this.isMissing(); };
 
 	// If timeRefIntervalNum is not empty, timeRefIntervalUnit must not be empty and vice versa
-	dojo.widget.byId("timeRefIntervalNum").isValid = function() {
+	var intervalNumWidget = dojo.widget.byId("timeRefIntervalNum");
+	intervalNumWidget.isValid = function() {
 		var unitVal = dojo.widget.byId("timeRefIntervalUnit").getValue();
 		var unitEmpty = (unitVal == null || unitVal.length == 0);
 
@@ -36,7 +37,7 @@ dojo.addOnLoad(function() {
 		}
 	};
 
-	dojo.event.connect(dojo.widget.byId("timeRefIntervalNum"), "onkeyup", function() {
+	dojo.event.connect(intervalNumWidget, "onkeyup", function() {
 		var val = dojo.widget.byId("timeRefIntervalNum").textbox.value;
 		var selectVal = dojo.widget.byId("timeRefIntervalUnit").getValue();
 
@@ -48,6 +49,17 @@ dojo.addOnLoad(function() {
 			dojo.widget.byId("timeRefIntervalUnit").required = true;
 			dojo.widget.byId("timeRefIntervalUnit").onValueChanged(selectVal);
 		}
+	});
+
+	var intervalNumWidget = dojo.widget.byId("timeRefIntervalNum");
+	var intervalUnitWidget = dojo.widget.byId("timeRefIntervalUnit");
+	dojo.event.connect(intervalNumWidget, "setValue", function() {
+		intervalNumWidget.onkeyup();
+		intervalNumWidget.isValid();
+	});
+	dojo.event.connect(intervalUnitWidget, "setValue", function() {
+		intervalNumWidget.onkeyup();
+		intervalNumWidget.isValid();
 	});
 });
 

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+
+<script type="text/javascript">
+var scriptScope = this;
+</script>
+
+</head>
+
+<body>
+
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="catalogueAdminFields" class="content">
+	
+			<!-- LEFT HAND SIDE CONTENT START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<div class="inputContainer field grey">
+				<span class="label"><label>Folgende Felder auch in der Standard-Ansicht anzeigen</label></span>
+				<div class="tableContainer rows10 w652">
+					<table id="fieldTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+						<thead>
+							<tr>
+								<th field="identifier" dataType="String" width="80">Feldnummer</th>
+								<th field="name" dataType="String" width="502">Feldname</th>
+								<th field="visibility" dataType="String" width="70">Sichtbar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr value="1">
+								<td>001</td>
+								<td>Zeitbezug des Dateninhalts</td>
+								<td><input type="checkbox" name="fieldVisible0" id="fieldVisible0" dojoType="Checkbox" /></td></tr>
+							<tr value="2">
+								<td>002</td>
+								<td>Periodizit&auml;t</td>
+								<td><input type="checkbox" name="fieldVisible1" id="fieldVisible1" dojoType="Checkbox" /></td></tr>
+						</tbody>
+					</table>
+					<div class="spacerField"></div>
+				</div>
+			</div>
+
+
+			<div class="inputContainer">
+				<span class="button w644" style="height:20px !important;">
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveFieldSettings();">Speichern</button>
+					</span>
+				</span>
+			</div>
+			<!-- LEFT HAND SIDE CONTENT END -->        
+		</div>
+
+	</div>
+</div>
+<!-- CONTENT END -->
+</body>
+</html>
