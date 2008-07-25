@@ -112,12 +112,16 @@ function applyRule2() {
 	if (dojo.widget.byId("thesaurusEnvExtRes").checked || dojo.widget.byId("thesaurusEnvTopics").store.getData().length != 0 || dojo.widget.byId("thesaurusEnvCats").store.getData().length != 0)
 	  required = true;
 
-	var labelNode1 = dojo.byId("thesaurusEnvTopicsLabel");
-	var labelNode2 = dojo.byId("thesaurusEnvCatsLabel");
-	var containerNode = labelNode1.parentNode.parentNode.parentNode;
+	var labelNode1 = dojo.byId("thesaurusEnvironmentLabel");
+	var labelNode2 = dojo.byId("thesaurusEnvTopicsLabel");
+	var labelNode3 = dojo.byId("thesaurusEnvCatsLabel");
+	var containerNode1 = dojo.byId("uiElementN014");
+	var containerNode2 = dojo.byId("uiElementN015");
+	var containerNode3 = dojo.byId("uiElementN016");
 
-//	setRequiredState(labelNode1, containerNode, required);
-//	setRequiredState(labelNode2, containerNode, required);
+	setRequiredState(labelNode1, containerNode1, required);
+	setRequiredState(labelNode2, containerNode2, required);
+	setRequiredState(labelNode3, containerNode3, required);
 }
 	
 function applyRule3(value) {
@@ -136,11 +140,11 @@ function applyRule4() {
 		poBoxRequired = true;
 	
 	// set strasse, plz required state
-	setRequiredState(dojo.byId("addressStreetLabel"), null, !poBoxRequired);
-	setRequiredState(dojo.byId("addressZipCodeLabel"), null, !poBoxRequired);
+	setRequiredState(dojo.byId("addressStreetLabel"), dojo.byId("uiElement4400"), !poBoxRequired);
+	setRequiredState(dojo.byId("addressZipCodeLabel"), dojo.byId("uiElement4410"), !poBoxRequired);
 	// set postfach, plz (postfach) required state
-	setRequiredState(dojo.byId("addressPOBoxLabel"), null, poBoxRequired);
-	setRequiredState(dojo.byId("addressZipPOBoxLabel"), null, poBoxRequired);
+	setRequiredState(dojo.byId("addressPOBoxLabel"), dojo.byId("uiElement4420"), poBoxRequired);
+	setRequiredState(dojo.byId("addressZipPOBoxLabel"), dojo.byId("uiElement4425"), poBoxRequired);
 }
 	
 
@@ -167,9 +171,9 @@ function applyRule5() {
 
 	var labelNode1 = dojo.byId("spatialRefAdminUnitLabel");
 	var labelNode2 = dojo.byId("spatialRefLocationLabel");
-	var container1 = dojo.byId("spatialRefAdminUnitContainer");
-	var container2 = dojo.byId("spatialRefLocationContainer");
+	var container1 = dojo.byId("uiElementN006");
+	var container2 = dojo.byId("uiElementN008");
 
-//	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
-//	setRequiredState(labelNode2, container2, !snsHasBB);
+	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
+	setRequiredState(labelNode2, container2, !snsHasBB);
 }

@@ -260,40 +260,95 @@ function toggleButton(btnImage, labelElement, color, mode)
 }
 
 function setRequiredState(/*html node to (un-)set the required class*/labelNode, 
-  /*html node to (un-)set the notRequired class, maybe null*/containerNode, isRequired)
-{
+  /*html node to (un-)set the notRequired class, maybe null*/containerNode, isRequired) {
+	dojo.debug("-> setRequiredState("+labelNode.id+", "+containerNode.id+", "+isRequired+")");
+
   // set the label to required
   // get the actual textnode
-  var textNode = dojo.dom.firstElement(labelNode, "label");
-  if (labelNode && textNode) {
-    if (isRequired) {
-      dojo.html.addClass(labelNode, "required");
-      if (textNode.innerHTML.charAt(textNode.innerHTML.length-1) != "*")
-        textNode.innerHTML += "*";
-    }
-    else {
-      dojo.html.removeClass(labelNode, "required");
-      dojo.html.removeClass(labelNode, "important");	// Remove the important tag too incase it is highlited
-      if (textNode.innerHTML.charAt(textNode.innerHTML.length-1) == "*")
-        textNode.innerHTML = textNode.innerHTML.substring(0, textNode.innerHTML.length-1);
-    }
-  }
-
-  // set the container to required
-	if (containerNode) {
+	var textNode = dojo.dom.firstElement(labelNode, "label");
+	if (labelNode && textNode) {
 		if (isRequired) {
-			dojo.html.removeClass(containerNode, "notRequired");
-		} else {
-			dojo.html.addClass(containerNode, "notRequired");
-		}
+			dojo.html.addClass(labelNode, "required");
+			if (textNode.innerHTML.charAt(textNode.innerHTML.length-1) != "*") {
+				textNode.innerHTML += "*";
+			}
 
-		var isExpanded = containerNode.parentNode.isExpanded;
-		if (isExpanded || isRequired) {
-			dojo.html.setDisplay(containerNode, "block");
 		} else {
-			dojo.html.setDisplay(containerNode, "none");
+			dojo.html.removeClass(labelNode, "required");
+			dojo.html.removeClass(labelNode, "important");	// Remove the important tag too incase it is highlited
+			if (textNode.innerHTML.charAt(textNode.innerHTML.length-1) == "*") {
+				textNode.innerHTML = textNode.innerHTML.substring(0, textNode.innerHTML.length-1);
+			}
 		}
 	}
+
+	// set the container to required
+	if (containerNode) {
+		dojo.debug("containerNode.type before change: "+containerNode.getAttribute("type"));
+		if (isRequired) {
+			containerNode.setAttribute("type", "required");
+
+		} else {
+			containerNode.setAttribute("type", "optional");
+		}
+		dojo.debug("Setting containerNode.type to "+containerNode.type);
+
+		var getSectionElement = function(node) {
+			if (dojo.html.hasClass(node, "contentBlock"))
+				return node;
+			else
+				return getSectionElement(node.parentNode);
+		}
+
+		var sectionElement = getSectionElement(containerNode);
+		var isExpanded = sectionElement.isExpanded;
+		dojo.debug("Section element: "+sectionElement.id);
+		dojo.debug("Section element is expanded: "+sectionElement.isExpanded);
+
+		if (isExpanded || isRequired) {
+			dojo.html.show(containerNode);
+			dojo.debug("Showing containerNode.");
+
+		} else {
+			dojo.html.hide(containerNode);
+			dojo.debug("Hiding containerNode.");
+		}
+	}
+
+	// Check if we have to update some inputContainers. TODO -> Mode to helper functions
+	var allInputContainers = dojo.lang.filter(sectionElement.getElementsByTagName("div"), function(divElement) {
+		return dojo.html.hasClass(divElement, "inputContainer");
+	});
+
+//	dojo.debug("Number of inputContainer Elements: "+allInputContainers.length);
+
+	// Hide all input containers where all input elements are hidden when mode == showRequired
+	// Else show all
+	dojo.lang.forEach(allInputContainers, function(inputContainer) {
+		// Get all span elements below the current 'inputContainer'
+		var spanElements = inputContainer.getElementsByTagName("span");
+		// Get a list with all span elements where the id starts with 'uiElement'
+		var uiElements = dojo.lang.filter(spanElements, function(span) {
+			return (span.id && typeof(span.id) == "string" && dojo.string.startsWith(span.id, "uiElement"));
+		});
+
+//		dojo.debug("Number of uiElements in inputContainer: "+uiElements.length);
+
+		// if every uiElement has the type attribute set to optional...
+		if (dojo.lang.every(uiElements, function(uiElement) {
+			return uiElement.getAttribute ? uiElement.getAttribute("type") == "optional" : true;
+		})) {
+			if (isExpanded) {
+				dojo.html.show(inputContainer);
+
+			} else {
+				// ... and mode == showRequired, then hide the inputContainer
+				dojo.html.hide(inputContainer);
+			}
+		}
+	});
+
+	dojo.debug("<- setRequiredState()");
 }
 
 /*

@@ -1785,7 +1785,7 @@ function hideSplash(){
 
 	              <div class="inputContainer noSpaceBelow notRequired h185">
 					<span id="uiElementN014" type="optional">
-	                	<span class="label"><script>document.write(message.get("ui.obj.thesaurus.terms.enviromental.title"))</script></span>
+	                	<span id="thesaurusEnvironmentLabel" class="label"><label for="thesaurusEnvironment" onclick="javascript:dialog.showContextHelp(arguments[0], 'Themenkategorien')"><script>document.write(message.get("ui.obj.thesaurus.terms.enviromental.title"))</script></label></span>
 		                <div id="thesaurusEnvironment" class="outlined h140">
 	                  <div class="checkboxContainer">
 	                    <span class="input"><input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Als Katalogseite anzeigen')"><script>document.write(message.get("ui.obj.thesaurus.terms.enviromental.displayCatalogPage"))</script></label></span>

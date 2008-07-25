@@ -44,7 +44,7 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel",
-			  "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
+			  "thesaurusEnvironmentLabel", "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
 			  "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
@@ -164,6 +164,7 @@ function isObjectPublishable(idcObject) {
 	if ((idcObject.thesaurusEnvTopicsList.length > 0 && idcObject.thesaurusEnvCatsList.length == 0)
 	  ||(idcObject.thesaurusEnvTopicsList.length == 0 && idcObject.thesaurusEnvCatsList.length > 0) 
 	  ||(idcObject.thesaurusEnvExtRes == true && (idcObject.thesaurusEnvTopicsList.length == 0 || idcObject.thesaurusEnvCatsList.length == 0))) {
+		dojo.html.addClass(dojo.byId("thesaurusEnvironmentLabel"), "important");
 		dojo.html.addClass(dojo.byId("thesaurusEnvTopicsLabel"), "important");		
 		dojo.html.addClass(dojo.byId("thesaurusEnvCatsLabel"), "important");		
 		dojo.debug("If one of the 'Umweltthemen' contains an entry, both of them need to contain at least one entry.");
