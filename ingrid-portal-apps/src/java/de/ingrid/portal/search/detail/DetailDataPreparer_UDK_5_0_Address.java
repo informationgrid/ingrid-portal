@@ -65,7 +65,7 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
         ArrayList superiorReferences = new ArrayList();
         IngridHit h = DetailDataPreparerHelper.getParentAddress(addrId, iplugId);
         if (h != null) {
-            superiorReferences.add(DetailDataPreparerHelper.getParentAddress(addrId, iplugId));
+            superiorReferences.add(h);
         }
         ArrayList subordinatedReferences = DetailDataPreparerHelper.getAddressChildren(addrId, iplugId);
 
@@ -87,21 +87,38 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
         Collections.sort(subordinatedReferences, new AddressRecordComparator());
 
 
-        // get related record of the subordinated address references
-        HashMap subordinatedObjRef = new LinkedHashMap();
+        // get direct related objects of the address
+        HashMap directObjRefMap = new LinkedHashMap();
+        ArrayList l = getObjectsByAddress(addrId, iplugId);
+        for (int j = 0; j < l.size(); j++) {
+            IngridHit objHit = (IngridHit) l.get(j);
+            IngridHitDetail detail = (IngridHitDetail) objHit.get(Settings.RESULT_KEY_DETAIL);
+            String objId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
+            if (!directObjRefMap.containsKey(objId)) {
+            	directObjRefMap.put(objId, objHit);
+            }
+        }
+        List directObjRefList = new ArrayList(directObjRefMap.values());  
+        Collections.sort(directObjRefList, new AddressRecordComparator());
+        context.put("directObjRef", directObjRefList);
+        
+        // get related objects of the subordinated address references
+        HashMap subordinatedObjRefMap = new LinkedHashMap();
         for (int i = 0; i < allAddressChildren.size(); i++) {
-            ArrayList l = getObjectsByAddress((String) ((IngridHitDetail) ((IngridHit) allAddressChildren
+            l = getObjectsByAddress((String) ((IngridHitDetail) ((IngridHit) allAddressChildren
                     .get(i)).get(Settings.RESULT_KEY_DETAIL)).get("T02_address.adr_id"), iplugId);
             for (int j = 0; j < l.size(); j++) {
                 IngridHit objHit = (IngridHit) l.get(j);
                 IngridHitDetail detail = (IngridHitDetail) objHit.get(Settings.RESULT_KEY_DETAIL);
                 String objId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
-                if (!subordinatedObjRef.containsKey(objId)) {
-                    subordinatedObjRef.put(objId, objHit);
+                if (!subordinatedObjRefMap.containsKey(objId)) {
+                    subordinatedObjRefMap.put(objId, objHit);
                 }
             }
         }
-        context.put("subordinatedObjRef", subordinatedObjRef);
+        List subordinatedObjRefList = new ArrayList(subordinatedObjRefMap.values());  
+        Collections.sort(subordinatedObjRefList, new AddressRecordComparator());
+        context.put("subordinatedObjRef", subordinatedObjRefList);
         
         context.put("record", record);
         HashMap recordMap = new LinkedHashMap();
@@ -150,7 +167,14 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 
          //myHash2.put("t011_obj_literatur.autor", "mm");
          */
-        DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), false, (IngridResourceBundle)context.get("MESSAGES"), dateFields, replacementFields);
+
+        // filter object-address / address-address relations ! already fetched via index (see above)
+        HashMap filter = new HashMap();
+        filter.put(Settings.HIT_KEY_OBJ_ADDR_RELATION, true);
+        filter.put(Settings.HIT_KEY_ADDR_ADDR_RELATION, true);
+
+        DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), false, 
+        	(IngridResourceBundle)context.get("MESSAGES"), dateFields, replacementFields, filter);
 
         // Replace all occurrences of <*> except the specified ones (<b>, </b>, <i>, ... are the ones NOT replaced)
         String summary = (String) DetailDataPreparerHelper.getFieldFromHashTree(recordMap, "summary");

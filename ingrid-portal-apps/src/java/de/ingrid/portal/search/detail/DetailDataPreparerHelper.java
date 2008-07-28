@@ -97,8 +97,8 @@ public class DetailDataPreparerHelper {
     }
     
     
-    public static void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns,
-            IngridResourceBundle messages, List dateFields, HashMap replacementFields) {
+    private static void addSubRecords(Record record, HashMap map, Locale locale, int level, boolean readableColumns,
+            IngridResourceBundle messages, List dateFields, HashMap replacementFields, HashMap filter) {
         level++;
         Column[] columns;
         ArrayList subRecordList;
@@ -110,6 +110,26 @@ public class DetailDataPreparerHelper {
             if (columns.length == 0) {
             	continue;
             }
+            // filter relations !
+            String targetName = columns[0].getTargetName();
+            boolean include = true;
+            if (filter != null && filter.size() > 0) {
+                Iterator it = filter.entrySet().iterator();
+                String targetNameLowerCase = targetName.toLowerCase();
+                while (it.hasNext()) {
+                    Map.Entry entry = (Map.Entry) it.next();
+                    String filterKeyLowerCase = ((String) entry.getKey()).toLowerCase(locale);
+                    if (targetNameLowerCase.startsWith(filterKeyLowerCase)) {
+                    	// found relation is filtered, we ignore this record !
+                    	include = false;
+                    	break;
+                    }
+                }
+            }
+            if (!include) {
+            	continue;
+            }
+
             for (int j = 0; j < columns.length; j++) {
                 if (columns[j].toIndex()) {
                     String columnName = columns[j].getTargetName();
@@ -133,7 +153,6 @@ public class DetailDataPreparerHelper {
                     }
                 }
             }
-            String targetName = columns[0].getTargetName();
             if (readableColumns) {
                 targetName = targetName.replace('_', ' ');
             } else {
@@ -147,14 +166,19 @@ public class DetailDataPreparerHelper {
             }
             subRecordList.add(subRecordMap);
             // add subrecords
-            addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns, messages, dateFields, replacementFields);
+            addSubRecords(subRecords[i], subRecordMap, locale, level, readableColumns, messages, dateFields, replacementFields, filter);
         }
 
     } 
 
     public static void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns,
             IngridResourceBundle messages, List dateFields, HashMap replacementFields) {
-        addSubRecords(record, map, locale, 0, readableColumns, messages, dateFields, replacementFields);
+        addSubRecords(record, map, locale, 0, readableColumns, messages, dateFields, replacementFields, null);
+    }
+    
+    public static void addSubRecords(Record record, HashMap map, Locale locale, boolean readableColumns,
+            IngridResourceBundle messages, List dateFields, HashMap replacementFields, HashMap filter) {
+        addSubRecords(record, map, locale, 0, readableColumns, messages, dateFields, replacementFields, filter);
     }
     
     /**

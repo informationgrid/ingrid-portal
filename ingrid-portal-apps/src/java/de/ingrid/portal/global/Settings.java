@@ -225,6 +225,12 @@ public class Settings {
     public static final String HIT_KEY_OBJ_OBJ_TYP = "T012_obj_obj.typ";
     public static final String HIT_KEY_OBJ_OBJ_TO = "T012_obj_obj.object_to_id";
 
+    // Object address relations
+    public static final String HIT_KEY_OBJ_ADDR_RELATION = "T012_obj_adr";
+
+    // Address address relations
+    public static final String HIT_KEY_ADDR_ADDR_RELATION = "T022_adr_adr";
+
     // ===========================================
     // PORTLET MESSAGING
     // NOTICE: Request Parameter (see next section) ARE USED AS MESSAGE KEYS AND VALUES whenever possible !
