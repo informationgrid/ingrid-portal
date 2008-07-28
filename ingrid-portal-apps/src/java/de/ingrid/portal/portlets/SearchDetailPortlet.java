@@ -97,6 +97,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
 
+            context.put("docId", documentId);
             context.put("plugId", iplugId);
             
             IngridHit hit = new IngridHit();
@@ -222,8 +223,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             if (request.getParameter("alt_document_id") != null) {
                 response.setRenderParameter("altdocid", request.getParameter("alt_document_id"));
             }
+            if (request.getParameter("maxORs") != null) {
+                response.setRenderParameter("maxORs", request.getParameter("maxORs"));
+            }
+            if (request.getParameter("maxSubORs") != null) {
+                response.setRenderParameter("maxSubORs", request.getParameter("maxSubORs"));
+            }
         }
-
     }
 
 

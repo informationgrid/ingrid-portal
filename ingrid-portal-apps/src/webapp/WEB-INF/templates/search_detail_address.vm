@@ -131,6 +131,16 @@
 	#end
 #end
 
+#macro (createActionURLOwnDocument)
+<!-- create action URL generating page exactly as it is right now. Set differing params afterwards. -->
+	#set ($action = $renderResponse.createActionURL())
+	$action.setParameter('cmd', "doShowDocument")
+	$action.setParameter('docid', "$docId")						
+	$action.setParameter('plugid', "$plugId")
+	$action.setParameter('maxORs', "$directObjRef_currentMaxNum")
+	$action.setParameter('maxSubORs', "$subordinatedObjRef_currentMaxNum")
+#end
+
 #macro (renderUDKAddressRelatedRecords)
 	#if(($tool.hasContent($directObjRef)) || ($tool.hasContent($subordinatedObjRef)))
 		<div class="line"><hr></div>
@@ -152,6 +162,11 @@
 			#end
 		</ul>
           </li>
+			#if($directObjRef_nextMaxNum)
+				#createActionURLOwnDocument()
+				$action.setParameter('maxORs', "$directObjRef_nextMaxNum")
+				<p><a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$MESSAGES.getString("search.detail.dataRelations.next")</a><br/></p>
+			#end
 		  #end
 		  #if($tool.hasContent($subordinatedObjRef))
 		  <li><a name="alle"></a>$MESSAGES.getString("search.detail.dataRelations.addresses")<ul class="udklist">
@@ -168,6 +183,11 @@
 			#end
 		</ul>
 		  </li>
+			#if($subordinatedObjRef_nextMaxNum)
+				#createActionURLOwnDocument()
+				$action.setParameter('maxSubORs', "$subordinatedObjRef_nextMaxNum")
+				<p><a href="$action" alt="$MESSAGES.getString('common.alt.icon.intern')">$MESSAGES.getString("search.detail.dataRelations.addresses.next")</a><br/></p>
+			#end
 		  #end
         </ul>
 	#end	

@@ -88,6 +88,10 @@ public class DetailDataPreparerHelper {
     	return IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId);
     }
     
+    public static ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumHits) {
+    	return IPlugHelperDscEcs.getHits(queryStr, requestedMetaData, filter, maxNumHits);
+    }
+    
     public static ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
     	return IPlugHelperDscEcs.getHits(queryStr, requestedMetaData, filter);
     }

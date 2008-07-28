@@ -31,7 +31,10 @@ import de.ingrid.utils.udk.UtilsDate;
 public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 
     private final static Log log = LogFactory.getLog(DetailDataPreparer_UDK_5_0_Address.class);
-	
+
+    /** number of Object references (AOR) to show initially and to add when "more" is pressed */
+    private final static int NUM_OBJ_REFS_PER_PAGE = 20;
+
 	private Context context;
 	private String iplugId;
 	private List dateFields;
@@ -51,6 +54,17 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 	 * @see de.ingrid.portal.search.detail.DetailDataPreparer#prepare(de.ingrid.utils.dsc.Record)
 	 */
 	public void prepare(Record record) throws Throwable {
+		// direct object references
+        int maxNumObjRefs = NUM_OBJ_REFS_PER_PAGE;
+        try {
+        	maxNumObjRefs = Integer.parseInt(request.getParameter("maxORs"));
+        } catch (Exception ex) {}
+		// object references of sub addresses
+        int maxNumSubObjRefs = NUM_OBJ_REFS_PER_PAGE;
+        try {
+        	maxNumSubObjRefs = Integer.parseInt(request.getParameter("maxSubORs"));
+        } catch (Exception ex) {}
+
         // enrich address with institution and units
         HashMap addrParents = new LinkedHashMap();
         String addressType = (String) record.get("T02_ADDRESS.TYP");
@@ -89,7 +103,12 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 
         // get direct related objects of the address
         HashMap directObjRefMap = new LinkedHashMap();
-        ArrayList l = getObjectsByAddress(addrId, iplugId);
+        boolean moreHits = false;
+        ArrayList l = getObjectsByAddress(addrId, iplugId, maxNumObjRefs);
+        if (l.size() >= maxNumObjRefs) {
+        	moreHits = true;
+        }
+        // NOTICE: this may result in less hits, if hits appear twice !
         for (int j = 0; j < l.size(); j++) {
             IngridHit objHit = (IngridHit) l.get(j);
             IngridHitDetail detail = (IngridHitDetail) objHit.get(Settings.RESULT_KEY_DETAIL);
@@ -98,28 +117,52 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
             	directObjRefMap.put(objId, objHit);
             }
         }
+        // sort results and pass to template
         List directObjRefList = new ArrayList(directObjRefMap.values());  
         Collections.sort(directObjRefList, new AddressRecordComparator());
         context.put("directObjRef", directObjRefList);
+    	context.put("directObjRef_currentMaxNum", (maxNumObjRefs));
+        if (moreHits) {
+        	context.put("directObjRef_nextMaxNum", (maxNumObjRefs + NUM_OBJ_REFS_PER_PAGE));
+        }
         
         // get related objects of the subordinated address references
         HashMap subordinatedObjRefMap = new LinkedHashMap();
+        moreHits = false;
         for (int i = 0; i < allAddressChildren.size(); i++) {
+        	boolean enoughRead = false;
             l = getObjectsByAddress((String) ((IngridHitDetail) ((IngridHit) allAddressChildren
-                    .get(i)).get(Settings.RESULT_KEY_DETAIL)).get("T02_address.adr_id"), iplugId);
+                    .get(i)).get(Settings.RESULT_KEY_DETAIL)).get("T02_address.adr_id"), iplugId, maxNumSubObjRefs);
+            if (l.size() >= maxNumSubObjRefs) {
+            	enoughRead = true;
+            }
+            // NOTICE: this may result in less hits, if hits appear twice !
             for (int j = 0; j < l.size(); j++) {
                 IngridHit objHit = (IngridHit) l.get(j);
                 IngridHitDetail detail = (IngridHitDetail) objHit.get(Settings.RESULT_KEY_DETAIL);
                 String objId = (String) detail.get(Settings.HIT_KEY_OBJ_ID);
                 if (!subordinatedObjRefMap.containsKey(objId)) {
                     subordinatedObjRefMap.put(objId, objHit);
+                    if (subordinatedObjRefMap.size() >= maxNumSubObjRefs) {
+                    	enoughRead = true;
+                    	break;
+                    }
                 }
             }
+            if (enoughRead) {
+            	moreHits = true;
+            	break;
+            }
         }
+        // sort results and pass to template
         List subordinatedObjRefList = new ArrayList(subordinatedObjRefMap.values());  
         Collections.sort(subordinatedObjRefList, new AddressRecordComparator());
         context.put("subordinatedObjRef", subordinatedObjRefList);
-        
+    	context.put("subordinatedObjRef_currentMaxNum", (maxNumSubObjRefs));
+        if (moreHits) {
+        	context.put("subordinatedObjRef_nextMaxNum", (maxNumSubObjRefs + NUM_OBJ_REFS_PER_PAGE));
+        }
+
         context.put("record", record);
         HashMap recordMap = new LinkedHashMap();
 
@@ -207,13 +250,13 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
         return result;
     }
     
-    private ArrayList getObjectsByAddress(String addrId, String iPlugId) {
+    private ArrayList getObjectsByAddress(String addrId, String iPlugId, int maxNumObjects) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         ArrayList result = DetailDataPreparerHelper.getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
-                requestedMetadata, filter);
+                requestedMetadata, filter, maxNumObjects);
         return result;
     }
 
