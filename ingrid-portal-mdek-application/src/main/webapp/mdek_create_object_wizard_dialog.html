@@ -10,8 +10,7 @@
 var scriptScope = this;
 
 _container_.addOnLoad(function() {
-	dojo.html.hide(dojo.byId("resultContainer"));
-	dojo.html.hide(dojo.byId("resultButtonContainer"));
+	hideResults();
 
 	dojo.widget.byId("assistantURL").setValue("http://");
 	dojo.widget.byId("assistantNumWords").setValue(200);
@@ -30,8 +29,52 @@ _container_.addOnLoad(function() {
                 scriptScope.startSearch();
             }
 	});
+
+
+	var descriptorCheckbox = dojo.widget.byId("assistantDescriptorTableCheckbox");
+	dojo.event.connect(descriptorCheckbox, "onClick", function() {
+		// get checkbox value
+		var value = dojo.widget.byId("assistantDescriptorTableCheckbox").checked;
+		// get data drom the topic store
+		var data = dojo.widget.byId("assistantDescriptorTable").store.getData();
+		for (var i in data) {
+			// check / uncheck all select boxes
+			dojo.byId("objectWiz_"+data[i].topicId).checked = value;
+		}
+	});
+	
+	var spatialCheckbox = dojo.widget.byId("assistantSpatialRefTableCheckbox");
+	dojo.event.connect(spatialCheckbox, "onClick", function() {
+		// get checkbox value
+		var value = dojo.widget.byId("assistantSpatialRefTableCheckbox").checked;
+		// get data drom the spatial store
+		var data = dojo.widget.byId("assistantSpatialRefTable").store.getData();
+		for (var i in data) {
+			// check / uncheck all select boxes
+			dojo.byId("objectWiz_"+data[i].topicId).checked = value;
+		}
+	});
 });
 
+function resetInputFields() {
+	dojo.widget.byId("assistantDescriptionCheckbox").setValue(false);
+	dojo.widget.byId("assistantDescription").setValue("");
+	dojo.widget.byId("assistantDescriptorTable").clear();
+	dojo.widget.byId("assistantDescriptorTableCheckbox").setValue(false);
+	dojo.widget.byId("assistantSpatialRefTable").clear();
+	dojo.widget.byId("assistantSpatialRefTableCheckbox").setValue(false);
+	dojo.widget.byId("assistantTimeRefTable").clear();
+}
+
+function hideResults() {
+	dojo.html.hide(dojo.byId("resultContainer"));
+	dojo.html.hide(dojo.byId("resultButtonContainer"));
+}
+
+function showResults() {
+	dojo.html.show(dojo.byId("resultContainer"));
+	dojo.html.show(dojo.byId("resultButtonContainer"));
+}
 
 // Updates the input fields with values from the given topic map
 function updateInputFields(topicMap) {
@@ -39,21 +82,6 @@ function updateInputFields(topicMap) {
 	var thesaTopicList = topicMap.thesaTopics;
 	var locationTopicList = topicMap.locationTopics;
 	var eventTopicList = topicMap.eventTopics;
-
-	dojo.debug("topicMap.indexedDocument:");
-	dojo.debugShallow(indexedDocument);
-
-	dojo.debug("topicMap.thesaTopics:");
-	for (var i in thesaTopicList)
-		dojo.debugShallow(thesaTopicList[i]);
-
-	dojo.debug("topicMap.locationTopics:");
-	for (var i in locationTopicList)
-		dojo.debugShallow(locationTopicList[i]);
-
-	dojo.debug("topicMap.eventTopics:");
-	for (var i in eventTopicList)
-		dojo.debugShallow(eventTopicList[i]);
 
 	// Description
 	dojo.widget.byId("assistantDescription").setValue(indexedDocument.description);
@@ -70,7 +98,7 @@ function updateInputFields(topicMap) {
 	UtilList.addTableIndices(locationTopicList);
 	for (var i in locationTopicList) {
 		// Add checkbox to entry
-		locationTopicList[i].selection = "<input type='checkbox'>";
+		locationTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+locationTopicList[i].topicId+"'>";
 		// Prepare bb for display in the table
 		if (locationTopicList[i].boundingBox) {
 			locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[0];
@@ -82,7 +110,29 @@ function updateInputFields(topicMap) {
 	dojo.widget.byId("assistantSpatialRefTable").store.setData(locationTopicList);
 
 	// Event Topics
-	// TODO ...
+	UtilList.addTableIndices(eventTopicList);
+	for (var i in eventTopicList) {
+		eventTopicList[i].selection = "<input type='radio' name='objectWiz_eventTopic' id='objectWiz_"+eventTopicList[i].topicId+"'>";
+
+		if (null != eventTopicList[i].at) {
+			eventTopicList[i].date1 = eventTopicList[i].at;
+			eventTopicList[i].type = "am";
+
+		} else if (null != eventTopicList[i].from && null != eventTopicList[i].to) {
+			eventTopicList[i].date1 = eventTopicList[i].from;
+			eventTopicList[i].date2 = eventTopicList[i].to;
+			eventTopicList[i].type = "von - bis";
+
+		} else if (null != eventTopicList[i].from && null == eventTopicList[i].to) {
+			eventTopicList[i].date1 = eventTopicList[i].from;
+			eventTopicList[i].type = "seit";
+
+		} else if (null == eventTopicList[i].from && null != eventTopicList[i].to) {
+			eventTopicList[i].date1 = eventTopicList[i].to;
+			eventTopicList[i].type = "bis";
+		}
+	}
+	dojo.widget.byId("assistantTimeRefTable").store.setData(eventTopicList);
 }
 
 
@@ -92,6 +142,7 @@ scriptScope.addValuesToObject = function() {
 		dojo.widget.byId("generalDesc").setValue(dojo.widget.byId("assistantDescription").getValue());
 	}
 
+	// Add Thesaurus Topics 
     var descStore = dojo.widget.byId("thesaurusTerms").store;
 	var thesaList = dojo.widget.byId("assistantDescriptorTable").store.getData();
 	for (var i in thesaList) {
@@ -104,6 +155,88 @@ scriptScope.addValuesToObject = function() {
 			}
 		}
 	}
+
+	// Add Location Topics
+	var spatialStore = dojo.widget.byId("spatialRefAdminUnit").store;
+	var locationList = dojo.widget.byId("assistantSpatialRefTable").store.getData();
+	for (var i in locationList) {
+		// If checkbox is selected
+		if (dojo.byId("objectWiz_"+locationList[i].topicId).checked) {
+			var topic = locationList[i];
+			var topicId = locationList[i].topicId;
+			var storeData = spatialStore.getData();
+			var storedTopic = null;
+			// Check if the topic is already in the spatial ref list
+			for (var j in storeData) {
+				if (storeData[j].topicId == topicId) {
+					storedTopic = storeData[j];
+					continue;
+				}
+			}
+
+			// If the topic was found, update the bounding box and continue
+			if (storedTopic) {
+				spatialStore.update(storedTopic, "name", topic.name);
+				if (topic.boundingBox) {
+					spatialStore.update(storedTopic, "longitude1", topic.boundingBox[0]);
+					spatialStore.update(storedTopic, "latitude1", topic.boundingBox[1]);
+					spatialStore.update(storedTopic, "longitude2", topic.boundingBox[2]);
+					spatialStore.update(storedTopic, "latitude2", topic.boundingBox[3]);
+				}
+				// Update elements that aren't displayed in the table
+				storedTopic.nativeKey = topic.nativeKey;
+			} else {
+				// The topic was not found in the result list. Create a new key and
+				// add the topic to the list
+				var key = UtilStore.getNewKey(spatialStore);
+				if (topic.boundingBox) {
+					spatialStore.addData({
+							Id: key,
+							topicId: topic.topicId,
+							name: topic.name,
+							longitude1: topic.boundingBox[0],
+							latitude1: topic.boundingBox[1],
+							longitude2: topic.boundingBox[2],
+							latitude2: topic.boundingBox[3],
+							nativeKey: topic.nativeKey
+					});
+				} else {
+					spatialStore.addData({
+							Id: key,
+							topicId: topic.topicId,
+							name: topic.name,
+							nativeKey: topic.nativeKey
+					});
+				}
+			}
+		}
+	}
+
+	// Add Event Topic
+	var eventList = dojo.widget.byId("assistantTimeRefTable").store.getData();
+
+	for (var i in eventList) {
+		// If radio button is selected
+		if (dojo.byId("objectWiz_"+eventList[i].topicId).checked) {
+			if (eventList[i].type == "von - bis")
+				eventList[i].type = "von";
+
+			dojo.widget.byId("timeRefType").setValue(eventList[i].type);
+
+			if (eventList[i].type == "bis") {
+				dojo.widget.byId("timeRefDate1").setValue(eventList[i].to);
+
+			} else if (eventList[i].type == "am") {
+				dojo.widget.byId("timeRefDate1").setValue(eventList[i].at);
+				dojo.widget.byId("timeRefDate2").setValue(eventList[i].at);
+
+			} else {
+				dojo.widget.byId("timeRefDate1").setValue(eventList[i].from);
+				dojo.widget.byId("timeRefDate2").setValue(eventList[i].to);
+			}
+		}
+	}
+
 	_container_.closeWindow();
 }
 
@@ -122,6 +255,8 @@ function hideLoadingZone() {
 // SNS Start search button function
 // Reads the url from the input field and executes a SNS autoClassify request
 scriptScope.startSearch = function() {
+	hideResults();
+	resetInputFields();
 	var url = dojo.string.trim(dojo.widget.byId("assistantURL").getValue());
 	var numWords = dojo.widget.byId("assistantNumWords").getValue();
 
@@ -132,8 +267,7 @@ scriptScope.startSearch = function() {
 		callback: function(topicMap) {
 			updateInputFields(topicMap);
 
-			dojo.html.show(dojo.byId("resultContainer"));
-			dojo.html.show(dojo.byId("resultButtonContainer"));
+			showResults();
 		},
 
 		errorHandler: function(msg) {
@@ -212,6 +346,10 @@ scriptScope.startSearch = function() {
 	                </div>
 				</div>
 
+				<div class="checkboxContainer">
+					<span class="input"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Alle Deskriptoren ausw&auml;hlen')">Alle Deskriptoren ausw&auml;hlen</label></span>
+				</div>
+
 	            <div class="inputContainer">
 	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug</label></span>
 	                <div class="tableContainer rows4 full">
@@ -232,35 +370,24 @@ scriptScope.startSearch = function() {
 	                </div>
 				</div>
 
+				<div class="checkboxContainer">
+					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Alle Raumbez&uuml;ge ausw&auml;hlen')">Alle Raumbez&uuml;ge ausw&auml;hlen</label></span>
+				</div>
+
 				<div class="inputContainer">
 					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')">Zeitbezug</label></span>
-<!-- full relativePos -->
 	                <div class="tableContainer rows4 full">
-						<table id="assistantTimeRefTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable">
+						<table id="assistantTimeRefTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="4" cellspacing="0" class="filteringTable">
 			    	      <thead>
 			    		      <tr>
 			          			<th nosort="true" field="selection" dataType="String" width="60">Auswahl</th>
 			          			<th nosort="true" field="name" dataType="String" width="346">Bezeichnung</th>
-			          			<th nosort="true" field="date" dataType="String" width="139">Datum</th>
-			          			<th nosort="true" field="type" dataType="String" width="139">Typ</th>
+			          			<th nosort="true" field="date1" dataType="Date" width="100">Datum 1</th>
+			          			<th nosort="true" field="date2" dataType="Date" width="100">Datum 2</th>
+			          			<th nosort="true" field="type" dataType="String" width="100">Typ</th>
 			    		      </tr>
 			    	      </thead>
 			    	      <tbody>
-			    		      <tr value="1">
-			    		        <td><input type="radio" name="assistantTimeSel" id="assistantTimeSel1" class="radio" /></td>
-			    		        <td>&lt;Titel&gt;</td>
-			    		        <td>tt.mm.jj - tt.mm.jj</td>
-			    		        <td>von - bis</td></tr>
-			    		      <tr value="2">
-			    		        <td><input type="radio" name="assistantTimeSel" id="assistantTimeSel2" class="radio" /></td>
-			    		        <td>&lt;Titel&gt;</td>
-			    		        <td>tt.mm.jj</td>
-			    		        <td>am</td></tr>
-			    		      <tr value="3">
-			    		        <td><input type="radio" name="assistantTimeSel" id="assistantTimeSel3" class="radio" /></td>
-			    		        <td>&lt;Titel&gt;</td>
-			    		        <td>tt.mm.jj</td>
-			    		        <td>seit</td></tr>
 			    	      </tbody>
 						</table>
 					</div>

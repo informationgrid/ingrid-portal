@@ -70,8 +70,11 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.CTSResponse"/>
-		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.IndexedDocument"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSEventTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopicMap"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.HelpMessage"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.UserData"/>
 
