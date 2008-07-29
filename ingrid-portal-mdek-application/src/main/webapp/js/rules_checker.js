@@ -13,20 +13,19 @@ var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeR
 	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
 var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
-var availUiInputElements = ["availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo",
-	"availabilityCosts", "availabilityNoteUse"];
+var availUiInputElements = ["availabilityUsageLimitationTable", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
 var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusFreeTermsList", "thesaurusEnvExtRes",
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
-var class1UiInputElements = ["ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
+var class1UiInputElements = ["ref1ObjectIdentifier", "ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
 	"ref1SpatialSystem", "ref1Scale", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLink",
 	"ref1KeysText", "ref1KeysLink", "ref1BasisText", "ref1BasisLink", "ref1DataBasisText", "ref1DataBasisLink", "ref1Data",
-	"ref1ProcessText", "ref1ProcessLink"];
+	"ref1ProcessText", "ref1ProcessLink", "extraInfoConformityTable"];
 var class2UiInputElements = ["ref2Author", "ref2Publisher", "ref2PublishedIn", "ref2PublishLocation", "ref2PublishedInIssue",
 	"ref2PublishedInPages", "ref2PublishedInYear", "ref2PublishedISBN", "ref2PublishedPublisher", "ref2LocationText", 
 	"ref2LocationLink", "ref2DocumentType", "ref2BaseDataText", "ref2BaseDataLink", "ref2BibData", "ref2Explanation"];
-var class3UiInputElements = ["ref3ServiceType", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
-	"ref3BaseDataLink", "ref3Explanation", "ref3Operation"];
+var class3UiInputElements = ["ref3ServiceType", "ref3ServiceTypeTable", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
+	"ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable"];
 var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
 var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
 
@@ -42,12 +41,13 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 
 
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
-			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
+			  "extraInfoConformityTableLabel", "availabilityUsageLimitationTableLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
+			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel",
 			  "thesaurusEnvironmentLabel", "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
-			  "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
+			  "addressComLabel", "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
 			  "addressZipPOBoxLabel"];
 
 
@@ -59,18 +59,29 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"],
 					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"]];
 
-var notEmptyFieldsClass1 = [["ref1DataSet", "ref1DataSetLabel"]]; 
+var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
+							["ref1ObjectIdentifier", "ref1ObjectIdentifierLabel"],
+                            ["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
-					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
+					  ["thesaurusTopicsList", "thesaurusTopicsLabel"],
+					  ["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
+
+var notEmptyTablesClass1 = [["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
+var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"],
+							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
 
 
-var notEmptyAddressFields = [ // ["addressClass", "addressTypeLabel"],
-							 ["addressOwner", "addressOwnerLabel"],
-						     ["countryCode", "addressCountryLabel"],
-						     ["city", "addressCityLabel"]];
+// INSPIRE changes. Only one email address is required 
+var notEmptyAddressFields = [// ["addressClass", "addressTypeLabel"],
+							 // ["addressOwner", "addressOwnerLabel"],
+						     // ["countryCode", "addressCountryLabel"],
+						     // ["city", "addressCityLabel"]
+							 ];
+
+var notEmptyAddressTables = [["communication", "addressComLabel"]];
 
 var notEmptyAddressFieldsClass0 = [["organisation", "headerAddressType0UnitLabel"]];
 var notEmptyAddressFieldsClass1 = [["organisation", "headerAddressType1UnitLabel"]];
@@ -114,6 +125,16 @@ function isObjectPublishable(idcObject) {
 			     || typeof(timeRef.date) == "undefined" || timeRef.date == null || dojo.string.trim(timeRef.date).length == 0); })) {
 		dojo.html.addClass(dojo.byId("timeRefTableLabel"), "important");		
 		dojo.debug("All entries in the timeRef table must have a valid type and date.");
+		publishable = false;
+	}
+
+	// Check if the availabilityUsageLimitation table contains valid input (both fields contain data)
+	var usageLimitData = idcObject.availabilityUsageLimitationTable;
+	if (dojo.lang.some(usageLimitData, function(ul) {
+			return (typeof(ul.limit) == "undefined" || ul.limit == null || dojo.string.trim(ul.limit).length == 0
+			     || typeof(ul.requirement) == "undefined" || ul.requirement == null || dojo.string.trim(ul.requirement).length == 0); })) {
+		dojo.html.addClass(dojo.byId("availabilityUsageLimitationTableLabel"), "important");		
+		dojo.debug("All entries in the availabilityUsageLimitation table must contain data.");
 		publishable = false;
 	}
 
@@ -185,6 +206,23 @@ function isObjectPublishable(idcObject) {
 					dojo.debug("Object class one required field empty.");				
 				}
 			}
+			for (var i in notEmptyTablesClass1) {
+				if (idcObject[notEmptyTablesClass1[i][0]].length == 0) {
+					dojo.html.addClass(dojo.byId(notEmptyTablesClass1[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class one required table '"+notEmptyTablesClass1[i][0]+"' empty.");				
+				}
+			}
+
+			// Check if the conformity table contains valid input (both level and specification must contain data)
+			var confData = idcObject.extraInfoConformityTable;
+			if (dojo.lang.some(confData, function(conf) {
+					return (typeof(conf.level) == "undefined" || conf.level == null || dojo.string.trim(conf.level).length == 0
+					     || typeof(conf.specification) == "undefined" || conf.specification == null || dojo.string.trim(conf.specification).length == 0); })) {
+				dojo.html.addClass(dojo.byId("extraInfoConformityTableLabel"), "important");		
+				dojo.debug("All entries in the conformity table must have a valid level and specification.");
+				publishable = false;
+			}
 
 			// The Vector format area is not required for publishing an object
 /*
@@ -212,6 +250,24 @@ function isObjectPublishable(idcObject) {
 					dojo.debug("Object class three required field empty.");				
 				}
 			}
+			for (var i in notEmptyTablesClass3) {
+				if (idcObject[notEmptyTablesClass3[i][0]].length == 0) {
+					dojo.html.addClass(dojo.byId(notEmptyTablesClass3[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class one required table '"+notEmptyTablesClass3[i][0]+"' empty.");				
+				}
+			}
+
+			// Check if the conformity table contains valid input (both level and specification must contain data)
+			var confData = idcObject.extraInfoConformityTable;
+			if (dojo.lang.some(confData, function(conf) {
+					return (typeof(conf.level) == "undefined" || conf.level == null || dojo.string.trim(conf.level).length == 0
+					     || typeof(conf.specification) == "undefined" || conf.specification == null || dojo.string.trim(conf.specification).length == 0); })) {
+				dojo.html.addClass(dojo.byId("extraInfoConformityTableLabel"), "important");		
+				dojo.debug("All entries in the conformity table must have a valid level and specification.");
+				publishable = false;
+			}
+
 			break;
 		case '4':
 			// No additional required fields for object class 4
@@ -240,8 +296,36 @@ function isAddressPublishable(idcAddress) {
 		}
 	}
 
+	for (var i in notEmptyAddressTables) {
+		if (idcAddress[notEmptyAddressTables[i][0]].length == 0) {
+			dojo.html.addClass(dojo.byId(notEmptyAddressTables[i][1]), "important");
+			dojo.debug("Address table '"+notEmptyAddressTables[i][0]+"' must not be empty.");
+			dojo.widget.byId("addressCom").applyValidation();
+			publishable = false;
+		}
+	}
+
+	// Check if all entries in the address table are valid
+	var addressData = idcAddress.communication;
+	if (dojo.lang.some(addressData, function(adr) { return (typeof(adr.communicationMedium) == "undefined" || adr.communicationMedium == null || dojo.string.trim(adr.communicationMedium).length == 0
+														 || typeof(adr.communicationValue) == "undefined" || adr.communicationValue == null || dojo.string.trim(adr.communicationValue).length == 0); })) {
+		dojo.html.addClass(dojo.byId("addressComLabel"), "important");		
+		dojo.debug("All entries in the addressCom table must contain values.");
+		publishable = false;
+	}
+
+	// Check if at least one entry exists with type email
+	if (dojo.lang.every(addressData, function(adr) { return ( dojo.string.trim(adr.communicationMedium) != "Email"); })) {
+		dojo.html.addClass(dojo.byId("addressComLabel"), "important");
+		dojo.debug("At least one entry has to be of type 'email'.");
+		publishable = false;
+	}
+
+	// DEPRECATED:
 	// If pobox contains a value, poboxPostalCode has to contain a value as well.
 	// Otherwise street and postalCode have to contain values 
+	// INSPIRE Change. Removed required fields.
+/*
 	var pobox = dojo.string.trim(idcAddress.pobox);
 	var poboxPostalCode = dojo.string.trim(idcAddress.poboxPostalCode);
 	var street = dojo.string.trim(idcAddress.street);
@@ -267,7 +351,7 @@ function isAddressPublishable(idcAddress) {
 			publishable = false;
 		}
 	}
-
+*/
 	// Check the required fields per address type:
 	switch (""+idcAddress.addressClass)
 	{

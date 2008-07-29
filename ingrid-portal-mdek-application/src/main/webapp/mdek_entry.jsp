@@ -373,6 +373,45 @@ function hideSplash(){
 	        	  <div id="ref1Content" class="content">
 
 	              <div class="inputContainer required">
+                	<span id="uiElement3520" type="optional">
+		                <span id="ref1BasisTabContainerLabel" class="label required"><label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3520)"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.title"))</script>*</label></span>
+		                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3520});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.link"))</script></a></span>
+		              	<div id="ref1BasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1BasisTab1">
+							<script>document.write("<div id='ref1BasisTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.technicalBasisTable.tab.text")+"'>")</script>
+		                    <span class="input">
+		               			<input type="text" mode="textarea" id="ref1BasisText" name="ref1BasisText" class="w668 h083" dojoType="ingrid:ValidationTextbox" />
+		               		</span> 
+		              		</div>
+							<script>document.write("<div id='ref1BasisTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type1.technicalBasisTable.tab.links")+"'>")</script>
+		                    <div class="tableContainer headHiddenRows4 full">
+		                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+		                	      <thead>
+		              		      <tr>
+		                    			<th nosort="true" field="icon" dataType="String"></th>
+		                    			<th nosort="true" field="linkLabel" dataType="String">Objekte</th>
+		              		      </tr>
+		                	      </thead>
+								  <colgroup>
+								    <col width="23">
+								    <col width="297">
+								  </colgroup>
+		                	      <tbody>
+		                	      </tbody>
+		                	    </table>
+		                    </div>
+		              		</div>
+		              	</div>
+					</span>
+	          	  </div>
+
+	              <div class="inputContainer required">
+					<span id="uiElementN021" type="required">
+						<span id="ref1ObjectIdentifierLabel" class="label required"><label for="ref1ObjectIdentifier" onclick="javascript:dialog.showContextHelp(arguments[0], 3565)"><script>document.write(message.get("ui.obj.type1.identifier"))</script>*</label></span>
+	                	<span class="input"><input type="text" maxlength="255" id="ref1ObjectIdentifier" class="w667" dojoType="ingrid:ValidationTextBox" /></span>
+					</span>
+				  </div>
+
+	              <div class="inputContainer required">
 	                <div class="half left">
 	                  <span id="uiElement5061" type="required">
 		                  <span id="ref1DataSetLabel" class="label required"><label for="ref1DataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 5061)"><script>document.write(message.get("ui.obj.type1.dataset"))</script>*</label></span>
@@ -606,38 +645,6 @@ function hideSplash(){
 	                		</div>
 						</span>
 					</div>
-
-	              <div class="inputContainer notRequired">
-                	<span id="uiElement3520" type="optional">
-		                <span class="label"><label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3520)"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.title"))</script></label></span>
-		                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3520});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.link"))</script></a></span>
-		              	<div id="ref1BasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1BasisTab1">
-							<script>document.write("<div id='ref1BasisTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.technicalBasisTable.tab.text")+"'>")</script>
-		                    <span class="input">
-		               			<input type="text" mode="textarea" id="ref1BasisText" name="ref1BasisText" class="w668 h083" dojoType="ingrid:ValidationTextbox" />
-		               		</span> 
-		              		</div>
-							<script>document.write("<div id='ref1BasisTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type1.technicalBasisTable.tab.links")+"'>")</script>
-		                    <div class="tableContainer headHiddenRows4 full">
-		                	    <table id="ref1BasisLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
-		                	      <thead>
-		              		      <tr>
-		                    			<th nosort="true" field="icon" dataType="String"></th>
-		                    			<th nosort="true" field="linkLabel" dataType="String">Objekte</th>
-		              		      </tr>
-		                	      </thead>
-								  <colgroup>
-								    <col width="23">
-								    <col width="297">
-								  </colgroup>
-		                	      <tbody>
-		                	      </tbody>
-		                	    </table>
-		                    </div>
-		              		</div>
-		              	</div>
-		             </span>
-	          	  </div>
 
 	              <div class="inputContainer notRequired">
                 	<span id="uiElement3570" type="optional">
@@ -920,6 +927,27 @@ function hideSplash(){
 	        	  <div id="ref3Content" class="content">
 
 	              <div class="inputContainer required">
+					<span id="uiElementN022" type="required">
+	                  <span id="ref3ServiceTypeTableLabel" class="label required"><label for="ref3ServiceTypeTable" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)"><script>document.write(message.get("ui.obj.type3.ref3ServiceTypeTable.title"))</script>*</label></span>
+	                  <div class="tableContainer headHiddenRows4 full">
+	                    <div class="cellEditors" id="ref3ServiceTypeTableEditors">
+	                      <div dojoType="ingrid:Select" toggle="plain" class="w608" listId="1100" id="ref3ServiceTypeEditor"></div>
+	                    </div>
+	               	    <table id="ref3ServiceTypeTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+	              	      <thead>
+	              		      <tr>
+	                    			<th nosort="true" field="title" dataType="String" editor="ref3ServiceTypeEditor">Typ des Dienstes</th>
+	              		      </tr>
+	              	      </thead>
+	              	      <tbody>
+	              	      </tbody>
+	              	    </table>
+	                  </div>
+					</span>
+	              </div>
+
+
+	              <div class="inputContainer required">
 	                <div class="half left">
 	                	<span id="uiElement3220" type="required">
 							<span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)"><script>document.write(message.get("ui.obj.type3.serviceType"))</script>*</label></span>
@@ -1011,6 +1039,30 @@ function hideSplash(){
                			</span> 
 	                </div>
 	                <div class="fill"></div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h130">
+					<span id="uiElementN023" type="optional">
+		                <span class="label"><script>document.write(message.get("ui.obj.type3.scaleTable.title"))</script></span>
+		                <div class="tableContainer rows4 full">
+		                  <div class="cellEditors" id="ref3ScaleEditors">
+		                    <div dojoType="IntegerTextbox" min="0" max="2147483647" maxlength="10" widgetId="ref3ScaleScale"></div>
+		                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref3ScaleGroundResolution"></div>
+		                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref3ScaleScanResolution"></div>
+		                  </div>
+		            	    <table id="ref3Scale" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+		            	      <thead>
+		            		      <tr>
+		                  			<th nosort="true" field="scale" dataType="String" width="105" editor="ref3ScaleScale"><script>document.write(message.get("ui.obj.type3.scaleTable.header.scale"))</script></th>
+		                  			<th nosort="true" field="groundResolution" dataType="String" width="285" editor="ref3ScaleGroundResolution"><script>document.write(message.get("ui.obj.type3.scaleTable.header.groundResolution"))</script></th>
+		                  			<th nosort="true" field="scanResolution" dataType="String" width="285" editor="ref3ScaleScanResolution"><script>document.write(message.get("ui.obj.type3.scaleTable.header.scanResolution"))</script></th>
+		            		      </tr>
+		            	      </thead>
+		            	      <tbody>
+		            	      </tbody>
+		            	    </table>
+		                </div>
+					</span>
 	          	  </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired h130">
@@ -1558,6 +1610,33 @@ function hideSplash(){
 	                <div class="fill"></div>
 	              </div>
 
+	              <div id="extraInfoConformityTableContainer" class="inputContainer" style="display:none;">
+				  	<span id="uiElementN024" type="required">
+		                <span id="extraInfoConformityTableLabel" class="label required"><label for="extraInfoConformityTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.title"))</script>*</label></span>
+	
+		                <div class="tableContainer rows4 full">
+		                    <div class="cellEditors" id="extraInfoConformityTableEditors">
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:120px;" listId="505" id="extraInfoConformityLevelEditor"></div>
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w478" widgetId="extraInfoConformitySpecificationEditor"></div>
+		                    </div>
+		            	    <table id="extraInfoConformityTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+		            	      <thead>
+		            		      <tr>
+		                  			<th nosort="true" field="level" dataType="String" editor="extraInfoConformityLevelEditor"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.header.level"))</script></th>
+		                  			<th nosort="true" field="specification" dataType="String" editor="extraInfoConformitySpecificationEditor"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.header.specification"))</script></th>
+		            		      </tr>
+		            	      </thead>
+							  <colgroup>
+							    <col width="150">
+							    <col width="513">
+							  </colgroup>
+		            	      <tbody>
+		            	      </tbody>
+		            	    </table>
+		                </div>
+					</span>
+	          	  </div>
+
 	              <div class="inputContainer notRequired h110">
 	                <div class="third1 left">
 					  <span id="uiElementN012" type="optional">
@@ -1629,7 +1708,35 @@ function hideSplash(){
 	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="availabilityContent" class="content">
-	        	  
+
+
+	              <div class="inputContainer">
+					<span id="uiElementN025" type="required">
+		                <span id="availabilityUsageLimitationTableLabel" class="label required"><label for="availabilityUsageLimitationTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.title"))</script>*</label></span>
+	
+		                <div class="tableContainer rows4 full">
+		                    <div class="cellEditors" id="availabilityUsageLimitationTableEditors">
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:120px;" listId="505" id="availabilityUsageLimitationLimitEditor"></div>
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w478" widgetId="availabilityUsageLimitationRequirementEditor"></div>
+		                    </div>
+		            	    <table id="availabilityUsageLimitationTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+		            	      <thead>
+		            		      <tr>
+		                  			<th nosort="true" field="limit" dataType="String" editor="availabilityUsageLimitationLimitEditor"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.header.limit"))</script></th>
+		                  			<th nosort="true" field="requirement" dataType="String" editor="availabilityUsageLimitationRequirementEditor"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.header.requirement"))</script></th>
+		            		      </tr>
+		            	      </thead>
+							  <colgroup>
+							    <col width="150">
+							    <col width="513">
+							  </colgroup>
+		            	      <tbody>
+		            	      </tbody>
+		            	    </table>
+		                </div>
+					</span>
+	          	  </div>
+
 	              <div class="inputContainer notRequired h130">
 					<span id="uiElement1320" type="optional">
 		                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 1320)"><script>document.write(message.get("ui.obj.availability.dataFormatTable.title"))</script></label></span>
@@ -1680,29 +1787,12 @@ function hideSplash(){
 					</span>
 	              </div>
 
-	              <div class="inputContainer notRequired">
-	                <div class="half left">
-						<span id="uiElement5052" type="optional">
-							<span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 5052)"><script>document.write(message.get("ui.obj.availability.orderInfo"))</script></label></span>
-							<span class="input"><input type="text" mode="textarea" id="availabilityOrderInfo" name="availabilityOrderInfo" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
-						</span>
-	                </div>
-	          
-	                <div class="half">
-						<span id="uiElement5051" type="optional">
-							<span class="label"><label for="availabilityCosts" onclick="javascript:dialog.showContextHelp(arguments[0], 5051)"><script>document.write(message.get("ui.obj.availability.cost"))</script></label></span>
-               				<span class="input"><input type="text" mode="textarea" maxlength="255" id="availabilityCosts" name="availabilityCosts" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span>
-               			</span> 
- 	                </div>
-	                <div class="fill"></div>
-	              </div>
-
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="full">
-						<span id="uiElement5040" type="optional">
-							<span class="label"><label for="availabilityNoteUse" onclick="javascript:dialog.showContextHelp(arguments[0], 5040)"><script>document.write(message.get("ui.obj.availability.note"))</script></label></span>
-							<span class="input"><input type="text" mode="textarea" id="availabilityNoteUse" name="availabilityNoteUse" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span>
-						</span> 
+						<span id="uiElement5052" type="optional">
+							<span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 5052"><script>document.write(message.get("ui.obj.availability.orderInfo"))</script></label></span>
+							<span class="input"><input type="text" mode="textarea" id="availabilityOrderInfo" name="availabilityOrderInfo" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+						</span>
 	                </div>
 	                <div class="fill"></div>
 	              </div>
@@ -2094,15 +2184,15 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
-						<span id="uiElement4400" type="required">
-			          		<span id="addressStreetLabel" class="label required"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 4400)">Stra&szlig;e/Hausnummer*</label></span>
+						<span id="uiElement4400" type="optional">
+			          		<span id="addressStreetLabel" class="label"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 4400)">Stra&szlig;e/Hausnummer</label></span>
 							<span class="input spaceBelow"><input type="text" id="addressStreet" maxlength="80" name="addressStreet" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 						</span>
 
 			          <div id="addressDetails1">
 			            <span class="entry first">
-							<span id="uiElement4405" type="required">
-			              		<span id="addressCountryLabel" class="label required"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)">Staat*</label></span>
+							<span id="uiElement4405" type="optional">
+			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)">Staat</label></span>
 			              		<span class="input spaceBelow">
 			              			<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
 			              				<option value="de">DE</option>
@@ -2111,14 +2201,14 @@ function hideSplash(){
 			            	</span>
 			            </span>
 			            <span class="entry">
-							<span id="uiElement4410" type="required">
-			              		<span id="addressZipCodeLabel" class="label required"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)">PLZ*</label></span>
+							<span id="uiElement4410" type="optional">
+			              		<span id="addressZipCodeLabel" class="label"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)">PLZ</label></span>
 			              		<span class="input spaceBelow"><input type="text" maxlength="10" id="addressZipCode" name="addressZipCode" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			              	</span>
 			            </span>
 			            <span class="entry">
-							<span id="uiElement4415" type="required">
-			              		<span id="addressCityLabel" class="label required"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 4415)">Ort*</label></span>
+							<span id="uiElement4415" type="optional">
+			              		<span id="addressCityLabel" class="label"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 4415)">Ort</label></span>
 			              		<span class="input spaceBelow"><input type="text" maxlength="80" id="addressCity" name="addressCity" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			              	</span>
 			            </span>
@@ -2126,13 +2216,13 @@ function hideSplash(){
 
 			          <div id="addressDetails2">
 			            <span class="entry first">
-							<span id="uiElement4420" type="required">
+							<span id="uiElement4420" type="optional">
 			              		<span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4420)">Postfach</label></span>
 			              		<span class="input"><input type="text" id="addressPOBox" maxlength="10" name="addressPOBox" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			            	</span>
 			            </span>
 			            <span class="entry">
-							<span id="uiElement4425" type="required">
+							<span id="uiElement4425" type="optional">
 			              		<span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4425)">PLZ (Postfach)</label></span>
 			              		<span class="input"><input type="text" id="addressZipPOBox" maxlength="10" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			            	</span>
@@ -2141,35 +2231,36 @@ function hideSplash(){
 			        </div>
 			  
 			        <div class="half">
-						<span id="uiElement4435" type="optional">
-			          		<span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 4435)">Notizen</label></span>
-			          		<span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" id="addressNotes" class="w320 h120" /></span>
-			        	</span>
+						<span id="uiElement4430" type="optional">
+				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation*</label></span>
+				          <div class="tableContainer rows5 half">
+				            <div class="cellEditors" id="addressComEditors">
+				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
+				              <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="addressComConnection"></div>
+				            </div>
+				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
+				      	      <thead>
+				      		      <tr>
+				            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
+				            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
+				      		      </tr>
+				      	      </thead>
+				      	      <tbody>
+				      	      </tbody>
+				      	    </table>
+				      	  </div>
+						</span>
 			        </div>
 			        <div class="fill"></div>
 			      </div>
 
 			      <div class="inputContainer noSpaceBelow notRequired">
+
 			        <div class="half left">
-						<span id="uiElement4430" type="optional">
-			          		<span class="label"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation</label></span>
-			          		<div class="tableContainer rows4 half">
-			            		<div class="cellEditors" id="addressComEditors">
-			              			<div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
-			              			<div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="addressComConnection"></div>
-			            		</div>
-			      	    		<table id="addressCom" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
-			      	      			<thead>
-			      		      			<tr>
-			            					<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
-			            					<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
-			      		      			</tr>
-			      	      			</thead>
-			      	      			<tbody>
-			      	      			</tbody>
-			      	    		</table>
-			      	  		</div>
-			        	</span>
+						<span id="uiElement4435" type="optional">
+							<span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 4435)">Notizen</label></span>
+							<span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" id="addressNotes" class="w320 h120" /></span>
+						</span>
 			        </div>
 
 			        <div class="half">

@@ -42,7 +42,7 @@ public interface DataMapperInterface {
 	public final static int TIME_STATUS_ID = 523;
 	public final static int HIERARCHY_LEVEL_ID = 525;
 	public final static int VECTOR_TOPOLOGY_LEVEL_ID = 528;
-	public final static int TIME_STEP_ID = 1230;
+	public final static int TIME_SCALE_ID = 1230;
 	public final static int DATA_LANGUAGE_ID = 99999999;
 	public final static int PUBLICATION_CONDITION_ID = 3571;
 

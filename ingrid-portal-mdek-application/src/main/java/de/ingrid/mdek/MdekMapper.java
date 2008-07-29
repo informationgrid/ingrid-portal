@@ -20,6 +20,7 @@ import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.object.ConformityBean;
 import de.ingrid.mdek.beans.object.DBContentBean;
 import de.ingrid.mdek.beans.object.DataFormatBean;
 import de.ingrid.mdek.beans.object.LinkDataBean;
@@ -31,6 +32,7 @@ import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.mdek.beans.object.ScaleBean;
 import de.ingrid.mdek.beans.object.TimeReferenceBean;
 import de.ingrid.mdek.beans.object.UrlBean;
+import de.ingrid.mdek.beans.object.UsageLimitationBean;
 import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
@@ -155,8 +157,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefDate2(convertTimestampToDate((String) obj.get(MdekKeys.ENDING_DATE)));
 		mdekObj.setTimeRefStatus((Integer) obj.get(MdekKeys.TIME_STATUS));
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
-		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_SCALE));
-		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_STEP));
+		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_STEP));
+		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
 		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
@@ -165,15 +167,34 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoLangData((String) convertLanguageCodeToIdentifier((String) obj.get(MdekKeys.DATA_LANGUAGE)));
 
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
+
+		// TODO: Change when inspire changes are implemented in the backend
+//		mdekObj.setExtraInfoConformityTable((ArrayList<ConformityBean>) mapToExtraInfoConformityTable((List<HashMap<String, Object>>) obj.get(MdekKeys.CONFORMITY)));
+		ArrayList<ConformityBean> conformityDummy = new ArrayList<ConformityBean>();
+		ConformityBean c = new ConformityBean();
+		c.setLevel(0);
+		c.setSpecification("not implemented yet!");
+		conformityDummy.add(c);
+		mdekObj.setExtraInfoConformityTable(conformityDummy);
+
+
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
 		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<HashMap<String, Object>>) obj.get(MdekKeys.EXPORTS)));
 		mdekObj.setExtraInfoLegalBasicsTable(mapToExtraInfoLegalBasicsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LEGISLATIONS)));
 
 		// Availability
+		// TODO: Change when inspire changes are implemented in the backend
+//		mdekObj.setAvailabilityUsageLimitationTable((ArrayList<UsageLimitationBean>) mapToAvailabilityUsageLimitationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.USAGE_LIMITATION)));
+		ArrayList<UsageLimitationBean> ulDummy = new ArrayList<UsageLimitationBean>();
+		UsageLimitationBean ul = new UsageLimitationBean();
+		ul.setLimit(0);
+		ul.setRequirement("not implemented yet!");
+		ulDummy.add(ul);
+		mdekObj.setAvailabilityUsageLimitationTable(ulDummy);
+
+		
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
-		mdekObj.setAvailabilityNoteUse((String) obj.get(MdekKeys.USE_CONSTRAINTS));
-		mdekObj.setAvailabilityCosts((String) obj.get(MdekKeys.FEES));
 		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATA_FORMATS)));
 		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
 		
@@ -218,6 +239,9 @@ public class MdekMapper implements DataMapperInterface {
 			Map<String, Object> td1Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
 			if (td1Map == null)
 				break;
+// TODO Implement when backend changes are finished
+//			mdekObj.setRef1ObjectIndetifier((String) td1Map.get(MdekKeys.OBJECT_IDENTIFIER));
+			mdekObj.setRef1ObjectIdentifier("Object Identifier - not implemented.");
 			mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
 			mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
 			KeyValuePair kvp = mapToKeyValuePair(td1Map, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
@@ -268,11 +292,21 @@ public class MdekMapper implements DataMapperInterface {
 				break;
 			kvp = mapToKeyValuePair(td3Map, MdekKeys.SERVICE_TYPE_KEY, MdekKeys.SERVICE_TYPE);
 			mdekObj.setRef3ServiceType(kvp.getValue());
+			// TODO Remove comment and temp list when implemented in the backend
+			intList = new ArrayList<Integer>();
+			intList.add(1);
+			mdekObj.setRef3ServiceTypeTable(intList);
+/*
+			intList = (ArrayList<Integer>) obj.get(MdekKeys.SERVICE_TYPE_TABLE);
+			if (intList != null)
+				mdekObj.setRef3ServiceTypeTable(intList);
+*/
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
 			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
+			mdekObj.setRef3Scale(mapToScaleTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), kvp.getKey()));
 
 			break;
@@ -658,8 +692,8 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.ENDING_DATE, convertDateToTimestamp(data.getTimeRefDate2()));
 		udkObj.put(MdekKeys.TIME_STATUS, data.getTimeRefStatus());
 		udkObj.put(MdekKeys.TIME_PERIOD, data.getTimeRefPeriodicity());
-		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalNum());
-		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalUnit());
+		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalNum());
+		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalUnit());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
 		udkObj.put(MdekKeys.DATASET_REFERENCES, mapFromTimeRefTable(data.getTimeRefTable()));
 
@@ -667,6 +701,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.METADATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangMetaData()));
 		udkObj.put(MdekKeys.DATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangData()));
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
+//		udkObj.put(MdekKeys.CONFORMITY, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
 		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
 		udkObj.put(MdekKeys.EXPORTS, mapFromExtraInfoXMLExportTable(data.getExtraInfoXMLExportTable()));
@@ -674,13 +709,12 @@ public class MdekMapper implements DataMapperInterface {
 
 
 		// Availability
-		// Only map for object class == 0
+		// Only map for object class != 0
 		if (data.getObjectClass() != 0) {
+//			udkObj.put(MdekKeys.USAGE_LIMITATION, mapFromAvailabilityUsageLimitationTable(data.getAvailabilityUsageLimitationTable()));			
 			udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
 			udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
 			udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
-			udkObj.put(MdekKeys.USE_CONSTRAINTS, data.getAvailabilityNoteUse());
-			udkObj.put(MdekKeys.FEES, data.getAvailabilityCosts());
 		}
 
 		//Thesaurus
@@ -715,6 +749,8 @@ public class MdekMapper implements DataMapperInterface {
 			break;
 		case 1:
 			IngridDocument td1Map = new IngridDocument();			
+			// TODO Add when implemented in the backend
+//			td1Map.put(MdekKeys.OBJECT_IDENTIFIER, data.getRef1ObjectIdentifier());
 			td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
 			td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
 			KeyValuePair kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
@@ -765,11 +801,14 @@ public class MdekMapper implements DataMapperInterface {
 				td3Map.put(MdekKeys.SERVICE_TYPE, kvp.getValue());
 				td3Map.put(MdekKeys.SERVICE_TYPE_KEY, kvp.getKey());
 			}
+			// TODO Remove comment when implemented in the backend
+//			td3Map.put(MdekKeys.SERVICE_TYPE_TABLE, data.getRef3ServiceTypeTable());
 			td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
 			td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
 			td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
 			td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
 			td3Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef3Explanation());
+			td3Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef3Scale()));
 			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), kvp.getKey()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;
@@ -810,7 +849,7 @@ public class MdekMapper implements DataMapperInterface {
 		// TODO Check if Ref1VFormatTopology is set properly
 		obj.setRef1VFormatTopology(sysListMapper.getInitialKeyFromListId(VECTOR_TOPOLOGY_LEVEL_ID));
 
-		Integer key = sysListMapper.getInitialKeyFromListId(TIME_STEP_ID);
+		Integer key = sysListMapper.getInitialKeyFromListId(TIME_SCALE_ID);
 		if (key != null) { obj.setTimeRefIntervalUnit(key.toString()); };
 
 		obj.setRef1SpatialSystem(sysListMapper.getInitialValue(MdekKeys.REFERENCESYSTEM_ID));
@@ -993,6 +1032,21 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	private ArrayList<IngridDocument> mapFromExtraInfoConformityTable(ArrayList<ConformityBean> conList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (conList == null)
+			return resultList;
+
+		for (ConformityBean con : conList) {
+			IngridDocument result = new IngridDocument();
+			// TODO Insert the correct keys when the backend part is implemented
+//			result.put(MdekKeys.CONFORMITY_LEVEL, con.getLevel());
+//			result.put(MdekKeys.CONFORMITY_SPECIFICATION, con.getSpecification());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+
 	private ArrayList<IngridDocument> mapFromExtraInfoXMLExportTable(ArrayList<String> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
@@ -1023,6 +1077,22 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	private ArrayList<IngridDocument> mapFromAvailUsageLimitationTable(ArrayList<UsageLimitationBean> ulList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (ulList == null)
+			return resultList;
+
+		for (UsageLimitationBean ul : ulList) {
+			IngridDocument result = new IngridDocument();
+			// TODO Insert the correct keys when the backend part is implemented
+//			result.put(MdekKeys.USAGE_LIMITATION_LIMIT, ul.getLimit());
+//			result.put(MdekKeys.USAGE_LIMITATION_REQUIREMENT, ul.getRequirement());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+
+	
 	private ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
@@ -1374,6 +1444,21 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 	
+	private ArrayList<ConformityBean> mapToExtraInfoConformityTable(List<HashMap<String, Object>> conList) {
+		ArrayList<ConformityBean> resultList = new ArrayList<ConformityBean>();
+		if (conList == null)
+			return resultList;
+
+		for (HashMap<String, Object> con : conList) {
+			ConformityBean c = new ConformityBean();
+			// TODO Implement when the changes are made in the backend
+//			c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_LEVEL));
+//			c.setSpecification((String) con.get(MdekKeys.CONFORMITY_SPECIFICATION));
+			resultList.add(c);
+		}
+		return resultList;
+	}
+
 	private ArrayList<String> mapToExtraInfoXMLExportTable(List<HashMap<String, Object>> refList) {
 		ArrayList<String> resultList = new ArrayList<String>();
 		if (refList == null)
@@ -1393,6 +1478,21 @@ public class MdekMapper implements DataMapperInterface {
 		for (HashMap<String, Object> ref : refList) {
 			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.LEGISLATION_KEY, MdekKeys.LEGISLATION_VALUE);
 			resultList.add(kvp.getValue());
+		}
+		return resultList;
+	}
+
+	private ArrayList<UsageLimitationBean> mapToAvailUsageLimitationTable(List<HashMap<String, Object>> ulList) {
+		ArrayList<UsageLimitationBean> resultList = new ArrayList<UsageLimitationBean>();
+		if (ulList == null)
+			return resultList;
+
+		for (HashMap<String, Object> ul : ulList) {
+			UsageLimitationBean u = new UsageLimitationBean();
+			// TODO Implement when the changes are made in the backend
+//			u.setLevel((Integer) ul.get(MdekKeys.USAGE_LIMITATION_LIMIT));
+//			u.setSpecification((String) ul.get(MdekKeys.USAGE_LIMITATION_REQUIREMENT));
+			resultList.add(u);
 		}
 		return resultList;
 	}

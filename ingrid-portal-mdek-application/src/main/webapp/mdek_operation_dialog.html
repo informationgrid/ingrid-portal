@@ -48,6 +48,11 @@ initOperationNameInput = function() {
 //		selectWidget.isValid = function() { return this.getValue() != ""; }
 		selectWidget.isValid = function() { return this.getValueForDisplayValue(this.textInputNode.value) != null; }
 
+		// TODO Change the following listIDs when they are implemented in the backend:
+		//      CSW		1
+		//      WMS		2
+		//      WFS		3
+		//      other	6
 		var listId = 5110;
 		if (serviceType == "1")			// WMS
 			listId = 5110;

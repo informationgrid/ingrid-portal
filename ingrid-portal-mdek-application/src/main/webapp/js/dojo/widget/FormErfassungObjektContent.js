@@ -56,5 +56,18 @@ dojo.widget.defineWidget(
       else
         availabilityContainer.style.display = 'block';
     }
+
+	var confContainer = dojo.byId("extraInfoConformityTableContainer");
+	if (confContainer) {
+		if (this.selectedClass == "Class1" || this.selectedClass == "Class3") {
+			dojo.html.show(confContainer);
+		} else {
+			dojo.html.hide(confContainer);
+		}
+	}
+
+	if (dojo.render.html.ie) {
+		setTimeout("refreshInputContainers()", 1);
+	}
   }
 });

@@ -1219,7 +1219,8 @@ udkDataProxy._setAddressData = function(nodeData)
 	}
 
 	// ------------------ Header ------------------
-	dojo.widget.byId("addressTitle").setValue(UtilAddress.createAddressTitle(nodeData));	dojo.widget.byId("addressType").setValue(UtilAddress.getAddressType(nodeData.addressClass));
+	dojo.widget.byId("addressTitle").setValue(UtilAddress.createAddressTitle(nodeData));
+	dojo.widget.byId("addressType").setValue(UtilAddress.getAddressType(nodeData.addressClass));
 	dojo.widget.byId("addressOwner").setValue(nodeData.addressOwner);
 
 	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
@@ -1452,15 +1453,15 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaData);
   dojo.widget.byId("extraInfoLangData").setValue(nodeData.extraInfoLangData);
   dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
+  dojo.widget.byId("extraInfoConformityTable").store.setData(UtilList.addTableIndices(nodeData.extraInfoConformityTable));
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
   dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
   dojo.widget.byId("extraInfoXMLExportTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.extraInfoXMLExportTable)));
   dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.extraInfoLegalBasicsTable)));
 
   // -- Availability --
+  dojo.widget.byId("availabilityUsageLimitationTable").store.setData(UtilList.addTableIndices(nodeData.availabilityUsageLimitationTable));
   dojo.widget.byId("availabilityOrderInfo").setValue(nodeData.availabilityOrderInfo);
-  dojo.widget.byId("availabilityNoteUse").setValue(nodeData.availabilityNoteUse);
-  dojo.widget.byId("availabilityCosts").setValue(nodeData.availabilityCosts);
   dojo.widget.byId("availabilityDataFormat").store.setData(UtilList.addTableIndices(nodeData.availabilityDataFormatTable));
   dojo.widget.byId("availabilityMediaOptions").store.setData(UtilList.addTableIndices(nodeData.availabilityMediaOptionsTable));
 
@@ -1515,6 +1516,7 @@ udkDataProxy._setObjectData = function(nodeData)
 udkDataProxy._setObjectDataClass0 = function(nodeData) {}
 
 udkDataProxy._setObjectDataClass1 = function(nodeData) {
+	dojo.widget.byId("ref1ObjectIdentifier").setValue(nodeData.ref1ObjectIdentifier);
 	dojo.widget.byId("ref1DataSet").setValue(nodeData.ref1DataSet);
 	dojo.widget.byId("ref1Coverage").setValue(nodeData.ref1Coverage);
 	dojo.widget.byId("ref1VFormatTopology").setValue(nodeData.ref1VFormatTopology);
@@ -1563,7 +1565,10 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 	dojo.widget.byId("ref3Explanation").setValue(nodeData.ref3Explanation);
 
 //	dojo.debug("Setting service version to: "+UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceVersion)));
+	dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceTypeTable)));
 	dojo.widget.byId("ref3ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceVersion)));
+
+	dojo.widget.byId("ref3Scale").store.setData(UtilList.addTableIndices(nodeData.ref3Scale));
 
 	// Prepare the operation table for display.
 	// Add table indices to the main obj and paramList
@@ -1779,6 +1784,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoLangMetaData = dojo.widget.byId("extraInfoLangMetaData").getValue();
   nodeData.extraInfoLangData = dojo.widget.byId("extraInfoLangData").getValue();
   nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
+  nodeData.extraInfoConformityTable = udkDataProxy._getTableData("extraInfoConformityTable");
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();
 	
@@ -1786,9 +1792,8 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoLegalBasicsTable = UtilList.tableDataToList(udkDataProxy._getTableData("extraInfoLegalBasicsTable"));
 
   // -- Availability --
+  nodeData.availabilityUsageLimitationTable = udkDataProxy._getTableData("availabilityUsageLimitationTable");
   nodeData.availabilityOrderInfo = dojo.widget.byId("availabilityOrderInfo").getValue();
-  nodeData.availabilityNoteUse = dojo.widget.byId("availabilityNoteUse").getValue();
-  nodeData.availabilityCosts = dojo.widget.byId("availabilityCosts").getValue();
   nodeData.availabilityDataFormatTable = udkDataProxy._getTableData("availabilityDataFormat");
   nodeData.availabilityMediaOptionsTable = udkDataProxy._getTableData("availabilityMediaOptions");
 
@@ -1852,6 +1857,7 @@ udkDataProxy._getObjectData = function(nodeData)
 udkDataProxy._getObjectDataClass0 = function(nodeData) {};
 
 udkDataProxy._getObjectDataClass1 = function(nodeData) {
+	nodeData.ref1ObjectIdentifier = dojo.widget.byId("ref1ObjectIdentifier").getValue();
 	nodeData.ref1DataSet = dojo.widget.byId("ref1DataSet").getValue();
 	nodeData.ref1Coverage = dojo.widget.byId("ref1Coverage").getValue();
 	nodeData.ref1VFormatTopology = dojo.widget.byId("ref1VFormatTopology").getValue();
@@ -1904,7 +1910,10 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 	nodeData.ref3BaseDataText = dojo.widget.byId("ref3BaseDataText").getValue();
 	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
 
+	nodeData.ref3ServiceTypeTable = UtilList.tableDataToList(udkDataProxy._getTableData("ref3ServiceTypeTable"));
 	nodeData.ref3ServiceVersion = UtilList.tableDataToList(udkDataProxy._getTableData("ref3ServiceVersion"));
+
+	nodeData.ref3Scale = udkDataProxy._getTableData("ref3Scale");
 
 	// Convert the containing operation tables to lists
 	// Add table indices and convert to tableData: platform, addressList and dependencies

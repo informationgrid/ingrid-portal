@@ -932,6 +932,15 @@ function initTableValidators() {
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
 		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
 	]);
+
+	// object class 3 - The 'Erstellungsmassstab' table must contain an integer and two doubles
+	var table = dojo.widget.byId("ref3Scale");
+	table.setValidationFunctions([
+		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item+"", unsignedIntFlags)));}},
+		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
+	]);
+
 /*
 	var table = dojo.widget.byId("timeRefTable");
 	table.setValidationFunctions([
@@ -1050,7 +1059,8 @@ function initSysLists() {
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
-		"ref3ServiceType", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea", "availabilityDataFormatName",
+		"ref3ServiceType", "ref3ServiceTypeEditor", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea", "extraInfoConformityLevelEditor",
+		"availabilityDataFormatName", "availabilityUsageLimitationLimitEditor",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType"]; 

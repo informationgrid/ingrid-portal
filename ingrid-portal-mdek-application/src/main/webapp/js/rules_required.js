@@ -56,6 +56,8 @@ dojo.addOnLoad(function() {
 	
 	// Applies to: erfassung adresse -> adresse und aufgaben -> postfach/plz (postfach) Ids = addressPOBox, addressZipPOBox
 	// Rule: If value != leer then other fields is required, strasse, plz are not required
+	// INSPIRE CHANGE - Remove required state.
+/*
 	var addressPOBoxField = dojo.widget.byId("addressPOBox");
 	var addressZipPOBoxField = dojo.widget.byId("addressZipPOBox");
 	if (addressPOBoxField) {
@@ -65,7 +67,7 @@ dojo.addOnLoad(function() {
 	  dojo.event.connect(addressZipPOBoxField, "update", function() {applyRule4();});
 	}
 	applyRule4();
-
+*/
 
 	// Applies to: erfassung object -> Raumbezug -> Geothesaurus-Raumbezug & freier Raumbezug Ids = spatialRefAdminUnit, spatialRefLocation
 	// Rule: At least one entry with a bounding box is required
@@ -134,6 +136,7 @@ function applyRule3(value) {
   }
 }
 
+/*
 function applyRule4() {
 	var poBoxRequired = false;
 	if (dojo.byId("addressPOBox").value.length > 0 || dojo.byId("addressZipPOBox").value.length > 0)
@@ -146,7 +149,7 @@ function applyRule4() {
 	setRequiredState(dojo.byId("addressPOBoxLabel"), dojo.byId("uiElement4420"), poBoxRequired);
 	setRequiredState(dojo.byId("addressZipPOBoxLabel"), dojo.byId("uiElement4425"), poBoxRequired);
 }
-	
+*/
 
 function applyRule5() {
 	var snsHasBB = false;

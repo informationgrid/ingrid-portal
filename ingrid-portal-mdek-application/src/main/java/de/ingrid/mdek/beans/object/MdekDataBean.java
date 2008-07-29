@@ -66,6 +66,7 @@ public class MdekDataBean {
 	public String extraInfoLangMetaData;
 	public String extraInfoLangData;
 	public Integer extraInfoPublishArea;
+	public ArrayList<ConformityBean> extraInfoConformityTable;
 	public ArrayList<String> extraInfoXMLExportTable;
 	public ArrayList<String> extraInfoLegalBasicsTable;
 	public String extraInfoPurpose;
@@ -73,11 +74,10 @@ public class MdekDataBean {
 	
 
 	// Availability
+	public ArrayList<UsageLimitationBean> availabilityUsageLimitationTable;
 	public ArrayList<DataFormatBean> availabilityDataFormatTable;
 	public ArrayList<MediaOptionBean> availabilityMediaOptionsTable;
 	public String availabilityOrderInfo;
-	public String availabilityNoteUse;
-	public String availabilityCosts;
 	
 	// Thesaurus
 	public ArrayList<SNSTopic> thesaurusTermsTable;
@@ -98,6 +98,7 @@ public class MdekDataBean {
 	
 	// TODO Subclass this?
 	// Object class 1 (Geoinformation/Karte)
+	public String ref1ObjectIdentifier;
 	public Integer ref1DataSet;
 	public Double ref1Coverage;
 	public ArrayList<Integer> ref1Representation;	
@@ -133,11 +134,13 @@ public class MdekDataBean {
 
 	// Object class 3 (Dienst/Anwendung/Informationssystem)
 	public String ref3ServiceType;
+	public ArrayList<Integer> ref3ServiceTypeTable;
 	public ArrayList<String> ref3ServiceVersion;
 	public String ref3SystemEnv;
 	public String ref3History;
 	public String ref3BaseDataText;
 	public String ref3Explanation;
+	public ArrayList<ScaleBean> ref3Scale;
 	public ArrayList<OperationBean> ref3Operation;
 	
 	// Object class 4 (Vorhaben/Projekt/Programm)
@@ -491,6 +494,7 @@ public class MdekDataBean {
 		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
 		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
+		this.setExtraInfoConformityTable(new ArrayList<ConformityBean>());
 		this.setExtraInfoXMLExportTable(new ArrayList<String>());
 		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
@@ -510,7 +514,9 @@ public class MdekDataBean {
 		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
 		this.setRef1KeysText(new ArrayList<LinkDataBean>());
 		this.setRef1Data(new ArrayList<String>());
+		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
 		this.setRef3ServiceVersion(new ArrayList<String>());
+		this.setRef3Scale(new ArrayList<ScaleBean>());
 		this.setRef3Operation(new ArrayList<OperationBean>());
 		this.setRef5dbContent(new ArrayList<DBContentBean>());
 	}
@@ -901,31 +907,6 @@ public class MdekDataBean {
 	public void setAvailabilityOrderInfo(String availabilityOrderInfo) {
 		this.availabilityOrderInfo = availabilityOrderInfo;
 	}
-
-
-
-	public String getAvailabilityNoteUse() {
-		return availabilityNoteUse;
-	}
-
-
-
-	public void setAvailabilityNoteUse(String availabilityNoteUse) {
-		this.availabilityNoteUse = availabilityNoteUse;
-	}
-
-
-
-	public String getAvailabilityCosts() {
-		return availabilityCosts;
-	}
-
-
-
-	public void setAvailabilityCosts(String availabilityCosts) {
-		this.availabilityCosts = availabilityCosts;
-	}
-
 
 	public String getUuid() {
 		return uuid;
@@ -1503,6 +1484,78 @@ public class MdekDataBean {
 
 	public void setIsPublished(Boolean isPublished) {
 		this.isPublished = isPublished;
+	}
+
+
+
+
+	public ArrayList<ConformityBean> getExtraInfoConformityTable() {
+		return extraInfoConformityTable;
+	}
+
+
+
+
+	public void setExtraInfoConformityTable(
+			ArrayList<ConformityBean> extraInfoConformityTable) {
+		this.extraInfoConformityTable = extraInfoConformityTable;
+	}
+
+
+
+
+	public String getRef1ObjectIdentifier() {
+		return ref1ObjectIdentifier;
+	}
+
+
+
+
+	public void setRef1ObjectIdentifier(String ref1ObjectIdentifier) {
+		this.ref1ObjectIdentifier = ref1ObjectIdentifier;
+	}
+
+
+
+
+	public ArrayList<UsageLimitationBean> getAvailabilityUsageLimitationTable() {
+		return availabilityUsageLimitationTable;
+	}
+
+
+
+
+	public void setAvailabilityUsageLimitationTable(
+			ArrayList<UsageLimitationBean> availabilityUsageLimitationTable) {
+		this.availabilityUsageLimitationTable = availabilityUsageLimitationTable;
+	}
+
+
+
+
+	public ArrayList<Integer> getRef3ServiceTypeTable() {
+		return ref3ServiceTypeTable;
+	}
+
+
+
+
+	public void setRef3ServiceTypeTable(ArrayList<Integer> ref3ServiceTypeTable) {
+		this.ref3ServiceTypeTable = ref3ServiceTypeTable;
+	}
+
+
+
+
+	public ArrayList<ScaleBean> getRef3Scale() {
+		return ref3Scale;
+	}
+
+
+
+
+	public void setRef3Scale(ArrayList<ScaleBean> ref3Scale) {
+		this.ref3Scale = ref3Scale;
 	}
 
 }

@@ -11,6 +11,8 @@ dojo.addOnLoad(function() {
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
 
 	addAddressTableInfoValidation();
+	addCommunicationTableValidation();
+
 
 	// Object Name must not be empty
 	dojo.widget.byId("objectName").isValid = function() { return !this.isMissing(); };
@@ -299,5 +301,35 @@ function addAddressTableInfoValidation() {
 
 		this.store.removeData(obj);
 		this.onValueDeleted(obj);
+	}
+}
+
+function addCommunicationTableValidation() {
+	var table = dojo.widget.byId("addressCom");
+	var popup = dojo.widget.createWidget("PopupContainer");
+  	popup.domNode.innerHTML = "Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ 'Email' beinhalten!";
+
+	dojo.event.connectOnce(table.store, "onAddData", table, "applyValidation");
+
+	table._valid = false;
+
+	table.applyValidation = function() {
+		this._valid = false;
+		var data = this.store.getData();
+		for (var i = 0; i < data.length; ++i) {
+			if (data[i].communicationMedium == "Email"
+			      && typeof(data[i].communicationValue) != "undefined"
+			      && dojo.string.trim(data[i].communicationValue).length != 0) {
+				this._valid = true;
+				dojo.html.removeClass(dojo.byId("addressComLabel"), "important");
+			}
+		}
+
+		if (this._valid) {
+			popup.close();
+
+		} else {
+			popup.open(this.domNode, this);			
+		}
 	}
 }
