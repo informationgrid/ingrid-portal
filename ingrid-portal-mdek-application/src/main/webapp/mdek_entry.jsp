@@ -2185,6 +2185,28 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 			        <div class="half left">
+						<span id="uiElement4430" type="required">
+				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation*</label></span>
+				          <div class="tableContainer rows5 half">
+				            <div class="cellEditors" id="addressComEditors">
+				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
+				              <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="addressComConnection"></div>
+				            </div>
+				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
+				      	      <thead>
+				      		      <tr>
+				            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
+				            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
+				      		      </tr>
+				      	      </thead>
+				      	      <tbody>
+				      	      </tbody>
+				      	    </table>
+				      	  </div>
+						</span>
+			        </div>
+
+			        <div class="half">
 						<span id="uiElement4400" type="optional">
 			          		<span id="addressStreetLabel" class="label"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 4400)">Stra&szlig;e/Hausnummer</label></span>
 							<span class="input spaceBelow"><input type="text" id="addressStreet" maxlength="80" name="addressStreet" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
@@ -2230,28 +2252,7 @@ function hideSplash(){
 			            </span>
 			          </div>
 			        </div>
-			  
-			        <div class="half">
-						<span id="uiElement4430" type="required">
-				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation*</label></span>
-				          <div class="tableContainer rows5 half">
-				            <div class="cellEditors" id="addressComEditors">
-				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
-				              <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="addressComConnection"></div>
-				            </div>
-				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
-				      	      <thead>
-				      		      <tr>
-				            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
-				            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
-				      		      </tr>
-				      	      </thead>
-				      	      <tbody>
-				      	      </tbody>
-				      	    </table>
-				      	  </div>
-						</span>
-			        </div>
+
 			        <div class="fill"></div>
 			      </div>
 
@@ -2267,7 +2268,7 @@ function hideSplash(){
 			        <div class="half">
 						<span id="uiElement4440" type="optional">
 			          		<span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 4440)">Aufgaben</label></span>
-			          		<span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="addressTasks" class="w320 h105" /></span>
+			          		<span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="addressTasks" class="w320 h120" /></span>
 			          	</span>
 			        </div>
 			        <div class="fill"></div>
