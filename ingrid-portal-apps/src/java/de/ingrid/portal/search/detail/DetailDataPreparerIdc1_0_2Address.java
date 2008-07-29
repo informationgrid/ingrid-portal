@@ -33,7 +33,7 @@ import de.ingrid.utils.udk.UtilsDate;
 public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 
     private final static Log log = LogFactory.getLog(DetailDataPreparerIdc1_0_2Address.class);
-	
+
 	private Context context;
 	private String iPlugId;
 	private RenderRequest request;
@@ -54,7 +54,6 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 	 * @see de.ingrid.portal.search.detail.DetailDataPreparer#prepare(de.ingrid.utils.dsc.Record)
 	 */
 	public void prepare(Record record) {
-
 		HashMap data = new HashMap();
 		HashMap general = new HashMap();
 		String addrType = record.getString("t02_address.adr_type");
@@ -484,10 +483,19 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
     }
     
     private void addObjectReferences(List elements, Record record) {
-    	
+		// max number to show of direct object references
+        int maxNumObjRefs = NUM_OBJ_REFS_PER_PAGE;
+        try {
+        	maxNumObjRefs = Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_MAX_OBJ_REFS));
+        } catch (Exception ex) {}
+
     	record.getString("t02_address.adr_uuid");
-    	List directObjReferences = getObjectsByAddress(record.getString("t02_address.adr_uuid"));
+    	boolean moreHits = false;
+    	List directObjReferences = getObjectsByAddress(record.getString("t02_address.adr_uuid"), maxNumObjRefs);
     	if (directObjReferences.size() > 0) {
+            if (directObjReferences.size() >= maxNumObjRefs) {
+            	moreHits = true;
+            }
         	List linkList = new ArrayList();
         	for (int i=0; i<directObjReferences.size(); i++) {
         		IngridHit hit = (IngridHit)directObjReferences.get(i);
@@ -512,22 +520,54 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
         	element.put("title", messages.getString("search.detail.dataRelations"));
         	element.put("linkList", linkList);
         	elements.add(element);
-    		
+
+            if (moreHits) {
+            	HashMap link = new HashMap();
+            	link.put("type", "linkLine");
+            	link.put("hasLinkIcon", new Boolean(false));
+            	link.put("isExtern", new Boolean(false));
+            	link.put("title", messages.getString("search.detail.dataRelations.next"));
+    			PortletURL actionUrl = response.createActionURL();
+    	    	actionUrl.setParameter("cmd", "doShowDocument");
+    			actionUrl.setParameter("docid", request.getParameter("docid"));
+    			actionUrl.setParameter("plugid", iPlugId);
+    			// max number to show of object references of direct address
+    			actionUrl.setParameter("maxORs", Integer.toString(maxNumObjRefs + NUM_OBJ_REFS_PER_PAGE));
+    			// max number to show of object references of sub addresses
+    	        int maxNumSubObjRefs = NUM_OBJ_REFS_PER_PAGE;
+    	        try {
+    	        	maxNumSubObjRefs = Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_MAX_SUB_OBJ_REFS));
+    	        } catch (Exception ex) {}
+    			actionUrl.setParameter("maxSubORs", Integer.toString(maxNumSubObjRefs));
+    			link.put("href", actionUrl.toString());
+    			
+    			// encapsulate in multiLine element to guarantee <p> rendering
+		    	element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("elements", new HashMap[] { link });
+	    	    elements.add(element);
+            }
     	}
     }
     
-    private List getObjectsByAddress(String addrId) {
+    private List getObjectsByAddress(String addrId, int maxNumObj) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         HashMap filter = new HashMap();
         ArrayList result = DetailDataPreparerHelper.getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
-                requestedMetadata, filter);
+                requestedMetadata, filter, maxNumObj);
         return result;
     }
     
     
     private void addSubordiantedObjectReferences(List elements, Record record) {
+		// max number to show of object references of sub addresses
+        int maxNumSubObjRefs = NUM_OBJ_REFS_PER_PAGE;
+        try {
+        	maxNumSubObjRefs = Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_MAX_SUB_OBJ_REFS));
+        } catch (Exception ex) {}
+
     	List results = new ArrayList();
     	List refRecords = getSubRecordsByColumnName(record, "children.address_node.addr_uuid");
     	for (int i=0; i<refRecords.size(); i++) {
@@ -537,8 +577,24 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
     	}
     	if (results.size() > 0) {
     		List subordiantedObjectReferences = new ArrayList();
+            boolean moreHits = false;
         	for (int i=0; i<results.size(); i++) {
-        		subordiantedObjectReferences.addAll(getObjectsByAddress((String)(results.get(i))));
+            	boolean enoughRead = false;
+            	List l = getObjectsByAddress((String)(results.get(i)), maxNumSubObjRefs);
+                if (l.size() >= maxNumSubObjRefs) {
+                	enoughRead = true;
+                }
+                for (int j = 0; j < l.size(); j++) {
+            		subordiantedObjectReferences.add(l.get(j));
+                    if (subordiantedObjectReferences.size() >= maxNumSubObjRefs) {
+                    	enoughRead = true;
+                    	break;
+                    }
+                }
+                if (enoughRead) {
+                	moreHits = true;
+                	break;
+                }
         	}
         	List linkList = new ArrayList();
         	for (int i=0; i<subordiantedObjectReferences.size(); i++) {
@@ -563,9 +619,34 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
         	element.put("title", messages.getString("search.detail.dataRelations.addresses"));
         	element.put("linkList", linkList);
         	elements.add(element);
-    		
+
+            if (moreHits) {
+            	HashMap link = new HashMap();
+            	link.put("type", "linkLine");
+            	link.put("hasLinkIcon", new Boolean(false));
+            	link.put("isExtern", new Boolean(false));
+            	link.put("title", messages.getString("search.detail.dataRelations.addresses.next"));
+    			PortletURL actionUrl = response.createActionURL();
+    	    	actionUrl.setParameter("cmd", "doShowDocument");
+    			actionUrl.setParameter("docid", request.getParameter("docid"));
+    			actionUrl.setParameter("plugid", iPlugId);
+    			// max number to show of object references of sub addresses
+    			actionUrl.setParameter("maxSubORs", Integer.toString(maxNumSubObjRefs + NUM_OBJ_REFS_PER_PAGE));
+    			// max number to show of object references of direct address
+    	        int maxNumObjRefs = NUM_OBJ_REFS_PER_PAGE;
+    	        try {
+    	        	maxNumObjRefs = Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_MAX_OBJ_REFS));
+    	        } catch (Exception ex) {}
+    			actionUrl.setParameter("maxORs", Integer.toString(maxNumObjRefs));
+    			link.put("href", actionUrl.toString());
+    			
+    			// encapsulate in multiLine element to guarantee <p> rendering
+		    	element = new HashMap();
+		    	element.put("type", "multiLine");
+		    	element.put("elements", new HashMap[] { link });
+	    	    elements.add(element);
+            }
     	}
-    	
     }
     
     private List getAllAddressChildren(String addrId) {

@@ -47,9 +47,14 @@ public class UtilsVelocity {
                 return new Boolean(true);
             }
         }
-        
+
+        if (obj instanceof Object[]) {
+            if (((Object[])obj).length > 0) {
+                return new Boolean(true);
+            }
+        }
+
         return new Boolean(false);
-        
     }
     
     public static String urlencode(String str) {

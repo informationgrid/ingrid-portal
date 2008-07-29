@@ -32,9 +32,6 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 
     private final static Log log = LogFactory.getLog(DetailDataPreparer_UDK_5_0_Address.class);
 
-    /** number of Object references (AOR) to show initially and to add when "more" is pressed */
-    private final static int NUM_OBJ_REFS_PER_PAGE = 20;
-
 	private Context context;
 	private String iplugId;
 	private List dateFields;
@@ -57,12 +54,12 @@ public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 		// direct object references
         int maxNumObjRefs = NUM_OBJ_REFS_PER_PAGE;
         try {
-        	maxNumObjRefs = Integer.parseInt(request.getParameter("maxORs"));
+        	maxNumObjRefs = Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_MAX_OBJ_REFS));
         } catch (Exception ex) {}
 		// object references of sub addresses
         int maxNumSubObjRefs = NUM_OBJ_REFS_PER_PAGE;
         try {
-        	maxNumSubObjRefs = Integer.parseInt(request.getParameter("maxSubORs"));
+        	maxNumSubObjRefs = Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_MAX_SUB_OBJ_REFS));
         } catch (Exception ex) {}
 
         // enrich address with institution and units
