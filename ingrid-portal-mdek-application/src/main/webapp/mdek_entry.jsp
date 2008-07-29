@@ -373,7 +373,7 @@ function hideSplash(){
 	        	  <div id="ref1Content" class="content">
 
 	              <div class="inputContainer required">
-                	<span id="uiElement3520" type="optional">
+                	<span id="uiElement3520" type="required">
 		                <span id="ref1BasisTabContainerLabel" class="label required"><label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3520)"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.title"))</script>*</label></span>
 		                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verweis anlegen/bearbeiten', 'mdek_links_dialog.html', 1010, 680, true, {filter: 3520});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.link"))</script></a></span>
 		              	<div id="ref1BasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1BasisTab1">
@@ -1610,7 +1610,8 @@ function hideSplash(){
 	                <div class="fill"></div>
 	              </div>
 
-	              <div id="extraInfoConformityTableContainer" class="inputContainer" style="display:none;">
+	              <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected object class -->
+	              <div id="extraInfoConformityTableContainer" class="inputContainer" displaytype="exclude">
 				  	<span id="uiElementN024" type="required">
 		                <span id="extraInfoConformityTableLabel" class="label required"><label for="extraInfoConformityTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.title"))</script>*</label></span>
 	
@@ -2231,7 +2232,7 @@ function hideSplash(){
 			        </div>
 			  
 			        <div class="half">
-						<span id="uiElement4430" type="optional">
+						<span id="uiElement4430" type="required">
 				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation*</label></span>
 				          <div class="tableContainer rows5 half">
 				            <div class="cellEditors" id="addressComEditors">

@@ -202,7 +202,8 @@ function toggleFields(section, /* optional */ mode, /* optional flag */ refreshC
 
 
 	var allInputContainers = dojo.lang.filter(allDivElements, function(divElement) {
-		return dojo.html.hasClass(divElement, "inputContainer");
+		return (dojo.html.hasClass(divElement, "inputContainer")
+				&& divElement.getAttribute("displaytype") != "exclude");
 	});
 
 //	dojo.debug("Number of inputContainer Elements: "+allInputContainers.length);
