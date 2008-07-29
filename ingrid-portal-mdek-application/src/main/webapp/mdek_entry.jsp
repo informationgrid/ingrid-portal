@@ -270,20 +270,18 @@ function hideSplash(){
 	              <td id="objectNameLabel" class="label required"><label for="objectName"><script>document.write(message.get("ui.obj.header.objectName"))</script>*</label></td>
 	              <td colspan="2"><input type="text" maxlength="255" id="objectName" required="true" name="objectName" class="w550" dojoType="ingrid:ValidationTextBox" /></td></tr>
 	            <tr>
-                  <span id="uiElement1020" type="optional">
-		              <td id="objectClassLabel" class="label required col1"><label for="objectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 1020)"><script>document.write(message.get("ui.obj.header.objectClass"))</script>*</label></td>
-		              <td class="col2">
-		                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
-		                <select dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectClass" name="objectClass">
-		                	<option value="Class0">Organisationseinheit/Fachaufgabe</option>
-		                	<option value="Class1">Geo-Information/Karte</option>
-		                	<option value="Class2">Dokument/Bericht/Literatur</option>
-		                	<option value="Class3">Dienst/Anwendung/Informationssystem</option>
-		                	<option value="Class4">Vorhaben/Projekt/Programm</option>
-		                	<option value="Class5">Datensammlung/Datenbank</option>
-		                </select>
-	 	              </td>
-	 	          </span>
+	              <td id="objectClassLabel" class="label required col1"><label for="objectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 1020)"><script>document.write(message.get("ui.obj.header.objectClass"))</script>*</label></td>
+	              <td class="col2">
+	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
+	                <select dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectClass">
+	                	<option value="Class0">Organisationseinheit/Fachaufgabe</option>
+	                	<option value="Class1">Geo-Information/Karte</option>
+	                	<option value="Class2">Dokument/Bericht/Literatur</option>
+	                	<option value="Class3">Dienst/Anwendung/Informationssystem</option>
+	                	<option value="Class4">Vorhaben/Projekt/Programm</option>
+	                	<option value="Class5">Datensammlung/Datenbank</option>
+	                </select>
+ 	              </td>
 	              <td class="col3"><img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
 	            </tr>
 	            <tr>
@@ -1791,7 +1789,7 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired">
 	                <div class="full">
 						<span id="uiElement5052" type="optional">
-							<span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 5052"><script>document.write(message.get("ui.obj.availability.orderInfo"))</script></label></span>
+							<span class="label"><label for="availabilityOrderInfo" onclick="javascript:dialog.showContextHelp(arguments[0], 5052)"><script>document.write(message.get("ui.obj.availability.orderInfo"))</script></label></span>
 							<span class="input"><input type="text" mode="textarea" id="availabilityOrderInfo" name="availabilityOrderInfo" class="w668 h038" dojoType="ingrid:ValidationTextbox" /></span> 
 						</span>
 	                </div>
