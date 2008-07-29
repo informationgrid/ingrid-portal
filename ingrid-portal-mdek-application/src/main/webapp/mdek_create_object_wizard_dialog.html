@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title>MDEK Demo V3</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript">
+var scriptScope = this;
+
+_container_.addOnLoad(function() {
+	dojo.html.hide(dojo.byId("resultContainer"));
+	dojo.html.hide(dojo.byId("resultButtonContainer"));
+
+	dojo.widget.byId("assistantURL").setValue("http://");
+	dojo.widget.byId("assistantNumWords").setValue(200);
+
+    // Pressing 'enter' on the input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("assistantURL").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startSearch();
+            }
+	});
+    // Pressing 'enter' on the input field is equal to a button click
+    dojo.event.connect(dojo.widget.byId("assistantNumWords").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScope.startSearch();
+            }
+	});
+});
+
+
+// Updates the input fields with values from the given topic map
+function updateInputFields(topicMap) {
+	var indexedDocument = topicMap.indexedDocument;
+	var thesaTopicList = topicMap.thesaTopics;
+	var locationTopicList = topicMap.locationTopics;
+	var eventTopicList = topicMap.eventTopics;
+
+	dojo.debug("topicMap.indexedDocument:");
+	dojo.debugShallow(indexedDocument);
+
+	dojo.debug("topicMap.thesaTopics:");
+	for (var i in thesaTopicList)
+		dojo.debugShallow(thesaTopicList[i]);
+
+	dojo.debug("topicMap.locationTopics:");
+	for (var i in locationTopicList)
+		dojo.debugShallow(locationTopicList[i]);
+
+	dojo.debug("topicMap.eventTopics:");
+	for (var i in eventTopicList)
+		dojo.debugShallow(eventTopicList[i]);
+
+	// Description
+	dojo.widget.byId("assistantDescription").setValue(indexedDocument.description);
+
+	// Thesaurus Topics
+	UtilList.addTableIndices(thesaTopicList);
+	for (var i in thesaTopicList) {
+		// Add checkbox to entry
+		thesaTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+thesaTopicList[i].topicId+"'>";
+	}
+	dojo.widget.byId("assistantDescriptorTable").store.setData(thesaTopicList);
+
+	// Location Topics
+	UtilList.addTableIndices(locationTopicList);
+	for (var i in locationTopicList) {
+		// Add checkbox to entry
+		locationTopicList[i].selection = "<input type='checkbox'>";
+		// Prepare bb for display in the table
+		if (locationTopicList[i].boundingBox) {
+			locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[0];
+			locationTopicList[i].latitude1  = locationTopicList[i].boundingBox[1];
+			locationTopicList[i].longitude2 = locationTopicList[i].boundingBox[2];
+			locationTopicList[i].latitude2  = locationTopicList[i].boundingBox[3];
+		}
+	}
+	dojo.widget.byId("assistantSpatialRefTable").store.setData(locationTopicList);
+
+	// Event Topics
+	// TODO ...
+}
+
+
+scriptScope.addValuesToObject = function() {
+	// If selected, add description
+	if (dojo.widget.byId("assistantDescriptionCheckbox").checked) {
+		dojo.widget.byId("generalDesc").setValue(dojo.widget.byId("assistantDescription").getValue());
+	}
+
+    var descStore = dojo.widget.byId("thesaurusTerms").store;
+	var thesaList = dojo.widget.byId("assistantDescriptorTable").store.getData();
+	for (var i in thesaList) {
+		// If checkbox is selected
+		if (dojo.byId("objectWiz_"+thesaList[i].topicId).checked) {
+			// and if the descriptor isn't already in the target list
+			if (dojo.lang.every(descStore.getData(), function(item){ return (thesaList[i].topicId != item.topicId); })) {
+				// add descriptor to store
+				descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: thesaList[i].topicId, title: thesaList[i].title} );
+			}
+		}
+	}
+	_container_.closeWindow();
+}
+
+
+function showLoadingZone() {
+	var loadingZone = dojo.byId("createObjectWizardLoadingZone");
+	loadingZone.style.visibility = "visible";
+}
+
+function hideLoadingZone() {
+	var loadingZone = dojo.byId("createObjectWizardLoadingZone");
+	loadingZone.style.visibility = "hidden";
+}
+
+
+// SNS Start search button function
+// Reads the url from the input field and executes a SNS autoClassify request
+scriptScope.startSearch = function() {
+	var url = dojo.string.trim(dojo.widget.byId("assistantURL").getValue());
+	var numWords = dojo.widget.byId("assistantNumWords").getValue();
+
+	SNSService.autoClassifyURL(url, numWords, null, true, null, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+
+		callback: function(topicMap) {
+			updateInputFields(topicMap);
+
+			dojo.html.show(dojo.byId("resultContainer"));
+			dojo.html.show(dojo.byId("resultButtonContainer"));
+		},
+
+		errorHandler: function(msg) {
+			hideLoadingZone();
+			if (msg == "SNS_TIMEOUT") {
+				dialog.show(message.get("general.error"), message.get("sns.timeoutError"), dialog.WARNING);
+			
+			} else if (msg == "SNS_INVALID_URL") {
+				dialog.show(message.get("general.error"), "Die von Ihnen angegebene Seite konnte nicht gefunden werden.", dialog.WARNING);
+			
+			} else {
+				displayErrorMessage(msg);
+			}
+		}
+	});
+}
+</script>
+</head>
+
+<body>
+
+<div dojoType="ContentPane">
+
+	<div id="assistant" class="contentBlockWhite top fullBlock">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="assistantContent" class="content">
+
+			<!-- LEFT HAND SIDE CONTENT START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<div class="inputContainer field grey noSpaceBelow fullField">
+				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL der Internetseite')">URL der Internetseite</label></span>
+				<span class="input spaceBelow"><input type="text" id="assistantURL" name="assistantURL" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+				<span class="label"><label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anzahl der zu analysierenden W&ouml;rter')">Anzahl der zu analysierenden W&ouml;rter</label></span>
+				<span class="input"><input dojoType="IntegerTextbox" min="0" max="1000" maxlength="4" id="assistantNumWords" class="w038" /></span>
+				<div class="spacerField"></div>
+			</div>
+
+			<div class="inputContainer">
+				<span class="button w644" style="height:20px !important;">
+					<span style="float:right;">
+						<button id="createObjWizardStartButton" dojoType="ingrid:Button" onClick="javascript:scriptScope.startSearch();" title="Start">Start</button>
+					</span>
+					<span id="createObjectWizardLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
+					</span>
+				</span>
+			</div>
+
+			<div id="resultContainer" class="inputContainer noSpaceBelow">
+				<span class="label">Ergebnis</span>
+				<div class="checkboxContainer">
+					<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung</label></span>
+				</div>
+				<div class="inputContainer">
+	           		<span class="input"><input type="text" mode="textarea" id="assistantDescription" class="w676 h062" dojoType="ingrid:ValidationTextbox" disabled="true"/></span> 
+				</div>
+
+				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Deskriptoren')">Deskriptoren</label></span>
+				<div class="inputContainer">
+	                <div class="tableContainer headHiddenRows4 full">
+	            	    <table id="assistantDescriptorTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+	            	      <thead>
+	            		      <tr>
+	                  			<th nosort="true" field="selection" dataType="String">&nbsp;</th>
+	                  			<th nosort="true" field="title" dataType="String">&nbsp;</th>
+	            		      </tr>
+	            	      </thead>
+						  <colgroup>
+						    <col width="23">
+						    <col width="500">
+						  </colgroup>
+	            	    </table>
+	                </div>
+				</div>
+
+	            <div class="inputContainer">
+	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug</label></span>
+	                <div class="tableContainer rows4 full">
+	            	    <table id="assistantSpatialRefTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
+	            	      <thead>
+	            		      <tr>
+	                  			<th nosort="true" field="selection" dataType="String" width="30">Auswahl</th>
+	                  			<th nosort="true" field="name" dataType="String" width="285">Geothesaurus-Raumbezug</th>
+	                  			<th nosort="true" field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
+	                  			<th nosort="true" field="latitude1" dataType="String" width="90">Breite 1</th>
+	                  			<th nosort="true" field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
+	                  			<th nosort="true" field="latitude2" dataType="String" width="90">Breite 2</th>
+	            		      </tr>
+	            	      </thead>
+	            	      <tbody>
+	            	      </tbody>
+	            	    </table>
+	                </div>
+				</div>
+
+				<div class="inputContainer">
+					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')">Zeitbezug</label></span>
+<!-- full relativePos -->
+	                <div class="tableContainer rows4 full">
+						<table id="assistantTimeRefTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable">
+			    	      <thead>
+			    		      <tr>
+			          			<th nosort="true" field="selection" dataType="String" width="60">Auswahl</th>
+			          			<th nosort="true" field="name" dataType="String" width="346">Bezeichnung</th>
+			          			<th nosort="true" field="date" dataType="String" width="139">Datum</th>
+			          			<th nosort="true" field="type" dataType="String" width="139">Typ</th>
+			    		      </tr>
+			    	      </thead>
+			    	      <tbody>
+			    		      <tr value="1">
+			    		        <td><input type="radio" name="assistantTimeSel" id="assistantTimeSel1" class="radio" /></td>
+			    		        <td>&lt;Titel&gt;</td>
+			    		        <td>tt.mm.jj - tt.mm.jj</td>
+			    		        <td>von - bis</td></tr>
+			    		      <tr value="2">
+			    		        <td><input type="radio" name="assistantTimeSel" id="assistantTimeSel2" class="radio" /></td>
+			    		        <td>&lt;Titel&gt;</td>
+			    		        <td>tt.mm.jj</td>
+			    		        <td>am</td></tr>
+			    		      <tr value="3">
+			    		        <td><input type="radio" name="assistantTimeSel" id="assistantTimeSel3" class="radio" /></td>
+			    		        <td>&lt;Titel&gt;</td>
+			    		        <td>tt.mm.jj</td>
+			    		        <td>seit</td></tr>
+			    	      </tbody>
+						</table>
+					</div>
+				</div>
+			</div> <!-- RESULT CONTAINER END -->
+
+			<div id="resultButtonContainer" class="inputContainer">
+				<span class="button w644" style="height:20px !important;">
+					<span style="float:right;">
+						<button id="createObjWizardAcceptButton" dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addValuesToObject();">&Uuml;bernehmen</button>
+					</span>
+					<span style="float:right;">
+						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:dialog.close(this);">Abbrechen</button>
+					</span>
+				</span>
+			</div>
+
+			<!-- LEFT HAND SIDE CONTENT END -->
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

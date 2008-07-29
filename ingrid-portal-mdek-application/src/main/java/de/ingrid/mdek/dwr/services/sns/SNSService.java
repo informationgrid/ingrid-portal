@@ -19,6 +19,10 @@ import org.apache.log4j.Logger;
 import com.slb.taxi.webservice.xtm.stubs.FieldsType;
 import com.slb.taxi.webservice.xtm.stubs.SearchType;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
+import com.slb.taxi.webservice.xtm.stubs.TopicMapFragmentIndexedDocument;
+import com.slb.taxi.webservice.xtm.stubs.xtm.BaseName;
+import com.slb.taxi.webservice.xtm.stubs.xtm.InstanceOf;
+import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 
 import de.ingrid.iplug.sns.SNSClient;
 import de.ingrid.iplug.sns.SNSController;
@@ -47,15 +51,20 @@ public class SNSService {
 
     // Error string for the frontend
     private static String ERROR_SNS_TIMEOUT = "SNS_TIMEOUT";
-
-    private static final SimpleDateFormat expiredDateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+    private static String ERROR_SNS_INVALID_URL = "SNS_INVALID_URL";
     
+    private static final SimpleDateFormat expiredDateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+
     // Settings and language specific values
     private ResourceBundle resourceBundle; 
     private SNSController snsController;
     private SNSClient snsClient;
-    
-	// Init Method is called by the Spring Framework on initialization
+
+    // The three main SNS topic types
+    private enum TopicType {EVENT, LOCATION, THESA}
+
+
+    // Init Method is called by the Spring Framework on initialization
     public void init() throws Exception {
 		resourceBundle = ResourceBundle.getBundle("sns");
 
@@ -360,7 +369,6 @@ public class SNSService {
 //	    log.debug("Number of descriptors in the result: "+resultList.size());
 	    return resultList;
     }
-
     
     // Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached
     public SNSTopic getTopicsForTopic(String topicId) {
@@ -457,7 +465,135 @@ public class SNSService {
     	return resultList;
     }
 
-    
+    // SNS autoClassify operation for URLs
+    public SNSTopicMap autoClassifyURL(String url, int analyzeMaxWords, String filter, boolean ignoreCase, String lang) {
+    	SNSTopicMap result = new SNSTopicMap();
+    	TopicMapFragment mapFragment = null;
+
+    	try {
+    		mapFragment = snsClient.autoClassifyToUrl(url, analyzeMaxWords, filter, ignoreCase, lang);
+
+    	} catch (AxisFault f) {
+    		log.debug("Error while calling autoClassifyToUrl.", f);
+    		if (f.getFaultString().contains("Timeout"))
+    			throw new RuntimeException(ERROR_SNS_TIMEOUT);
+    		else
+    			throw new RuntimeException(ERROR_SNS_INVALID_URL);
+
+    	} catch (Exception e) {
+	    	log.error("Error calling snsClient.autoClassifyToUrl", e);
+    	}
+
+    	if (null != mapFragment) {
+    		TopicMapFragmentIndexedDocument indexedDocument = mapFragment.getIndexedDocument();
+    		result.setIndexedDocument(new IndexedDocument(indexedDocument));
+
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	    	if (null == topics) {
+	    		return result;
+	    	}
+
+	    	ArrayList<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
+	    	ArrayList<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
+	    	ArrayList<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
+
+	    	for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+            	switch (getTopicType(topic)) {
+            	case EVENT:
+            		eventTopics.add(createEventTopic(topic));
+            		break;
+            	case LOCATION:
+            		SNSLocationTopic locTopic = createLocationTopic(topic);
+            		// createLocationTopic returns null for expired topics
+            		if (null != locTopic) {
+            			locationTopics.add(locTopic);
+            		}
+
+            		break;
+            	case THESA:
+            		thesaTopics.add(createThesaurusTopic(topic));
+            		break;
+            	}
+	    	}
+        	result.setEventTopics(eventTopics);
+        	result.setLocationTopics(locationTopics);
+        	result.setThesaTopics(thesaTopics);
+    	}
+    	return result;
+    }
+
+    private TopicType getTopicType(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+		String instance = topic.getInstanceOf()[0].getTopicRef().getHref();
+//		log.debug("InstanceOf: "+instance);
+		if (instance.indexOf("topTermType") != -1 || instance.indexOf("nodeLabelType") != -1
+		 || instance.indexOf("descriptorType") != -1 || instance.indexOf("nonDescriptorType") != -1) {
+			return TopicType.THESA;
+
+		} else if (instance.indexOf("activityType") != -1 || instance.indexOf("anniversaryType") != -1
+				 || instance.indexOf("conferenceType") != -1 || instance.indexOf("disasterType") != -1
+				 || instance.indexOf("historicalType") != -1 || instance.indexOf("interYearType") != -1
+				 || instance.indexOf("legalType") != -1 || instance.indexOf("observationType") != -1
+				 || instance.indexOf("natureOfTheYearType") != -1 || instance.indexOf("publicationType") != -1) {
+			return TopicType.EVENT;
+
+		} else { // if instance.indexOf("nationType") != -1 || ...
+			return TopicType.LOCATION;
+		}
+    }
+
+    private SNSEventTopic createEventTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	SNSEventTopic t = new SNSEventTopic();
+    	t.setTopicId(topic.getId());
+    	t.setName(topic.getBaseName()[0].getBaseNameString().get_value());
+
+    	for (Occurrence occ: topic.getOccurrence()) {
+    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("descriptionOcc")) {
+    			if (occ.getScope().getTopicRef()[0].getHref().endsWith("de"))
+    				t.setDescription(occ.getResourceData().get_value());
+
+    		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalAtOcc")) {        		
+    			log.debug("Temporal at: "+occ.getResourceData().get_value());
+    			t.setAt(convertTemporalValueToDate(occ.getResourceData().get_value()));
+
+    		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalFromOcc")) {        		
+    			log.debug("Temporal from: "+occ.getResourceData().get_value());
+    			t.setFrom(convertTemporalValueToDate(occ.getResourceData().get_value()));
+
+    		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalToOcc")) {        		
+    			log.debug("Temporal to: "+occ.getResourceData().get_value());
+    			t.setTo(convertTemporalValueToDate(occ.getResourceData().get_value()));
+        	}
+    	}
+
+    	return t;
+    }
+
+
+    private Date convertTemporalValueToDate(String dateString) {
+		SimpleDateFormat standardDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat yearMonthDateFormat = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");
+
+    	try { return standardDateFormat.parse(dateString); }
+    	catch (java.text.ParseException pe) { log.debug(pe); }
+
+    	try { return yearMonthDateFormat.parse(dateString); }
+    	catch (java.text.ParseException pe) { log.debug(pe); }
+
+    	try { return yearDateFormat.parse(dateString); }
+    	catch (java.text.ParseException pe) { log.debug(pe); }
+
+    	log.error("Error parsing date: "+dateString);
+    	return null;
+    }
+
+
+    private SNSTopic createThesaurusTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+		String topicName = topic.getBaseName(0).getBaseNameString().get_value();
+		return new SNSTopic(getTypeFromTopic(topic), topic.getId(), topicName);
+    }
+
+
     private SNSLocationTopic createLocationTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	SNSLocationTopic result = new SNSLocationTopic();
     	result.setTopicId(topic.getId());

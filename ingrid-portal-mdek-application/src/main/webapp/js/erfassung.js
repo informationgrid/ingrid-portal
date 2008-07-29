@@ -182,10 +182,22 @@ function toggleFields(section, /* optional */ mode, /* optional flag */ refreshC
 
 	// Hide all optional input elements
 	if (mode == "showAll") {
-		dojo.lang.forEach(allOptionalUIElements, dojo.html.show);
+		// show the input elements with displaytype == undef and displaytype == alwaysShow
+		// hide the input elements with displaytype == alwaysHide
+		var hiddenUIElements = dojo.lang.filter(allOptionalUIElements, function(uiElement){ return uiElement.getAttribute("displaytype") == "alwaysHide"; });
+		var shownUIElements =  dojo.lang.filter(allOptionalUIElements, function(uiElement){ return uiElement.getAttribute("displaytype") != "alwaysHide"; });
+
+		dojo.lang.forEach(hiddenUIElements, dojo.html.hide);
+		dojo.lang.forEach(shownUIElements, dojo.html.show);
 
 	} else {
-		dojo.lang.forEach(allOptionalUIElements, dojo.html.hide);
+		// show the input elements with displaytype == alwaysShow
+		// hide the input elements with displaytype == undef and displaytype == alwaysHide
+		var hiddenUIElements = dojo.lang.filter(allOptionalUIElements, function(uiElement){ return uiElement.getAttribute("displaytype") != "alwaysHide"; });
+		var shownUIElements =  dojo.lang.filter(allOptionalUIElements, function(uiElement){ return uiElement.getAttribute("displaytype") == "alwaysShow"; });
+
+		dojo.lang.forEach(hiddenUIElements, dojo.html.hide);
+		dojo.lang.forEach(shownUIElements, dojo.html.show);
 	}
 
 
@@ -207,17 +219,12 @@ function toggleFields(section, /* optional */ mode, /* optional flag */ refreshC
 
 //		dojo.debug("Number of uiElements in inputContainer: "+uiElements.length);
 
-		// if every uiElement has the type attribute set to optional...
-		if (dojo.lang.every(uiElements, function(uiElement) {
-			return uiElement.getAttribute ? uiElement.getAttribute("type") == "optional" : true;
-		})) {
-			if (mode == "showAll") {
-				dojo.html.show(inputContainer);
+		// if some uiElements are displayed, show the inputContainer, else hide
+		if (dojo.lang.some(uiElements, dojo.html.isShowing)) {
+			dojo.html.show(inputContainer);
 
-			} else {
-				// ... and mode == showRequired, then hide the inputContainer
-				dojo.html.hide(inputContainer);
-			}
+		} else {
+			dojo.html.hide(inputContainer);
 		}
 	});
 
@@ -261,7 +268,7 @@ function toggleButton(btnImage, labelElement, color, mode)
 
 function setRequiredState(/*html node to (un-)set the required class*/labelNode, 
   /*html node to (un-)set the notRequired class, maybe null*/containerNode, isRequired) {
-	dojo.debug("-> setRequiredState("+labelNode.id+", "+containerNode.id+", "+isRequired+")");
+//	dojo.debug("-> setRequiredState("+labelNode.id+", "+containerNode.id+", "+isRequired+")");
 
   // set the label to required
   // get the actual textnode
@@ -284,14 +291,14 @@ function setRequiredState(/*html node to (un-)set the required class*/labelNode,
 
 	// set the container to required
 	if (containerNode) {
-		dojo.debug("containerNode.type before change: "+containerNode.getAttribute("type"));
+//		dojo.debug("containerNode.type before change: "+containerNode.getAttribute("type"));
 		if (isRequired) {
 			containerNode.setAttribute("type", "required");
 
 		} else {
 			containerNode.setAttribute("type", "optional");
 		}
-		dojo.debug("Setting containerNode.type to "+containerNode.type);
+//		dojo.debug("Setting containerNode.type to "+containerNode.type);
 
 		var getSectionElement = function(node) {
 			if (dojo.html.hasClass(node, "contentBlock"))
@@ -302,16 +309,16 @@ function setRequiredState(/*html node to (un-)set the required class*/labelNode,
 
 		var sectionElement = getSectionElement(containerNode);
 		var isExpanded = sectionElement.isExpanded;
-		dojo.debug("Section element: "+sectionElement.id);
-		dojo.debug("Section element is expanded: "+sectionElement.isExpanded);
+//		dojo.debug("Section element: "+sectionElement.id);
+//		dojo.debug("Section element is expanded: "+sectionElement.isExpanded);
 
 		if (isExpanded || isRequired) {
 			dojo.html.show(containerNode);
-			dojo.debug("Showing containerNode.");
+//			dojo.debug("Showing containerNode.");
 
 		} else {
 			dojo.html.hide(containerNode);
-			dojo.debug("Hiding containerNode.");
+//			dojo.debug("Hiding containerNode.");
 		}
 	}
 
@@ -348,7 +355,7 @@ function setRequiredState(/*html node to (un-)set the required class*/labelNode,
 		}
 	});
 
-	dojo.debug("<- setRequiredState()");
+//	dojo.debug("<- setRequiredState()");
 }
 
 /*

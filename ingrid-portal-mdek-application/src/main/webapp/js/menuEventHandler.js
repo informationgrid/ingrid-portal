@@ -20,7 +20,12 @@ menuEventHandler.handleNewEntity = function(mes) {
 		
 		} else if (selectedNode.nodeAppType == "O") {
 			// publish a createObject request and attach the newly created node if it was successful
-			deferred.addCallback(function(res){attachNewNode(selectedNode, res);});
+			deferred.addCallback(function(res){
+				attachNewNode(selectedNode, res);
+
+				// TODO Remove comment when the wizad is implemented
+				menuEventHandler.openCreateObjectWizardDialog();
+			});
 			deferred.addErrback(function(err){
 //				dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
 				displayErrorMessage(err);
@@ -789,6 +794,15 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
 
 menuEventHandler.switchLanguage = function() {
 	document.location.href="index.jsp?lang="+UtilLanguage.getNextLanguage();
+}
+
+menuEventHandler.openCreateObjectWizardDialog = function() {
+	dialog.show("Erfassungsassistent", "M&ouml;chten Sie den allgemeinen Erfassungsassistenten zur Erstellung des Objektes verwenden?", dialog.INFO, [
+	{ caption: message.get("general.no"), action: function() { return; }},
+	{ caption: message.get("general.yes"), action: function() {
+			dialog.showPage("Allgemeiner Erfassungsassistent", "mdek_create_object_wizard_dialog.html", 755, 600, true);
+		}}
+	]);
 }
 
 // ------------------------- Helper functions -------------------------
