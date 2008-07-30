@@ -84,55 +84,62 @@ function updateInputFields(topicMap) {
 	var eventTopicList = topicMap.eventTopics;
 
 	// Description
-	dojo.widget.byId("assistantDescription").setValue(indexedDocument.description);
+	if (indexedDocument.description != null)
+		dojo.widget.byId("assistantDescription").setValue(indexedDocument.description);
 
 	// Thesaurus Topics
-	UtilList.addTableIndices(thesaTopicList);
-	for (var i in thesaTopicList) {
-		// Add checkbox to entry
-		thesaTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+thesaTopicList[i].topicId+"'>";
+	if (thesaTopicList != null) {
+		UtilList.addTableIndices(thesaTopicList);
+		for (var i in thesaTopicList) {
+			// Add checkbox to entry
+			thesaTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+thesaTopicList[i].topicId+"'>";
+		}
+		dojo.widget.byId("assistantDescriptorTable").store.setData(thesaTopicList);
 	}
-	dojo.widget.byId("assistantDescriptorTable").store.setData(thesaTopicList);
 
 	// Location Topics
-	UtilList.addTableIndices(locationTopicList);
-	for (var i in locationTopicList) {
-		// Add checkbox to entry
-		locationTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+locationTopicList[i].topicId+"'>";
-		// Prepare bb for display in the table
-		if (locationTopicList[i].boundingBox) {
-			locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[0];
-			locationTopicList[i].latitude1  = locationTopicList[i].boundingBox[1];
-			locationTopicList[i].longitude2 = locationTopicList[i].boundingBox[2];
-			locationTopicList[i].latitude2  = locationTopicList[i].boundingBox[3];
+	if (locationTopicList != null) {
+		UtilList.addTableIndices(locationTopicList);
+		for (var i in locationTopicList) {
+			// Add checkbox to entry
+			locationTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+locationTopicList[i].topicId+"'>";
+			// Prepare bb for display in the table
+			if (locationTopicList[i].boundingBox) {
+				locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[0];
+				locationTopicList[i].latitude1  = locationTopicList[i].boundingBox[1];
+				locationTopicList[i].longitude2 = locationTopicList[i].boundingBox[2];
+				locationTopicList[i].latitude2  = locationTopicList[i].boundingBox[3];
+			}
 		}
+		dojo.widget.byId("assistantSpatialRefTable").store.setData(locationTopicList);
 	}
-	dojo.widget.byId("assistantSpatialRefTable").store.setData(locationTopicList);
 
 	// Event Topics
-	UtilList.addTableIndices(eventTopicList);
-	for (var i in eventTopicList) {
-		eventTopicList[i].selection = "<input type='radio' name='objectWiz_eventTopic' id='objectWiz_"+eventTopicList[i].topicId+"'>";
-
-		if (null != eventTopicList[i].at) {
-			eventTopicList[i].date1 = eventTopicList[i].at;
-			eventTopicList[i].type = "am";
-
-		} else if (null != eventTopicList[i].from && null != eventTopicList[i].to) {
-			eventTopicList[i].date1 = eventTopicList[i].from;
-			eventTopicList[i].date2 = eventTopicList[i].to;
-			eventTopicList[i].type = "von - bis";
-
-		} else if (null != eventTopicList[i].from && null == eventTopicList[i].to) {
-			eventTopicList[i].date1 = eventTopicList[i].from;
-			eventTopicList[i].type = "seit";
-
-		} else if (null == eventTopicList[i].from && null != eventTopicList[i].to) {
-			eventTopicList[i].date1 = eventTopicList[i].to;
-			eventTopicList[i].type = "bis";
+	if (eventTopicList != null) {
+		UtilList.addTableIndices(eventTopicList);
+		for (var i in eventTopicList) {
+			eventTopicList[i].selection = "<input type='radio' name='objectWiz_eventTopic' id='objectWiz_"+eventTopicList[i].topicId+"'>";
+	
+			if (null != eventTopicList[i].at) {
+				eventTopicList[i].date1 = eventTopicList[i].at;
+				eventTopicList[i].type = "am";
+	
+			} else if (null != eventTopicList[i].from && null != eventTopicList[i].to) {
+				eventTopicList[i].date1 = eventTopicList[i].from;
+				eventTopicList[i].date2 = eventTopicList[i].to;
+				eventTopicList[i].type = "von - bis";
+	
+			} else if (null != eventTopicList[i].from && null == eventTopicList[i].to) {
+				eventTopicList[i].date1 = eventTopicList[i].from;
+				eventTopicList[i].type = "seit";
+	
+			} else if (null == eventTopicList[i].from && null != eventTopicList[i].to) {
+				eventTopicList[i].date1 = eventTopicList[i].to;
+				eventTopicList[i].type = "bis";
+			}
 		}
+		dojo.widget.byId("assistantTimeRefTable").store.setData(eventTopicList);
 	}
-	dojo.widget.byId("assistantTimeRefTable").store.setData(eventTopicList);
 }
 
 
@@ -265,9 +272,14 @@ scriptScope.startSearch = function() {
 		postHook: hideLoadingZone,
 
 		callback: function(topicMap) {
-			updateInputFields(topicMap);
-
-			showResults();
+			if (topicMap.indexedDocument.description == null && topicMap.thesaTopics == null
+			    && topicMap.locationTopics == null && topicMap.eventTopics == null) {
+					dialog.show(message.get("general.hint"), "Der SNS lieferte keine Ergebnisse zu der von Ihnen angegebenen Webseite. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.INFO);
+			
+			} else {
+				updateInputFields(topicMap);
+				showResults();
+			}
 		},
 
 		errorHandler: function(msg) {
