@@ -1254,7 +1254,9 @@ udkDataProxy._setAddressData = function(nodeData)
 	var unpubLinkTable = nodeData.linksFromObjectTable;
 	var pubLinkTable = nodeData.linksFromPublishedObjectTable;
 	dojo.lang.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
-	var linkTable = unpubLinkTable.concat(pubLinkTable);
+	// AOR change
+//	var linkTable = unpubLinkTable.concat(pubLinkTable);
+	var linkTable = pubLinkTable.concat(unpubLinkTable);
 
 	// Initialize the object address reference table with the links received from the backend
 	UtilAddress.initObjectAddressReferenceTable(linkTable);

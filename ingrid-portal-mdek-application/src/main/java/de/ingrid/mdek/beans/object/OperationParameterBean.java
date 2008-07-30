@@ -7,7 +7,17 @@ public class OperationParameterBean {
 	Integer optional;
 	Integer multiple;
 
+	public OperationParameterBean() {}
 	
+	public OperationParameterBean(String name, String description, String direction, boolean optional, boolean multiple) {
+		this.name = name;
+		this.description = description;
+		this.direction = direction;
+		this.optional = optional? 1 : 0;
+		this.multiple = multiple? 1 : 0;
+	}
+
+
 	public String getName() {
 		return name;
 	}
