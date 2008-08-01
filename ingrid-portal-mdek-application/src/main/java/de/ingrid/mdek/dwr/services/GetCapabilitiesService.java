@@ -29,6 +29,7 @@ public class GetCapabilitiesService {
 
 	private final static String SERVICE_TYPE_WMS = "OGC:WMS";
 	private final static String SERVICE_TYPE_WFS = "WFS";
+	private final static String SERVICE_TYPE_WCS = "WCS";
 
 	private final static String XPATH_EXP_WMS_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
 	private final static String XPATH_EXP_WMS_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
@@ -58,6 +59,14 @@ public class GetCapabilitiesService {
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Post[1]/@href";
 
+	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
+	
+	private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
 
 	private XPath xPath = null;
 	
@@ -90,6 +99,11 @@ public class GetCapabilitiesService {
         	}
 
         	if (serviceType == null || serviceType.length() == 0) {
+            	XPathExpression xeWcsServiceType = xPath.compile("/Capabilities/ServiceIdentification/ServiceType[1]");
+            	serviceType = xeWcsServiceType.evaluate(doc);
+        	}
+
+        	if (serviceType == null || serviceType.length() == 0) {
         		// Could not evaluate serviceType
         		log.debug("Could not evaluate service type.");
 
@@ -98,6 +112,9 @@ public class GetCapabilitiesService {
 
         	} else if (serviceType.contains(SERVICE_TYPE_WFS)) {
             	return getCapabilitiesWFS(doc);        		
+
+        	} else if (serviceType.contains(SERVICE_TYPE_WCS)) {
+            	return getCapabilitiesWCS(doc);        		
 
         	} else {
         		log.debug("Invalid service type: "+serviceType);
@@ -242,7 +259,10 @@ public class GetCapabilitiesService {
     	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	ArrayList<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", true, false));
+    	paramList.add(new OperationParameterBean("SERVICE=WFS", "Service type", "", false, false));
     	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=string", "Sequence number or string for cache control", "", true, false));
     	getCapabilitiesOp.setParamList(paramList);
     	operations.add(getCapabilitiesOp);
 
@@ -383,6 +403,113 @@ public class GetCapabilitiesService {
 	    	transactionOp.setParamList(paramList);
 	    	operations.add(transactionOp);
     	}
+
+    	result.setOperations(operations);
+    	return result;
+    }
+
+
+    public CapabilitiesBean getCapabilitiesWCS(Document doc) throws XPathExpressionException {
+    	CapabilitiesBean result = new CapabilitiesBean();
+
+    	// General settings
+    	result.setServiceType("WFS");
+    	result.setTitle(xPath.evaluate(XPATH_EXP_WFS_TITLE, doc));
+    	result.setDescription(xPath.evaluate(XPATH_EXP_WFS_ABSTRACT, doc));
+    	result.setVersion(xPath.evaluate(XPATH_EXP_WFS_VERSION, doc));
+
+    	// Operation List
+    	ArrayList<OperationBean> operations = new ArrayList<OperationBean>();
+
+
+    	// Operation - GetCapabilities
+    	OperationBean getCapabilitiesOp = new OperationBean();
+    	String getCapabilitiesGet = xPath.evaluate(XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF, doc);
+    	String getCapabilitiesPost = xPath.evaluate(XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF, doc);
+    	getCapabilitiesOp.setName("GetCapabilities");
+    	getCapabilitiesOp.setMethodCall("GetCapabilities");
+    	ArrayList<String> getCapabilitiesOpAddressList = new ArrayList<String>();
+    	getCapabilitiesOpAddressList.add(getCapabilitiesGet);
+    	ArrayList<String> getCapabilitiesOpPlatform = new ArrayList<String>();
+    	getCapabilitiesOpPlatform.add("HTTP GET");
+    	if (getCapabilitiesPost != null && getCapabilitiesPost.length() != 0) {
+    		getCapabilitiesOpAddressList.add(getCapabilitiesPost);
+    		getCapabilitiesOpPlatform.add("HTTP POST");
+    	}
+		getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
+		getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
+
+    	ArrayList<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("SERVICE=WCS", "Service type", "", false, false));
+    	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
+    	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
+    	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is “increased” whenever any change is made in complete service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
+    	getCapabilitiesOp.setParamList(paramList);
+    	operations.add(getCapabilitiesOp);
+
+
+    	// Operation - DescribeCoverage
+    	OperationBean describeCoverageOp = new OperationBean();
+    	String describeCoverageGet = xPath.evaluate(XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF, doc);
+    	String describeCoveragePost = xPath.evaluate(XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF, doc);
+    	describeCoverageOp.setName("DescribeCoverage");
+    	describeCoverageOp.setMethodCall("DescribeCoverage");
+    	ArrayList<String> describeCoverageOpAddressList = new ArrayList<String>();
+    	describeCoverageOpAddressList.add(describeCoverageGet);
+    	ArrayList<String> describeCoverageOpPlatform = new ArrayList<String>();
+    	describeCoverageOpPlatform.add("HTTP GET");
+    	if (describeCoveragePost != null && describeCoveragePost.length() != 0) {
+        	describeCoverageOpAddressList.add(describeCoveragePost);
+    		describeCoverageOpPlatform.add("HTTP POST");
+    	}
+    	describeCoverageOp.setPlatform(describeCoverageOpPlatform);
+    	describeCoverageOp.setAddressList(describeCoverageOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
+    	paramList.add(new OperationParameterBean("request=DescribeCoverage", "Request name. Shall be DescribeCoverage", "", false, false));
+    	paramList.add(new OperationParameterBean("version=1.1.2", "Request protocol version", "", false, false));
+    	paramList.add(new OperationParameterBean("identifiers=identifier1, identifier2, ...", "A comma-separated list of coverage identifiers to describe (identified by their identifier values in the Capabilities document)", "", false, false));
+    	describeCoverageOp.setParamList(paramList);
+    	operations.add(describeCoverageOp);
+
+    	
+    	// Operation - GetCoverage
+    	OperationBean getCoverageOp = new OperationBean();
+    	String getCoverageGet = xPath.evaluate(XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF, doc);
+    	String getCoveragePost = xPath.evaluate(XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF, doc);
+    	getCoverageOp.setName("GetCoverage");
+    	getCoverageOp.setMethodCall("GetCoverage");
+    	ArrayList<String> getCoverageOpAddressList = new ArrayList<String>();
+    	getCoverageOpAddressList.add(getCoverageGet);
+    	ArrayList<String> getCoverageOpPlatform = new ArrayList<String>();
+    	getCoverageOpPlatform.add("HTTP GET");
+    	if (getCoveragePost != null && getCoveragePost.length() != 0) {
+        	getCoverageOpAddressList.add(getCoveragePost);
+    		getCoverageOpPlatform.add("HTTP POST");
+    	}
+    	getCoverageOp.setPlatform(getCoverageOpPlatform);
+    	getCoverageOp.setAddressList(getCoverageOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
+    	paramList.add(new OperationParameterBean("request=DescribeCoverage", "Request name. Shall be GetCoverage", "", false, false));
+    	paramList.add(new OperationParameterBean("version=1.1.2", "Request protocol version", "", false, false));
+    	paramList.add(new OperationParameterBean("identifier=identifier", "Unique identifier of an available coverage", "", false, false));
+    	paramList.add(new OperationParameterBean("BoundingBox=47,-71, - 51,66, urn:ogc:def:crs:EPSG:6.6:63266405", "Request a coverage subset defined by the specified bounding box in the referenced coordinate reference system", "", false, false));
+    	paramList.add(new OperationParameterBean("TimeSequence= 20060801, 20060811, ... OR TimeSequence = 20060801/ 2006-0901 / P1D, ...", "Request a subset corresponding to the specified time instants or intervals, expressed in the extended ISO 8601 syntax defined in Annex D of [OGC 06-042]. (See 9.3.2.4.)", "", true, false));
+    	paramList.add(new OperationParameterBean("RangeSubset=temp:nearest; radiance[band[1,2,5]]", "Request only some fields OR subsets of some fields (OR list fields to request non-default interpolation on them).", "", true, false));
+    	paramList.add(new OperationParameterBean("format=image/netcdf", "Requested output format of Coverage. Shall be one of those listed in the description of the selected coverage", "", false, false));
+    	paramList.add(new OperationParameterBean("store=true", "Specifies whether response coverage should be stored, remotely from client at network URL, a boolean value", "", true, false));
+    	paramList.add(new OperationParameterBean("GridBaseCRS=urn:ogc:def:crs:EPSG:6.6:32618", "Reference to GridBaseCRS of desired output GridCRS, a URN", "", true, false));
+    	paramList.add(new OperationParameterBean("GridType=urn:ogc:def:method:WCS:1.1:2dGridIn2dCrs", "Reference to grid type of desired output GridCRS, a URN", "", true, false));
+    	paramList.add(new OperationParameterBean("GridCS=urn:ogc:def:cs:OGC:0.0:Grid2dSquareCS", "Reference to coordinate system of desired output GridCRS, a URN", "", true, false));
+    	paramList.add(new OperationParameterBean("GridOrigin=0,0", "Position coordinates of one possible grid origin, in GridBaseCRS of desired output GridCRS", "", true, false));
+    	paramList.add(new OperationParameterBean("GridOffsets=0.0707, -0.0707,0.1414,0.1414&", "Offsets between adjacent grid points, in GridBaseCRS of desired output GridCRS", "", true, false));
+    	getCoverageOp.setParamList(paramList);
+    	operations.add(getCoverageOp);
 
     	result.setOperations(operations);
     	return result;
