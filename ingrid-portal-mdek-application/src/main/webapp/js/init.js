@@ -1192,11 +1192,11 @@ function _disableHtmlLink(elementId) {
 	
 	if (element.onClick) {
 		element._disabledOnClick = element.onClick;
-		element.onClick = function() { return false; };
+		element.onClick = null;
 
 	} else if (element.onclick) {
 		element._disabledOnClick = element.onclick;
-		element.onclick = function() { return false; };
+		element.onclick = null;
 	}
 }
 
@@ -1205,6 +1205,7 @@ function _enableHtmlLink(elementId) {
 	
 	if (element._disabledOnClick) {
 		element.onclick = element._disabledOnClick;
+		element._disabledOnClick = null;
 	}
 }
 
@@ -1219,6 +1220,8 @@ function disableInputOnWrongPermission() {
 		var hasWritePermission = message.node.userWritePermission;
 //		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
 //		var hasWriteTreePermission = message.node.userWriteTreePermission;
+		dojo.debug("hasWritePermission: "+hasWritePermission);
+
 		if (hasWritePermission) {
 			// Enable all input elements
 			dojo.lang.forEach(headerUiInputElements, _enableInputElement);
@@ -1241,6 +1244,7 @@ function disableInputOnWrongPermission() {
 			dojo.lang.forEach(adrClass2UiInputElements, _enableInputElement);
 			dojo.lang.forEach(adrClass3UiInputElements, _enableInputElement);
 
+			dojo.debug("enabling html links...");
 			dojo.lang.forEach(htmlLinks, _enableHtmlLink);
 
 			_enableInputElement("thesaurusFreeTermsAddButton");
@@ -1268,6 +1272,7 @@ function disableInputOnWrongPermission() {
 			dojo.lang.forEach(adrClass2UiInputElements, _disableInputElement);
 			dojo.lang.forEach(adrClass3UiInputElements, _disableInputElement);
 
+			dojo.debug("disabling html links...");
 			dojo.lang.forEach(htmlLinks, _disableHtmlLink);
 
 			_disableInputElement("thesaurusFreeTermsAddButton");
