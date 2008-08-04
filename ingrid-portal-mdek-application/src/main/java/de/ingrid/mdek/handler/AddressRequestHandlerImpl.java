@@ -76,7 +76,9 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean getAddressDetail(String uuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, HTTPSessionHelper.getCurrentSessionId());
+		// TODO Implement new parameters
+//		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, 0, 10, HTTPSessionHelper.getCurrentSessionId());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);	
 	}
 
@@ -126,7 +128,9 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address for publishing:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, HTTPSessionHelper.getCurrentSessionId());
+		// TODO Implement new parameters
+//		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, 10, HTTPSessionHelper.getCurrentSessionId());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 
@@ -142,7 +146,9 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address for storage:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.storeAddress(connectionFacade.getCurrentPlugId(), adr, true, HTTPSessionHelper.getCurrentSessionId());
+		// TODO Implement new parameters
+//		IngridDocument response = mdekCallerAddress.storeAddress(connectionFacade.getCurrentPlugId(), adr, true, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.storeAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, 10, HTTPSessionHelper.getCurrentSessionId());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 

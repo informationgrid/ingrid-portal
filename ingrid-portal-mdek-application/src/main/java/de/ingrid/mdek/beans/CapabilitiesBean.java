@@ -9,8 +9,7 @@ public class CapabilitiesBean {
 	public String title;
 	public String description;
 	public String serviceType;
-	public String version;
-	public String platform;
+	public ArrayList<String> versions;
 
 	public ArrayList<OperationBean> operations;
 
@@ -39,28 +38,20 @@ public class CapabilitiesBean {
 		this.serviceType = serviceType;
 	}
 
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	public String getPlatform() {
-		return platform;
-	}
-
-	public void setPlatform(String platform) {
-		this.platform = platform;
-	}
-
 	public ArrayList<OperationBean> getOperations() {
 		return operations;
 	}
 
 	public void setOperations(ArrayList<OperationBean> operations) {
 		this.operations = operations;
+	}
+
+	public ArrayList<String> getVersions() {
+		return versions;
+	}
+
+	public void setVersions(ArrayList<String> versions) {
+		this.versions = versions;
 	}
 
 }

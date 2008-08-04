@@ -31,6 +31,10 @@ public class GetCapabilitiesService {
 	private final static String SERVICE_TYPE_WFS = "WFS";
 	private final static String SERVICE_TYPE_WCS = "WCS";
 
+    private static String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
+    private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
+    private static String ERROR_GETCAP = "ERROR_GETCAP_ERROR";
+
 	private final static String XPATH_EXP_WMS_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
 	private final static String XPATH_EXP_WMS_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
 	private final static String XPATH_EXP_WMS_VERSION = "/WMT_MS_Capabilities/@version";
@@ -106,6 +110,8 @@ public class GetCapabilitiesService {
         	if (serviceType == null || serviceType.length() == 0) {
         		// Could not evaluate serviceType
         		log.debug("Could not evaluate service type.");
+//        		throw new RuntimeException(ERROR_GETCAP);
+        		throw new RuntimeException("Could not evaluate service type.");
 
         	} else if (serviceType.contains(SERVICE_TYPE_WMS)) {
         		return getCapabilitiesWMS(doc);
@@ -118,23 +124,31 @@ public class GetCapabilitiesService {
 
         	} else {
         		log.debug("Invalid service type: "+serviceType);
+//        		throw new RuntimeException(ERROR_GETCAP);
+        		throw new RuntimeException("Invalid service type: "+serviceType);
         	}
 
 
     	} catch (MalformedURLException e) {
-    		log.error("", e);
+    		log.debug("", e);
+//    		throw new RuntimeException(ERROR_GETCAP_INVALID_URL, e);
+    		throw new RuntimeException(e);
 
     	} catch (IOException e) {
-    		log.error("", e);
+    		log.debug("", e);
+//    		throw new RuntimeException(ERROR_GETCAP, e);
+    		throw new RuntimeException(e);
 
     	} catch (XPathExpressionException e) {
-    		log.error("", e);
+    		log.debug("", e);
+//    		throw new RuntimeException(ERROR_GETCAP_XPATH, e);
+    		throw new RuntimeException(e);
 
     	} catch (Exception e) {
-    		log.error("", e);
+    		log.debug("", e);
+//    		throw new RuntimeException(ERROR_GETCAP, e);
+    		throw new RuntimeException(e);
     	}    
-
-    	return null;
     }
 
     public CapabilitiesBean getCapabilitiesWMS(Document doc) throws XPathExpressionException {
@@ -144,7 +158,10 @@ public class GetCapabilitiesService {
     	result.setServiceType("WMS");
     	result.setTitle(xPath.evaluate(XPATH_EXP_WMS_TITLE, doc));
     	result.setDescription(xPath.evaluate(XPATH_EXP_WMS_ABSTRACT, doc));
-    	result.setVersion(xPath.evaluate(XPATH_EXP_WMS_VERSION, doc));
+    	String version = xPath.evaluate(XPATH_EXP_WMS_VERSION, doc);
+    	ArrayList<String> versions = new ArrayList<String>();
+    	versions.add(version);
+    	result.setVersions(versions);
 
     	// Operation List
     	ArrayList<OperationBean> operations = new ArrayList<OperationBean>();
@@ -242,7 +259,10 @@ public class GetCapabilitiesService {
     	result.setServiceType("WFS");
     	result.setTitle(xPath.evaluate(XPATH_EXP_WFS_TITLE, doc));
     	result.setDescription(xPath.evaluate(XPATH_EXP_WFS_ABSTRACT, doc));
-    	result.setVersion(xPath.evaluate(XPATH_EXP_WFS_VERSION, doc));
+    	String version = xPath.evaluate(XPATH_EXP_WFS_VERSION, doc);
+    	ArrayList<String> versions = new ArrayList<String>();
+    	versions.add(version);
+    	result.setVersions(versions);
 
     	// Operation List
     	ArrayList<OperationBean> operations = new ArrayList<OperationBean>();
@@ -416,7 +436,10 @@ public class GetCapabilitiesService {
     	result.setServiceType("WFS");
     	result.setTitle(xPath.evaluate(XPATH_EXP_WFS_TITLE, doc));
     	result.setDescription(xPath.evaluate(XPATH_EXP_WFS_ABSTRACT, doc));
-    	result.setVersion(xPath.evaluate(XPATH_EXP_WFS_VERSION, doc));
+    	String version = xPath.evaluate(XPATH_EXP_WFS_VERSION, doc);
+    	ArrayList<String> versions = new ArrayList<String>();
+    	versions.add(version);
+    	result.setVersions(versions);
 
     	// Operation List
     	ArrayList<OperationBean> operations = new ArrayList<OperationBean>();

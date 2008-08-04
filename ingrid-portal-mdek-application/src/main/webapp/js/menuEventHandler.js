@@ -797,12 +797,16 @@ menuEventHandler.switchLanguage = function() {
 }
 
 menuEventHandler.openCreateObjectWizardDialog = function() {
+	dialog.showPage("Assistent w&auml;hlen", "mdek_select_wizard_dialog.html", 350, 170, true);
+
+/*
 	dialog.show("Erfassungsassistent", "M&ouml;chten Sie den allgemeinen Erfassungsassistenten zur Erstellung des Objektes verwenden?", dialog.INFO, [
 	{ caption: message.get("general.no"), action: function() { return; }},
 	{ caption: message.get("general.yes"), action: function() {
 			dialog.showPage("Allgemeiner Erfassungsassistent", "mdek_create_object_wizard_dialog.html", 755, 600, true);
 		}}
 	]);
+*/
 }
 
 // ------------------------- Helper functions -------------------------

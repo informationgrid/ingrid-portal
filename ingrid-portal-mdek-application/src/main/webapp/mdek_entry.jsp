@@ -15,8 +15,9 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/GetCapabilitiesService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
