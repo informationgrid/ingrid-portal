@@ -395,10 +395,10 @@ UtilAddress.getAddressType = function(addressClass) {
 	}
 }
 
-// Initialize the object->address reference table with a given array of links 'linkList'.
-// Sets the label and link to their initial values and stores the given (possibly large) list in
-// 'UtilAddress.objectAddressReferences'
-UtilAddress.initObjectAddressReferenceTable = function(linkList) {
+// Initialize the object->address reference table with a given array of links 'linkList'. The number of references is specified with
+// the parameter 'numReferences'.
+// Sets the label and link to their initial values. Further links are loaded from the backend via UtilAddress.navObjectAddressReferences
+UtilAddress.initObjectAddressReferenceTable = function(linkList, numReferences) {
 	var tableLabel = dojo.byId("associatedObjNameLabel");
 	var tableLink = dojo.byId("associatedObjNameLink");
 	var tableStore = dojo.widget.byId("associatedObjName").store;
@@ -408,8 +408,6 @@ UtilAddress.initObjectAddressReferenceTable = function(linkList) {
 	UtilList.addObjectLinkLabels(linkList);  
 	UtilList.addIcons(linkList);
 	
-	UtilAddress.objectAddressReferences = linkList;
-
 	// Clear the underlying store
 	tableStore.clearData();
 
@@ -421,22 +419,43 @@ UtilAddress.initObjectAddressReferenceTable = function(linkList) {
 		dojo.event.connectOnce("after", UtilAddress.objectAddressRefPageNav, "onPageSelected", function() { UtilAddress.navObjectAddressReferences(); });
 	}
 
-	UtilAddress.objectAddressRefPageNav.setTotalNumHits(linkList.length);
-	UtilAddress.navObjectAddressReferences();
+	UtilAddress.objectAddressRefPageNav.setTotalNumHits(numReferences);
+	tableStore.setData(linkList);	
+	UtilAddress.objectAddressRefPageNav.updateDomNodes();
 }
 
 UtilAddress.navObjectAddressReferences = function() {
 	var curPos = UtilAddress.objectAddressRefPageNav.getStartHit();
-	var refList = UtilAddress.objectAddressReferences;
+	var totalNumHits = UtilAddress.objectAddressRefPageNav.totalNumHits;
 	var tableStore = dojo.widget.byId("associatedObjName").store;
 
 	tableStore.clearData();
 
-	for (var i = curPos; i < UtilAddress.objectAddressRefPageNav.getStartHit()+20 && i < refList.length; ++i) {
-//		dojo.debug("Adding ref: "+i);
-		tableStore.addData(refList[i]);
-	}
-	UtilAddress.objectAddressRefPageNav.updateDomNodes();
+	// TODO Do we need to get the uuid from somewhere else?
+	AddressService.fetchAddressObjectReferences(currentUdk.uuid, curPos, 20, {
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+			callback: function(adr){
+//				dojo.debugShallow(adr);
+
+				// -- Links --
+				var unpubLinkTable = adr.linksFromObjectTable;
+				var pubLinkTable = adr.linksFromPublishedObjectTable;
+				dojo.lang.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
+				var linkTable = pubLinkTable.concat(unpubLinkTable);
+
+				UtilList.addTableIndices(linkTable);
+				UtilList.addObjectLinkLabels(linkTable);  
+				UtilList.addIcons(linkTable);
+
+				tableStore.setData(linkTable);
+				UtilAddress.objectAddressRefPageNav.updateDomNodes();
+			},
+			errorHandler:function(message) {
+				UtilDWR.exitLoadingState();
+				dojo.debug("Error: "+message);
+			}
+	});
 }
 
 

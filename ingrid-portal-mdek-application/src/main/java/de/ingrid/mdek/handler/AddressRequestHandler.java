@@ -22,4 +22,5 @@ public interface AddressRequestHandler {
 	public List<String> getPathToAddress(String uuid);
 	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress);
 	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress);
+	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 }

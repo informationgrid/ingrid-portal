@@ -17,4 +17,5 @@ public interface AddressService {
 	public List<String> getPathToAddress(String targetUuid);
 	public boolean canCutAddress(String parentUuid);
 	public boolean canCopyAddress(String parentUuid);
+	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 }

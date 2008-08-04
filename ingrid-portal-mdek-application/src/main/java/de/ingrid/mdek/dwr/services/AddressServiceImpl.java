@@ -195,6 +195,19 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
+	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs) {
+		try { return addressRequestHandler.fetchAddressObjectReferences(addrUuid, startIndex, numRefs); }
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching address AORs.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+		catch (RuntimeException e) {
+			log.debug("Error while fetching address AORs.", e);
+			throw e;
+		}		
+	}
+
 	public AddressRequestHandler getAddressRequestHandler() {
 		return addressRequestHandler;
 	}
