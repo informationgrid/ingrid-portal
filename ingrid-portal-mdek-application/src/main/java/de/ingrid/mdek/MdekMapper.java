@@ -424,7 +424,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
 		mdekAddress.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
 		mdekAddress.setParentInstitutions(mapToGeneralAddressTable((List<HashMap<String, Object>>) adr.get(MdekKeys.PATH_ORGANISATIONS)));
-
+		mdekAddress.setTotalNumReferences((Integer) adr.get(MdekKeys.OBJ_REFERENCES_FROM_TOTAL_NUM));
 /*
 		mdekAddress.setTypeOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_ID));
 		mdekAddress.setNameOfRelation((String) adr.get(MdekKeys.RELATION_TYPE_NAME));

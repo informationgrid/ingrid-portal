@@ -59,7 +59,8 @@ public class MdekAddressBean {
 	public ArrayList<MdekDataBean> linksFromObjectTable;
 	public ArrayList<MdekDataBean> linksFromPublishedObjectTable;
 	public ArrayList<MdekAddressBean> parentInstitutions;
-
+	public Integer totalNumReferences;
+	
 	
 	public MdekAddressBean() {
 		this.communication = new ArrayList<HashMap<String, String>>();
@@ -389,5 +390,13 @@ public class MdekAddressBean {
 
 	public void setIsPublished(Boolean isPublished) {
 		this.isPublished = isPublished;
+	}
+
+	public Integer getTotalNumReferences() {
+		return totalNumReferences;
+	}
+
+	public void setTotalNumReferences(Integer totalNumReferences) {
+		this.totalNumReferences = totalNumReferences;
 	}
 }
