@@ -45,7 +45,11 @@ public class MdekErrorUtils {
 					|| containsErrorType(err, MdekErrorType.USER_EDITING_OBJECT_PERMISSION_MISSING)
 					|| containsErrorType(err, MdekErrorType.USER_RESPONSIBLE_FOR_OBJECT_PERMISSION_MISSING)
 					|| containsErrorType(err, MdekErrorType.USER_EDITING_ADDRESS_PERMISSION_MISSING)
-					|| containsErrorType(err, MdekErrorType.USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING)) {
+					|| containsErrorType(err, MdekErrorType.USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING)
+					|| containsErrorType(err, MdekErrorType.NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION)
+					|| containsErrorType(err, MdekErrorType.NO_RIGHT_TO_REMOVE_OBJECT_PERMISSION)
+					|| containsErrorType(err, MdekErrorType.NO_RIGHT_TO_REMOVE_USER_PERMISSION)
+					|| containsErrorType(err, MdekErrorType.NO_RIGHT_TO_ADD_USER_PERMISSION)) {
 				handleInvalidPermissionError(err);
 
 			} else if (containsErrorType(err, MdekErrorType.GROUP_HAS_USERS)) {
@@ -137,6 +141,26 @@ public class MdekErrorUtils {
 				ArrayList<MdekAddressBean> userAdrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
 				rootAddress = userAdrs.get(0);
 				invalidAddress = invalidAdrs.get(0);
+				break;
+
+			} else if (err.equals(MdekErrorType.NO_RIGHT_TO_REMOVE_OBJECT_PERMISSION)
+					|| err.equals(MdekErrorType.NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION)) {
+				errorType = err;
+				IngridDocument errorInfo = mdekError.getErrorInfo();
+				ArrayList<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				ArrayList<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
+
+				if (adrs != null && adrs.size() > 0) {
+					rootAddress = adrs.get(0);
+				}
+				if (objs != null && objs.size() > 0) {
+					rootObject = objs.get(0);
+				}
+				break;
+
+			} else if (err.equals(MdekErrorType.NO_RIGHT_TO_REMOVE_USER_PERMISSION)
+					|| err.equals(MdekErrorType.NO_RIGHT_TO_ADD_USER_PERMISSION)) {
+				errorType = err;
 				break;
 			}
 		}

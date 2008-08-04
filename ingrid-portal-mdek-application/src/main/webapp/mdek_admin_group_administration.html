@@ -674,6 +674,18 @@ function displayStoreGroupErrorMessage(err) {
 		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING") != -1) {
 			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
 
+		} else if (err.message.indexOf("NO_RIGHT_TO_REMOVE_OBJECT_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.rootObject.title+"' darf nicht entfernt werden, da Sie nicht &uuml;ber die n&ouml;tigen Rechte verf&uuml;gen.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.rootAddress)+"' darf nicht entfernt werden, da Sie nicht &uuml;ber die n&ouml;tigen Rechte verf&uuml;gen.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("NO_RIGHT_TO_REMOVE_USER_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um die Gruppeneigenschaften zu &auml;ndern.", dialog.WARNING, null, 350, 200);
+
+		} else if (err.message.indexOf("NO_RIGHT_TO_ADD_USER_PERMISSION") != -1) {
+			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um die Gruppeneigenschaften zu &auml;ndern.", dialog.WARNING, null, 350, 200);
+
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
 		}
