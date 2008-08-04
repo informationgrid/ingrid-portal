@@ -1220,7 +1220,7 @@ function disableInputOnWrongPermission() {
 		var hasWritePermission = message.node.userWritePermission;
 //		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
 //		var hasWriteTreePermission = message.node.userWriteTreePermission;
-		dojo.debug("hasWritePermission: "+hasWritePermission);
+//		dojo.debug("hasWritePermission: "+hasWritePermission);
 
 		if (hasWritePermission) {
 			// Enable all input elements
@@ -1244,7 +1244,6 @@ function disableInputOnWrongPermission() {
 			dojo.lang.forEach(adrClass2UiInputElements, _enableInputElement);
 			dojo.lang.forEach(adrClass3UiInputElements, _enableInputElement);
 
-			dojo.debug("enabling html links...");
 			dojo.lang.forEach(htmlLinks, _enableHtmlLink);
 
 			_enableInputElement("thesaurusFreeTermsAddButton");
@@ -1272,7 +1271,6 @@ function disableInputOnWrongPermission() {
 			dojo.lang.forEach(adrClass2UiInputElements, _disableInputElement);
 			dojo.lang.forEach(adrClass3UiInputElements, _disableInputElement);
 
-			dojo.debug("disabling html links...");
 			dojo.lang.forEach(htmlLinks, _disableHtmlLink);
 
 			_disableInputElement("thesaurusFreeTermsAddButton");

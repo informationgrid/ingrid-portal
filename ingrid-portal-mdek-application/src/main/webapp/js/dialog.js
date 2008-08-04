@@ -18,6 +18,11 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
 {
   dojo.require("ingrid.widget.FloatingPane");
 
+  // Limit max window size to the current viewport size
+  var viewPort = dojo.html.getViewport();
+  if (viewPort.width < width) { width = viewPort.width; }
+  if (viewPort.height < height) { height = viewPort.height; }
+
   // define params
   var params = {};
   params['displayCloseAction'] = true;
@@ -117,6 +122,11 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
   // define params
   if (!width) width = 254;
   if (!height) height = 170;
+
+  // Limit max window size to the current viewport size
+  var viewPort = dojo.html.getViewport();
+  if (viewPort.width < width) { width = viewPort.width; }
+  if (viewPort.height < height) { height = viewPort.height; }
 
   var params = {};
   params['displayCloseAction'] = true;
