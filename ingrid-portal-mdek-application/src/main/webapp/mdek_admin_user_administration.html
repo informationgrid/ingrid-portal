@@ -15,7 +15,7 @@ var requiredElements = [["userDataAddressLink", "userDataAddressLinkLabel"],
 
 _container_.addOnLoad(function() {
 	initializeUserTree();
-	initializeGroupList();
+	initializeGroupList(true);
 
 	dojo.widget.byId("userDataAddressLink").isValid = function() { return !this.isEmpty(); };
 });
@@ -90,8 +90,8 @@ function initializeUserTree() {
 	dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { treeNodeSelected(data.node); });
 }
 
-function initializeGroupList() {
-	var def = getAllGroups();
+function initializeGroupList(includeCatAdminGroup) {
+	var def = getAllGroups(includeCatAdminGroup);
 
 	def.addCallback(function(groupList) {
 		var list = [];
@@ -104,6 +104,7 @@ function initializeGroupList() {
 	dojo.widget.byId("userDataGroup").isValid = function() {
 		return (this.getValue() != "");
 	}
+	return def;
 }
 
 // 'Delete user' button function
@@ -385,20 +386,25 @@ function treeNodeSelected(treeNode) {
 
 // Updates the input elements with the data from 'treeNode'
 function updateInputElements(treeNode) {
+
 	if (treeNode.role == 1) {
 		// Standards for catAdmin
+		var def = initializeGroupList(true);
 		dojo.widget.byId("userDataGroup").disable();
 
 	} else {
+		var def = initializeGroupList(false);
 		dojo.widget.byId("userDataGroup").enable();	
 	}
 
-	dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
-	dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
-	dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
-	dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
-	currentSelectedAddressId = treeNode.addressUuid;
-	currentSelectedUser = treeNode;
+	def.addCallback(function() {
+		dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
+		dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
+		dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
+		dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
+		currentSelectedAddressId = treeNode.addressUuid;
+		currentSelectedUser = treeNode;
+	});
 }
 
 
@@ -423,10 +429,11 @@ scriptScope.searchForAddress = function() {
 	});
 }
 
-function getAllGroups() {
+
+function getAllGroups(includeCatAdminGroup) {
 	var deferred = new dojo.Deferred();
 
-	SecurityService.getGroups(true, {
+	SecurityService.getGroups(includeCatAdminGroup, {
 		callback: function(groupList) {
 			deferred.callback(groupList);
 		},

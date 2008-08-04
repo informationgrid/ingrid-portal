@@ -429,8 +429,6 @@ UtilAddress.navObjectAddressReferences = function() {
 	var totalNumHits = UtilAddress.objectAddressRefPageNav.totalNumHits;
 	var tableStore = dojo.widget.byId("associatedObjName").store;
 
-	tableStore.clearData();
-
 	// TODO Do we need to get the uuid from somewhere else?
 	AddressService.fetchAddressObjectReferences(currentUdk.uuid, curPos, 20, {
 			preHook: UtilDWR.enterLoadingState,
@@ -438,7 +436,8 @@ UtilAddress.navObjectAddressReferences = function() {
 			callback: function(adr){
 //				dojo.debugShallow(adr);
 
-				// -- Links --
+				tableStore.clearData();
+
 				var unpubLinkTable = adr.linksFromObjectTable;
 				var pubLinkTable = adr.linksFromPublishedObjectTable;
 				dojo.lang.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
