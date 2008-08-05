@@ -49,6 +49,13 @@ function deleteGroup(group) {
 	return def;
 }
 
+function reloadCurrentGroup() {
+	var groupList = dojo.widget.byId("groups");
+	var selectedGroups = groupList.getSelectedData();
+	if (selectedGroups.length == 1) {
+		updateAllInputData(selectedGroups[0]);
+	}
+}
 
 function addObjectToPermissionTable(obj) {
 	var objStore = dojo.widget.byId("groupDataRightsObjectsList").store;
@@ -154,64 +161,24 @@ scriptScope.saveGroup = function() {
 			]);
 		});
 
+		def.addErrback(function(err) {
+			dojo.debug("Error: "+err);
+			if (err && err.message) {
+				if (err.message.indexOf("NO_RIGHT_TO_REMOVE_USER_PERMISSION") != -1
+				 || err.message.indexOf("NO_RIGHT_TO_ADD_USER_PERMISSION") != -1
+				 || err.message.indexOf("NO_RIGHT_TO_REMOVE_OBJECT_PERMISSION") != -1
+				 || err.message.indexOf("NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION") != -1) {
+					reloadCurrentGroup();
+				}
+			}
+		});
+
 	} else {
 		// zero or multiple groups selected
 		createNewGroup(groupName);
 	}
 }
 
-
-scriptScope.saveObjectPermissions = function() {
-//	var group = dojo.widget.byId("groups").getSelectedData[0];
-	var group = curSelectedGroupDetails;
-	var objs = dojo.widget.byId("groupDataRightsObjectsList").store.getData();
-
-	var permissionList = [];
-
-	dojo.lang.forEach(objs, function(obj){
-//		dojo.debugShallow(obj);
-		var id = obj.uuid;
-		var permissionType = dojo.byId(obj.uuid+"_subtree").checked ? "WRITE_TREE" : "WRITE_SINGLE";
-		permissionList.push( { uuid:id, permission:permissionType } );
-	});
-
-	group.objectPermissions = permissionList;
-	var def = storeGroup(group, true);
-
-	def.addCallback(function(storedGroup) {
-		curSelectedGroupDetails = storedGroup;
-
-		dialog.show(message.get("dialog.storeGroupTitle"), message.get("dialog.storeGroupSuccess"), dialog.INFO, [
-	    	{ caption: message.get("general.ok"),  action: function() {} }
-		]);
-//		updateAllInputData(item);
-	});
-}
-
-scriptScope.saveAddressPermissions = function() {
-	var group = curSelectedGroupDetails;
-	var adrs = dojo.widget.byId("groupDataRightsAddressesList").store.getData();
-
-	var permissionList = [];
-
-	dojo.lang.forEach(adrs, function(adr){
-		var id = adr.uuid;
-		var permissionType = dojo.byId(adr.uuid+"_subtree").checked ? "WRITE_TREE" : "WRITE_SINGLE";
-		permissionList.push( { uuid:id, permission:permissionType } );
-	});
-
-	group.addressPermissions = permissionList;
-	var def = storeGroup(group, true);
-
-	def.addCallback(function(storedGroup) {
-		curSelectedGroupDetails = storedGroup;
-//		updateAllInputData(item);
-
-		dialog.show(message.get("dialog.storeGroupTitle"), message.get("dialog.storeGroupSuccess"), dialog.INFO, [
-	    	{ caption: message.get("general.ok"),  action: function() {} }
-		]);
-	});
-}
 
 // 'Add Object' button function.
 scriptScope.addObject = function() {
@@ -464,7 +431,7 @@ function storeGroup(group, refetch) {
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 */
-			deferred.errback(err);			
+			deferred.errback(errMsg);			
 		}
 	});
 
@@ -858,19 +825,6 @@ function displayDeleteGroupError(err) {
 					</div>
 					<!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
 				</div>
-
-<!-- 		
-				<div class="inputContainer">
-					<span class="button w925" style="height:20px !important;">
-						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Berechtigungen speichern" onClick="javascript:scriptScope.saveObjectPermissions();">Berechtigungen speichern</button>
-						</span>
-						<span id="adminGroupObjectsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-							<img src="img/ladekreis.gif" />
-						</span>
-					</span>
-				</div>
- -->
 			</div>
 			<!-- CONTENT BLOCK 2 END -->
 	
@@ -935,18 +889,6 @@ function displayDeleteGroupError(err) {
 					<!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
 				</div>
 
-<!-- 
-				<div class="inputContainer">
-					<span class="button w925" style="height:20px !important;">
-						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Berechtigungen speichern" onClick="javascript:scriptScope.saveAddressPermissions();">Berechtigungen speichern</button>
-						</span>
-						<span id="adminGroupAddressesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-							<img src="img/ladekreis.gif" />
-						</span>
-					</span>
-				</div>
- -->
 			</div>
 			<!-- CONTENT BLOCK 2 END -->
 		</div>
