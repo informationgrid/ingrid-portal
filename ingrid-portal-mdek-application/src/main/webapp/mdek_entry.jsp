@@ -59,10 +59,10 @@ dojo.require("ingrid.widget.Form");
 
 // click handler for main menus
 var menus = [{menu:"page1", submenus:[]}, 
-			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]}
+			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]},
+			 {menu:"page3", submenus:["page3", "page3Sub2"]}
 // The following pages are not implemented yet
-//			 {menu:"page3", submenus:[]},
-//			 {menu:"page4", submenus:["page4", "page4Sub2"]}
+//			 {menu:"page4", submenus:[]},
 			];
 var currentMenu = null;
 var currentSubMenu = new Array();
@@ -189,10 +189,10 @@ function hideSplash(){
   	    <ul>
   	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Hierarchie & Erfassung"><script>document.write(message.get("menu.main.hierarchyAcquisition"))</script></a></li>
   	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Recherche"><script>document.write(message.get("menu.main.research"))</script></a></li>
+  	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Qualit&auml;tssicherung">Qualit&auml;tssicherung</a></li>
 <!-- The following pages are not implemented yet -->
 <!-- 
-  	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Statistik">Statistik</a></li>
-  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Qualitätssicherung">Qualitätssicherung</a></li>
+  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Statistik">Statistik</a></li>
 -->
   	    </ul>
   	  </div>
@@ -205,15 +205,15 @@ function hideSplash(){
   	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Datenbank-Suche"><script>document.write(message.get("menu.main.research.databaseSearch"))</script></a></li>
   	    </ul>
   	  </div>
-<!-- The following pages are not implemented yet -->
-<!-- 
-	  <div id="page3Subnavi" class="subnavi" style="display:none"></div>
-	  <div id="page4Subnavi" class="subnavi" style="display:none">
+	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
-   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="Bearbeitung/Verantwortlich">Bearbeitung/Verantwortlich</a></li>
-  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Qualitätssicherung">Qualitätssicherung</a></li>
+   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" class="current" title="Bearbeitung/Verantwortlich">Bearbeitung/Verantwortlich</a></li>
+  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Qualit&auml;tssicherung">Qualit&auml;tssicherung</a></li>
   	    </ul>
   	  </div>
+<!-- The following pages are not implemented yet -->
+<!-- 
+	  <div id="page4Subnavi" class="subnavi" style="display:none"></div>
  -->
     </div>
   
@@ -2406,12 +2406,12 @@ function hideSplash(){
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="true" executeScripts="true"></div>
 
+  <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="false" executeScripts="true"></div>
+  <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.html" preload="false" executeScripts="true"></div>
 
 <!-- the following pages are not implemented yet -->
 <!--
-  <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
-  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="true"></div>
-  <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.html" preload="true"></div>
+  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="true"></div>
  -->
   </div>
 

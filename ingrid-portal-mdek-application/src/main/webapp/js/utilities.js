@@ -492,7 +492,7 @@ UtilAddress.createAddressTitle = function(adr) {
 	if (title == null)
 		return message.get("tree.newAddressName");
 	else
-		return dojo.string.trim(title);
+		return dojo.string.escape("html", dojo.string.trim(title));
 }
 
 

@@ -1,12 +1,16 @@
 package de.ingrid.mdek.dwr.services;
 
+import java.util.ArrayList;
+
 import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
+import de.ingrid.mdek.beans.query.AddressWorkflowResultBean;
 import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
 import de.ingrid.mdek.beans.query.SearchResultBean;
 
 public interface QueryService {
@@ -21,6 +25,9 @@ public interface QueryService {
 
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
+
+	public ArrayList<AddressWorkflowResultBean> queryAddressesForWorkflowManagement();
+	public ArrayList<ObjectWorkflowResultBean> queryObjectsForWorkflowManagement();
 
 	public FileTransfer queryHQLToCSV(String hqlQuery);
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);

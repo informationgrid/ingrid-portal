@@ -2160,7 +2160,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	var title = "";
 	var objClass; 
 	if (nodeData.nodeAppType == "O") {
-		title = nodeData.objectName;
+		title = dojo.string.escape("html", nodeData.objectName);
 		objClass = nodeData.objectClass;
 	} else if (nodeData.nodeAppType == "A") {
 		title = UtilAddress.createAddressTitle(nodeData);
