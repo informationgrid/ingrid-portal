@@ -548,7 +548,7 @@ public class SNSService {
 
     	for (Occurrence occ: topic.getOccurrence()) {
     		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("descriptionOcc")) {
-    			if (occ.getScope().getTopicRef()[0].getHref().endsWith("de"))
+    			if (occ.getScope().getTopicRef()[0].getHref().endsWith("de") && occ.getResourceData() != null)
     				t.setDescription(occ.getResourceData().get_value());
 
     		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalAtOcc")) {        		

@@ -13,7 +13,7 @@ _container_.addOnLoad(function() {
 	hideResults();
 
 	dojo.widget.byId("assistantURL").setValue("http://");
-	dojo.widget.byId("assistantNumWords").setValue(200);
+	dojo.widget.byId("assistantNumWords").setValue(1000);
 
     // Pressing 'enter' on the input field is equal to a button click
     dojo.event.connect(dojo.widget.byId("assistantURL").domNode, "onkeypress",
@@ -282,7 +282,10 @@ scriptScope.startSearch = function() {
 			}
 		},
 
-		errorHandler: function(msg) {
+		errorHandler: function(msg, err) {
+//			dojo.debug("Error: "+msg);
+//			dojo.debugShallow(err);
+
 			hideLoadingZone();
 			if (msg == "SNS_TIMEOUT") {
 				dialog.show(message.get("general.error"), message.get("sns.timeoutError"), dialog.WARNING);
@@ -296,6 +299,12 @@ scriptScope.startSearch = function() {
 		}
 	});
 }
+
+
+scriptScope.closeDialog = function() {
+	_container_.closeWindow();
+}
+
 </script>
 </head>
 
@@ -412,7 +421,7 @@ scriptScope.startSearch = function() {
 						<button id="createObjWizardAcceptButton" dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addValuesToObject();">&Uuml;bernehmen</button>
 					</span>
 					<span style="float:right;">
-						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:dialog.close(this);">Abbrechen</button>
+						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();">Abbrechen</button>
 					</span>
 				</span>
 			</div>

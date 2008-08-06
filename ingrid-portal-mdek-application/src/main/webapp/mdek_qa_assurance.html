@@ -1,67 +1,131 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
+<script type="text/javascript">
+var scriptScope = this;
+
+_container_.addOnLoad(function() {
+	initTables();
+});
+
+function initTables() {
+	var d1 = getWfAddresses();
+	var d2 = getWfObjects();
+
+	var l1 = new dojo.DeferredList([d1, d2], false, false, true);
+	l1.addCallback(function (resultList) {
+		var adrList = resultList[0][1];
+		var objList = resultList[1][1];
+
+		// Set the main list
+		var res = objList.concat(adrList);
+		UtilList.addTableIndices(res);
+		dojo.widget.byId("qaAssuranceEditorsTable").store.setData(res);
+	});
+}
+
+function getWfObjects() {
+	var def = new dojo.Deferred();
+
+	QueryService.queryObjectsForWorkflowManagement({
+		callback: function(wfObjResultList) {
+			dojo.lang.forEach(wfObjResultList, prepareEntryFromWfObjectResult);
+			prepareWfObjectResultListForDisplay(wfObjResultList);
+			def.callback(wfObjResultList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function prepareEntryFromWfObjectResult(wfResult) {
+	wfResult.title = dojo.string.escape("html", wfResult.object.objectName);
+	wfResult.uuid = wfResult.object.uuid;
+	wfResult.objectClass = wfResult.object.objectClass;
+	wfResult.assignedUserTitle = "not implemented yet!";
+}
+
+function prepareWfObjectResultListForDisplay(wfObjResultList) {
+	UtilList.addObjectLinkLabels(wfObjResultList);
+	UtilList.addIcons(wfObjResultList);
+}
+
+
+
+
+function getWfAddresses() {
+	var def = new dojo.Deferred();
+
+	QueryService.queryAddressesForWorkflowManagement({
+		callback: function(wfAdrResultList) {
+			dojo.lang.forEach(wfAdrResultList, prepareEntryFromWfAddressResult);
+			prepareWfAddressResultListForDisplay(wfAdrResultList);
+			def.callback(wfAdrResultList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function prepareEntryFromWfAddressResult(wfResult) {
+	wfResult.title = UtilAddress.createAddressTitle(wfResult.address);
+	wfResult.uuid = wfResult.address.uuid;
+	wfResult.addressClass = wfResult.address.uuid;
+	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+}
+
+function prepareWfAddressResultListForDisplay(wfAdrResultList) {
+	UtilList.addAddressLinkLabels(wfAdrResultList);
+	UtilList.addIcons(wfAdrResultList);
+}
+
+</script>
 </head>
 
 <body>
+<div dojoType="ContentPane" layoutAlign="client">
 
-  <!-- CONTENT START -->
-  <form method="get" id="contentForm" action="">
-  <div dojoType="ContentPane" layoutAlign="client">
-  
-    <div id="qaAssuranceContentSection" class="contentBlockWhite top wideBlock">
-      <div id="winNavi">
-        <a href="#" title="Hilfe">[?]</a>
-  	  </div>
-  	  <div id="editors" class="content">
+	<div class="contentBlockWhite top wideBlock">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+
+		<div class="content">
         
-        <div class="spacer"></div>
-        <div class="spacer"></div>
-  	      	    
-        <span class="label"><label>Zur Qualitätssicherung angemeldete Objekte / Adressen</label></span>
-        <div class="inputContainer">
-    	    <table id="qaAssuranceEditorsTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTable wide relativePos">
-    	      <thead>
-    		      <tr>
-          			<th field="type" dataType="String" width="32"></th>
-          			<th field="name" dataType="String" width="340">Name</th>
-          			<th field="assignedTo" dataType="String" width="130">Bearbeiter</th>
-          			<th field="qs_status" dataType="String" width="210">Status</th>
-          			<th field="qs_type" dataType="String" width="160">Typ</th>
-          			<th field="date" dataType="String" width="100">Zuweisungsdatum</th>
-    		      </tr>
-    	      </thead>
-    	      <tbody>
-    		      <tr value="1">
-    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=O" title="Objekt &ouml;ffnen: Objekt 1">Objekt 1</a></td>
-    		        <td>Gerdes, G&uuml;nther</td>
-    		        <td>&uuml;berweisen an Qualit&auml;tssicherung</td>
-    		        <td>Neu angelegt</td>
-    		        <td>11.07.2006</td></tr>
-    		      <tr value="2">
-    		        <td><img src="img/UDK/addr_free_l.gif" width="16" height="16" alt="Person" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=A" title="Adresse &ouml;ffnen: Adresse 1">Adresse 1</a></td>
-    		        <td>Altm&uuml;ller, Reinhard</td>
-    		        <td>bei Bearbeiter</td>
-    		        <td>In Bearbeitung</td>
-    		        <td>-</td></tr>
-    		      <tr value="3">
-    		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=A" title="Adresse &ouml;ffnen: Adresse 2">Adresse 2</a></td>
-    		        <td>Backhaus, Hermann</td>
-    		        <td>r&uuml;ck&uuml;berwiesen an Bearbeiter</td>
-    		        <td>Neu angelegt</td>
-    		        <td>11.07.2006</td></tr>
-    	      </tbody>
-    	    </table>
-        </div>
-  
-      </div>
-    </div>
-  </div>
-  </form>
-  <!-- CONTENT END -->
-
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+	
+			<span class="label"><label>Zur Qualit&auml;tssicherung angemeldete Objekte / Adressen</label></span>
+			<div class="inputContainer">
+		        <div class="tableContainer rows20 wide">
+					<table id="qaAssuranceEditorsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="20" cellspacing="0" class="filteringTable nosort">
+						<thead>
+							<tr>
+								<th nosort="true" field="icon" dataType="String" width="32"></th>
+								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
+								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+								<th nosort="true" field="state" dataType="String" width="210">Status</th>
+								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+								<th nosort="true" field="date" dataType="Date" width="100">Zuweisungsdatum</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div> <!-- tablecontainer end -->
+			</div> <!-- inputContainer end -->
+		</div> <!-- content end -->
+	</div> <!-- contentBlock end -->
+</div> <!-- contentPane end -->
 </body>
 </html>
