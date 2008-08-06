@@ -83,6 +83,10 @@ dojo.widget.defineWidget(
 		},
 
 		setValue: function(value) {
+			if (dojo.render.html.ie && value == null) {
+				value = "";
+			}
+
 			var ee = this[this.mode.toLowerCase()];				
 			if (this.flags.decimal && value) {
 				value += '';

@@ -5,25 +5,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
-</head>
+
+<script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 <script>
 
 function loadit() {
-  var queryString = '<%= request.getQueryString() == null ? "" : request.getQueryString() %>';
+	SecurityService.getCurrentUser({
+		callback: function(userData) {
+			forwardToMdekEntry();
+		},
+		errorHandler: function(errMsg, err) {
+			alert("Die Applikation kann nicht geöffnet werden. Bei der Anmeldung ist folgender Fehler aufgetreten: "+errMsg);
+			document.location.href='closeWindow.jsp';
+		}
+	});
+};
 
-  if (queryString.length == 0) {
-  	document.location.href="mdek_entry.jsp";
+function forwardToMdekEntry() {
+	// Forward to mdek_entry.jsp with the current queryString (used for the language parameter)
+	var queryString = '<%= request.getQueryString() == null ? "" : request.getQueryString() %>';
 
-  } else {
-  	document.location.href="mdek_entry.jsp?"+queryString;
-  }
+	if (queryString.length == 0) {
+		document.location.href="mdek_entry.jsp";
+
+	} else {
+		document.location.href="mdek_entry.jsp?"+queryString;
+	}
 }
 
-;
 </script>
+</head>
 
-<body onload="window.setTimeout('loadit()', 1000);">
+<body onload="window.setTimeout('loadit()', 100);">
 
 <div id="splash" style="position: absolute; top: 0px; width: 100%;z-index: 100; height:2000px;background-color:#FFFFFF">
 <div style="position: relative; width: 100%;z-index: 100;top:200px">
