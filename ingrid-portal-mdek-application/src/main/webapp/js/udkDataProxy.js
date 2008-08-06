@@ -404,7 +404,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 	// TODO Check if we are in a state where it's safe to create a node?
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
 	var deferred = udkDataProxy.checkForUnsavedChanges();
-	var loadErrback = function() {msg.resultHandler.errback();}
+	var loadErrback = function(err) {msg.resultHandler.errback(err);}
 	var loadCallback = function() {
 		ObjectService.createNewNode(nodeId,
 			{

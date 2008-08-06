@@ -22,8 +22,6 @@ menuEventHandler.handleNewEntity = function(mes) {
 			// publish a createObject request and attach the newly created node if it was successful
 			deferred.addCallback(function(res){
 				attachNewNode(selectedNode, res);
-
-				// TODO Remove comment when the wizad is implemented
 				menuEventHandler.openCreateObjectWizardDialog();
 			});
 			deferred.addErrback(function(err){
@@ -823,6 +821,9 @@ function displayErrorMessage(err) {
 		}
 
 		if (err.message.indexOf("OPERATION_CANCELLED") != -1) {
+			return;
+
+		} else if (err.message.indexOf("LOAD_CANCELLED") != -1) {
 			return;
 
 		} else if (err.message.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
