@@ -267,7 +267,7 @@ scriptScope.startSearch = function() {
 	var url = dojo.string.trim(dojo.widget.byId("assistantURL").getValue());
 	var numWords = dojo.widget.byId("assistantNumWords").getValue();
 
-	SNSService.autoClassifyURL(url, numWords, null, true, null, {
+	SNSService.autoClassifyURL(url, numWords, null, false, null, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 
