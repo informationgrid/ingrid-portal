@@ -36,15 +36,16 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
                 log.error("Failed to start iBus communication.", e);
             }
             
-            try {
+            /*            try {
                 StdSchedulerFactory sf = new StdSchedulerFactory();
                 sf.initialize("quartz.properties");
                 sched = sf.getScheduler();
                 sched.start();
+                
             } catch (SchedulerException e) {
                 log.error("Failed to start scheduler.", e);
             }
-            
+            */
         }
     }
 

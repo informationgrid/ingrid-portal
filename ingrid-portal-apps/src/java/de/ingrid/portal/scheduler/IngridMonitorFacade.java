@@ -38,7 +38,7 @@ public class IngridMonitorFacade {
 
 	private IngridMonitorFacade() throws SchedulerException {
 		StdSchedulerFactory sf = new StdSchedulerFactory();
-		sf.initialize("quartz.monitor.properties");
+		sf.initialize("quartz.properties");
 		scheduler = sf.getScheduler();
 		scheduler.start();
 
