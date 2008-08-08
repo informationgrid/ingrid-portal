@@ -21,6 +21,7 @@ import de.ingrid.portal.forms.MeasuresSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
@@ -28,6 +29,7 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 
 public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -166,8 +168,16 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         } else {
             // check for "Zeige alle" for a provider !
-            Object providers = query.get("provider");
-            if (providers != null) {
+        	ArrayList<FieldQuery> providers = (ArrayList<FieldQuery>)query.get("provider");
+            ArrayList<String> resultsForProviderList = new ArrayList<String>();
+        	if (providers != null) {
+        		for (FieldQuery fq : providers) {
+        			String providerName = UtilsDB.getProviderFromKey(fq.getFieldValue());
+        			if (!resultsForProviderList.contains(providerName)) {
+        				resultsForProviderList.add(providerName);
+        			}
+        		}
+            	context.put("resultsForProviderList", resultsForProviderList);
                 context.put("providerOnly", "1");
             }
         }

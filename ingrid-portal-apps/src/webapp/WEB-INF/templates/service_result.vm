@@ -63,7 +63,18 @@
 		#if($velocityCount > 1)
 			<div class="line"><hr /></div>
 		#elseif($providerOnly)
-			#set ($filterSubject = "$MESSAGES.getString('common.result.provider') '$rs.provider'")
+		    #set ($filterProviders = "")
+		    #set ($firstFilterProvider = "1")
+		    #foreach($filterProvider in $resultsForProviderList)
+				#if($firstFilterProvider == '1')
+		    		#set ($firstFilterProvider = "0")
+					#set ($filterProviders = "'$filterProvider'")
+	    		#else
+					#set ($filterProviders = "$filterProviders, '$filterProvider'")
+		    	#end
+		    #end
+			
+			#set ($filterSubject = "$MESSAGES.getString('common.result.provider') $filterProviders")
 			<div class="resultset_partner_group">
 				<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
 			</div>

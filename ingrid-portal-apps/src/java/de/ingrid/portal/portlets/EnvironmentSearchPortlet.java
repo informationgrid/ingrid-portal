@@ -86,8 +86,12 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         // check for portal restricted to only one partner
         String partnerRestriction = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
-
-        if (partnerRestriction == null || partnerRestriction.length() == 0) {
+        boolean isPartnerRestrictionEnabled = false;
+        if (partnerRestriction != null && partnerRestriction.length() > 0) {
+        	isPartnerRestrictionEnabled = true;
+        }
+        
+        if (!isPartnerRestrictionEnabled) {
             // get partners, if not restricted
             context.put("partnerList", UtilsDB.getPartners());
         } else {
@@ -120,7 +124,7 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // preset the provider selected in the simple search form
-        if (partnerRestriction != null && partnerRestriction.length() > 0) {
+        if (isPartnerRestrictionEnabled) {
             // get selected provider
             IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                     IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
@@ -148,6 +152,14 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
                 // generated also for this one (e.g.
                 // for page navigation)
                 af.setInput(EnvironmentSearchForm.STORAGE_PROVIDER, subjects);
+                /*
+                 * If partner restriction is enabled, the partner list box is filled 
+                 * with providers. Therefore we set the partner field to the provider
+                 * to ensure the selection of the selected provider in the listbox.
+                 */
+                if (isPartnerRestrictionEnabled) {
+                	af.setInput(EnvironmentSearchForm.FIELD_PARTNER, subjects);
+                }
             }
             af.setInput(EnvironmentSearchForm.FIELD_GROUPING, "none");
         }
