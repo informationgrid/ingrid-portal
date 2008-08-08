@@ -34,6 +34,8 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
         }
 
         // start monitor scheduler
+        // this is the only quartz komponent for now
+        // TODO: refactor this to be monitor unspecific
         IngridMonitorFacade monitor = IngridMonitorFacade.instance();
         if (monitor == null) {
         	log.error("Failed to start ingrid component monitor component.");

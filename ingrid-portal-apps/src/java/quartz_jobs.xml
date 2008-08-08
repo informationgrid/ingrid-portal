@@ -20,7 +20,6 @@
                 <job-group>DEFAULT</job-group>
                 <repeat-count>-1</repeat-count>
                 <repeat-interval>3600000</repeat-interval>
-<!--                 <misfire-instruction>MISFIRE_INSTRUCTION_FIRE_NOW</misfire-instruction> -->
             </simple>
         </trigger>
     </job>
@@ -42,7 +41,6 @@
                 <job-group>DEFAULT</job-group>
                 <repeat-count>-1</repeat-count>
                 <repeat-interval>3600000</repeat-interval>
-                <misfire-instruction>MISFIRE_INSTRUCTION_FIRE_NOW</misfire-instruction>
             </simple>
         </trigger>
     </job>
