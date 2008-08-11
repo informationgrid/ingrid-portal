@@ -62,7 +62,7 @@ dojo.widget.defineWidget(
 	    	dojo.widget.Select.prototype.setValue.apply(this, [""]);	    
 	    }
     } else {
-      dojo.debug("ingrid.widget.Select.setValue: initialization not finished.");
+//      dojo.debug("ingrid.widget.Select.setValue: initialization not finished.");
 	}
   },
 

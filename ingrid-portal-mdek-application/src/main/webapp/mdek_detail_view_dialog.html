@@ -238,7 +238,11 @@ function renderTextWithTitle(val, title) {
 }
 
 function removeEvilTags(val) {
-	return val.replace(/<(?!b>|\/b>|i>|\/i>|u>|\/u>|p>|\/p>|br>|br\/>|br \/>|strong>|\/strong>|ul>|\/ul>|ol>|\/ol>|li>|\/li>)[^>]*>/gi, '');
+	if (val) {
+		return val.replace(/<(?!b>|\/b>|i>|\/i>|u>|\/u>|p>|\/p>|br>|br\/>|br \/>|strong>|\/strong>|ul>|\/ul>|ol>|\/ol>|li>|\/li>)[^>]*>/gi, '');
+	} else {
+		return "";
+	}
 }
 
 function renderAddressList(list) {
