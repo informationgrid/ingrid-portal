@@ -406,7 +406,7 @@ function hideSplash(){
 	              <div class="inputContainer required">
 					<span id="uiElementN021" type="required">
 						<span id="ref1ObjectIdentifierLabel" class="label required"><label for="ref1ObjectIdentifier" onclick="javascript:dialog.showContextHelp(arguments[0], 3565)"><script>document.write(message.get("ui.obj.type1.identifier"))</script>*</label></span>
-	                	<span class="input"><input type="text" maxlength="255" id="ref1ObjectIdentifier" class="w667" dojoType="ingrid:ValidationTextBox" /></span>
+	                	<span class="input"><input type="text" maxlength="255" required="true" id="ref1ObjectIdentifier" class="w667" dojoType="ingrid:ValidationTextBox" /></span>
 					</span>
 				  </div>
 
@@ -1613,11 +1613,11 @@ function hideSplash(){
 	              <div id="extraInfoConformityTableContainer" class="inputContainer" displaytype="exclude">
 				  	<span id="uiElementN024" type="required">
 		                <span id="extraInfoConformityTableLabel" class="label required"><label for="extraInfoConformityTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.title"))</script>*</label></span>
-	
+
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="extraInfoConformityTableEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" style="width:120px;" listId="505" id="extraInfoConformityLevelEditor"></div>
-		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w478" widgetId="extraInfoConformitySpecificationEditor"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:420px;" listId="6000" id="extraInfoConformityLevelEditor"></div>
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w224" widgetId="extraInfoConformitySpecificationEditor"></div>
 		                    </div>
 		            	    <table id="extraInfoConformityTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -1627,8 +1627,8 @@ function hideSplash(){
 		            		      </tr>
 		            	      </thead>
 							  <colgroup>
-							    <col width="150">
-							    <col width="513">
+							    <col width="440">
+							    <col width="225">
 							  </colgroup>
 		            	      <tbody>
 		            	      </tbody>
@@ -1716,8 +1716,8 @@ function hideSplash(){
 	
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="availabilityUsageLimitationTableEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" style="width:120px;" listId="505" id="availabilityUsageLimitationLimitEditor"></div>
-		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w478" widgetId="availabilityUsageLimitationRequirementEditor"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:420px;" listId="6010" id="availabilityUsageLimitationLimitEditor"></div>
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w224" widgetId="availabilityUsageLimitationRequirementEditor"></div>
 		                    </div>
 		            	    <table id="availabilityUsageLimitationTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -1727,8 +1727,8 @@ function hideSplash(){
 		            		      </tr>
 		            	      </thead>
 							  <colgroup>
-							    <col width="150">
-							    <col width="513">
+							    <col width="440">
+							    <col width="225">
 							  </colgroup>
 		            	      <tbody>
 		            	      </tbody>
