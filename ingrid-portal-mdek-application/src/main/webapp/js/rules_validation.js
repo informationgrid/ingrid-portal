@@ -23,8 +23,8 @@ dojo.addOnLoad(function() {
 	dojo.widget.byId("headerAddressType2Lastname").isValid = function() { return !this.isMissing(); };
 	dojo.widget.byId("headerAddressType3Lastname").isValid = function() { return !this.isMissing(); };
 
-	// Ref1 object identifier must not be empty
-	dojo.widget.byId("ref1ObjectIdentifier").isValid = function() { return !this.isMissing(); };
+	// Ref1 object identifier may be empty
+//	dojo.widget.byId("ref1ObjectIdentifier").isValid = function() { return !this.isMissing(); };
 
 	// If timeRefIntervalNum is not empty, timeRefIntervalUnit must not be empty and vice versa
 	var intervalNumWidget = dojo.widget.byId("timeRefIntervalNum");

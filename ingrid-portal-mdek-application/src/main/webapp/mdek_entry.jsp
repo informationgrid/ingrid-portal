@@ -406,7 +406,7 @@ function hideSplash(){
 	              <div class="inputContainer required">
 					<span id="uiElementN021" type="required">
 						<span id="ref1ObjectIdentifierLabel" class="label required"><label for="ref1ObjectIdentifier" onclick="javascript:dialog.showContextHelp(arguments[0], 3565)"><script>document.write(message.get("ui.obj.type1.identifier"))</script>*</label></span>
-	                	<span class="input"><input type="text" maxlength="255" required="true" id="ref1ObjectIdentifier" class="w667" dojoType="ingrid:ValidationTextBox" /></span>
+	                	<span class="input"><input type="text" maxlength="255" id="ref1ObjectIdentifier" class="w667" dojoType="ingrid:ValidationTextBox" /></span>
 					</span>
 				  </div>
 

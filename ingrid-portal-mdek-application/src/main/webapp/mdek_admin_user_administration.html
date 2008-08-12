@@ -17,7 +17,7 @@ _container_.addOnLoad(function() {
 	initializeUserTree();
 	initializeGroupList(true);
 
-	dojo.widget.byId("userDataAddressLink").isValid = function() { return !this.isEmpty(); };
+	dojo.widget.byId("userDataAddressLink").isValid = function() { return (!this.isEmpty() && this.getValue() != "Neuer Benutzer"); };
 });
 
 function setTreeRoot(catAdmin) {
