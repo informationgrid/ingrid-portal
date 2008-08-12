@@ -78,6 +78,7 @@
 	"dialog.browserFunctionDisabled":"Diese Funktionalit&auml;t ist in der MDEK deaktiviert.",
 
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
+	"dialog.inputInvalidHtmlTagError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Eines der Eingabefelder enth&auml;lt ung&uuml;ltige HTML Tags. Es sind ausschlie&szlig;lich folgende Tags erlaubt: 'b, i, u, p, br, strong, ul, ol, li'.",
 	"dialog.generalError":"Beim Ausf&uuml;hren der Aktion ist folgender Fehler aufgetreten: '%{0}'",
 	"dialog.undefinedError":"Beim Ausf&uuml;hren der Aktion ist ein Fehler aufgetreten.",
 	"dialog.sessionTimeoutError":"Ihre Session ist abgelaufen. Bitte schliessen Sie die Anwendung und melden Sie sich erneut an.",

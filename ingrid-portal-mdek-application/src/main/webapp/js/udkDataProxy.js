@@ -480,11 +480,11 @@ udkDataProxy.handleSaveRequest = function(msg)
 }
 
 udkDataProxy._handleSaveAddressRequest = function(msg) {
-
 	// Address validity check	
-	if (!checkValidityOfAddressInputElements()){
+	var valid = checkValidityOfAddressInputElements();
+	if (valid != "VALID"){
 		if (msg && msg.resultHandler) {
-			msg.resultHandler.errback(new Error("INPUT_INVALID_ERROR"));
+			msg.resultHandler.errback(new Error(valid));
 		}
 		return;
 	}
@@ -525,9 +525,10 @@ udkDataProxy._handleSaveAddressRequest = function(msg) {
 
 
 udkDataProxy._handleSaveObjectRequest = function(msg) {
-	if (!checkValidityOfInputElements()){
+	var valid = checkValidityOfInputElements();
+	if (valid != "VALID"){
 		if (msg && msg.resultHandler) {
-			msg.resultHandler.errback(new Error("INPUT_INVALID_ERROR"));
+			msg.resultHandler.errback(new Error(valid));
 		}
 		return;
 	}

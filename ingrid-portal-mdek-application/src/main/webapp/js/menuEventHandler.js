@@ -611,8 +611,15 @@ menuEventHandler.handleFinalSave = function(msg) {
 }	
 
 menuEventHandler._handleFinalSaveObject = function(msg) {
-	if (!checkValidityOfInputElements()){
-		dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+	var valid = checkValidityOfInputElements();
+
+	if (valid != "VALID"){
+		if (valid == "INVALID_INPUT_HTML_TAG_INVALID") {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
+			
+		} else {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		}
 		return;
 	}
 
@@ -636,8 +643,15 @@ menuEventHandler._handleFinalSaveObject = function(msg) {
 	}
 }
 menuEventHandler._handleFinalSaveAddress = function(msg) {
-	if (!checkValidityOfAddressInputElements()){
-		dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+	var valid = checkValidityOfAddressInputElements();
+
+	if (valid != "VALID"){
+		if (valid == "INVALID_INPUT_HTML_TAG_INVALID") {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
+			
+		} else {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		}
 		return;
 	}
 
@@ -835,8 +849,17 @@ function displayErrorMessage(err) {
 		} else if (err.message.indexOf("USER_HAS_NO_PERMISSION") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.noPermissionError"), dialog.WARNING);
 
-		} else if (err.message.indexOf("INPUT_INVALID_ERROR") != -1) {
+		} else if (err.message.indexOf("INVALID_REQUIRED_BUT_EMPTY") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		
+		} else if (err.message.indexOf("INVALID_INPUT_INVALID") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		
+		} else if (err.message.indexOf("INVALID_INPUT_OUT_OF_RANGE") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		
+		} else if (err.message.indexOf("INVALID_INPUT_HTML_TAG_INVALID") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
 		
 		} else if (err.message.indexOf("HQL_NOT_VALID") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.hqlQueryInvalidError"), dialog.WARNING);

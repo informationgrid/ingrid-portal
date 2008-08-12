@@ -66,12 +66,16 @@ var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
-					  ["thesaurusTopicsList", "thesaurusTopicsLabel"],
-					  ["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
+					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
 
-var notEmptyTablesClass1 = [["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
+// TODO Add class 2, 4, 5 to isObjectPublishable when needed
+var notEmptyTablesClass1 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"],
+							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
+var notEmptyTablesClass2 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
 var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"],
 							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
+var notEmptyTablesClass4 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
+var notEmptyTablesClass5 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
 
 
 // INSPIRE changes. Only one email address is required 
@@ -107,6 +111,7 @@ function isObjectPublishable(idcObject) {
 	for (var i in notEmptyFields) {
 		if (!idcObject[notEmptyFields[i][0]] || idcObject[notEmptyFields[i][0]] == "") {
 			dojo.html.addClass(dojo.byId(notEmptyFields[i][1]), "important");
+			dojo.debug("Field '"+notEmptyFields[i][0]+"' empty but required.");
 			publishable = false;
 		}
 	}
@@ -114,6 +119,7 @@ function isObjectPublishable(idcObject) {
 	for (var i in notEmptyTables) {
 		if (idcObject[notEmptyTables[i][0]].length == 0) {
 			dojo.html.addClass(dojo.byId(notEmptyTables[i][1]), "important");
+			dojo.debug("Table '"+notEmptyTables[i][0]+"' empty but required.");
 			publishable = false;
 		}
 	}
@@ -129,13 +135,15 @@ function isObjectPublishable(idcObject) {
 	}
 
 	// Check if the availabilityUsageLimitation table contains valid input (both fields contain data)
-	var usageLimitData = idcObject.availabilityUsageLimitationTable;
-	if (dojo.lang.some(usageLimitData, function(ul) {
-			return (typeof(ul.limit) == "undefined" || ul.limit == null || dojo.string.trim(ul.limit).length == 0
-			     || typeof(ul.requirement) == "undefined" || ul.requirement == null || dojo.string.trim(ul.requirement).length == 0); })) {
-		dojo.html.addClass(dojo.byId("availabilityUsageLimitationTableLabel"), "important");		
-		dojo.debug("All entries in the availabilityUsageLimitation table must contain data.");
-		publishable = false;
+	if (""+idcObject.objectClass != '0') {
+		var usageLimitData = idcObject.availabilityUsageLimitationTable;
+		if (dojo.lang.some(usageLimitData, function(ul) {
+				return (typeof(ul.limit) == "undefined" || ul.limit == null || dojo.string.trim(ul.limit).length == 0
+				     || typeof(ul.requirement) == "undefined" || ul.requirement == null || dojo.string.trim(ul.requirement).length == 0); })) {
+			dojo.html.addClass(dojo.byId("availabilityUsageLimitationTableLabel"), "important");		
+			dojo.debug("All entries in the availabilityUsageLimitation table must contain data.");
+			publishable = false;
+		}
 	}
 
 	// Check if all entries in the address table have valid reference types
@@ -193,7 +201,7 @@ function isObjectPublishable(idcObject) {
 	}
 
 	// Check the required fields per object class:
-	switch (idcObject.objectClass)
+	switch (""+idcObject.objectClass)
 	{
 		case '0':
 			// No additional required fields for object class 0
@@ -399,6 +407,8 @@ function isAddressPublishable(idcAddress) {
 	return publishable;
 }
 
+
+/*
 function checkValidityOfInputElements() {
 	var isValid = function(widgetId) {
 		var widget = dojo.widget.byId(widgetId);
@@ -439,7 +449,79 @@ function checkValidityOfInputElements() {
 	
 	return true;
 }
+*/
+function checkValidityOfInputElements() {
+	var isValid = function(widgetId) {
+		var widget = dojo.widget.byId(widgetId);
 
+		var widgetIsValid   = widget.isValid   ? widget.isValid()   : true;
+		var widgetIsInRange = widget.isInRange ? widget.isInRange() : true;
+		var widgetIsEmpty   = widget.isEmpty   ? widget.isEmpty()   : false;
+	
+		if (widget.required && widgetIsEmpty) {
+			dojo.debug("Widget "+widgetId+" is required but empty.");
+			return "INVALID_REQUIRED_BUT_EMPTY";
+		}
+
+		if (!widgetIsEmpty && (!widgetIsValid || !widgetIsInRange)) {
+			if (!widgetIsValid) {
+				dojo.debug("Widget "+widgetId+" contains invalid input.");
+				return "INVALID_INPUT_INVALID";
+			}
+			if (!widgetIsInRange) {
+				dojo.debug("Widget "+widgetId+" is out of range.");
+				return "INVALID_INPUT_OUT_OF_RANGE";
+			}
+		}
+
+		// Check if any input element contains invalid html tags
+		if (widget instanceof ingrid.widget.ValidationTextbox) {
+			var val = ""+widget.getValue();
+			var evilTag = /<(?!b>|\/b>|i>|\/i>|u>|\/u>|p>|\/p>|br>|br\/>|br \/>|strong>|\/strong>|ul>|\/ul>|ol>|\/ol>|li>|\/li>)[^>]*>/i;
+			if (val.search(evilTag) != -1) {
+				return "INVALID_INPUT_HTML_TAG_INVALID";
+			}
+		}
+
+		return "VALID";
+	}
+
+	var checkValidityOfWidgets = function(widgetIdList) {
+		for (var i in widgetIdList) {
+			var res = isValid(widgetIdList[i]);
+			if (res != "VALID") {
+				return res;
+			}
+		}
+		return "VALID";
+	}
+
+	var objectClassStr = dojo.widget.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class
+	var objectClass = objectClassStr.substr(5, 1);
+
+	var valid = checkValidityOfWidgets(headerUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(generalUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(spatialUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(extraUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(thesUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(timeUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(this[objectClassStr+"UiInputElements"]);
+	if (valid != "VALID") { return valid; }
+
+	// Object class 0 doesn't have availability information. For all other classes check availability and return
+	if (objectClass != "0") {
+		valid = checkValidityOfWidgets(availUiInputElements);
+		if (valid != "VALID") { return valid; }
+	}
+
+	return "VALID";
+}
 
 function checkValidityOfAddressInputElements() {
 /*
@@ -472,25 +554,49 @@ function checkValidityOfAddressInputElements() {
 	
 		if (widget.required && widgetIsEmpty) {
 			dojo.debug("Widget "+widgetId+" is required but empty.");
-			return false;
+			return "INVALID_REQUIRED_BUT_EMPTY";
 		}
 
 		if (!widgetIsEmpty && (!widgetIsValid || !widgetIsInRange)) {
-			if (!widgetIsValid)
+			if (!widgetIsValid) {
 				dojo.debug("Widget "+widgetId+" contains invalid input.");
-			if (!widgetIsInRange)
+				return "INVALID_INPUT_INVALID";
+			}
+			if (!widgetIsInRange) {
 				dojo.debug("Widget "+widgetId+" is out of range.");
-			return false;
+				return "INVALID_INPUT_OUT_OF_RANGE";
+			}
 		}
-		return true;
+
+		// Check if any input element contains invalid html tags
+		if (widget instanceof ingrid.widget.ValidationTextbox) {
+			var val = ""+widget.getValue();
+			var evilTag = /<(?!b>|\/b>|i>|\/i>|u>|\/u>|p>|\/p>|br>|br\/>|br \/>|strong>|\/strong>|ul>|\/ul>|ol>|\/ol>|li>|\/li>)[^>]*>/i;
+			if (val.search(evilTag) != -1) {
+				return "INVALID_INPUT_HTML_TAG_INVALID";
+			}
+		}
+
+		return "VALID";
 	}
 
+
+	var checkValidityOfWidgets = function(widgetIdList) {
+		for (var i in widgetIdList) {
+			var res = isValid(widgetIdList[i]);
+			if (res != "VALID") {
+				return res;
+			}
+		}
+		return "VALID";
+	}
 
 	var addressClass = UtilAddress.getAddressClass();
 
-	if (!dojo.lang.every(adrUiInputElements, isValid) || !dojo.lang.every(this["adrClass"+addressClass+"UiInputElements"], isValid)) {
-		return false;
-	}
+	var valid = checkValidityOfWidgets(adrUiInputElements);
+	if (valid != "VALID") { return valid; }
+	valid = checkValidityOfWidgets(this["adrClass"+addressClass+"UiInputElements"]);
+	if (valid != "VALID") { return valid; }
 
-	return true;
+	return "VALID";
 }
