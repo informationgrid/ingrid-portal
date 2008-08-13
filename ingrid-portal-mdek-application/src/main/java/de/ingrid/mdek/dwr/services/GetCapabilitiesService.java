@@ -63,6 +63,10 @@ public class GetCapabilitiesService {
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Post[1]/@href";
 
+	private final static String XPATH_EXP_WCS_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_WCS_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_WCS_VERSION = "/Capabilities/@version";
+
 	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
 
@@ -433,10 +437,10 @@ public class GetCapabilitiesService {
     	CapabilitiesBean result = new CapabilitiesBean();
 
     	// General settings
-    	result.setServiceType("WFS");
-    	result.setTitle(xPath.evaluate(XPATH_EXP_WFS_TITLE, doc));
-    	result.setDescription(xPath.evaluate(XPATH_EXP_WFS_ABSTRACT, doc));
-    	String version = xPath.evaluate(XPATH_EXP_WFS_VERSION, doc);
+    	result.setServiceType("WCS");
+    	result.setTitle(xPath.evaluate(XPATH_EXP_WCS_TITLE, doc));
+    	result.setDescription(xPath.evaluate(XPATH_EXP_WCS_ABSTRACT, doc));
+    	String version = xPath.evaluate(XPATH_EXP_WCS_VERSION, doc);
     	ArrayList<String> versions = new ArrayList<String>();
     	versions.add(version);
     	result.setVersions(versions);

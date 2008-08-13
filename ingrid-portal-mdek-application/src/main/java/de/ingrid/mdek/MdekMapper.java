@@ -275,8 +275,11 @@ public class MdekMapper implements DataMapperInterface {
 			Map<String, Object> td3Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
 			if (td3Map == null)
 				break;
-			kvp = mapToKeyValuePair(td3Map, MdekKeys.SERVICE_TYPE_KEY, MdekKeys.SERVICE_TYPE);
-			mdekObj.setRef3ServiceType(kvp.getValue());
+//			kvp = mapToKeyValuePair(td3Map, MdekKeys.SERVICE_TYPE_KEY, MdekKeys.SERVICE_TYPE);
+//			mdekObj.setRef3ServiceType(kvp.getValue());
+			// INSPIRE: ref3ServiceType changed to Select, was ComboBox
+			mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
+
 			// TODO Remove comment and temp list when implemented in the backend
 			intList = new ArrayList<Integer>();
 			intList.add(1);
@@ -292,7 +295,7 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef3Scale(mapToScaleTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
-			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), kvp.getKey()));
+			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
 
 			break;
 		case 4:
@@ -780,11 +783,14 @@ public class MdekMapper implements DataMapperInterface {
 			break;
 		case 3:
 			IngridDocument td3Map = new IngridDocument();			
-			kvp = mapFromKeyValue(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
-			if (kvp.getValue() != null || kvp.getKey() != -1) {
-				td3Map.put(MdekKeys.SERVICE_TYPE, kvp.getValue());
-				td3Map.put(MdekKeys.SERVICE_TYPE_KEY, kvp.getKey());
-			}
+//			kvp = mapFromKeyValue(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+//			if (kvp.getValue() != null || kvp.getKey() != -1) {
+//				td3Map.put(MdekKeys.SERVICE_TYPE, kvp.getValue());
+//				td3Map.put(MdekKeys.SERVICE_TYPE_KEY, kvp.getKey());
+//			}
+			// INSPIRE: ref3ServiceType changed to Select, was ComboBox
+			td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+
 			// TODO Remove comment when implemented in the backend
 //			td3Map.put(MdekKeys.SERVICE_TYPE_TABLE, data.getRef3ServiceTypeTable());
 			td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
@@ -793,7 +799,7 @@ public class MdekMapper implements DataMapperInterface {
 			td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
 			td3Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef3Explanation());
 			td3Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef3Scale()));
-			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), kvp.getKey()));
+			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), data.getRef3ServiceType()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;
 		case 4:
@@ -837,7 +843,8 @@ public class MdekMapper implements DataMapperInterface {
 		if (key != null) { obj.setTimeRefIntervalUnit(key.toString()); };
 
 		obj.setRef1SpatialSystem(sysListMapper.getInitialValue(MdekKeys.REFERENCESYSTEM_ID));
-		obj.setRef3ServiceType(sysListMapper.getInitialValue(MdekKeys.SERVICE_TYPE_KEY));
+
+		obj.setRef3ServiceType(sysListMapper.getInitialKeyFromListId(SERVICE_TYPE_ID));
 
 		key = sysListMapper.getInitialKeyFromListId(DATA_LANGUAGE_ID);
 		if (key != null) {
@@ -1226,7 +1233,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		for (OperationBean op : opList) {
 			IngridDocument result = new IngridDocument();
-			if (serviceType == -1) {
+			if (serviceType == 5 || serviceType == 6) {
 				result.put(MdekKeys.SERVICE_OPERATION_NAME, op.getName());
 				result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, new Integer(-1));
 			} else {
@@ -1619,7 +1626,7 @@ public class MdekMapper implements DataMapperInterface {
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
 			OperationBean op = new OperationBean();
-			if (serviceType == null || serviceType == -1) {
+			if (serviceType == null || serviceType == 5 || serviceType == 6) {
 				op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
 			} else {
 				String val = sysListMapper.getValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY));

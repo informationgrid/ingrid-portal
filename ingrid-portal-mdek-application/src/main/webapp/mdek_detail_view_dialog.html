@@ -77,7 +77,7 @@ function renderNodeData(nodeData) {
 		renderSectionTitel("Fachbezug");
 		// Dienst/Anwendung/Informationssystem
 		renderList(nodeData.ref3ServiceTypeTable, message.get("ui.obj.type3.ref3ServiceTypeTable.title"), null, function(val) { return dojo.widget.byId("ref3ServiceTypeEditor")._getDisplayValueForValue(val); });
-		renderTextWithTitle(nodeData.ref3ServiceType, "Servicetyp");
+		renderTextWithTitle(dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeData.ref3ServiceType), "Servicetyp");
 		renderList(nodeData.ref3ServiceVersion, "Versionen des Service");
 		renderTextWithTitle(nodeData.ref3SystemEnv, "Systemumgebung");
 		renderTextWithTitle(nodeData.ref3History, "Historie");

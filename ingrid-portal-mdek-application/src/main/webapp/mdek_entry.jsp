@@ -954,7 +954,7 @@ function hideSplash(){
 							<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
  -->
 							<span class="input spaceBelow">
-								<div dojoType="ingrid:ComboBox" maxlength="255" autoComplete="false" class="w308" listId="5100" id="ref3ServiceType"></div>
+								<div dojoType="ingrid:Select" maxlength="255" autoComplete="false" class="w308" listId="5100" id="ref3ServiceType"></div>
 				  			</span>
 						</span>
             		</div>

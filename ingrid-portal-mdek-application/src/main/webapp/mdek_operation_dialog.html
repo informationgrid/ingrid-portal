@@ -39,25 +39,24 @@ _container_.addOnUnload(function() {
 
 initOperationNameInput = function() {
 	var serviceTypeWidget = dojo.widget.byId("ref3ServiceType");
-	var serviceType = serviceTypeWidget.getValueForDisplayValue(serviceTypeWidget.getValue());
+	var serviceType = ""+serviceTypeWidget.getValue();
 
-	if (serviceType) {
+	if (serviceType != "5" && serviceType != "6") {
 		dojo.html.hide(dojo.widget.byId("operationsName").domNode);	
 		requiredElements.push(["operationsNameSelect", "operationsNameLabel"]);
 		var selectWidget = dojo.widget.byId("operationsNameSelect");
 //		selectWidget.isValid = function() { return this.getValue() != ""; }
 		selectWidget.isValid = function() { return this.getValueForDisplayValue(this.textInputNode.value) != null; }
 
-		// TODO Change the following listIDs when they are implemented in the backend:
-		//      CSW		1
-		//      WMS		2
-		//      WFS		3
-		//      other	6
 		var listId = 5110;
-		if (serviceType == "1")			// WMS
+		if (serviceType == "1")			// CSW
+			listId = 5105;
+		else if (serviceType == "2")	// WMS
 			listId = 5110;
-		else if (serviceType == "2")	// WFS
+		else if (serviceType == "3")	// WFS
 			listId = 5120;
+		else if (serviceType == "4")	// WCTS
+			listId = 5130;
 
 		var languageCode = UtilCatalog.getCatalogLanguage();
 
