@@ -1265,7 +1265,7 @@ function hideSplash(){
 		            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
 		            		      <tr>
-		                  			<th nosort="true" field="name" dataType="String" width="315"><script>document.write(message.get("ui.obj.spatial.geoThesTable.header.name"))</script></th>
+		                  			<th nosort="true" field="label" dataType="String" width="315"><script>document.write(message.get("ui.obj.spatial.geoThesTable.header.name"))</script></th>
 		                  			<th nosort="true" field="longitude1" dataType="String" width="90"><script>document.write(message.get("ui.obj.spatial.geoThesTable.header.longitude1"))</script></th>
 		                  			<th nosort="true" field="latitude1" dataType="String" width="90"><script>document.write(message.get("ui.obj.spatial.geoThesTable.header.latitude1"))</script></th>
 		                  			<th nosort="true" field="longitude2" dataType="String" width="90"><script>document.write(message.get("ui.obj.spatial.geoThesTable.header.longitude2"))</script></th>

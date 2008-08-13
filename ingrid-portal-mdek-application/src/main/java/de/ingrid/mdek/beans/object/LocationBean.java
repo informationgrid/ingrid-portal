@@ -9,8 +9,9 @@ public class LocationBean {
 	public Double latitude1;
 	public Double longitude2;
 	public Double latitude2;
+	public String topicType;
+	public String topicTypeId;
 
-	
 	public String getName() {
 		return name;
 	}
@@ -58,6 +59,18 @@ public class LocationBean {
 	}
 	public void setLatitude2(Double latitude2) {
 		this.latitude2 = latitude2;
+	}
+	public String getTopicType() {
+		return topicType;
+	}
+	public void setTopicType(String topicType) {
+		this.topicType = topicType;
+	}
+	public String getTopicTypeId() {
+		return topicTypeId;
+	}
+	public void setTopicTypeId(String topicTypeId) {
+		this.topicTypeId = topicTypeId;
 	}
 
 }

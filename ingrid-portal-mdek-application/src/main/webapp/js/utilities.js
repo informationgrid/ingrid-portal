@@ -696,6 +696,20 @@ UtilList.addTableIndices = function(list) {
 	}
 }
 
+// Add SNS Location labels (entry.label = entry.name + ", " + (entry.topicType || entry.type))
+UtilList.addSNSLocationLabels = function(list) {
+	if (list) {
+		dojo.lang.forEach(list, function(entry){
+			entry.label = entry.name + ", ";
+			entry.label += entry.topicType ? entry.topicType : entry.type;
+		});
+		return list;
+
+	} else {
+		return [];
+	}
+}
+
 
 // Util functions for dojo store 
 var UtilStore = {}

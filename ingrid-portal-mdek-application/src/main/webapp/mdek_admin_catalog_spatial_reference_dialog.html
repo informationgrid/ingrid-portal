@@ -138,8 +138,10 @@ scriptScope.addLocationTopics = function() {
 			var location = {
 				topicId: radioButtonArray[i].topic.topicId,
 				name: radioButtonArray[i].topic.name,
-				type: radioButtonArray[i].topic.type,
-				nativeKey: radioButtonArray[i].topic.nativeKey
+				type: "G",
+				nativeKey: radioButtonArray[i].topic.nativeKey,
+				topicType: radioButtonArray[i].topic.type,
+				topicTypeId: radioButtonArray[i].topic.typeId
 			}
 
 			if (radioButtonArray[i].topic.boundingBox && radioButtonArray[i].topic.boundingBox.length == 4) {

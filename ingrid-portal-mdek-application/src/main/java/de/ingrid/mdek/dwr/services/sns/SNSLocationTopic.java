@@ -4,6 +4,7 @@ public class SNSLocationTopic {
 
 	public String topicId;
 	public String type; 
+	public String typeId;	// e.g. use4Type, use6Type, ... 
 	public String name;
 	public String qualifier;
 	public String nativeKey;
@@ -67,6 +68,12 @@ public class SNSLocationTopic {
 	}
 	public void setNativeKey(String nativeKey) {
 		this.nativeKey = nativeKey;
+	}
+	public String getTypeId() {
+		return typeId;
+	}
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
 	}
 
 }

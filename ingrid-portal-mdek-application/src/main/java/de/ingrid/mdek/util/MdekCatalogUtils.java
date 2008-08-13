@@ -113,7 +113,8 @@ public class MdekCatalogUtils {
 		locDoc.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
 		locDoc.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
 		locDoc.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
-	
+		locDoc.put(MdekKeys.SNS_TOPIC_TYPE, loc.getTopicTypeId());
+
 		return locDoc;
 	}
 }

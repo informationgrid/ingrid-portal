@@ -100,7 +100,7 @@ function renderNodeData(nodeData) {
 	
 	// spatial reference
 	renderSectionTitel("Raumbezug");
-	renderTable(nodeData.spatialRefAdminUnitTable, ["name", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "fachlicher Schl&uuml;ssel", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Administrative Einheiten");
+	renderTable(nodeData.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "fachlicher Schl&uuml;ssel", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Administrative Einheiten");
 	renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Freier Bezug");
 	var altitudeData = [nodeData];
 	// create cell render functions

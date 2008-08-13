@@ -600,6 +600,7 @@ public class SNSService {
     	result.setName(topic.getBaseName(0).getBaseNameString().get_value());
     	String type = topic.getInstanceOf(0).getTopicRef().getHref();
     	type = type.substring(type.lastIndexOf("#")+1);
+    	result.setTypeId(type);
     	result.setType(resourceBundle.getString("sns.topic.ref."+type));
 
     	// If the topic doesn't contain any more information return the basic info

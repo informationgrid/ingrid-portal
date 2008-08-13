@@ -100,6 +100,7 @@ function updateInputFields(topicMap) {
 	// Location Topics
 	if (locationTopicList != null) {
 		UtilList.addTableIndices(locationTopicList);
+		UtilList.addSNSLocationLabels(locationTopicList);
 		for (var i in locationTopicList) {
 			// Add checkbox to entry
 			locationTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+locationTopicList[i].topicId+"'>";
@@ -183,7 +184,7 @@ scriptScope.addValuesToObject = function() {
 
 			// If the topic was found, update the bounding box and continue
 			if (storedTopic) {
-				spatialStore.update(storedTopic, "name", topic.name);
+				store.update(storedTopic, "label", topic.name+", "+topic.type);
 				if (topic.boundingBox) {
 					spatialStore.update(storedTopic, "longitude1", topic.boundingBox[0]);
 					spatialStore.update(storedTopic, "latitude1", topic.boundingBox[1]);
@@ -192,6 +193,9 @@ scriptScope.addValuesToObject = function() {
 				}
 				// Update elements that aren't displayed in the table
 				storedTopic.nativeKey = topic.nativeKey;
+				storedTopic.name = topic.name;
+				storedTopic.topicType = topic.type;
+				storedTopic.topicTypeId = topic.typeId;
 			} else {
 				// The topic was not found in the result list. Create a new key and
 				// add the topic to the list
@@ -200,19 +204,25 @@ scriptScope.addValuesToObject = function() {
 					spatialStore.addData({
 							Id: key,
 							topicId: topic.topicId,
+							label: topic.name+", "+topic.type,
 							name: topic.name,
 							longitude1: topic.boundingBox[0],
 							latitude1: topic.boundingBox[1],
 							longitude2: topic.boundingBox[2],
 							latitude2: topic.boundingBox[3],
-							nativeKey: topic.nativeKey
+							nativeKey: topic.nativeKey,
+							topicType: topic.type,
+							topicTypeId: topic.typeId
 					});
 				} else {
 					spatialStore.addData({
 							Id: key,
 							topicId: topic.topicId,
+							label: topic.name+", "+topic.type,
 							name: topic.name,
-							nativeKey: topic.nativeKey
+							nativeKey: topic.nativeKey,
+							topicType: topic.type,
+							topicTypeId: topic.typeId
 					});
 				}
 			}
@@ -378,7 +388,7 @@ scriptScope.closeDialog = function() {
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="selection" dataType="String" width="30">Auswahl</th>
-	                  			<th nosort="true" field="name" dataType="String" width="285">Geothesaurus-Raumbezug</th>
+	                  			<th nosort="true" field="label" dataType="String" width="285">Geothesaurus-Raumbezug</th>
 	                  			<th nosort="true" field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
 	                  			<th nosort="true" field="latitude1" dataType="String" width="90">Breite 1</th>
 	                  			<th nosort="true" field="longitude2" dataType="String" width="90">L&auml;nge 2</th>

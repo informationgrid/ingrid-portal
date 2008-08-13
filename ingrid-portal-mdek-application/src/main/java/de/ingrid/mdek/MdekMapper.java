@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,7 +17,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
-import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -41,6 +41,14 @@ public class MdekMapper implements DataMapperInterface {
 
 	private final static Logger log = Logger.getLogger(MdekMapper.class);
 	private SysListCache sysListMapper;
+	private ResourceBundle snsResourceBundle;
+
+	// Init Method is called by the Spring Framework on initialization
+    public void init() throws Exception {
+		// Fetch the sns resource bundle for location topic type mapping
+    	snsResourceBundle = ResourceBundle.getBundle("sns");
+    }
+
 	
 	// -- Dispatch to the local private methods --
 	public MdekDataBean getDetailedObjectRepresentation(Object obj) {
@@ -1002,12 +1010,12 @@ public class MdekMapper implements DataMapperInterface {
 				res.put(MdekKeys.SOUTH_BOUNDING_COORDINATE, loc.getLatitude1());
 				res.put(MdekKeys.EAST_BOUNDING_COORDINATE, loc.getLongitude2());
 				res.put(MdekKeys.NORTH_BOUNDING_COORDINATE, loc.getLatitude2());
+				res.put(MdekKeys.SNS_TOPIC_TYPE, loc.getTopicTypeId());
 				resultList.add(res);
 			}
 		}
 		return resultList;
 	}
-
 
 	private ArrayList<IngridDocument> mapFromTimeRefTable(ArrayList<TimeReferenceBean> refList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
@@ -1388,12 +1396,26 @@ public class MdekMapper implements DataMapperInterface {
 				loc.setLatitude1((Double) location.get(MdekKeys.SOUTH_BOUNDING_COORDINATE));
 				loc.setLongitude2((Double) location.get(MdekKeys.EAST_BOUNDING_COORDINATE));
 				loc.setLatitude2((Double) location.get(MdekKeys.NORTH_BOUNDING_COORDINATE));
+				loc.setTopicTypeId((String) location.get(MdekKeys.SNS_TOPIC_TYPE));
+				loc.setTopicType(mapFromSNSTopicTypeId((String) location.get(MdekKeys.SNS_TOPIC_TYPE)));
 				resultList.add(loc);
 			}
 		}
 		return resultList;
 	}
-	
+
+	private String mapFromSNSTopicTypeId(String topicTypeId) {
+		// topicTypeId is one of the SNS topic Types (use2Type, use6Type, ...)
+		// The sns resource bundle is used to resolve the different types
+    	// If the type can not be resolved, null is returned
+		try {
+    		return snsResourceBundle.getString("sns.topic.ref."+topicTypeId);
+
+    	} catch (Exception e) {
+    		return null;
+    	}
+	}
+
 	private ArrayList<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
 		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)

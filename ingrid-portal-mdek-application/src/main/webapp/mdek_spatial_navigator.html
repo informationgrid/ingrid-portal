@@ -188,7 +188,7 @@ addLocationTopics = function() {
 		if (storedTopic) {
 			// Element is already in the table. Update the topic.
 			// Update elements that are displayed in the table
-			store.update(storedTopic, "name", topic.name);
+			store.update(storedTopic, "label", topic.name+", "+topic.type);
 			if (topic.boundingBox) {
 				store.update(storedTopic, "longitude1", topic.boundingBox[0]);
 				store.update(storedTopic, "latitude1", topic.boundingBox[1]);
@@ -197,6 +197,10 @@ addLocationTopics = function() {
 			}
 			// Update elements that aren't displayed in the table
 			storedTopic.nativeKey = topic.nativeKey;
+			storedTopic.name = topic.name;
+			storedTopic.topicType = topic.type;
+			storedTopic.topicTypeId = topic.typeId;
+
 		} else {
 			// The topic was not found in the result list. Create a new key and
 			// add the topic to the list
@@ -205,19 +209,25 @@ addLocationTopics = function() {
 				store.addData({
 						Id: key,
 						topicId: topic.topicId,
+						label: topic.name+", "+topic.type,
 						name: topic.name,
 						longitude1: topic.boundingBox[0],
 						latitude1: topic.boundingBox[1],
 						longitude2: topic.boundingBox[2],
 						latitude2: topic.boundingBox[3],
-						nativeKey: topic.nativeKey
+						nativeKey: topic.nativeKey,
+						topicType: topic.type,
+						topicTypeId: topic.typeId
 				});
 			} else {
 				store.addData({
 						Id: key,
 						topicId: topic.topicId,
+						label: topic.name+", "+topic.type,
 						name: topic.name,
-						nativeKey: topic.nativeKey
+						nativeKey: topic.nativeKey,
+						topicType: topic.type,
+						topicTypeId: topic.typeId
 				});
 			}
 		}
