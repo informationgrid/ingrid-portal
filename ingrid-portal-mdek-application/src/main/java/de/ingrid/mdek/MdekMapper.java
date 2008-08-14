@@ -165,8 +165,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefDate2(convertTimestampToDate((String) obj.get(MdekKeys.ENDING_DATE)));
 		mdekObj.setTimeRefStatus((Integer) obj.get(MdekKeys.TIME_STATUS));
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
-		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_STEP));
-		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_SCALE));
+		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_SCALE));
+		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_STEP));
 		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
@@ -287,16 +287,8 @@ public class MdekMapper implements DataMapperInterface {
 //			mdekObj.setRef3ServiceType(kvp.getValue());
 			// INSPIRE: ref3ServiceType changed to Select, was ComboBox
 			mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
+			mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
 
-			// TODO Remove comment and temp list when implemented in the backend
-			intList = new ArrayList<Integer>();
-			intList.add(1);
-			mdekObj.setRef3ServiceTypeTable(intList);
-/*
-			intList = (ArrayList<Integer>) obj.get(MdekKeys.SERVICE_TYPE_TABLE);
-			if (intList != null)
-				mdekObj.setRef3ServiceTypeTable(intList);
-*/
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
@@ -688,8 +680,8 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.ENDING_DATE, convertDateToTimestamp(data.getTimeRefDate2()));
 		udkObj.put(MdekKeys.TIME_STATUS, data.getTimeRefStatus());
 		udkObj.put(MdekKeys.TIME_PERIOD, data.getTimeRefPeriodicity());
-		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalNum());
-		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalUnit());
+		udkObj.put(MdekKeys.TIME_SCALE, data.getTimeRefIntervalNum());
+		udkObj.put(MdekKeys.TIME_STEP, data.getTimeRefIntervalUnit());
 		udkObj.put(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN, data.getTimeRefExplanation());
 		udkObj.put(MdekKeys.DATASET_REFERENCES, mapFromTimeRefTable(data.getTimeRefTable()));
 
@@ -799,8 +791,7 @@ public class MdekMapper implements DataMapperInterface {
 			// INSPIRE: ref3ServiceType changed to Select, was ComboBox
 			td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
 
-			// TODO Remove comment when implemented in the backend
-//			td3Map.put(MdekKeys.SERVICE_TYPE_TABLE, data.getRef3ServiceTypeTable());
+			td3Map.put(MdekKeys.SERVICE_TYPE2_LIST, mapFromServiceTypeTable(data.getRef3ServiceTypeTable()));
 			td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
 			td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
 			td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
@@ -1164,7 +1155,20 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-
+	private ArrayList<IngridDocument> mapFromServiceTypeTable(ArrayList<Integer> serviceTypeList) {
+		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (serviceTypeList == null) {
+			return resultList;
+		}
+		
+		for (Integer i : serviceTypeList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.SERVICE_TYPE2_KEY, i);
+			resultList.add(result);
+		}
+		return resultList;
+	}
+	
 	private ArrayList<IngridDocument> mapFromScaleTable(ArrayList<ScaleBean> scaleList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (scaleList == null)
@@ -1583,6 +1587,17 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
+	private ArrayList<Integer> mapToServiceTypeTable(List<HashMap<String, Object>> serviceTypeList) {
+		ArrayList<Integer> resultList = new ArrayList<Integer>();
+		if (serviceTypeList == null) {
+			return resultList;
+		}
+		for (HashMap<String, Object> serviceType : serviceTypeList) {
+			resultList.add((Integer) serviceType.get(MdekKeys.SERVICE_TYPE2_KEY));
+		}
+		return resultList;
+	}
+	
 	private ArrayList<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
 		ArrayList<ScaleBean> resultList = new ArrayList<ScaleBean>();
 		if (scaleList == null)

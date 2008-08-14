@@ -31,15 +31,25 @@ function setOperationValues(capBean) {
 	dojo.widget.byId("generalDesc").setValue(capBean.description);
 	if (capBean.serviceType.indexOf("CSW") != -1) {
 		dojo.widget.byId("ref3ServiceType").setValue(1);		
+		dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([207])));
+
 	} else if (capBean.serviceType.indexOf("WMS") != -1) {
 		dojo.widget.byId("ref3ServiceType").setValue(2);		
+		dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([202])));
+
 	} else if (capBean.serviceType.indexOf("WFS") != -1) {
 		dojo.widget.byId("ref3ServiceType").setValue(3);		
+		dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([201])));
+
 	} else if (capBean.serviceType.indexOf("WCTS") != -1) {
 		dojo.widget.byId("ref3ServiceType").setValue(4);		
+//		dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([207])));
+
 	} else if (capBean.serviceType.indexOf("WCS") != -1) {	// WCS does not exist yet
 		dojo.widget.byId("ref3ServiceType").setValue(6);
+		dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([203])));
 	}
+
 	dojo.widget.byId("ref3ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(capBean.versions)));
 
 	// Prepare the operation table for display.

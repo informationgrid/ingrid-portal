@@ -930,7 +930,7 @@ function hideSplash(){
 	                  <span id="ref3ServiceTypeTableLabel" class="label required"><label for="ref3ServiceTypeTable" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)"><script>document.write(message.get("ui.obj.type3.ref3ServiceTypeTable.title"))</script>*</label></span>
 	                  <div class="tableContainer headHiddenRows4 full">
 	                    <div class="cellEditors" id="ref3ServiceTypeTableEditors">
-	                      <div dojoType="ingrid:Select" toggle="plain" class="w608" listId="1100" id="ref3ServiceTypeEditor"></div>
+	                      <div dojoType="ingrid:Select" toggle="plain" class="w608" listId="5200" id="ref3ServiceTypeEditor"></div>
 	                    </div>
 	               	    <table id="ref3ServiceTypeTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
