@@ -813,3 +813,14 @@ UtilLanguage.getLanguageName = function(lang) {
 UtilLanguage.getNextLanguageName = function() {
 	return UtilLanguage.getLanguageName(UtilLanguage.getNextLanguage());
 }
+
+// String utilities
+var UtilString = {}
+
+UtilString.compare = function(a, b) {
+	return a == b ? 0 : (a < b ? -1 : 1);
+}
+
+UtilString.compareIgnoreCase = function(a, b) {
+	return UtilString.compare(a.toLowerCase(), b.toLowerCase());
+}

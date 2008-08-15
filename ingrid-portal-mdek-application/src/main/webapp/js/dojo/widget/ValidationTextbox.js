@@ -87,6 +87,9 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 		this.update();
 	},
 
+	getValueField: function() {
+		return this[this.mode.toLowerCase()];
+	},
 
 	isEmpty: function() {
 		// summary: Checks for whitespace

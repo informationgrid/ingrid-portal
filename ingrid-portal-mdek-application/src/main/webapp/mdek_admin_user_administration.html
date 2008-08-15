@@ -509,7 +509,8 @@ function convertUserListToTreeNodes(userList) {
 		treeNodes.push(convertUserToTreeNode(user));
 	});
 
-	return treeNodes;
+	// Return a sorted list according to the users titles
+	return treeNodes.sort(function(a, b) { return UtilString.compareIgnoreCase(a.title, b.title); });
 }
 
 function convertUserToTreeNode(user) {

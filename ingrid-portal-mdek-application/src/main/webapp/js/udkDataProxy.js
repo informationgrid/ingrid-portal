@@ -217,13 +217,15 @@ function _connectWidgetWithDirtyFlag(widgetId) {
 
 	var widget = dojo.widget.byId(widgetId);
 	if (widget instanceof dojo.widget.RealNumberTextbox) {
-    	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
+//    	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
+    	dojo.event.connect(widget.getValueField(), "onchange", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof dojo.widget.Checkbox) {
     	dojo.event.connect(widget, "onClick", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof dojo.widget.DropdownDatePicker) {
 	    dojo.event.connect(widget, "onValueChanged", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof ingrid.widget.ValidationTextbox) {
-    	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
+//    	dojo.event.connect(widget, "onkeyup", udkDataProxy, "setDirtyFlag");
+    	dojo.event.connect(widget.getValueField(), "onchange", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof ingrid.widget.Select) {
 	    dojo.event.connect(widget, "onValueChanged", udkDataProxy, "setDirtyFlag");
 	} else if (widget instanceof ingrid.widget.ComboBox) {
