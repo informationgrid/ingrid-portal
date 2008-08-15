@@ -457,6 +457,33 @@ UtilAddress.navObjectAddressReferences = function() {
 	});
 }
 
+// Checks if a title can be constructed for the given adr
+UtilAddress.hasValidTitle = function(adr) {
+	var title = "";
+	switch (adr.addressClass) {
+		case 0: // Institution
+			title = adr.organisation;
+			break;
+		case 1:	// Unit
+			title = adr.organisation;
+			break;
+		case 2: // Person
+			if (adr.name) title += adr.name;
+			if (adr.givenName) title += ", "+adr.givenName;
+			break;
+		case 3: // Freie Adresse
+			if (adr.name) title += adr.name;
+			if (adr.givenName) title += ", "+adr.givenName;
+			if (adr.organisation) title += " ("+adr.organisation+")";
+			break;
+		default:
+			break;
+	}
+	if (title == null || title == "")
+		return false;
+	else
+		return true;
+}
 
 // Builds an address title from a given MdekAddressBean.
 // example arguments:
@@ -489,7 +516,7 @@ UtilAddress.createAddressTitle = function(adr) {
 		default:
 			break;
 	}
-	if (title == null)
+	if (title == null || title == "")
 		return message.get("tree.newAddressName");
 	else
 		return dojo.string.escape("html", dojo.string.trim(title));

@@ -1229,8 +1229,12 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
 	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
-	if (nodeData.lastEditor != null)
+	
+	if (nodeData.lastEditor != null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
 		dojo.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
+	} else {
+		dojo.byId("addressLastEditor").innerHTML = "---";
+	}
 
 	if (nodeData.writePermission == true) {
 		dojo.html.hide(dojo.byId("permissionAdrLock"));
@@ -1360,8 +1364,12 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.byId("workState").innerHTML = nodeData.workState;
   dojo.byId("creationTime").innerHTML = nodeData.creationTime;
   dojo.byId("modificationTime").innerHTML = nodeData.modificationTime;
-  if (nodeData.lastEditor != null)
+
+  if (nodeData.lastEditor != null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
 	dojo.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
+  } else {
+    dojo.byId("lastEditor").innerHTML = "---";
+  }
 
   dojo.widget.byId("objectOwner").setValue(nodeData.objectOwner);
 
