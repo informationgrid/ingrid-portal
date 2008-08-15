@@ -48,6 +48,7 @@ function setOperationValues(capBean) {
 	} else if (capBean.serviceType.indexOf("WCS") != -1) {	// WCS does not exist yet
 		dojo.widget.byId("ref3ServiceType").setValue(6);
 		dojo.widget.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([203])));
+		dojo.widget.byId("ref3Explanation").setValue("WCS Service");
 	}
 
 	dojo.widget.byId("ref3ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(capBean.versions)));
