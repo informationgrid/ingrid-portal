@@ -114,8 +114,8 @@ dojo.lang.extend(dojo.widget.ValidationTextbox, {
 		//		Show missing or invalid messages if appropriate, and highlight textbox field.
 		var ee = this[this.mode.toLowerCase()];				
 
-		// Limit the size of the input in case of a textarea
-		if (this.mode.toLowerCase() == "textarea" && this.maxlength && ee.value.length > parseInt(this.maxlength)) {
+		// Limit the size of the input (setValue can lead to too large fields if they aren't displayed)
+		if (this.maxlength && ee.value.length > parseInt(this.maxlength)) {
 			ee.value = ee.value.substr(0, this.maxlength);
 		}
 
