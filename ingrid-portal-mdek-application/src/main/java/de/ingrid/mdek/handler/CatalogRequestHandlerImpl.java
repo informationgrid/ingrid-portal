@@ -31,6 +31,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractSysListFromResponse(response);
 	}
 
+	public List<Map<String, String>> getSysGuis(String[] guiIds) {
+		IngridDocument response = mdekCallerCatalog.getSysGuis(connectionFacade.getCurrentPlugId(), guiIds, HTTPSessionHelper.getCurrentSessionId());
+		return MdekCatalogUtils.extractSysGuisFromResponse(response);
+	}
+
 	public CatalogBean getCatalogData() {
 		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
 		return MdekCatalogUtils.extractCatalogFromResponse(response);

@@ -678,7 +678,7 @@ function hideSplash(){
 	          	  </div>
 
 	              <div class="inputContainer notRequired h088">
-                	<span id="uiElement3570" type="optional">
+                	<span id="uiElement5070" type="optional">
 		                <span class="label"><label for="ref1Data" onclick="javascript:dialog.showContextHelp(arguments[0], 5070)"><script>document.write(message.get("ui.obj.type1.attributes"))</script></label></span>
 		                <div class="tableContainer headHiddenRows3 full">
 		                  <div class="cellEditors" id="ref1DataEditors">

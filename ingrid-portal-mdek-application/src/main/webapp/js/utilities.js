@@ -851,3 +851,21 @@ UtilString.compare = function(a, b) {
 UtilString.compareIgnoreCase = function(a, b) {
 	return UtilString.compare(a.toLowerCase(), b.toLowerCase());
 }
+
+// Utility functions needed for workflow control
+var UtilQS = {}
+
+// Returns whether workflow control is activated for the current catalog
+UtilQS.isQSActive = function() {
+	// TODO: implement
+	// TODO: Move to UtilCatalog?
+	dojo.debug("UtilQS.isQSActive is not implemented yet. Returning false.");
+	return false;
+}
+
+// Utility functions for UI specific stuff
+var UtilUI = {}
+
+UtilUI.getDescriptionForGuiId = function(guiId) {
+	return message.get("ui."+guiId+".description");
+}

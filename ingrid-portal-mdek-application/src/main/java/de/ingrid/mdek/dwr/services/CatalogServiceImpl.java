@@ -22,6 +22,10 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysLists(listIds, languageCode);
 	}
 
+	public List<Map<String, String>> getSysGuis(String[] guiIds) {
+		return catalogRequestHandler.getSysGuis(guiIds);
+	}
+
 	public CatalogBean getCatalogData() {
 		return catalogRequestHandler.getCatalogData();	
 	}

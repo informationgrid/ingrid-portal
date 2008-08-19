@@ -2,6 +2,7 @@ package de.ingrid.mdek.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,9 @@ import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekCatalogUtils {
+
+	private static final String SYS_GUI_ID = "id";
+	private static final String SYS_GUI_MODE = "mode";
 
 	public static Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -38,6 +42,28 @@ public class MdekCatalogUtils {
 			return null;
 		}
 	}
+
+	public static List<Map<String, String>> extractSysGuisFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		List<Map<String, String>> sysGuiList = new ArrayList<Map<String,String>>();
+
+		Set<Map.Entry<String, Map<String, Object>>> entrySet = result.entrySet();
+		Iterator<Map.Entry<String, Map<String, Object>>> it = entrySet.iterator();
+
+		while (it.hasNext()) {
+			Map.Entry<String, Map<String, Object>> entry = it.next();
+			Map<String, Object> guiEntry = entry.getValue();
+			
+			Map<String, String> res = new HashMap<String, String>();
+			res.put(SYS_GUI_ID, (String) guiEntry.get(MdekKeys.SYS_GUI_ID));
+			res.put(SYS_GUI_MODE, ((Integer) guiEntry.get(MdekKeys.SYS_GUI_BEHAVIOUR)).toString());
+
+			sysGuiList.add(res);
+		}
+		
+		return sysGuiList;
+	}
+
 
 	public static CatalogBean extractCatalogFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);

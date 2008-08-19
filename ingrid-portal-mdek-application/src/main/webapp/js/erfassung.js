@@ -344,7 +344,7 @@ function setRequiredState(/*html node to (un-)set the required class*/labelNode,
 
 		// if every uiElement has the type attribute set to optional...
 		if (dojo.lang.every(uiElements, function(uiElement) {
-			return uiElement.getAttribute ? uiElement.getAttribute("type") == "optional" : true;
+			return uiElement.getAttribute ? (uiElement.getAttribute("type") == "optional" && uiElement.getAttribute("displaytype") != "alwaysShow") : true;
 		})) {
 			if (isExpanded) {
 				dojo.html.show(inputContainer);

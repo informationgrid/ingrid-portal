@@ -19,7 +19,7 @@ dojo.addOnLoad(function()
   initToolbar();
   disableInputOnWrongPermission();
   initTree();
-  initForm();
+//  initForm();	// We need to init the form after setting the optional field states in 'initOptionalFieldStates'
   initTableValidators();
   initCTS();
   initFreeTermsButtons();
@@ -28,10 +28,15 @@ dojo.addOnLoad(function()
   deferred.addCallback(initCatalogData);
   deferred.addCallback(initSysLists);
   deferred.addCallback(initCurrentGroup);
+  deferred.addCallback(initOptionalFieldStates);
+  deferred.addCallback(initForm);
+  deferred.addCallback(hideSplash);	// hide the splash after everything is loaded
+  deferred.addCallback(udkDataProxy.resetDirtyFlag);
 
-  hideSplash();
-  udkDataProxy.resetDirtyFlag();
+//  hideSplash();
+//  udkDataProxy.resetDirtyFlag();
 });
+
 
 function initForm() {
   // hide address and object panel after initialization
@@ -64,14 +69,16 @@ function initForm() {
 */
 
   // set context menu on last editor label
-  var lastEditorLabel = dojo.byId('last_editor');
+/*
+  // TODO Fixme!
+  var lastEditorLabel = dojo.byId('lastEditor');
   if (lastEditorLabel) {
     var lastEditorCM = dojo.widget.createWidget("ingrid:ContextMenu");
     lastEditorCM.addItemObject({caption:message.get('general.showAddress'), method:showAddress});
     lastEditorCM.bindDomNode(lastEditorLabel);
     lastEditorLabel.style.cursor='pointer';
   }
-
+*/
   // size right content height
   dojo.event.connect(window, "onresize", window, "sizeContent");
   sizeContent();
@@ -140,8 +147,11 @@ function initTree() {
   contextMenu1.addItem(message.get('tree.nodeCopy'), 'copy', menuEventHandler.handleCopyTree);
   contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
   contextMenu1.addSeparator();
-//  contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
-  contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleDelete);
+  if (UtilQS.isQSActive()) {
+	contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
+  } else {
+	contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleDelete);
+  }
 
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
@@ -706,6 +716,9 @@ function initAddressReferenceTables() {
 }
 
 function initToolbar() {
+  // Check if qs is active
+  var isQSActive = UtilQS.isQSActive();
+
   // create toolbar buttons with tooltips
   var rightToolbar = dojo.widget.byId('rightToolbar');
   rightToolbar.addChild("img/ic_expand_required_grey.gif", "after", {
@@ -761,35 +774,46 @@ function initToolbar() {
                           });
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
-/*
-  leftToolbar.addChild("img/ic_submit_qs.gif", "after", {
+
+  if (isQSActive) {
+	var finalSaveButton = leftToolbar.addChild("img/ic_submit_qs.gif", "after", {
                             onClick:menuEventHandler.handleForwardToQS,
                             caption:"An QS überweisen"
                           });
-*/
-  var finalSaveButton = leftToolbar.addChild("img/ic_submit.gif", "after", {
+  } else {
+  	var finalSaveButton = leftToolbar.addChild("img/ic_submit.gif", "after", {
                             onClick:menuEventHandler.handleFinalSave,
 //                          disabled:true,
                             caption:"Abschließendes Speichern"
                           });
-  var deleteButton = leftToolbar.addChild("img/ic_delete.gif", "after", {
+  }
+
+  if (isQSActive) {
+  	var deleteButton = leftToolbar.addChild("img/ic_delete.gif", "after", {
+                            onClick:menuEventHandler.handleMarkDeleted,
+							caption:"Als gelöscht markieren"
+                          });
+  } else {
+  	var deleteButton = leftToolbar.addChild("img/ic_delete.gif", "after", {
                             onClick:menuEventHandler.handleDelete,
                             caption:"Ausgewähltes Objekt bzw. Teilbaum löschen"
-//                            caption:"Als gelöscht markieren"
-                          });
-/*
-  leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
+                          });  	
+  }
+
+  if (isQSActive) {
+	leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
                             onClick:menuEventHandler.handleUnmarkDeleted,
                             caption:"Löschen aufheben"
                           });
-*/
+  }
 
-/*
-  leftToolbar.addChild("img/ic_original.gif", "after", {
+  if (isQSActive) {
+	leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"
                           });
-*/
+  }
+
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   var showCommentButton = leftToolbar.addChild("img/ic_comment.gif", "after", {
                             onClick:menuEventHandler.handleShowComment,
@@ -1280,4 +1304,45 @@ function disableInputOnWrongPermission() {
 			_disableInputElement("thesaurusFreeTermsAddressAddButton");
 		}
     });
+}
+
+function initOptionalFieldStates() {
+	var def = getGuiIdList();
+
+	def.addCallback(function(guiIdList) {
+		dojo.lang.forEach(guiIdList, function(entry) {
+			var guiId = "uiElement"+entry.id;
+			var uiElement = dojo.byId(guiId);
+			var dispType = "standard";
+
+			if (uiElement) {
+				if (entry.mode == "0") {
+					uiElement.setAttribute("displaytype", "alwaysHide");
+
+				} else if (entry.mode == "1") {
+					uiElement.setAttribute("displaytype", "alwaysShow");
+				}
+			}
+		});
+	});
+
+	return def;
+}
+
+function getGuiIdList() {
+	var deferred = new dojo.Deferred();
+
+	// Get all gui ids
+	CatalogService.getSysGuis(null, {
+		callback: function(sysGuiList) {
+			deferred.callback(sysGuiList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);			
+		}
+	});
+
+	return deferred;
 }
