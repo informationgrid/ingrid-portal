@@ -32,9 +32,9 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
  * @author joachim
  *
  */
-public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
+public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 
-    private final static Log log = LogFactory.getLog(DetailDataPreparerIdc1_0_2Object.class);
+    private final static Log log = LogFactory.getLog(DetailDataPreparerIdc1_0_3Object.class);
 	
 	private Context context;
 	private String iPlugId;
@@ -43,7 +43,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	private IngridResourceBundle messages;
 	private IngridSysCodeList sysCodeList;
 	
-	public DetailDataPreparerIdc1_0_2Object(Context context, String iPlugId, RenderRequest request, RenderResponse response) {
+	public DetailDataPreparerIdc1_0_3Object(Context context, String iPlugId, RenderRequest request, RenderResponse response) {
 		this.context = context;
 		this.iPlugId = iPlugId;
 		this.request = request;
@@ -156,6 +156,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		
 		// add availability information
 		addAvailabilityInformation(elements, record);
+		
+		
 
 		if (previousElementsSize < elements.size()) {
 			// add horizontal line
@@ -166,6 +168,69 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		// add additional information
 		addAdditionalInformation(elements, record);
 
+		// add conformity information (new for INSPIRE)
+		List tableRecords = getSubRecordsByColumnName(record, "object_access.line");
+		if (tableRecords.size() > 0) {
+	    	HashMap element = new HashMap();
+	    	element.put("type", "table");
+	    	element.put("title", messages.getString("object_access"));
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("object_access.restriction_value"));
+			head.add(messages.getString("object_access.terms_of_use"));
+			element.put("head", head);
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+	    	for (int i=0; i<tableRecords.size(); i++) {
+	    		Record tableRecord = (Record)tableRecords.get(i);
+	    		ArrayList row = new ArrayList();
+	    		row.add(notNull(tableRecord.getString("object_access.restriction_value")));
+	    		row.add(notNull(tableRecord.getString("object_access.terms_of_use")));
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
+	    	}
+	    	if (body.size() > 0) {
+		    	elements.add(element);
+		    	element = new HashMap();
+		    	element.put("type", "space");
+				elements.add(element);
+	    	}
+	    	
+		}
+		
+		
+		// add conformity information (new for INSPIRE)
+		tableRecords = getSubRecordsByColumnName(record, "object_conformity.line");
+		if (tableRecords.size() > 0) {
+	    	HashMap element = new HashMap();
+	    	element.put("type", "table");
+	    	element.put("title", messages.getString("object_conformity"));
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("object_conformity.specification"));
+			head.add(messages.getString("object_conformity.degree_value"));
+			element.put("head", head);
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+	    	for (int i=0; i<tableRecords.size(); i++) {
+	    		Record tableRecord = (Record)tableRecords.get(i);
+	    		ArrayList row = new ArrayList();
+	    		row.add(notNull(tableRecord.getString("object_conformity.specification")));
+	    		row.add(notNull(tableRecord.getString("object_conformity.degree_value")));
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
+	    	}
+	    	if (body.size() > 0) {
+		    	elements.add(element);
+		    	element = new HashMap();
+		    	element.put("type", "space");
+				elements.add(element);
+	    	}
+	    	
+		}
+		
+		
+		
 		if (previousElementsSize < elements.size()) {
 			// add horizontal line
 			addLine(elements);
@@ -375,8 +440,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			elements.add(element);
 		}
    		addElementEntry(elements, record.getString("t01_object.ordering_instructions"), messages.getString("t01_object.ordering_instructions"));
-   		addElementEntry(elements, record.getString("t01_object.avail_access_note"), messages.getString("t01_object.avail_access_note"));
-   		addElementEntry(elements, record.getString("t01_object.fees"), messages.getString("t01_object.fees"));
+//   		addElementEntry(elements, record.getString("t01_object.avail_access_note"), messages.getString("t01_object.avail_access_note"));
+//   		addElementEntry(elements, record.getString("t01_object.fees"), messages.getString("t01_object.fees"));
    		
 	}
 
@@ -541,6 +606,11 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	List refRecords = getSubRecordsByColumnName(record, "t011_obj_geo.special_base");
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
+    		
+    		if (refRecord.getString("t011_obj_geo.special_base") != null) {
+    			addElementEntry(elements, refRecord.getString("t011_obj_geo.special_base"), messages.getString("t011_obj_geo.special_base"));
+    		}
+    		
     		addElementEntry(elements, sysCodeList.getName("525", refRecord.getString("t011_obj_geo.hierarchy_level")), messages.getString("t011_obj_geo.hierarchy_level"));
     		
     		List tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_symc.line");
@@ -698,9 +768,6 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     		if (refRecord.getString("t011_obj_geo.rec_exact") != null) {
     			addElementEntry(elements, refRecord.getString("t011_obj_geo.rec_exact").concat(" %"), messages.getString("t011_obj_geo.rec_exact"));
     		}
-    		if (refRecord.getString("t011_obj_geo.special_base") != null) {
-    			addElementEntry(elements, refRecord.getString("t011_obj_geo.special_base"), messages.getString("t011_obj_geo.special_base"));
-    		}
     		if (refRecord.getString("t011_obj_geo.data_base") != null) {
     			addElementEntry(elements, refRecord.getString("t011_obj_geo.data_base"), messages.getString("t011_obj_geo.data_base"));
     		}
@@ -724,6 +791,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         	    elements.add(element);
     		}
     		addElementEntry(elements, refRecord.getString("t011_obj_geo.method"), messages.getString("t011_obj_geo.method"));
+    		// add datasource indetificatioon (new for INSPIRE)
+    		addElementEntry(elements, refRecord.getString("t011_obj_geo.datasource_uuid"), messages.getString("t011_obj_geo.datasource_uuid"));
     	}
 	}	
 
@@ -767,6 +836,25 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.environment"), messages.getString("t011_obj_serv.environment"));
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.history"), messages.getString("t011_obj_serv.history"));
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.base"), messages.getString("t011_obj_serv.base"));
+    		// type of service (new for INSPIRE)
+    		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_type.line");
+    		if (refRecords.size() > 0) {
+    	    	HashMap element = new HashMap();
+    	    	element.put("type", "multiLine");
+    	    	element.put("title", messages.getString("t011_obj_serv_type"));
+    	    	ArrayList lines = new ArrayList();
+    	    	element.put("elements", lines);
+    	    	for (int i=0; i<refRecords.size(); i++) {
+    	    		refRecord = (Record)refRecords.get(i);
+    	        	HashMap line = new HashMap();
+    	        	line.put("type", "textLine");
+    	        	line.put("body", refRecord.getString("t011_obj_serv_type.serv_type_value"));
+    	        	if (!isEmptyLine(line)) {
+    	        		lines.add(line);
+    	        	}
+    	    	}
+        	    elements.add(element);
+    		}
     		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_version.line");
     		if (refRecords.size() > 0) {
     	    	HashMap element = new HashMap();
@@ -785,6 +873,36 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
         	    elements.add(element);
     		}
+    		// table resolution scale (new for INSPIRE)
+    		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_scale.line");
+    		if (refRecords.size() > 0) {
+    	    	HashMap element = new HashMap();
+    	    	element.put("type", "table");
+    	    	element.put("title", messages.getString("t011_obj_serv_scale"));
+    			ArrayList head = new ArrayList();
+    			head.add(messages.getString("t011_obj_serv_scale.scale").concat(" 1:x"));
+    			head.add(messages.getString("t011_obj_serv_scale.resolution_ground").concat(" m"));
+    			head.add(messages.getString("t011_obj_serv_scale.resolution_scan").concat(" dpi"));
+    			element.put("head", head);
+    			ArrayList body = new ArrayList();
+    			element.put("body", body);
+    	    	for (int i=0; i<refRecords.size(); i++) {
+    	    		refRecord = (Record)refRecords.get(i);
+    	    		ArrayList row = new ArrayList();
+    	    		row.add(notNull(refRecord.getString("t011_obj_serv_scale.scale")));
+    	    		row.add(notNull(refRecord.getString("t011_obj_serv_scale.resolution_ground")));
+    	    		row.add(notNull(refRecord.getString("t011_obj_serv_scale.resolution_scan")));
+    	    		if (!isEmptyRow(row)) {
+    	    			body.add(row);
+    	    		}
+    	    	}
+    	    	if (body.size() > 0) {
+    		    	elements.add(element);
+    		    	element = new HashMap();
+    		    	element.put("type", "space");
+    				elements.add(element);
+    	    	}
+    		} 
     		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_operation.line");
     		if (refRecords.size() > 0) {
     	    	HashMap element = new HashMap();

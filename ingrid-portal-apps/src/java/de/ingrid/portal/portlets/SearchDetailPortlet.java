@@ -145,7 +145,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
                 DetailDataPreparerFactory ddpf = new DetailDataPreparerFactory(context, iplugId, dateFields, request, response, replacementFields);
                 
-                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
+                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_ECS);
