@@ -26,6 +26,17 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysGuis(guiIds);
 	}
 
+	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore) {
+		try {
+			return catalogRequestHandler.storeSysGuis(sysGuis, refetchAfterStore);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while storing sysGui data.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+	}
+
 	public CatalogBean getCatalogData() {
 		return catalogRequestHandler.getCatalogData();	
 	}

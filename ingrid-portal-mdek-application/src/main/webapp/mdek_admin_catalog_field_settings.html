@@ -17,6 +17,7 @@ function initFieldsTable() {
 	var guiIdList = getGuiIdList();
 
 	guiIdList.addCallback(function(guiIdList) {
+		var delay = 10;
 		dojo.lang.forEach(guiIdList, function(entry) {
 
 			var dispType = "standard";
@@ -28,11 +29,44 @@ function initFieldsTable() {
 				dispType = "alwaysShow";
 			}
 
-			addLineToFieldsTable({ identifier: entry.id, name: UtilUI.getDescriptionForGuiId(entry.id), displayType: dispType });
-//			addLineToFieldsTable({ identifier: entry.sys-gui-id, name: UtilUI.getDescriptionForGuiId(entry.sys-gui-id), displayType: dispType });
+			// adding all lines at once without delay causes dojo to hang for a couple of seconds.
+			// To prevent this, the calls are delayed for a couple of ms
+//			addLineToFieldsTable({ identifier: entry.id, name: UtilUI.getDescriptionForGuiId(entry.id), displayType: dispType });
+			setTimeout("addLineToFieldsTable({identifier: '"+entry.id+"', name: '"+UtilUI.getDescriptionForGuiId(entry.id)+"', displayType: '"+dispType+"' })", delay);
+			delay += 10;
 		});	
 	});
 }
+
+// Button function for the 'save' button
+// The current settings are sent to the backend
+scriptScope.saveGuiIdList = function() {
+	var store = dojo.widget.byId("fieldTable").store;
+	var data = store.getData();
+	var guiIdList = [];
+
+	for (var i in data) {
+		var guiId = data[i].identifier;
+
+		var mode = "-1";
+		if (dojo.byId(guiId+"_noModifier").checked) {
+			mode = "-1";
+		} else if (dojo.byId(guiId+"_alwaysHide").checked) {
+			mode = "0";
+		} else if (dojo.byId(guiId+"_alwaysShow").checked) {
+			mode = "1";
+		}
+
+		guiIdList.push({id: guiId, mode: mode});
+	}
+
+	var def = storeGuiIdList(guiIdList, false);
+
+	def.addCallback(function(res) {
+		dialog.show(message.get("general.hint"), "Die Feldeinstellungen wurden erfolgreich gespeichert.", dialog.INFO);
+	});
+}
+
 
 function getGuiIdList() {
 	var deferred = new dojo.Deferred();
@@ -55,7 +89,30 @@ function getGuiIdList() {
 	return deferred;
 }
 
-function addLineToFieldsTable(field) {
+function storeGuiIdList(guiIdList, refetchAfterStore) {
+	var deferred = new dojo.Deferred();
+
+	// Store gui id list
+	CatalogService.storeSysGuis(guiIdList, refetchAfterStore, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(sysGuiList) {
+			deferred.callback(sysGuiList);
+		},
+		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
+			dojo.debug(errMsg);
+			dojo.debugShallow(err);
+			deferred.errback(err);			
+		}
+	});
+
+	return deferred;	
+}
+
+
+//function addLineToFieldsTable(field) {
+addLineToFieldsTable = function(field) {
 	var fieldStore = dojo.widget.byId("fieldTable").store;
 
 	var f = {}
@@ -127,7 +184,7 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveFieldSettings();">Speichern</button>
+						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGuiIdList();">Speichern</button>
 					</span>
 					<span id="catalogueFieldSettingsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />

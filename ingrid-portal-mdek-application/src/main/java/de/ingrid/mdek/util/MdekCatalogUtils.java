@@ -64,6 +64,18 @@ public class MdekCatalogUtils {
 		return sysGuiList;
 	}
 
+	public static List<IngridDocument> convertFromSysGuiRepresentation(List<Map<String, String>> sysGuiList) {
+		List<IngridDocument> result = new ArrayList<IngridDocument>();
+
+		for (Map<String, String> sysGuiEntry : sysGuiList) {
+			IngridDocument doc = new IngridDocument();
+			doc.put(MdekKeys.SYS_GUI_ID, sysGuiEntry.get(SYS_GUI_ID));
+			doc.put(MdekKeys.SYS_GUI_BEHAVIOUR, new Integer(sysGuiEntry.get(SYS_GUI_MODE)));
+
+			result.add(doc);
+		}
+		return result;
+	}
 
 	public static CatalogBean extractCatalogFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);

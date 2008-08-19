@@ -36,6 +36,13 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractSysGuisFromResponse(response);
 	}
 
+	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore) {
+		List<IngridDocument> sysGuiDoc = MdekCatalogUtils.convertFromSysGuiRepresentation(sysGuis);
+
+		IngridDocument response = mdekCallerCatalog.storeSysGuis(connectionFacade.getCurrentPlugId(), sysGuiDoc, refetchAfterStore, HTTPSessionHelper.getCurrentSessionId());
+		return MdekCatalogUtils.extractSysGuisFromResponse(response);
+	}
+
 	public CatalogBean getCatalogData() {
 		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
 		return MdekCatalogUtils.extractCatalogFromResponse(response);
@@ -44,7 +51,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	public CatalogBean storeCatalogData(CatalogBean cat) {
 		IngridDocument catDoc = (IngridDocument) MdekCatalogUtils.convertFromCatalogRepresentation(cat);
 
-		log.debug("Sending the following catalogfor storage:");
+		log.debug("Sending the following catalog for storage:");
 		log.debug(catDoc);
 
 		IngridDocument response = mdekCallerCatalog.storeCatalog(connectionFacade.getCurrentPlugId(), catDoc, true, HTTPSessionHelper.getCurrentSessionId());
