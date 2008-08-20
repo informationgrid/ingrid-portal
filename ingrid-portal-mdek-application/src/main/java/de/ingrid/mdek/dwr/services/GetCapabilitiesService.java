@@ -135,23 +135,19 @@ public class GetCapabilitiesService {
 
     	} catch (MalformedURLException e) {
     		log.debug("", e);
-//    		throw new RuntimeException(ERROR_GETCAP_INVALID_URL, e);
-    		throw new RuntimeException(e);
+    		throw new RuntimeException(ERROR_GETCAP_INVALID_URL, e);
 
     	} catch (IOException e) {
     		log.debug("", e);
-//    		throw new RuntimeException(ERROR_GETCAP, e);
-    		throw new RuntimeException(e);
+    		throw new RuntimeException(ERROR_GETCAP, e);
 
     	} catch (XPathExpressionException e) {
     		log.debug("", e);
-//    		throw new RuntimeException(ERROR_GETCAP_XPATH, e);
-    		throw new RuntimeException(e);
+    		throw new RuntimeException(ERROR_GETCAP_XPATH, e);
 
     	} catch (Exception e) {
     		log.debug("", e);
-//    		throw new RuntimeException(ERROR_GETCAP, e);
-    		throw new RuntimeException(e);
+    		throw new RuntimeException(ERROR_GETCAP, e);
     	}    
     }
 

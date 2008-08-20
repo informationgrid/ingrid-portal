@@ -76,6 +76,9 @@
 	"dialog.storeGroupTitle":"Gruppe speichern",
 	"dialog.storeGroupSuccess":"Die Gruppe wurde erfolgreich gespeichert.",
 	"dialog.browserFunctionDisabled":"Diese Funktionalit&auml;t ist in der MDEK deaktiviert.",
+	"dialog.getcap.error":"Es ist ein Fehler bei der Kommunikation mit der von Ihnen angegebenen Seite aufgetreten. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut!",
+	"dialog.getcap.xpathError":"Das zur&uuml;ckgelieferte Dokument konnte nicht analysiert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut!",
+	"dialog.getcap.invalidUrlError":"Die von Ihnen eingegebene Url ist ung&uuml;ltig. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut!",
 
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 	"dialog.inputInvalidHtmlTagError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Eines der Eingabefelder enth&auml;lt ung&uuml;ltige HTML Tags. Es sind ausschlie&szlig;lich folgende Tags erlaubt: 'b, i, u, p, br, strong, ul, ol, li'.",

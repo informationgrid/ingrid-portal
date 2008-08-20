@@ -1318,9 +1318,11 @@ function initOptionalFieldStates() {
 			if (uiElement) {
 				if (entry.mode == "0") {
 					uiElement.setAttribute("displaytype", "alwaysHide");
+					dojo.html.hide(uiElement);
 
 				} else if (entry.mode == "1") {
 					uiElement.setAttribute("displaytype", "alwaysShow");
+					dojo.html.show(uiElement);
 				}
 			}
 		});

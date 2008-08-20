@@ -864,6 +864,15 @@ function displayErrorMessage(err) {
 		} else if (err.message.indexOf("INVALID_INPUT_HTML_TAG_INVALID") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
 		
+		} else if (err.message.indexOf("ERROR_GETCAP_ERROR") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.getcap.error"), dialog.WARNING);
+
+		} else if (err.message.indexOf("ERROR_GETCAP_XPATH") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.getcap.xpathError"), dialog.WARNING);
+
+		} else if (err.message.indexOf("ERROR_GETCAP_INVALID_URL") != -1) {
+	    	dialog.show(message.get("general.error"), message.get("dialog.getcap.invalidUrlError"), dialog.WARNING);
+
 		} else if (err.message.indexOf("HQL_NOT_VALID") != -1) {
 	    	dialog.show(message.get("general.error"), message.get("dialog.hqlQueryInvalidError"), dialog.WARNING);
 
