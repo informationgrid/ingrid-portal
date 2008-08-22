@@ -57,6 +57,13 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
  * Show the context help
  */
 dialog.showContextHelp = function(e, guiId, caption /* optional */) {
+	// Check if guiId is a string or int
+	// If it's a string (deprecated), display it
+	if (typeof guiId == "string") {
+		dialog.show(message.get('general.hint'), "Der Hilfetext f&uuml;r '"+guiId+"' konnte nicht gefunden werden.", dialog.INFO);
+		return;
+	}
+
 	// Fetch the help message from the server
 	var def = UtilUdk.loadHelpMessage(guiId);
 

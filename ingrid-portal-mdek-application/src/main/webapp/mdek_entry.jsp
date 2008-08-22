@@ -1712,7 +1712,7 @@ function hideSplash(){
 
 	              <div class="inputContainer">
 					<span id="uiElementN025" type="required">
-		                <span id="availabilityUsageLimitationTableLabel" class="label required"><label for="availabilityUsageLimitationTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.title"))</script>*</label></span>
+		                <span id="availabilityUsageLimitationTableLabel" class="label required"><label for="availabilityUsageLimitationTable" onclick="javascript:dialog.showContextHelp(arguments[0], 10025)"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.title"))</script>*</label></span>
 	
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="availabilityUsageLimitationTableEditors">

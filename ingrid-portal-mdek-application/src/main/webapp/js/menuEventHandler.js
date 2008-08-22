@@ -677,27 +677,47 @@ menuEventHandler._handleFinalSaveAddress = function(msg) {
 
 
 
-menuEventHandler.handleForwardToQS = function() {alertNotImplementedYet();}
-menuEventHandler.handleMarkDeleted = function(msg) {alertNotImplementedYet();}
-menuEventHandler.handleUnmarkDeleted = function() {alertNotImplementedYet();}
+menuEventHandler.handleForwardToQS = function(msg) {
+	// Forward the current object/address to the QS.
+	// Do we need to implement any checks / additional stuff here, or can we just publish the obj/adr?
+	// Changes are not permitted after the object is sent to the QS
+	alertNotImplementedYet();
+}
+
+
+menuEventHandler.handleMarkDeleted = function(msg) {
+	// Mark the current obj/adr for deletion.
+	// Changes are not permitted after the object is sent to the QS
+	alertNotImplementedYet();
+}
+
+
+menuEventHandler.handleUnmarkDeleted = function(msg) {
+	// Only available for the person in charge of QS.
+	// Removes the flag which marks the obj/adr for deletion
+	alertNotImplementedYet();
+}
+
 
 menuEventHandler.handleShowChanges = function(msg) {
 	// Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
 	//   where the event originated
-  dojo.debug('Message parameter: '+msg);
+	dojo.debug('Message parameter: '+msg);
 
- 	var tree = dojo.widget.byId('tree');
-  var selectedNode = tree.selectedNode;
-  dojo.debug('selectedNode id: '+ selectedNode.id);
+//	var tree = dojo.widget.byId('tree');
+//	var selectedNode = tree.selectedNode;
+
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+	dojo.debug('selectedNode id: '+ selectedNode.id);
   
-	// params for the first (really delete object query) dialog.
 	var params = {
 		selectedNodeId: selectedNode.id
 	};
-	
-  dojo.debug('done.');
+
+	dojo.debug('done.');
 	dialog.showPage("Compare View", "mdek_compare_view_dialog.html", 755, 600, false, params);
-  dojo.debug('opened.');
+	dojo.debug('opened.');
 }
 
 menuEventHandler.handleShowComment = function() {

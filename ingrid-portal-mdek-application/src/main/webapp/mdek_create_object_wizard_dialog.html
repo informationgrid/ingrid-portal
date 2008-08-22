@@ -301,7 +301,7 @@ scriptScope.startSearch = function() {
 				dialog.show(message.get("general.error"), message.get("sns.timeoutError"), dialog.WARNING);
 			
 			} else if (msg == "SNS_INVALID_URL") {
-				dialog.show(message.get("general.error"), "Die von Ihnen angegebene Seite konnte nicht gefunden werden.", dialog.WARNING);
+				dialog.show(message.get("general.error"), "Die von Ihnen angegebene Seite konnte vom SNS nicht analysiert werden.", dialog.WARNING);
 			
 			} else {
 				displayErrorMessage(msg);
