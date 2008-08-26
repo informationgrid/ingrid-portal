@@ -10,6 +10,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/HttpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/ObjectService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>

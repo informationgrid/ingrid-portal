@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/GetCapabilitiesService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/HttpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 <script type="text/javascript">
@@ -45,7 +45,7 @@ function removeEvilTags(val) {
 function getBody(url) {
 	var def = new dojo.Deferred();
 
-	GetCapabilitiesService.getHtmlBody(url, {
+	HttpService.getHtmlBody(url, {
 		callback: function(rawBody) { def.callback(rawBody); },
 		errorHandler: function(message, err) {
 			def.errback(new Error(message));

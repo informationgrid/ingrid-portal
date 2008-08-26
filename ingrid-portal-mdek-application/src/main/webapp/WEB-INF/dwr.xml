@@ -18,6 +18,9 @@
 		<create creator="spring" javascript="HelpService">
 			<param name="beanName" value="helpService" />
 		</create>
+		<create creator="spring" javascript="HttpService">
+			<param name="beanName" value="httpService" />
+		</create>
 		<create creator="spring" javascript="ObjectService">
 			<param name="beanName" value="objectService" />
 		</create>
