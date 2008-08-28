@@ -138,27 +138,5 @@ public interface WMSInterface {
      * @return String Array with admin URLs
      */
     String[] getAdminInterfaceURLs();
-    
-    
-    /**
-     * Returns the current WMC document that describes the state of mapBender and is bound to the given session
-     * id.
-     * 
-     * @param sessionID
-     *            The session id
-     * @return The current WMC XML document as String.
-     */
-    String getWMCDocument(String sessionId);
 
-    /**
-     * Sets a WMC document that describes the state of mapBender and is bound to the given session
-     * id.
-     * 
-     * @param wmc
-     *            The WMC document as string.
-     * @param sessionID
-     *            The session id
-     */
-    void setWMCDocument(String wmc, String sessionId);
-    
 }
