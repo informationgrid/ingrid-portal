@@ -36,7 +36,7 @@
 		  <artifactId>maven-compiler-plugin</artifactId>
 		  <configuration>
 		    <fork>true</fork>
-			<executable>${java.home}/bin/javac</executable>
+			<executable>${java.home}/../bin/javac</executable>
 			<source>1.5</source>
 			<target>1.5</target>
 	      </configuration>
@@ -340,5 +340,21 @@
 			<layout>legacy</layout>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>ingrid-repository</id>
+			<name>ingrid-repository</name>
+			<url>file:///srv/www/htdocs/ingrid/maven</url>
+			<layout>legacy</layout>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>ingrid-repository</id>
+			<name>ingrid-repository</name>
+			<url>file:///srv/www/htdocs/ingrid/maven</url>
+			<layout>legacy</layout>
+		</snapshotRepository>
+	</distributionManagement>
 	
  </project>
