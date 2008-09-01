@@ -32,6 +32,7 @@ dojo.addOnLoad(function()
   deferred.addCallback(initForm);
   deferred.addCallback(hideSplash);	// hide the splash after everything is loaded
   deferred.addCallback(udkDataProxy.resetDirtyFlag);
+  deferred.addCallback(jumpToNodeOnInit);
 
 //  hideSplash();
 //  udkDataProxy.resetDirtyFlag();
@@ -929,7 +930,7 @@ function initToolbar() {
 }
 
 function initTableValidators() {
-	var unsignedIntFlags = { min:0, max:2147483647 }
+	var unsignedIntFlags = { min:0, max:2147483647 };
 
 	// The coordinates in the spatial reference table must be empty or real numbers
 	var table = dojo.widget.byId("spatialRefLocation");
@@ -949,7 +950,7 @@ function initTableValidators() {
 	// Availability media option 'Datenvolumen' is of type double 
 	var table = dojo.widget.byId("availabilityMediaOptions");
 	table.setValidationFunctions([
-		{target: "transferSize", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
+		{target: "transferSize", validateFunction: function(item) { return (item == null || item == "" || dojo.validate.isRealNumber(item)); }}
 	]);
 
 	// object class 1 - The 'Erstellungsmassstab' table must contain an integer and two doubles
@@ -957,7 +958,7 @@ function initTableValidators() {
 	table.setValidationFunctions([
 		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item+"", unsignedIntFlags)));}},
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
-		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
+		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}}		
 	]);
 
 	// object class 3 - The 'Erstellungsmassstab' table must contain an integer and two doubles
@@ -965,7 +966,7 @@ function initTableValidators() {
 	table.setValidationFunctions([
 		{target: "scale", validateFunction: function(item) {return (item == null || item == "" || (dojo.validate.isInteger(item) && dojo.validate.isInRange(item+"", unsignedIntFlags)));}},
 		{target: "groundResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},
-		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}},		
+		{target: "scanResolution", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item));}}	
 	]);
 
 /*
@@ -1329,6 +1330,14 @@ function initOptionalFieldStates() {
 	});
 
 	return def;
+}
+
+function jumpToNodeOnInit() {
+	dojo.debug("jumpToNodeOnInit called with parameters ["+initJumpToNodeId+", "+initJumpToNodeType+"]");
+
+	if (initJumpToNodeId.length != 0 && initJumpToNodeType.length != 0) {
+		menuEventHandler.handleSelectNodeInTree(initJumpToNodeId, initJumpToNodeType);
+	}
 }
 
 function getGuiIdList() {

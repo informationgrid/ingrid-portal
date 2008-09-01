@@ -1128,7 +1128,7 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 //				timeout:10000,
 				errorHandler:function(message) {
 					UtilDWR.exitLoadingState();
-					alert("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
+					dojo.debug("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
 					msg.resultHandler.errback();
 				}
 			}
@@ -1156,7 +1156,7 @@ udkDataProxy.handleGetAddressPathRequest = function(msg) {
 //				timeout:10000,
 				errorHandler:function(message) {
 					UtilDWR.exitLoadingState();
-					alert("Error in js/udkDataProxy.js: Error while getting path to address: " + message);
+					dojo.debug("Error in js/udkDataProxy.js: Error while getting path to address: " + message);
 					msg.resultHandler.errback();
 				}
 			}
@@ -1233,7 +1233,7 @@ udkDataProxy._setAddressData = function(nodeData)
 	if (nodeData.lastEditor != null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
 		dojo.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
 	} else {
-		dojo.byId("addressLastEditor").innerHTML = "---";
+		dojo.byId("addressLastEditor").innerHTML = message.get("general.unknown");
 	}
 
 	if (nodeData.writePermission == true) {
@@ -1368,7 +1368,7 @@ udkDataProxy._setObjectData = function(nodeData)
   if (nodeData.lastEditor != null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
 	dojo.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
   } else {
-    dojo.byId("lastEditor").innerHTML = "---";
+    dojo.byId("lastEditor").innerHTML = message.get("general.unknown");
   }
 
   dojo.widget.byId("objectOwner").setValue(nodeData.objectOwner);

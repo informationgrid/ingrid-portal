@@ -25,6 +25,8 @@
 
 <script type="text/javascript">
 	var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
+	var initJumpToNodeId = '<%= request.getParameter("nodeId") == null ? "" : request.getParameter("nodeId") %>';
+	var initJumpToNodeType = '<%= request.getParameter("nodeType") == null ? "" : request.getParameter("nodeType")%>';
 
 	var djConfig = {
 		locale: userLocale,

@@ -12,6 +12,7 @@
     "general.move":"Verschieben",
     "general.showAddress":"Zeige Adresse",
     "general.delete":"L&ouml;schen",
+	"general.unknown":"Unbekannt",
     "general.closeWindow":"Alle nicht gespeicherten \u00c4nderungen werden dabei verworfen.",
 	"general.lang.de":"Deutsch",
 	"general.lang.en":"Englisch",

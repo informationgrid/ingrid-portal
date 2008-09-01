@@ -15,7 +15,16 @@ _container_.addOnLoad(function() {
 	if (catalogData != null) {
 		updateInputFields(catalogData);
 		currentCatalogData = catalogData;
+	} else {
+		scriptScope.reloadCatalogData();
 	}
+
+	var checkbox = dojo.widget.byId("adminCatalogExpire");
+	var inputField = dojo.widget.byId("adminCatalogExpiryDuration");
+
+	dojo.event.connectOnce(checkbox, "onClick", function() {
+		checkbox.checked ? inputField.enable() : inputField.disable();
+	});
 });
 
 function updateInputFields(catalogData) {
@@ -26,6 +35,15 @@ function updateInputFields(catalogData) {
 	dojo.widget.byId("adminCatalogLanguage").setValue(catalogData.language);
 	dojo.widget.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
 	dojo.widget.byId("adminCatalogSpatialRef").location = catalogData.location;
+	if (catalogData.expiryDuration != null && catalogData.expiryDuration > 0) {
+		dojo.widget.byId("adminCatalogExpire").setValue(true);
+		dojo.widget.byId("adminCatalogExpiryDuration").enable();
+		dojo.widget.byId("adminCatalogExpiryDuration").setValue(catalogData.expiryDuration);
+	} else {
+		dojo.widget.byId("adminCatalogExpire").setValue(false);
+		dojo.widget.byId("adminCatalogExpiryDuration").setValue("0");
+		dojo.widget.byId("adminCatalogExpiryDuration").disable();
+	}
 }
 
 scriptScope.reloadCatalogData = function() {
@@ -51,6 +69,7 @@ scriptScope.saveCatalogData = function() {
 	newCatalogData.country = dojo.widget.byId("adminCatalogCountry").getValue();
 	newCatalogData.language = dojo.widget.byId("adminCatalogLanguage").getValue();
 	newCatalogData.location = dojo.widget.byId("adminCatalogSpatialRef").location;
+	newCatalogData.expiryDuration = (dojo.widget.byId("adminCatalogExpire").checked ? dojo.widget.byId("adminCatalogExpiryDuration").getValue() : "0");
 	// TODO Change when workflow control is implemented
 	newCatalogData.workflowControl = "N";
 
@@ -97,7 +116,9 @@ scriptScope.selectSpatialReference = function() {
 function isValidCatalog(cat) {
 	return (dojo.string.trim(cat.country).length != 0
 		 && dojo.string.trim(cat.language).length != 0
-		 && dojo.string.trim(cat.location.name).length != 0);
+		 && dojo.string.trim(cat.location.name).length != 0
+		 && dojo.validate.isInteger(cat.expiryDuration)
+		 && dojo.validate.isInRange(cat.expiryDuration, { min:0, max:2147483647 }));
 }
 
 </script>
@@ -381,7 +402,7 @@ function isValidCatalog(cat) {
 					
 					<div class="checkboxContainer">
 						<span class="input"><input type="checkbox" disabled="true" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Workflow-Kontrolle aktivieren')">Workflow-Kontrolle aktivieren</label></span>
-						<span class="input"><input type="checkbox" disabled="true" id="adminCatalogExpire" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], '&Uuml;berarbeiten nach xxx Tagen')">&Uuml;berarbeiten nach <input type="text" widgetId="adminCatalogExpiryDuration" class="w033" disabled="true" dojoType="ingrid:ValidationTextBox" /> Tagen</label></span>
+						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label style="cursor:default;">&Uuml;berarbeiten nach <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> Tagen</label></span>
 					</div>
 		
 					<div class="spacerField"></div>
