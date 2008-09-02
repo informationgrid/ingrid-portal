@@ -83,6 +83,21 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	} catch (SecurityException e) {
     		log.debug(e);
     	}
+    	
+    	// get auto startup parameter from request
+    	String type = request.getParameter("nodeType");
+    	String uuid = request.getParameter("nodeId");
+    	String autoStartQueryString = "";
+    	if (type != null && type.length() > 0) {
+    		autoStartQueryString = "nodeType=" + type;
+    	}
+    	if (uuid != null && uuid.length() > 0) {
+    		if (autoStartQueryString.length() > 0) {
+    			autoStartQueryString = autoStartQueryString + "&";
+    		}
+			autoStartQueryString = autoStartQueryString + "nodeId=" + uuid;
+    	}
+    	context.put("autoStartQueryString", autoStartQueryString);
 
     	setDefaultViewPage(TEMPLATE_START);
         super.doView(request, response);

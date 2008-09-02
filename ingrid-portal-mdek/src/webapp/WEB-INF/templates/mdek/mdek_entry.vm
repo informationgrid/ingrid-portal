@@ -1,3 +1,9 @@
+#if($autoStartQueryString)
+<script type="text/javascript"><!--
+    window.open('/ingrid-portal-mdek-application/index.jsp?${autoStartQueryString}');
+ //--></script>
+#end
+
 <div class="section">    
   <div class="formbody" style="overflow: auto;">
 <!--
