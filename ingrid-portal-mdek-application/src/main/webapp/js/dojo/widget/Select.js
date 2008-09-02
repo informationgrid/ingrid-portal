@@ -21,6 +21,7 @@ dojo.widget.defineWidget(
   buttonSrc: dojo.uri.moduleUri("ingrid", "widget/templates/images/combo_box_arrow.png"),
   dropdownToggle: "none",
 
+  autoComplete: false, 
   // NOTE: we use dojo.widget.basicComboBoxDataProvider for simplicity. Drawback is that it loads
   // all data on initialization. So if there is much data in the comboboxes, we should implement 
   // an own provider, that allows to search for a value (like the default one) AND for a key 

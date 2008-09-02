@@ -700,24 +700,14 @@ menuEventHandler.handleUnmarkDeleted = function(msg) {
 
 
 menuEventHandler.handleShowChanges = function(msg) {
-	// Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
-	//   where the event originated
-	dojo.debug('Message parameter: '+msg);
-
-//	var tree = dojo.widget.byId('tree');
-//	var selectedNode = tree.selectedNode;
-
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
-	dojo.debug('selectedNode id: '+ selectedNode.id);
-  
+
 	var params = {
 		selectedNodeId: selectedNode.id
 	};
 
-	dojo.debug('done.');
 	dialog.showPage("Compare View", "mdek_compare_view_dialog.html", 755, 600, false, params);
-	dojo.debug('opened.');
 }
 
 menuEventHandler.handleShowComment = function() {
