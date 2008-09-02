@@ -377,6 +377,9 @@ public class Settings {
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
     public static final String PARAM_CURRENT_SELECTOR_PAGE_UNRANKED = "currentSelectorPageUnranked";
+    
+	public static final String PARAM_LOGIN_REDIRECT = "r";
+
 
     // ------------- Session keys for direct HTTP session manipulation -------------------------
     

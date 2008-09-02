@@ -59,6 +59,12 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
             frm.setINITIAL_USERNAME(messages.getString("login.form.username.initialValue"));
             frm.setINITIAL_PASSWORD(messages.getString("login.form.passwd.initialValue"));
             frm.init();
+            String loginRedirect = request.getParameter(Settings.PARAM_LOGIN_REDIRECT);
+            if (loginRedirect == null || loginRedirect.length() == 0) {
+                frm.setInput(LoginForm.FIELD_DESTINATION, response.createActionURL().toString());
+            } else {
+            	frm.setInput(LoginForm.FIELD_DESTINATION, request.getParameter(Settings.PARAM_LOGIN_REDIRECT));
+            }
             frm.clearErrors();
         }
         context.put("actionForm", frm);

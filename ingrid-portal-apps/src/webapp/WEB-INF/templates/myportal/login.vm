@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 
 <form action="$action" method="post" id="frm_login">
-<input type="hidden" name="${loginConstants.DESTINATION}" value="$action" />
+<input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
 <input type="hidden" name="cmd" value="doLogin" />
 <div class="formbody">
 		<div class="optional-links">
