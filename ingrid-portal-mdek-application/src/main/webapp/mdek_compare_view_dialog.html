@@ -31,7 +31,9 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 						dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeDataNew.objectClass), "Objektklasse");
 	renderTextWithTitle(nodeDataOld.generalDescription, nodeDataNew.generalDescription, "Beschreibung");
 
-//	renderAddressList(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable);
+	UtilList.addAddressTitles(nodeDataOld.generalAddressTable);
+	UtilList.addAddressLinkLabels(nodeDataOld.generalAddressTable);
+	renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], ["Verweistyp", "Titel"], "Adressen");
 
 	// technical domains
 	if (nodeDataOld.objectClass != nodeDataNew.objectClass) {
@@ -114,6 +116,11 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	function lookupSpatialRefAltVDate(val) {
 		return dojo.widget.byId("spatialRefAltVDate")._getDisplayValueForValue(val);
 	}
+
+	if (altitudeDataOld[0].spatialRefAltMin == null) { altitudeDataOld[0].spatialRefAltMin = ""; }
+	if (altitudeDataOld[0].spatialRefAltMax == null) { altitudeDataOld[0].spatialRefAltMax = ""; }
+	if (altitudeDataOld[0].spatialRefAltMeasure = null) { altitudeDataOld[0].spatialRefAltMeasure = ""; }
+	if (altitudeDataOld[0].spatialRefAltVDate == null) { altitudeDataOld[0].spatialRefAltVDate = ""; }
 	renderTable(altitudeDataOld, altitudeDataNew, ["spatialRefAltMin", "spatialRefAltMax", "spatialRefAltMeasure", "spatialRefAltVDate"], ["Min", "Max", "Ma&szlig;einheit", "Vertikaldatum"], "H&ouml;he", [null, null, lookupSpatialRefAltMeasure, lookupSpatialRefAltVDate]);
 	renderTextWithTitle(nodeDataOld.spatialRefExplanation, nodeDataNew.spatialRefExplanation, "Erl&auml;uterungen");
 
@@ -269,47 +276,28 @@ function renderLinkedObjectListWithTitle(oldList, newList, title) {
 }
 
 function renderAddressList(oldList, newList) {
+	var oldText = "";
+	var newText = "";
 	if (oldList.length > 0) {
-		var t = "";
 		for (var i = 0; i < oldList.length; ++i) {
-			t += "<strong>" + oldList[i].nameOfRelation+ "</strong><br/><br/>";
-			t += "<p>";
-			if (oldList[i].organisation) {
-				t += oldList[i].organisation + "</br>";
-			}
-			ptr = t.length;
-			if (oldList[i].nameForm) {
-				t += oldList[i].nameForm + " ";
-			}
-			if (oldList[i].titleOrFunction) {
-				t += oldList[i].titleOrFunction + " ";
-			}
-			if (oldList[i].givenName) {
-				t += oldList[i].givenName + " ";
-			}
-			if (oldList[i].name) {
-				t += oldList[i].name;
-			}
-			if (ptr < t.length) {
-				t += "<br/>"
-			}
-			if (oldList[i].street) {
-				t += oldList[i].street+"<br/>";
-			}
-			if (oldList[i].city) {
-				t += oldList[i].city+"<br/>";
-			}
-			if (oldList[i].pobox) {
-				t += "<br/>"+oldList[i].pobox+"<br/>";
-			}
-			if (oldList[i].poboxPostalCode) {
-				t += oldList[i].poboxPostalCode+"<br/>";
-			}
-			t += "</p><br/>";
+			oldText += oldList[i].nameOfRelation+ ": ";
+			oldText += UtilAddress.createAddressTitle(oldList[i])+ "\n";
 		}
-		dojo.byId("oldContent").innerHTML += t + "<br/><br/>";
+		dojo.byId("oldContent").innerHTML += oldText.replace(/\n/g, '<br />') + "<br /><br />";
 	}
 
+	if (newList.length > 0) {
+		for (var i = 0; i < newList.length; ++i) {
+			newText += newList[i].nameOfRelation+ ": ";
+			newText += UtilAddress.createAddressTitle(newList[i])+ "\n";
+		}
+		dojo.byId("currentContent").innerHTML += newText.replace(/\n/g, '<br />') + "<br /><br />";
+	}
+
+	var diffText = diffString(oldText, newText);
+	diffText = diffText.replace(/\n/g, '<br />').replace(/&para;/g, '');
+
+	dojo.byId("diffContent").innerHTML += diffText + "<br /><br />";
 }
 
 function renderText(oldVal, newVal) {
@@ -564,7 +552,7 @@ function compareTable(table1, table2, properties) {
 
 		for (var j in table2) {
 			var obj2 = table2[j];
-			if (!arrayContains(diff.eq, obj2) && compareObj(obj2, obj1, properties)) {
+			if (!arrayContains(diff.eq, obj2) && compareObj(obj1, obj2, properties)) {
 				diff.eq.push(obj2);
 				found = true;
 				break;
@@ -597,8 +585,8 @@ function compareObj(obj1, obj2, properties) {
 	}
 
 	for (var i in properties) {
-		var prop1 = obj1[properties[i]];
-		var prop2 = obj2[properties[i]];
+		var prop1 = obj1[properties[i]] || "";
+		var prop2 = obj2[properties[i]] || "";
 		// Compare as strings so date objects are handled properly
 		if (prop1+"" != prop2+"") {
 			return false;
