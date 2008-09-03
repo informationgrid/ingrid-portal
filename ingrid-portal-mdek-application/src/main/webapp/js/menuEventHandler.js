@@ -707,7 +707,11 @@ menuEventHandler.handleShowChanges = function(msg) {
 		selectedNodeId: selectedNode.id
 	};
 
-	dialog.showPage("Compare View", "mdek_compare_view_dialog.html", 755, 600, false, params);
+	if (selectedNode.nodeAppType == "O") {
+		dialog.showPage("Compare View", "mdek_compare_view_dialog.html", 755, 600, false, params);
+	} else if (selectedNode.nodeAppType == "A") {
+		dialog.showPage("Compare View", "mdek_compare_view_address_dialog.html", 755, 600, false, params);
+	}
 }
 
 menuEventHandler.handleShowComment = function() {

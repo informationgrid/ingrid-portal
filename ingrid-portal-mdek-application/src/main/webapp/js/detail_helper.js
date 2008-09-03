@@ -55,6 +55,10 @@ detailHelper.renderAddressEntry = function(address) {
 		entry += "\n"+address.addressDescription;
 	}
 
+	if (this.isValid(address.task)) {
+		entry += "\n"+address.task;
+	}
+
 	return entry;
 }
 
