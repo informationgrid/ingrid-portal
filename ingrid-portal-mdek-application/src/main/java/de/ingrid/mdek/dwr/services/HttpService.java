@@ -7,14 +7,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
+import org.htmlparser.Node;
+import org.htmlparser.Parser;
 import org.htmlparser.beans.StringBean;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.HasParentFilter;
+import org.htmlparser.filters.NodeClassFilter;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.nodes.TextNode;
+import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
+import org.htmlparser.util.SimpleNodeIterator;
 
 
 public class HttpService {
 
 	private final static Logger log = Logger.getLogger(HttpService.class);	
 
-    public String getHtmlBody(String urlStr) {
+    @Deprecated
+	public String getHtmlBody(String urlStr) {
     	try {
 	    	URL url = new URL(urlStr);
         	BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -48,6 +60,24 @@ public class HttpService {
 			throw new RuntimeException(e);
     	}
 	}
+
+    public String getHtmlTitle(String url) {
+    	try {
+    		Parser parser = new Parser (url);
+    		// Find a node that is of type 'TextNode' and is child of a tag named 'title'
+    		NodeList nodeList = parser.parse(new AndFilter(new NodeClassFilter(TextNode.class), new HasParentFilter(new TagNameFilter("title"))));
+    		SimpleNodeIterator it = nodeList.elements();
+    		while (it.hasMoreNodes()) {
+    			Node n = it.nextNode();
+    			return n.getText();
+    		}
+
+    	} catch (ParserException e) {
+    		return "";
+    	}
+
+    	return "";
+    }
 
     public String parseHtml(String url, int maxWords) {
     	// Parse the given url and return a string with maxWords

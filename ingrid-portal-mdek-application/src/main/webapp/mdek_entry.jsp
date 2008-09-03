@@ -984,6 +984,30 @@ function hideSplash(){
 	            	  <div class="fill"></div>
 	              </div>
 
+	              <div class="inputContainer notRequired h130">
+					<span id="uiElementN023" type="optional">
+		                <span class="label"><script>document.write(message.get("ui.obj.type3.scaleTable.title"))</script></span>
+		                <div class="tableContainer rows4 full">
+		                  <div class="cellEditors" id="ref3ScaleEditors">
+		                    <div dojoType="IntegerTextbox" min="0" max="2147483647" maxlength="10" widgetId="ref3ScaleScale"></div>
+		                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref3ScaleGroundResolution"></div>
+		                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref3ScaleScanResolution"></div>
+		                  </div>
+		            	    <table id="ref3Scale" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+		            	      <thead>
+		            		      <tr>
+		                  			<th nosort="true" field="scale" dataType="String" width="105" editor="ref3ScaleScale"><script>document.write(message.get("ui.obj.type3.scaleTable.header.scale"))</script></th>
+		                  			<th nosort="true" field="groundResolution" dataType="String" width="285" editor="ref3ScaleGroundResolution"><script>document.write(message.get("ui.obj.type3.scaleTable.header.groundResolution"))</script></th>
+		                  			<th nosort="true" field="scanResolution" dataType="String" width="285" editor="ref3ScaleScanResolution"><script>document.write(message.get("ui.obj.type3.scaleTable.header.scanResolution"))</script></th>
+		            		      </tr>
+		            	      </thead>
+		            	      <tbody>
+		            	      </tbody>
+		            	    </table>
+		                </div>
+					</span>
+	          	  </div>
+
 	              <div class="inputContainer notRequired">
 	                <div class="half left">
                 	  <span id="uiElement3200" type="optional">
@@ -1041,30 +1065,6 @@ function hideSplash(){
                			</span> 
 	                </div>
 	                <div class="fill"></div>
-	          	  </div>
-
-	              <div class="inputContainer notRequired h130">
-					<span id="uiElementN023" type="optional">
-		                <span class="label"><script>document.write(message.get("ui.obj.type3.scaleTable.title"))</script></span>
-		                <div class="tableContainer rows4 full">
-		                  <div class="cellEditors" id="ref3ScaleEditors">
-		                    <div dojoType="IntegerTextbox" min="0" max="2147483647" maxlength="10" widgetId="ref3ScaleScale"></div>
-		                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref3ScaleGroundResolution"></div>
-		                    <div dojoType="ingrid:RealNumberTextbox" decimal="," widgetId="ref3ScaleScanResolution"></div>
-		                  </div>
-		            	    <table id="ref3Scale" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
-		            	      <thead>
-		            		      <tr>
-		                  			<th nosort="true" field="scale" dataType="String" width="105" editor="ref3ScaleScale"><script>document.write(message.get("ui.obj.type3.scaleTable.header.scale"))</script></th>
-		                  			<th nosort="true" field="groundResolution" dataType="String" width="285" editor="ref3ScaleGroundResolution"><script>document.write(message.get("ui.obj.type3.scaleTable.header.groundResolution"))</script></th>
-		                  			<th nosort="true" field="scanResolution" dataType="String" width="285" editor="ref3ScaleScanResolution"><script>document.write(message.get("ui.obj.type3.scaleTable.header.scanResolution"))</script></th>
-		            		      </tr>
-		            	      </thead>
-		            	      <tbody>
-		            	      </tbody>
-		            	    </table>
-		                </div>
-					</span>
 	          	  </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired h130">
@@ -1619,19 +1619,29 @@ function hideSplash(){
 
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="extraInfoConformityTableEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" style="width:420px;" listId="6000" id="extraInfoConformityLevelEditor"></div>
-		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w224" widgetId="extraInfoConformitySpecificationEditor"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:130px;" listId="6000" id="extraInfoConformityLevelEditor"></div>
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w405" widgetId="extraInfoConformitySpecificationEditor"></div>
+		                      <div dojoType="ingrid:DropdownDatePicker" displayFormat="dd.MM.yyyy" toggle="plain" widgetId="extraInfoConformityDatePicker"></div>
 		                    </div>
-		            	    <table id="extraInfoConformityTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+		            	    <table id="extraInfoConformityTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
 		            		      <tr>
 		                  			<th nosort="true" field="level" dataType="String" editor="extraInfoConformityLevelEditor"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.header.level"))</script></th>
 		                  			<th nosort="true" field="specification" dataType="String" editor="extraInfoConformitySpecificationEditor"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.header.specification"))</script></th>
+	                    			<th nosort="true" field="date" dataType="Date" width="120" editor="extraInfoConformityDatePicker"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.header.date"))</script></th>
 		            		      </tr>
 		            	      </thead>
 							  <colgroup>
+							    <col width="150">
+							    <col width="414">
+							    <col width="100">
+<!-- 
+
+
+
 							    <col width="440">
 							    <col width="225">
+ -->
 							  </colgroup>
 		            	      <tbody>
 		            	      </tbody>
@@ -1719,8 +1729,8 @@ function hideSplash(){
 	
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="availabilityUsageLimitationTableEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" style="width:420px;" listId="6010" id="availabilityUsageLimitationLimitEditor"></div>
-		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w224" widgetId="availabilityUsageLimitationRequirementEditor"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:312px;" listId="6010" id="availabilityUsageLimitationLimitEditor"></div>
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w320" widgetId="availabilityUsageLimitationRequirementEditor"></div>
 		                    </div>
 		            	    <table id="availabilityUsageLimitationTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -1730,9 +1740,9 @@ function hideSplash(){
 		            		      </tr>
 		            	      </thead>
 							  <colgroup>
-							    <col width="440">
-							    <col width="225">
-							  </colgroup>
+							    <col width="332">
+							    <col width="332">
+ 							  </colgroup>
 		            	      <tbody>
 		            	      </tbody>
 		            	    </table>

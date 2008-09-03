@@ -1,9 +1,11 @@
 package de.ingrid.mdek.beans.object;
 
+import java.util.Date;
+
 public class ConformityBean {
 	public Integer level;
 	public String specification;
-
+	public Date date;
 	
 	public Integer getLevel() {
 		return level;
@@ -16,5 +18,11 @@ public class ConformityBean {
 	}
 	public void setSpecification(String specification) {
 		this.specification = specification;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

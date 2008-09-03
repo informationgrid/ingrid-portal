@@ -65,6 +65,8 @@ _container_.addOnLoad(function() {
 });
 
 function resetInputFields() {
+	dojo.widget.byId("assistantHtmlTitleCheckbox").setValue(false);
+	dojo.widget.byId("assistantHtmlTitle").setValue("");
 	dojo.widget.byId("assistantDescriptionCheckbox").setValue(false);
 	dojo.widget.byId("assistantDescription").setValue("");
 	dojo.widget.byId("assistantDescriptorTable").clear();
@@ -179,6 +181,11 @@ scriptScope.addValuesToObject = function() {
 	}
 	dojo.widget.byId("generalDesc").setValue(dojo.string.trim(desc));
 
+	// Title
+	if (dojo.widget.byId("assistantHtmlTitleCheckbox").checked) {
+		dojo.widget.byId("objectName").setValue(dojo.string.trim(dojo.widget.byId("assistantHtmlTitle").getValue()));
+	}
+
 	// Add Thesaurus Topics 
     var descStore = dojo.widget.byId("thesaurusTerms").store;
 	var thesaList = dojo.widget.byId("assistantDescriptorTable").store.getData();
@@ -283,7 +290,34 @@ scriptScope.addValuesToObject = function() {
 		}
 	}
 
+	// Add the url to the link table
+	var newUrl = createNewUrl();
+
+	var urlData = [newUrl];
+	UtilList.addIcons(urlData);
+	UtilList.addUrlLinkLabels(urlData);
+	dojo.widget.byId("linksTo").store.setData(urlData);
+
 	_container_.closeWindow();
+}
+
+function createNewUrl() {
+	var newUrl = {};
+
+	newUrl.Id = 0;
+	newUrl.relationType = -1;
+	newUrl.relationTypeName = "Internet-Verweis";
+	var urlName = dojo.string.trim(dojo.widget.byId("assistantHtmlTitle").getValue());
+	newUrl.name = urlName.length != 0 ? urlName : "Internet-Verweis";
+	newUrl.url = dojo.string.trim(dojo.widget.byId("assistantURL").getValue());
+	newUrl.datatype = "HTML";
+	newUrl.volume = "";
+	newUrl.urlType = "";
+	newUrl.iconUrl = "";
+	newUrl.iconText = "";
+	newUrl.description = "";
+
+	return newUrl;
 }
 
 
@@ -312,17 +346,19 @@ scriptScope.startSearch = function() {
 
 	var autoClassifyDef = autoClassifyUrl(url, numWords);
 	var getHtmlContentDef = getHtmlContent(url, htmlContentNumWords);
+	var getHtmlTitleDef = getHtmlTitle(url);
 
 	showLoadingZone();
 
-	var l1 = new dojo.DeferredList([autoClassifyDef, getHtmlContentDef], false, false, true);
+	var l1 = new dojo.DeferredList([autoClassifyDef, getHtmlContentDef, getHtmlTitleDef], false, false, true);
 	l1.addCallback(function (resultList) {
-		if (resultList[0][0] == false || resultList[1][0] == false) {
+		if (resultList[0][0] == false || resultList[1][0] == false || resultList[2][0] == false) {
 			handleError(resultList[0], resultList[1]);
 
 		} else {
 			var topicMap = resultList[0][1];
 			var htmlContent = resultList[1][1];
+			var htmlTitle = resultList[2][1];
 	
 			if ((topicMap.indexedDocument == null || topicMap.indexedDocument.description == null) && topicMap.thesaTopics == null
 			    && topicMap.locationTopics == null && topicMap.eventTopics == null) {
@@ -331,6 +367,7 @@ scriptScope.startSearch = function() {
 			} else {
 				updateInputFields(topicMap);
 				dojo.widget.byId("assistantHtmlContent").setValue(dojo.string.trim(htmlContent));
+				dojo.widget.byId("assistantHtmlTitle").setValue(dojo.string.trim(htmlTitle));
 				showResults(showDescription, showHtmlContent);
 			}
 		}
@@ -405,6 +442,22 @@ function getHtmlContent(url, maxWords) {
 	return def;
 }
 
+function getHtmlTitle(url) {
+	var def = new dojo.Deferred();
+
+	HttpService.getHtmlTitle(url, {
+		callback: function(title) {
+			def.callback(title);
+		},
+
+		errorHandler: function(msg, err) {
+			def.errback(new Error(msg));
+		}
+	});
+
+	return def;
+}
+
 scriptScope.closeDialog = function() {
 	_container_.closeWindow();
 }
@@ -452,6 +505,15 @@ scriptScope.closeDialog = function() {
 
 			<div id="resultContainer" class="inputContainer noSpaceBelow">
 				<span class="label">Ergebnis</span>
+
+					<div class="checkboxContainer">
+						<span class="input"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel &uuml;bernehmen</label></span>
+					</div>
+					<div class="inputContainer">
+		           		<span class="input"><input type="text" id="assistantHtmlTitle" class="w676" dojoType="ingrid:ValidationTextbox" /></span> 
+					</div>
+
+
 				<span id="assistantDescriptionContainer">
 					<div class="checkboxContainer">
 						<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung &uuml;bernehmen</label></span>

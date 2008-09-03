@@ -28,6 +28,11 @@ function setOperationValues(capBean) {
 //	dojo.debugShallow(capBean);
 
 	dojo.widget.byId("generalShortDesc").setValue(capBean.title);
+	var serviceTitle = dojo.string.trim(capBean.title+"");
+	if (serviceTitle.length != 0) {
+		dojo.widget.byId("objectName").setValue(serviceTitle);
+	}
+
 	dojo.widget.byId("generalDesc").setValue(capBean.description);
 	if (capBean.serviceType.indexOf("CSW") != -1) {
 		dojo.widget.byId("ref3ServiceType").setValue(1);		

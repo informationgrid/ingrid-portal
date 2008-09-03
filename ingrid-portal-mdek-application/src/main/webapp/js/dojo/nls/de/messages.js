@@ -217,6 +217,7 @@
 	"ui.obj.additionalInfo.conformityTable.title":"Konformit&auml;t",
 	"ui.obj.additionalInfo.conformityTable.header.level":"Grad der Konformit&auml;t",
 	"ui.obj.additionalInfo.conformityTable.header.specification":"Spezifikation der Konformit&auml;t",
+	"ui.obj.additionalInfo.conformityTable.header.date":"Datum",
 	"ui.obj.additionalInfo.xmlExportCriteria":"XML-Export-Kriterium",
 	"ui.obj.additionalInfo.legalBasis":"Rechtliche Grundlagen",
 	"ui.obj.additionalInfo.purpose":"Herstellungszweck",

@@ -45,7 +45,7 @@ function removeEvilTags(val) {
 function getBody(url) {
 	var def = new dojo.Deferred();
 
-	HttpService.getHtmlBody(url, {
+	HttpService.parseHtml(url, -1, {
 		callback: function(rawBody) { def.callback(rawBody); },
 		errorHandler: function(message, err) {
 			def.errback(new Error(message));
