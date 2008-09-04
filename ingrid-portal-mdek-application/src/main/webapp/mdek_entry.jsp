@@ -1722,7 +1722,7 @@ function hideSplash(){
 	
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="availabilityUsageLimitationTableEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" style="width:312px;" listId="6010" id="availabilityUsageLimitationLimitEditor"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" style="width:425px;" listId="6010" id="availabilityUsageLimitationLimitEditor"></div>
 		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w320" widgetId="availabilityUsageLimitationRequirementEditor"></div>
 		                    </div>
 		            	    <table id="availabilityUsageLimitationTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">

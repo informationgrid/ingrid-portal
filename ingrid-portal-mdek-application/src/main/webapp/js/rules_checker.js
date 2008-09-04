@@ -227,7 +227,7 @@ function isObjectPublishable(idcObject) {
 			if (dojo.lang.some(confData, function(conf) {
 					return (typeof(conf.level) == "undefined" || conf.level == null || dojo.string.trim(conf.level).length == 0
 					     || typeof(conf.specification) == "undefined" || conf.specification == null || dojo.string.trim(conf.specification).length == 0
-					     || typeof(conf.date) == "undefined" || conf.date == null); })) {
+					     || typeof(conf.date) == "undefined" || conf.date == null || dojo.string.trim(conf.date+"").length == 0); })) {
 				dojo.html.addClass(dojo.byId("extraInfoConformityTableLabel"), "important");		
 				dojo.debug("All entries in the conformity table must have a valid level, specification and date.");
 				publishable = false;
@@ -272,7 +272,7 @@ function isObjectPublishable(idcObject) {
 			if (dojo.lang.some(confData, function(conf) {
 					return (typeof(conf.level) == "undefined" || conf.level == null || dojo.string.trim(conf.level).length == 0
 					     || typeof(conf.specification) == "undefined" || conf.specification == null || dojo.string.trim(conf.specification).length == 0
-					     || typeof(conf.date) == "undefined" || conf.date == null); })) {
+					     || typeof(conf.date) == "undefined" || conf.date == null || dojo.string.trim(conf.date+"").length == 0); })) {
 				dojo.html.addClass(dojo.byId("extraInfoConformityTableLabel"), "important");		
 				dojo.debug("All entries in the conformity table must have a valid level and specification.");
 				publishable = false;
