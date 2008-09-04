@@ -24,14 +24,21 @@
 				$MESSAGES.getString("maps.error.noframes") 
 			</iframe>
 			<div class="rightmargin" align="right">
-#if($enableSave)
-	$action.setParameter('action','doSaveWMSServices')
+#if($enableLoad)
+	$action.setParameter('action','doLoadWMC')
 		        <span class="iconLink">
 					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
-					<a href="$action">$MESSAGES.getString("maps.save.wms.services")</a>
+					<a href="$action">$MESSAGES.getString("maps.load.wmc")</a>
+				</span>&nbsp;&nbsp;
+#end
+#if($enableSave)
+	$action.setParameter('action','doSaveWMC')
+		        <span class="iconLink">
+					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
+					<a href="$action">$MESSAGES.getString("maps.save.wmc")</a>
 				</span>
 #if($wmsServicesSaved)
-				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wms.services.saved")</p>
+				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wmc.saved")</p>
 #end					
 #end
 			</div>

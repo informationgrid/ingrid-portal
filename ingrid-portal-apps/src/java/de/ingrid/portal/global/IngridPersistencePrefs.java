@@ -38,6 +38,8 @@ public class IngridPersistencePrefs {
 
     public static final String WMS_SERVICES = "wmsServices";
 
+    public static final String WMC_DOCUMENT = "wmcDocument";
+    
     private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
 
     private static final XStream xstream;

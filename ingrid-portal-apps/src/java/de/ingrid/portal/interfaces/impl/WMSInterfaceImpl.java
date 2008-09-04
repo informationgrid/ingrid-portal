@@ -3,7 +3,11 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -15,9 +19,18 @@ import java.util.Locale;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.hibernate.cfg.Environment;
@@ -156,9 +169,15 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             // END workaround for wrong dtd location
 
-            url = new URL(config.getString("interface_url",
-                    "http://localhost/mapbender/php/mod_portalCommunication_gt.php").concat("?PREQUEST=getWMSSearch")
-                    .concat("&PHPSESSID=" + sessionID));
+            String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
+            
+            if (urlStr.indexOf("?") > 0) {
+            	urlStr = urlStr.concat("&PREQUEST=getWMSSearch").concat("&PHPSESSID=" + sessionID);
+            } else {
+            	urlStr = urlStr.concat("?PREQUEST=getWMSSearch").concat("&PHPSESSID=" + sessionID);
+            }
+            
+            url = new URL(urlStr);
 
             reader.setValidation(false);
             Document document = reader.read(url);
@@ -231,7 +250,12 @@ public class WMSInterfaceImpl implements WMSInterface {
             viewerURL = config.getString("nojs_display_viewer_url",
                     "http://localhost/mapbender/frames/wms_viewer_nojs.php");
         }
-        viewerURL = viewerURL.concat("?PHPSESSID=" + sessionId);
+        if (viewerURL.indexOf("?") > 0) {
+            viewerURL = viewerURL.concat("&PHPSESSID=" + sessionId);
+        } else {
+            viewerURL = viewerURL.concat("?PHPSESSID=" + sessionId);
+        }
+        
         if (language != null) {
             viewerURL = viewerURL.concat("&" + LANGUAGE_PARAM + "=" + language.getLanguage());
         }
@@ -250,7 +274,11 @@ public class WMSInterfaceImpl implements WMSInterface {
             searchURL = config.getString("nojs_display_search_url",
                     "http://localhost/mapbender/frames/wms_search_nojs.php");
         }
-        searchURL = searchURL.concat("?PHPSESSID=" + sessionId);
+        if (searchURL.indexOf("?") > 0) {
+        	searchURL = searchURL.concat("&PHPSESSID=" + sessionId);
+        } else {
+        	searchURL = searchURL.concat("?PHPSESSID=" + sessionId);
+        }
         if (language != null) {
             searchURL = searchURL.concat("&" + LANGUAGE_PARAM + "=" + language.getLanguage());
         }
@@ -344,5 +372,123 @@ public class WMSInterfaceImpl implements WMSInterface {
         result[1] = PortalConfig.getInstance().getString(PortalConfig.WMS_MAPLAB_ADMIN_URL, "");
         return result;
     }
+
+	public String getWMCDocument(String sessionId) {
+        String wmc = new String();
+
+        try {
+
+            String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
+            if (urlStr.indexOf("?") > 0) {
+            	urlStr = urlStr.concat("&PREQUEST=getWMC").concat("&PHPSESSID=" + sessionId);
+            } else {
+            	urlStr = urlStr.concat("?PREQUEST=getWMC").concat("&PHPSESSID=" + sessionId);
+            }
+
+//          Create an instance of HttpClient.
+            HttpClient client = new HttpClient();
+
+            // Create a method instance.
+            GetMethod method = new GetMethod(urlStr);
+            
+            // Provide custom retry handler is necessary
+            method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, 
+            		new DefaultHttpMethodRetryHandler(2, false));
+
+            try {
+              // Execute the method.
+              int statusCode = client.executeMethod(method);
+
+              if (statusCode != HttpStatus.SC_OK) {
+            	  log.error("Requesting WMC faild for URL: " + urlStr);
+              }
+
+              // Read the response body.
+              byte[] responseBody = method.getResponseBody();
+
+              // Deal with the response.
+              // Use caution: ensure correct character encoding and is not binary data
+              wmc = new String(responseBody);
+
+            } catch (HttpException e) {
+          	  log.error("Fatal protocol violation: " + e.getMessage(), e);
+            } catch (IOException e) {
+           	  log.error("Fatal transport error: " + e.getMessage(), e);
+            } finally {
+              // Release the connection.
+              method.releaseConnection();
+            }            
+            Document document = DocumentHelper.parseText(wmc);
+            // check for valid server response
+            String error = document.valueOf("//portal_communication/error");
+            if (error != null && error.length() > 0) {
+                throw new Exception("WMS Server Error: " + error);
+            }
+
+        	return wmc;
+
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return null;
+    }
+
+	public void setWMCDocument(String wmc, String sessionId) {
+        String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
+        if (urlStr.indexOf("?") > 0) {
+        	urlStr = urlStr.concat("&PREQUEST=setWMC").concat("&PHPSESSID=" + sessionId);
+        } else {
+        	urlStr = urlStr.concat("?PREQUEST=setWMC").concat("&PHPSESSID=" + sessionId);
+        }
+//      Create an instance of HttpClient.
+        HttpClient client = new HttpClient();
+
+        // Create a method instance.
+        PostMethod method = new PostMethod(urlStr);
+        method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, 
+        		new DefaultHttpMethodRetryHandler(2, false));
+        
+        NameValuePair[] data = {
+                new NameValuePair("wmc", wmc)
+              };
+        method.setRequestBody(data);        
+        
+        try {
+          // Execute the method.
+          int statusCode = client.executeMethod(method);
+
+          if (statusCode != HttpStatus.SC_OK) {
+        	  log.error("Sending WMC faild for URL: " + urlStr);
+          }
+
+          // Read the response body.
+          byte[] responseBody = method.getResponseBody();
+
+          // Deal with the response.
+          // Use caution: ensure correct character encoding and is not binary data
+          Document document = DocumentHelper.parseText(new String(responseBody));
+          
+          // check for valid server response
+          String error = document.valueOf("//portal_communication/error");
+          if (error != null && error.length() > 0) {
+              throw new Exception("WMS Server Error: " + error);
+          }
+          
+          String success = document.valueOf("//portal_communication/success");
+          if (error == null || success.length() == 0) {
+              throw new Exception("WMS Server Error: Cannot find success message from server. message was: " + new String(responseBody));
+          }
+
+        } catch (HttpException e) {
+        	log.error("Fatal protocol violation: " + e.getMessage(), e);
+        } catch (IOException e) {
+            log.error("Fatal transport error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Fatal error: " + e.getMessage(), e);
+        } finally {
+          // Release the connection.
+          method.releaseConnection();
+        }         
+	}
 
 }

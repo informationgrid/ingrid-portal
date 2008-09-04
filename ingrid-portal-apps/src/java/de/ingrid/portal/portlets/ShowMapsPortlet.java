@@ -46,6 +46,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         if (Utils.getLoggedOn(request)) {
             context.put("enableSave", "true");
             context.put("wmsServicesSaved", request.getParameter("wmsServicesSaved"));
+            String wmc = (String)IngridPersistencePrefs.getPref(request.getUserPrincipal().getName(), IngridPersistencePrefs.WMC_DOCUMENT);
+            if (wmc != null && wmc.length() > 0) {
+            	context.put("enableLoad", "true");
+            }
         }
 
         super.doView(request, response);
@@ -55,12 +59,19 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
             IOException {
         String action = request.getParameter("action");
 
-        if (action != null && action.equals("doSaveWMSServices") && Utils.getLoggedOn(request)) {
-            // get the WMS Services
-            Collection c = WMSInterfaceImpl.getInstance().getWMSServices(request.getPortletSession().getId());
+        if (action != null && action.equals("doSaveWMC") && Utils.getLoggedOn(request)) {
+            // get the WMC from mapbender
+        	String wmc = WMSInterfaceImpl.getInstance().getWMCDocument(request.getPortletSession().getId());
             Principal principal = request.getUserPrincipal();
-            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES, c);
+            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMC_DOCUMENT, wmc);
             actionResponse.setRenderParameter("wmsServicesSaved", "1");
+        } else if (action != null && action.equals("doLoadWMC") && Utils.getLoggedOn(request)) {
+            // set the WMC in mapbender
+            Principal principal = request.getUserPrincipal();
+            String wmc = (String)IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.WMC_DOCUMENT);
+            if (wmc != null && wmc.length() > 0) {
+            	WMSInterfaceImpl.getInstance().setWMCDocument(wmc, request.getPortletSession().getId());
+            }
         }
     }
 
