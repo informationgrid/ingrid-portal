@@ -10,6 +10,8 @@
         <property name="current_session_context_class">thread</property>
 
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+
 <!--
         <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
         <property name="cache.use_query_cache">true</property>
@@ -17,7 +19,7 @@
 
         <!-- SQL dialect -->
 <!--    <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property> -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>

@@ -27,6 +27,7 @@ import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -140,13 +141,6 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
-    	log.debug("Parameters:");
-    	Enumeration<String> e = request.getParameterNames();
-    	while (e.hasMoreElements()) {
-    		String parameterName = e.nextElement();
-    		log.debug(parameterName+": "+request.getParameter(parameterName));
-    	}
-
     	switch (getAction(request)) {
     	case NEW:
     		processActionNew(request, actionResponse);
@@ -189,7 +183,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     		return;
     	}
 
-    	// Remove all connections from the givenlist
+    	// Remove all connections from the given list
     	for (String plugId : plugIdList) {
     		removeConnectedIPlug(plugId);
     	}
@@ -219,25 +213,44 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	user.setPlugId(plugId);
     	user.setPortalLogin(userName);
 
+    	// Try to add the role 'mdek' to the user 'userName'
+    	try {
+        	roleManager.addRoleToUser(userName, "mdek");
+
+    	} catch (SecurityException e) {
+    		log.error("Could not add role 'mdek' to user with name '"+userName+"'");
+    		throw new PortletException("Could not add role 'mdek' to user with name '"+userName+"'", e);
+    	}
+
+    	// Role was successfully added, store the user in the mdek db
     	Session s = HibernateUtil.currentSession();
 
     	try {    	
         	s.beginTransaction();
         	s.persist(user);
-        	roleManager.addRoleToUser(userName, "mdek");
         	s.getTransaction().commit();
 
-    	} catch (SecurityException e) {
-    		if (s.getTransaction() != null) {
+    	} catch (HibernateException e) {
+    		// Hibernate Exception. Rollback the role change and the transaction
+    		if (s.getTransaction() != null && s.getTransaction().wasCommitted()) {
     			s.getTransaction().rollback();
     		}
-    		throw new PortletException(e);
+
+    		try {
+   				roleManager.removeRoleFromUser(userName, "mdek");
+
+    		} catch (SecurityException se) {
+    			log.error("Error while connectiong a new catalog. The user '"+userName+"' could not be created in the 'mdek' database. "
+    					 +"Additionaly the user received the role 'mdek' which could not be removed.", se);
+    		}
+
+    		throw new PortletException("Error while connectiong a new catalog. The user '"+userName+"' could not be created in the 'mdek' database. "
+					 +"Additionaly the user received the role 'mdek' which could not be removed.", e);
 
     	} finally {    		
     		HibernateUtil.closeSession();
+        	this.state = STATE.START;
     	}
-
-    	this.state = STATE.START;
     }
 
     private void removeConnectedIPlug(String plugId) throws PortletException {
@@ -333,9 +346,13 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         		IngridDocument cat = mdekCallerCatalog.fetchCatalog(plugId, userData.getAddressUuid());
         		IngridDocument adm = mdekCallerSecurity.getCatalogAdmin(plugId, userData.getAddressUuid());
         		String catAdminUuid = extractCatalogAdminUuid(adm);
-        		
-        		CatalogBean catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
 
+        		CatalogBean catBean = null;
+        		try {
+        			catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
+        		} catch (Exception e) {
+        			continue;
+        		}
 
         		UserData catAdminUserData = (UserData) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", catAdminUuid)).uniqueResult();
 
@@ -370,7 +387,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     private static String extractCatalogAdminUuid(IngridDocument catAdmin) {
     	IngridDocument result = MdekUtils.getResultFromResponse(catAdmin);
-    	return (String) result.get(MdekKeys.UUID);
+    	return result == null ? "" : (String) result.get(MdekKeys.UUID);
     }
 
 
@@ -409,6 +426,10 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
 		IngridDocument response = mdekCallerSecurity.getCatalogAdmin(plugId, request.getUserPrincipal().getName());
     	IngridDocument catAdmin = MdekUtils.getResultFromResponse(response);
+    	if (catAdmin == null) {
+    		return true;
+    	}
+
     	String addressUuid = (String) catAdmin.get(MdekKeys.UUID);
 
     	Session s = HibernateUtil.currentSession();
