@@ -165,10 +165,10 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataOld.extraInfoPublishArea), dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataNew.extraInfoPublishArea), "Ver&ouml;ffentlichung");
 	// Table is only displayed for object classes 1 and 3
 	if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
-		renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["level", "specification"],
-					[message.get("ui.obj.additionalInfo.conformityTable.header.level"), message.get("ui.obj.additionalInfo.conformityTable.header.specification")],
+		renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["level", "specification", "date"],
+					[message.get("ui.obj.additionalInfo.conformityTable.header.level"), message.get("ui.obj.additionalInfo.conformityTable.header.specification"), message.get("ui.obj.additionalInfo.conformityTable.header.date")],
 					message.get("ui.obj.additionalInfo.conformityTable.title"),
-					[function(val) { return dojo.widget.byId("extraInfoConformityLevelEditor")._getDisplayValueForValue(val); }, null]);
+					[function(val) { return dojo.widget.byId("extraInfoConformityLevelEditor")._getDisplayValueForValue(val); }, null, formatDate]);
 	}
 	renderList(nodeDataOld.extraInfoXMLExportTable, nodeDataNew.extraInfoXMLExportTable, "XML-Export-Kriterium");
 	renderList(nodeDataOld.extraInfoLegalBasicsTable, nodeDataNew.extraInfoLegalBasicsTable, "Rechtliche Grundlagen");

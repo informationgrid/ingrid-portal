@@ -145,10 +145,10 @@ function renderNodeData(nodeData) {
 	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeData.extraInfoPublishArea), "Ver&ouml;ffentlichung");
 	// Table is only displayed for object classes 1 and 3
 	if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
-		renderTable(nodeData.extraInfoConformityTable, ["level", "specification"],
-					[message.get("ui.obj.additionalInfo.conformityTable.header.level"), message.get("ui.obj.additionalInfo.conformityTable.header.specification")],
+		renderTable(nodeData.extraInfoConformityTable, ["level", "specification", "date"],
+					[message.get("ui.obj.additionalInfo.conformityTable.header.level"), message.get("ui.obj.additionalInfo.conformityTable.header.specification"), message.get("ui.obj.additionalInfo.conformityTable.header.date")],
 					message.get("ui.obj.additionalInfo.conformityTable.title"),
-					[function(val) { return dojo.widget.byId("extraInfoConformityLevelEditor")._getDisplayValueForValue(val); }, null]);
+					[function(val) { return dojo.widget.byId("extraInfoConformityLevelEditor")._getDisplayValueForValue(val); }, null, formatDate]);
 	}
 	renderList(nodeData.extraInfoXMLExportTable, "XML-Export-Kriterium");
 	renderList(nodeData.extraInfoLegalBasicsTable, "Rechtliche Grundlagen");

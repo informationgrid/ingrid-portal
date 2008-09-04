@@ -1031,6 +1031,7 @@ public class MdekMapper implements DataMapperInterface {
 			IngridDocument result = new IngridDocument();
 			result.put(MdekKeys.CONFORMITY_DEGREE_KEY, con.getLevel());
 			result.put(MdekKeys.CONFORMITY_SPECIFICATION, con.getSpecification());
+			result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getDate()));
 			resultList.add(result);
 		}
 		return resultList;
@@ -1468,6 +1469,7 @@ public class MdekMapper implements DataMapperInterface {
 			ConformityBean c = new ConformityBean();
 			c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_DEGREE_KEY));
 			c.setSpecification((String) con.get(MdekKeys.CONFORMITY_SPECIFICATION));
+			c.setDate(convertTimestampToDate((String) con.get(MdekKeys.CONFORMITY_PUBLICATION_DATE)));
 			resultList.add(c);
 		}
 		return resultList;

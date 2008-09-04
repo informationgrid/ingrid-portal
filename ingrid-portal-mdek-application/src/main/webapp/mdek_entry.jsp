@@ -1615,7 +1615,7 @@ function hideSplash(){
 	              <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected object class -->
 	              <div id="extraInfoConformityTableContainer" class="inputContainer" displaytype="exclude">
 				  	<span id="uiElementN024" type="required">
-		                <span id="extraInfoConformityTableLabel" class="label required"><label for="extraInfoConformityTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.title"))</script>*</label></span>
+		                <span id="extraInfoConformityTableLabel" class="label required"><label for="extraInfoConformityTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Konformit&auml;t')"><script>document.write(message.get("ui.obj.additionalInfo.conformityTable.title"))</script>*</label></span>
 
 		                <div class="tableContainer rows4 full">
 		                    <div class="cellEditors" id="extraInfoConformityTableEditors">
@@ -1635,13 +1635,6 @@ function hideSplash(){
 							    <col width="150">
 							    <col width="414">
 							    <col width="100">
-<!-- 
-
-
-
-							    <col width="440">
-							    <col width="225">
- -->
 							  </colgroup>
 		            	      <tbody>
 		            	      </tbody>
