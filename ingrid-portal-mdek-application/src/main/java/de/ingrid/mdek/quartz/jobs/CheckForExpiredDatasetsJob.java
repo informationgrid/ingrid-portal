@@ -15,14 +15,21 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.MdekUtils.ExpiryState;
 import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -49,7 +56,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		List<String> iplugList = caller.getRegisteredIPlugs();
 		for (String plugId : iplugList) {
 			Integer expiryDuration = getExpiryDuration(plugId);
-			
+
 			if (expiryDuration == null || expiryDuration <= 0) {
 				continue;
 			}
@@ -57,50 +64,45 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			Calendar expireCal = Calendar.getInstance();
 			Calendar notifyCal = Calendar.getInstance();
 			expireCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration));
-			notifyCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration+NOTIFY_DAYS_BEFORE_EXPIRY));
+			notifyCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration-NOTIFY_DAYS_BEFORE_EXPIRY));
 
-			ArrayList<MdekDataBean> objsWillExpireList = getExpiredObjects(notifyCal.getTime(), expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
-			ArrayList<MdekDataBean> objsExpiredList = getExpiredObjects(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
+			ArrayList<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
+			ArrayList<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 
-			HashMap<String, String> uuidEmailMap = new HashMap<String, String>();
-			HashMap<String, ArrayList<MdekDataBean>> emailWillExpireMap = createEmailExpireMap(objsWillExpireList, uuidEmailMap, plugId);
-			HashMap<String, ArrayList<MdekDataBean>> emailExpiredMap = createEmailExpireMap(objsExpiredList, uuidEmailMap, plugId);
+			sendMails(datasetsWillExpireList);
+			sendMails(datasetsExpiredList);
 
-			sendMails(emailWillExpireMap);
-			sendMails(emailExpiredMap);
-
-//			updateExpiryState(objsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
-//			updateExpiryState(objsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
+			updateExpiryState(datasetsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
+			updateExpiryState(datasetsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
 		}
 	}
 
-
-	private void updateExpiryState(ArrayList<MdekDataBean> objs, de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
+	private void updateExpiryState(ArrayList<ExpiredDataset> expiredDatasetList, de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 		IMdekCallerObject mdekCallerObject = connectionFacade.getMdekCallerObject();
+		IMdekCallerAddress mdekCallerAddress = connectionFacade.getMdekCallerAddress();
+		String catAdminUuid = getCatAdminUuid(plugId);
 
-		for (MdekDataBean obj : objs) {
+		for (ExpiredDataset expiredDataset : expiredDatasetList) {
 			IngridDocument doc = new IngridDocument();
-			doc.put(MdekKeys.UUID, obj.getUuid());
+			doc.put(MdekKeys.UUID, expiredDataset.getUuid());
 			doc.put(MdekKeys.EXPIRY_STATE, state.getDbValue());
-			mdekCallerObject.updateObjectPart(plugId, doc, IdcEntityVersion.PUBLISHED_VERSION, null);
+
+			if (expiredDataset.getType() == ExpiredDataset.Type.ADDRESS) {
+				mdekCallerAddress.updateAddressPart(plugId, doc, IdcEntityVersion.PUBLISHED_VERSION, catAdminUuid);
+			} else {
+				mdekCallerObject.updateObjectPart(plugId, doc, IdcEntityVersion.PUBLISHED_VERSION, catAdminUuid);
+			}
 		}
 	}
 
 
-	private void sendMails(HashMap<String, ArrayList<MdekDataBean>> emailObjMap) {
-		Set<Map.Entry<String, ArrayList<MdekDataBean>>> entrySet = emailObjMap.entrySet();
-		Iterator<Map.Entry<String, ArrayList<MdekDataBean>>> it = entrySet.iterator();
-
-		while (it.hasNext()) {
-			Map.Entry<String, ArrayList<MdekDataBean>> entry = it.next();
-			String sendToEmail = entry.getKey();
-			ArrayList<MdekDataBean> objs = entry.getValue();
-
-			log.debug("Send email to: "+sendToEmail);
-			for (MdekDataBean obj : objs) {
-				log.debug(" obj uuid: "+obj.getUuid());
-				log.debug(" obj title: "+obj.getObjectName());
-			}
+	private void sendMails(ArrayList<ExpiredDataset> expiredDatasetList) {
+		for (ExpiredDataset expiredDataset : expiredDatasetList) {
+			log.debug("Send email to: "+expiredDataset.getResponsibleUserEmail());
+			log.debug(" title: "+expiredDataset.getTitle());
+			log.debug(" uuid: "+expiredDataset.getUuid());
+			log.debug(" type: "+expiredDataset.getType());
+			log.debug(" last modified: "+expiredDataset.getLastModified());
 		}
 
 /*		
@@ -132,88 +134,15 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 */
 	}
 
-
-	private HashMap<String, ArrayList<MdekDataBean>> createEmailExpireMap(ArrayList<MdekDataBean> objsExpireList, HashMap<String, String> uuidEmailMap, String plugId) {
-		HashMap<String, ArrayList<MdekDataBean>> emailObjMap = new HashMap<String, ArrayList<MdekDataBean>>();
-		for (MdekDataBean obj : objsExpireList) {
-			String email = uuidEmailMap.get(obj.getObjectOwner());
-
-			if (email == null) {
-				email = getResponsibleUserEmail(plugId, obj);
-				uuidEmailMap.put(obj.getObjectOwner(), email);
-			}
-			ArrayList<MdekDataBean> willExpireList = emailObjMap.get(email);
-			if (willExpireList == null) {
-				willExpireList = new ArrayList<MdekDataBean>();
-				emailObjMap.put(email, willExpireList);
-			}
-			willExpireList.add(obj);
+	private String getCatAdminUuid(String plugId) {
+		try {
+			IMdekCallerSecurity mdekCallerSecurity = connectionFacade.getMdekCallerSecurity();
+			IngridDocument response = mdekCallerSecurity.getCatalogAdmin(plugId, "");
+			IngridDocument result = MdekUtils.getResultFromResponse(response);
+			return (String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID);
+		} catch (Exception e) {
+			return "";
 		}
-		return emailObjMap;
-	}
-
-
-	private String buildMessageContent() {
-		String message = "Mdek Test Message created at "+new Date()+"\n\n";
-
-		IMdekCaller caller = connectionFacade.getMdekCaller();
-
-		List<String> iplugList = caller.getRegisteredIPlugs();
-		message += "Current registered iPlugs ("+iplugList.size()+"):\n";
-		for (String iplug : iplugList) {
-			message += " "+iplug+ "\n";
-
-			ArrayList<MdekDataBean> expObjList = getExpiredObjects(null, null, null, iplug);
-
-			HashMap<String, String> responsibleUserMap = new HashMap<String, String>();
-
-			message += "  expired objects:\n";			
-			for (MdekDataBean obj : expObjList) {
-				String email = responsibleUserMap.get(obj.getObjectOwner());
-
-				if (email == null) {
-					email = getResponsibleUserEmail(iplug, obj);
-					responsibleUserMap.put(obj.getObjectOwner(), email);
-				}
-
-				message += "\nhttp://localhost:8080/ingrid-portal/portal/service-myportal.psml?r=http://localhost:8080/ingrid-portal/portal/mdek%3FnodeType=O%26nodeId="+obj.getUuid()+"\n";
-				message += "   obj name: "+obj.getObjectName()+"\n";
-				message += "   obj id: "+obj.getUuid()+"\n";
-				message += "   expired since: "+obj.getTimeRefDate1()+"\n";
-				message += "   send email to: "+email+"\n";
-			}
-		}
-
-		message += "\n--------\nThe End!\n";
-
-		return message;
-	}
-
-
-	private String getResponsibleUserEmail(String plugId, MdekDataBean obj) {
-		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
-
-		String qString = "select distinct adrComm.commValue " +
-		"from AddressNode aNode " +
-		"inner join aNode.t02AddressPublished adr " +
-		"inner join adr.t021Communications adrComm " +
-		"where " +
-		"adrComm.commtypeValue = 'Email' " +
-		"and aNode.addrUuid = '"+obj.getObjectOwner()+"'";
-
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, MAX_NUM_EXPIRED_OBJECTS, "");
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-
-		if (result != null) {
-			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
-			if (adrs != null) {
-				for (IngridDocument adrEntity : adrs) {
-					return adrEntity.getString("adrComm.commValue");
-				}
-			}
-		}
-		
-		return "";
 	}
 
 	private Integer getExpiryDuration(String plugId) {
@@ -224,21 +153,37 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		return cat.getExpiryDuration();		
 	}
 
-	private ArrayList<MdekDataBean> getExpiredObjects(Date begin, Date end, de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
-		ArrayList<MdekDataBean> resultList = new ArrayList<MdekDataBean>();
+	private ArrayList<ExpiredDataset> getExpiredDatasets(Date begin, Date end,
+			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
+
+		ArrayList<ExpiredDataset> expiredObjs = getExpiredObjects(begin, end, state, plugId);
+		ArrayList<ExpiredDataset> expiredAdrs = getExpiredAddresses(begin, end, state, plugId);
+
+		expiredObjs.addAll(expiredAdrs);
+		return expiredObjs;
+	}
+
+	private ArrayList<ExpiredDataset> getExpiredObjects(Date begin, Date end,
+			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
+		ArrayList<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
 		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 
 		if (mdekCallerQuery == null) {
 			return resultList;
 		}
 
-		String qString = "select distinct oNode.objUuid, obj.responsibleUuid, obj.objName " +
-				"from ObjectNode oNode " +
-				"inner join oNode.t01ObjectPublished obj " +
-				"inner join obj.objectMetadata objMetadata " +
-				"where " +
-				"objMetadata.expiryState <= " + state.getDbValue() +
-				" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end);
+		String qString = "select obj.objUuid, obj.objName, obj.modTime, comm.commValue " +
+		"from ObjectNode oNode " +
+			"inner join oNode.t01ObjectPublished obj " +
+			"inner join obj.objectMetadata oMeta, " +
+			"AddressNode as aNode " +
+			"inner join aNode.t02AddressPublished addr " +
+			"inner join addr.t021Communications comm " +
+		"where " +
+			"oMeta.expiryState <= " + state.getDbValue() +
+			" and obj.responsibleUuid = aNode.addrUuid " +
+			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
+			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end);
 		if (begin != null) {
 			qString += " and obj.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
 		}
@@ -251,16 +196,83 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			if (objs != null) {
 				for (IngridDocument objEntity : objs) {
-					MdekDataBean data = new MdekDataBean();
-					data.setUuid(objEntity.getString("oNode.objUuid"));
-					data.setObjectName(objEntity.getString("obj.objName"));
-					data.setObjectOwner(objEntity.getString("obj.responsibleUuid"));
-					resultList.add(data);
+					ExpiredDataset dataset = new ExpiredDataset();
+					dataset.setUuid(objEntity.getString("obj.objUuid"));
+					dataset.setTitle(objEntity.getString("obj.objName"));
+					dataset.setType(ExpiredDataset.Type.OBJECT);
+					dataset.setLastModified(MdekUtils.convertTimestampToDate(objEntity.getString("obj.modTime")));
+//					dataset.setLastModifiedBy(lastModifiedBy);
+					dataset.setResponsibleUserEmail(objEntity.getString("comm.commValue"));
+					resultList.add(dataset);
 				}
 			}
 		}
 
 		return resultList;
+	}
+
+	
+	private ArrayList<ExpiredDataset> getExpiredAddresses(Date begin, Date end,
+			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
+		ArrayList<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
+		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
+
+		if (mdekCallerQuery == null) {
+			return resultList;
+		}
+
+		String qString = "select adr.adrUuid, adr.institution, adr.firstname, adr.lastname, adr.modTime, comm.commValue " +
+		"from AddressNode addrNode " +
+			"inner join addrNode.t02AddressPublished adr " +
+			"inner join adr.addressMetadata aMeta, " +
+			"AddressNode as aNode " +
+			"inner join aNode.t02AddressPublished addr " +
+			"inner join addr.t021Communications comm " +
+		"where " +
+			"aMeta.expiryState <= " + state.getDbValue() +
+			" and adr.responsibleUuid = aNode.addrUuid " +
+			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
+			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end);
+		if (begin != null) {
+			qString += " and adr.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
+		}
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, MAX_NUM_EXPIRED_OBJECTS, "");
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
+			if (adrs != null) {
+				for (IngridDocument adrEntity : adrs) {
+					ExpiredDataset dataset = new ExpiredDataset();
+					dataset.setUuid(adrEntity.getString("adr.adrUuid"));
+					String institution = adrEntity.getString("adr.institution");
+					String lastName = adrEntity.getString("adr.lastname");
+					String firstName = adrEntity.getString("adr.firstname");
+					dataset.setTitle(createAddressTitle(institution, lastName, firstName));
+					dataset.setType(ExpiredDataset.Type.ADDRESS);
+					dataset.setLastModified(MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
+//					dataset.setLastModifiedBy(lastModifiedBy);
+					dataset.setResponsibleUserEmail(adrEntity.getString("comm.commValue"));
+					resultList.add(dataset);
+				}
+			}
+		}
+
+		return resultList;
+	}
+
+	private static String createAddressTitle(String institution, String lastName, String firstName) {
+		institution = institution == null ? "" : institution.trim();
+		lastName = lastName == null ? "" : lastName.trim();
+		firstName = firstName == null ? "" : firstName.trim();
+
+		if (institution.length() != 0) {
+			return institution;
+
+		} else {
+			return firstName.length() != 0 ? lastName+", "+firstName : lastName;
+		}
 	}
 
 
