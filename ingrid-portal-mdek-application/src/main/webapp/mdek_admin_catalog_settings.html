@@ -35,6 +35,11 @@ function updateInputFields(catalogData) {
 	dojo.widget.byId("adminCatalogLanguage").setValue(catalogData.language);
 	dojo.widget.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
 	dojo.widget.byId("adminCatalogSpatialRef").location = catalogData.location;
+	if (catalogData.workflowControl == "Y") {
+		dojo.widget.byId("adminCatalogWorkflowControl").setValue(true);
+	} else {
+		dojo.widget.byId("adminCatalogWorkflowControl").setValue(false);
+	}
 	if (catalogData.expiryDuration != null && catalogData.expiryDuration > 0) {
 		dojo.widget.byId("adminCatalogExpire").setValue(true);
 		dojo.widget.byId("adminCatalogExpiryDuration").enable();
@@ -70,8 +75,7 @@ scriptScope.saveCatalogData = function() {
 	newCatalogData.language = dojo.widget.byId("adminCatalogLanguage").getValue();
 	newCatalogData.location = dojo.widget.byId("adminCatalogSpatialRef").location;
 	newCatalogData.expiryDuration = (dojo.widget.byId("adminCatalogExpire").checked ? dojo.widget.byId("adminCatalogExpiryDuration").getValue() : "0");
-	// TODO Change when workflow control is implemented
-	newCatalogData.workflowControl = "N";
+	newCatalogData.workflowControl = dojo.widget.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
 
 	if (!isValidCatalog(newCatalogData)) {
 		dialog.show(message.get("general.error"), "Es m&uuml;ssen alle Pflichtfelder ausgef&uuml;llt sein, bevor die Katalogdaten gespeichert werden k&ouml;nnen!", dialog.WARNING);
@@ -401,7 +405,7 @@ function isValidCatalog(cat) {
 					<span class="input spaceBelow"><input type="text" required="true" widgetId="adminCatalogSpatialRef" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" disabled="true" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Workflow-Kontrolle aktivieren')">Workflow-Kontrolle aktivieren</label></span>
+						<span class="input"><input type="checkbox" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label style="cursor:default;">Workflow-Kontrolle aktivieren</label></span>
 						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label style="cursor:default;">&Uuml;berarbeiten nach <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> Tagen</label></span>
 					</div>
 		

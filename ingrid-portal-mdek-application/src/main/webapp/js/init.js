@@ -15,27 +15,29 @@ dojo.addOnLoad(function()
     console.style.visibility = "visible";
   }
 
-  initGeneralEventListener();
-  initToolbar();
-  disableInputOnWrongPermission();
-  initTree();
-//  initForm();	// We need to init the form after setting the optional field states in 'initOptionalFieldStates'
-  initTableValidators();
-  initCTS();
-  initFreeTermsButtons();
-  initReferenceTables();
-  var deferred = initCurrentUser();
-  deferred.addCallback(initCatalogData);
-  deferred.addCallback(initSysLists);
-  deferred.addCallback(initCurrentGroup);
-  deferred.addCallback(initOptionalFieldStates);
-  deferred.addCallback(initForm);
-  deferred.addCallback(hideSplash);	// hide the splash after everything is loaded
-  deferred.addCallback(udkDataProxy.resetDirtyFlag);
-  deferred.addCallback(jumpToNodeOnInit);
+  var def = initCatalogData();
+  def.addCallback(initGeneralEventListener);
+  def.addCallback(initToolbar);
+  def.addCallback(disableInputOnWrongPermission);
+  def.addCallback(initTree);
+  def.addCallback(initTableValidators);
+  def.addCallback(initCTS);
+  def.addCallback(initFreeTermsButtons);
+  def.addCallback(initReferenceTables);
+  def.addCallback(initCurrentUser);
+  def.addCallback(initSysLists);
+  def.addCallback(initCurrentGroup);
+  def.addCallback(initOptionalFieldStates);
+  def.addCallback(initForm);
+  def.addCallback(hideSplash);	// hide the splash after everything is loaded
+  def.addCallback(jumpToNodeOnInit);
+  // NOTE: the undo button enable / disable function is connected to the set / resetDirtyFlag.
+  // If the function is directly used as a callback (def.addCallback(resetDirtyFlag)), the connected
+  // functions are never fired (dojo bug?).
+  // If we create a new function that does nothing but call resetDirtyFlag, the connected functions are
+  // called properly
+  def.addCallback(function() { udkDataProxy.resetDirtyFlag(); });
 
-//  hideSplash();
-//  udkDataProxy.resetDirtyFlag();
 });
 
 

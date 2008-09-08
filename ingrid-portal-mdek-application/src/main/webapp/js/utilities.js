@@ -857,10 +857,11 @@ var UtilQS = {}
 
 // Returns whether workflow control is activated for the current catalog
 UtilQS.isQSActive = function() {
-	// TODO: implement
-	// TODO: Move to UtilCatalog?
-	dojo.debug("UtilQS.isQSActive is not implemented yet. Returning false.");
-	return false;
+	if (catalogData && typeof(catalogData.workflowControl) != "undefined" && catalogData.workflowControl == "Y") {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 // Utility functions for UI specific stuff
