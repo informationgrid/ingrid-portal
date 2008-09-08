@@ -803,15 +803,17 @@ function initToolbar() {
                           });  	
   }
 
+  var removeDeleteFlagButton = null;
   if (isQSActive) {
-	leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
+	removeDeleteFlagButton = leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
                             onClick:menuEventHandler.handleUnmarkDeleted,
                             caption:"Löschen aufheben"
                           });
   }
 
+  var showChangesButton = null;
   if (isQSActive) {
-	leftToolbar.addChild("img/ic_original.gif", "after", {
+	showChangesButton = leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"
                           });
@@ -840,37 +842,37 @@ function initToolbar() {
 		var enableList = [];
 		if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
 			if (canCreateRootNodes) {
-				disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
+				disableList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 				enableList = [newEntityButton];
 			} else {
-				disableList = [newEntityButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
+				disableList = [showChangesButton, newEntityButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 				enableList = [];				
 			}
 
 		} else if (message.node.id == "newNode") {
-			disableList = [copyTreeButton, cutButton, copyEntityButton, newEntityButton];
+			disableList = [showChangesButton, copyTreeButton, cutButton, copyEntityButton, newEntityButton];
 			enableList = [previewButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
 
 		} else if (message.node.isFolder && hasWriteTreePermission) {
 			disableList = [];
-			enableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
+			enableList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
 
 		} else if (message.node.isFolder && hasWriteSinglePermission) {
 			disableList = [cutButton, deleteButton, newEntityButton];
-			enableList = [previewButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, showCommentButton];
+			enableList = [showChangesButton, previewButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, showCommentButton];
 
 		} else if (message.node.isFolder && !hasWritePermission) {
 			disableList = [cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
-			enableList = [previewButton, copyEntityButton, copyTreeButton, showCommentButton];
+			enableList = [showChangesButton, previewButton, copyEntityButton, copyTreeButton, showCommentButton];
 
 		} else if (hasWritePermission) {
 			if (hasWriteTreePermission) {
 				disableList = [copyTreeButton];
-				enableList = [previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+				enableList = [showChangesButton, previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
 
 			} else if (hasWriteSinglePermission) {
 				disableList = [copyTreeButton, cutButton, deleteButton];
-				enableList = [previewButton, copyEntityButton, saveButton, discardButton, finalSaveButton, showCommentButton];				
+				enableList = [showChangesButton, previewButton, copyEntityButton, saveButton, discardButton, finalSaveButton, showCommentButton];				
 			}
 
 			if (message.node.nodeAppType == "O") {
@@ -891,7 +893,7 @@ function initToolbar() {
 
 		} else if (!hasWritePermission) {
 			disableList = [copyTreeButton, cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
-			enableList = [previewButton, copyEntityButton, showCommentButton];
+			enableList = [showChangesButton, previewButton, copyEntityButton, showCommentButton];
 		}
 
 		// The paste button depends on the current selection in treeController and the current selected node
@@ -901,8 +903,8 @@ function initToolbar() {
 			disableList.push(pasteButton);
 		}
 
-		dojo.lang.forEach(disableList, function(item) {item.disable()});
-		dojo.lang.forEach(enableList, function(item) {item.enable()});
+		dojo.lang.forEach(disableList, function(item) { if (item != null) { item.disable(); } });
+		dojo.lang.forEach(enableList, function(item) { if (item != null) { item.enable(); } });
     });
 
 	// The undo button depends on the dirty flag
@@ -927,8 +929,8 @@ function initToolbar() {
     dojo.event.connectOnce("after", treeController, "prepareCut", showOrHidePasteButton);
 
 	// Initially disable all icons
-	var disableList = [previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];	
-	dojo.lang.forEach(disableList, function(item) {item.disable()});
+	var disableList = [removeDeleteFlagButton, showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];	
+	dojo.lang.forEach(disableList, function(item) { if (item != null) { item.disable(); } });
 }
 
 function initTableValidators() {
