@@ -2,11 +2,12 @@ package de.ingrid.mdek.handler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
@@ -17,9 +18,11 @@ import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
 import de.ingrid.mdek.beans.query.SearchResultBean;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.util.MdekAddressUtils;
+import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekObjectUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -110,51 +113,131 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 	}
 
 	public ArrayList<AddressWorkflowResultBean> searchAddressesForWorkflowManagement() {
-		// TODO Implement!
-		AddressSearchResultBean adrResults = queryAddressesFullText("a", 0, 10);
-		ArrayList<AddressWorkflowResultBean> result = new ArrayList<AddressWorkflowResultBean>();
-		for (MdekAddressBean adr : adrResults.getResultList()) {
-			AddressWorkflowResultBean adrWf = new AddressWorkflowResultBean();
-			adrWf.setAddress(adr);
-			double d = Math.random() * (new Date().getTime() - new Date(0).getTime());
-			adrWf.setDate(new Date((long) d));
+		ArrayList<AddressWorkflowResultBean> adrResults = new ArrayList<AddressWorkflowResultBean>();
 
-			int idx = (int) ((double) adrResults.getResultList().size() * Math.random());
-			adrWf.setAssignedUser(adrResults.getResultList().get(idx));
-			adrWf.setState("State");
-
-			adrWf.setType(getRandomType());
-			result.add(adrWf);
+		Integer expiryDuration = getExpiryDuration();
+		if (expiryDuration == null || expiryDuration <= 0) {
+			return adrResults;
 		}
-		return result;
+
+		Calendar expireCal = Calendar.getInstance();
+		expireCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration));
+
+		String qString = "select adr.adrUuid, adr.institution, adr.firstname, adr.lastname, adr.adrType, adr.modTime, " +
+				"addr.adrUuid, addr.institution, addr.firstname, addr.lastname, addr.adrType " +
+		"from AddressNode addrNode " +
+			"inner join addrNode.t02AddressPublished adr " +
+			"inner join adr.addressMetadata aMeta, " +
+			"AddressNode as aNode " +
+			"inner join aNode.t02AddressPublished addr " +
+			"inner join addr.t021Communications comm " +
+		"where " +
+			"adr.responsibleUuid = aNode.addrUuid " +
+			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(expireCal.getTime()) +
+			" and adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'";
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, 10, "");
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
+			if (adrs != null) {
+				for (IngridDocument adrEntity : adrs) {
+					AddressWorkflowResultBean adrWf = new AddressWorkflowResultBean();
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
+					cal.add(Calendar.DAY_OF_MONTH, expiryDuration);
+					adrWf.setDate(cal.getTime());
+					adrWf.setState("Expired");
+					adrWf.setType("B");
+
+					adrWf.setAddress(createAddressFromHQLMap(adrEntity, "adr.adrUuid", "adr.adrType", "adr.institution", "adr.firstname", "adr.lastname"));
+					adrWf.setAssignedUser(createAddressFromHQLMap(adrEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
+
+					adrResults.add(adrWf);
+				}
+			}
+		}
+
+		return adrResults;
 	}
 
-	private String getRandomType() {
-		int x = (int) (Math.random() * 4.0d);
-		switch (x) {
-		case 0: return "A";
-		case 1: return "B";
-		case 2: return "C";
-		case 3: return "D";
-		default: return "D";
-		}
+	private Integer getExpiryDuration() {
+		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+
+		IngridDocument catDoc = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), "");
+		CatalogBean cat = MdekCatalogUtils.extractCatalogFromResponse(catDoc);
+		return cat.getExpiryDuration();		
 	}
 
 	public ArrayList<ObjectWorkflowResultBean> searchObjectsForWorkflowManagement() {
-		// TODO Implement!
-		ObjectSearchResultBean objResults = queryObjectsFullText("g", 0, 10);
-		ArrayList<ObjectWorkflowResultBean> result = new ArrayList<ObjectWorkflowResultBean>();
-		for (MdekDataBean obj : objResults.getResultList()) {
-			ObjectWorkflowResultBean objWf = new ObjectWorkflowResultBean();
-			objWf.setObject(obj);
-			double d = Math.random() * (new Date().getTime() - new Date(0).getTime());
-			objWf.setDate(new Date((long) d));
+		ArrayList<ObjectWorkflowResultBean> objResults = new ArrayList<ObjectWorkflowResultBean>();
 
-//			objWf.setAssignedUser(null);
-			objWf.setState("State");
-			objWf.setType(getRandomType());
-			result.add(objWf);
+		Integer expiryDuration = getExpiryDuration();
+		if (expiryDuration == null || expiryDuration <= 0) {
+			return objResults;
 		}
+
+		Calendar expireCal = Calendar.getInstance();
+		expireCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration));
+
+		String qString = "select obj.objUuid, obj.objClass, obj.objName, obj.modTime, addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+		"from ObjectNode oNode " +
+			"inner join oNode.t01ObjectPublished obj " +
+			"inner join obj.objectMetadata oMeta, " +
+			"AddressNode as aNode " +
+			"inner join aNode.t02AddressPublished addr " +
+			"inner join addr.t021Communications comm " +
+		"where " +
+			"obj.responsibleUuid = aNode.addrUuid " +
+			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(expireCal.getTime()) +
+			" and obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'";
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, 10, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+			if (objs != null) {
+				for (IngridDocument objEntity : objs) {
+					ObjectWorkflowResultBean objWf = new ObjectWorkflowResultBean();
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(MdekUtils.convertTimestampToDate(objEntity.getString("obj.modTime")));
+					cal.add(Calendar.DAY_OF_MONTH, expiryDuration);
+					objWf.setDate(cal.getTime());
+					objWf.setState("Expired");
+					objWf.setType("B");
+
+					objWf.setObject(createObjectFromHQLMap(objEntity, "obj.objUuid", "obj.objName", "obj.objClass"));
+					objWf.setAssignedUser(createAddressFromHQLMap(objEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
+
+					objResults.add(objWf);
+				}
+			}
+		}
+
+		return objResults;
+	}
+
+	private MdekDataBean createObjectFromHQLMap(IngridDocument objEntity, String uuidKey,
+			String nameKey, String classKey) {
+		MdekDataBean result = new MdekDataBean();
+		result.setUuid(objEntity.getString(uuidKey));
+		result.setObjectName(objEntity.getString(nameKey));
+		result.setObjectClass((Integer) objEntity.get(classKey));
+		return result;
+	}
+
+	private MdekAddressBean createAddressFromHQLMap(IngridDocument adrEntity, String uuidKey,
+			String typeKey, String institutionKey, String firstnameKey, String lastnameKey) {
+		MdekAddressBean result = new MdekAddressBean();
+		result.setUuid(adrEntity.getString(uuidKey));
+		result.setAddressClass((Integer) adrEntity.get(typeKey));
+		result.setOrganisation(adrEntity.getString(institutionKey));
+		result.setGivenName(adrEntity.getString(firstnameKey));
+		result.setName(adrEntity.getString(lastnameKey));
 		return result;
 	}
 
