@@ -522,6 +522,13 @@ UtilAddress.createAddressTitle = function(adr) {
 		return dojo.string.escape("html", dojo.string.trim(title));
 }
 
+// returns a 'linkLabel' depending on the 'uuid' and 'title' of the address.
+// linkLabel is a html href to directly jump to a given address in the main tree
+UtilAddress.createAddressLinkLabel = function(adrUuid, adrTitle) {
+	return "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+adrUuid+"\", \"A\");'"+
+		"title='"+adrTitle+"'>"+adrTitle+"</a>";
+}
+
 
 // Utility functions for handling misc data from the frontend
 var UtilUdk = {}

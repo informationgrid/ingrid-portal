@@ -136,7 +136,8 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			"adr.responsibleUuid = aNode.addrUuid " +
 			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(expireCal.getTime()) +
 			" and adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'";
-
+		qString += " order by adr.adrType, adr.institution, adr.lastname, adr.firstname";
+		
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
@@ -193,6 +194,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			"obj.responsibleUuid = aNode.addrUuid " +
 			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(expireCal.getTime()) +
 			" and obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'";
+		qString += " order by obj.objClass, obj.objName";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -235,6 +237,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			" and (obj.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
 					"or obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
 			" and obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.IN_BEARBEITUNG.getDbValue()+"'";
+		qString += " order by obj.objClass, obj.objName";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -272,6 +275,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			" and (adr.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
 					"or adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
 			" and adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.IN_BEARBEITUNG.getDbValue()+"'";
+		qString += " order by adr.adrType desc, adr.institution, adr.lastname, adr.firstname";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -310,6 +314,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 					"or obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
 			" and (obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue()+"'" +
 					"or obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue()+"')";
+		qString += " order by obj.objClass, obj.objName";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -349,6 +354,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 					"or adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
 			" and (adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue()+"'" +
 					"or adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue()+"')";
+		qString += " order by adr.adrType desc, adr.institution, adr.lastname, adr.firstname";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);

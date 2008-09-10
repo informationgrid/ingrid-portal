@@ -226,7 +226,8 @@ function prepareEntryFromWfObjectResult(wfResult) {
 	wfResult.title = dojo.string.escape("html", wfResult.object.objectName);
 	wfResult.uuid = wfResult.object.uuid;
 	wfResult.objectClass = wfResult.object.objectClass;
-	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+//	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+	wfResult.assignedUserTitle = UtilAddress.createAddressLinkLabel(wfResult.assignedUser.uuid, UtilAddress.createAddressTitle(wfResult.assignedUser));
 }
 
 function prepareWfObjectResultListForDisplay(wfObjResultList) {
@@ -258,7 +259,8 @@ function prepareEntryFromWfAddressResult(wfResult) {
 	wfResult.title = UtilAddress.createAddressTitle(wfResult.address);
 	wfResult.uuid = wfResult.address.uuid;
 	wfResult.addressClass = wfResult.address.uuid;
-	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+//	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+	wfResult.assignedUserTitle = UtilAddress.createAddressLinkLabel(wfResult.assignedUser.uuid, UtilAddress.createAddressTitle(wfResult.assignedUser));
 }
 
 function prepareWfAddressResultListForDisplay(wfAdrResultList) {
@@ -360,7 +362,7 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 							<tr>
 								<th nosort="true" field="icon" dataType="String" width="32"></th>
 								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
-								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Verantwortlicher</th>
 								<th nosort="true" field="state" dataType="String" width="210">Status</th>
 								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
 								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
@@ -386,11 +388,13 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 						<thead>
 							<tr>
 								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
+								<th nosort="true" field="linkLabel" dataType="String" width="440">Name</th>
 								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
 								<th nosort="true" field="state" dataType="String" width="210">Status</th>
 								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+<!-- 
 								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+ -->
 							</tr>
 						</thead>
 						<tbody>
