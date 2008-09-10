@@ -29,6 +29,7 @@ dojo.addOnLoad(function()
   def.addCallback(initCurrentGroup);
   def.addCallback(initOptionalFieldStates);
   def.addCallback(initForm);
+  def.addCallback(initMenu);
   def.addCallback(hideSplash);	// hide the splash after everything is loaded
   def.addCallback(jumpToNodeOnInit);
   // NOTE: the undo button enable / disable function is connected to the set / resetDirtyFlag.
@@ -40,6 +41,12 @@ dojo.addOnLoad(function()
 
 });
 
+function initMenu() {
+	// Hide page3Subnavi2 if QA is deactivated
+	if (!UtilQS.isQSActive()) {
+		dojo.byId("page3Subnavi2").style.display = "none";
+	}
+}
 
 function initForm() {
   // hide address and object panel after initialization

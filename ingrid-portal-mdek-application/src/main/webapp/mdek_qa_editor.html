@@ -1,108 +1,433 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
+<script type="text/javascript">
+var scriptScope = this;
+
+var resultsPerPage = 10;
+var expiredDatasetPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("expiredDatasetTableInfo"), pagingSpan:dojo.byId("expiredDatasetTablePaging") });
+var modifiedDatasetPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("modifiedDatasetTableInfo"), pagingSpan:dojo.byId("modifiedDatasetTablePaging") });
+var qaDatasetPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("qaDatasetTableInfo"), pagingSpan:dojo.byId("qaDatasetTablePaging") });
+
+var expiredDatasetTable = null;
+var modifiedDatasetTable = null;
+var qaDatasetTable = null;
+
+_container_.addOnLoad(function() {
+	dojo.event.connect("after", expiredDatasetPageNav, "onPageSelected", function() { navigateExpiredDatasetTable(); });
+	dojo.event.connect("after", modifiedDatasetPageNav, "onPageSelected", function() { navigateModifiedDatasetTable(); });
+	dojo.event.connect("after", qaDatasetPageNav, "onPageSelected", function() { navigateQADatasetTable(); });
+	initTables();
+});
+
+function initTables() {
+	var d1 = getExpiredAddresses();
+	var d2 = getExpiredObjects();
+	var d3 = getModifiedAddresses();
+	var d4 = getModifiedObjects();
+	var d5 = getQAAddresses();	
+	var d6 = getQAObjects();
+
+
+	var l1 = new dojo.DeferredList([d1, d2, d3, d4, d5, d6], false, false, true);
+	l1.addCallback(function (resultList) {
+		var expAdrList = resultList[0][1];
+		var expObjList = resultList[1][1];
+		var modAdrList = resultList[2][1];
+		var modObjList = resultList[3][1];
+		var qaAdrList = resultList[4][1];
+		var qaObjList = resultList[5][1];
+
+		// Set the expired obj/adr list
+		expiredDatasetTable = expObjList.concat(expAdrList);
+		UtilList.addTableIndices(expiredDatasetTable);
+		dojo.lang.forEach(expiredDatasetTable, function(item) { item.state = "&Uuml;berwiesen an Verantwortlichen"; item.type = "Verfallsdatum erreicht"; });
+		navigateExpiredDatasetTable();
+
+		// Set the modified obj/adr list
+		modifiedDatasetTable = modObjList.concat(modAdrList);
+		UtilList.addTableIndices(modifiedDatasetTable);
+		dojo.lang.forEach(modifiedDatasetTable, function(item) {
+			item.state = "Bei Bearbeiter";
+			item.type = item.type == "A" ? "neu angelegt" : "&uuml;berarbeitet";
+		});
+		navigateModifiedDatasetTable();
+
+		// Set the qa obj/adr list
+
+		// Count occurences
+		var numAdrStateQ = 0;
+		var numAdrStateR = 0;
+		var numObjStateQ = 0;
+		var numObjStateR = 0;
+		dojo.lang.forEach(qaAdrList, function(item) {if (item.state == "Q") {numAdrStateQ++;} else {numAdrStateR++;} });
+		dojo.lang.forEach(qaObjList, function(item) {if (item.state == "Q") {numObjStateQ++;} else {numObjStateR++;} });
+
+		qaDatasetTable = qaObjList.concat(qaAdrList);
+		UtilList.addTableIndices(qaDatasetTable);
+		dojo.lang.forEach(qaDatasetTable, function(item) {
+			item.state = item.state == "Q" ? "&Uuml;berwiesen an Qualit&auml;tssicherung": "Von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen";
+			item.type = item.type == "A" ? "neu angelegt" : "&uuml;berarbeitet";
+		});
+		
+		navigateQADatasetTable();
+
+		// Count the number of occurences and set the overview lst
+		initOverviewTable(expObjList.length, expAdrList.length, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR);
+	});
+	l1.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+}
+
+function navigateExpiredDatasetTable() {
+	expiredDatasetPageNav.setTotalNumHits(expiredDatasetTable.length);
+	expiredDatasetPageNav.updateDomNodes();
+
+	var expDatasetStore = dojo.widget.byId("expiredDatasetTable").store;
+	var beginIndex = expiredDatasetPageNav.getStartHit();
+	var endIndex = expiredDatasetPageNav.getStartHit() + resultsPerPage;
+	endIndex = endIndex > expiredDatasetTable.length ? expiredDatasetTable.length : endIndex;
+
+	expDatasetStore.clearData();
+	for (var i = beginIndex; i < endIndex; ++i) {
+		expDatasetStore.addData(expiredDatasetTable[i]);
+	}
+}
+
+function navigateModifiedDatasetTable() {
+	modifiedDatasetPageNav.setTotalNumHits(modifiedDatasetTable.length);
+	modifiedDatasetPageNav.updateDomNodes();
+
+	var modDatasetStore = dojo.widget.byId("modifiedDatasetTable").store;
+	var beginIndex = modifiedDatasetPageNav.getStartHit();
+	var endIndex = modifiedDatasetPageNav.getStartHit() + resultsPerPage;
+	endIndex = endIndex > modifiedDatasetTable.length ? modifiedDatasetTable.length : endIndex;
+
+	modDatasetStore.clearData();
+	for (var i = beginIndex; i < endIndex; ++i) {
+		modDatasetStore.addData(modifiedDatasetTable[i]);
+	}
+}
+
+function navigateQADatasetTable() {
+	qaDatasetPageNav.setTotalNumHits(qaDatasetTable.length);
+	qaDatasetPageNav.updateDomNodes();
+
+	var qaDatasetStore = dojo.widget.byId("qaDatasetTable").store;
+	var beginIndex = qaDatasetPageNav.getStartHit();
+	var endIndex = qaDatasetPageNav.getStartHit() + resultsPerPage;
+	endIndex = endIndex > qaDatasetTable.length ? qaDatasetTable.length : endIndex;
+
+	qaDatasetStore.clearData();
+	for (var i = beginIndex; i < endIndex; ++i) {
+		qaDatasetStore.addData(qaDatasetTable[i]);
+	}
+}
+
+
+function getExpiredObjects() {
+	var def = new dojo.Deferred();
+
+	QueryService.getExpiredObjects(-1, {
+		callback: function(expObjList) {
+			dojo.lang.forEach(expObjList, prepareEntryFromWfObjectResult);
+			prepareWfObjectResultListForDisplay(expObjList);
+			def.callback(expObjList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function getModifiedObjects() {
+	var def = new dojo.Deferred();
+
+	QueryService.getModifiedObjects(-1, {
+		callback: function(modObjList) {
+			dojo.lang.forEach(modObjList, prepareEntryFromWfObjectResult);
+			prepareWfObjectResultListForDisplay(modObjList);
+			def.callback(modObjList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function getModifiedAddresses() {
+	var def = new dojo.Deferred();
+
+	QueryService.getModifiedAddresses(-1, {
+		callback: function(modAdrList) {
+			dojo.lang.forEach(modAdrList, prepareEntryFromWfAddressResult);
+			prepareWfAddressResultListForDisplay(modAdrList);
+			def.callback(modAdrList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function getQAObjects() {
+	var def = new dojo.Deferred();
+
+	QueryService.getQAObjects(-1, {
+		callback: function(qaObjList) {
+			dojo.lang.forEach(qaObjList, prepareEntryFromWfObjectResult);
+			prepareWfObjectResultListForDisplay(qaObjList);
+			def.callback(qaObjList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function getQAAddresses() {
+	var def = new dojo.Deferred();
+
+	QueryService.getQAAddresses(-1, {
+		callback: function(qaAdrList) {
+			dojo.lang.forEach(qaAdrList, prepareEntryFromWfAddressResult);
+			prepareWfAddressResultListForDisplay(qaAdrList);
+			def.callback(qaAdrList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function prepareEntryFromWfObjectResult(wfResult) {
+	wfResult.title = dojo.string.escape("html", wfResult.object.objectName);
+	wfResult.uuid = wfResult.object.uuid;
+	wfResult.objectClass = wfResult.object.objectClass;
+	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+}
+
+function prepareWfObjectResultListForDisplay(wfObjResultList) {
+	UtilList.addObjectLinkLabels(wfObjResultList);
+	UtilList.addIcons(wfObjResultList);
+}
+
+
+function getExpiredAddresses() {
+	var def = new dojo.Deferred();
+
+	QueryService.getExpiredAddresses(-1, {
+		callback: function(expAdrList) {
+			dojo.lang.forEach(expAdrList, prepareEntryFromWfAddressResult);
+			prepareWfAddressResultListForDisplay(expAdrList);
+			def.callback(expAdrList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function prepareEntryFromWfAddressResult(wfResult) {
+	wfResult.title = UtilAddress.createAddressTitle(wfResult.address);
+	wfResult.uuid = wfResult.address.uuid;
+	wfResult.addressClass = wfResult.address.uuid;
+	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+}
+
+function prepareWfAddressResultListForDisplay(wfAdrResultList) {
+	UtilList.addAddressLinkLabels(wfAdrResultList);
+	UtilList.addIcons(wfAdrResultList);
+}
+
+function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR) {
+	var types = [{Id:0, type:"Aktualisierte Raumeinheiten", obj:0, adr:0},
+				 {Id:1, type:"Verfallszeitpunkt erreicht", obj:numExpObj, adr:numExpAdr},
+				 {Id:2, type:"An Qualit&auml;tssicherung &uuml;berwiesen", obj:numObjStateQ, adr:numAdrStateQ},
+				 {Id:3, type:"Von Qualit&auml;tssicherung zur&uuml;ck&uuml;berwiesen", obj:numObjStateR, adr:numAdrStateR}];
+
+	dojo.widget.byId("editorsOverviewTable").store.setData(types);
+/*
+	var types = [{Id:0, type:"Aktualisierte Raumeinheiten", obj:0, adr:0},
+				 {Id:1, type:"Verfallszeitpunkt erreicht", obj:0, adr:0},
+				 {Id:2, type:"An Qualit&auml;tssicherung &uuml;berwiesen", obj:0, adr:0},
+				 {Id:3, type:"Von Qualit&auml;tssicherung zur&uuml;ck&uuml;berwiesen", obj:0, adr:0}];
+
+	dojo.lang.forEach(wfList, function(item) {
+		var objOrAdr = (typeof item.objectClass != "undefined") ? "obj" : "adr";
+		if (item.type == "A") {
+			types[0][objOrAdr]++;
+		} else if (item.type == "B") {
+			types[1][objOrAdr]++;
+		} else if (item.type == "C") {
+			types[2][objOrAdr]++;
+		} else if (item.type == "D") {
+			types[3][objOrAdr]++;
+		}
+	});
+
+	dojo.widget.byId("editorsOverviewTable").store.setData(types);
+*/
+}
+
+</script>
 </head>
 
 <body>
+<div dojoType="ContentPane" layoutAlign="client">
 
-  <!-- CONTENT START -->
-  <form method="get" id="contentForm" action="">
-  <div dojoType="ContentPane" layoutAlign="client">
-  
-    <div id="qaEditorContentSection" class="contentBlockWhite top wideBlock">
-      <div id="winNavi">
-        <a href="#" title="Hilfe">[?]</a>
-  	  </div>
-  	  <div id="editors" class="content">
-        
-        <div class="inputContainer noSpaceBelow">
-          <div id="editorsOverview" class="infobox w478">
-            <span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-            <span class="title"><a href="javascript:toggleInfo('editorsOverview');" title="Info aufklappen">Übersicht:
-              <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-            <div id="editorsOverviewContent">
-        	    <table dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTableBlue relativePos">
-        	      <thead>
-        		      <tr>
-              			<th field="case" dataType="String" width="295">Objektzustand</th>
-              			<th field="objects" dataType="String" width="92">Objekte</th>
-              			<th field="addresses" dataType="String" width="92">Adressen</th>
-        		      </tr>
-        	      </thead>
-        	      <tbody>
-        		      <tr value="1">
-        		        <td>Aktualisierte Raumeinheiten</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="2">
-        		        <td>Verfallszeitpunkt erreicht</td>
-        		        <td>&nbsp;</td>
-        		        <td>1</td></tr>
-        		      <tr value="3">
-        		        <td>An Qualit&auml;tssicherung &uuml;berwiesen</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="4">
-        		        <td>Von Qualit&auml;tssicherung zur&uuml;ck&uuml;berwiesen</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td></tr>
-        	      </tbody>
-        	    </table>
-        	  </div>
-          </div>
-        </div>
+	<div class="contentBlockWhite top wideBlock">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+
+		<div class="content">
+			<div class="inputContainer noSpaceBelow">
+				<div id="editorsOverview" class="infobox w478">
+					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+					<span class="title"><a href="javascript:toggleInfo('editorsOverview');" title="Info aufklappen">&Uuml;bersicht:
+						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+					<div id="editorsOverviewContent">
+						<table id="editorsOverviewTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTableBlue relativePos nosort">
+							<thead>
+								<tr>
+									<th nosort="true" field="type" dataType="String" width="295">Objektzustand</th>
+									<th nosort="true" field="obj" dataType="String" width="92">Objekte</th>
+									<th nosort="true" field="adr" dataType="String" width="92">Adressen</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr value="1">
+									<td>Aktualisierte Raumeinheiten</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td></tr>
+								<tr value="2">
+									<td>Verfallszeitpunkt erreicht</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td></tr>
+								<tr value="3">
+									<td>An Qualit&auml;tssicherung &uuml;berwiesen</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td></tr>
+								<tr value="4">
+									<td>Von Qualit&auml;tssicherung zur&uuml;ck&uuml;berwiesen</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div> <!-- inputContainer end -->
   	    
-        <span class="label"><label>In Bearbeitung befindliche Objekte / Adressen</label></span>
-        <div class="inputContainer">
-    	    <table id="editorsTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTable wide relativePos">
-    	      <thead>
-    		      <tr>
-          			<th field="type" dataType="String" width="32"></th>
-          			<th field="name" dataType="String" width="340">Name</th>
-          			<th field="assignedTo" dataType="String" width="130">Bearbeiter</th>
-          			<th field="qs_status" dataType="String" width="210">Status</th>
-          			<th field="qs_type" dataType="String" width="160">Typ</th>
-          			<th field="date" dataType="String" width="100">Datum</th>
-    		      </tr>
-    	      </thead>
-    	      <tbody>
-    		      <tr value="1">
-    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=O" title="Objekt &ouml;ffnen: Objekt 1">Objekt 1</a></td>
-    		        <td>Gerdes, G&uuml;nther</td>
-    		        <td>&uuml;berwiesen an Qualit&auml;tssicherung</td>
-    		        <td>Vefallene Raumbez&uuml;ge</td>
-    		        <td>11.07.2006</td></tr>
-    		      <tr value="2">
-    		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=O" title="Objekt &ouml;ffnen: Objekt 2">Objekt 2</a></td>
-    		        <td>Altm&uuml;ller, Reinhard</td>
-    		        <td>&uuml;berwiesen an Verantwortlichen</td>
-    		        <td>Vefallsdatum erreicht</td>
-    		        <td>11.07.2006</td></tr>
-    		      <tr value="3">
-    		        <td><img src="img/UDK/addr_free_l.gif" width="16" height="16" alt="Person" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=A" title="Adresse &ouml;ffnen: Adresse 1">Adresse 1</a></td>
-    		        <td>Backhaus, Hermann</td>
-    		        <td>bei Bearbeiter</td>
-    		        <td>Neu angelegt</td>
-    		        <td>11.07.2006</td></tr>
-    		      <tr value="4">
-    		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-    		        <td><a href="erfassung.html?nodeAppType=A" title="Adresse &ouml;ffnen: Adresse 2">Adresse 2</a></td>
-    		        <td>Backhaus, Hermann</td>
-    		        <td>r&uuml;ck&uuml;berwiesen an Bearbeiter</td>
-    		        <td>Als gel&ouml;scht markiert</td>
-    		        <td>11.07.2006</td></tr>
-    	      </tbody>
-    	    </table>
-        </div>
-  
-      </div>
-    </div>
-  </div>
-  </form>
-  <!-- CONTENT END -->
+			<span class="label"><label>Objekte / Adressen deren Verfallszeitspanne abgelaufen ist</label></span>
 
+			<div class="inputContainer">
+				<div class="listInfo wide">
+					<span id="expiredDatasetTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="expiredDatasetTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+		        <div class="tableContainer rows10 wide">
+					<table id="expiredDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+						<thead>
+							<tr>
+								<th nosort="true" field="icon" dataType="String" width="32"></th>
+								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
+								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+								<th nosort="true" field="state" dataType="String" width="210">Status</th>
+								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div> <!-- tableContainer end -->
+			</div> <!-- inputContainer end -->
+
+			<span class="label"><label>Objekte / Adressen die sich in von Ihnen derzeit in Bearbeitung befinden</label></span>
+
+			<div class="inputContainer">
+				<div class="listInfo wide">
+					<span id="modifiedDatasetTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="modifiedDatasetTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+		        <div class="tableContainer rows10 wide">
+					<table id="modifiedDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+						<thead>
+							<tr>
+								<th nosort="true" field="icon" dataType="String" width="32"></th>
+								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
+								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+								<th nosort="true" field="state" dataType="String" width="210">Status</th>
+								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div> <!-- tableContainer end -->
+			</div> <!-- inputContainer end -->
+
+			<span class="label"><label>Objekte / Adressen die an die Qualit&auml;tssicherung &uuml;berwiesen bzw. von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen wurden</label></span>
+
+			<div class="inputContainer">
+				<div class="listInfo wide">
+					<span id="qaDatasetTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="qaDatasetTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+		        <div class="tableContainer rows10 wide">
+					<table id="qaDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+						<thead>
+							<tr>
+								<th nosort="true" field="icon" dataType="String" width="32"></th>
+								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
+								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+								<th nosort="true" field="state" dataType="String" width="210">Status</th>
+								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div> <!-- tableContainer end -->
+			</div> <!-- inputContainer end -->
+
+		</div> <!-- content end -->
+	</div> <!-- contentBlock end -->
+</div> <!-- contentPane end -->
 </body>
 </html>

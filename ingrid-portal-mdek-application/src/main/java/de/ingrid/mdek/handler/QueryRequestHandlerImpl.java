@@ -112,9 +112,10 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
-	public ArrayList<AddressWorkflowResultBean> searchAddressesForWorkflowManagement() {
+	public ArrayList<AddressWorkflowResultBean> getExpiredAddresses(int numHits) {
 		ArrayList<AddressWorkflowResultBean> adrResults = new ArrayList<AddressWorkflowResultBean>();
-
+		Integer maxNumResults = numHits < 0 ? null : numHits;
+		
 		Integer expiryDuration = getExpiryDuration();
 		if (expiryDuration == null || expiryDuration <= 0) {
 			return adrResults;
@@ -136,7 +137,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(expireCal.getTime()) +
 			" and adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, 10, "");
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -149,8 +150,6 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 					cal.setTime(MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
 					cal.add(Calendar.DAY_OF_MONTH, expiryDuration);
 					adrWf.setDate(cal.getTime());
-					adrWf.setState("Expired");
-					adrWf.setType("B");
 
 					adrWf.setAddress(createAddressFromHQLMap(adrEntity, "adr.adrUuid", "adr.adrType", "adr.institution", "adr.firstname", "adr.lastname"));
 					adrWf.setAssignedUser(createAddressFromHQLMap(adrEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
@@ -171,8 +170,9 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		return cat.getExpiryDuration();		
 	}
 
-	public ArrayList<ObjectWorkflowResultBean> searchObjectsForWorkflowManagement() {
+	public ArrayList<ObjectWorkflowResultBean> getExpiredObjects(int numHits) {
 		ArrayList<ObjectWorkflowResultBean> objResults = new ArrayList<ObjectWorkflowResultBean>();
+		Integer maxNumResults = numHits < 0 ? null : numHits;
 
 		Integer expiryDuration = getExpiryDuration();
 		if (expiryDuration == null || expiryDuration <= 0) {
@@ -194,7 +194,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(expireCal.getTime()) +
 			" and obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, 10, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -207,8 +207,6 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 					cal.setTime(MdekUtils.convertTimestampToDate(objEntity.getString("obj.modTime")));
 					cal.add(Calendar.DAY_OF_MONTH, expiryDuration);
 					objWf.setDate(cal.getTime());
-					objWf.setState("Expired");
-					objWf.setType("B");
 
 					objWf.setObject(createObjectFromHQLMap(objEntity, "obj.objUuid", "obj.objName", "obj.objClass"));
 					objWf.setAssignedUser(createAddressFromHQLMap(objEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
@@ -221,6 +219,158 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		return objResults;
 	}
 
+	public ArrayList<ObjectWorkflowResultBean> getModifiedObjects(int numHits) {
+		ArrayList<ObjectWorkflowResultBean> objResults = new ArrayList<ObjectWorkflowResultBean>();
+		Integer maxNumResults = numHits < 0 ? null : numHits;
+
+		String qString = "select obj.objUuid, obj.objClass, obj.objName, oNode.objIdPublished, " +
+				" addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+		"from ObjectNode oNode " +
+			"inner join oNode.t01ObjectWork obj, " +
+			"AddressNode as aNode " +
+			"inner join aNode.t02AddressPublished addr " +
+		"where " +
+			"((obj.modUuid is not null and obj.modUuid = aNode.addrUuid) " +
+				"or (obj.modUuid is null and obj.responsibleUuid = aNode.addrUuid)) " +
+			" and (obj.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
+					"or obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
+			" and obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.IN_BEARBEITUNG.getDbValue()+"'";
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+			if (objs != null) {
+				for (IngridDocument objEntity : objs) {
+					ObjectWorkflowResultBean objWf = new ObjectWorkflowResultBean();
+					objWf.setType(objEntity.get("oNode.objIdPublished") == null ? "A" : "B");
+					objWf.setObject(createObjectFromHQLMap(objEntity, "obj.objUuid", "obj.objName", "obj.objClass"));
+					objWf.setAssignedUser(createAddressFromHQLMap(objEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
+
+					objResults.add(objWf);
+				}
+			}
+		}
+
+		return objResults;
+	}
+	
+	public ArrayList<AddressWorkflowResultBean> getModifiedAddresses(int numHits) {
+		ArrayList<AddressWorkflowResultBean> adrResults = new ArrayList<AddressWorkflowResultBean>();
+		Integer maxNumResults = numHits < 0 ? null : numHits;
+
+		String qString = "select adr.institution, adr.firstname, adr.lastname, adr.adrUuid, adr.adrType, aNode.addrIdPublished, " +
+				" addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+		"from AddressNode aNode " +
+			"inner join aNode.t02AddressWork adr, " +
+			"AddressNode as adrNode " +
+			"inner join adrNode.t02AddressPublished addr " +
+		"where " +
+			"((adr.modUuid is not null and adr.modUuid = adrNode.addrUuid) " +
+				"or (adr.modUuid is null and adr.responsibleUuid = adrNode.addrUuid)) " +
+			" and (adr.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
+					"or adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
+			" and adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.IN_BEARBEITUNG.getDbValue()+"'";
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
+			if (adrs != null) {
+				for (IngridDocument adrEntity : adrs) {
+					AddressWorkflowResultBean adrWf = new AddressWorkflowResultBean();
+					adrWf.setType(adrEntity.get("aNode.addrIdPublished") == null ? "A" : "B");
+					adrWf.setAddress(createAddressFromHQLMap(adrEntity, "adr.adrUuid", "adr.adrType", "adr.institution", "adr.firstname", "adr.lastname"));
+					adrWf.setAssignedUser(createAddressFromHQLMap(adrEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
+
+					adrResults.add(adrWf);
+				}
+			}
+		}
+
+		return adrResults;
+	}
+
+	public ArrayList<ObjectWorkflowResultBean> getQAObjects(int numHits) {
+		ArrayList<ObjectWorkflowResultBean> objResults = new ArrayList<ObjectWorkflowResultBean>();
+		Integer maxNumResults = numHits < 0 ? null : numHits;
+
+		String qString = "select obj.objUuid, obj.objClass, obj.objName, obj.workState, oNode.objIdPublished, " +
+				" addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+		"from ObjectNode oNode " +
+			"inner join oNode.t01ObjectWork obj, " +
+			"AddressNode as aNode " +
+			"inner join aNode.t02AddressPublished addr " +
+		"where " +
+			"((obj.modUuid is not null and obj.modUuid = aNode.addrUuid) " +
+				"or (obj.modUuid is null and obj.responsibleUuid = aNode.addrUuid)) " +
+			" and (obj.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
+					"or obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
+			" and (obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue()+"'" +
+					"or obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue()+"')";
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+			if (objs != null) {
+				for (IngridDocument objEntity : objs) {
+					ObjectWorkflowResultBean objWf = new ObjectWorkflowResultBean();
+					objWf.setState((String) objEntity.get("obj.workState"));
+					objWf.setType(objEntity.get("oNode.objIdPublished") == null ? "A" : "B");
+					objWf.setObject(createObjectFromHQLMap(objEntity, "obj.objUuid", "obj.objName", "obj.objClass"));
+					objWf.setAssignedUser(createAddressFromHQLMap(objEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
+
+					objResults.add(objWf);
+				}
+			}
+		}
+
+		return objResults;
+	}
+
+	public ArrayList<AddressWorkflowResultBean> getQAAddresses(int numHits) {
+		ArrayList<AddressWorkflowResultBean> adrResults = new ArrayList<AddressWorkflowResultBean>();
+		Integer maxNumResults = numHits < 0 ? null : numHits;
+
+		String qString = "select adr.institution, adr.firstname, adr.lastname, adr.adrUuid, adr.adrType, adr.workState, aNode.addrIdPublished, " +
+				" addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+		"from AddressNode aNode " +
+			"inner join aNode.t02AddressWork adr, " +
+			"AddressNode as adrNode " +
+			"inner join adrNode.t02AddressPublished addr " +
+		"where " +
+			"((adr.modUuid is not null and adr.modUuid = adrNode.addrUuid) " +
+				"or (adr.modUuid is null and adr.responsibleUuid = adrNode.addrUuid)) " +
+			" and (adr.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
+					"or adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
+			" and (adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue()+"'" +
+					"or adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue()+"')";
+
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
+			if (adrs != null) {
+				for (IngridDocument adrEntity : adrs) {
+					AddressWorkflowResultBean adrWf = new AddressWorkflowResultBean();
+					adrWf.setState((String) adrEntity.get("adr.workState"));
+					adrWf.setType(adrEntity.get("aNode.addrIdPublished") == null ? "A" : "B");
+					adrWf.setAddress(createAddressFromHQLMap(adrEntity, "adr.adrUuid", "adr.adrType", "adr.institution", "adr.firstname", "adr.lastname"));
+					adrWf.setAssignedUser(createAddressFromHQLMap(adrEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
+
+					adrResults.add(adrWf);
+				}
+			}
+		}
+
+		return adrResults;
+	}
+	
 	private MdekDataBean createObjectFromHQLMap(IngridDocument objEntity, String uuidKey,
 			String nameKey, String classKey) {
 		MdekDataBean result = new MdekDataBean();

@@ -26,8 +26,14 @@ public interface QueryService {
 	public AddressSearchResultBean queryAddressesThesaurusTerm(String topicId, int startHit, int numHits);
 	public ObjectSearchResultBean queryObjectsThesaurusTerm(String topicId, int startHit, int numHits);
 
-	public ArrayList<AddressWorkflowResultBean> queryAddressesForWorkflowManagement();
-	public ArrayList<ObjectWorkflowResultBean> queryObjectsForWorkflowManagement();
+	public ArrayList<AddressWorkflowResultBean> getExpiredAddresses(int numHits);
+	public ArrayList<ObjectWorkflowResultBean> getExpiredObjects(int numHits);
+
+	public ArrayList<AddressWorkflowResultBean> getModifiedAddresses(int numHits);
+	public ArrayList<ObjectWorkflowResultBean> getModifiedObjects(int numHits);
+
+	public ArrayList<AddressWorkflowResultBean> getQAAddresses(int numHits);
+	public ArrayList<ObjectWorkflowResultBean> getQAObjects(int numHits);
 
 	public FileTransfer queryHQLToCSV(String hqlQuery);
 	public SearchResultBean queryHQL(String hqlQuery, int startHit, int numHits);
