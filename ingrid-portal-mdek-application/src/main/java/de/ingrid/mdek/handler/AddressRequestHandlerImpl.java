@@ -134,6 +134,21 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 
+	public MdekAddressBean assignAddressToQA(MdekAddressBean data) {
+		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+
+		if (data.getUuid().equalsIgnoreCase("newNode")) {
+			adr.remove(MdekKeys.UUID);
+			adr.remove(MdekKeys.ID);
+		}
+
+		log.debug("Sending the following address to QA:");
+		log.debug(adr);
+
+		IngridDocument response = mdekCallerAddress.assignAddressToQA(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		return MdekAddressUtils.extractSingleAddressFromResponse(response);
+	}
+
 	public MdekAddressBean saveAddress(MdekAddressBean data) {
 		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
 //		log.debug("saveAddress() not implemented yet.");

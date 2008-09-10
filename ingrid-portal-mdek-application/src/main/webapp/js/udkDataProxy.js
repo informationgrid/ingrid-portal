@@ -142,6 +142,10 @@ dojo.addOnLoad(function()
     dojo.event.topic.subscribe("/copyAddressRequest", udkDataProxy, "handleCopyAddressRequest");
     dojo.event.topic.subscribe("/getAddressPathRequest", udkDataProxy, "handleGetAddressPathRequest");
 
+	// QA requests
+    dojo.event.topic.subscribe("/forwardObjectToQARequest", udkDataProxy, "handleForwardObjectToQARequest");
+    dojo.event.topic.subscribe("/forwardAddressToQARequest", udkDataProxy, "handleForwardAddressToQARequest");
+
 
 	// Set initial values
 	udkDataProxy.dirtyFlag = false;
@@ -1116,6 +1120,73 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 	);
 }
 
+udkDataProxy.handleForwardObjectToQARequest = function(msg) {
+	// Construct an MdekDataBean from the available data
+	var nodeData = udkDataProxy._getData();
+
+	// Deferred obj for the main publish operation. The passed resulthandler is called with the appropriate result
+	var onForwardDef = new dojo.Deferred();
+	onForwardDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onForwardDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling ObjectService.assignObjectToQA("+nodeData.uuid+")");
+	ObjectService.assignObjectToQA(nodeData,
+		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+			callback: function(res) { onForwardDef.callback(res); },
+			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
+				dojo.debug("Error in js/udkDataProxy.js: Error while assigning node to QA: "+err);
+				onForwardDef.errback(err);
+			}
+		}
+	);
+}
+
+udkDataProxy.handleForwardAddressToQARequest = function(msg) {
+	// Construct an MdekAddressBean from the available data
+	var nodeData = udkDataProxy._getData();
+
+	// Deferred adr for the main publish operation. The passed resulthandler is called with the appropriate result
+	var onPublishDef = new dojo.Deferred();
+	onPublishDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onPublishDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling AddressService.assignAddressToQA("+nodeData.uuid+")");
+	AddressService.assignAddressToQA(nodeData,
+		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+			callback: function(res) { onPublishDef.callback(res); },
+			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
+				dojo.debug("Error in js/udkDataProxy.js: Error while assigning address to QA: "+err);
+				onPublishDef.errback(err);
+			}
+		}
+	);
+}
 
 udkDataProxy.handleGetObjectPathRequest = function(msg) {
 	var loadErrback = function() {msg.resultHandler.errback();}
@@ -2222,6 +2293,12 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			node.setTitle(title);
 			node.objectClass = objClass,
 			node.id = nodeData.uuid;	
+			// update permissions
+			node.userWritePermission = nodeData.writePermission;
+			node.userWriteSinglePermission = nodeData.writeSinglePermission;
+			node.userWriteTreePermission = nodeData.writeTreePermission;
+			var treeListener = dojo.widget.byId("treeListener");
+			dojo.event.topic.publish(treeListener.eventNames.select, {node: node});
 		} else {
 			dojo.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
 		}

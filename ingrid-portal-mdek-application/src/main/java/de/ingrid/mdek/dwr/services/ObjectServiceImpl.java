@@ -199,7 +199,23 @@ public class ObjectServiceImpl implements ObjectService {
 			}
 		}
 	}
-	
+
+	public MdekDataBean assignObjectToQA(MdekDataBean data) {
+		log.debug("Assigning node with ID to QA: "+data.getUuid());
+
+		try { return objectRequestHandler.assignObjectToQA(data); }
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while assigning node to QA.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+		catch (RuntimeException e) {
+			log.debug("Error while assigning node to QA", e);
+			throw e;
+		}
+	}		
+
+
 	public ObjectRequestHandler getObjectRequestHandler() {
 		return objectRequestHandler;
 	}

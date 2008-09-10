@@ -3,11 +3,7 @@ package de.ingrid.mdek.quartz.jobs;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -16,21 +12,18 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
-import de.ingrid.mdek.MdekUtils.ExpiryState;
 import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.address.MdekAddressBean;
-import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -41,6 +34,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	private final static Integer NOTIFY_DAYS_BEFORE_EXPIRY = 14;
 
 	private ConnectionFacade connectionFacade;
+	private MdekEmailUtils mdekEmailUtils;
 
 
 	protected void executeInternal(JobExecutionContext ctx)
@@ -69,8 +63,8 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			ArrayList<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
 			ArrayList<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 
-			sendMails(datasetsWillExpireList);
-			sendMails(datasetsExpiredList);
+			mdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
+			mdekEmailUtils.sendExpiryMails(datasetsExpiredList);
 
 			updateExpiryState(datasetsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 			updateExpiryState(datasetsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
@@ -95,44 +89,6 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		}
 	}
 
-
-	private void sendMails(ArrayList<ExpiredDataset> expiredDatasetList) {
-		for (ExpiredDataset expiredDataset : expiredDatasetList) {
-			log.debug("Send email to: "+expiredDataset.getResponsibleUserEmail());
-			log.debug(" title: "+expiredDataset.getTitle());
-			log.debug(" uuid: "+expiredDataset.getUuid());
-			log.debug(" type: "+expiredDataset.getType());
-			log.debug(" last modified: "+expiredDataset.getLastModified());
-		}
-
-/*		
-		Properties props = (Properties)System.getProperties().clone();
-
-	    // Setup mail server
-	    props.put("mail.smtp.host", "gotthard.wemove.lan");
-
-		Session session = Session.getDefaultInstance(props, null);
-		if (log.isDebugEnabled()) {
-			session.setDebug(true);
-		}
-
-		Message msg = new MimeMessage(session);
-
-		try {
-			msg.setFrom( new InternetAddress( "michael.benz@wemove.com") );
-			msg.setRecipients(Message.RecipientType.TO, new InternetAddress[] { new InternetAddress( "michael.benz@wemove.com") });
-			msg.setSubject("[MDEK] Test");
-			msg.setContent(buildMessageContent(), "text/plain; charset=UTF-8");
-			Transport.send(msg, msg.getAllRecipients());
-
-		} catch (AddressException e) {
-			log.error("invalid email address format", e);
-
-		} catch (MessagingException e) {
-			log.error("error sending email.", e);
-		}		
-*/
-	}
 
 	private String getCatAdminUuid(String plugId) {
 		try {
@@ -278,5 +234,9 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
+	}
+
+	public void setMdekEmailUtils(MdekEmailUtils mdekEmailUtils) {
+		this.mdekEmailUtils = mdekEmailUtils;
 	}
 }

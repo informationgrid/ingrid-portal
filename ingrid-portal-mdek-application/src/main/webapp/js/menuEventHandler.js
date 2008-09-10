@@ -676,12 +676,84 @@ menuEventHandler._handleFinalSaveAddress = function(msg) {
 }
 
 
+menuEventHandler.handleForwardToQA = function(msg) {
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+	
+	if (selectedNode.nodeAppType == "O") {
+		menuEventHandler._handleForwardObjectToQA(msg);
+	} else if (selectedNode.nodeAppType == "A") {
+		menuEventHandler._handleForwardAddressToQA(msg);
+	}
+}	
 
-menuEventHandler.handleForwardToQS = function(msg) {
-	// Forward the current object/address to the QS.
-	// Do we need to implement any checks / additional stuff here, or can we just publish the obj/adr?
-	// Changes are not permitted after the object is sent to the QS
-	alertNotImplementedYet();
+
+menuEventHandler._handleForwardObjectToQA = function(msg) {
+	// Forward the current object to the QA.
+	var valid = checkValidityOfInputElements();
+
+	if (valid != "VALID"){
+		if (valid == "INVALID_INPUT_HTML_TAG_INVALID") {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
+			
+		} else {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		}
+		return;
+	}
+
+	var nodeData = udkDataProxy._getData();
+	if (isObjectPublishable(nodeData)) {
+		var deferred = new dojo.Deferred();
+		deferred.addErrback(displayErrorMessage);
+
+		// Show a dialog to query the user before publishing
+		dialog.show(message.get("dialog.forwardToQATitle"), message.get("dialog.object.forwardToQAMessage"), dialog.INFO, [
+        	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
+        	{ caption: message.get("general.yes"), action: function() {
+					dojo.debug("Publishing event: /forwardObjectToQARequest");
+					dojo.event.topic.publish("/forwardObjectToQARequest", {resultHandler: deferred});
+        		}
+        	}
+		]);
+
+	} else {
+  		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+	}
+}
+
+menuEventHandler._handleForwardAddressToQA = function(msg) {
+	// Forward the current address to the QA.
+	var valid = checkValidityOfAddressInputElements();
+
+	if (valid != "VALID"){
+		if (valid == "INVALID_INPUT_HTML_TAG_INVALID") {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
+			
+		} else {
+			dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
+		}
+		return;
+	}
+
+	var nodeData = udkDataProxy._getData();
+	if (isAddressPublishable(nodeData)) {
+		var deferred = new dojo.Deferred();
+		deferred.addErrback(displayErrorMessage);
+
+		// Show a dialog to query the user before forwarding
+		dialog.show(message.get("dialog.forwardToQATitle"), message.get("dialog.address.forwardToQAMessage"), dialog.INFO, [
+        	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
+        	{ caption: message.get("general.yes"), action: function() {
+					dojo.debug("Publishing event: /forwardAddressToQARequest");
+					dojo.event.topic.publish("/forwardAddressToQARequest", {resultHandler: deferred});		
+        		}
+        	}
+		]);
+
+	} else {
+  		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+	}
 }
 
 

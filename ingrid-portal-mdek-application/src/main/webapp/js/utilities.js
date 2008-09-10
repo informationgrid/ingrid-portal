@@ -790,8 +790,21 @@ UtilSecurity.getRoleName = function(roleId) {
 }
 
 UtilSecurity.canCreateRootNodes = function() {
+	if (currentGroup == null || typeof(currentGroup.groupPermissions) == "undefined") { return false; }
+
 	for (var i = 0; i < currentGroup.groupPermissions.length; ++i) {
 		if (currentGroup.groupPermissions[i] == "CREATE_ROOT") {
+			return true;
+		}
+	}
+	return false;
+}
+
+UtilSecurity.isCurrentUserQA = function() {
+	if (currentGroup == null || typeof(currentGroup.groupPermissions) == "undefined") { return false; }
+
+	for (var i = 0; i < currentGroup.groupPermissions.length; ++i) {
+		if (currentGroup.groupPermissions[i] == "QUALITY_ASSURANCE") {
 			return true;
 		}
 	}
@@ -860,10 +873,10 @@ UtilString.compareIgnoreCase = function(a, b) {
 }
 
 // Utility functions needed for workflow control
-var UtilQS = {}
+var UtilQA = {}
 
 // Returns whether workflow control is activated for the current catalog
-UtilQS.isQSActive = function() {
+UtilQA.isQAActive = function() {
 	if (catalogData && typeof(catalogData.workflowControl) != "undefined" && catalogData.workflowControl == "Y") {
 		return true;
 	} else {

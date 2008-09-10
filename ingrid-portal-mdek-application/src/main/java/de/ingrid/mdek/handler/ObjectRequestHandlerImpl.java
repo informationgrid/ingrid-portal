@@ -144,6 +144,21 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 
+	public MdekDataBean assignObjectToQA(MdekDataBean data) {
+		IngridDocument obj = (IngridDocument) MdekObjectUtils.convertFromObjectRepresentation(data);
+
+		if (data.getUuid().equalsIgnoreCase("newNode")) {
+			obj.remove(MdekKeys.UUID);
+			obj.remove(MdekKeys.ID);
+		}
+
+		log.debug("Sending the following object for publishing to QA:");
+		log.debug(obj);
+
+		IngridDocument response = mdekCallerObject.assignObjectToQA(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
+		return MdekObjectUtils.extractSingleObjectFromResponse(response);
+	}
+
 
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;

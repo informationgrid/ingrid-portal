@@ -16,6 +16,8 @@ dojo.addOnLoad(function()
   }
 
   var def = initCatalogData();
+  def.addCallback(initCurrentUser);
+  def.addCallback(initCurrentGroup);
   def.addCallback(initGeneralEventListener);
   def.addCallback(initToolbar);
   def.addCallback(disableInputOnWrongPermission);
@@ -24,9 +26,7 @@ dojo.addOnLoad(function()
   def.addCallback(initCTS);
   def.addCallback(initFreeTermsButtons);
   def.addCallback(initReferenceTables);
-  def.addCallback(initCurrentUser);
   def.addCallback(initSysLists);
-  def.addCallback(initCurrentGroup);
   def.addCallback(initOptionalFieldStates);
   def.addCallback(initForm);
   def.addCallback(initMenu);
@@ -39,11 +39,12 @@ dojo.addOnLoad(function()
   // called properly
   def.addCallback(function() { udkDataProxy.resetDirtyFlag(); });
 
+  def.addErrback(function(err){ dojo.debug("Error: "+err); dojo.debugShallow(err); });
 });
 
 function initMenu() {
 	// Hide page3Subnavi2 if QA is deactivated
-	if (!UtilQS.isQSActive()) {
+	if (!UtilQA.isQAActive()) {
 		dojo.byId("page3Subnavi2").style.display = "none";
 	}
 }
@@ -157,7 +158,7 @@ function initTree() {
   contextMenu1.addItem(message.get('tree.nodeCopy'), 'copy', menuEventHandler.handleCopyTree);
   contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
   contextMenu1.addSeparator();
-  if (UtilQS.isQSActive()) {
+  if (UtilQA.isQAActive()) {
 	contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
   } else {
 	contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleDelete);
@@ -726,8 +727,9 @@ function initAddressReferenceTables() {
 }
 
 function initToolbar() {
-  // Check if qs is active
-  var isQSActive = UtilQS.isQSActive();
+  // Check if qa is active
+  var isQAActive = UtilQA.isQAActive();
+  var isUserQA = UtilSecurity.isCurrentUserQA();
 
   // create toolbar buttons with tooltips
   var rightToolbar = dojo.widget.byId('rightToolbar');
@@ -785,9 +787,9 @@ function initToolbar() {
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
 
-  if (isQSActive) {
+  if (isQAActive && !isUserQA) {
 	var finalSaveButton = leftToolbar.addChild("img/ic_submit_qs.gif", "after", {
-                            onClick:menuEventHandler.handleForwardToQS,
+                            onClick:menuEventHandler.handleForwardToQA,
                             caption:"An QS überweisen"
                           });
   } else {
@@ -798,7 +800,7 @@ function initToolbar() {
                           });
   }
 
-  if (isQSActive) {
+  if (isQAActive && !isUserQA) {
   	var deleteButton = leftToolbar.addChild("img/ic_delete.gif", "after", {
                             onClick:menuEventHandler.handleMarkDeleted,
 							caption:"Als gelöscht markieren"
@@ -811,7 +813,7 @@ function initToolbar() {
   }
 
   var removeDeleteFlagButton = null;
-  if (isQSActive) {
+  if (isQAActive && isUserQA) {
 	removeDeleteFlagButton = leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
                             onClick:menuEventHandler.handleUnmarkDeleted,
                             caption:"Löschen aufheben"
@@ -819,7 +821,7 @@ function initToolbar() {
   }
 
   var showChangesButton = null;
-  if (isQSActive) {
+  if (isQAActive) {
 	showChangesButton = leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"
@@ -832,6 +834,8 @@ function initToolbar() {
                             caption:"Kommentar ansehen/hinzufügen"
                           });
 
+	// TODO
+	// if (isQAActive && isUserQA) { show return to assignee button }
 
 
 	// Activate/Deactivate buttons depending on the selected node
@@ -1013,9 +1017,10 @@ function initCatalogData() {
 }
 
 function initCurrentGroup() {
-	var def = getCurrentGroupName();
+	var def = new dojo.Deferred();
+	var getGroupNameDef = getCurrentGroupName();
 
-	def.addCallback(function(groupName) {
+	getGroupNameDef.addCallback(function(groupName) {
 		SecurityService.getGroupDetails(groupName, {
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1023,12 +1028,14 @@ function initCurrentGroup() {
 //				dojo.debug("Group Details:");
 //				dojo.debugShallow(group);
 				currentGroup = group;
+				def.callback();
 			},
 
 			errorHandler:function(mes){
 				UtilDWR.exitLoadingState();
 				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 				dojo.debug("Error: "+mes);
+				def.errback(mes);
 			}
 		});
 	});
@@ -1344,8 +1351,6 @@ function initOptionalFieldStates() {
 }
 
 function jumpToNodeOnInit() {
-	dojo.debug("jumpToNodeOnInit called with parameters ["+initJumpToNodeId+", "+initJumpToNodeType+"]");
-
 	if (initJumpToNodeId.length != 0 && initJumpToNodeType.length != 0) {
 		menuEventHandler.handleSelectNodeInTree(initJumpToNodeId, initJumpToNodeType);
 	}

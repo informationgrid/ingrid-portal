@@ -9,6 +9,7 @@ public interface AddressService {
 
 	public MdekAddressBean getAddressData(String nodeUuid, Boolean useWorkingCopy);
 	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy);
+	public MdekAddressBean assignAddressToQA(MdekAddressBean data);
 	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid, Boolean includeChildren, Boolean copyToFreeAddress);
 	public void moveAddress(String nodeUuid, String dstNodeUuid, boolean moveToFreeAddress);
 	public void deleteAddress(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);

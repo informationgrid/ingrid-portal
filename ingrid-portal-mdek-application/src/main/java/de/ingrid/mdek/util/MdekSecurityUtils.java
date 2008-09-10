@@ -1,14 +1,10 @@
 package de.ingrid.mdek.util;
 
 import java.security.Principal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
@@ -31,15 +27,7 @@ public class MdekSecurityUtils {
 		HttpServletRequest req = wctx.getHttpServletRequest();
 
 		HttpSession ses = wctx.getSession();
-/*
-		// Test code begin
-		log.debug("Session parameters:");
-		log.debug("            Id: "+ses.getId());
-		log.debug(" Creation Time: "+new Date(ses.getCreationTime()).toString());
-		log.debug("   Last Access: "+new Date(ses.getLastAccessedTime()).toString());
-		log.debug("  Max inactive: "+ses.getMaxInactiveInterval());
-		// Test code end
-*/
+
 		Principal userPrincipal = req.getUserPrincipal(); 
 		if (userPrincipal != null) {
 			// userPrincipal found. return the UserData associated with the userName			
@@ -60,6 +48,7 @@ public class MdekSecurityUtils {
 			}
 		}
 //		return getUserData("Testmdadmin");
+//		return getUserData("Testmdadmin2");
 //		return getUserData("Testcatadmin");
 	}
 

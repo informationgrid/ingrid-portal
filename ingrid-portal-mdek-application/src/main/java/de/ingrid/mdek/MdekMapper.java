@@ -450,21 +450,26 @@ public class MdekMapper implements DataMapperInterface {
 	private static String getObjectDocType(Map<String, Object> obj) {
 		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
 		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
-		// If workState... nodeDocType += "_"+workState ?		
-		if (workState != null && workState.equalsIgnoreCase("B")) {
-			if (obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean)obj.get(MdekKeys.IS_PUBLISHED)) {
-				nodeDocType += "_BV";
-			} else {
-				nodeDocType += "_B";
-			}
-		}
+		Boolean isPublished = (Boolean) obj.get(MdekKeys.IS_PUBLISHED) == null ? false : (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
 
+		if (workState != null) {
+			if (workState.equals("V") && isPublished) {
+				return nodeDocType;
+			}
+
+			nodeDocType += "_"+workState;
+			nodeDocType += isPublished ? "V" : "";
+		}
 		return nodeDocType;
 	}
+
 
 	private static String getAddressDocType(Map<String, Object> adr) {
 		String nodeDocType = null;
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
+		String workState = (String) adr.get(MdekKeys.WORK_STATE); 
+		Boolean isPublished = (Boolean) adr.get(MdekKeys.IS_PUBLISHED) == null ? false : (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
+
 		if (adrClass == null)
 				return "Institution_B";
 
@@ -486,15 +491,15 @@ public class MdekMapper implements DataMapperInterface {
 			break;
 		}
 
-		String workState = (String) adr.get(MdekKeys.WORK_STATE); 
-		// If workState... nodeDocType += "_"+workState ?		
-		if (workState != null && workState.equalsIgnoreCase("B")) {
-			if (adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED)) {
-				nodeDocType += "_BV";
-			} else {
-				nodeDocType += "_B";
+		if (workState != null) {
+			if (workState.equals("V") && isPublished) {
+				return nodeDocType;
 			}
+
+			nodeDocType += "_"+workState;
+			nodeDocType += isPublished ? "V" : "";
 		}
+
 		return nodeDocType;
 	}
 

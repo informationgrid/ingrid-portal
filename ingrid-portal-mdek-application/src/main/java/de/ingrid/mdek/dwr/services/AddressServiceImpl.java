@@ -195,6 +195,22 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
+	public MdekAddressBean assignAddressToQA(MdekAddressBean data) {
+		log.debug("Forwarding address with ID to QA: "+data.getUuid());
+
+		try { return addressRequestHandler.assignAddressToQA(data); }
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while forwarding address to QA.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+		catch (RuntimeException e) {
+			log.debug("Error while forwarding address to QA", e);
+			throw e;
+		}
+	}		
+
+
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs) {
 		try { return addressRequestHandler.fetchAddressObjectReferences(addrUuid, startIndex, numRefs); }
 		catch (MdekException e) {
