@@ -185,8 +185,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 
 		String qString = "select obj.objUuid, obj.objClass, obj.objName, obj.modTime, addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
 		"from ObjectNode oNode " +
-			"inner join oNode.t01ObjectPublished obj " +
-			"inner join obj.objectMetadata oMeta, " +
+			"inner join oNode.t01ObjectPublished obj, " +
 			"AddressNode as aNode " +
 			"inner join aNode.t02AddressPublished addr " +
 			"inner join addr.t021Communications comm " +
@@ -301,19 +300,24 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		ArrayList<ObjectWorkflowResultBean> objResults = new ArrayList<ObjectWorkflowResultBean>();
 		Integer maxNumResults = numHits < 0 ? null : numHits;
 
+		String assignedToQA = de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue();
+		String reassignedFromQA = de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue();
+		String currentUserUuid = HTTPSessionHelper.getCurrentSessionId();
+
 		String qString = "select obj.objUuid, obj.objClass, obj.objName, obj.workState, oNode.objIdPublished, " +
-				" addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+				"addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType, " +
+				"oMeta.assignTime, oMeta.reassignTime " +
 		"from ObjectNode oNode " +
-			"inner join oNode.t01ObjectWork obj, " +
+			"inner join oNode.t01ObjectWork obj " +
+			"inner join obj.objectMetadata oMeta, " +
 			"AddressNode as aNode " +
 			"inner join aNode.t02AddressPublished addr " +
 		"where " +
-			"((obj.modUuid is not null and obj.modUuid = aNode.addrUuid) " +
-				"or (obj.modUuid is null and obj.responsibleUuid = aNode.addrUuid)) " +
-			" and (obj.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
-					"or obj.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
-			" and (obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue()+"'" +
-					"or obj.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue()+"')";
+			"oMeta.assignerUuid = aNode.addrUuid" +
+			" and (obj.modUuid = '"+currentUserUuid+"'" +
+					"or obj.responsibleUuid = '"+currentUserUuid+"')" +
+			" and (obj.workState = '"+assignedToQA+"'" +
+					"or obj.workState = '"+reassignedFromQA+"')";
 		qString += " order by obj.objClass, obj.objName";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
@@ -324,8 +328,15 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			if (objs != null) {
 				for (IngridDocument objEntity : objs) {
 					ObjectWorkflowResultBean objWf = new ObjectWorkflowResultBean();
-					objWf.setState((String) objEntity.get("obj.workState"));
+					String workState = (String) objEntity.get("obj.workState");
+					objWf.setState(workState);
 					objWf.setType(objEntity.get("oNode.objIdPublished") == null ? "A" : "B");
+					if (workState.equals(assignedToQA)) {
+						objWf.setDate(MdekUtils.convertTimestampToDate((String) objEntity.get("oMeta.assignTime")));
+					} else {
+						objWf.setDate(MdekUtils.convertTimestampToDate((String) objEntity.get("oMeta.reassignTime")));
+					}
+
 					objWf.setObject(createObjectFromHQLMap(objEntity, "obj.objUuid", "obj.objName", "obj.objClass"));
 					objWf.setAssignedUser(createAddressFromHQLMap(objEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
 
@@ -341,19 +352,24 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		ArrayList<AddressWorkflowResultBean> adrResults = new ArrayList<AddressWorkflowResultBean>();
 		Integer maxNumResults = numHits < 0 ? null : numHits;
 
+		String assignedToQA = de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue();
+		String reassignedFromQA = de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue();
+		String currentUserUuid = HTTPSessionHelper.getCurrentSessionId();
+
 		String qString = "select adr.institution, adr.firstname, adr.lastname, adr.adrUuid, adr.adrType, adr.workState, aNode.addrIdPublished, " +
-				" addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType " +
+				"addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType, " +
+				"aMeta.assignTime, aMeta.reassignTime " +
 		"from AddressNode aNode " +
-			"inner join aNode.t02AddressWork adr, " +
+			"inner join aNode.t02AddressWork adr " +
+			"inner join adr.addressMetadata aMeta, " +
 			"AddressNode as adrNode " +
 			"inner join adrNode.t02AddressPublished addr " +
 		"where " +
-			"((adr.modUuid is not null and adr.modUuid = adrNode.addrUuid) " +
-				"or (adr.modUuid is null and adr.responsibleUuid = adrNode.addrUuid)) " +
-			" and (adr.modUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"'" +
-					"or adr.responsibleUuid = '"+HTTPSessionHelper.getCurrentSessionId()+"')" +
-			" and (adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_UEBERWIESEN.getDbValue()+"'" +
-					"or adr.workState = '"+de.ingrid.mdek.MdekUtils.WorkState.QS_RUECKUEBERWIESEN.getDbValue()+"')";
+			"aMeta.assignerUuid = adrNode.addrUuid" +
+			" and (adr.modUuid = '"+currentUserUuid+"'" +
+					"or adr.responsibleUuid = '"+currentUserUuid+"')" +
+			" and (adr.workState = '"+assignedToQA+"'" +
+					"or adr.workState = '"+reassignedFromQA+"')";
 		qString += " order by adr.adrType desc, adr.institution, adr.lastname, adr.firstname";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, maxNumResults, HTTPSessionHelper.getCurrentSessionId());
@@ -364,8 +380,14 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 			if (adrs != null) {
 				for (IngridDocument adrEntity : adrs) {
 					AddressWorkflowResultBean adrWf = new AddressWorkflowResultBean();
-					adrWf.setState((String) adrEntity.get("adr.workState"));
+					String workState = (String) adrEntity.get("adr.workState");
+					adrWf.setState(workState);
 					adrWf.setType(adrEntity.get("aNode.addrIdPublished") == null ? "A" : "B");
+					if (workState.equals(assignedToQA)) {
+						adrWf.setDate(MdekUtils.convertTimestampToDate((String) adrEntity.get("aMeta.assignTime")));
+					} else {
+						adrWf.setDate(MdekUtils.convertTimestampToDate((String) adrEntity.get("aMeta.reassignTime")));
+					}
 					adrWf.setAddress(createAddressFromHQLMap(adrEntity, "adr.adrUuid", "adr.adrType", "adr.institution", "adr.firstname", "adr.lastname"));
 					adrWf.setAssignedUser(createAddressFromHQLMap(adrEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
 
