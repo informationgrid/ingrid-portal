@@ -1297,7 +1297,7 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.widget.byId("addressType").setValue(UtilAddress.getAddressType(nodeData.addressClass));
 	dojo.widget.byId("addressOwner").setValue(nodeData.addressOwner);
 
-	dojo.byId("addressWorkState").innerHTML = nodeData.workState;
+	dojo.byId("addressWorkState").innerHTML = message.get("general.workState."+nodeData.workState);
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
 	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
 	
@@ -1432,7 +1432,7 @@ udkDataProxy._setObjectData = function(nodeData)
   	dojo.widget.byId("objectName").setValue(nodeData.objectName);
 
   dojo.widget.byId("objectClass").setValue("Class"+nodeData.objectClass);
-  dojo.byId("workState").innerHTML = nodeData.workState;
+  dojo.byId("workState").innerHTML = message.get("general.workState."+nodeData.workState);
   dojo.byId("creationTime").innerHTML = nodeData.creationTime;
   dojo.byId("modificationTime").innerHTML = nodeData.modificationTime;
 
@@ -1719,6 +1719,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 
 	// ------------- General Static Data -------------
 	nodeData.uuid = currentUdk.uuid;
+	nodeData.workState = currentUdk.workState;
 	var parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
 	if (parentUuid != "addressRoot" && parentUuid != "addressFreeRoot") {
 		nodeData.parentUuid = parentUuid;
@@ -1801,6 +1802,7 @@ udkDataProxy._getObjectData = function(nodeData)
   // ------------- General Static Data -------------
   nodeData.uuid = currentUdk.uuid;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
+  nodeData.workState = currentUdk.workState;
   var parentUuid = dojo.widget.byId(currentUdk.uuid).parent.id;
   if (parentUuid != "objectRoot") {
   	nodeData.parentUuid = parentUuid;

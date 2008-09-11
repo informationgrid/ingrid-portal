@@ -118,7 +118,7 @@ public class MdekMapper implements DataMapperInterface {
 		} else {
 			workState = WorkState.IN_BEARBEITUNG;
 		}
-		mdekObj.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
+		mdekObj.setWorkState(workState.getDbValue());
 
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
@@ -376,7 +376,7 @@ public class MdekMapper implements DataMapperInterface {
 			workState = WorkState.IN_BEARBEITUNG;
 			adr.put(MdekKeys.WORK_STATE, "B");
 		}
-		mdekAddress.setWorkState(StringEscapeUtils.escapeHtml(workState.toString()));
+		mdekAddress.setWorkState(workState.getDbValue());
 		mdekAddress.setHasChildren((Boolean) adr.get(MdekKeys.HAS_CHILD));		
 		mdekAddress.setCreationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_CREATION)));
 		mdekAddress.setModificationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
@@ -606,6 +606,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.PARENT_UUID, data.getParentUuid());
 		udkAdr.put(MdekKeys.UUID, data.getUuid());
 		udkAdr.put(MdekKeys.CLASS, data.getAddressClass());
+		udkAdr.put(MdekKeys.WORK_STATE, data.getWorkState());
 
 		IngridDocument responsibleUser = new IngridDocument();
 		responsibleUser.put(MdekKeys.UUID, data.getAddressOwner());
@@ -658,6 +659,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.UUID, data.getUuid());
 		udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());
 		udkObj.put(MdekKeys.TITLE, data.getObjectName());
+		udkObj.put(MdekKeys.WORK_STATE, data.getWorkState());
 
 		IngridDocument responsibleUser = new IngridDocument();
 		responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
