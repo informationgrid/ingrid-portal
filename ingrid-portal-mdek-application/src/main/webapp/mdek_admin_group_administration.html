@@ -149,7 +149,14 @@ scriptScope.saveGroup = function() {
 		group.addressPermissions = adrPermissionList;
 
 		// update group permissions
-		group.groupPermissions = dojo.widget.byId("userDataCreate").checked ? ["CREATE_ROOT"] : [];
+		group.groupPermissions = [];
+		if (dojo.widget.byId("userDataCreate").checked) {
+			group.groupPermissions.push("CREATE_ROOT");
+		}
+		if (dojo.widget.byId("userDataQS").checked) {
+			group.groupPermissions.push("QUALITY_ASSURANCE");
+		}
+
 
 		var def = storeGroup(group, true);
 		def.addCallback(function(storedGroup) {
@@ -505,14 +512,19 @@ function setObjectPermissions(permissionList) {
 }
 
 function setGroupPermissions(permissionList) {
-	var canCreateRoot = false;	
+	var canCreateRoot = false;
+	var isQA = false;
+
 	dojo.lang.forEach(permissionList, function(idcPermission){
 		if (idcPermission == "CREATE_ROOT") {
 			canCreateRoot = true;
+		} else if (idcPermission == "QUALITY_ASSURANCE") {
+			isQA = true;
 		}
 	});
 
 	dojo.widget.byId("userDataCreate").setValue(canCreateRoot);
+	dojo.widget.byId("userDataQS").setValue(isQA);
 }
 
 
@@ -755,7 +767,7 @@ function displayDeleteGroupError(err) {
 				</div>
 				<div id="permissionCheckboxContainer" class="inputContainer grey field checkboxContainer" style="display:none;">
 					<span class="input"><input type="checkbox" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
-					<span class="input"><input type="checkbox" id="userDataQS" disabled="true" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+					<span class="input"><input type="checkbox" id="userDataQS" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
 		        </div>
 			</div>
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
