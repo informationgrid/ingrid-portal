@@ -12,6 +12,7 @@ public interface AddressRequestHandler {
 	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly);
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
 	public MdekAddressBean getAddressDetail(String uuid);
+	public MdekAddressBean getPublishedAddressDetail(String uuid);
 	public MdekAddressBean getInitialAddress(String parentUuid);
 	public MdekAddressBean saveAddress(MdekAddressBean data);
 	public MdekAddressBean publishAddress(MdekAddressBean data);

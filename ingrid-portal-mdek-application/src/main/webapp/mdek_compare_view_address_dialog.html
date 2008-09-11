@@ -8,11 +8,11 @@ _container_.addOnLoad(function() {
 	var nodeDataNew = udkDataProxy._getData();
 	var nodeOld = dojo.widget.byId(_container_.customParams.selectedNodeId);
 
-	AddressService.getAddressData(nodeOld.id, "false",
+	AddressService.getPublishedAddressData(nodeOld.id,
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
 //			timeout:5000,
-			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_address_dialog.html: Error while waiting for nodeData: " + message); }
+			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_address_dialog.html: Error while waiting for published nodeData: " + message); }
 		}
 	);
 });

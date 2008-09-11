@@ -80,10 +80,14 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean getAddressDetail(String uuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);	
 	}
 
+	public MdekAddressBean getPublishedAddressDetail(String uuid) {
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		return MdekAddressUtils.extractSingleAddressFromResponse(response);	
+	}
 	
 	public MdekAddressBean getInitialAddress(String parentUuid) {
 		IngridDocument adr = new IngridDocument();

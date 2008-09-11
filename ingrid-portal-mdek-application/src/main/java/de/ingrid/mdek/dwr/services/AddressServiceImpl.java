@@ -141,6 +141,21 @@ public class AddressServiceImpl implements AddressService {
 		return address;
 	}
 
+	public MdekAddressBean getPublishedAddressData(String nodeUuid) {
+		MdekAddressBean address = null; 
+
+		try {
+			address = addressRequestHandler.getPublishedAddressDetail(nodeUuid);
+		} catch (RuntimeException e) {
+			log.debug("Error while getting published address data.", e);
+			throw e;
+		}
+
+		if (address == null) {;}
+
+		return address;
+	}
+
 	public List<String> getPathToAddress(String uuid) {
 		return addressRequestHandler.getPathToAddress(uuid);
 	}

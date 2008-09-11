@@ -8,6 +8,7 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 public interface ObjectService {
 
 	public MdekDataBean getNodeData(String nodeUuid, String nodeType, Boolean useWorkingCopy);
+	public MdekDataBean getPublishedNodeData(String nodeUuid);
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
 	public Map<String, Object> copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);

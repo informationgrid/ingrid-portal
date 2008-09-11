@@ -1832,8 +1832,11 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Time --
   nodeData.timeRefType = dojo.widget.byId("timeRefType").getValue();
+  var dirty = this.dirtyFlag;
   var timeFrom = dojo.widget.byId("timeRefDate1").getValue();
   var timeTo = dojo.widget.byId("timeRefDate2").getValue();
+  if (dirty) { this.setDirtyFlag(); } else { this.resetDirtyFlag(); }
+
   if (nodeData.timeRefType == "bis") {
 	  if (timeFrom != "") {
 		  nodeData.timeRefDate1 = null;

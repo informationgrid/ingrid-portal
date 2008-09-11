@@ -8,6 +8,7 @@ import de.ingrid.mdek.beans.address.MdekAddressBean;
 public interface AddressService {
 
 	public MdekAddressBean getAddressData(String nodeUuid, Boolean useWorkingCopy);
+	public MdekAddressBean getPublishedAddressData(String nodeUuid);
 	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy);
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data);
 	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid, Boolean includeChildren, Boolean copyToFreeAddress);

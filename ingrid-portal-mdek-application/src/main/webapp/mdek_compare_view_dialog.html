@@ -7,13 +7,11 @@ _container_.addOnLoad(function() {
 	var tree = dojo.widget.byId("tree");
 	var nodeDataNew = udkDataProxy._getData();
 	var nodeOld = dojo.widget.byId(_container_.customParams.selectedNodeId);
-//	dojo.debug("mdek_compare_view_dialog.html calling ObjectService.getNodeData("+nodeOld.id+", "+nodeOld.nodeAppType+")");
 
-	ObjectService.getNodeData(nodeOld.id, nodeOld.nodeAppType, "false",
+	ObjectService.getPublishedNodeData(nodeOld.id,
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
-//			timeout:5000,
-			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_dialog.html: Error while waiting for nodeData: " + message); }
+			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_dialog.html: Error while waiting for published nodeData: " + message); }
 		}
 	);
 });

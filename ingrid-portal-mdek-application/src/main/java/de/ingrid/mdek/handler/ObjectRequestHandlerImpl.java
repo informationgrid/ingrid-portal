@@ -39,10 +39,15 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean getObjectDetail(String uuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentSessionId());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 
+	public MdekDataBean getPublishedObjectDetail(String uuid) {
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, HTTPSessionHelper.getCurrentSessionId());
+		return MdekObjectUtils.extractSingleObjectFromResponse(response);
+	}
+	
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
 		IngridDocument response = mdekCallerObject.fetchTopObjects(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
 		return MdekObjectUtils.extractObjectsFromResponse(response);

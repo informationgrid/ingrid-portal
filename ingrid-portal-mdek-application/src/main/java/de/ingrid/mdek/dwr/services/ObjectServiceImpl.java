@@ -148,6 +148,23 @@ public class ObjectServiceImpl implements ObjectService {
 		return data;
 	}
 
+	public MdekDataBean getPublishedNodeData(String nodeUuid) {
+		MdekDataBean data = null; 
+
+		try {
+			data = objectRequestHandler.getPublishedObjectDetail(nodeUuid);
+		} catch (RuntimeException e) {
+			log.debug("Error while getting published node data.", e);
+			throw e;
+		}
+
+		// Return a newly created node
+		if (data == null) {;}
+
+		return data;
+	}
+
+	
 	public List<String> getPathToObject(String uuid) {
 		return objectRequestHandler.getPathToObject(uuid);
 	}

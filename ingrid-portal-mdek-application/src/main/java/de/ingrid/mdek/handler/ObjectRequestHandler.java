@@ -12,6 +12,7 @@ public interface ObjectRequestHandler {
 	public ArrayList<HashMap<String, Object>> getRootObjects();
 	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth);
 	public MdekDataBean getObjectDetail(String uuid);
+	public MdekDataBean getPublishedObjectDetail(String uuid);
 	public MdekDataBean getInitialObject(String parentUuid);
 	public MdekDataBean saveObject(MdekDataBean data);
 	public MdekDataBean publishObject(MdekDataBean data, boolean forcePublicationCondition);
