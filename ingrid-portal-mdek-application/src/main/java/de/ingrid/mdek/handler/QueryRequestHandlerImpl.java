@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtilsSecurity;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
@@ -398,6 +399,28 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 
 		return adrResults;
 	}
+
+	public ArrayList<ObjectWorkflowResultBean> getAllObjectsForQAAssignedToQA(int numHits, boolean userIsCatAdmin) {
+		return new ArrayList<ObjectWorkflowResultBean>();
+	}
+
+	public ArrayList<AddressWorkflowResultBean> getAllAddressesForQAAssignedToQA(int numHits, boolean userIsCatAdmin) {
+		return new ArrayList<AddressWorkflowResultBean>();
+	}
+	public ArrayList<ObjectWorkflowResultBean> getAllModifiedObjectsForQA(int numHits, boolean userIsCatAdmin) {
+		return new ArrayList<ObjectWorkflowResultBean>();
+	}
+	public ArrayList<AddressWorkflowResultBean> getAllModifiedAddressesForQA(int numHits, boolean userIsCatAdmin) {
+		return new ArrayList<AddressWorkflowResultBean>();
+	}
+
+	public ArrayList<ObjectWorkflowResultBean> getAllExpiredObjectsForQA(int numHits, boolean userIsCatAdmin) {
+		return new ArrayList<ObjectWorkflowResultBean>();
+	}
+	public ArrayList<AddressWorkflowResultBean> getAllExpiredAddressesForQA(int numHits, boolean userIsCatAdmin) {
+		return new ArrayList<AddressWorkflowResultBean>();
+	}
+
 	
 	private MdekDataBean createObjectFromHQLMap(IngridDocument objEntity, String uuidKey,
 			String nameKey, String classKey) {

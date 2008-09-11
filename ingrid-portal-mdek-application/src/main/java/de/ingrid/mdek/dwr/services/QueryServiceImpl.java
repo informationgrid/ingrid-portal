@@ -267,6 +267,83 @@ public class QueryServiceImpl implements QueryService {
 		return new ArrayList<ObjectWorkflowResultBean>();
 	}
 
+	public ArrayList<ObjectWorkflowResultBean> getAllObjectsForQAAssignedToQA(int numHits, boolean userIsCatAdmin) {
+		try {
+			return queryRequestHandler.getAllObjectsForQAAssignedToQA(numHits, userIsCatAdmin);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for objects - workflow management.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for qa objects - workflow management.", e);
+		}
+		return new ArrayList<ObjectWorkflowResultBean>();
+	}
+
+	public ArrayList<AddressWorkflowResultBean> getAllAddressesForQAAssignedToQA(int numHits, boolean userIsCatAdmin) {
+		try {
+			return queryRequestHandler.getAllAddressesForQAAssignedToQA(numHits, userIsCatAdmin);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for addresses - workflow management.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for qa addresses - workflow management.", e);
+		}
+		return new ArrayList<AddressWorkflowResultBean>();
+	}
+
+	public ArrayList<ObjectWorkflowResultBean> getAllModifiedObjectsForQA(int numHits, boolean userIsCatAdmin) {
+		try {
+			return queryRequestHandler.getAllModifiedObjectsForQA(numHits, userIsCatAdmin);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for objects - workflow management.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for qa objects - workflow management.", e);
+		}
+		return new ArrayList<ObjectWorkflowResultBean>();
+	}
+	
+	public ArrayList<AddressWorkflowResultBean> getAllModifiedAddressesForQA(int numHits, boolean userIsCatAdmin) {
+		try {
+			return queryRequestHandler.getAllModifiedAddressesForQA(numHits, userIsCatAdmin);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for addresses - workflow management.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for qa addresses - workflow management.", e);
+		}
+		return new ArrayList<AddressWorkflowResultBean>();
+	}
+
+	public ArrayList<ObjectWorkflowResultBean> getAllExpiredObjectsForQA(int numHits, boolean userIsCatAdmin) {
+		try {
+			return queryRequestHandler.getAllExpiredObjectsForQA(numHits, userIsCatAdmin);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for objects - workflow management.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for qa objects - workflow management.", e);
+		}
+		return new ArrayList<ObjectWorkflowResultBean>();
+	}
+	public ArrayList<AddressWorkflowResultBean> getAllExpiredAddressesForQA(int numHits, boolean userIsCatAdmin) {
+		try {
+			return queryRequestHandler.getAllExpiredAddressesForQA(numHits, userIsCatAdmin);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while searching for addresses - workflow management.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (Exception e) {
+			log.error("Error while searching for qa addresses - workflow management.", e);
+		}
+		return new ArrayList<AddressWorkflowResultBean>();
+	}
+
 	public QueryRequestHandler getQueryRequestHandler() {
 		return queryRequestHandler;
 	}

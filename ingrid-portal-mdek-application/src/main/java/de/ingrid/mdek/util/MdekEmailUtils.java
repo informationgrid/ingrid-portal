@@ -31,7 +31,8 @@ public class MdekEmailUtils {
 	private final static String MAIL_SENDER = "michael.benz@wemove.com";
 	private final static String TEMP_MAIL_RECEIVER = "michael.benz@wemove.com";
 	private final static String MAIL_SMTP_HOST = "gotthard.wemove.lan";
-
+	private final static String MAIL_SUBJECT = "[MDEK] Test";
+	
 	public void init() {
 		// TODO read properties (smtp host, sender email, ...) from a property file
 	}
@@ -114,7 +115,7 @@ public class MdekEmailUtils {
 
 			msg.setFrom( new InternetAddress(from) );
 			msg.setRecipients(Message.RecipientType.TO, receivers);
-			msg.setSubject("[MDEK] Test");
+			msg.setSubject(MAIL_SUBJECT);
 			msg.setContent(content, "text/plain; charset=UTF-8");
 			Transport.send(msg, msg.getAllRecipients());
 

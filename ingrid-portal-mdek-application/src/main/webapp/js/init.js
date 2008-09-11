@@ -45,7 +45,7 @@ dojo.addOnLoad(function()
 
 function initMenu() {
 	// Hide page3Subnavi2 if QA is deactivated
-	if (!UtilQA.isQAActive()) {
+	if (!UtilQA.isQAActive() || !UtilSecurity.isCurrentUserQA()) {
 		dojo.byId("page3Subnavi2").style.display = "none";
 	}
 }
