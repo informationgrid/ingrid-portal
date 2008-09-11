@@ -186,6 +186,7 @@
 			<map>
 				<entry key="connectionFacade"><ref local="connectionFacade"/></entry>
 				<entry key="mdekEmailUtils"><ref local="mdekEmailUtils"/></entry>
+				<entry key="notifyDaysBeforeExpiry"><value>${workflow.notifyDaysBeforeExpiry}</value></entry>
 			</map>
 	  </property>
 	</bean>

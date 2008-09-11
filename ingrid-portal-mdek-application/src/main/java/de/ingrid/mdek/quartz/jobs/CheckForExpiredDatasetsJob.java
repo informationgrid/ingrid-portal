@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -29,14 +30,13 @@ import de.ingrid.utils.IngridDocument;
 
 public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
-	private final static Logger log = Logger .getLogger(CheckForExpiredDatasetsJob.class);
+	private final static Logger log = Logger.getLogger(CheckForExpiredDatasetsJob.class);
 	private final static Integer MAX_NUM_EXPIRED_OBJECTS = 100;
-	private final static Integer NOTIFY_DAYS_BEFORE_EXPIRY = 14;
 
 	private ConnectionFacade connectionFacade;
 	private MdekEmailUtils mdekEmailUtils;
-
-
+	private Integer notifyDaysBeforeExpiry;
+	
 	protected void executeInternal(JobExecutionContext ctx)
 			throws JobExecutionException {
 		// 1. Get all objects that: will expire soon & first notification has not been sent
@@ -58,7 +58,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			Calendar expireCal = Calendar.getInstance();
 			Calendar notifyCal = Calendar.getInstance();
 			expireCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration));
-			notifyCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration-NOTIFY_DAYS_BEFORE_EXPIRY));
+			notifyCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration-this.notifyDaysBeforeExpiry));
 
 			ArrayList<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
 			ArrayList<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
@@ -238,5 +238,9 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	public void setMdekEmailUtils(MdekEmailUtils mdekEmailUtils) {
 		this.mdekEmailUtils = mdekEmailUtils;
+	}
+
+	public void setNotifyDaysBeforeExpiry(Integer notifyDaysBeforeExpiry) {
+		this.notifyDaysBeforeExpiry = notifyDaysBeforeExpiry < 1 ? 14 : notifyDaysBeforeExpiry;
 	}
 }
