@@ -31,6 +31,7 @@ dojo.addOnLoad(function()
   def.addCallback(initForm);
   def.addCallback(initMenu);
   def.addCallback(hideSplash);	// hide the splash after everything is loaded
+  def.addCallback(function() { udkDataProxy.resetDirtyFlag(); });
   def.addCallback(jumpToNodeOnInit);
   // NOTE: the undo button enable / disable function is connected to the set / resetDirtyFlag.
   // If the function is directly used as a callback (def.addCallback(resetDirtyFlag)), the connected

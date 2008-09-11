@@ -1,0 +1,16 @@
+#set($EXP_DS_LIST = $map.get("expiredDatasetList"))
+Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid Software.
+Die Verfallszeitspanne folgender Datensätze ist abgelaufen: 
+
+#foreach($expDS in $EXP_DS_LIST)
+Titel: $expDS.title
+Uuid: $expDS.uuid
+Typ: $expDS.type
+Letzte Änderung: $expDS.lastModified
+#if( $expDS.type.toString() == "OBJECT")
+Direkter Link: http://localhost:8080/ingrid-portal/portal/service-myportal.psml?r=http://localhost:8080/ingrid-portal/portal/mdek%3FnodeType=O%26nodeId=$expDS.uuid
+#else
+Direkter Link: http://localhost:8080/ingrid-portal/portal/service-myportal.psml?r=http://localhost:8080/ingrid-portal/portal/mdek%3FnodeType=A%26nodeId=$expDS.uuid
+#end
+
+#end
