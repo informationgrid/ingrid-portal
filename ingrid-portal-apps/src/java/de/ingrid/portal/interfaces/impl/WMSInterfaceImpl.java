@@ -374,10 +374,9 @@ public class WMSInterfaceImpl implements WMSInterface {
     }
 
 	public String getWMCDocument(String sessionId) {
-        String wmc = new String();
-
+        String response = null;
+        
         try {
-
             String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
             if (urlStr.indexOf("?") > 0) {
             	urlStr = urlStr.concat("&PREQUEST=getWMC").concat("&PHPSESSID=" + sessionId);
@@ -385,6 +384,10 @@ public class WMSInterfaceImpl implements WMSInterface {
             	urlStr = urlStr.concat("?PREQUEST=getWMC").concat("&PHPSESSID=" + sessionId);
             }
 
+            if (log.isDebugEnabled()) {
+            	log.debug("MapBender Server Request: " + urlStr);
+            }
+            
 //          Create an instance of HttpClient.
             HttpClient client = new HttpClient();
 
@@ -406,9 +409,7 @@ public class WMSInterfaceImpl implements WMSInterface {
               // Read the response body.
               byte[] responseBody = method.getResponseBody();
 
-              // Deal with the response.
-              // Use caution: ensure correct character encoding and is not binary data
-              wmc = new String(responseBody);
+              response = new String(responseBody);
 
             } catch (HttpException e) {
           	  log.error("Fatal protocol violation: " + e.getMessage(), e);
@@ -418,14 +419,25 @@ public class WMSInterfaceImpl implements WMSInterface {
               // Release the connection.
               method.releaseConnection();
             }            
-            Document document = DocumentHelper.parseText(wmc);
+            
+            if (log.isDebugEnabled()) {
+            	log.debug("MapBender Server Response: " + response);
+            }
+            
+            Document document = DocumentHelper.parseText(response);
             // check for valid server response
             String error = document.valueOf("//portal_communication/error");
             if (error != null && error.length() > 0) {
-                throw new Exception("WMS Server Error: " + error);
+                throw new Exception("MapBender Server Error: " + error);
             }
-
-        	return wmc;
+            
+            String sessionMapBender = document.valueOf("//portal_communication/session");
+            if (sessionMapBender != null && !sessionMapBender.equals(sessionId)) {
+                throw new Exception("MapBender Server Error: session Id (" + sessionId + ") from request and session Id (" + sessionMapBender + ") from MapBender are not the same.");
+            }
+            
+            String urlEncodedWmc = document.valueOf("//portal_communication/wmc");
+        	return urlEncodedWmc;
 
         } catch (Exception e) {
             log.error(e);
@@ -464,6 +476,10 @@ public class WMSInterfaceImpl implements WMSInterface {
           // Read the response body.
           byte[] responseBody = method.getResponseBody();
 
+          if (log.isDebugEnabled()) {
+            	log.debug("MapBender Server Response: " + new String(responseBody));
+          }
+          
           // Deal with the response.
           // Use caution: ensure correct character encoding and is not binary data
           Document document = DocumentHelper.parseText(new String(responseBody));
@@ -473,6 +489,7 @@ public class WMSInterfaceImpl implements WMSInterface {
           if (error != null && error.length() > 0) {
               throw new Exception("WMS Server Error: " + error);
           }
+          
           
           String success = document.valueOf("//portal_communication/success");
           if (error == null || success.length() == 0) {

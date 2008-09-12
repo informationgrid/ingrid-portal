@@ -141,7 +141,7 @@ public interface WMSInterface {
     
     
     /**
-     * Returns the current WMC document that describes the state of mapBender and is bound to the given session
+     * Returns the current url encoded WMC document that describes the state of mapBender and is bound to the given session
      * id.
      * 
      * @param sessionID
@@ -151,7 +151,7 @@ public interface WMSInterface {
     String getWMCDocument(String sessionId);
 
     /**
-     * Sets a WMC document that describes the state of mapBender and is bound to the given session
+     * Sets a urlencoded WMC document that describes the state of mapBender and is bound to the given session
      * id.
      * 
      * @param wmc
