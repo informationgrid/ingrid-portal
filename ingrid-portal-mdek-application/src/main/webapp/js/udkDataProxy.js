@@ -2057,7 +2057,7 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 
 		if (parentUuid != null) {
 			// new node && not root
-			SecurityService.getUsersWithWritePermissionForObject(parentUuid, true, {
+			SecurityService.getUsersWithWritePermissionForObject(parentUuid, false, true, {
 				callback: function(userList) {
 					var list = [];
 					// Iterate over all users and include those with 'write tree' permission on the parent node
@@ -2120,7 +2120,7 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
     }
 
 
-	SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, false, {
+	SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, false, false, {
 		callback: function(userList) {
 			var list = [];
 			dojo.lang.forEach(userList, function(user){
@@ -2152,7 +2152,7 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
 		if (parentUuid != null) {
 			// new node && not root
-			SecurityService.getUsersWithWritePermissionForAddress(parentUuid, true, {
+			SecurityService.getUsersWithWritePermissionForAddress(parentUuid, false, true, {
 				callback: function(userList) {
 					var list = [];
 					// Iterate over all users and include those with 'write tree' permission on the parent node
@@ -2216,7 +2216,7 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
 
 
-	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, false, {
+	SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, false, false, {
 		callback: function(userList) {
 			var list = [];
 			dojo.lang.forEach(userList, function(user){
@@ -2278,6 +2278,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			userWritePermission: nodeData.writePermission,
 			userWriteSinglePermission: nodeData.writeSinglePermission,
 			userWriteTreePermission: nodeData.writeTreePermission,
+			userWriteSubTreePermission: nodeData.writeSubTreePermission,
 			id: nodeData.uuid
 		});
 
@@ -2302,6 +2303,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			node.userWritePermission = nodeData.writePermission;
 			node.userWriteSinglePermission = nodeData.writeSinglePermission;
 			node.userWriteTreePermission = nodeData.writeTreePermission;
+			node.userWriteSubTreePermission = nodeData.writeSubTreePermission;
 			var treeListener = dojo.widget.byId("treeListener");
 			dojo.event.topic.publish(treeListener.eventNames.select, {node: node});
 		} else {

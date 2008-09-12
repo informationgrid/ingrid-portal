@@ -27,6 +27,7 @@ public class MdekDataBean {
 	public Boolean writePermission;
 	public Boolean writeSinglePermission;
 	public Boolean writeTreePermission;
+	public Boolean writeSubTreePermission;
 
 	// Identification 
 	public String objectName;
@@ -1556,6 +1557,20 @@ public class MdekDataBean {
 
 	public void setRef3ServiceType(Integer ref3ServiceType) {
 		this.ref3ServiceType = ref3ServiceType;
+	}
+
+
+
+
+	public Boolean getWriteSubTreePermission() {
+		return writeSubTreePermission;
+	}
+
+
+
+
+	public void setWriteSubTreePermission(Boolean writeSubTreePermission) {
+		this.writeSubTreePermission = writeSubTreePermission;
 	}
 
 }

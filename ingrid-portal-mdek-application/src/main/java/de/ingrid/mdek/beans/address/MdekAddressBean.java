@@ -19,6 +19,7 @@ public class MdekAddressBean {
 	public Boolean writePermission;
 	public Boolean writeSinglePermission;
 	public Boolean writeTreePermission;
+	public Boolean writeSubTreePermission;
 	public Boolean isPublished;
 	
 	public String addressOwner;
@@ -398,5 +399,13 @@ public class MdekAddressBean {
 
 	public void setTotalNumReferences(Integer totalNumReferences) {
 		this.totalNumReferences = totalNumReferences;
+	}
+
+	public Boolean getWriteSubTreePermission() {
+		return writeSubTreePermission;
+	}
+
+	public void setWriteSubTreePermission(Boolean writeSubTreePermission) {
+		this.writeSubTreePermission = writeSubTreePermission;
 	}
 }

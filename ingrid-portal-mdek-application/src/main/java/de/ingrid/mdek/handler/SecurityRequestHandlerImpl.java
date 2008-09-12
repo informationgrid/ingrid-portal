@@ -88,13 +88,13 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return MdekUtils.extractSecurityUserFromResponse(response);		
 	}
 
-	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean detailedPermissions) {
-		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, HTTPSessionHelper.getCurrentSessionId(), detailedPermissions);
+	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions) {
+		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, HTTPSessionHelper.getCurrentSessionId(), checkWorkflow, detailedPermissions);
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 	
-	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean detailedPermissions) {
-		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, HTTPSessionHelper.getCurrentSessionId(), detailedPermissions);
+	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions) {
+		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, HTTPSessionHelper.getCurrentSessionId(), checkWorkflow, detailedPermissions);
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 

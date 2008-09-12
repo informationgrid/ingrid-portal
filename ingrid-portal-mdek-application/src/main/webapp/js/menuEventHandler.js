@@ -718,7 +718,7 @@ menuEventHandler._handleForwardObjectToQA = function(msg) {
 		]);
 
 	} else {
-  		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+  		dialog.show(message.get("general.hint"), message.get("tree.forwardToQAHint"), dialog.WARNING);
 	}
 }
 
@@ -752,7 +752,7 @@ menuEventHandler._handleForwardAddressToQA = function(msg) {
 		]);
 
 	} else {
-  		dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+  		dialog.show(message.get("general.hint"), message.get("tree.forwardToQAHint"), dialog.WARNING);
 	}
 }
 

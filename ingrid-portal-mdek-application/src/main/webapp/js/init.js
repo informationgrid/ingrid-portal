@@ -159,7 +159,7 @@ function initTree() {
   contextMenu1.addItem(message.get('tree.nodeCopy'), 'copy', menuEventHandler.handleCopyTree);
   contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
   contextMenu1.addSeparator();
-  if (UtilQA.isQAActive()) {
+  if (UtilQA.isQAActive() && !UtilSecurity.isCurrentUserQA()) {
 	contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
   } else {
 	contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleDelete);
@@ -847,75 +847,62 @@ function initToolbar() {
 		var hasWritePermission = message.node.userWritePermission;
 		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
 		var hasWriteTreePermission = message.node.userWriteTreePermission;
+		var hasWriteSubTreePermission = message.node.userWriteSubTreePermission;
 		var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
 //		dojo.debug("User has write permission? "+hasWritePermission);
 
-		var disableList = [];
+		var buttonList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
 		var enableList = [];
+
+		// Initially disable all buttons
+		dojo.lang.forEach(buttonList, function(item) { if (item != null) { item.disable(); } });
+
+		// Build the enable list
 		if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
 			if (canCreateRootNodes) {
-				disableList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 				enableList = [newEntityButton];
 			} else {
-				disableList = [showChangesButton, newEntityButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 				enableList = [];				
 			}
 
 		} else if (message.node.id == "newNode") {
-			disableList = [showChangesButton, copyTreeButton, cutButton, copyEntityButton, newEntityButton];
 			enableList = [previewButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
 
-		} else if (message.node.isFolder && hasWriteTreePermission) {
-			disableList = [];
-			enableList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton];
-
-		} else if (message.node.isFolder && hasWriteSinglePermission) {
-			disableList = [cutButton, deleteButton, newEntityButton];
-			enableList = [showChangesButton, previewButton, copyEntityButton, copyTreeButton, saveButton, discardButton, finalSaveButton, showCommentButton];
-
-		} else if (message.node.isFolder && !hasWritePermission) {
-			disableList = [cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
-			enableList = [showChangesButton, previewButton, copyEntityButton, copyTreeButton, showCommentButton];
-
-		} else if (hasWritePermission) {
-			if (hasWriteTreePermission) {
-				disableList = [copyTreeButton];
-				enableList = [showChangesButton, previewButton, cutButton, copyEntityButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
-
-			} else if (hasWriteSinglePermission) {
-				disableList = [copyTreeButton, cutButton, deleteButton];
-				enableList = [showChangesButton, previewButton, copyEntityButton, saveButton, discardButton, finalSaveButton, showCommentButton];				
-			}
-
-			if (message.node.nodeAppType == "O") {
-				if (hasWriteTreePermission) {
-					enableList.push(newEntityButton);
-				} else {
-					disableList.push(newEntityButton);
-				}
-
-			} else if (message.node.nodeAppType == "A") {
-				// For addresses, the new entity button depends on the class of the selected node
-				if (message.node.objectClass == 2 || message.node.objectClass == 3 || !hasWriteTreePermission) {
-					disableList.push(newEntityButton);
-				} else {
-					enableList.push(newEntityButton);
-				}
-			}
-
-		} else if (!hasWritePermission) {
-			disableList = [copyTreeButton, cutButton, saveButton, discardButton, finalSaveButton, deleteButton, newEntityButton];
+		} else {
+			// If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
 			enableList = [showChangesButton, previewButton, copyEntityButton, showCommentButton];
+
+			// If the node has children, enable the 'copy tree' button
+			if (message.node.isFolder) {
+				enableList.push(copyTreeButton);
+			}
+			// If the the user has write permission (single or tree), he can discard, save and publish nodes
+			if (hasWritePermission) {
+				enableList = enableList.concat([discardButton, saveButton, finalSaveButton]);				
+			}
+			// If the the user has write tree permission (tree), he can delete, move and create new nodes
+			if (hasWriteTreePermission) {
+				enableList = enableList.concat([deleteButton, cutButton]);
+				if (message.node.nodeAppType == "O") {
+					enableList.push(newEntityButton);
+
+				} else if (message.node.nodeAppType == "A" && message.node.objectClass != 2 && message.node.objectClass != 3) {
+					// For addresses, the new entity button depends on the class of the selected node
+					enableList.push(newEntityButton);
+				}
+			}
+			// If the the user has write tree permission (tree), but a node is assigned to QA, the user
+			// is only allowed to create new subnodes.
+			if (hasWriteSubTreePermission) {
+				enableList.push(newEntityButton);
+			}
 		}
 
 		// The paste button depends on the current selection in treeController and the current selected node
 		if (treeController.canPaste(message.node)) {
 			enableList.push(pasteButton);
-		} else {
-			disableList.push(pasteButton);
 		}
 
-		dojo.lang.forEach(disableList, function(item) { if (item != null) { item.disable(); } });
 		dojo.lang.forEach(enableList, function(item) { if (item != null) { item.enable(); } });
     });
 

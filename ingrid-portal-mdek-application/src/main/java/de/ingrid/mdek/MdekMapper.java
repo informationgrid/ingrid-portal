@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -131,6 +132,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setWritePermission(hasWritePermission(idcPermissions));
 		mdekObj.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekObj.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
+		mdekObj.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekObj.setIsPublished((Boolean) obj.get(MdekKeys.IS_PUBLISHED));
 		
@@ -350,6 +352,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setWritePermission(hasWritePermission(idcPermissions));
 		mdekAddress.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekAddress.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
+		mdekAddress.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekAddress.setIsPublished((Boolean) adr.get(MdekKeys.IS_PUBLISHED));
 
@@ -524,6 +527,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
 		mdekObj.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
 		mdekObj.put(MDEK_USER_WRITE_TREE_PERMISSION, hasWriteTreePermission(idcPermissions));
+		mdekObj.put(MDEK_USER_WRITE_SUB_TREE_PERMISSION, hasWriteSubTreePermission(idcPermissions));
 
 		String nodeDocType = getObjectDocType(obj);
 		mdekObj.put(MDEK_DOCTYPE, nodeDocType);
@@ -592,6 +596,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
 		mdekAdr.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
 		mdekAdr.put(MDEK_USER_WRITE_TREE_PERMISSION, hasWriteTreePermission(idcPermissions));
+		mdekAdr.put(MDEK_USER_WRITE_SUB_TREE_PERMISSION, hasWriteSubTreePermission(idcPermissions));
 
 		String adrDocType = getAddressDocType(adr);
 		mdekAdr.put(MDEK_DOCTYPE, adrDocType);
@@ -1805,6 +1810,18 @@ public class MdekMapper implements DataMapperInterface {
 	}
 	private boolean hasWriteTreePermission(List<IngridDocument> permissionList) {
 		return MdekUtilsSecurity.hasWriteTreePermission(permissionList);
+	}
+	private boolean hasWriteSubTreePermission(List<IngridDocument> permissionList) {
+		if (permissionList != null) {
+			for (IngridDocument permissionDoc : permissionList) {
+				IdcPermission idcPerm = EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permissionDoc.get(MdekKeysSecurity.IDC_PERMISSION));
+				if (idcPerm == IdcPermission.DUMMY_WRITE_SUBTREE) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 
