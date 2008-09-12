@@ -17,6 +17,7 @@ import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekAddressUtils;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -120,6 +121,9 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, moveToFreeAddress, HTTPSessionHelper.getCurrentSessionId());
 		if (MdekUtils.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
+
+		} else {
+			MdekEmailUtils.sendAddressMovedMail(fromUuid);
 		}
 	}
 
@@ -150,7 +154,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug(adr);
 
 		IngridDocument response = mdekCallerAddress.assignAddressToQA(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
-		return MdekAddressUtils.extractSingleAddressFromResponse(response);
+		MdekAddressBean result = MdekAddressUtils.extractSingleAddressFromResponse(response);
+		if (result != null) {
+			MdekEmailUtils.sendAddressAssignedToQAMail(data);
+		}
+
+		return result;
 	}
 
 	public MdekAddressBean saveAddress(MdekAddressBean data) {

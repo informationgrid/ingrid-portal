@@ -16,6 +16,7 @@ import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekObjectUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -116,6 +117,9 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		IngridDocument response = mdekCallerObject.moveObject(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, forcePublicationCondition, HTTPSessionHelper.getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
+
+		} else {
+			MdekEmailUtils.sendObjectMovedMail(fromUuid);
 		}
 	}
 
@@ -161,7 +165,12 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		log.debug(obj);
 
 		IngridDocument response = mdekCallerObject.assignObjectToQA(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
-		return MdekObjectUtils.extractSingleObjectFromResponse(response);
+		MdekDataBean result = MdekObjectUtils.extractSingleObjectFromResponse(response);
+		if (result != null) {
+			MdekEmailUtils.sendObjectAssignedToQAMail(data);
+		}
+
+		return result;
 	}
 
 

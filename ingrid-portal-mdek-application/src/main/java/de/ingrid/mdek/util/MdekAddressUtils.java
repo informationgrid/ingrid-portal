@@ -103,6 +103,19 @@ public class MdekAddressUtils {
 		return searchResult;
 	}
 
+	public static String createAddressTitle(String institution, String lastName, String firstName) {
+		institution = institution == null ? "" : institution.trim();
+		lastName = lastName == null ? "" : lastName.trim();
+		firstName = firstName == null ? "" : firstName.trim();
+
+		if (institution.length() != 0) {
+			return institution;
+
+		} else {
+			return firstName.length() != 0 ? lastName+", "+firstName : lastName;
+		}
+	}
+
 	public static void setInitialValues(MdekAddressBean addr) {
 		dataMapper.setInitialValues(addr);
 	}

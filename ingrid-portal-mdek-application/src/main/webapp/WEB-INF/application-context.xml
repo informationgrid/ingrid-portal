@@ -65,6 +65,9 @@
 	</bean>
 	<bean id="mdekEmailUtils"
 		class="de.ingrid.mdek.util.MdekEmailUtils">
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
  	</bean>
 	<bean id="mdekErrorUtils"
 		class="de.ingrid.mdek.util.MdekErrorUtils">
@@ -185,7 +188,6 @@
 		<property name="jobDataAsMap">
 			<map>
 				<entry key="connectionFacade"><ref local="connectionFacade"/></entry>
-				<entry key="mdekEmailUtils"><ref local="mdekEmailUtils"/></entry>
 				<entry key="notifyDaysBeforeExpiry"><value>${workflow.notifyDaysBeforeExpiry}</value></entry>
 			</map>
 	  </property>

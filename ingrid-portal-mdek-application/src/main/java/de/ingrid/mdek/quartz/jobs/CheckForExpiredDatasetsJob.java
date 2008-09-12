@@ -23,6 +23,7 @@ import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
+import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -34,7 +35,6 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	private final static Integer MAX_NUM_EXPIRED_OBJECTS = 100;
 
 	private ConnectionFacade connectionFacade;
-	private MdekEmailUtils mdekEmailUtils;
 	private Integer notifyDaysBeforeExpiry;
 	
 	protected void executeInternal(JobExecutionContext ctx)
@@ -63,8 +63,8 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			ArrayList<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
 			ArrayList<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 
-			mdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
-			mdekEmailUtils.sendExpiryMails(datasetsExpiredList);
+			MdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
+			MdekEmailUtils.sendExpiryMails(datasetsExpiredList);
 
 			updateExpiryState(datasetsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 			updateExpiryState(datasetsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
@@ -205,7 +205,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 					String institution = adrEntity.getString("adr.institution");
 					String lastName = adrEntity.getString("adr.lastname");
 					String firstName = adrEntity.getString("adr.firstname");
-					dataset.setTitle(createAddressTitle(institution, lastName, firstName));
+					dataset.setTitle(MdekAddressUtils.createAddressTitle(institution, lastName, firstName));
 					dataset.setType(ExpiredDataset.Type.ADDRESS);
 					dataset.setLastModified(MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
 //					dataset.setLastModifiedBy(lastModifiedBy);
@@ -218,26 +218,8 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		return resultList;
 	}
 
-	private static String createAddressTitle(String institution, String lastName, String firstName) {
-		institution = institution == null ? "" : institution.trim();
-		lastName = lastName == null ? "" : lastName.trim();
-		firstName = firstName == null ? "" : firstName.trim();
-
-		if (institution.length() != 0) {
-			return institution;
-
-		} else {
-			return firstName.length() != 0 ? lastName+", "+firstName : lastName;
-		}
-	}
-
-
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
-	}
-
-	public void setMdekEmailUtils(MdekEmailUtils mdekEmailUtils) {
-		this.mdekEmailUtils = mdekEmailUtils;
 	}
 
 	public void setNotifyDaysBeforeExpiry(Integer notifyDaysBeforeExpiry) {
