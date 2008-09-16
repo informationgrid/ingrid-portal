@@ -32,6 +32,7 @@ public class GetCapabilitiesService {
 	private final static String SERVICE_TYPE_WFS = "WFS";
 	private final static String SERVICE_TYPE_WCS = "WCS";
 	private final static String SERVICE_TYPE_CSW = "CSW";
+	private final static String SERVICE_TYPE_WCTS = "WCTS";
 
     private static String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
     private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
@@ -100,6 +101,31 @@ public class GetCapabilitiesService {
 	private final static String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Harvest']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Harvest']/DCP[1]/HTTP[1]/Post[1]/@href";
 
+	private final static String XPATH_EXP_WCTS_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_WCTS_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
+	private final static String XPATH_EXP_WCTS_VERSION = "/Capabilities/@version";
+
+	private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
+	
+	private final static String XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Transform']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Transform']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='IsTransformable']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='IsTransformable']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetTransformation']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetTransformation']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeTransformation']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeTransformation']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCRS']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCRS']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeMethod']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeMethod']/DCP[1]/HTTP[1]/Post[1]/@href";
+
 	private XPath xPath = null;
 	
     // Init Method is called by the Spring Framework on initialization
@@ -152,6 +178,9 @@ public class GetCapabilitiesService {
 
         	} else if (serviceType.contains(SERVICE_TYPE_CSW)) {
             	return getCapabilitiesCSW(doc);        		
+
+        	} else if (serviceType.contains(SERVICE_TYPE_WCTS)) {
+        		return getCapabilitiesWCTS(doc);
 
         	} else {
         		log.debug("Invalid service type: "+serviceType);
@@ -759,6 +788,218 @@ public class GetCapabilitiesService {
     	harvestOp.setParamList(paramList);
     	operations.add(harvestOp);
 
+    	
+    	result.setOperations(operations);
+    	return result;
+    }
+
+    public CapabilitiesBean getCapabilitiesWCTS(Document doc) throws XPathExpressionException {
+    	CapabilitiesBean result = new CapabilitiesBean();
+
+    	// General settings
+    	result.setServiceType("WCTS");
+    	result.setTitle(xPath.evaluate(XPATH_EXP_WCTS_TITLE, doc));
+    	result.setDescription(xPath.evaluate(XPATH_EXP_WCTS_ABSTRACT, doc));
+    	String version = xPath.evaluate(XPATH_EXP_WCTS_VERSION, doc);
+    	ArrayList<String> versions = new ArrayList<String>();
+    	versions.add(version);
+    	result.setVersions(versions);
+
+    	// Operation List
+    	ArrayList<OperationBean> operations = new ArrayList<OperationBean>();
+
+    	// Operation - GetCapabilities
+    	OperationBean getCapabilitiesOp = new OperationBean();
+    	String getCapabilitiesGet = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF, doc);
+    	String getCapabilitiesPost = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF, doc);
+    	getCapabilitiesOp.setName("GetCapabilities");
+    	getCapabilitiesOp.setMethodCall("GetCapabilities");
+    	ArrayList<String> getCapabilitiesOpAddressList = new ArrayList<String>();
+    	getCapabilitiesOpAddressList.add(getCapabilitiesGet);
+    	ArrayList<String> getCapabilitiesOpPlatform = new ArrayList<String>();
+    	getCapabilitiesOpPlatform.add("HTTP GET");
+    	if (getCapabilitiesPost != null && getCapabilitiesPost.length() != 0) {
+    		getCapabilitiesOpAddressList.add(getCapabilitiesPost);
+    		getCapabilitiesOpPlatform.add("HTTP POST");
+    	}
+		getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
+		getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
+
+    	ArrayList<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("SERVICE=WCTS", "Service type", "", false, false));
+    	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
+    	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
+    	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is “increased” whenever any change is made in complete service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
+    	getCapabilitiesOp.setParamList(paramList);
+    	operations.add(getCapabilitiesOp);
+
+
+    	// Operation - Transform
+    	OperationBean transformOp = new OperationBean();
+    	String transformGet = xPath.evaluate(XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF, doc);
+    	String transformPost = xPath.evaluate(XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF, doc);
+    	transformOp.setName("Transform");
+    	transformOp.setMethodCall("Transform");
+    	ArrayList<String> transformOpAddressList = new ArrayList<String>();
+    	transformOpAddressList.add(transformGet);
+    	ArrayList<String> transformOpPlatform = new ArrayList<String>();
+    	transformOpPlatform.add("HTTP GET");
+    	if (transformPost != null && transformPost.length() != 0) {
+        	transformOpAddressList.add(transformPost);
+    		transformOpPlatform.add("HTTP POST");
+    	}
+    	transformOp.setPlatform(transformOpPlatform);
+    	transformOp.setAddressList(transformOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+    	paramList.add(new OperationParameterBean("request=Transform", "Operation name", "", false, false));
+    	paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
+    	paramList.add(new OperationParameterBean("InputData=TBD", "Data to be transformed encoded in a format supported by the WCTS, either encoded inline as GML or referenced using a URL", "", false, false));
+    	paramList.add(new OperationParameterBean("SourceCRS=urn:ogc:def:crs:EPSG:6.3:4326", "Identifier URI of input coordinate reference system", "", true, false));
+    	paramList.add(new OperationParameterBean("TargetCRS=urn:ogc:def:crs:EPSG:6.3:32611", "Identifier URI of desired output coordinate reference system", "", true, false));
+    	paramList.add(new OperationParameterBean("Transformation=urn:ogc:def:coordinateOperation:EPSG:6.3:TBD", "Identifier URI of desired coordinate operation", "", true, false));
+    	paramList.add(new OperationParameterBean("InterpolationMethod=bilinear", "Identifier of interpolation method which should be used to transform a coverage", "", true, false));
+    	paramList.add(new OperationParameterBean("OutputFormat=TBD", "Identifier of output format to be used for the transformed features or coverage", "", true, false));
+    	paramList.add(new OperationParameterBean("store=true", "Boolean (true and false values) used to indicate if the transformed data needs to be stored on a remote resource or returned directly in the response. By default, it is set to false. (return directly in response)", "", true, false));
+    	transformOp.setParamList(paramList);
+    	operations.add(transformOp);
+
+
+    	// Operation - IsTransformable
+    	OperationBean isTransformableOp = new OperationBean();
+    	String isTransformableGet = xPath.evaluate(XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF, doc);
+    	String isTransformablePost = xPath.evaluate(XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF, doc);
+    	isTransformableOp.setName("IsTransformable");
+    	isTransformableOp.setMethodCall("IsTransformable");
+    	ArrayList<String> isTransformableOpAddressList = new ArrayList<String>();
+    	isTransformableOpAddressList.add(isTransformableGet);
+    	ArrayList<String> isTransformableOpPlatform = new ArrayList<String>();
+    	isTransformableOpPlatform.add("HTTP GET");
+    	if (isTransformablePost != null && isTransformablePost.length() != 0) {
+        	isTransformableOpAddressList.add(isTransformablePost);
+    		isTransformableOpPlatform.add("HTTP POST");
+    	}
+    	isTransformableOp.setPlatform(isTransformableOpPlatform);
+    	isTransformableOp.setAddressList(isTransformableOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+    	paramList.add(new OperationParameterBean("request=IsTransformable", "Operation name", "", false, false));
+    	paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
+    	paramList.add(new OperationParameterBean("SourceCRS=urn:ogc:def:crs:EPSG:6.3:4326", "Identifier URI of input coordinate reference system", "", true, false));
+    	paramList.add(new OperationParameterBean("TargetCRS=urn:ogc:def:crs:EPSG:6.3:32611", "Identifier URI of desired output coordinate reference system", "", true, false));
+    	paramList.add(new OperationParameterBean("Transformation=urn:ogc:def:coordinateOperation:EPSG:6.3:TBD", "Identifier URI of desired coordinate operation", "", true, false));
+    	paramList.add(new OperationParameterBean("Method=urn:ogc:def:method:EPSG:6.3:TBD", "Identifier URI of operation method to be used in user-defined coordinate transformation", "", true, false));
+    	paramList.add(new OperationParameterBean("GeometryTypes=TBD", "Unordered list of types of GML 3 geometric primitives that will be requested to be transformed, separated by commas", "", true, false));
+    	paramList.add(new OperationParameterBean("CoverageTypes=TBD", "Unordered list of coverage types that will be requested to be transformed, separated by commas", "", true, false));
+    	paramList.add(new OperationParameterBean("InterpolationMethods=bilinear", "Unordered list of interpolation methods which could be used to transform coverages, separated by commas", "", true, false));
+    	isTransformableOp.setParamList(paramList);
+    	operations.add(isTransformableOp);
+
+
+    	// Operation - GetTransformation
+    	OperationBean getTransformationOp = new OperationBean();
+    	String getTransformationGet = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF, doc);
+    	String getTransformationPost = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF, doc);
+    	getTransformationOp.setName("GetTransformation");
+    	getTransformationOp.setMethodCall("GetTransformation");
+    	ArrayList<String> getTransformationOpAddressList = new ArrayList<String>();
+    	getTransformationOpAddressList.add(getTransformationGet);
+    	ArrayList<String> getTransformationOpPlatform = new ArrayList<String>();
+    	getTransformationOpPlatform.add("HTTP GET");
+    	if (getTransformationPost != null && getTransformationPost.length() != 0) {
+        	getTransformationOpAddressList.add(getTransformationPost);
+    		getTransformationOpPlatform.add("HTTP POST");
+    	}
+    	getTransformationOp.setPlatform(getTransformationOpPlatform);
+    	getTransformationOp.setAddressList(getTransformationOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+    	paramList.add(new OperationParameterBean("request=GetTransformation", "Operation name", "", false, false));
+    	paramList.add(new OperationParameterBean("version=0.0.20", "Specification and schema version for this operation", "", false, false));
+    	paramList.add(new OperationParameterBean("SourceCRS=urn:ogc:def:crs:EPSG:6.3:4326", "Identifier URI of input coordinate reference system", "", false, false));
+    	paramList.add(new OperationParameterBean("TargetCRS=urn:ogc:def:crs:EPSG:6.3:32611", "Identifier URI of desired output coordinate reference system", "", false, false));
+    	getTransformationOp.setParamList(paramList);
+    	operations.add(getTransformationOp);
+
+    	// Operation - DescribeTransformation
+    	OperationBean describeTransformationOp = new OperationBean();
+    	String describeTransformationGet = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF, doc);
+    	String describeTransformationPost = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF, doc);
+    	describeTransformationOp.setName("DescribeTransformation");
+    	describeTransformationOp.setMethodCall("DescribeTransformation");
+    	ArrayList<String> describeTransformationOpAddressList = new ArrayList<String>();
+    	describeTransformationOpAddressList.add(describeTransformationGet);
+    	ArrayList<String> describeTransformationOpPlatform = new ArrayList<String>();
+    	describeTransformationOpPlatform.add("HTTP GET");
+    	if (describeTransformationPost != null && describeTransformationPost.length() != 0) {
+        	describeTransformationOpAddressList.add(describeTransformationPost);
+    		describeTransformationOpPlatform.add("HTTP POST");
+    	}
+    	describeTransformationOp.setPlatform(describeTransformationOpPlatform);
+    	describeTransformationOp.setAddressList(describeTransformationOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+    	paramList.add(new OperationParameterBean("request=DescribeTransformation", "Operation name", "", false, false));
+    	paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
+    	paramList.add(new OperationParameterBean("Transformations=urn:ogc:def:coordinateOperation:EPSG:6.3:19916", "Identifier URIs of one or more coordinate operations, comma-separated list", "", false, false));
+    	describeTransformationOp.setParamList(paramList);
+    	operations.add(describeTransformationOp);
+
+    	// Operation - DescribeCRS
+    	OperationBean describeCRSOp = new OperationBean();
+    	String describeCRSGet = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF, doc);
+    	String describeCRSPost = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF, doc);
+    	describeCRSOp.setName("DescribeCRS");
+    	describeCRSOp.setMethodCall("DescribeCRS");
+    	ArrayList<String> describeCRSOpAddressList = new ArrayList<String>();
+    	describeCRSOpAddressList.add(describeCRSGet);
+    	ArrayList<String> describeCRSOpPlatform = new ArrayList<String>();
+    	describeCRSOpPlatform.add("HTTP GET");
+    	if (describeCRSPost != null && describeCRSPost.length() != 0) {
+        	describeCRSOpAddressList.add(describeCRSPost);
+    		describeCRSOpPlatform.add("HTTP POST");
+    	}
+    	describeCRSOp.setPlatform(describeCRSOpPlatform);
+    	describeCRSOp.setAddressList(describeCRSOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+    	paramList.add(new OperationParameterBean("request=DescribeCRS", "Operation name", "", false, false));
+    	paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
+    	paramList.add(new OperationParameterBean("CRSs=urn:ogc:def:crs:EPSG:6.3:4277", "Identifier URIs of one or more desired coordinate reference systems, comma separated list", "", false, false));
+    	describeCRSOp.setParamList(paramList);
+    	operations.add(describeCRSOp);
+    	
+    	// Operation - DescribeMethod
+    	OperationBean describeMethodOp = new OperationBean();
+    	String describeMethodGet = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF, doc);
+    	String describeMethodPost = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF, doc);
+    	describeMethodOp.setName("DescribeMethod");
+    	describeMethodOp.setMethodCall("DescribeMethod");
+    	ArrayList<String> describeMethodOpAddressList = new ArrayList<String>();
+    	describeMethodOpAddressList.add(describeMethodGet);
+    	ArrayList<String> describeMethodOpPlatform = new ArrayList<String>();
+    	describeMethodOpPlatform.add("HTTP GET");
+    	if (describeMethodPost != null && describeMethodPost.length() != 0) {
+        	describeMethodOpAddressList.add(describeMethodPost);
+    		describeMethodOpPlatform.add("HTTP POST");
+    	}
+    	describeMethodOp.setPlatform(describeMethodOpPlatform);
+    	describeMethodOp.setAddressList(describeMethodOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+    	paramList.add(new OperationParameterBean("request=DescribeMethod", "Operation name", "", false, false));
+    	paramList.add(new OperationParameterBean("version=0.0.20", "Specification and schema version for this operation", "", false, false));
+    	paramList.add(new OperationParameterBean("methods=urn:ogc:def:method:EPSG:6.3:9807", "Identifier URIs of one or more desired operation methods, comma separated", "", false, false));
+    	describeMethodOp.setParamList(paramList);
+    	operations.add(describeMethodOp);
     	
     	result.setOperations(operations);
     	return result;
