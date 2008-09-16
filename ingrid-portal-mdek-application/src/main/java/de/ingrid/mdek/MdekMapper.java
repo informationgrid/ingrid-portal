@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.WorkState;
@@ -37,6 +36,7 @@ import de.ingrid.mdek.beans.object.UsageLimitationBean;
 import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.mdek.MdekUtils.UserOperation;
 
 public class MdekMapper implements DataMapperInterface {
 
@@ -112,6 +112,17 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setObjectOwner(responsibleUser.getUuid());
 		}
 
+		// QA Fields
+		MdekAddressBean assignerUser = getDetailedAddressRepresentation(obj.get(MdekKeys.ASSIGNER_USER));
+		if (assignerUser != null) {
+			mdekObj.setAssignerUser(assignerUser);
+		}
+		mdekObj.setAssignTime(convertTimestampToDate((String) obj.get(MdekKeys.ASSIGN_TIME)));
+		UserOperation u = (UserOperation) obj.get(MdekKeys.RESULTINFO_USER_OPERATION);
+		if (u != null) {
+			mdekObj.setUserOperation(u.toString());
+		}
+
 		String workStateStr = (String) obj.get(MdekKeys.WORK_STATE); 
 		WorkState workState = null;
 		if (workStateStr != null) {
@@ -135,7 +146,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekObj.setIsPublished((Boolean) obj.get(MdekKeys.IS_PUBLISHED));
-		
+
 		// Comments
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
 

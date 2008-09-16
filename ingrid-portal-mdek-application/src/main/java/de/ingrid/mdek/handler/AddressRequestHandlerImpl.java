@@ -156,7 +156,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		IngridDocument response = mdekCallerAddress.assignAddressToQA(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
 		MdekAddressBean result = MdekAddressUtils.extractSingleAddressFromResponse(response);
 		if (result != null) {
-			MdekEmailUtils.sendAddressAssignedToQAMail(data);
+			MdekEmailUtils.sendAddressAssignedToQAMail(result);
 		}
 
 		return result;

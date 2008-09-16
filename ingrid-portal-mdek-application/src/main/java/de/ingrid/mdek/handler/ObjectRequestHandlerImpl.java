@@ -7,10 +7,14 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.MdekUtils.IdcEntitySelectionType;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
@@ -167,10 +171,18 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		IngridDocument response = mdekCallerObject.assignObjectToQA(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
 		MdekDataBean result = MdekObjectUtils.extractSingleObjectFromResponse(response);
 		if (result != null) {
-			MdekEmailUtils.sendObjectAssignedToQAMail(data);
+			MdekEmailUtils.sendObjectAssignedToQAMail(result);
 		}
 
 		return result;
+	}
+
+	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum) {
+		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
+		IdcEntitySelectionType st = selectionType == null ? null : IdcEntitySelectionType.valueOf(selectionType);
+		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), ws, st, maxNum, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		return MdekObjectUtils.extractDetailedObjects(result);
 	}
 
 

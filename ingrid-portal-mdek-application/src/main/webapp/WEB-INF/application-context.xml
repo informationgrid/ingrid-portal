@@ -189,6 +189,8 @@
 			<map>
 				<entry key="connectionFacade"><ref local="connectionFacade"/></entry>
 				<entry key="notifyDaysBeforeExpiry"><value>${workflow.notifyDaysBeforeExpiry}</value></entry>
+				<entry key="numAddressesMax"><value>${workflow.mail.numAddressesMax}</value></entry>
+				<entry key="numObjectsMax"><value>${workflow.mail.numObjectsMax}</value></entry>
 			</map>
 	  </property>
 	</bean>

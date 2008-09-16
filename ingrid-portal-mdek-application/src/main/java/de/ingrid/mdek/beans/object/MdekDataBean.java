@@ -29,6 +29,11 @@ public class MdekDataBean {
 	public Boolean writeTreePermission;
 	public Boolean writeSubTreePermission;
 
+	// QA Fields
+	public MdekAddressBean assignerUser;
+	public Date assignTime;
+	public String userOperation;
+
 	// Identification 
 	public String objectName;
 	public Integer objectClass;
@@ -1571,6 +1576,48 @@ public class MdekDataBean {
 
 	public void setWriteSubTreePermission(Boolean writeSubTreePermission) {
 		this.writeSubTreePermission = writeSubTreePermission;
+	}
+
+
+
+
+	public MdekAddressBean getAssignerUser() {
+		return assignerUser;
+	}
+
+
+
+
+	public void setAssignerUser(MdekAddressBean assignerUser) {
+		this.assignerUser = assignerUser;
+	}
+
+
+
+
+	public Date getAssignTime() {
+		return assignTime;
+	}
+
+
+
+
+	public void setAssignTime(Date assignTime) {
+		this.assignTime = assignTime;
+	}
+
+
+
+
+	public String getUserOperation() {
+		return userOperation;
+	}
+
+
+
+
+	public void setUserOperation(String userOperation) {
+		this.userOperation = userOperation;
 	}
 
 }

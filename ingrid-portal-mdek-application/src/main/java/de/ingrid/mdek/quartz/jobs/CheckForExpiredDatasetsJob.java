@@ -32,13 +32,15 @@ import de.ingrid.utils.IngridDocument;
 public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	private final static Logger log = Logger.getLogger(CheckForExpiredDatasetsJob.class);
-	private final static Integer MAX_NUM_EXPIRED_OBJECTS = 100;
 
 	private ConnectionFacade connectionFacade;
 	private Integer notifyDaysBeforeExpiry;
-	
+	private Integer numAddressesMax;
+	private Integer numObjectsMax;
+
 	protected void executeInternal(JobExecutionContext ctx)
 			throws JobExecutionException {
+		log.debug("Executing CheckForExpiredDatasetsJob...");
 		// 1. Get all objects that: will expire soon & first notification has not been sent
 		// 2. Get all objects that: are expired & final notification has not been sent
 		// 3.1. Get emails for the objects
@@ -48,10 +50,13 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 		IMdekCaller caller = connectionFacade.getMdekCaller();
 		List<String> iplugList = caller.getRegisteredIPlugs();
+		log.debug("Number of iplugs found: "+iplugList.size());
 		for (String plugId : iplugList) {
+			log.debug("Checking expired datasets for: "+plugId);
 			Integer expiryDuration = getExpiryDuration(plugId);
 
 			if (expiryDuration == null || expiryDuration <= 0) {
+				log.debug("Expiry duration deactivated -> done.");
 				continue;
 			}
 
@@ -63,11 +68,15 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			ArrayList<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
 			ArrayList<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 
+			log.debug("Number of datasets to notify found: "+datasetsWillExpireList.size());
+			log.debug("Number of datasets to expire found: "+datasetsExpiredList.size());
 			MdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
 			MdekEmailUtils.sendExpiryMails(datasetsExpiredList);
 
+			log.debug("Updating expiry states.");
 			updateExpiryState(datasetsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 			updateExpiryState(datasetsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
+			log.debug("CheckForExpiredDatasetsJob done.");
 		}
 	}
 
@@ -145,7 +154,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		}
 		qString += " order by obj.objClass, obj.objName";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, MAX_NUM_EXPIRED_OBJECTS, "");
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numObjectsMax, "");
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -193,7 +202,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			qString += " and adr.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
 		}
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, MAX_NUM_EXPIRED_OBJECTS, "");
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numAddressesMax, "");
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -224,5 +233,13 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	public void setNotifyDaysBeforeExpiry(Integer notifyDaysBeforeExpiry) {
 		this.notifyDaysBeforeExpiry = notifyDaysBeforeExpiry < 1 ? 14 : notifyDaysBeforeExpiry;
+	}
+
+	public void setNumAddressesMax(Integer numAddressesMax) {
+		this.numAddressesMax = numAddressesMax;
+	}
+
+	public void setNumObjectsMax(Integer numObjectsMax) {
+		this.numObjectsMax = numObjectsMax;
 	}
 }

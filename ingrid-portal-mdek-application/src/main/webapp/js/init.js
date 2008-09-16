@@ -821,13 +821,10 @@ function initToolbar() {
                           });
   }
 
-  var showChangesButton = null;
-  if (isQAActive) {
-	showChangesButton = leftToolbar.addChild("img/ic_original.gif", "after", {
+  var showChangesButton = leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"
                           });
-  }
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
   var showCommentButton = leftToolbar.addChild("img/ic_comment.gif", "after", {

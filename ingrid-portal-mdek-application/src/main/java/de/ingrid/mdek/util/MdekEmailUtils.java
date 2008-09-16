@@ -48,6 +48,7 @@ public class MdekEmailUtils {
 	// Set in the init method
 	private static String MAIL_SENDER;
 	private static String MAIL_SMTP_HOST;
+	private static String MDEK_DIRECT_LINK;
 
 	private final static String MAIL_SUBJECT = "[MDEK] Information";
 
@@ -68,6 +69,7 @@ public class MdekEmailUtils {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("mdek");
 		MAIL_SENDER = resourceBundle.getString("workflow.mail.sender");
 		MAIL_SMTP_HOST = resourceBundle.getString("workflow.mail.smtp");
+		MDEK_DIRECT_LINK = resourceBundle.getString("mdek.directLink");
 	}
 
 	public static void sendObjectAssignedToQAMail(MdekDataBean data) {
@@ -264,6 +266,8 @@ public class MdekEmailUtils {
 	}
 
 	private static String mergeTemplate(String realTemplatePath, Map<String, Object> attributes, String attributesName) {
+		attributes.put("directLink", MDEK_DIRECT_LINK);
+
 		VelocityContext context = new VelocityContext();
 		context.put(attributesName, attributes);
 		StringWriter sw = new StringWriter();
@@ -272,7 +276,10 @@ public class MdekEmailUtils {
 			FileReader templateReader = new FileReader(realTemplatePath);
 
 			sw = new StringWriter();
-			Velocity.init();
+
+		    Properties p = new Properties();
+		    p.setProperty("input.encoding", "UTF-8");
+		    Velocity.init(p);
 			Velocity.evaluate(context, sw, "UserEmailProcessor", templateReader);
 
 		} catch (Exception e) {

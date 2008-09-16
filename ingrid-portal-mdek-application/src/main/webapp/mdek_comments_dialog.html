@@ -27,6 +27,7 @@ _container_.addOnLoad(function() {
 
 	if (!currentUdk.writePermission) {
 		dojo.widget.byId("addCommentButton").disable();
+		dojo.widget.byId("commentNewComment").disable();
 		dojo.html.addClass(dojo.widget.byId("commentCommentsTable").domNode, "readonly");
 		dojo.html.removeClass(dojo.widget.byId("commentCommentsTable").domNode, "interactive");
 		dojo.widget.byId("commentCommentsTable").removeContextMenu();

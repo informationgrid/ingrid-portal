@@ -232,6 +232,21 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}		
 
+	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum) {
+		try {
+			return objectRequestHandler.getQAObjects(workState, selectionType, maxNum);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching QA objects.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+
+		} catch (RuntimeException e) {
+			log.debug("Error while fetching QA objects", e);
+			throw e;
+		}
+	}
+
 
 	public ObjectRequestHandler getObjectRequestHandler() {
 		return objectRequestHandler;

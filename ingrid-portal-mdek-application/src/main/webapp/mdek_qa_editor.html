@@ -14,9 +14,9 @@ var modifiedDatasetTable = null;
 var qaDatasetTable = null;
 
 _container_.addOnLoad(function() {
-	dojo.event.connect("after", expiredDatasetPageNav, "onPageSelected", function() { navigateExpiredDatasetTable(); });
-	dojo.event.connect("after", modifiedDatasetPageNav, "onPageSelected", function() { navigateModifiedDatasetTable(); });
-	dojo.event.connect("after", qaDatasetPageNav, "onPageSelected", function() { navigateQADatasetTable(); });
+	dojo.event.connectOnce("after", expiredDatasetPageNav, "onPageSelected", function() { navigateExpiredDatasetTable(); });
+	dojo.event.connectOnce("after", modifiedDatasetPageNav, "onPageSelected", function() { navigateModifiedDatasetTable(); });
+	dojo.event.connectOnce("after", qaDatasetPageNav, "onPageSelected", function() { navigateQADatasetTable(); });
 	initTables();
 });
 

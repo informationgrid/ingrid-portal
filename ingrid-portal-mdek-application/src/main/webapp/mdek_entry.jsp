@@ -2412,7 +2412,7 @@ function hideSplash(){
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.html" preload="false" executeScripts="true"></div>
 
-  <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="false" executeScripts="true" refreshOnShow="true"></div>
+  <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.html" preload="false" executeScripts="true" refreshOnShow="false"></div>
   <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.html" preload="false" executeScripts="true" refreshOnShow="true"></div>
 
 <!-- the following pages are not implemented yet -->
