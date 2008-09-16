@@ -31,6 +31,7 @@ public class GetCapabilitiesService {
 	private final static String SERVICE_TYPE_WMS = "OGC:WMS";
 	private final static String SERVICE_TYPE_WFS = "WFS";
 	private final static String SERVICE_TYPE_WCS = "WCS";
+	private final static String SERVICE_TYPE_CSW = "CSW";
 
     private static String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
     private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
@@ -65,7 +66,7 @@ public class GetCapabilitiesService {
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Post[1]/@href";
 
 	private final static String XPATH_EXP_WCS_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_WCS_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_WCS_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
 	private final static String XPATH_EXP_WCS_VERSION = "/Capabilities/@version";
 
 	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
@@ -76,6 +77,28 @@ public class GetCapabilitiesService {
 	
 	private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_CSW_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_CSW_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
+	private final static String XPATH_EXP_CSW_VERSION = "/Capabilities/@version";
+
+	private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeRecord']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeRecord']/DCP[1]/HTTP[1]/Post[1]/@href";
+	
+	private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetDomain']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetDomain']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecords']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecords']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecordById']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecordById']/DCP[1]/HTTP[1]/Post[1]/@href";
+
+	private final static String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Harvest']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Harvest']/DCP[1]/HTTP[1]/Post[1]/@href";
 
 	private XPath xPath = null;
 	
@@ -126,6 +149,9 @@ public class GetCapabilitiesService {
 
         	} else if (serviceType.contains(SERVICE_TYPE_WCS)) {
             	return getCapabilitiesWCS(doc);        		
+
+        	} else if (serviceType.contains(SERVICE_TYPE_CSW)) {
+            	return getCapabilitiesCSW(doc);        		
 
         	} else {
         		log.debug("Invalid service type: "+serviceType);
@@ -385,7 +411,7 @@ public class GetCapabilitiesService {
 	    	lockFeatureOp.setAddressList(lockFeatureAddressList);
 
 	    	paramList = new ArrayList<OperationParameterBean>();
-	    	paramList.add(new OperationParameterBean("REQUEST=[GetGmlObject]", "The name of the WFS request", "", false, false));
+	    	paramList.add(new OperationParameterBean("REQUEST=[LockFeature]", "The name of the WFS request", "", false, false));
 	    	paramList.add(new OperationParameterBean("TRAVERSEXLINKDEPTH", "The depth to which nested property XLink linking element locator attribute (href) XLinks are traversed and resolved if possible. The range of valid values consists of positive integers plus \"*\" for unlimited", "", false, false));
 	    	paramList.add(new OperationParameterBean("TRAVERSEXLINKEXPIRY", "The number of minutes a WFS should wait to receive a response to a nested GetGmlObject request.. If no value is specified then the period is implementation dependent", "", true, false));
 	    	paramList.add(new OperationParameterBean("GMLOBJECTID", "The XML ID of the element to fetch", "", false, false));
@@ -535,6 +561,205 @@ public class GetCapabilitiesService {
     	getCoverageOp.setParamList(paramList);
     	operations.add(getCoverageOp);
 
+    	result.setOperations(operations);
+    	return result;
+    }
+
+    public CapabilitiesBean getCapabilitiesCSW(Document doc) throws XPathExpressionException {
+    	CapabilitiesBean result = new CapabilitiesBean();
+
+    	// General settings
+    	result.setServiceType("CSW");
+    	result.setTitle(xPath.evaluate(XPATH_EXP_CSW_TITLE, doc));
+    	result.setDescription(xPath.evaluate(XPATH_EXP_CSW_ABSTRACT, doc));
+    	String version = xPath.evaluate(XPATH_EXP_CSW_VERSION, doc);
+    	ArrayList<String> versions = new ArrayList<String>();
+    	versions.add(version);
+    	result.setVersions(versions);
+
+    	// Operation List
+    	ArrayList<OperationBean> operations = new ArrayList<OperationBean>();
+
+    	// Operation - GetCapabilities
+    	OperationBean getCapabilitiesOp = new OperationBean();
+    	String getCapabilitiesGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF, doc);
+    	String getCapabilitiesPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF, doc);
+    	getCapabilitiesOp.setName("GetCapabilities");
+    	getCapabilitiesOp.setMethodCall("GetCapabilities");
+    	ArrayList<String> getCapabilitiesOpAddressList = new ArrayList<String>();
+    	getCapabilitiesOpAddressList.add(getCapabilitiesGet);
+    	ArrayList<String> getCapabilitiesOpPlatform = new ArrayList<String>();
+    	getCapabilitiesOpPlatform.add("HTTP GET");
+    	if (getCapabilitiesPost != null && getCapabilitiesPost.length() != 0) {
+    		getCapabilitiesOpAddressList.add(getCapabilitiesPost);
+    		getCapabilitiesOpPlatform.add("HTTP POST");
+    	}
+		getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
+		getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
+
+    	ArrayList<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("SERVICE=CSW", "Service type", "", false, false));
+    	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
+    	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
+    	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is “increased” whenever any change is made in complete service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
+    	getCapabilitiesOp.setParamList(paramList);
+    	operations.add(getCapabilitiesOp);
+
+
+    	// Operation - DescribeRecord
+    	OperationBean describeRecordOp = new OperationBean();
+    	String describeRecordGet = xPath.evaluate(XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF, doc);
+    	String describeRecordPost = xPath.evaluate(XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF, doc);
+    	describeRecordOp.setName("DescribeRecord");
+    	describeRecordOp.setMethodCall("DescribeRecord");
+    	ArrayList<String> describeRecordOpAddressList = new ArrayList<String>();
+    	describeRecordOpAddressList.add(describeRecordGet);
+    	ArrayList<String> describeRecordOpPlatform = new ArrayList<String>();
+    	describeRecordOpPlatform.add("HTTP GET");
+    	if (describeRecordPost != null && describeRecordPost.length() != 0) {
+        	describeRecordOpAddressList.add(describeRecordPost);
+    		describeRecordOpPlatform.add("HTTP POST");
+    	}
+    	describeRecordOp.setPlatform(describeRecordOpPlatform);
+    	describeRecordOp.setAddressList(describeRecordOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
+    	paramList.add(new OperationParameterBean("request=DescribeRecord", "Fixed value of DescribeRecord, case insensitive", "", false, false));
+    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
+    	paramList.add(new OperationParameterBean("NAMESPACE", "List of Character String, comma separated. Used to specify namespace(s) and their prefix(es). Format is xmlns([prefix=]namespace-url). If prefix is not specified, then this is the default namespace.", "", true, false));
+    	paramList.add(new OperationParameterBean("TypeName", "List of Character String, comma separated. One or more qualified type names to be described", "", true, false));
+    	paramList.add(new OperationParameterBean("outputFormat", "Character String. A MIME type indicating the format that the output document should have", "", true, false));
+    	paramList.add(new OperationParameterBean("schemaLanguage", "Character String", "", true, false));
+    	describeRecordOp.setParamList(paramList);
+    	operations.add(describeRecordOp);
+
+
+    	// Operation - GetDomain
+    	OperationBean getDomainOp = new OperationBean();
+    	String getDomainGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF, doc);
+    	String getDomainPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF, doc);
+    	getDomainOp.setName("GetDomain");
+    	getDomainOp.setMethodCall("GetDomain");
+    	ArrayList<String> getDomainOpAddressList = new ArrayList<String>();
+    	getDomainOpAddressList.add(getDomainGet);
+    	ArrayList<String> getDomainOpPlatform = new ArrayList<String>();
+    	getDomainOpPlatform.add("HTTP GET");
+    	if (getDomainPost != null && getDomainPost.length() != 0) {
+        	getDomainOpAddressList.add(getDomainPost);
+    		getDomainOpPlatform.add("HTTP POST");
+    	}
+    	getDomainOp.setPlatform(getDomainOpPlatform);
+    	getDomainOp.setAddressList(getDomainOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
+    	paramList.add(new OperationParameterBean("request=GetDomain", "Fixed value of GetDomain, case insensitive", "", false, false));
+    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
+    	paramList.add(new OperationParameterBean("ParameterName", "List of Character String, comma separated. Unordered list of names of requested parameters, of the form OperationName.ParameterName", "", true, false));
+    	paramList.add(new OperationParameterBean("PropertyName", "List of Character String, comma separated. Unordered list of names of requested properties, from the information model that the catalogue is using", "", true, false));
+    	getDomainOp.setParamList(paramList);
+    	operations.add(getDomainOp);
+
+    	// Operation - GetRecords
+    	OperationBean getRecordsOp = new OperationBean();
+    	String getRecordsGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF, doc);
+    	String getRecordsPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF, doc);
+    	getRecordsOp.setName("GetRecords");
+    	getRecordsOp.setMethodCall("GetRecords");
+    	ArrayList<String> getRecordsOpAddressList = new ArrayList<String>();
+    	getRecordsOpAddressList.add(getRecordsGet);
+    	ArrayList<String> getRecordsOpPlatform = new ArrayList<String>();
+    	getRecordsOpPlatform.add("HTTP GET");
+    	if (getRecordsPost != null && getRecordsPost.length() != 0) {
+        	getRecordsOpAddressList.add(getRecordsPost);
+    		getRecordsOpPlatform.add("HTTP POST");
+    	}
+    	getRecordsOp.setPlatform(getRecordsOpPlatform);
+    	getRecordsOp.setAddressList(getRecordsOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
+    	paramList.add(new OperationParameterBean("request=GetRecords", "Fixed value of GetRecords, case insensitive", "", false, false));
+    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
+    	paramList.add(new OperationParameterBean("typeNames", "List of Character String, comma separated. Unordered List of object types implicated in the query", "", false, false));
+    	paramList.add(new OperationParameterBean("NAMESPACE", "List of Character String, comma separated. Used to specify namespace(s) and their prefix(es). Format is xmlns([prefix=]namespace-url). If prefix is not specified, then this is the default namespace.", "", true, false));
+    	paramList.add(new OperationParameterBean("resultType", "CodeList with allowed values: 'hits', 'results' or 'validate'", "", true, false));
+    	paramList.add(new OperationParameterBean("requestId", "URI", "", true, false));
+    	paramList.add(new OperationParameterBean("outputFormat", "Character String. Value is Mime type. The only value that is required to be supported is application/xml. Other supported values may include text/html and text/plain", "", true, false));
+    	paramList.add(new OperationParameterBean("outputSchema", "Any URI", "", true, false));
+    	paramList.add(new OperationParameterBean("startPosition", "Non-Zero Positive Integer", "", true, false));
+    	paramList.add(new OperationParameterBean("maxRecords", "Positive Integer", "", true, false));
+    	paramList.add(new OperationParameterBean("ElementSetName", "List of Character String", "", true, false));
+    	paramList.add(new OperationParameterBean("ElementName", "List of Character String", "", true, false));
+    	paramList.add(new OperationParameterBean("CONSTRAINTLANGUAGE", "CodeList with allowed values: CQL_TEXT or FILTER", "", true, false));
+    	paramList.add(new OperationParameterBean("Constraint", "Character String. Predicate expression specified in the language indicated by the CONSTRAINTLANGUAGE parameter", "", true, false));
+    	paramList.add(new OperationParameterBean("SortBy", "List of Character String, comma separated. Ordered list of names of metadata elements to use for sorting the response. Format of each list item is metadata_element_name:A indicating an ascending sort or metadata_ element_name:D indicating descending sort", "", true, false));
+    	paramList.add(new OperationParameterBean("DistributedSearch", "Boolean", "", true, false));
+    	paramList.add(new OperationParameterBean("hopCount", "Integer", "", true, false));
+    	paramList.add(new OperationParameterBean("ResponseHandler", "Any URI", "", true, false));
+    	getRecordsOp.setParamList(paramList);
+    	operations.add(getRecordsOp);
+    	
+    	// Operation - GetRecordById
+    	OperationBean getRecordByIdOp = new OperationBean();
+    	String getRecordByIdGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF, doc);
+    	String getRecordByIdPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF, doc);
+    	getRecordByIdOp.setName("GetRecordById");
+    	getRecordByIdOp.setMethodCall("GetRecordById");
+    	ArrayList<String> getRecordByIdOpAddressList = new ArrayList<String>();
+    	getRecordByIdOpAddressList.add(getRecordByIdGet);
+    	ArrayList<String> getRecordByIdOpPlatform = new ArrayList<String>();
+    	getRecordByIdOpPlatform.add("HTTP GET");
+    	if (getRecordByIdPost != null && getRecordByIdPost.length() != 0) {
+        	getRecordByIdOpAddressList.add(getRecordByIdPost);
+    		getRecordByIdOpPlatform.add("HTTP POST");
+    	}
+    	getRecordByIdOp.setPlatform(getRecordByIdOpPlatform);
+    	getRecordByIdOp.setAddressList(getRecordByIdOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("request=GetRecordById", "Fixed value of GetRecordById, case insensitive", "", false, false));
+    	paramList.add(new OperationParameterBean("Id", "Comma separated list of anyURI", "", false, false));
+    	paramList.add(new OperationParameterBean("ElementSetName", "CodeList with allowed values: 'brief', 'summary' or 'full'", "", true, false));
+    	paramList.add(new OperationParameterBean("outputFormat", "Character String. Value is Mime type. The only value that is required to be supported is application/xml. Other supported values may include text/html and text/plain", "", true, false));
+    	paramList.add(new OperationParameterBean("outputSchema", "Reference to the preferred schema of the response", "", true, false));
+    	getRecordByIdOp.setParamList(paramList);
+    	operations.add(getRecordByIdOp);
+
+    	// Operation - Harvest
+    	OperationBean harvestOp = new OperationBean();
+    	String harvestGet = xPath.evaluate(XPATH_EXP_CSW_OP_HARVEST_GET_HREF, doc);
+    	String harvestPost = xPath.evaluate(XPATH_EXP_CSW_OP_HARVEST_POST_HREF, doc);
+    	harvestOp.setName("Harvest");
+    	harvestOp.setMethodCall("Harvest");
+    	ArrayList<String> harvestOpAddressList = new ArrayList<String>();
+    	harvestOpAddressList.add(harvestGet);
+    	ArrayList<String> harvestOpPlatform = new ArrayList<String>();
+    	harvestOpPlatform.add("HTTP GET");
+    	if (harvestPost != null && harvestPost.length() != 0) {
+        	harvestOpAddressList.add(harvestPost);
+    		harvestOpPlatform.add("HTTP POST");
+    	}
+    	harvestOp.setPlatform(harvestOpPlatform);
+    	harvestOp.setAddressList(harvestOpAddressList);
+
+    	paramList = new ArrayList<OperationParameterBean>();
+    	paramList.add(new OperationParameterBean("request=Harvest", "Fixed value of Harvest, case insensitive", "", false, false));
+    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
+    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
+    	paramList.add(new OperationParameterBean("Source", "URI. Reference to the source from which the resource is to be harvested", "", false, false));
+    	paramList.add(new OperationParameterBean("ResourceType", "Character String. Reference to the type of resource being harvested", "", false, false));
+    	paramList.add(new OperationParameterBean("NAMESPACE", "List of Character String, comma separated. Used to specify namespace(s) and their prefix(es). Format is xmlns([prefix=]namespace-url). If prefix is not specified, then this is the default namespace.", "", true, false));
+    	paramList.add(new OperationParameterBean("ResourceFormat", "Character String. MIME type indicating format of the resource being harvested", "", true, false));
+    	paramList.add(new OperationParameterBean("ResponseHandler", "URL. A reference to a person or entity that the CSW should respond to when it has completed processing Harvest request asynchronously", "", true, false));
+    	paramList.add(new OperationParameterBean("HarvestInterval", "Period. Must conform to ISO8601 Period syntax.", "", true, false));
+    	harvestOp.setParamList(paramList);
+    	operations.add(harvestOp);
+
+    	
     	result.setOperations(operations);
     	return result;
     }
