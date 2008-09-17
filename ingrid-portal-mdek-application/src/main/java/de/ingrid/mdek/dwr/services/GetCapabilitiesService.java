@@ -1,9 +1,7 @@
 package de.ingrid.mdek.dwr.services;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StreamTokenizer;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
@@ -28,7 +25,9 @@ public class GetCapabilitiesService {
 
 	private final static Logger log = Logger.getLogger(GetCapabilitiesService.class);	
 
-	private final static String SERVICE_TYPE_WMS = "OGC:WMS";
+	private enum ServiceType { WMS, WFS, WCS, CSW, WCTS }
+
+	private final static String SERVICE_TYPE_WMS = "WMS";
 	private final static String SERVICE_TYPE_WFS = "WFS";
 	private final static String SERVICE_TYPE_WCS = "WCS";
 	private final static String SERVICE_TYPE_CSW = "CSW";
@@ -38,46 +37,58 @@ public class GetCapabilitiesService {
     private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
     private static String ERROR_GETCAP = "ERROR_GETCAP_ERROR";
 
-	private final static String XPATH_EXP_WMS_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
-	private final static String XPATH_EXP_WMS_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
-	private final static String XPATH_EXP_WMS_VERSION = "/WMT_MS_Capabilities/@version";
-	private final static String XPATH_EXP_WMS_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	// Version 1.3.0 of the WMS uses 'WMS_Capabilities' as its root element (OGC 06-042, Chapter 7.2.4.1)
+    // Version 1.1.1 uses 'WMT_MS_Capabilities'
+    private final static String XPATH_EXP_WMS_1_1_1_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
+	private final static String XPATH_EXP_WMS_1_1_1_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
+	private final static String XPATH_EXP_WMS_1_1_1_VERSION = "/WMT_MS_Capabilities/@version";
+	private final static String XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	private final static String XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	private final static String XPATH_EXP_WMS_1_1_1_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+
+	private final static String XPATH_EXP_WMS_1_3_0_TITLE = "/WMS_Capabilities/Service[1]/Title[1]";
+	private final static String XPATH_EXP_WMS_1_3_0_ABSTRACT = "/WMS_Capabilities/Service[1]/Abstract[1]";
+	private final static String XPATH_EXP_WMS_1_3_0_VERSION = "/WMS_Capabilities/@version";
+	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_CAPABILITIES_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
 
 	private final static String XPATH_EXP_WFS_TITLE = "/WFS_Capabilities/ServiceIdentification[1]/Title[1]";
 	private final static String XPATH_EXP_WFS_ABSTRACT = "/WFS_Capabilities/ServiceIdentification[1]/Abstract[1]";
 	private final static String XPATH_EXP_WFS_VERSION = "/WFS_Capabilities/ServiceIdentification[1]/ServiceTypeVersion[1]";
-
 	private final static String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-
 	private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeFeatureType']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeFeatureType']/DCP[1]/HTTP[1]/Post[1]/@href";
-
 	private final static String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetFeature']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetFeature']/DCP[1]/HTTP[1]/Post[1]/@href";
-
 	private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetGmlObject']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetGmlObject']/DCP[1]/HTTP[1]/Post[1]/@href";
-
 	private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='LockFeature']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='LockFeature']/DCP[1]/HTTP[1]/Post[1]/@href";
-
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Get[1]/@href";
 	private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Post[1]/@href";
 
-	private final static String XPATH_EXP_WCS_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_WCS_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
-	private final static String XPATH_EXP_WCS_VERSION = "/Capabilities/@version";
+	// Version 1.0.0 uses 'WCS_Capabilities' as root element (see http://schemas.opengis.net/wcs/1.0.0/wcsCapabilities.xsd)
+	// Version 1.1.0 uses 'Capabilities'
+	private final static String XPATH_EXP_WCS_1_0_0_TITLE = "/WCS_Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_WCS_1_0_0_ABSTRACT = "/WCS_Capabilities/ServiceIdentification[1]/Abstract[1]";
+	private final static String XPATH_EXP_WCS_1_0_0_VERSION = "/WCS_Capabilities/@version";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_GET_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_POST_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_GET_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_POST_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_GET_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_POST_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
 
-	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
-	
-	private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
+	private final static String XPATH_EXP_WCS_1_1_0_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
+	private final static String XPATH_EXP_WCS_1_1_0_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
+	private final static String XPATH_EXP_WCS_1_1_0_VERSION = "/Capabilities/@version";
+	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
+	private final static String XPATH_EXP_WCS_1_1_0_OP_DESCRIBE_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_1_1_0_OP_DESCRIBE_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
+	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
+	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
 
 	private final static String XPATH_EXP_CSW_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
 	private final static String XPATH_EXP_CSW_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
@@ -146,48 +157,16 @@ public class GetCapabilitiesService {
         	DocumentBuilder builder = factory.newDocumentBuilder();
         	Document doc = builder.parse(inputSource);
 
-        	// Check for the service type. First evaluate the wms xPath expr., then the wfs
-        	String serviceType = null;
-        	XPathExpression xeWmsServiceType = xPath.compile("/WMT_MS_Capabilities/Service/Name[1]");
-        	serviceType = xeWmsServiceType.evaluate(doc);
-
-        	if (serviceType == null || serviceType.length() == 0) {
-            	XPathExpression xeWfsServiceType = xPath.compile("/WFS_Capabilities/ServiceIdentification/ServiceType[1]");
-            	serviceType = xeWfsServiceType.evaluate(doc);
+        	ServiceType serviceType = getServiceType(doc);
+        	switch (serviceType) {
+	        	case WMS: return getCapabilitiesWMS(doc, getServiceVersionWMS(doc));
+	        	case WFS: return getCapabilitiesWFS(doc);
+	        	case WCS: return getCapabilitiesWCS(doc, getServiceVersionWCS(doc));
+	        	case CSW: return getCapabilitiesCSW(doc);
+	        	case WCTS: return getCapabilitiesWCTS(doc);
+	        	default:
+	        		throw new RuntimeException("Unknown Service Type.");
         	}
-
-        	if (serviceType == null || serviceType.length() == 0) {
-            	XPathExpression xeWcsServiceType = xPath.compile("/Capabilities/ServiceIdentification/ServiceType[1]");
-            	serviceType = xeWcsServiceType.evaluate(doc);
-        	}
-
-        	if (serviceType == null || serviceType.length() == 0) {
-        		// Could not evaluate serviceType
-        		log.debug("Could not evaluate service type.");
-//        		throw new RuntimeException(ERROR_GETCAP);
-        		throw new RuntimeException("Could not evaluate service type.");
-
-        	} else if (serviceType.contains(SERVICE_TYPE_WMS)) {
-        		return getCapabilitiesWMS(doc);
-
-        	} else if (serviceType.contains(SERVICE_TYPE_WFS)) {
-            	return getCapabilitiesWFS(doc);        		
-
-        	} else if (serviceType.contains(SERVICE_TYPE_WCS)) {
-            	return getCapabilitiesWCS(doc);        		
-
-        	} else if (serviceType.contains(SERVICE_TYPE_CSW)) {
-            	return getCapabilitiesCSW(doc);        		
-
-        	} else if (serviceType.contains(SERVICE_TYPE_WCTS)) {
-        		return getCapabilitiesWCTS(doc);
-
-        	} else {
-        		log.debug("Invalid service type: "+serviceType);
-//        		throw new RuntimeException(ERROR_GETCAP);
-        		throw new RuntimeException("Invalid service type: "+serviceType);
-        	}
-
 
     	} catch (MalformedURLException e) {
     		log.debug("", e);
@@ -207,14 +186,14 @@ public class GetCapabilitiesService {
     	}    
     }
 
-    public CapabilitiesBean getCapabilitiesWMS(Document doc) throws XPathExpressionException {
+    public CapabilitiesBean getCapabilitiesWMS(Document doc, String serviceVersion) throws XPathExpressionException {
     	CapabilitiesBean result = new CapabilitiesBean();
 
     	// General settings
     	result.setServiceType("WMS");
-    	result.setTitle(xPath.evaluate(XPATH_EXP_WMS_TITLE, doc));
-    	result.setDescription(xPath.evaluate(XPATH_EXP_WMS_ABSTRACT, doc));
-    	String version = xPath.evaluate(XPATH_EXP_WMS_VERSION, doc);
+    	result.setTitle(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "TITLE"), doc));
+    	result.setDescription(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "ABSTRACT"), doc));
+    	String version = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "VERSION"), doc);
     	ArrayList<String> versions = new ArrayList<String>();
     	versions.add(version);
     	result.setVersions(versions);
@@ -230,9 +209,9 @@ public class GetCapabilitiesService {
     	getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
     	ArrayList<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	getCapabilitiesOpAddressList.add(xPath.evaluate(XPATH_EXP_WMS_OP_GET_CAPABILITIES_HREF, doc));
+    	getCapabilitiesOpAddressList.add(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc));
     	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
-    	
+
     	ArrayList<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", true, false));
     	paramList.add(new OperationParameterBean("SERVICE=WMS", "Service type", "", false, false));
@@ -249,7 +228,7 @@ public class GetCapabilitiesService {
     	getMapOp.setPlatform(getMapOpPlatform);
     	getMapOp.setMethodCall("GetMap");
     	ArrayList<String> getMapOpAddressList = new ArrayList<String>();
-    	getMapOpAddressList.add(xPath.evaluate(XPATH_EXP_WMS_OP_GET_MAP_HREF, doc));
+    	getMapOpAddressList.add(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc));
     	getMapOp.setAddressList(getMapOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
@@ -276,7 +255,7 @@ public class GetCapabilitiesService {
     	operations.add(getMapOp);
 
     	// Operation - GetFeatureInfo - optional
-    	String getFeatureInfoAddress = xPath.evaluate(XPATH_EXP_WMS_OP_GET_FEATURE_INFO_HREF, doc);
+    	String getFeatureInfoAddress = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_FEATURE_INFO_HREF"), doc);
     	if (getFeatureInfoAddress != null && getFeatureInfoAddress.length() != 0) {
 	    	OperationBean getFeatureInfoOp = new OperationBean();
 	    	getFeatureInfoOp.setName("GetFeatureInfo");
@@ -485,14 +464,14 @@ public class GetCapabilitiesService {
     }
 
 
-    public CapabilitiesBean getCapabilitiesWCS(Document doc) throws XPathExpressionException {
+    public CapabilitiesBean getCapabilitiesWCS(Document doc, String serviceVersion) throws XPathExpressionException {
     	CapabilitiesBean result = new CapabilitiesBean();
 
     	// General settings
     	result.setServiceType("WCS");
-    	result.setTitle(xPath.evaluate(XPATH_EXP_WCS_TITLE, doc));
-    	result.setDescription(xPath.evaluate(XPATH_EXP_WCS_ABSTRACT, doc));
-    	String version = xPath.evaluate(XPATH_EXP_WCS_VERSION, doc);
+    	result.setTitle(xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "TITLE"), doc));
+    	result.setDescription(xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "ABSTRACT"), doc));
+    	String version = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "VERSION"), doc);
     	ArrayList<String> versions = new ArrayList<String>();
     	versions.add(version);
     	result.setVersions(versions);
@@ -503,8 +482,8 @@ public class GetCapabilitiesService {
 
     	// Operation - GetCapabilities
     	OperationBean getCapabilitiesOp = new OperationBean();
-    	String getCapabilitiesGet = xPath.evaluate(XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF, doc);
-    	String getCapabilitiesPost = xPath.evaluate(XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF, doc);
+    	String getCapabilitiesGet = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_CAPABILITIES_GET_HREF"), doc);
+    	String getCapabilitiesPost = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_CAPABILITIES_POST_HREF"), doc);
     	getCapabilitiesOp.setName("GetCapabilities");
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
     	ArrayList<String> getCapabilitiesOpAddressList = new ArrayList<String>();
@@ -531,8 +510,8 @@ public class GetCapabilitiesService {
 
     	// Operation - DescribeCoverage
     	OperationBean describeCoverageOp = new OperationBean();
-    	String describeCoverageGet = xPath.evaluate(XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF, doc);
-    	String describeCoveragePost = xPath.evaluate(XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF, doc);
+    	String describeCoverageGet = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_DESCRIBE_COVERAGE_GET_HREF"), doc);
+    	String describeCoveragePost = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_DESCRIBE_COVERAGE_POST_HREF"), doc);
     	describeCoverageOp.setName("DescribeCoverage");
     	describeCoverageOp.setMethodCall("DescribeCoverage");
     	ArrayList<String> describeCoverageOpAddressList = new ArrayList<String>();
@@ -557,8 +536,8 @@ public class GetCapabilitiesService {
     	
     	// Operation - GetCoverage
     	OperationBean getCoverageOp = new OperationBean();
-    	String getCoverageGet = xPath.evaluate(XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF, doc);
-    	String getCoveragePost = xPath.evaluate(XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF, doc);
+    	String getCoverageGet = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_COVERAGE_GET_HREF"), doc);
+    	String getCoveragePost = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_COVERAGE_POST_HREF"), doc);
     	getCoverageOp.setName("GetCoverage");
     	getCoverageOp.setMethodCall("GetCoverage");
     	ArrayList<String> getCoverageOpAddressList = new ArrayList<String>();
@@ -1003,5 +982,106 @@ public class GetCapabilitiesService {
     	
     	result.setOperations(operations);
     	return result;
+    }
+
+    private String getServiceVersionWMS(Document doc) throws XPathExpressionException {
+    	// WMS Version 1.3.0
+    	String serviceType = xPath.evaluate("/WMS_Capabilities/Service/Name[1]", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return "1_3_0";
+    	}
+    	// WMS Version 1.1.1
+    	serviceType = xPath.evaluate("/WMT_MS_Capabilities/Service/Name[1]", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return "1_1_1";
+    	}
+
+    	throw new RuntimeException("Could not determine WMS Service Version.");
+    }
+    	
+    private String getServiceVersionWCS(Document doc) throws XPathExpressionException {
+    	// WCS Version 1.0.0. Doesn't have a Service or ServiceType/Name Element. Just check if WCS_Capabilities exists
+    	String serviceType = xPath.evaluate("/WCS_Capabilities", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return "1_0_0";
+    	}
+    	// WCS Version 1.1.0
+    	serviceType = xPath.evaluate("/Capabilities/ServiceIdentification/ServiceType[1]", doc);
+    	if (serviceType != null && serviceType.contains(SERVICE_TYPE_WCS)) {
+    		return "1_1_0";
+    	}
+
+    	throw new RuntimeException("Could not determine WCS Service Version.");
+    }
+
+    private ServiceType getServiceType(Document doc) throws XPathExpressionException {
+    	// WMS Version 1.3.0
+    	String serviceType = xPath.evaluate("/WMS_Capabilities/Service/Name[1]", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return ServiceType.WMS;
+    	}
+    	// WMS Version 1.1.1
+    	serviceType = xPath.evaluate("/WMT_MS_Capabilities/Service/Name[1]", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return ServiceType.WMS;
+    	}
+    	// WCS Version 1.0.0. Doesn't have a Service or ServiceType/Name Element. Just check if WCS_Capabilities exists
+    	serviceType = xPath.evaluate("/WCS_Capabilities", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return ServiceType.WCS;
+    	}
+    	// WFS
+    	serviceType = xPath.evaluate("/WFS_Capabilities/ServiceIdentification/ServiceType[1]", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		return ServiceType.WFS;
+    	}
+
+    	// All other services have can be evaluated via '/Capabilities/ServiceIdentification/ServiceType[1]'
+    	serviceType = xPath.evaluate("/Capabilities/ServiceIdentification/ServiceType[1]", doc);
+    	if (serviceType != null && serviceType.length() != 0) {
+    		if (serviceType.contains(SERVICE_TYPE_WMS)) {
+    			return ServiceType.WMS;
+
+    		} else if (serviceType.contains(SERVICE_TYPE_WFS)) {
+    			return ServiceType.WFS;
+
+    		} else if (serviceType.contains(SERVICE_TYPE_WCS)) {
+    			return ServiceType.WCS;
+
+    		} else if (serviceType.contains(SERVICE_TYPE_CSW)) {
+    			return ServiceType.CSW;
+
+    		} else if (serviceType.contains(SERVICE_TYPE_WCTS)) {
+    			return ServiceType.WCTS;
+
+    		} else {
+        		log.debug("Invalid service type: "+serviceType);
+        		throw new RuntimeException("Invalid service type: "+serviceType);
+    		}
+
+    	} else {
+			// Could not determine ServiceType
+    		log.debug("Could not evaluate service type.");
+    		throw new RuntimeException("Could not evaluate service type.");
+    	}
+    }
+
+
+    private static String getXPathExpressionFor(ServiceType serviceType, String ver, String postfix) {
+    	String fieldId = "XPATH_EXP_"+serviceType+"_"+ver+"_"+postfix;
+    	try {
+    		final Field fields[] = GetCapabilitiesService.class.getDeclaredFields();
+    		for (Field f : fields) {
+    	      if (fieldId.equals(f.getName())) {
+    	        f.setAccessible(true);
+    	        return (String) f.get(null);
+    	      }
+    	    }
+
+    	} catch (IllegalAccessException e) {
+    		log.debug("Could not access field for xpathExpression.", e);
+    	}
+
+    	return null;
     }
 }
