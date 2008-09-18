@@ -103,7 +103,17 @@ this.saveAsCSV = function() {
 	QueryService.queryHQLToCSV(currentQuery, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
-		callback: function(data) { window.open(data); },
+		callback: function(data) {
+//			window.open(data);
+//			window.open(data, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=0,menubar=0');
+			dwr.engine.openInDownload(data);
+/*
+			var iframe = document.createElement("iframe");
+			iframe.src = data;
+			iframe.style.display = "none";
+			document.body.appendChild(iframe);
+*/
+		},
 		errorHandler: function(errMsg, err) {
 			displayErrorMessage(err);
 		}		

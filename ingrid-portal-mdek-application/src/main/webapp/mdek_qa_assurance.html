@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
+var NUM_OBJECTS_MAX = 100;
 var scriptScope = this;
 
 var resultsPerPage = 10;
@@ -86,6 +87,7 @@ function initTables() {
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		displayErrorMessage(err);
 	});
 }
 
@@ -138,14 +140,13 @@ function navigateQAAssignedDatasetTable() {
 function getQAExpiredObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects(null, "EXPIRY_STATE_EXPIRED", null, {
+	ObjectService.getQAObjects(null, "EXPIRY_STATE_EXPIRED", NUM_OBJECTS_MAX, {
 		callback: function(expObjList) {
 			def.callback(expObjList);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
@@ -164,7 +165,6 @@ function getQAExpiredAddresses() {
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
@@ -174,14 +174,13 @@ function getQAExpiredAddresses() {
 function getQAModifiedObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects("B", null, null, {
+	ObjectService.getQAObjects("B", null, NUM_OBJECTS_MAX, {
 		callback: function(modObjList) {
 			def.callback(modObjList);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
@@ -198,7 +197,6 @@ function getQAModifiedAddresses() {
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
@@ -208,14 +206,13 @@ function getQAModifiedAddresses() {
 function getQAAssignedObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects("Q", null, null, {
+	ObjectService.getQAObjects("Q", null, NUM_OBJECTS_MAX, {
 		callback: function(qaObjList) {
 			def.callback(qaObjList);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
@@ -232,7 +229,6 @@ function getQAAssignedAddresses() {
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});

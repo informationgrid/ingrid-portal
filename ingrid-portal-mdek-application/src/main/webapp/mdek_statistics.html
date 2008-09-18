@@ -1,71 +1,379 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
+<script type="text/javascript">
+var scriptScope = this;
+// node widget ids need to be prefixed so we don't get widget collisions
+var STATS_TREE_NODE_ID_PREFIX = "_stats_";
+
+_container_.addOnLoad(function() {
+	initStatsTree();
+
+	resetStatsObjectsTable();
+	resetStatsAdrTable();
+});
+
+
+// Set the data for the objects statistics table
+// data is a list with objects containing information about the number of objects in the different states.
+// The first object specifies the number of objects of class 0, the second for class 1 and so on. data.length is always 6.
+// Example:
+// data = [ {v:14, b:7, q:2, r:0}, {v:11, b:3, q:1, r:3}, ... ];
+function setStatsObjectsTableContent(data) {
+	var amounts = [];
+	var percentages = [];
+	var numTotal = 0;
+	var numObjs = {v:0,b:0,q:0,r:0}
+
+	for (var i in data) {
+		amounts.push(data[i].v + data[i].b + data[i].q + data[i].r);
+		numObjs.v += data[i].v;
+		numObjs.b += data[i].b;
+		numObjs.q += data[i].q;
+		numObjs.r += data[i].r;
+		numTotal += amounts[i];
+	}
+	for (var i in amounts) {
+		percentages.push(amounts[i]*100 / numTotal);
+	}
+
+	// Update table data
+	var store = dojo.widget.byId("statsObjectsTable").store;
+	var storeData = store.getData();
+
+	store.update(storeData[0], "amount", numTotal);
+	store.update(storeData[0], "percentage", 100);
+	store.update(storeData[0], "published", numObjs.v);
+	store.update(storeData[0], "modified", numObjs.b);
+	store.update(storeData[0], "qa", numObjs.q);
+	store.update(storeData[0], "returned", numObjs.r);
+
+	for (var i = 1; i < storeData.length; ++i) {
+		store.update(storeData[i], "amount", amounts[i-1]);
+		store.update(storeData[i], "percentage", Math.round(percentages[i-1]));
+		store.update(storeData[i], "published", data[i-1].v);
+		store.update(storeData[i], "modified", data[i-1].b);
+		store.update(storeData[i], "qa", data[i-1].q);
+		store.update(storeData[i], "returned", data[i-1].r);
+	}
+}
+
+// Set the data for the address statistics table
+// data is a list with addresses containing information about the number of addresses in the different states.
+// The first address specifies the number of addresses of class 0, the second for class 1 and so on. data.length is always 4.
+// Example:
+// data = [ {v:14, b:7, q:2, r:0}, {v:11, b:3, q:1, r:3}, ... ];
+function setStatsAdrTableContent(data) {
+	var amounts = [];
+	var percentages = [];
+	var numTotal = 0;
+	var numAdrs = {v:0,b:0,q:0,r:0}
+
+	for (var i in data) {
+		amounts.push(data[i].v + data[i].b + data[i].q + data[i].r);
+		numAdrs.v += data[i].v;
+		numAdrs.b += data[i].b;
+		numAdrs.q += data[i].q;
+		numAdrs.r += data[i].r;
+		numTotal += amounts[i];
+	}
+	for (var i in amounts) {
+		percentages.push(amounts[i]*100 / numTotal);
+	}
+
+	// Update table data
+	var store = dojo.widget.byId("statsAdrTable").store;
+	var storeData = store.getData();
+
+	store.update(storeData[0], "amount", numTotal);
+	store.update(storeData[0], "percentage", 100);
+	store.update(storeData[0], "published", numAdrs.v);
+	store.update(storeData[0], "modified", numAdrs.b);
+	store.update(storeData[0], "qa", numAdrs.q);
+	store.update(storeData[0], "returned", numAdrs.r);
+
+	for (var i = 1; i < storeData.length; ++i) {
+		store.update(storeData[i], "amount", amounts[i-1]);
+		store.update(storeData[i], "percentage", Math.round(percentages[i-1]));
+		store.update(storeData[i], "published", data[i-1].v);
+		store.update(storeData[i], "modified", data[i-1].b);
+		store.update(storeData[i], "qa", data[i-1].q);
+		store.update(storeData[i], "returned", data[i-1].r);
+	}
+}
+
+function setStatsThesaurusTermsTable(tableId, data) {
+	var numTotal = 0;
+
+	for (var i in data) {
+		numTotal += data[i].amount;
+	}
+	for (var i in data) {
+		data[i].percentage = Math.round(data[i].amount*100 / numTotal);
+	}
+
+	// Update table data
+	var store = dojo.widget.byId(tableId).store;
+
+	data.unshift({term:"Gesamt", amount:numTotal, percentage:100});
+	UtilList.addTableIndices(data);
+	store.setData(data);
+}
+
+
+// The user clicked the catalog root node in the tree. Show statistics for the complete catalog.
+function showStatisticsForCatalog() {
+	// TODO Implement
+	dojo.debug("showStatisticsForCatalog not implemented yet.");
+	var dataObj = generateRandomObjectData();
+	var dataAdr = generateRandomAddressData();
+	setStatsObjectsTableContent(dataObj);
+	setStatsAdrTableContent(dataAdr);
+	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
+}
+
+// The user clicked the object root node in the tree. Show statistics for all objects.
+function showStatisticsForAllObjects() {
+	// TODO Implement
+	dojo.debug("showStatisticsForAllObjects not implemented yet.");
+	var data = generateRandomObjectData();
+	setStatsObjectsTableContent(data);
+	resetStatsAdrTable();
+	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
+	resetThesaurusTable("statsThesaurusTermsAdrTable");
+	resetThesaurusTable("statsFreeTermsAdrTable");
+}
+
+// The user clicked the address root node in the tree. Show statistics for all addresses.
+function showStatisticsForAllAddresses() {
+	// TODO Implement
+	dojo.debug("showStatisticsForAllAddresses not implemented yet.");
+	var data = generateRandomAddressData();
+	setStatsAdrTableContent(data);
+	resetStatsObjectsTable();
+	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
+	resetThesaurusTable("statsThesaurusTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+}
+
+// The user clicked the free address root node in the tree. Show statistics for all free addresses.
+function showStatisticsForAllFreeAddresses() {
+	// TODO Implement
+	dojo.debug("showStatisticsForAllFreeAddresses not implemented yet.");
+	var data = generateRandomAddressData();
+	for (var i = 1; i < 4; ++i) {
+		data[i].v = 0; data[i].b = 0; data[i].q = 0; data[i].r = 0;
+	}
+	setStatsAdrTableContent(data);
+	resetStatsObjectsTable();
+	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
+	resetThesaurusTable("statsThesaurusTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+}
+
+// The user clicked a specific address node in the tree. Show statistics for the address.
+function showStatisticsForAddress(uuid) {
+	// TODO Implement
+	dojo.debug("showStatisticsForAddress not implemented yet.");
+	var data = generateRandomAddressData();
+	data[0].v = 0; data[0].b = 0; data[0].q = 0; data[0].r = 0;
+	setStatsAdrTableContent(data);
+	resetStatsObjectsTable();
+	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
+	resetThesaurusTable("statsThesaurusTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+}
+
+// The user clicked a specific object node in the tree. Show statistics for the object.
+function showStatisticsForObject(uuid) {
+	// TODO Implement
+	dojo.debug("showStatisticsForObject not implemented yet.");
+	var data = generateRandomObjectData();
+	setStatsObjectsTableContent(data);
+	resetStatsAdrTable();
+	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
+	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
+	resetThesaurusTable("statsThesaurusTermsAdrTable");
+	resetThesaurusTable("statsFreeTermsAdrTable");
+}
+
+
+// This function is called when the user clicks a node in the tree
+function onStatisticsNodeSelected(message) {
+	var node = message.node;
+	var nodeId = null;
+	if (typeof(node.id) != "undefined") {
+		// Remove the prefix from the nodeId
+		nodeId = node.id.substring(STATS_TREE_NODE_ID_PREFIX.length, node.id.length);
+	}
+
+	if (nodeId == null) {
+		showStatisticsForCatalog();
+
+	} else if (nodeId == "objectRoot") {
+		showStatisticsForAllObjects();
+
+	} else if (nodeId == "addressRoot") {
+		showStatisticsForAllAddresses();
+
+	} else if (nodeId == "addressFreeRoot") {
+		showStatisticsForAllFreeAddresses();
+
+	} else if (node.nodeAppType == "A") {
+		showStatisticsForAddress(nodeId);
+
+	} else if (node.nodeAppType == "O") {
+		showStatisticsForObject(nodeId);
+
+	} else {
+		// TODO Show error message?
+		dojo.debug("clicked unknown node with id '"+nodeId+"'");
+	}
+}
+
+
+function initStatsTree() {
+	// Listen for nodeSelections
+	var treeListener = dojo.widget.byId('statisticsTreeListener');
+	dojo.event.topic.subscribe(treeListener.eventNames.select, onStatisticsNodeSelected);
+
+	// Overload the loadRemote function to load objs/adrs from the server via dwr
+	var treeController = dojo.widget.byId('statisticsTreeController');
+	treeController.loadRemote = function(node, sync){
+//		dojo.debug("loadRemote called on node: "+node.id);
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		// create the requestId. The root note does not have a 'id' -> set requestId to null and load the object/address roots
+		var requestId = null;
+		if (typeof(node.id) != "undefined") {
+			requestId = node.id.substring(STATS_TREE_NODE_ID_PREFIX.length, node.id.length);
+		}
+//		dojo.debug("requestId: "+requestId);
+
+		var deferred = new dojo.Deferred();
+
+		deferred.addCallback(function(res) {
+			dojo.lang.forEach(res, function(obj){
+				obj.title = dojo.string.escape("html", obj.title);
+				obj.id = STATS_TREE_NODE_ID_PREFIX+""+obj.id;
+			});
+			return _this.loadProcessResponse(node,res);
+		});
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+
+		TreeService.getSubTree(requestId, node.nodeAppType, 1, {
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+  			callback:function(res) { deferred.callback(res); },
+			errorHandler:function(message) {
+				UtilDWR.exitLoadingState();
+				deferred.errback(new dojo.RpcError(message, this));
+			}
+  		});
+
+		return deferred;
+	};
+}
+
+function resetStatsObjectsTable() {
+	// Reset table data
+	var fieldIdList = ["amount", "percentage", "published", "modified", "qa", "returned"];
+	var store = dojo.widget.byId("statsObjectsTable").store;
+	var data = store.getData();
+	for (var i in data) {
+		dojo.lang.forEach(fieldIdList, function(item) {
+			store.update(data[i], item, 0);
+		});
+	}
+}
+
+function resetStatsAdrTable() {
+	// Reset table data
+	var fieldIdList = ["amount", "percentage", "published", "modified", "qa", "returned"];
+	var store = dojo.widget.byId("statsAdrTable").store;
+	var data = store.getData();
+	for (var i in data) {
+		dojo.lang.forEach(fieldIdList, function(item) {
+			store.update(data[i], item, 0);
+		});
+	}
+}
+
+function resetThesaurusTable(tableId) {
+	dojo.widget.byId(tableId).store.clearData();
+}
+
+function generateRandomObjectData() {
+	var data = [];
+	for (var i = 0; i < 6; ++i) {
+		data.push({v:Math.floor(Math.random()*51), b:Math.floor(Math.random()*51), q:Math.floor(Math.random()*51), r:Math.floor(Math.random()*51)});
+	}
+	return data;
+}
+
+function generateRandomAddressData() {
+	var data = [];
+	for (var i = 0; i < 4; ++i) {
+		data.push({v:Math.floor(Math.random()*51), b:Math.floor(Math.random()*51), q:Math.floor(Math.random()*51), r:Math.floor(Math.random()*51)});
+	}
+	return data;
+}
+
+function generateRandomThesaurusData() {
+	var numEntries = Math.floor(Math.random()*51);
+	var data = [];
+	for (var i = 0; i < numEntries; ++i) {
+		var strLength = Math.floor(Math.random()*21) + 1;
+		var amount = Math.floor(Math.random()*300);
+		data.push({term:generateRandomString(strLength), amount:amount});
+	}
+
+	data.sort(function(a, b){ return b.amount - a.amount; });
+	return data;
+}
+
+function generateRandomString(strLength) {
+	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+	var string_length = strLength;
+	var str = '';
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		str += chars.substring(rnum,rnum+1);
+	}
+	return str;
+}
+
+</script>
 </head>
 
 <body>
 <div dojoType="LayoutContainer" id="statisticsLayout" class="layout" layoutChildPriority="top-bottom">
 
-  <!-- SPLIT CONTAINER START -->
-  <div dojoType="SplitContainer" id="statisticsContentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
-    <!-- LEFT CONTENT PANE START -->
-  	<div dojoType="ContentPane" id="statisticsTreeContainer">
-      <!-- tree components -->
-      <div dojoType="ingrid:TreeController" widgetId="statisticsTreeController" RpcUrl="server/treelistener.php"></div>
-      <div dojoType="ingrid:TreeListener" widgetId="statisticsTreeListener"></div>	
-      <div dojoType="ingrid:TreeDocIcons" widgetId="statisticsTreeDocIcons"></div>	
-      <div dojoType="ingrid:TreeDecorator" listener="statisticsTreeListener"></div>
-      
-      <!-- context menus -->
-      <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="statisticsContextMenu1"></div>
-      <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="statisticsContextMenu2"></div>
+	<!-- SPLIT CONTAINER START -->
+	<div dojoType="SplitContainer" id="statisticsContentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+		<!-- LEFT CONTENT PANE START -->
+		<div dojoType="ContentPane" id="statisticsTreeContainer">
+			<!-- tree components -->
+			<div dojoType="ingrid:TreeController" widgetId="statisticsTreeController" RpcUrl="server/treelistener.php"></div>
+			<div dojoType="ingrid:TreeListener" widgetId="statisticsTreeListener"></div>	
+			<div dojoType="ingrid:TreeDocIcons" widgetId="statisticsTreeDocIcons"></div>	
+			<div dojoType="ingrid:TreeDecorator" listener="statisticsTreeListener"></div>
       
       <!-- tree -->
-      <div dojoType="ingrid:Tree" listeners="statisticsTreeController;statisticsTreeListener;statisticsContextMenu1;statisticsContextMenu2;statisticsTreeDocIcons" widgetId="statisticsTree">
-        <!-- uncomment the next 2 lines in production
-      	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="O"></div>
-      	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="A"></div>
-        end of uncomment -->
-        <!-- remove the next lines in production -->
-      	<div dojoType="ingrid:TreeNode" title="Katalog" widgetId="sk1" contextMenu="contextMenu2" nodeDocType="Catalog" nodeAppType="C">
-        	<div dojoType="ingrid:TreeNode" title="Objekte" widgetId="so13" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="O">
-          	<div dojoType="ingrid:TreeNode" title="Rechtsgrundlagen" widgetId="so2" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O">
-          		<div dojoType="ingrid:TreeNode" title="Niedersächsische Rechtsgrundlagen" widgetId="so3" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O">
-            		<div dojoType="ingrid:TreeNode" title="Gesetze des Landes Niedersachsen" widgetId="so31" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O">
-            		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="so311" contextMenu="contextMenu1" nodeDocType="Class1" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="so312" contextMenu="contextMenu1" nodeDocType="Class2" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="so313" contextMenu="contextMenu1" nodeDocType="Class4" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="so314" contextMenu="contextMenu1" nodeDocType="Class5" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="so315" contextMenu="contextMenu1" nodeDocType="Class6" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="so316" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Elftes Gesetz zur Änderung des Niedersächsischen Wassergesetzes" widgetId="so317" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Niedersächsisches Wattenmeer'" widgetId="so318" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-            		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Abwasserabgabengesetz (Nds. AG AbwAG)" widgetId="so319" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-            		</div>
-            		<div dojoType="ingrid:TreeNode" title="Verordnungen und Vorschriften des Landes Niedersachsen" widgetId="so32" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-          		</div>
-          		<div dojoType="ingrid:TreeNode" title="Bundesdeutsche Rechtsgrundlagen" widgetId="so4" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-          		<div dojoType="ingrid:TreeNode" title="Europäische und internationale Rechtsgrundlagen" widgetId="so5" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="O"></div>
-          	</div>
-        	</div>
-        	<div dojoType="ingrid:TreeNode" title="Adressen" widgetId="sa0" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="A">
-          	<div dojoType="ingrid:TreeNode" title="NDS. UMWELTMINISTERIUM" widgetId="sa1" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A">
-          		<div dojoType="ingrid:TreeNode" title="Abteilung 3: Immissionsschutz, Kreislaufwirtschaft und Abfall" widgetId="sa11" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A"></div>
-          		<div dojoType="ingrid:TreeNode" title="Referatsgruppe Natur und Landschaft" widgetId="sa12" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A">
-          		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Artenschutz" widgetId="sa121" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Naturparke" widgetId="sa122" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A"></div>
-          		</div>
-          		<div dojoType="ingrid:TreeNode" title="Abteilung 4: Energie, Atomaufsicht und Strahlenschutz" widgetId="sa13" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A">
-          		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Strahlenschutz" widgetId="sa131" contextMenu="contextMenu1" nodeDocType="InstitutionUnit_B" nodeAppType="A"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Energiepolitik" widgetId="sa132" contextMenu="contextMenu1" nodeDocType="InstitutionPerson_Q" nodeAppType="A"></div>
-          		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Kernenergie" widgetId="sa133" contextMenu="contextMenu1" nodeDocType="PersonAddress_R" nodeAppType="A"></div>
-          		</div>
-          		<div dojoType="ingrid:TreeNode" title="Abteilung 1: Zentrale Aufgaben" widgetId="sa14" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A"></div>
-          		<div dojoType="ingrid:TreeNode" title="Abteilung 2: Wasserwirtschaft" widgetId="sa15" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="A"></div>
-          	</div>
-        	</div>
-      	</div>
-        <!-- end of remove -->
+      <div dojoType="ingrid:Tree" listeners="statisticsTreeController;statisticsTreeListener;statisticsTreeDocIcons" widgetId="statisticsTree">
+      	<div dojoType="ingrid:TreeNode" title="Katalog" id="statsTreeRoot" id="statsTreeRoot" isFolder="true" nodeDocType="Catalog" nodeAppType="C"></div>
       </div>
   	</div>
     <!-- LEFT CONTENT PANE END -->
@@ -80,421 +388,228 @@
     	  <div id="stats" class="content">
           
           <!-- MAIN TAB CONTAINER START -->
-        	<div id="statsTable" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="statsObjectsAddr">
+        	<div id="statsTable" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="statsObjectsAdr">
             <!-- MAIN TAB 1 START -->
-        		<div id="statsObjectsAddr" dojoType="ContentPane" label="Objekte/Adressen">
-        	    <table id="statsObjectsTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTable full relativePos">
-        	      <thead>
-        		      <tr>
-              			<th field="type" dataType="String" width="40"><br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="objectClass" dataType="String" width="364">Objektklasse<br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="amount" dataType="String" width="80">Anzahl<br />
-              			  <span class="totalsRow" title="Anzahl gesamt">10</span></th>
-              			<th field="percentage" dataType="String" width="80">%-Anteil<br />
-              			  <span class="totalsRow" title="Prozente gesamt">100</span></th>
-              			<th field="published" dataType="String" width="30" title="Veröffentlicht">V<br />
-              			  <span class="totalsRow" title="Veröffentlicht gesamt">2</span></th>
-              			<th field="edit" dataType="String" width="30" title="In Bearbeitung">B<br />
-              			  <span class="totalsRow" title="In Bearbeitung gesamt">2</span></th>
-              			<th field="qa" dataType="String" width="30" title="In Qualitätssicherung">Q<br />
-              			  <span class="totalsRow" title="In Qualitätssicherung gesamt">4</span></th>
-              			<th field="sentBack" dataType="String" width="30" title="Rücküberwiesen">R<br />
-              			  <span class="totalsRow" title="Rücküberwiesen gesamt">2</span></th>
-        		      </tr>
-        	      </thead>
-        	      <tbody>
-        		      <tr value="1">
-        		        <td><img src="img/UDK/udk_class1.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
-        		        <td>Organisationseinheit / Fachaufgabe</td>
-        		        <td>1</td>
-        		        <td>10</td>
-        		        <td>1</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="2">
-        		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="Geo-Information / Karte" /></td>
-        		        <td>Geo-Information / Karte</td>
-        		        <td>1</td>
-        		        <td>10</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="3">
-        		        <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
-        		        <td>Dokument / Bericht / Literatur</td>
-        		        <td>2</td>
-        		        <td>20</td>
-        		        <td>&nbsp;</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td>
-        		        <td>1</td></tr>
-        		      <tr value="4">
-        		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="Dienst / Anwendung / Informationssystem" /></td>
-        		        <td>Dienst / Anwendung / Informationssystem</td>
-        		        <td>2</td>
-        		        <td>20</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>1</td></tr>
-        		      <tr value="5">
-        		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-        		        <td>Vorhaben / Projekt / Programm</td>
-        		        <td>2</td>
-        		        <td>20</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>2</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="6">
-        		        <td><img src="img/UDK/udk_class6.gif" width="16" height="16" alt="Datensammlung / Datenbank" /></td>
-        		        <td>Datensammlung / Datenbank</td>
-        		        <td>2</td>
-        		        <td>20</td>
-        		        <td>1</td>
-        		        <td>1</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td></tr>
-        	      </tbody>
-        	    </table>
-
+        		<div id="statsObjectsAdr" dojoType="ContentPane" label="Objekte/Adressen">
+				<div class="tableContainer rows7 full">
+	        	    <table id="statsObjectsTable" dojoType="ingrid:FilteringTable" minRows="7" cellspacing="0" class="filteringTable nosort relativePos">
+	        	      <thead>
+	        		      <tr>
+	              			<th nosort="true" field="type" dataType="String" width="40"></th>
+	              			<th nosort="true" field="objectClass" dataType="String" width="364">Objektklasse</th>
+	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="published" dataType="String" width="30">V</th>
+	              			<th nosort="true" field="modified" dataType="String" width="30">B</th>
+	              			<th nosort="true" field="qa" dataType="String" width="30">Q</th>
+	              			<th nosort="true" field="returned" dataType="String" width="30">R</th>
+	        		      </tr>
+	        	      </thead>
+	        	      <tbody>
+	        		      <tr value="0">
+	        		        <td>&nbsp;</td>
+	        		        <td>Gesamt</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="1">
+	        		        <td><img src="img/UDK/udk_class0.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+	        		        <td>Organisationseinheit / Fachaufgabe</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="2">
+	        		        <td><img src="img/UDK/udk_class1.gif" width="16" height="16" alt="Geo-Information / Karte" /></td>
+	        		        <td>Geo-Information / Karte</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="3">
+	        		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
+	        		        <td>Dokument / Bericht / Literatur</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="4">
+	        		        <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dienst / Anwendung / Informationssystem" /></td>
+	        		        <td>Dienst / Anwendung / Informationssystem</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="5">
+	        		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+	        		        <td>Vorhaben / Projekt / Programm</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="6">
+	        		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Datensammlung / Datenbank" /></td>
+	        		        <td>Datensammlung / Datenbank</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        	      </tbody>
+	        	    </table>
+				</div> <!-- end tableContainer -->
               <div class="spacer"></div>
 
-        	    <table id="statsAddrTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTable full relativePos">
-        	      <thead>
-        		      <tr>
-              			<th field="type" dataType="String" width="40"><br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="addressType" dataType="String" width="364">Adresstyp<br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="amount" dataType="String" width="80">Anzahl<br />
-              			  <span class="totalsRow" title="Anzahl gesamt">10</span></th>
-              			<th field="percentage" dataType="String" width="80">%-Anteil<br />
-              			  <span class="totalsRow" title="Prozente gesamt">100</span></th>
-              			<th field="published" dataType="String" width="30" title="Veröffentlicht">V<br />
-              			  <span class="totalsRow" title="Veröffentlicht gesamt">2</span></th>
-              			<th field="edit" dataType="String" width="30" title="In Bearbeitung">B<br />
-              			  <span class="totalsRow" title="In Bearbeitung gesamt">2</span></th>
-              			<th field="qa" dataType="String" width="30" title="In Qualitätssicherung">Q<br />
-              			  <span class="totalsRow" title="In Qualitätssicherung gesamt">4</span></th>
-              			<th field="sentBack" dataType="String" width="30" title="Rücküberwiesen">R<br />
-              			  <span class="totalsRow" title="Rücküberwiesen gesamt">2</span></th>
-        		      </tr>
-        	      </thead>
-        	      <tbody>
-        		      <tr value="1">
-        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-        		        <td>Institution</td>
-        		        <td>2</td>
-        		        <td>20</td>
-        		        <td>2</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="2">
-        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Einheit" /></td>
-        		        <td>Einheit</td>
-        		        <td>1</td>
-        		        <td>10</td>
-        		        <td>&nbsp;</td>
-        		        <td>2</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td></tr>
-        		      <tr value="3">
-        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Person" /></td>
-        		        <td>Person</td>
-        		        <td>2</td>
-        		        <td>20</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>2</td></tr>
-        		      <tr value="4">
-        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Freie Adresse" /></td>
-        		        <td>Freie Adresse</td>
-        		        <td>4</td>
-        		        <td>40</td>
-        		        <td>&nbsp;</td>
-        		        <td>&nbsp;</td>
-        		        <td>4</td>
-        		        <td>&nbsp;</td></tr>
-        	      </tbody>
-        	    </table>
+				<div class="tableContainer rows5 full">
+	        	    <table id="statsAdrTable" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort relativePos">
+	        	      <thead>
+	        		      <tr>
+	              			<th nosort="true" field="type" dataType="String" width="40">&nbsp;</th>
+	              			<th nosort="true" field="addressType" dataType="String" width="364">Adresstyp</th>
+	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="published" dataType="String" width="30">V</th>
+	              			<th nosort="true" field="modified" dataType="String" width="30">B</th>
+	              			<th nosort="true" field="qa" dataType="String" width="30">Q</th>
+	              			<th nosort="true" field="returned" dataType="String" width="30">R</th>
+	        		      </tr>
+	        	      </thead>
+	        	      <tbody>
+	        		      <tr value="0">
+	        		        <td>&nbsp</td>
+	        		        <td>Gesamt</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="1">
+	        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Freie Adresse" /></td>
+	        		        <td>Freie Adresse</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="2">
+	        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+	        		        <td>Institution</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="3">
+	        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Einheit" /></td>
+	        		        <td>Einheit</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="4">
+	        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Person" /></td>
+	        		        <td>Person</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        	      </tbody>
+	        	    </table>
+				</div> <!-- end tableContainer -->
             </div>
             <!-- MAIN TAB 1 END -->
         		
             <!-- MAIN TAB 2 START -->
         		<div id="statsFreeTerms" dojoType="ContentPane" label="Freie Suchbegriffe">
-        	    <table id="statsFreeTermsObjTable" dojoType="ingrid:FilteringTable" minRows="3" headClass="fixedHeader" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable full relativePos">
-        	      <thead>
-        		      <tr>
-              			<th field="type" dataType="String" width="524">Suchbegriff für Objekt<br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="amount" dataType="String" width="80">Anzahl<br />
-              			  <span class="totalsRow" title="Anzahl gesamt">6763</span></th>
-              			<th field="percentage" dataType="String" width="80">%-Anteil<br />
-              			  <span class="totalsRow" title="Prozente gesamt">100</span></th>
-        		      </tr>
-        	      </thead>
-        	      <tbody>
-        		      <tr value="1">
-        		        <td>Lufthygienisches &Uuml;berwachunssystem</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="2">
-        		        <td>Nitratauswaschungsgef&auml;hrdunng</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="3">
-        		        <td>Industrie- und Handelskammer</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="4">
-        		        <td>Landwirtschaftliches Ertragspotential</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="5">
-        		        <td>Lufthygienisches &Uuml;berwachunssystem</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="6">
-        		        <td>Nitratauswaschungsgef&auml;hrdunng</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="7">
-        		        <td>Industrie- und Handelskammer</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="8">
-        		        <td>Landwirtschaftliches Ertragspotential</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="9">
-        		        <td>Lufthygienisches &Uuml;berwachunssystem</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="10">
-        		        <td>Nitratauswaschungsgef&auml;hrdunng</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="11">
-        		        <td>Industrie- und Handelskammer</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="12">
-        		        <td>Landwirtschaftliches Ertragspotential</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		     </tbody>
-        	    </table>
-
+				<div class="tableContainer rows10 full">
+	        	    <table id="statsFreeTermsObjTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+	        	      <thead>
+	        		      <tr>
+	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Objekt</th>
+	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	        		      </tr>
+	        	      </thead>
+	        	      <tbody>
+        		      </tbody>
+	        	    </table>
+				</div> <!-- tableContainer -->
               <div class="spacer"></div>
 
-        	    <table id="statsFreeTermsAddrTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable full relativePos">
+				<div class="tableContainer rows10 full">
+        	    <table id="statsFreeTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
         	      <thead>
         		      <tr>
-              			<th field="type" dataType="String" width="524">Suchbegriff für Adresse<br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="amount" dataType="String" width="80">Anzahl<br />
-              			  <span class="totalsRow" title="Anzahl gesamt">6763</span></th>
-              			<th field="percentage" dataType="String" width="80">%-Anteil<br />
-              			  <span class="totalsRow" title="Prozente gesamt">100</span></th>
+              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Adresse</th>
+              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
         		      </tr>
         	      </thead>
         	      <tbody>
-        		      <tr value="1">
-        		        <td>Lufthygienisches &Uuml;berwachunssystem</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="2">
-        		        <td>Nitratauswaschungsgef&auml;hrdunng</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="3">
-        		        <td>Industrie- und Handelskammer</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="4">
-        		        <td>Landwirtschaftliches Ertragspotential</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="5">
-        		        <td>Lufthygienisches &Uuml;berwachunssystem</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="6">
-        		        <td>Nitratauswaschungsgef&auml;hrdunng</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="7">
-        		        <td>Industrie- und Handelskammer</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="8">
-        		        <td>Landwirtschaftliches Ertragspotential</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="9">
-        		        <td>Lufthygienisches &Uuml;berwachunssystem</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="10">
-        		        <td>Nitratauswaschungsgef&auml;hrdunng</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="11">
-        		        <td>Industrie- und Handelskammer</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="12">
-        		        <td>Landwirtschaftliches Ertragspotential</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
         	      </tbody>
         	    </table>
+        	   </div> <!-- tableContainer -->
             </div>
             <!-- MAIN TAB 2 END -->
 
             <!-- MAIN TAB 3 START -->
         		<div id="statsThesaurusTerms" dojoType="ContentPane" label="Thesaurus-Suchbegriffe">
-        	    <table id="statsThesaurusTermsObjTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable full relativePos">
-        	      <thead>
-        		      <tr>
-              			<th field="type" dataType="String" width="524">Suchbegriff für Objekt<br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="amount" dataType="String" width="80">Anzahl<br />
-              			  <span class="totalsRow" title="Anzahl gesamt">6763</span></th>
-              			<th field="percentage" dataType="String" width="80">%-Anteil<br />
-              			  <span class="totalsRow" title="Prozente gesamt">100</span></th>
-        		      </tr>
-        	      </thead>
-        	      <tbody>
-        		      <tr value="1">
-        		        <td>Stadt</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="2">
-        		        <td>Wiese</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="3">
-        		        <td>Vogel</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="4">
-        		        <td>Maus</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="5">
-        		        <td>Stadt</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="6">
-        		        <td>Wiese</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="7">
-        		        <td>Vogel</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="8">
-        		        <td>Maus</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="9">
-        		        <td>Stadt</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="10">
-        		        <td>Wiese</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="11">
-        		        <td>Vogel</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="12">
-        		        <td>Maus</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        	      </tbody>
-        	    </table>
-
+				<div class="tableContainer rows10 full">
+	        	    <table id="statsThesaurusTermsObjTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+	        	      <thead>
+	        		      <tr>
+	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Objekt</th>
+	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	        		      </tr>
+	        	      </thead>
+	        	      <tbody>
+	        	      </tbody>
+	        	    </table>
+				</div>
               <div class="spacer"></div>
 
-        	    <table id="statsThesaurusTermsAddrTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" tbodyClass="scrollContent rows10" cellspacing="0" class="filteringTable full relativePos">
-        	      <thead>
-        		      <tr>
-              			<th field="type" dataType="String" width="524">Suchbegriff für Adresse<br />
-              			  <span class="totalsRow">&nbsp;</span></th>
-              			<th field="amount" dataType="String" width="80">Anzahl<br />
-              			  <span class="totalsRow" title="Anzahl gesamt">6763</span></th>
-              			<th field="percentage" dataType="String" width="80">%-Anteil<br />
-              			  <span class="totalsRow" title="Prozente gesamt">100</span></th>
-        		      </tr>
-        	      </thead>
-        	      <tbody>
-        		      <tr value="1">
-        		        <td>Stadt</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="2">
-        		        <td>Wiese</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="3">
-        		        <td>Vogel</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="4">
-        		        <td>Maus</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="5">
-        		        <td>Stadt</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="6">
-        		        <td>Wiese</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="7">
-        		        <td>Vogel</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="8">
-        		        <td>Maus</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="9">
-        		        <td>Stadt</td>
-        		        <td>101</td>
-        		        <td>1,48</td></tr>
-        		      <tr value="10">
-        		        <td>Wiese</td>
-        		        <td>2</td>
-        		        <td>0,03</td></tr>
-        		      <tr value="11">
-        		        <td>Vogel</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        		      <tr value="12">
-        		        <td>Maus</td>
-        		        <td>1</td>
-        		        <td>0,01</td></tr>
-        	      </tbody>
-        	    </table>
+				<div class="tableContainer rows10 full">
+	        	    <table id="statsThesaurusTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+	        	      <thead>
+	        		      <tr>
+	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Adresse</th>
+	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	        		      </tr>
+	        	      </thead>
+	        	      <tbody>
+	        	      </tbody>
+	        	    </table>
+        			</div> <!-- tableContainer -->
         		</div>
             <!-- MAIN TAB 3 END -->
         	</div>
           <!-- MAIN TAB CONTAINER END -->
     
           <div class="spacer"></div>
-          <p class="note">V = Veröffentlicht, B = in Bearbeitung, Q = in Qualitätssicherung, R = von Qualitätssicherung an Bearbeiter rücküberwiesen</p>
+          <p class="note">V = Ver&ouml;ffentlicht, B = in Bearbeitung, Q = in Qualit&auml;tssicherung, R = von Qualit&auml;tssicherung an Bearbeiter r&uuml;ck&uuml;berwiesen</p>
     
         </div>
       </div>
