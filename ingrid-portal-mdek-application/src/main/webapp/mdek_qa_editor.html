@@ -18,7 +18,141 @@ _container_.addOnLoad(function() {
 	dojo.event.connectOnce("after", modifiedDatasetPageNav, "onPageSelected", function() { navigateModifiedDatasetTable(); });
 	dojo.event.connectOnce("after", qaDatasetPageNav, "onPageSelected", function() { navigateQADatasetTable(); });
 	initTables();
+	initSort();
 });
+
+function initSort() {
+	var table = dojo.widget.byId("expiredDatasetTable");
+	table.onSort = sortExpiredDatasetTable;
+	table.createSorter = function(){return null;}
+
+	table = dojo.widget.byId("modifiedDatasetTable");
+	table.onSort = sortModifiedDatasetTable;
+	table.createSorter = function(){return null;}
+
+	table = dojo.widget.byId("qaDatasetTable");
+	table.onSort = sortQADatasetTable;
+	table.createSorter = function(){return null;}
+}
+
+function sortExpiredDatasetTable(e) {
+	var table = dojo.widget.byId("expiredDatasetTable");
+	var field = getFieldFromTableHeaderClickEvent(table, e);
+
+	if (field == table.lastSortedByField) {
+		var direction = table.lastSortedByDirection == "down" ? "up" : "down";
+	} else {
+		var direction = "up";
+	}
+
+	expiredDatasetTable.sort(getDatasetSortFuncFor(field, direction));
+
+	table.lastSortedByField = field;
+	table.lastSortedByDirection = direction;
+
+	navigateExpiredDatasetTable();
+}
+
+
+function sortModifiedDatasetTable(e) {
+	var table = dojo.widget.byId("modifiedDatasetTable");
+	var field = getFieldFromTableHeaderClickEvent(table, e);
+
+	if (field == table.lastSortedByField) {
+		var direction = table.lastSortedByDirection == "down" ? "up" : "down";
+	} else {
+		var direction = "up";
+	}
+
+	modifiedDatasetTable.sort(getDatasetSortFuncFor(field, direction));
+
+	table.lastSortedByField = field;
+	table.lastSortedByDirection = direction;
+
+	navigateModifiedDatasetTable();
+}
+
+
+function sortQADatasetTable(e) {
+	var table = dojo.widget.byId("qaDatasetTable");
+	var field = getFieldFromTableHeaderClickEvent(table, e);
+
+	if (field == table.lastSortedByField) {
+		var direction = table.lastSortedByDirection == "down" ? "up" : "down";
+	} else {
+		var direction = "up";
+	}
+
+	qaDatasetTable.sort(getDatasetSortFuncFor(field, direction));
+
+	table.lastSortedByField = field;
+	table.lastSortedByDirection = direction;
+
+	navigateQADatasetTable();
+}
+
+
+function getFieldFromTableHeaderClickEvent(table, /* HTMLEvent */e) {
+	var source = e.target;
+	var row = dojo.html.getParentByType(source,"tr");
+	var cellTag = "td";
+	if(row.getElementsByTagName(cellTag).length == 0){
+		cellTag = "th";
+	}
+
+	var headers = row.getElementsByTagName(cellTag);
+	var header = dojo.html.getParentByType(source,cellTag);
+
+	for(var i=0; i<headers.length; i++){
+		if(headers[i] == header){
+			var meta = table.columns[i];
+			return meta.getField();
+		}
+	}
+	// Field was not found (should not happen), return an empty string
+	return "";
+}
+
+function getDatasetSortFuncFor(field, direction) {
+	if (field == "icon") {
+		// Sort by class
+		var sortFunc = function(a, b) {
+			if (direction == "down") { var temp = a; a = b; b = temp; }
+
+			if (typeof a.objectClass != "undefined" && typeof b.objectClass != "undefined") {
+				return a.objectClass - b.objectClass;
+			} else if (typeof a.addressClass != "undefined" && typeof b.addressClass != "undefined") {
+				return a.addressClass - b.addressClass;
+			} else {
+				return (typeof a.objectClass == "undefined" ? 1 : -1);
+			}
+		}
+		
+		return sortFunc;
+	
+	} else {
+		// Sort by title, date, state or type
+		if (field == "linkLabel") {
+			field = "title";
+		} else if (field == "assignedUserTitle") {
+			field = "assignedUserAddressTitle";
+		}
+
+//		dojo.debug("field: "+field);
+		var sortFunc = function(a, b) {
+			if (direction == "down") { var temp = a; a = b; b = temp; }
+			
+			if (typeof a[field] == "string") {
+				return UtilString.compareIgnoreCase(a[field], b[field]);
+			} else {
+				return a[field] - b[field];
+			}
+		}
+	
+		return sortFunc;
+	}
+}
+
 
 function initTables() {
 	var d1 = getExpiredAddresses();
@@ -40,15 +174,14 @@ function initTables() {
 
 		// Set the expired obj/adr list
 		expiredDatasetTable = expObjList.concat(expAdrList);
-		UtilList.addTableIndices(expiredDatasetTable);
-		dojo.lang.forEach(expiredDatasetTable, function(item) { item.state = "&Uuml;berwiesen an Verantwortlichen"; item.type = "Verfallsdatum erreicht"; });
+//		dojo.lang.forEach(expiredDatasetTable, function(item) { item.state = "&Uuml;berwiesen an Verantwortlichen"; item.type = "Verfallsdatum erreicht"; });
 		navigateExpiredDatasetTable();
 
 		// Set the modified obj/adr list
 		modifiedDatasetTable = modObjList.concat(modAdrList);
 		UtilList.addTableIndices(modifiedDatasetTable);
 		dojo.lang.forEach(modifiedDatasetTable, function(item) {
-			item.state = "Bei Bearbeiter";
+//			item.state = "Bei Bearbeiter";
 			item.type = item.type == "A" ? "neu angelegt" : "&uuml;berarbeitet";
 		});
 		navigateModifiedDatasetTable();
@@ -91,9 +224,11 @@ function navigateExpiredDatasetTable() {
 	endIndex = endIndex > expiredDatasetTable.length ? expiredDatasetTable.length : endIndex;
 
 	expDatasetStore.clearData();
+	var newData = [];
 	for (var i = beginIndex; i < endIndex; ++i) {
-		expDatasetStore.addData(expiredDatasetTable[i]);
+		newData.push(expiredDatasetTable[i]);
 	}
+	expDatasetStore.setData(newData);
 }
 
 function navigateModifiedDatasetTable() {
@@ -106,9 +241,11 @@ function navigateModifiedDatasetTable() {
 	endIndex = endIndex > modifiedDatasetTable.length ? modifiedDatasetTable.length : endIndex;
 
 	modDatasetStore.clearData();
+	var newData = [];
 	for (var i = beginIndex; i < endIndex; ++i) {
-		modDatasetStore.addData(modifiedDatasetTable[i]);
+		newData.push(modifiedDatasetTable[i]);
 	}
+	modDatasetStore.setData(newData);
 }
 
 function navigateQADatasetTable() {
@@ -121,9 +258,11 @@ function navigateQADatasetTable() {
 	endIndex = endIndex > qaDatasetTable.length ? qaDatasetTable.length : endIndex;
 
 	qaDatasetStore.clearData();
+	var newData = [];
 	for (var i = beginIndex; i < endIndex; ++i) {
-		qaDatasetStore.addData(qaDatasetTable[i]);
+		newData.push(qaDatasetTable[i]);
 	}
+	qaDatasetStore.setData(newData);
 }
 
 
@@ -145,6 +284,26 @@ function getExpiredObjects() {
 	});
 	return def;
 }
+
+function getExpiredAddresses() {
+	var def = new dojo.Deferred();
+
+	QueryService.getExpiredAddresses(-1, {
+		callback: function(expAdrList) {
+			dojo.lang.forEach(expAdrList, prepareEntryFromWfAddressResult);
+			prepareWfAddressResultListForDisplay(expAdrList);
+			def.callback(expAdrList);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			displayErrorMessage(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
 
 function getModifiedObjects() {
 	var def = new dojo.Deferred();
@@ -227,7 +386,8 @@ function prepareEntryFromWfObjectResult(wfResult) {
 	wfResult.uuid = wfResult.object.uuid;
 	wfResult.objectClass = wfResult.object.objectClass;
 //	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
-	wfResult.assignedUserTitle = UtilAddress.createAddressLinkLabel(wfResult.assignedUser.uuid, UtilAddress.createAddressTitle(wfResult.assignedUser));
+	wfResult.assignedUserAddressTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+	wfResult.assignedUserTitle = UtilAddress.createAddressLinkLabel(wfResult.assignedUser.uuid, wfResult.assignedUserAddressTitle);
 }
 
 function prepareWfObjectResultListForDisplay(wfObjResultList) {
@@ -235,32 +395,13 @@ function prepareWfObjectResultListForDisplay(wfObjResultList) {
 	UtilList.addIcons(wfObjResultList);
 }
 
-
-function getExpiredAddresses() {
-	var def = new dojo.Deferred();
-
-	QueryService.getExpiredAddresses(-1, {
-		callback: function(expAdrList) {
-			dojo.lang.forEach(expAdrList, prepareEntryFromWfAddressResult);
-			prepareWfAddressResultListForDisplay(expAdrList);
-			def.callback(expAdrList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			displayErrorMessage(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
 function prepareEntryFromWfAddressResult(wfResult) {
 	wfResult.title = UtilAddress.createAddressTitle(wfResult.address);
 	wfResult.uuid = wfResult.address.uuid;
 	wfResult.addressClass = wfResult.address.uuid;
 //	wfResult.assignedUserTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
-	wfResult.assignedUserTitle = UtilAddress.createAddressLinkLabel(wfResult.assignedUser.uuid, UtilAddress.createAddressTitle(wfResult.assignedUser));
+	wfResult.assignedUserAddressTitle = UtilAddress.createAddressTitle(wfResult.assignedUser);
+	wfResult.assignedUserTitle = UtilAddress.createAddressLinkLabel(wfResult.assignedUser.uuid, wfResult.assignedUserAddressTitle);
 }
 
 function prepareWfAddressResultListForDisplay(wfAdrResultList) {
@@ -357,15 +498,17 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 				</div>
 
 		        <div class="tableContainer rows10 wide">
-					<table id="expiredDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+					<table id="expiredDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 						<thead>
 							<tr>
-								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
-								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Verantwortlicher</th>
-								<th nosort="true" field="state" dataType="String" width="210">Status</th>
-								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
-								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+								<th field="icon" dataType="String" width="32"></th>
+								<th field="linkLabel" dataType="String" width="700">Name</th>
+								<th field="assignedUserTitle" dataType="String" width="130">Verantwortlicher</th>
+<!--
+								<th field="state" dataType="String" width="210">Status</th>
+								<th field="type" dataType="String" width="160">Typ</th>
+-->
+								<th field="date" dataType="Date" width="100">Datum</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -384,16 +527,18 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 				</div>
 
 		        <div class="tableContainer rows10 wide">
-					<table id="modifiedDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+					<table id="modifiedDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 						<thead>
 							<tr>
-								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="440">Name</th>
-								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
-								<th nosort="true" field="state" dataType="String" width="210">Status</th>
-								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+								<th field="icon" dataType="String" width="32"></th>
+								<th field="linkLabel" dataType="String" width="550">Name</th>
+								<th field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+<!--
+								<th field="state" dataType="String" width="210">Status</th>
+-->
+								<th field="type" dataType="String" width="160">Typ</th>
 <!-- 
-								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+								<th field="date" dataType="Date" width="100">Datum</th>
  -->
 							</tr>
 						</thead>
@@ -413,15 +558,15 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 				</div>
 
 		        <div class="tableContainer rows10 wide">
-					<table id="qaDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+					<table id="qaDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 						<thead>
 							<tr>
-								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="340">Name</th>
-								<th nosort="true" field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
-								<th nosort="true" field="state" dataType="String" width="210">Status</th>
-								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
-								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+								<th field="icon" dataType="String" width="32"></th>
+								<th field="linkLabel" dataType="String" width="340">Name</th>
+								<th field="assignedUserTitle" dataType="String" width="130">Bearbeiter</th>
+								<th field="state" dataType="String" width="210">Status</th>
+								<th field="type" dataType="String" width="160">Typ</th>
+								<th field="date" dataType="Date" width="100">Datum</th>
 							</tr>
 						</thead>
 						<tbody>
