@@ -29,10 +29,13 @@ detailHelper.renderAddressEntry = function(address) {
 		entry += address.street+"\n";
 	}
 	if (this.isValid(address.city)) {
+		if (this.isValid(address.city)) {
+			entry += address.postalCode +" ";
+		}
 		entry += address.city+"\n";
 	}
 	if (this.isValid(address.pobox)) {
-		entry += "\n"+address.pobox+"\n";
+		entry += "\n Postfach "+address.pobox+"\n";
 		if (this.isValid(address.poboxPostalCode)) {
 			entry += address.poboxPostalCode+" ";
 		}

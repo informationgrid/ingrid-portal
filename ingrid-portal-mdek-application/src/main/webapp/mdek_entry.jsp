@@ -1332,7 +1332,7 @@ function hideSplash(){
 					<span id="uiElementN008" type="required">
 		                <span id="spatialRefLocationLabel" class="label required"><label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 'Freier Raumbezug')"><script>document.write(message.get("ui.obj.spatial.geoTable.title"))</script>*</label></span>
 		                <span class="functionalLink">
-		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Raumbezug hinzuf&uuml;gen', 'mdek_spatial_assist_dialog.html', 505, 220, true);" title="Raumbezug Assistent [Popup]"><script>document.write(message.get("ui.obj.spatial.geoTable.link"))</script></a>
+		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Raumbezug hinzuf&uuml;gen', 'mdek_spatial_assist_dialog.html', 555, 240, true);" title="Raumbezug Assistent [Popup]"><script>document.write(message.get("ui.obj.spatial.geoTable.link"))</script></a>
 	<!-- The following feature is not yet implemented -->
 	<!-- 
 		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a>

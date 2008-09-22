@@ -6,6 +6,8 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
+<script type="text/javascript" src="js/detail_helper.js"></script>
+
 <script type="text/javascript">
 
 _container_.addOnLoad(function() {
@@ -15,7 +17,7 @@ _container_.addOnLoad(function() {
 	var addressDiv = dojo.byId("addressPreviewContent");
 	var displayText = "";
 
-
+/*
 	displayText += address.name+"<br>";
 	displayText += address.street+"<br>";
 	if (address.pobox)
@@ -34,6 +36,8 @@ _container_.addOnLoad(function() {
 	}
 
 	addressDiv.innerHTML = displayText;
+*/
+	addressDiv.innerHTML = detailHelper.renderAddressEntry(address).replace(/\n/g, '<br />');
 });
 
 

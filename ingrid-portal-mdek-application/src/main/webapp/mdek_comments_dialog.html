@@ -82,12 +82,12 @@ addComment = function() {
       <div class="inputContainer wide">
         <span id="commentTableLabel" class="label">Kommentare zu diesem Objekt</span>
   	    <div class="tableContainer rows8 wide">
-  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%M" minRows="8" cellspacing="0" class="filteringTable interactive relativePos">
+  	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%M" minRows="8" cellspacing="0" class="filteringTable interactive nosort relativePos">
   	      <thead>
   		      <tr>
-        			<th field="date" dataType="Date" width="120">Datum</th>
-        			<th field="title" dataType="String" width="185">Nutzer</th>
-        			<th field="comment" dataType="String" width="677">Kommentar</th>
+        			<th nosort="true" field="date" dataType="Date" width="120">Datum</th>
+        			<th nosort="true" field="title" dataType="String" width="185">Nutzer</th>
+        			<th nosort="true" field="comment" dataType="String" width="677">Kommentar</th>
   		      </tr>
   	      </thead>
   	      <tbody>
