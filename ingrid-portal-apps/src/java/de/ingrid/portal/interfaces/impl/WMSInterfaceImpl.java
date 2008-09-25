@@ -327,7 +327,7 @@ public class WMSInterfaceImpl implements WMSInterface {
                 serviceName = service.getName();
                 if (serviceURL != null && serviceURL.length() > 0) {
                     if (!prequestAdded) {
-                        resultB.append("&PREQUEST=setServices");
+                        resultB.append("&COMMAND=addWMS");
                         prequestAdded = true;
                     }
                     if (serviceName != null && serviceName.length() > 0) {
