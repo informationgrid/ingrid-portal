@@ -82,6 +82,10 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER = "portal.search.restrict.partner";
 
     public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS = "portal.search.display.providers";
+    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_ADDRESS = "portal.search.display.providers.address";
+    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_ENVINFO = "portal.search.display.providers.default";
+    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_LAW = "portal.search.display.providers.law";
+    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_RESEARCH = "portal.search.display.providers.research";
     
     public static final String PORTAL_LOGGER_RESOURCE = "portal.logger.resource";
 

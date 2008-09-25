@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <help>
     <chapter>
-        <header>PortalU Help</header>
+        <header>Saxony PortalU Help</header>
         <section help-key="index">
             <header>Topics</header>
             <content>
@@ -911,7 +911,7 @@
                 <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung mitgeführt
                     wird, können Sie als eingeloggter Nutzer (siehe <a
-                        href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>) auch
+                        href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>) auch
                     Suchanfragen permanent speichern.</p>
                 <p>Beide Formen gespeicherter Suchanfragen können Sie über die
                     Funktion &#8222;Suchhistorie&#8220; erneut aufrufen.</p>
@@ -990,7 +990,7 @@
                         die Option &#8222;Ähnliche Begriffe in die Suche
                         einbeziehen&#8220; an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe <a
-                            href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>).</li>
+                            href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die die Funktionalität
                             &#8222;<a
@@ -1028,7 +1028,7 @@
                     können. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>).</p>
+                    (siehe <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
@@ -1925,9 +1925,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Sachsen PortalU informiert</header>
+        <header>SachsenPortalU informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>Sachsen PortalU informiert</header>
+            <header>SachsenPortalU informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
                     Betreiber des Portals bereitgestellt werden.</p>
@@ -1935,9 +1935,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Mein Sachsen PortalU</header>
+        <header>Mein SachsenPortalU</header>
         <section help-key="myingrid-1">
-            <header>Mein Sachsen PortalU</header>
+            <header>Mein SachsenPortalU</header>
             <content>
                 <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>

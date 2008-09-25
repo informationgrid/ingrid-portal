@@ -287,8 +287,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
 
         // enable/disable providers drop down
-        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)) {
-            String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)
+        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_ENVINFO)
+        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_ADDRESS)
+        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_LAW)
+        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_RESEARCH)
+        		) {
+        	String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
             List providers;
             if (partner == null || partner.length() == 0) {
                 providers = UtilsDB.getProviders();

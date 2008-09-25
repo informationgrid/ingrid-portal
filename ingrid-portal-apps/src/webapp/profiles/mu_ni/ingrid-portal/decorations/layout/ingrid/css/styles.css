@@ -408,8 +408,8 @@ div.formbody div.marginleft {margin-left:4em}
 div.formbody .indent1_checkbox {margin-left:2em}
 div.formbody .indent2_checkbox {margin-left:4em}
 
-div.formbody select.env_themes, 
-div.formbody select.spacial_relation { width:15em;}
+div.formbody select.env_themes { width:15em;} 
+div.formbody select.spacial_relation { width:23em;}
 div.formbody select.funct_class  { width:20em;}
 div.formbody select.info_provider  { width:22em; border: 0px inset #FFFFFF; padding:4px; }
 div.formbody select.group_by { width:15em;}

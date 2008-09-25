@@ -19,6 +19,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.search.SearchState;
 
 /**
  * This portlet is the abstract base class of all "wizard" portlets in the Law
@@ -60,7 +61,10 @@ abstract class SearchExtLaw extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
         
         // enable/disable providers drop down
-        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)) {
+        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)
+        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_LAW)
+        		) {
             String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
             List providers;
             if (partner == null || partner.length() == 0) {

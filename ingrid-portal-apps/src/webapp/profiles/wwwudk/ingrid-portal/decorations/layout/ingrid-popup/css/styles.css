@@ -82,12 +82,12 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 
 div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_karten.gif); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -384,8 +384,8 @@ div.formbody div.marginleft {margin-left:4em}
 div.formbody .indent1_checkbox {margin-left:2em}
 div.formbody .indent2_checkbox {margin-left:4em}
 
-div.formbody select.env_themes, 
-div.formbody select.spacial_relation { width:15em;}
+div.formbody select.env_themes { width:15em;} 
+div.formbody select.spacial_relation { width:23em;}
 div.formbody select.funct_class  { width:20em;}
 div.formbody select.info_provider  { width:22em; border: 0px inset #FFFFFF; padding:4px; }
 div.formbody select.group_by { width:15em;}

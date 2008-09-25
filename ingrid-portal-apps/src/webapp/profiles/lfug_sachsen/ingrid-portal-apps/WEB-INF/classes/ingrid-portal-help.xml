@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <help>
     <chapter>
-        <header>Hilfe zu PortalU</header>
+        <header>Hilfe zu SachsenPortalU</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=about-1">Über Sachsen PortalU</a>
+                        <a href="help.psml?hkey=about-1">Über SachsenPortalU</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-1">Suche</a>
@@ -28,10 +28,10 @@
                         <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ingrid-inform-1">Sachsen PortalU informiert</a>
+                        <a href="help.psml?hkey=ingrid-inform-1">SachsenPortalU informiert</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>
+                        <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -41,7 +41,7 @@
         </section>
     </chapter>
     <chapter>
-        <header>Über Sachsen PortalU</header>
+        <header>Über SachsenPortalU</header>
         <section help-key="about-1">
             <header>Konzept und Aufgabe von PortalU</header>
             <content>
@@ -91,7 +91,7 @@
             <content>
                 <p>
                     <b>Suche:</b> Zentrale Funktion des Portals ist die
-                    PortalU-Suche (<a href="help.psml?hkey=search-1">Suche</a>)
+                    SachsenPortalU-Suche (<a href="help.psml?hkey=search-1">Suche</a>)
                     mit deren Hilfe Webseiten und Datenbankeinträge über eine
                     herkömmliche Volltextsuche (<a
                         href="help.psml?hkey=search-1">Einfache Suche</a>), aber
@@ -102,9 +102,9 @@
                     <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
                     Raumbezüge für die Suche über interaktive Karten einzugeben
                     oder aber digitale Karten aus der Such-Ergebnisliste direkt
-                    in PortalU anzuzeigen.</p>
+                    in SachsenPortalU anzuzeigen.</p>
                 <p>
-                    <b>Themenseiten:</b> Die PortalU Themenseiten  bieten einen
+                    <b>Themenseiten:</b> Die SachsenPortalU Themenseiten  bieten einen
                     themenbezogenen Zugang zu ausgewählten, besonders
                     interessanten Informationen und Daten.</p>
                 <p>
@@ -116,7 +116,7 @@
                     Informationen über Veranstaltungen und aktuelle
                     Publikationen im Umweltbereich.</p>
                 <p>
-                    <b>Messwerte</b>: Sachsen PortalU informiert Sie rund um die Uhr
+                    <b>Messwerte</b>: SachsenPortalU informiert Sie rund um die Uhr
                     über den aktuellen Zustand Ihrer Umwelt.</p>
                 <p>
                     <b>Umweltchronik</b>: Wann trat das Kyoto-Protokoll in
@@ -308,7 +308,7 @@
                         (Unterbegriffe) oder anders ausdrücken (Synonyme) lässt.
                         Thesauri werden z.B. zum Verschlagworten und Auffinden
                         von Dokumenten genutzt.</p>
-                    <p>PortalU verwendet den Umweltthesaurus
+                    <p>SachsenPortalU verwendet den Umweltthesaurus
                         (UMTHES<sup>®</sup>) des Umweltbundesamtes in Dessau. Er
                         enthält mehr als 30.000 Fachbegriffe aus dem
                         Themengebiet &quot;Umwelt&quot;.</p>
@@ -409,13 +409,13 @@
         <section help-key="ext-search-spacial-1">
             <header>Raum</header>
             <content>
-                <p>PortalU analysiert über den <a
+                <p>SachsenPortalU analysiert über den <a
                         href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau die Web-Seiten der
                     angeschlossenen Server und ermittelt einen Raumbezug für
                     jede Seite. Bei der räumlichen Suche nach Webseiten wird in
-                    PortalU dieser Raumbezug genutzt. Die räumliche Suche ist
+                    SachsenPortalU dieser Raumbezug genutzt. Die räumliche Suche ist
                     also nicht, wie in den meisten anderen Suchmaschinen, eine
                     Volltext-Suche nach räumlichen Begriffen.</p>
                 <p>Bei der räumlichen Suche in den angeschlossenen Datenbanken
@@ -498,9 +498,9 @@
                     zugeordnet sind, verglichen. Innerhalb der Datenbanken wird
                     direkt nach dem Suchrechteck gesucht.</p>
                 <p>Zur Orientierung und Spezifikation eines Suchrechtecks können
-                    Sie die Standard-Hintergrundkarten in PortalU nutzen oder
+                    Sie die Standard-Hintergrundkarten in SachsenPortalU nutzen oder
                     aber eigene Hintergrundkarten über den Web-Mapping-Service
-                    (WMS) des PortalU hinzu laden.</p>
+                    (WMS) des SachsenPortalU hinzu laden.</p>
             </content>
             <section help-key="ext-search-spacial-7">
                 <header>Aktive Kartendienste</header>
@@ -797,7 +797,7 @@
         <section help-key="ext-search-time-1">
             <header>Zeit</header>
             <content>
-                <p>PortalU ist in der Lage nach den Zeitbezügen der
+                <p>SachsenPortalU ist in der Lage nach den Zeitbezügen der
                     angeschlossenen Systeme zu suchen. Hierzu werden einerseits
                     die Daten genutzt, die der <a
                         href="http://www.semantic-network.de/"
@@ -889,7 +889,7 @@
         <section help-key="ext-search-area-2">
             <header>Datenquellen</header>
             <content>
-                <p>An PortalU sind neben Web-Servern auch Metadaten- und
+                <p>An SachsenPortalU sind neben Web-Servern auch Metadaten- und
                     Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
                     all diesen Systemen suchen wollen (Standard), oder ob Sie
                     ihre Suche gezielt auf eine oder mehrere Arten von
@@ -931,10 +931,10 @@
         <section help-key="search-history-1">
             <header>Suchhistorie</header>
             <content>
-                <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
+                <p>SachsenPortalU speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung mitgeführt
                     wird, können Sie als eingeloggter Nutzer (siehe <a
-                        href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>) auch
+                        href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>) auch
                     Suchanfragen permanent speichern.</p>
                 <p>Beide Formen gespeicherter Suchanfragen können Sie über die
                     Funktion &#8222;Suchhistorie&#8220; erneut aufrufen.</p>
@@ -985,7 +985,7 @@
         <section help-key="search-settings-3">
             <header>Ähnliche Begriffe in die Suche einbeziehen</header>
             <content>
-                <p>PortalU führt nicht nur die bei Suchmaschinen übliche
+                <p>SachsenPortalU führt nicht nur die bei Suchmaschinen übliche
                     Indexierung der Seiten durch, sondern lässt den Seiteninhalt
                     auch über den <a href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
@@ -1013,7 +1013,7 @@
                         die Option &#8222;Ähnliche Begriffe in die Suche
                         einbeziehen&#8220; an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe <a
-                            href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>).</li>
+                            href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die die Funktionalität
                             &#8222;<a
@@ -1051,17 +1051,17 @@
                     können. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="help.psml?hkey=myingrid-1">Mein Sachsen PortalU</a>).</p>
+                    (siehe <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
             <header>Sie haben eine spezielle Suchanfrage, die sie nicht über die
                 erweiterte Suche formulieren können?</header>
             <content>
-                <p>PortalU erlaubt komplexe Suchanfragen  durchzuführen, die
+                <p>SachsenPortalU erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
+                    usw.). Lesen Sie hierzu in der Hilfe zu SachsenPortalU den
                     Abschnitt &#8222;<a
                     href="help.psml?hkey=search-expert-1">Expertensuche</a>&#8220;
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
@@ -1131,7 +1131,7 @@
             <content>
                 <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
                     Nutzer (siehe <a href="help.psml?hkey=myingrid-1">Mein
-                    PortalU</a>) die Möglichkeit den verwendeten Suchausdruck
+                    SachsenPortalU</a>) die Möglichkeit den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
                     &#8222;Suche speichern&#8220;.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
@@ -1274,14 +1274,14 @@
         <section help-key="search-expert-9">
             <header>Suche in speziellen Feldern</header>
             <content>
-                <p>Der PortalU Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in PortalU verwendeten Felder lassen sich
+                <p>Der SachsenPortalU Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in SachsenPortalU verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     &#8218;Feldname:Wert&#8217; verwandt.</p>
                 <p>Beispiel: &#8218;location:Berlin&#8217; (Es wird nach
                     Dokumenten gesucht, die den Raumbezug
                     &#8218;Berlin&#8217; haben.)</p>
-                <p>Folgende Felder sind in PortalU durchsuchbar:</p>
+                <p>Folgende Felder sind in SachsenPortalU durchsuchbar:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1328,7 +1328,7 @@
         <section help-key="search-expert-11">
             <header>Sonderzeichen</header>
             <content>
-                <p>Die folgenden Zeichen haben im Suchausdruck von PortalU eine
+                <p>Die folgenden Zeichen haben im Suchausdruck von SachsenPortalU eine
                     spezielle Bedeutung (z.B. in Form von Operatoren):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>Sollen sie dennoch als einfache Zeichen innerhalb eines
@@ -1385,7 +1385,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über PortalU abgefragt. Die
+                    Umweltinformationssysteme über SachsenPortalU abgefragt. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach
@@ -1399,7 +1399,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>SachsenPortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a
                         href="http://www.semantic-network.de/"
@@ -1460,7 +1460,7 @@
             <header>Umweltthemen</header>
             <content>
                 <p>Die Informationen, die als &#8222;Umweltthemen&#8220;
-                    in PortalU bereitgestellt werden, sind Web-Seiten und
+                    in SachsenPortalU bereitgestellt werden, sind Web-Seiten und
                     UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
                     besonders relevant und interessant sind . Neben dem
                     eigentlichen Thema (wie z.B. Wasser oder Abfall) können Sie
@@ -1948,9 +1948,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Sachsen PortalU informiert</header>
+        <header>SachsenPortalU informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>Sachsen PortalU informiert</header>
+            <header>SachsenPortalU informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
                     Betreiber des Portals bereitgestellt werden.</p>
@@ -1958,11 +1958,11 @@
         </section>
     </chapter>
     <chapter>
-        <header>Mein Sachsen PortalU</header>
+        <header>Mein SachsenPortalU</header>
         <section help-key="myingrid-1">
-            <header>Mein Sachsen PortalU</header>
+            <header>Mein SachsenPortalU</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
+                <p>SachsenPortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
                 <ul>
                     <li>die Startseite an Ihre Bedürfnisse anpassen</li>
@@ -2124,7 +2124,7 @@
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
-                    <p>PortalU führt nicht nur die bei Suchmaschinen übliche
+                    <p>SachsenPortalU führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
                         Seiteninhalt auch über den <a
                             href="http://www.semantic-network.de/"
@@ -2150,7 +2150,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von PortalU mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von SachsenPortalU mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
