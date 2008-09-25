@@ -866,7 +866,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    		refRecord = (Record)refRecords.get(i);
     	        	HashMap line = new HashMap();
     	        	line.put("type", "textLine");
-    	        	line.put("body", refRecord.getString("t011_obj_serv_version.version"));
+    	        	line.put("body", refRecord.getString("t011_obj_serv_version.serv_version"));
     	        	if (!isEmptyLine(line)) {
     	        		lines.add(line);
     	        	}

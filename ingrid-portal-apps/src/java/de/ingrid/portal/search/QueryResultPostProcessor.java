@@ -251,7 +251,7 @@ public class QueryResultPostProcessor {
                 }
                 if (tmpString.length() > 0) {
                     try {
-                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString, "UTF-8"));
+                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         log.error("Error url encoding wms URL!", e);
                     }

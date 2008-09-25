@@ -778,7 +778,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    		refRecord = (Record)refRecords.get(i);
     	        	HashMap line = new HashMap();
     	        	line.put("type", "textLine");
-    	        	line.put("body", refRecord.getString("t011_obj_serv_version.version"));
+    	        	line.put("body", refRecord.getString("t011_obj_serv_version.serv_version"));
     	        	if (!isEmptyLine(line)) {
     	        		lines.add(line);
     	        	}
@@ -829,7 +829,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	    	        	link.put("hasLinkIcon", new Boolean(true));
 	    	        	link.put("isExtern", new Boolean(false));
 	    	        	link.put("title", messages.getString("common.result.showMap"));
-	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(refRecord.getString("t011_obj_serv_op_connpoint.connect_point")));
+	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(refRecord.getString("t011_obj_serv_op_connpoint.connect_point").trim()));
 	    	        	linkList.add(link);
     	        	}
     	    	}
