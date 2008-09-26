@@ -236,18 +236,20 @@ public class QueryResultPostProcessor {
                 tmpString = "";
                 if (obj instanceof String[]) {
                     // PATCH for wrong data in database -> service string was passed multiple times !
-                    String[] servicesArray = (String[]) obj;
-                    /*
+                	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
+                	String[] servicesArray = (String[]) obj;
                      for (int j = 0; j < servicesArray.length; j++) {
-                     if (j != 0) {
-                     tmpString = tmpString.concat("&");
+                         if (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1) {
+                         	tmpString = servicesArray[j];
+                         	break;
+                         }
                      }
-                     tmpString = tmpString.concat(servicesArray[j]);
-                     }
-                     */
-                    tmpString = servicesArray[0];
                 } else {
                     tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
+                    // only show WMS getCapabilities URL
+                    if (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                    	tmpString = "";
+                    }
                 }
                 if (tmpString.length() > 0) {
                     try {

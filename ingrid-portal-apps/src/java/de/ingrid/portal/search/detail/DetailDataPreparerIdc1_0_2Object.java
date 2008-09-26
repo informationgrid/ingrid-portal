@@ -764,6 +764,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.type_value"), messages.getString("t011_obj_serv.type"));
+    		String serviceType = refRecord.getString("t011_obj_serv.type_value");
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.environment"), messages.getString("t011_obj_serv.environment"));
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.history"), messages.getString("t011_obj_serv.history"));
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.base"), messages.getString("t011_obj_serv.base"));
@@ -785,6 +786,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
         	    elements.add(element);
     		}
+    		ArrayList<String> wmsServiceLinks = new ArrayList<String>();
     		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_operation.line");
     		if (refRecords.size() > 0) {
     	    	HashMap element = new HashMap();
@@ -803,6 +805,13 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.name_value")));
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.descr")));
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.invocation_name")));
+    	    		List serviceLinkRecords = getSubRecordsByColumnName(refRecord, "t011_obj_serv_op_connpoint.line");
+    	    		// only add getCap urls of WMS services
+    	    		if (serviceType.equalsIgnoreCase("wms") && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
+    	    	    	for (int j=0; j<serviceLinkRecords.size(); j++) {
+    	    	    		wmsServiceLinks.add(((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"));
+    	    	    	}
+    	    		}
     	    		if (!isEmptyRow(row)) {
     	    			body.add(row);
     	    		}
@@ -815,21 +824,19 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
 
     		}
-    		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_op_connpoint.line");
-    		if (refRecords.size() > 0) {
+    		if (wmsServiceLinks.size() > 0) {
     	    	ArrayList linkList = new ArrayList();
     			HashMap element = new HashMap();
 	        	element.put("type", "linkList");
 	        	element.put("linkList", linkList);
 	        	elements.add(element);
-    	    	for (int i=0; i<refRecords.size(); i++) {
-    	    		refRecord = (Record)refRecords.get(i);
-    	        	if (UtilsVelocity.hasContent(refRecord.getString("t011_obj_serv_op_connpoint.connect_point")).booleanValue()) {
+    	    	for (int i=0; i<wmsServiceLinks.size(); i++) {
+    	        	if (UtilsVelocity.hasContent(wmsServiceLinks.get(i)).booleanValue()) {
 	    	    		HashMap link = new HashMap();
 	    	        	link.put("hasLinkIcon", new Boolean(true));
 	    	        	link.put("isExtern", new Boolean(false));
 	    	        	link.put("title", messages.getString("common.result.showMap"));
-	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(refRecord.getString("t011_obj_serv_op_connpoint.connect_point").trim()));
+	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
 	    	        	linkList.add(link);
     	        	}
     	    	}
