@@ -130,7 +130,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             for (Iterator i = nodes.iterator(); i.hasNext();) {
                 Node node = (Node) i.next();
                 WMSServiceDescriptor wmsServiceDescriptor = new WMSServiceDescriptor(node.valueOf("name"), node
-                        .valueOf("url").replace(',', '&'));
+                        .valueOf("url"));
                 result.add(wmsServiceDescriptor);
             }
 
@@ -333,7 +333,7 @@ public class WMSInterfaceImpl implements WMSInterface {
                     if (serviceName != null && serviceName.length() > 0) {
                         resultB.append("&wmsName" + (i + 1) + "=" + URLEncoder.encode(serviceName, "UTF-8"));
                     }
-                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL.replace('&', ','), "UTF-8"));
+                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8"));
                 }
             }
         } catch (UnsupportedEncodingException e) {
