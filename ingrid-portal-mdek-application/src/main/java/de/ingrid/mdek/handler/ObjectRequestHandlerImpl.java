@@ -185,9 +185,9 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 		IngridDocument response = mdekCallerObject.reassignObjectToAuthor(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
 		MdekDataBean result = MdekObjectUtils.extractSingleObjectFromResponse(response);
-//		if (result != null) {
-//			MdekEmailUtils.sendObjectAssignedToQAMail(result);
-//		}
+		if (result != null) {
+			MdekEmailUtils.sendObjectReassignedMail(result);
+		}
 
 		return result;
 	}

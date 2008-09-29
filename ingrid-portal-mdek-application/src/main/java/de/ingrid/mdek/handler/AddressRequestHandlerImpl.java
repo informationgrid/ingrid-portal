@@ -173,9 +173,9 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
 		IngridDocument response = mdekCallerAddress.reassignAddressToAuthor(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
 		MdekAddressBean result = MdekAddressUtils.extractSingleAddressFromResponse(response);
-//		if (result != null) {
-//			MdekEmailUtils.sendAddressAssignedToQAMail(result);
-//		}
+		if (result != null) {
+			MdekEmailUtils.sendAddressReassignedMail(result);
+		}
 
 		return result;
 	}
