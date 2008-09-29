@@ -766,6 +766,11 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 		return;
 	}
 
+	if (!selectedNode.isPublished) {
+		menuEventHandler.handleDelete(msg);
+		return;
+	}
+
 	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode == "addressRoot" || selectedNode == "addressFreeRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
@@ -783,8 +788,8 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 	    		// This function is called when the user has selected yes and the node was successfully
 				// marked as deleted
 				var tree = dojo.widget.byId("tree");
-				if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
-					// If the currently selected Node is a child of the deleted node, we reload the current node
+				if (tree.selectedNode == selectedNode) {
+					// If the current node was marked as deleted, reload the current node (updates permissions, etc.)
 					var newSelectNode = selectedNode;
 					var treeListener = dojo.widget.byId("treeListener");
 
@@ -801,12 +806,27 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 						dojo.debug(msg);
 					});
 
-					// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
 					udkDataProxy.resetDirtyFlag();
 		    		dojo.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.nodeAppType+")");
 			    	dojo.event.topic.publish("/loadRequest", {id: newSelectNode.id, appType: newSelectNode.nodeAppType, resultHandler:d});
+
 				} else {
-					// Otherwise we do nothing
+					// Otherwise update the node that was marked as deleted
+					// The nodeDocType and permissions have to be updated
+					if (selectedNode.nodeDocType.search(/_BV|_RV/) != -1) {
+						// If the nodeDocType ends with _BV or _RV, replace it with _QV
+						selectedNode.nodeDocType = selectedNode.nodeDocType.replace(/_BV|_RV/, "_QV");
+					} else {
+						// else add _QV to the end of the string
+						selectedNode.nodeDocType = selectedNode.nodeDocType + "_QV";
+					}
+					dojo.widget.byId("treeDocIcons").setnodeDocTypeClass(selectedNode);
+
+					// update permissions
+					selectedNode.userWriteSubTreePermission = selectedNode.userWriteTreePermission;
+					selectedNode.userWritePermission = false;
+					selectedNode.userWriteSinglePermission = false;
+					selectedNode.userWriteTreePermission = false;
 				}
 	    	});
 			deleteObjDef.addErrback(displayErrorMessage);
