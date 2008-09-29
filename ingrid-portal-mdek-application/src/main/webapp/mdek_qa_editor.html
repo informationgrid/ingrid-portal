@@ -199,7 +199,7 @@ function initTables() {
 		qaDatasetTable = qaObjList.concat(qaAdrList);
 		UtilList.addTableIndices(qaDatasetTable);
 		dojo.lang.forEach(qaDatasetTable, function(item) {
-			item.state = item.state == "Q" ? "&Uuml;berwiesen an Qualit&auml;tssicherung": "Von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen";
+			item.state = item.state == "Q" ? "&Uuml;berwiesen an Qualit&auml;tssicherung": "Von Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen";
 
 			if (item.type == "L") {
 				item.type = "als gel&ouml;scht markiert";
