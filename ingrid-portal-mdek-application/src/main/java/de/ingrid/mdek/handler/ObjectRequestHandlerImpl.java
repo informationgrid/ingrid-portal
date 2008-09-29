@@ -177,6 +177,21 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return result;
 	}
 
+	public MdekDataBean reassignObjectToAuthor(MdekDataBean data) {
+		IngridDocument obj = (IngridDocument) MdekObjectUtils.convertFromObjectRepresentation(data);
+
+		log.debug("Sending the following object to the author:");
+		log.debug(obj);
+
+		IngridDocument response = mdekCallerObject.reassignObjectToAuthor(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
+		MdekDataBean result = MdekObjectUtils.extractSingleObjectFromResponse(response);
+//		if (result != null) {
+//			MdekEmailUtils.sendObjectAssignedToQAMail(result);
+//		}
+
+		return result;
+	}
+
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum) {
 		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
 		IdcEntitySelectionType st = selectionType == null ? null : IdcEntitySelectionType.valueOf(selectionType);

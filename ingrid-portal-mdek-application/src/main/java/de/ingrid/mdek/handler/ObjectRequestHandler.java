@@ -24,5 +24,6 @@ public interface ObjectRequestHandler {
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree);
 	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
+	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum);
 }

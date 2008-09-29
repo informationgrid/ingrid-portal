@@ -225,6 +225,20 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}		
 
+	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data) {
+		log.debug("Forwarding address with ID to Author: "+data.getUuid());
+
+		try { return addressRequestHandler.reassignAddressToAuthor(data); }
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while forwarding address to Author.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+		catch (RuntimeException e) {
+			log.debug("Error while forwarding address to Author", e);
+			throw e;
+		}
+	}		
 
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs) {
 		try { return addressRequestHandler.fetchAddressObjectReferences(addrUuid, startIndex, numRefs); }

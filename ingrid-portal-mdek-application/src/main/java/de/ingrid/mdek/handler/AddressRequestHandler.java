@@ -17,6 +17,7 @@ public interface AddressRequestHandler {
 	public MdekAddressBean saveAddress(MdekAddressBean data);
 	public MdekAddressBean publishAddress(MdekAddressBean data);
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data);
+	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data);
 	public void deleteAddress(String uuid, boolean forceDeleteReferences);
 	public boolean deleteAddressWorkingCopy(String uuid, boolean forceDeleteReferences);
 	public boolean canCutAddress(String uuid);

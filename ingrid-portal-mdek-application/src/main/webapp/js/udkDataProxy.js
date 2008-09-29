@@ -145,6 +145,8 @@ dojo.addOnLoad(function()
 	// QA requests
     dojo.event.topic.subscribe("/forwardObjectToQARequest", udkDataProxy, "handleForwardObjectToQARequest");
     dojo.event.topic.subscribe("/forwardAddressToQARequest", udkDataProxy, "handleForwardAddressToQARequest");
+    dojo.event.topic.subscribe("/forwardObjectToAuthorRequest", udkDataProxy, "handleForwardObjectToAuthorRequest");
+    dojo.event.topic.subscribe("/forwardAddressToAuthorRequest", udkDataProxy, "handleForwardAddressToAuthorRequest");
 
 
 	// Set initial values
@@ -1187,6 +1189,76 @@ udkDataProxy.handleForwardAddressToQARequest = function(msg) {
 		}
 	);
 }
+
+
+udkDataProxy.handleForwardObjectToAuthorRequest = function(msg) {
+	// Construct an MdekDataBean from the available data
+	var nodeData = udkDataProxy._getData();
+
+	// Deferred obj for the main publish operation. The passed resulthandler is called with the appropriate result
+	var onForwardDef = new dojo.Deferred();
+	onForwardDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onForwardDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling ObjectService.reassignObjectToAuthor("+nodeData.uuid+")");
+	ObjectService.reassignObjectToAuthor(nodeData,
+		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+			callback: function(res) { onForwardDef.callback(res); },
+			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
+				dojo.debug("Error in js/udkDataProxy.js: Error while reassigning node to Author: "+err);
+				onForwardDef.errback(err);
+			}
+		}
+	);
+}
+
+udkDataProxy.handleForwardAddressToAuthorRequest = function(msg) {
+	// Construct an MdekAddressBean from the available data
+	var nodeData = udkDataProxy._getData();
+
+	// Deferred adr for the main publish operation. The passed resulthandler is called with the appropriate result
+	var onPublishDef = new dojo.Deferred();
+	onPublishDef.addCallback(function(res) {
+		udkDataProxy.resetDirtyFlag();
+		udkDataProxy._setData(res);
+		udkDataProxy._updateTree(res, nodeData.uuid);
+		udkDataProxy.onAfterSave();
+		msg.resultHandler.callback(res);	
+	});
+	onPublishDef.addErrback(function(err) {
+		msg.resultHandler.errback(err);
+	});
+
+
+	// ---- DWR call to store the data ----
+	dojo.debug("udkDataProxy calling AddressService.reassignAddressToAuthor("+nodeData.uuid+")");
+	AddressService.reassignAddressToAuthor(nodeData,
+		{
+			preHook: UtilDWR.enterLoadingState,
+			postHook: UtilDWR.exitLoadingState,
+			callback: function(res) { onPublishDef.callback(res); },
+			errorHandler:function(err) {
+				UtilDWR.exitLoadingState();
+				dojo.debug("Error in js/udkDataProxy.js: Error while reassigning address to Author: "+err);
+				onPublishDef.errback(err);
+			}
+		}
+	);
+}
+
 
 udkDataProxy.handleGetObjectPathRequest = function(msg) {
 	var loadErrback = function() {msg.resultHandler.errback();}

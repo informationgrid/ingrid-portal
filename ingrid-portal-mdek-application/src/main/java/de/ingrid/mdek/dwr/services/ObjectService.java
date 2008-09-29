@@ -11,6 +11,7 @@ public interface ObjectService {
 	public MdekDataBean getPublishedNodeData(String nodeUuid);
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
+	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum);
 	public Map<String, Object> copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);
 	public void moveNode(String nodeUuid, String dstNodeUuid, boolean forcePublicationCondition);

@@ -232,6 +232,21 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}		
 
+	public MdekDataBean reassignObjectToAuthor(MdekDataBean data) {
+		log.debug("Reassigning node with ID to author: "+data.getUuid());
+
+		try { return objectRequestHandler.reassignObjectToAuthor(data); }
+		catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while reassigning node to Author.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+		catch (RuntimeException e) {
+			log.debug("Error while reassigning node to Author", e);
+			throw e;
+		}
+	}		
+	
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum) {
 		try {
 			return objectRequestHandler.getQAObjects(workState, selectionType, maxNum);

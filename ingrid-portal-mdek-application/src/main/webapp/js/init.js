@@ -788,6 +788,14 @@ function initToolbar() {
 
   leftToolbar.addSeparator("img/ic_sep.gif", "after");
 
+var reassignToAuthorButton = null;
+  if (isQAActive && isUserQA) {
+	reassignToAuthorButton = leftToolbar.addChild("img/ic_submit_author.gif", "after", {
+                            onClick:menuEventHandler.handleReassignToAuthor,
+                            caption:"An Bearbeiter rücküberweisen"
+                          });
+  }
+
   if (isQAActive && !isUserQA) {
 	var finalSaveButton = leftToolbar.addChild("img/ic_submit_qs.gif", "after", {
                             onClick:menuEventHandler.handleForwardToQA,
@@ -833,9 +841,6 @@ function initToolbar() {
                             caption:"Kommentar ansehen/hinzufügen"
                           });
 
-	// TODO
-	// if (isQAActive && isUserQA) { show return to assignee button }
-
 
 	// Activate/Deactivate buttons depending on the selected node
 	var treeListener = dojo.widget.byId("treeListener");
@@ -849,7 +854,8 @@ function initToolbar() {
 		var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
 //		dojo.debug("User has write permission? "+hasWritePermission);
 
-		var buttonList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton, saveButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
+		var buttonList = [showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, discardButton,
+				saveButton, finalSaveButton, reassignToAuthorButton, deleteButton, showCommentButton, newEntityButton, pasteButton];
 		var enableList = [];
 
 		// Initially disable all buttons
@@ -894,6 +900,11 @@ function initToolbar() {
 			if (hasWriteSubTreePermission) {
 				enableList.push(newEntityButton);
 			}
+			
+			// If the current node is assigned to the QA enable the reassign button
+			if (message.node.nodeDocType.search(/_QV/) != -1) {
+				enableList.push(reassignToAuthorButton);
+			}
 		}
 
 		// The paste button depends on the current selection in treeController and the current selected node
@@ -926,7 +937,9 @@ function initToolbar() {
     dojo.event.connectOnce("after", treeController, "prepareCut", showOrHidePasteButton);
 
 	// Initially disable all icons
-	var disableList = [removeDeleteFlagButton, showChangesButton, previewButton, cutButton, copyEntityButton, copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, deleteButton, showCommentButton, newEntityButton, pasteButton];	
+	var disableList = [removeDeleteFlagButton, showChangesButton, previewButton, cutButton, copyEntityButton,
+			copyTreeButton, saveButton, undoButton, discardButton, finalSaveButton, reassignToAuthorButton, deleteButton,
+			showCommentButton, newEntityButton, pasteButton];	
 	dojo.lang.forEach(disableList, function(item) { if (item != null) { item.disable(); } });
 }
 

@@ -165,6 +165,22 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return result;
 	}
 
+	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data) {
+		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+
+		log.debug("Sending the following address to the author:");
+		log.debug(adr);
+
+		IngridDocument response = mdekCallerAddress.reassignAddressToAuthor(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		MdekAddressBean result = MdekAddressUtils.extractSingleAddressFromResponse(response);
+//		if (result != null) {
+//			MdekEmailUtils.sendAddressAssignedToQAMail(result);
+//		}
+
+		return result;
+	}
+
+	
 	public MdekAddressBean saveAddress(MdekAddressBean data) {
 		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
 //		log.debug("saveAddress() not implemented yet.");

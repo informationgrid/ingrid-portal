@@ -757,6 +757,66 @@ menuEventHandler._handleForwardAddressToQA = function(msg) {
 }
 
 
+menuEventHandler.handleReassignToAuthor = function(msg) {
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+	
+	if (selectedNode.nodeAppType == "O") {
+		menuEventHandler._handleReassignObjectToAuthor(msg);
+	} else if (selectedNode.nodeAppType == "A") {
+		menuEventHandler._handleReassignAddressToAuthor(msg);
+	}
+}	
+
+
+menuEventHandler._handleReassignObjectToAuthor = function(msg) {
+	var valid = checkValidityOfInputElements();
+	if (valid != "VALID") {
+		displayErrorMessage(new Error(valid));
+		dojo.debug("input invalid: "+valid);
+		return;
+	}
+
+	// Forward the current object to the Author.
+	var nodeData = udkDataProxy._getData();
+	var deferred = new dojo.Deferred();
+	deferred.addErrback(displayErrorMessage);
+
+	// Show a dialog to query the user before reassigning
+	dialog.show(message.get("dialog.reassignToAuthorTitle"), message.get("dialog.object.reassignToAuthorMessage"), dialog.INFO, [
+    	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
+    	{ caption: message.get("general.yes"), action: function() {
+				dojo.debug("Publishing event: /forwardObjectToAuthorRequest");
+				dojo.event.topic.publish("/forwardObjectToAuthorRequest", {resultHandler: deferred});
+    		}
+    	}
+	]);
+}
+
+menuEventHandler._handleReassignAddressToAuthor = function(msg) {
+	var valid = checkValidityOfAddressInputElements();
+	if (valid != "VALID") {
+		displayErrorMessage(new Error(valid));
+		dojo.debug("input invalid: "+valid);
+		return;
+	}
+
+	var nodeData = udkDataProxy._getData();
+	var deferred = new dojo.Deferred();
+	deferred.addErrback(displayErrorMessage);
+
+	// Show a dialog to query the user before forwarding
+	dialog.show(message.get("dialog.reassignToAuthorTitle"), message.get("dialog.address.reassignToAuthorMessage"), dialog.INFO, [
+    	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
+    	{ caption: message.get("general.yes"), action: function() {
+				dojo.debug("Publishing event: /forwardAddressToAuthorRequest");
+				dojo.event.topic.publish("/forwardAddressToAuthorRequest", {resultHandler: deferred});		
+    		}
+    	}
+	]);
+}
+
+
 menuEventHandler.handleMarkDeleted = function(msg) {
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
@@ -888,7 +948,6 @@ menuEventHandler.handleShowComment = function() {
  	}
 */
 }
-
 
 // Expands the tree according to the nodeIds in pathList.
 // pathList should be a list containing node IDs from the top element to the target node.

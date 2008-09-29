@@ -11,6 +11,7 @@ public interface AddressService {
 	public MdekAddressBean getPublishedAddressData(String nodeUuid);
 	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy);
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data);
+	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data);
 	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer maxNum);
 	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid, Boolean includeChildren, Boolean copyToFreeAddress);
 	public void moveAddress(String nodeUuid, String dstNodeUuid, boolean moveToFreeAddress);
