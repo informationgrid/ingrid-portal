@@ -1,6 +1,7 @@
 package de.ingrid.mdek.beans.address;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import de.ingrid.mdek.beans.CommentBean;
@@ -22,6 +23,11 @@ public class MdekAddressBean {
 	public Boolean writeSubTreePermission;
 	public Boolean isPublished;
 	
+	// QA Fields
+	public MdekAddressBean assignerUser;
+	public Date assignTime;
+	public String userOperation;
+
 	public String addressOwner;
 	public String creationTime;
 	public String modificationTime;
@@ -407,5 +413,29 @@ public class MdekAddressBean {
 
 	public void setWriteSubTreePermission(Boolean writeSubTreePermission) {
 		this.writeSubTreePermission = writeSubTreePermission;
+	}
+
+	public MdekAddressBean getAssignerUser() {
+		return assignerUser;
+	}
+
+	public void setAssignerUser(MdekAddressBean assignerUser) {
+		this.assignerUser = assignerUser;
+	}
+
+	public Date getAssignTime() {
+		return assignTime;
+	}
+
+	public void setAssignTime(Date assignTime) {
+		this.assignTime = assignTime;
+	}
+
+	public String getUserOperation() {
+		return userOperation;
+	}
+
+	public void setUserOperation(String userOperation) {
+		this.userOperation = userOperation;
 	}
 }

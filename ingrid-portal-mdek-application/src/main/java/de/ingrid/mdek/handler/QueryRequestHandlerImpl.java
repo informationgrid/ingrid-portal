@@ -307,7 +307,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 
 		String qString = "select obj.objUuid, obj.objClass, obj.objName, obj.workState, oNode.objIdPublished, " +
 				"addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType, " +
-				"oMeta.assignTime, oMeta.reassignTime " +
+				"oMeta.assignTime, oMeta.reassignTime, oMeta.markDeleted " +
 		"from ObjectNode oNode " +
 			"inner join oNode.t01ObjectWork obj " +
 			"inner join obj.objectMetadata oMeta, " +
@@ -330,14 +330,21 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 				for (IngridDocument objEntity : objs) {
 					ObjectWorkflowResultBean objWf = new ObjectWorkflowResultBean();
 					String workState = (String) objEntity.get("obj.workState");
-					objWf.setState(workState);
-					objWf.setType(objEntity.get("oNode.objIdPublished") == null ? "A" : "B");
+					boolean markedDeleted = objEntity.getString("oMeta.markDeleted").equals("Y");
+
+					if (markedDeleted) {
+						objWf.setType("L");						
+					} else {
+						objWf.setType(objEntity.get("oNode.objIdPublished") == null ? "A" : "B");						
+					}
+
 					if (workState.equals(assignedToQA)) {
 						objWf.setDate(MdekUtils.convertTimestampToDate((String) objEntity.get("oMeta.assignTime")));
 					} else {
 						objWf.setDate(MdekUtils.convertTimestampToDate((String) objEntity.get("oMeta.reassignTime")));
 					}
 
+					objWf.setState(workState);
 					objWf.setObject(createObjectFromHQLMap(objEntity, "obj.objUuid", "obj.objName", "obj.objClass"));
 					objWf.setAssignedUser(createAddressFromHQLMap(objEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
 
@@ -359,7 +366,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 
 		String qString = "select adr.institution, adr.firstname, adr.lastname, adr.adrUuid, adr.adrType, adr.workState, aNode.addrIdPublished, " +
 				"addr.institution, addr.firstname, addr.lastname, addr.adrUuid, addr.adrType, " +
-				"aMeta.assignTime, aMeta.reassignTime " +
+				"aMeta.assignTime, aMeta.reassignTime, aMeta.markDeleted " +
 		"from AddressNode aNode " +
 			"inner join aNode.t02AddressWork adr " +
 			"inner join adr.addressMetadata aMeta, " +
@@ -382,13 +389,22 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 				for (IngridDocument adrEntity : adrs) {
 					AddressWorkflowResultBean adrWf = new AddressWorkflowResultBean();
 					String workState = (String) adrEntity.get("adr.workState");
-					adrWf.setState(workState);
-					adrWf.setType(adrEntity.get("aNode.addrIdPublished") == null ? "A" : "B");
+
+					boolean markedDeleted = adrEntity.getString("aMeta.markDeleted").equals("Y");
+
+					if (markedDeleted) {
+						adrWf.setType("L");
+					} else {
+						adrWf.setType(adrEntity.get("aNode.addrIdPublished") == null ? "A" : "B");
+					}
+
 					if (workState.equals(assignedToQA)) {
 						adrWf.setDate(MdekUtils.convertTimestampToDate((String) adrEntity.get("aMeta.assignTime")));
 					} else {
 						adrWf.setDate(MdekUtils.convertTimestampToDate((String) adrEntity.get("aMeta.reassignTime")));
 					}
+
+					adrWf.setState(workState);
 					adrWf.setAddress(createAddressFromHQLMap(adrEntity, "adr.adrUuid", "adr.adrType", "adr.institution", "adr.firstname", "adr.lastname"));
 					adrWf.setAssignedUser(createAddressFromHQLMap(adrEntity, "addr.adrUuid", "addr.adrType", "addr.institution", "addr.firstname", "addr.lastname"));
 

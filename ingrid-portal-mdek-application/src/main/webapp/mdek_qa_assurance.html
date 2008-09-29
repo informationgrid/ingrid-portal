@@ -3,6 +3,7 @@
 <head>
 <script type="text/javascript">
 var NUM_OBJECTS_MAX = 100;
+var NUM_ADDRESSES_MAX = 100;
 var scriptScope = this;
 
 var resultsPerPage = 10;
@@ -23,63 +24,94 @@ _container_.addOnLoad(function() {
 
 function initTables() {
 	var d1 = getQAAssignedObjects();
-//	var d2 = getQAAssignedAddresses();
+	var d2 = getQAAssignedAddresses();
 	var d3 = getQAModifiedObjects();
-//	var d4 = getQAModifiedAddresses();
+	var d4 = getQAModifiedAddresses();
 	var d5 = getQAExpiredObjects();
-//	var d6 = getQAExpiredAddresses();
+	var d6 = getQAExpiredAddresses();
 
-	var l1 = new dojo.DeferredList([d1, d3, d5], false, false, true);
+	var l1 = new dojo.DeferredList([d1, d2, d3, d4, d5, d6], false, false, true);
 	l1.addCallback(function (resultList) {
 		var qaAssignedObjList = resultList[0][1];
-//		var qaAssignedAdrList = resultList[1][1];
-		var qaModifiedObjList = resultList[1][1];
-		var qaExpiredObjList = resultList[2][1];
+		var qaAssignedAdrList = resultList[1][1];
+		var qaModifiedObjList = resultList[2][1];
+		var qaModifiedAdrList = resultList[3][1];
+		var qaExpiredObjList = resultList[4][1];
+		var qaExpiredAdrList = resultList[5][1];
 
-		// Datasets in state Q where the current user is QA
-		qaAssignedDatasetTable = qaAssignedObjList;
+		// ---- Datasets in state Q where the current user is QA ----
+		// Prepare address entries for display
+		dojo.lang.forEach(qaAssignedAdrList, function(item) {
+			item.title = dojo.string.escape("html", UtilAddress.createAddressTitle(item));
+		});
+		UtilList.addAddressLinkLabels(qaAssignedAdrList);
+
+		// Prepare object entries for display
 		dojo.lang.forEach(qaAssignedObjList, function(item) {
 			item.title = dojo.string.escape("html", item.objectName);
-			item.type = item.userOperation == "EDITED" ? "&uuml;berarbeitet" : "neu angelegt";
+		});
+		UtilList.addObjectLinkLabels(qaAssignedObjList);
+
+		// Common (adr & obj) display properties
+		qaAssignedDatasetTable = qaAssignedObjList.concat(qaAssignedAdrList);
+		dojo.lang.forEach(qaAssignedDatasetTable, function(item) {
+			item.type = convertUserOperationToString(item.userOperation);
 			item.assignerUserTitle = UtilAddress.createAddressLinkLabel(item.assignerUser.uuid, UtilAddress.createAddressTitle(item.assignerUser));
 		});
 
-		UtilList.addObjectLinkLabels(qaAssignedObjList);
-		UtilList.addIcons(qaAssignedObjList);
-
+		UtilList.addIcons(qaAssignedDatasetTable);
 		UtilList.addTableIndices(qaAssignedDatasetTable);
 		navigateQAAssignedDatasetTable();
 
 
-		// Datasets in state B where the current user is QA
-		qaModifiedDatasetTable = qaModifiedObjList;
+		// ---- Datasets in state B where the current user is QA ----
+		// Prepare address entries for display
+		dojo.lang.forEach(qaModifiedAdrList, function(item) {
+			item.title = dojo.string.escape("html", UtilAddress.createAddressTitle(item));
+		});
+		UtilList.addAddressLinkLabels(qaModifiedAdrList);
+
+		// Prepare object entries for display
 		dojo.lang.forEach(qaModifiedObjList, function(item) {
 			item.title = dojo.string.escape("html", item.objectName);
-			item.type = item.userOperation == "EDITED" ? "&uuml;berarbeitet" : "neu angelegt";
+		});
+		UtilList.addObjectLinkLabels(qaModifiedObjList);
+
+		// Common (adr & obj) display properties
+		qaModifiedDatasetTable = qaModifiedObjList.concat(qaModifiedAdrList);
+		dojo.lang.forEach(qaModifiedDatasetTable, function(item) {
+			item.type = convertUserOperationToString(item.userOperation);
 			item.modUserTitle = UtilAddress.createAddressLinkLabel(item.lastEditor.uuid, UtilAddress.createAddressTitle(item.lastEditor));
 			item.date = dojo.date.parse(item.modificationTime, {datePattern: "dd.MM.yyyy"});
 		});
 
-		UtilList.addObjectLinkLabels(qaModifiedObjList);
-		UtilList.addIcons(qaModifiedObjList);
-
+		UtilList.addIcons(qaModifiedDatasetTable);
 		UtilList.addTableIndices(qaModifiedDatasetTable);
 		navigateQAModifiedDatasetTable();
 
 
-		// Datasets which are expired where the current user is QA
-		qaExpiredDatasetTable = qaExpiredObjList;
+		// ---- Datasets which are expired where the current user is QA ----
+		// Prepare address entries for display
+		dojo.lang.forEach(qaExpiredAdrList, function(item) {
+			item.title = dojo.string.escape("html", UtilAddress.createAddressTitle(item));
+		});
+		UtilList.addAddressLinkLabels(qaExpiredAdrList);
+
+		// Prepare object entries for display
 		dojo.lang.forEach(qaExpiredObjList, function(item) {
 			item.title = dojo.string.escape("html", item.objectName);
+		});
+		UtilList.addObjectLinkLabels(qaExpiredObjList);
+
+		qaExpiredDatasetTable = qaExpiredObjList.concat(qaExpiredAdrList);
+		dojo.lang.forEach(qaExpiredDatasetTable, function(item) {
 			item.modUserTitle = UtilAddress.createAddressLinkLabel(item.lastEditor.uuid, UtilAddress.createAddressTitle(item.lastEditor));
 			item.date = dojo.date.parse(item.modificationTime, {datePattern: "dd.MM.yyyy"});
  			// Add the expiry duration to the last mod date
  			item.date.setDate(item.date.getDate()+catalogData.expiryDuration);
 		});
 
-		UtilList.addObjectLinkLabels(qaExpiredObjList);
-		UtilList.addIcons(qaExpiredObjList);
-
+		UtilList.addIcons(qaExpiredDatasetTable);
 		UtilList.addTableIndices(qaExpiredDatasetTable);
 		navigateQAExpiredDatasetTable();
 	});
@@ -156,10 +188,8 @@ function getQAExpiredObjects() {
 function getQAExpiredAddresses() {
 	var def = new dojo.Deferred();
 
-	QueryService.getAllExpiredAddressesForQA(-1, false, {
+	AddressService.getQAAddresses(null, "EXPIRY_STATE_EXPIRED", NUM_ADDRESSES_MAX, {
 		callback: function(expAdrList) {
-			dojo.lang.forEach(expAdrList, prepareEntryFromWfAddressResult);
-			prepareWfAddressResultListForDisplay(expAdrList);
 			def.callback(expAdrList);
 		},
 		errorHandler: function(errMsg, err) {
@@ -190,7 +220,7 @@ function getQAModifiedObjects() {
 function getQAModifiedAddresses() {
 	var def = new dojo.Deferred();
 
-	AddressService.getQAAddresses("B", null, null, {
+	AddressService.getQAAddresses("B", null, NUM_ADDRESSES_MAX, {
 		callback: function(modAdrList) {
 			def.callback(modAdrList);
 		},
@@ -222,7 +252,7 @@ function getQAAssignedObjects() {
 function getQAAssignedAddresses() {
 	var def = new dojo.Deferred();
 
-	AddressService.getQAAddresses("Q", null, null, {
+	AddressService.getQAAddresses("Q", null, NUM_ADDRESSES_MAX, {
 		callback: function(qaAdrList) {
 			def.callback(qaAdrList);
 		},
@@ -233,6 +263,18 @@ function getQAAssignedAddresses() {
 		}
 	});
 	return def;
+}
+
+function convertUserOperationToString(userOperation) {
+	if (userOperation == "DELETED") {
+		return "als gel&ouml;scht markiert";
+	
+	} else if (userOperation == "EDITED") {
+		return "&uuml;berarbeitet";
+	
+	} else {
+		return "neu angelegt";
+	}
 }
 
 </script>

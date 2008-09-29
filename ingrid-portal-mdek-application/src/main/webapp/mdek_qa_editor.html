@@ -200,7 +200,16 @@ function initTables() {
 		UtilList.addTableIndices(qaDatasetTable);
 		dojo.lang.forEach(qaDatasetTable, function(item) {
 			item.state = item.state == "Q" ? "&Uuml;berwiesen an Qualit&auml;tssicherung": "Von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen";
-			item.type = item.type == "A" ? "neu angelegt" : "&uuml;berarbeitet";
+
+			if (item.type == "L") {
+				item.type = "als gel&ouml;scht markiert";
+
+			} else if (item.type == "A") {
+				item.type = "neu angelegt";
+
+			} else {
+				item.type = "&uuml;berarbeitet";
+			}
 		});
 		
 		navigateQADatasetTable();

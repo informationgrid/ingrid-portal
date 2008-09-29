@@ -359,6 +359,17 @@ public class MdekMapper implements DataMapperInterface {
 			mdekAddress.setAddressOwner(responsibleUser.getUuid());
 		}
 
+		// QA Fields
+		MdekAddressBean assignerUser = getDetailedAddressRepresentation(adr.get(MdekKeys.ASSIGNER_USER));
+		if (assignerUser != null) {
+			mdekAddress.setAssignerUser(assignerUser);
+		}
+		mdekAddress.setAssignTime(convertTimestampToDate((String) adr.get(MdekKeys.ASSIGN_TIME)));
+		UserOperation u = (UserOperation) adr.get(MdekKeys.RESULTINFO_USER_OPERATION);
+		if (u != null) {
+			mdekAddress.setUserOperation(u.toString());
+		}
+
 		List<IngridDocument> idcPermissions = (List<IngridDocument>) adr.get(MdekKeysSecurity.IDC_PERMISSIONS);
 		mdekAddress.setWritePermission(hasWritePermission(idcPermissions));
 		mdekAddress.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));

@@ -239,6 +239,21 @@ public class AddressServiceImpl implements AddressService {
 		}		
 	}
 
+	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer maxNum) {
+		try {
+			return addressRequestHandler.getQAAddresses(workState, selectionType, maxNum);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching QA addresses.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+
+		} catch (RuntimeException e) {
+			log.debug("Error while fetching QA addresses", e);
+			throw e;
+		}
+	}
+
 	public AddressRequestHandler getAddressRequestHandler() {
 		return addressRequestHandler;
 	}

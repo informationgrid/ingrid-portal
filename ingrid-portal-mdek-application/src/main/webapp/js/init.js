@@ -814,13 +814,14 @@ function initToolbar() {
   }
 
   var removeDeleteFlagButton = null;
+/*
   if (isQAActive && isUserQA) {
 	removeDeleteFlagButton = leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
                             onClick:menuEventHandler.handleUnmarkDeleted,
                             caption:"Löschen aufheben"
                           });
   }
-
+*/
   var showChangesButton = leftToolbar.addChild("img/ic_original.gif", "after", {
                             onClick:menuEventHandler.handleShowChanges,
                             caption:"Änderungen anzeigen"

@@ -758,9 +758,82 @@ menuEventHandler._handleForwardAddressToQA = function(msg) {
 
 
 menuEventHandler.handleMarkDeleted = function(msg) {
-	// Mark the current obj/adr for deletion.
-	// Changes are not permitted after the object is sent to the QS
-	alertNotImplementedYet();
+	// Get the selected node from the message
+	var selectedNode = getSelectedNode(msg);
+
+	if (selectedNode.id == "newNode") {
+		menuEventHandler.handleDiscard(msg);
+		return;
+	}
+
+	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode == "addressRoot" || selectedNode == "addressFreeRoot") {
+    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
+	} else {
+		// If a selected node was found do the following:
+		// 1. Query the user if he really wants to delete the selected object
+		//    This is accomplished by creating a deferred obj 'deferred' and passing it to the
+		//    delete_object dialog. If the user clicks yes, the attached callback function is executed.
+		// 2. The attached callback function publishes a delete request which is picked up by the
+		//    udkDataProxy and sent to the backend. We need another deferred obj 'deleteObjDef' for this
+		//    so we can see if the delete operation was successful.
+		var deferred = new dojo.Deferred();
+		deferred.addCallback(function() {
+	    	var deleteObjDef = new dojo.Deferred();
+	    	deleteObjDef.addCallback(function() {
+	    		// This function is called when the user has selected yes and the node was successfully
+				// marked as deleted
+				var tree = dojo.widget.byId("tree");
+				if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
+					// If the currently selected Node is a child of the deleted node, we reload the current node
+					var newSelectNode = selectedNode;
+					var treeListener = dojo.widget.byId("treeListener");
+
+					var d = new dojo.Deferred();
+					d.addCallback(function(){				
+						tree.selectNode(newSelectNode);
+						tree.selectedNode = newSelectNode;
+						dojo.event.topic.publish(treeListener.eventNames.select, {node: newSelectNode});
+						if (!dojo.render.html.ie)				
+							dojo.html.scrollIntoView(newSelectNode.domNode);
+					});
+					d.addErrback(function(msg){
+						dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+						dojo.debug(msg);
+					});
+
+					// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
+					udkDataProxy.resetDirtyFlag();
+		    		dojo.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.nodeAppType+")");
+			    	dojo.event.topic.publish("/loadRequest", {id: newSelectNode.id, appType: newSelectNode.nodeAppType, resultHandler:d});
+				} else {
+					// Otherwise we do nothing
+				}
+	    	});
+			deleteObjDef.addErrback(displayErrorMessage);
+
+			// Tell the backend to delete the selected node.
+	    	dojo.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
+	    	dojo.event.topic.publish("/deleteRequest", {id: selectedNode.id, resultHandler: deleteObjDef});				
+		});
+
+		// Build the message key (dialog.<object|address>.delete<Children>Message)
+		var messageKey = "dialog.";
+		if (selectedNode.nodeAppType == "O")
+			messageKey += "object.markDelete";
+		else
+			messageKey += "address.markDelete";
+
+		if (selectedNode.isFolder)
+			messageKey += "Children";
+
+		messageKey += "Message";
+		var displayText = dojo.string.substituteParams(message.get(messageKey), selectedNode.title);
+
+		dialog.show(message.get("general.delete"), displayText, dialog.INFO, [
+                        { caption: message.get("general.cancel"), action: function() { deferred.errback(); } },
+                        { caption: message.get("general.ok"),     action: function() { deferred.callback(); } }
+		]);
+	}
 }
 
 
