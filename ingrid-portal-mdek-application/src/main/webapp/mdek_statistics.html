@@ -309,6 +309,11 @@ function resetThesaurusTable(tableId) {
 	dojo.widget.byId(tableId).store.clearData();
 }
 
+scriptScope.print = function() {
+	var selectedTab = dojo.widget.byId("statsTable").selectedChild;
+	printDivContent(selectedTab);
+}
+
 function generateRandomObjectData() {
 	var data = [];
 	for (var i = 0; i < 6; ++i) {
@@ -376,8 +381,8 @@ function generateRandomString(strLength) {
   	<div dojoType="ContentPane" id="statisticsContentContainer" class="contentContainer" layoutAlign="top">
 
       <div id="statisticsContentSection" class="contentBlockWhite">
-        <div id="winNavi">
-          <a href="#" title="drucken"><img src="img/ic_fl_print.gif" width="11" height="11" alt="drucken" />drucken</a><a href="#" title="Hilfe">[?]</a>
+        <div style="z-index: 99;" id="winNavi">
+          <a href="javascript:scriptScope.print()" title="drucken"><img src="img/ic_fl_print.gif" width="11" height="11" alt="drucken" />drucken</a><a href="#" title="Hilfe">[?]</a>
     	  </div>
     	  <div id="stats" class="content">
           
