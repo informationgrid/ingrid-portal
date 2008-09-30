@@ -70,15 +70,15 @@ public class GetCapabilitiesService {
 
 	// Version 1.0.0 uses 'WCS_Capabilities' as root element (see http://schemas.opengis.net/wcs/1.0.0/wcsCapabilities.xsd)
 	// Version 1.1.0 uses 'Capabilities'
-	private final static String XPATH_EXP_WCS_1_0_0_TITLE = "/WCS_Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_WCS_1_0_0_ABSTRACT = "/WCS_Capabilities/ServiceIdentification[1]/Abstract[1]";
+	private final static String XPATH_EXP_WCS_1_0_0_TITLE = "/WCS_Capabilities/Service/name";
+	private final static String XPATH_EXP_WCS_1_0_0_ABSTRACT = "/WCS_Capabilities/Service/description";
 	private final static String XPATH_EXP_WCS_1_0_0_VERSION = "/WCS_Capabilities/@version";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_GET_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_POST_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_GET_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_POST_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_GET_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_POST_HREF = "/WCS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_GET_HREF = "/WCS_Capabilities/Capability/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_POST_HREF = "/WCS_Capabilities/Capability/Request/GetCapabilities/DCPType/HTTP/Post/OnlineResource/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_GET_HREF = "/WCS_Capabilities/Capability/Request/DescribeCoverage/DCPType/HTTP/Get/OnlineResource/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_POST_HREF = "/WCS_Capabilities/Capability/Request/DescribeCoverage/DCPType/HTTP/Post/OnlineResource/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_GET_HREF = "/WCS_Capabilities/Capability/Request/GetCoverage/DCPType/HTTP/Get/OnlineResource/@href";
+	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_POST_HREF = "/WCS_Capabilities/Capability/Request/GetCoverage/DCPType/HTTP/Post/OnlineResource/@href";
 
 	private final static String XPATH_EXP_WCS_1_1_0_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
 	private final static String XPATH_EXP_WCS_1_1_0_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
