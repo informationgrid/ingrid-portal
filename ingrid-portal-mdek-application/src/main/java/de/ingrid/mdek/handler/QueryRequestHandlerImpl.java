@@ -316,7 +316,8 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		"where " +
 			"oMeta.assignerUuid = aNode.addrUuid" +
 			" and (obj.modUuid = '"+currentUserUuid+"'" +
-					"or obj.responsibleUuid = '"+currentUserUuid+"')" +
+					" or obj.responsibleUuid = '"+currentUserUuid+"'" +
+					" or oMeta.assignerUuid = '"+currentUserUuid+"')" +
 			" and (obj.workState = '"+assignedToQA+"'" +
 					"or obj.workState = '"+reassignedFromQA+"')";
 		qString += " order by obj.objClass, obj.objName";
@@ -375,7 +376,8 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		"where " +
 			"aMeta.assignerUuid = adrNode.addrUuid" +
 			" and (adr.modUuid = '"+currentUserUuid+"'" +
-					"or adr.responsibleUuid = '"+currentUserUuid+"')" +
+					" or adr.responsibleUuid = '"+currentUserUuid+"'" +
+					" or aMeta.assignerUuid = '"+currentUserUuid+"')" +
 			" and (adr.workState = '"+assignedToQA+"'" +
 					"or adr.workState = '"+reassignedFromQA+"')";
 		qString += " order by adr.adrType desc, adr.institution, adr.lastname, adr.firstname";
