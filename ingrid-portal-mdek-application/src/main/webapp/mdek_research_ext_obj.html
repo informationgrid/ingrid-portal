@@ -164,29 +164,6 @@ scriptScope.navInnerTab = function(sectionName, subSectionIndex, numSubSections)
 			dojo.html.hide(dojo.byId(sectionName + i));
 		}
 	}
-
-	// The page does not get refreshed properly on IE if we change the 'display' style of elements.
-	// It looks like the dojo containers don't get refreshed.
-	// Refresh the page manually for IE:
-	if (dojo.render.html.ie) {
-		setTimeout("window._refreshExtendedSearchObjectPage('"+sectionName+"', '"+subSectionIndex+"')", 1);
-	}
-}
-
-// Evil hack for IE to refresh the dojo containers.
-window._refreshExtendedSearchObjectPage = function(sectionName, sectionIndex) {
-	// If the section 'objTopic2' is toggled it will be hidden.
-	// TODO: Why does this happen? I assume it has to do with the content 
-	if (sectionName+sectionIndex == "objTopic2") {
-		return;
-	}
-
-	var sectionDiv = dojo.byId(sectionName + sectionIndex);
-
-	if (sectionDiv) {
-		dojo.html.toggleDisplay(sectionDiv);
-		dojo.html.toggleDisplay(sectionDiv);
-	}
 }
 
 // Read the input fields and write the query to 'currentQuery'

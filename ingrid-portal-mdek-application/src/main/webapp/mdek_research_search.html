@@ -178,28 +178,6 @@ this.toggleContent = function(type){
 
 	    dojo.html.show(searchButtonContainer);
 	}
-
-	// The page does not get refreshed properly on IE if we change the 'display' style of elements.
-	// It looks like the dojo containers don't get refreshed.
-	// Refresh the page manually for IE:
-	if (dojo.render.html.ie) {
-		setTimeout("window._refreshExtendedSearchPage('"+type+"')", 1);
-	}
-}
-
-// Evil hack for IE to refresh the search page.
-window._refreshExtendedSearchPage = function(type) {
-//	dojo.widget.byId("objects").onResized();
-//	dojo.widget.byId("extContentObj").onResized();
-
-	if (type == "obj") {
-		dojo.html.toggleDisplay(dojo.byId("objectSearchButtonContainer"));
-		dojo.html.toggleDisplay(dojo.byId("objectSearchButtonContainer"));
-
-	} else {
-		dojo.html.toggleDisplay(dojo.byId("addressSearchButtonContainer"));
-		dojo.html.toggleDisplay(dojo.byId("addressSearchButtonContainer"));
-	}
 }
 
 
