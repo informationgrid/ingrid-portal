@@ -47,6 +47,7 @@ public class MdekEmailUtils {
 
 	// Set in the init method
 	private static String MAIL_SENDER;
+	private static String MAIL_RECEIVER;
 	private static String MAIL_SMTP_HOST;
 	private static String MDEK_DIRECT_LINK;
 
@@ -70,6 +71,20 @@ public class MdekEmailUtils {
 		MAIL_SENDER = resourceBundle.getString("workflow.mail.sender");
 		MAIL_SMTP_HOST = resourceBundle.getString("workflow.mail.smtp");
 		MDEK_DIRECT_LINK = resourceBundle.getString("mdek.directLink");
+
+		// Check if a receiver email was specified.
+		try {
+			MAIL_RECEIVER = resourceBundle.getString("workflow.mail.receiver").trim();
+			if (MAIL_RECEIVER.length() == 0) {
+				MAIL_RECEIVER = null;
+			}
+
+		} catch (Exception e) {
+			// No receiver specified. Initialize MAIL_RECEIVER with null
+			MAIL_RECEIVER = null;
+		}
+
+		log.debug("MAIL_RECEIVER set to: "+MAIL_RECEIVER);
 	}
 
 	public static void sendObjectAssignedToQAMail(MdekDataBean data) {
@@ -228,9 +243,15 @@ public class MdekEmailUtils {
 		Message msg = new MimeMessage(session);
 
 		try {
-			InternetAddress[] receivers = new InternetAddress[to.length];
-			for (int i = 0; i < to.length; ++i) {
-				receivers[i] = new InternetAddress(to[i]);
+			InternetAddress[] receivers = null;
+			if (MAIL_RECEIVER != null) {
+				receivers = new InternetAddress[] { new InternetAddress(MAIL_RECEIVER) };
+
+			} else {
+				receivers = new InternetAddress[to.length];
+				for (int i = 0; i < to.length; ++i) {
+					receivers[i] = new InternetAddress(to[i]);
+				}
 			}
 
 			msg.setFrom( new InternetAddress(from) );
