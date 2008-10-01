@@ -1151,6 +1151,24 @@ function initSysLists() {
 
 
 function initGeneralEventListener() {
+	// Attach error messages to the DatePickers. If an invalid date is parsed, the user gets an error message.
+	var datePickerIdList = ["ref1SymbolsDateDatePicker", "ref1KeysDateDatePicker", "timeRefDateDatePicker",
+			"timeRefDate1", "timeRefDate2", "extraInfoConformityDatePicker"];
+
+	var adviceFunc = function(input) {
+		this.clearValue();
+		dialog.show(message.get("general.error"), "Das von Ihnen eingegebene Datum '"+input+"' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.", dialog.WARNING);			
+	}
+
+	dojo.lang.forEach(datePickerIdList, function(datePickerId) {
+	    var datePicker = dojo.widget.byId(datePickerId);
+
+	    var kwArgs = { adviceType: "after", srcObj: datePicker, srcFunc: "onInvalidInput", adviceObj: datePicker,
+	    			   adviceFunc: adviceFunc, once: true }
+	
+		dojo.event.kwConnect(kwArgs);
+	});
+
 	// Disable backspace default behaviour (browser back button)
 	if (dojo.render.html.ie) {
 		// Registering IE onkeydown with dojo doesn't work as it should
