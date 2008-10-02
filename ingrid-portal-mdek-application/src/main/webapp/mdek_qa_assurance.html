@@ -172,7 +172,7 @@ function navigateQAAssignedDatasetTable() {
 function getQAExpiredObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects(null, "EXPIRY_STATE_EXPIRED", NUM_OBJECTS_MAX, {
+	ObjectService.getQAObjects(null, "QA_EXPIRY_STATE_EXPIRED", NUM_OBJECTS_MAX, {
 		callback: function(expObjList) {
 			def.callback(expObjList);
 		},
@@ -188,7 +188,7 @@ function getQAExpiredObjects() {
 function getQAExpiredAddresses() {
 	var def = new dojo.Deferred();
 
-	AddressService.getQAAddresses(null, "EXPIRY_STATE_EXPIRED", NUM_ADDRESSES_MAX, {
+	AddressService.getQAAddresses(null, "QA_EXPIRY_STATE_EXPIRED", NUM_ADDRESSES_MAX, {
 		callback: function(expAdrList) {
 			def.callback(expAdrList);
 		},
