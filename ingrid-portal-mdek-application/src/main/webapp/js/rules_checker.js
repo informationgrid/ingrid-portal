@@ -324,10 +324,12 @@ function isAddressPublishable(idcAddress) {
 		publishable = false;
 	}
 
+	// Get the string (from the syslist) that is used to identify email entries
+	var emailString = dojo.widget.byId("addressComType").getDisplayValueForValue(3);
 	// Check if at least one entry exists with type email
-	if (dojo.lang.every(addressData, function(adr) { return ( dojo.string.trim(adr.communicationMedium) != "Email"); })) {
+	if (dojo.lang.every(addressData, function(adr) { return ( dojo.string.trim(adr.communicationMedium) != emailString); })) {
 		dojo.html.addClass(dojo.byId("addressComLabel"), "important");
-		dojo.debug("At least one entry has to be of type 'email'.");
+		dojo.debug("At least one entry has to be of type '"+emailString+"'.");
 		publishable = false;
 	}
 

@@ -42,9 +42,7 @@
 <script type="text/javascript" src="js/treeEventHandler.js"></script>
 <script type="text/javascript" src="js/menuEventHandler.js"></script>
 <script type="text/javascript" src="js/udkDataProxy.js"></script>
-<script type="text/javascript" src="js/rules_checker.js"></script>
 <script type="text/javascript" src="js/diff.js"></script>
-
 <script type="text/javascript" src="js/utilities.js"></script>
 
 <script type="text/javascript">
@@ -57,6 +55,9 @@ dojo.require("ingrid.widget.Form");
 <script type="text/javascript" src="js/erfassung.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/init.js"></script>
+<script type="text/javascript" src="js/rules_checker.js"></script>
+<script type="text/javascript" src="js/rules_required.js"></script>
+<script type="text/javascript" src="js/rules_validation.js"></script>
 
 <script type="text/javascript">
 

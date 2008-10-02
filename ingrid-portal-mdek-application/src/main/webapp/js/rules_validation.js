@@ -310,29 +310,43 @@ function addAddressTableInfoValidation() {
 function addCommunicationTableValidation() {
 	var table = dojo.widget.byId("addressCom");
 	var popup = dojo.widget.createWidget("PopupContainer");
-  	popup.domNode.innerHTML = "Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ 'Email' beinhalten!";
 
-	dojo.event.connectOnce(table.store, "onAddData", table, "applyValidation");
+	// Get the string for 'email' from the backend. Since this function is called in the init phase it's safer
+	// to directly query the backend instead of the select box dataProvider. We can't be sure if the dp has
+	// already been initialized.
+	var def = getEmailString();
 
-	table._valid = false;
-
-	table.applyValidation = function() {
-		this._valid = false;
-		var data = this.store.getData();
-		for (var i = 0; i < data.length; ++i) {
-			if (data[i].communicationMedium == "Email"
-			      && typeof(data[i].communicationValue) != "undefined"
-			      && dojo.string.trim(data[i].communicationValue).length != 0) {
-				this._valid = true;
-				dojo.html.removeClass(dojo.byId("addressComLabel"), "important");
+	def.addCallback(function(emailEntry) {
+	  	var email = emailEntry[0];
+	  	popup.domNode.innerHTML = "Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ '"+email+"' beinhalten!";
+	
+		dojo.event.connectOnce(table.store, "onAddData", table, "applyValidation");
+	
+		table._valid = false;
+	
+		table.applyValidation = function() {
+			this._valid = false;
+			var data = this.store.getData();
+			for (var i = 0; i < data.length; ++i) {
+				if (data[i].communicationMedium == email
+				      && typeof(data[i].communicationValue) != "undefined"
+				      && dojo.string.trim(data[i].communicationValue).length != 0) {
+					this._valid = true;
+					dojo.html.removeClass(dojo.byId("addressComLabel"), "important");
+				}
+			}
+	
+			if (this._valid) {
+				popup.close();
+	
+			} else {
+				popup.open(this.domNode, this);			
 			}
 		}
+	});
+}
 
-		if (this._valid) {
-			popup.close();
-
-		} else {
-			popup.open(this.domNode, this);			
-		}
-	}
+function getEmailString() {
+	var def = UtilCatalog.getSysListEntry(dojo.widget.byId("addressComType").listId, 2);
+	return def;
 }

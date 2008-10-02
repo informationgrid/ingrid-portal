@@ -772,6 +772,28 @@ UtilCatalog.getCatalogLanguage = function() {
 	}
 }
 
+// returns a specific entry (array with three values [displayValue, identifier, default(Y or N)])from a syslist
+UtilCatalog.getSysListEntry = function(sysListId, entryId) {
+	var def = new dojo.Deferred();
+
+	// Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
+	var languageCode = UtilCatalog.getCatalogLanguage();
+	var lstIds = [sysListId];
+
+	CatalogService.getSysLists(lstIds, languageCode, {
+		callback: function(res) {
+			var entry = res[sysListId][entryId];
+			def.callback(entry);
+		},
+		errorHandler:function(mes){
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
+
+	return def;
+}
+
 // Security related utility functions
 var UtilSecurity = {}
 

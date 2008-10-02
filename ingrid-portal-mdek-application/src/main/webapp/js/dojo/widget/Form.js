@@ -34,8 +34,9 @@ dojo.widget.defineWidget(
     btnImage.src = "img/ic_expand_required_grey.gif";
 
     // load special rules
-    dojo.hostenv.loadPath(ingridJsPath+"rules_required.js");
-    dojo.hostenv.loadPath(ingridJsPath+"rules_validation.js");
+	// -> moved to mdek_entry.jsp 
+//    dojo.hostenv.loadPath(ingridJsPath+"rules_required.js");
+//    dojo.hostenv.loadPath(ingridJsPath+"rules_validation.js");
   },
 
   /*
