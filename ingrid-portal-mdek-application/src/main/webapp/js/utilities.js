@@ -772,7 +772,7 @@ UtilCatalog.getCatalogLanguage = function() {
 	}
 }
 
-// returns a specific entry (array with three values [displayValue, identifier, default(Y or N)])from a syslist
+// returns a specific entry (array with three values [displayValue, entryId, default(Y or N)])from a syslist
 UtilCatalog.getSysListEntry = function(sysListId, entryId) {
 	var def = new dojo.Deferred();
 
@@ -782,8 +782,17 @@ UtilCatalog.getSysListEntry = function(sysListId, entryId) {
 
 	CatalogService.getSysLists(lstIds, languageCode, {
 		callback: function(res) {
-			var entry = res[sysListId][entryId];
-			def.callback(entry);
+			var sysList = res[sysListId];
+			for (var i = 0; i < sysList.length; ++i) {
+				if (sysList[i][1] == entryId) { 
+					// Syslist entry found
+					def.callback(sysList[i]);
+					return;
+				}
+			}
+
+			// Syslist entry not found
+			def.errback();
 		},
 		errorHandler:function(mes){
 			dojo.debug("Error: "+mes);

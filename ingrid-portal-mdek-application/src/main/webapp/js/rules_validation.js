@@ -220,91 +220,99 @@ function addMinMaxBoundingBoxValidation(tableId) {
 function addAddressTableInfoValidation() {
 	var table = dojo.widget.byId("generalAddress");
 	var popup = dojo.widget.createWidget("PopupContainer");
-  	popup.domNode.innerHTML = "Die Addressverweistabelle muss mindestens eine Adresse vom Typ Auskunft beinhalten!";
 
 	dojo.event.connectOnce(table.store, "onAddData", table, "applyValidation");
 
+	// Get the string for 'Auskunft' from the backend. Since this function is called in the init phase it's safer
+	// to directly query the backend instead of the select box dataProvider. We can't be sure if the dp has
+	// already been initialized.
+	var def = getAuskunftString();
 
-	table._valid = false;
+	def.addCallback(function(auskunftEntry) {
+	  	var auskunftString = auskunftEntry[0];
+	  	popup.domNode.innerHTML = "Die Addressverweistabelle muss mindestens eine Adresse vom Typ '"+auskunftString+"' beinhalten!";
 
-	table.applyValidation = function() {
-		this._valid = false;
-		var data = this.store.getData();
-		for (var i = 0; i < data.length; ++i) {
-			if (data[i].nameOfRelation == "Auskunft" && typeof(data[i].uuid) != "undefined") {
-				this._valid = true;
-			}
-		}
+		table._valid = false;
 
-		if (this._valid) {
-			popup.close();
-
-			var rows = this.domNode.tBodies[0].rows;
-			// Iterate over all the rows in the table
-			for (var i = 0; i < rows.length; i++) {
-				var row = rows[i];
-				var rowData = this.getDataByRow(row);
-				// If we have a valid row continue. rowData can be null since we also display empty rows
-				if (rowData) {
-					var relNameIdx = this.getColumnIndex("nameOfRelation");
-					dojo.html.removeClass(row.cells[relNameIdx], this.fieldInvalidClass);
-				}
-			}
-		} else {
-			popup.open(this.domNode, this);
-			
-			var rows = this.domNode.tBodies[0].rows;
-			// Iterate over all the rows in the table
-			for (var i = 0; i < rows.length; i++) {
-				var row = rows[i];
-				var rowData = this.getDataByRow(row);
-				// If we have a valid row continue. rowData can be null since we also display empty rows
-				if (rowData) {
-					var relNameIdx = this.getColumnIndex("nameOfRelation");
-					dojo.html.addClass(row.cells[relNameIdx], this.fieldInvalidClass);
-				}
-			}
-		}
-	}
-
-	table.isValid = function() {
-		var data = this.store.getData();
-		var rows = this.domNode.tBodies[0].rows;
-		var relNameIdx = this.getColumnIndex("nameOfRelation");
-		for (var i in data) {
-			if (typeof(data[i].uuid) == "undefined") {
-				dojo.html.addClass(rows[i].cells[relNameIdx], this.fieldInvalidClass);
-				return false;
-			} else {
-				dojo.html.removeClass(rows[i].cells[relNameIdx], this.fieldInvalidClass);				
-			}
-		}
-		return true;
-	}
-
-
-	table.deleteRow = function(obj) {
-//		dojo.debug("delete called on:");
-//		dojo.debugShallow(obj);
-
-		// If a row of type 'Auskunft' is deleted, check if it is the last one in the table
-		if (obj.nameOfRelation == "Auskunft") {
+		table.applyValidation = function() {
+			this._valid = false;
 			var data = this.store.getData();
-			var numInfoEntries = 0;
-			for (var i in data) {
-				if (data[i].nameOfRelation == "Auskunft") {
-					numInfoEntries += 1;
+			for (var i = 0; i < data.length; ++i) {
+				if (data[i].nameOfRelation == auskunftString && typeof(data[i].uuid) != "undefined") {
+					this._valid = true;
 				}
 			}
-			if (numInfoEntries <= 1) {
+
+			if (this._valid) {
+				popup.close();
+
+				var rows = this.domNode.tBodies[0].rows;
+				// Iterate over all the rows in the table
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					var rowData = this.getDataByRow(row);
+					// If we have a valid row continue. rowData can be null since we also display empty rows
+					if (rowData) {
+						var relNameIdx = this.getColumnIndex("nameOfRelation");
+						dojo.html.removeClass(row.cells[relNameIdx], this.fieldInvalidClass);
+					}
+				}
+			} else {
 				popup.open(this.domNode, this);
-				return;
+				
+				var rows = this.domNode.tBodies[0].rows;
+				// Iterate over all the rows in the table
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					var rowData = this.getDataByRow(row);
+					// If we have a valid row continue. rowData can be null since we also display empty rows
+					if (rowData) {
+						var relNameIdx = this.getColumnIndex("nameOfRelation");
+						dojo.html.addClass(row.cells[relNameIdx], this.fieldInvalidClass);
+					}
+				}
 			}
 		}
-
-		this.store.removeData(obj);
-		this.onValueDeleted(obj);
-	}
+	
+		table.isValid = function() {
+			var data = this.store.getData();
+			var rows = this.domNode.tBodies[0].rows;
+			var relNameIdx = this.getColumnIndex("nameOfRelation");
+			for (var i in data) {
+				if (typeof(data[i].uuid) == "undefined") {
+					dojo.html.addClass(rows[i].cells[relNameIdx], this.fieldInvalidClass);
+					return false;
+				} else {
+					dojo.html.removeClass(rows[i].cells[relNameIdx], this.fieldInvalidClass);				
+				}
+			}
+			return true;
+		}
+	
+	
+		table.deleteRow = function(obj) {
+	//		dojo.debug("delete called on:");
+	//		dojo.debugShallow(obj);
+	
+			// If a row of type 'Auskunft' is deleted, check if it is the last one in the table
+			if (obj.nameOfRelation == auskunftString) {
+				var data = this.store.getData();
+				var numInfoEntries = 0;
+				for (var i in data) {
+					if (data[i].nameOfRelation == auskunftString) {
+						numInfoEntries += 1;
+					}
+				}
+				if (numInfoEntries <= 1) {
+					popup.open(this.domNode, this);
+					return;
+				}
+			}
+	
+			this.store.removeData(obj);
+			this.onValueDeleted(obj);
+		}		
+	});
 }
 
 function addCommunicationTableValidation() {
@@ -347,6 +355,11 @@ function addCommunicationTableValidation() {
 }
 
 function getEmailString() {
-	var def = UtilCatalog.getSysListEntry(dojo.widget.byId("addressComType").listId, 2);
+	var def = UtilCatalog.getSysListEntry(dojo.widget.byId("addressComType").listId, 3);
+	return def;
+}
+
+function getAuskunftString() {
+	var def = UtilCatalog.getSysListEntry(dojo.widget.byId("generalAddressCombobox").listId, 7);
 	return def;
 }

@@ -154,10 +154,13 @@ function isObjectPublishable(idcObject) {
 		publishable = false;
 	}
 
+	// Get the string (from the syslist) that is used to identify auskunft entries
+	var auskunftString = dojo.widget.byId("generalAddressCombobox").getDisplayValueForValue(7);
+
 	// Check if at least one entry exists with the correct relation type
-	if (dojo.lang.every(addressData, function(addressRef) { return ( dojo.string.trim(addressRef.nameOfRelation) != "Auskunft"); })) {
+	if (dojo.lang.every(addressData, function(addressRef) { return ( dojo.string.trim(addressRef.nameOfRelation) != auskunftString); })) {
 		dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");
-		dojo.debug("At least one entry has to be of type 'Auskunft'.");
+		dojo.debug("At least one entry has to be of type '"+auskunftString+"'.");
 		publishable = false;
 	}
 
