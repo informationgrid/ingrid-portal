@@ -1,13 +1,13 @@
 #set($assignedDS = $map.get("assignedDataset"))
 #set($DIRECT_LINK = $map.get("directLink"))
 Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid Software.
-Der folgende Datensatz wurde Ihrer Benutzergruppe zur Qualitätssicherung überwiesen: 
+Der folgende Datensatz wurde Ihrer Benutzergruppe zur QualitÃ¤tssicherung Ã¼berwiesen: 
 
 Titel: $assignedDS.title
 Uuid: $assignedDS.uuid
 #if( $assignedDS.type == "O")
-Direkter Link: ${DIRECT_LINK}%3FnodeType=O%26nodeId=$assignedDS.uuid
+Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$assignedDS.uuid
 #else
-Direkter Link: ${DIRECT_LINK}%3FnodeType=A%26nodeId=$assignedDS.uuid
+Direkter Link: ${DIRECT_LINK}?nodeType=A&nodeId=$assignedDS.uuid
 #end
 

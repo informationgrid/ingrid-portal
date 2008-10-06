@@ -290,11 +290,6 @@ function hideSplash(){
 <style type="text/css">
 	@import url(css/scrolling_table.css);
 </style>
-<!--[if IE]>
-<style type="text/css">
-	@import url(css/scrolling_table.ie.css);
-</style>
-<![endif]-->
 
 </head>
 

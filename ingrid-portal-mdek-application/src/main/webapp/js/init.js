@@ -902,7 +902,7 @@ var reassignToAuthorButton = null;
 			}
 			
 			// If the current node is assigned to the QA enable the reassign button
-			if (message.node.nodeDocType.search(/_QV/) != -1) {
+			if (message.node.nodeDocType.search(/_Q/) != -1) {
 				enableList.push(reassignToAuthorButton);
 			}
 		}

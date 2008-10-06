@@ -1,0 +1,348 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+_container_.addOnLoad(function() { });
+
+</script>
+</head>
+
+<body>
+
+  <!-- CONTENT START -->
+  <div dojoType="ContentPane" layoutAlign="client">
+  
+    <div id="contentSection" class="contentBlockWhite top">
+      <div id="winNavi">
+        <a href="#" title="Hilfe">[?]</a>
+  	  </div>
+  	  <div id="import" class="content">
+
+        <!-- LEFT HAND SIDE CONTENT START -->
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+        <div class="inputContainer field grey w939">
+          <div class="inputContainer">
+            <span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Import-Datei')">Import-Datei</label></span>
+            <span><input type="file" id="importFile" name="importFile" size="80" /> <a href="#" class="buttonBlue" title="Analysieren" id="analyzeBtn" style="visibility:hidden">Analysieren</a></span>
+          </div>
+          <div class="checkboxContainer">
+            <span class="input"><input type="radio" name="importType" id="importType1" class="radio"/><label class="noRightMargin" for="importType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaum')">Teilbaum</label></span>
+          </div>
+          <div class="checkboxContainer noSpaceBelow">
+            <span class="input"><input type="radio" name="importType" id="importType2" class="radio"/><label class="noRightMargin" for="importType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Universeller Import')">Universeller Import</label></span>
+          </div>
+    	  </div>
+
+        <!-- IMPORT TEILBAUM START -->
+        <!-- SPLIT CONTAINER START -->
+        <div id="importTree">
+          <span class="label"><label>Teilbaumimport</label></span>
+          <div dojoType="SplitContainer" id="importTreeContainer" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
+              <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
+              <div class="inputContainer grey noSpaceBelow">
+              	<div dojoType="ContentPane" id="treeImportTree">
+                  <!-- tree components -->
+                  <div dojoType="ingrid:TreeController" widgetId="treeControllerObjects" RpcUrl="server/treelistener.php"></div>
+                  <div dojoType="ingrid:TreeListener" widgetId="treeListenerObjects"></div>	
+                  <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsObjects"></div>	
+                  <div dojoType="ingrid:TreeDecorator" listener="treeListenerObjects"></div>
+                  
+                  <!-- tree -->
+                  <div dojoType="ingrid:Tree" listeners="treeControllerObjects;treeListenerObjects;treeDocIconsObjects" widgetId="tree">
+                    <!-- uncomment the next 2 lines in production
+                  	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
+                  	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+                    end of uncomment -->
+                    <!-- remove the next lines in production -->
+                  	<div dojoType="ingrid:TreeNode" title="Objekte" widgetId="o1" nodeDocType="Objects" nodeAppType="Objekt">
+                    	<div dojoType="ingrid:TreeNode" title="Rechtsgrundlagen" widgetId="o2" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+                    		<div dojoType="ingrid:TreeNode" title="Niedersächsische Rechtsgrundlagen" widgetId="o3" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+                      		<div dojoType="ingrid:TreeNode" title="Gesetze des Landes Niedersachsen" widgetId="o31" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="o311" contextMenu="contextMenu1" nodeDocType="Class1" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="o312" contextMenu="contextMenu1" nodeDocType="Class2" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="o313" contextMenu="contextMenu1" nodeDocType="Class4" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="o314" contextMenu="contextMenu1" nodeDocType="Class5" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="o315" contextMenu="contextMenu1" nodeDocType="Class6" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="o316" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Elftes Gesetz zur Änderung des Niedersächsischen Wassergesetzes" widgetId="o317" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Niedersächsisches Wattenmeer'" widgetId="o318" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Abwasserabgabengesetz (Nds. AG AbwAG)" widgetId="o319" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		</div>
+                      		<div dojoType="ingrid:TreeNode" title="Verordnungen und Vorschriften des Landes Niedersachsen" widgetId="o32" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                    		</div>
+                    		<div dojoType="ingrid:TreeNode" title="Bundesdeutsche Rechtsgrundlagen" widgetId="o4" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                    		<div dojoType="ingrid:TreeNode" title="Europäische und internationale Rechtsgrundlagen" widgetId="o5" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                    	</div>
+                  	</div>
+                  	<div dojoType="ingrid:TreeNode" title="Adressen" widgetId="a0" nodeDocType="Addresses" nodeAppType="Adresse">
+                    	<div dojoType="ingrid:TreeNode" title="NDS. UMWELTMINISTERIUM" widgetId="a1" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 3: Immissionsschutz, Kreislaufwirtschaft und Abfall" widgetId="a11" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		<div dojoType="ingrid:TreeNode" title="Referatsgruppe Natur und Landschaft" widgetId="a12" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Artenschutz" widgetId="a121" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Naturparke" widgetId="a122" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		</div>
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 4: Energie, Atomaufsicht und Strahlenschutz" widgetId="a13" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Strahlenschutz" widgetId="a131" contextMenu="contextMenu1" nodeDocType="InstitutionUnit_B" nodeAppType="Adresse"></div>
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Energiepolitik" widgetId="a132" contextMenu="contextMenu1" nodeDocType="InstitutionPerson_Q" nodeAppType="Adresse"></div>
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Kernenergie" widgetId="a133" contextMenu="contextMenu1" nodeDocType="PersonAddress_R" nodeAppType="Adresse"></div>
+                    		</div>
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 1: Zentrale Aufgaben" widgetId="a14" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 2: Wasserwirtschaft" widgetId="a15" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    	</div>
+                  	</div>
+                    <!-- end of remove -->
+                  </div>
+                  <div class="spacer"></div>
+                </div>
+              </div>
+            </div>
+            <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM END -->
+
+            <!-- RIGHT HAND SIDE CONTENT IMPORT TEILBAUM START -->
+            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="77.5">
+              <div class="selectEntryBtn">
+                <span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+            	</div>
+              <div class="selectEntryBtn" id="btnPos1">
+                <span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+            	</div>
+       
+              <div id="importTreeData" class="inputContainer grey field w659">
+                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')">Ausgew&auml;hltes &uuml;bergeordnetes Objekt</label></span>
+                <span class="input spaceBelow"><input type="text" id="importTreeParentObject" name="importTreeParentObject" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" value="WABIS - Altablagerungen" /></span>
+                <span class="label"><label for="importTreeAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlte Auskunftsadresse')">Ausgew&auml;hlte Auskunftsadresse</label></span>
+                <span class="input"><input type="text" id="importTreeAddress" name="importTreeAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" value="Behmann, J&ouml;rg" /></span>
+            	</div>
+            </div>
+          </div>
+          <!-- RIGHT HAND SIDE CONTENT IMPORT TEILBAUM END -->
+
+          <div class="inputContainer">
+            <span class="button w915"><a href="#" class="buttonBlue" title="Zuordnung zur&uuml;cksetzen">Zur&uuml;cksetzen</a><a href="#" class="buttonBlue" title="Import starten">Import starten</a></span>
+      	  </div>
+        </div>
+        <!-- IMPORT TEILBAUM END -->
+
+        <!-- IMPORT UNIVERSELL START -->
+        <!-- SPLIT CONTAINER START -->
+        <div id="importUniversal">
+          <span class="label"><label>Universeller Import</label></span>
+          <div dojoType="SplitContainer" id="importUniversalContainer" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
+              <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
+              <div class="inputContainer grey noSpaceBelow">
+              	<div dojoType="ContentPane" id="treeImportUniversal">
+                  <!-- tree components -->
+                  <div dojoType="ingrid:TreeController" widgetId="u_treeControllerObjects" RpcUrl="server/treelistener.php"></div>
+                  <div dojoType="ingrid:TreeListener" widgetId="u_treeListenerObjects"></div>	
+                  <div dojoType="ingrid:TreeDocIcons" widgetId="u_treeDocIconsObjects"></div>	
+                  <div dojoType="ingrid:TreeDecorator" listener="u_treeListenerObjects"></div>
+                  
+                  <!-- tree -->
+                  <div dojoType="ingrid:Tree" listeners="u_treeControllerObjects;u_treeListenerObjects;u_treeDocIconsObjects" widgetId="u_tree">
+                    <!-- uncomment the next 2 lines in production
+                  	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
+                  	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+                    end of uncomment -->
+                    <!-- remove the next lines in production -->
+                  	<div dojoType="ingrid:TreeNode" title="Objekte" widgetId="u_o1" nodeDocType="Objects" nodeAppType="Objekt">
+                    	<div dojoType="ingrid:TreeNode" title="Rechtsgrundlagen" widgetId="u_o2" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+                    		<div dojoType="ingrid:TreeNode" title="Niedersächsische Rechtsgrundlagen" widgetId="u_o3" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+                      		<div dojoType="ingrid:TreeNode" title="Gesetze des Landes Niedersachsen" widgetId="u_o31" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt">
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Harz'" widgetId="u_o311" contextMenu="contextMenu1" nodeDocType="Class1" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen dem Land Niedersachsen und dem Land Sachsen-Anhalt zur Zusammenführung des Nationalparks 'Harz' und des Nationalparks 'Hochharz' (Harz-StVG)" widgetId="u_o312" contextMenu="contextMenu1" nodeDocType="Class2" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag über die Bildung einer gemeinsamen Einrichtung nach § 6 Abs.1 Satz 7 des Abfallverbringungsgesetzes" widgetId="u_o313" contextMenu="contextMenu1" nodeDocType="Class4" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Gesetz über die Umweltverträglichkeitsprüfung (NUVPG)" widgetId="u_o314" contextMenu="contextMenu1" nodeDocType="Class5" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Wasserverbandsgesetz (Nds. AGWVG)" widgetId="u_o315" contextMenu="contextMenu1" nodeDocType="Class6" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz zum Staatsvertrag zwischen der freien Hansestadt Hamburg und dem Land Niedersachsen über öffentlich-rechtliche Vereinbarungen auf dem Gebiet der Abwasserbeseitigung (AbwHH-S)" widgetId="u_o316" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Elftes Gesetz zur Änderung des Niedersächsischen Wassergesetzes" widgetId="u_o317" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Gesetz über den Nationalpark 'Niedersächsisches Wattenmeer'" widgetId="u_o318" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		  <div dojoType="ingrid:TreeNode" title="Niedersächsisches Ausführungsgesetz zum Abwasserabgabengesetz (Nds. AG AbwAG)" widgetId="u_o319" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                      		</div>
+                      		<div dojoType="ingrid:TreeNode" title="Verordnungen und Vorschriften des Landes Niedersachsen" widgetId="u_o32" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                    		</div>
+                    		<div dojoType="ingrid:TreeNode" title="Bundesdeutsche Rechtsgrundlagen" widgetId="u_o4" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                    		<div dojoType="ingrid:TreeNode" title="Europäische und internationale Rechtsgrundlagen" widgetId="u_o5" contextMenu="contextMenu1" nodeDocType="Class3" nodeAppType="Objekt"></div>
+                    	</div>
+                  	</div>
+                  	<div dojoType="ingrid:TreeNode" title="Adressen" widgetId="a_a0" nodeDocType="Addresses" nodeAppType="Adresse">
+                    	<div dojoType="ingrid:TreeNode" title="NDS. UMWELTMINISTERIUM" widgetId="a_a1" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 3: Immissionsschutz, Kreislaufwirtschaft und Abfall" widgetId="a_a11" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		<div dojoType="ingrid:TreeNode" title="Referatsgruppe Natur und Landschaft" widgetId="a_a12" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Artenschutz" widgetId="a_a121" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Naturparke" widgetId="a_a122" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		</div>
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 4: Energie, Atomaufsicht und Strahlenschutz" widgetId="a_a13" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse">
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Strahlenschutz" widgetId="a_a131" contextMenu="contextMenu1" nodeDocType="InstitutionUnit_B" nodeAppType="Adresse"></div>
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Energiepolitik" widgetId="a_a132" contextMenu="contextMenu1" nodeDocType="InstitutionPerson_Q" nodeAppType="Adresse"></div>
+                    		  <div dojoType="ingrid:TreeNode" title="Fachgruppe Kernenergie" widgetId="a_a133" contextMenu="contextMenu1" nodeDocType="PersonAddress_R" nodeAppType="Adresse"></div>
+                    		</div>
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 1: Zentrale Aufgaben" widgetId="a_a14" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    		<div dojoType="ingrid:TreeNode" title="Abteilung 2: Wasserwirtschaft" widgetId="a_a15" contextMenu="contextMenu1" nodeDocType="Institution" nodeAppType="Adresse"></div>
+                    	</div>
+                  	</div>
+                    <!-- end of remove -->
+                  </div>
+                  <div class="spacer"></div>
+                </div>
+              </div>
+            </div>
+            <!-- LEFT HAND SIDE CONTENT IMPORT UNIVERSAL END -->
+
+            <!-- RIGHT HAND SIDE CONTENT IMPORT UNIVERSAL START -->
+            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeShare="77.5">
+              <div id="importUniversalBtn" class="inputContainer">
+                <span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+            	</div>
+              <div id="importUniversalBtn" class="inputContainer">
+                <span class="buttonCol" id="btnPos2"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+            	</div>
+              <div id="importUniversalBtn" class="inputContainer">
+                <span class="buttonCol" id="btnPos3"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
+            	</div>
+
+              <div id="importUniversalData" class="inputContainer grey field w659">
+                <div class="inputContainer h130">
+                  <span class="label"><label for="importUniversalParent" onclick="javascript:dialog.showContextHelp(arguments[0], 'Elternobjekt festlegen')">Elternobjekt festlegen</label></span>
+                  <div class="tableContainer rows5">
+              	    <table id="importUniversalParent" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive readonly w636 relativePos">
+              	      <thead>
+              		      <tr>
+                    			<th field="importObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th field="importObj" dataType="String" width="288">Objekt aus Import</th>
+                    			<th field="assignedObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th field="assignedObj" dataType="String" width="288">Zugeordnetes Objekt</th>
+              		      </tr>
+              	      </thead>
+              	      <tbody>
+              	        <tr value="1">
+              	          <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+              	          <td>Objekt 1 aus Import</td>
+              	          <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+              	          <td>Objekt x aus DB</td></tr>
+              	        <tr value="2">
+              	          <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+              	          <td>Objekt 2 aus Import</td>
+              	          <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+              	          <td>Objekt y aus DB</td></tr>
+              	        <tr value="3">
+              	          <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+              	          <td>Objekt 3 aus Import</td>
+              	          <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
+              	          <td>Objekt z aus DB</td></tr>
+              	      </tbody>
+              	    </table>
+                  </div>
+                </div>
+    
+                <div class="inputContainer h130">
+                  <span class="label"><label for="importUniversalInfoAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auskunfts-Adresse festlegen')">Auskunfts-Adresse festlegen</label></span>
+                  <div class="tableContainer rows5">
+              	    <table id="importUniversalInfoAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive readonly w636 relativePos">
+              	      <thead>
+              		      <tr>
+                    			<th field="importObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th field="importObj" dataType="String" width="288">Adresse aus Import</th>
+                    			<th field="assignedObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th field="assignedObj" dataType="String" width="288">Zugeordnete Adresse</th>
+              		      </tr>
+              	      </thead>
+              	      <tbody>
+              	        <tr value="1">
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse 1 aus Import</td>
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse x aus DB</td></tr>
+              	        <tr value="2">
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse 2 aus Import</td>
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse y aus DB</td></tr>
+              	        <tr value="3">
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse 3 aus Import</td>
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse z aus DB</td></tr>
+              	      </tbody>
+              	    </table>
+                  </div>
+                </div>      
+   
+                <div class="inputContainer h130">
+                  <span class="label"><label for="importUniversalInfoAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Elternadresse festlegen')">Elternadresse festlegen</label></span>
+                  <div class="tableContainer">
+              	    <table id="importUniversalInfoAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive readonly w636 relativePos">
+              	      <thead>
+              		      <tr>
+                    			<th field="importObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th field="importObj" dataType="String" width="288">Adresse aus Import</th>
+                    			<th field="assignedObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th field="assignedObj" dataType="String" width="288">Zugeordnete Adresse</th>
+              		      </tr>
+              	      </thead>
+              	      <tbody>
+              	        <tr value="1">
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse 1 aus Import</td>
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse x aus DB</td></tr>
+              	        <tr value="2">
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse 2 aus Import</td>
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse y aus DB</td></tr>
+              	        <tr value="3">
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse 3 aus Import</td>
+              	          <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+              	          <td>Adresse z aus DB</td></tr>
+              	      </tbody>
+              	    </table>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- RIGHT HAND SIDE CONTENT IMPORT UNIVERSAL END -->
+
+          <div id="importUniversalButtons" class="inputContainer">
+            <span class="button w915"><a href="#" class="buttonBlue" title="Zuordnung zur&uuml;cksetzen">Zur&uuml;cksetzen</a><a href="#" class="buttonBlue" title="Import starten">Import starten</a></span>
+      	  </div>
+        </div>
+        <!-- IMPORT UNIVERSAL END -->
+
+        <div id="processInfo" class="inputContainer noSpaceBelow">
+          <div class="infobox w941">
+            <span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
+            <span class="title"><a href="javascript:toggleInfo('processInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+              <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+            <div id="processInfoContent">
+              <p>Die <a href="#" title="Logdatei">[Logdatei]</a> des Imports steht Ihnen zur Verfügung.</p>
+              <table cellspacing="0">
+                <tr>
+                  <td>Gestartet am:</td>
+                  <td>13.2.2007, 00:02 Uhr</td></tr>
+                  <td>Beendet am:</td>
+                  <td>13.2.2007, 19:32 Uhr</td></tr>
+                  <td>Anzahl Objekte:</td>
+                  <td>132110</td></tr>
+                  <td>Anzahl Adressen:</td>
+                  <td>10</td></tr>
+              </table>
+<!--              <span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>-->
+        	  </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+
+</body>
+</html>

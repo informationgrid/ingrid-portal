@@ -8,10 +8,9 @@ var scriptScope = this;
 
 
 <body>
-
 	<!-- CONTENT START -->
 	<div dojoType="ContentPane" layoutAlign="client">
-  
+
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
 				<a href="#" title="Hilfe">[?]</a>
@@ -25,7 +24,7 @@ var scriptScope = this;
 				<div class="inputContainer">
 					<span class="buttonLeft w644 transparent"><a href="#" class="buttonBlue first" title="Pr&uuml;fung starten">Pr&uuml;fung starten</a></span>
 				</div>
-        
+
 				<div class="inputContainer noSpaceBelow">
 					<div id="analysisInfo" class="infobox w652">
 						<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
@@ -52,7 +51,7 @@ var scriptScope = this;
 				<div class="inputContainer">
 					<span class="label">Ergebnis der Analyse des Datenbestandes</span>
 					<div widgetId="analysisAccordion" dojoType="AccordionContainer" duration="200" labelNodeClass="label" containerNodeClass="accBody"	style="width:666px; height:572px;">
-						<div dojoType="ingrid:AccordionPane" label="Fehlerhafte Einträge in 1:n Tabellen" icon="img/ic_analysis_cross.gif" itemCount="2" infoUrl="" selected="true">
+						<div dojoType="ingrid:AccordionPane" label="Fehlerhafte Eintr&auml;ge in 1:n Tabellen" icon="img/ic_analysis_cross.gif" itemCount="2" infoUrl="" selected="true">
 							<div dojoType="ContentPane">
 								<table id="analysisList1" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" headClass="fixedHeader" tbodyClass="scrollContent rows13" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
 									<thead>
@@ -65,15 +64,15 @@ var scriptScope = this;
 									<tbody>
 										<tr value="1">
 											<td>123</td>
-											<td>fehlerhafte Einträge in t011_obj_project</td>
+											<td>fehlerhafte Eintr&auml;ge in t011_obj_project</td>
 											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in 1:n Tabellen', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
 										<tr value="2">
 											<td>3</td>
-											<td>fehlerhafte Einträge in t011_obj_serv</td>
+											<td>fehlerhafte Eintr&auml;ge in t011_obj_serv</td>
 											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in 1:n Tabellen', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
 										<tr value="3">
 											<td>26</td>
-											<td>fehlerhafte Einträge in t011_obj_data</td>
+											<td>fehlerhafte Eintr&auml;ge in t011_obj_data</td>
 											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in 1:n Tabellen', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
 									</tbody>
 								</table>
@@ -160,7 +159,7 @@ var scriptScope = this;
 							</div>
 						</div>
 
-						<div dojoType="ingrid:AccordionPane" label="Objekte, die ungültige Adressverweise haben" icon="img/ic_analysis_check.gif" itemCount="10" infoUrl="javascript:dialog.showPage('Objekte, die ungültige Adressverweise haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+						<div dojoType="ingrid:AccordionPane" label="Objekte, die ung&uuml;ltige Adressverweise haben" icon="img/ic_analysis_check.gif" itemCount="10" infoUrl="javascript:dialog.showPage('Objekte, die ung&uuml;ltige Adressverweise haben', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
 							<div dojoType="ContentPane">
 								<table id="analysisList3" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
 									<thead>
@@ -229,7 +228,7 @@ var scriptScope = this;
 							</div>
 						</div>
 
-						<div dojoType="ingrid:AccordionPane" label="Fehlerhafte Einträge in Objekt- bzw. Adress-Verweistabellen" icon="img/ic_analysis_check.gif" itemCount="2" infoUrl="">
+						<div dojoType="ingrid:AccordionPane" label="Fehlerhafte Eintr&auml;ge in Objekt- bzw. Adress-Verweistabellen" icon="img/ic_analysis_check.gif" itemCount="2" infoUrl="">
 							<div dojoType="ContentPane">
 								<table id="analysisList6" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable interactive w668 relativePos lightHead">
 									<thead>
@@ -242,11 +241,11 @@ var scriptScope = this;
 									<tbody>
 										<tr value="1">
 											<td>424</td>
-											<td>Fehlerhafte Einträge in der Objekthierarchie (auch Verweise): kein gültiges Zielobjekt</td>
+											<td>Fehlerhafte Eintr&auml;ge in der Objekthierarchie (auch Verweise): kein g&uuml;ltiges Zielobjekt</td>
 											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in der Objekthierarchie', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
 										<tr value="2">
 											<td>2</td>
-											<td>Fehlerhafte Einträge in der Adresshierarchie (auch Verweise): keine gültige Zieladresse</td>
+											<td>Fehlerhafte Eintr&auml;ge in der Adresshierarchie (auch Verweise): keine g&uuml;ltige Zieladresse</td>
 											<td><a href="javascript:dialog.showPage('Fehlerhafte Eintr&auml;ge in der Adresshierarchie', 'admin_g_katalog_analyse_info.html', 502, 260, false);" title="Info">Info</a></td></tr>
 									</tbody>
 								</table>
@@ -277,7 +276,7 @@ var scriptScope = this;
 							</div>
 						</div>
 
-						<div dojoType="ingrid:AccordionPane" label="Objekte bzw. Adressen mit fehlerhaften Einträgen in geändert von und MD-Verantwortlicher" icon="img/ic_analysis_check.gif" itemCount="5" infoUrl="javascript:dialog.showPage('Objekte bzw. Adressen mit fehlerhaften Eintr&auml;gen', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+						<div dojoType="ingrid:AccordionPane" label="Objekte bzw. Adressen mit fehlerhaften Eintr&auml;gen in ge&auml;ndert von und MD-Verantwortlicher" icon="img/ic_analysis_check.gif" itemCount="5" infoUrl="javascript:dialog.showPage('Objekte bzw. Adressen mit fehlerhaften Eintr&auml;gen', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
 							<div dojoType="ContentPane">
 								<table id="analysisList8" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" cellspacing="0" class="filteringTable w668 relativePos lightHead">
 									<thead>
@@ -301,7 +300,7 @@ var scriptScope = this;
 							</div>
 						</div>
 
-						<div dojoType="ingrid:AccordionPane" label="Einträge im Feld gesetzliche Grundlagen, die nicht in der Schlüsseltabelle auftreten" icon="img/ic_analysis_info.gif" itemCount="1" infoUrl="javascript:dialog.showPage('Eintr&auml;ge im Feld gesetzliche Grundlagen', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
+						<div dojoType="ingrid:AccordionPane" label="Eintr&auml;ge im Feld gesetzliche Grundlagen, die nicht in der Schl&uuml;sseltabelle auftreten" icon="img/ic_analysis_info.gif" itemCount="1" infoUrl="javascript:dialog.showPage('Eintr&auml;ge im Feld gesetzliche Grundlagen', 'admin_g_katalog_analyse_info.html', 502, 260, false);">
 							<div dojoType="ContentPane">
 								<table id="analysisList9" dojoType="ingrid:FilteringTable" minRows="13" displayField="name" headClass="fixedHeader" tbodyClass="scrollContent rows13" cellspacing="0" class="filteringTable w668 relativePos lightHead">
 									<thead>
@@ -314,7 +313,7 @@ var scriptScope = this;
 									<tbody>
 										<tr value="1">
 											<td>261</td>
-											<td>Einträge 'gesetzliche Grundlagen', die nicht in der Schlüsseltabelle vorhanden sind</td>
+											<td>Eintr&auml;ge 'gesetzliche Grundlagen', die nicht in der Schl&uuml;sseltabelle vorhanden sind</td>
 											<td><a href="javascript:dialog.showPage('Eintr&auml;ge, die nicht in der Schl&uuml;sseltabelle vorhanden sind', 'admin_g_katalog_gesetzl_grundlagen.html', 670, 290, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Bearbeiten" /></a></td></tr>
 									</tbody>
 								</table>

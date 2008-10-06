@@ -6,8 +6,8 @@ Der folgende Datensatz wurde im Hierarchiebaum verschoben:
 Titel: $movedDS.title
 Uuid: $movedDS.uuid
 #if( $movedDS.type == "O")
-Direkter Link: ${DIRECT_LINK}%3FnodeType=O%26nodeId=$movedDS.uuid
+Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$movedDS.uuid
 #else
-Direkter Link: ${DIRECT_LINK}%3FnodeType=A%26nodeId=$movedDS.uuid
+Direkter Link: ${DIRECT_LINK}?nodeType=A&nodeId=$movedDS.uuid
 #end
 

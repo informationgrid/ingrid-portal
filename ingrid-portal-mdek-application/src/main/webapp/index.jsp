@@ -17,8 +17,30 @@ function loadit() {
 			forwardToMdekEntry();
 		},
 		errorHandler: function(errMsg, err) {
-			alert("Die Applikation kann nicht geöffnet werden. Bei der Anmeldung ist folgender Fehler aufgetreten: "+errMsg);
-			document.location.href='closeWindow.jsp';
+			if (errMsg.indexOf("USER_LOGIN_ERROR") != -1) {
+				// -- Redirect to the portal login page --
+				
+				// get the current url without request parameters
+				var baseUrl;
+				var tempIndex = document.location.href.indexOf("?");
+				if (tempIndex == -1) {
+					baseUrl = document.location.href;
+				} else {
+					baseUrl = document.location.href.substring(0, tempIndex);
+				}
+
+				// build the target url by replacing index.jsp with a link to the portal login page. Keep all parameters
+				var redirectUrl = document.location.href.replace(/\?/, "%3F");
+				redirectUrl = redirectUrl.replace(/&/g, "%26");
+				redirectUrl = redirectUrl.replace(/index.jsp/, "../ingrid-portal/portal/service-myportal.psml?r="+baseUrl);
+	
+				// redirect
+				document.location.href = redirectUrl;
+
+			} else {
+				alert("Die Applikation kann nicht geöffnet werden. Bei der Anmeldung ist folgender Fehler aufgetreten: "+errMsg);
+				document.location.href='closeWindow.jsp';
+			}
 		}
 	});
 };

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+_container_.addOnLoad(function() {
+	initSysLists();
+	refreshProcessInfo();
+});
+
+function startExportCatalog() {
+	dojo.debug("Catalog Export not implemented yet.");
+}
+
+function startExportCriteria() {
+	dojo.debug("Criteria Export not implemented yet.");
+}
+
+function startExportPartial() {
+	dojo.debug("Partial Export not implemented yet.");
+}
+
+
+// Button function for 'start export'. Send a request to the backend to start a new export job
+scriptScope.startExport = function() {
+	if (dojo.byId("exportType0").checked) {
+		startExportCatalog();
+
+	} else if (dojo.byId("exportType1").checked) {
+		startExportCriteria();
+
+	} else if (dojo.byId("exportType2").checked) {
+		startExportPartial();
+
+	} else {
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen Exporttyp aus.", dialog.WARNING);
+		dojo.debug("No export type selected.");
+	}
+}
+
+// Button function for the 'select dataset' link.
+scriptScope.selectDataset = function() {
+	var deferred = new dojo.Deferred();
+
+	deferred.addCallback(function(selectedDataset) {
+		
+	});
+
+	dialog.showPage('Teilbaum ausw&auml;hlen', 'mdek_admin_export_select_dataset.html', 522, 520, true, {
+		// custom parameters
+		resultHandler: deferred	
+	});
+}
+
+// Reload the process info for the last run from the backend
+function refreshProcessInfo() {
+	dojo.debug("refresh Process Info not implemented yet");
+}
+
+
+function initSysLists() {
+	var def = new dojo.Deferred();
+
+	var selectWidgetIDs = ["exportXMLCriteria"]; 
+	// Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
+	var languageCode = UtilCatalog.getCatalogLanguage();
+
+	var lstIds = [];
+	dojo.lang.forEach(selectWidgetIDs, function(item){
+		lstIds.push(dojo.widget.byId(item).listId);
+	});
+
+	CatalogService.getSysLists(lstIds, languageCode, {
+		callback: function(res) {
+			dojo.lang.forEach(selectWidgetIDs, function(widgetId) {
+				var selectWidget = dojo.widget.byId(widgetId);
+				selectWidget.dataProvider.setData(res[selectWidget.listId]);	
+			});
+			def.callback();
+		},
+		errorHandler:function(mes){
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
+
+	return def;
+}
+
+</script>
+</head>
+
+<body>
+
+	<!-- CONTENT START -->
+	<div dojoType="ContentPane" layoutAlign="client">
+
+		<div class="contentBlockWhite top">
+			<div id="winNavi">
+				<a href="#" title="Hilfe">[?]</a>
+			</div>
+			<div class="content">
+	
+				<!-- LEFT HAND SIDE CONTENT START -->
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+				<div class="inputContainer field grey noSpaceBelow">
+					<div class="checkboxContainer">
+						<span class="input"><input type="radio" name="exportType" id="exportType0" class="radio" /><label class="noRightMargin" for="exportType0" onclick="javascript:dialog.showContextHelp(arguments[0], 'Katalogexport')">Katalogexport</label></span>
+						<div class="fill"></div>
+					</div>
+					<div class="checkboxContainer">
+						<span class="entry first"><input type="radio" name="exportType" id="exportType1" class="radio" /><label class="noRightMargin" for="exportType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilexport')">Teilexport</label></span>
+						<span class="rightAlign marginRight"><div dojoType="ingrid:Combobox" toggle="plain" listId="1370" style="width:485px;" widgetId="exportXMLCriteria"></div></span>
+						<div class="fill"></div>
+					</div>
+					<div class="checkboxContainer">
+						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaumexport')">Teilbaumexport Kriterium:</label></span>
+						<span class="functionalLink marginRight" style="position:relative; top:24px"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScope.selectDataset()" title="Teilbaum ausw&auml;hlen [Popup]">Teilbaum ausw&auml;hlen</a></span>
+						<span class="rightAlign marginRight"><input type="text" id="exportTreeName" name="exportTreeName" class="w503" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Nur der ausgew&auml;hlte Datensatz')">Nur der ausgew&auml;hlte Datensatz</label></span></span>
+						<div class="fill"></div>
+					</div>
+	
+<!-- 
+          <div class="checkboxContainer">
+            <span class="input"><input type="radio" name="exportType" id="exportType3" class="radio" /><label class="noRightMargin" for="exportType3" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inkrementeller Export')">Inkrementeller Export</label></span>
+            <div class="fill"></div>
+          </div>
+          <span class="checkboxContainer noSpaceBelow insetCheckbox"><label>Es werden alle Objekte/Adressen exportiert, die nach dem tt.mm.jjjj geändert wurden.</label><br />
+            <label>Bereits exportierte Objekte: </label><br />
+            <label>Bereits exportierte Adressen: </label></span>
+          <div class="spacerField"></div>
+    	  </div>
+ -->
+	 
+				</div> <!-- inputContainer end -->
+<!-- 	
+				<div class="inputContainer">
+					<span class="button w644"><a href="#" class="buttonBlue" title="Export starten">Export starten</a></span>
+				</div>
+-->
+				<div class="inputContainer">
+					<span class="button w644" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Export starten" onClick="javascript:scriptScope.startExport();">Export starten</button>
+						</span>
+					</span>
+		            <div class="fill"></div>
+				</div>
+
+				<div class="inputContainer noSpaceBelow">
+					<div id="processInfo" class="infobox w670">
+						<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
+						<span class="title"><a href="javascript:toggleInfo('processInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+	              			<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
+	              		</span>
+						<div id="processInfoContent">
+							<p>Ihre Export-Datei steht Ihnen <a href="#" title="Export-Datei: Bezeichnung">hier</a> zur Verf&uuml;gung.</p>
+							<table cellspacing="0">
+								<tr>
+									<td>Gestartet am:</td>
+									<td>13.2.2007, 00:02 Uhr</td></tr>
+									<td>Beendet am:</td>
+									<td>13.2.2007, 19:32 Uhr</td></tr>
+									<td>Anzahl Objekte:</td>
+									<td>132110</td></tr>
+									<td>Anzahl Adressen:</td>
+									<td>10</td></tr>
+							</table>
+<!--              			<span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>-->
+						</div> <!-- processInfoContent end -->
+					</div> <!-- processInfo end -->
+				</div> <!-- inputContainer end -->
+				<!-- LEFT HAND SIDE CONTENT END -->
+			</div> <!-- content end -->
+		</div> <!-- contentBlockWhite end -->
+	</div> <!-- ContentPane end -->
+<!-- CONTENT END -->
+
+</body>
+</html>

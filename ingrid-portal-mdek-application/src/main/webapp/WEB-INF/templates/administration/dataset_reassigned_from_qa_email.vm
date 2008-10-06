@@ -1,13 +1,13 @@
 #set($reassignedDS = $map.get("reassignedDataset"))
 #set($DIRECT_LINK = $map.get("directLink"))
 Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid Software.
-Der folgende Datensatz wurde Ihnen von der Qualitätssicherung rücküberwiesen: 
+Der folgende Datensatz wurde Ihnen von der QualitÃ¤tssicherung rÃ¼ckÃ¼berwiesen: 
 
 Titel: $reassignedDS.title
 Uuid: $reassignedDS.uuid
 #if( $reassignedDS.type == "O")
-Direkter Link: ${DIRECT_LINK}%3FnodeType=O%26nodeId=$reassignedDS.uuid
+Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$reassignedDS.uuid
 #else
-Direkter Link: ${DIRECT_LINK}%3FnodeType=A%26nodeId=$reassignedDS.uuid
+Direkter Link: ${DIRECT_LINK}?nodeType=A&nodeId=$reassignedDS.uuid
 #end
 

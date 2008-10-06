@@ -220,7 +220,7 @@ scriptScope.addValuesToObject = function() {
 
 			// If the topic was found, update the bounding box and continue
 			if (storedTopic) {
-				store.update(storedTopic, "label", topic.name+", "+topic.type);
+				spatialStore.update(storedTopic, "label", topic.name+", "+topic.type);
 				if (topic.boundingBox) {
 					spatialStore.update(storedTopic, "longitude1", topic.boundingBox[0]);
 					spatialStore.update(storedTopic, "latitude1", topic.boundingBox[1]);
