@@ -363,7 +363,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 		String textLine = record.getString("t021_communication.comm_value");
 		if (UtilsVelocity.hasContent(record.getString("t021_communication.commtype_value")).booleanValue()) {
 			if (textLine != null) {
-				record.getString("t021_communication.commtype_value").concat(": ").concat(textLine);
+				textLine = record.getString("t021_communication.commtype_value").concat(": ").concat(textLine);
 			}
 		}
 		element.put("body", textLine);
