@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 
 public interface ObjectRequestHandler {
 
@@ -26,4 +27,5 @@ public interface ObjectRequestHandler {
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum);
+	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
 }

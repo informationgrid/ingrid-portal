@@ -14,6 +14,7 @@ import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.MdekUtils.IdcEntitySelectionType;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerObject;
@@ -200,6 +201,11 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekObjectUtils.extractDetailedObjects(result);
 	}
 
+	public ObjectStatisticsResultBean getObjectStatistics(String objUuid) {
+		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		return MdekObjectUtils.extractObjectStatistics(result);
+	}
 
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;

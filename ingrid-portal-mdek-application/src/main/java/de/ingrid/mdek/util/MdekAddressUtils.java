@@ -3,11 +3,17 @@ package de.ingrid.mdek.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.ingrid.mdek.DataMapperInterface;
+import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.AddressType;
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
+import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
+import de.ingrid.mdek.beans.query.StatisticsBean;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekAddressUtils {
@@ -116,6 +122,34 @@ public class MdekAddressUtils {
 		}
 	}
 
+	public static AddressStatisticsResultBean extractAddressStatistics(IngridDocument result) {
+		AddressStatisticsResultBean res = new AddressStatisticsResultBean();
+		Map<Integer, StatisticsBean> resultMap = new HashMap<Integer, StatisticsBean>();
+
+		Object[] adrClasses = EnumUtil.getDbValues(AddressType.class);
+		Object[] workStates = EnumUtil.getDbValues(WorkState.class);
+		for (Object adrClass : adrClasses) {
+			StatisticsBean stats = new StatisticsBean();
+			Map<String, Long> resClassMap = new HashMap<String, Long>();
+			IngridDocument classMap = (IngridDocument) result.get(adrClass);
+
+			for (Object workState : workStates) {
+				// dwr uses the 'toString' method to convert enums to javascript strings. Therefore, if we use enums
+				// we end up with the wrong identifiers on the client. Use strings instead.
+//				resClassMap.put(WorkState.valueOf((String) workState), (Long) classMap.get(workState));
+				resClassMap.put((String) workState, (Long) classMap.get(workState));
+			}
+			stats.setNumTotal((Long) classMap.get(MdekKeys.TOTAL_NUM));
+			stats.setClassMap(resClassMap);
+
+			resultMap.put((Integer) adrClass, stats);
+		}
+		res.setResultMap(resultMap);
+
+		return res;
+	}
+
+	
 	public static void setInitialValues(MdekAddressBean addr) {
 		dataMapper.setInitialValues(addr);
 	}

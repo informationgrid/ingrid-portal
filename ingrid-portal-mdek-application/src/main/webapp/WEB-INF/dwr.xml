@@ -69,12 +69,15 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.VectorFormatDetailsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressExtSearchParamsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressStatisticsResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressWorkflowResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.CSVSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectStatisticsResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectWorkflowResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.SearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.StatisticsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.Group"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.Permission"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>

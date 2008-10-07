@@ -13,24 +13,26 @@ _container_.addOnLoad(function() {
 
 
 // Set the data for the objects statistics table
-// data is a list with objects containing information about the number of objects in the different states.
-// The first object specifies the number of objects of class 0, the second for class 1 and so on. data.length is always 6.
+// stats is an object with maps containing information about the number of objects in the different states.
+// See ObjectStatisticsResultBean
 // Example:
-// data = [ {v:14, b:7, q:2, r:0}, {v:11, b:3, q:1, r:3}, ... ];
-function setStatsObjectsTableContent(data) {
+// stats = { 0:{numTotal:23, classMap:{v:14, b:7, q:2, r:0}}, 1:{numTotal:18, classMap:{v:11, b:3, q:1, r:3}}, ... };
+function setStatsObjectsTableContent(stats) {
 	var amounts = [];
 	var percentages = [];
 	var numTotal = 0;
-	var numObjs = {v:0,b:0,q:0,r:0}
+	var numObjs = {v:0,b:0,q:0,r:0};
 
-	for (var i in data) {
-		amounts.push(data[i].v + data[i].b + data[i].q + data[i].r);
-		numObjs.v += data[i].v;
-		numObjs.b += data[i].b;
-		numObjs.q += data[i].q;
-		numObjs.r += data[i].r;
-		numTotal += amounts[i];
+	for (var i = 0; i < 6; ++i) {
+		var classMap = stats[i].classMap;
+		amounts.push(classMap.V + classMap.B + classMap.Q + classMap.R);
+		numObjs.v += classMap.V;
+		numObjs.b += classMap.B;
+		numObjs.q += classMap.Q;
+		numObjs.r += classMap.R;
+		numTotal += stats[i].numTotal;
 	}
+
 	for (var i in amounts) {
 		percentages.push(amounts[i]*100 / numTotal);
 	}
@@ -49,31 +51,32 @@ function setStatsObjectsTableContent(data) {
 	for (var i = 1; i < storeData.length; ++i) {
 		store.update(storeData[i], "amount", amounts[i-1]);
 		store.update(storeData[i], "percentage", Math.round(percentages[i-1]));
-		store.update(storeData[i], "published", data[i-1].v);
-		store.update(storeData[i], "modified", data[i-1].b);
-		store.update(storeData[i], "qa", data[i-1].q);
-		store.update(storeData[i], "returned", data[i-1].r);
+		store.update(storeData[i], "published", stats[i-1].classMap.V);
+		store.update(storeData[i], "modified", stats[i-1].classMap.B);
+		store.update(storeData[i], "qa", stats[i-1].classMap.Q);
+		store.update(storeData[i], "returned", stats[i-1].classMap.R);
 	}
 }
 
 // Set the data for the address statistics table
-// data is a list with addresses containing information about the number of addresses in the different states.
-// The first address specifies the number of addresses of class 0, the second for class 1 and so on. data.length is always 4.
+// stats is an object with maps containing information about the number of addresses in the different states.
+// See AddressStatisticsResultBean
 // Example:
-// data = [ {v:14, b:7, q:2, r:0}, {v:11, b:3, q:1, r:3}, ... ];
-function setStatsAdrTableContent(data) {
+// stats = { 0:{numTotal:23, classMap:{v:14, b:7, q:2, r:0}}, 1:{numTotal:18, classMap:{v:11, b:3, q:1, r:3}}, ... };
+function setStatsAdrTableContent(stats) {
 	var amounts = [];
 	var percentages = [];
 	var numTotal = 0;
-	var numAdrs = {v:0,b:0,q:0,r:0}
+	var numAdrs = {v:0,b:0,q:0,r:0};
 
-	for (var i in data) {
-		amounts.push(data[i].v + data[i].b + data[i].q + data[i].r);
-		numAdrs.v += data[i].v;
-		numAdrs.b += data[i].b;
-		numAdrs.q += data[i].q;
-		numAdrs.r += data[i].r;
-		numTotal += amounts[i];
+	for (var i in stats) {
+		var classMap = stats[i].classMap;
+		amounts.push(classMap.V + classMap.B + classMap.Q + classMap.R);
+		numAdrs.v += classMap.V;
+		numAdrs.b += classMap.B;
+		numAdrs.q += classMap.Q;
+		numAdrs.r += classMap.R;
+		numTotal += stats[i].numTotal;
 	}
 	for (var i in amounts) {
 		percentages.push(amounts[i]*100 / numTotal);
@@ -93,10 +96,10 @@ function setStatsAdrTableContent(data) {
 	for (var i = 1; i < storeData.length; ++i) {
 		store.update(storeData[i], "amount", amounts[i-1]);
 		store.update(storeData[i], "percentage", Math.round(percentages[i-1]));
-		store.update(storeData[i], "published", data[i-1].v);
-		store.update(storeData[i], "modified", data[i-1].b);
-		store.update(storeData[i], "qa", data[i-1].q);
-		store.update(storeData[i], "returned", data[i-1].r);
+		store.update(storeData[i], "published", stats[i-1].classMap.V);
+		store.update(storeData[i], "modified", stats[i-1].classMap.B);
+		store.update(storeData[i], "qa", stats[i-1].classMap.Q);
+		store.update(storeData[i], "returned", stats[i-1].classMap.R);
 	}
 }
 
@@ -121,12 +124,24 @@ function setStatsThesaurusTermsTable(tableId, data) {
 
 // The user clicked the catalog root node in the tree. Show statistics for the complete catalog.
 function showStatisticsForCatalog() {
+	var d1 = getObjectStatistics(null);
+	var d2 = getAddressStatistics(null);
+
+	var l1 = new dojo.DeferredList([d1, d2], false, false, true);
+
+	l1.addCallback(function(resultList) {
+		setStatsObjectsTableContent(resultList[0][1]);
+		setStatsAdrTableContent(resultList[1][1]);
+	});
+
+	l1.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+
+
 	// TODO Implement
-	dojo.debug("showStatisticsForCatalog not implemented yet.");
-	var dataObj = generateRandomObjectData();
-	var dataAdr = generateRandomAddressData();
-	setStatsObjectsTableContent(dataObj);
-	setStatsAdrTableContent(dataAdr);
+	dojo.debug("showStatisticsForCatalog thesaurus not implemented yet.");
 	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
@@ -135,11 +150,21 @@ function showStatisticsForCatalog() {
 
 // The user clicked the object root node in the tree. Show statistics for all objects.
 function showStatisticsForAllObjects() {
+	var def = getObjectStatistics(null);
+
+	def.addCallback(function(objStats) {
+		setStatsObjectsTableContent(objStats);
+		resetStatsAdrTable();
+	});
+
+	def.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+
+
 	// TODO Implement
-	dojo.debug("showStatisticsForAllObjects not implemented yet.");
-	var data = generateRandomObjectData();
-	setStatsObjectsTableContent(data);
-	resetStatsAdrTable();
+	dojo.debug("showStatisticsForAllObjects thesaurus not implemented yet.");
 	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
 	resetThesaurusTable("statsThesaurusTermsAdrTable");
@@ -148,11 +173,20 @@ function showStatisticsForAllObjects() {
 
 // The user clicked the address root node in the tree. Show statistics for all addresses.
 function showStatisticsForAllAddresses() {
+	var def = getAddressStatistics(null);
+
+	def.addCallback(function(adrStats) {
+		setStatsAdrTableContent(adrStats);
+		resetStatsObjectsTable();
+	});
+
+	def.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+
 	// TODO Implement
-	dojo.debug("showStatisticsForAllAddresses not implemented yet.");
-	var data = generateRandomAddressData();
-	setStatsAdrTableContent(data);
-	resetStatsObjectsTable();
+	dojo.debug("showStatisticsForAllAddresses thesaurus not implemented yet.");
 	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
 	resetThesaurusTable("statsThesaurusTermsObjTable");
@@ -161,14 +195,20 @@ function showStatisticsForAllAddresses() {
 
 // The user clicked the free address root node in the tree. Show statistics for all free addresses.
 function showStatisticsForAllFreeAddresses() {
+	var def = getAddressStatistics(null);
+
+	def.addCallback(function(adrStats) {
+		setStatsAdrTableContent(adrStats);
+		resetStatsObjectsTable();
+	});
+
+	def.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+
 	// TODO Implement
-	dojo.debug("showStatisticsForAllFreeAddresses not implemented yet.");
-	var data = generateRandomAddressData();
-	for (var i = 1; i < 4; ++i) {
-		data[i].v = 0; data[i].b = 0; data[i].q = 0; data[i].r = 0;
-	}
-	setStatsAdrTableContent(data);
-	resetStatsObjectsTable();
+	dojo.debug("showStatisticsForAllFreeAddresses thesaurus not implemented yet.");
 	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
 	resetThesaurusTable("statsThesaurusTermsObjTable");
@@ -176,13 +216,21 @@ function showStatisticsForAllFreeAddresses() {
 }
 
 // The user clicked a specific address node in the tree. Show statistics for the address.
-function showStatisticsForAddress(uuid) {
+function showStatisticsForAddress(adrUuid) {
+	var def = getAddressStatistics(adrUuid);
+
+	def.addCallback(function(adrStats) {
+		setStatsAdrTableContent(adrStats);
+		resetStatsObjectsTable();
+	});
+
+	def.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+
 	// TODO Implement
-	dojo.debug("showStatisticsForAddress not implemented yet.");
-	var data = generateRandomAddressData();
-	data[0].v = 0; data[0].b = 0; data[0].q = 0; data[0].r = 0;
-	setStatsAdrTableContent(data);
-	resetStatsObjectsTable();
+	dojo.debug("showStatisticsForAddress thesaurus not implemented yet.");
 	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
 	resetThesaurusTable("statsThesaurusTermsObjTable");
@@ -191,11 +239,21 @@ function showStatisticsForAddress(uuid) {
 
 // The user clicked a specific object node in the tree. Show statistics for the object.
 function showStatisticsForObject(uuid) {
+	var def = getObjectStatistics(uuid);
+
+	def.addCallback(function(objStats) {
+		setStatsObjectsTableContent(objStats);
+		resetStatsAdrTable();
+	});
+
+	def.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+	});
+
+
 	// TODO Implement
-	dojo.debug("showStatisticsForObject not implemented yet.");
-	var data = generateRandomObjectData();
-	setStatsObjectsTableContent(data);
-	resetStatsAdrTable();
+	dojo.debug("showStatisticsForObject thesaurus not implemented yet.");
 	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
 	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
 	resetThesaurusTable("statsThesaurusTermsAdrTable");
@@ -207,8 +265,6 @@ function showStatisticsForObject(uuid) {
 function onStatisticsNodeSelected(message) {
 	var node = message.node;
 	var nodeId = null;
-	dojo.debug("node.id: "+node.id);
-	dojo.debug("node.uuid: "+node.uuid);
 	if (typeof(node.id) != "undefined") {
 		// Remove the prefix from the nodeId
 		nodeId = node.uuid;
@@ -279,6 +335,40 @@ function initStatsTree() {
 
 		return deferred;
 	};
+}
+
+function getObjectStatistics(objUuid) {
+	var def = new dojo.Deferred();
+
+	ObjectService.getObjectStatistics(objUuid, {
+		callback: function(objStats) {
+			def.callback(objStats.resultMap);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+
+	return def;
+}
+
+function getAddressStatistics(adrUuid) {
+	var def = new dojo.Deferred();
+
+	AddressService.getAddressStatistics(adrUuid, {
+		callback: function(adrStats) {
+			def.callback(adrStats.resultMap);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+
+	return def;
 }
 
 function resetStatsObjectsTable() {
@@ -498,16 +588,7 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
 	        		      <tr value="1">
-	        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Freie Adresse" /></td>
-	        		        <td>Freie Adresse</td>
-	        		        <td>0</td>
-	        		        <td>0</td>
-	        		        <td>0</td>
-	        		        <td>0</td>
-	        		        <td>0</td>
-	        		        <td>0</td></tr>
-	        		      <tr value="2">
-	        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
+	        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Institution" /></td>
 	        		        <td>Institution</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -515,8 +596,8 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
-	        		      <tr value="3">
-	        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Einheit" /></td>
+	        		      <tr value="2">
+	        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Einheit" /></td>
 	        		        <td>Einheit</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -524,9 +605,18 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
-	        		      <tr value="4">
-	        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Person" /></td>
+	        		      <tr value="3">
+	        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Person" /></td>
 	        		        <td>Person</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="4">
+	        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Freie Adresse" /></td>
+	        		        <td>Freie Adresse</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>

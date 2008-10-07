@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 
 public interface AddressService {
 
@@ -22,4 +23,5 @@ public interface AddressService {
 	public boolean canCutAddress(String parentUuid);
 	public boolean canCopyAddress(String parentUuid);
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
+	public AddressStatisticsResultBean getAddressStatistics(String objUuid);
 }

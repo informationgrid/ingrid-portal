@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 
 public interface ObjectService {
 
@@ -21,4 +22,5 @@ public interface ObjectService {
 	public List<String> getPathToObject(String targetUuid);
 	public boolean canCutObject(String parentUuid);
 	public boolean canCopyObject(String parentUuid);
+	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
 }

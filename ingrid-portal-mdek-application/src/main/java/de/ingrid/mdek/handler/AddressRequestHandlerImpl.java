@@ -14,6 +14,7 @@ import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.MdekUtils.IdcEntitySelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
@@ -209,6 +210,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), ws, st, maxNum, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekAddressUtils.extractDetailedAddresses(result);
+	}
+
+	public AddressStatisticsResultBean getAddressStatistics(String adrUuid) {
+		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		return MdekAddressUtils.extractAddressStatistics(result);
 	}
 
 	public ConnectionFacade getConnectionFacade() {

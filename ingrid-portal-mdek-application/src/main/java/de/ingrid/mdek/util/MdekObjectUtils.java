@@ -3,12 +3,18 @@ package de.ingrid.mdek.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.ingrid.mdek.DataMapperInterface;
+import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.ObjectType;
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
+import de.ingrid.mdek.beans.query.StatisticsBean;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekObjectUtils {
@@ -103,6 +109,33 @@ public class MdekObjectUtils {
 			MdekErrorUtils.handleError(response);
 		}
 		return searchResult;
+	}
+
+	public static ObjectStatisticsResultBean extractObjectStatistics(IngridDocument result) {
+		ObjectStatisticsResultBean res = new ObjectStatisticsResultBean();
+		Map<Integer, StatisticsBean> resultMap = new HashMap<Integer, StatisticsBean>();
+
+		Object[] objClasses = EnumUtil.getDbValues(ObjectType.class);
+		Object[] workStates = EnumUtil.getDbValues(WorkState.class);
+		for (Object objClass : objClasses) {
+			StatisticsBean stats = new StatisticsBean();
+			Map<String, Long> resClassMap = new HashMap<String, Long>();
+			IngridDocument classMap = (IngridDocument) result.get(objClass);
+
+			for (Object workState : workStates) {
+				// dwr uses the 'toString' method to convert enums to javascript strings. Therefore, if we use enums
+				// we end up with the wrong identifiers on the client. Use strings instead.
+//				resClassMap.put(WorkState.valueOf((String) workState), (Long) classMap.get(workState));
+				resClassMap.put((String) workState, (Long) classMap.get(workState));
+			}
+			stats.setNumTotal((Long) classMap.get(MdekKeys.TOTAL_NUM));
+			stats.setClassMap(resClassMap);
+
+			resultMap.put((Integer) objClass, stats);
+		}
+		res.setResultMap(resultMap);
+
+		return res;
 	}
 
 	

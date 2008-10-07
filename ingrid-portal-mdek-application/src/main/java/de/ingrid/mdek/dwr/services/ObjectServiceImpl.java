@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;
@@ -262,6 +263,20 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}
 
+	public ObjectStatisticsResultBean getObjectStatistics(String objUuid) {
+		try {
+			return objectRequestHandler.getObjectStatistics(objUuid);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching objects for statistics.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+
+		} catch (RuntimeException e) {
+			log.debug("Error while fetching objects for statistics", e);
+			throw e;
+		}		
+	}
 
 	public ObjectRequestHandler getObjectRequestHandler() {
 		return objectRequestHandler;

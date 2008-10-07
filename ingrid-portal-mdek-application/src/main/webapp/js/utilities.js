@@ -918,6 +918,9 @@ UtilQA.isQAActive = function() {
 // Utility functions for UI specific stuff
 var UtilUI = {}
 
+// This variable serves as a cache to store whether ui elements have been activated or not
+UtilUI._uiElementsActive = true;
+
 UtilUI.getDescriptionForGuiId = function(guiId) {
 	return message.get("ui."+guiId+".description");
 }
