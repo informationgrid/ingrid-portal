@@ -112,8 +112,11 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
 
     private ArrayList getSEIndexIPlugs(Permissions permissions, PlugDescription[] plugs) {
         ArrayList result = new ArrayList();
-        if (permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)) {
+        if (permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)
+                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION)) {
             for (int i = 0; i < plugs.length; i++) {
                 PlugDescription plug = plugs[i];
                 // do not include search engine iplugs
