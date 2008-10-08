@@ -55,7 +55,7 @@
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.newNodeName":"Neues Objekt",
     "tree.newAddressName":"Neue Adresse",
-    "tree.reload":"Neues Laden",
+    "tree.reload":"Baum neu laden",
 
 	"dialog.object.deleteChildrenMessage":"Soll das Objekt '%{0}' und alle untergeordneten Objekte wirklich gel&ouml;scht werden?",
 	"dialog.address.deleteChildrenMessage":"Soll die Adresse '%{0}' und alle untergeordneten Adressen wirklich gel&ouml;scht werden?",

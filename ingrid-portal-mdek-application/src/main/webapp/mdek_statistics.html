@@ -456,6 +456,11 @@ function initStatsTree() {
 
 		return deferred;
 	};
+
+	// init the context menu
+	var contextMenu = dojo.widget.byId('statsTreeContextMenu');
+	contextMenu.treeController = dojo.widget.byId('statisticsTreeController');
+	contextMenu.addItem(message.get('tree.reload'), 'reload', reloadStatsTree);
 }
 
 function getObjectStatistics(objUuid) {
@@ -588,6 +593,20 @@ function resetThesaurusTable(tableId) {
 }
 
 
+function reloadStatsTree() {
+	var treeController = dojo.widget.byId("statisticsTreeController");
+	var rootNode = dojo.widget.byId("statsTreeRoot");
+	treeController.refreshChildren(rootNode);
+
+	// reset tables as well since no node is selected
+	resetStatsObjectsTable();
+	resetStatsAdrTable();
+	resetThesaurusTable("statsThesTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+	resetThesaurusTable("statsThesTermsAdrTable");
+	resetThesaurusTable("statsFreeTermsAdrTable");
+}
+
 scriptScope.print = function() {
 	var selectedTab = dojo.widget.byId("statsTable").selectedChild;
 	printDivContent(selectedTab);
@@ -649,9 +668,12 @@ function generateRandomString(strLength) {
 			<div dojoType="ingrid:TreeDocIcons" widgetId="statisticsTreeDocIcons"></div>	
 			<div dojoType="ingrid:TreeDecorator" listener="statisticsTreeListener"></div>
       
+      <!-- context menus -->
+      <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="statsTreeContextMenu"></div>
+
       <!-- tree -->
-      <div dojoType="ingrid:Tree" listeners="statisticsTreeController;statisticsTreeListener;statisticsTreeDocIcons" widgetId="statisticsTree">
-      	<div dojoType="ingrid:TreeNode" title="Katalog" id="statsTreeRoot" id="statsTreeRoot" isFolder="true" nodeDocType="Catalog" nodeAppType="C"></div>
+      <div dojoType="ingrid:Tree" listeners="statisticsTreeController;statisticsTreeListener;statsTreeContextMenu;statisticsTreeDocIcons" widgetId="statisticsTree">
+      	<div dojoType="ingrid:TreeNode" title="Katalog" id="statsTreeRoot" contextMenu="statsTreeContextMenu" isFolder="true" nodeDocType="Catalog" nodeAppType="C"></div>
       </div>
   	</div>
     <!-- LEFT CONTENT PANE END -->
