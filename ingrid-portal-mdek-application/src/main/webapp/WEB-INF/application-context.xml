@@ -40,6 +40,7 @@
 	<bean id="ctService" class="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationServiceImpl" />
 	<bean id="getCapabilitiesService" class="de.ingrid.mdek.dwr.services.GetCapabilitiesService" />
 	<bean id="httpService" class="de.ingrid.mdek.dwr.services.HttpService" />
+	<bean id="importService" class="de.ingrid.mdek.dwr.services.ImportServiceImpl" />
 	<bean id="versionInformation" class="de.ingrid.mdek.beans.VersionInformation" />
 
 <!-- Syslist cache -->

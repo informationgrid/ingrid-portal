@@ -3,6 +3,8 @@
 <head>
 <script type="text/javascript">
 var scriptScope = this;
+var currentSelectedNode = null;
+
 
 _container_.addOnLoad(function() {
 	initSysLists();
@@ -44,7 +46,10 @@ scriptScope.selectDataset = function() {
 	var deferred = new dojo.Deferred();
 
 	deferred.addCallback(function(selectedDataset) {
-		
+		dojo.debugShallow(selectedDataset);
+		dojo.widget.byId("exportTreeName").setValue(selectedDataset.title);
+		currentSelectedNode = selectedDataset;
+		dojo.byId("exportType2").checked = true;
 	});
 
 	dialog.showPage('Teilbaum ausw&auml;hlen', 'mdek_admin_export_select_dataset.html', 522, 520, true, {
@@ -117,8 +122,8 @@ function initSysLists() {
 						<div class="fill"></div>
 					</div>
 					<div class="checkboxContainer">
-						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaumexport')">Teilbaumexport Kriterium:</label></span>
-						<span class="functionalLink marginRight" style="position:relative; top:24px"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScope.selectDataset()" title="Teilbaum ausw&auml;hlen [Popup]">Teilbaum ausw&auml;hlen</a></span>
+						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaumexport')">Teilbaumexport</label></span>
+						<span class="functionalLink marginRight" style="position:relative; top:43px"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScope.selectDataset()" title="Teilbaum ausw&auml;hlen [Popup]">Teilbaum ausw&auml;hlen</a></span>
 						<span class="rightAlign marginRight"><input type="text" id="exportTreeName" name="exportTreeName" class="w503" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Nur der ausgew&auml;hlte Datensatz')">Nur der ausgew&auml;hlte Datensatz</label></span></span>
 						<div class="fill"></div>

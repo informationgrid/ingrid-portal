@@ -4,7 +4,51 @@
 <script type="text/javascript">
 var scriptScope = this;
 
-_container_.addOnLoad(function() { });
+_container_.addOnLoad(function() {
+	document.getElementById("importType1").onclick = selectImportType;
+	document.getElementById("importType2").onclick = selectImportType;
+    selectImportType();
+});
+
+function selectImportType(e) {
+	// if (!e) var e = window.event
+	if (this.id == "importType2") {
+		document.getElementById("importTree").style.display = "none";
+		document.getElementById("importUniversal").style.visibility = "visible";
+		document.getElementById("importUniversal").style.display = "block";
+		document.getElementById("importType1").checked = false;
+		document.getElementById("processInfo").style.top = 667 + "px";
+		
+		document.getElementById("analyzeBtn").style.visibility = "visible";
+
+    } else if (this.id == "importType1") {
+		document.getElementById("importTree").style.visibility = "visible";
+		document.getElementById("importTree").style.display = "block";
+		document.getElementById("importUniversal").style.display = "none";
+		document.getElementById("importType2").checked = false;
+		document.getElementById("processInfo").style.top = 667 + "px";
+		
+		document.getElementById("analyzeBtn").style.visibility = "hidden";
+
+    } else {
+		document.getElementById("importTree").style.visibility = "hidden";
+		document.getElementById("importUniversal").style.visibility = "hidden";
+		document.getElementById("processInfo").style.top = 167 + "px";
+		
+		document.getElementById("analyzeBtn").style.visibility = "hidden";
+	}
+}
+
+scriptScope.uploadFile = function() {
+	dojo.debug("uploadFile called.");
+	var file = dwr.util.getValue("importFile");
+
+	dojo.debug("File: "+file);
+
+	ImportService.uploadFile(file, function(data) {
+		dwr.engine.openInDownload(data);
+	});
+}
 
 </script>
 </head>
@@ -26,7 +70,13 @@ _container_.addOnLoad(function() { });
         <div class="inputContainer field grey w939">
           <div class="inputContainer">
             <span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Import-Datei')">Import-Datei</label></span>
-            <span><input type="file" id="importFile" name="importFile" size="80" /> <a href="#" class="buttonBlue" title="Analysieren" id="analyzeBtn" style="visibility:hidden">Analysieren</a></span>
+            <span>
+            <input type="file" id="importFile" size="80" />
+			<span class="button w644" style="height:20px !important;">
+				<button dojoType="ingrid:Button" title="Datei hochladen" onClick="javascript:scriptScope.uploadFile();">Datei hochladen</button>
+			</span>
+
+            <a href="#" class="buttonBlue" title="Analysieren" id="analyzeBtn" style="visibility:hidden">Analysieren</a></span>
           </div>
           <div class="checkboxContainer">
             <span class="input"><input type="radio" name="importType" id="importType1" class="radio"/><label class="noRightMargin" for="importType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaum')">Teilbaum</label></span>
@@ -273,9 +323,9 @@ _container_.addOnLoad(function() { });
                 </div>      
    
                 <div class="inputContainer h130">
-                  <span class="label"><label for="importUniversalInfoAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Elternadresse festlegen')">Elternadresse festlegen</label></span>
+                  <span class="label"><label for="importUniversalInfoParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Elternadresse festlegen')">Elternadresse festlegen</label></span>
                   <div class="tableContainer">
-              	    <table id="importUniversalInfoAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive readonly w636 relativePos">
+              	    <table id="importUniversalInfoParentAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" tbodyClass="scrollContent rows4" cellspacing="0" class="filteringTable interactive readonly w636 relativePos">
               	      <thead>
               		      <tr>
                     			<th field="importObjType" dataType="String" width="30">&nbsp;</th>

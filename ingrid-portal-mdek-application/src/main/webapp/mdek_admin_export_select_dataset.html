@@ -28,9 +28,16 @@ function init() {
 
 	// Load initial first level of the tree from the server
 	TreeService.getSubTree(null, null, 1, 
-		function (str) {
+		function (rootNodeList) {
 			var tree = dojo.widget.byId('selectDatasetTree');
-			tree.setChildren(str);
+
+			dojo.lang.forEach(rootNodeList, function(rootNode){
+				rootNode.title = dojo.string.escape("html", rootNode.title);
+				rootNode.uuid = rootNode.id;
+				rootNode.id = null;
+			});
+
+			tree.setChildren(rootNodeList);
 	});
 
 	// Load children of the node from server
@@ -56,7 +63,7 @@ function init() {
 		});
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
-		TreeService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
   			callback:function(res) { deferred.callback(res); },
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
 			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
@@ -72,38 +79,7 @@ scriptScope.selectDataset = function() {
 		var retVal = {};
 		retVal.uuid = node.uuid;
 		retVal.title = node.title;
-/*
-	var nodeId = null;
-	dojo.debug("node.id: "+node.id);
-	dojo.debug("node.uuid: "+node.uuid);
-	if (typeof(node.id) != "undefined") {
-		// Remove the prefix from the nodeId
-		nodeId = node.uuid;
-	}
 
-	if (nodeId == null) {
-		showStatisticsForCatalog();
-
-	} else if (nodeId == "objectRoot") {
-		showStatisticsForAllObjects();
-
-	} else if (nodeId == "addressRoot") {
-		showStatisticsForAllAddresses();
-
-	} else if (nodeId == "addressFreeRoot") {
-		showStatisticsForAllFreeAddresses();
-
-	} else if (node.nodeAppType == "A") {
-		showStatisticsForAddress(nodeId);
-
-	} else if (node.nodeAppType == "O") {
-		showStatisticsForObject(nodeId);
-
-	} else {
-		// TODO Show error message?
-		dojo.debug("clicked unknown node with id '"+nodeId+"'");
-	}
-*/
 		_container_.customParams.resultHandler.callback(retVal);
 	}
 
