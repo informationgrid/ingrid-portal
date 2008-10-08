@@ -15,6 +15,7 @@ import de.ingrid.mdek.MdekUtils.IdcEntitySelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
@@ -212,12 +213,23 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractDetailedAddresses(result);
 	}
 
-	public AddressStatisticsResultBean getAddressStatistics(String adrUuid) {
-		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, HTTPSessionHelper.getCurrentSessionId());
+	public AddressStatisticsResultBean getAddressStatistics(String adrUuid, boolean freeAddressesOnly) {
+		// The Parameters startHit and numHit are ignored for IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES
+		int startHit = 0;
+		int numHits = 0;
+		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, freeAddressesOnly, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekAddressUtils.extractAddressStatistics(result);
 	}
 
+	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits) {
+		IdcEntitySelectionType selectionType = thesaurusTerms ? IdcEntitySelectionType.STATISTICS_SEARCHTERMS_THESAURUS : IdcEntitySelectionType.STATISTICS_SEARCHTERMS_FREE;
+		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, freeAddressesOnly, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		return MdekUtils.extractThesaurusStatistics(result);
+	}
+
+	
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

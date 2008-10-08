@@ -22,6 +22,7 @@ public class MdekAddressBean {
 	public Boolean writeTreePermission;
 	public Boolean writeSubTreePermission;
 	public Boolean isPublished;
+	public Boolean isMarkedDeleted;
 	
 	// QA Fields
 	public MdekAddressBean assignerUser;
@@ -437,5 +438,13 @@ public class MdekAddressBean {
 
 	public void setUserOperation(String userOperation) {
 		this.userOperation = userOperation;
+	}
+
+	public Boolean getIsMarkedDeleted() {
+		return isMarkedDeleted;
+	}
+
+	public void setIsMarkedDeleted(Boolean isMarkedDeleted) {
+		this.isMarkedDeleted = isMarkedDeleted;
 	}
 }

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekAddressUtils;
@@ -269,9 +270,9 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
-	public AddressStatisticsResultBean getAddressStatistics(String objUuid) {
+	public AddressStatisticsResultBean getAddressStatistics(String adrUuid, boolean freeAddressesOnly) {
 		try {
-			return addressRequestHandler.getAddressStatistics(objUuid);
+			return addressRequestHandler.getAddressStatistics(adrUuid, freeAddressesOnly);
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
@@ -282,6 +283,21 @@ public class AddressServiceImpl implements AddressService {
 			log.debug("Error while fetching addresses statistics", e);
 			throw e;
 		}		
+	}
+
+	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits) {
+		try {
+			return addressRequestHandler.getAddressThesaurusStatistics(adrUuid, freeAddressesOnly, thesaurusTerms, startHit, numHits);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching addresses thesaurus statistics.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+
+		} catch (RuntimeException e) {
+			log.debug("Error while fetching addresses thesaurus statistics", e);
+			throw e;
+		}
 	}
 
 	public AddressRequestHandler getAddressRequestHandler() {

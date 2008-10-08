@@ -5,6 +5,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
 public interface AddressService {
 
@@ -23,5 +24,6 @@ public interface AddressService {
 	public boolean canCutAddress(String parentUuid);
 	public boolean canCopyAddress(String parentUuid);
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
-	public AddressStatisticsResultBean getAddressStatistics(String objUuid);
+	public AddressStatisticsResultBean getAddressStatistics(String objUuid, boolean freeAddressesOnly);
+	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits);
 }

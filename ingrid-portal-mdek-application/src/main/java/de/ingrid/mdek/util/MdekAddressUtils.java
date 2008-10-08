@@ -133,14 +133,23 @@ public class MdekAddressUtils {
 			Map<String, Long> resClassMap = new HashMap<String, Long>();
 			IngridDocument classMap = (IngridDocument) result.get(adrClass);
 
-			for (Object workState : workStates) {
-				// dwr uses the 'toString' method to convert enums to javascript strings. Therefore, if we use enums
-				// we end up with the wrong identifiers on the client. Use strings instead.
-//				resClassMap.put(WorkState.valueOf((String) workState), (Long) classMap.get(workState));
-				resClassMap.put((String) workState, (Long) classMap.get(workState));
+			if (classMap == null) {
+				for (Object workState : workStates) {
+					resClassMap.put((String) workState, 0L);
+				}
+				stats.setNumTotal(0L);
+				stats.setClassMap(resClassMap);
+
+			} else {
+				for (Object workState : workStates) {
+					// dwr uses the 'toString' method to convert enums to javascript strings. Therefore, if we use enums
+					// we end up with the wrong identifiers on the client. Use strings instead.
+	//				resClassMap.put(WorkState.valueOf((String) workState), (Long) classMap.get(workState));
+					resClassMap.put((String) workState, (Long) classMap.get(workState));
+				}
+				stats.setNumTotal((Long) classMap.get(MdekKeys.TOTAL_NUM));
+				stats.setClassMap(resClassMap);
 			}
-			stats.setNumTotal((Long) classMap.get(MdekKeys.TOTAL_NUM));
-			stats.setClassMap(resClassMap);
 
 			resultMap.put((Integer) adrClass, stats);
 		}

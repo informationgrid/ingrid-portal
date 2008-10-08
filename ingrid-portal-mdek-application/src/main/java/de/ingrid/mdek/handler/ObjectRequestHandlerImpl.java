@@ -16,6 +16,7 @@ import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerAbstract.Quantity;
@@ -202,11 +203,21 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid) {
-		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, HTTPSessionHelper.getCurrentSessionId());
+		// startHit and numHits parameters are ignored for STATISTICS_CLASSES_AND_STATES
+		int startHit = 0;
+		int numHits = 0;
+		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekObjectUtils.extractObjectStatistics(result);
 	}
 
+	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits) {
+		IdcEntitySelectionType selectionType = thesaurusTerms ? IdcEntitySelectionType.STATISTICS_SEARCHTERMS_THESAURUS : IdcEntitySelectionType.STATISTICS_SEARCHTERMS_FREE;
+		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		return MdekUtils.extractThesaurusStatistics(result);
+	}
+	
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

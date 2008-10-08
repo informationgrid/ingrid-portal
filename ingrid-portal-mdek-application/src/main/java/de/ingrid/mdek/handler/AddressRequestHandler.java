@@ -7,6 +7,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
 public interface AddressRequestHandler {
 
@@ -28,5 +29,6 @@ public interface AddressRequestHandler {
 	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress);
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer maxNum);
-	public AddressStatisticsResultBean getAddressStatistics(String uuid);
+	public AddressStatisticsResultBean getAddressStatistics(String uuid, boolean freeAddressesOnly);
+	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits);
 }

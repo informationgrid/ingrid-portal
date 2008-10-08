@@ -5,6 +5,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
 public interface ObjectService {
 
@@ -23,4 +24,5 @@ public interface ObjectService {
 	public boolean canCutObject(String parentUuid);
 	public boolean canCopyObject(String parentUuid);
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
+	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits);
 }

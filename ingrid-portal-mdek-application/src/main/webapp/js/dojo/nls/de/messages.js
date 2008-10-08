@@ -21,6 +21,7 @@
 	"general.workState.B":"In Bearbeitung",
 	"general.workState.Q":"An Qualit&auml;tssicherung zugewiesen",
 	"general.workState.R":"Von Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen",
+	"general.state.maredDeleted":"als gel&ouml;scht markiert",
 
 	"menu.general.help":"Hilfe",
 	"menu.general.disclaimer":"Impressum",

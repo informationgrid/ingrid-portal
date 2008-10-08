@@ -7,6 +7,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
 public interface ObjectRequestHandler {
 
@@ -28,4 +29,5 @@ public interface ObjectRequestHandler {
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum);
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
+	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits);
 }

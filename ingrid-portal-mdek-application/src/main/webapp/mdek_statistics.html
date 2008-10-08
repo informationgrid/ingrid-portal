@@ -4,11 +4,26 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+var resultsPerPage = 10;
+var statsFreeTermsObjPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsFreeTermsObjTableInfo"), pagingSpan:dojo.byId("statsFreeTermsObjTablePaging") });
+var statsFreeTermsAdrPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsFreeTermsAdrTableInfo"), pagingSpan:dojo.byId("statsFreeTermsAdrTablePaging") });
+var statsThesTermsObjPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsThesTermsObjTableInfo"), pagingSpan:dojo.byId("statsThesTermsObjTablePaging") });
+var statsThesTermsAdrPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsThesTermsAdrTableInfo"), pagingSpan:dojo.byId("statsThesTermsAdrTablePaging") });
+
 _container_.addOnLoad(function() {
+	dojo.event.connectOnce("after", statsFreeTermsObjPageNav, "onPageSelected", function() { navigateFreeTermsObjTable(); });
+	dojo.event.connectOnce("after", statsFreeTermsAdrPageNav, "onPageSelected", function() { navigateFreeTermsAdrTable(); });
+	dojo.event.connectOnce("after", statsThesTermsObjPageNav, "onPageSelected", function() { navigateThesTermsObjTable(); });
+	dojo.event.connectOnce("after", statsThesTermsAdrPageNav, "onPageSelected", function() { navigateThesTermsAdrTable(); });
+
 	initStatsTree();
 
 	resetStatsObjectsTable();
 	resetStatsAdrTable();
+	resetThesaurusTable("statsThesTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+	resetThesaurusTable("statsThesTermsAdrTable");
+	resetThesaurusTable("statsFreeTermsAdrTable");
 });
 
 
@@ -33,8 +48,13 @@ function setStatsObjectsTableContent(stats) {
 		numTotal += stats[i].numTotal;
 	}
 
-	for (var i in amounts) {
-		percentages.push(amounts[i]*100 / numTotal);
+	if (numTotal <= 0) {
+		percentages = [0, 0, 0, 0, 0, 0];
+
+	} else {
+		for (var i in amounts) {
+			percentages.push(amounts[i]*100 / numTotal);
+		}
 	}
 
 	// Update table data
@@ -78,8 +98,14 @@ function setStatsAdrTableContent(stats) {
 		numAdrs.r += classMap.R;
 		numTotal += stats[i].numTotal;
 	}
-	for (var i in amounts) {
-		percentages.push(amounts[i]*100 / numTotal);
+
+	if (numTotal <= 0) {
+		percentages = [0, 0, 0, 0];
+
+	} else {
+		for (var i in amounts) {
+			percentages.push(amounts[i]*100 / numTotal);
+		}
 	}
 
 	// Update table data
@@ -103,31 +129,126 @@ function setStatsAdrTableContent(stats) {
 	}
 }
 
-function setStatsThesaurusTermsTable(tableId, data) {
-	var numTotal = 0;
+function setStatsThesaurusTermsTable(tableId, thesaurusResult) {
+	var numTotal = thesaurusResult.numTermsTotal;
+	var termList = thesaurusResult.searchTermList;
 
-	for (var i in data) {
-		numTotal += data[i].amount;
-	}
-	for (var i in data) {
-		data[i].percentage = Math.round(data[i].amount*100 / numTotal);
+	for (var i in termList) {
+		termList[i].percentage = Math.round(termList[i].numOccurences*100 / numTotal);
 	}
 
 	// Update table data
 	var store = dojo.widget.byId(tableId).store;
 
-	data.unshift({term:"Gesamt", amount:numTotal, percentage:100});
-	UtilList.addTableIndices(data);
-	store.setData(data);
+	termList.unshift({term:"Gesamt", numOccurences:numTotal, percentage:100});
+	UtilList.addTableIndices(termList);
+	store.setData(termList);
+
+
+	var pageNav;
+	
+	if (tableId == "statsThesTermsObjTable") {
+		pageNav = statsThesTermsObjPageNav;
+	} else if (tableId == "statsThesTermsAdrTable") {
+		pageNav = statsThesTermsAdrPageNav;	
+	} else if (tableId == "statsFreeTermsObjTable") {
+		pageNav = statsFreeTermsObjPageNav;	
+	} else if (tableId == "statsFreeTermsAdrTable") {
+		pageNav = statsFreeTermsAdrPageNav;	
+	}
+
+	pageNav.setTotalNumHits(thesaurusResult.numHitsTotal);
+	pageNav.updateDomNodes();
 }
 
 
+function navigateThesTermsObjTable() {
+	var objUuid = dojo.widget.byId("statisticsTree").selectedNode.uuid;
+	if (objUuid == "objectRoot") {
+		objUuid = null;
+	}
+	var thesTermsObjStore = dojo.widget.byId("statsThesTermsObjTable").store;
+	var startHit = statsThesTermsObjPageNav.getStartHit();
+
+	var def = getObjectThesaurusStatistics(objUuid, true, startHit, resultsPerPage);
+
+	def.addCallback(function(thesResult) {
+		setStatsThesaurusTermsTable("statsThesTermsObjTable", thesResult);
+	});
+
+	return def;
+}
+
+function navigateFreeTermsObjTable() {
+	var objUuid = dojo.widget.byId("statisticsTree").selectedNode.uuid;
+	if (objUuid == "objectRoot") {
+		objUuid = null;
+	}
+	var freeTermsObjStore = dojo.widget.byId("statsFreeTermsObjTable").store;
+	var startHit = statsFreeTermsObjPageNav.getStartHit();
+
+	var def = getObjectThesaurusStatistics(objUuid, false, startHit, resultsPerPage);
+
+	def.addCallback(function(thesResult) {
+		setStatsThesaurusTermsTable("statsFreeTermsObjTable", thesResult);
+	});
+
+	return def;
+}
+
+function navigateThesTermsAdrTable() {
+	var adrUuid = dojo.widget.byId("statisticsTree").selectedNode.uuid;
+
+	var freeAddressesOnly = (adrUuid == "addressFreeRoot");
+	if (freeAddressesOnly || adrUuid == "addressRoot") {
+		adrUuid = null;
+	}
+	var thesTermsAdrStore = dojo.widget.byId("statsThesTermsAdrTable").store;
+	var startHit = statsThesTermsAdrPageNav.getStartHit();
+
+	var def = getAddressThesaurusStatistics(adrUuid, freeAddressesOnly, true, startHit, resultsPerPage);
+
+	def.addCallback(function(thesResult) {
+		setStatsThesaurusTermsTable("statsThesTermsAdrTable", thesResult);
+	});
+
+	return def;
+}
+
+function navigateFreeTermsAdrTable() {
+	var adrUuid = dojo.widget.byId("statisticsTree").selectedNode.uuid;
+
+	var freeAddressesOnly = (adrUuid == "addressFreeRoot");
+	if (freeAddressesOnly || adrUuid == "addressRoot") {
+		adrUuid = null;
+	}
+	var freeTermsAdrStore = dojo.widget.byId("statsFreeTermsAdrTable").store;
+	var startHit = statsFreeTermsAdrPageNav.getStartHit();
+
+	var def = getAddressThesaurusStatistics(adrUuid, freeAddressesOnly, false, startHit, resultsPerPage);
+
+	def.addCallback(function(thesResult) {
+		setStatsThesaurusTermsTable("statsFreeTermsAdrTable", thesResult);
+	});
+
+	return def;
+}
+
 // The user clicked the catalog root node in the tree. Show statistics for the complete catalog.
 function showStatisticsForCatalog() {
-	var d1 = getObjectStatistics(null);
-	var d2 = getAddressStatistics(null);
+	resetThesaurusTablePageNav("statsThesTermsObjTable");
+	resetThesaurusTablePageNav("statsFreeTermsObjTable");
+	resetThesaurusTablePageNav("statsThesTermsAdrTable");
+	resetThesaurusTablePageNav("statsFreeTermsAdrTable");
 
-	var l1 = new dojo.DeferredList([d1, d2], false, false, true);
+	var d1 = getObjectStatistics(null);
+	var d2 = getAddressStatistics(null, false);
+	var d3 = navigateThesTermsObjTable();
+	var d4 = navigateFreeTermsObjTable();
+	var d5 = navigateThesTermsAdrTable();
+	var d6 = navigateFreeTermsAdrTable();
+
+	var l1 = new dojo.DeferredList([d1, d2, d3, d4, d5, d6], false, false, true);
 
 	l1.addCallback(function(resultList) {
 		setStatsObjectsTableContent(resultList[0][1]);
@@ -138,126 +259,126 @@ function showStatisticsForCatalog() {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-
-
-	// TODO Implement
-	dojo.debug("showStatisticsForCatalog thesaurus not implemented yet.");
-	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
 }
 
 // The user clicked the object root node in the tree. Show statistics for all objects.
 function showStatisticsForAllObjects() {
-	var def = getObjectStatistics(null);
+	resetStatsAdrTable();
+	resetThesaurusTablePageNav("statsThesTermsObjTable");
+	resetThesaurusTablePageNav("statsFreeTermsObjTable");
+	resetThesaurusTable("statsThesTermsAdrTable");
+	resetThesaurusTable("statsFreeTermsAdrTable");
 
-	def.addCallback(function(objStats) {
-		setStatsObjectsTableContent(objStats);
-		resetStatsAdrTable();
+	var d1 = getObjectStatistics(null);
+	var d2 = navigateThesTermsObjTable();
+	var d3 = navigateFreeTermsObjTable();
+
+	var l1 = new dojo.DeferredList([d1, d2, d3], false, false, true);
+
+	l1.addCallback(function(resultList) {
+		setStatsObjectsTableContent(resultList[0][1]);
 	});
 
-	def.addErrback(function(err) {
+	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-
-
-	// TODO Implement
-	dojo.debug("showStatisticsForAllObjects thesaurus not implemented yet.");
-	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
-	resetThesaurusTable("statsThesaurusTermsAdrTable");
-	resetThesaurusTable("statsFreeTermsAdrTable");
 }
 
 // The user clicked the address root node in the tree. Show statistics for all addresses.
 function showStatisticsForAllAddresses() {
-	var def = getAddressStatistics(null);
+	resetStatsObjectsTable();
+	resetThesaurusTable("statsThesTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+	resetThesaurusTablePageNav("statsThesTermsAdrTable");
+	resetThesaurusTablePageNav("statsFreeTermsAdrTable");
 
-	def.addCallback(function(adrStats) {
-		setStatsAdrTableContent(adrStats);
-		resetStatsObjectsTable();
+	var d1 = getAddressStatistics(null, false);
+	var d2 = navigateThesTermsAdrTable();
+	var d3 = navigateFreeTermsAdrTable();
+
+	var l1 = new dojo.DeferredList([d1, d2, d3], false, false, true);
+
+	l1.addCallback(function(resultList) {
+		setStatsAdrTableContent(resultList[0][1]);
 	});
 
-	def.addErrback(function(err) {
+	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-
-	// TODO Implement
-	dojo.debug("showStatisticsForAllAddresses thesaurus not implemented yet.");
-	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
-	resetThesaurusTable("statsThesaurusTermsObjTable");
-	resetThesaurusTable("statsFreeTermsObjTable");
 }
 
 // The user clicked the free address root node in the tree. Show statistics for all free addresses.
 function showStatisticsForAllFreeAddresses() {
-	var def = getAddressStatistics(null);
+	resetStatsObjectsTable();
+	resetThesaurusTable("statsThesTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+	resetThesaurusTablePageNav("statsThesTermsAdrTable");
+	resetThesaurusTablePageNav("statsFreeTermsAdrTable");
 
-	def.addCallback(function(adrStats) {
-		setStatsAdrTableContent(adrStats);
-		resetStatsObjectsTable();
+	var d1 = getAddressStatistics(null, true);
+	var d2 = navigateThesTermsAdrTable();
+	var d3 = navigateFreeTermsAdrTable();
+
+	var l1 = new dojo.DeferredList([d1, d2, d3], false, false, true);
+
+	l1.addCallback(function(resultList) {
+		setStatsAdrTableContent(resultList[0][1]);
 	});
 
-	def.addErrback(function(err) {
+	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-
-	// TODO Implement
-	dojo.debug("showStatisticsForAllFreeAddresses thesaurus not implemented yet.");
-	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
-	resetThesaurusTable("statsThesaurusTermsObjTable");
-	resetThesaurusTable("statsFreeTermsObjTable");
 }
 
 // The user clicked a specific address node in the tree. Show statistics for the address.
 function showStatisticsForAddress(adrUuid) {
-	var def = getAddressStatistics(adrUuid);
+	resetStatsObjectsTable();
+	resetThesaurusTable("statsThesTermsObjTable");
+	resetThesaurusTable("statsFreeTermsObjTable");
+	resetThesaurusTablePageNav("statsThesTermsAdrTable");
+	resetThesaurusTablePageNav("statsFreeTermsAdrTable");
 
-	def.addCallback(function(adrStats) {
-		setStatsAdrTableContent(adrStats);
-		resetStatsObjectsTable();
+	var d1 = getAddressStatistics(adrUuid, false);
+	var d2 = navigateThesTermsAdrTable();
+	var d3 = navigateFreeTermsAdrTable();
+
+	var l1 = new dojo.DeferredList([d1, d2, d3], false, false, true);
+
+	l1.addCallback(function(resultList) {
+		setStatsAdrTableContent(resultList[0][1]);
 	});
 
-	def.addErrback(function(err) {
+	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-
-	// TODO Implement
-	dojo.debug("showStatisticsForAddress thesaurus not implemented yet.");
-	setStatsThesaurusTermsTable("statsThesaurusTermsAdrTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsAdrTable", generateRandomThesaurusData());
-	resetThesaurusTable("statsThesaurusTermsObjTable");
-	resetThesaurusTable("statsFreeTermsObjTable");
 }
 
 // The user clicked a specific object node in the tree. Show statistics for the object.
 function showStatisticsForObject(uuid) {
-	var def = getObjectStatistics(uuid);
+	resetStatsAdrTable();
+	resetThesaurusTablePageNav("statsThesTermsObjTable");
+	resetThesaurusTablePageNav("statsFreeTermsObjTable");
+	resetThesaurusTable("statsThesTermsAdrTable");
+	resetThesaurusTable("statsFreeTermsAdrTable");
 
-	def.addCallback(function(objStats) {
-		setStatsObjectsTableContent(objStats);
-		resetStatsAdrTable();
+	var d1 = getObjectStatistics(uuid);
+	var d2 = navigateThesTermsObjTable();
+	var d3 = navigateFreeTermsObjTable();
+
+	var l1 = new dojo.DeferredList([d1, d2, d3], false, false, true);
+
+	l1.addCallback(function(resultList) {
+		setStatsObjectsTableContent(resultList[0][1]);
 	});
 
-	def.addErrback(function(err) {
+	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-
-
-	// TODO Implement
-	dojo.debug("showStatisticsForObject thesaurus not implemented yet.");
-	setStatsThesaurusTermsTable("statsThesaurusTermsObjTable", generateRandomThesaurusData());
-	setStatsThesaurusTermsTable("statsFreeTermsObjTable", generateRandomThesaurusData());
-	resetThesaurusTable("statsThesaurusTermsAdrTable");
-	resetThesaurusTable("statsFreeTermsAdrTable");
 }
 
 
@@ -354,10 +475,27 @@ function getObjectStatistics(objUuid) {
 	return def;
 }
 
-function getAddressStatistics(adrUuid) {
+function getObjectThesaurusStatistics(objUuid, thesaurusTerms, startHit, numHits) {
 	var def = new dojo.Deferred();
 
-	AddressService.getAddressStatistics(adrUuid, {
+	ObjectService.getObjectThesaurusStatistics(objUuid, thesaurusTerms, startHit, numHits, {
+		callback: function(objThesStats) {
+			def.callback(objThesStats);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+
+	return def;
+}
+
+function getAddressStatistics(adrUuid, freeAddressesOnly) {
+	var def = new dojo.Deferred();
+
+	AddressService.getAddressStatistics(adrUuid, freeAddressesOnly, {
 		callback: function(adrStats) {
 			def.callback(adrStats.resultMap);
 		},
@@ -370,6 +508,24 @@ function getAddressStatistics(adrUuid) {
 
 	return def;
 }
+
+function getAddressThesaurusStatistics(adrUuid, freeAddressesOnly, thesaurusTerms, startHit, numHits) {
+	var def = new dojo.Deferred();
+
+	AddressService.getAddressThesaurusStatistics(adrUuid, freeAddressesOnly, thesaurusTerms, startHit, numHits, {
+		callback: function(adrThesStats) {
+			def.callback(adrThesStats);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+
+	return def;
+}
+
 
 function resetStatsObjectsTable() {
 	// Reset table data
@@ -395,9 +551,42 @@ function resetStatsAdrTable() {
 	}
 }
 
+function resetThesaurusTablePageNav(tableId) {
+	var pageNav;
+	
+	if (tableId == "statsThesTermsObjTable") {
+		pageNav = statsThesTermsObjPageNav;
+	} else if (tableId == "statsThesTermsAdrTable") {
+		pageNav = statsThesTermsAdrPageNav;	
+	} else if (tableId == "statsFreeTermsObjTable") {
+		pageNav = statsFreeTermsObjPageNav;	
+	} else if (tableId == "statsFreeTermsAdrTable") {
+		pageNav = statsFreeTermsAdrPageNav;	
+	}
+
+	pageNav.reset();
+//	pageNav.updateDomNodes();
+//	dojo.widget.byId(tableId).store.clearData();
+}
+
 function resetThesaurusTable(tableId) {
+	var pageNav;
+	
+	if (tableId == "statsThesTermsObjTable") {
+		pageNav = statsThesTermsObjPageNav;
+	} else if (tableId == "statsThesTermsAdrTable") {
+		pageNav = statsThesTermsAdrPageNav;	
+	} else if (tableId == "statsFreeTermsObjTable") {
+		pageNav = statsFreeTermsObjPageNav;	
+	} else if (tableId == "statsFreeTermsAdrTable") {
+		pageNav = statsFreeTermsAdrPageNav;	
+	}
+
+	pageNav.reset();
+	pageNav.updateDomNodes();
 	dojo.widget.byId(tableId).store.clearData();
 }
+
 
 scriptScope.print = function() {
 	var selectedTab = dojo.widget.byId("statsTable").selectedChild;
@@ -630,13 +819,20 @@ function generateRandomString(strLength) {
             <!-- MAIN TAB 1 END -->
         		
             <!-- MAIN TAB 2 START -->
-        		<div id="statsFreeTerms" dojoType="ContentPane" label="Freie Suchbegriffe">
-				<div class="tableContainer rows10 full">
-	        	    <table id="statsFreeTermsObjTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+        	<div id="statsFreeTerms" dojoType="ContentPane" label="Freie Suchbegriffe">
+
+				<div class="listInfoStatistics">
+					<span id="statsFreeTermsObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="statsFreeTermsObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+				<div class="tableContainer rows11 full">
+	        	    <table id="statsFreeTermsObjTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
 	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Objekt</th>
-	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
 	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
 	        		      </tr>
 	        	      </thead>
@@ -644,14 +840,20 @@ function generateRandomString(strLength) {
         		      </tbody>
 	        	    </table>
 				</div> <!-- tableContainer -->
-              <div class="spacer"></div>
+				<div class="spacer"></div>
 
-				<div class="tableContainer rows10 full">
-        	    <table id="statsFreeTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+				<div class="listInfoStatistics">
+					<span id="statsFreeTermsAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="statsFreeTermsAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+				<div class="tableContainer rows11 full">
+        	    <table id="statsFreeTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
         	      <thead>
         		      <tr>
               			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Adresse</th>
-              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
               			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
         		      </tr>
         	      </thead>
@@ -664,12 +866,19 @@ function generateRandomString(strLength) {
 
             <!-- MAIN TAB 3 START -->
         		<div id="statsThesaurusTerms" dojoType="ContentPane" label="Thesaurus-Suchbegriffe">
-				<div class="tableContainer rows10 full">
-	        	    <table id="statsThesaurusTermsObjTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+
+				<div class="listInfoStatistics">
+					<span id="statsThesTermsObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="statsThesTermsObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+				<div class="tableContainer rows11 full">
+	        	    <table id="statsThesTermsObjTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
 	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Objekt</th>
-	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
 	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
 	        		      </tr>
 	        	      </thead>
@@ -679,12 +888,18 @@ function generateRandomString(strLength) {
 				</div>
               <div class="spacer"></div>
 
-				<div class="tableContainer rows10 full">
-	        	    <table id="statsThesaurusTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
+				<div class="listInfoStatistics">
+					<span id="statsThesTermsAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+					<span id="statsThesTermsAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+					<div class="fill"></div>
+				</div>
+
+				<div class="tableContainer rows11 full">
+	        	    <table id="statsThesTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
 	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Adresse</th>
-	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
+	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
 	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
 	        		      </tr>
 	        	      </thead>

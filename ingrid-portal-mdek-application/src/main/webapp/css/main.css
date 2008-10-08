@@ -428,6 +428,12 @@ remove by jm because of collision with other definition change (contentSection .
 .buttonCol a.buttonGrey { margin:8px 0; padding:0; display:block; width:37px; height:30px; line-height:30px; }
 
 /********************************************************************
+  page navigation style for the statistics page (grey background)
+*********************************************************************/
+.contentBlockWhite div.listInfoStatistics { background:#ffffff !important; width:674px; }
+.contentBlockWhite div.listInfoStatistics a { color:#156496; }
+
+/********************************************************************
   portal U startpage
 *********************************************************************/
 

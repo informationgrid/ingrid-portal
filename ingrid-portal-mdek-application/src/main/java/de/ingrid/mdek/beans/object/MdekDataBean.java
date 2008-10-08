@@ -20,6 +20,7 @@ public class MdekDataBean {
 	public String workState;
 	public Integer parentPublicationCondition;
 	public Boolean isPublished;
+	public Boolean isMarkedDeleted;
 
 	public String title;
 	public String nodeDocType;
@@ -1618,6 +1619,20 @@ public class MdekDataBean {
 
 	public void setUserOperation(String userOperation) {
 		this.userOperation = userOperation;
+	}
+
+
+
+
+	public Boolean getIsMarkedDeleted() {
+		return isMarkedDeleted;
+	}
+
+
+
+
+	public void setIsMarkedDeleted(Boolean isMarkedDeleted) {
+		this.isMarkedDeleted = isMarkedDeleted;
 	}
 
 }

@@ -20,6 +20,8 @@ import de.ingrid.mdek.beans.query.CSVSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.SearchResultBean;
+import de.ingrid.mdek.beans.query.SearchTermBean;
+import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.Permission;
 import de.ingrid.mdek.beans.security.User;
@@ -490,5 +492,23 @@ public class MdekUtils {
 		result.put(MdekKeys.TIME_CONTAINS, query.getTimeContains());
 		
 		return result;
+	}
+
+	public static ThesaurusStatisticsResultBean extractThesaurusStatistics(IngridDocument result) {
+		ThesaurusStatisticsResultBean res = new ThesaurusStatisticsResultBean();
+		List<SearchTermBean> searchTermList = new ArrayList<SearchTermBean>();
+
+		for (IngridDocument doc : (List<IngridDocument>) result.get(MdekKeys.STATISTICS_SEARCHTERM_LIST)) {
+			SearchTermBean searchTerm = new SearchTermBean();
+			searchTerm.setTerm((String) doc.get(MdekKeys.TERM_NAME));
+			searchTerm.setNumOccurences((Long) doc.get(MdekKeys.TOTAL_NUM));
+			searchTermList.add(searchTerm);
+		}
+
+		res.setNumHitsTotal((Long) result.get(MdekKeys.TOTAL_NUM_PAGING));
+		res.setNumTermsTotal((Long) result.get(MdekKeys.TOTAL_NUM));
+		res.setSearchTermList(searchTermList);
+
+		return res;
 	}
 }

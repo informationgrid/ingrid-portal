@@ -77,7 +77,9 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectStatisticsResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectWorkflowResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.SearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.SearchTermBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.StatisticsBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.Group"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.Permission"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>

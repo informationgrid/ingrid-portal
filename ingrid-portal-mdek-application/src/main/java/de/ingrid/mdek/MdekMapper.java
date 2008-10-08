@@ -146,6 +146,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekObj.setIsPublished((Boolean) obj.get(MdekKeys.IS_PUBLISHED));
+		String markDeleted = (String) obj.get(MdekKeys.MARK_DELETED);
+		mdekObj.setIsMarkedDeleted(markDeleted != null && markDeleted.equals("Y"));
 
 		// Comments
 		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
@@ -377,7 +379,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekAddress.setIsPublished((Boolean) adr.get(MdekKeys.IS_PUBLISHED));
-
+		String markDeleted = (String) adr.get(MdekKeys.MARK_DELETED);
+		mdekAddress.setIsMarkedDeleted(markDeleted != null && markDeleted.equals("Y"));
 		
 		// General Information
 		mdekAddress.setUuid((String) adr.get(MdekKeys.UUID));
