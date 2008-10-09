@@ -6,9 +6,16 @@
 
 #macro (renderTextLine $entry)
 	#if($tool.hasContent($entry.body))
-		$entry.body<br />
+		#if($tool.hasContent($entry.title))$entry.title #end$entry.body<br />
     #end
 #end
+
+#macro (renderTextLinkLine $entry)
+	#if($tool.hasContent($entry.body))
+		#if($tool.hasContent($entry.title))$entry.title #end<a href="$entry.href" alt="$entry.altText">$entry.body</a><br />
+    #end
+#end
+
 
 #macro (renderEntryInLine $entry)
 	#if($tool.hasContent($entry.body))
@@ -111,6 +118,8 @@
 				#renderMultiLine($e)
 			#elseif($e.type=="textLine")
 				#renderTextLine($e)
+			#elseif($e.type=="textLinkLine")
+				#renderTextLinkLine($e)
 			#elseif($e.type=="linkLine")
 				#renderLinkLine($e)
 			#elseif($e.type=="line")
@@ -165,6 +174,8 @@
 				#renderTextLine($e)
 			#elseif($e.type=="linkLine")
 				#renderLinkLine($e)
+			#elseif($e.type=="textLinkLine")
+				#renderTextLinkLine($e)
 			#elseif($e.type=="line")
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")

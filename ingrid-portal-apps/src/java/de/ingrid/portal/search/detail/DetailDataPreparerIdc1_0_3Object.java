@@ -1305,14 +1305,36 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     
     private void addCommunication(List elements, Record record) {
     	HashMap element = new HashMap();
-		element.put("type", "textLine");
 		String textLine = record.getString("t021_communication.comm_value");
+		String type = null;
 		if (UtilsVelocity.hasContent(record.getString("t021_communication.commtype_value")).booleanValue()) {
+			type = record.getString("t021_communication.commtype_value");
 			if (textLine != null) {
-				textLine = record.getString("t021_communication.commtype_value").concat(": ").concat(textLine);
+				element.put("title", record.getString("t021_communication.commtype_value").concat(":"));
 			}
 		}
-		element.put("body", textLine);
+		
+		if (type == null) {
+			element.put("type", "textLine");
+			element.put("body", textLine);
+		} else if (type.equalsIgnoreCase("email") || type.equalsIgnoreCase("e-mail")) {
+			element.put("type", "textLinkLine");
+			element.put("href", "mailto:".concat(textLine));
+			element.put("body", textLine);
+			element.put("altText", textLine);
+		} else if (type.equalsIgnoreCase("www") || type.equalsIgnoreCase("url")) {
+			element.put("type", "textLinkLine");
+			if (textLine.startsWith("http")) {
+				element.put("href", textLine);
+			} else {
+				element.put("href", "http://".concat(textLine));
+			}
+			element.put("body", textLine);
+			element.put("altText", textLine);
+		} else {
+			element.put("type", "textLine");
+			element.put("body", textLine);
+		}
     	elements.add(element);
     }
     
