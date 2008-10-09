@@ -26,20 +26,15 @@
 #rightsAddressesUserList  { height:240px; }
 
 /*** import ***/
-#importTree { width:955px; height:441px; }
-#importTreeContainer { width:955px; height:441px; background:#ececec; }
+#importTree { width:955px; }
+#importTreeContainer { width:955px; height:450px; background:#ececec; }
 #treeImportTree { height:441px; }
-#importTreeData { height:441px; margin:-102px 0 0 50px; }
-#btnPos1 { margin-top:23px !important; }
+#importTreeData { height:441px; margin:-144px 0 0 50px; }
 
-#importUniversal { width:955px; height:441px; }
-#importUniversalContainer { width:955px; height:441px; background:#ececec; }
+#importUniversal { width:955px; }
+#importUniversalContainer { width:955px; height:450px; background:#ececec; }
 #treeImportUniversal { height:441px; }
-#importUniversalBtn { width:32px; margin:13px 0 0 8px; }
-#importUniversalData { height:441px; margin:-328px 0 0 50px; }
-#btnPos2 { margin-top:109px !important; }
-#btnPos3 { margin-top:109px !important; }
-#importUniversalButtons { }
+#importUniversalData { height:441px; margin:-480px 0 0 50px; }
 
 #treeContainerUser, #treeContainerObjects, #treeContainerAddresses, #treeImportTree, #treeImportUniversal, #treeContainerAddressDelete, #treeContainerAddressNew { padding:13px 0 0 8px; }
 
