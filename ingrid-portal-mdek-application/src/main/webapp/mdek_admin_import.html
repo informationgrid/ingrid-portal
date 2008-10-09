@@ -13,7 +13,13 @@ span.universalImport div.dojoButton {
 <script type="text/javascript">
 var scriptScope = this;
 
+var importTreeSelectedParentDataset = null;
+var importTreeSelectedInfoAddress = null;
+
+
 _container_.addOnLoad(function() {
+	initTrees();
+
 	document.getElementById("importType1").onclick = selectImportType;
 	document.getElementById("importType2").onclick = selectImportType;
     selectImportType();
@@ -48,22 +54,142 @@ function selectImportType(e) {
 	}
 }
 
+scriptScope.resetImport = function() {
+	if (dojo.byId("importType1").checked) {
+		dojo.widget.byId("importTreeParentDataset").setValue("");
+		dojo.widget.byId("importTreeAddress").setValue("");
+		importTreeSelectedParentDataset = null;
+		importTreeSelectedInfoAddress = null;
+
+	} else {
+	}
+}
+
+scriptScope.selectParentDatasetForTreeImport = function() {
+	var selectedNode = dojo.widget.byId("treeImportTree").selectedNode;
+
+	// All nodes allowed except addresses of class 2 & 3 (persons and free addresses))
+	if (selectedNode && !(selectedNode.nodeAppType == "A" && selectedNode.objectClass >= 2)) {
+		dojo.widget.byId("importTreeParentDataset").setValue(selectedNode.title);
+		importTreeSelectedParentDataset = selectedNode;
+
+	} else {
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen g&uuml;ltigen Datensatz aus.", dialog.WARNING);
+	}
+}
+
+scriptScope.selectInfoAddressForTreeImport = function() {
+	var selectedNode = dojo.widget.byId("treeImportTree").selectedNode;
+
+	if (selectedNode && selectedNode.nodeAppType == "A" && selectedNode.uuid != "addressRoot" && selectedNode.uuid != "addressFreeRoot") {
+		dojo.widget.byId("importTreeAddress").setValue(selectedNode.title);
+		importTreeSelectedInfoAddress = selectedNode;
+
+	} else {
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Adresse aus.", dialog.WARNING);
+	}
+}
+
 scriptScope.analyseFile = function() {
 	// TODO Implement
 	document.getElementById("importUniversal").style.visibility = "visible";
 	document.getElementById("importUniversal").style.display = "block";
 }
 
-scriptScope.startImport = function() {
+function startTreeImport() {
 	// TODO Implement
 	dojo.debug("uploadFile called.");
 	var file = dwr.util.getValue("importFile");
 
-	dojo.debug("File: "+file);
-
 	ImportService.uploadFile(file, function(data) {
 		dwr.engine.openInDownload(data);
 	});
+}
+
+scriptScope.startImport = function() {
+
+	if (dojo.byId("importType1").checked) {
+		if (dojo.byId("importFile").value && importTreeSelectedParentDataset != null && importTreeSelectedInfoAddress != null) {
+			startTreeImport();
+		} else {
+			dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie die Importdatei, einen &uuml;bergeordneten Datensatz und eine Auskunftsadresse aus bevor Sie den Importvorgang starten.", dialog.WARNING);
+		}
+
+	} else {
+		startUniversalImport();
+	}
+}
+
+function initTrees() {
+	// Load initial first level of the tree from the server
+	TreeService.getSubTree(null, null, 1, 
+		function (rootNodeList) {
+			var importTree = dojo.widget.byId("treeImportTree");
+			var importUniversalTree = dojo.widget.byId("treeImportUniversal");
+
+			dojo.lang.forEach(rootNodeList, function(rootNode){
+				rootNode.title = dojo.string.escape("html", rootNode.title);
+				rootNode.uuid = rootNode.id;
+				rootNode.id = null;
+			});
+
+			var clonedRootNodeList = cloneObject(rootNodeList);
+
+			importTree.setChildren(rootNodeList);
+			importUniversalTree.setChildren(clonedRootNodeList);
+	});
+
+	// Function to load children of the node from server
+	var loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		deferred.addCallback(function(res) {
+			dojo.lang.forEach(res, function(obj){
+				obj.title = dojo.string.escape("html", obj.title);
+				obj.uuid = obj.id;
+				obj.id = null;
+			});
+			return _this.loadProcessResponse(node,res);
+		});
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+
+		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+
+		return deferred;
+	};
+
+	// Attach load remote function to the tree controllers
+	var importTreeController = dojo.widget.byId("treeImportTreeController");
+	var importTreeUniversalController = dojo.widget.byId("treeImportUniversalController");
+	importTreeController.loadRemote = loadRemote;
+	importTreeUniversalController.loadRemote = loadRemote;
+}
+
+// clone an object or array and all it's contents.
+// An array containing only primitive types (no objects) can also be cloned with array.slice(0).
+function cloneObject(obj) {
+	var newObj = (obj instanceof Array) ? [] : {};
+
+	for (i in obj) {
+		if (obj[i] && typeof obj[i] == "object") {
+			newObj[i] = cloneObject(obj[i]);
+
+		} else {
+			newObj[i] = obj[i];
+		}
+	}
+	return newObj;
 }
 
 </script>
@@ -115,17 +241,19 @@ scriptScope.startImport = function() {
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
               <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
               <div class="inputContainer grey noSpaceBelow">
-              	<div dojoType="ContentPane" id="treeImportTree">
+              	<div dojoType="ContentPane" id="treeImportTreeContent">
                   <!-- tree components -->
-                  <div dojoType="ingrid:TreeController" widgetId="treeControllerObjects" RpcUrl="server/treelistener.php"></div>
-                  <div dojoType="ingrid:TreeListener" widgetId="treeListenerObjects"></div>	
-                  <div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsObjects"></div>	
-                  <div dojoType="ingrid:TreeDecorator" listener="treeListenerObjects"></div>
+                  <div dojoType="ingrid:TreeController" widgetId="treeImportTreeController" RpcUrl="server/treelistener.php"></div>
+                  <div dojoType="ingrid:TreeListener" widgetId="treeImportTreeListener"></div>	
+                  <div dojoType="ingrid:TreeDocIcons" widgetId="treeImportTreeDocIcons"></div>	
+                  <div dojoType="ingrid:TreeDecorator" listener="treeImportTreeListener"></div>
                   
                   <!-- tree -->
-                  <div dojoType="ingrid:Tree" listeners="treeControllerObjects;treeListenerObjects;treeDocIconsObjects" widgetId="tree">
+                  <div dojoType="ingrid:Tree" listeners="treeImportTreeController;treeImportTreeListener;treeImportTreeDocIcons" widgetId="treeImportTree">
+<!-- 
                   	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
                   	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+ -->
                   </div>
                   <div class="spacer"></div>
                 </div>
@@ -138,16 +266,16 @@ scriptScope.startImport = function() {
 
 				<span class="entry">
 					<span class="buttonCol subtreeImport" style="margin-top:39px;">
-						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentObjectForSubtreeImport();">&nbsp;>&nbsp;</button>
-						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectInfoAddressForSubtreeImport();">&nbsp;>&nbsp;</button>
+						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentDatasetForTreeImport();">&nbsp;>&nbsp;</button>
+						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectInfoAddressForTreeImport();">&nbsp;>&nbsp;</button>
 					</span>
 				</span>
 
               <div id="importTreeData" class="entry field">
-                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlter &uuml;bergeordneter Datensatz')">Ausgew&auml;hltes &uuml;bergeordnetes Objekt</label></span>
-                <span class="input spaceBelow"><input type="text" id="importTreeParentObject" name="importTreeParentObject" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" value="WABIS - Altablagerungen" /></span>
+                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlter &uuml;bergeordneter Datensatz')">Ausgew&auml;hlter &uuml;bergeordneter Datensatz</label></span>
+                <span class="input spaceBelow"><input type="text" id="importTreeParentDataset" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
                 <span class="label"><label for="importTreeAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlte Auskunftsadresse (f&uuml;r Objekte)')">Ausgew&auml;hlte Auskunftsadresse</label></span>
-                <span class="input"><input type="text" id="importTreeAddress" name="importTreeAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" value="Behmann, J&ouml;rg" /></span>
+                <span class="input"><input type="text" id="importTreeAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
             	</div>
             </div>
           </div>
@@ -175,17 +303,19 @@ scriptScope.startImport = function() {
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
               <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
               <div class="inputContainer grey noSpaceBelow">
-              	<div dojoType="ContentPane" id="treeImportUniversal">
+              	<div dojoType="ContentPane" id="treeImportUniversalContent">
                   <!-- tree components -->
-                  <div dojoType="ingrid:TreeController" widgetId="u_treeControllerObjects" RpcUrl="server/treelistener.php"></div>
-                  <div dojoType="ingrid:TreeListener" widgetId="u_treeListenerObjects"></div>	
-                  <div dojoType="ingrid:TreeDocIcons" widgetId="u_treeDocIconsObjects"></div>	
-                  <div dojoType="ingrid:TreeDecorator" listener="u_treeListenerObjects"></div>
+                  <div dojoType="ingrid:TreeController" widgetId="treeImportUniversalController" RpcUrl="server/treelistener.php"></div>
+                  <div dojoType="ingrid:TreeListener" widgetId="treeImportUniversalListener"></div>	
+                  <div dojoType="ingrid:TreeDocIcons" widgetId="treeImportUniversalDocIcons"></div>	
+                  <div dojoType="ingrid:TreeDecorator" listener="treeImportUniversalListener"></div>
                   
                   <!-- tree -->
-                  <div dojoType="ingrid:Tree" listeners="u_treeControllerObjects;u_treeListenerObjects;u_treeDocIconsObjects" widgetId="u_tree">
+                  <div dojoType="ingrid:Tree" listeners="treeImportUniversalController;treeImportUniversalListener;treeImportUniversalDocIcons" widgetId="treeImportUniversal">
+<!-- 
                   	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
                   	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+ -->
                   </div>
                   <div class="spacer"></div>
                 </div>
@@ -208,13 +338,13 @@ scriptScope.startImport = function() {
                 <div class="inputContainer h130">
                   <span class="label"><label for="importUniversalParent" onclick="javascript:dialog.showContextHelp(arguments[0], 'Elternobjekt festlegen')">Elternobjekt festlegen</label></span>
                   <div class="tableContainer rows4 fullInside">
-              	    <table id="importUniversalParent" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" cellspacing="0" class="filteringTable interactive readonly relativePos">
+              	    <table id="importUniversalParent" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive readonly relativePos">
               	      <thead>
               		      <tr>
-                    			<th field="importObjType" dataType="String" width="30">&nbsp;</th>
-                    			<th field="importObj" dataType="String" width="288">Objekt aus Import</th>
-                    			<th field="assignedObjType" dataType="String" width="30">&nbsp;</th>
-                    			<th field="assignedObj" dataType="String" width="288">Zugeordnetes Objekt</th>
+                    			<th nosort="true" field="importObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th nosort="true" field="importObj" dataType="String" width="288">Objekt aus Import</th>
+                    			<th nosort="true" field="assignedObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th nosort="true" field="assignedObj" dataType="String" width="288">Zugeordnetes Objekt</th>
               		      </tr>
               	      </thead>
               	      <tbody>
@@ -226,13 +356,13 @@ scriptScope.startImport = function() {
                 <div class="inputContainer h130">
                   <span class="label"><label for="importUniversalInfoAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auskunfts-Adresse festlegen')">Auskunfts-Adresse festlegen</label></span>
                   <div class="tableContainer rows4 fullInside">
-              	    <table id="importUniversalInfoAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" cellspacing="0" class="filteringTable interactive readonly relativePos">
+              	    <table id="importUniversalInfoAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive readonly relativePos">
               	      <thead>
               		      <tr>
-                    			<th field="importObjType" dataType="String" width="30">&nbsp;</th>
-                    			<th field="importObj" dataType="String" width="288">Adresse aus Import</th>
-                    			<th field="assignedObjType" dataType="String" width="30">&nbsp;</th>
-                    			<th field="assignedObj" dataType="String" width="288">Zugeordnete Adresse</th>
+                    			<th nosort="true" field="importObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th nosort="true" field="importObj" dataType="String" width="288">Adresse aus Import</th>
+                    			<th nosort="true" field="assignedObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th nosort="true" field="assignedObj" dataType="String" width="288">Zugeordnete Adresse</th>
               		      </tr>
               	      </thead>
               	      <tbody>
@@ -244,13 +374,13 @@ scriptScope.startImport = function() {
                 <div class="inputContainer h130">
                   <span class="label"><label for="importUniversalInfoParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Elternadresse festlegen')">Elternadresse festlegen</label></span>
                   <div class="tableContainer rows4 fullInside">
-              	    <table id="importUniversalInfoParentAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" cellspacing="0" class="filteringTable interactive readonly relativePos">
+              	    <table id="importUniversalInfoParentAddress" dojoType="ingrid:FilteringTable" minRows="4" multiple="true" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive readonly relativePos">
               	      <thead>
               		      <tr>
-                    			<th field="importObjType" dataType="String" width="30">&nbsp;</th>
-                    			<th field="importObj" dataType="String" width="288">Adresse aus Import</th>
-                    			<th field="assignedObjType" dataType="String" width="30">&nbsp;</th>
-                    			<th field="assignedObj" dataType="String" width="288">Zugeordnete Adresse</th>
+                    			<th nosort="true" field="importObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th nosort="true" field="importObj" dataType="String" width="288">Adresse aus Import</th>
+                    			<th nosort="true" field="assignedObjType" dataType="String" width="30">&nbsp;</th>
+                    			<th nosort="true" field="assignedObj" dataType="String" width="288">Zugeordnete Adresse</th>
               		      </tr>
               	      </thead>
               	      <tbody>

@@ -28,12 +28,12 @@
 /*** import ***/
 #importTree { width:955px; }
 #importTreeContainer { width:955px; height:450px; background:#ececec; }
-#treeImportTree { height:441px; }
+#treeImportTreeContent { height:441px; }
 #importTreeData { height:441px; margin:-144px 0 0 50px; }
 
 #importUniversal { width:955px; }
 #importUniversalContainer { width:955px; height:450px; background:#ececec; }
-#treeImportUniversal { height:441px; }
+#treeImportUniversalContent { height:441px; }
 #importUniversalData { height:441px; margin:-480px 0 0 50px; }
 
 #treeContainerUser, #treeContainerObjects, #treeContainerAddresses, #treeImportTree, #treeImportUniversal, #treeContainerAddressDelete, #treeContainerAddressNew { padding:13px 0 0 8px; }
