@@ -7,7 +7,7 @@ Die Verfallszeitspanne folgender Datensätze ist abgelaufen:
 Titel: $expDS.title
 Uuid: $expDS.uuid
 Typ: $expDS.type
-Letzte �nderung: $expDS.lastModified
+Letzte Änderung: $expDS.lastModified
 #if( $expDS.type.toString() == "OBJECT")
 Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$expDS.uuid
 #else
