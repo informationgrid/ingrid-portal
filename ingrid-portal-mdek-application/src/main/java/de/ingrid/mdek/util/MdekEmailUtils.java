@@ -160,7 +160,7 @@ public class MdekEmailUtils {
 	}
 
 	public static void sendObjectMovedMail(String objUuid) {
-		if (!isWorkflowControlEnabled()) {
+		if (!isWorkflowControlEnabled() || isCurrentUserQAForObject(objUuid)) {
 			return;
 		}
 		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentSessionId());
@@ -184,11 +184,47 @@ public class MdekEmailUtils {
 	}
 
 	public static void sendAddressMovedMail(String adrUuid) {
-		if (!isWorkflowControlEnabled()) {
+		if (!isWorkflowControlEnabled() || isCurrentUserQAForAddress(adrUuid)) {
 			return;
 		}
 		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, HTTPSessionHelper.getCurrentSessionId());
 		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));	
+	}
+
+	public static void sendObjectMarkedDeletedMail(String objUuid) {
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentSessionId());
+		sendObjectMarkedDeletedMail(MdekObjectUtils.extractSingleObjectFromResponse(response));
+	}
+
+	public static void sendObjectMarkedDeletedMail(MdekDataBean data) {
+		List<User> qaUserList = getQAUsersForObject(data);
+		List<String> emailList = getEmailAddressesForUsers(qaUserList);
+		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
+
+		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
+		String templatePath = url.getPath();
+		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		mailData.put("assignedDataset", assignedDatasetMap);
+		String text = mergeTemplate(templatePath, mailData, "map");
+		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
+	}
+
+	public static void sendAddressMarkedDeletedMail(String adrUuid) {
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, HTTPSessionHelper.getCurrentSessionId());
+		sendAddressMarkedDeletedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));	
+	}
+
+	public static void sendAddressMarkedDeletedMail(MdekAddressBean adr) {
+		List<User> qaUserList = getQAUsersForAddress(adr);
+		List<String> emailList = getEmailAddressesForUsers(qaUserList);
+		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
+
+		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
+		String templatePath = url.getPath();
+		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		mailData.put("assignedDataset", assignedDatasetMap);
+		String text = mergeTemplate(templatePath, mailData, "map");
+		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
 
 	public static void sendExpiryNotificationMails(ArrayList<ExpiredDataset> expiredDatasetList) {
@@ -330,9 +366,13 @@ public class MdekEmailUtils {
 	}
 	
 	private static List<User> getQAUsersForAddress(MdekAddressBean data) {
+		return getQAUsersForAddress(data.getUuid());
+	}
+
+	private static List<User> getQAUsersForAddress(String adrUuid) {
 		List<User> qaUserList = new ArrayList<User>();
 
-		IngridDocument doc = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), data.getUuid(), HTTPSessionHelper.getCurrentSessionId(), true, true);
+		IngridDocument doc = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), adrUuid, HTTPSessionHelper.getCurrentSessionId(), true, true);
 		List<User> userList = MdekUtils.extractSecurityUsersFromResponse(doc);
 
 		// Get all users that have qa right on the obj
@@ -470,6 +510,30 @@ public class MdekEmailUtils {
 		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
 		CatalogBean cat = MdekCatalogUtils.extractCatalogFromResponse(response);
 		return (cat.getWorkflowControl() != null && cat.getWorkflowControl().equals(de.ingrid.mdek.MdekUtils.YES));
+	}
+
+	private static boolean isCurrentUserQAForObject(String objUuid) {
+		String userId = HTTPSessionHelper.getCurrentSessionId();
+		List<User> qaUsers = getQAUsersForObject(objUuid);
+		for (User u : qaUsers) {
+			if (u.getAddressUuid().equals(userId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	private static boolean isCurrentUserQAForAddress(String adrUuid) {
+		String userId = HTTPSessionHelper.getCurrentSessionId();
+		List<User> qaUsers = getQAUsersForAddress(adrUuid);
+		for (User u : qaUsers) {
+			if (u.getAddressUuid().equals(userId)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public ConnectionFacade getConnectionFacade() {

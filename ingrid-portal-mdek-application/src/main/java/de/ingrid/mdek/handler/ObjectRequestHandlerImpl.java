@@ -88,6 +88,11 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	public void deleteObject(String uuid, boolean forceDeleteReferences) {
 		IngridDocument response = mdekCallerObject.deleteObject(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.extractAdditionalInformationFromResponse(response);
+
+		boolean markedDeleted = result.getBoolean(MdekKeys.RESULTINFO_WAS_MARKED_DELETED);
+		if (markedDeleted) {
+			MdekEmailUtils.sendObjectMarkedDeletedMail(uuid);
+		}
 	}
 
 	public boolean deleteObjectWorkingCopy(String uuid, boolean forceDeleteReferences) {

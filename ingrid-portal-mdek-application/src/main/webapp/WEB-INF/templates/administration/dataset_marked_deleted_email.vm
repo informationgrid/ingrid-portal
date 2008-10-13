@@ -1,0 +1,14 @@
+#set($assignedDS = $map.get("assignedDataset"))
+#set($DIRECT_LINK = $map.get("directLink"))
+Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid Software.
+Der folgende Datensatz wurde als gelöscht markiert und Ihrer Benutzergruppe zur Qualitätssicherung überwiesen: 
+
+Titel: $assignedDS.title
+Uuid: $assignedDS.uuid
+
+#if( $assignedDS.type == "O")
+Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$assignedDS.uuid
+#else
+Direkter Link: ${DIRECT_LINK}?nodeType=A&nodeId=$assignedDS.uuid
+#end
+
