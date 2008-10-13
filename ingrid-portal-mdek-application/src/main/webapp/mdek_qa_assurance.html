@@ -63,6 +63,7 @@ function initTables() {
 
 		UtilList.addIcons(qaAssignedDatasetTable);
 		UtilList.addTableIndices(qaAssignedDatasetTable);
+		qaAssignedDatasetPageNav.reset();
 		navigateQAAssignedDatasetTable();
 
 
@@ -89,6 +90,7 @@ function initTables() {
 
 		UtilList.addIcons(qaModifiedDatasetTable);
 		UtilList.addTableIndices(qaModifiedDatasetTable);
+		qaModifiedDatasetPageNav.reset();
 		navigateQAModifiedDatasetTable();
 
 
@@ -115,6 +117,7 @@ function initTables() {
 
 		UtilList.addIcons(qaExpiredDatasetTable);
 		UtilList.addTableIndices(qaExpiredDatasetTable);
+		qaExpiredDatasetPageNav.reset();
 		navigateQAExpiredDatasetTable();
 		exitLoadingState();
 	});
@@ -291,6 +294,10 @@ function exitLoadingState() {
 	dojo.byId("qaContent").style.visibility = "visible";
 }
 
+scriptScope.reloadPage = function() {
+	initTables();
+}
+
 </script>
 </head>
 
@@ -312,6 +319,7 @@ function exitLoadingState() {
 		<div class="content" id="qaContent" style="visibility:hidden;">
         
 			<div class="spacer"></div>
+			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();">Seite aktualisieren</button>
 			<div class="spacer"></div>
 
 			<span class="label"><label>Objekte / Adressen die Ihnen als Qualit&auml;tssichernder zugewiesen wurden</label></span>

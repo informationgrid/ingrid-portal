@@ -176,6 +176,7 @@ function initTables() {
 		// Set the expired obj/adr list
 		expiredDatasetTable = expObjList.concat(expAdrList);
 //		dojo.lang.forEach(expiredDatasetTable, function(item) { item.state = "&Uuml;berwiesen an Verantwortlichen"; item.type = "Verfallsdatum erreicht"; });
+		expiredDatasetPageNav.reset();
 		navigateExpiredDatasetTable();
 
 		// Set the modified obj/adr list
@@ -185,6 +186,7 @@ function initTables() {
 //			item.state = "Bei Bearbeiter";
 			item.type = item.type == "A" ? "neu angelegt" : "&uuml;berarbeitet";
 		});
+		modifiedDatasetPageNav.reset();
 		navigateModifiedDatasetTable();
 
 		// Set the qa obj/adr list
@@ -212,7 +214,7 @@ function initTables() {
 				item.type = "&uuml;berarbeitet";
 			}
 		});
-		
+		qaDatasetPageNav.reset();
 		navigateQADatasetTable();
 
 		// Count the number of occurences and set the overview lst
@@ -461,6 +463,10 @@ function exitLoadingState() {
 	dojo.byId("qaEditorContent").style.visibility = "visible";
 }
 
+scriptScope.reloadPage = function() {
+	initTables();
+}
+
 </script>
 </head>
 
@@ -480,6 +486,11 @@ function exitLoadingState() {
 		</span>
 
 		<div class="content" id="qaEditorContent" style="visibility:hidden;">
+
+			<div class="spacer"></div>
+			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();">Seite aktualisieren</button>
+			<div class="spacer"></div>
+
 			<div class="inputContainer noSpaceBelow">
 				<div id="editorsOverview" class="infobox w478">
 					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
