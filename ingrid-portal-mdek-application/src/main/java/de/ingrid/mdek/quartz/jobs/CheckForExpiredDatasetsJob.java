@@ -137,18 +137,22 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			return resultList;
 		}
 
-		String qString = "select obj.objUuid, obj.objName, obj.modTime, comm.commValue " +
+		String qString = "select obj.objUuid, obj.objName, obj.modTime, comm.commValue," +
+				"modUserAddr.institution, modUserAddr.firstname, modUserAddr.lastname " +
 		"from ObjectNode oNode " +
-			"inner join oNode.t01ObjectPublished obj " +
-			"inner join obj.objectMetadata oMeta, " +
-			"AddressNode as aNode " +
-			"inner join aNode.t02AddressPublished addr " +
-			"inner join addr.t021Communications comm " +
+				"inner join oNode.t01ObjectPublished obj " +
+				"inner join obj.objectMetadata oMeta, " +
+			"AddressNode as responsibleUserNode " +
+				"inner join responsibleUserNode.t02AddressWork responsibleUserAddr " +
+				"inner join responsibleUserAddr.t021Communications comm, " +
+			"AddressNode as modUserNode " +
+				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
 			"oMeta.expiryState <= " + state.getDbValue() +
-			" and obj.responsibleUuid = aNode.addrUuid " +
+			" and obj.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
-			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end);
+			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
+			" and modUserNode.addrUuid = obj.modUuid";
 		if (begin != null) {
 			qString += " and obj.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
 		}
@@ -166,7 +170,10 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 					dataset.setTitle(objEntity.getString("obj.objName"));
 					dataset.setType(ExpiredDataset.Type.OBJECT);
 					dataset.setLastModified(MdekUtils.convertTimestampToDate(objEntity.getString("obj.modTime")));
-//					dataset.setLastModifiedBy(lastModifiedBy);
+					String institution = objEntity.getString("modUserAddr.institution");
+					String lastName = objEntity.getString("modUserAddr.lastname");
+					String firstName = objEntity.getString("modUserAddr.firstname");
+					dataset.setLastModifiedBy(MdekAddressUtils.createAddressTitle(institution, lastName, firstName));
 					dataset.setResponsibleUserEmail(objEntity.getString("comm.commValue"));
 					resultList.add(dataset);
 				}
@@ -186,18 +193,22 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			return resultList;
 		}
 
-		String qString = "select adr.adrUuid, adr.institution, adr.firstname, adr.lastname, adr.modTime, comm.commValue " +
+		String qString = "select adr.adrUuid, adr.institution, adr.firstname, adr.lastname, adr.modTime, comm.commValue," +
+				"modUserAddr.institution, modUserAddr.firstname, modUserAddr.lastname " +
 		"from AddressNode addrNode " +
-			"inner join addrNode.t02AddressPublished adr " +
-			"inner join adr.addressMetadata aMeta, " +
-			"AddressNode as aNode " +
-			"inner join aNode.t02AddressPublished addr " +
-			"inner join addr.t021Communications comm " +
+				"inner join addrNode.t02AddressPublished adr " +
+				"inner join adr.addressMetadata aMeta, " +
+			"AddressNode as responsibleUserNode " +
+				"inner join responsibleUserNode.t02AddressWork responsibleUserAddr " +
+				"inner join responsibleUserAddr.t021Communications comm, " +
+			"AddressNode as modUserNode " +
+				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
 			"aMeta.expiryState <= " + state.getDbValue() +
-			" and adr.responsibleUuid = aNode.addrUuid " +
+			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
-			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end);
+			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
+			" and modUserNode.addrUuid = adr.modUuid";
 		if (begin != null) {
 			qString += " and adr.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
 		}
@@ -217,7 +228,10 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 					dataset.setTitle(MdekAddressUtils.createAddressTitle(institution, lastName, firstName));
 					dataset.setType(ExpiredDataset.Type.ADDRESS);
 					dataset.setLastModified(MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
-//					dataset.setLastModifiedBy(lastModifiedBy);
+					String modInstitution = adrEntity.getString("modUserAddr.institution");
+					String modLastName = adrEntity.getString("modUserAddr.lastname");
+					String modFirstName = adrEntity.getString("modUserAddr.firstname");
+					dataset.setLastModifiedBy(MdekAddressUtils.createAddressTitle(modInstitution, modLastName, modFirstName));
 					dataset.setResponsibleUserEmail(adrEntity.getString("comm.commValue"));
 					resultList.add(dataset);
 				}

@@ -5,6 +5,7 @@ Der folgende Datensatz wurde Ihnen von der Qualitätssicherung rücküberwiesen:
 
 Titel: $reassignedDS.title
 Uuid: $reassignedDS.uuid
+
 #if( $reassignedDS.type == "O")
 Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$reassignedDS.uuid
 #else

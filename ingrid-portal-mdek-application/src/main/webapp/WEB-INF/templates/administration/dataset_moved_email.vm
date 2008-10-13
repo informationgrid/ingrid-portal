@@ -5,6 +5,7 @@ Der folgende Datensatz wurde im Hierarchiebaum verschoben:
 
 Titel: $movedDS.title
 Uuid: $movedDS.uuid
+
 #if( $movedDS.type == "O")
 Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$movedDS.uuid
 #else

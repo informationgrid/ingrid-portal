@@ -206,9 +206,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
 
 	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer maxNum) {
+		// TODO use this parameter
+		int startHit = 0;
+
 		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
 		IdcEntitySelectionType st = selectionType == null ? null : IdcEntitySelectionType.valueOf(selectionType);
-		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), ws, st, maxNum, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), ws, st, startHit, maxNum, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekAddressUtils.extractDetailedAddresses(result);
 	}

@@ -23,6 +23,8 @@ _container_.addOnLoad(function() {
 });
 
 function initTables() {
+	enterLoadingState();
+
 	var d1 = getQAAssignedObjects();
 	var d2 = getQAAssignedAddresses();
 	var d3 = getQAModifiedObjects();
@@ -114,12 +116,14 @@ function initTables() {
 		UtilList.addIcons(qaExpiredDatasetTable);
 		UtilList.addTableIndices(qaExpiredDatasetTable);
 		navigateQAExpiredDatasetTable();
+		exitLoadingState();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 		displayErrorMessage(err);
+		exitLoadingState();
 	});
 }
 
@@ -277,6 +281,16 @@ function convertUserOperationToString(userOperation) {
 	}
 }
 
+function enterLoadingState() {
+	dojo.byId("qaLoadingZone").style.display = "block";
+	dojo.byId("qaContent").style.visibility = "hidden";
+}
+
+function exitLoadingState() {
+	dojo.byId("qaLoadingZone").style.display = "none";
+	dojo.byId("qaContent").style.visibility = "visible";
+}
+
 </script>
 </head>
 
@@ -288,7 +302,14 @@ function convertUserOperationToString(userOperation) {
 			<a href="#" title="Hilfe">[?]</a>
 		</div>
 
-		<div class="content">
+		<span class="label" id="qaLoadingZone">
+			<div id="loadingZone" z-index: 100;">
+		        <img id="imageZone" src="img/ladekreis.gif" style="background-color:#FFFFFF;" />
+		        <label>&nbsp;Bitte warten, die Daten werden geladen...</label>
+		    </div>
+		</span>
+
+		<div class="content" id="qaContent" style="visibility:hidden;">
         
 			<div class="spacer"></div>
 			<div class="spacer"></div>

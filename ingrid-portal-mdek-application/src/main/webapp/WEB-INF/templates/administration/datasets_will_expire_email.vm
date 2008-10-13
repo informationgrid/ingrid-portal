@@ -8,10 +8,13 @@ Titel: $expDS.title
 Uuid: $expDS.uuid
 Typ: $expDS.type
 Letzte Änderung: $expDS.lastModified
+Letzte Änderung von: $expDS.lastModifiedBy
+
 #if( $expDS.type.toString() == "OBJECT")
 Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$expDS.uuid
 #else
 Direkter Link: ${DIRECT_LINK}?nodeType=A&nodeId=$expDS.uuid
 #end
+
 
 #end

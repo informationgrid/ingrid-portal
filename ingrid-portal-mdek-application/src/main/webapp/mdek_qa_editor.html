@@ -162,6 +162,7 @@ function initTables() {
 	var d5 = getQAAddresses();	
 	var d6 = getQAObjects();
 
+	enterLoadingState();
 
 	var l1 = new dojo.DeferredList([d1, d2, d3, d4, d5, d6], false, false, true);
 	l1.addCallback(function (resultList) {
@@ -216,10 +217,12 @@ function initTables() {
 
 		// Count the number of occurences and set the overview lst
 		initOverviewTable(expObjList.length, expAdrList.length, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR);
+		exitLoadingState();
 	});
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		exitLoadingState();
 	});
 }
 
@@ -448,6 +451,16 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 */
 }
 
+function enterLoadingState() {
+	dojo.byId("qaEditorLoadingZone").style.display = "block";
+	dojo.byId("qaEditorContent").style.visibility = "hidden";
+}
+
+function exitLoadingState() {
+	dojo.byId("qaEditorLoadingZone").style.display = "none";
+	dojo.byId("qaEditorContent").style.visibility = "visible";
+}
+
 </script>
 </head>
 
@@ -459,7 +472,14 @@ function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, num
 			<a href="#" title="Hilfe">[?]</a>
 		</div>
 
-		<div class="content">
+		<span class="label" id="qaEditorLoadingZone">
+			<div id="loadingZone" z-index: 100;">
+		        <img id="imageZone" src="img/ladekreis.gif" style="background-color:#FFFFFF;" />
+		        <label>&nbsp;Bitte warten, die Daten werden geladen...</label>
+		    </div>
+		</span>
+
+		<div class="content" id="qaEditorContent" style="visibility:hidden;">
 			<div class="inputContainer noSpaceBelow">
 				<div id="editorsOverview" class="infobox w478">
 					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
