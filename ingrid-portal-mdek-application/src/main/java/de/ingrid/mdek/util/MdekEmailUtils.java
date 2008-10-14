@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.apache.velocity.app.Velocity;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.security.User;
@@ -122,6 +124,8 @@ public class MdekEmailUtils {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_reassigned_from_qa_email.vm");
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		List<String> commentList = extractNewCommentsFromObject(data);
+		mailData.put("commentList", commentList);
 		mailData.put("reassignedDataset", reassignedDatasetMap);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
@@ -138,7 +142,9 @@ public class MdekEmailUtils {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_reassigned_from_qa_email.vm");
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		List<String> commentList = extractNewCommentsFromAddress(adr);
 		mailData.put("reassignedDataset", reassignedDatasetMap);
+		mailData.put("commentList", commentList);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
@@ -546,6 +552,26 @@ public class MdekEmailUtils {
 		}
 
 		return false;
+	}
+
+	private static List<String> extractNewCommentsFromObject(MdekDataBean data) {
+		return extractNewComments(data.getCommentTable(), data.getAssignTime());		
+	}
+
+	private static List<String> extractNewCommentsFromAddress(MdekAddressBean adr) {
+		return extractNewComments(adr.getCommentTable(), adr.getAssignTime());
+	}
+
+	private static List<String> extractNewComments(List<CommentBean> commentList, Date assignTime) {
+		List<String> resultList = new ArrayList<String>();
+
+		for (CommentBean c : commentList) {
+			if (c.getDate().after(assignTime)) {
+				resultList.add(c.getComment());
+			}
+		}
+
+		return resultList;
 	}
 
 	private static String getObjectTitle(String objUuid) {

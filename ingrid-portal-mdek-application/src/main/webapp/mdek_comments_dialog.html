@@ -61,6 +61,7 @@ addComment = function() {
 		var newCommentBean = {Id: key, comment: newComment, date: new Date(), user: {uuid: currentUser.addressUuid}, title: userName};
 
 		commentStore.addData(newCommentBean);
+		dojo.widget.byId("commentNewComment").setValue("");
 	}
 }
 

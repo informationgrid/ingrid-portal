@@ -6,9 +6,9 @@ Der folgende Datensatz wurde Ihrer Benutzergruppe zur Qualitätssicherung überw
 Titel: $assignedDS.title
 Uuid: $assignedDS.uuid
 #if ( $assignedDS.operation == "A")
-Bearbeitungsoperation: neu angelegt
+Operation: neu angelegt
 #else
-Bearbeitungsoperation: bearbeitet
+Operation: bearbeitet
 #end
 
 #if( $assignedDS.type == "O")
