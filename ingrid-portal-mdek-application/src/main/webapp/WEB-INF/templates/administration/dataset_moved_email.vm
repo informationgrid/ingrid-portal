@@ -1,7 +1,8 @@
 #set($movedDS = $map.get("movedDataset"))
 #set($DIRECT_LINK = $map.get("directLink"))
+#set($currentUser = $map.get("currentUser"))
 Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid Software.
-Der folgende Datensatz wurde im Hierarchiebaum verschoben: 
+Der folgende Datensatz wurde von '${currentUser}' im Hierarchiebaum verschoben: 
 
 Titel: $movedDS.title
 Uuid: $movedDS.uuid

@@ -92,10 +92,13 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
 
+		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentSessionId());
+
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_assigned_to_qa_email.vm");
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
+		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
@@ -105,10 +108,13 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
 
+		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentSessionId());
+
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_assigned_to_qa_email.vm");
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
+		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
@@ -158,6 +164,8 @@ public class MdekEmailUtils {
 		String srcTitle = (fromUuid == null? "" : getObjectTitle(fromUuid));
 		String dstTitle = (toUuid == null? "" : getObjectTitle(toUuid));
 
+		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentSessionId());
+
 		HashMap<String, String> movedDatasetMap = createDatasetFromObject(data);
 		movedDatasetMap.put("oldParent", srcTitle);
 		movedDatasetMap.put("newParent", dstTitle);
@@ -166,6 +174,7 @@ public class MdekEmailUtils {
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("movedDataset", movedDatasetMap);
+		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );		
 	}
@@ -187,6 +196,8 @@ public class MdekEmailUtils {
 		String srcTitle = (fromUuid == null? "" : getAddressTitle(fromUuid));
 		String dstTitle = (toUuid == null? "" : getAddressTitle(toUuid));
 
+		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentSessionId());
+
 		HashMap<String, String> movedDatasetMap = createDatasetFromAddress(adr);
 		movedDatasetMap.put("oldParent", srcTitle);
 		movedDatasetMap.put("newParent", dstTitle);
@@ -195,6 +206,7 @@ public class MdekEmailUtils {
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("movedDataset", movedDatasetMap);
+		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
@@ -217,10 +229,13 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
 
+		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentSessionId());
+
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
+		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
@@ -235,10 +250,13 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
 
+		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentSessionId());
+
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
 		String templatePath = url.getPath();
 		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
+		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
