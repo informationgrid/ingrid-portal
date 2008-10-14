@@ -84,27 +84,25 @@ function setStatsObjectsTableContent(stats) {
 // Example:
 // stats = { 0:{numTotal:23, classMap:{v:14, b:7, q:2, r:0}}, 1:{numTotal:18, classMap:{v:11, b:3, q:1, r:3}}, ... };
 function setStatsAdrTableContent(stats) {
-	var amounts = [];
-	var percentages = [];
+	var amounts = [0, 0, 0, 0];
+	var percentages = [0, 0, 0, 0];
 	var numTotal = 0;
 	var numAdrs = {v:0,b:0,q:0,r:0};
 
-	for (var i in stats) {
-		var classMap = stats[i].classMap;
-		amounts.push(classMap.V + classMap.B + classMap.Q + classMap.R);
+	for (var i = 0; i < 4; ++i) {
+		var classMap = stats[i+""].classMap;
+
+		amounts[i] = classMap.V + classMap.B + classMap.Q + classMap.R;
 		numAdrs.v += classMap.V;
 		numAdrs.b += classMap.B;
 		numAdrs.q += classMap.Q;
 		numAdrs.r += classMap.R;
-		numTotal += stats[i].numTotal;
+		numTotal += stats[i+""].numTotal;
 	}
 
-	if (numTotal <= 0) {
-		percentages = [0, 0, 0, 0];
-
-	} else {
-		for (var i in amounts) {
-			percentages.push(amounts[i]*100 / numTotal);
+	if (numTotal > 0) {
+		for (var i = 0; i < amounts.length; ++i) {
+			percentages[i] = amounts[i]*100 / numTotal;
 		}
 	}
 
@@ -122,10 +120,10 @@ function setStatsAdrTableContent(stats) {
 	for (var i = 1; i < storeData.length; ++i) {
 		store.update(storeData[i], "amount", amounts[i-1]);
 		store.update(storeData[i], "percentage", Math.round(percentages[i-1]));
-		store.update(storeData[i], "published", stats[i-1].classMap.V);
-		store.update(storeData[i], "modified", stats[i-1].classMap.B);
-		store.update(storeData[i], "qa", stats[i-1].classMap.Q);
-		store.update(storeData[i], "returned", stats[i-1].classMap.R);
+		store.update(storeData[i], "published", stats[(i-1)+""].classMap.V);
+		store.update(storeData[i], "modified", stats[(i-1)+""].classMap.B);
+		store.update(storeData[i], "qa", stats[(i-1)+""].classMap.Q);
+		store.update(storeData[i], "returned", stats[(i-1)+""].classMap.R);
 	}
 }
 
@@ -690,7 +688,7 @@ function generateRandomString(strLength) {
           <!-- MAIN TAB CONTAINER START -->
         	<div id="statsTable" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="statsObjectsAdr">
             <!-- MAIN TAB 1 START -->
-        		<div id="statsObjectsAdr" dojoType="ContentPane" label="Objekte/Adressen">
+        		<div id="statsObjectsAdr" dojoType="ContentPane" label="Objekte/Adressen" style="overflow:hidden;">
 				<div class="tableContainer rows7 full">
 	        	    <table id="statsObjectsTable" dojoType="ingrid:FilteringTable" minRows="7" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
@@ -799,7 +797,7 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
 	        		      <tr value="1">
-	        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Institution" /></td>
+	        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
 	        		        <td>Institution</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -808,7 +806,7 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
 	        		      <tr value="2">
-	        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Einheit" /></td>
+	        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Einheit" /></td>
 	        		        <td>Einheit</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -817,7 +815,7 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
 	        		      <tr value="3">
-	        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Person" /></td>
+	        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Person" /></td>
 	        		        <td>Person</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -826,7 +824,7 @@ function generateRandomString(strLength) {
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
 	        		      <tr value="4">
-	        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Freie Adresse" /></td>
+	        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Freie Adresse" /></td>
 	        		        <td>Freie Adresse</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -837,6 +835,10 @@ function generateRandomString(strLength) {
 	        	      </tbody>
 	        	    </table>
 				</div> <!-- end tableContainer -->
+
+	          <div class="spacer"></div>
+	          <p class="note">V = Ver&ouml;ffentlicht, B = in Bearbeitung, Q = in Qualit&auml;tssicherung, R = von Qualit&auml;tssicherung an Bearbeiter r&uuml;ck&uuml;berwiesen</p>
+
             </div>
             <!-- MAIN TAB 1 END -->
         		
@@ -853,7 +855,7 @@ function generateRandomString(strLength) {
 	        	    <table id="statsFreeTermsObjTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
-	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Objekt</th>
+	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Objekte</th>
 	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
 	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
 	        		      </tr>
@@ -874,7 +876,7 @@ function generateRandomString(strLength) {
         	    <table id="statsFreeTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
         	      <thead>
         		      <tr>
-              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Adresse</th>
+              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Adressen</th>
               			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
               			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
         		      </tr>
@@ -899,7 +901,7 @@ function generateRandomString(strLength) {
 	        	    <table id="statsThesTermsObjTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
-	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Objekt</th>
+	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Objekte</th>
 	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
 	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
 	        		      </tr>
@@ -920,7 +922,7 @@ function generateRandomString(strLength) {
 	        	    <table id="statsThesTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
-	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriff f&uuml;r Adresse</th>
+	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Adressen</th>
 	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
 	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
 	        		      </tr>
@@ -933,9 +935,6 @@ function generateRandomString(strLength) {
             <!-- MAIN TAB 3 END -->
         	</div>
           <!-- MAIN TAB CONTAINER END -->
-    
-          <div class="spacer"></div>
-          <p class="note">V = Ver&ouml;ffentlicht, B = in Bearbeitung, Q = in Qualit&auml;tssicherung, R = von Qualit&auml;tssicherung an Bearbeiter r&uuml;ck&uuml;berwiesen</p>
     
         </div>
       </div>
